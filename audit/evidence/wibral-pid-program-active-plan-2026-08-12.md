@@ -125,16 +125,36 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   with no new alerts, but CI run `31686107959` completed with failure at
   `2026-08-13T10:44:06Z`: 44 of 45 jobs succeeded and exactly one certified-SxPID2
   full-container custody job failed deterministically. That failure is retained as negative
-  evidence; it gives no hosted success or integration credit. M1a remains
-  `integration_no_go`: freeze the exact composite custody correction, append Lean r6 custody, push
-  the unsigned correction descendant, and obtain its all-green hosted receipt before the distinct
-  M1c final-authority descendant.
+  evidence; it gives no hosted success or integration credit. The exact unsigned custody correction
+  `7473e62acef6077c2c1147e09d5d1297f2a2874b`, sole child of `cb3f58f0...`, was subsequently
+  sealed, passed normal/optimized local precommit and postcommit custody, appended final r6, and
+  fast-forwarded to public `main`. CodeQL run `31724449083` is terminal green with no new alert
+  number. CI run `31724449805` attempt 1 nevertheless completed with 43 successful and two failed
+  jobs. The certified-SxPID2 job failed because its depth-one checkout omitted the fixed
+  `cb3f58f0...` checker authority; the certified mathematical checker itself passed first. The KSG
+  custody job separately failed its `certified_protocol` accepted vector. Its public log exposes
+  only the outer failure, while a reviewer-derived cross-version reproduction identified a stored
+  CPython-minor-sensitive `ast.dump` projection over unchanged certified bootstrap bytes. The run
+  remains failed zero-credit evidence; no composite-v2 receipt is issued and no rerun can rewrite
+  attempt 1. M1a remains `integration_no_go`: preserve `7473e62a...` and its hosted observations,
+  add one bounded fast-forward sole-child recovery with `fetch-depth: 0` and version-stable raw-byte
+  plus structural protocol custody, preserve finalized r7 and append Lean r8, require all-green
+  hosted CI/CodeQL on that distinct recovery head, then issue only a later composite-v3 receipt
+  before the distinct M1c final-authority descendant.
   A first local sealed-index precommit attempt on 13 August also failed closed before any ref
   update: orphan checkpoint `952c1bbf295aeff6222f11ff9383905e96562abc` bound candidate tree
   `cf84ab1996cbe15088f6c580cb47546b9f41a782` and the mode-`0400`, 87,963-byte index SHA-256
   `4354d8be0e9d8d98a56768627a0f5d0128e07f261db48771bcc345e4c1221372`, but normal precommit
   emitted no receipt and rejected the stale pre-materialization private-directory identity
   baseline. `main`, the primary index, and hosted state remained at the implementation anchor.
+  A later r7-based local seal attempt also failed closed before any ref update because the recovery
+  checker incorrectly required every tracked candidate leaf to be nonempty. It observed unreachable
+  checkpoint `37473f8fa9470fcec0bd419ec3df18ea4a6d805b`, candidate tree
+  `66f33f467f2bc661795599fa53ef81681ecd8406`, and a mode-`0644`, 88,875-byte, 731-entry alternate
+  index with SHA-256 `fb892aeaac2091e1d4c6b619a4ce0053771d8aeb0ee147105017613a3b46a56d`.
+  Those are unauthenticated local observations, not sealed custody; none may be reused or relabeled.
+  Preserve finalized r7 exactly, repair the tracked-leaf boundary append-only, require a complete
+  mode scan, and advance current custody only through a fresh r8 replay and fresh seal attempt.
   This is unauthenticated local negative evidence only; it grants no lifecycle, hosted, or
   scientific credit and the failed seal/checkpoint must not be reused.
 - [ ] Complete PID2 revision 4 with exact four-coordinate identities, support/scaling assumptions,
@@ -169,7 +189,7 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   receives execution credit only when its exact receipt exists and validates under normal and
   optimized custody checks. Finalized r5 is exact prior evidence at SHA-256
   `872175ca504efb24752633704fe13e57802e43ae25bb3c463c4fb8c9dfd073f7`.
-- [ ] After the M1a composite custody-correction bytes are frozen, preserve finalized `r5`
+- [x] After the M1a composite custody-correction bytes are frozen, preserve finalized `r5`
   byte-for-byte and generate append-only
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json` as the sixth
   receipt in the versioned sequence that originated on 12 August and the seventh current-project
@@ -177,7 +197,26 @@ shared code, citations, hashes, formal tools, or passing tests are not mappings.
   historical receipt is outside that sequence; the suffix does not denote a calendar date, schema,
   theorem, review, assurance tier, or independence revision. No Lean theorem source changes, and
   r6 receives execution credit only when its exact receipt exists and validates under normal and
-  optimized custody checks.
+  optimized custody checks. Finalized r6 is exact prior evidence at SHA-256
+  `f14e7a33c01909055cc868fc955e6b2520ae15ebf0d598730911ec57a7f4c5ea`.
+- [x] After the failed public correction observation and hosted-recovery bytes are frozen, preserve
+  finalized `r6` byte-for-byte and generate append-only
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json` as the
+  seventh receipt in the versioned sequence that originated on 12 August and the eighth
+  current-project replay receipt overall. The 11 August historical receipt remains outside that
+  sequence; the suffix does not denote a calendar date, schema, theorem, review, assurance tier,
+  or independence revision. No Lean theorem source changes, and r7 receives execution credit only
+  when its exact receipt exists and validates under normal and optimized custody checks. Finalized
+  r7 is exact prior evidence at SHA-256
+  `3dd2df7d7064bac93cf4806cdeac28d9ecc747444689162a4636029228822abb`.
+- [ ] After the failed r7-based local seal is recorded and the append-only verifier repair is frozen,
+  preserve finalized `r7` byte-for-byte and generate append-only
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json` as the eighth
+  receipt in the versioned sequence that originated on 12 August and the ninth current-project
+  replay receipt overall. The 11 August historical receipt remains outside that sequence; the
+  suffix does not denote a calendar date, schema, theorem, review, assurance tier, or independence
+  revision. No Lean theorem source changes, and r8 receives execution credit only when its exact
+  receipt exists and validates under normal and optimized custody checks.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

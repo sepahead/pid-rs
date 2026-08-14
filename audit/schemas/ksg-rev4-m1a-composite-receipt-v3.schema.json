@@ -1,0 +1,4371 @@
+{
+  "$comment": "Closed declarative companion only. A schema pass grants no status. The authoritative hosted-recovery checker must parse canonical bounded stdin at a committed strict descendant and independently enforce Git objects, exact projections, hosted identities, both negative records, both sealed indexes, and all cross-field equalities.",
+  "$defs": {
+    "alertState": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "dismissed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "dismissed_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "fixed": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "fixed_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "maximum_alert_number": {
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "minimum_alert_number": {
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "new_alert_numbers": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "observed_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "observed_new_alerts": {
+          "const": 0,
+          "type": "integer"
+        },
+        "open": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "open_alert_numbers": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "total": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "open",
+        "open_alert_numbers",
+        "dismissed",
+        "dismissed_alert_numbers",
+        "fixed",
+        "fixed_alert_numbers",
+        "total",
+        "baseline_alert_numbers",
+        "observed_alert_numbers",
+        "new_alert_numbers",
+        "minimum_alert_number",
+        "maximum_alert_number",
+        "observed_new_alerts"
+      ],
+      "type": "object"
+    },
+    "analysisProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "const": "canonical compact sorted-key ASCII JSON plus LF over analysis-id-sorted rows"
+        },
+        "entry_count": {
+          "const": 4,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "encoding",
+        "entry_count",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "apiCapture": {
+      "additionalProperties": false,
+      "properties": {
+        "endpoint_class": {
+          "enum": [
+            "ci_artifact_inventory",
+            "ci_job_step_roster",
+            "ci_run_summary",
+            "codeql_alert_state",
+            "codeql_job_analysis_roster",
+            "codeql_run_summary",
+            "postcommit_source_state_v2_content"
+          ]
+        },
+        "format": {
+          "const": "canonical-compact-sorted-key-ascii-json-plus-lf/v1"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "repetitions_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "endpoint_class",
+        "format",
+        "pagination_complete",
+        "repetitions_equal",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "git_blob_oid_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 33554432,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "artifactInventoryRow": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "created_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "expired": {
+          "type": "boolean"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "size_in_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "updated_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "created_at",
+        "expired",
+        "expires_at",
+        "name",
+        "size_in_bytes",
+        "updated_at"
+      ],
+      "type": "object"
+    },
+    "ciFailureBase": {
+      "additionalProperties": false,
+      "properties": {
+        "all_jobs_successful": {
+          "const": false,
+          "type": "boolean"
+        },
+        "api_captures": {},
+        "artifact_contents_projection": {
+          "$ref": "#/$defs/projectionBinding"
+        },
+        "artifact_inventory": {
+          "items": {
+            "$ref": "#/$defs/artifactInventoryRow"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "artifact_inventory_projection": {
+          "$ref": "#/$defs/projectionBinding"
+        },
+        "attempt": {
+          "const": 1,
+          "type": "integer"
+        },
+        "conclusion": {
+          "const": "failure"
+        },
+        "failed_diagnostic": {
+          "$ref": "#/$defs/legacyFailedDiagnostic"
+        },
+        "failed_diagnostics": {
+          "$ref": "#/$defs/correctionFailedDiagnostics"
+        },
+        "failed_job_count": {
+          "maximum": 45,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "head_tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "job_roster": {
+          "items": {
+            "$ref": "#/$defs/hostedJob"
+          },
+          "maxItems": 45,
+          "minItems": 45,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "job_roster_projection": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/jobProjection"
+            },
+            {
+              "properties": {
+                "entry_count": {
+                  "const": 45,
+                  "type": "integer"
+                }
+              }
+            }
+          ]
+        },
+        "jobs_successful": {
+          "maximum": 44,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "jobs_total": {
+          "const": 45,
+          "type": "integer"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "postcommit_source_state_v2": {},
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retained_negative_evidence": {
+          "const": true,
+          "type": "boolean"
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_event": {
+          "const": "push"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "success_credit": {
+          "const": "none"
+        },
+        "workflow": {
+          "const": "CI"
+        },
+        "workflow_path": {
+          "const": ".github/workflows/ci.yml"
+        }
+      },
+      "required": [
+        "all_jobs_successful",
+        "api_captures",
+        "attempt",
+        "conclusion",
+        "failed_job_count",
+        "head_sha",
+        "head_tree",
+        "job_roster",
+        "job_roster_projection",
+        "jobs_successful",
+        "jobs_total",
+        "pagination_complete",
+        "postcommit_source_state_v2",
+        "ref",
+        "repository",
+        "retained_negative_evidence",
+        "run_id",
+        "runner_authenticity_claimed",
+        "source_event",
+        "status",
+        "success_credit",
+        "workflow",
+        "workflow_path"
+      ],
+      "type": "object"
+    },
+    "ciSuccess": {
+      "additionalProperties": false,
+      "properties": {
+        "all_jobs_successful": {
+          "const": true,
+          "type": "boolean"
+        },
+        "api_captures": {
+          "items": {
+            "$ref": "#/$defs/apiCapture"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/apiCapture"
+                },
+                {
+                  "properties": {
+                    "endpoint_class": {
+                      "const": "ci_job_step_roster"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/apiCapture"
+                },
+                {
+                  "properties": {
+                    "endpoint_class": {
+                      "const": "ci_run_summary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/apiCapture"
+                },
+                {
+                  "properties": {
+                    "endpoint_class": {
+                      "const": "postcommit_source_state_v2_content"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "array",
+          "uniqueItems": true
+        },
+        "attempt": {
+          "const": 1,
+          "type": "integer"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "failed_diagnostic": {
+          "type": "null"
+        },
+        "failed_job_count": {
+          "const": 0,
+          "type": "integer"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "head_tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "job_roster": {
+          "items": {
+            "$ref": "#/$defs/hostedJob"
+          },
+          "maxItems": 45,
+          "minItems": 45,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "job_roster_projection": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/jobProjection"
+            },
+            {
+              "properties": {
+                "entry_count": {
+                  "const": 45,
+                  "type": "integer"
+                }
+              }
+            }
+          ]
+        },
+        "jobs_successful": {
+          "const": 45,
+          "type": "integer"
+        },
+        "jobs_total": {
+          "const": 45,
+          "type": "integer"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "postcommit_source_state_v2": {
+          "$ref": "#/$defs/legacyHostedArtifact"
+        },
+        "postcommit_source_state_v2_content": {
+          "$comment": "The authoritative checker binds legacy6 content_sha256/content_size_bytes to canonical pretty sorted-key ASCII JSON plus LF of this object, and the new6 postcommit_source_state_v2_content capture to its canonical compact sorted-key ASCII JSON plus LF projection.",
+          "$ref": "#/$defs/postcommitSourceStateV2"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retained_negative_evidence": {
+          "const": false,
+          "type": "boolean"
+        },
+        "run_id": {
+          "minimum": 1,
+          "not": {
+            "enum": [
+              31686106737,
+              31686107959,
+              31724449083,
+              31724449805
+            ]
+          },
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_event": {
+          "const": "push"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "success_credit": {
+          "const": "hosted_success_observation_only"
+        },
+        "workflow": {
+          "const": "CI"
+        },
+        "workflow_path": {
+          "const": ".github/workflows/ci.yml"
+        }
+      },
+      "required": [
+        "all_jobs_successful",
+        "api_captures",
+        "attempt",
+        "conclusion",
+        "failed_diagnostic",
+        "failed_job_count",
+        "head_sha",
+        "head_tree",
+        "job_roster",
+        "job_roster_projection",
+        "jobs_successful",
+        "jobs_total",
+        "pagination_complete",
+        "postcommit_source_state_v2",
+        "postcommit_source_state_v2_content",
+        "ref",
+        "repository",
+        "retained_negative_evidence",
+        "run_id",
+        "runner_authenticity_claimed",
+        "source_event",
+        "status",
+        "success_credit",
+        "workflow",
+        "workflow_path"
+      ],
+      "type": "object"
+    },
+    "codeqlAnalysis": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "category": {
+          "pattern": "^/language:(actions|javascript-typescript|python|rust)$",
+          "type": "string"
+        },
+        "commit_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "error": {
+          "const": ""
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "language": {
+          "enum": [
+            "actions",
+            "javascript-typescript",
+            "python",
+            "rust"
+          ]
+        },
+        "no_new_alerts_observed": {
+          "const": true,
+          "type": "boolean"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "results_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "rules_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "warning": {
+          "const": ""
+        }
+      },
+      "required": [
+        "job_id",
+        "analysis_id",
+        "category",
+        "commit_sha",
+        "ref",
+        "language",
+        "results_count",
+        "rules_count",
+        "error",
+        "warning",
+        "status",
+        "conclusion",
+        "no_new_alerts_observed"
+      ],
+      "type": "object"
+    },
+    "codeqlSuccessBase": {
+      "additionalProperties": false,
+      "properties": {
+        "alert_state": {
+          "$ref": "#/$defs/alertState"
+        },
+        "all_jobs_successful": {
+          "const": true,
+          "type": "boolean"
+        },
+        "analysis_roster": {
+          "items": {
+            "$ref": "#/$defs/codeqlAnalysis"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/codeqlAnalysis"
+                },
+                {
+                  "properties": {
+                    "category": {
+                      "const": "/language:actions"
+                    },
+                    "language": {
+                      "const": "actions"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/codeqlAnalysis"
+                },
+                {
+                  "properties": {
+                    "category": {
+                      "const": "/language:javascript-typescript"
+                    },
+                    "language": {
+                      "const": "javascript-typescript"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/codeqlAnalysis"
+                },
+                {
+                  "properties": {
+                    "category": {
+                      "const": "/language:python"
+                    },
+                    "language": {
+                      "const": "python"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/codeqlAnalysis"
+                },
+                {
+                  "properties": {
+                    "category": {
+                      "const": "/language:rust"
+                    },
+                    "language": {
+                      "const": "rust"
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "type": "array",
+          "uniqueItems": true
+        },
+        "analysis_roster_projection": {},
+        "api_captures": {},
+        "attempt": {
+          "const": 1,
+          "type": "integer"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/sha1"
+        },
+        "head_tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "job_roster": {
+          "items": {
+            "$ref": "#/$defs/hostedJob"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "job_roster_projection": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/jobProjection"
+            },
+            {
+              "properties": {
+                "entry_count": {
+                  "const": 4,
+                  "type": "integer"
+                }
+              }
+            }
+          ]
+        },
+        "jobs_successful": {
+          "const": 4,
+          "type": "integer"
+        },
+        "jobs_total": {
+          "const": 4,
+          "type": "integer"
+        },
+        "new_alerts": {
+          "const": 0,
+          "type": "integer"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_event": {
+          "const": "dynamic"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "workflow": {
+          "const": "CodeQL"
+        }
+      },
+      "required": [
+        "alert_state",
+        "all_jobs_successful",
+        "analysis_roster",
+        "analysis_roster_projection",
+        "api_captures",
+        "attempt",
+        "conclusion",
+        "head_sha",
+        "head_tree",
+        "job_roster",
+        "job_roster_projection",
+        "jobs_successful",
+        "jobs_total",
+        "new_alerts",
+        "pagination_complete",
+        "ref",
+        "repository",
+        "run_id",
+        "runner_authenticity_claimed",
+        "source_event",
+        "status",
+        "workflow"
+      ],
+      "type": "object"
+    },
+    "correctionAlternateIndex": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_count": {
+          "const": 724,
+          "type": "integer"
+        },
+        "input_descriptor_read_only": {
+          "const": true,
+          "type": "boolean"
+        },
+        "input_transport": {
+          "const": "standard_input_regular_file_descriptor"
+        },
+        "mode_octal": {
+          "const": "0400"
+        },
+        "path_or_residency_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "precommit_descriptor_observation_authenticated": {
+          "const": false,
+          "type": "boolean"
+        },
+        "retained_index_artifact": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/retainedIndexArtifact"
+            },
+            {
+              "properties": {
+                "git_blob_oid_sha1": {
+                  "const": "79f0eaf13969008a8a31c2e47f3fbb06ba2055c6"
+                },
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin"
+                },
+                "sha256": {
+                  "const": "f9d1f42a758c3dfe55ec1d313229b14c0c462db9d753b5b1d59a4008f1f232bc"
+                },
+                "size_bytes": {
+                  "const": 87963,
+                  "type": "integer"
+                }
+              }
+            }
+          ]
+        },
+        "sha256": {
+          "const": "f9d1f42a758c3dfe55ec1d313229b14c0c462db9d753b5b1d59a4008f1f232bc"
+        },
+        "single_link": {
+          "const": true,
+          "type": "boolean"
+        },
+        "size_bytes": {
+          "const": 87963,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entry_count",
+        "input_descriptor_read_only",
+        "input_transport",
+        "mode_octal",
+        "path_or_residency_claimed",
+        "precommit_descriptor_observation_authenticated",
+        "retained_index_artifact",
+        "sha256",
+        "single_link",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "correctionChildDigests": {
+      "additionalProperties": false,
+      "properties": {
+        "scripts/check-certified-sxpid2-claim-self-test.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-certified-sxpid2-claim.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-lean-toolchain-freeze-self-test.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-lean-toolchain-freeze.py": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "scripts/check-certified-sxpid2-claim-self-test.py",
+        "scripts/check-certified-sxpid2-claim.py",
+        "scripts/check-lean-toolchain-freeze-self-test.py",
+        "scripts/check-lean-toolchain-freeze.py"
+      ],
+      "type": "object"
+    },
+    "correctionCiFailure": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ciFailureBase"
+        },
+        {
+          "properties": {
+            "api_captures": {
+              "items": {
+                "$ref": "#/$defs/apiCapture"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "ci_artifact_inventory"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "ci_job_step_roster"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "ci_run_summary"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "array",
+              "uniqueItems": true
+            },
+            "artifact_contents_projection": {
+              "$ref": "#/$defs/projectionBinding"
+            },
+            "artifact_inventory": {
+              "items": {
+                "$ref": "#/$defs/artifactInventoryRow"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "artifact_inventory_projection": {
+              "$ref": "#/$defs/projectionBinding"
+            },
+            "failed_diagnostics": {
+              "$ref": "#/$defs/correctionFailedDiagnostics"
+            },
+            "failed_job_count": {
+              "const": 2,
+              "type": "integer"
+            },
+            "head_sha": {
+              "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+            },
+            "head_tree": {
+              "const": "d0b2613e678a89318550c1797ba9cc59a4ec9478"
+            },
+            "jobs_successful": {
+              "const": 43,
+              "type": "integer"
+            },
+            "postcommit_source_state_v2": {
+              "$ref": "#/$defs/legacyHostedArtifact"
+            },
+            "run_id": {
+              "const": 31724449805,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "artifact_contents_projection",
+            "artifact_inventory",
+            "artifact_inventory_projection",
+            "failed_diagnostics"
+          ]
+        }
+      ],
+      "maxProperties": 27,
+      "minProperties": 27,
+      "unevaluatedProperties": false
+    },
+    "correctionCodeqlSuccess": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/codeqlSuccessBase"
+        },
+        {
+          "properties": {
+            "analysis_roster_projection": {
+              "$ref": "#/$defs/analysisProjection"
+            },
+            "api_captures": {
+              "items": {
+                "$ref": "#/$defs/apiCapture"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_alert_state"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_job_analysis_roster"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_run_summary"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "array",
+              "uniqueItems": true
+            },
+            "head_sha": {
+              "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+            },
+            "head_tree": {
+              "const": "d0b2613e678a89318550c1797ba9cc59a4ec9478"
+            },
+            "run_id": {
+              "const": 31724449083,
+              "type": "integer"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "correctionFailedDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "exception_class": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "exception_message": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "job_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "raw_log": {
+          "additionalProperties": false,
+          "properties": {
+            "repetitions_equal": {
+              "const": true,
+              "type": "boolean"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "size_bytes": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "truncated": {
+              "const": false,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "sha256",
+            "size_bytes",
+            "repetitions_equal",
+            "truncated"
+          ],
+          "type": "object"
+        },
+        "step_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "step_number": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "traceback_projection": {
+          "additionalProperties": false,
+          "properties": {
+            "encoding": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "size_bytes": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "text": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "encoding",
+            "sha256",
+            "size_bytes",
+            "text"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "job_id",
+        "job_name",
+        "step_number",
+        "step_name",
+        "exception_class",
+        "exception_message",
+        "traceback_projection",
+        "raw_log"
+      ],
+      "type": "object"
+    },
+    "correctionFailedDiagnostics": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/correctionFirstFailedDiagnostic"
+        },
+        {
+          "$ref": "#/$defs/correctionSecondFailedDiagnostic"
+        }
+      ],
+      "type": "array",
+      "uniqueItems": true
+    },
+    "correctionFirstFailedDiagnostic": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/correctionFailedDiagnostic"
+        },
+        {
+          "properties": {
+            "exception_class": {
+              "const": "SelfTestError"
+            },
+            "exception_message": {
+              "const": "cannot read the fixed cb3f certified-checker authority"
+            },
+            "job_id": {
+              "const": 94529230276,
+              "type": "integer"
+            },
+            "job_name": {
+              "const": "Exact-count directed-rounding SxPID2 reference"
+            },
+            "step_name": {
+              "const": "Run python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py"
+            },
+            "step_number": {
+              "const": 24,
+              "type": "integer"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "correctionPhaseCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index_custody": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/correctionAlternateIndex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkpoint_commit": {
+          "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+        },
+        "commit_envelope": {
+          "$ref": "#/$defs/correctionPhaseCommitEnvelope"
+        },
+        "delta": {
+          "items": {
+            "$ref": "#/$defs/phaseDelta"
+          },
+          "maxItems": 26,
+          "minItems": 26,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "tree": {
+          "const": "d0b2613e678a89318550c1797ba9cc59a4ec9478"
+        }
+      },
+      "required": [
+        "alternate_index_custody",
+        "checkpoint_commit",
+        "commit_envelope",
+        "delta",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseCertified": {
+      "additionalProperties": false,
+      "properties": {
+        "cli_only_selftest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scientific_authority_unchanged": {
+          "const": true,
+          "type": "boolean"
+        },
+        "three_container_digest_literals": {
+          "additionalProperties": false,
+          "properties": {
+            ".github/workflows/ci.yml": {
+              "$ref": "#/$defs/sha256"
+            },
+            "justfile": {
+              "$ref": "#/$defs/sha256"
+            },
+            "scripts/README.md": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            ".github/workflows/ci.yml",
+            "justfile",
+            "scripts/README.md"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "cli_only_selftest_sha256",
+        "scientific_authority_unchanged",
+        "three_container_digest_literals"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseCommitEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "message": {
+          "maxLength": 180,
+          "pattern": "^Correct KSG M1a hosted custody wiring\\n\\nSealed-index-SHA256: [0-9a-f]{64}\\nSealed-index-Size: [1-9][0-9]{0,7}\\n$",
+          "type": "string"
+        },
+        "sealed_index_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "sealed_index_size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "author",
+        "committer",
+        "message",
+        "sealed_index_sha256",
+        "sealed_index_size_bytes"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseCustody": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index": {
+          "$ref": "#/$defs/correctionAlternateIndex"
+        },
+        "boundary": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md"
+                }
+              }
+            }
+          ]
+        },
+        "checker": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-custody-correction.py"
+                }
+              }
+            }
+          ]
+        },
+        "policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-path-policy-v1.json"
+                }
+              }
+            }
+          ]
+        },
+        "postcommit_outputs": {
+          "$ref": "#/$defs/correctionPostcommitOutputGroup"
+        },
+        "precommit_outputs": {
+          "$ref": "#/$defs/correctionPrecommitOutputGroup"
+        },
+        "self_test": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-custody-correction-self-test.py"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "alternate_index",
+        "boundary",
+        "checker",
+        "policy",
+        "postcommit_outputs",
+        "precommit_outputs",
+        "self_test"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseLeanR6": {
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "const": "pid-rs/lean-current-project-replay/v2"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "const": "passed"
+        }
+      },
+      "required": [
+        "schema",
+        "sha256",
+        "status"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseNegative": {
+      "additionalProperties": false,
+      "properties": {
+        "codeql_run_id": {
+          "const": 31686106737,
+          "type": "integer"
+        },
+        "failed_ci_run_id": {
+          "const": 31686107959,
+          "type": "integer"
+        },
+        "failed_jobs": {
+          "const": 1,
+          "type": "integer"
+        },
+        "jobs": {
+          "const": 45,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "codeql_run_id",
+        "failed_ci_run_id",
+        "failed_jobs",
+        "jobs",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseOutput": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "precommit"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "candidate": {
+                "properties": {
+                  "alternate_index_custody": {
+                    "$ref": "#/$defs/correctionAlternateIndex"
+                  }
+                }
+              },
+              "lifecycle": {
+                "const": "implementation_plus_exact_correction_overlay"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "postcommit"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "candidate": {
+                "properties": {
+                  "alternate_index_custody": {
+                    "type": "null"
+                  }
+                }
+              },
+              "lifecycle": {
+                "const": "clean_main_direct_child_postcommit_no_credit"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "candidate": {
+          "$ref": "#/$defs/correctionPhaseCandidate"
+        },
+        "certified_sxpid_correction": {
+          "$ref": "#/$defs/correctionPhaseCertified"
+        },
+        "child_output_sha256": {
+          "$ref": "#/$defs/correctionChildDigests"
+        },
+        "credit": {
+          "const": "none_local_custody_match_hosted_pending"
+        },
+        "current_source_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "disposition": {
+          "const": "local_hosted_pending_no_credit"
+        },
+        "implementation_anchor": {
+          "$ref": "#/$defs/phaseImplementationAnchor"
+        },
+        "lean_r6": {
+          "$ref": "#/$defs/correctionPhaseLeanR6"
+        },
+        "lifecycle": {
+          "enum": [
+            "clean_main_direct_child_postcommit_no_credit",
+            "implementation_plus_exact_correction_overlay"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "postcommit",
+            "precommit"
+          ]
+        },
+        "negative_evidence": {
+          "$ref": "#/$defs/correctionPhaseNegative"
+        },
+        "policy_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preclosure": {
+          "$ref": "#/$defs/correctionPhasePreclosure"
+        },
+        "repository_state": {
+          "$ref": "#/$defs/phaseRepositoryState"
+        },
+        "runtime_mode": {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-custody-correction-phase-validation/v1"
+        },
+        "static_artifact_sha256": {
+          "$ref": "#/$defs/correctionStaticDigests"
+        }
+      },
+      "required": [
+        "candidate",
+        "certified_sxpid_correction",
+        "child_output_sha256",
+        "credit",
+        "current_source_manifest_sha256",
+        "disposition",
+        "implementation_anchor",
+        "lean_r6",
+        "lifecycle",
+        "mode",
+        "negative_evidence",
+        "policy_sha256",
+        "preclosure",
+        "repository_state",
+        "runtime_mode",
+        "schema",
+        "static_artifact_sha256"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseOutputGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "normal": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/correctionPhaseRecord"
+            },
+            {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "runtime_mode": {
+                      "const": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "optimized": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/correctionPhaseRecord"
+            },
+            {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "runtime_mode": {
+                      "const": 1,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "pair_normalized_equal": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "normal",
+        "optimized",
+        "pair_normalized_equal"
+      ],
+      "type": "object"
+    },
+    "correctionPhasePreclosure": {
+      "additionalProperties": false,
+      "properties": {
+        "final_decision_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "final_evidence_matrix_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "future_composite_receipt_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "open_gate_count": {
+          "const": 13,
+          "type": "integer"
+        },
+        "status": {
+          "const": "integration_no_go"
+        }
+      },
+      "required": [
+        "final_decision_absent",
+        "final_evidence_matrix_absent",
+        "future_composite_receipt_absent",
+        "open_gate_count",
+        "status"
+      ],
+      "type": "object"
+    },
+    "correctionPhaseRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "$ref": "#/$defs/correctionPhaseOutput"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "output",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "correctionPostcommitOutputGroup": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/correctionPhaseOutputGroup"
+        },
+        {
+          "properties": {
+            "normal": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "postcommit"
+                    }
+                  }
+                }
+              }
+            },
+            "optimized": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "postcommit"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "correctionPrecommitOutputGroup": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/correctionPhaseOutputGroup"
+        },
+        {
+          "properties": {
+            "normal": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "precommit"
+                    }
+                  }
+                }
+              }
+            },
+            "optimized": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "precommit"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "correctionSecondFailedDiagnostic": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/correctionFailedDiagnostic"
+        },
+        {
+          "properties": {
+            "exception_class": {
+              "const": "not_observed_in_terminal_log"
+            },
+            "exception_message": {
+              "const": "KSG M1a custody-correction self-test failed: accepted vector failed: certified_protocol: b''"
+            },
+            "job_id": {
+              "const": 94529230323,
+              "type": "integer"
+            },
+            "job_name": {
+              "const": "KSG integer-harmonic arithmetic and phase isolation"
+            },
+            "step_name": {
+              "const": "Verify the KSG M1a hosted-custody correction lifecycle"
+            },
+            "step_number": {
+              "const": 10,
+              "type": "integer"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "correctionStaticDigests": {
+      "additionalProperties": false,
+      "properties": {
+        "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md": {
+          "$ref": "#/$defs/sha256"
+        },
+        "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-ksg-m1a-custody-correction-self-test.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-ksg-m1a-custody-correction.py": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md",
+        "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json",
+        "scripts/check-ksg-m1a-custody-correction-self-test.py",
+        "scripts/check-ksg-m1a-custody-correction.py"
+      ],
+      "type": "object"
+    },
+    "correctionSubject": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "commit": {
+          "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+        },
+        "commit_message": {
+          "const": "Correct KSG M1a hosted custody wiring\n\nSealed-index-SHA256: f9d1f42a758c3dfe55ec1d313229b14c0c462db9d753b5b1d59a4008f1f232bc\nSealed-index-Size: 87963\n"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "direct_parent": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "distinct_from_implementation_anchor": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_identity_after_correction": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "one_parent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sealed_index": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sealedIndex"
+            },
+            {
+              "properties": {
+                "entry_count": {
+                  "const": 724,
+                  "type": "integer"
+                },
+                "git_blob_oid_sha1": {
+                  "const": "79f0eaf13969008a8a31c2e47f3fbb06ba2055c6"
+                },
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin"
+                },
+                "sha256": {
+                  "const": "f9d1f42a758c3dfe55ec1d313229b14c0c462db9d753b5b1d59a4008f1f232bc"
+                },
+                "size_bytes": {
+                  "const": 87963,
+                  "type": "integer"
+                }
+              }
+            }
+          ]
+        },
+        "tree": {
+          "const": "d0b2613e678a89318550c1797ba9cc59a4ec9478"
+        },
+        "unsigned": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "direct_parent",
+        "commit_message",
+        "author",
+        "committer",
+        "object_format",
+        "one_parent",
+        "unsigned",
+        "sealed_index",
+        "distinct_from_implementation_anchor",
+        "implementation_identity_after_correction"
+      ],
+      "type": "object"
+    },
+    "hostedJob": {
+      "additionalProperties": false,
+      "properties": {
+        "completed_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "conclusion": {
+          "enum": [
+            "cancelled",
+            "failure",
+            "skipped",
+            "success"
+          ]
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "started_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "steps": {
+          "items": {
+            "$ref": "#/$defs/hostedStep"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "job_id",
+        "name",
+        "status",
+        "conclusion",
+        "started_at",
+        "completed_at",
+        "steps"
+      ],
+      "type": "object"
+    },
+    "hostedStep": {
+      "additionalProperties": false,
+      "properties": {
+        "conclusion": {
+          "enum": [
+            "cancelled",
+            "failure",
+            "skipped",
+            "success"
+          ]
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "number": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "const": "completed"
+        }
+      },
+      "required": [
+        "number",
+        "name",
+        "status",
+        "conclusion"
+      ],
+      "type": "object"
+    },
+    "humanIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "const": "sepmhn@gmail.com"
+        },
+        "name": {
+          "const": "Sepehr Mahmoudian"
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ],
+      "type": "object"
+    },
+    "implementationCiFailure": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/ciFailureBase"
+        },
+        {
+          "properties": {
+            "api_captures": {
+              "items": {
+                "$ref": "#/$defs/legacyApiCapture"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/legacyApiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "ci_job_step_roster"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/legacyApiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "ci_run_summary"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/legacyApiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "postcommit_source_state_v2_artifact"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "array",
+              "uniqueItems": true
+            },
+            "failed_diagnostic": {
+              "$ref": "#/$defs/legacyFailedDiagnostic"
+            },
+            "failed_job_count": {
+              "const": 1,
+              "type": "integer"
+            },
+            "head_sha": {
+              "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+            },
+            "head_tree": {
+              "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+            },
+            "jobs_successful": {
+              "const": 44,
+              "type": "integer"
+            },
+            "postcommit_source_state_v2": {
+              "$ref": "#/$defs/legacyHostedArtifact"
+            },
+            "run_id": {
+              "const": 31686107959,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "failed_diagnostic"
+          ]
+        }
+      ],
+      "maxProperties": 24,
+      "minProperties": 24,
+      "unevaluatedProperties": false
+    },
+    "implementationCodeqlSuccess": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/codeqlSuccessBase"
+        },
+        {
+          "properties": {
+            "analysis_roster_projection": {
+              "$ref": "#/$defs/legacyAnalysisProjection"
+            },
+            "api_captures": {
+              "items": {
+                "$ref": "#/$defs/legacyApiCapture"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/legacyApiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_alert_state"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/legacyApiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_job_analysis_roster"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/legacyApiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_run_summary"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "array",
+              "uniqueItems": true
+            },
+            "head_sha": {
+              "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+            },
+            "head_tree": {
+              "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+            },
+            "run_id": {
+              "const": 31686106737,
+              "type": "integer"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "jobProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "const": "canonical compact sorted-key ASCII JSON plus LF over job-id-sorted rows with number-sorted steps"
+        },
+        "entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "encoding",
+        "entry_count",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "legacyAnalysisProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "const": "canonical compact sorted-key ASCII JSON plus LF over language-sorted analysis rows"
+        },
+        "entry_count": {
+          "const": 4,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "encoding",
+        "entry_count",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "legacyApiCapture": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "endpoint_class": {
+                "const": "ci_job_step_roster"
+              }
+            },
+            "required": [
+              "endpoint_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "projection": {
+                "$ref": "#/$defs/legacyCiJobRosterProjection"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_class": {
+                "const": "ci_run_summary"
+              }
+            },
+            "required": [
+              "endpoint_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "projection": {
+                "$ref": "#/$defs/legacyCiRunSummary"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_class": {
+                "const": "codeql_alert_state"
+              }
+            },
+            "required": [
+              "endpoint_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "projection": {
+                "$ref": "#/$defs/alertState"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_class": {
+                "const": "codeql_job_analysis_roster"
+              }
+            },
+            "required": [
+              "endpoint_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "projection": {
+                "$ref": "#/$defs/legacyCodeqlAnalysisRoster"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_class": {
+                "const": "codeql_run_summary"
+              }
+            },
+            "required": [
+              "endpoint_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "projection": {
+                "$ref": "#/$defs/legacyCodeqlRunSummary"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "endpoint_class": {
+                "const": "postcommit_source_state_v2_artifact"
+              }
+            },
+            "required": [
+              "endpoint_class"
+            ]
+          },
+          "then": {
+            "properties": {
+              "projection": {
+                "$ref": "#/$defs/legacyHostedArtifact"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "endpoint_class": {
+          "enum": [
+            "ci_job_step_roster",
+            "ci_run_summary",
+            "codeql_alert_state",
+            "codeql_job_analysis_roster",
+            "codeql_run_summary",
+            "postcommit_source_state_v2_artifact"
+          ]
+        },
+        "projection": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/legacyCiJobRosterProjection"
+            },
+            {
+              "$ref": "#/$defs/legacyCiRunSummary"
+            },
+            {
+              "$ref": "#/$defs/alertState"
+            },
+            {
+              "$ref": "#/$defs/legacyCodeqlAnalysisRoster"
+            },
+            {
+              "$ref": "#/$defs/legacyCodeqlRunSummary"
+            },
+            {
+              "$ref": "#/$defs/legacyHostedArtifact"
+            }
+          ]
+        },
+        "repetitions_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "endpoint_class",
+        "projection",
+        "repetitions_equal",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "legacyCiJobRosterProjection": {
+      "items": {
+        "$ref": "#/$defs/hostedJob"
+      },
+      "maxItems": 45,
+      "minItems": 45,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "legacyCiRunSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "all_jobs_successful": {
+          "const": false,
+          "type": "boolean"
+        },
+        "attempt": {
+          "const": 1,
+          "type": "integer"
+        },
+        "conclusion": {
+          "const": "failure"
+        },
+        "failed_job_count": {
+          "const": 1,
+          "type": "integer"
+        },
+        "head_sha": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "head_tree": {
+          "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+        },
+        "jobs_successful": {
+          "const": 44,
+          "type": "integer"
+        },
+        "jobs_total": {
+          "const": 45,
+          "type": "integer"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retained_negative_evidence": {
+          "const": true,
+          "type": "boolean"
+        },
+        "run_id": {
+          "const": 31686107959,
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_event": {
+          "const": "push"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "success_credit": {
+          "const": "none"
+        },
+        "workflow": {
+          "const": "CI"
+        },
+        "workflow_path": {
+          "const": ".github/workflows/ci.yml"
+        }
+      },
+      "required": [
+        "all_jobs_successful",
+        "attempt",
+        "conclusion",
+        "failed_job_count",
+        "head_sha",
+        "head_tree",
+        "jobs_successful",
+        "jobs_total",
+        "pagination_complete",
+        "ref",
+        "repository",
+        "retained_negative_evidence",
+        "run_id",
+        "runner_authenticity_claimed",
+        "source_event",
+        "status",
+        "success_credit",
+        "workflow",
+        "workflow_path"
+      ],
+      "type": "object"
+    },
+    "legacyCodeqlAnalysisRoster": {
+      "additionalProperties": false,
+      "properties": {
+        "analyses": {
+          "items": {
+            "$ref": "#/$defs/codeqlAnalysis"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "jobs": {
+          "items": {
+            "$ref": "#/$defs/hostedJob"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "analyses",
+        "jobs"
+      ],
+      "type": "object"
+    },
+    "legacyCodeqlRunSummary": {
+      "additionalProperties": false,
+      "properties": {
+        "all_jobs_successful": {
+          "const": true,
+          "type": "boolean"
+        },
+        "attempt": {
+          "const": 1,
+          "type": "integer"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "head_sha": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "head_tree": {
+          "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+        },
+        "jobs_successful": {
+          "const": 4,
+          "type": "integer"
+        },
+        "jobs_total": {
+          "const": 4,
+          "type": "integer"
+        },
+        "new_alerts": {
+          "const": 0,
+          "type": "integer"
+        },
+        "pagination_complete": {
+          "const": true,
+          "type": "boolean"
+        },
+        "ref": {
+          "const": "refs/heads/main"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "run_id": {
+          "const": 31686106737,
+          "type": "integer"
+        },
+        "runner_authenticity_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "source_event": {
+          "const": "dynamic"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "workflow": {
+          "const": "CodeQL"
+        }
+      },
+      "required": [
+        "all_jobs_successful",
+        "attempt",
+        "conclusion",
+        "head_sha",
+        "head_tree",
+        "jobs_successful",
+        "jobs_total",
+        "new_alerts",
+        "pagination_complete",
+        "ref",
+        "repository",
+        "run_id",
+        "runner_authenticity_claimed",
+        "source_event",
+        "status",
+        "workflow"
+      ],
+      "type": "object"
+    },
+    "legacyFailedDiagnostic": {
+      "additionalProperties": false,
+      "properties": {
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "job_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "log_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "log_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "step_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "step_number": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "truncated": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "job_id",
+        "job_name",
+        "step_number",
+        "step_name",
+        "log_sha256",
+        "log_size_bytes",
+        "truncated"
+      ],
+      "type": "object"
+    },
+    "legacyHostedArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "content_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "content_sha256",
+        "content_size_bytes",
+        "name",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "phaseDelta": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "const": "100644"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "A",
+            "M"
+          ]
+        }
+      },
+      "required": [
+        "mode",
+        "path",
+        "status"
+      ],
+      "type": "object"
+    },
+    "phaseImplementationAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "direct_parent": {
+          "const": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9"
+        },
+        "protected_projection": {
+          "$ref": "#/$defs/phaseProtectedProjection"
+        },
+        "tree": {
+          "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+        }
+      },
+      "required": [
+        "commit",
+        "direct_parent",
+        "protected_projection",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "phaseProtectedProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_equals_anchor": {
+          "const": true,
+          "type": "boolean"
+        },
+        "entry_count": {
+          "const": 83,
+          "type": "integer"
+        },
+        "sha256": {
+          "const": "37789ee0a6db5cab13629d08e70763eed6a55c1aeecbe94300717527419d0843"
+        }
+      },
+      "required": [
+        "candidate_equals_anchor",
+        "entry_count",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "phaseRepositoryState": {
+      "additionalProperties": false,
+      "properties": {
+        "active_git_operations": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "branch": {
+          "const": "main"
+        }
+      },
+      "required": [
+        "active_git_operations",
+        "branch"
+      ],
+      "type": "object"
+    },
+    "postcommitSourceStateV2": {
+      "additionalProperties": false,
+      "properties": {
+        "binding": {
+          "$ref": "#/$defs/postcommitSourceStateV2Binding"
+        },
+        "checks": {
+          "$ref": "#/$defs/postcommitSourceStateV2Checks"
+        },
+        "determinism": {
+          "$ref": "#/$defs/postcommitSourceStateV2Determinism"
+        },
+        "evidence_class": {
+          "const": "post_commit_identity_evidence_only"
+        },
+        "generated_by": {
+          "const": "scripts/check-post-commit-source-state-v2.py"
+        },
+        "nonimplications": {
+          "const": [
+            "This post-commit identity artifact is not authentication, authenticity, attestation, provenance, or proof of repository origin.",
+            "It does not establish line review, human review, independent review, institutional review, or review completion.",
+            "It does not establish scientific validity, estimator validity, formal correctness, source-to-formal correspondence, implementation refinement, numerical correctness, or application validity.",
+            "Commit, tree, blob, and SHA-256 identifiers bind exact bytes under named algorithms; they do not confer trust or authenticity.",
+            "Generation is bounded execution evidence for one committed state, not a CI-pass, release, tag, or fact about any other commit.",
+            "Repeated endpoint checks are not an atomic history against concurrent filesystem or repository mutation.",
+            "Repository-ignored products and Git object-store internals are outside this committed-tree identity projection.",
+            "Emission uses standard output and validation uses standard input; this artifact does not bind storage location, filesystem identity, durability, or upload custody."
+          ],
+          "type": "array"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "schema": {
+          "const": "pid-rs/post-commit-source-state"
+        },
+        "schema_revision": {
+          "const": 2,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binding",
+        "checks",
+        "determinism",
+        "evidence_class",
+        "generated_by",
+        "nonimplications",
+        "repository",
+        "schema",
+        "schema_revision"
+      ],
+      "type": "object"
+    },
+    "postcommitSourceStateV2Binding": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_oid": {
+          "$ref": "#/$defs/sha1"
+        },
+        "git_object_format": {
+          "const": "sha1"
+        },
+        "manifest": {
+          "$ref": "#/$defs/postcommitSourceStateV2Manifest"
+        },
+        "tree_oid": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "commit_oid",
+        "git_object_format",
+        "manifest",
+        "tree_oid"
+      ],
+      "type": "object"
+    },
+    "postcommitSourceStateV2Checks": {
+      "additionalProperties": false,
+      "properties": {
+        "current_manifest_checker_passed": {
+          "const": true,
+          "type": "boolean"
+        },
+        "head_tree_matches_index": {
+          "const": true,
+          "type": "boolean"
+        },
+        "manifest_is_tracked_head_blob": {
+          "const": true,
+          "type": "boolean"
+        },
+        "post_commit_checker_is_tracked_head_blob": {
+          "const": true,
+          "type": "boolean"
+        },
+        "post_commit_schema_is_tracked_head_blob": {
+          "const": true,
+          "type": "boolean"
+        },
+        "repeated_endpoint_observations_match": {
+          "const": true,
+          "type": "boolean"
+        },
+        "repository_visible_untracked_paths": {
+          "items": false,
+          "maxItems": 0,
+          "minItems": 0,
+          "type": "array"
+        },
+        "self_excluding_projection_matches_head_tree": {
+          "const": true,
+          "type": "boolean"
+        },
+        "tracked_worktree_matches_head": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "current_manifest_checker_passed",
+        "head_tree_matches_index",
+        "manifest_is_tracked_head_blob",
+        "post_commit_checker_is_tracked_head_blob",
+        "post_commit_schema_is_tracked_head_blob",
+        "repeated_endpoint_observations_match",
+        "repository_visible_untracked_paths",
+        "self_excluding_projection_matches_head_tree",
+        "tracked_worktree_matches_head"
+      ],
+      "type": "object"
+    },
+    "postcommitSourceStateV2Determinism": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_transport": {
+          "const": "canonical_json_stdout_or_stdin_only"
+        },
+        "commit_cycle": {
+          "const": "none; the committed manifest excludes itself and this artifact is generated only after commit"
+        },
+        "generated_at": {
+          "const": "omitted_for_determinism"
+        },
+        "storage_custody": {
+          "const": "caller_owned_not_bound_by_this_artifact"
+        }
+      },
+      "required": [
+        "artifact_transport",
+        "commit_cycle",
+        "generated_at",
+        "storage_custody"
+      ],
+      "type": "object"
+    },
+    "postcommitSourceStateV2Manifest": {
+      "additionalProperties": false,
+      "properties": {
+        "blob_oid": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "const": "audit/evidence/current-source-state-v1.json"
+        },
+        "schema": {
+          "const": "pid-rs/current-source-state"
+        },
+        "schema_revision": {
+          "const": 1,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "source_projection_entries_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_projection_entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "blob_oid",
+        "path",
+        "schema",
+        "schema_revision",
+        "sha256",
+        "size_bytes",
+        "source_projection_entries_sha256",
+        "source_projection_entry_count"
+      ],
+      "type": "object"
+    },
+    "projectionBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "encoding": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "encoding",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "protectedProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_equals_anchor": {
+          "const": true,
+          "type": "boolean"
+        },
+        "entry_count": {
+          "const": 83,
+          "type": "integer"
+        },
+        "format": {
+          "const": "canonical compact sorted-key ASCII JSON plus LF over sorted {path,git_mode,git_blob_oid_sha1,sha256,size_bytes} rows"
+        },
+        "sha256": {
+          "const": "37789ee0a6db5cab13629d08e70763eed6a55c1aeecbe94300717527419d0843"
+        }
+      },
+      "required": [
+        "candidate_equals_anchor",
+        "entry_count",
+        "format",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "recoveryAlternateIndex": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "input_descriptor_read_only": {
+          "const": true,
+          "type": "boolean"
+        },
+        "input_transport": {
+          "const": "standard_input_regular_file_descriptor"
+        },
+        "mode_octal": {
+          "const": "0400"
+        },
+        "path_or_residency_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "precommit_descriptor_observation_authenticated": {
+          "const": false,
+          "type": "boolean"
+        },
+        "retained_index_artifact": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/retainedIndexArtifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-hosted-recovery-sealed-index.bin"
+                }
+              }
+            }
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "single_link": {
+          "const": true,
+          "type": "boolean"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entry_count",
+        "input_descriptor_read_only",
+        "input_transport",
+        "mode_octal",
+        "path_or_residency_claimed",
+        "precommit_descriptor_observation_authenticated",
+        "retained_index_artifact",
+        "sha256",
+        "single_link",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "recoveryChildDigests": {
+      "additionalProperties": false,
+      "properties": {
+        "scripts/check-certified-sxpid2-claim-self-test.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-certified-sxpid2-claim.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-lean-toolchain-freeze-self-test.py": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-lean-toolchain-freeze.py": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "scripts/check-certified-sxpid2-claim-self-test.py",
+        "scripts/check-certified-sxpid2-claim.py",
+        "scripts/check-lean-toolchain-freeze-self-test.py",
+        "scripts/check-lean-toolchain-freeze.py"
+      ],
+      "type": "object"
+    },
+    "recoveryCodeqlSuccess": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/codeqlSuccessBase"
+        },
+        {
+          "properties": {
+            "analysis_roster_projection": {
+              "$ref": "#/$defs/analysisProjection"
+            },
+            "api_captures": {
+              "items": {
+                "$ref": "#/$defs/apiCapture"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "prefixItems": [
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_alert_state"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_job_analysis_roster"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/apiCapture"
+                    },
+                    {
+                      "properties": {
+                        "endpoint_class": {
+                          "const": "codeql_run_summary"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "type": "array",
+              "uniqueItems": true
+            },
+            "run_id": {
+              "minimum": 1,
+              "not": {
+                "enum": [
+                  31686106737,
+                  31686107959,
+                  31724449083,
+                  31724449805
+                ]
+              },
+              "type": "integer"
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "recoveryCorrectionSealedIndex": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_count": {
+          "const": 724,
+          "type": "integer"
+        },
+        "git_blob_oid_sha1": {
+          "const": "79f0eaf13969008a8a31c2e47f3fbb06ba2055c6"
+        },
+        "sha256": {
+          "const": "f9d1f42a758c3dfe55ec1d313229b14c0c462db9d753b5b1d59a4008f1f232bc"
+        },
+        "size_bytes": {
+          "const": 87963,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entry_count",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "recoveryFailedCorrectionAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+        },
+        "direct_parent": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "full_tree_projection": {
+          "$ref": "#/$defs/recoveryFullTreeProjection"
+        },
+        "protected_projection": {
+          "$ref": "#/$defs/phaseProtectedProjection"
+        },
+        "sealed_index": {
+          "$ref": "#/$defs/recoveryCorrectionSealedIndex"
+        },
+        "tree": {
+          "const": "d0b2613e678a89318550c1797ba9cc59a4ec9478"
+        }
+      },
+      "required": [
+        "commit",
+        "direct_parent",
+        "full_tree_projection",
+        "protected_projection",
+        "sealed_index",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "recoveryFourContainerDigests": {
+      "additionalProperties": false,
+      "properties": {
+        "certified_checker": {
+          "$ref": "#/$defs/sha256"
+        },
+        "certified_self_test": {
+          "$ref": "#/$defs/sha256"
+        },
+        "just_recipe": {
+          "$ref": "#/$defs/sha256"
+        },
+        "workflow_job": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "certified_checker",
+        "certified_self_test",
+        "just_recipe",
+        "workflow_job"
+      ],
+      "type": "object"
+    },
+    "recoveryFullTreeProjection": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_count": {
+          "const": 724,
+          "type": "integer"
+        },
+        "sha256": {
+          "const": "d6b6ea6f43bba0f240269fe16ba4a40ae87663f1185e6201c8a0d300b605f7fa"
+        },
+        "size_bytes": {
+          "const": 173969,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "entry_count",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index_custody": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/recoveryAlternateIndex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "checkpoint_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "commit_envelope": {
+          "$ref": "#/$defs/recoveryPhaseCommitEnvelope"
+        },
+        "delta": {
+          "items": {
+            "$ref": "#/$defs/phaseDelta"
+          },
+          "maxItems": 27,
+          "minItems": 27,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "tree": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "alternate_index_custody",
+        "checkpoint_commit",
+        "commit_envelope",
+        "delta",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseCertified": {
+      "additionalProperties": false,
+      "properties": {
+        "four_container_digest_literals": {
+          "$ref": "#/$defs/recoveryFourContainerDigests"
+        },
+        "scientific_authority_unchanged": {
+          "const": true,
+          "type": "boolean"
+        },
+        "self_test_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "workflow_fetch_depth_zero": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "four_container_digest_literals",
+        "scientific_authority_unchanged",
+        "self_test_sha256",
+        "workflow_fetch_depth_zero"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseCommitEnvelope": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "message": {
+          "maxLength": 180,
+          "pattern": "^Repair KSG M1a hosted recovery wiring\\n\\nSealed-index-SHA256: [0-9a-f]{64}\\nSealed-index-Size: [1-9][0-9]{0,7}\\n$",
+          "type": "string"
+        },
+        "sealed_index_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "sealed_index_size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "author",
+        "committer",
+        "message",
+        "sealed_index_sha256",
+        "sealed_index_size_bytes"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseCustody": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index": {
+          "$ref": "#/$defs/recoveryAlternateIndex"
+        },
+        "boundary": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md"
+                }
+              }
+            }
+          ]
+        },
+        "checker": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-hosted-recovery.py"
+                }
+              }
+            }
+          ]
+        },
+        "policy": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json"
+                }
+              }
+            }
+          ]
+        },
+        "postcommit_outputs": {
+          "$ref": "#/$defs/recoveryPostcommitOutputGroup"
+        },
+        "precommit_outputs": {
+          "$ref": "#/$defs/recoveryPrecommitOutputGroup"
+        },
+        "self_test": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "scripts/check-ksg-m1a-hosted-recovery-self-test.py"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "alternate_index",
+        "boundary",
+        "checker",
+        "policy",
+        "postcommit_outputs",
+        "precommit_outputs",
+        "self_test"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseLeanR8": {
+      "additionalProperties": false,
+      "properties": {
+        "prior_r6_sha256": {
+          "const": "f14e7a33c01909055cc868fc955e6b2520ae15ebf0d598730911ec57a7f4c5ea"
+        },
+        "prior_r7_sha256": {
+          "const": "3dd2df7d7064bac93cf4806cdeac28d9ecc747444689162a4636029228822abb"
+        },
+        "receipt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "replay_projection_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "prior_r6_sha256",
+        "prior_r7_sha256",
+        "receipt_sha256",
+        "replay_projection_sha256"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseNegative": {
+      "additionalProperties": false,
+      "properties": {
+        "ci_run_id": {
+          "const": 31724449805,
+          "type": "integer"
+        },
+        "codeql_run_id": {
+          "const": 31724449083,
+          "type": "integer"
+        },
+        "failed_jobs": {
+          "maximum": 45,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "jobs": {
+          "const": 45,
+          "type": "integer"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "ci_run_id",
+        "codeql_run_id",
+        "failed_jobs",
+        "jobs",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseOutput": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "precommit"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "candidate": {
+                "properties": {
+                  "alternate_index_custody": {
+                    "$ref": "#/$defs/recoveryAlternateIndex"
+                  }
+                }
+              },
+              "lifecycle": {
+                "const": "failed_correction_plus_exact_recovery_overlay"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "postcommit"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "candidate": {
+                "properties": {
+                  "alternate_index_custody": {
+                    "type": "null"
+                  }
+                }
+              },
+              "lifecycle": {
+                "const": "clean_main_sole_child_recovery_no_credit"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "candidate": {
+          "$ref": "#/$defs/recoveryPhaseCandidate"
+        },
+        "certified_sxpid_recovery": {
+          "$ref": "#/$defs/recoveryPhaseCertified"
+        },
+        "child_output_sha256": {
+          "$ref": "#/$defs/recoveryChildDigests"
+        },
+        "credit": {
+          "const": "none_local_custody_match_hosted_pending"
+        },
+        "current_source_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "disposition": {
+          "const": "local_hosted_pending_no_credit"
+        },
+        "failed_correction_anchor": {
+          "$ref": "#/$defs/recoveryFailedCorrectionAnchor"
+        },
+        "implementation_anchor": {
+          "$ref": "#/$defs/phaseImplementationAnchor"
+        },
+        "lean_r8": {
+          "$ref": "#/$defs/recoveryPhaseLeanR8"
+        },
+        "lifecycle": {
+          "enum": [
+            "clean_main_sole_child_recovery_no_credit",
+            "failed_correction_plus_exact_recovery_overlay"
+          ]
+        },
+        "mode": {
+          "enum": [
+            "postcommit",
+            "precommit"
+          ]
+        },
+        "negative_evidence": {
+          "$ref": "#/$defs/recoveryPhaseNegative"
+        },
+        "policy_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preclosure": {
+          "$ref": "#/$defs/recoveryPhasePreclosure"
+        },
+        "repository_state": {
+          "$ref": "#/$defs/phaseRepositoryState"
+        },
+        "runtime_mode": {
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-hosted-recovery-phase-validation/v1"
+        },
+        "static_artifact_sha256": {
+          "$ref": "#/$defs/recoveryStaticDigests"
+        }
+      },
+      "required": [
+        "candidate",
+        "certified_sxpid_recovery",
+        "child_output_sha256",
+        "credit",
+        "current_source_manifest_sha256",
+        "disposition",
+        "failed_correction_anchor",
+        "implementation_anchor",
+        "lean_r8",
+        "lifecycle",
+        "mode",
+        "negative_evidence",
+        "policy_sha256",
+        "preclosure",
+        "repository_state",
+        "runtime_mode",
+        "schema",
+        "static_artifact_sha256"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseOutputGroup": {
+      "additionalProperties": false,
+      "properties": {
+        "normal": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/recoveryPhaseRecord"
+            },
+            {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "runtime_mode": {
+                      "const": 0,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "optimized": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/recoveryPhaseRecord"
+            },
+            {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "runtime_mode": {
+                      "const": 1,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "pair_normalized_equal": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "normal",
+        "optimized",
+        "pair_normalized_equal"
+      ],
+      "type": "object"
+    },
+    "recoveryPhasePreclosure": {
+      "additionalProperties": false,
+      "properties": {
+        "final_decision_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "final_evidence_matrix_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "future_composite_receipt_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "future_retained_indexes_absent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "open_gate_count": {
+          "const": 13,
+          "type": "integer"
+        },
+        "status": {
+          "const": "integration_no_go"
+        }
+      },
+      "required": [
+        "final_decision_absent",
+        "final_evidence_matrix_absent",
+        "future_composite_receipt_absent",
+        "future_retained_indexes_absent",
+        "open_gate_count",
+        "status"
+      ],
+      "type": "object"
+    },
+    "recoveryPhaseRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "output": {
+          "$ref": "#/$defs/recoveryPhaseOutput"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "output",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "recoveryPostcommitOutputGroup": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/recoveryPhaseOutputGroup"
+        },
+        {
+          "properties": {
+            "normal": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "postcommit"
+                    }
+                  }
+                }
+              }
+            },
+            "optimized": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "postcommit"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "recoveryPrecommitOutputGroup": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/recoveryPhaseOutputGroup"
+        },
+        {
+          "properties": {
+            "normal": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "precommit"
+                    }
+                  }
+                }
+              }
+            },
+            "optimized": {
+              "properties": {
+                "output": {
+                  "properties": {
+                    "mode": {
+                      "const": "precommit"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "recoveryStaticDigests": {
+      "additionalProperties": false,
+      "properties": {
+        "audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json": {
+          "$ref": "#/$defs/sha256"
+        },
+        "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md": {
+          "$ref": "#/$defs/sha256"
+        },
+        "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json": {
+          "$ref": "#/$defs/sha256"
+        },
+        "scripts/check-ksg-m1a-hosted-recovery-self-test.py": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json",
+        "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md",
+        "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json",
+        "scripts/check-ksg-m1a-hosted-recovery-self-test.py"
+      ],
+      "type": "object"
+    },
+    "recoverySubject": {
+      "additionalProperties": false,
+      "properties": {
+        "author": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "commit_message": {
+          "maxLength": 180,
+          "pattern": "^Repair KSG M1a hosted recovery wiring\\n\\nSealed-index-SHA256: [0-9a-f]{64}\\nSealed-index-Size: [1-9][0-9]{0,7}\\n$",
+          "type": "string"
+        },
+        "committer": {
+          "$ref": "#/$defs/humanIdentity"
+        },
+        "direct_parent": {
+          "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+        },
+        "distinct_from_correction": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_identity_after_recovery": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "one_parent": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sealed_index": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sealedIndex"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-hosted-recovery-sealed-index.bin"
+                }
+              }
+            }
+          ]
+        },
+        "tree": {
+          "$ref": "#/$defs/sha1"
+        },
+        "unsigned": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "commit",
+        "tree",
+        "direct_parent",
+        "commit_message",
+        "author",
+        "committer",
+        "object_format",
+        "one_parent",
+        "unsigned",
+        "sealed_index",
+        "distinct_from_correction",
+        "implementation_identity_after_recovery"
+      ],
+      "type": "object"
+    },
+    "retainedIndexArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "git_blob_oid_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "enum": [
+            "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin",
+            "audit/evidence/ksg-rev4-m1a-hosted-recovery-sealed-index.bin"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "sealedIndex": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_message_trailer_matches": {
+          "const": true,
+          "type": "boolean"
+        },
+        "entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "git_blob_oid_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "path": {
+          "enum": [
+            "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin",
+            "audit/evidence/ksg-rev4-m1a-hosted-recovery-sealed-index.bin"
+          ]
+        },
+        "path_or_residency_claimed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "precommit_descriptor_observation_authenticated": {
+          "const": false,
+          "type": "boolean"
+        },
+        "reconstructs_tree_twice": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 67108864,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "git_blob_oid_sha1",
+        "sha256",
+        "size_bytes",
+        "entry_count",
+        "commit_message_trailer_matches",
+        "reconstructs_tree_twice",
+        "precommit_descriptor_observation_authenticated",
+        "path_or_residency_claimed"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "utcTimestamp": {
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])T(?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\\.[0-9]+)?Z$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "claim": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "KSG-INTEGER-HARMONIC-001"
+        },
+        "revision": {
+          "const": 4,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ],
+      "type": "object"
+    },
+    "correction_local_phase_custody": {
+      "$ref": "#/$defs/correctionPhaseCustody"
+    },
+    "custody_correction": {
+      "$ref": "#/$defs/correctionSubject"
+    },
+    "evidence_class": {
+      "const": "m1a_three_subject_hosted_recovery_custody_not_scientific_evidence"
+    },
+    "hosted_observations": {
+      "additionalProperties": false,
+      "properties": {
+        "all_green_applies_only_to_recovery_head": {
+          "const": true,
+          "type": "boolean"
+        },
+        "correction_ci_failure": {
+          "$ref": "#/$defs/correctionCiFailure"
+        },
+        "correction_codeql_success": {
+          "$ref": "#/$defs/correctionCodeqlSuccess"
+        },
+        "correction_heads_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "correction_negative_evidence_artifact": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json"
+                }
+              }
+            }
+          ]
+        },
+        "implementation_ci_failure": {
+          "$ref": "#/$defs/implementationCiFailure"
+        },
+        "implementation_codeql_success": {
+          "$ref": "#/$defs/implementationCodeqlSuccess"
+        },
+        "implementation_heads_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "implementation_negative_evidence_artifact": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifact"
+            },
+            {
+              "properties": {
+                "path": {
+                  "const": "audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json"
+                }
+              }
+            }
+          ]
+        },
+        "recovery_ci_success": {
+          "$ref": "#/$defs/ciSuccess"
+        },
+        "recovery_codeql_success": {
+          "$ref": "#/$defs/recoveryCodeqlSuccess"
+        },
+        "recovery_heads_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "three_subject_heads_distinct": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "all_green_applies_only_to_recovery_head",
+        "correction_ci_failure",
+        "correction_codeql_success",
+        "correction_heads_equal",
+        "correction_negative_evidence_artifact",
+        "implementation_ci_failure",
+        "implementation_codeql_success",
+        "implementation_heads_equal",
+        "implementation_negative_evidence_artifact",
+        "recovery_ci_success",
+        "recovery_codeql_success",
+        "recovery_heads_equal",
+        "three_subject_heads_distinct"
+      ],
+      "type": "object"
+    },
+    "hosted_recovery": {
+      "$ref": "#/$defs/recoverySubject"
+    },
+    "implementation_anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "direct_parent": {
+          "const": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9"
+        },
+        "protected_projection": {
+          "$ref": "#/$defs/protectedProjection"
+        },
+        "remains_implementation_after_recovery": {
+          "const": true,
+          "type": "boolean"
+        },
+        "tree": {
+          "const": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+        }
+      },
+      "required": [
+        "commit",
+        "direct_parent",
+        "protected_projection",
+        "remains_implementation_after_recovery",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "milestone": {
+      "additionalProperties": false,
+      "properties": {
+        "gate_id": {
+          "const": "G1"
+        },
+        "implementation_phase": {
+          "const": "M1a"
+        },
+        "integration_status": {
+          "const": "integration_no_go"
+        },
+        "status": {
+          "const": "implementation_failed_correction_and_hosted_recovery_observed"
+        }
+      },
+      "required": [
+        "gate_id",
+        "implementation_phase",
+        "integration_status",
+        "status"
+      ],
+      "type": "object"
+    },
+    "negative_evidence_semantics": {
+      "const": [
+        "CI run 31686107959 attempt 1 on cb3f58f0b190454cb3f1090de8798261ec78f194 is terminal failed zero-credit evidence and remains failed after every later correction or recovery observation.",
+        "CodeQL run 31686106737 attempt 1 succeeded on cb3f58f0b190454cb3f1090de8798261ec78f194, but that success neither changes the separate failed CI run nor establishes all-green status for the implementation head.",
+        "CI run 31724449805 attempt 1 on 7473e62acef6077c2c1147e09d5d1297f2a2874b is terminal failed zero-credit evidence and remains failed after every later recovery observation.",
+        "CodeQL run 31724449083 attempt 1 succeeded on 7473e62acef6077c2c1147e09d5d1297f2a2874b, but that success neither changes the separate failed CI run nor establishes all-green status for the correction head.",
+        "All-green hosted status applies only to separately observed successful CI and CodeQL attempt-1 runs whose head SHA and tree both equal the distinct recovery subject.",
+        "A later hosted success cannot erase, relabel, retry, supersede, or transfer success credit to either earlier failed CI observation.",
+        "The implementation, correction, and recovery heads are distinct lifecycle subjects; no run, job, analysis, alert, artifact, or conclusion transfers across them.",
+        "Provider identifiers, captures, logs, timestamps, digests, artifacts, and alert rosters are unauthenticated observations, not trusted time, authorship, transparency, provenance, or causation."
+      ],
+      "type": "array"
+    },
+    "nonimplications": {
+      "const": [
+        "This composite receipt is bounded lifecycle custody for an exact M1a implementation, its failed direct-child custody correction, and one fast-forward hosted recovery; it is not scientific, formal, estimator, PID, calibration, support, application, package, release, or identity evidence.",
+        "The two failed CI runs remain failed zero-credit observations; later recovery success cannot erase, relabel, retry, or transfer success to either failed head.",
+        "Same-head CodeQL success does not make a separate CI run green, and no result transfers across distinct heads.",
+        "Provider identifiers, logs, timestamps, digests, artifacts, and alert rosters are unauthenticated observations, not trusted time, authorship, transparency, provenance, or causation.",
+        "The unchanged 83-path projection proves only byte equality for its named paths, not scientific correctness or origin.",
+        "The r8 replay is current execution custody only for its named Lean project; r6 and r7 are byte-preserved prior evidence, not current runner custody, and none transfers any theorem to Rust, binary64, KSG M1c, or any PID construction.",
+        "The receipt and both retained indexes are absent from all three subject trees; the receipt does not hash or attest its own bytes or containing descendant commit.",
+        "Revision 4 remains integration_no_go with thirteen open gates and no final evidence matrix or decision."
+      ],
+      "type": "array"
+    },
+    "recovery_local_phase_custody": {
+      "$ref": "#/$defs/recoveryPhaseCustody"
+    },
+    "remote_observations": {
+      "additionalProperties": false,
+      "properties": {
+        "branch": {
+          "const": "main"
+        },
+        "correction_commit": {
+          "const": "7473e62acef6077c2c1147e09d5d1297f2a2874b"
+        },
+        "implementation_commit": {
+          "const": "cb3f58f0b190454cb3f1090de8798261ec78f194"
+        },
+        "observed_at": {
+          "$ref": "#/$defs/utcTimestamp"
+        },
+        "observed_remote_head": {
+          "$ref": "#/$defs/sha1"
+        },
+        "recovery_commit": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "branch",
+        "correction_commit",
+        "implementation_commit",
+        "observed_at",
+        "observed_remote_head",
+        "recovery_commit"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "revision4_integration": {
+      "additionalProperties": false,
+      "properties": {
+        "decision_v4_absent_at_recovery": {
+          "const": true,
+          "type": "boolean"
+        },
+        "evidence_matrix_v4_absent_at_recovery": {
+          "const": true,
+          "type": "boolean"
+        },
+        "open_gate_count": {
+          "const": 13,
+          "type": "integer"
+        },
+        "status": {
+          "const": "integration_no_go"
+        }
+      },
+      "required": [
+        "decision_v4_absent_at_recovery",
+        "evidence_matrix_v4_absent_at_recovery",
+        "open_gate_count",
+        "status"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v3"
+    },
+    "schema_revision": {
+      "const": 3,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "schema_revision",
+    "repository",
+    "evidence_class",
+    "claim",
+    "milestone",
+    "revision4_integration",
+    "implementation_anchor",
+    "custody_correction",
+    "hosted_recovery",
+    "remote_observations",
+    "hosted_observations",
+    "correction_local_phase_custody",
+    "recovery_local_phase_custody",
+    "negative_evidence_semantics",
+    "nonimplications"
+  ],
+  "title": "KSG revision-4 M1a three-subject hosted-recovery composite receipt v3",
+  "type": "object"
+}

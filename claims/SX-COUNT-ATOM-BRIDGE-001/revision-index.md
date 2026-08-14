@@ -7,15 +7,17 @@
 
 Revision 2 does not rewrite revision 1. Mutable shared conventions, evidence matrix, and theorem
 map now describe revision 2. Current execution is bound by the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json).
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json).
 The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
 and [finalized r3 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json)
 and [finalized r4 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json)
 and [finalized r5 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json)
-remain prior execution evidence. Here `r6` denotes only the sixth receipt in the versioned sequence
-that originated on 12 August, and therefore the seventh current-project replay receipt overall; the
+and [finalized r6 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json)
+and [finalized r7 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json)
+remain prior execution evidence. Here `r8` denotes only the eighth receipt in the versioned sequence
+that originated on 12 August, and therefore the ninth current-project replay receipt overall; the
 11 August historical receipt is outside that versioned sequence. The suffix does not denote a
 calendar date, schema, theorem, review, assurance tier, or independence revision. The current route
 receives execution credit only when its exact receipt exists and validates.

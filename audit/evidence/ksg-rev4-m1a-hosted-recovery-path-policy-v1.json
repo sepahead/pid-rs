@@ -1,0 +1,229 @@
+{
+  "authority": {
+    "credit_permitted": false,
+    "freeze_instruction": "Keep the failed public correction 7473e62a, every v1/v2 authority byte, and finalized r7 receipt byte immutable. The first r7-based local recovery seal failed closed on a legitimate empty tracked blob; its unreachable checkpoint, candidate tree, mode-0644 index, and output must never be reused or relabeled. After the append-only r8 verifier repair, exact 27-path inventory, current pointers, and every discretionary byte are independently reviewed, derive the frozen policy/boundary/checker and prospective Lean-r8 maps. Flip only the reviewed recovery policy and boundary state, finalize the append-only r8 two-cut receipt, and generate current-source state last. Then construct and seal a fresh full alternate index and create one new unsigned sole-child recovery commit of 7473e62a. Never retry/relabel a failed run or local attempt, rewrite public history, or mechanically accept an observed delta.",
+    "inventory_status": "frozen",
+    "lifecycle_validation_permitted": true,
+    "mechanical_resealing_permitted": false,
+    "provisional_disposition": "local_hosted_pending_no_credit",
+    "scope": "KSG revision-4 M1a hosted-recovery wiring only; cb3f remains the implementation, 7473e62a remains the failed direct-child correction, and integration remains no-go"
+  },
+  "commit_envelope": {
+    "author": {
+      "email": "sepmhn@gmail.com",
+      "name": "Sepehr Mahmoudian"
+    },
+    "author_and_committer_headers_identical": true,
+    "committer": {
+      "email": "sepmhn@gmail.com",
+      "name": "Sepehr Mahmoudian"
+    },
+    "message_template": "Repair KSG M1a hosted recovery wiring\n\nSealed-index-SHA256: <lowercase-sha256>\nSealed-index-Size: <canonical-decimal-bytes>\n",
+    "parent_count": 1,
+    "signature_headers_permitted": false,
+    "timezone": "+0200"
+  },
+  "deletions_permitted": false,
+  "entries": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "review_class": "hosted_recovery_wiring",
+      "status": "M"
+    },
+    {
+      "path": "AGENTS.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "review_class": "mandatory_release_record",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/completion-active-resume.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/current-source-state-v1.json",
+      "review_class": "self_excluding_source_state",
+      "status": "M"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json",
+      "review_class": "retained_failed_correction_hosted_negative",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md",
+      "review_class": "hosted_recovery_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json",
+      "review_class": "hosted_recovery_authority",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json",
+      "review_class": "lean_r7_preserved_execution_custody",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
+      "review_class": "lean_r8_execution_custody",
+      "status": "A"
+    },
+    {
+      "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+      "review_class": "durable_program_coordination",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json",
+      "review_class": "hosted_recovery_authority",
+      "status": "A"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+      "review_class": "lean_r8_pointer_consequence",
+      "status": "M"
+    },
+    {
+      "path": "justfile",
+      "review_class": "hosted_recovery_wiring",
+      "status": "M"
+    },
+    {
+      "path": "scripts/README.md",
+      "review_class": "hosted_recovery_docs_and_lean_r8_pointer",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+      "review_class": "certified_container_rebind",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim.py",
+      "review_class": "certified_container_rebind",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-ksg-m1a-hosted-recovery-self-test.py",
+      "review_class": "hosted_recovery_verifier",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-ksg-m1a-hosted-recovery.py",
+      "review_class": "hosted_recovery_verifier",
+      "status": "A"
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+      "review_class": "lean_r8_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze.py",
+      "review_class": "lean_r8_custody",
+      "status": "M"
+    },
+    {
+      "path": "scripts/generate-lean-4.33-replay.py",
+      "review_class": "lean_r8_custody",
+      "status": "M"
+    }
+  ],
+  "failed_correction_anchor": {
+    "commit": "7473e62acef6077c2c1147e09d5d1297f2a2874b",
+    "direct_parent": "cb3f58f0b190454cb3f1090de8798261ec78f194",
+    "hosted": {
+      "ci_attempt": 1,
+      "ci_run_id": 31724449805,
+      "ci_status": "terminal_failure_required_before_freeze",
+      "codeql_attempt": 1,
+      "codeql_run_id": 31724449083,
+      "codeql_status": "success"
+    },
+    "sealed_index": {
+      "entry_count": 724,
+      "sha256": "f9d1f42a758c3dfe55ec1d313229b14c0c462db9d753b5b1d59a4008f1f232bc",
+      "size_bytes": 87963
+    },
+    "tree": "d0b2613e678a89318550c1797ba9cc59a4ec9478"
+  },
+  "forbidden_contexts": [
+    "any change to the protected 83-path M1a implementation projection",
+    "replacement of cb3f58f0 as the M1a implementation identity",
+    "mutation or relabeling of the public failed correction 7473e62a or its v1/v2 authority",
+    "rerun, cancellation, erasure, or success-credit transfer from CI run 31724449805 attempt 1",
+    "non-fast-forward rewrite, force push, branch-protection bypass, merge parent, or signature header",
+    "PID2, PID3, categorical MGW, Williams-Beer I_min, estimator, support, calibration, API, package, or release-family changes",
+    "immutable evidence-matrix-v4.md or decision-v4.md creation"
+  ],
+  "implementation_anchor": {
+    "commit": "cb3f58f0b190454cb3f1090de8798261ec78f194",
+    "direct_parent": "bbdfda40f0a49a2260b10eafdcb438fc61ae94e9",
+    "protected_projection": {
+      "entry_count": 83,
+      "format": "canonical compact sorted-key ASCII JSON plus LF over sorted {path,git_mode,git_blob_oid_sha1,sha256,size_bytes} rows",
+      "sha256": "37789ee0a6db5cab13629d08e70763eed6a55c1aeecbe94300717527419d0843"
+    },
+    "tree": "8070e0d3afbbd27d7381825f950ae6ff97ae7cf0"
+  },
+  "receipt_contract": {
+    "failed_correction_ci_must_remain_failed": true,
+    "failed_correction_codeql_must_remain_separate": true,
+    "later_descendant_required": true,
+    "receipt_path": "audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json",
+    "receipt_schema": "pid-rs/ksg-rev4-m1a-composite-receipt/v3",
+    "recovery_subject_must_not_contain_receipt": true,
+    "recovery_subject_must_not_contain_retained_indexes": true,
+    "retained_correction_index_path": "audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin",
+    "retained_recovery_index_path": "audit/evidence/ksg-rev4-m1a-hosted-recovery-sealed-index.bin"
+  },
+  "review_classes": {
+    "certified_container_rebind": "Add fetch-depth zero to the sole direct hosted certified-SxPID2 checkout, replace the recovery protocol's stored cross-minor AST-text digest with exact raw-byte and same-interpreter structural custody, then rebind only the reviewed workflow/Just/README complete containers and exact certified job/recipe projections. Preserve the cb3f mathematical authority, fixed CLI transport, packet, gate inventory, and scientific result.",
+    "durable_program_coordination": "Retain the exact failed hosted correction observation and bounded fast-forward recovery without granting M1c, integration, estimator, PID, or scientific authority.",
+    "hosted_recovery_authority": "Define the linear cb3f to 7473e62a to recovery lifecycle, exact recovery delta, composite-v3 receipt, both negative observations, both sealed indexes, and nonclaim boundary.",
+    "hosted_recovery_docs_and_lean_r8_pointer": "Document both terminal failed jobs, the shallow-history and interpreter-minor AST-text diagnoses, the failed local r7 seal without reusing it, exact full-history and version-stable protocol corrections, fast-forward recovery lifecycle, future composite-v3 parser, and current append-only r8 replay while preserving r6/r7 and granting no local credit.",
+    "hosted_recovery_verifier": "Validate the exact historical implementation and failed correction Git objects, immutable v1/v2 authority, terminal negative record, full-history workflow repair, bounded certified rebind, exact sole-child recovery lifecycle, fresh sealed fd0 index, protected projection, r6/r7 preservation, r8/current-source custody, and later canonical-stdin composite-v3 receipt. Accept the legitimate tracked empty blob only in full candidate comparison and reject reuse of the failed local r7 seal. Every local result remains hosted-pending and no-credit.",
+    "hosted_recovery_wiring": "Run normal and optimized recovery policy/self-test and candidate/postcommit lifecycle checks with full history while preserving every prior job and gate.",
+    "lean_r7_preserved_execution_custody": "Preserve the finalized r7 receipt byte-for-byte as prior execution evidence; it is not current r8 custody and is never regenerated, relabeled, or replaced.",
+    "lean_r8_custody": "Append a fresh no-clobber Lean 4.33 r8 replay after all other recovery bytes freeze; preserve r6, r7, and every earlier receipt byte and do not alter theorem source.",
+    "lean_r8_execution_custody": "Add one no-clobber current-project r8 replay receipt while preserving the exact r6 and r7 receipts as prior evidence.",
+    "lean_r8_pointer_consequence": "Advance only current replay pointers to r8 while preserving every historical r6/r7 authority reference and distinguishing current custody from prior evidence.",
+    "mandatory_release_record": "Record the failed hosted attempt and bounded recovery under Unreleased without calling either a release, theorem, validation, or estimator result.",
+    "retained_failed_correction_hosted_negative": "Preserve terminal CI run 31724449805 attempt 1 and same-head successful CodeQL run 31724449083 with exact rosters/captures and no authenticity, causation, lifecycle, or scientific credit.",
+    "self_excluding_source_state": "Regenerate last from the settled recovery candidate; self-exclusion avoids a manifest digest cycle."
+  },
+  "schema": "pid-rs/ksg-rev4-m1a-hosted-recovery-path-policy",
+  "schema_revision": 1
+}

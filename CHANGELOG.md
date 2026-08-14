@@ -9,6 +9,36 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Preserved the exact public KSG M1a custody-correction commit `7473e62a...` after its first hosted
+  CI run completed with 43 successful and two failed jobs. The certified-SxPID2 self-test failed
+  because its depth-one checkout omitted the fixed `cb3f58f0...` checker authority read with
+  `git show`; its mathematical checker had passed. The KSG custody job separately rejected the
+  `certified_protocol` vector; the public log exposes only the outer failure, while a scoped local
+  reproduction found that the frozen correction checker had hashed CPython-minor-sensitive
+  `ast.dump` text over unchanged bootstrap bytes. Same-head CodeQL completed successfully with no
+  new alert number, and no result rewrites or transfers success to another. The bounded
+  fast-forward recovery gives the certified job full history and replaces the live protocol's
+  cross-minor text digest with exact raw-byte and version-stable structural custody. It retains the
+  terminal attempt-1 failure as zero-credit evidence, preserves the frozen correction and
+  composite-v2 bytes, and reserves composite v3 for a later descendant that binds the entire
+  implementation→failed-correction→recovery chain. This is hosted verifier wiring, not scientific,
+  formal, estimator, PID, support, calibration, integration, release, or application evidence.
+- Reopened the prospective hosted-recovery seal after its first r7-based local attempt failed
+  closed on the repository's legitimate empty tracked blob. The unreachable checkpoint, candidate
+  tree, mode-0644 alternate index, and empty/error outputs are retained as unauthenticated local
+  observations and cannot be reused or relabeled. The verifier now permits a zero-byte regular
+  leaf only in bounded worktree/blob comparison; authority, policy, schema, interpreter, and other
+  static reads remain positive-size by default. A full candidate mode scan also normalizes the
+  seven observed mode-0600 filesystem leaves to mode 0644 without changing their bytes.
+- Advanced the prospective current Lean 4.33 replay route from finalized r7 to append-only
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json` for the
+  repaired hosted-recovery operational surface. Finalized r7 remains byte-for-byte prior evidence
+  at SHA-256 `3dd2df7d7064bac93cf4806cdeac28d9ecc747444689162a4636029228822abb`.
+  The r8 suffix denotes only the eighth receipt in the versioned sequence that originated on
+  12 August and the ninth current-project replay receipt overall; the 11 August historical receipt
+  is outside that sequence. It does not denote a calendar date, schema, theorem, review, assurance
+  tier, or independence revision. The current route receives execution credit only when the exact
+  r8 receipt exists and validates under normal and optimized custody checks.
 - Advanced the frozen Lean 4.33 current-project replay route to append-only receipt
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json`, while
   preserving finalized receipt `r5` byte-for-byte at SHA-256

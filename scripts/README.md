@@ -483,6 +483,114 @@ verifier custody only: the three container-digest rebinds remain distinct from t
 packet, and none changes the certified mathematical result.
 <!-- END KSG_M1A_CUSTODY_CORRECTION_README_V1 -->
 
+<!-- BEGIN KSG_M1A_HOSTED_RECOVERY_README_V1 -->
+## KSG M1a hosted-recovery verifier
+
+Commit `7473e62acef6077c2c1147e09d5d1297f2a2874b` is the exact, frozen direct-child
+custody correction of `cb3f58f0...`. Its local normal/optimized precommit and postcommit receipts
+remain bounded custody evidence, not hosted success. Public CI run `31724449805` attempt 1 failed
+with 43 successful and two failed jobs. The certified-SxPID2 self-test failed because that job's
+depth-one checkout omitted the fixed `cb3f58f0...` checker authority. The KSG custody job separately
+rejected the `certified_protocol` vector. Its public log exposes only the outer failure; a separate
+reviewer-derived local cross-version reproduction found a CPython-minor-sensitive stored `ast.dump`
+projection over unchanged bootstrap bytes. Same-head CodeQL run `31724449083` succeeded without a
+new alert number. The CI and CodeQL observations remain separate and no composite-v2 receipt is
+issued.
+
+The bounded recovery is one unsigned fast-forward sole child of `7473e62a...`. It changes the
+certified job's pinned checkout to `fetch-depth: 0`, preserving `persist-credentials: false`, the
+fixed `cb3f58f0...` authority, the certified mathematical packet, and every non-container semantic
+definition. It also validates marked certified bootstrap bytes and same-interpreter structural
+relations instead of treating a stored cross-minor `ast.dump` digest as portable. Full history is
+intentional: a later receipt descendant moves the fixed authority past any chosen finite depth.
+The recovery checker independently reads and rehashes both historical subject commits, preserves
+the implementation's exact 83-path projection, binds both terminal failed diagnostics and the
+complete failed-run record, and validates only the reviewed 27-path recovery inventory: 19
+modifications and eight additions.
+
+The first r7-based local recovery seal failed closed on the repository's legitimate empty tracked
+blob. Its unreachable checkpoint `37473f8fa9470fcec0bd419ec3df18ea4a6d805b`, candidate tree
+`66f33f467f2bc661795599fa53ef81681ecd8406`, and mode-`0644`, 88,875-byte, 731-entry alternate
+index SHA-256 `fb892aeaac2091e1d4c6b619a4ce0053771d8aeb0ee147105017613a3b46a56d`
+are unauthenticated local observations, not sealed custody. The ref never advanced, and none of
+those identities may be reused or relabeled. The append-only repair permits zero bytes only for a
+regular, single-link candidate leaf compared with the matching zero-byte blob; authority and
+static inputs remain positive-size. Its self-test exercises the real empty blob, a nonempty
+mismatch, empty authority rejection, and independent symlink, hardlink, mode, size-bound, and
+identity-stability failures. A full candidate scan requires every tracked regular leaf to have its
+declared mode; seven pre-existing mode-0600 filesystem leaves were normalized to 0644 without
+changing content, and finalized r7 remains byte-identical.
+
+While the recovery policy is provisional, run:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --validate-policy-only --allow-provisional-diagnostic
+python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --validate-policy-only --allow-provisional-diagnostic
+python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+```
+
+After every authored byte is independently reviewed and the recovery authority is frozen, preserve
+finalized r7 and generate append-only Lean r8, then regenerate current-source state last. Construct a fresh full
+alternate index, seal it as a regular single-link mode-`0400` file, and create the unsigned
+sole-child checkpoint with exactly:
+
+```text
+Repair KSG M1a hosted recovery wiring
+
+Sealed-index-SHA256: <lowercase-sha256>
+Sealed-index-Size: <canonical-decimal-bytes>
+```
+
+The lifecycle commands mirror the historical correction but bind `7473e62a...` as the immediate
+parent. Precommit accepts the index only on descriptor 0; candidate mode requires detached HEAD;
+postcommit requires clean attached `main`. Every result is still hosted-pending and no-credit:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --mode precommit --expected-candidate-tree <tree> --checkpoint-commit <commit> \
+  --alternate-index-sha256 <sha256> --alternate-index-entry-count <count> < "$sealed_index"
+python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --mode precommit --expected-candidate-tree <tree> --checkpoint-commit <commit> \
+  --alternate-index-sha256 <sha256> --alternate-index-entry-count <count> < "$sealed_index"
+python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --mode candidate-commit --expected-candidate-tree <tree> --checkpoint-commit <commit>
+python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --mode candidate-commit --expected-candidate-tree <tree> --checkpoint-commit <commit>
+python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --mode postcommit --expected-candidate-tree <tree> --checkpoint-commit <commit>
+python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --mode postcommit --expected-candidate-tree <tree> --checkpoint-commit <commit>
+```
+
+Only after exact-SHA CI and CodeQL are separately terminal green on the recovery head may a strict
+descendant retain both sealed indexes and a canonical composite-v3 receipt. The receipt must bind
+the linear `cb3f58f0... -> 7473e62a... -> recovery` chain, both failed CI runs, all three same-head
+CodeQL observations, all-green status only on recovery, both four-mode local custody records, and
+the distinct postcommit source-state artifacts. Composite validation applies only while `HEAD` is
+the clean detached exact direct receipt child of the embedded recovery commit, with no active Git
+operation, staged or tracked worktree change, or repository-visible untracked path, and with the
+receipt plus the two retained indexes as its exact three-path delta. Before a manual replay, check
+out that exact receipt commit detached and preserve this clean topology. The hosted workflow uses
+the same exact push/main/SHA/sole-parent applicability guard. Pull-request checkouts and later
+descendants may retain the evidence but skip this sole-child validation with no credit; they do not
+relabel or transfer the receipt result. Pass the committed receipt bytes on standard input:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --validate-composite-receipt < audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json
+python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+  --validate-composite-receipt < audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json
+```
+
+The schema alone grants no status. The receipt cannot hash or attest its own bytes or containing
+commit. Hosted provider IDs, times, logs, alerts, and artifacts remain unauthenticated observations.
+M1a stays `integration_no_go`; this route provides no KSG M1c, estimator, support, calibration,
+PID2/PID3, categorical MGW, Williams--Beer `I_min`, package, release, or application evidence.
+<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->
+
 The W1b runtime lane uses one finite `n=4,k=1` predecessor-adjacent fixture in both source orders.
 Pair diagnostics bind ordered counts; pair and xblocks bind association-specific selected bits and
 covered source mutations under forced brute/kd-tree backends. The selected bits are one ordered
@@ -686,15 +794,16 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
-finalized `r4` receipt, and finalized `r5` receipt remain exact-hash-bound prior evidence with their
-original v1, v2, v2, v2, v2, and v2 schema identities. The `r6` suffix denotes only the sixth
-receipt in the versioned sequence that originated on 12 August, and therefore the seventh
+finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, and finalized `r7` receipt
+remain exact-hash-bound prior evidence with their original v1, v2, v2, v2, v2, v2, v2, and v2
+schema identities. The `r8` suffix denotes only the eighth receipt in the versioned sequence that
+originated on 12 August, and therefore the ninth
 current-project replay receipt overall; the 11 August historical receipt is outside that versioned
 sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
-route receives current execution credit only after that exact receipt exists and validates.
+route receives current execution credit only when that exact receipt exists and validates.
 
 The freeze gate binds the exact empty-output `lake --quiet --wfail` clean build,
 `leanchecker --fresh`, the complete
@@ -719,7 +828,9 @@ arguments: it uses exact reviewed repository, output, Darwin Lean-bin, Python, a
 constants. It rejects any extra argument before runner-controlled repository/archive/output
 lookup, repository-module load, child launch, or write; hashes the single-link archive through a
 stable no-follow descriptor; and repeats symlink-aware build/config absence checks immediately
-before the clean build. Its exact
+before the clean build. Receipt construction remains private at mode `0600`; the retained
+descriptor is changed to exact mode `0644` and fsynced before the final name is linked, and the
+published single-link receipt is revalidated at mode `0644`. Its exact
 invocation and the boundary that fixed host-local routes are not authenticated executables are
 recorded in the freeze document. The pinned executable set includes Lean, Lake, LeanChecker, and
 Python; Lake child selection is bounded by the release-bin-first `PATH` and the same leaf

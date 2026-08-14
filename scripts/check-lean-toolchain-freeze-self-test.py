@@ -43,7 +43,7 @@ ROOT = SCRIPT.parent.parent
 CHECKER = ROOT / "scripts/check-lean-toolchain-freeze.py"
 CURRENT_RECEIPT_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
-    "2026-08-13-r6.json"
+    "2026-08-14-r8.json"
 )
 PRIOR_AUG12_RECEIPT_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json"
@@ -63,6 +63,14 @@ PRIOR_AUG12_R4_RECEIPT_RELATIVE = (
 PRIOR_AUG13_R5_RECEIPT_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
     "2026-08-13-r5.json"
+)
+PRIOR_AUG13_R6_RECEIPT_RELATIVE = (
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
+    "2026-08-13-r6.json"
+)
+PRIOR_AUG13_R7_RECEIPT_RELATIVE = (
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
+    "2026-08-13-r7.json"
 )
 CHECKER_RELATIVE = "scripts/check-lean-toolchain-freeze.py"
 MAX_MODULE_SOURCE_BYTES = 8 * 1024 * 1024
@@ -327,7 +335,7 @@ def required_paths(checker: ModuleType) -> set[str]:
 def synthesize_pre_receipt_fixture(checker: ModuleType, destination: Path) -> None:
     """Make a non-evidentiary fixture so hostile tests can run before replay."""
 
-    receipt = json.loads((destination / PRIOR_AUG13_R5_RECEIPT_RELATIVE).read_bytes())
+    receipt = json.loads((destination / PRIOR_AUG13_R7_RECEIPT_RELATIVE).read_bytes())
     require(isinstance(receipt, dict), "prior replay fixture is not an object")
     receipt["active_claim_authority_sha256"] = checker.EXPECTED_ACTIVE_CLAIM_HASHES
     receipt["active_configuration"] = checker.EXPECTED_CONFIG_HASHES
@@ -401,6 +409,47 @@ def copy_fixture(
         if relative == CHECKER_RELATIVE:
             target.write_bytes(checker_snapshot.raw)
             continue
+        if pre_receipt and relative in {
+            "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md",
+            "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json",
+        }:
+            require(
+                source.is_file() and not source.is_symlink(),
+                f"prospective freeze fixture source is not regular: {relative}",
+            )
+            shutil.copy2(source, target)
+            raw = target.read_bytes()
+            replacements = (
+                (
+                    (
+                        b"provisional inventory; exact lifecycle validation disabled; hosted pending; no credit",
+                        b"frozen reviewed inventory; exact local lifecycle validation enabled; hosted pending; no credit",
+                    ),
+                    (
+                        b"<!-- ksg-m1a-hosted-recovery-policy-state: provisional -->",
+                        b"<!-- ksg-m1a-hosted-recovery-policy-state: frozen -->",
+                    ),
+                )
+                if relative.endswith("boundary-2026-08-13.md")
+                else (
+                    (
+                        b'"inventory_status": "provisional"',
+                        b'"inventory_status": "frozen"',
+                    ),
+                    (
+                        b'"lifecycle_validation_permitted": false',
+                        b'"lifecycle_validation_permitted": true',
+                    ),
+                )
+            )
+            for old, new in replacements:
+                require(
+                    raw.count(old) == 1 and raw.count(new) == 0,
+                    f"prospective freeze fixture anchor drifted: {relative}",
+                )
+                raw = raw.replace(old, new, 1)
+            target.write_bytes(raw)
+            continue
         if relative in pending:
             if source.is_file() and not source.is_symlink():
                 shutil.copy2(source, target)
@@ -467,7 +516,7 @@ def check_structural_placeholder_contract(checker: ModuleType) -> None:
         return
     require(
         not (ROOT / CURRENT_RECEIPT_RELATIVE).exists(),
-        "r6 receipt exists while structural digest placeholders remain",
+        "r8 receipt exists while structural digest placeholders remain",
     )
     require(
         checker.EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 == "0" * 64,
@@ -538,7 +587,7 @@ def mutate_policy_disable_rollback(checker: ModuleType, root: Path) -> None:
 def mutate_receipt_archive_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["official_archive"].__setitem__("sha256", "0" * 64),
     )
 
@@ -546,7 +595,7 @@ def mutate_receipt_archive_hash(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_optimized_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["python_optimization_parity"]["pairs"]["finite_checker"][
             "optimized_stdout"
         ].__setitem__("sha256", "0" * 64),
@@ -556,7 +605,7 @@ def mutate_receipt_optimized_hash(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_scope(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["scope_boundary"].__setitem__(
             0, "This replay proves Lean kernel soundness and Rust refinement."
         ),
@@ -566,7 +615,7 @@ def mutate_receipt_scope(_checker: ModuleType, root: Path) -> None:
 def mutate_environment_inheritance(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["environment_policy"].__setitem__(
             "ambient_environment_inherited", True
         ),
@@ -576,7 +625,7 @@ def mutate_environment_inheritance(_checker: ModuleType, root: Path) -> None:
 def mutate_stdin_inheritance(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["environment_policy"].__setitem__("stdin_inherited", True),
     )
 
@@ -584,7 +633,7 @@ def mutate_stdin_inheritance(_checker: ModuleType, root: Path) -> None:
 def mutate_process_umask(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["environment_policy"].__setitem__("umask_octal", "0000"),
     )
 
@@ -592,7 +641,7 @@ def mutate_process_umask(_checker: ModuleType, root: Path) -> None:
 def mutate_signal_state(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["environment_policy"]["signal_dispositions"].__setitem__(
             "SIGTERM", "SIG_IGN"
         ),
@@ -602,7 +651,7 @@ def mutate_signal_state(_checker: ModuleType, root: Path) -> None:
 def mutate_bounded_child_policy(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["environment_policy"].__setitem__(
             "command_timeout_seconds", 86_400
         ),
@@ -612,7 +661,7 @@ def mutate_bounded_child_policy(_checker: ModuleType, root: Path) -> None:
 def mutate_dependency_preflight_remove(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["dependency_checkout_preflight"].pop(),
     )
 
@@ -620,7 +669,7 @@ def mutate_dependency_preflight_remove(_checker: ModuleType, root: Path) -> None
 def mutate_dependency_preflight_argv(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["dependency_checkout_preflight"][0][
             "argv_executed"
         ].__setitem__(0, "/tmp/ambient-git"),
@@ -630,7 +679,7 @@ def mutate_dependency_preflight_argv(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_schema(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value.__setitem__(
             "schema", "pid-rs/lean-current-project-replay/v1"
         ),
@@ -652,7 +701,7 @@ def mutate_current_receipt_self_digest_inventory(
 def mutate_receipt_duplicate_key(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     text = path.read_text(encoding="utf-8")
     path.write_text('{\n  "status": "passed",' + text[1:], encoding="utf-8")
@@ -661,7 +710,7 @@ def mutate_receipt_duplicate_key(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_noncanonical(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     path.write_text(path.read_text(encoding="utf-8") + " ", encoding="utf-8")
 
@@ -675,7 +724,7 @@ def mutate_self_test_with_coordinated_receipt_hash(
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         receipt,
@@ -689,7 +738,7 @@ def mutate_self_test_with_coordinated_receipt_hash(
 def mutate_replay_checker_endpoint_hash(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["replay_custody_gate_sha256"].__setitem__(
             "scripts/check-lean-toolchain-freeze.py", "0" * 64
         ),
@@ -699,7 +748,7 @@ def mutate_replay_checker_endpoint_hash(_checker: ModuleType, root: Path) -> Non
 def mutate_local_archive_observation(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["official_archive_observation"].__setitem__(
             "sha256", "0" * 64
         ),
@@ -711,7 +760,7 @@ def refresh_source_binding(checker: ModuleType, root: Path, relative: str) -> No
     checker.EXPECTED_SOURCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         receipt,
@@ -792,7 +841,7 @@ def mutate_policy_symlink(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_hardlink(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     os.link(path, path.with_name("replay-second-link.json"))
 
@@ -820,7 +869,7 @@ def refresh_current_evidence_binding(
     checker.EXPECTED_CURRENT_EVIDENCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         receipt,
@@ -845,7 +894,7 @@ def refresh_manifest_binding(checker: ModuleType, root: Path) -> None:
     refresh_policy_binding(checker, root)
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         receipt,
@@ -1108,6 +1157,49 @@ def mutate_m1a_custody_correction_self_test_wiring(
     )
 
 
+def mutate_m1a_hosted_recovery_negative_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root,
+        "audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json",
+    )
+
+
+def mutate_m1a_hosted_recovery_policy_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(
+        root, "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json"
+    )
+
+
+def mutate_m1a_hosted_recovery_boundary_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root, "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md"
+    )
+
+
+def mutate_m1a_hosted_recovery_composite_schema_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root, "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json"
+    )
+
+
+def mutate_m1a_hosted_recovery_checker_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(root, "scripts/check-ksg-m1a-hosted-recovery.py")
+
+
+def mutate_m1a_hosted_recovery_self_test_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root, "scripts/check-ksg-m1a-hosted-recovery-self-test.py"
+    )
+
+
 def mutate_post_v2_schema_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(
         root, "audit/schemas/post-commit-source-state-v2.schema.json"
@@ -1157,8 +1249,8 @@ def mutate_retired_v1_self_test_recreated(_checker: ModuleType, root: Path) -> N
 def mutate_coordinated_agents_pointer_rewind(checker: ModuleType, root: Path) -> None:
     relative = "AGENTS.md"
     path = root / relative
-    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
-    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
+    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json"
     text = path.read_text(encoding="utf-8")
     require(text.count(current) == 1, "AGENTS current-replay mutation anchor drifted")
     path.write_text(text.replace(current, prior, 1), encoding="utf-8")
@@ -1168,24 +1260,24 @@ def mutate_coordinated_agents_pointer_rewind(checker: ModuleType, root: Path) ->
 def mutate_coordinated_claim_pointer_rewind(checker: ModuleType, root: Path) -> None:
     relative = "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md"
     path = root / relative
-    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
-    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json"
+    current = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
+    prior = "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json"
     text = path.read_text(encoding="utf-8")
     require(text.count(current) == 2, "claim current-replay mutation anchor drifted")
     path.write_text(text.replace(current, prior), encoding="utf-8")
     refresh_active_claim_binding(checker, root, relative)
 
 
-def mutate_coordinated_agents_r6_sequence_conflation(
+def mutate_coordinated_agents_r8_sequence_conflation(
     checker: ModuleType, root: Path
 ) -> None:
     relative = "AGENTS.md"
     path = root / relative
-    anchor = "sixth receipt in the\nversioned sequence"
+    anchor = "eighth receipt in the versioned sequence"
     text = path.read_text(encoding="utf-8")
-    require(text.count(anchor) == 1, "AGENTS r6-sequence mutation anchor drifted")
+    require(text.count(anchor) == 1, "AGENTS r8-sequence mutation anchor drifted")
     path.write_text(
-        text.replace(anchor, "review revision six in the\nversioned sequence", 1),
+        text.replace(anchor, "review revision eight in the versioned sequence", 1),
         encoding="utf-8",
     )
     refresh_operational_wiring_binding(checker, root, relative)
@@ -1225,7 +1317,7 @@ def mutate_prior_replay_aug12_coordinated_schema(
     checker.PRESERVED_PRIOR_REPLAY_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         receipt,
@@ -1358,10 +1450,84 @@ def mutate_prior_replay_aug13_r5_coordinated_schema(
     )
 
 
+def mutate_prior_replay_aug13_r6_bytes(_checker: ModuleType, root: Path) -> None:
+    path = root / PRIOR_AUG13_R6_RECEIPT_RELATIVE
+    path.write_bytes(path.read_bytes() + b"\n")
+
+
+def mutate_prior_replay_aug13_r6_coordinated_schema(
+    checker: ModuleType, root: Path
+) -> None:
+    relative = PRIOR_AUG13_R6_RECEIPT_RELATIVE
+    path = root / relative
+    canonical_json(
+        path,
+        lambda value: value.__setitem__(
+            "schema", "pid-rs/lean-current-project-replay/v1"
+        ),
+    )
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    checker.PRESERVED_PRIOR_REPLAY_HASHES[relative] = digest
+    receipt = root / CURRENT_RECEIPT_RELATIVE
+    canonical_json(
+        receipt,
+        lambda value: (
+            value["prior_replay_preservation_sha256"].__setitem__(relative, digest),
+            value["prior_replay_schema"].__setitem__(
+                relative, "pid-rs/lean-current-project-replay/v1"
+            ),
+        ),
+    )
+
+
+def mutate_prior_replay_aug13_r7_bytes(_checker: ModuleType, root: Path) -> None:
+    path = root / PRIOR_AUG13_R7_RECEIPT_RELATIVE
+    path.write_bytes(path.read_bytes() + b"\n")
+
+
+def mutate_prior_replay_aug13_r7_coordinated_schema(
+    checker: ModuleType, root: Path
+) -> None:
+    relative = PRIOR_AUG13_R7_RECEIPT_RELATIVE
+    path = root / relative
+    canonical_json(
+        path,
+        lambda value: value.__setitem__(
+            "schema", "pid-rs/lean-current-project-replay/v1"
+        ),
+    )
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    checker.PRESERVED_PRIOR_REPLAY_HASHES[relative] = digest
+    receipt = root / CURRENT_RECEIPT_RELATIVE
+    canonical_json(
+        receipt,
+        lambda value: (
+            value["prior_replay_preservation_sha256"].__setitem__(relative, digest),
+            value["prior_replay_schema"].__setitem__(
+                relative, "pid-rs/lean-current-project-replay/v1"
+            ),
+        ),
+    )
+
+
+def mutate_prior_replay_operational_overlap(checker: ModuleType, root: Path) -> None:
+    relative = PRIOR_AUG13_R7_RECEIPT_RELATIVE
+    checker.EXPECTED_OPERATIONAL_WIRING_HASHES[relative] = (
+        checker.PRESERVED_PRIOR_REPLAY_HASHES[relative]
+    )
+    receipt = root / CURRENT_RECEIPT_RELATIVE
+    canonical_json(
+        receipt,
+        lambda value: value["operational_wiring_sha256"].__setitem__(
+            relative, checker.PRESERVED_PRIOR_REPLAY_HASHES[relative]
+        ),
+    )
+
+
 def mutate_exact_archive_route(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         path,
@@ -1375,7 +1541,7 @@ def mutate_exact_archive_route(_checker: ModuleType, root: Path) -> None:
 def mutate_exact_python_route(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
 
     def mutate(value: dict) -> None:
@@ -1391,7 +1557,7 @@ def mutate_exact_python_route(_checker: ModuleType, root: Path) -> None:
 def mutate_exact_lean_route(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
 
     def mutate(value: dict) -> None:
@@ -1414,7 +1580,7 @@ def mutate_exact_lean_route(_checker: ModuleType, root: Path) -> None:
 def mutate_executable_digest(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         path,
@@ -1427,7 +1593,7 @@ def mutate_executable_digest(_checker: ModuleType, root: Path) -> None:
 def mutate_git_route(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["execution_environment"].__setitem__(
             "git_executable", "/opt/homebrew/bin/git"
         ),
@@ -1437,7 +1603,7 @@ def mutate_git_route(_checker: ModuleType, root: Path) -> None:
 def mutate_executable_size(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["execution_environment"][
             "executable_size_bytes"
         ].__setitem__("git", 0),
@@ -1447,7 +1613,7 @@ def mutate_executable_size(_checker: ModuleType, root: Path) -> None:
 def mutate_executable_link_count(_checker: ModuleType, root: Path) -> None:
     canonical_json(
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json",
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json",
         lambda value: value["execution_environment"][
             "executable_link_counts"
         ].__setitem__("git", 1),
@@ -1589,7 +1755,7 @@ def check_generator_zero_argument_contract(root: Path) -> None:
     for literal in (
         'PINNED_ROOT = Path("/private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo")',
         'SCRIPT = PINNED_ROOT / "scripts/generate-lean-4.33-replay.py"',
-        '/ "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"',
+        '/ "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"',
         'die("runner was not launched from the pinned repository route")',
         "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin",
         "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst",
@@ -1597,6 +1763,12 @@ def check_generator_zero_argument_contract(root: Path) -> None:
         "if len(sys.argv) != 1:",
         "os.umask(0o077)",
         'input_bytes = b""',
+        "os.fchmod(descriptor, 0o644)",
+        "stat.S_IMODE(opened.st_mode) != 0o600",
+        "(linked.st_dev, linked.st_ino) != temporary_device_inode",
+        'die("private receipt construction identity drifted")',
+        'die("private receipt identity drifted during construction")',
+        'die("private receipt did not reach canonical publication identity")',
     ):
         require(
             source.count(literal) == 1, f"generator route contract drifted: {literal}"
@@ -1886,9 +2058,25 @@ def check_generator_behavior(root: Path) -> None:
             )
             require(
                 (publication / "receipt.json").read_bytes() == b"receipt\n"
+                and stat.S_IMODE((publication / "receipt.json").stat().st_mode) == 0o644
                 and not (publication / "receipt.tmp").exists(),
                 "no-clobber publication did not durably publish exact bytes",
             )
+            wrong_mode = publication / "wrong-mode.json"
+            wrong_mode.write_bytes(b"wrong mode\n")
+            wrong_mode.chmod(0o600)
+            try:
+                generator.validate_published_receipt(
+                    descriptor, wrong_mode.name, b"wrong mode\n"
+                )
+            except SystemExit as error:
+                require(
+                    "published receipt identity drifted" in str(error),
+                    "wrong-mode published receipt diagnostic drifted",
+                )
+            else:
+                raise SelfTestError("wrong-mode published receipt was accepted")
+            wrong_mode.unlink()
             try:
                 generator.publish_receipt_no_clobber(
                     b"replacement\n",
@@ -1968,6 +2156,38 @@ def check_generator_behavior(root: Path) -> None:
                 not (publication / "post-link-stat.json").exists()
                 and not (publication / "post-link-stat.tmp").exists(),
                 "first post-link stat failure did not roll back invocation-owned leaves",
+            )
+
+            def wrong_link_identity(parent_descriptor: int, output_leaf: str):
+                observed = original_link_stat(parent_descriptor, output_leaf)
+                fields = list(observed)
+                fields[1] += 1
+                return os.stat_result(fields)
+
+            generator.stat_newly_linked_receipt = wrong_link_identity
+            try:
+                try:
+                    generator.publish_receipt_no_clobber(
+                        b"post-link-identity\n",
+                        descriptor,
+                        publication,
+                        identity,
+                        "post-link-identity.json",
+                        "post-link-identity.tmp",
+                    )
+                except SystemExit as error:
+                    require(
+                        "published receipt link identity drifted" in str(error),
+                        "wrong post-link identity diagnostic drifted",
+                    )
+                else:
+                    raise SelfTestError("wrong post-link identity was accepted")
+            finally:
+                generator.stat_newly_linked_receipt = original_link_stat
+            require(
+                not (publication / "post-link-identity.json").exists()
+                and not (publication / "post-link-identity.tmp").exists(),
+                "wrong post-link identity did not roll back invocation-owned leaves",
             )
             target = publication / "symlink-target"
             target.write_bytes(b"target\n")
@@ -2062,7 +2282,7 @@ def mutate_stale_policy_manifest(checker: ModuleType, root: Path) -> None:
 def mutate_receipt_missing_source(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         path,
@@ -2073,7 +2293,7 @@ def mutate_receipt_missing_source(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_extra_evidence(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         path,
@@ -2086,7 +2306,7 @@ def mutate_receipt_extra_evidence(_checker: ModuleType, root: Path) -> None:
 def mutate_receipt_missing_checker(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         path,
@@ -2097,7 +2317,7 @@ def mutate_receipt_missing_checker(_checker: ModuleType, root: Path) -> None:
 def mutate_cached_build_credit(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
 
     def mutate(value: dict) -> None:
@@ -2115,7 +2335,7 @@ def mutate_cached_build_credit(_checker: ModuleType, root: Path) -> None:
 def mutate_clean_build_transcript(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     replacement = b"unexpected clean-build output\n"
 
@@ -2139,7 +2359,7 @@ def mutate_clean_build_transcript(_checker: ModuleType, root: Path) -> None:
 def mutate_valid_replay_timestamps(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
 
     def shifted(value: str) -> str:
@@ -2163,7 +2383,7 @@ def mutate_valid_replay_timestamps(_checker: ModuleType, root: Path) -> None:
 def mutate_valid_replay_root(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
 
     def mutate(value: dict) -> None:
@@ -2181,7 +2401,7 @@ def mutate_valid_replay_root(_checker: ModuleType, root: Path) -> None:
 def mutate_paired_checker_output(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     replacement = b"OK: forged paired checker output\n"
     forged_stream = {
@@ -2207,7 +2427,7 @@ def mutate_paired_checker_output(_checker: ModuleType, root: Path) -> None:
 def mutate_axiom_audit_stdin(_checker: ModuleType, root: Path) -> None:
     path = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     trivial = b"#check True\n"
 
@@ -2239,7 +2459,7 @@ def mutate_derived_receipt_overclaim(checker: ModuleType, root: Path) -> None:
     checker.EXPECTED_DERIVED_EVIDENCE_HASHES[relative] = digest
     receipt = (
         root
-        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+        / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
     )
     canonical_json(
         receipt,
@@ -2521,6 +2741,36 @@ MUTATIONS: tuple[Mutation, ...] = (
         "operational wiring digest mismatch: scripts/check-ksg-m1a-custody-correction-self-test.py",
     ),
     (
+        "m1a-hosted-recovery-negative-operational-wiring-drift",
+        mutate_m1a_hosted_recovery_negative_wiring,
+        "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json",
+    ),
+    (
+        "m1a-hosted-recovery-policy-operational-wiring-drift",
+        mutate_m1a_hosted_recovery_policy_wiring,
+        "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json",
+    ),
+    (
+        "m1a-hosted-recovery-boundary-operational-wiring-drift",
+        mutate_m1a_hosted_recovery_boundary_wiring,
+        "operational wiring digest mismatch: audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md",
+    ),
+    (
+        "m1a-hosted-recovery-composite-schema-operational-wiring-drift",
+        mutate_m1a_hosted_recovery_composite_schema_wiring,
+        "operational wiring digest mismatch: audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json",
+    ),
+    (
+        "m1a-hosted-recovery-checker-operational-wiring-drift",
+        mutate_m1a_hosted_recovery_checker_wiring,
+        "operational wiring digest mismatch: scripts/check-ksg-m1a-hosted-recovery.py",
+    ),
+    (
+        "m1a-hosted-recovery-self-test-operational-wiring-drift",
+        mutate_m1a_hosted_recovery_self_test_wiring,
+        "operational wiring digest mismatch: scripts/check-ksg-m1a-hosted-recovery-self-test.py",
+    ),
+    (
         "post-v2-schema-operational-wiring-drift",
         mutate_post_v2_schema_wiring,
         "operational wiring digest mismatch: audit/schemas/post-commit-source-state-v2.schema.json",
@@ -2568,17 +2818,17 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "coordinated-agents-current-pointer-rewind",
         mutate_coordinated_agents_pointer_rewind,
-        "current/prior r6 replay pointer semantics drifted: AGENTS.md",
+        "current/prior r8 replay pointer semantics drifted: AGENTS.md",
     ),
     (
         "coordinated-claim-current-pointer-rewind",
         mutate_coordinated_claim_pointer_rewind,
-        "current/prior r6 replay pointer semantics drifted: claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "current/prior r8 replay pointer semantics drifted: claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
     ),
     (
-        "coordinated-agents-r6-sequence-conflation",
-        mutate_coordinated_agents_r6_sequence_conflation,
-        "r6 sequencing/non-conflation boundary drifted: AGENTS.md",
+        "coordinated-agents-r8-sequence-conflation",
+        mutate_coordinated_agents_r8_sequence_conflation,
+        "r8 sequencing/non-conflation boundary drifted: AGENTS.md",
     ),
     (
         "wrong-mathlib-tag",
@@ -2695,6 +2945,31 @@ MUTATIONS: tuple[Mutation, ...] = (
         "prior-replay-aug13-r5-coordinated-schema-drift",
         mutate_prior_replay_aug13_r5_coordinated_schema,
         "preserved prior replay lost its exact schema identity",
+    ),
+    (
+        "prior-replay-aug13-r6-byte-drift",
+        mutate_prior_replay_aug13_r6_bytes,
+        "preserved prior 4.33 replay digest mismatch",
+    ),
+    (
+        "prior-replay-aug13-r6-coordinated-schema-drift",
+        mutate_prior_replay_aug13_r6_coordinated_schema,
+        "preserved prior replay lost its exact schema identity",
+    ),
+    (
+        "prior-replay-aug13-r7-byte-drift",
+        mutate_prior_replay_aug13_r7_bytes,
+        "preserved prior 4.33 replay digest mismatch",
+    ),
+    (
+        "prior-replay-aug13-r7-coordinated-schema-drift",
+        mutate_prior_replay_aug13_r7_coordinated_schema,
+        "preserved prior replay lost its exact schema identity",
+    ),
+    (
+        "prior-replay-operational-role-overlap",
+        mutate_prior_replay_operational_overlap,
+        "operational wiring overlaps preserved prior replay evidence",
     ),
     (
         "derived-output-drift",

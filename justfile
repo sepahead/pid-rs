@@ -170,12 +170,12 @@ ksg-revision:
     python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
     python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
     python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
-    # BEGIN KSG_M1A_CUSTODY_CORRECTION_JUST_V1
-    python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py --validate-policy-only
-    python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py --validate-policy-only
-    python3 -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
-    python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
-    # END KSG_M1A_CUSTODY_CORRECTION_JUST_V1
+    # BEGIN KSG_M1A_HOSTED_RECOVERY_JUST_V1
+    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py --validate-policy-only --allow-provisional-diagnostic
+    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py --validate-policy-only --allow-provisional-diagnostic
+    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    # END KSG_M1A_HOSTED_RECOVERY_JUST_V1
     scripts/check-ksg-c3-checkpoint.sh
 
 # This gate is intentionally red until every integration gate is closed and the packet is promoted.

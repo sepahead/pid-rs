@@ -82,7 +82,7 @@ PROCESS_GROUP_KILL_GRACE_SECONDS = 2.0
 PROCESS_GROUP_POLL_SECONDS = 0.02
 OUTPUT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
 )
 OUTPUT_TEMPORARY_LEAF = OUTPUT.name + ".tmp"
 GIT_FIXED_ARGUMENTS = (
@@ -166,6 +166,7 @@ def validate_published_receipt(
     if (
         not stat.S_ISREG(before.st_mode)
         or stat.S_ISLNK(before.st_mode)
+        or stat.S_IMODE(before.st_mode) != 0o644
         or before.st_nlink != 1
         or before.st_size != len(expected)
     ):
@@ -235,12 +236,39 @@ def publish_receipt_no_clobber(
         try:
             opened = os.fstat(descriptor)
             temporary_device_inode = (opened.st_dev, opened.st_ino)
+            if (
+                not stat.S_ISREG(opened.st_mode)
+                or stat.S_IMODE(opened.st_mode) != 0o600
+                or opened.st_nlink != 1
+                or opened.st_size != 0
+            ):
+                die("private receipt construction identity drifted")
             remaining = memoryview(raw)
             while remaining:
                 written = os.write(descriptor, remaining)
                 if written <= 0:
                     die("receipt write made no progress")
                 remaining = remaining[written:]
+            written_state = os.fstat(descriptor)
+            if (
+                not stat.S_ISREG(written_state.st_mode)
+                or stat.S_IMODE(written_state.st_mode) != 0o600
+                or written_state.st_nlink != 1
+                or written_state.st_size != len(raw)
+                or (written_state.st_dev, written_state.st_ino)
+                != temporary_device_inode
+            ):
+                die("private receipt identity drifted during construction")
+            os.fchmod(descriptor, 0o644)
+            ready = os.fstat(descriptor)
+            if (
+                not stat.S_ISREG(ready.st_mode)
+                or stat.S_IMODE(ready.st_mode) != 0o644
+                or ready.st_nlink != 1
+                or ready.st_size != len(raw)
+                or (ready.st_dev, ready.st_ino) != temporary_device_inode
+            ):
+                die("private receipt did not reach canonical publication identity")
             os.fsync(descriptor)
         finally:
             os.close(descriptor)
@@ -258,7 +286,13 @@ def publish_receipt_no_clobber(
         # before any fallible post-link observation so exact rollback remains possible.
         published_device_inode = temporary_device_inode
         linked = stat_newly_linked_receipt(parent_descriptor, output_leaf)
-        if published_device_inode != temporary_device_inode or linked.st_nlink != 2:
+        if (
+            (linked.st_dev, linked.st_ino) != temporary_device_inode
+            or not stat.S_ISREG(linked.st_mode)
+            or stat.S_IMODE(linked.st_mode) != 0o644
+            or linked.st_nlink != 2
+            or linked.st_size != len(raw)
+        ):
             die("published receipt link identity drifted")
         os.fsync(parent_descriptor)
         unlink_matching_leaf(parent_descriptor, temporary_leaf, temporary_device_inode)

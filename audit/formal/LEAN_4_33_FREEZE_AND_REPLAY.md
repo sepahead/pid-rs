@@ -6,16 +6,18 @@ The active formal project is pinned exactly to `leanprover/lean4:v4.33.0`, Lean 
 [`lake-manifest.json`](lean/lake-manifest.json). The active policy is machine-readable in
 [`toolchain-freeze-policy.json`](lean/toolchain-freeze-policy.json), and the bounded Darwin replay
 is recorded separately in
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
 and [finalized r3 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json)
 and [finalized r4 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json)
 and [finalized r5 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json)
+and [finalized r6 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json)
+and [finalized r7 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json)
 remain byte-preserved prior execution evidence. The 11 August receipt predates the hardened
-runner; none is current runner custody. The `r6` suffix denotes only the sixth receipt in the
-versioned sequence that originated on 12 August, and therefore the seventh current-project replay
+runner; none is current runner custody. The `r8` suffix denotes only the eighth receipt in the
+versioned sequence that originated on 12 August, and therefore the ninth current-project replay
 receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, replay schema, theorem, review, assurance tier, or independence
 revision; the current receipt remains schema v2 and receives execution credit only when it exists
@@ -137,7 +139,11 @@ checker digest is omitted from that projection to avoid a checker/receipt digest
 self-test digest remains reviewed, and both custody digests are compared directly with live files.
 The separate fully projected `replay_custody_gate_sha256` records the checker and self-test bytes
 that were stable at both replay endpoints. The runner first no-clobber-publishes a provisional
-receipt with the zero-placeholder checker. Finalization has exactly two tracked edits: replace only
+receipt with the zero-placeholder checker. It constructs the receipt through a retained descriptor
+on a private mode-`0600` temporary inode, verifies the complete bytes and identity, changes that
+same inode to exact mode `0644`, fsyncs it, links the final no-clobber name, removes the temporary
+name, and validates the final single-link mode-`0644` bytes. No post-publication chmod is part of
+the lifecycle. Finalization has exactly two tracked edits: replace only
 the checker's projection literal, then replace only the live
 `custody_gate_sha256["scripts/check-lean-toolchain-freeze.py"]` value in that provisional receipt
 with the final checker digest. The replay-custody checker digest remains the endpoint hash. The

@@ -173,11 +173,12 @@ jobs:
           else
             printf 'current checkout is not the exact direct-child push on main; M1a credit replay not applicable\n'
           fi
-      # BEGIN KSG_M1A_CUSTODY_CORRECTION_WORKFLOW_V1
-      - name: Verify the KSG M1a hosted-custody correction lifecycle
+      # BEGIN KSG_M1A_HOSTED_RECOVERY_WORKFLOW_V1
+      - name: Verify the KSG M1a hosted-recovery lifecycle
         run: |
           set -euo pipefail
-          implementation_anchor="cb3f58f0b190454cb3f1090de8798261ec78f194"
+          failed_correction="7473e62acef6077c2c1147e09d5d1297f2a2874b"
+          composite_receipt="audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json"
           head="$(git rev-parse HEAD)"
           expected_checkout_sha="${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}"
           if [[ "$head" != "$expected_checkout_sha" ]]
@@ -199,28 +200,28 @@ jobs:
           then
             direct_parent="${parent_fields[1]}"
           fi
-          python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+          python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
             --validate-policy-only
-          python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+          python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
             --validate-policy-only
-          python3 -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
-          python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
+          python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+          python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
           if [[ "$parent_count" == "1" ]] \
-            && [[ "$direct_parent" == "$implementation_anchor" ]]
+            && [[ "$direct_parent" == "$failed_correction" ]]
           then
             candidate_tree="$(git rev-parse "${head}^{tree}")"
-            # Validate every exact direct-child candidate before a push.  Pull-request and
-            # diagnostic checkouts stay detached and receive no hosted or lifecycle credit.
+            # Validate the exact sole-child recovery before push. Pull-request and diagnostic
+            # checkouts stay detached and receive no hosted or lifecycle credit.
             if git symbolic-ref -q HEAD >/dev/null
             then
-              printf 'exact direct-child source checkout is unexpectedly attached before candidate validation\n' >&2
+              printf 'exact hosted-recovery checkout is unexpectedly attached before candidate validation\n' >&2
               exit 1
             fi
-            python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+            python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
               --mode candidate-commit \
               --expected-candidate-tree "$candidate_tree" \
               --checkpoint-commit "$head"
-            python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+            python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
               --mode candidate-commit \
               --expected-candidate-tree "$candidate_tree" \
               --checkpoint-commit "$head"
@@ -229,13 +230,13 @@ jobs:
             && [[ "$GITHUB_REF" == "refs/heads/main" ]] \
             && [[ "$head" == "$GITHUB_SHA" ]] \
             && [[ "$parent_count" == "1" ]] \
-            && [[ "$direct_parent" == "$implementation_anchor" ]]
+            && [[ "$direct_parent" == "$failed_correction" ]]
           then
             if git show-ref --verify --quiet refs/heads/main
             then
               if [[ "$(git rev-parse refs/heads/main)" != "$head" ]]
               then
-                printf 'pre-existing local main does not resolve to the captured correction SHA\n' >&2
+                printf 'pre-existing local main does not resolve to the captured hosted-recovery SHA\n' >&2
                 exit 1
               fi
               git switch main
@@ -245,22 +246,74 @@ jobs:
             if [[ "$(git symbolic-ref --short HEAD)" != "main" ]] \
               || [[ "$(git rev-parse HEAD)" != "$head" ]]
             then
-              printf 'failed to attach exact correction SHA to ephemeral local main\n' >&2
+              printf 'failed to attach exact hosted-recovery SHA to ephemeral local main\n' >&2
               exit 1
             fi
             candidate_tree="$(git rev-parse "${head}^{tree}")"
-            python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+            python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
               --mode postcommit \
               --expected-candidate-tree "$candidate_tree" \
               --checkpoint-commit "$head"
-            python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction.py \
+            python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
               --mode postcommit \
               --expected-candidate-tree "$candidate_tree" \
               --checkpoint-commit "$head"
           else
-            printf 'current checkout is not the exact direct-child correction push on main; strict postcommit replay is not applicable and no credit is granted\n'
+            printf 'current checkout is not the exact sole-child hosted-recovery push on main; strict postcommit replay is not applicable and no credit is granted\n'
           fi
-      # END KSG_M1A_CUSTODY_CORRECTION_WORKFLOW_V1
+          if [[ -f "$composite_receipt" ]]
+          then
+            receipt_recovery="$(
+              python3 -I -S -B - "$composite_receipt" <<'PY'
+          import json
+          from pathlib import Path
+          import re
+          import sys
+
+
+          def unique(pairs):
+              result = {}
+              for key, value in pairs:
+                  if key in result:
+                      raise ValueError(f"duplicate key: {key}")
+                  result[key] = value
+              return result
+
+
+          raw = Path(sys.argv[1]).read_bytes()
+          if len(raw) > 24 * 1024 * 1024:
+              raise SystemExit("composite receipt exceeds the reviewed JSON bound")
+          try:
+              value = json.loads(raw, object_pairs_hook=unique)
+          except (UnicodeDecodeError, ValueError, json.JSONDecodeError) as error:
+              raise SystemExit(f"composite receipt is not strict JSON: {error}") from None
+          recovery = value.get("hosted_recovery") if isinstance(value, dict) else None
+          commit = recovery.get("commit") if isinstance(recovery, dict) else None
+          if not isinstance(commit, str) or re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+              raise SystemExit("composite receipt recovery commit is malformed")
+          sys.stdout.write(commit)
+          PY
+            )"
+            if [[ "$GITHUB_EVENT_NAME" == "push" ]] \
+              && [[ "$GITHUB_REF" == "refs/heads/main" ]] \
+              && [[ "$head" == "$GITHUB_SHA" ]] \
+              && [[ "$parent_count" == "1" ]] \
+              && [[ "$direct_parent" == "$receipt_recovery" ]]
+            then
+              if git symbolic-ref -q HEAD >/dev/null
+              then
+                printf 'exact composite-receipt checkout is unexpectedly attached before descendant validation\n' >&2
+                exit 1
+              fi
+              python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+                --validate-composite-receipt < "$composite_receipt"
+              python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
+                --validate-composite-receipt < "$composite_receipt"
+            else
+              printf 'composite receipt is retained outside its exact direct-child push; sole-child validation is not applicable and no credit is granted\n'
+            fi
+          fi
+      # END KSG_M1A_HOSTED_RECOVERY_WORKFLOW_V1
       # Keep ignored build/cache material outside the exact-source custody boundary above.
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - name: Bind ordered KSG and inclusive Ehrlich counts to production paths
@@ -591,6 +644,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
+          fetch-depth: 0
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:

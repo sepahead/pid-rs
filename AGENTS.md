@@ -209,11 +209,12 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json`;
-the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, and finalized
-`r5` receipts are exact-hash-bound prior replays. Here `r6` denotes only the sixth receipt in the
-versioned sequence that originated on 12 August, and therefore the seventh current-project replay
-receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json`;
+the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
+finalized `r6`, and finalized `r7` receipts are exact-hash-bound prior replays. Here `r8` denotes
+only the eighth receipt in the versioned sequence that originated on 12 August, and therefore the
+ninth current-project replay receipt overall; the 11 August historical receipt is outside that
+versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.
 

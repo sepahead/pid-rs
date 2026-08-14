@@ -46,7 +46,7 @@ VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
 RESOURCE_POLICY = "sxpid2-certification-default-v2"
 LOADED_EXECUTION_DOMAIN = "pid-certified-sxpid-independent-loaded-execution-v3"
 EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256 = (
-    "5b34fa8061b525efdddd813aea936300718d56d3e8402fe2796a63cc70cae5c9"
+    "6c173cbf90fe27bbd43342f37ebe0378db76a1e4e8e22a92aa4d5416f9789bda"
 )
 EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
     "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7"
@@ -56,9 +56,9 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "be1ce389b90b613defc86d1aafd6a17fce641f187eb83b55b43b0f537dd9deb6"
+        "61283264499a7b6069a4e5e9563c72541ab101b69379f3ace75a12cd4bf4b175"
     ),
-    "justfile": ("dfd5e270e8c7f84b5e9887bf9556384280d3d9ca933403d65170d5980a972212"),
+    "justfile": ("8cb030aaa01b1230c7d490c1bc399be8875c7285f4c39d6ca46eff624bfd4591"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -165,7 +165,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "87a27ec193bf29a2e769c2dba143a86a9d4d56c37051376c1b85d0abb493f2ca"
+        "32d63a3e34e1263d1fd6e49fedff9a35d6717df34dc2edf7aca062db41963f2a"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
