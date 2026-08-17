@@ -13,7 +13,7 @@ The checked source extends the completed supplied-count event bridge from four s
 cumulatives to every informative, misinformative, and signed-net cumulative and two-source
 Möbius atom. It gives one quantified result over a fixed 24-coordinate type. Exact identities,
 the current 80-route change registry, document checks, and review boundaries are recorded in the
-[current versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json).
+[current versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -22,8 +22,9 @@ and [finalized r4 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project
 and [finalized r5 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json)
 and [finalized r6 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json)
 and [finalized r7 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json)
-are retained byte-for-byte as prior execution evidence. Here `r8` denotes only the eighth receipt in
-the versioned sequence that originated on 12 August, and therefore the ninth current-project replay
+and [finalized r8 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json)
+are retained byte-for-byte as prior execution evidence. Here `r9` denotes only the ninth receipt in
+the versioned sequence that originated on 12 August, and therefore the tenth current-project replay
 receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The current route receives execution credit only when its exact receipt exists and validates.

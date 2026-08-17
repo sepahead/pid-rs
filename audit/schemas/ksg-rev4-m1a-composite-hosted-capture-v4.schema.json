@@ -1,0 +1,297 @@
+{
+  "$defs": {
+    "capture": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "pattern": "^[A-Za-z0-9+/]*={0,2}(?![\\s\\S])",
+          "type": "string"
+        },
+        "body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "body_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "logical_request": {
+          "pattern": "^(?:recovery|migration)_(?:ci|codeql|contract)_(?:run|jobs|artifacts|artifact_[0-9]+|analysis_[0-9]+|analyses|alerts_(?:open|dismissed|fixed))(?![\\s\\S])",
+          "type": "string"
+        },
+        "media_type": {
+          "enum": [
+            "application/json",
+            "application/octet-stream",
+            "application/zip"
+          ]
+        },
+        "page": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/[ -~]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "redirect": {
+          "additionalProperties": false,
+          "properties": {
+            "status_code": {
+              "enum": [
+                301,
+                302,
+                303,
+                307,
+                308
+              ]
+            },
+            "target_host": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "target_url_sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            "status_code",
+            "target_host",
+            "target_url_sha256"
+          ],
+          "type": [
+            "null",
+            "object"
+          ]
+        },
+        "repetition": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "response_kind": {
+          "enum": [
+            "json",
+            "zip"
+          ]
+        },
+        "status_code": {
+          "const": 200
+        }
+      },
+      "required": [
+        "body_base64",
+        "body_sha256",
+        "body_size_bytes",
+        "logical_request",
+        "media_type",
+        "page",
+        "path",
+        "redirect",
+        "repetition",
+        "response_kind",
+        "status_code"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}(?![\\s\\S])",
+      "type": "string"
+    },
+    "descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+(?![\\s\\S])",
+      "type": "string"
+    },
+    "retryEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "category": {
+          "enum": [
+            "http_429",
+            "http_502",
+            "http_503",
+            "http_504",
+            "transport"
+          ]
+        },
+        "logical_request": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "page": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/[ -~]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "repetition": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "response_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "response_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "attempt",
+        "category",
+        "logical_request",
+        "page",
+        "path",
+        "repetition",
+        "response_sha256",
+        "response_size_bytes"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capture_tool": {
+      "$ref": "#/$defs/descriptor"
+    },
+    "captures": {
+      "items": {
+        "$ref": "#/$defs/capture"
+      },
+      "maxItems": 4096,
+      "minItems": 20,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "retry_events": {
+      "items": {
+        "$ref": "#/$defs/retryEvent"
+      },
+      "maxItems": 8192,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "runs": {
+      "additionalProperties": false,
+      "properties": {
+        "migration_ci": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "migration_codeql": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "migration_contract": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "recovery_ci": {
+          "const": 31773937366
+        },
+        "recovery_codeql": {
+          "const": 31773937102
+        }
+      },
+      "required": [
+        "migration_ci",
+        "migration_codeql",
+        "migration_contract",
+        "recovery_ci",
+        "recovery_codeql"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-hosted-capture/v4"
+    },
+    "schema_revision": {
+      "const": 4
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "contract_tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "recovery_commit": {
+          "const": "bc3aa80fb6025e709c2906a08bce25a4fac40578"
+        },
+        "recovery_tree": {
+          "const": "7d87f87953a42edb91e40880d918471c7cbe4414"
+        }
+      },
+      "required": [
+        "contract_commit",
+        "contract_tree",
+        "recovery_commit",
+        "recovery_tree"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "capture_tool",
+    "captures",
+    "nonimplications",
+    "repository",
+    "retry_events",
+    "runs",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "type": "object"
+}

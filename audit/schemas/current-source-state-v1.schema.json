@@ -83,15 +83,15 @@
       "type": "object"
     },
     "repositoryPath": {
-      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+(?![\\s\\S])",
       "type": "string"
     },
     "sha1": {
-      "pattern": "^[0-9a-f]{40}$",
+      "pattern": "^[0-9a-f]{40}(?![\\s\\S])",
       "type": "string"
     },
     "sha256": {
-      "pattern": "^[0-9a-f]{64}$",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
       "type": "string"
     },
     "subprojection": {
@@ -178,8 +178,8 @@
       "items": {
         "$ref": "#/$defs/artifact"
       },
-      "maxItems": 10,
-      "minItems": 10,
+      "maxItems": 11,
+      "minItems": 11,
       "type": "array",
       "uniqueItems": true
     },

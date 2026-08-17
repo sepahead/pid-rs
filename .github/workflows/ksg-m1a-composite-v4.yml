@@ -1,0 +1,56 @@
+name: KSG M1a composite v4
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ksg-m1a-composite-v4-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  validate-contract:
+    name: Validate the composite-v4 contract
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: "${{ github.sha }}"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - name: Validate static contract in normal and optimized modes
+        run: |
+          set -euo pipefail
+          python3 -I -S -B scripts/check-ksg-m1a-composite-v4.py \
+            --validate-static > "${RUNNER_TEMP}/ksg-m1a-composite-v4-static.json"
+          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v4.py \
+            --validate-static > "${RUNNER_TEMP}/ksg-m1a-composite-v4-static.optimized.json"
+          cmp --silent \
+            "${RUNNER_TEMP}/ksg-m1a-composite-v4-static.json" \
+            "${RUNNER_TEMP}/ksg-m1a-composite-v4-static.optimized.json"
+          unlink -- "${RUNNER_TEMP}/ksg-m1a-composite-v4-static.optimized.json"
+      - name: Reject the adversarial contract and capture vectors
+        run: |
+          set -euo pipefail
+          python3 -I -S -B scripts/check-ksg-m1a-composite-v4-self-test.py \
+            > "${RUNNER_TEMP}/composite-v4-self-test.json"
+          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v4-self-test.py \
+            > "${RUNNER_TEMP}/composite-v4-self-test.optimized.json"
+          cmp --silent \
+            "${RUNNER_TEMP}/composite-v4-self-test.json" \
+            "${RUNNER_TEMP}/composite-v4-self-test.optimized.json"
+      - name: Upload the exact static result
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          compression-level: 0
+          if-no-files-found: error
+          name: ksg-m1a-composite-v4-static-${{ github.sha }}
+          path: ${{ runner.temp }}/ksg-m1a-composite-v4-static.json
+          retention-days: 90

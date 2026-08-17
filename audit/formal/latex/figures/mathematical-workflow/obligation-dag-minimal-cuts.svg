@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="78mm" viewBox="0 0 1600 780" role="img" aria-labelledby="obligation-title obligation-desc" data-admissible-universe="A1,A2,B1,C" data-route-a="A1,A2,C" data-route-b="B1,C" data-minimal-cuts="C;A1,B1;A2,B1">
   <title id="obligation-title">AND OR obligation DAG with inclusion-minimal cuts</title>
-  <desc id="obligation-desc">A directed acyclic graph points from prerequisites toward a release claim. In frozen admissible universe U = {A1, A2, B1, C}, route A = {A1, A2, C} and route B = {B1, C}. The complete inclusion-minimal cut family is {C}, {A1, B1}, and {A2, B1}. The common goal and synthetic route aggregators are excluded.</desc>
+  <desc id="obligation-desc">A directed acyclic graph points from prerequisites toward a release claim. In frozen admissible universe U = {A1, A2, B1, C}, route A = {A1, A2, C} and route B = {B1, C}. The complete inclusion-minimal cut family is {C}, {A1, B1}, and {A2, B1}. The common goal and synthetic route aggregators are excluded. GO names only the terminal gate state; it is not an evidence class or claim disposition.</desc>
   <defs>
-    <marker id="dag-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L12,6 L0,12 z" fill="#1F6968"/>
+    <marker id="dag-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#1F6968"/>
     </marker>
     <pattern id="cut-hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
       <line x1="0" y1="0" x2="0" y2="14" stroke="#B28218" stroke-width="4"/>
     </pattern>
     <style>
-      .heading { font-family: 'Source Sans Pro', sans-serif; font-size: 31px; font-weight: 700; fill: #1F3F60; }
-      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
-      .node-title { font-family: 'Source Sans Pro', sans-serif; font-size: 22px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
-      .node-body { font-family: 'Latin Modern Roman', serif; font-size: 18px; font-weight: 400; fill: #2C3E50; text-anchor: middle; }
-      .badge { font-family: 'Source Sans Pro', sans-serif; font-size: 17px; font-weight: 700; fill: #F7F3E9; text-anchor: middle; }
-      .small { font-family: 'Source Sans Pro', sans-serif; font-size: 17px; font-weight: 600; fill: #596A73; }
+      .heading { font-family: 'Source Sans Pro', sans-serif; font-size: 40px; font-weight: 700; fill: #1F3F60; }
+      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
+      .node-title { font-family: 'Source Sans Pro', sans-serif; font-size: 29px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
+      .node-body { font-family: 'Latin Modern Roman', serif; font-size: 25px; font-weight: 400; fill: #2C3E50; text-anchor: middle; }
+      .badge { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; fill: #F7F3E9; text-anchor: middle; }
+      .small { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 600; fill: #596A73; }
     </style>
   </defs>
 
@@ -39,15 +39,15 @@
   <g>
     <rect x="70" y="165" width="232" height="102" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
     <text x="186" y="207" class="node-title">Premise A1</text>
-    <text x="186" y="238" class="node-body">route-specific evidence</text>
+    <text x="186" y="238" class="node-body">route evidence</text>
 
     <rect x="70" y="295" width="232" height="102" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
     <text x="186" y="337" class="node-title">Premise A2</text>
-    <text x="186" y="368" class="node-body">route-specific evidence</text>
+    <text x="186" y="368" class="node-body">route evidence</text>
 
     <rect x="70" y="564" width="232" height="102" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
     <text x="186" y="606" class="node-title">Premise B1</text>
-    <text x="186" y="637" class="node-body">route-specific evidence</text>
+    <text x="186" y="637" class="node-body">route evidence</text>
 
     <rect x="87" y="433" width="276" height="104" rx="17" fill="url(#cut-hatch)" stroke="#B28218" stroke-width="5"/>
     <rect x="96" y="442" width="258" height="86" rx="12" fill="#F7F3E9" stroke="#B28218" stroke-width="2"/>
@@ -55,28 +55,29 @@
     <text x="225" y="507" class="node-body">common to every route</text>
 
     <rect x="575" y="218" width="250" height="130" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
-    <circle cx="700" cy="238" r="22" fill="#1F6968"/>
-    <text x="700" y="244" class="badge">AND</text>
+    <circle cx="700" cy="238" r="27" fill="#1F6968"/>
+    <text x="700" y="245" class="badge">AND</text>
     <text x="700" y="287" class="node-title">Accepted route A</text>
     <text x="700" y="318" class="node-body">A1 + A2 + C</text>
 
     <rect x="575" y="498" width="250" height="130" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
-    <circle cx="700" cy="518" r="22" fill="#1F6968"/>
-    <text x="700" y="524" class="badge">AND</text>
+    <circle cx="700" cy="518" r="27" fill="#1F6968"/>
+    <text x="700" y="525" class="badge">AND</text>
     <text x="700" y="567" class="node-title">Accepted route B</text>
     <text x="700" y="598" class="node-body">B1 + C</text>
 
     <path d="M1120 330 L1260 409 L1120 488 L980 409 Z" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
-    <circle cx="1120" cy="361" r="22" fill="#1F3F60"/>
-    <text x="1120" y="367" class="badge">OR</text>
+    <circle cx="1120" cy="361" r="27" fill="#1F3F60"/>
+    <text x="1120" y="368" class="badge">OR</text>
     <text x="1120" y="416" class="node-title">Release claim</text>
     <text x="1120" y="450" class="node-body">A or B accepted</text>
 
-    <rect x="1512" y="375" width="36" height="68" rx="8" fill="#B28218"/>
-    <text x="1530" y="407" class="badge" transform="rotate(90 1530 407)">GO</text>
+    <rect x="1504" y="371" width="44" height="76" rx="9" fill="#1F3F60"/>
+    <text x="1526" y="409" class="badge" transform="rotate(90 1526 409)">GO</text>
   </g>
 
   <text x="70" y="697" class="small">Frozen U = {A1, A2, B1, C}</text>
-  <text x="430" y="697" class="small">Routes: A = {A1, A2, C}; B = {B1, C}</text>
+  <text x="470" y="697" class="small">Routes: A = {A1, A2, C}; B = {B1, C}</text>
+  <text x="1245" y="697" class="small">Gate state: GO</text>
   <text x="70" y="738" class="small">All inclusion-minimal cuts: {C}; {A1, B1}; {A2, B1}</text>
 </svg>

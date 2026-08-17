@@ -9,7 +9,7 @@ The exact Lean module is kernel-replayed, its declaration and axiom inventories 
 semantic contracts compile with unlimited heartbeat, all minimum K2 change classes are exercised,
 the categorical-only catalog and assurance routes are bound, and the Markdown/LaTeX/PDF artifact
 has deterministic and visual checks. The current execution evidence is the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json).
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json).
 The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -18,8 +18,9 @@ and [finalized r4 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-curren
 and [finalized r5 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json)
 and [finalized r6 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json)
 and [finalized r7 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json)
-are preserved as prior execution evidence. Here `r8` denotes only the eighth receipt in the
-versioned sequence that originated on 12 August, and therefore the ninth current-project replay
+and [finalized r8 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json)
+are preserved as prior execution evidence. Here `r9` denotes only the ninth receipt in the
+versioned sequence that originated on 12 August, and therefore the tenth current-project replay
 receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The current route receives execution credit only when its exact receipt exists and validates.

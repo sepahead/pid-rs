@@ -36,7 +36,7 @@ SCHEMA_REVISION = 1
 GENERATOR = "scripts/check-current-source-state-v1.py"
 REPOSITORY = "sepahead/pid-rs"
 EXPECTED_SCHEMA_SHA256 = (
-    "1027cc3826aa6933a23dea1736b5d007b9c5bc1568f41ac87dea98e5f2924a97"
+    "501ed8fcca211ae598e041a5596b44574c48da46a9143cafe7266a7493b93f53"
 )
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
 CRITICAL_ARTIFACTS = (
@@ -64,6 +64,7 @@ EXPECTED_PDF_PATHS = (
     "output/pdf/finite-alphabet-plugin-convergence.pdf",
     "output/pdf/formal-tool-adoption-audit.pdf",
     "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
+    "output/pdf/ksg-m1a-composite-v4-process.pdf",
     "output/pdf/mathematical-problem-solving-workflow.pdf",
     "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
     "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
@@ -561,9 +562,9 @@ def build_manifest(root: Path) -> dict[str, Any]:
             "excluded_paths": [MANIFEST_RELATIVE],
             "generated_at": "omitted_for_determinism",
             "projection_algorithm": (
-                "canonical compact JSON of sorted repository .gitignore-aware tracked-plus-"
-                "untracked entries {git_mode,path,sha256,size_bytes}; ambient global and "
-                ".git/info excludes are ignored"
+                "newline-free canonical compact JSON of sorted repository .gitignore-aware "
+                "tracked-plus-untracked entries {git_mode,path,sha256,size_bytes}; ambient "
+                "global and .git/info excludes are ignored"
             ),
             "scope_kind": "self_excluding_worktree_source_projection",
         },

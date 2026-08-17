@@ -38,7 +38,7 @@ SCRIPT = Path(os.path.abspath(os.fspath(Path(__file__))))
 ROOT = SCRIPT.parent.parent
 PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
-RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
+RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json"
 RECEIPT = ROOT / RECEIPT_RELATIVE
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -50,7 +50,8 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
 # This literal is deliberately one line so the append-only receipt can reconstruct
 # the exact pre-pin checker bytes without a checksum cycle.
 # fmt: off
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "2eb5e10a9e96cc8e52f8586407a7005bf0fc359bf10e7eddff303f69363b6c87"
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "aaac51edba0f8a354a766918213c3f0d8e1160a09db5b75e50a8ee80b4672aaa"
+EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "8fb61c4fcc831be1847ddec7448e2dbeb6f2f51b915b4b6cd91df561c491b5bb"
 # fmt: on
 EXPECTED_LOCAL_REPLAY_ROUTES = {
     "archive": (
@@ -255,6 +256,9 @@ PRESERVED_PRIOR_REPLAY_HASHES = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json": (
         "3dd2df7d7064bac93cf4806cdeac28d9ecc747444689162a4636029228822abb"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json": (
+        "86251c48c0f720d1ca021dcac87dfbf6e1a54adf409ea8a8981102cea1769611"
+    ),
 }
 PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
@@ -281,12 +285,15 @@ PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json": (
         "pid-rs/lean-current-project-replay/v2"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json": (
+        "pid-rs/lean-current-project-replay/v2"
+    ),
 }
 EXPECTED_POLICY_SHA256 = (
     "db0c403f61af1c49996ed217fd025007bd76743de8c57ff147fa12ed319eb204"
 )
 EXPECTED_ACTIVE_RESUME_SHA256 = (
-    "88ef9f57bd13e6ccaf887b25420913cf3d8d38903aae1522d1b1007a4b1e1d3d"
+    "ee9fd7dc96b1af56cb3784ab34d69339416457ee7f6b8864e9c7bcf63760ea35"
 )
 OPTION = "set_option backward.isDefEq.respectTransparency.types false in"
 EXPECTED_OPTION_LINES = {
@@ -428,13 +435,13 @@ EXPECTED_CURRENT_REPLAY_POINTER_PATHS = (
     "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
     "scripts/README.md",
 )
-EXPECTED_R8_SEQUENCE_EXPLANATION_PATHS = EXPECTED_CURRENT_REPLAY_POINTER_PATHS
+EXPECTED_R9_SEQUENCE_EXPLANATION_PATHS = EXPECTED_CURRENT_REPLAY_POINTER_PATHS
 EXPECTED_ACTIVE_RESUME_HASHES = {
     "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": (
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
     ),
     "audit/evidence/completion-active-resume.md": (
-        "88ef9f57bd13e6ccaf887b25420913cf3d8d38903aae1522d1b1007a4b1e1d3d"
+        "ee9fd7dc96b1af56cb3784ab34d69339416457ee7f6b8864e9c7bcf63760ea35"
     ),
 }
 EXPECTED_PENDING_ACTIVE_RESUME_PATHS = tuple(
@@ -445,8 +452,10 @@ EXPECTED_PENDING_ACTIVE_RESUME_PATHS = tuple(
 PENDING_OPERATIONAL_SHA256 = "0" * 64
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "61283264499a7b6069a4e5e9563c72541ab101b69379f3ace75a12cd4bf4b175",
-    "AGENTS.md": "558322ced657caf8a76e71844739366d8efa7594e2eb72e6524c0a6b05e9a8bf",
-    "CHANGELOG.md": "178c6a06ee8ac3c0c83ae99bac12fefea54b516e98dcf4897f04bfc33c227c1c",
+    ".github/workflows/ksg-m1a-composite-v4.yml": "541f4bcfe7135c63f4e4b76c5d119b2c64e60550e365885c4ac98f9c8c48df04",
+    "AGENTS.md": "28f74ab66f65c15a0fe2752e287e19cac2d6f419767fd454795260584f955e18",
+    "CHANGELOG.md": "d6e55c4581f6d663ffa3e2112bbd3eafea1d002fca64faa47a89019b901f3145",
+    "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": "538690ae27c6e52bb5bbb6844acb3cd8f32d46f8f08ef770e09dae8d33ae9bb6",
     "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
     "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md": "85bb7aed98e33f924a12bb882d8aba396a8d31b66b1432caebc48627b1e0b292",
     "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md": "591bccc8e770b9b51ab34ce8cce9d2ac54973c50185141e1a598fd90260dcc16",
@@ -456,28 +465,63 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json": "3bb78b296e9a1898ee72a2ae88988c1a73bbb81c3247054a500935f3690a4916",
     "audit/evidence/ksg-rev4-m1a-path-policy-v1.json": "7f4944ae0d4f9578c08a16f5bd5ba251e30339f574e11fa75840857a3710942e",
     "audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json": "f4a187516847c9826e9729c83906e1598df4657bc069c54a5527e71bdde17dc5",
-    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "4940532a46dcb345f5992bb3aa148f3262d1fef11f0b8e3114c8f78c52525417",
-    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "c909fecf9ae228528c13c8a3d9c7fe44c7ab11eedfc2d5d7142ddd66ecc9f90a",
-    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "d9acd539df31a5387fb7aa6208d41bd0cc1beb83d1b2bb3b81c1e11775faa39d",
+    "audit/evidence/ksg-m1a-composite-v4-process-visual-receipt-2026-08-17.md": "f014f36f8f3cd6325a5fa9f74eda2fb7a7d9b2202eea0cb81b4af2b6387e0b81",
+    "audit/evidence/ksg-rev4-m1a-composite-v3-impossibility-2026-08-15.json": "735925734c1eeb41cf4fa6a48ed20ccbb5dd0d7da786239b2ab5723b7a632b6b",
+    "audit/evidence/ksg-rev4-m1a-composite-v4-path-policy-v1.json": "9b6522e8ed8c3fc797dd89bedb933e677c16491c55296c3d919ae0f933872262",
+    "audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md": "c821cd7fefb472a99d2b2df5a66b7f6deb18c9c9a9c5472046abb547f4047d30",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json": "fb162cc40da3059b61eab9024f4aa38cf6daf2d84ef7e1d8a26dc7d345291e70",
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md": "cc604d039f1c6a488f3d25f3ca1d16bc7624db0cc4074608475bc662a8920a46",
+    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "186ba1bccdc28846654220afb91dbe1e9d49f4559e8ca76cb5e5f26ec8c42536",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "ff21bb914566b57cc61d40808eaf5d38d6beae120b4b88075f5db08d0257e42a",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "ba43b600b3e1353584af64ea0e1628f623f6ecfbf15547c99519003fc4a45ae1",
+    "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.pdf": "9111ff1ae77c011d9b75999852136880746f3e33b137ade877bee80f6e354499",
+    "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.svg": "9022812adeb3845e9d494428fb5e2f6489bb7cf938444c1c96c364c38d4f6095",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "0960ae0cbfdf74118111fb994ed08acd6ab6246f2176e552b317cf9fc4ffdbad",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg": "8c38292e6fcb0b848ebdbc745f48e8e85d9842b7a8184bd7305c593778c7b70e",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": "8d730825723c81f4610b188e6f290b85ee89bf2b228337a6ff887bd24ad9423c",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg": "2e8edce85d47398482b277fe35218f6d0c245975d3052109fe76a7db61ce97f9",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": "e067092709715babc62027fa5d8f7da122ebb1837c4eee0ff90ad9c2f2766527",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
+    "audit/formal/latex/ksg-m1a-composite-v4-process.tex": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657",
+    "audit/formal/latex/mathematical-problem-solving-workflow.tex": "deb0cf82f4ddaa2ecfeb858d1130df12d9a3831feaf9f3215fa176c8a2f9aae1",
+    "audit/formal/requirements-pdf.txt": "f1f2171ff6481ee900b72df600d8326140d001a1a024977b41386461e2b57d36",
+    "audit/schemas/current-source-state-v1.schema.json": "501ed8fcca211ae598e041a5596b44574c48da46a9143cafe7266a7493b93f53",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json": "7512e24e3256baaacca2d75a23a9ae2a530cd987f6460788d2b431175f41c8d1",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json": "797e7c5a0dc7122aff6c16319749c3a18683ebbe21e94dd039cdc5b7a330d42c",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json": "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v4.schema.json": "8492da6dfd704667515e7b9da88d501de34903e5e2b52582106211b07f48528e",
     "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json": "b477f8c4c3cb2066c0eb9c09a98cb9fbbc3ba330951aed440d2011fcace4d672",
     "audit/schemas/post-commit-source-state-v2.schema.json": "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a",
-    "justfile": "8cb030aaa01b1230c7d490c1bc399be8875c7285f4c39d6ca46eff624bfd4591",
-    "scripts/README.md": "32d63a3e34e1263d1fd6e49fedff9a35d6717df34dc2edf7aca062db41963f2a",
+    "justfile": "21a0f1eee5d11bdf2458d91c2260d5e984726b6e655ea6b67208ddacb530b776",
+    "output/pdf/ksg-m1a-composite-v4-process.pdf": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
+    "output/pdf/mathematical-problem-solving-workflow.pdf": "6abf5af2ab7fb5cf0b40c37977dc38156d4bdf251b6f2948815c472fc77f1288",
+    "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": "95a6e38797f6f4086ae0094bf187649bc01834a54e6a2d6c7aae9b2a4ae3b63d",
+    "scripts/README.md": "c6bd33664ae96fb7176bb3fbe5e8862643f34288eef2904e5a15fa3925cde7b5",
+    "scripts/capture-ksg-m1a-composite-v4.py": "7cf9a6fe57c2a828def8789524069e14a21d35739a5019b4310613c8f44065ef",
     "scripts/check-certified-sxpid2-claim-self-test.py": "ae2289b6e3ac461d6f0161009e13384e903d527ea52026b15d9d2ea8c32d435c",
     "scripts/check-certified-sxpid2-claim.py": "c119b3d239627f4d052d9ecf6fc7c47536ba2cd31dba91e867ad9d7e485fee67",
+    "scripts/check-current-source-state-v1-self-test.py": "3dc2d846f2512e10f871ad21dbda8d45817884998942c1325cf2b78138d5753e",
+    "scripts/check-current-source-state-v1.py": "1d9561909cee8ace366802c76ba108cb5418499d9549946aad34c809fff57bd7",
+    "scripts/check-formal-pdf-set.sh": "f5a224fd60b186b11dbbc06213a84173e55f07a941566fd665d0b2006409ac84",
+    "scripts/check-formal-pdf-style.py": "665128962f36e530b47c1861cbfd70065cb1719dc39427e6edb81335bc3c5676",
     "scripts/check-ksg-m1a-custody-correction-self-test.py": "a466461b9eecd4afd3f839aa8137a6fc6b4de13e1aa6e18dc81b0862c6f0fdcb",
     "scripts/check-ksg-m1a-custody-correction.py": "e504fb1617fc93abd096ced451d82c74745011edb4a3b4673bd2dd8c4cea3147",
     "scripts/check-ksg-m1a-hosted-recovery-self-test.py": "ce8cf3b23e9fa735f01b56bb6d90b18332f5b60d9b20738080b00356bbcef35f",
     "scripts/check-ksg-m1a-hosted-recovery.py": "6c422718b32d9ad22b74a22d1ea56b73ebe3b312412f28b3319f4085598d66cc",
     "scripts/check-ksg-m1a-phase-self-test.py": "851299dfb62de6cbec9f77f893ea5992839bc007e77e5772c30689281307873c",
     "scripts/check-ksg-m1a-phase.py": "433b493a52af6f7c738ba96fed99cf1f5183d975785527c0a040848a0ae14d42",
-    "scripts/check-post-commit-source-state-v2-self-test.py": "56910c1db339d642b34080bc1b5173324f7719f70b58453a39fffd4165eb8d70",
-    "scripts/check-post-commit-source-state-v2.py": "e2028d9edf0af7864abad52d89db4ea2855c1f9e4da94a178f45087432b5aaa9",
+    "scripts/check-ksg-m1a-composite-v4-process-pdf.sh": "8881f819da0a5ba8e6db31a007aa2465fbac7982de4c662b3d48d477bedfcf83",
+    "scripts/check-ksg-m1a-composite-v4-self-test.py": "4a40f43396e5b45aa0a5762995eabb908b61d850b1a215aa817c731140a6078b",
+    "scripts/check-ksg-m1a-composite-v4.py": "8fb61c4fcc831be1847ddec7448e2dbeb6f2f51b915b4b6cd91df561c491b5bb",
+    "scripts/check-mathematical-workflow-pdf-self-test.sh": "b8f42aa6dbd403861479c5a27960934bbf63f1d1372ec11caf8efc5a2a9d0228",
+    "scripts/check-mathematical-workflow-pdf.sh": "7af9d7acde3f2f61022007eb3ad1bd1c1862b18636071f2df6f48d346ce7678f",
+    "scripts/check-post-commit-source-state-v2-self-test.py": "b1f45814efca5754bdb33c0b41258be9f1874fd404ff7620505878a7c8fa4657",
+    "scripts/check-post-commit-source-state-v2.py": "06fa6721d366fd33b9bd8997d108c31578bc32da4bcdcda8ccf5aeb22fad94d3",
     "scripts/check-zeta-pid-transfer-firewall-self-test.py": "3f6c48049e797d89c6c183d10da8124348a9c23ec932bcea6a762cd571578df0",
     "scripts/check-zeta-pid-transfer-firewall.py": "f6345343ee9d075c0d4b195a41614e9dffbe51466782e852126758cff3839c03",
-    "scripts/generate-lean-4.33-replay.py": "4ab8d4305174302fa01afc8851acb4ca2bf718f6329a1bfd217d9ff0a9709f2c",
+    "scripts/generate-lean-4.33-replay.py": "7bf3d8cc48bec544d0ce0218bdc1367ec17b56c5657c9d8a259eb2515376179f",
 }
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
     relative
@@ -491,13 +535,13 @@ EXPECTED_ABSENT_OPERATIONAL_PATHS = (
 EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "da695e716fbae098a6f258947a668cff4c277b0976234ad7f85e0d92b417f1e0",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "2537f30b0a52129ff1ffbcf0152c594833879169af7b80f5a5ba0f891fed0001",
     "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "d90ef5931fb621c3b1f8cac8552c382711e88cd84cebe6d13393992534c024c9",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "2a4a5cc644a95179653983677674a1b90b802decf0baff3dbf0bd2347ca9cca7",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "18542798a79285b1d9b0254fb82f2212e486a24d2a0d5874bea95b3f145d7f7d",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "1c983c5ba576f4d4be4dde784552dcc8a15254e4ab83b4b56164075e8bd3554c",
     "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "429c3a7cfbc1a0083e181cc5a076c18da624f82f16317bd1718d542476cd8a35",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "c8da1c32edbdbb85256a0569ba940fc0e9d1d9d972741745ade360806b23b049",
     "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
     "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
     "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
@@ -1721,7 +1765,7 @@ def check_active_resume_split() -> None:
         "current completion pointer lost freeze semantics",
     )
     require(
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json" in text
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json" in text
         and "first 11 August replay" in text
         and "first 12 August replay" in text
         and "finalized r2 replay" in text
@@ -1730,6 +1774,7 @@ def check_active_resume_split() -> None:
         and "finalized r5 replay" in text
         and "finalized r6 replay" in text
         and "finalized r7 replay" in text
+        and "finalized r8 replay" in text
         and "prior evidence, not current runner custody" in text,
         "current completion pointer lost current/prior replay separation",
     )
@@ -1746,7 +1791,7 @@ def check_active_resume_split() -> None:
 
 def check_current_replay_pointers() -> None:
     current_leaf = (
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json"
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json"
     )
     bound_paths = {
         *EXPECTED_ACTIVE_CLAIM_HASHES,
@@ -1758,9 +1803,9 @@ def check_current_replay_pointers() -> None:
         "current replay pointer inventory is not fully hash-bound",
     )
     require(
-        set(EXPECTED_R8_SEQUENCE_EXPLANATION_PATHS)
+        set(EXPECTED_R9_SEQUENCE_EXPLANATION_PATHS)
         <= set(EXPECTED_CURRENT_REPLAY_POINTER_PATHS),
-        "r8 sequence explanation inventory is not pointer-bound",
+        "r9 sequence explanation inventory is not pointer-bound",
     )
     for relative in EXPECTED_CURRENT_REPLAY_POINTER_PATHS:
         text = stable_read(
@@ -1772,27 +1817,28 @@ def check_current_replay_pointers() -> None:
             and "finalized" in normalized
             and "r6" in normalized
             and "r7" in normalized
+            and "r8" in normalized
             and "execution credit only" in normalized
             and "exists and validates" in normalized,
-            f"current/prior r8 replay pointer semantics drifted: {relative}",
+            f"current/prior r9 replay pointer semantics drifted: {relative}",
         )
-    for relative in EXPECTED_R8_SEQUENCE_EXPLANATION_PATHS:
+    for relative in EXPECTED_R9_SEQUENCE_EXPLANATION_PATHS:
         text = stable_read(
-            ROOT / relative, f"r8 sequence explanation: {relative}"
+            ROOT / relative, f"r9 sequence explanation: {relative}"
         ).raw.decode("utf-8", errors="strict")
         normalized = " ".join(text.split())
         require(
-            "eighth receipt" in normalized
+            "ninth receipt" in normalized
             and "versioned sequence" in normalized
             and "originated on 12 August" in normalized
-            and "ninth current-project replay receipt overall" in normalized
+            and "tenth current-project replay receipt overall" in normalized
             and "11 August historical receipt is outside" in normalized
             and "calendar date" in normalized
             and "schema" in normalized
             and "theorem" in normalized
             and "review" in normalized
             and "independence" in normalized,
-            f"r8 sequencing/non-conflation boundary drifted: {relative}",
+            f"r9 sequencing/non-conflation boundary drifted: {relative}",
         )
 
 

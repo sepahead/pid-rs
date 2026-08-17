@@ -254,7 +254,7 @@
   {Mathematical Problem-Solving Workflow}
   {Full-fidelity process protocol for \texttt{pid-rs}}}
 \author{pid-rs contributors}
-\date{11 August 2026}
+\date{15 August 2026}
 
 \begin{document}
 \PidMakeTitle
@@ -262,8 +262,9 @@
 \begin{abstract}
 This document is the human-readable typeset rendition of the canonical Markdown file
 \texttt{MATHEMATICAL\_PROBLEM\_}\allowbreak\texttt{SOLVING\_WORKFLOW.md}. It records external process observations,
-then defines the complete project protocol for exact claims, independent routes, retained
-failures, certificate conversion, adversarial audit, blind holdouts, PID-specific exceptional
+then defines the complete project protocol for exact claims, separately developed routes with
+explicit independence accounting, retained failures, certificate conversion, adversarial audit,
+blind holdouts, PID-specific exceptional
 cases, Codex goal and continuity control, a future typed publication harness, layered assurance,
 and claim disposition. The protocol is project-defined guidance. It is not a PID estimator,
 theorem, benchmark result, or validation claim; the harness described here is a specification, not
@@ -301,12 +302,14 @@ A particular program returns a represented number
   =\operatorname{Program}_{\mathrm{compiler,features,platform}}
     (Z_1,\ldots,Z_n),
 \]
-and a consumer may use that number, diagnostics \(U_n\), and a policy \(\mathcal D\) to make a
-decision
+and a consumer may use that number, a typed diagnostic record \(U_n\), and a policy \(\mathcal D\)
+to make a decision
 \[
   d_n=\mathcal D(\widetilde F_n,U_n).
 \]
-These are four different objects: the population functional, the estimator, the executable
+Here \(\mathcal D\) has a declared domain consisting of the represented-result and
+diagnostic-record types and maps them into a declared decision space containing \(d_n\). These are
+four different objects: the population functional, the estimator, the executable
 result, and the consumer decision.  A proof that \(F\) is continuous establishes no finite-sample
 error rate for \(\widehat F_n\).  An estimator theorem does not prove that the executable implements
 the estimator.  Executable conformance does not establish that a downstream decision is safe.
@@ -339,7 +342,7 @@ An exact mathematical claim should be reducible to a proposition such as
   A_1(x)\wedge\cdots\wedge A_k(x)\Longrightarrow C(x),
   \tag{1}
 \]
-where \(\mathcal X\) is the domain, \(A_i\) are assumptions, and \(C\) is the conclusion.  A
+where \(\mathcal X\) is the domain, \(k\geq 1\), \(A_i\) are assumptions, and \(C\) is the conclusion.  A
 counterexample is one explicit \(x_\star\in\mathcal X\) for which every \(A_i(x_\star)\) is true
 but \(C(x_\star)\) is false.  An example outside \(\mathcal X\), or one that violates an assumption,
 does not refute (1); it may instead show that the assumption is necessary.
@@ -348,7 +351,7 @@ Quantifier order and convergence mode are part of the claim.  For example, point
 in probability over a declared class \(\mathcal P\) has the pattern
 \[
   \forall P\in\mathcal P\;\forall\varepsilon,\eta>0\;
-  \exists N(P,\varepsilon,\eta)\;
+  \exists N(P,\varepsilon,\eta)\in\mathbb N\;
   \forall n\ge N(P,\varepsilon,\eta):
   \Pr_P\!\left\{\bigl|\widehat F_n-F(P)\bigr|>\varepsilon\right\}<\eta.
   \tag{2}
@@ -380,7 +383,7 @@ node, or closing one branch of an AND-edge, is not closure.
   {AND prerequisites, OR routes, and the complete three-cut family in the frozen example.}
 \FloatBarrier
 
-\PidWorkflowSubsection{Certificates and independently checkable computation}
+\PidWorkflowSubsection{Certificates and separately specified checking}
 
 Exploratory floating-point output can suggest a lemma but is not a proof.  A certificate separates
 generation from checking:
@@ -412,7 +415,9 @@ assert that every PID proposal uses this carrier or semantics.  For finite varia
 \(P\) assigns nonnegative masses summing to one.  A source collection is a nonempty subset of
 \(\{1,\ldots,m\}\).  An antichain is a nonempty set of source collections in which no member
 contains another.  The declared cumulative quantities \(c_\alpha\), indexed by antichains, are
-related to atoms \(\pi_\beta\) by a finite zeta transform
+related to atoms \(\pi_\beta\) by a finite zeta transform. The orientation below is part of the
+definition: \(\beta\preceq\alpha\) means that atom \(\pi_\beta\) contributes to cumulative
+\(c_\alpha\).
 \[
   c_\alpha=\sum_{\beta\preceq\alpha}\pi_\beta,
   \qquad
@@ -425,8 +430,9 @@ where \(\preceq\) is the declared redundancy order and \(\mu\) is its Möbius fu
 paper semantics or that floating-point code evaluates them accurately.
 
 For the ordinary two-source four-atom shape, let \(R\), \(U_1\), \(U_2\), and \(S\) denote
-redundancy, source-specific unique terms, and synergy.  If the corresponding cumulative values are
-\(c_R,c_1,c_2,c_{12}\), inversion is
+redundancy, source-specific unique terms, and synergy.  Let \(c_R\) be the redundancy-node
+cumulative, \(c_1\) and \(c_2\) the two single-source cumulatives, and \(c_{12}\) the joint-source
+cumulative for the already declared functional. Inversion is
 \begin{align*}
   R   &=c_R,\\
   U_1 &=c_1-R,\\
@@ -489,7 +495,9 @@ mutation \(m\) of a proof script, certificate, or implementation, a search may r
     -\text{runtime}
   \bigr)
 \]
-lexicographically.  Mutation operators may swap a source mask, replace a union with an
+lexicographically, with larger tuples preferred. Thus an accepted invalid mutant outranks every
+rejected mutant, and the negative signs prefer smaller witnesses and shorter runtimes within the
+same acceptance class. Mutation operators may swap a source mask, replace a union with an
 intersection, reverse a log ratio, perturb an interval endpoint, or delete one Möbius predecessor.
 Any accepted invalid mutant is a concrete checker weakness and must be retained and minimized.
 
@@ -536,10 +544,11 @@ for a fully written proposition \(H\).  Each component is itself a record
    \text{negative evidence},\text{residual boundary}).
   \tag{7}
 \]
-The component \emph{artifact-verification state} is one of
+The component \emph{assurance-component closure state} is one of
 \texttt{not-applicable}, \texttt{open}, \texttt{rejected}, or \texttt{closed}.  It is distinct
-from the accepted evidence class (for example, theorem, finite machine check, certified bound,
-empirical result, counterexample, or diagnostic) and from the claim disposition
+from the canonical artifact-verification label, from the accepted evidence class (for example,
+theorem, finite machine check, certified bound, empirical result, counterexample, or diagnostic),
+and from the claim disposition
 (\texttt{proposed}, \texttt{active}, \texttt{blocked}, \texttt{falsified}, or \texttt{complete}).
 Multiple evidence records may support one component; one claim has one current disposition.
 
@@ -570,16 +579,17 @@ inapplicable component needs a recorded reason.
 
 \PidWorkflowSubsection{Critical cut sets determine dependence}
 
-Let test families \(T_1,\ldots,T_k\) bear on a binary proposition \(H\), and let \(C\) range over a
-fully defined finite set of latent shared-failure states for an oracle, imported theorem,
-generator, or implementation.  Different test names do not make them independent.  For each
-\(B\in\{H,\neg H\}\), a complete joint evidence model must retain the shared state:
+Let test-result random variables \(T_1,\ldots,T_k\) bear on a binary proposition \(H\), let
+\(t_1,\ldots,t_k\) denote one possible result tuple, and let \(C\) range over a fully defined finite
+set of latent shared-failure states for an oracle, imported theorem, generator, or implementation.
+Different test names do not make them independent.  For each \(B\in\{H,\neg H\}\), a complete joint
+evidence model must retain the shared state:
 \[
-  \Pr(T_1,\ldots,T_k\mid B)
+  \Pr(T_1=t_1,\ldots,T_k=t_k\mid B)
   =
   \sum_c
   \Pr(C=c\mid B)\,
-  \Pr(T_1,\ldots,T_k\mid B,C=c).
+  \Pr(T_1=t_1,\ldots,T_k=t_k\mid B,C=c).
   \tag{8}
 \]
 Multiplying marginal pass probabilities is justified only after an evidence-dependence model
@@ -596,7 +606,7 @@ oracle.  Let \(D\) mean that the implementation has a particular semantic defect
 mean that the shared oracle also contains the same defect.  Conditional on
 \(D\wedge O\), every suite can pass:
 \[
-  \Pr(T_1=\cdots=T_5=\mathrm{pass}\mid D,O)=1.
+  \Pr(T_1=\cdots=T_5=\mathrm{pass}\mid D\wedge O)=1.
   \tag{9}
 \]
 They are useful for code paths and transformations outside the shared defect, but at the oracle
@@ -697,9 +707,9 @@ enlarges the proposition's scope.
 
 \PidWorkflowSubsection{Change invalidation and publication state}
 
-Orient every dependency-bearing edge from prerequisite to dependent.  If (u\to v), the current
-validity of (v) relies on (u); changing (u) invalidates (v) and every other dependent
-reachable from (u).  It does not invalidate unreachable upstream artifacts.  This orientation
+Orient every dependency-bearing edge from prerequisite to dependent.  If \(u\to v\), the current
+validity of \(v\) relies on \(u\); changing \(u\) invalidates \(v\) and every other dependent
+reachable from \(u\).  It does not invalidate unreachable upstream artifacts.  This orientation
 makes the affected set an ordinary forward reachability query and prevents the common mistake of
 walking the graph backward.
 
@@ -730,6 +740,13 @@ supplements explain the protocol but do not change it. A source observation is n
 This note does not validate the mathematical claims in the external sources. It also does not claim
 that the source workflow guarantees a correct proof. The workflow is useful because it makes the
 claim, search, failure, and audit steps explicit.
+
+An author, institution, paper, repository, X thread, or model is a source, not an authority by
+label. Keep each statement attributed until separately adjudicated. Before adopting a lesson,
+inspect at least: statement semantics; primary-source correspondence; mathematical logic; executable
+or formal implementation; trust surface; numerical representation; hostile controls; provenance
+and selection; reproducibility and independence dimensions; and scope, nonimplications, and transfer
+boundaries. A council supplies adversarial hypotheses, not votes that substitute for this review.
 
 This note is project-defined process guidance. It has no software implementation or defining
 method paper. It adds no PID method, estimator, theorem, benchmark result, or validation.
@@ -793,19 +810,22 @@ Model confidence, polished prose, and agreement among models are not evidence cl
   of the constructions, a general convergence proof, or a convergence theorem for a fixed pid-rs
   quantizer. Its reviewed Eq. (8) overlap display (physical PDF page 4) repeats $m_{S_2}$;
   independent substitution of both source-bin widths requires $m_{S_1}m_{S_2}$, a local source
-  correction rather than an estimator change. Definition 1 and the explicit non-normalization
-  discussion are on physical PDF page 5; the mixed-system limitation and Appendix K begin on
-  physical PDF page 27.
-  Retain three further arXiv-v3 source corrections without silently converting them into pid-rs
-  estimator changes. First, the global two-source expectation immediately after Definition 2 on
+  correction rather than an estimator change. This is a reviewer-derived candidate source
+  correction, not an author- or publisher-confirmed erratum. Definition 1 and the explicit
+  non-normalization discussion are on physical PDF page 5; the mixed-system limitation and
+  Appendix K begin on physical PDF page 27.
+  Retain three further reviewer-derived candidate source corrections from arXiv v3; none is
+  author- or publisher-confirmed, and none may silently become a pid-rs estimator change. First,
+  the global two-source expectation immediately after Definition 2 on
   physical PDF page 5 prints $dt\,ds_1\,ds_1$. The density and local integrand depend on
   $(t,s_1,s_2)$, and the Appendix D derivation on physical PDF page 24 uses
-  $dt\,ds_1\,ds_2$, so the second displayed differential must be $ds_2$. Second, Equation (14) on
+  $dt\,ds_1\,ds_2$, so the source-consistent reading of the second displayed differential is
+  $ds_2$. Second, Equation (14) on
   physical PDF page 10 is a natural-log/digamma expression. To reproduce the paper's base-2
   definitions and bit-valued examples, the complete right-hand side must be divided by $\ln 2$;
   pid-rs intentionally retains the natural-unit expression and converts an upstream bit fixture by
-  $\text{nats}=\text{bits}\cdot\ln 2$. Third, Algorithm 6 on physical PDF page 28 must pass the
-  antichain $\alpha$ to both `_compute_epsilons(S,T,antichain)` and
+  $\text{nats}=\text{bits}\cdot\ln 2$. Third, the source-consistent Algorithm 6 wiring on physical
+  PDF page 28 passes the antichain $\alpha$ to both `_compute_epsilons(S,T,antichain)` and
   `_compute_n_alpha(S,antichain,eps)`, and target counts must come from `_compute_n_T(T,eps)`.
   The printed pseudocode omits $\alpha$ twice and calls the source
   count routine on $T$. Algorithm 5 also advertises an unused $\alpha$ argument, while Algorithm
@@ -912,6 +932,340 @@ These observations come from the five linked posts:
 - [Long-run work pattern](https://x.com/Qiaoqiao2001/status/2080003459248755141)
 - [Research loop](https://x.com/Qiaoqiao2001/status/2080003461517549887)
 
+### Lea launch thread and source audit: a proof checker is not a trusted problem setter
+
+The [Lea launch thread](https://x.com/chegday/status/2088290461072908638) was inspected on
+2026-08-15 together with the public
+[`VIDA-NYU/Lea`](https://github.com/VIDA-NYU/Lea) repository at version-pinned commit
+[`790853c89522bf5899feeb0052b795326feee720`](https://github.com/VIDA-NYU/Lea/commit/790853c89522bf5899feeb0052b795326feee720).
+The separate public evaluation repository was inspected at
+[`18cf90da1c5db574382ab4f0e3e3aad27dd07462`](https://github.com/chinmayhegde/lea-prover/commit/18cf90da1c5db574382ab4f0e3e3aad27dd07462),
+FormalQualBench at
+[`efaa113c6a00a79e92842ce541b407d7695d7699`](https://github.com/math-inc/FormalQualBench/commit/efaa113c6a00a79e92842ce541b407d7695d7699),
+and upstream SafeVerify at
+[`241dfb0d986baf8a3ba76cba14f10c16e8793e84`](https://github.com/GasStationManager/SafeVerify/commit/241dfb0d986baf8a3ba76cba14f10c16e8793e84).
+No external repository archive or Git-object bytes and no provider-authentication record are
+retained in pid-rs; these commit hashes and URLs are source locators, not pid-rs custody.
+This was a process and source-code review, not an execution of Lea and not a verification of any
+mathematical result attributed to it. No X response bytes or authentication record are retained;
+the thread text is an attributed observation from the visible retrieval, not a signed statement.
+
+The thread candidly reports that an early run appeared to solve a Quillen--Suslin formalization by
+weakening a load-bearing definition to a trivial proposition. It also reports a later, much larger
+Lean development as a proper proof. Those are the thread author's claims. The later proof was not
+located and audited as a public replay bundle, so pid-rs records no verified Quillen--Suslin
+formalization result. Quillen--Suslin is a classical
+theorem; the reported achievement concerns a FormalQualBench formalization challenge, not discovery
+of a new mathematical theorem. The thread's separate allusion to internally solved open PDE/TCS
+problems names no exact theorem or public proof bundle and therefore receives no result credit.
+The inspected
+[prover README](https://github.com/VIDA-NYU/Lea/blob/790853c89522bf5899feeb0052b795326feee720/apps/lea-standalone/prover/README.md#L52-L55)
+says benchmark harnesses and results live in a separate evaluation repository, so absence from this
+serving repository is not evidence that they never existed; it is a custody boundary.
+
+The exact historical mutation is present at the evaluation repository's pinned
+[`test_cheats.py`](https://github.com/chinmayhegde/lea-prover/blob/18cf90da1c5db574382ab4f0e3e3aad27dd07462/tests/cheats/test_cheats.py#L42-L57):
+inside namespace `QuillenSuslinTheorem`, it declares a local abbreviation:
+
+```text
+abbrev Module.Free (...) : Prop := True
+```
+
+The later surface spelling resolves to the local
+fully qualified declaration and `trivial` proves it. The canonical
+[FormalQualBench target](https://github.com/math-inc/FormalQualBench/blob/efaa113c6a00a79e92842ce541b407d7695d7699/FormalQualBench/QuillenSuslinTheorem/Main.lean#L1-L14)
+uses Mathlib's global `Module.Free`. This is a kernel-valid proof of the wrong elaborated object,
+not a Lean kernel break; because the trivialization can be axiom-free, an allowed-axiom scan alone
+cannot detect it.
+
+The inspected Lea commit exposes the more general boundary directly in source:
+
+- Lea's
+  [`safeverify.py`](https://github.com/VIDA-NYU/Lea/blob/790853c89522bf5899feeb0052b795326feee720/apps/lea-standalone/prover/lea/safeverify.py#L9-L30)
+  says its target is generated from the submitted file by replacing
+  theorem bodies with `sorry`. It explicitly warns that a weakened statement is inherited by that
+  generated target and can pass; a separately trusted target is required to catch statement drift.
+- The verifier is
+  [opt-in](https://github.com/VIDA-NYU/Lea/blob/790853c89522bf5899feeb0052b795326feee720/apps/lea-standalone/prover/lea/tools.py#L834-L878)
+  and can be unavailable. In the
+  [subagent promotion path](https://github.com/VIDA-NYU/Lea/blob/790853c89522bf5899feeb0052b795326feee720/apps/lea-standalone/adapter/app/bridge.py#L1479-L1493),
+  an explicit
+  `rejected` verdict blocks promotion, but `unavailable` or `error` does not. A clean Lean compile
+  can therefore remain the operative gate in a degraded configuration; the promoted stored step
+  records compiler `check_status=ok`, not a successful SafeVerify receipt.
+- The wrapper has a second fail-closure obligation. After a nonzero SafeVerify exit, its
+  [universe/hygiene override](https://github.com/VIDA-NYU/Lea/blob/790853c89522bf5899feeb0052b795326feee720/apps/lea-standalone/prover/lea/safeverify.py#L247-L358)
+  accepts when one extracted theorem-type mismatch becomes equal after name normalization. It does
+  not establish that the same output contains no second violation. This is not merely hypothetical:
+  the evaluation repository's
+  [Fable report](https://github.com/chinmayhegde/lea-prover/blob/18cf90da1c5db574382ab4f0e3e3aad27dd07462/fqb-reports/fqb-fable5-bon5-report.md#L62-L77)
+  records a Pontryagin-duality candidate with `sorryAx` that was accepted by this alternate branch
+  after SafeVerify returned nonzero for an alpha-equivalent type diagnostic. No regex or
+  pretty-printed sub-diagnostic may override a checker-wide failure; acceptance must be the
+  conjunction of every structured verdict.
+- The vendored
+  [SafeVerify documentation](https://github.com/VIDA-NYU/Lea/blob/790853c89522bf5899feeb0052b795326feee720/apps/lea-standalone/prover/third_party/SafeVerify/README.md#L25-L44)
+  says kernel replay covers the submitted module but not its imports; fresh import replay needs an
+  additional route. It separately lists source-level escape
+  surfaces such as `implemented_by`, `extern`, and `noncomputable`, and compilation-time filesystem
+  effects that require sandboxing.
+- Useful controls are nevertheless present: submitted declarations are replayed through Lean's
+  kernel, theorem types and selected definition bodies are compared, the permitted axiom basis is
+  explicit, `partial`/`unsafe` declarations are rejected, and the user-facing tool correctly says
+  that it checks a proof against the file's own statements rather than certifying intended meaning.
+
+The inspected repository's public workflows build the website and container image but do not make
+SafeVerify or the historical definition-shadow failure a mandatory regression gate. pid-rs does
+not infer an absent private evaluation, but it does refuse to treat an unpublished run label,
+leaderboard statement, or model summary as a durable proof artifact.
+
+Project interpretation: pid-rs does not adopt Lea as a dependency or call it mature enough to
+adjudicate a publication claim. The transferable lesson is architectural, not competitive: the
+claim packet, definitions, imports, permitted axioms, and judge must be fixed outside the
+candidate's write authority; verification must be mandatory and fail closed when unavailable;
+imports must be replayed from a clean pinned environment; compilation must be confined; and a
+separate human-reviewed prose-to-formal map must remain open even after kernel acceptance. Calling
+this candidate/judge isolation is more precise than inferring intent or misconduct from a failed
+candidate.
+
+### Grothendieck-constant case study: discovery, certification, and state loss
+
+The [human--AI case-study thread](https://x.com/rah4927/status/2088265007255392411), the exact
+arXiv v2 papers
+[*Long-Horizon AI Research for Grothendieck Constant*](https://arxiv.org/abs/2608.11195v2) and
+[*New Lower and Upper Bounds for the Grothendieck Constant*](https://arxiv.org/abs/2608.11158v2),
+and the public
+[`trishullab/grothendieck-bounds`](https://github.com/trishullab/grothendieck-bounds) repository at
+version-pinned commit
+[`17de8e2331859d37322c199a3d56fb81d740764f`](https://github.com/trishullab/grothendieck-bounds/commit/17de8e2331859d37322c199a3d56fb81d740764f)
+were inspected on 2026-08-15. The downloaded case-study PDF was 1,094,088 bytes, 17 pages, SHA-256
+`da428c740ab9af973220823673094e2c031b4522f0fdb531d22e52cfed574fd4`; the mathematics PDF was
+678,634 bytes, 56 pages, SHA-256
+`d1a6bd20324712eef290dea920fafcd2fd33f0f00a06028ac7fb633adcbbb377`. These downloaded PDFs are
+not retained repository artifacts, and their hashes are local retrieval observations rather than
+publisher authentication.
+
+The case-study paper's Section 3 and Tables 1--2 report roughly 240 sessions, 2,091 reasoning-model
+calls, 152 million tokens, about forty dated human directives, a reasoning model, a separate coding
+agent, a human bulletin, and session reports used as long-term memory. It labels the lower bound
+$K_G\geq 6\pi/11$ as additionally verified by the authors and stated as a theorem. It deliberately
+labels stronger reported bounds only `system-tested`, because their certificates had not yet
+received that human verification. pid-rs does not independently validate either mathematical
+paper, and the same authors' review is not institutional independence.
+
+Three process observations are especially load-bearing:
+
+1. Repeated failed constructions were useful only after a human-directed change of question:
+   instead of launching another variant, the run sought a universal obstruction. This suggests a
+   research-judgement trigger, not a theorem schema. A PID obstruction follows only if its exact
+   functional, admissible class, mixture/limit map, and quantifiers are separately proved.
+2. Section 5 reports that an exploration-only numerical value survived as an apparent record after its caveat and an
+   earlier feasibility criterion disappeared from repeatedly rewritten summaries. The archive
+   retained the facts, but the active representation lost them; the unsupported value was withdrawn
+   25 days later. A polished active summary must therefore be a derived view over an append-only
+   obligation/failure ledger, never the authority that can erase caveats, contradictions, or status.
+3. Appendix A reports that adversarial review found a finite-to-measurable-mixture gap, a Jensen inequality in
+   the wrong direction, and a coverage defect in the interval certificate. Repairing a proof after
+   those findings does not erase the failed versions; each becomes a load-bearing correction-ledger
+   event. Retain a hostile fixture where permitted; otherwise record the exact privacy, licensing,
+   security, or provider omission instead of claiming a permanent executable control.
+
+The certificate repository claims a useful *shape*: exploratory numerics are separated from Arb
+checks; exact decimal inputs are declared; the covered parameter domain is partitioned into
+regimes; margins are reported; tool versions and deterministic commands are named; and completed
+logs are retained. Source inspection nevertheless found one concrete fail-closure defect in the
+public lower-bound wrapper at the inspected commit. The
+[`highc_certificate.py` driver](https://github.com/trishullab/grothendieck-bounds/blob/17de8e2331859d37322c199a3d56fb81d740764f/lower-bounds/scripts/highc_certificate.py#L91-L151)
+prints three load-bearing Boolean dispositions--the branch-positivity check, the away-region
+domination check, and the $M_O$ validity check--but does not raise or exit when any is false. The
+[`run_all.sh` predicate](https://github.com/trishullab/grothendieck-bounds/blob/17de8e2331859d37322c199a3d56fb81d740764f/lower-bounds/run_all.sh#L52-L57)
+greps an unconditional final string and the two branch-and-bound success strings, not those three
+Boolean dispositions. A false prerequisite can therefore coexist with the wrapper's exit status
+zero. A separately inspecting consumer could still reject the printed `False`; the defect is the
+wrapper's success predicate, not evidence that a retained positive disposition is false.
+
+A second candidate concern did **not** survive direct checking and is retained here to demonstrate
+why representation semantics must be tested before alleging a coverage gap. The high-$c$ source
+defines $H=1/12$ in Arb and passes `float(H)` into an interval constructor. That binary64 value is
+exactly $6004799503160661/72057594037927936$, below $1/12$ by
+$1/216172782113783808$. But under the declared `python-flint` 0.8.0 semantics, the actual interval
+constructed by `iv` from zero and `float(H)` has an outward upper endpoint about
+$0.0833333333527358847>1/12$, and the Taylor ball contains exact $H$. This was an unretained,
+reviewer-derived local calculation, not execution evidence from the upstream project. Its bounded
+reproduction under `python-flint==0.8.0` is:
+
+```python
+from flint import arb, ctx
+ctx.prec = 300
+H = arb(1) / 12
+f = float(H)
+lo, hi = arb(0), arb(f)
+interval = arb((lo + hi) / 2, (hi - lo) / 2)
+assert interval.contains(H) and interval.upper() > H
+```
+
+The suspected endpoint sliver is therefore **not** established by the binary64 conversion and is
+withdrawn as a defect.
+
+The non-fatal wrapper predicate is a certificate-wrapper fail-closure/verification defect, not
+evidence of intent or a refutation
+of the paper's theorem. Closure requires fatal checks for every prerequisite, hostile mutations
+that make each prerequisite false, and a clean rerun. This source inspection did not replay the
+full certificate or prove that every analytic reduction and arithmetic conversion is sound.
+Generator, checker, repository, paper, and author review also share premises and custody. pid-rs
+therefore transfers only the requirement to produce a finite, separately re-derived,
+margin-bearing, fail-closed certificate when the object permits one--never the Grothendieck
+mathematics or its conclusion.
+
+#### Twenty-lens joint disposition
+
+The two cases were reviewed through the same mandatory lenses used below. The entries are
+prospective requirements or no-transfer dispositions only. They do **not** assert that an existing
+pid-rs proof, certificate, or accepted claim was produced under this protocol; object-specific
+compliance remains `OPEN` until a packet contains the required evidence.
+
+| Lens | Disposition for pid-rs |
+|---|---|
+| 1. Estimand | **NO TRANSFER:** no PID functional, estimator, atom, or objective is supplied by either case. |
+| 2. Types | **PROSPECTIVE REQUIREMENT:** task statement, definitions, imports, candidate payload, certificate, and judge are distinct typed objects. |
+| 3. Quantifiers | **PROSPECTIVE REQUIREMENT:** freeze their order before candidate access; a later change creates a new revision. |
+| 4. Mappings | `OPEN` per future claim: neither a Lean pass nor a Grothendieck obstruction maps into PID without a positive theorem. |
+| 5. Support/reference measure | `N/A` to the process lesson; every later PID use must still declare its own law and support. |
+| 6. Lattice/source count | `N/A`: no antichain order, redundancy functional, or source-count result transfers. |
+| 7. Units/gauge | **NO TRANSFER:** exact constants and arithmetic representation must be bound; no information-unit claim is present. |
+| 8. Population/empirical | **PROSPECTIVE REQUIREMENT:** exploratory, system-tested, certified, and human-reviewed display tags must not be collapsed. |
+| 9. Sampling | `N/A` to these proof cases; estimator sampling claims retain their own obligations. |
+| 10. Selection/UQ | **PROSPECTIVE REQUIREMENT:** adaptive route selection, stopping, and chosen-result history require an ex-ante or append-only ledger. |
+| 11. Formal correspondence | **PROSPECTIVE REQUIREMENT:** a candidate-derived formal target cannot establish intended-statement identity. |
+| 12. Kernel/axioms/toolchain | **PROSPECTIVE REQUIREMENT:** bind and replay the exact import closure, kernel, axiom allowlist, source, and sandbox route. |
+| 13. Route dependency diversity | **NO INDEPENDENCE CREDIT:** separate models, roles, sessions, or files are correlated unless their dependency and custody cuts differ. |
+| 14. Numerical/binary64 | **PROSPECTIVE REQUIREMENT:** exploration must become exact rational or outward-rounded finite coverage with a positive margin where applicable. |
+| 15. Compiled/wrapper parity | `OPEN` per artifact: compilation, kernel replay, source scan, and executable refinement are separate gates. |
+| 16. Counterexample/mutation | **PROSPECTIVE REQUIREMENT:** attack target weakening, judge edits, import/axiom expansion, lost coverage, and coordinated status reseals. |
+| 17. Custody/threat/refusal | **PROSPECTIVE REQUIREMENT:** judge and task packet remain outside candidate authority; unavailable verification is a refusal, never a pass. |
+| 18. Citations/novelty | **ATTRIBUTED OBSERVATION:** author reports and repository claims remain so until separately adjudicated with the applicable independence vector recorded. |
+| 19. Ecosystem/authority | **NO TRANSFER:** Prisoma, Galadriel, Haldir, and Crebain inherit no readiness or PID result from these process studies. |
+| 20. Resource/platform/release | **PROSPECTIVE REQUIREMENT:** retain model/tool versions, budgets, interventions, failed attempts, selected route, platform, and publication status separately. |
+
+### DeepSeek Harness, Cordis, and category theory: explicit mapping checks, not branding
+
+The newly public
+[`deepseek-ai/deepseek-harness`](https://github.com/deepseek-ai/deepseek-harness) repository was
+inspected on 2026-08-15 at version-pinned commit
+[`47f943859bef60e4160492346772ded9b24f765a`](https://github.com/deepseek-ai/deepseek-harness/commit/47f943859bef60e4160492346772ded9b24f765a),
+the merge that published the `0.1.0-rc.5` family. Its own
+[README](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/README.md)
+calls the release a developer preview and warns of compatibility-breaking changes. The inspected
+harness vendors Cordis `4.0.0-rc.7` at upstream commit `56b3d4f...`, then records substantial local
+lifecycle and transactional hardening in its
+[vendor manifest](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/vendor/README.md#L13-L46).
+The current public Cordis repository was separately inspected at
+[`8cc9e33fab69e2d0476d126baaf2acb24e6a6ab4`](https://github.com/cordiverse/cordis/commit/8cc9e33fab69e2d0476d126baaf2acb24e6a6ab4),
+and its actively revised 88-page preprint, *A Programming Paradigm for Spatiotemporal
+Composability*, at paper commit
+[`948a07b369c62adb3b12e102458be5c18dfb69b9`](https://github.com/cordiverse/paper/commit/948a07b369c62adb3b12e102458be5c18dfb69b9).
+These external repository objects and PDF bytes are not retained by pid-rs, and the source review
+does not authenticate a provider or replay the TypeScript implementation.
+
+Cordis uses real algebra rather than category-theory decoration. It models context transformations
+and their oppositely accumulated candidate inverses by a twisted-composition monoid, proves
+homomorphism and commutation results, and combines revertible effects with reactive coeffects.
+Monads, comonads, and enriched categories supply background vocabulary, while the central
+construction is an explicit operational calculus over effects, dependencies, and lifecycle traces.
+That distinction matters: the paper's implementation section explicitly says that `ctx.effect`
+does **not** verify the witness that a returned disposer actually reverses its effect. The component
+author retains that obligation. The paper also defines effect “independence” by commutation of
+forward/inverse transformations and stability of yielded inverses. It is not epistemic,
+institutional, statistical, data, implementation, or custody independence.
+
+The DeepSeek Harness exposes several useful engineering lessons without making them mathematical
+evidence. Its
+[architecture](https://github.com/deepseek-ai/deepseek-harness/blob/47f943859bef60e4160492346772ded9b24f765a/docs/architecture.md#L9-L102)
+separates service definition, provider, and consumer; makes model-visible context derivable from an
+append-only session log; declares dependencies; and treats registrations as reversible effects.
+But “everything is a plugin” and “there is no privileged core” are the wrong acceptance model for
+pid-rs research. Proposers, search heuristics, and non-authoritative tool adapters may be
+replaceable. A frozen statement, axiom/import policy, judge, reference values, and acceptance
+predicate must remain outside candidate authority. A session log improves replay only to the
+extent that the logging boundary is complete and trustworthy; it does not prove authenticity,
+semantic correctness, or absence of unlogged inputs. Scratch-state teardown may be reversible,
+whereas accepted evidence and correction history remain append-only. An external publication,
+remote write, or leaked secret is an emission, not an invertible effect.
+
+Category theory has one immediate, bounded use in this project: it sharpens **explicit mapping
+checks between named object types**. In plain language, this asks whether a result really carries
+from one object to another, and what exact evidence licenses that step. The default artifact remains
+a typed directed multigraph, because many research
+edges are partial, premise-indexed, approximate, statistical, or versioned. A category-theoretic
+term is permitted only when its laws are part of the claim:
+
+- a proposed category names its objects, morphisms, equality, identities, composition, and the
+  closure/associativity premises actually used;
+- a proposed functor names both categories and proves preservation of identities and composition;
+- a claimed naturality or commuting square names every map and proves exact equality, or replaces
+  equality with a separately justified metric/divergence bound and total error budget;
+- parallel proof, formalization, estimator, representation, and consumer paths are not identified
+  merely because they end in similarly named values; and
+- the absence of a proved arrow is an `OPEN` or `BLOCKED` transfer, not an invitation to draw one.
+
+For example, a paper-to-formal-to-executable claim may use the following square only after its four
+arrows and the path equality are separately bound:
+
+```text
+paper object  --formalization-->  formal object
+     |                                  |
+  semantic map                     extraction/refinement
+     |                                  |
+     v                                  v
+reference object --implementation--> executable object
+
+required witness: extraction/refinement o formalization
+                  = implementation o semantic map
+```
+
+An approximate version must state the common codomain, metric or divergence, domain of validity,
+and an aggregate bound; visual symmetry is not evidence that the square commutes. A failed square
+identifies an exact missing edge or path disagreement and is retained as a counterexample.
+
+Two tempting project-specific recastings are rejected for now. First, the finite PID antichain
+poset can be regarded as a thin category, but pid-rs already has the exact order and finite
+zeta/Moebius transforms it needs. Re-labelling that code adds no theorem, algorithm, or safety.
+Second, Markov categories offer a serious compositional language for stochastic channels,
+conditional independence, data processing, and comparison of statistical experiments. Perrone's
+[*Markov Categories and Entropy*](https://arxiv.org/abs/2212.11719v2) recovers mutual-information
+and entropy constructions from enriched categorical structure, and Fritz et al.'s
+[*Representable Markov Categories and Comparison of Statistical Experiments in Categorical
+Probability*](https://arxiv.org/abs/2010.07416) treats Blackwell--Sherman--Stein comparison. Neither
+source defines MGW shared-exclusions atoms, proves an Ehrlich estimator, supplies a PID lattice
+measure, or validates Rust/binary64 behavior. A future Blackwell-order PID investigation would be a
+distinct PID proposal with its own method identity; it would not be an alias or bridge to MGW,
+Schick--Poland, Ehrlich, Williams--Beer, PID2, or PID3.
+
+#### Twenty-lens adoption disposition
+
+| Lens | Disposition for pid-rs |
+|---|---|
+| 1. Estimand | **NO TRANSFER:** Harness/Cordis and categorical probability supply no pid-rs PID estimand or estimator. |
+| 2. Types | **ADOPT AS A PROSPECTIVE REQUIREMENT:** every diagram must type its objects, arrows, equality, and applicable premises. |
+| 3. Quantifiers | `NARROW`: composition preserves only the quantifiers actually proved for every arrow; none may be inferred from diagram shape. |
+| 4. Mappings | **ADOPT FOR THIS BOUNDED USE:** commuting-path obligations make missing or disagreeing transfers explicit. |
+| 5. Support/reference measure | `OPEN` per stochastic use; categorical notation never supplies support, disintegration, density, or reference-measure premises. |
+| 6. Lattice/source count | **NO CHANGE:** the finite antichain poset and Moebius direction remain the current operative specification; thin-category language adds no credit. |
+| 7. Units/gauge | **NO TRANSFER:** every arrow still carries its own nats/bits, metric, scale, and gauge behavior. |
+| 8. Population/empirical | `NARROW`: population laws, empirical PMFs, estimators, and outputs remain distinct objects with no automatic arrow. |
+| 9. Sampling | `N/A` to Cordis; a statistical diagram still needs its exact row law, dependence, split, and rate premises. |
+| 10. Selection/UQ | `NARROW`: durable event logs motivate selection ledgers but do not establish completeness, blinding, or uncertainty control. |
+| 11. Formal correspondence | **ADOPT AS A CHALLENGE TEMPLATE ONLY:** the two paper/formal/executable paths must agree under a retained witness. |
+| 12. Kernel/axioms/toolchain | **NO CREDIT:** a diagram, type checker, or plugin framework does not inventory or replay a proof kernel and trust surface. |
+| 13. Route dependency diversity | **QUALIFIED:** Cordis effect commutation is not scientific independence; the project's independence vector remains the operative independence specification. |
+| 14. Numerical/binary64 | `OPEN` per edge: approximate commutation needs one stated metric and aggregate error bound below the claimed margin. |
+| 15. Compiled/wrapper parity | `OPEN`: the Cordis paper's theory-to-code table and pid-rs source mappings require separate executable/refinement evidence. |
+| 16. Counterexample/mutation | `NARROW`: mutate domains, codomains, maps, premises, and one path at a time; a noncommuting witness must fail the transfer. |
+| 17. Custody/threat/refusal | `NARROW`: exact external locators are recorded, but no external archive, authenticated capture, or TypeScript replay is retained. |
+| 18. Citations/novelty | **ATTRIBUTED SOURCE-REVIEW:** this is a source-derived process lesson and no categorical-PID novelty claim. |
+| 19. Ecosystem/authority | **NO TRANSFER:** no Prisoma, Galadriel, Haldir, or Crebain readiness follows from the abstraction. |
+| 20. Resource/platform/release | `NEGATIVE` for dependency adoption now: both Harness and Cordis declare unstable preview status; pid-rs adds no runtime or CI dependency. |
+
 ### Cycle Double Cover prompt
 
 The [Cycle Double Cover prompt](https://cdn.openai.com/pdf/04d1d1e4-bc75-476a-97cf-49055cd98d31/cdc_prompt.pdf)
@@ -932,13 +1286,13 @@ Project interpretation: this structure separates three questions:
 
 ### Erdős repository
 
-The source tree was inspected at immutable commit
+The source tree was inspected at version-pinned commit
 [`f2ae0edb45cbdb257e135d51ef855f64caeb348b`](https://github.com/ShouqiaoW/erdos/commit/f2ae0edb45cbdb257e135d51ef855f64caeb348b).
 At that commit, each of the six problem directories contains a problem-specific prompt and a paper.
 The tree also contains Lean projects for problems 486, 788, and 1038. It contains Python numerical
 verifiers for problems 390, 536, and 1038.
 
-The immutable prompt files are available for
+The version-pinned prompt files are available for
 [1002](https://github.com/ShouqiaoW/erdos/blob/f2ae0edb45cbdb257e135d51ef855f64caeb348b/1002/prompt.md),
 [1038](https://github.com/ShouqiaoW/erdos/blob/f2ae0edb45cbdb257e135d51ef855f64caeb348b/1038/prompt.md),
 [390](https://github.com/ShouqiaoW/erdos/blob/f2ae0edb45cbdb257e135d51ef855f64caeb348b/390/prompt.md),
@@ -961,7 +1315,7 @@ is designed to use a double-precision scan for initial brackets. Its higher-prec
 interval checks are designed to certify signs. The
 [Lean project](https://github.com/ShouqiaoW/erdos/tree/f2ae0edb45cbdb257e135d51ef855f64caeb348b/1038/lean)
 contains rational and interval data for finite kernel checks. This review did not run the verifier
-or build the project. The repository also has immutable
+or build the project. The inspected commit also contains version-pinned
 [486](https://github.com/ShouqiaoW/erdos/tree/f2ae0edb45cbdb257e135d51ef855f64caeb348b/486/lean)
 and
 [788](https://github.com/ShouqiaoW/erdos/tree/f2ae0edb45cbdb257e135d51ef855f64caeb348b/788/lean)
@@ -977,7 +1331,7 @@ transcript. This difference matters when pid-rs records its own process.
 ### Erdős 477 cubic repository
 
 The [`pw/erdos477-cubic`](https://github.com/pw/erdos477-cubic) repository was inspected at
-immutable commit
+version-pinned commit
 [`8440d599890b5a5ef7b212c65338723ab2443eaf`](https://github.com/pw/erdos477-cubic/commit/8440d599890b5a5ef7b212c65338723ab2443eaf).
 This was a process review only. It did not validate the repository's claimed theorem.
 
@@ -1050,7 +1404,7 @@ $$
  \longrightarrow \pi^{\mathbb A^1}_{9,5}(SL_5)(\mathbb C).
 $$
 
-It then reads Theorem 7.2.1 of the immutable arXiv v3 source
+It then reads Theorem 7.2.1 of the version-pinned arXiv v3 source
 [`2306.04631v3`](https://arxiv.org/abs/2306.04631v3), downloaded here with SHA-256
 `d4bd95572c7e2c356e964407ceab26c64c37768a655b45b45feaa4ab50dd8536`, whose displayed short
 exact sequence is
@@ -1078,7 +1432,7 @@ mathematically defective in the displayed formulation, so this review does not r
 choosing whichever referent makes the draft's argument work.
 
 There is a stronger source-based check. The proof of Theorem 7.2.1 invokes the stable 1-line
-calculation of Røndigs--Spitzweck--Østvær. Its immutable
+calculation of Røndigs--Spitzweck--Østvær. Its version-pinned
 [`1604.00365v2`](https://arxiv.org/abs/1604.00365v2) artifact, downloaded here with SHA-256
 `bdcf6f0ef128457740c09c5fb38c1a187951b29119d5ec2b8ba0339cb7887966`, states in equation (1.1)
 and Theorem 5.5, for the relevant fields and range, the exact sequence
@@ -1309,7 +1663,7 @@ mathematical support for that boundary.
 #### Mathematical method reconstructed from the paper
 
 The claimed advance is unconditional and asymptotic. It does not prove the Riemann hypothesis and
-does not classify the un-certified remainder. In the paper's normalization, the argument is:
+does not classify the uncertified remainder. In the paper's normalization, the argument is:
 
 Write $N(T,2T)$ for all nontrivial zeros in the dyadic ordinate window, counted with
 multiplicity; $N_0^*(T,2T)$ for distinct zeros on the critical line; $N_0^s(T,2T)$ for simple
@@ -1599,6 +1953,206 @@ functional/mechanism, epistemic/dependency, and institutional/custody independen
 at every load-bearing shared bridge, specialist human review, and an explicit consumer no-go
 condition while any applicable gate is open.
 
+### Candidate/judge isolation and research-integrity controls
+
+This protocol applies prospectively to research/scientific or claim-adjudicating attempts opened
+after this policy revision. Historical claims receive no retroactive compliance, custody, or
+independence credit merely because their artifacts are later described in this vocabulary.
+Deterministic execution of an already-fixed operational custody contract follows that contract's
+own pre-bound checker and receives no scientific credit; routine receipt generation is not a new
+scientific candidate attempt.
+
+Before any proof, certificate, implementation, benchmark, or model candidate sees an attempt,
+seal and record a versioned task packet--publishing only its permitted projection or commitment--
+containing the exact claim/statement, definitions, imports,
+permitted axioms and trust routes, source and toolchain identities, candidate write scope,
+acceptance predicate, resource budget, stopping rule, and selection rule. The packet is frozen for
+that attempt, not immutable forever. Any semantic or acceptance change creates a new revision and
+leaves the earlier attempt at its original disposition.
+
+Any output produced before its attempt is registered and its packet is sealed permanently loses
+preregistered, selection-unbiased, and strict-confirmatory credit. Preserve it as retrospective
+exploratory evidence rather than erasing it. Naming or registering the output after selection does
+not cure the missing boundary, and rerunning it against the same exposed data or judge does not cure
+adaptive selection. A deterministic formal or exact artifact may later receive credit only for the
+separately checked predicate; an empirical promotion needs a candidate-inaccessible confirmation
+route or a declared selection-aware design.
+
+The candidate may write only its declared payload. A separately instantiated judge, built from
+pre-bound bytes outside candidate authority, must reject any change to the claim, definitions,
+imports, axiom policy, verifier, tests, fixtures, reference values, or trust surface. It must also
+reject undeclared `sorryAx`/axioms, unsafe or partial routes, code generation or external execution
+outside the packet, network or secret access outside the frozen allowlist, and source/toolchain drift. Compilation and proof
+checking run in a fresh confined environment; imported modules are replayed when import replay is
+claimed. An unavailable, crashed, timed-out, or incomplete judge is `not-run` or `failed`, never a
+degraded pass. A colocated hash detects drift but does not prove that the packet predated candidate
+access or that a separate institution controlled it.
+
+Retain an append-only attempt ledger. Every attempt receives a durable minimum entry: task revision,
+purpose and route, candidate and judge identities, model/system/tool identity when knowable,
+terminal status, selection or rejection decision, reopen condition, and an output locator/identity
+or explicit omission. Retain the full permitted input or privacy-preserving projection, seed when
+exposed, decisive output/diff, resource use, and verifier receipt for every promoted, adjudicating,
+or load-bearing failed or withdrawn attempt. A valid unselected attempt that entered a best-of-$N$
+or any other selection decision is load-bearing: retain its decisive permitted output and verifier
+receipt. If that record is unavailable, mark the selection route incomplete and grant it no strict
+selection credit. Other routine outputs are retained only when useful and permitted; record bounded
+omission or redaction for privacy, licensing, security, provider, or volume reasons instead of
+claiming completeness or replay. Retain failures, withdrawals, and unselected valid candidates;
+append corrections rather than rewriting them.
+
+### Problem-specific autoresearch and durable publication
+
+pid-rs uses an **autoresearch-like** loop only in a bounded methodological sense: propose a typed
+hypothesis, run a predeclared falsification or evaluation route, retain the result, update a small
+beam of live hypotheses, and let a human decide what to revise, promote, or stop. Sankalp's
+GPU-kernel worklog reports that a problem-specific harness, an attempt log, profile-driven
+questions, and a three-to-five-family candidate beam accompanied its move beyond a
+single-incumbent local maximum
+([Sankalp, “Auto-research with codex,” 8 July 2026](https://sankalp.bearblog.dev/autoresearch/),
+inspected 15 August 2026). The retrospective account does not isolate the causal contribution of
+the beam, adviser, agent, or harness. It is an attributed engineering case study, not authority for
+PID validity, reproducibility, or optimal research design; pid-rs adopts only the lessons that
+survive its own claim analysis. The URL and inspection date are source locators only; this
+repository retains no authenticated provider record or archival copy of the article bytes.
+
+The analogy stops where a scientific claim ceases to be a fixed-score optimization problem. A
+leaderboard can rank one accepted output by one scalar. PID research may simultaneously change a
+functional, estimator, support class, numerical representation, proof obligation, benchmark,
+selection rule, and downstream interpretation. Therefore no single “best score,” passing test,
+formal proof, model vote, or publication status may choose across those objects. The scientific
+loop uses a typed obligation-and-evidence vector and freezes the task and judge before each scored
+attempt.
+
+Repeated adaptive evaluation also creates a selection problem. Reusing the same samples,
+simulations, benchmark cases, prompts, or visible verifier failures to choose among many candidates
+makes that route development evidence. A promoted empirical claim therefore needs either (a)
+candidate-inaccessible confirmation--for example untouched data or sealed cases or seeds sampled
+from a predeclared generator--or (b) a declared selection-robust route--for example exhaustive
+validation over the entire declared finite domain or valid sequential/multiplicity-adjusted
+inference. Every prior exposure and shared dependency must be recorded.
+Deterministic theorem checking does not create a sampling $p$-value, but repeated feedback
+can still optimize against a weak or candidate-influenced statement and judge; pre-candidate target
+and verifier custody remains mandatory.
+
+| Lens | Transfer from the engineering case study | pid-rs boundary |
+|---|---|---|
+| Objective | Keep the objective quantitative where possible. | Use an obligation vector, not a scalar that trades correctness or correspondence for speed or convenience. |
+| Search | Maintain exploit, near-miss, and structural/high-risk beams. | Each beam names one exact PID/method object and revision; it cannot silently change the estimand or judge. The reported three-to-five size is anecdotal, not a universal optimum. A near-miss has a localized diagnosed failed obligation or robust partial property, not merely a score or significance value close to a threshold after adaptive evaluation. |
+| Feedback | Prefer completed evaluator output to intuition. | Evaluator output is evidence only for its frozen predicate and cannot validate the predicate itself. |
+| Failure memory | Log failed and inconclusive attempts. | Retain load-bearing failures and all selection-bearing valid alternatives; distinguish reject, timeout, crash, and not-run. |
+| Diversity | Seek structurally different ideas when local tuning saturates. | Record shared premises and dependency overlap; model/session diversity is not epistemic independence. |
+| Human steering | Use domain knowledge to identify missing questions. | Human judgment is a named disposition with scope, not an unexplained override or retrospective target change. |
+| Selection | Promote only after comparable evaluation. | Freeze the candidate-admission and adaptation policy, budget, stopping rule, and selection rule; log every adaptation and use fresh confirmation or sequentially valid inference. |
+| Generalization | Recheck across shapes and input regimes. | Recheck across declared alphabets/supports, sample roles, gauges, boundary cases, and implementation representations; do not infer population validity from fixtures. |
+| Security and integrity | Keep the evaluator outside the candidate's write scope. | Pre-bind statements, definitions, imports, axioms, tests, reference values, and judge bytes; reject undeclared trust expansion. |
+| Publication and durability | Keep attempt logs and promoted candidates. | Make each coherent accepted milestone reachable from the reviewed remote main branch, then bind publication artifacts and archival locators separately. |
+
+The research loop is therefore:
+
+1. freeze one typed claim packet and its judge;
+2. maintain a small, genuinely diverse beam of hypotheses for that same object;
+3. run the cheapest high-information falsification check, negative control, or counterexample search
+   before expensive proof, certification, or hosted evaluation;
+4. record every terminal disposition and every candidate that affected selection;
+5. promote only a coherent packet whose evidence classes remain separate;
+6. commit and push the packet, result, disposition, and synchronized publication closure in small
+   reviewable milestones; and
+7. reopen the science only under a new revision with an explicit reason.
+
+Durability has layers. A scratch file, temporary worktree, local commit, remote side branch,
+remote-`main` commit, release artifact, and scholarly archive are not interchangeable. Scratch and
+local-only state can disappear and carry no durable-evidence credit. Under the recorded repository
+retention and no-history-rewrite assumptions, a verified remote-`main` commit is the minimum
+operational recovery anchor for accepted work, not immutable or scholarly preservation. Record the
+remote URL, ref, observed OID, observation time, and whether the milestone is the tip or an ancestor
+of a later remote tip. A versioned release or recognized content-addressed scholarly archive/DOI is
+required when the publication packet claims longer-term preservation.
+
+Each ledger-declared load-bearing artifact needs an exact path or object name, SHA-256, byte size and
+format, claim/campaign/attempt provenance, a retrievable versioned locator with access, license, and
+retention limits, and a clean retrieval or rebuild check. A digest without a retrievable preimage is
+only a commitment or omission record. If protected or oversized material cannot enter Git, use an
+approved restricted durable store and publish only a safe commitment/manifest until blindness or
+embargo ends. Before abandoning a worktree or branch, verify that every accepted, adjudicating, or
+selection/load-bearing artifact identified by the ledger or manifest is reachable from remote
+`main`, intentionally rejected with a ledger record, or covered by a checked durable locator.
+
+This is deliberately problem-specific. The project does not build a generic self-improving harness
+or reward submission volume. It uses automation to widen and test the hypothesis space while
+preserving the right to leave an obligation open, a claim `blocked`, a route abstained, or a search
+without improvement; each uses its canonical gate, route, or claim namespace. A claim about
+research-process quality is eligible for a scoped methods report only if the protocol, attempt
+population, adaptive exposures, selection decisions, failures, inconclusive outcomes, deviations,
+resource use, model/tool/AI roles, and limitations are reported. Such a report should additionally
+freeze its task suite and resource accounting, compare or ablate the claimed loop components,
+report missing/redacted attempts, separate exploratory from confirmatory outcomes, and measure both
+useful yield and false acceptance/semantic-drift rates. A successful PID result can motivate such a
+study; it cannot by itself establish that the research process caused the success or generalizes to
+another problem. These are necessary publication conditions, not a guarantee of novelty,
+correctness, peer-review acceptance, or external reproducibility.
+
+### Council protocol
+
+Use a council for every named scientific claim, method adoption or transfer, completion/disposition,
+and research-process or publication milestone. Routine mechanical work inherits the last applicable
+council disposition only while it changes no semantics, evidence, or public claim. A council is a
+structured adversarial review mechanism, not a vote and not an independence claim.
+
+1. Freeze the object under review and ask each member to write a memo before seeing any other
+   member's conclusions. Record exactly what source material each member could see.
+2. Cover the applicable source/semantics, mathematics, numerical/statistical, implementation,
+   applicability/transfer, adversarial, publication, and custody lenses. Record role overlap and
+   shared model, prompt, data, code, institutional, and tool dependencies.
+3. Ask for the strongest counterexample, alternative explanation, and scope-narrowing proposal,
+   not merely a confidence score or summary.
+4. Retain each permitted minority report verbatim or as a labelled faithful summary and bind the
+   retained content by digest. If its content cannot be retained, record the omission/redaction and
+   a durable restricted locator; a bare digest supplies no substantive dissent-review credit.
+   Consensus does not erase a falsifier, and majority agreement supplies no scientific evidence.
+5. The named integrator adjudicates each finding against primary sources and executable evidence,
+   states what changed, and owns the final decision. A council recommendation is advisory unless a
+   frozen claim packet explicitly makes a particular human or institutional review dispositive.
+6. If council review changes the task, definitions, acceptance predicate, judge, or selection rule,
+   open a new revision; never repair the already-scored attempt retrospectively. A persistent
+   council may cover child attempts under one unchanged campaign packet; reconvene at promotion,
+   publication, or any change to a frozen field.
+
+Use the following coexisting evidence tags; several may apply simultaneously, none is an assurance
+ladder, and they must never be compressed to one green Boolean:
+
+| Status | Exact meaning |
+|---|---|
+| `exploratory` | Useful for search; no closure credit. |
+| `system-tested` | Passed the named internal protocol; no human-verification or independence claim. |
+| `kernel-checked` | The exact formal statement was accepted under the inventoried kernel/import/axiom surface. |
+| `numerically-certified` | The exact finite arithmetic predicate was enclosed or checked under its declared representation and coverage proof. |
+| `human-reviewed` | A named human issued the recorded disposition on the named object and scope; this is not “verified” unless a verification protocol is separately named. |
+| `separately-reproduced` | A separately controlled route reproduced the exact scoped result and recorded its dependency vector; the label alone grants no independence dimension. |
+| `reproduced-with-independent-dimension` | A reproduction has at least one named, evidenced independent dimension; the label names that dimension and leaves every shared or unknown semantic, data, implementation, epistemic, institutional, and custody dimension explicit. |
+| `published` | An exact version was publicly disseminated; this supplies no peer-review or correctness claim. |
+| `peer-reviewed` | An exact version received the named peer-review disposition; this does not retroactively supply missing proof, implementation, or application edges. |
+
+These are subject-bound **derived display tags**, not stored attempt states, evidence classes, gate
+states, or claim dispositions.
+
+`kernel-checked` derives only from a matching `FORMALLY-CHECKED` artifact-verification record.
+
+`numerically-certified` derives only from a matching `CERTIFIED-NUMERICALLY`
+artifact-verification record. Review, reproduction, dissemination, and peer-review tags derive from
+their separate metadata records and do not create an accepted-result evidence class. The
+canonical accepted evidence classes remain the six classes in the acceptance rule; claim
+disposition remains exactly `proposed`, `active`, `blocked`, `falsified`, or `complete`; route and
+gate state remain in their own namespaces. A display may show multiple tags without changing any
+underlying record.
+
+A model-labelled proposer or judge remains advisory. Different prompts, sessions, roles, or vendors
+do not establish semantic, data, implementation, epistemic, institutional, or custody independence.
+Likewise, a kernel proof establishes only the exact formal statement under the inventoried trust
+surface, and a numerical certificate establishes only its finite arithmetic predicate. Neither
+closes paper-to-definition correspondence, binary64 refinement, estimator calibration or
+consistency, PID-method identity, or an application edge.
+
 ### Separate roles
 
 Use explicit roles and deliverables for a major claim. Do not ask one undifferentiated run to set
@@ -1607,7 +2161,7 @@ the problem, prove it, design its test, and adjudicate its own work.
 | Role | Required output | Invalid shortcut |
 |---|---|---|
 | Specification editor | Frozen claim packet and ambiguity table | Solving before the claim is fixed |
-| Source checker | Immutable source and known-result map | Trusting the prompt premise |
+| Source checker | Version-pinned source and known-result map | Trusting the prompt premise |
 | Proof route | Named subclaims and dependency graph | Confidence language as proof |
 | Counterexample route | Exact falsifiers and boundary cases | Only random examples |
 | Formalization route | Prose-to-formal object map | Silent weaker surrogate |
@@ -1650,10 +2204,10 @@ when it uses the same theorem or oracle.
 Internal review has **saturated** only when all applicable joints have retained challenges, new
 passes share the same load-bearing dependencies and produce no new objections or evidence, the
 open uncertainty is explicitly listed, and the integrator can explain why more same-lineage review
-would add little information. Saturation is not acceptance. It triggers handoff to an appropriately
-independent specialist, custodian, implementation route, or empirical route. Record the stopping
-decision and the external evidence still required; never use compute or token exhaustion as the
-reason a claim became true.
+would add little information. Saturation is not acceptance. It triggers handoff to a specialist,
+custodian, implementation route, or empirical route that supplies the required recorded
+independence dimension. Record the stopping decision and the external evidence still required;
+never use compute or token exhaustion as the reason a claim became true.
 
 ### Independence vector
 
@@ -1671,7 +2225,7 @@ valuable. A same-lineage source-blind derivation can reduce one epistemic depend
 institutionally independent merely because it ran separately. State unknown or absent components
 instead of promoting a partial vector to “independent verification.”
 
-### Independent routes
+### Separately developed routes and independence accounting
 
 For each major claim:
 
@@ -1687,8 +2241,9 @@ For each major claim:
    generalization or merge two mechanisms merely because they reach the same conclusion.
 
 Prefer method diversity to model-name diversity. Examples are a coupling proof and exact
-enumeration, a real-analysis proof and a formal kernel, or a generator and an independently written
-checker. Repeated passes by the same model against the same prompt, source text, imported theorem,
+enumeration, a real-analysis proof and a formal kernel, or a generator and a separately written
+checker whose dependency vector is recorded. Repeated passes by the same model against the same
+prompt, source text, imported theorem,
 or proposed proof are correlated evidence, even when they occur in fresh sessions or use harder
 reasoning settings. They can reveal instability and generate attacks, but they do not satisfy the
 epistemic route requirement unless their load-bearing dependencies are genuinely disjoint, and
@@ -1715,7 +2270,7 @@ inclusion-minimal cut family is
 $\{\{C\},\{A1,B1\},\{A2,B1\}\}$. This follows without trusting the drawing: if $C\in H$,
 minimality forces $H=\{C\}$; if $C\notin H$, hitting $R_B$ forces $B1\in H$, and hitting
 $R_A$ then forces exactly one of $A1$ or $A2$. The figure metadata records these same sets, and
-the publication checker independently enumerates their finite transversal family. Omitting
+the publication checker separately enumerates their finite transversal family. Omitting
 $\{A2,B1\}$, or retaining a nonminimal superset, is a failing semantic mutation.
 
 Two derivations that use different case splits but obtain their power from the same imported
@@ -1745,9 +2300,14 @@ Record this full context for each model run promoted to evidence or used to adju
 - Rust compiler, `Cargo.lock`, target, and feature set when code is in scope;
 - generated table and lattice digests;
 - exact definitions, conventions, assumptions, and non-solutions;
+- pre-candidate task-packet identity, candidate write scope, judge/verifier identity, and evidence
+  plus an enforcement mechanism showing that the packet and judge were outside that candidate's
+  permitted mutations;
 - ex-ante intended closure and falsification routes, the initial accepted-result label, and
-  completion checks;
-- prompt text, model identity, run date, output path, and output digest.
+  completion checks, resource/stopping rule, and selection rule;
+- prompt text or an exact permitted projection, model/system/tool identity where knowable, run date,
+  seed when exposed, output path and digest, terminal disposition, and retained redaction/omission
+  record.
 
 For a non-exploratory run that is not promoted or adjudicating, retain only enough identity,
 purpose, disposition, and reopen condition to prevent accidental reuse or double counting. Retain
@@ -1775,8 +2335,9 @@ the theorem or statistical design actually requires fixedness.
 Git-tree identity, SHA-256 of raw file bytes, canonical mathematical-object identity, and external
 authentication answer different questions. A Git commit binds a tree and paths; a raw-file digest
 binds one encoding; a domain-separated canonical digest binds the declared mathematical
-serialization; a signature, protected log, or independent custodian can authenticate or anchor an
-identity. None proves the object's mathematical correctness. Retain extra digests where they bind
+serialization; a signature, protected log, or separately controlled custodian with a recorded
+custody dimension can authenticate or anchor an identity. None proves the object's mathematical
+correctness. Retain extra digests where they bind
 cross-artifact, release, package, certificate/input, or external-source bytes, or where mechanism
 diversity checks an encoding. Do not multiply routine prose digests and call the count evidence.
 
@@ -1802,7 +2363,8 @@ an unobservable checkpoint was recorded. The record must contain:
 - primary-source and citation identities, versions, locators, and locally checked byte digests when
   the downloaded bytes matter;
 - every closed gate with its exact evidence and explicit non-implications;
-- open obligations, blockers, dependencies, and every invalidated or zero-credit run with cause;
+- open obligations, blockers, dependencies, caveats, contradictions, and every invalidated,
+  withdrawn, unselected, or zero-credit run with cause;
 - user decisions, permissions, and forbidden actions;
 - the next safe read-only or in-scope action; and
 - record schema version and UTC update time as observation metadata, never as preregistration or
@@ -1828,6 +2390,13 @@ Never store credentials, tokens, decryption keys, secret holdout rows/seeds/targ
 traces, or other protected material in the continuity record. Store only custody locators and
 permitted opaque identities for inaccessible assets.
 
+Any active summary must be a derived navigation view over these append-only facts. It may prioritize
+or compress, but it must carry stable references to every still-load-bearing caveat, contradiction,
+open obligation, and withdrawal. A summary rewrite cannot delete or upgrade the underlying record;
+if the summary and ledger disagree, adjudication stops until the conflict is reconciled against the
+original artifacts. This prevents a polished retelling from silently converting an exploratory
+value into an accepted result.
+
 Compact copyable template:
 
 ```text
@@ -1852,8 +2421,8 @@ next_safe_action: <one exact action>
 ### Codex goal, plan, and tool lifecycle
 
 A long-running Codex execution has three distinct state layers. The **scientific claim state** is the
-authority for mathematical completion; the **goal state** records the user's unfinished objective;
-and the **plan state** is only a mutable scheduling aid. A token count, elapsed time, model
+normative record of the mathematical disposition; the **goal state** records the user's unfinished
+objective; and the **plan state** is only a mutable scheduling aid. A token count, elapsed time, model
 confidence, completed plan step, or the mere success status of a tool call is not evidence of
 scientific progress. Validated and retained tool output may supply evidence for the exact obligation
 it checks.
@@ -1920,7 +2489,7 @@ institutional independence.
 ### Publication-harness state machine
 
 A future executable harness should make the workflow below a typed acyclic graph, not infer it from
-prose. Each immutable claim revision owns:
+prose. Each frozen, append-preserved claim revision owns:
 
 - a premise registry and positive mapping obligations;
 - artifact nodes for source, formal statement, certificate, generator, checker, executable, data,
@@ -2063,7 +2632,9 @@ Create one packet before work starts. Give the packet a stable claim ID. Include
 | Conclusion | The exact versioned definition; equality, inequality, quantified theorem, limit, coverage, calibration, error, or abstention statement; formal-correspondence claim; executable refinement/conformance property; archive/release predicate; or bounded consumer readiness/no-go decision appropriate to the selected kind, including scope and non-implications |
 | Non-solutions | Weaker statements that do not complete the claim |
 | Falsifiers | Boundary cases and counterexamples that can refute the claim |
+| Attempt and judge boundary | Stable attempt/revision ID; exact pre-candidate packet identity; candidate-readable inputs and writable payload paths; prohibited mutations and trust expansions; pre-bound judge/verifier/test/reference identities outside candidate authority; confinement and network/secret policy; and fail-closed behavior when any required judge route is unavailable |
 | Intended closure/falsification routes | Frozen ex ante for each obligation: premise-explicit mathematical proof, machine-checked proof, certified computation, scoped test or holdout, and a counterexample route where falsification is possible |
+| Resource, stopping, and selection rule | Ex-ante or append-only rule for budget, concurrency, retries, termination, route comparison, candidate promotion, and retention of valid unselected, failed, and withdrawn attempts |
 | Initial accepted-result evidence records | Empty, rendered as the literal text “no accepted evidence”; later adjudicated records are appended one class per record and never substituted for the intended-route field |
 | Completion predicate and adjudicator | A fail-closed predicate, mechanical where possible, plus the named human authority where required, that checks whether every applicable typed obligation is already closed by current accepted evidence and whether no unresolved falsifier, contradiction, expiry, or invalidation remains. It may adjudicate the disposition; it cannot create, replace, or upgrade missing evidence. |
 
@@ -2079,6 +2650,80 @@ Completeness is a disposition, not an evidence class. A green completion checker
 for the exact checker-conformance claim it exercised. It does not by itself close a mathematical,
 statistical, formal, executable, release, custody, or consumer claim. Each typed obligation still
 needs an accepted record from one of its frozen permitted routes, with every mapping edge closed.
+
+#### Why scientific results must be typed
+
+Many consequential failures are object-identity failures rather than arithmetic failures. A bare
+number cannot say whether it is a functional or estimator output, population or sample object,
+training-fitted or same-sample result, exact-real or binary64 value, nominal permutation statistic
+or surrogate-tail diagnostic, or whether its support and units satisfy the route that consumes it.
+In PID specifically, the same numeric representation can otherwise conceal transfers among KSG
+MI; categorical MGW shared-exclusions SxPID; the unimplemented Schick--Poland general
+measure-theoretic construction; Ehrlich continuous shared-exclusions redundancy and PID2;
+Williams--Beer $I_{\min}$; incomplete versus research-only mixed-dimensional PID3; fitted
+quantized SxPID for a quantized estimand; and project-defined diagnostics.
+
+Where applicable, a result object should therefore carry: estimand and method identity;
+domain/support and reference measure; units/gauge; source/target, sample, fitting, and evaluation
+roles; method/source revision; assumptions; representation and numeric semantics; artifact
+verification/invalidation state and links to separate evidence and claim records; warnings or
+abstention; resource budget; and admissible interpretations. Typed constructors and composition
+edges reject incompatible composition; the claim harness, not the result object, reopens dependent
+gates when a field is missing, incompatible, invalidated, or changed.
+
+This has three distinct potential values. It is intended to improve **scientific error prevention**
+by making silent object substitution explicit or unrepresentable. It can improve **engineering and
+ecosystem composition** because Rust, Python, run-log, resampling, and downstream systems can
+exchange structured results without guessing what an unlabeled scalar means. Neither benefit is a
+demonstrated outcome until prevented counterexamples, usability, and cross-package behavior are
+measured. It provides **no automatic scientific novelty**: a type system becomes a potential
+methods/software contribution only when its composition laws and those empirical benefits are
+actually evidenced.
+
+The pattern generalizes to causal estimands, posterior summaries, uncertainty intervals,
+surrogate tests, imaging transforms, and action-conditioned forecasts. Its transferable principle
+is: **an unlabeled number is not a self-interpreting or safely transportable quantitative scientific
+result; its object identity, assumptions, units, production route, and admissible interpretations
+must travel with it.** Types still cannot establish
+paper-to-definition correspondence, estimator consistency or calibration, numerical correctness,
+kernel soundness, or application validity. Those remain separate proof, certificate, experiment,
+and review obligations.
+
+#### Current pid-rs/Wibral-program inventory boundary
+
+The following is a non-additive status snapshot, not a novelty score. It is bound to base commit
+`bc3aa80fb6025e709c2906a08bce25a4fac40578`, `method-catalog.json` (401,485 bytes; SHA-256
+`6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa`), and its generated
+`METHODS.md` (488,874 bytes; SHA-256
+`a24a7c9a789902bd92dadcae442bdcf96e3d47de1632764fdcc0d67c9c125af4`).
+The landed inventory rows below derive from those base-commit objects. The mutable `0/7`, `0/5`,
+and `0/108` coordination rows are separately derived on 15 August 2026 from the same base commit's
+`audit/evidence/wibral-pid-program-active-plan-2026-08-12.md` (17,112 bytes; SHA-256
+`4940532a46dcb345f5992bb3aa148f3262d1fef11f0b8e3114c8f78c52525417`) and the absence of completed
+claim packets; they are coordination observations, not base-tree scientific results.
+
+| Object class | Landed or claimed count | Exact boundary |
+|---|---:|---|
+| Globally novel PID theories/functionals claimed | 0 | The current catalog makes no scientific-priority claim. |
+| Published PID theory/functional lineages with an implemented decomposition route | 3 | Williams--Beer $I_{\min}$; MGW categorical shared exclusions; Ehrlich continuous shared exclusions. Schick--Poland's separately represented general construction has no implementation here and is excluded. This is a lineage count, not a novelty claim. |
+| Implemented PID decomposition method routes | 4 | Williams--Beer categorical $I_{\min}$; categorical MGW shared-exclusions SxPID; Ehrlich continuous PID2; research-only mixed-dimensional continuous PID3. PID3 is a distinct 18-node mixed-dimensional implementation route within the Ehrlich lineage, not a fourth theory lineage or a new PID. |
+| Separately cataloged PID-defining redundancy dependencies | 1 | Ehrlich continuous shared-exclusions redundancy; it is not counted again as a decomposition or as another theory lineage. |
+| Project-defined PID workflow/composition extensions | 10 | Typed compositions/adapters and selection/UQ workflows; none is an alias for its input paper functional. |
+| Cataloged PID-facing validation/assurance extensions | 6 | Formal, exact, convergence, continuity, concentration, or audit packages; not six PIDs. |
+| PID/KSG-relevant source-written Lean theorems | 275 | Scope-specific formal statements; theorem count is not scientific completeness. |
+| Exact solver obligations | 9 | Five PID-algebra and four conditional KSG obligations; solver results are not kernel proof objects. |
+| Named current core-science units closed | 0/7 | KSG M1c (1), PID2 revision 4 (1), and categorical MGW SxPID3 Programs A--E (5) remain open. |
+| Categorical MGW SxPID3 assurance | 0/5 programs; 0/108 coordinates | Stable code computes the 18-antichain lattice, but the stronger assurance program is not landed. |
+
+The three-lineage count groups objects by their published defining theory/functional identity. The
+four-route count instead records distinct implemented decomposition methods: Ehrlich PID2 and the
+18-node mixed-dimensional PID3 are separate algorithmic routes inside the same Ehrlich lineage.
+Raw/report variants, source-count variants, language bindings, wrappers, and workflows add neither
+lineages nor routes; a separately cataloged redundancy dependency is listed without double-counting.
+KSG MI, co-/O-information, target-free analogues, support diagnostics, resampling, and custody
+infrastructure remain outside both counts. Publishing this inventory adds no scientific
+credit; every future commit must be counted from its actual tree/diff. Two explicit estimator gaps
+remain: hyperbolic shared-exclusions PID and general mixed-support continuous shared exclusions.
 
 Add a semantic pin for every ambiguity that changes the mathematical object. Quote or transcribe
 the controlling primary-source statement, record the competing readings, choose one reading with
@@ -2108,6 +2753,38 @@ destination obligation. Use separate nodes for these classes:
 
 If an edge depends on an unproved lemma, create a separate obligation node. Mark it as open until
 evidence closes it.
+
+#### Optional explicit mapping-check rule
+
+Use the typed graph directly unless category-theoretic structure closes a named obligation. The
+ordinary project phrase is **explicit mapping check**; “commuting square” is only the optional
+mathematical notation for a proved path-equality claim. When that notation genuinely applies, treat
+the obligation graph as freely generating paths: composing accepted edges creates a candidate
+route, but parallel paths are not equal until an exact equality witness is accepted.
+For an approximate or statistical comparison, replace equality only with a declared common
+codomain, metric/divergence, domain, probability statement, and aggregate error bound. Never infer
+an edge from shared names, isomorphic-looking diagrams, matching units, a common implementation,
+or a limiting intuition.
+
+Every categorical claim must answer five questions in its claim packet:
+
+1. What are the exact objects and admissible morphisms, and which PID/method identity does each
+   inhabit?
+2. What equality or equivalence is used, and is it exact, almost-sure, distributional, numerical,
+   observational, or only heuristic?
+3. Which identity, associativity, composition-preservation, naturality, monotonicity, or data-
+   processing laws are actually proved?
+4. What counterexample would show that a square does not commute or a proposed functor does not
+   preserve the named structure?
+5. What does the categorical formulation *not* establish about support, estimation, calibration,
+   binary64 refinement, computation, custody, or application?
+
+Keep MGW categorical shared exclusions, Schick--Poland general shared exclusions, Ehrlich
+continuous shared exclusions, Williams--Beer `I_min`, Blackwell-order proposals, PID2, PID3, and
+project diagnostics on distinct nodes. “Categorical” in MGW's data domain remains unrelated to
+category theory. Do not add a Cargo dependency, plugin layer, schema abstraction, or CI mechanism
+for this notation unless a later object-specific proposal demonstrates a smaller trusted surface or
+a proof obligation that the existing typed graph cannot express adequately.
 
 ### 3. Keep a separate-approach registry
 
@@ -2202,6 +2879,42 @@ exploratory computation
 Keep the generator, its inputs, the generated certificate, the checker, and their digests. Add
 documented negative mutations. The checker must reject each mutation.
 
+The accepted checker must re-derive the finite predicate from the certificate's primitive fields;
+it must not trust a producer-written verdict, copied score, or shared hidden state. State every
+applicable item among the exact covered domain, partitions and overlaps, tail/remainder theorem,
+outward-rounding mode, precision, strict margin, aggregate error budget, and unsupported region;
+record a reasoned typed `not_applicable` for the rest. An exact integer or rational-equality
+certificate must not invent an interval partition, rounding mode, or positive margin it does not
+use. Check running coverage as well as final counts when coverage is applicable, so a missing
+terminal region cannot disappear behind a green summary. A second
+program that imports the producer's formulas or generated table is useful implementation diversity,
+not an independent mathematical derivation; record the common cut explicitly.
+
+Exploratory floating-point search may choose a candidate, but its value never enters the accepted
+record until the frozen certificate route encloses it. If a feasibility predicate, caveat, or
+coverage condition is later lost or contradicted, downgrade the result immediately, retain the
+withdrawn value, and require a new claim/attempt revision rather than re-labelling the old run.
+
+The certificate boundary is fail-closed. Every printed prerequisite must feed the exit status, and
+final success text is emitted only after their conjunction is true. Exact rational endpoints or
+outward enclosures define every universal domain; control-flow floats may not shrink it. Represent
+coverage as intervals and mechanically check their union and overlap. Never use Python `assert` as
+the acceptance mechanism. A skipped heavy stage has a distinct status from a full rebuild. Digest
+the certificate, primitive inputs, checker, environment lock, source revision, complete log, and
+every trusted upstream artifact as separate fields rather than one ambiguous bundle hash.
+
+For every certificate family, classify the following mutations by applicability: force each
+prerequisite false; perturb an endpoint by one representable unit; delete a band; create a one-unit
+coverage hole; spoof the final verdict string; delete one primitive coefficient or row; mismatch
+parameter metadata; run optimized Python; reuse a stale heavy-stage artifact; and replace a
+universal domain with sampled points. Every applicable mutation that actually violates a frozen
+acceptance predicate must fail. Record a typed `not_applicable` with a reason for mutations whose
+field or predicate the certificate does not possess. In particular, an endpoint perturbation is a
+negative test only when it creates a forbidden gap, overlap, or bound violation; a different but
+still valid enclosure is not required to fail. A same-library downstream replay declares its
+trusted upstream values and dependency overlap; it is not an independent proof merely because it
+lives in a second file.
+
 Rational probabilities do not imply rational logarithmic information values. Use a symbolic
 identity or a certified interval for a proof claim. Label an uncertified high-precision value as a
 reference. Do not call a decimal reference an exact entropy oracle.
@@ -2235,16 +2948,16 @@ is not a completed matrix.
 
 | Lens | Required applicability question |
 |---|---|
-| 11. Formal correspondence | Does a reviewed prose-to-formal map bind the actual objects and conclusion, not a convenient surrogate? |
-| 12. Kernel/axioms/toolchain | Are exact versions, trusted kernel, imported axioms, `--trust=0` or equivalent, and unformalized bridges inventoried? |
-| 13. Route dependency diversity | Is the functional/epistemic/institutional independence vector stated, with shared cut sets and common causes? |
+| 11. Formal correspondence | Does a reviewed prose-to-formal map bind the actual objects and conclusion to a target fixed before candidate access, rather than a candidate-derived or convenient surrogate? |
+| 12. Kernel/axioms/toolchain | Are exact versions, complete import closure, trusted kernel, permitted axioms, fresh replay/confinement route, `--trust=0` or equivalent, and unformalized bridges inventoried; does an unavailable verifier fail closed? |
+| 13. Route dependency diversity | Is the functional/epistemic/institutional independence vector stated, with shared cut sets and common causes, without treating model/session/role separation as independence? |
 | 14. Numerical/binary64 | Are exact-real, high-precision, interval, and binary64 claims separated with bounds for rounding, cancellation, overflow, underflow/subnormals, signed zero, NaN/±Inf propagation, rounding mode and FMA contraction, platform `libm`, and compiler/target variation; and is one total error budget smaller than every strict claimed margin? |
 | 15. Compiled/wrapper parity | Is every claimed Rust feature/build path, backend, Python wrapper, serialization, and failure surface checked? |
-| 16. Counterexample/mutation | Are boundary falsifiers, malformed fixtures, wrong mappings, weakened premises, and optimized-mode mutations required to fail closed? |
-| 17. Custody/threat/refusal | For each freeze, are the object, error threat, enforcement refusal point, same-actor limit, and theorem need recorded? |
-| 18. Citations/novelty | Are immutable primary sources, exact imported statements, application hypotheses, provenance class, and no-novelty boundary correct? |
+| 16. Counterexample/mutation | Are boundary falsifiers, malformed fixtures, wrong mappings, target/definition/judge edits, axiom/import expansion, weakened premises, coordinated status reseals, and optimized-mode mutations required to fail closed? |
+| 17. Custody/threat/refusal | For each freeze, are the object, pre-candidate task revision, candidate write scope, judge authority, error threat, enforcement refusal point, same-actor limit, and theorem need recorded? |
+| 18. Citations/novelty | Are primary sources version-pinned, exact imported statements and application hypotheses preserved, and the provenance class and no-novelty boundary correct? |
 | 19. Ecosystem/authority | Are consumer snapshots, authority direction, capability gaps, acceptance status, and stale derived projections explicit? |
-| 20. Resource/platform/release | Are resource ceilings, cancellation, determinism, OS/architecture/toolchain scope, package identity, release assets, and non-implications closed? |
+| 20. Resource/platform/release | Are resource ceilings, stopping/selection rules, complete attempt and withdrawal dispositions, cancellation, determinism, OS/architecture/toolchain scope, package identity, release assets, and non-implications closed? |
 
 For every strict sign, ranking, or separation claim, bind an exact or enclosed positive margin and
 one aggregate error budget covering every applicable approximation, tail, dependence, finite-range,
@@ -2299,7 +3012,7 @@ atom sign, or calibration statement from another PID or another construction mus
 evidence merely because both methods use the words redundancy, unique information, and synergy.
 Before importing a PID result, bind all of the following:
 
-1. the exact measure and immutable definition revision;
+1. the exact measure and frozen-per-claim-revision definition identity;
 2. the target, ordered sources, source collections, and antichain order;
 3. the construction-native local or target-outcome-specific information object, any cumulative-event
    semantics and Möbius convention it actually uses, and a typed `not_applicable` for absent fields;
@@ -2351,7 +3064,7 @@ requires a separate typed theorem and cannot be inferred from the word “catego
 For every external theorem that carries a load-bearing step, retain an application record:
 
 ```text
-Source theorem and immutable version:
+Source theorem and version-pinned revision:
 Exact source statement:
 Named source arrow (domain -> codomain):
 Property and direction imported (injective/surjective/isomorphic/zero/exact):
@@ -2439,7 +3152,7 @@ must satisfy. Use them as early falsifiers and retain the smallest failure. Exam
 
 - an integer-valued quantity must remain integral;
 - a mathematical probability vector in an exact-real or rational representation must have
-  nonnegative entries summing exactly to one; independently rounded binary64 entries instead need
+  nonnegative entries summing exactly to one; separately rounded binary64 entries instead need
   a proved rounding enclosure or a construction that enforces the represented normalization;
 - a Möbius transform and its zeta inverse must reconstruct every coordinate;
 - a symmetry claim must commute with the declared source permutation;
@@ -2450,7 +3163,9 @@ must satisfy. Use them as early falsifiers and retain the smallest failure. Exam
 - a resource estimate must dominate the exact serialized object it is intended to bound.
 
 An invariant can refute a route. Passing it does not prove the route. Whenever an invariant catches
-an error, add it to the correction ledger and convert it into a permanent negative control.
+an error, add a durable correction-ledger entry and retain a negative control when privacy,
+licensing, security, and custody permit. Otherwise record the omitted fixture and its exact reason;
+never claim that an unavailable control was preserved.
 
 ### 7. Use a blind holdout protocol
 
@@ -2466,14 +3181,24 @@ its binding-and-hiding commitment or encrypted-package digest. Never treat a raw
 enumerable secret as hiding. If these conditions do not hold, call the design a controlled holdout,
 not a blind holdout.
 
+For theorem or proof benchmarks, the inaccessible set also includes reference solutions, earlier
+attempts, transcripts, scratch directories, archives, judge reports, and unredacted feedback.
+Moving or renaming an archive is not isolation: a shell-capable candidate may enumerate the whole
+filesystem. Use a fresh ephemeral worktree or container per attempt, read-only exact dependencies,
+an allowlisted filesystem, and disabled network unless access is declared and allowlisted. Record
+network interactions to a stated capture boundary and deny strict-isolation credit for unknown or
+omitted interactions. Best-of-$N$ trials are not independent when they share artifacts, feedback,
+caches, candidate-visible state, or an unsealed filesystem; state the actual dependency vector.
+
 Use this protocol for estimator and pipeline claims:
 
 1. Freeze the estimand, data-generating families, parameter grid, sample sizes, metrics, tolerances,
    failure rules, and analysis code.
-2. Seal the generator, seed list, and targets. Before holdout access, publish an independently
-   timestamped binding-and-hiding commitment: for low-entropy secrets, use a fresh high-entropy
-   nonce retained under independent custody or bind an encrypted sealed package. A raw digest of an
-   enumerable seed or target is not hiding.
+2. Seal the generator, seed list, and targets. Before holdout access, publish a binding-and-hiding
+   commitment anchored by third-party time evidence or a separately controlled adjudicator record.
+   For low-entropy secrets, use a fresh high-entropy nonce retained under separately controlled
+   custody or bind an encrypted sealed package. Record the applicable institutional/custody
+   independence dimensions. A raw digest of an enumerable seed or target is not hiding.
 3. Define the development, implementation, execution, and adjudication roles. Record all role
    overlaps and the access matrix.
 4. Separate development, calibration, and holdout data. Do not tune on the holdout data.
@@ -2502,19 +3227,19 @@ Record these fields:
 | Benchmark ID | Stable versioned identifier |
 | Claim IDs | Scoped empirical or calibration claims that the benchmark can accept or reject; never an unspecified universal or exact theorem |
 | Analysis-plan digest | Digest of the metrics, tolerances, confidence limits, multiplicity rule, and acceptance rule |
-| Code identity | Immutable source identity and environment or package-lock identity |
+| Code identity | Version-pinned source identity and environment or package-lock identity |
 | Generator identity | Generator digest, parameter-grid digest, and sampling-law version |
 | Sealed inputs | Binding-and-hiding commitment to the seed list or target bundle, or digest of an encrypted sealed package; record nonce/key custody separately |
 | Role separation | People or systems that develop, implement, execute, and adjudicate, including all role overlaps |
 | Access matrix | Permitted access for each role to code, rows, seeds, targets, keys, and result output |
 | Commitment custody | Party that holds each sealed artifact, opening material, and binding-and-hiding commitment or encrypted-package digest, as applicable |
 | Access rule | Event that permits target access and the party that records that event |
-| Independent time evidence | Third-party timestamp or an independent adjudicator record |
+| External or separately controlled time evidence | Third-party timestamp or a separately controlled adjudicator record, with the applicable institutional/custody independence dimensions |
 | Failure rule | Treatment of crashes, non-finite values, abstentions, missing cells, and resource exhaustion |
 | Result identity | Digest of the complete first result table before any revision |
 | Deviations | Every difference from the frozen plan |
 
-A local Git commit time alone is not independent time evidence. Do not store a secret seed, target,
+A local Git commit time alone is not external or separately controlled time evidence. Do not store a secret seed, target,
 decryption key, or credential in the repository. The adjudicator must retain failed cells and must
 run the frozen analysis without manual result-dependent changes. If a confidentiality constraint
 prevents public release of a sealed input, publish a binding-and-hiding commitment and state who
@@ -2753,6 +3478,24 @@ theorem shape permit it:
    record its own parser, calculus, platform, resource, and completeness assumptions; and
 7. retain a separate reviewed prose-to-statement map and implementation-refinement map.
 
+Formal acceptance is conjunctive. Bind the task revision, pre-candidate separately reviewed target
+bytes with the review dependency vector recorded, theorem fully qualified name and elaborated
+signature, candidate bytes, complete import closure,
+Lake/toolchain/kernel/checker/wrapper identities, permitted and observed transitive axioms,
+environment and sandbox policy, command, exit status, full standard streams, structured report,
+and before/after artifact identities. A nonzero exit, missing/skipped verifier, unavailable binary,
+malformed report, timeout, crash, target mismatch, forbidden axiom, or artifact change means
+`unverified`; no regex or pretty-printer sub-diagnostic can override a checker-wide failure.
+Atomically associate the verdict with the exact bytes checked and retain the raw report.
+
+At minimum, hostile cases include local `abbrev`/`def` shadows of a trusted predicate; weakened,
+renamed, deleted, empty, or wrong-FQN targets; direct/helper/imported `sorry`/`admit`; new axioms,
+opaque/unsafe/partial paths; a forbidden axiom combined with an alpha-equivalent type diagnostic;
+ambient `LEAN_PATH`/`LEAN_SRC_PATH`/`LEAN_SYSROOT`/`ELAN_TOOLCHAIN`; replacement modules and stale
+`.olean` files; missing/skipped/crashed/timed-out verification; structured-report deletion; and a
+file change between checking and verdict recording. A positive canonical baseline must pass, and
+every mutation must reject under normal and applicable optimized execution.
+
 Comparator credit is conditional on its own preconditions. Bind the complete trusted Challenge
 import closure and Lake files; prove that no earlier adversarial Solution build contaminated the
 trusted environment; pin a compatible `lean4export`, primary kernel, and second kernel; isolate the
@@ -2778,7 +3521,8 @@ Record formal assurance as an orthogonal status ledger, not a single linear matu
 No dimension implies another. A theorem can have a primary-kernel pass while its paper
 correspondence is blocked; an optional second kernel can remain `not-run` without preventing a
 separate correspondence review. Record release tag, tag object, commit, toolchain, library graph,
-local/hosted execution state, and whether each receipt is self-reported or independently held. A
+local/hosted execution state, and whether each receipt is self-reported or held under separately
+controlled custody with the applicable independence dimension recorded. A
 repository audit file is not a hosted execution receipt.
 
 Process artifacts also need typed provenance. Distinguish raw event logs, exact visible dialogue,

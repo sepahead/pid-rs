@@ -565,30 +565,63 @@ python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
   --mode postcommit --expected-candidate-tree <tree> --checkpoint-commit <commit>
 ```
 
-Only after exact-SHA CI and CodeQL are separately terminal green on the recovery head may a strict
-descendant retain both sealed indexes and a canonical composite-v3 receipt. The receipt must bind
-the linear `cb3f58f0... -> 7473e62a... -> recovery` chain, both failed CI runs, all three same-head
-CodeQL observations, all-green status only on recovery, both four-mode local custody records, and
-the distinct postcommit source-state artifacts. Composite validation applies only while `HEAD` is
-the clean detached exact direct receipt child of the embedded recovery commit, with no active Git
-operation, staged or tracked worktree change, or repository-visible untracked path, and with the
-receipt plus the two retained indexes as its exact three-path delta. Before a manual replay, check
-out that exact receipt commit detached and preserve this clean topology. The hosted workflow uses
-the same exact push/main/SHA/sole-parent applicability guard. Pull-request checkouts and later
-descendants may retain the evidence but skip this sole-child validation with no credit; they do not
-relabel or transfer the receipt result. Pass the committed receipt bytes on standard input:
+The recovery head is exact commit `bc3aa80fb6025e709c2906a08bce25a4fac40578`. Its exact-SHA CI
+and CodeQL runs completed successfully. Composite-v3 nevertheless cannot issue a truthful receipt:
+its fixed semantic CodeQL language order conflicts with its increasing-analysis-ID predicate on the
+actual recovery observations, and its exact-three-additions child cannot also update the
+self-excluding current-source manifest. Preserve the v3 checker, self-test, schema, and permanent
+absence of its reserved receipt. Do not reconstruct either unavailable historical index or invent
+replacement custody.
+
+The append-only successor is documented in
+`audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md` and its companion PDF. C4 is an
+unsigned, single-parent direct child that changes only the exact operational policy inventory; R4
+is a later unsigned, single-parent direct child that adds the raw capture and derived receipt and
+regenerates current-source. The exact v4 local gates are:
 
 ```text
-python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
-  --validate-composite-receipt < audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json
-python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
-  --validate-composite-receipt < audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json
+tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v4.XXXXXX")"
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v4.py --self-test \
+  > "$tmp_root/capture-self-test.json"
+python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v4.py --self-test \
+  > "$tmp_root/capture-self-test.optimized.json"
+cmp "$tmp_root/capture-self-test.json" "$tmp_root/capture-self-test.optimized.json"
+python3 -I -S -B scripts/check-ksg-m1a-composite-v4.py --validate-static \
+  > "$tmp_root/static.json"
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v4.py --validate-static \
+  > "$tmp_root/static.optimized.json"
+cmp "$tmp_root/static.json" "$tmp_root/static.optimized.json"
+python3 -I -S -B scripts/check-ksg-m1a-composite-v4-self-test.py \
+  > "$tmp_root/self-test.json"
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v4-self-test.py \
+  > "$tmp_root/self-test.optimized.json"
+cmp "$tmp_root/self-test.json" "$tmp_root/self-test.optimized.json"
+scripts/check-ksg-m1a-composite-v4-process-pdf.sh --exact
 ```
 
-The schema alone grants no status. The receipt cannot hash or attest its own bytes or containing
-commit. Hosted provider IDs, times, logs, alerts, and artifacts remain unauthenticated observations.
-M1a stays `integration_no_go`; this route provides no KSG M1c, estimator, support, calibration,
-PID2/PID3, categorical MGW, Williams--Beer `I_min`, package, release, or application evidence.
+The KSG process-PDF gate additionally pins the repository's standard-library render comparator.
+Its cross-toolchain route rasterizes all nine rebuilt and committed report pages and the
+standalone custody figure with the same local Poppler at 120 dpi, then requires every page to
+remain inside explicit mean, changed-pixel, and large-delta bounds. Causal controls insert an
+active one-point-square clipping path before the page-3 custody Form and replace both Source Sans
+embedded font-program references with the LM Roman donor program in both the report Form and
+standalone figure while retaining the declared font dictionaries; all three must fail at the raster
+predicate. This is bounded same-renderer regression evidence. It is not exact visual identity,
+renderer independence, accessibility
+conformance, human review, or a proof against every PDF visibility manipulation.
+
+All output paths are outside the repository because the static checker requires the complete
+tracked worktree to equal `HEAD` and rejects repository-visible untracked paths. The capture tool
+may run only after exact-C4 CI, CodeQL, and the dedicated v4 workflow are terminal. It fetches the
+bounded provider surface twice, writes canonical capture bytes to standard output, and retains no
+authentication claim. Derive the R4 receipt from those exact bytes on standard input; validate the
+committed receipt from standard input after R4 exists. Never seed a real receipt from the synthetic
+self-test fixture.
+
+The schema alone grants no status. Hosted identifiers, times, logs, alerts, and artifacts remain
+unauthenticated observations. M1a stays `integration_no_go`; this route provides no KSG M1c,
+estimator, support, calibration, categorical MGW, Schick--Poland, Ehrlich continuous, `I_min`,
+PID2/PID3, quantized/mixed-support, package, release, objective, or application evidence.
 <!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->
 
 The W1b runtime lane uses one finite `n=4,k=1` predecessor-adjacent fixture in both source orders.
@@ -794,12 +827,12 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
-finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, and finalized `r7` receipt
-remain exact-hash-bound prior evidence with their original v1, v2, v2, v2, v2, v2, v2, and v2
-schema identities. The `r8` suffix denotes only the eighth receipt in the versioned sequence that
-originated on 12 August, and therefore the ninth
+finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt, and
+finalized `r8` receipt remain exact-hash-bound prior evidence with their original v1, v2, v2, v2,
+v2, v2, v2, v2, and v2 schema identities. The `r9` suffix denotes only the ninth receipt in the
+versioned sequence that originated on 12 August, and therefore the tenth
 current-project replay receipt overall; the 11 August historical receipt is outside that versioned
 sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
@@ -844,6 +877,14 @@ projection-omitted live checker digest; the replay digest remains the endpoint h
 checker reconstructs its zero-placeholder replay source and allows no other checker
 replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
 two-edit finalization and normal/optimized checker plus self-test replay.
+
+The runner also refuses to start unless the three-way composite-v4 checksum cut is invocation
+ready. The replay projection must still be the exact zero-placeholder source expression; the two
+Lean composite-v4 digests must be equal, nonzero, and hash the exact composite checker; and the
+composite checker's normalized-Lean digest must reproduce the Lean source with all three cut lines
+restored to their reviewed placeholder forms. These predicates run before replay commands and
+no-clobber publication. The hostile suite removes or changes each cut and also rejects a projection
+that was finalized before replay.
 
 For every natural-valued count function with positive total on a complete finite two-source key
 space, the first bridge identifies the four signed-net averaged cumulatives as support-restricted
@@ -1183,7 +1224,7 @@ makes Markdown 2.23 and 3.4 agree on the equations and following list items with
 reindenting the mathematics; it does not change the mathematics or relax the cross-toolchain text,
 navigation, or raster predicates.
 
-The direct self-test freezes exactly 319 controls in the partition 200 predecessor, 37
+The direct self-test freezes exactly 322 controls in the partition 203 predecessor, 37
 bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3 transitive-executable-custody,
 and 47 format-custody controls. The format family covers exact query and selected-path
 canonicalization (including Kpathsea's empty-component default expansion), nonempty bounded source
@@ -1191,7 +1232,7 @@ bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode and 
 digest replay, actual compiler-environment consumption, verifier ordering before every compiler
 pass and after both builds, the complete source/size/digest receipt, and case-insensitive
 raw/resolved FLS format sets across direct and aliased paths. These are correlated deterministic
-fault probes, not 319 independent defenses or scientific replications. The liveness
+fault probes, not 322 independent defenses or scientific replications. The liveness
 mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
 the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
 deliberate process-group escape, external anchor death, PGID reuse outside the checked transitions,

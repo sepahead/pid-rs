@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="90mm" viewBox="0 0 1600 900" role="img" aria-labelledby="custody-title custody-desc" data-contract-commit="C4" data-receipt-hashes="capture-H-only" data-manifest-scope="all-visible-paths-except-M" data-r4-delta="A:H A:V M:M">
+  <title id="custody-title">Acyclic C4-to-R4 evidence custody</title>
+  <desc id="custody-desc">The exact C4 contract triggers three terminal hosted runs. Their retained raw response and archive bytes form capture H. Typed receipt V is derived from H and embeds only the SHA-256 of H. The self-excluding source manifest M inventories H and V but excludes itself. Together with C4 as the sole parent, adding H, adding V, and modifying M produces R4. The R4 tree and commit identities are outputs, never checksum inputs. This establishes byte custody only, not KSG correctness, PID validity, authentication, attestation, or scientific credit.</desc>
+  <defs>
+    <marker id="custody-teal-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#1F6968"/>
+    </marker>
+    <marker id="custody-navy-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#1F3F60"/>
+    </marker>
+    <marker id="custody-gold-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#B28218"/>
+    </marker>
+    <pattern id="custody-hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#B28218" stroke-width="4"/>
+    </pattern>
+    <style>
+      .heading { font-family: 'Source Sans Pro', sans-serif; font-size: 40px; font-weight: 700; fill: #1F3F60; }
+      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
+      .lane { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; letter-spacing: 1px; fill: #596A73; }
+      .node-title { font-family: 'Source Sans Pro', sans-serif; font-size: 30px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
+      .node-body { font-family: 'Latin Modern Roman', serif; font-size: 26px; font-weight: 400; fill: #2C3E50; text-anchor: middle; }
+      .small { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 600; fill: #596A73; }
+      .small-center { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 600; fill: #596A73; text-anchor: middle; }
+      .badge { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; fill: #F7F3E9; text-anchor: middle; letter-spacing: 1px; }
+      .delta { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; fill: #2C3E50; }
+      .delta-body { font-family: 'Latin Modern Roman', serif; font-size: 26px; font-weight: 400; fill: #2C3E50; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#F7F3E9"/>
+  <path d="M52 72 H1548" stroke="#D2E0E2" stroke-width="2"/>
+  <path d="M52 72 H260" stroke="#B28218" stroke-width="7"/>
+  <text x="52" y="43" class="eyebrow">ACYCLIC EVIDENCE CUSTODY</text>
+  <text x="52" y="122" class="heading">Capture first, derive once, inventory without self-reference</text>
+
+  <text x="360" y="171" class="lane">HOSTED OBSERVATION ROUTE</text>
+  <text x="380" y="486" class="lane">SELF-EXCLUDING SOURCE-STATE ROUTE</text>
+
+  <g fill="none" stroke="#1F6968" stroke-width="4" marker-end="url(#custody-teal-arrow)">
+    <path d="M302 300 C326 300 336 252 360 252"/>
+    <path d="M640 252 H700"/>
+    <path d="M950 252 H1030"/>
+  </g>
+  <g fill="none" stroke="#1F3F60" stroke-width="4" marker-end="url(#custody-navy-arrow)">
+    <path d="M302 367 C336 367 346 582 380 582"/>
+    <path d="M740 582 H920"/>
+  </g>
+
+  <g fill="none" stroke="#B28218" stroke-width="4" stroke-dasharray="10 8" marker-end="url(#custody-gold-arrow)">
+    <path d="M825 325 V407 C825 458 948 452 990 500"/>
+    <path d="M1160 345 V410 C1160 455 1125 470 1110 500"/>
+  </g>
+  <text x="785" y="442" class="small">inventory H</text>
+  <text x="1168" y="442" class="small">inventory V</text>
+
+  <path d="M1220 582 C1262 582 1278 501 1295 501" fill="none" stroke="#1F6968" stroke-width="4" marker-end="url(#custody-teal-arrow)"/>
+  <path d="M177 425 C177 704 1272 718 1410 595" fill="none" stroke="#1F3F60" stroke-width="4" stroke-dasharray="12 9" marker-end="url(#custody-navy-arrow)"/>
+  <text x="676" y="704" class="small">C4 is the sole parent; the exact three-path delta determines the R4 tree</text>
+
+  <g>
+    <rect x="52" y="225" width="250" height="200" rx="20" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
+    <rect x="84" y="241" width="82" height="36" rx="18" fill="#1F3F60"/>
+    <text x="125" y="267" class="badge">C4</text>
+    <text x="177" y="316" class="node-title">Exact contract</text>
+    <text x="177" y="354" class="node-body">clean fixed tree</text>
+    <text x="177" y="388" class="node-body">no capture; no receipt</text>
+
+    <rect x="360" y="190" width="280" height="135" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
+    <text x="500" y="231" class="node-title">Terminal runs</text>
+    <text x="500" y="269" class="node-body">CI · CodeQL · contract</text>
+    <text x="500" y="301" class="node-body">exact C4 subject</text>
+
+    <rect x="700" y="190" width="250" height="135" rx="18" fill="#F7F3E9" stroke="#1F6968" stroke-width="4"/>
+    <rect x="718" y="206" width="42" height="34" rx="17" fill="#1F6968"/>
+    <text x="739" y="231" class="badge">H</text>
+    <text x="825" y="266" class="node-title">Raw capture</text>
+    <text x="825" y="301" class="node-body">response + ZIP bytes</text>
+
+    <rect x="1030" y="190" width="260" height="155" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
+    <rect x="1139" y="206" width="42" height="34" rx="17" fill="#1F6968"/>
+    <text x="1160" y="231" class="badge">V</text>
+    <text x="1160" y="272" class="node-title">Typed receipt</text>
+    <text x="1160" y="305" class="node-body">derived from H</text>
+    <text x="1160" y="335" class="node-body">embeds SHA-256(H)</text>
+
+    <rect x="380" y="510" width="360" height="145" rx="18" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
+    <text x="560" y="553" class="node-title">Visible path inputs</text>
+    <text x="560" y="592" class="node-body">C4 paths + H + V</text>
+    <text x="560" y="626" class="node-body">manifest M excluded</text>
+
+    <rect x="920" y="500" width="300" height="180" rx="20" fill="url(#custody-hatch)" stroke="#B28218" stroke-width="5"/>
+    <rect x="932" y="512" width="276" height="156" rx="14" fill="#F7F3E9" stroke="#B28218" stroke-width="2"/>
+    <rect x="950" y="524" width="42" height="34" rx="17" fill="#1F3F60"/>
+    <text x="971" y="549" class="badge">M</text>
+    <text x="1070" y="579" class="node-title">Source manifest</text>
+    <text x="1070" y="617" class="node-body">inventories H and V</text>
+    <text x="1070" y="650" class="node-body">never inventories itself</text>
+
+    <rect x="1295" y="365" width="260" height="230" rx="22" fill="#D2E0E2" stroke="#1F3F60" stroke-width="5"/>
+    <rect x="1303" y="381" width="244" height="36" rx="18" fill="#1F3F60"/>
+    <text x="1425" y="407" class="badge">R4 · DIRECT CHILD</text>
+    <text x="1425" y="455" class="node-title">Exact delta</text>
+    <text x="1328" y="498" class="delta">A</text>
+    <text x="1362" y="498" class="delta-body">capture H</text>
+    <text x="1328" y="532" class="delta">A</text>
+    <text x="1362" y="532" class="delta-body">receipt V</text>
+    <text x="1328" y="566" class="delta">M</text>
+    <text x="1362" y="566" class="delta-body">manifest M</text>
+  </g>
+
+  <rect x="52" y="748" width="1496" height="108" rx="16" fill="#D2E0E2"/>
+  <rect x="52" y="748" width="9" height="108" rx="4" fill="#B28218"/>
+  <text x="82" y="790" class="small">ACYCLIC CUT: V hashes H only · M inventories H and V but excludes M · R4 tree and commit are outputs.</text>
+  <text x="82" y="829" class="small">NO SCIENCE CREDIT: no KSG correctness · no PID validity · no authentication · no attestation.</text>
+</svg>

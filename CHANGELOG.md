@@ -9,6 +9,114 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Updated the hash-pinned PDF verifier dependency to `pypdf` 6.15.0, the first release patched for
+  GHSA-fp3f-mc75-235c and GHSA-fwg2-594c-jp42. Both reviewed advisories concern bounded-resource
+  handling of adversarial font data. This tooling change does not alter a PID definition,
+  estimator, theorem, committed numerical result, formal disposition, or scientific claim.
+- Defined pid-rs's problem-specific autoresearch boundary: a frozen typed claim/judge packet,
+  exploit/near-miss/structural hypothesis beams, high-information falsification checks, explicit
+  stopping and selection,
+  retained failed and selection-bearing alternatives, and human adjudication. The transfer is
+  critically derived from an attributed GPU-kernel engineering worklog rather than accepted as
+  authority. Single-score leaderboard hill climbing, submission volume, model votes, and generic
+  harness activity receive no PID-science credit. Accepted research milestones may not remain only
+  in temporary worktrees, local branches, or conversations: they must become verified remote-main
+  commits, with exact publication identities and a release/archive locator when repository hosting
+  is not a sufficient preservation boundary.
+- Audited the 14 August 2026 Lea and Grothendieck-constant human--AI research reports, plus the
+  newly public DeepSeek Harness/Cordis composability sources, against
+  pinned primary papers and repository commits, then added prospective requirements for
+  candidate/judge isolation, frozen-per-attempt task packets, fail-closed verifier custody, durable
+  attempt/failure ledgers, explicit selection/stopping records, dependency-vector review, and
+  coexisting exploratory/system-tested/kernel-checked/numerically-certified/human-reviewed
+  statuses to the
+  mathematical workflow. Category theory is admitted only as an optional typed-composition and
+  commuting-square discipline: the project adds no Harness/Cordis dependency, treats effect
+  commutation as distinct from scientific independence, keeps the judge outside replaceable
+  plugin authority, and requires explicit functorial/commutation laws before using those terms.
+  Markov-category and Blackwell-order ideas remain a separate research route with no transfer to
+  any implemented PID. The Lea source shows why a proof target derived from candidate-controlled
+  definitions cannot establish intended-statement identity. The Grothendieck lower-bound wrapper
+  does not make three printed high-$c$ prerequisite Booleans fatal; conversely, a suspected
+  binary64 endpoint gap was withdrawn after direct `python-flint` 0.8.0 interval semantics showed
+  that the constructed outward ball contains the exact $1/12$ endpoint. These are bounded
+  source-review and reviewer-derived research-method and fail-closure/verification observations,
+  not adoption of Lea, verification or
+  refutation of either reported theorem, retrospective compliance credit, human/institutional
+  independence, scientific novelty, or a mapping among KSG, categorical MGW shared exclusions,
+  Schick--Poland, Ehrlich continuous shared exclusions, PID2/PID3, Williams--Beer `I_min`, fitted
+  quantized routes, estimators/evaluators, or downstream objectives.
+- Added a status-separated active-plan inventory that records zero claimed new PID theories, three
+  published PID theory/functional lineages represented by four implemented decomposition method
+  routes, plus one separately cataloged redundancy dependency, ten project-defined PID
+  workflow/composition extensions, six PID-facing validation/assurance extensions, 275
+  PID/KSG-relevant source-written Lean theorems, nine solver obligations, and the exact open
+  KSG-M1c/PID2-revision-4/MGW-SxPID3 work units. The categories are explicitly non-additive;
+  co-/O-information, target-free analogues, KSG MI, diagnostics, resampling, and infrastructure do
+  inflate neither count, and the current C4 delta adds no science.
+- Preserved the successful KSG M1a recovery commit `bc3aa80f...` and declined to issue the frozen
+  composite-v3 receipt after proving two separately sufficient contract contradictions. In the
+  exact successful CodeQL run, the provider's positive unique analysis identifiers are not
+  increasing in the schema's fixed semantic language order; reordering the rows or reassigning
+  identifiers would falsify a different predicate. Separately, v3 permits exactly three additions
+  while the repository-wide self-excluding source manifest must also change to inventory those
+  additions.
+  Composite-v4 is therefore an append-only two-commit process: an unsigned, single-parent C4
+  publishes the corrected checker, closed schemas, capture tool, adversarial suite, workflow,
+  counterexample, process Markdown/TeX/PDF, operational custody updates, and a fresh Lean replay;
+  only after exact-C4 CI, CodeQL, and the dedicated workflow finish may an unsigned R4 add the raw
+  hosted capture and deterministically derived typed receipt while regenerating current-source
+  last. The process-PDF gate checks every page box, the unique page-3 custody Form and its bounded
+  resource graph, and bounded same-renderer rasters for all report pages and the standalone figure;
+  causal clipping and embedded-font-program mutations must fail. This renderer-scoped regression
+  evidence is not human visual review, accessibility conformance, or universal PDF equivalence.
+  The v3 checker, self-test, schema, and permanent absence of its reserved receipt are
+  preserved. This is a project-defined evidence-contract migration, not KSG mathematics,
+  estimator validation, scientific review, release evidence, or authority to transfer a result
+  among categorical MGW, Schick--Poland, Ehrlich continuous shared exclusions, KSG MI,
+  Williams--Beer `I_min`, PID2/PID3, quantized or mixed-support routes, resampling procedures, or
+  downstream objectives.
+- Retained the exact first local composite-v4 `r9` replay output after its formal execution
+  and receipt-finalization predicates passed but the containing pre-publication C4 failed static
+  closure. For the same 748 sorted entries, the current-source generator hashed 132,893 bytes of
+  newline-free compact JSON to
+  `b336e6f54450090693731f2391b1ef3e112095dd9a9c8cbdadddbf2f855fba47`, whereas the first
+  composite checker hashed 132,894 bytes including one terminal line feed to
+  `7d4d4fd6bc478aeb20008cd05d1efe4b92b6ca9fd72a72043e67322e6a722f20`. Local commit
+  `e02d27bec91f142949336f9f28550c672d22b297` was rejected before any C4 push. The candidate is
+  execution-custody evidence only and receives no C4-publication, hosted, scientific,
+  accepted-current-replay, or independence credit. Its unchanged 132,710 bytes are preserved at
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json`
+  with SHA-256 `fb162cc40da3059b61eab9024f4aa38cf6daf2d84ef7e1d8a26dc7d345291e70`.
+  The corrected composite checker uses the generator's established newline-free compact framing,
+  binds the rejected attempt as retained pre-publication closure evidence outside the accepted
+  replay lineage, and requires a fresh one-shot replay before C4 can be amended, validated, and
+  published. The exact rejected replay and measured framing facts are retained; no rejected C4 is
+  represented as a published commit.
+- Recorded and withdrew a second local pre-publication attempt after its 132,912-byte schema-v2
+  replay output (SHA-256 `6d5068a2ade251b4ea005e847b78be656bb7697b14ae2e6d8a644d521f09e2cb`)
+  and static checks passed but the complete composite self-test exposed an obsolete hostile
+  fixture. Mixed direct and individually safe redirected delivery of identical ZIP bytes is valid
+  transport variation under the schema, not a repeated-observation mismatch. The corrected suite
+  accepts that mixed route, rejects a forbidden redirect host, and makes its repetition and
+  duplicate-row mutations reach their named predicates. Host-local commit
+  `f6d76c1d01a040f74ea55277a5ba835b32fdb6ab` was never pushed or accepted as C4. The committed
+  process record binds the exact disposition and omission, not the second raw preimage; its digest
+  alone gives no recovery or reproducibility credit, and the candidate receives no
+  C4-publication, hosted, scientific, accepted-current-replay, selection, or independence credit.
+- Advanced the current Lean 4.33 replay route to append-only
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json` for the
+  composite-v4 operational surface, while preserving finalized r8 byte-for-byte at SHA-256
+  `86251c48c0f720d1ca021dcac87dfbf6e1a54adf409ea8a8981102cea1769611`. The `r9`
+  suffix denotes only the ninth receipt in the versioned sequence that originated on 12 August and
+  the tenth current-project replay receipt overall; the 11 August historical receipt is outside
+  that sequence. It does not denote a calendar date, schema, theorem, review, assurance tier, or
+  independence revision. The one-shot generator now rejects a finalized projection, missing or
+  unequal composite-v4 checker cuts, an unbound checker byte image, and a missing or incorrect
+  three-cut Lean normalization before it can publish r9; the hostile suite causally reseals each
+  mutation so every predicate is exercised rather than masked by an earlier digest failure. No
+  Lean theorem source changes, and the current route receives execution credit only when the exact
+  r9 receipt exists and validates under normal and optimized custody checks.
 - Preserved the exact public KSG M1a custody-correction commit `7473e62a...` after its first hosted
   CI run completed with 43 successful and two failed jobs. The certified-SxPID2 self-test failed
   because its depth-one checkout omitted the fixed `cb3f58f0...` checker authority read with

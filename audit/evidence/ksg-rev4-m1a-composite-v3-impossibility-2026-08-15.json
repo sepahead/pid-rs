@@ -1,0 +1,90 @@
+{
+  "counterexample": {
+    "codeql_order": {
+      "analysis_ids_in_required_language_order": [
+        1617732991,
+        1617732745,
+        1617735963,
+        1617735749
+      ],
+      "analysis_ids_strictly_increasing": false,
+      "analysis_ids_unique": true,
+      "languages": [
+        "actions",
+        "javascript-typescript",
+        "python",
+        "rust"
+      ],
+      "provider_order_claimed": false,
+      "run_id": 31773937102
+    },
+    "source_state_topology": {
+      "bc3_source_projection_entry_count": 731,
+      "bc3_tree_entry_count": 732,
+      "required_receipt_child_additions": 3,
+      "required_receipt_child_source_projection_entry_count": 734,
+      "v3_allows_current_source_manifest_modification": false,
+      "v3_required_delta_entry_count": 3
+    }
+  },
+  "decision": {
+    "composite_v3_receipt_issued": false,
+    "disposition": "uninstantiable_for_the_exact_bc3_recovery_subject",
+    "repair_class": "append_only_contract_revision",
+    "rewrite_or_relabel_v3_forbidden": true
+  },
+  "evidence_class": "project_defined_contract_counterexample_not_scientific_evidence",
+  "frozen_authorities": {
+    "ci_workflow": {
+      "git_blob_oid_sha1": "80b576448a3053f615580265056eeb9ab0b70b1b",
+      "path": ".github/workflows/ci.yml",
+      "sha256": "61283264499a7b6069a4e5e9563c72541ab101b69379f3ace75a12cd4bf4b175",
+      "size_bytes": 68913
+    },
+    "current_source_checker": {
+      "git_blob_oid_sha1": "54f68f03f526f7a1cb1ca1c5ce5ac729ef0b4529",
+      "path": "scripts/check-current-source-state-v1.py",
+      "sha256": "5be09a05b734d2c04d5a509cb919c630f37e9651d1e4bbd4b8fc2a34aff86591",
+      "size_bytes": 25651
+    },
+    "current_source_manifest": {
+      "git_blob_oid_sha1": "c0743888c7dd8eb22c2162b47219073744790fba",
+      "path": "audit/evidence/current-source-state-v1.json",
+      "sha256": "8dabf1b65040e1ee6e55b21b67fc1094248ec62a619b8efdf8ab0565b8e20c57",
+      "size_bytes": 176095
+    },
+    "v3_checker": {
+      "git_blob_oid_sha1": "32fc45c58ea9a7da0f96b0a0fdc6a98271fb70ab",
+      "path": "scripts/check-ksg-m1a-hosted-recovery.py",
+      "sha256": "6c422718b32d9ad22b74a22d1ea56b73ebe3b312412f28b3319f4085598d66cc",
+      "size_bytes": 246860
+    },
+    "v3_schema": {
+      "git_blob_oid_sha1": "7e6e86bb0677b6feb73f99395e7fde2ec0805852",
+      "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json",
+      "sha256": "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5",
+      "size_bytes": 114567
+    },
+    "v3_self_test": {
+      "git_blob_oid_sha1": "1147c93ec08561ffd9cad8dbc6ffe9cf539ca5f8",
+      "path": "scripts/check-ksg-m1a-hosted-recovery-self-test.py",
+      "sha256": "ce8cf3b23e9fa735f01b56bb6d90b18332f5b60d9b20738080b00356bbcef35f",
+      "size_bytes": 140677
+    }
+  },
+  "nonimplications": [
+    "The counterexample does not invalidate the KSG implementation or any mathematical theorem.",
+    "A successful CodeQL run is not estimator validation, scientific review, or application evidence.",
+    "A contract defect does not transfer to categorical MGW SxPID, continuous Ehrlich PID, PID2, PID3, Williams-Beer I_min, or any downstream objective.",
+    "Unique provider identifiers are opaque observations; their numerical order has no scientific meaning.",
+    "Missing historical sealed-index bytes are not reconstructed, fabricated, or relabeled."
+  ],
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v3-impossibility/v1",
+  "schema_revision": 1,
+  "subject": {
+    "recovery_commit": "bc3aa80fb6025e709c2906a08bce25a4fac40578",
+    "recovery_tree": "7d87f87953a42edb91e40880d918471c7cbe4414",
+    "v3_receipt_path": "audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json"
+  }
+}

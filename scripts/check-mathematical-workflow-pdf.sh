@@ -27,16 +27,16 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-12.md"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
 REPORT_STEM="mathematical-problem-solving-workflow"
 ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"
-SOURCE_DATE_EPOCH_VALUE="1785715200"
+SOURCE_DATE_EPOCH_VALUE="1786752000"
 RENDER_DPI=120
-EXPECTED_PAGES=64
-EXPECTED_PYPDF_VERSION="6.14.2"
+EXPECTED_PAGES=83
+EXPECTED_PYPDF_VERSION="6.15.0"
 MODE="${1:---exact}"
 CHECK_NAME="mathematical workflow PDF check"
 
@@ -638,7 +638,7 @@ manifest_paths=(
 )
 if [[ "$MODE" != "--refresh" ]]; then
   # Refresh is the bootstrap/update operation for the report PDF, its rendering receipt, and the
-  # four SVG-derived figure PDFs.  The independent visual receipt is rebound only after a human or
+  # four SVG-derived figure PDFs.  A new scoped visual receipt is bound only after a human or
   # agent actually inspects the refreshed pages.  Treating stale or absent output bytes as source
   # inputs made a clean refresh impossible and falsely enlarged the build dependency closure.
   # Exact and cross-toolchain modes still capture the report, rendering, and visual records.
@@ -1288,6 +1288,17 @@ semantic_literals = (
     "complete right-hand side must be divided by $\\ln 2$",
     "_compute_n_T(T,eps)",
     "That code is correlated with the defining-paper route",
+    "not authority for PID validity, reproducibility, or optimal research design",
+    "candidate-inaccessible confirmation",
+    "declared selection-robust route",
+    "structured adversarial review mechanism, not a vote",
+    "minimum operational recovery anchor for accepted work, not immutable or scholarly preservation",
+    "derived display tags",
+    "fitted quantized SxPID for a quantized estimand",
+    "| Globally novel PID theories/functionals claimed | 0 |",
+    "0/108 coordinates",
+    "Publishing this inventory adds no scientific credit",
+    "A digest without a retrievable preimage is only a commitment or omission record",
 )
 normalized_markdown = " ".join(semantic_markdown.split())
 for literal in semantic_literals:
@@ -1352,10 +1363,10 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "c55e6fa63ba9f72477e1bb8e4153e99d80e77ef69fc858e49976ee0c154335a7":
+if markdown_digest != "538690ae27c6e52bb5bbb6844acb3cd8f32d46f8f08ef770e09dae8d33ae9bb6":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "a86e39c1a5602866c496c93259b8c0da6ac21b8cfe3736bbc5f4d02dc4f31dab":
+if primer_digest != "684783a855acb21e04f4bb7c3901249bfa082edcf4bb4584ca859ce7dda50828":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
@@ -1458,10 +1469,10 @@ expected_fields = {
     "dpi": str(expected_dpi),
     "color_pages_reviewed": f"1-{expected_pages}",
     "grayscale_pages_reviewed": f"1-{expected_pages}",
-    "original_resolution_spot_checks": f"1-{expected_pages}",
-    "figure_pages_reviewed": "3,4,9,10",
+    "original_resolution_spot_checks": "1,5,6,10,12,19-23,28,30,31,37-47,55-63,79-83",
+    "figure_pages_reviewed": "5,6,10,12",
     "status": "passed",
-    "review_date_utc": "2026-08-12",
+    "review_date_utc": "2026-08-16",
     "reviewer_kind": "agent-visual-inspection",
 }
 for name, expected in expected_fields.items():
@@ -1519,10 +1530,10 @@ expected_geometry = {
     "invalidation-publication-state-machine": ("160mm", "84mm", "0 0 1600 840"),
 }
 expected_svg_sha256 = {
-    "four-object-assurance-chain": "64955c76d881c9bfe4ee3fade1961064acebf5b21c20ba75be826824b0dcdc25",
-    "obligation-dag-minimal-cuts": "d3c5bbade2238e1d5023f7637ac7714ce79baa3bf0f2a20cdfab28ce14bf6a0c",
-    "shared-oracle-correlated-routes": "44b55e8cc1dbe7c357bb223fface53488761ed97c6ecc8fc133e9be2c23e4987",
-    "invalidation-publication-state-machine": "9ac971262d90e71197e6b421a167ea0b91f1c3ce1c921944824b533e5e85dc59",
+    "four-object-assurance-chain": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
+    "obligation-dag-minimal-cuts": "2e8edce85d47398482b277fe35218f6d0c245975d3052109fe76a7db61ce97f9",
+    "shared-oracle-correlated-routes": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
+    "invalidation-publication-state-machine": "8c38292e6fcb0b848ebdbc745f48e8e85d9842b7a8184bd7305c593778c7b70e",
 }
 allowed_palette = {
     "#1F3F60",
@@ -1866,8 +1877,8 @@ def strict_visible_text(root: ET.Element, path: Path) -> str:
         if fill.casefold() == "none" or fill.upper() not in allowed_palette:
             fail(f"{path.name} text class lacks a visible palette fill")
         font_size_raw = text_style.get("font-size", "").removesuffix("px")
-        if number_pattern.fullmatch(font_size_raw) is None or float(font_size_raw) <= 0:
-            fail(f"{path.name} text class has a nonpositive font size")
+        if number_pattern.fullmatch(font_size_raw) is None or float(font_size_raw) < 25:
+            fail(f"{path.name} text class is below the 25-pixel publication minimum")
         x_raw = element.get("x", "")
         y_raw = element.get("y", "")
         if number_pattern.fullmatch(x_raw) is None or number_pattern.fullmatch(y_raw) is None:
@@ -1903,18 +1914,22 @@ required_figure_language = {
         "A or B accepted",
         "Frozen U = {A1, A2, B1, C}",
         "Routes: A = {A1, A2, C}; B = {B1, C}",
+        "Gate state: GO",
         "All inclusion-minimal cuts: {C}; {A1, B1}; {A2, B1}",
     ),
     "shared-oracle-correlated-routes": (
-        "Candidate separate route",
+        "Candidate route: separate formulation and verifier, followed by a dependency audit",
         "Separate formulation",
         "Distinct verifier",
         "Independence audit",
+        "Breadth ≠ independence; record shared dependencies.",
+        "Result state: PASS · audit state: OPEN",
         "OPEN",
     ),
     "invalidation-publication-state-machine": (
-        "Nodes unreachable from this change are not invalidated by it",
-        "their prior state remains separately governed",
+        "Invalidation follows prerequisite → dependent edges",
+        "Bound hosted run",
+        "Workflow state ≠ evidence class or claim disposition; unreachable nodes retain their governed state.",
     ),
 }
 for stem in stems:
@@ -1941,7 +1956,7 @@ for stem in stems:
     observed_svg_sha256 = hashlib.sha256(raw_bytes).hexdigest()
     if observed_svg_sha256 != expected_svg_sha256[stem]:
         fail(
-            f"{path.name} differs from its exact visually reviewed source bytes: "
+            f"{path.name} differs from its exact expected source bytes: "
             f"{observed_svg_sha256}"
         )
 PY
@@ -1959,7 +1974,7 @@ python3 -O -I -S "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py
 bash "$SNAPSHOT_ROOT/scripts/check-formal-pdf-log-self-test.sh" >/dev/null
 if [[ "$MODE" != "--refresh" ]]; then
   # The checker self-test contains accepted controls bound to the committed PDF, rendering
-  # receipt, and independent visual receipt.  Refresh is the operation that creates/replaces the
+  # receipt, and separately scoped visual receipt.  Refresh is the operation that creates/replaces the
   # first two and deliberately invalidates the third, so its accepted controls are necessarily
   # circular during bootstrap.  Exact/cross modes always run the full hostile suite.
   bash "$SNAPSHOT_ROOT/scripts/check-mathematical-workflow-pdf-self-test.sh" >/dev/null
@@ -2920,8 +2935,8 @@ figure_sentinel() {
   case "$1" in
     four-object-assurance-chain) printf '%s\n' 'Keep the scientific objects distinct' ;;
     obligation-dag-minimal-cuts) printf '%s\n' 'Accepted routes, AND prerequisites' ;;
-    shared-oracle-correlated-routes) printf '%s\n' 'Five routes may still be one route semantically' ;;
-    invalidation-publication-state-machine) printf '%s\n' 'Prerequisites point toward dependents; invalidation follows the arrows' ;;
+    shared-oracle-correlated-routes) printf '%s\n' 'Five test suites may still be one semantic route' ;;
+    invalidation-publication-state-machine) printf '%s\n' 'Invalidation follows prerequisite → dependent edges' ;;
     *) return 2 ;;
   esac
 }
@@ -3846,8 +3861,8 @@ required_text=(
   'Keep the scientific objects distinct'
   'Accepted routes, AND prerequisites, and all minimal cuts'
   'All inclusion-minimal cuts: {C}; {A1, B1}; {A2, B1}'
-  'Five routes may still be one route semantically'
-  'Prerequisites point toward dependents; invalidation follows the arrows'
+  'Five test suites may still be one semantic route'
+  'Invalidation follows prerequisite → dependent edges'
   'normative_prompt:'
   'PID/PGID or explicit unavailable'
   'three-turn blocked audit'
@@ -3860,6 +3875,16 @@ required_text=(
   'Ahat=P+Q'
   '0.672500703679...'
   'M1-M9-incomplete=>abstain'
+  'Problem-specific autoresearch and durable publication'
+  'attributed engineering case study, not authority'
+  'candidate-inaccessible confirmation'
+  'declared selection-robust route'
+  'structured adversarial review mechanism, not a vote'
+  'minimum operational recovery anchor'
+  'Why scientific results must be typed'
+  'Globally novel PID'
+  'theories/functionals claimed'
+  '0/108 coordinates'
 )
 for sentinel in "${required_text[@]}"; do
   if ! grep -F -- "$sentinel" "$BUILD_ROOT/built.txt" >/dev/null; then
@@ -4063,16 +4088,16 @@ def walk_outline(items, depth: int = 0) -> None:
 
 
 walk_outline(reader.outline)
-if len(outline_rows) != 74:
+if len(outline_rows) != 85:
     fail(f"outline item inventory drifted: {len(outline_rows)}")
 outline_manifest = "".join(
     f"{depth}\t{title}\t{page_index + 1}\n"
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "ba9955ea747694eab4a11985fa43f180fafada843813492aa97ea9216e46fd7d":
+if outline_manifest_digest != "d4ecfca05ebb657bcbe1e0e87726f0cb32a8a1f9389fe841c39c795c1af9ce9e":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
-if len(reader.named_destinations) != 185:
+if len(reader.named_destinations) != 220:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
 
 raw_destination_root = names.get("/Dests")
@@ -4169,7 +4194,7 @@ _raw_first, _raw_last, raw_destination_entries = walk_destination_name_tree(
 )
 raw_destination_names = [name for name, _destination in raw_destination_entries]
 logical_destination_names = sorted(map(str, reader.named_destinations))
-if len(raw_destination_names) != 185 or raw_destination_names != logical_destination_names:
+if len(raw_destination_names) != 220 or raw_destination_names != logical_destination_names:
     fail("raw destination name-tree inventory differs from the logical destination inventory")
 
 
@@ -4227,13 +4252,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "412fdd7fbd6e55e661336d1c4f9b6dfa3179ea1347ae02b04705a39415cf6fea":
+if named_destination_route_digest != "3bdebe074c266f4786fdc601aa0a0896e17b92e8a4c5afc1987a810d9eb64546":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "c3be5be42104ffab51a48d23dbdf80f5659616da99130795e383cd15dd186d5f":
+    if named_destination_digest != "327b304629068f09d6eaeac50e4842a22a2272b97bc3ba7f87bc4f2220be28ec":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index
@@ -5850,5 +5875,5 @@ if [[ "$MODE" == "--exact" ]]; then
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
   echo "OK: workflow PDF and four SVG/PDF pairs preserve text, structure, and bounded same-renderer color/grayscale pixels across toolchains; $EXPECTED_PAGES report pages rendered ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 else
-  echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; the visual-review receipt must now be independently rebound before --exact can pass"
+  echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; a new scoped visual-review receipt must now be bound before --exact can pass"
 fi

@@ -28,6 +28,7 @@ EXPECTED = (
     "finite-alphabet-plugin-convergence.tex",
     "formal-tool-adoption-audit.tex",
     "foundational-shared-exclusions-pid-audit.tex",
+    "ksg-m1a-composite-v4-process.tex",
     "mathematical-problem-solving-workflow.tex",
     "support-change-tolerant-averaged-sxpid-continuity.tex",
     "two-source-sxpid-count-atom-bridge.tex",
@@ -261,7 +262,7 @@ def main() -> int:
             print(f"{location}: {finding.message}", file=sys.stderr)
         return 1
     print(
-        "OK: all ten formal papers use the shared visual system, explicit header bands, "
+        "OK: all eleven formal papers use the shared visual system, explicit header bands, "
         "and no vertical table rules"
     )
     return 0

@@ -3,16 +3,16 @@
   <title id="four-object-title">Four-object assurance chain</title>
   <desc id="four-object-desc">Four distinct cards run left to right from population functional through estimator and executable result to consumer decision. Lettered arrows bind target correspondence, implementation refinement, and consumer qualification as separate obligations.</desc>
   <defs>
-    <marker id="four-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L12,6 L0,12 z" fill="#1F6968"/>
+    <marker id="four-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#1F6968"/>
     </marker>
     <style>
-      .heading { font-family: 'Source Sans Pro', sans-serif; font-size: 31px; font-weight: 700; fill: #1F3F60; }
-      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
-      .card-title { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; fill: #2C3E50; }
-      .body { font-family: 'Latin Modern Roman', serif; font-size: 20px; font-weight: 400; fill: #2C3E50; }
-      .small { font-family: 'Source Sans Pro', sans-serif; font-size: 17px; font-weight: 600; fill: #596A73; }
-      .step { font-family: 'Source Sans Pro', sans-serif; font-size: 21px; font-weight: 700; fill: #F7F3E9; text-anchor: middle; }
+      .heading { font-family: 'Source Sans Pro', sans-serif; font-size: 40px; font-weight: 700; fill: #1F3F60; }
+      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
+      .card-title { font-family: 'Source Sans Pro', sans-serif; font-size: 30px; font-weight: 700; fill: #2C3E50; }
+      .body { font-family: 'Latin Modern Roman', serif; font-size: 27px; font-weight: 400; fill: #2C3E50; }
+      .small { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 600; fill: #596A73; }
+      .step { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; fill: #F7F3E9; text-anchor: middle; }
     </style>
   </defs>
 
@@ -47,7 +47,7 @@
     <text x="30" y="158" class="body">The rule applied to</text>
     <text x="30" y="187" class="body">observed data.</text>
     <text x="30" y="238" class="small">Question</text>
-    <text x="30" y="268" class="body">Under which assumptions?</text>
+    <text x="30" y="268" class="body">Which assumptions?</text>
   </g>
 
   <g transform="translate(840 170)">
@@ -84,9 +84,9 @@
     <path d="M1165 333 H1220"/>
   </g>
   <g>
-    <circle cx="404" cy="295" r="16" fill="#B28218"/>
-    <circle cx="798" cy="295" r="16" fill="#B28218"/>
-    <circle cx="1192" cy="295" r="16" fill="#B28218"/>
+    <circle cx="404" cy="295" r="19" fill="#1F3F60"/>
+    <circle cx="798" cy="295" r="19" fill="#1F3F60"/>
+    <circle cx="1192" cy="295" r="19" fill="#1F3F60"/>
     <text x="404" y="302" class="step">A</text>
     <text x="798" y="302" class="step">B</text>
     <text x="1192" y="302" class="step">C</text>
@@ -94,6 +94,6 @@
 
   <rect x="52" y="520" width="1496" height="80" rx="9" fill="#D2E0E2"/>
   <rect x="52" y="520" width="12" height="80" rx="6" fill="#B28218"/>
-  <text x="84" y="550" class="small">A · target correspondence   B · implementation refinement   C · consumer qualification</text>
-  <text x="84" y="581" class="body">Each mapping is an obligation; evidence for one object does not discharge another.</text>
+  <text x="84" y="550" class="small">A: target correspondence · B: implementation refinement · C: consumer qualification</text>
+  <text x="84" y="584" class="body">Each mapping needs evidence; one object cannot discharge another.</text>
 </svg>

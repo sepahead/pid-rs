@@ -132,6 +132,100 @@ Independently read the exact primary-source/repository bytes, rerun the applicab
 hostile self-test in normal and optimized Python where provided, and inspect the outputs. Apply the
 same rerun-and-inspect standard to your own claims; never inherit a reported green result.
 
+### AI-assisted candidate/judge isolation and research-integrity controls (MANDATORY)
+
+These controls apply prospectively to every research/scientific proof, numerical certificate,
+estimator or algorithm implementation, benchmark, or model attempt opened after this policy
+revision when it can change a scientific or public claim. They do not retroactively upgrade an
+existing claim, proof, certificate, or review. Deterministic execution of an already-fixed
+operational custody contract follows that contract's own pre-bound checker and receives no
+scientific credit; do not relabel routine receipt generation as a scientific candidate attempt.
+
+An output produced before its attempt is registered and its packet is sealed permanently loses
+preregistered, selection-unbiased, and strict-confirmatory credit. Preserve it as retrospective
+`exploratory` evidence; do not erase it. Naming it after selection does not repair the boundary, and
+rerunning against the same exposed data or judge does not cure adaptive selection. A deterministic
+formal or exact artifact may later receive only its separately checked predicate; empirical
+promotion needs candidate-inaccessible confirmation or a declared selection-aware design.
+
+- Before candidate access, seal a versioned task packet containing the exact claim or theorem,
+  definitions, imports, permitted axioms and trust routes, source/toolchain identities, candidate
+  write scope, acceptance predicate, resource budget, stopping rule, and selection rule. Publish
+  only a permitted projection or commitment when the packet contains protected material. Any
+  semantic or acceptance change starts a new revision; it does not repair the scored attempt.
+- Restrict candidate writes to the declared payload. A fresh-checkout, pre-bound judge outside the
+  candidate's authority must reject changes to the statement, definitions, imports, axiom policy,
+  verifier, tests, fixtures, reference values, or trust surface, including undeclared `sorryAx`, new
+  axioms/imports, unsafe/partial execution, code generation or external execution outside the
+  packet, network/secret access outside the frozen allowlist, and toolchain drift. An unavailable,
+  crashed, timed-out, or incomplete judge is not a pass.
+- Give every attempt a durable minimum ledger entry: task revision, purpose/route, candidate and
+  judge identity, terminal status, selection decision, reopen condition, and output identity or
+  explicit omission. Retain full permitted inputs, decisive output/diff, verifier receipt, resource
+  use, and known model/system/tool/context metadata for every promoted, adjudicating, or
+  load-bearing failed/withdrawn attempt. Any valid unselected attempt that enters a best-of-$N$ or
+  other selection decision is load-bearing: retain its decisive permitted output and verifier
+  receipt. If that record is unavailable, mark the selection route incomplete and grant it no
+  strict-selection credit. Record bounded omissions/redactions rather than claiming complete
+  transcripts or deterministic hosted-model replay. Append corrections; never erase or relabel
+  failures and unselected valid candidates.
+- Model proposer/judge output remains advisory. A different prompt, session, role, model, vendor,
+  file, or implementation is not by itself semantic, data, implementation, epistemic,
+  institutional, or custody independence. Record the existing independence vector and require a
+  separately scoped human disposition whenever human scientific review is claimed.
+- A kernel proof establishes only the exact formal statement under its inventoried imports, axioms,
+  kernel, and trust surface. A numerical certificate establishes only its declared finite
+  arithmetic predicate and covered domain. Neither closes paper-to-definition correspondence,
+  executable/binary64 refinement, estimator calibration or consistency, PID-functional identity,
+  or an application edge. Apply these boundaries separately to every PID, estimator, evaluator,
+  objective, law/support class, and downstream consumer.
+- Candidate/judge write isolation is tamper resistance, not holdout isolation or scientific
+  independence. Repeated judge feedback makes that route development evidence. Empirical packets
+  must separate development, selection, and candidate-inaccessible confirmation routes unless a
+  declared sequentially valid design permits reuse. A frozen campaign packet may govern multiple
+  child attempts while its semantics, judge, budget, stopping rule, and selection rule remain
+  unchanged; every child still gets a durable attempt ID, and any frozen-field change starts a new
+  packet revision.
+
+Research durability is part of the method, not housekeeping:
+
+- No unique accepted or load-bearing research object may exist only in `/tmp`, a disposable
+  worktree, an unpushed branch, a terminal transcript, or an agent conversation. Scratch state has
+  zero durable-evidence credit until its permitted bytes or a content-addressed manifest are in a
+  commit reachable from the remote `main` branch, or protected bytes are in an approved restricted
+  durable store with a safe public commitment and stated access/retention boundary.
+- Commit and push coherent milestones early: frozen task packet; candidate or counterexample;
+  judge/verifier result; disposition; and publication artifact. Keep those commits small enough to
+  review, but never split a self-consistency set such as Markdown/TeX/PDF/rendering receipt or a
+  schema/checker/hostile-vector change. Verify the pushed `main` OID with a read-only remote query.
+- A pushed Git commit is the project's operational recovery anchor, not permanent scholarly
+  preservation. Publication-grade objects must additionally record exact paths, byte sizes and
+  digests, provenance and nonclaims, and a release or archival deposit when the claim packet
+  requires one. If raw data, prompts, or provider artifacts cannot be committed, retain them in an
+  approved durable store and commit a bounded manifest/locator; record any omission, access
+  restriction, or retention limit explicitly.
+- This policy does not itself authorize a commit, push, tag, release, archive deposit, or public
+  disclosure. Obtain explicit maintainer authorization and honor branch protection and review.
+  Do not publish a packet, holdout, judge feedback, failure, or candidate while publication would
+  contaminate a blinded or pending attempt; use restricted durable storage and expose only a safe
+  commitment/manifest until the boundary closes. A commitment without a retrievable permitted
+  preimage provides binding, not recovery or reproducibility.
+- Before deleting or abandoning any worktree, branch, cache, or local artifact, prove that every
+  accepted, adjudicating, or selection/load-bearing artifact identified by the attempt ledger or
+  manifest is either reachable from remote `main`, intentionally rejected with a ledger record, or
+  bound by a verified durable external locator. A remote side branch is a backup, not completion;
+  move accepted work to `main`.
+- Verify publication with a read-only remote query. Record the remote URL, ref, observed OID, and
+  observation time. If `main` advanced after the milestone, prove the milestone is an ancestor of
+  the observed tip; never force-push merely to restore a previously expected tip.
+- Use a council for every named scientific claim, method transfer/adoption, disposition, and
+  publication milestone. Require independent-first written critiques before cross-member
+  discussion; cover the applicable semantic, mathematical, numerical/statistical, implementation,
+  transfer, adversarial, publication, and custody lenses; preserve dissent; and record shared
+  dependencies. Council votes and same-system agreement are advisory, not independent evidence.
+  The primary agent must read the exact sources, adjudicate every finding, and remain responsible
+  for the final decision. Any council-driven change to the frozen task or judge opens a new revision.
+
 Durable routing and validation:
 
 - [`audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md`](audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md)
@@ -187,6 +281,25 @@ python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
 python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
 ```
 
+The composite-v3 hosted receipt is permanently unissued: its fixed semantic language order and
+increasing opaque-ID predicate conflict on the exact recovery run, and its exact-three-additions
+topology cannot also refresh the self-excluding source manifest. Preserve those historical bytes
+and use only the append-only composite-v4 C4/R4 process documented in
+[`ksg-rev4-m1a-composite-v4-process-2026-08-15.md`](audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md).
+From a clean committed checkout, keep every generated result outside the repository and run:
+
+```text
+just ksg-composite-v4
+```
+
+C4 and R4 are separate unsigned, human-attributed milestones. C4 changes only its exact authorized
+process/documentation and operational policy and must receive exact-SHA CI, CodeQL, and
+dedicated-v4 success before capture.
+R4 adds the retained raw hosted capture and deterministically derived receipt, then regenerates
+current-source last. Neither milestone may change scientific code, issue the v3 receipt, recreate a
+missing historical index, promote KSG M1a beyond `integration_no_go`, or transfer evidence among
+the scientific-object rows above.
+
 Only after committing the final self-excluding manifest, run the post-commit route from an exact
 clean checkout. The shell owns these temporary files; v2 makes no path, durability, or upload
 custody claim:
@@ -209,11 +322,11 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json`;
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
-finalized `r6`, and finalized `r7` receipts are exact-hash-bound prior replays. Here `r8` denotes
-only the eighth receipt in the versioned sequence that originated on 12 August, and therefore the
-ninth current-project replay receipt overall; the 11 August historical receipt is outside that
+finalized `r6`, finalized `r7`, and finalized `r8` receipts are exact-hash-bound prior replays. Here
+`r9` denotes only the ninth receipt in the versioned sequence that originated on 12 August, and
+therefore the tenth current-project replay receipt overall; the 11 August historical receipt is outside that
 versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.

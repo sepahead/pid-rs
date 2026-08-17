@@ -1,0 +1,380 @@
+{
+  "base": {
+    "commit": "bc3aa80fb6025e709c2906a08bce25a4fac40578",
+    "tree": "7d87f87953a42edb91e40880d918471c7cbe4414"
+  },
+  "c4": {
+    "delta": [
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v4.yml",
+        "role": "dedicated_hosted_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "AGENTS.md",
+        "role": "operational_and_scientific_object_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "CHANGELOG.md",
+        "role": "append_only_change_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md",
+        "role": "prospective_research_integrity_documentation",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/completion-active-resume.md",
+        "role": "current_replay_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-m1a-composite-v4-process-visual-receipt-2026-08-17.md",
+        "role": "process_visual_review_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v3-impossibility-2026-08-15.json",
+        "role": "v3_impossibility_counterexample",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v4-path-policy-v1.json",
+        "role": "c4_r4_path_policy",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md",
+        "role": "process_record_markdown",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json",
+        "role": "prepublication_replay_execution_passed_closure_rejected",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json",
+        "role": "current_lean_replay_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md",
+        "role": "prospective_research_integrity_visual_review",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+        "role": "durable_active_plan",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+        "role": "lean_replay_process_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+        "role": "current_replay_scientific_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.pdf",
+        "role": "process_custody_diagram_derivative",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.svg",
+        "role": "process_custody_diagram_source",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf",
+        "role": "prospective_research_integrity_vector_derivative",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg",
+        "role": "prospective_research_integrity_vector_source",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf",
+        "role": "prospective_research_integrity_vector_derivative",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg",
+        "role": "prospective_research_integrity_vector_source",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf",
+        "role": "prospective_research_integrity_vector_derivative",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg",
+        "role": "prospective_research_integrity_vector_source",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf",
+        "role": "prospective_research_integrity_vector_derivative",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg",
+        "role": "prospective_research_integrity_vector_source",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/ksg-m1a-composite-v4-process.tex",
+        "role": "process_publication_source",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/mathematical-problem-solving-workflow.tex",
+        "role": "prospective_research_integrity_publication_source",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/requirements-pdf.txt",
+        "role": "pdf_verifier_dependency_lock",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/current-source-state-v1.schema.json",
+        "role": "current_source_schema",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json",
+        "role": "hosted_capture_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v4.schema.json",
+        "role": "typed_receipt_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "role": "current_replay_claim_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+        "role": "current_replay_decision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+        "role": "current_replay_evidence_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+        "role": "current_replay_revision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "justfile",
+        "role": "local_command_wiring",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "output/pdf/ksg-m1a-composite-v4-process.pdf",
+        "role": "process_publication_pdf",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
+        "role": "prospective_research_integrity_publication_pdf",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
+        "role": "prospective_research_integrity_rendering_receipt",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/README.md",
+        "role": "script_process_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v4.py",
+        "role": "bounded_hosted_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-current-source-state-v1-self-test.py",
+        "role": "current_source_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-current-source-state-v1.py",
+        "role": "current_source_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-formal-pdf-set.sh",
+        "role": "formal_pdf_inventory_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-formal-pdf-style.py",
+        "role": "formal_pdf_style_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-ksg-m1a-composite-v4-process-pdf.sh",
+        "role": "process_pdf_reproduction_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v4-self-test.py",
+        "role": "composite_v4_hostile_suite",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v4.py",
+        "role": "composite_v4_semantic_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+        "role": "lean_replay_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze.py",
+        "role": "lean_replay_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
+        "role": "prospective_research_integrity_pdf_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-mathematical-workflow-pdf.sh",
+        "role": "prospective_research_integrity_pdf_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-post-commit-source-state-v2-self-test.py",
+        "role": "postcommit_source_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-post-commit-source-state-v2.py",
+        "role": "postcommit_source_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/generate-lean-4.33-replay.py",
+        "role": "lean_replay_generator",
+        "status": "M"
+      }
+    ],
+    "direct_parent_role": "hosted_recovery",
+    "message": "Migrate KSG M1a composite receipt contract\n"
+  },
+  "nonimplications": [
+    "This policy declares and checks only the exact process/documentation and operational C4 and R4 deltas; it records no scientific-code or result change.",
+    "A path role, Git object, checker result, hosted run, capture, or receipt is not a PID definition, estimator validation, calibration result, review disposition, or application gate.",
+    "No evidence transfers among categorical MGW, Schick-Poland, Ehrlich continuous shared exclusions, KSG mutual information, Williams-Beer I_min, PID2, PID3, quantized or mixed-support routes, resampling procedures, or downstream objectives."
+  ],
+  "r4": {
+    "delta": [
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-hosted-capture-v4-2026-08-15.json",
+        "role": "raw_hosted_capture",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-receipt-v4-2026-08-15.json",
+        "role": "typed_observation_receipt",
+        "status": "A"
+      }
+    ],
+    "direct_parent_role": "c4_contract_migration",
+    "message": "Record KSG M1a composite v4 receipt\n"
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v4-path-policy/v1",
+  "schema_revision": 1
+}

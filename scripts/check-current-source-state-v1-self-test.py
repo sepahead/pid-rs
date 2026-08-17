@@ -28,6 +28,7 @@ EXPECTED_PDF_PATHS = (
     "output/pdf/finite-alphabet-plugin-convergence.pdf",
     "output/pdf/formal-tool-adoption-audit.pdf",
     "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
+    "output/pdf/ksg-m1a-composite-v4-process.pdf",
     "output/pdf/mathematical-problem-solving-workflow.pdf",
     "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
     "output/pdf/two-source-sxpid-count-atom-bridge.pdf",

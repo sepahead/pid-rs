@@ -7,7 +7,7 @@ if [[ "$SCRIPT_DIRECTORY" == "${BASH_SOURCE[0]}" ]]; then
 fi
 ROOT="$(cd "$SCRIPT_DIRECTORY/.." && pwd -P)"
 CHECK_NAME="mathematical workflow PDF checker self-test"
-EXPECTED_PAGES=64
+EXPECTED_PAGES=83
 EXPECTED_DPI=120
 
 TMP_PARENT_RAW="${TMPDIR:-/tmp}"
@@ -50,9 +50,9 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
-# C3 adds six mechanically separated control families to the 200-control predecessor suite.  A
+# C3 adds six mechanically separated control families to the 203-control predecessor suite.  A
 # moving aggregate can hide accidental deletion from one family behind addition to another, so the
-# final gate freezes all seven partitions and the 319-control total.  Keep these counters in
+# final gate freezes all seven partitions and the 322-control total.  Keep these counters in
 # portable scalar shell variables: the supported Darwin system Bash does not provide associative
 # arrays.
 C3_ACTIVE_FAMILY=""
@@ -62,15 +62,15 @@ C3_RUNTIME_MAP_COUNT=0
 C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
-EXPECTED_PREDECESSOR_CONTROL_COUNT=200
+EXPECTED_PREDECESSOR_CONTROL_COUNT=203
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
-EXPECTED_TOTAL_CONTROL_COUNT=319
-# This suite never compiles the 64-page report.  Its locally observed slowest focused PDF-parser
+EXPECTED_TOTAL_CONTROL_COUNT=322
+# This suite never compiles the 83-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
 # absence polling, and reaping are separately bounded stages under the declared progress premise.
@@ -4109,6 +4109,42 @@ expect_reject \
   "canonical semantic literal is absent: neighboring non-target method or estimand that it must reject" \
   run_source_semantic_validator "$case_dir"
 
+case_dir="$(mktemp -d "$TEST_ROOT/source-autoresearch-authority.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  $'not authority for\nPID validity, reproducibility, or optimal research design' \
+  "authoritative guidance for PID validity, reproducibility, and optimal research design"
+expect_reject \
+  "canonical semantics reject promotion of an attributed autoresearch case study to PID authority" \
+  "canonical semantic literal is absent: not authority for PID validity, reproducibility, or optimal research design" \
+  run_source_semantic_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/source-remote-main-archive.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  $'minimum\noperational recovery anchor for accepted work, not immutable or scholarly preservation' \
+  "immutable scholarly preservation for accepted work"
+expect_reject \
+  "canonical semantics reject conflation of remote-main recovery with archival preservation" \
+  "canonical semantic literal is absent: minimum operational recovery anchor for accepted work, not immutable or scholarly preservation" \
+  run_source_semantic_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/source-novelty-count.XXXXXX")"
+make_semantic_fixture "$case_dir"
+mutate_canonical_pair \
+  "$case_dir/workflow.tex" \
+  "$case_dir/workflow.md" \
+  "| Globally novel PID theories/functionals claimed | 0 |" \
+  "| Globally novel PID theories/functionals claimed | 1 |"
+expect_reject \
+  "canonical semantics reject an unsupported positive PID novelty count" \
+  "canonical semantic literal is absent: | Globally novel PID theories/functionals claimed | 0 |" \
+  run_source_semantic_validator "$case_dir"
+
 case_dir="$(mktemp -d "$TEST_ROOT/source-comment-concealment.XXXXXX")"
 make_semantic_fixture "$case_dir"
 mutate_canonical_pair \
@@ -5084,10 +5120,10 @@ pages: `{pages}`
 dpi: `{dpi}`
 color_pages_reviewed: `1-{pages}`
 grayscale_pages_reviewed: `1-{pages}`
-original_resolution_spot_checks: `1-{pages}`
-figure_pages_reviewed: `3,4,9,10`
+original_resolution_spot_checks: `1,5,6,10,12,19-23,28,30,31,37-47,55-63,79-83`
+figure_pages_reviewed: `5,6,10,12`
 status: `passed`
-review_date_utc: `2026-08-12`
+review_date_utc: `2026-08-16`
 reviewer_kind: `agent-visual-inspection`
 
 All {pages} color pages and all {pages} grayscale pages were viewed in page order.
@@ -5387,8 +5423,8 @@ case_dir="$(mktemp -d "$TEST_ROOT/svg-hidden-presentation.XXXXXX")"
 make_svg_case "$case_dir"
 replace_once \
   "$case_dir/four-object-assurance-chain.svg" \
-  'A · target correspondence' \
-  'A · target mapping'
+  'A: target correspondence' \
+  'A: target mapping'
 replace_once \
   "$case_dir/four-object-assurance-chain.svg" \
   '</svg>' \
@@ -5402,8 +5438,8 @@ case_dir="$(mktemp -d "$TEST_ROOT/svg-hidden-defs.XXXXXX")"
 make_svg_case "$case_dir"
 replace_once \
   "$case_dir/four-object-assurance-chain.svg" \
-  'A · target correspondence' \
-  'A · target mapping'
+  'A: target correspondence' \
+  'A: target mapping'
 replace_once \
   "$case_dir/four-object-assurance-chain.svg" \
   '</svg>' \
@@ -5443,7 +5479,7 @@ replace_once \
   $'  <!-- semantically inert unreviewed byte drift -->\n</svg>'
 expect_reject \
   "SVG exact-source custody rejects otherwise unrecognized byte drift" \
-  "four-object-assurance-chain.svg differs from its exact visually reviewed source bytes" \
+  "four-object-assurance-chain.svg differs from its exact expected source bytes" \
   run_svg_validator "$case_dir"
 
 case_dir="$(mktemp -d "$TEST_ROOT/svg-event.XXXXXX")"

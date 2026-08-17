@@ -6,7 +6,7 @@ The active formal project is pinned exactly to `leanprover/lean4:v4.33.0`, Lean 
 [`lake-manifest.json`](lean/lake-manifest.json). The active policy is machine-readable in
 [`toolchain-freeze-policy.json`](lean/toolchain-freeze-policy.json), and the bounded Darwin replay
 is recorded separately in
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -15,13 +15,30 @@ and [finalized r4 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project
 and [finalized r5 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json)
 and [finalized r6 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json)
 and [finalized r7 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json)
+and [finalized r8 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json)
 remain byte-preserved prior execution evidence. The 11 August receipt predates the hardened
-runner; none is current runner custody. The `r8` suffix denotes only the eighth receipt in the
-versioned sequence that originated on 12 August, and therefore the ninth current-project replay
+runner; none is current runner custody. The `r9` suffix denotes only the ninth receipt in the
+versioned sequence that originated on 12 August, and therefore the tenth current-project replay
 receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, replay schema, theorem, review, assurance tier, or independence
 revision; the current receipt remains schema v2 and receives execution credit only when it exists
 and validates.
+
+One additional schema-v2 document is retained as a failed-publication attempt rather than as an
+accepted current member of that sequence. Its [bounded execution and receipt-finalization
+predicates passed, but C4 closure
+rejected it before push](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json)
+for the same 748 entries: the generator's 132,893 newline-free compact bytes hash to
+`b336e6f54450090693731f2391b1ef3e112095dd9a9c8cbdadddbf2f855fba47`, while the first
+composite checker's 132,894 bytes with one terminal line feed hash to
+`7d4d4fd6bc478aeb20008cd05d1efe4b92b6ca9fd72a72043e67322e6a722f20`. The exact
+132,710-byte artifact has SHA-256
+`fb162cc40da3059b61eab9024f4aa38cf6daf2d84ef7e1d8a26dc7d345291e70`. Its internal
+`status = passed` records only that attempt's bounded execution. Local commit
+`e02d27bec91f142949336f9f28550c672d22b297` was never pushed or accepted as C4; the candidate
+receives no C4-publication, hosted, scientific, accepted-current-replay, or independence credit.
+The corrected current receipt must bind those raw bytes as retained pre-publication closure
+evidence outside the accepted replay lineage, without renumbering or relabelling them.
 The exact dependency revisions were also checked against the separately generated manifest in the
 bounded, retrospective
 [`manifest-regeneration observation`](../evidence/lean-4.33.0-manifest-regeneration-2026-08-11.json).
@@ -137,6 +154,14 @@ The replay receipt has a reviewed canonical projection covering its timestamps, 
 command streams, current evidence, and claim inventories. Within `custody_gate_sha256`, only the
 checker digest is omitted from that projection to avoid a checker/receipt digest cycle; the
 self-test digest remains reviewed, and both custody digests are compared directly with live files.
+Before any replay command, the zero-argument runner independently checks the complete acyclic
+composite-v4 cut state from source bytes: the replay-projection line is exactly the unique zero
+placeholder; the Lean composite scalar and operational-map row are identical nonzero literals
+equal to the composite-v4 checker SHA-256; and that checker contains the nonzero SHA-256 of the
+Lean checker after all three cut lines are restored to their exact placeholder forms. Missing,
+duplicated, stale, mismatched, or prematurely finalized cuts stop the runner before publication.
+The self-test exercises the positive construction plus projection-finalized, missing-cut,
+mismatched-cut, normalized-cut, and operational-map-omission mutations.
 The separate fully projected `replay_custody_gate_sha256` records the checker and self-test bytes
 that were stable at both replay endpoints. The runner first no-clobber-publishes a provisional
 receipt with the zero-placeholder checker. It constructs the receipt through a retained descriptor

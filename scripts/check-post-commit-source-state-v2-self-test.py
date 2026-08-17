@@ -28,7 +28,7 @@ POST_SCHEMA_RELATIVE = "audit/schemas/post-commit-source-state-v2.schema.json"
 CURRENT_SCHEMA_RELATIVE = "audit/schemas/current-source-state-v1.schema.json"
 CURRENT_MANIFEST_RELATIVE = "audit/evidence/current-source-state-v1.json"
 EXPECTED_CURRENT_SCHEMA_SHA256 = (
-    "1027cc3826aa6933a23dea1736b5d007b9c5bc1568f41ac87dea98e5f2924a97"
+    "501ed8fcca211ae598e041a5596b44574c48da46a9143cafe7266a7493b93f53"
 )
 EXPECTED_POST_SCHEMA_SHA256 = (
     "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a"
@@ -45,6 +45,7 @@ EXPECTED_PDF_PATHS = (
     "output/pdf/finite-alphabet-plugin-convergence.pdf",
     "output/pdf/formal-tool-adoption-audit.pdf",
     "output/pdf/foundational-shared-exclusions-pid-audit.pdf",
+    "output/pdf/ksg-m1a-composite-v4-process.pdf",
     "output/pdf/mathematical-problem-solving-workflow.pdf",
     "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
     "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
