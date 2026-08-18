@@ -323,6 +323,7 @@ lean-toolchain-freeze:
     python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 
 # Append-only KSG M1a composite-v4 contract, offline transport controls, and process PDF.
+# Historical C4 validation only: its hosted qualification failed and R4 is permanently unissued.
 # The checker requires a clean committed tree, so all result files live outside the repository.
 ksg-composite-v4:
     #!/usr/bin/env bash
@@ -340,6 +341,34 @@ ksg-composite-v4:
     python3 -O -I -S -B scripts/check-ksg-m1a-composite-v4-self-test.py > "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
     scripts/check-ksg-m1a-composite-v4-process-pdf.sh --exact
+
+# Append-only composite-v5 successor: four C4 failure-surface controls, fresh r10 custody,
+# no-credit predecessor capture semantics, and the conditional C5-to-R5 contract.
+ksg-composite-v5:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    umask 077
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v5.XXXXXX")"
+    trap 'rm -rf -- "$result_root"' EXIT
+    python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
+    python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
+    scripts/check-release-state-self-test.sh
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.json"
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.optimized.json"
+    cmp "$result_root/zeta.json" "$result_root/zeta.optimized.json"
+    python3 -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v5.py --self-test > "$result_root/capture.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v5.py --self-test > "$result_root/capture.optimized.json"
+    cmp "$result_root/capture.json" "$result_root/capture.optimized.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v5.py --validate-static > "$result_root/static.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v5.py --validate-static > "$result_root/static.optimized.json"
+    cmp "$result_root/static.json" "$result_root/static.optimized.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py > "$result_root/self-test.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py > "$result_root/self-test.optimized.json"
+    cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
+    scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh --exact
+    scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
@@ -452,7 +481,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v4 certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v5 certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

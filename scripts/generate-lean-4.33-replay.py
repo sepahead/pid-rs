@@ -83,7 +83,7 @@ PROCESS_GROUP_KILL_GRACE_SECONDS = 2.0
 PROCESS_GROUP_POLL_SECONDS = 0.02
 OUTPUT = (
     ROOT
-    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json"
+    / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json"
 )
 OUTPUT_TEMPORARY_LEAF = OUTPUT.name + ".tmp"
 LEAN_CHECKER_RELATIVE = "scripts/check-lean-toolchain-freeze.py"

@@ -573,11 +573,14 @@ self-excluding current-source manifest. Preserve the v3 checker, self-test, sche
 absence of its reserved receipt. Do not reconstruct either unavailable historical index or invent
 replacement custody.
 
-The append-only successor is documented in
+The historical append-only v4 contract is documented in
 `audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md` and its companion PDF. C4 is an
 unsigned, single-parent direct child that changes only the exact operational policy inventory; R4
 is a later unsigned, single-parent direct child that adds the raw capture and derived receipt and
-regenerates current-source. The exact v4 local gates are:
+regenerates current-source. C4 was published as
+`da253576a5f76e99633fff4de5cf1118f967b90d`, but its attempt-1 hosted qualification failed; R4 is
+therefore permanently unissued. These exact v4 local gates are historical replay routes, not a way
+to reopen R4:
 
 ```text
 tmp_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v4.XXXXXX")"
@@ -610,13 +613,45 @@ predicate. This is bounded same-renderer regression evidence. It is not exact vi
 renderer independence, accessibility
 conformance, human review, or a proof against every PDF visibility manipulation.
 
-All output paths are outside the repository because the static checker requires the complete
-tracked worktree to equal `HEAD` and rejects repository-visible untracked paths. The capture tool
-may run only after exact-C4 CI, CodeQL, and the dedicated v4 workflow are terminal. It fetches the
-bounded provider surface twice, writes canonical capture bytes to standard output, and retains no
-authentication claim. Derive the R4 receipt from those exact bytes on standard input; validate the
-committed receipt from standard input after R4 exists. Never seed a real receipt from the synthetic
-self-test fixture.
+The append-only correction is documented in
+`audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md` and its four-page companion PDF.
+C5 is the unsigned direct child of published C4 and uses a fresh `r10` replay. It narrowly
+normalizes one exact checkout-residue byte image, isolates extracted release fixtures from ambient
+Git ancestry, rebinds the reviewed zeta spelling, and rebinds the final certified-SxPID execution
+containers. It does not assert a unique cause for the release-state runner failure. Run:
+
+```text
+just ksg-composite-v5
+scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh --cross-toolchain
+scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh
+```
+
+The v5 publication gate binds the exact Markdown, TeX, accessible SVG, standalone vector PDF,
+four-page report, color/grayscale rendering receipt, and closed visual-review receipt. It builds
+the figure and report twice, rejects external SVG resources and text below the declared print
+floor, requires four zero-rotation A4 pages with no annotations or executable actions, and requires
+the sole vector Form to be visible on page 3. Object hostiles exercise a wrong page box, relative
+URI, nonidentity Form matrix, zero page transform, unsafe catalog action, and relocated Form. The
+external self-test additionally reseals an unsafe SVG resource, a live PDF annotation, and receipt
+body drift. Cross-toolchain mode compares all report pages and the standalone figure through the
+same local Poppler at 120 dpi under explicit bounds; this remains differential same-renderer
+evidence, not absolute visual correctness, PDF/UA, or renderer independence. Local L5 runs the
+same-toolchain exact gate and the default exact/cross hostile suite. The Ubuntu dedicated-v5 route
+installs the hash-pinned Python verifier plus its declared TeX/SVG/Poppler packages, then invokes
+the gate and hostile suite with `--cross-toolchain`; it does not pretend Linux can reproduce the
+macOS PDF bytes exactly.
+
+The predecessor-failure capture belongs to C5. Only a fresh attempt-1 all-success C5 qualification
+can permit R5, whose exact three-path delta adds the successor capture and typed receipt and
+regenerates current-source last. The receipt binds both captures. Passing a subset, rerunning an
+attempt, or changing C5 requires another append-only contract version.
+
+The v4 capture and receipt commands documented by the historical process report described a
+conditional route that was never admitted. C4's attempt-1 qualification failed, R4 is permanently
+unissued, and the two reserved v4 evidence paths must remain absent. Do not run the v4 live capture,
+derive an R4 receipt, reinterpret a rerun as attempt 1, or seed evidence from its synthetic fixture.
+Composite-v5 uses separately versioned predecessor/successor captures and a separately typed R5
+receipt; those artifacts preserve the failed observation without reviving or renaming R4.
 
 The schema alone grants no status. Hosted identifiers, times, logs, alerts, and artifacts remain
 unauthenticated observations. M1a stays `integration_no_go`; this route provides no KSG M1c,
@@ -827,12 +862,12 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
 finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt, and
-finalized `r8` receipt remain exact-hash-bound prior evidence with their original v1, v2, v2, v2,
-v2, v2, v2, v2, and v2 schema identities. The `r9` suffix denotes only the ninth receipt in the
-versioned sequence that originated on 12 August, and therefore the tenth
+finalized `r8` receipt and finalized `r9` receipt remain exact-hash-bound prior evidence with their
+original v1, v2, v2, v2, v2, v2, v2, v2, v2, and v2 schema identities. The `r10` suffix denotes
+only the tenth receipt in the versioned sequence that originated on 12 August, and therefore the eleventh
 current-project replay receipt overall; the 11 August historical receipt is outside that versioned
 sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The

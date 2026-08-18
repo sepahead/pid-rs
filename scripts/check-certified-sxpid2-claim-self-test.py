@@ -156,6 +156,8 @@ EXPECTED_CHECKER_BOOTSTRAP_SHA256 = (
 )
 EXECUTION_CONTAINER_ASSIGNMENT = "EXPECTED_EXECUTION_CONTAINER_SHA256"
 REVIEWED_DOCUMENTATION_ASSIGNMENT = "EXPECTED_REVIEWED_DOCUMENTATION_SHA256"
+JUST_RELEASE_AUDIT_ASSIGNMENT = "EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256"
+SUPPORT_GATE_ASSIGNMENT = "EXPECTED_SUPPORT_GATE_SHA256"
 GATE_COMMANDS_ASSIGNMENT = "GATE_COMMANDS"
 CI_JOB_DIGEST_ASSIGNMENT = "EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256"
 JUST_RECIPE_DIGEST_ASSIGNMENT = "EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256"
@@ -169,6 +171,7 @@ EXECUTION_CONTAINER_PATHS = frozenset({".github/workflows/ci.yml", "justfile"})
 REVIEWED_DOCUMENTATION_PATHS = frozenset(
     {"audit/tools/certified-sxpid/README.md", "scripts/README.md"}
 )
+SUPPORT_GATE_PATHS = frozenset({"scripts/check-formal-pdf-set.sh"})
 AUDIT_TOOL_README = "audit/tools/certified-sxpid/README.md"
 SCRIPTS_README = "scripts/README.md"
 ANCHOR_GATE_COMMANDS = (
@@ -187,8 +190,8 @@ CANDIDATE_GATE_COMMANDS = (
     "python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
     "python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
 )
-EXPECTED_SNAPSHOT_MUTATIONS = 116
-EXPECTED_NEW_SOURCE_MUTATIONS = 4
+EXPECTED_SNAPSHOT_MUTATIONS = 117
+EXPECTED_NEW_SOURCE_MUTATIONS = 6
 EXPECTED_NEW_HUGE_INTEGER_MUTATIONS = 1
 PYC_MAGIC_BY_MINOR = {
     (3, 11): bytes.fromhex("a70d0d0a"),
@@ -464,6 +467,18 @@ def validate_checker_source_reconstruction(
     candidate_documentation_segment, candidate_documentation = top_level_assignment(
         candidate_source, candidate_tree, REVIEWED_DOCUMENTATION_ASSIGNMENT
     )
+    anchor_release_segment, anchor_release_digest = top_level_literal_assignment(
+        anchor_source, anchor_tree, JUST_RELEASE_AUDIT_ASSIGNMENT
+    )
+    candidate_release_segment, candidate_release_digest = top_level_literal_assignment(
+        candidate_source, candidate_tree, JUST_RELEASE_AUDIT_ASSIGNMENT
+    )
+    anchor_support_segment, anchor_support = top_level_assignment(
+        anchor_source, anchor_tree, SUPPORT_GATE_ASSIGNMENT
+    )
+    candidate_support_segment, candidate_support = top_level_assignment(
+        candidate_source, candidate_tree, SUPPORT_GATE_ASSIGNMENT
+    )
     anchor_gate_segment, anchor_gate_commands = top_level_literal_assignment(
         anchor_source, anchor_tree, GATE_COMMANDS_ASSIGNMENT
     )
@@ -521,6 +536,19 @@ def validate_checker_source_reconstruction(
         "candidate reviewed-documentation rebind",
     )
     require(
+        isinstance(anchor_release_digest, str)
+        and re.fullmatch(r"[0-9a-f]{64}", anchor_release_digest) is not None
+        and isinstance(candidate_release_digest, str)
+        and re.fullmatch(r"[0-9a-f]{64}", candidate_release_digest) is not None,
+        "release-audit-line rebind is not a SHA-256 value",
+    )
+    validate_digest_mapping(
+        anchor_support, SUPPORT_GATE_PATHS, "anchor support-gate rebind"
+    )
+    validate_digest_mapping(
+        candidate_support, SUPPORT_GATE_PATHS, "candidate support-gate rebind"
+    )
+    require(
         candidate_documentation[AUDIT_TOOL_README]
         == anchor_documentation[AUDIT_TOOL_README],
         "audit-tool README digest changed",
@@ -539,6 +567,16 @@ def validate_checker_source_reconstruction(
             anchor_documentation_segment,
             candidate_documentation_segment,
         ),
+        (
+            "release-audit-line-rebind",
+            anchor_release_segment,
+            candidate_release_segment,
+        ),
+        (
+            "support-gate-rebind",
+            anchor_support_segment,
+            candidate_support_segment,
+        ),
         ("isolated-gate-commands", anchor_gate_segment, candidate_gate_segment),
         ("workflow-job-digest", anchor_ci_segment, candidate_ci_segment),
         ("just-recipe-digest", anchor_just_segment, candidate_just_segment),
@@ -552,7 +590,8 @@ def validate_checker_source_reconstruction(
         )
     require(
         normalized_anchor == normalized_candidate,
-        "checker bytes outside the marked block and two rebind assignments differ from cb3f",
+        "checker bytes outside the marked block, four digest-rebind assignments, "
+        "and separately enumerated gate bindings differ from cb3f",
     )
     private_raw = without_bootstrap[
         begin + len(PRIVATE_BLOCK_BEGIN) : end - len(PRIVATE_BLOCK_END)
@@ -566,6 +605,13 @@ def validate_checker_source_reconstruction(
 def replace_checker_mapping(raw: bytes, name: str, value: dict[str, str]) -> bytes:
     source, tree = parse_python_source(raw, "<checker-source-mutant>")
     segment, _current = top_level_assignment(source, tree, name)
+    replacement = f"{name} = {value!r}"
+    return replace_once(source, segment, replacement, name).encode("utf-8")
+
+
+def replace_checker_literal(raw: bytes, name: str, value: object) -> bytes:
+    source, tree = parse_python_source(raw, "<checker-source-mutant>")
+    segment, _current = top_level_literal_assignment(source, tree, name)
     replacement = f"{name} = {value!r}"
     return replace_once(source, segment, replacement, name).encode("utf-8")
 
@@ -590,6 +636,9 @@ def validate_checker_source_mutations(anchor_raw: bytes, candidate_raw: bytes) -
     )
     _documentation_segment, documentation = top_level_assignment(
         candidate_source, candidate_tree, REVIEWED_DOCUMENTATION_ASSIGNMENT
+    )
+    _support_segment, support = top_level_assignment(
+        candidate_source, candidate_tree, SUPPORT_GATE_ASSIGNMENT
     )
 
     bootstrap_guard = b"and _bootstrap_sys.flags.isolated == 1"
@@ -643,6 +692,24 @@ def validate_checker_source_mutations(anchor_raw: bytes, candidate_raw: bytes) -
             candidate_raw, REVIEWED_DOCUMENTATION_ASSIGNMENT, audit_drift
         ),
         "audit-tool README digest changed",
+    )
+
+    expanded_support = dict(support)
+    expanded_support["scripts/unreviewed-support-gate.sh"] = "0" * 64
+    expect_checker_source_rejection(
+        "support-gate-rebind-inventory-expanded",
+        anchor_raw,
+        replace_checker_mapping(candidate_raw, SUPPORT_GATE_ASSIGNMENT, expanded_support),
+        "candidate support-gate rebind path inventory changed",
+    )
+
+    expect_checker_source_rejection(
+        "release-audit-line-rebind-malformed",
+        anchor_raw,
+        replace_checker_literal(
+            candidate_raw, JUST_RELEASE_AUDIT_ASSIGNMENT, "not-a-sha256"
+        ),
+        "release-audit-line rebind is not a SHA-256 value",
     )
     return EXPECTED_NEW_SOURCE_MUTATIONS
 
@@ -2455,17 +2522,26 @@ def main() -> int:
         (
             "just-gate-moved-to-unused-recipe",
             transformed_text(
-                baseline,
-                "justfile",
-                lambda text: (
-                    text.replace(
-                        "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n",
-                        "    true # claim gate removed\n",
-                        1,
-                    )
-                    + "\nunused-retained-claim-gate:\n"
-                    + "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n"
+                mutated_text(
+                    baseline,
+                    "justfile",
+                    (
+                        "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n"
+                        "    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py\n"
+                        "    python3 -I -S -B "
+                        "scripts/check-certified-sxpid2-claim-self-test.py\n"
+                    ),
+                    (
+                        "    true # claim gate removed\n"
+                        "    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py\n"
+                        "    python3 -I -S -B "
+                        "scripts/check-certified-sxpid2-claim-self-test.py\n"
+                    ),
                 ),
+                "justfile",
+                lambda text: text
+                + "\nunused-retained-claim-gate:\n"
+                + "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n",
             ),
             "revision-3 executable gate must occur once as an active command",
         ),
@@ -2474,10 +2550,32 @@ def main() -> int:
             mutated_text(
                 baseline,
                 "justfile",
-                " formal-finite-convergence lean-toolchain-freeze certified-sxpid citation-edge-countermodel ",
-                " formal-finite-convergence lean-toolchain-freeze citation-edge-countermodel ",
+                (
+                    " formal-finite-convergence lean-toolchain-freeze "
+                    "ksg-composite-v5 certified-sxpid citation-edge-countermodel "
+                ),
+                (
+                    " formal-finite-convergence lean-toolchain-freeze "
+                    "ksg-composite-v5 citation-edge-countermodel "
+                ),
             ),
             "revision-3 release-audit dependency missing",
+        ),
+        (
+            "release-audit-line-framing-changed-with-membership-preserved",
+            mutated_text(
+                baseline,
+                "justfile",
+                (
+                    "lean-toolchain-freeze ksg-composite-v5 certified-sxpid "
+                    "citation-edge-countermodel formal-pdfs"
+                ),
+                (
+                    "lean-toolchain-freeze ksg-composite-v5  certified-sxpid "
+                    "citation-edge-countermodel formal-pdfs"
+                ),
+            ),
+            "release-audit just dependency line exact digest changed",
         ),
         (
             "ci-gate-removed",

@@ -62,12 +62,13 @@ merging PID families or proof/certificate/application statuses.
 
 ## Status-separated research inventory
 
-This inventory is a coordination snapshot for the pre-C4 program, not a novelty claim or a
+This inventory is a coordination snapshot bound to the C4-era catalog, not a novelty claim or a
 completion percentage. The rows are **not additive**: a dependency, workflow composition,
 validation package, theorem, solver obligation, and PID definition are different object types.
-The planned C4 path policy permits no PID definition, estimator, theorem-source, or scientific-code
-change; that is a scope rule, not evidence that the future commit obeyed it. Recompute the actual
-tree/diff and counts before publication.
+Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` changed no PID definition,
+estimator, theorem source, or scientific code. Composite-v5 preserves that zero-science scope.
+Those are exact tree/diff observations for named commits, not permission to infer the same about a
+future descendant without recomputing it.
 
 | Category | Landed inventory | Open inventory and boundary |
 |---|---:|---|
@@ -80,8 +81,8 @@ tree/diff and counts before publication.
 | PID/KSG-relevant source-written Lean theorems | **275** | The total is 246 bridge/convergence, 19 KSG integer-harmonic, 7 exact-log-product, and 3 descriptor-factorization theorems. No arbitrary theorem-count target is asserted. |
 | Exact solver obligations | **9** | Five PID-algebra QF\_LRA obligations and four conditional KSG QF\_UFLIRA obligations are landed; solver answers are not kernel proof objects. Future obligations follow the named open packets rather than a predeclared count. |
 | Categorical MGW SxPID3 | Stable implementation computes the **18-antichain** three-source lattice | The stronger assurance program is **0/5 Programs A--E** and **0/108 component-coordinates** complete. Do not transfer the implementation status into certification status. |
-| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and C4/R4 are engineering/evidence work and are counted separately. |
-| Mutable plan checklist | **19/61 checked; 42 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
+| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5 qualification lineage are engineering/evidence work and are counted separately. |
+| Mutable plan checklist | **21/62 checked; 41 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
 
 The catalog currently contains 73 method rows and 45 references: 17 paper-defined, 15
 paper-derived, and 41 project-defined. Every row records `scientific_novelty_claim = none`.
@@ -170,14 +171,15 @@ experiments, and review.
 
 ### Anti-infrastructure-drift priority
 
-Composite-v4 C4/R4 is the final general evidence-contract migration in this phase. After those two
-milestones are exact and hosted-green, work must move to the seven named P4 science units and their
+Published C4 failed hosted qualification and R4 remained unissued. Composite-v5 C5/R5 is the
+smallest append-only operational correction and the final general evidence-contract migration in
+this phase. After C5 is exact and hosted-green and R5 is issued, work must move to the seven named P4 science units and their
 publication packets. Do not start another repository-wide harness, receipt generation, formal
 replay, schema family, or CI expansion merely because it is possible. Additional infrastructure is
 authorized only when a named scientific claim packet identifies a concrete failure mode, shows
 that the existing machinery cannot express or check it, and bounds the smallest required change.
 
-The harness is a means to trustworthy research, not the research endpoint. Priority after C4/R4 is
+The harness is a means to trustworthy research, not the research endpoint. Priority after C5/R5 is
 KSG M1c correspondence, PID2 revision 4, categorical MGW SxPID3 Programs A--E and 108 coordinates,
 high-value consumer APIs with exact object identities, and thesis/publication-ready positive and
 negative results. Ecosystem usefulness is a downstream requirement, not permission to replace the
@@ -320,12 +322,15 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   its fixed CodeQL language order conflicts with increasing analysis-ID order on the exact recovery
   observations, and its exact-three-additions topology cannot also update the self-excluding
   current-source manifest. Preserve the v3 checker, self-test, schema, and absence of its reserved
-  receipt. The bounded append-only replacement is composite-v4: publish C4 as an unsigned,
-  single-parent direct child containing only operational custody gates, schemas, documentation,
-  counterexample, process PDF, and a fresh Lean replay; require exact-C4 CI, CodeQL, and dedicated
-  workflow success; then publish R4 as a separate unsigned, single-parent direct child adding the
-  raw hosted capture and derived receipt while regenerating current-source last. Neither commit may
-  alter scientific code or promote M1a beyond `integration_no_go`.
+  receipt. Composite-v4 published unsigned direct-child C4
+  `da253576a5f76e99633fff4de5cf1118f967b90d`, but its first hosted qualification failed: CodeQL
+  passed, while repository CI had three terminal failed jobs and the dedicated v4 route failed in
+  static-validation preflight. R4 is permanently unissued. Composite-v5 is the bounded append-only
+  replacement: publish direct-child C5 with the predecessor failure, four operational repairs, the
+  boundary PDF, and fresh replay r10; require exact-C5 attempt-1 local, CI, CodeQL, and dedicated-v5
+  success; then permit direct-child R5 to add the successor capture and dual-capture receipt while
+  regenerating current-source last. Neither commit may alter scientific code or promote M1a beyond
+  `integration_no_go`.
 
   The two earlier failed local seal/checkpoint tuples remain unauthenticated negative observations
   and must never be reused or relabeled: `952c1bb...` / `cf84ab1...` / index SHA-256
@@ -392,7 +397,7 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   receipt exists and validates under normal and optimized custody checks. Finalized r8 is exact
   prior evidence at SHA-256
   `86251c48c0f720d1ca021dcac87dfbf6e1a54adf409ea8a8981102cea1769611`.
-- [ ] After every composite-v4 C4 operational byte, process document, and PDF is frozen, preserve
+- [x] After every composite-v4 C4 operational byte, process document, and PDF is frozen, preserve
   finalized r8 byte-for-byte and generate append-only
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json` as the ninth
   receipt in the versioned sequence that originated on 12 August and the tenth current-project
@@ -406,12 +411,17 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   mismatch against the current-source generator's newline-free compact projection. Preserve that
   exact 132,710-byte candidate at the explicit `prepublication-closure-rejected-2026-08-17` path
   as bounded execution-custody evidence, with zero C4-publication, hosted, scientific,
-  accepted-current-replay, or independence credit; the corrected attempt must bind it and start
-  from an absent final `r9` path rather than overwriting or relabelling it.
-- [ ] Publish composite-v4 C4 and R4 as separate, unsigned, human-attributed fast-forward
-  milestones. C4 must pass exact-SHA CI, CodeQL, and the dedicated composite-v4 workflow before any
-  hosted capture is generated. R4 must be derived from two retained observations of every bounded
-  endpoint, contain no scientific-code change, and pass local plus exact-SHA hosted validation.
+  accepted-current-replay, or independence credit. Final r9 was generated fresh, validated, and
+  published in C4 without overwriting or relabelling the rejected document.
+- [x] Publish unsigned, human-attributed, fast-forward composite-v4 C4; retain its exact attempt-1
+  hosted failure, keep both v4 capture/receipt paths absent, and record R4 as permanently unissued.
+  C4 is `da253576a5f76e99633fff4de5cf1118f967b90d`; its CodeQL route passed but CI and the dedicated
+  v4 route did not, so no partial or rerun credit is granted.
+- [ ] Publish composite-v5 C5 and conditional R5 as separate unsigned, human-attributed
+  fast-forward milestones. C5 must retain the predecessor capture, four bounded repairs,
+  publication-quality boundary PDF/SVG and receipts, fresh r10, exact path policy, and regenerated
+  current-source. Only fresh attempt-1 exact-C5 CI, CodeQL, and dedicated-v5 success permits R5;
+  R5 adds the successor capture and dual-capture typed receipt and regenerates current-source last.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

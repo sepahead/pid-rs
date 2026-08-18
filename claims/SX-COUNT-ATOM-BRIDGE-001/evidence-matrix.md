@@ -23,7 +23,7 @@ routes may help find discrepancies after explicit comparison; they cannot silent
 refinement edges.
 
 Current identities, inventories, and command outcomes are recorded in the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json),
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json),
 with the [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -33,8 +33,9 @@ and [finalized r5 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-curren
 and [finalized r6 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json)
 and [finalized r7 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json)
 and [finalized r8 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json)
-retained as prior execution evidence. Here `r9` denotes only the ninth receipt in the versioned
-sequence that originated on 12 August, and therefore the tenth current-project replay receipt
+and [finalized r9 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json)
+retained as prior execution evidence. Here `r10` denotes only the tenth receipt in the versioned
+sequence that originated on 12 August, and therefore the eleventh current-project replay receipt
 overall; the 11 August historical receipt is outside that versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 current route receives execution credit only when its exact receipt exists and validates.

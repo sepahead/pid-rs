@@ -284,19 +284,26 @@ python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
 The composite-v3 hosted receipt is permanently unissued: its fixed semantic language order and
 increasing opaque-ID predicate conflict on the exact recovery run, and its exact-three-additions
 topology cannot also refresh the self-excluding source manifest. Preserve those historical bytes
-and use only the append-only composite-v4 C4/R4 process documented in
+and the append-only composite-v4 process documented in
 [`ksg-rev4-m1a-composite-v4-process-2026-08-15.md`](audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md).
-From a clean committed checkout, keep every generated result outside the repository and run:
+Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` failed its first hosted
+qualification, so R4 is permanently unissued and the v4 capture/receipt paths remain absent.
+Preserve that failure; do not rewrite C4, rerun it for attempt-1 credit, or revive R4.
+
+The operative append-only successor is composite-v5, documented in
+[`ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md`](audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md).
+From a clean committed checkout run:
 
 ```text
-just ksg-composite-v4
+just ksg-composite-v5
 ```
 
-C4 and R4 are separate unsigned, human-attributed milestones. C4 changes only its exact authorized
-process/documentation and operational policy and must receive exact-SHA CI, CodeQL, and
-dedicated-v4 success before capture.
-R4 adds the retained raw hosted capture and deterministically derived receipt, then regenerates
-current-source last. Neither milestone may change scientific code, issue the v3 receipt, recreate a
+C5 and R5 are separate unsigned, human-attributed milestones. C5 is the exact direct child of C4;
+it retains the failed qualification, applies only the four bounded operational repairs, publishes
+a fresh Lean `r10` replay, and binds the predecessor-failure capture. R5 is permitted only after
+fresh attempt-1 local, CI, CodeQL, and dedicated-v5 success for the same exact C5 commit. It adds
+the successor capture and derived receipt, then regenerates current-source last. The receipt binds
+both captures. Neither milestone may change scientific code, issue a v3/v4 receipt, recreate a
 missing historical index, promote KSG M1a beyond `integration_no_go`, or transfer evidence among
 the scientific-object rows above.
 
@@ -322,11 +329,12 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json`;
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
-finalized `r6`, finalized `r7`, and finalized `r8` receipts are exact-hash-bound prior replays. Here
-`r9` denotes only the ninth receipt in the versioned sequence that originated on 12 August, and
-therefore the tenth current-project replay receipt overall; the 11 August historical receipt is outside that
+finalized `r6`, finalized `r7`, finalized `r8`, and finalized `r9` receipts are exact-hash-bound
+prior replays. Here `r10` denotes only the tenth receipt in the versioned sequence that originated
+on 12 August, and therefore the eleventh current-project replay receipt overall; the 11 August
+historical receipt is outside that
 versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.

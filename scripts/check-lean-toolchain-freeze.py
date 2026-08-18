@@ -38,7 +38,7 @@ SCRIPT = Path(os.path.abspath(os.fspath(Path(__file__))))
 ROOT = SCRIPT.parent.parent
 PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
-RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json"
+RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json"
 RECEIPT = ROOT / RECEIPT_RELATIVE
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -259,6 +259,9 @@ PRESERVED_PRIOR_REPLAY_HASHES = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json": (
         "86251c48c0f720d1ca021dcac87dfbf6e1a54adf409ea8a8981102cea1769611"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json": (
+        "e9136696563e007f98498080bb7a769c60353df83537ee90976ee9cc66c0873f"
+    ),
 }
 PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
@@ -286,6 +289,9 @@ PRESERVED_PRIOR_REPLAY_SCHEMAS = {
         "pid-rs/lean-current-project-replay/v2"
     ),
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json": (
+        "pid-rs/lean-current-project-replay/v2"
+    ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json": (
         "pid-rs/lean-current-project-replay/v2"
     ),
 }
@@ -435,7 +441,7 @@ EXPECTED_CURRENT_REPLAY_POINTER_PATHS = (
     "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
     "scripts/README.md",
 )
-EXPECTED_R9_SEQUENCE_EXPLANATION_PATHS = EXPECTED_CURRENT_REPLAY_POINTER_PATHS
+EXPECTED_R10_SEQUENCE_EXPLANATION_PATHS = EXPECTED_CURRENT_REPLAY_POINTER_PATHS
 EXPECTED_ACTIVE_RESUME_HASHES = {
     "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": (
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
@@ -1765,7 +1771,7 @@ def check_active_resume_split() -> None:
         "current completion pointer lost freeze semantics",
     )
     require(
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json" in text
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json" in text
         and "first 11 August replay" in text
         and "first 12 August replay" in text
         and "finalized r2 replay" in text
@@ -1791,7 +1797,7 @@ def check_active_resume_split() -> None:
 
 def check_current_replay_pointers() -> None:
     current_leaf = (
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json"
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json"
     )
     bound_paths = {
         *EXPECTED_ACTIVE_CLAIM_HASHES,
@@ -1803,9 +1809,9 @@ def check_current_replay_pointers() -> None:
         "current replay pointer inventory is not fully hash-bound",
     )
     require(
-        set(EXPECTED_R9_SEQUENCE_EXPLANATION_PATHS)
+        set(EXPECTED_R10_SEQUENCE_EXPLANATION_PATHS)
         <= set(EXPECTED_CURRENT_REPLAY_POINTER_PATHS),
-        "r9 sequence explanation inventory is not pointer-bound",
+        "r10 sequence explanation inventory is not pointer-bound",
     )
     for relative in EXPECTED_CURRENT_REPLAY_POINTER_PATHS:
         text = stable_read(
@@ -1820,25 +1826,25 @@ def check_current_replay_pointers() -> None:
             and "r8" in normalized
             and "execution credit only" in normalized
             and "exists and validates" in normalized,
-            f"current/prior r9 replay pointer semantics drifted: {relative}",
+            f"current/prior r10 replay pointer semantics drifted: {relative}",
         )
-    for relative in EXPECTED_R9_SEQUENCE_EXPLANATION_PATHS:
+    for relative in EXPECTED_R10_SEQUENCE_EXPLANATION_PATHS:
         text = stable_read(
-            ROOT / relative, f"r9 sequence explanation: {relative}"
+            ROOT / relative, f"r10 sequence explanation: {relative}"
         ).raw.decode("utf-8", errors="strict")
         normalized = " ".join(text.split())
         require(
-            "ninth receipt" in normalized
+            "tenth receipt" in normalized
             and "versioned sequence" in normalized
             and "originated on 12 August" in normalized
-            and "tenth current-project replay receipt overall" in normalized
+            and "eleventh current-project replay receipt overall" in normalized
             and "11 August historical receipt is outside" in normalized
             and "calendar date" in normalized
             and "schema" in normalized
             and "theorem" in normalized
             and "review" in normalized
             and "independence" in normalized,
-            f"r9 sequencing/non-conflation boundary drifted: {relative}",
+            f"r10 sequencing/non-conflation boundary drifted: {relative}",
         )
 
 

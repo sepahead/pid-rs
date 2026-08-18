@@ -1,0 +1,468 @@
+{
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "archive_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "artifact_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "members_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "archive_sha256",
+        "archive_size_bytes",
+        "artifact_id",
+        "members_sha256",
+        "name"
+      ],
+      "type": "object"
+    },
+    "captureBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "phase": {
+          "$ref": "#/$defs/phase"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "phase",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}(?![\\s\\S])",
+      "type": "string"
+    },
+    "contractAuthority": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "failedJobLog": {
+      "additionalProperties": false,
+      "properties": {
+        "failed_steps": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "job_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "observed_markers": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "failed_steps",
+        "job_id",
+        "job_name",
+        "observed_markers",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "observation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/artifact"
+          },
+          "maxItems": 32,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "artifacts_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "codeql_alerts_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "codeql_analyses_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "codeql_analysis_ids": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "failed_job_logs": {
+          "items": {
+            "$ref": "#/$defs/failedJobLog"
+          },
+          "maxItems": 64,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "failed_job_logs_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "job_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "job_ids": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maxItems": 45,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "jobs_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "kind": {
+          "enum": [
+            "ci",
+            "codeql",
+            "contract"
+          ]
+        },
+        "role": {
+          "enum": [
+            "predecessor_ci",
+            "predecessor_codeql",
+            "predecessor_contract",
+            "successor_ci",
+            "successor_codeql",
+            "successor_contract"
+          ]
+        },
+        "run": {
+          "$ref": "#/$defs/run"
+        }
+      },
+      "required": [
+        "artifacts",
+        "artifacts_sha256",
+        "codeql_alerts_sha256",
+        "codeql_analysis_ids",
+        "codeql_analyses_sha256",
+        "failed_job_logs",
+        "failed_job_logs_sha256",
+        "job_count",
+        "job_ids",
+        "jobs_sha256",
+        "kind",
+        "role",
+        "run"
+      ],
+      "type": "object"
+    },
+    "phase": {
+      "enum": [
+        "predecessor_failure",
+        "successor_qualification"
+      ]
+    },
+    "phaseObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "phase": {
+          "$ref": "#/$defs/phase"
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/$defs/observation"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "capture_sha256",
+        "phase",
+        "roles"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+(?![\\s\\S])",
+      "type": "string"
+    },
+    "run": {
+      "additionalProperties": false,
+      "properties": {
+        "conclusion": {
+          "enum": [
+            "failure",
+            "success"
+          ]
+        },
+        "event": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "head_branch": {
+          "const": "main"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "repository_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "run_attempt": {
+          "const": 1
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "workflow_id": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "conclusion",
+        "event",
+        "head_branch",
+        "head_sha",
+        "name",
+        "path",
+        "repository_id",
+        "run_attempt",
+        "run_id",
+        "status",
+        "workflow_id"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v5.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capture_bindings": {
+      "items": {
+        "$ref": "#/$defs/captureBinding"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "contract_authorities": {
+      "items": {
+        "$ref": "#/$defs/contractAuthority"
+      },
+      "maxItems": 32,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 16,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "observations": {
+      "items": {
+        "$ref": "#/$defs/phaseObservation"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v5"
+    },
+    "schema_revision": {
+      "const": 5
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c4_commit": {
+          "const": "da253576a5f76e99633fff4de5cf1118f967b90d"
+        },
+        "c4_tree": {
+          "const": "916245b95f90bd98b8bd37a72e148fb9328d5c52"
+        },
+        "c5_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c5_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "c4_commit",
+        "c4_tree",
+        "c5_commit",
+        "c5_tree"
+      ],
+      "type": "object"
+    },
+    "verdict": {
+      "additionalProperties": false,
+      "properties": {
+        "c4_hosted_qualification": {
+          "const": "failed_zero_credit"
+        },
+        "c4_publication": {
+          "const": "published"
+        },
+        "c5_bounded_repair": {
+          "const": "pass"
+        },
+        "c5_hosted_observation": {
+          "const": "pass"
+        },
+        "r4_receipt_issued": {
+          "const": false
+        },
+        "scientific_validation": {
+          "const": "not_adjudicated"
+        }
+      },
+      "required": [
+        "c4_hosted_qualification",
+        "c4_publication",
+        "c5_bounded_repair",
+        "c5_hosted_observation",
+        "r4_receipt_issued",
+        "scientific_validation"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "capture_bindings",
+    "contract_authorities",
+    "nonimplications",
+    "observations",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject",
+    "verdict"
+  ],
+  "type": "object"
+}
