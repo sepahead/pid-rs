@@ -158,9 +158,9 @@ EXPECTED_FROZEN_BOUNDARY_SHA256 = (
 )
 EXPECTED_FROZEN_BOUNDARY_SIZE_BYTES = 9_601
 EXPECTED_FROZEN_SELF_TEST_SHA256 = (
-    "ce8cf3b23e9fa735f01b56bb6d90b18332f5b60d9b20738080b00356bbcef35f"
+    "0ebd801ce758203ce12111ccec8802bc9a6c68ad80033105abc59f6e60d05787"
 )
-EXPECTED_FROZEN_SELF_TEST_SIZE_BYTES = 140_677
+EXPECTED_FROZEN_SELF_TEST_SIZE_BYTES = 142_954
 EXPECTED_FROZEN_SCHEMA_SHA256 = (
     "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5"
 )
@@ -2275,28 +2275,56 @@ def validate_recovery_wiring(workflow: bytes, just: bytes, readme: bytes) -> Non
         "--mode precommit",
         "--mode candidate-commit",
         "--mode postcommit",
-        "--validate-composite-receipt",
         "cb3f58f0...",
         CORRECTION,
-        "clean detached exact direct receipt child",
-        "receipt plus the two retained indexes as its exact three-path delta",
-        "no active Git",
-        "same exact push/main/SHA/sole-parent applicability guard",
-        "Pull-request checkouts and later",
-        "skip this sole-child validation with no credit",
         "integration_no_go",
     ):
         require(
             token.encode() in readme_block,
             f"hosted-recovery README token absent: {token}",
         )
-    lowered = readme_block.lower()
+
+    # Prose is line-wrapped for publication.  Collapse ASCII whitespace only:
+    # accepting Unicode lookalike whitespace here would make the certified
+    # semantic projection broader than the Markdown source readers inspect.
+    normalized_readme = re.sub(rb"[\t\n\v\f\r ]+", b" ", readme_block).strip()
+    for truth in (
+        b"C4 was published as `da253576a5f76e99633fff4de5cf1118f967b90d`, "
+        b"but its attempt-1 hosted qualification failed; R4 is therefore permanently "
+        b"unissued.",
+        b"The append-only correction is documented in "
+        b"`audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md`",
+        b"C5 is the unsigned direct child of published C4",
+        b"The predecessor-failure capture belongs to C5.",
+        b"Only a fresh attempt-1 all-success C5 qualification can permit R5",
+        b"The receipt binds both captures.",
+        b"C4's attempt-1 qualification failed, R4 is permanently unissued, and the two "
+        b"reserved v4 evidence paths must remain absent.",
+        b"Do not run the v4 live capture, derive an R4 receipt, reinterpret a rerun as "
+        b"attempt 1, or seed evidence from its synthetic fixture.",
+        b"Composite-v5 uses separately versioned predecessor/successor captures and a "
+        b"separately typed R5 receipt; those artifacts preserve the failed observation "
+        b"without reviving or renaming R4.",
+    ):
+        require(
+            truth in normalized_readme,
+            f"hosted-recovery README current C4/C5 truth absent: {truth.decode()}",
+        )
+
+    lowered = normalized_readme.lower()
     for contradiction in (
         b"shallow checkout is sufficient",
         b"fetch-depth: 0 is unnecessary",
         b"grants scientific credit",
         b"validate on every later descendant",
         b"integration_go",
+        b"r4 may be issued",
+        b"r4 can be revived",
+        b"run the v4 live capture now",
+        b"derive and publish an r4 receipt",
+        b"rename r5 as r4",
+        b"reuse the v4 capture for composite-v5",
+        b"one shared v5 capture is sufficient",
     ):
         require(
             contradiction not in lowered, "hosted-recovery README contradicts authority"
