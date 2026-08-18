@@ -324,9 +324,9 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   current-source manifest. Preserve the v3 checker, self-test, schema, and absence of its reserved
   receipt. Composite-v4 published unsigned direct-child C4
   `da253576a5f76e99633fff4de5cf1118f967b90d`, but its first hosted qualification failed: CodeQL
-  passed, while repository CI had three terminal failed jobs and the dedicated v4 route failed in
+  passed, while repository CI had four terminal failed jobs and the dedicated v4 route failed in
   static-validation preflight. R4 is permanently unissued. Composite-v5 is the bounded append-only
-  replacement: publish direct-child C5 with the predecessor failure, four operational repairs, the
+  replacement: publish direct-child C5 with the predecessor failure, five operational repairs, the
   boundary PDF, and fresh replay r10; require exact-C5 attempt-1 local, CI, CodeQL, and dedicated-v5
   success; then permit direct-child R5 to add the successor capture and dual-capture receipt while
   regenerating current-source last. Neither commit may alter scientific code or promote M1a beyond
@@ -413,6 +413,14 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   as bounded execution-custody evidence, with zero C4-publication, hosted, scientific,
   accepted-current-replay, or independence credit. Final r9 was generated fresh, validated, and
   published in C4 without overwriting or relabelling the rejected document.
+- [ ] After all C5 operational bytes settle, preserve finalized r6, r7, r8, and r9 as exact prior
+  evidence and generate
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`. Here r10
+  is the tenth receipt in the versioned sequence that originated on 12 August and the eleventh
+  current-project replay receipt overall; the 11 August historical receipt is outside that
+  sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
+  or independence revision. C5 receives execution credit only when that exact receipt exists and
+  validates under normal and optimized custody checks; regenerate current-source last.
 - [x] Publish unsigned, human-attributed, fast-forward composite-v4 C4; retain its exact attempt-1
   hosted failure, keep both v4 capture/receipt paths absent, and record R4 as permanently unissued.
   C4 is `da253576a5f76e99633fff4de5cf1118f967b90d`; its CodeQL route passed but CI and the dedicated

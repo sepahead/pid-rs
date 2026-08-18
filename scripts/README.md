@@ -916,13 +916,28 @@ checker reconstructs its zero-placeholder replay source and allows no other chec
 replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
 two-edit finalization and normal/optimized checker plus self-test replay.
 
-The runner also refuses to start unless the three-way composite-v4 checksum cut is invocation
-ready. The replay projection must still be the exact zero-placeholder source expression; the two
-Lean composite-v4 digests must be equal, nonzero, and hash the exact composite checker; and the
-composite checker's normalized-Lean digest must reproduce the Lean source with all three cut lines
-restored to their reviewed placeholder forms. These predicates run before replay commands and
-no-clobber publication. The hostile suite removes or changes each cut and also rejects a projection
-that was finalized before replay.
+The runner also refuses to start unless the three-way composite-v5 checksum cut is invocation
+ready. The replay projection must still be the unique exact zero-placeholder source expression;
+the Lean composite-v5 scalar and the `scripts/check-ksg-m1a-composite-v5.py` operational-map row
+must be equal nonzero literals hashing the exact final v5 checker; and the v5 checker's unique
+nonzero `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal must reproduce the Lean source after
+normalizing exactly the projection, v5 scalar, and v5 operational row to their reviewed placeholder
+forms. The retained v4 checker, its ordinary operational-map row, and r9 receipt are immutable
+prior evidence: they are neither rewritten nor part of the r10 normalization cut.
+
+Finalization is deliberately acyclic. First freeze the v5 self-test, this guide, the freeze guide,
+and every other non-cut byte and digest row. With all three Lean cut positions in placeholder form,
+compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v5 checker.
+Then freeze the v5 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
+only the Lean v5 scalar and v5 operational row. Leave the replay projection as `"0" * 64`, rerun
+the normal and optimized hostile suites, and invoke the zero-argument replay generator exactly
+once. Only after it no-clobber-publishes the provisional r10 receipt may the established two-edit
+receipt finalization replace the projection literal and the projection-omitted live Lean-checker
+custody digest. Any change to the v5 self-test or another normalized Lean input after `H_L` was
+computed invalidates the cut and requires restarting this sequence. The generator predicates run
+before replay commands and publication; the hostile suites exercise causal checker drift,
+projection-finalized, missing, duplicated, mismatched, normalized-cut, and operational-map-omission
+mutations.
 
 For every natural-valued count function with positive total on a complete finite two-source key
 space, the first bridge identifies the four signed-net averaged cumulatives as support-restricted

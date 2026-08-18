@@ -771,6 +771,170 @@ def test_replay_and_delta() -> tuple[int, int]:
     return len(replay_mutations), len(delta_mutations)
 
 
+def test_lean_r10_checksum_cut() -> int:
+    projection = 'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64'
+    scalar = 'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "0" * 64'
+    operational = '    "scripts/check-ksg-m1a-composite-v5.py": "0" * 64,'
+    normalized_lean = (projection + "\n" + scalar + "\n" + operational + "\n").encode(
+        "utf-8"
+    )
+    normalized_digest = V5.sha256(normalized_lean)
+    checker_raw = (
+        'EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = "' + normalized_digest + '"\n'
+    ).encode("utf-8")
+
+    def seal_lean(checker: bytes, projection_value: str = "1" * 64) -> bytes:
+        checker_digest = V5.sha256(checker)
+        return (
+            normalized_lean.replace(
+                projection.encode("utf-8"),
+                (
+                    'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "'
+                    + projection_value
+                    + '"'
+                ).encode("utf-8"),
+                1,
+            )
+            .replace(
+                scalar.encode("utf-8"),
+                (
+                    'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "'
+                    + checker_digest
+                    + '"'
+                ).encode("utf-8"),
+                1,
+            )
+            .replace(
+                operational.encode("utf-8"),
+                (
+                    '    "scripts/check-ksg-m1a-composite-v5.py": "'
+                    + checker_digest
+                    + '",'
+                ).encode("utf-8"),
+                1,
+            )
+        )
+
+    checker_digest = V5.sha256(checker_raw)
+    replay_lean_raw = normalized_lean.replace(
+        scalar.encode("utf-8"),
+        (
+            'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "'
+            + checker_digest
+            + '"'
+        ).encode("utf-8"),
+        1,
+    ).replace(
+        operational.encode("utf-8"),
+        (
+            '    "scripts/check-ksg-m1a-composite-v5.py": "' + checker_digest + '",'
+        ).encode("utf-8"),
+        1,
+    )
+    self_test_path = "scripts/check-lean-toolchain-freeze-self-test.py"
+    r10 = {
+        "custody_gate_sha256": {
+            self_test_path: "a" * 64,
+            V5.LEAN_CHECKER_RELATIVE: "0" * 64,
+        },
+        "operational_wiring_sha256": {V5.CHECKER_RELATIVE: checker_digest},
+        "prior_replay_preservation_sha256": {V5.LEAN_R9_RELATIVE: "b" * 64},
+        "prior_replay_schema": {
+            V5.LEAN_R9_RELATIVE: "pid-rs/lean-current-project-replay/v2"
+        },
+        "replay_custody_gate_sha256": {
+            self_test_path: "a" * 64,
+            V5.LEAN_CHECKER_RELATIVE: V5.sha256(replay_lean_raw),
+        },
+        "schema": "pid-rs/lean-current-project-replay/v2",
+        "status": "passed",
+    }
+    projection_value = V5.lean_replay_projection_sha256(r10)
+    lean_raw = seal_lean(checker_raw, projection_value)
+    r10["custody_gate_sha256"][V5.LEAN_CHECKER_RELATIVE] = V5.sha256(lean_raw)
+    V5.validate_lean_r10_checksum_cut(checker_raw, lean_raw)
+    V5.validate_lean_r10_receipt_cuts(checker_raw, lean_raw, r10, projection_value)
+    mismatched_checker = checker_raw.replace(
+        normalized_digest.encode("ascii"), b"3" * 64, 1
+    )
+    placeholder_checker = checker_raw.replace(
+        normalized_digest.encode("ascii"), b"0" * 64, 1
+    )
+    mutations = (
+        (checker_raw + b"# post-seal drift\n", lean_raw, "v5 checker causal drift"),
+        (
+            checker_raw,
+            lean_raw.replace(
+                (
+                    'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "'
+                    + checker_digest
+                    + '"'
+                ).encode("utf-8"),
+                (
+                    'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "'
+                    + "2" * 64
+                    + '"'
+                ).encode("utf-8"),
+                1,
+            ),
+            "v5 scalar cut",
+        ),
+        (
+            checker_raw,
+            lean_raw.replace(
+                (
+                    '    "scripts/check-ksg-m1a-composite-v5.py": "'
+                    + checker_digest
+                    + '",'
+                ).encode("utf-8"),
+                (
+                    '    "scripts/check-ksg-m1a-composite-v5.py": "' + "2" * 64 + '",'
+                ).encode("utf-8"),
+                1,
+            ),
+            "v5 operational cut",
+        ),
+        (mismatched_checker, seal_lean(mismatched_checker), "normalized Lean cut"),
+        (placeholder_checker, seal_lean(placeholder_checker), "normalized placeholder"),
+        (
+            checker_raw + checker_raw,
+            seal_lean(checker_raw + checker_raw),
+            "duplicate cut",
+        ),
+        (checker_raw, lean_raw + b"# normalized-source drift\n", "Lean source drift"),
+    )
+    for changed_checker, changed_lean, label in mutations:
+        rejected(
+            lambda changed_checker=changed_checker, changed_lean=changed_lean: (
+                V5.validate_lean_r10_checksum_cut(changed_checker, changed_lean)
+            ),
+            label,
+        )
+    receipt_mutations: list[tuple[bytes, dict[str, Any], str, str]] = []
+    changed = copy.deepcopy(r10)
+    changed["operational_wiring_sha256"][V5.CHECKER_RELATIVE] = "0" * 64
+    receipt_mutations.append((lean_raw, changed, projection_value, "r10 v5 map"))
+    changed = copy.deepcopy(r10)
+    changed["custody_gate_sha256"][V5.LEAN_CHECKER_RELATIVE] = "0" * 64
+    receipt_mutations.append((lean_raw, changed, projection_value, "r10 final custody"))
+    changed = copy.deepcopy(r10)
+    changed["replay_custody_gate_sha256"][V5.LEAN_CHECKER_RELATIVE] = "0" * 64
+    receipt_mutations.append(
+        (lean_raw, changed, projection_value, "r10 replay custody")
+    )
+    receipt_mutations.append((lean_raw, r10, "2" * 64, "r10 projection"))
+    for changed_lean, changed_r10, changed_projection, label in receipt_mutations:
+        rejected(
+            lambda changed_lean=changed_lean, changed_r10=changed_r10, changed_projection=changed_projection: (
+                V5.validate_lean_r10_receipt_cuts(
+                    checker_raw, changed_lean, changed_r10, changed_projection
+                )
+            ),
+            label,
+        )
+    return len(mutations) + len(receipt_mutations)
+
+
 def test_identifier_domains() -> int:
     phases = receipt_fixture()["observations"]
     V5.validate_identifier_domains(phases, "positive phases")
@@ -948,6 +1112,7 @@ def main() -> int:
         policy_count = test_policy()
         receipt_count = test_receipt_schema()
         replay_count, delta_count = test_replay_and_delta()
+        lean_cut_count = test_lean_r10_checksum_cut()
         identifier_count = test_identifier_domains()
         failure_surface_count = test_predecessor_failure_surface()
         forbidden_history_count = test_forbidden_r4_history()
@@ -959,6 +1124,7 @@ def main() -> int:
             "job_mutations_rejected": job_count,
             "identifier_domain_mutations_rejected": identifier_count,
             "job_timestamp_mutations_rejected": timestamp_count,
+            "lean_checksum_cut_mutations_rejected": lean_cut_count,
             "policy_mutations_rejected": policy_count,
             "predecessor_failure_surface_mutations_rejected": failure_surface_count,
             "receipt_schema_mutations_rejected": receipt_count,

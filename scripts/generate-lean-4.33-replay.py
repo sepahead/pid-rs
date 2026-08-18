@@ -87,7 +87,7 @@ OUTPUT = (
 )
 OUTPUT_TEMPORARY_LEAF = OUTPUT.name + ".tmp"
 LEAN_CHECKER_RELATIVE = "scripts/check-lean-toolchain-freeze.py"
-COMPOSITE_V4_CHECKER_RELATIVE = "scripts/check-ksg-m1a-composite-v4.py"
+COMPOSITE_V5_CHECKER_RELATIVE = "scripts/check-ksg-m1a-composite-v5.py"
 GIT_FIXED_ARGUMENTS = (
     "-c",
     "core.fsmonitor=false",
@@ -111,41 +111,67 @@ def die(message: str) -> None:
     raise SystemExit(message)
 
 
-def validate_composite_v4_cut_bytes(
+def validate_composite_v5_cut_bytes(
     lean_raw: bytes,
     composite_raw: bytes,
     expected_operational: dict[str, str],
 ) -> None:
-    """Require the exact acyclic cut state needed before one-shot publication."""
+    """Require the exact successor cut state before one-shot publication."""
 
     try:
         lean_source = lean_raw.decode("utf-8", errors="strict")
         composite_source = composite_raw.decode("utf-8", errors="strict")
     except UnicodeDecodeError as error:
         die(f"replay checksum-cut source is not UTF-8: {error}")
-    projection_placeholder = (
-        'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64'
-    )
+    projection_placeholder = 'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64'
     if lean_source.count(projection_placeholder) != 1:
         die("replay projection cut is not the unique zero placeholder")
+    projection_assignment_pattern = re.compile(
+        r"^EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = .+$", re.MULTILINE
+    )
+    projection_final_pattern = re.compile(
+        r'^EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "([0-9a-f]{64})"$',
+        re.MULTILINE,
+    )
+    if projection_final_pattern.search(lean_source) is not None:
+        die("replay projection cut was finalized before the one-shot replay")
+    if len(projection_assignment_pattern.findall(lean_source)) != 1:
+        die("replay projection cut is not the unique zero placeholder")
     composite_pattern = re.compile(
-        r'^EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "([0-9a-f]{64})"$',
+        r'^EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "([0-9a-f]{64})"$',
         re.MULTILINE,
     )
     operational_pattern = re.compile(
-        r'^    "scripts/check-ksg-m1a-composite-v4\.py": "([0-9a-f]{64})",$',
+        r'^    "scripts/check-ksg-m1a-composite-v5\.py": "([0-9a-f]{64})",$',
         re.MULTILINE,
     )
     normalized_pattern = re.compile(
         r'^EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = "([0-9a-f]{64})"$',
         re.MULTILINE,
     )
+    composite_assignment_pattern = re.compile(
+        r"^EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = .+$", re.MULTILINE
+    )
+    operational_assignment_pattern = re.compile(
+        r'^    "scripts/check-ksg-m1a-composite-v5\.py": .+$', re.MULTILINE
+    )
+    normalized_assignment_pattern = re.compile(
+        r"^EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = .+$", re.MULTILINE
+    )
     composite_matches = list(composite_pattern.finditer(lean_source))
     operational_matches = list(operational_pattern.finditer(lean_source))
     normalized_matches = list(normalized_pattern.finditer(composite_source))
-    if len(composite_matches) != 1 or len(operational_matches) != 1:
-        die("composite-v4 checker digest cuts are not unique final literals")
-    if len(normalized_matches) != 1:
+    if (
+        len(composite_matches) != 1
+        or len(operational_matches) != 1
+        or len(composite_assignment_pattern.findall(lean_source)) != 1
+        or len(operational_assignment_pattern.findall(lean_source)) != 1
+    ):
+        die("composite-v5 checker digest cuts are not unique final literals")
+    if (
+        len(normalized_matches) != 1
+        or len(normalized_assignment_pattern.findall(composite_source)) != 1
+    ):
         die("normalized Lean checker cut is not a unique final literal")
     composite_digest = hashlib.sha256(composite_raw).hexdigest()
     composite_cut = composite_matches[0].group(1)
@@ -156,19 +182,18 @@ def validate_composite_v4_cut_bytes(
         or operational_cut == "0" * 64
         or composite_cut != operational_cut
         or composite_cut != composite_digest
-        or expected_operational.get(COMPOSITE_V4_CHECKER_RELATIVE)
-        != composite_digest
+        or expected_operational.get(COMPOSITE_V5_CHECKER_RELATIVE) != composite_digest
     ):
-        die("composite-v4 checker digest cuts do not bind the exact checker bytes")
+        die("composite-v5 checker digest cuts do not bind the exact checker bytes")
     if normalized_cut == "0" * 64:
         die("normalized Lean checker cut remains a placeholder")
     normalized_lean_source = composite_pattern.sub(
-        'EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "0" * 64',
+        'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "0" * 64',
         lean_source,
         count=1,
     )
     normalized_lean_source = operational_pattern.sub(
-        '    "scripts/check-ksg-m1a-composite-v4.py": "0" * 64,',
+        '    "scripts/check-ksg-m1a-composite-v5.py": "0" * 64,',
         normalized_lean_source,
         count=1,
     )
@@ -179,15 +204,15 @@ def validate_composite_v4_cut_bytes(
         die("normalized Lean checker cut does not bind the exact three-cut source")
 
 
-def validate_composite_v4_cut_state(freeze: types.ModuleType, root: Path) -> None:
+def validate_composite_v5_cut_state(freeze: types.ModuleType, root: Path) -> None:
     lean_raw = freeze.stable_read(
         root / LEAN_CHECKER_RELATIVE, "pre-replay Lean checker cut state"
     ).raw
     composite_raw = freeze.stable_read(
-        root / COMPOSITE_V4_CHECKER_RELATIVE,
-        "pre-replay composite-v4 checker cut state",
+        root / COMPOSITE_V5_CHECKER_RELATIVE,
+        "pre-replay composite-v5 checker cut state",
     ).raw
-    validate_composite_v4_cut_bytes(
+    validate_composite_v5_cut_bytes(
         lean_raw, composite_raw, freeze.EXPECTED_OPERATIONAL_WIRING_HASHES
     )
 
@@ -954,7 +979,7 @@ def main() -> int:
         or freeze.RECEIPT_RELATIVE != output.relative_to(root).as_posix()
     ):
         die("replay generator/checker receipt routes diverged")
-    validate_composite_v4_cut_state(freeze, root)
+    validate_composite_v5_cut_state(freeze, root)
     finite = load_module(
         root / "scripts/check-lean-finite-convergence.py", "pid_finite"
     )

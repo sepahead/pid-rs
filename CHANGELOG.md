@@ -23,6 +23,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   and regenerates current-source last. This is a project-defined hosted-qualification/process
   correction, not a new theory, PID functional, estimator, theorem, numerical result, scientific
   validation, authentication, independence finding, release, or downstream application claim.
+  The current replay pointer is
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`; finalized
+  r6, r7, r8, and r9 remain exact prior evidence. Here r10 is the tenth receipt in the versioned
+  sequence that originated on 12 August and the eleventh current-project replay receipt overall;
+  the 11 August historical receipt is outside that sequence. The suffix does not denote a calendar
+  date, schema, theorem, review, or independence revision. C5 receives execution credit only when
+  that exact receipt exists and validates under normal and optimized custody checks.
 - Updated the hash-pinned PDF verifier dependency to `pypdf` 6.15.0, the first release patched for
   GHSA-fp3f-mc75-235c and GHSA-fwg2-594c-jp42. Both reviewed advisories concern bounded-resource
   handling of adversarial font data. This tooling change does not alter a PID definition,

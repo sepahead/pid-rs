@@ -417,47 +417,6 @@ def copy_fixture(
         if relative == CHECKER_RELATIVE:
             target.write_bytes(checker_snapshot.raw)
             continue
-        if pre_receipt and relative in {
-            "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md",
-            "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json",
-        }:
-            require(
-                source.is_file() and not source.is_symlink(),
-                f"prospective freeze fixture source is not regular: {relative}",
-            )
-            shutil.copy2(source, target)
-            raw = target.read_bytes()
-            replacements = (
-                (
-                    (
-                        b"provisional inventory; exact lifecycle validation disabled; hosted pending; no credit",
-                        b"frozen reviewed inventory; exact local lifecycle validation enabled; hosted pending; no credit",
-                    ),
-                    (
-                        b"<!-- ksg-m1a-hosted-recovery-policy-state: provisional -->",
-                        b"<!-- ksg-m1a-hosted-recovery-policy-state: frozen -->",
-                    ),
-                )
-                if relative.endswith("boundary-2026-08-13.md")
-                else (
-                    (
-                        b'"inventory_status": "provisional"',
-                        b'"inventory_status": "frozen"',
-                    ),
-                    (
-                        b'"lifecycle_validation_permitted": false',
-                        b'"lifecycle_validation_permitted": true',
-                    ),
-                )
-            )
-            for old, new in replacements:
-                require(
-                    raw.count(old) == 1 and raw.count(new) == 0,
-                    f"prospective freeze fixture anchor drifted: {relative}",
-                )
-                raw = raw.replace(old, new, 1)
-            target.write_bytes(raw)
-            continue
         if relative in pending:
             if source.is_file() and not source.is_symlink():
                 shutil.copy2(source, target)
@@ -1852,7 +1811,7 @@ def check_generator_zero_argument_contract(root: Path) -> None:
         "dst_dir_fd=parent_descriptor",
         "reject_repository_bytecode_cache(root)",
         'die("replay generator/checker receipt routes diverged")',
-        "validate_composite_v4_cut_state(freeze, root)",
+        "validate_composite_v5_cut_state(freeze, root)",
         '"schema": "pid-rs/lean-current-project-replay/v2"',
     ):
         require(
@@ -1871,7 +1830,7 @@ def check_generator_zero_argument_contract(root: Path) -> None:
         "generator output no-clobber preflight moved after repository module load",
     )
     require(
-        source.index("validate_composite_v4_cut_state(freeze, root)")
+        source.index("validate_composite_v5_cut_state(freeze, root)")
         < source.index("freeze.check_static_without_receipt()"),
         "generator checksum-cut preflight moved after replay static validation",
     )
@@ -1903,16 +1862,14 @@ def generator_test_environment(root: Path) -> dict[str, str]:
 
 def check_generator_cut_preflight(generator: ModuleType) -> None:
     projection = 'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64'
-    composite = 'EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "0" * 64'
-    operational = '    "scripts/check-ksg-m1a-composite-v4.py": "0" * 64,'
+    composite = 'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "0" * 64'
+    operational = '    "scripts/check-ksg-m1a-composite-v5.py": "0" * 64,'
     normalized_lean = (
         projection + "\n" + composite + "\n" + operational + "\n"
     ).encode("utf-8")
     normalized_digest = hashlib.sha256(normalized_lean).hexdigest()
     composite_raw = (
-        'EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = "'
-        + normalized_digest
-        + '"\n'
+        'EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = "' + normalized_digest + '"\n'
     ).encode("utf-8")
 
     def reseal_checker(checker_raw: bytes) -> tuple[bytes, dict[str, str]]:
@@ -1920,7 +1877,7 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
         lean_raw = normalized_lean.replace(
             composite.encode("utf-8"),
             (
-                'EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "'
+                'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "'
                 + checker_digest
                 + '"'
             ).encode("utf-8"),
@@ -1928,26 +1885,20 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
         ).replace(
             operational.encode("utf-8"),
             (
-                '    "scripts/check-ksg-m1a-composite-v4.py": "'
-                + checker_digest
-                + '",'
+                '    "scripts/check-ksg-m1a-composite-v5.py": "' + checker_digest + '",'
             ).encode("utf-8"),
             1,
         )
-        return lean_raw, {
-            generator.COMPOSITE_V4_CHECKER_RELATIVE: checker_digest
-        }
+        return lean_raw, {generator.COMPOSITE_V5_CHECKER_RELATIVE: checker_digest}
 
     ready_lean, expected = reseal_checker(composite_raw)
-    composite_digest = expected[generator.COMPOSITE_V4_CHECKER_RELATIVE]
-    generator.validate_composite_v4_cut_bytes(ready_lean, composite_raw, expected)
+    composite_digest = expected[generator.COMPOSITE_V5_CHECKER_RELATIVE]
+    generator.validate_composite_v5_cut_bytes(ready_lean, composite_raw, expected)
 
     placeholder_checker = composite_raw.replace(
         normalized_digest.encode("ascii"), b"0" * 64, 1
     )
-    placeholder_lean, placeholder_expected = reseal_checker(
-        placeholder_checker
-    )
+    placeholder_lean, placeholder_expected = reseal_checker(placeholder_checker)
     mismatch_checker = composite_raw.replace(
         normalized_digest.encode("ascii"), b"3" * 64, 1
     )
@@ -1958,9 +1909,7 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
             ready_lean.replace(
                 projection.encode("utf-8"),
                 (
-                    'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "'
-                    + "1" * 64
-                    + '"'
+                    'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "' + "1" * 64 + '"'
                 ).encode("utf-8"),
                 1,
             ),
@@ -1969,10 +1918,20 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
             "projection cut is not the unique zero placeholder",
         ),
         (
+            "additional-finalized-projection",
+            ready_lean
+            + (
+                'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "' + "1" * 64 + '"\n'
+            ).encode("utf-8"),
+            composite_raw,
+            expected,
+            "projection cut was finalized before the one-shot replay",
+        ),
+        (
             "missing-composite-final-cut",
             ready_lean.replace(
                 (
-                    'EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "'
+                    'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "'
                     + composite_digest
                     + '"'
                 ).encode("utf-8"),
@@ -1987,18 +1946,23 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
             "mismatched-operational-cut",
             ready_lean.replace(
                 (
-                    '    "scripts/check-ksg-m1a-composite-v4.py": "'
+                    '    "scripts/check-ksg-m1a-composite-v5.py": "'
                     + composite_digest
                     + '",'
                 ).encode("utf-8"),
                 (
-                    '    "scripts/check-ksg-m1a-composite-v4.py": "'
-                    + "2" * 64
-                    + '",'
+                    '    "scripts/check-ksg-m1a-composite-v5.py": "' + "2" * 64 + '",'
                 ).encode("utf-8"),
                 1,
             ),
             composite_raw,
+            expected,
+            "do not bind the exact checker bytes",
+        ),
+        (
+            "checker-drift-without-lean-reseal",
+            ready_lean,
+            composite_raw + b"# post-seal drift\n",
             expected,
             "do not bind the exact checker bytes",
         ),
@@ -2008,6 +1972,13 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
             placeholder_checker,
             placeholder_expected,
             "normalized Lean checker cut remains a placeholder",
+        ),
+        (
+            "duplicate-normalized-cut",
+            reseal_checker(composite_raw + composite_raw)[0],
+            composite_raw + composite_raw,
+            reseal_checker(composite_raw + composite_raw)[1],
+            "normalized Lean checker cut is not a unique final literal",
         ),
         (
             "normalized-cut-mismatch",
@@ -2026,7 +1997,7 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
     )
     for role, lean_raw, checker_raw, operational_map, diagnostic in mutations:
         try:
-            generator.validate_composite_v4_cut_bytes(
+            generator.validate_composite_v5_cut_bytes(
                 lean_raw, checker_raw, operational_map
             )
         except SystemExit as error:
@@ -2035,9 +2006,7 @@ def check_generator_cut_preflight(generator: ModuleType) -> None:
                 f"generator checksum-cut mutation {role} produced wrong diagnostic",
             )
         else:
-            raise SelfTestError(
-                f"generator checksum-cut mutation survived: {role}"
-            )
+            raise SelfTestError(f"generator checksum-cut mutation survived: {role}")
 
 
 def check_generator_behavior(root: Path) -> None:

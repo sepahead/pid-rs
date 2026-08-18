@@ -50,8 +50,8 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
 # This literal is deliberately one line so the append-only receipt can reconstruct
 # the exact pre-pin checker bytes without a checksum cycle.
 # fmt: off
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "aaac51edba0f8a354a766918213c3f0d8e1160a09db5b75e50a8ee80b4672aaa"
-EXPECTED_COMPOSITE_V4_CHECKER_OPERATIONAL_SHA256 = "8fb61c4fcc831be1847ddec7448e2dbeb6f2f51b915b4b6cd91df561c491b5bb"
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64
+EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "29bdfa9562f7ca3bb1254a33847610303a34d89eabdec29f83f165a9599f79c5"
 # fmt: on
 EXPECTED_LOCAL_REPLAY_ROUTES = {
     "archive": (
@@ -299,7 +299,7 @@ EXPECTED_POLICY_SHA256 = (
     "db0c403f61af1c49996ed217fd025007bd76743de8c57ff147fa12ed319eb204"
 )
 EXPECTED_ACTIVE_RESUME_SHA256 = (
-    "ee9fd7dc96b1af56cb3784ab34d69339416457ee7f6b8864e9c7bcf63760ea35"
+    "16d8b97fd2aa2d31f9315252ca152d08498ca7fa9b262a7462fb9826f1abf667"
 )
 OPTION = "set_option backward.isDefEq.respectTransparency.types false in"
 EXPECTED_OPTION_LINES = {
@@ -447,7 +447,7 @@ EXPECTED_ACTIVE_RESUME_HASHES = {
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
     ),
     "audit/evidence/completion-active-resume.md": (
-        "ee9fd7dc96b1af56cb3784ab34d69339416457ee7f6b8864e9c7bcf63760ea35"
+        "16d8b97fd2aa2d31f9315252ca152d08498ca7fa9b262a7462fb9826f1abf667"
     ),
 }
 EXPECTED_PENDING_ACTIVE_RESUME_PATHS = tuple(
@@ -458,9 +458,10 @@ EXPECTED_PENDING_ACTIVE_RESUME_PATHS = tuple(
 PENDING_OPERATIONAL_SHA256 = "0" * 64
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "61283264499a7b6069a4e5e9563c72541ab101b69379f3ace75a12cd4bf4b175",
-    ".github/workflows/ksg-m1a-composite-v4.yml": "541f4bcfe7135c63f4e4b76c5d119b2c64e60550e365885c4ac98f9c8c48df04",
-    "AGENTS.md": "28f74ab66f65c15a0fe2752e287e19cac2d6f419767fd454795260584f955e18",
-    "CHANGELOG.md": "d6e55c4581f6d663ffa3e2112bbd3eafea1d002fca64faa47a89019b901f3145",
+    ".github/workflows/ksg-m1a-composite-v4.yml": "3952fdfb596ce15e176795d8a6ec76aaad9d8d66e830129784d3b919ddc5cda5",
+    ".github/workflows/ksg-m1a-composite-v5.yml": "7f41177c175d785c92512beb23cfd860c5cf94f12dd2a4aa0d4f414963c86593",
+    "AGENTS.md": "a0b637a6ba0dc93c380372a24e93d1691e208a7ff4dd09777b5ceeddcfb1d539",
+    "CHANGELOG.md": "91f62df938541a310577306896eb2df334df3f95f2751c437fea27f8597f8fe3",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": "538690ae27c6e52bb5bbb6844acb3cd8f32d46f8f08ef770e09dae8d33ae9bb6",
     "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
     "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md": "85bb7aed98e33f924a12bb882d8aba396a8d31b66b1432caebc48627b1e0b292",
@@ -475,13 +476,19 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "audit/evidence/ksg-rev4-m1a-composite-v3-impossibility-2026-08-15.json": "735925734c1eeb41cf4fa6a48ed20ccbb5dd0d7da786239b2ab5723b7a632b6b",
     "audit/evidence/ksg-rev4-m1a-composite-v4-path-policy-v1.json": "9b6522e8ed8c3fc797dd89bedb933e677c16491c55296c3d919ae0f933872262",
     "audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md": "c821cd7fefb472a99d2b2df5a66b7f6deb18c9c9a9c5472046abb547f4047d30",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v5-2026-08-18.json": "d64886ca605cf82eb501fba9020938ed3f0e1adf7f635b19f3fcda8d8909bd69",
+    "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md": "6596e3c7e4a8bca989ad4724efb2f9c7592564b359b29f3a2a7a224ce2270a29",
+    "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-visual-receipt-2026-08-18.md": "8e73300fb5b4a0ad3d56b5b2230a9a9a45c63295c9445e9ef91fa2805ee68420",
+    "audit/evidence/ksg-rev4-m1a-composite-v5-path-policy-v1.json": "dc030a357eb9a18beb8d55a5ecb23bf79c8e55676a0c50bf6661847ce5b9a89c",
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json": "fb162cc40da3059b61eab9024f4aa38cf6daf2d84ef7e1d8a26dc7d345291e70",
     "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md": "cc604d039f1c6a488f3d25f3ca1d16bc7624db0cc4074608475bc662a8920a46",
-    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "186ba1bccdc28846654220afb91dbe1e9d49f4559e8ca76cb5e5f26ec8c42536",
-    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "ff21bb914566b57cc61d40808eaf5d38d6beae120b4b88075f5db08d0257e42a",
-    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "ba43b600b3e1353584af64ea0e1628f623f6ecfbf15547c99519003fc4a45ae1",
+    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "be4622a7fc99b5d8a60d59a51fe2a9890dee38e370164b47510e4f7430e43842",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "1d05f596f25a3fbd835e56eb741b2013b2a01de928c29b2c0c16847d37e95c4b",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "56154607d698b6b95672b13b772df34d470daf4f9c308826387d424988b93656",
     "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.pdf": "9111ff1ae77c011d9b75999852136880746f3e33b137ade877bee80f6e354499",
     "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.svg": "9022812adeb3845e9d494428fb5e2f6489bb7cf938444c1c96c364c38d4f6095",
+    "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.pdf": "2b7f97c1491b8ab05a6223e958c9dfd2e74e2d1a41c7973d4098ae7cafd4d2d3",
+    "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.svg": "2f5040914e30e2db84c43035c3983a5e7a0150288a1ea53f8291cd4b5e7bc081",
     "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
     "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
     "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "0960ae0cbfdf74118111fb994ed08acd6ab6246f2176e552b317cf9fc4ffdbad",
@@ -491,43 +498,57 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": "e067092709715babc62027fa5d8f7da122ebb1837c4eee0ff90ad9c2f2766527",
     "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
     "audit/formal/latex/ksg-m1a-composite-v4-process.tex": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657",
+    "audit/formal/latex/ksg-m1a-composite-v5-boundary.tex": "8f32bf892c102b73c20d507c92b631d2387ab07b686ab7e0a163eae7f1f52527",
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": "deb0cf82f4ddaa2ecfeb858d1130df12d9a3831feaf9f3215fa176c8a2f9aae1",
     "audit/formal/requirements-pdf.txt": "f1f2171ff6481ee900b72df600d8326140d001a1a024977b41386461e2b57d36",
     "audit/schemas/current-source-state-v1.schema.json": "501ed8fcca211ae598e041a5596b44574c48da46a9143cafe7266a7493b93f53",
     "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json": "7512e24e3256baaacca2d75a23a9ae2a530cd987f6460788d2b431175f41c8d1",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v5.schema.json": "cbacb1bd7b5896a497312fd2a2809a33e43699bb3e4eb081d19cde6803b69c24",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json": "797e7c5a0dc7122aff6c16319749c3a18683ebbe21e94dd039cdc5b7a330d42c",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json": "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v4.schema.json": "8492da6dfd704667515e7b9da88d501de34903e5e2b52582106211b07f48528e",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v5.schema.json": "7fc4fac9fdf923610768df6a5e4c90440d85400572d31e48b45367eeeb8f8e9d",
     "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json": "b477f8c4c3cb2066c0eb9c09a98cb9fbbc3ba330951aed440d2011fcace4d672",
     "audit/schemas/post-commit-source-state-v2.schema.json": "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a",
-    "justfile": "21a0f1eee5d11bdf2458d91c2260d5e984726b6e655ea6b67208ddacb530b776",
+    "justfile": "f0ba67880981b7ff1b8ca38e8f1218df1de1c9dc8be92e8c4930dc0b16617c7e",
     "output/pdf/ksg-m1a-composite-v4-process.pdf": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
+    "output/pdf/ksg-m1a-composite-v5-boundary.pdf": "bf932cfb2dbe70500458cc8de0d4ce2f3718bfe5d135755e2a9147c3d6621a79",
+    "output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv": "7730f32febfb3a0ce2bc90b8300980aa299c6afd1d957ada7a14daaeae741413",
     "output/pdf/mathematical-problem-solving-workflow.pdf": "6abf5af2ab7fb5cf0b40c37977dc38156d4bdf251b6f2948815c472fc77f1288",
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": "95a6e38797f6f4086ae0094bf187649bc01834a54e6a2d6c7aae9b2a4ae3b63d",
-    "scripts/README.md": "c6bd33664ae96fb7176bb3fbe5e8862643f34288eef2904e5a15fa3925cde7b5",
+    "scripts/README.md": "67350d26d69a0d5774bdedb6e59ad4b46ef07c211ecf10340baad7a6c352ff47",
     "scripts/capture-ksg-m1a-composite-v4.py": "7cf9a6fe57c2a828def8789524069e14a21d35739a5019b4310613c8f44065ef",
-    "scripts/check-certified-sxpid2-claim-self-test.py": "ae2289b6e3ac461d6f0161009e13384e903d527ea52026b15d9d2ea8c32d435c",
-    "scripts/check-certified-sxpid2-claim.py": "c119b3d239627f4d052d9ecf6fc7c47536ba2cd31dba91e867ad9d7e485fee67",
+    "scripts/capture-ksg-m1a-composite-v5.py": "a0e955c9645c852276a3750ee24c49c8feb029d748a73909461d4f71777b3a11",
+    "scripts/check-certified-sxpid2-claim-self-test.py": "c4fc122de0908ad076ebd029e6bde80e9debb0ee3f187f39f71a644a6dc81327",
+    "scripts/check-certified-sxpid2-claim.py": "54c64e7a9d21d6d1186d5e6d446c54584663318505ab96cc539a65ff986056e1",
+    "scripts/check-current-release-state.sh": "a97a690a6e2df35b2bbe957c901c65418ced7104d2df6ea93ddb22f2cc03d99a",
     "scripts/check-current-source-state-v1-self-test.py": "3dc2d846f2512e10f871ad21dbda8d45817884998942c1325cf2b78138d5753e",
     "scripts/check-current-source-state-v1.py": "1d9561909cee8ace366802c76ba108cb5418499d9549946aad34c809fff57bd7",
-    "scripts/check-formal-pdf-set.sh": "f5a224fd60b186b11dbbc06213a84173e55f07a941566fd665d0b2006409ac84",
-    "scripts/check-formal-pdf-style.py": "665128962f36e530b47c1861cbfd70065cb1719dc39427e6edb81335bc3c5676",
+    "scripts/check-formal-pdf-set.sh": "e26970509de4fef73e271083d203c82e871fa8e70ec5826b6b769ed4a41541c2",
+    "scripts/check-formal-pdf-style.py": "624661dd734fa91728e77798708b2fa5a9fcbf4d799bb32f1b5388f7a661ce7e",
     "scripts/check-ksg-m1a-custody-correction-self-test.py": "a466461b9eecd4afd3f839aa8137a6fc6b4de13e1aa6e18dc81b0862c6f0fdcb",
     "scripts/check-ksg-m1a-custody-correction.py": "e504fb1617fc93abd096ced451d82c74745011edb4a3b4673bd2dd8c4cea3147",
-    "scripts/check-ksg-m1a-hosted-recovery-self-test.py": "ce8cf3b23e9fa735f01b56bb6d90b18332f5b60d9b20738080b00356bbcef35f",
-    "scripts/check-ksg-m1a-hosted-recovery.py": "6c422718b32d9ad22b74a22d1ea56b73ebe3b312412f28b3319f4085598d66cc",
+    "scripts/check-ksg-m1a-hosted-recovery-self-test.py": "0ebd801ce758203ce12111ccec8802bc9a6c68ad80033105abc59f6e60d05787",
+    "scripts/check-ksg-m1a-hosted-recovery.py": "7bbbe8d32e4f6ad631f9c2d5074f4a06e7872492945404ad26fd2195664592ee",
     "scripts/check-ksg-m1a-phase-self-test.py": "851299dfb62de6cbec9f77f893ea5992839bc007e77e5772c30689281307873c",
     "scripts/check-ksg-m1a-phase.py": "433b493a52af6f7c738ba96fed99cf1f5183d975785527c0a040848a0ae14d42",
     "scripts/check-ksg-m1a-composite-v4-process-pdf.sh": "8881f819da0a5ba8e6db31a007aa2465fbac7982de4c662b3d48d477bedfcf83",
     "scripts/check-ksg-m1a-composite-v4-self-test.py": "4a40f43396e5b45aa0a5762995eabb908b61d850b1a215aa817c731140a6078b",
     "scripts/check-ksg-m1a-composite-v4.py": "8fb61c4fcc831be1847ddec7448e2dbeb6f2f51b915b4b6cd91df561c491b5bb",
+    "scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh": "fe8aa30908d1d2f8fc603b50708a2f57011a8b7a46b95e82e1ec45b311660079",
+    "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh": "81c7e8efbec07dc7a1c26e0d63075a4bbae6c0125547d6daac70596940beb61c",
+    "scripts/check-ksg-m1a-composite-v5-self-test.py": "61024e4df9ee0999fdf03e79c505dcf8c268188779b5424665143808679b24aa",
+    "scripts/check-ksg-m1a-composite-v5.py": "29bdfa9562f7ca3bb1254a33847610303a34d89eabdec29f83f165a9599f79c5",
     "scripts/check-mathematical-workflow-pdf-self-test.sh": "b8f42aa6dbd403861479c5a27960934bbf63f1d1372ec11caf8efc5a2a9d0228",
     "scripts/check-mathematical-workflow-pdf.sh": "7af9d7acde3f2f61022007eb3ad1bd1c1862b18636071f2df6f48d346ce7678f",
     "scripts/check-post-commit-source-state-v2-self-test.py": "b1f45814efca5754bdb33c0b41258be9f1874fd404ff7620505878a7c8fa4657",
     "scripts/check-post-commit-source-state-v2.py": "06fa6721d366fd33b9bd8997d108c31578bc32da4bcdcda8ccf5aeb22fad94d3",
-    "scripts/check-zeta-pid-transfer-firewall-self-test.py": "3f6c48049e797d89c6c183d10da8124348a9c23ec932bcea6a762cd571578df0",
-    "scripts/check-zeta-pid-transfer-firewall.py": "f6345343ee9d075c0d4b195a41614e9dffbe51466782e852126758cff3839c03",
-    "scripts/generate-lean-4.33-replay.py": "7bf3d8cc48bec544d0ce0218bdc1367ec17b56c5657c9d8a259eb2515376179f",
+    "scripts/check-release-state-self-test.sh": "e9fec4e65a42653b9488b5fb02ceee669aeb7d374ddd34334c6755fb7eff6f0d",
+    "scripts/check-zeta-pid-transfer-firewall-self-test.py": "8803595bc5af615cf88215b9bdd40d7a8d227724b410c4b04802a63e81b0704e",
+    "scripts/check-zeta-pid-transfer-firewall.py": "97d45807f7b58b9fb8a62a2c4007e514adfdc5aeadf811daf590010cb313b65f",
+    "scripts/generate-lean-4.33-replay.py": "2a5b4a1b588f4b1fe66b30fd8814be2268584511a1b7306720cc158ea43115b9",
+    "scripts/normalize-actions-checkout-worktree-config-self-test.py": "4d7943e55a3eb3d8804d32e03bd0c754804cf1e2bcb6fcf0d477d9c63e63b063",
+    "scripts/normalize-actions-checkout-worktree-config.py": "8887789f2039c8603a61f40f2518b707fa37f2311ccbd613e8c927fb6856be18",
 }
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
     relative
@@ -541,13 +562,13 @@ EXPECTED_ABSENT_OPERATIONAL_PATHS = (
 EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "2537f30b0a52129ff1ffbcf0152c594833879169af7b80f5a5ba0f891fed0001",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "1402245ded95bf69c8088a087de9e6951acb0094c443265e3014d7abf4035e44",
     "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "18542798a79285b1d9b0254fb82f2212e486a24d2a0d5874bea95b3f145d7f7d",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "1c983c5ba576f4d4be4dde784552dcc8a15254e4ab83b4b56164075e8bd3554c",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "cca911f47befd9f47948a9233677fa0a5a909bcd13d7f803172cc542e1c68637",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "76ec940dae7d2b98c52f51cb44b49e00bb835708cb0b11b02b076bfcba61af41",
     "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "c8da1c32edbdbb85256a0569ba940fc0e9d1d9d972741745ade360806b23b049",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "1008f44776f7a063a5a21632666266dd21e752c42639d53926119b03d0568f99",
     "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
     "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
     "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",

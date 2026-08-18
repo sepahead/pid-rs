@@ -15,6 +15,7 @@ import base64
 from collections import defaultdict
 from dataclasses import dataclass
 import hashlib
+import json
 import os
 from pathlib import Path
 import re
@@ -81,6 +82,7 @@ LEAN_R10_RELATIVE = (
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-"
     "2026-08-18-r10.json"
 )
+LEAN_CHECKER_RELATIVE = "scripts/check-lean-toolchain-freeze.py"
 V4_WORKFLOW_RELATIVE = ".github/workflows/ksg-m1a-composite-v4.yml"
 V5_WORKFLOW_RELATIVE = ".github/workflows/ksg-m1a-composite-v5.yml"
 CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE = (
@@ -144,6 +146,9 @@ FORBIDDEN_R4_PATHS = (V4_CAPTURE_RELATIVE, V4_RECEIPT_RELATIVE)
 V4_CHECKER_RELATIVE = "scripts/check-ksg-m1a-composite-v4.py"
 V4_CHECKER_SHA256 = "8fb61c4fcc831be1847ddec7448e2dbeb6f2f51b915b4b6cd91df561c491b5bb"
 V4_CHECKER_SIZE_BYTES = 141530
+# Finalize this literal only after every non-cut Lean byte, including this
+# checker's self-test digest, is frozen.  The r10 generator rejects the zero cut.
+EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = "14cb01e0abc2dd02ff744168f0f0bc53ae76fa67229192f03ebc5246444022c5"
 V4_CAPTURE_PRIMITIVE = {
     "path": "scripts/capture-ksg-m1a-composite-v4.py",
     "sha256": "7cf9a6fe57c2a828def8789524069e14a21d35739a5019b4310613c8f44065ef",
@@ -902,6 +907,176 @@ def validate_replay_values(r9_raw: bytes, r10: Any) -> None:
     )
 
 
+def lean_replay_projection_sha256(receipt: dict[str, Any]) -> str:
+    """Reproduce the r10 projection without importing the mutable Lean checker."""
+
+    projected = dict(receipt)
+    custody = projected.get("custody_gate_sha256")
+    require(type(custody) is dict, "r10 custody-gate inventory is malformed")
+    self_test_path = "scripts/check-lean-toolchain-freeze-self-test.py"
+    require(self_test_path in custody, "r10 self-test custody is absent")
+    projected["custody_gate_sha256"] = {self_test_path: custody[self_test_path]}
+    try:
+        raw = json.dumps(
+            projected,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        ).encode("utf-8")
+    except (RecursionError, TypeError, ValueError) as error:
+        raise ContractError(f"cannot project r10 replay receipt: {error}") from None
+    return sha256(raw)
+
+
+def lean_r10_source_cuts(raw: bytes) -> tuple[str, str, str, bytes]:
+    """Extract and normalize exactly the three final Lean/r10 checksum cuts."""
+
+    try:
+        source = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as error:
+        raise ContractError(f"Lean checker source is not UTF-8: {error}") from None
+    patterns = (
+        (
+            "replay projection",
+            re.compile(
+                r'^EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "([0-9a-f]{64})"$',
+                re.MULTILINE,
+            ),
+            re.compile(
+                r"^EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = .+$", re.MULTILINE
+            ),
+            'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64',
+        ),
+        (
+            "composite-v5 checker scalar",
+            re.compile(
+                r'^EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "([0-9a-f]{64})"$',
+                re.MULTILINE,
+            ),
+            re.compile(
+                r"^EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = .+$",
+                re.MULTILINE,
+            ),
+            'EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "0" * 64',
+        ),
+        (
+            "composite-v5 operational-map row",
+            re.compile(
+                r'^    "scripts/check-ksg-m1a-composite-v5\.py": "([0-9a-f]{64})",$',
+                re.MULTILINE,
+            ),
+            re.compile(
+                r'^    "scripts/check-ksg-m1a-composite-v5\.py": .+$', re.MULTILINE
+            ),
+            '    "scripts/check-ksg-m1a-composite-v5.py": "0" * 64,',
+        ),
+    )
+    values: list[str] = []
+    normalized = source
+    for label, pattern, assignment_pattern, replacement in patterns:
+        matches = list(pattern.finditer(normalized))
+        require(
+            len(matches) == 1 and len(assignment_pattern.findall(normalized)) == 1,
+            f"Lean {label} cut is not unique and final",
+        )
+        value = matches[0].group(1)
+        require(value != "0" * 64, f"Lean {label} cut remains a placeholder")
+        values.append(value)
+        normalized = pattern.sub(replacement, normalized, count=1)
+    return values[0], values[1], values[2], normalized.encode("utf-8")
+
+
+def normalized_lean_checker_cut(raw: bytes) -> str:
+    """Extract the one final normalized-Lean binding from v5 checker bytes."""
+
+    try:
+        source = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as error:
+        raise ContractError(f"composite-v5 checker is not UTF-8: {error}") from None
+    pattern = re.compile(
+        r'^EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = "([0-9a-f]{64})"$',
+        re.MULTILINE,
+    )
+    assignment_pattern = re.compile(
+        r"^EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256 = .+$", re.MULTILINE
+    )
+    matches = list(pattern.finditer(source))
+    require(
+        len(matches) == 1 and len(assignment_pattern.findall(source)) == 1,
+        "normalized Lean checker cut is not a unique final literal",
+    )
+    value = matches[0].group(1)
+    require(value != "0" * 64, "normalized Lean checker cut remains a placeholder")
+    return value
+
+
+def validate_lean_r10_checksum_cut(
+    v5_checker_raw: bytes, lean_checker_raw: bytes
+) -> str:
+    """Bind final v5 bytes to the exactly three-cut-normalized Lean source."""
+
+    checker_digest = sha256(v5_checker_raw)
+    _projection, scalar_cut, operational_cut, normalized = lean_r10_source_cuts(
+        lean_checker_raw
+    )
+    require(
+        scalar_cut == checker_digest and operational_cut == checker_digest,
+        "Lean composite-v5 checker cuts do not bind the exact v5 checker bytes",
+    )
+    require(
+        normalized_lean_checker_cut(v5_checker_raw) == sha256(normalized),
+        "normalized Lean checker authority changed",
+    )
+    return _projection
+
+
+def validate_lean_r10_receipt_cuts(
+    v5_checker_raw: bytes,
+    lean_checker_raw: bytes,
+    r10: dict[str, Any],
+    projection: str,
+) -> None:
+    """Join the final projection and replay/final checker custody to r10."""
+
+    operational = r10.get("operational_wiring_sha256")
+    require(
+        type(operational) is dict
+        and operational.get(CHECKER_RELATIVE) == sha256(v5_checker_raw),
+        "Lean r10 operational map does not bind the v5 checker bytes",
+    )
+    require(
+        lean_replay_projection_sha256(r10) == projection,
+        "Lean r10 projection cut changed",
+    )
+    final_custody = r10.get("custody_gate_sha256")
+    replay_custody = r10.get("replay_custody_gate_sha256")
+    require(
+        type(final_custody) is dict
+        and type(replay_custody) is dict
+        and final_custody.get(LEAN_CHECKER_RELATIVE) == sha256(lean_checker_raw),
+        "Lean r10 final checker custody changed",
+    )
+    final_projection_line = (
+        'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "' + projection + '"'
+    ).encode("ascii")
+    placeholder_projection_line = (
+        b'EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64'
+    )
+    require(
+        lean_checker_raw.count(final_projection_line) == 1
+        and placeholder_projection_line not in lean_checker_raw,
+        "Lean r10 projection line is not exactly reconstructable",
+    )
+    replay_checker_raw = lean_checker_raw.replace(
+        final_projection_line, placeholder_projection_line, 1
+    )
+    require(
+        replay_custody.get(LEAN_CHECKER_RELATIVE) == sha256(replay_checker_raw),
+        "Lean r10 replay-time checker custody changed",
+    )
+
+
 def validate_replay_pair(c5_entries: dict[str, Any]) -> None:
     r9_raw = require_exact_bytes(
         c5_entries,
@@ -916,6 +1091,10 @@ def validate_replay_pair(c5_entries: dict[str, Any]) -> None:
         canonical=False,
     )
     validate_replay_values(r9_raw, r10)
+    v5_checker_raw = tree_blob(c5_entries, CHECKER_RELATIVE)
+    lean_checker_raw = tree_blob(c5_entries, LEAN_CHECKER_RELATIVE)
+    projection = validate_lean_r10_checksum_cut(v5_checker_raw, lean_checker_raw)
+    validate_lean_r10_receipt_cuts(v5_checker_raw, lean_checker_raw, r10, projection)
 
 
 def validate_exact_delta(

@@ -156,12 +156,22 @@ command streams, current evidence, and claim inventories. Within `custody_gate_s
 checker digest is omitted from that projection to avoid a checker/receipt digest cycle; the
 self-test digest remains reviewed, and both custody digests are compared directly with live files.
 Before any replay command, the zero-argument runner independently checks the complete acyclic
-composite-v4 cut state from source bytes: the replay-projection line is exactly the unique zero
-placeholder; the Lean composite scalar and operational-map row are identical nonzero literals
-equal to the composite-v4 checker SHA-256; and that checker contains the nonzero SHA-256 of the
-Lean checker after all three cut lines are restored to their exact placeholder forms. Missing,
-duplicated, stale, mismatched, or prematurely finalized cuts stop the runner before publication.
-The self-test exercises the positive construction plus projection-finalized, missing-cut,
+composite-v5 cut state from source bytes. The replay-projection line is exactly the unique zero
+placeholder. The Lean composite-v5 scalar and its v5 operational-map row are identical nonzero
+literals equal to the final composite-v5 checker SHA-256. That v5 checker contains one nonzero
+`EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal equal to the Lean checker hash after normalizing
+exactly the projection, v5 scalar, and v5 operational row to their exact placeholder forms. The
+immutable composite-v4 checker and r9 receipt remain prior evidence; neither is rewritten, and the
+ordinary retained v4 operational row is outside this normalization.
+
+The cut is finalized in one direction. Freeze the v5 self-test and every non-cut Lean input first;
+compute `H_L` from the three-placeholder Lean normalization and place only `H_L` in the v5
+checker; hash those final v5 checker bytes as `H_V`; place the same `H_V` in only the Lean v5 scalar
+and v5 operational row; and keep the replay projection as the zero expression until the one-shot
+generator succeeds. Changing the v5 self-test, documentation, or any other normalized Lean input
+after computing `H_L` invalidates the sequence. Missing, duplicated, stale, mismatched, causally
+changed, or prematurely finalized cuts stop the runner before publication. The self-tests exercise
+the positive construction plus checker-drift, projection-finalized, missing-cut, duplicated-cut,
 mismatched-cut, normalized-cut, and operational-map-omission mutations.
 The separate fully projected `replay_custody_gate_sha256` records the checker and self-test bytes
 that were stable at both replay endpoints. The runner first no-clobber-publishes a provisional
