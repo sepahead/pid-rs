@@ -12,9 +12,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Published composite-v4 C4 as exact commit
   `da253576a5f76e99633fff4de5cf1118f967b90d`, retained its first hosted qualification as a
   no-credit failed attempt, and permanently left R4 unissued. CodeQL passed, but repository CI had
-  three terminal job failures and the dedicated v4 route failed in the static-validation step's
+  four terminal job failures and the dedicated v4 route failed in the static-validation step's
   preflight. Composite-v5 is the append-only successor: C5 is C4's direct child, retains the
-  predecessor failure capture, applies four bounded operational repairs, publishes fresh Lean 4.33
+  predecessor failure capture, applies five bounded operational repairs, publishes fresh Lean 4.33
   replay `r10`, and requires fresh attempt-1 local/CI/CodeQL/dedicated-v5 success before any R5.
   The four-page publication binds its accessible SVG, deterministic vector companion, A4 PDF,
   color/grayscale rendering receipt, and closed visual-review receipt; object and external hostile
@@ -66,8 +66,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   workflow/composition extensions, six PID-facing validation/assurance extensions, 275
   PID/KSG-relevant source-written Lean theorems, nine solver obligations, and the exact open
   KSG-M1c/PID2-revision-4/MGW-SxPID3 work units. The categories are explicitly non-additive;
-  co-/O-information, target-free analogues, KSG MI, diagnostics, resampling, and infrastructure do
-  inflate neither count, and the current C4 delta adds no science.
+  co-/O-information, target-free analogues, KSG MI, diagnostics, resampling, and infrastructure
+  inflate neither count, and neither C4 nor the bounded C5 delta adds science.
 - Preserved the successful KSG M1a recovery commit `bc3aa80f...` and declined to issue the frozen
   composite-v3 receipt after proving two separately sufficient contract contradictions. In the
   exact successful CodeQL run, the provider's positive unique analysis identifiers are not
@@ -75,12 +75,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   identifiers would falsify a different predicate. Separately, v3 permits exactly three additions
   while the repository-wide self-excluding source manifest must also change to inventory those
   additions.
-  Composite-v4 is therefore an append-only two-commit process: an unsigned, single-parent C4
-  publishes the corrected checker, closed schemas, capture tool, adversarial suite, workflow,
-  counterexample, process Markdown/TeX/PDF, operational custody updates, and a fresh Lean replay;
-  only after exact-C4 CI, CodeQL, and the dedicated workflow finish may an unsigned R4 add the raw
-  hosted capture and deterministically derived typed receipt while regenerating current-source
-  last. The process-PDF gate checks every page box, the unique page-3 custody Form and its bounded
+  Composite-v4 was defined as an append-only two-commit process: an unsigned, single-parent C4
+  published the corrected checker, closed schemas, capture tool, adversarial suite, workflow,
+  counterexample, process Markdown/TeX/PDF, operational custody updates, and a fresh Lean replay.
+  Its conditional R4 could have been issued only after exact-C4 CI, CodeQL, and the dedicated
+  workflow all succeeded; published C4 did not meet that condition, so R4 is permanently unissued.
+  The process-PDF gate checks every page box, the unique page-3 custody Form and its bounded
   resource graph, and bounded same-renderer rasters for all report pages and the standalone figure;
   causal clipping and embedded-font-program mutations must fail. This renderer-scoped regression
   evidence is not human visual review, accessibility conformance, or universal PDF equivalence.

@@ -342,7 +342,7 @@ ksg-composite-v4:
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
     scripts/check-ksg-m1a-composite-v4-process-pdf.sh --exact
 
-# Append-only composite-v5 successor: four C4 failure-surface controls, fresh r10 custody,
+# Append-only composite-v5 successor: five C4 failure-surface controls, fresh r10 custody,
 # no-credit predecessor capture semantics, and the conditional C5-to-R5 contract.
 ksg-composite-v5:
     #!/usr/bin/env bash
@@ -356,8 +356,24 @@ ksg-composite-v5:
     python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.json"
     python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.optimized.json"
     cmp "$result_root/zeta.json" "$result_root/zeta.optimized.json"
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
     python3 -I -S -B scripts/check-certified-sxpid2-claim.py
     python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh --exact
+    scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh
+    python3 -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -I -S -B scripts/check-current-source-state-v1.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1.py
+    python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
     python3 -I -S -B scripts/capture-ksg-m1a-composite-v5.py --self-test > "$result_root/capture.json"
     python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v5.py --self-test > "$result_root/capture.optimized.json"
     cmp "$result_root/capture.json" "$result_root/capture.optimized.json"
@@ -367,8 +383,6 @@ ksg-composite-v5:
     python3 -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py > "$result_root/self-test.json"
     python3 -O -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py > "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
-    scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh --exact
-    scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:

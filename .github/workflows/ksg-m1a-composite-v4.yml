@@ -1,7 +1,8 @@
 name: KSG M1a composite v4 (retired)
 
-# C4's attempt-1 hosted run failed in the static-validation step's preflight.  R4 is permanently
-# unissued.  This historical workflow has no automatic trigger and cannot grant
+# C4's dedicated composite-v4 attempt-1 run 32079866461 failed in the static-validation step's
+# preflight. R4 is permanently unissued. This historical workflow has no automatic trigger and
+# cannot grant
 # v5 or scientific credit; the append-only successor has its own workflow.
 on:
   workflow_dispatch:

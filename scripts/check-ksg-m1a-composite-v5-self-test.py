@@ -164,20 +164,24 @@ def receipt_observation(role: str, conclusion: str, run_id: int) -> dict[str, An
     normalized = V5.normalized_run(
         run(role, conclusion, run_id), role, run_id, V5.C4_COMMIT
     )
-    logs = (
-        [
-            {
-                "failed_steps": ["bounded failure surface"],
-                "job_id": 700 + run_id,
-                "job_name": "failed boundary",
-                "observed_markers": ["bounded failure surface"],
-                "sha256": "f" * 64,
-                "size_bytes": 1,
-            }
-        ]
-        if conclusion == "failure"
-        else []
-    )
+    logs = []
+    if conclusion == "failure" and role.startswith("predecessor_"):
+        for job_id, (job_name, failed_steps) in sorted(
+            V5.PREDECESSOR_REQUIRED_FAILURE_IDENTITIES[role].items()
+        ):
+            logs.append(
+                {
+                    "failed_steps": list(failed_steps),
+                    "job_id": job_id,
+                    "job_name": job_name,
+                    "observed_markers": list(
+                        V5.PREDECESSOR_REQUIRED_LOG_MARKERS[job_id]
+                    ),
+                    "sha256": V5.sha256(str(job_id).encode("ascii")),
+                    "size_bytes": 1,
+                }
+            )
+    job_ids = [item["job_id"] for item in logs] or [5000 + run_id]
     return {
         "artifacts": [],
         "artifacts_sha256": "a" * 64,
@@ -186,8 +190,8 @@ def receipt_observation(role: str, conclusion: str, run_id: int) -> dict[str, An
         "codeql_analyses_sha256": None,
         "failed_job_logs": logs,
         "failed_job_logs_sha256": "b" * 64,
-        "job_count": 1,
-        "job_ids": [5000 + run_id],
+        "job_count": len(job_ids),
+        "job_ids": job_ids,
         "jobs_sha256": "c" * 64,
         "kind": V5.ROLE_KIND[role],
         "role": role,
@@ -443,6 +447,12 @@ def test_v5_workflow_prerequisites() -> int:
     raw = (ROOT / V5.V5_WORKFLOW_RELATIVE).read_bytes()
     V5.validate_v5_workflow_prerequisites(raw)
     first, second = V5.V5_PDF_PREREQUISITE_BLOCKS
+    hosted_recovery = V5.V5_CURRENT_HOSTED_RECOVERY_SELF_TEST_BLOCK
+    hosted_normal, hosted_optimized, empty = hosted_recovery.split(b"\n")
+    require(
+        empty == b"" and hosted_normal != hosted_optimized,
+        "hosted-recovery workflow prerequisite fixture changed",
+    )
     mutations: list[tuple[bytes, str]] = [
         (raw.replace(first, b"", 1), "PDF verifier setup removed"),
         (
@@ -471,7 +481,38 @@ def test_v5_workflow_prerequisites() -> int:
             "PDF requirement hash enforcement removed",
         ),
         (raw.replace(b"            lacheck \\\n", b"", 1), "PDF tool omitted"),
+        (
+            raw.replace(hosted_normal + b"\n", b"", 1),
+            "hosted-recovery normal self-test removed",
+        ),
+        (
+            raw.replace(hosted_optimized + b"\n", b"", 1),
+            "hosted-recovery optimized self-test removed",
+        ),
+        (
+            raw.replace(
+                hosted_recovery,
+                hosted_optimized + b"\n" + hosted_normal + b"\n",
+                1,
+            ),
+            "hosted-recovery self-test modes reordered",
+        ),
+        (
+            raw.replace(hosted_recovery, b"", 1).replace(
+                V5.V5_PUBLICATION_STEP_MARKER,
+                V5.V5_PUBLICATION_STEP_MARKER + hosted_recovery,
+                1,
+            ),
+            "hosted-recovery self-test moved after publication validation",
+        ),
     ]
+    mutations.extend(
+        (
+            raw + b"# stale semantic token: " + token + b"\n",
+            f"stale composite-v3 semantic token {index}",
+        )
+        for index, token in enumerate(V5.V5_STALE_V3_SEMANTIC_TOKENS, start=1)
+    )
     for changed, label in mutations:
         require(changed != raw, f"workflow mutation did not reach its target: {label}")
         rejected(
@@ -481,9 +522,82 @@ def test_v5_workflow_prerequisites() -> int:
     return len(mutations)
 
 
+def test_frozen_authority_values() -> int:
+    retired_v4 = (ROOT / V5.V4_WORKFLOW_RELATIVE).read_bytes()
+    successor_v5 = (ROOT / V5.V5_WORKFLOW_RELATIVE).read_bytes()
+    hosted_self_test = (
+        ROOT / V5.CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE
+    ).read_bytes()
+    hosted_checker = (ROOT / V5.CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE).read_bytes()
+    V5.validate_frozen_workflow_values(retired_v4, successor_v5)
+    V5.validate_current_hosted_recovery_values(hosted_self_test, hosted_checker)
+    mutations: list[tuple[Callable[[], Any], str]] = [
+        (
+            lambda: V5.validate_frozen_workflow_values(
+                retired_v4 + b"\n", successor_v5
+            ),
+            "retired-v4 workflow bytes",
+        ),
+        (
+            lambda: V5.validate_frozen_workflow_values(
+                retired_v4, successor_v5 + b"\n"
+            ),
+            "successor-v5 workflow bytes",
+        ),
+        (
+            lambda: V5.validate_current_hosted_recovery_values(
+                hosted_self_test + b"\n", hosted_checker
+            ),
+            "current hosted-recovery hostile-suite bytes",
+        ),
+        (
+            lambda: V5.validate_current_hosted_recovery_values(
+                hosted_self_test, hosted_checker + b"\n"
+            ),
+            "current hosted-recovery gate bytes",
+        ),
+    ]
+    for operation, label in mutations:
+        rejected(operation, label)
+    return len(mutations)
+
+
 def test_policy() -> int:
     require(V5.C5_POLICY_ROWS, "C5 policy rows have not been frozen")
-    policy = policy_fixture()
+    require(
+        len(V5.C5_POLICY_ROWS) == 47
+        and sum(row[1] == "M" for row in V5.C5_POLICY_ROWS) == 27
+        and sum(row[1] == "A" for row in V5.C5_POLICY_ROWS) == 20,
+        "C5 policy does not have the exact 47-row 27-M/20-A inventory",
+    )
+    composite_index = next(
+        index
+        for index, row in enumerate(V5.C5_POLICY_ROWS)
+        if row[0] == V5.CHECKER_RELATIVE
+    )
+    require(
+        V5.C5_POLICY_ROWS[composite_index + 1 : composite_index + 3]
+        == (
+            (
+                V5.CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE,
+                "M",
+                "100644",
+                "current_hosted_recovery_hostile_suite",
+            ),
+            (
+                V5.CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE,
+                "M",
+                "100644",
+                "current_hosted_recovery_gate",
+            ),
+        ),
+        "current hosted-recovery rows are not immediately after the v5 checker",
+    )
+    expected_policy = policy_fixture()
+    policy = V5.parse_json(
+        (ROOT / V5.POLICY_RELATIVE).read_bytes(), "stored composite-v5 path policy"
+    )
+    require(policy == expected_policy, "stored composite-v5 path policy bytes drifted")
     V5.validate_policy_value(policy)
     mutations: list[tuple[dict[str, Any], str]] = []
     changed = copy.deepcopy(policy)
@@ -498,6 +612,30 @@ def test_policy() -> int:
     changed = copy.deepcopy(policy)
     changed["c5"]["delta"] = changed["c5"]["delta"][:-1]
     mutations.append((changed, "C5 missing row"))
+    changed = copy.deepcopy(policy)
+    changed["c5"]["delta"] = [
+        row
+        for row in changed["c5"]["delta"]
+        if row["path"] != V5.CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE
+    ]
+    mutations.append((changed, "C5 missing current hosted-recovery hostile suite"))
+    changed = copy.deepcopy(policy)
+    next(
+        row
+        for row in changed["c5"]["delta"]
+        if row["path"] == V5.CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE
+    )["role"] = "v3_checker"
+    mutations.append((changed, "C5 stale hosted-recovery gate role"))
+    changed = copy.deepcopy(policy)
+    first_index = next(
+        index
+        for index, row in enumerate(changed["c5"]["delta"])
+        if row["path"] == V5.CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE
+    )
+    changed["c5"]["delta"][first_index : first_index + 2] = reversed(
+        changed["c5"]["delta"][first_index : first_index + 2]
+    )
+    mutations.append((changed, "C5 hosted-recovery rows reordered"))
     changed = copy.deepcopy(policy)
     changed["r5"]["delta"][0]["status"] = "A"
     mutations.append((changed, "R5 current-source status"))
@@ -559,6 +697,14 @@ def test_receipt_schema() -> int:
     changed = copy.deepcopy(receipt)
     del changed["observations"][0]["roles"][0]["failed_job_logs"][0]["observed_markers"]
     mutations.append((changed, "observed failure marker"))
+    changed = copy.deepcopy(receipt)
+    fourth_log = next(
+        item
+        for item in changed["observations"][0]["roles"][0]["failed_job_logs"]
+        if item["job_id"] == 95540603799
+    )
+    fourth_log["observed_markers"] = ["different hosted-recovery symptom"]
+    mutations.append((changed, "fourth failure marker"))
     changed = copy.deepcopy(receipt)
     changed["observations"][0]["roles"][0]["job_ids"] *= 2
     mutations.append((changed, "duplicate job identifier"))
@@ -664,7 +810,6 @@ def test_identifier_domains() -> int:
 def test_predecessor_failure_surface() -> int:
     known_ci = set(V5.PREDECESSOR_REQUIRED_FAILED_JOB_IDS["predecessor_ci"])
     V5.validate_predecessor_failed_set("predecessor_ci", known_ci)
-    V5.validate_predecessor_failed_set("predecessor_ci", known_ci | {99999999999})
     known_contract = set(V5.PREDECESSOR_REQUIRED_FAILED_JOB_IDS["predecessor_contract"])
     V5.validate_predecessor_failed_set("predecessor_contract", known_contract)
     jobs = [
@@ -682,14 +827,46 @@ def test_predecessor_failure_surface() -> int:
         ].items()
     ]
     V5.validate_predecessor_failure_identities("predecessor_ci", jobs, known_ci)
+    groups: dict[tuple[str, int], list[tuple[dict[str, Any], bytes]]] = {}
+    for repetition in (1, 2):
+        for job_id in sorted(known_ci):
+            marker = V5.PREDECESSOR_REQUIRED_LOG_MARKERS[job_id][0]
+            logical = f"predecessor_ci_failed_job_{job_id}_log"
+            groups[(logical, repetition)] = [
+                (
+                    {
+                        "page": 0,
+                        "path": f"/repos/{V5.REPOSITORY}/actions/jobs/{job_id}/logs",
+                        "response_kind": "log",
+                    },
+                    f"provider prefix\n{marker}\nprovider suffix\n".encode("ascii"),
+                )
+            ]
+    retained_logs = V5.failed_job_logs(
+        V5.CaptureRows(copy.deepcopy(groups)), "predecessor_ci", known_ci, jobs
+    )
+    require(
+        [item["job_id"] for item in retained_logs] == sorted(known_ci)
+        and len(retained_logs) == 4,
+        "predecessor capture did not retain the exact four CI failure logs",
+    )
+    missing_fourth_groups = copy.deepcopy(groups)
+    del missing_fourth_groups[("predecessor_ci_failed_job_95540603799_log", 2)]
+    rejected(
+        lambda: V5.failed_job_logs(
+            V5.CaptureRows(missing_fourth_groups), "predecessor_ci", known_ci, jobs
+        ),
+        "fourth failure log absent",
+    )
     set_mutations: list[tuple[str, set[int]]] = [
         ("missing known CI failure", known_ci - {min(known_ci)}),
+        ("extra CI failure", known_ci | {99999999999}),
         ("extra dedicated failure", known_contract | {99999999998}),
     ]
     for label, failed in set_mutations:
         role = (
             "predecessor_ci"
-            if label == "missing known CI failure"
+            if label in {"missing known CI failure", "extra CI failure"}
             else "predecessor_contract"
         )
         rejected(
@@ -700,11 +877,14 @@ def test_predecessor_failure_surface() -> int:
         )
     identity_mutations: list[tuple[list[dict[str, Any]], str]] = []
     changed = copy.deepcopy(jobs)
-    changed[0]["name"] = "different job"
-    identity_mutations.append((changed, "required failure job renamed"))
+    fourth_index = next(
+        index for index, item in enumerate(changed) if item["job_id"] == 95540603799
+    )
+    changed[fourth_index]["name"] = "different job"
+    identity_mutations.append((changed, "fourth failure job renamed"))
     changed = copy.deepcopy(jobs)
-    changed[0]["steps"][0]["name"] = "different failed step"
-    identity_mutations.append((changed, "required failed step renamed"))
+    changed[fourth_index]["steps"][0]["name"] = "different failed step"
+    identity_mutations.append((changed, "fourth failed step renamed"))
     for changed, label in identity_mutations:
         rejected(
             lambda changed=changed: V5.validate_predecessor_failure_identities(
@@ -712,23 +892,25 @@ def test_predecessor_failure_surface() -> int:
             ),
             label,
         )
-    release_marker = V5.PREDECESSOR_REQUIRED_LOG_MARKERS[95540603816][0]
-    require(
-        V5.observed_failure_markers(
-            95540603816,
-            f"provider prefix\n{release_marker}\nprovider suffix".encode("ascii"),
-            "predecessor_ci",
+    marker_job_ids = (95540603799, 95540603816)
+    for job_id in marker_job_ids:
+        marker = V5.PREDECESSOR_REQUIRED_LOG_MARKERS[job_id][0]
+        require(
+            V5.observed_failure_markers(
+                job_id,
+                f"provider prefix\n{marker}\nprovider suffix".encode("ascii"),
+                "predecessor_ci",
+            )
+            == [marker],
+            f"required raw-log marker was not preserved for job {job_id}",
         )
-        == [release_marker],
-        "required raw-log marker was not preserved",
-    )
-    rejected(
-        lambda: V5.observed_failure_markers(
-            95540603816, b"different provider output\n", "predecessor_ci"
-        ),
-        "required raw-log marker missing",
-    )
-    return len(set_mutations) + len(identity_mutations) + 1
+        rejected(
+            lambda job_id=job_id: V5.observed_failure_markers(
+                job_id, b"different provider output\n", "predecessor_ci"
+            ),
+            f"required raw-log marker missing for job {job_id}",
+        )
+    return len(set_mutations) + len(identity_mutations) + len(marker_job_ids) + 1
 
 
 def test_forbidden_r4_history() -> int:
@@ -762,6 +944,7 @@ def main() -> int:
         run_count, job_count = test_runs_and_jobs()
         timestamp_count = test_job_timestamps()
         workflow_count = test_v5_workflow_prerequisites()
+        frozen_authority_count = test_frozen_authority_values()
         policy_count = test_policy()
         receipt_count = test_receipt_schema()
         replay_count, delta_count = test_replay_and_delta()
@@ -772,6 +955,7 @@ def main() -> int:
             "capture_mutations_rejected": capture_count,
             "delta_mutations_rejected": delta_count,
             "forbidden_r4_history_mutations_rejected": forbidden_history_count,
+            "frozen_authority_mutations_rejected": frozen_authority_count,
             "job_mutations_rejected": job_count,
             "identifier_domain_mutations_rejected": identifier_count,
             "job_timestamp_mutations_rejected": timestamp_count,

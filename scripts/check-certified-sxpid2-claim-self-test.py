@@ -2526,12 +2526,14 @@ def main() -> int:
                     baseline,
                     "justfile",
                     (
+                        "    python3 scripts/check-lean-exact-log-product.py\n"
                         "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n"
                         "    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py\n"
                         "    python3 -I -S -B "
                         "scripts/check-certified-sxpid2-claim-self-test.py\n"
                     ),
                     (
+                        "    python3 scripts/check-lean-exact-log-product.py\n"
                         "    true # claim gate removed\n"
                         "    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py\n"
                         "    python3 -I -S -B "

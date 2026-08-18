@@ -2343,6 +2343,18 @@ def main() -> int:
         "readme": stable_read(ROOT / "scripts/README.md")[0].decode("utf-8"),
     }
     accepted("wiring", wiring)
+    accepted(
+        "wiring",
+        mutate(
+            wiring,
+            lambda item: replace_once_field(
+                item,
+                "readme",
+                "C4 was published as\n",
+                "C4\twas   published as\n\n",
+            ),
+        ),
+    )
     for label, field, old, new in (
         (
             "wiring composite parent guard",
@@ -2397,6 +2409,54 @@ def main() -> int:
             "readme",
             "<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
             "shallow checkout is sufficient\n<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+        ),
+        (
+            "wiring README R4 revival",
+            "readme",
+            "<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+            "R4 can be revived.\n<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+        ),
+        (
+            "wiring README C4 success relabel",
+            "readme",
+            "attempt-1 hosted qualification failed; R4 is\ntherefore permanently unissued.",
+            "attempt-1 hosted qualification succeeded; R4 is\ntherefore permanently unissued.",
+        ),
+        (
+            "wiring README v4 reserved paths admitted",
+            "readme",
+            "two reserved v4 evidence paths must remain absent.",
+            "two reserved v4 evidence paths may now be added.",
+        ),
+        (
+            "wiring README C5 not append-only successor",
+            "readme",
+            "C5 is the unsigned direct child of published C4",
+            "C5 is an unrelated replacement for published C4",
+        ),
+        (
+            "wiring README run v4 live capture",
+            "readme",
+            "<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+            "Run the v4 live capture now.\n<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+        ),
+        (
+            "wiring README derive R4",
+            "readme",
+            "<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+            "Derive and publish an R4 receipt.\n<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+        ),
+        (
+            "wiring README rename R5 as R4",
+            "readme",
+            "<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+            "Rename R5 as R4.\n<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
+        ),
+        (
+            "wiring README missing v5 capture separation",
+            "readme",
+            "Composite-v5 uses separately versioned predecessor/successor captures and a separately typed R5\nreceipt",
+            "Composite-v5 uses one shared v5 capture and a typed R5\nreceipt",
         ),
     ):
         rejected(

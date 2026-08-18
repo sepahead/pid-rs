@@ -83,6 +83,10 @@ LEAN_R10_RELATIVE = (
 )
 V4_WORKFLOW_RELATIVE = ".github/workflows/ksg-m1a-composite-v4.yml"
 V5_WORKFLOW_RELATIVE = ".github/workflows/ksg-m1a-composite-v5.yml"
+CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE = (
+    "scripts/check-ksg-m1a-hosted-recovery-self-test.py"
+)
+CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE = "scripts/check-ksg-m1a-hosted-recovery.py"
 PROCESS_ARTIFACTS = (
     (
         "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md",
@@ -152,10 +156,20 @@ LEAN_R9_SIZE_BYTES = 132912
 
 # These two byte identities are frozen with the C5 commit.  They intentionally
 # bind the retired live v4 trigger and the replacement v5 trigger separately.
-RETIRED_V4_WORKFLOW_SHA256 = "TO_BE_FROZEN"
-RETIRED_V4_WORKFLOW_SIZE_BYTES = 0
-V5_WORKFLOW_SHA256 = "TO_BE_FROZEN"
-V5_WORKFLOW_SIZE_BYTES = 0
+RETIRED_V4_WORKFLOW_SHA256 = (
+    "3952fdfb596ce15e176795d8a6ec76aaad9d8d66e830129784d3b919ddc5cda5"
+)
+RETIRED_V4_WORKFLOW_SIZE_BYTES = 785
+V5_WORKFLOW_SHA256 = "7f41177c175d785c92512beb23cfd860c5cf94f12dd2a4aa0d4f414963c86593"
+V5_WORKFLOW_SIZE_BYTES = 5811
+CURRENT_HOSTED_RECOVERY_SELF_TEST_SHA256 = (
+    "0ebd801ce758203ce12111ccec8802bc9a6c68ad80033105abc59f6e60d05787"
+)
+CURRENT_HOSTED_RECOVERY_SELF_TEST_SIZE_BYTES = 142954
+CURRENT_HOSTED_RECOVERY_CHECKER_SHA256 = (
+    "7bbbe8d32e4f6ad631f9c2d5074f4a06e7872492945404ad26fd2195664592ee"
+)
+CURRENT_HOSTED_RECOVERY_CHECKER_SIZE_BYTES = 248343
 V5_PDF_PREREQUISITE_BLOCKS = (
     r"""      - name: Install the hash-pinned PDF verifier dependency
         run: |
@@ -188,14 +202,27 @@ V5_PDF_PREREQUISITE_BLOCKS = (
 V5_PUBLICATION_STEP_MARKER = (
     b"      - name: Validate the bounded successor publication\n"
 )
+V5_CURRENT_HOSTED_RECOVERY_SELF_TEST_BLOCK = (
+    b"          python3 -I -S -B "
+    b"scripts/check-ksg-m1a-hosted-recovery-self-test.py\n"
+    b"          python3 -O -I -S -B "
+    b"scripts/check-ksg-m1a-hosted-recovery-self-test.py\n"
+)
+V5_STALE_V3_SEMANTIC_TOKENS = (
+    b"scripts/check-ksg-m1a-composite-v3.py",
+    b"scripts/check-ksg-m1a-composite-v3-self-test.py",
+    b"audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json",
+    b"audit/evidence/ksg-rev4-m1a-composite-receipt-v3-2026-08-13.json",
+    b"--validate-composite-receipt",
+)
 CAPTURE_SCHEMA_SHA256 = (
     "cbacb1bd7b5896a497312fd2a2809a33e43699bb3e4eb081d19cde6803b69c24"
 )
 CAPTURE_SCHEMA_SIZE_BYTES = 14123
 RECEIPT_SCHEMA_SHA256 = (
-    "b721d392f724f463633a71ed984909696a9b9fb450dc6bd3aa09f8feac38642e"
+    "7fc4fac9fdf923610768df6a5e4c90440d85400572d31e48b45367eeeb8f8e9d"
 )
-RECEIPT_SCHEMA_SIZE_BYTES = 10246
+RECEIPT_SCHEMA_SIZE_BYTES = 13844
 
 CAPTURE_NONIMPLICATIONS = [
     "Captured HTTPS response bytes do not authenticate themselves.",
@@ -226,12 +253,16 @@ PREDECESSOR_RUNS = {
     "predecessor_contract": 32079866461,
 }
 PREDECESSOR_REQUIRED_FAILED_JOB_IDS = {
-    "predecessor_ci": {95540603816, 95540603850, 95540603999},
+    "predecessor_ci": {95540603799, 95540603816, 95540603850, 95540603999},
     "predecessor_codeql": set(),
     "predecessor_contract": {95540602684},
 }
 PREDECESSOR_REQUIRED_FAILURE_IDENTITIES = {
     "predecessor_ci": {
+        95540603799: (
+            "KSG integer-harmonic arithmetic and phase isolation",
+            ("Verify the KSG M1a hosted-recovery lifecycle",),
+        ),
         95540603816: (
             "Package + semver + unused dependencies",
             ("Run scripts/check-release-state-self-test.sh",),
@@ -255,6 +286,9 @@ PREDECESSOR_REQUIRED_FAILURE_IDENTITIES = {
 }
 PREDECESSOR_REQUIRED_LOG_MARKERS = {
     95540602684: ("ERROR: worktree-scoped Git configuration is unsupported",),
+    95540603799: (
+        "KSG M1a hosted-recovery self-test failed: accepted vector failed: wiring: b''",
+    ),
     95540603816: ("fatal: not a git repository",),
     95540603850: (
         "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed",
@@ -290,7 +324,260 @@ EXPECTED_RUN_CONCLUSION = {
 
 # Centralized exact policy rows.  This tuple is replaced once, immediately
 # before C5 is committed, from the independently reviewed path inventory.
-C5_POLICY_ROWS: tuple[tuple[str, str, str, str], ...] = ()
+C5_POLICY_ROWS: tuple[tuple[str, str, str, str], ...] = (
+    (
+        ".github/workflows/ksg-m1a-composite-v4.yml",
+        "M",
+        "100644",
+        "retired_v4_no_credit_workflow",
+    ),
+    (
+        ".github/workflows/ksg-m1a-composite-v5.yml",
+        "A",
+        "100644",
+        "dedicated_v5_hosted_gate",
+    ),
+    (
+        "AGENTS.md",
+        "M",
+        "100644",
+        "operational_and_scientific_object_guide",
+    ),
+    ("CHANGELOG.md", "M", "100644", "append_only_change_record"),
+    (
+        "audit/evidence/completion-active-resume.md",
+        "M",
+        "100644",
+        "current_replay_pointer",
+    ),
+    (
+        CURRENT_SOURCE_RELATIVE,
+        "M",
+        "100644",
+        "self_excluding_source_state",
+    ),
+    (
+        PREDECESSOR_CAPTURE_RELATIVE,
+        "A",
+        "100644",
+        "predecessor_failure_hosted_capture",
+    ),
+    (
+        "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md",
+        "A",
+        "100644",
+        "operational_boundary_record",
+    ),
+    (
+        "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-visual-receipt-2026-08-18.md",
+        "A",
+        "100644",
+        "operational_boundary_visual_receipt",
+    ),
+    (POLICY_RELATIVE, "A", "100644", "c5_r5_path_policy"),
+    (LEAN_R10_RELATIVE, "A", "100644", "current_lean_replay_receipt"),
+    (
+        "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+        "M",
+        "100644",
+        "durable_active_plan",
+    ),
+    (
+        "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+        "M",
+        "100644",
+        "lean_replay_process_record",
+    ),
+    (
+        "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+        "M",
+        "100644",
+        "current_replay_scientific_pointer",
+    ),
+    (
+        "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.pdf",
+        "A",
+        "100644",
+        "operational_boundary_vector_derivative",
+    ),
+    (
+        "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.svg",
+        "A",
+        "100644",
+        "operational_boundary_vector_source",
+    ),
+    (
+        "audit/formal/latex/ksg-m1a-composite-v5-boundary.tex",
+        "A",
+        "100644",
+        "operational_boundary_latex_source",
+    ),
+    (
+        CAPTURE_SCHEMA_RELATIVE,
+        "A",
+        "100644",
+        "dual_phase_hosted_capture_schema",
+    ),
+    (
+        RECEIPT_SCHEMA_RELATIVE,
+        "A",
+        "100644",
+        "dual_capture_typed_receipt_schema",
+    ),
+    (
+        "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "M",
+        "100644",
+        "current_replay_claim_pointer",
+    ),
+    (
+        "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+        "M",
+        "100644",
+        "current_replay_decision_pointer",
+    ),
+    (
+        "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+        "M",
+        "100644",
+        "current_replay_evidence_pointer",
+    ),
+    (
+        "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+        "M",
+        "100644",
+        "current_replay_revision_pointer",
+    ),
+    ("justfile", "M", "100644", "local_command_wiring"),
+    (
+        "output/pdf/ksg-m1a-composite-v5-boundary.pdf",
+        "A",
+        "100644",
+        "operational_boundary_publication_pdf",
+    ),
+    (
+        "output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv",
+        "A",
+        "100644",
+        "operational_boundary_rendering_receipt",
+    ),
+    ("scripts/README.md", "M", "100644", "script_process_guide"),
+    (
+        CAPTURE_TOOL_RELATIVE,
+        "A",
+        "100644",
+        "bounded_dual_phase_hosted_capture_tool",
+    ),
+    (
+        "scripts/check-certified-sxpid2-claim-self-test.py",
+        "M",
+        "100644",
+        "certified_sxpid2_claim_hostile_suite",
+    ),
+    (
+        "scripts/check-certified-sxpid2-claim.py",
+        "M",
+        "100644",
+        "certified_sxpid2_claim_gate",
+    ),
+    (
+        "scripts/check-current-release-state.sh",
+        "M",
+        "100755",
+        "release_state_selector",
+    ),
+    (
+        "scripts/check-formal-pdf-set.sh",
+        "M",
+        "100755",
+        "formal_pdf_inventory_gate",
+    ),
+    (
+        "scripts/check-formal-pdf-style.py",
+        "M",
+        "100755",
+        "formal_pdf_style_gate",
+    ),
+    (
+        "scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh",
+        "A",
+        "100755",
+        "operational_boundary_pdf_gate_self_test",
+    ),
+    (
+        "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh",
+        "A",
+        "100755",
+        "operational_boundary_pdf_gate",
+    ),
+    (
+        SELF_TEST_RELATIVE,
+        "A",
+        "100644",
+        "composite_v5_hostile_suite",
+    ),
+    (CHECKER_RELATIVE, "A", "100644", "composite_v5_semantic_gate"),
+    (
+        CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE,
+        "M",
+        "100644",
+        "current_hosted_recovery_hostile_suite",
+    ),
+    (
+        CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE,
+        "M",
+        "100644",
+        "current_hosted_recovery_gate",
+    ),
+    (
+        "scripts/check-lean-toolchain-freeze-self-test.py",
+        "M",
+        "100644",
+        "lean_replay_hostile_suite",
+    ),
+    (
+        "scripts/check-lean-toolchain-freeze.py",
+        "M",
+        "100644",
+        "lean_replay_gate",
+    ),
+    (
+        "scripts/check-release-state-self-test.sh",
+        "M",
+        "100755",
+        "release_state_hostile_suite",
+    ),
+    (
+        "scripts/check-zeta-pid-transfer-firewall-self-test.py",
+        "M",
+        "100755",
+        "zeta_transfer_firewall_hostile_suite",
+    ),
+    (
+        "scripts/check-zeta-pid-transfer-firewall.py",
+        "M",
+        "100755",
+        "zeta_transfer_firewall_gate",
+    ),
+    (
+        "scripts/generate-lean-4.33-replay.py",
+        "M",
+        "100644",
+        "lean_replay_generator",
+    ),
+    (
+        "scripts/normalize-actions-checkout-worktree-config-self-test.py",
+        "A",
+        "100755",
+        "checkout_worktree_config_normalizer_hostile_suite",
+    ),
+    (
+        "scripts/normalize-actions-checkout-worktree-config.py",
+        "A",
+        "100755",
+        "checkout_worktree_config_normalizer",
+    ),
+)
 R5_POLICY_ROWS = (
     (
         CURRENT_SOURCE_RELATIVE,
@@ -306,7 +593,36 @@ R5_POLICY_ROWS = (
         "fresh_successor_hosted_capture",
     ),
 )
-POLICY_NONIMPLICATIONS: list[str] = []
+POLICY_NONIMPLICATIONS: list[str] = [
+    "This policy describes an exact C5 and conditional R5 path topology; it is not "
+    "prior authorization to create either commit or any evidence artifact.",
+    "Path, mode, role, status, Git topology, message, hash, or checker conformance "
+    "does not authenticate bytes, authorship, provider observations, or trusted time.",
+    "C4 was published, but its hosted qualification attempt failed; the "
+    "predecessor-failure capture is zero-credit failure evidence and cannot issue or "
+    "substitute for R4.",
+    "R4 is permanently unissued; neither C5 nor R5 creates, reconstructs, renames, "
+    "backdates, or revives it.",
+    "R5 requires fresh local qualification of the exact C5 commit and fresh "
+    "attempt-1, exact-C5, all-success repository CI, CodeQL, and dedicated-v5 hosted "
+    "qualification; partial success, retries, or predecessor observations cannot "
+    "transfer.",
+    "C5 makes bounded repairs to named failure surfaces; reproduced residues and "
+    "stale digests do not establish that every observed C4 failure had a unique cause "
+    "or that C5 is the only possible remedy.",
+    "Operational publications, process documentation, workflow results, captures, "
+    "and receipts are not scientific authorities and establish no PID definition, "
+    "mathematical proof, estimator validity, security certification, release, or "
+    "application approval.",
+    "No evidence transfers among KSG mutual information, categorical or continuous "
+    "shared exclusions, I_min, PID2, PID3, quantized or mixed-support routes, "
+    "resampling procedures, or downstream objectives.",
+    "Repeated provider retrievals, checker agreement, and same-renderer comparisons "
+    "do not establish independence or reproducibility.",
+    "Git and SHA-256 identities bind named bytes and topology only; they do not "
+    "establish authorship, authenticity, independent reproduction, or indefinite "
+    "storage durability.",
+]
 
 MAX_JSON_BYTES = 32 * 1024 * 1024
 MAX_CAPTURE_BODY_BYTES = 22 * 1024 * 1024
@@ -553,6 +869,12 @@ def validate_policy_value(value: Any) -> tuple[tuple[str, str, str], ...]:
     )
     c5_rows = _policy_rows(c5["delta"], "composite-v5 policy C5 delta")
     r5_rows = _policy_rows(r5["delta"], "composite-v5 policy R5 delta")
+    require(
+        len(C5_POLICY_ROWS) == 47
+        and sum(row[1] == "M" for row in C5_POLICY_ROWS) == 27
+        and sum(row[1] == "A" for row in C5_POLICY_ROWS) == 20,
+        "C5 policy status inventory changed",
+    )
     require(C5_POLICY_ROWS and c5_rows == C5_POLICY_ROWS, "C5 policy rows changed")
     require(r5_rows == R5_POLICY_ROWS, "R5 policy rows changed")
     return tuple((path, status, mode) for path, status, mode, _role in c5_rows)
@@ -614,9 +936,48 @@ def validate_v5_workflow_prerequisites(raw: bytes) -> None:
         )
         offsets.append(raw.index(block))
     require(
+        raw.count(V5_CURRENT_HOSTED_RECOVERY_SELF_TEST_BLOCK) == 1,
+        "successor workflow current hosted-recovery self-test pair changed",
+    )
+    hosted_recovery_offset = raw.index(V5_CURRENT_HOSTED_RECOVERY_SELF_TEST_BLOCK)
+    require(
         raw.count(V5_PUBLICATION_STEP_MARKER) == 1
-        and offsets[0] < offsets[1] < raw.index(V5_PUBLICATION_STEP_MARKER),
-        "successor workflow PDF prerequisites are not ordered before validation",
+        and offsets[0]
+        < offsets[1]
+        < hosted_recovery_offset
+        < raw.index(V5_PUBLICATION_STEP_MARKER),
+        "successor workflow prerequisites are not ordered before validation",
+    )
+    require(
+        all(token not in raw for token in V5_STALE_V3_SEMANTIC_TOKENS),
+        "successor workflow contains a stale composite-v3 semantic token",
+    )
+
+
+def validate_frozen_workflow_values(retired_v4_raw: bytes, v5_raw: bytes) -> None:
+    require(
+        len(retired_v4_raw) == RETIRED_V4_WORKFLOW_SIZE_BYTES
+        and sha256(retired_v4_raw) == RETIRED_V4_WORKFLOW_SHA256,
+        "retired live v4 workflow byte identity changed",
+    )
+    require(
+        len(v5_raw) == V5_WORKFLOW_SIZE_BYTES and sha256(v5_raw) == V5_WORKFLOW_SHA256,
+        "successor live v5 workflow byte identity changed",
+    )
+
+
+def validate_current_hosted_recovery_values(
+    self_test_raw: bytes, checker_raw: bytes
+) -> None:
+    require(
+        len(self_test_raw) == CURRENT_HOSTED_RECOVERY_SELF_TEST_SIZE_BYTES
+        and sha256(self_test_raw) == CURRENT_HOSTED_RECOVERY_SELF_TEST_SHA256,
+        "current hosted-recovery hostile-suite byte identity changed",
+    )
+    require(
+        len(checker_raw) == CURRENT_HOSTED_RECOVERY_CHECKER_SIZE_BYTES
+        and sha256(checker_raw) == CURRENT_HOSTED_RECOVERY_CHECKER_SHA256,
+        "current hosted-recovery gate byte identity changed",
     )
 
 
@@ -1020,8 +1381,7 @@ def normalized_run(value: Any, role: str, run_id: int, head: str) -> dict[str, A
 def validate_predecessor_failed_set(role: str, failed: set[int]) -> None:
     required_failed = PREDECESSOR_REQUIRED_FAILED_JOB_IDS[role]
     require(
-        required_failed <= failed
-        and (role != "predecessor_contract" or failed == required_failed),
+        failed == required_failed,
         f"{role} lost a required failed-job identity",
     )
 
@@ -1532,6 +1892,16 @@ def contract_authorities(
         authority_descriptor(c5_entries, V5_WORKFLOW_RELATIVE, "successor_v5_workflow"),
         authority_descriptor(c5_entries, CHECKER_RELATIVE, "v5_checker"),
         authority_descriptor(c5_entries, SELF_TEST_RELATIVE, "v5_checker_self_test"),
+        authority_descriptor(
+            c5_entries,
+            CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE,
+            "current_hosted_recovery_hostile_suite",
+        ),
+        authority_descriptor(
+            c5_entries,
+            CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE,
+            "current_hosted_recovery_gate",
+        ),
         authority_descriptor(c5_entries, CAPTURE_TOOL_RELATIVE, "v5_capture_tool"),
         authority_descriptor(c5_entries, CAPTURE_SCHEMA_RELATIVE, "v5_capture_schema"),
         authority_descriptor(c5_entries, RECEIPT_SCHEMA_RELATIVE, "v5_receipt_schema"),
@@ -1751,7 +2121,7 @@ def validate_topology(head: str, head_tree: str) -> tuple[str, str, str | None]:
     )
     validate_replay_pair(c5_entries)
     _v4.validate_current_source(c5_entries, "C5")
-    require_exact_bytes(
+    retired_v4_workflow_raw = require_exact_bytes(
         c5_entries,
         V4_WORKFLOW_RELATIVE,
         RETIRED_V4_WORKFLOW_SHA256,
@@ -1765,7 +2135,25 @@ def validate_topology(head: str, head_tree: str) -> tuple[str, str, str | None]:
         V5_WORKFLOW_SIZE_BYTES,
         "successor live v5 workflow",
     )
+    validate_frozen_workflow_values(retired_v4_workflow_raw, v5_workflow_raw)
     validate_v5_workflow_prerequisites(v5_workflow_raw)
+    current_hosted_recovery_self_test_raw = require_exact_bytes(
+        c5_entries,
+        CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE,
+        CURRENT_HOSTED_RECOVERY_SELF_TEST_SHA256,
+        CURRENT_HOSTED_RECOVERY_SELF_TEST_SIZE_BYTES,
+        "current hosted-recovery hostile suite",
+    )
+    current_hosted_recovery_checker_raw = require_exact_bytes(
+        c5_entries,
+        CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE,
+        CURRENT_HOSTED_RECOVERY_CHECKER_SHA256,
+        CURRENT_HOSTED_RECOVERY_CHECKER_SIZE_BYTES,
+        "current hosted-recovery gate",
+    )
+    validate_current_hosted_recovery_values(
+        current_hosted_recovery_self_test_raw, current_hosted_recovery_checker_raw
+    )
     authority_modes = {
         V4_CHECKER_RELATIVE: "100644",
         V4_CAPTURE_PRIMITIVE["path"]: "100644",
@@ -1781,6 +2169,8 @@ def validate_topology(head: str, head_tree: str) -> tuple[str, str, str | None]:
         LEAN_R10_RELATIVE: "100644",
         V4_WORKFLOW_RELATIVE: "100644",
         V5_WORKFLOW_RELATIVE: "100644",
+        CURRENT_HOSTED_RECOVERY_SELF_TEST_RELATIVE: "100644",
+        CURRENT_HOSTED_RECOVERY_CHECKER_RELATIVE: "100644",
         **{path: mode for path, mode, _role in PROCESS_ARTIFACTS},
     }
     for path, mode in authority_modes.items():

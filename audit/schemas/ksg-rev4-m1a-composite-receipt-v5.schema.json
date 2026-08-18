@@ -89,6 +89,138 @@
     },
     "failedJobLog": {
       "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Validate static contract in normal and optimized modes"
+              ]
+            },
+            "job_id": {
+              "const": 95540602684
+            },
+            "job_name": {
+              "const": "Validate the composite-v4 contract"
+            },
+            "observed_markers": {
+              "const": [
+                "ERROR: worktree-scoped Git configuration is unsupported"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        },
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Verify the KSG M1a hosted-recovery lifecycle"
+              ]
+            },
+            "job_id": {
+              "const": 95540603799
+            },
+            "job_name": {
+              "const": "KSG integer-harmonic arithmetic and phase isolation"
+            },
+            "observed_markers": {
+              "const": [
+                "KSG M1a hosted-recovery self-test failed: accepted vector failed: wiring: b''"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        },
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Run scripts/check-release-state-self-test.sh"
+              ]
+            },
+            "job_id": {
+              "const": 95540603816
+            },
+            "job_name": {
+              "const": "Package + semver + unused dependencies"
+            },
+            "observed_markers": {
+              "const": [
+                "fatal: not a git repository"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        },
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Run python3 -I -S -B scripts/check-certified-sxpid2-claim.py"
+              ]
+            },
+            "job_id": {
+              "const": 95540603850
+            },
+            "job_name": {
+              "const": "Exact-count directed-rounding SxPID2 reference"
+            },
+            "observed_markers": {
+              "const": [
+                "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        },
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Check the zeta-to-PID transfer firewall"
+              ]
+            },
+            "job_id": {
+              "const": 95540603999
+            },
+            "job_name": {
+              "const": "Formal LaTeX / PDF inventory and cross-toolchain structure"
+            },
+            "observed_markers": {
+              "const": [
+                "zeta-to-PID transfer firewall: WORKFLOW.section_sha256"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        }
+      ],
       "properties": {
         "failed_steps": {
           "items": {
@@ -114,6 +246,7 @@
             "type": "string"
           },
           "maxItems": 8,
+          "minItems": 1,
           "type": "array",
           "uniqueItems": true
         },

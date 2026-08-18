@@ -299,7 +299,7 @@ just ksg-composite-v5
 ```
 
 C5 and R5 are separate unsigned, human-attributed milestones. C5 is the exact direct child of C4;
-it retains the failed qualification, applies only the four bounded operational repairs, publishes
+it retains the failed qualification, applies only the five bounded operational repairs, publishes
 a fresh Lean `r10` replay, and binds the predecessor-failure capture. R5 is permitted only after
 fresh attempt-1 local, CI, CodeQL, and dedicated-v5 success for the same exact C5 commit. It adds
 the successor capture and derived receipt, then regenerates current-source last. The receipt binds

@@ -1,9 +1,9 @@
 # KSG revision-4 M1a composite-v5 successor boundary
 
-Status: **C5 contract definition; C4 is published; R4 is permanently unissued; R5 is pending a
-fresh all-success qualification**  
-Observation date: 18 August 2026  
-Repository: `sepahead/pid-rs`
+- Status: **C5 contract definition; C4 is published; R4 is permanently unissued; R5 is pending a
+  fresh all-success qualification**
+- Observation date: 18 August 2026
+- Repository: `sepahead/pid-rs`
 
 ## Executive disposition
 
@@ -12,9 +12,9 @@ Published commit `da253576a5f76e99633fff4de5cf1118f967b90d` (tree
 closure passed before publication, but its first hosted qualification did not. CodeQL succeeded;
 the dedicated composite-v4 workflow failed at the static-validation preflight, before substantive
 contract validation completed; and the repository CI run
-contained three terminal job failures. Therefore C4 is a published contract migration, **not** a
-qualified hosted receipt subject. No R4 capture or receipt is issued, and the two reserved v4 paths
-remain absent.
+finished with 41 successful and four failed jobs. Therefore C4 is a published contract migration,
+**not** a qualified hosted receipt subject. No R4 capture or receipt is issued, and the two reserved
+v4 paths remain absent.
 
 Composite-v5 is an append-only successor. C5 is an unsigned direct child of the published C4. It
 retains the predecessor failure, repairs only the observed operational failure surfaces, publishes
@@ -31,24 +31,24 @@ Wibral-authored claims, or any downstream application.
 
 Define the C4 hosted qualification predicate
 
-\[
+$$
 Q_4 = \mathrm{CI}_4 \land \mathrm{CodeQL}_4 \land D_4,
-\]
+$$
 
-where each term means terminal success for the exact C4 commit on run attempt 1 and \(D_4\) is the
+where each term means terminal success for the exact C4 commit on run attempt 1 and $D_4$ is the
 dedicated composite-v4 workflow. The observed values are
 
-\[
+$$
 \mathrm{CI}_4=\mathrm{false},\qquad
 \mathrm{CodeQL}_4=\mathrm{true},\qquad
 D_4=\mathrm{false}.
-\]
+$$
 
-Hence \(Q_4=\mathrm{false}\). The issuance rule is
+Hence $Q_4=\mathrm{false}$. The issuance rule is
 
-\[
+$$
 \mathrm{issue}(R4) \Longleftrightarrow Q_4.
-\]
+$$
 
 It follows that R4 is permanently unissued. A passing CodeQL route cannot compensate for failed CI
 or a failed dedicated contract route. Rerunning the failed dedicated workflow would retain the same
@@ -59,17 +59,17 @@ C4 would destroy the published subject rather than repair it.
 
 | Role | Run | Observed disposition | Bounded interpretation |
 |---|---:|---|---|
-| Repository CI | `32079866560` | failed; three terminal job failures | C4 did not satisfy the all-jobs-success predicate |
+| Repository CI | `32079866560` | failed; 41 successful and four failed jobs | C4 did not satisfy the all-jobs-success predicate |
 | CodeQL | `32079865482` | passed for Actions, JavaScript/TypeScript, Python, and Rust | this satisfies only the CodeQL term |
 | Dedicated composite-v4 | `32079866461` | failed at static-validation preflight | Substantive contract validation did not complete; the dedicated-v4 term is false |
-| Dependency Graph | `32079867694` | passed | context only; neither a term in \(Q_4\) nor a captured qualification role |
+| Dependency Graph | `32079867694` | passed | context only; neither a term in $Q_4$ nor a captured qualification role |
 
 The predecessor hosted capture is retained in C5 as failure evidence. Its existence does not grant
 C4, C5, or R5 success credit. Provider responses and artifact archives are bounded observations;
 they do not authenticate GitHub, prove a complete provider history, or establish scientific
 validity.
 
-## Four bounded repairs
+## Five bounded repairs
 
 ### 1. Reviewed checkout residue
 
@@ -121,6 +121,20 @@ The repair does not upgrade the certificate's mathematical scope. In particular,
 a finite exact certifier into a population theorem, a Rust refinement proof, or a general validation
 of shared-exclusions PID.
 
+### 5. Legacy hosted-recovery README-token expectation
+
+The fourth repository-CI failure occurred in the KSG integer-harmonic assurance job. Its legacy
+hosted-recovery self-test submitted the repository's live workflow, Just recipe, and README block
+as the positive `wiring` vector, but the validator still demanded stale README tokens for a
+composite-v3 receipt-child route that never issued. Composite-v3 could not issue a truthful receipt,
+its reserved receipt remains absent, and that absence must not be relabelled as a later receipt.
+
+C5 updates only this live README-token expectation to the exact current boundary: permanent
+composite-v3 nonissuance, permanent R4 nonissuance, and a separately versioned v5/R5 route. The
+legacy checker's historical Git-topology, custody, workflow, and Just-recipe checks remain in force,
+and hostile controls reject revival or renaming of either unissued receipt. This operational wiring
+repair creates no receipt, changes no prior hosted outcome, and transfers no scientific credit.
+
 ## Fresh C5 and R5 topology
 
 C5 must be the exact unsigned, single-parent direct child of C4 with commit message
@@ -130,24 +144,24 @@ single-parent direct child of C5 with commit message
 
 Define
 
-\[
+$$
 Q_5 = L_5 \land \mathrm{CI}_5 \land \mathrm{CodeQL}_5 \land D_5,
-\]
+$$
 
-where \(L_5\) is local static, hostile, replay, source-state, and publication closure;
-\(\mathrm{CI}_5\) is repository-CI all-jobs success; \(\mathrm{CodeQL}_5\) is success of every
-required CodeQL role; and \(D_5\) is success of the dedicated composite-v5 workflow. Every term
+where $L_5$ is local static, hostile, replay, source-state, and publication closure;
+$\mathrm{CI}_5$ is repository-CI all-jobs success; $\mathrm{CodeQL}_5$ is success of every
+required CodeQL role; and $D_5$ is success of the dedicated composite-v5 workflow. Every term
 must be terminal at attempt 1 for the same exact C5 commit. The issuance rule is
 
-\[
+$$
 \mathrm{issue}(R5) \Longleftrightarrow Q_5.
-\]
+$$
 
 If any term is false, missing, nonterminal, attached to another commit, or from another run attempt,
 R5 remains unissued and another append-only contract version is required. Passing a subset is not
 partial qualification.
 
-When \(Q_5\) is true, R5 has exactly three source changes:
+When $Q_5$ is true, R5 has exactly three source changes:
 
 1. add the raw successor-qualification hosted capture;
 2. add the typed receipt derived from that capture; and
@@ -198,7 +212,7 @@ operator usability, and publication English. Disagreement is retained until adju
 alone does not preserve a minority report.
 
 A separate correlated agent red-team found and corrected the original C4-to-R4-to-C5 topology,
-run-status language, permission claim, incomplete \(Q_5\) definitions, dual-capture binding, and
+run-status language, permission claim, incomplete $Q_5$ definitions, dual-capture binding, and
 durability-field omissions. This records review provenance but grants no dependency-disjoint,
 independent, or human-review credit.
 

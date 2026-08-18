@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="90mm" viewBox="0 0 1600 900" role="img" aria-labelledby="v5-title v5-desc" data-predecessor="C4" data-failed-contract="v4" data-successor="C5" data-receipt="R5" data-r4-status="permanently-unissued">
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="90mm" viewBox="0 0 1600 900" role="img" aria-labelledby="v5-title v5-desc" data-predecessor="C4" data-failed-contract="v4" data-successor="C5" data-receipt="R5" data-r4-status="permanently-unissued" data-repair-count="5" data-fifth-repair="legacy-hosted-recovery-readme-token-expectation">
   <title id="v5-title">A failed C4 qualification cannot issue R4; C5 creates a fresh qualification route to R5</title>
-  <desc id="v5-desc">The published C4 commit remains immutable. Its hosted CI and dedicated composite-v4 workflow failed, so the conjunction Q4 is false and R4 is permanently unissued even though CodeQL passed. A direct-child C5 records the failure and repairs four bounded failure surfaces without changing PID or KSG results. Only a fresh attempt-one run in which local gates, CI, CodeQL, and the dedicated v5 workflow all succeed can make Q5 true. R5 may then retain the successor capture, derive a typed receipt, and regenerate the self-excluding source manifest. The diagram states process custody only, not scientific validity, authentication, independence, or reproducibility.</desc>
+  <desc id="v5-desc">The published C4 commit remains immutable. Its hosted CI finished with 41 successful and four failed jobs, and its dedicated composite-v4 workflow failed, so the conjunction Q4 is false and R4 is permanently unissued even though CodeQL passed. A direct-child C5 records the failure and repairs five bounded failure surfaces without changing PID or KSG results. The fifth repair replaces only a stale live README-token expectation in the legacy hosted-recovery validator; its historical Git and custody logic remains in force, and composite-v3 remains unissued. Only a fresh attempt-one run in which local gates, CI, CodeQL, and the dedicated v5 workflow all succeed can make Q5 true. R5 may then retain the successor capture, derive a typed receipt, and regenerate the self-excluding source manifest. The diagram states process custody only, not scientific validity, authentication, independence, or reproducibility.</desc>
   <defs>
     <marker id="v5-arrow-navy" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
       <path d="M0 0 L9 4.5 L0 9 Z" fill="#1F3F60"/>
@@ -47,7 +47,7 @@
     <text x="88" y="260" class="left-small">fixed</text>
     <rect x="276" y="238" width="112" height="38" rx="19" fill="#8F302A"/>
     <text x="332" y="265" class="badge">CI FAIL</text>
-    <text x="414" y="265" class="left-small">3 terminal job failures</text>
+    <text x="414" y="265" class="left-small">41 success · 4 failed</text>
     <text x="88" y="313" class="left-small">observed</text>
     <rect x="260" y="291" width="182" height="38" rx="19" fill="#1F6968"/>
     <text x="351" y="318" class="badge">CODEQL PASS</text>
@@ -69,15 +69,17 @@
     <rect x="1062" y="170" width="486" height="274" rx="20" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
     <rect x="1082" y="189" width="76" height="36" rx="18" fill="#1F3F60"/>
     <text x="1120" y="215" class="badge">C5</text>
-    <text x="1334" y="218" class="card-title">Bounded repair</text>
-    <text x="1097" y="268" class="left-small">1</text>
-    <text x="1125" y="268" class="left-small">normalize exact checkout residue</text>
-    <text x="1097" y="310" class="left-small">2</text>
-    <text x="1125" y="310" class="left-small">isolate release fixture from parent Git</text>
-    <text x="1097" y="352" class="left-small">3</text>
-    <text x="1125" y="352" class="left-small">rebind reviewed zeta prose</text>
-    <text x="1097" y="394" class="left-small">4</text>
-    <text x="1125" y="394" class="left-small">rebind certified-SxPID containers</text>
+    <text x="1334" y="218" class="card-title">Five bounded repairs</text>
+    <text x="1097" y="258" class="left-small">1</text>
+    <text x="1125" y="258" class="left-small">normalize exact checkout residue</text>
+    <text x="1097" y="291" class="left-small">2</text>
+    <text x="1125" y="291" class="left-small">isolate release fixture from parent Git</text>
+    <text x="1097" y="324" class="left-small">3</text>
+    <text x="1125" y="324" class="left-small">rebind reviewed zeta prose</text>
+    <text x="1097" y="357" class="left-small">4</text>
+    <text x="1125" y="357" class="left-small">rebind certified-SxPID containers</text>
+    <text x="1097" y="390" class="left-small">5</text>
+    <text x="1125" y="390" class="left-small">replace stale v3 README-token demand</text>
     <text x="1305" y="428" class="small">fresh r10; zero numerical-result change</text>
   </g>
 

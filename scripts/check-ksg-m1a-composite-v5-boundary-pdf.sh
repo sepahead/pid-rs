@@ -11,12 +11,12 @@ PDF="output/pdf/ksg-m1a-composite-v5-boundary.pdf"
 RENDERING_RECEIPT="output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv"
 VISUAL_RECEIPT="audit/evidence/ksg-rev4-m1a-composite-v5-boundary-visual-receipt-2026-08-18.md"
 COMPARATOR="scripts/compare-formal-pdf-renders.py"
-EXPECTED_MD_SHA256="f8823994aaf26da7c007e43aec319bbfe7c50423eb6110e187c2e9cdc54a00f7"
-EXPECTED_MD_BYTES=12367
-EXPECTED_TEX_SHA256="19b798a043aa6aa07ed9601db1e7321a402d883fb0d142256467a1847575e70f"
-EXPECTED_TEX_BYTES=12380
-EXPECTED_SVG_SHA256="efdec319be8a987d540acf9463e341005c84168686c3f46ecbfada41b1c6b916"
-EXPECTED_SVG_BYTES=9341
+EXPECTED_MD_SHA256="6596e3c7e4a8bca989ad4724efb2f9c7592564b359b29f3a2a7a224ce2270a29"
+EXPECTED_MD_BYTES=13398
+EXPECTED_TEX_SHA256="8f32bf892c102b73c20d507c92b631d2387ab07b686ab7e0a163eae7f1f52527"
+EXPECTED_TEX_BYTES=12800
+EXPECTED_SVG_SHA256="2f5040914e30e2db84c43035c3983a5e7a0150288a1ea53f8291cd4b5e7bc081"
+EXPECTED_SVG_BYTES=9835
 EXPECTED_COMPARATOR_SHA256="7b230bef4371398c18a3975d6888207bc31a737eeffb0217f3d5bbc0aec3054b"
 EXPECTED_COMPARATOR_BYTES=16408
 EXPECTED_PAGES=4
@@ -98,6 +98,8 @@ expected_root = {
     "data-successor": "C5",
     "data-receipt": "R5",
     "data-r4-status": "permanently-unissued",
+    "data-repair-count": "5",
+    "data-fifth-repair": "legacy-hosted-recovery-readme-token-expectation",
 }
 for key, value in expected_root.items():
     if root.get(key) != value:
@@ -142,7 +144,8 @@ required = (
     "C5 direct child of C4",
     "R4 UNISSUED",
     "Q4 = CI4 AND CodeQL4 AND D4 = false",
-    "Bounded repair",
+    "Five bounded repairs",
+    "replace stale v3 README-token demand",
     "Fresh C5 qualification only",
     "Q5 = L5 AND CI5 AND CodeQL5 AND D5",
     "one exact C5 · attempt 1 · all terminal success",
@@ -521,6 +524,8 @@ required_text=(
   "remote URL, ref, commit OID"
   "predecessor and successor captures"
   "zero PID theories, zero PID functionals, zero estimators"
+  "Legacy recovery wiring"
+  "stale README-token expectation"
   "Nothing here transfers evidence"
   "not a KSG proof, PID validation, authentication"
 )

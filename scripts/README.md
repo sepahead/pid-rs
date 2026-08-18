@@ -618,7 +618,10 @@ The append-only correction is documented in
 C5 is the unsigned direct child of published C4 and uses a fresh `r10` replay. It narrowly
 normalizes one exact checkout-residue byte image, isolates extracted release fixtures from ambient
 Git ancestry, rebinds the reviewed zeta spelling, and rebinds the final certified-SxPID execution
-containers. It does not assert a unique cause for the release-state runner failure. Run:
+containers. It also replaces the stale live README-token expectations for the never-issued
+composite-v3 recovery route with the current C4/C5 nonissuance and capture-separation boundary,
+while retaining the legacy checker's historical Git, custody, workflow, Just, and anti-revival
+checks. It does not assert a unique cause for the release-state runner failure. Run:
 
 ```text
 just ksg-composite-v5
@@ -864,12 +867,12 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 The current append-only receipt path is
 `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
-finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt, and
-finalized `r8` receipt and finalized `r9` receipt remain exact-hash-bound prior evidence with their
+finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt,
+finalized `r8` receipt, and finalized `r9` receipt remain exact-hash-bound prior evidence with their
 original v1, v2, v2, v2, v2, v2, v2, v2, v2, and v2 schema identities. The `r10` suffix denotes
-only the tenth receipt in the versioned sequence that originated on 12 August, and therefore the eleventh
-current-project replay receipt overall; the 11 August historical receipt is outside that versioned
-sequence. The suffix does not
+only the tenth receipt in the versioned sequence that originated on 12 August, and therefore the
+eleventh current-project replay receipt overall; the 11 August historical receipt is outside that
+versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 route receives current execution credit only when that exact receipt exists and validates.
 
@@ -1477,7 +1480,7 @@ maintainer toolchain. The structural mode is not a pixel-identity or cross-toolc
 reproducibility claim. These checks prevent a mathematical source or rendered paper from being
 silently omitted. They verify artifact completeness and rendering properties, not theorem truth.
 
-Before any PDF build, `check-formal-pdf-style.py` enforces the ten-paper shared visual-system
+Before any PDF build, `check-formal-pdf-style.py` enforces the twelve-paper shared visual-system
 contract: every paper loads the common package and title/section/header helpers exactly once,
 every explicit `booktabs` top rule is followed by an explicit header-row band, Markdown-generated
 workflow tables install the same band hook, and no source introduces vertical or legacy table

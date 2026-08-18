@@ -2,13 +2,13 @@
 
 schema: `pid-rs/composite-v5-boundary-visual-review/v1`
 subject: `output/pdf/ksg-m1a-composite-v5-boundary.pdf`
-pdf_sha256: `5339c048727e5f712c089d1c7900fef1c47fd185defcc66464f85e099cc073a8`
+pdf_sha256: `bf932cfb2dbe70500458cc8de0d4ce2f3718bfe5d135755e2a9147c3d6621a79`
 rendering_receipt: `output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv`
-rendering_receipt_sha256: `59e3d8517a11d2515b2a4862146962022805555939ab5465a9079c3e0db32aad`
+rendering_receipt_sha256: `7730f32febfb3a0ce2bc90b8300980aa299c6afd1d957ada7a14daaeae741413`
 figure_svg: `audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.svg`
-figure_svg_sha256: `efdec319be8a987d540acf9463e341005c84168686c3f46ecbfada41b1c6b916`
+figure_svg_sha256: `2f5040914e30e2db84c43035c3983a5e7a0150288a1ea53f8291cd4b5e7bc081`
 figure_pdf: `audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.pdf`
-figure_pdf_sha256: `af1f85e19b497a3676269d67038de03dae760398f77d0b1ffdfe5560f4b75bb5`
+figure_pdf_sha256: `2b7f97c1491b8ab05a6223e958c9dfd2e74e2d1a41c7973d4098ae7cafd4d2d3`
 pages: `4`
 dpi: `144`
 color_pages_reviewed: `1-4`

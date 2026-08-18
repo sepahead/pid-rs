@@ -418,7 +418,7 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   C4 is `da253576a5f76e99633fff4de5cf1118f967b90d`; its CodeQL route passed but CI and the dedicated
   v4 route did not, so no partial or rerun credit is granted.
 - [ ] Publish composite-v5 C5 and conditional R5 as separate unsigned, human-attributed
-  fast-forward milestones. C5 must retain the predecessor capture, four bounded repairs,
+  fast-forward milestones. C5 must retain the predecessor capture, five bounded repairs,
   publication-quality boundary PDF/SVG and receipts, fresh r10, exact path policy, and regenerated
   current-source. Only fresh attempt-1 exact-C5 CI, CodeQL, and dedicated-v5 success permits R5;
   R5 adds the successor capture and dual-capture typed receipt and regenerates current-source last.
