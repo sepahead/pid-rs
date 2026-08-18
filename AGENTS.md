@@ -290,22 +290,37 @@ Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` failed its first 
 qualification, so R4 is permanently unissued and the v4 capture/receipt paths remain absent.
 Preserve that failure; do not rewrite C4, rerun it for attempt-1 credit, or revive R4.
 
-The operative append-only successor is composite-v5, documented in
-[`ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md`](audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md).
+Published C5 commit `be862b155d710573ec95356fc1cbe9a96a2b83b9` retained the C4 failure,
+applied its five bounded operational repairs, and published fresh Lean `r10`. Its attempt-1 hosted
+qualification failed in the PDF portability lane, so R5 is permanently unissued. Preserve C5,
+that failed attempt, the exact r10 receipt, and the immutable v5 gate bytes; do not rerun them for
+attempt-1 credit, rewrite their cross-toolchain predicate in place, or revive R5.
+
+The operative append-only successor is composite-v6, documented in
+[`ksg-rev4-m1a-composite-v6-boundary-2026-08-18.md`](audit/evidence/ksg-rev4-m1a-composite-v6-boundary-2026-08-18.md).
 From a clean committed checkout run:
 
 ```text
-just ksg-composite-v5
+just ksg-composite-v6
 ```
 
-C5 and R5 are separate unsigned, human-attributed milestones. C5 is the exact direct child of C4;
-it retains the failed qualification, applies only the five bounded operational repairs, publishes
-a fresh Lean `r10` replay, and binds the predecessor-failure capture. R5 is permitted only after
-fresh attempt-1 local, CI, CodeQL, and dedicated-v5 success for the same exact C5 commit. It adds
-the successor capture and derived receipt, then regenerates current-source last. The receipt binds
-both captures. Neither milestone may change scientific code, issue a v3/v4 receipt, recreate a
-missing historical index, promote KSG M1a beyond `integration_no_go`, or transfer evidence among
-the scientific-object rows above.
+C6 and R6 are separate unsigned, human-attributed milestones. C6 must be the exact direct child of
+C5. It retains the failed C5 qualification, corrects one Cartesian report/figure association rule
+through separately versioned portability gates, publishes a fresh Lean `r11` replay, and binds the
+predecessor-failure capture. R6 is permitted only after one fresh exact-C6 local closure and fresh
+attempt-1 CI, CodeQL, and dedicated-v6 success for that same commit. The local observation has no
+attempt-number authority: a separately typed recorder must run the fixed `just ksg-composite-v6`
+command from an exact clean C6 checkout, retain bounded output and clean endpoint observations in a
+mode-0600 staging file outside the repository, and install those exact bytes only after validation.
+Those endpoints use ordinary Git status plus selected metadata checks. Rejecting
+`core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
+uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
+hermetic closure.
+R6 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
+and the deterministically derived receipt, then regenerates current-source last. The receipt binds
+and validates the predecessor capture, local record, and successor capture. Neither milestone may
+change scientific code, issue a v3/v4/v5 receipt, recreate a missing historical index, promote KSG
+M1a beyond `integration_no_go`, or transfer evidence among the scientific-object rows above.
 
 Only after committing the final self-excluding manifest, run the post-commit route from an exact
 clean checkout. The shell owns these temporary files; v2 makes no path, durability, or upload
@@ -329,13 +344,12 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`;
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
-finalized `r6`, finalized `r7`, finalized `r8`, and finalized `r9` receipts are exact-hash-bound
-prior replays. Here `r10` denotes only the tenth receipt in the versioned sequence that originated
-on 12 August, and therefore the eleventh current-project replay receipt overall; the 11 August
-historical receipt is outside that
-versioned sequence. The suffix
+finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, and finalized `r10` receipts are
+exact-hash-bound prior replays. Here `r11` denotes only the eleventh receipt in the versioned
+sequence that originated on 12 August, and therefore the twelfth current-project replay receipt
+overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.
 

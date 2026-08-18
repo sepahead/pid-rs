@@ -649,6 +649,88 @@ can permit R5, whose exact three-path delta adds the successor capture and typed
 regenerates current-source last. The receipt binds both captures. Passing a subset, rerunning an
 attempt, or changing C5 requires another append-only contract version.
 
+That condition was not met. Published C5 commit
+`be862b155d710573ec95356fc1cbe9a96a2b83b9` retained a successful attempt-1 CodeQL route, but its
+dedicated-v5 publication step failed and the repository-CI formal-PDF job exposed the analogous
+immutable-v4 lane; repository CI ended with 44 successful jobs and that one failure. Both old
+cross-toolchain gates compared every report with every fresh and
+committed standalone figure even though the TeX reports name the committed figure. R5 is therefore
+permanently unissued. Preserve C5, r10, and both old gate scripts exactly; their failed hosted
+observations receive no R5, scientific, authentication, or independence credit.
+
+Composite-v6 adds a separately versioned keyed portability adjudicator and boundary publication.
+Each rebuilt or committed report must match the exact committed figure its TeX source names. The
+fresh standalone figure is checked separately against the committed standalone figure through
+closed object-safety, text, page geometry, subset-neutral font-family, and bounded color/grayscale
+same-renderer predicates. A decoded-content-different no-op positive proves the cross-toolchain
+figure relation does not collapse back to byte identity, while the same fixture must be rejected
+as a report's associated figure. Run the local exact lane from frozen bytes with:
+
+```text
+just ksg-composite-v6
+scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --exact
+scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --exact
+scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
+scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
+```
+
+The dedicated Ubuntu v6 workflow runs the same two gate pairs with `--cross-toolchain`; it does
+not claim that Linux can reproduce the committed macOS PDF bytes. C6 must be C5's exact unsigned
+direct child and publishes fresh replay r11. From an exact clean committed C6 checkout, the typed
+local recorder runs only the fixed `just ksg-composite-v6` command under its constructed
+environment and writes a new mode-0600 staging file outside the repository:
+
+```text
+local_closure_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c6-local-closure.XXXXXX")"
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py \
+  --output "$local_closure_dir/local-closure.json"
+```
+
+The staged record binds exact C6 topology, the fixed command, clean pre/post observations, bounded
+stdout/stderr, and a reviewed executable subset. It is an unsigned correlated local observation,
+not a first-attempt authority, complete transitive executable inventory, atomic snapshot,
+authentication, trusted time, or independent reproduction. Install its exact bytes at
+`audit/evidence/ksg-rev4-m1a-composite-local-closure-v6-2026-08-18.json` only after its schema and
+semantic checks pass.
+
+The clean endpoints use ordinary Git status plus selected metadata checks. Rejecting
+`core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
+uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
+hermetic closure.
+
+After the successor hosted capture also validates, derive the candidate receipt from two distinct
+new mode-0600 staging files. The derivation route accepts no evidentiary stdin route and requires
+both inputs at offset zero through stable, single-link regular-file descriptors:
+
+```text
+set -o noclobber
+umask 077
+local_record="$local_closure_dir/local-closure.json"
+successor_capture="/absolute/private/path/successor-capture.json"
+receipt_staging="/absolute/private/path/composite-v6-receipt.json"
+python3 -I -S -B scripts/check-ksg-m1a-composite-v6.py \
+  --derive-receipt --local-closure-fd 3 --successor-capture-fd 4 \
+  3<"$local_record" 4<"$successor_capture" >"$receipt_staging"
+```
+
+Do not install the derived bytes until the checker validates the staged receipt and both input
+records against the exact C6/R6 contract. The two private staging paths are transport locations,
+not evidence locators or durable authorities.
+
+R6 remains an exact conditional four-path child: that local record, the fresh successor hosted
+capture, the deterministically derived receipt, and current-source regenerated last. It is
+permitted only after the fresh exact-C6 local closure and fresh attempt-1 repository CI, all four
+CodeQL language jobs, and dedicated-v6 success for the same exact C6 SHA. The receipt validates and
+binds the predecessor capture, local record, and successor capture before recording all four terms.
+Any false, absent, nonterminal, wrong-attempt, or wrong-SHA hosted term—or an absent or invalid local
+record—leaves R6 unissued and requires another append-only contract version.
+
+This portability correction is one project-defined report/figure association repair manifested in
+two immutable predecessor gates. It is not evidence that either committed publication is
+defective, is not a generic PDF-equivalence theorem, and grants no PID, KSG, mathematical,
+scientific, security, application, PDF/UA, renderer-independence, authentication, or independent
+reproduction status.
+
 The v4 capture and receipt commands documented by the historical process report described a
 conditional route that was never admitted. C4's attempt-1 qualification failed, R4 is permanently
 unissued, and the two reserved v4 evidence paths must remain absent. Do not run the v4 live capture,

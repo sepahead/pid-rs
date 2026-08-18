@@ -384,6 +384,53 @@ ksg-composite-v5:
     python3 -O -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py > "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
 
+# Append-only composite-v6 successor: immutable-v4/v5 keyed PDF portability,
+# one bounded C5 association-rule repair, fresh r11 custody, and conditional R6.
+ksg-composite-v6:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    umask 077
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v6.XXXXXX")"
+    trap 'rm -rf -- "$result_root"' EXIT
+    python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
+    python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
+    scripts/check-release-state-self-test.sh
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.json"
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.optimized.json"
+    cmp "$result_root/zeta.json" "$result_root/zeta.optimized.json"
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py --self-test > "$result_root/local-closure-self-test.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py --self-test > "$result_root/local-closure-self-test.optimized.json"
+    cmp "$result_root/local-closure-self-test.json" "$result_root/local-closure-self-test.optimized.json"
+    scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --exact
+    scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --exact
+    scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
+    scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
+    python3 -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -I -S -B scripts/check-current-source-state-v1.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1.py
+    python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v6.py --self-test > "$result_root/capture.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v6.py --self-test > "$result_root/capture.optimized.json"
+    cmp "$result_root/capture.json" "$result_root/capture.optimized.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v6.py --validate-static > "$result_root/static.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v6.py --validate-static > "$result_root/static.optimized.json"
+    cmp "$result_root/static.json" "$result_root/static.optimized.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v6-self-test.py > "$result_root/self-test.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v6-self-test.py > "$result_root/self-test.optimized.json"
+    cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
+
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
     cargo fetch --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
@@ -495,7 +542,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v5 certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v6 certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

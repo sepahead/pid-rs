@@ -9,13 +9,38 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Published composite-v5 C5 as exact commit
+  `be862b155d710573ec95356fc1cbe9a96a2b83b9` with fresh Lean 4.33 replay `r10`.
+  Its attempt-1 CodeQL run passed, but dedicated-v5 run `32107469077` failed in the bounded
+  publication step and repository CI run `32107469096` completed with 44 successful jobs and one
+  failed formal-PDF job in the analogous immutable-v4 lane. The old cross-toolchain gates
+  associated every rebuilt and committed report with every
+  rebuilt and committed standalone figure, although each TeX report names the committed figure.
+  Raw decoded-content equality against an unreferenced fresh-toolchain figure was therefore a
+  wrong-lane Cartesian predicate, not evidence that either committed publication was visually or
+  structurally defective. R5 is permanently unissued. Composite-v6 is the append-only direct-child
+  successor: it preserves C5, r10, and both failed gate scripts exactly; separates exact
+  report-to-committed-figure custody from bounded fresh-to-committed figure portability; publishes
+  a separately versioned boundary; and requires one fresh exact-C6 local closure plus fresh
+  attempt-1 CI, CodeQL, and dedicated-v6 success before any R6. The local observation has no
+  attempt-number authority and must be retained as a separately typed, bounded, unauthenticated
+  record. Its Git-clean endpoints exclude repository-ignored products and uninspected Git metadata,
+  which may remain side inputs; the record is not a hermetic-closure claim. Conditional R6 is
+  therefore an exact four-path delta: local record, successor hosted
+  capture, derived receipt, and current-source regenerated last. The current replay pointer becomes
+  `r11`; finalized `r10` remains exact prior evidence. Here `r11` is the eleventh receipt in the
+  versioned sequence that originated on 12 August and the twelfth current-project replay receipt
+  overall. This is one project-defined PDF-checker association repair, not a new PID definition,
+  estimator, theorem, numerical result, scientific validation, security claim, authentication,
+  independence result, PDF/UA claim, renderer-independence claim, release, or application approval.
 - Published composite-v4 C4 as exact commit
   `da253576a5f76e99633fff4de5cf1118f967b90d`, retained its first hosted qualification as a
   no-credit failed attempt, and permanently left R4 unissued. CodeQL passed, but repository CI had
   four terminal job failures and the dedicated v4 route failed in the static-validation step's
   preflight. Composite-v5 is the append-only successor: C5 is C4's direct child, retains the
   predecessor failure capture, applies five bounded operational repairs, publishes fresh Lean 4.33
-  replay `r10`, and requires fresh attempt-1 local/CI/CodeQL/dedicated-v5 success before any R5.
+  replay `r10`, and requires fresh exact-C5 local closure plus fresh attempt-1
+  CI/CodeQL/dedicated-v5 success before any R5.
   The four-page publication binds its accessible SVG, deterministic vector companion, A4 PDF,
   color/grayscale rendering receipt, and closed visual-review receipt; object and external hostile
   controls cover unsafe SVG resources, annotations/actions, geometry, clipping/placement, and
