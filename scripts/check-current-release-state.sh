@@ -2,8 +2,8 @@
 # Select the release-state checker from explicit metadata and the current Git ref.
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd -P)"
 
 version="$({
   awk '
@@ -40,6 +40,13 @@ fi
 
 tag="v$version"
 tagged=false
+repository_git_root=""
+if [[ -z "${GITHUB_REF_TYPE:-}" ]]; then
+  repository_git_root="$(git -C "$REPO_ROOT" rev-parse --show-toplevel 2>/dev/null || true)"
+  if [[ -n "$repository_git_root" ]]; then
+    repository_git_root="$(cd "$repository_git_root" 2>/dev/null && pwd -P || true)"
+  fi
+fi
 if [[ "${GITHUB_REF_TYPE:-}" == tag ]]; then
   [[ "${GITHUB_REF_NAME:-}" == "$tag" ]] || {
     echo "ERROR: tag event '${GITHUB_REF_NAME:-<missing>}' does not match workspace $tag" >&2
@@ -47,7 +54,7 @@ if [[ "${GITHUB_REF_TYPE:-}" == tag ]]; then
   }
   tagged=true
 elif [[ -z "${GITHUB_REF_TYPE:-}" ]] \
-  && git -C "$REPO_ROOT" rev-parse --git-dir >/dev/null 2>&1 \
+  && [[ "$repository_git_root" == "$REPO_ROOT" ]] \
   && git -C "$REPO_ROOT" show-ref --verify --quiet "refs/tags/$tag" \
   && [[ "$(git -C "$REPO_ROOT" rev-parse "refs/tags/$tag^{commit}")" \
     == "$(git -C "$REPO_ROOT" rev-parse HEAD)" ]] \

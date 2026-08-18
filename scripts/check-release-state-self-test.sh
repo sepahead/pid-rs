@@ -45,6 +45,30 @@ fixture_git() {
   isolated_git "$TMP" "$@"
 }
 
+create_tracked_source_fixture() {
+  local phase="$1"
+  local destination="$2"
+  local archive="$EXTERNAL_TMP/$phase.tar"
+
+  if [[ -e "$destination" || -L "$destination" ]]; then
+    echo "ERROR: $phase source-fixture destination already exists: $destination" >&2
+    return 1
+  fi
+  mkdir -p "$destination"
+  if ! fixture_git archive --format=tar HEAD >"$archive"; then
+    echo "ERROR: $phase could not serialize the committed fixture tree" >&2
+    return 1
+  fi
+  if ! tar -xf "$archive" -C "$destination"; then
+    echo "ERROR: $phase could not extract the committed fixture tree" >&2
+    return 1
+  fi
+  if [[ -e "$destination/.git" || -L "$destination/.git" ]]; then
+    echo "ERROR: $phase extracted source fixture unexpectedly contains .git metadata" >&2
+    return 1
+  fi
+}
+
 while IFS= read -r -d '' path; do
   if [[ ! -e "$REPO_ROOT/$path" && ! -L "$REPO_ROOT/$path" ]]; then
     continue
@@ -186,8 +210,23 @@ expect_failure() {
   fi
 }
 
+expect_success() {
+  local label="$1"
+  shift
+  if ! "$@" >"$TMP/output.log" 2>&1; then
+    echo "ERROR: $label failed" >&2
+    sed 's/^/  | /' "$TMP/output.log" >&2
+    return 1
+  fi
+}
+
+run_selector_at() {
+  local root="$1"
+  GITHUB_REF_TYPE='' GITHUB_REF_NAME='' "$root/scripts/check-current-release-state.sh"
+}
+
 run_local_selector() {
-  GITHUB_REF_TYPE='' GITHUB_REF_NAME='' "$TMP/scripts/check-current-release-state.sh"
+  run_selector_at "$TMP"
 }
 
 restore_head_file() {
@@ -342,12 +381,48 @@ fixture_git commit -q --no-gpg-sign --no-verify -m review-metadata
 cp "$TMP/README.md" "$EXTERNAL_TMP/README.corrected.md"
 cp "$TMP/RELEASE_NOTES.md" "$EXTERNAL_TMP/RELEASE_NOTES.corrected.md"
 
-# An extracted review-source archive has no Git metadata. Both the public-state checker and the
-# complete version/author checker must accept it anyway.
-mv "$TMP/.git" "$TMP/.git.saved"
-"$TMP/scripts/check-release-state.sh" review-source "v$version" >/dev/null
-"$TMP/scripts/check-version-coherence.sh" review-source "v$version" >/dev/null
-mv "$TMP/.git.saved" "$TMP/.git"
+# An extracted review-source archive has no Git metadata. Build it from the exact committed fixture
+# bytes without disturbing the live fixture repository: later tag-inference tests must continue to
+# exercise that repository, not a moved-out/moved-back approximation.
+review_source_fixture="$EXTERNAL_TMP/review-source"
+create_tracked_source_fixture review-source "$review_source_fixture"
+expect_success "review-source archive: release-state checker" \
+  "$review_source_fixture/scripts/check-release-state.sh" review-source "v$version"
+expect_success "review-source archive: version-coherence checker" \
+  "$review_source_fixture/scripts/check-version-coherence.sh" review-source "v$version"
+expect_success "review-source archive: automatic selector" \
+  run_selector_at "$review_source_fixture"
+
+# A source archive can be unpacked below an unrelated Git repository. Make that ancestor maximally
+# misleading: it is clean, ignores the extracted child, and has the exact release tag at its HEAD.
+# The child selector must still choose source mode rather than inheriting the ancestor's tag state.
+hostile_parent="$EXTERNAL_TMP/unrelated-parent"
+hostile_review_source="$hostile_parent/extracted-review-source"
+mkdir -p "$hostile_parent"
+isolated_git "$hostile_parent" init -q
+isolated_git "$hostile_parent" config user.name "Unrelated Parent"
+isolated_git "$hostile_parent" config user.email "unrelated-parent.invalid"
+printf '/extracted-review-source/\n' >"$hostile_parent/.gitignore"
+isolated_git "$hostile_parent" add .gitignore
+isolated_git "$hostile_parent" commit -q --no-gpg-sign --no-verify -m unrelated-parent
+isolated_git "$hostile_parent" tag -a "v$version" -m "unrelated v$version"
+create_tracked_source_fixture hostile-review-source "$hostile_review_source"
+discovered_parent="$(isolated_git "$hostile_review_source" rev-parse --show-toplevel)"
+hostile_parent_physical="$(cd "$hostile_parent" && pwd -P)"
+[[ "$discovered_parent" == "$hostile_parent_physical" ]] || {
+  echo "ERROR: hostile-review-source did not discover the intended unrelated ancestor Git root" >&2
+  exit 1
+}
+[[ -z "$(isolated_git "$hostile_review_source" status --porcelain=v2 --untracked-files=all)" ]] || {
+  echo "ERROR: hostile-review-source unrelated ancestor fixture is not clean" >&2
+  exit 1
+}
+expect_success "hostile-review-source archive: release-state checker" \
+  "$hostile_review_source/scripts/check-release-state.sh" review-source "v$version"
+expect_success "hostile-review-source archive: version-coherence checker" \
+  "$hostile_review_source/scripts/check-version-coherence.sh" review-source "v$version"
+expect_success "hostile-review-source archive: selector ignores unrelated ancestor Git" \
+  run_selector_at "$hostile_review_source"
 
 fixture_git tag "v$version"
 expect_failure "selector rejects lightweight review tag" \
@@ -1019,11 +1094,14 @@ rm -f "$TMP"/*.bak "$TMP/crates/pid-python"/*.bak
 fixture_git add .
 fixture_git commit -q --no-gpg-sign --no-verify -m final-registry-metadata
 
-mv "$TMP/.git" "$TMP/.git.saved"
-"$TMP/scripts/check-release-state.sh" final-source "v$final_version" >/dev/null
-"$TMP/scripts/check-version-coherence.sh" final-source "v$final_version" >/dev/null
-run_local_selector >/dev/null
-mv "$TMP/.git.saved" "$TMP/.git"
+final_source_fixture="$EXTERNAL_TMP/final-source"
+create_tracked_source_fixture final-source "$final_source_fixture"
+expect_success "final-source archive: release-state checker" \
+  "$final_source_fixture/scripts/check-release-state.sh" final-source "v$final_version"
+expect_success "final-source archive: version-coherence checker" \
+  "$final_source_fixture/scripts/check-version-coherence.sh" final-source "v$final_version"
+expect_success "final-source archive: automatic selector" \
+  run_selector_at "$final_source_fixture"
 
 fixture_git tag -a "v$final_version" -m "v$final_version"
 "$TMP/scripts/check-release-state.sh" tagged "v$final_version" >/dev/null
