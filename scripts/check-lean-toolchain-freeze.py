@@ -50,7 +50,7 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
 # This literal is deliberately one line so the append-only receipt can reconstruct
 # the exact pre-pin checker bytes without a checksum cycle.
 # fmt: off
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "0" * 64
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "752cd0eab838abd206e3f40f3ee015642ddbdfca418ce3ce1cf9522aba7cf410"
 EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "29bdfa9562f7ca3bb1254a33847610303a34d89eabdec29f83f165a9599f79c5"
 # fmt: on
 EXPECTED_LOCAL_REPLAY_ROUTES = {
