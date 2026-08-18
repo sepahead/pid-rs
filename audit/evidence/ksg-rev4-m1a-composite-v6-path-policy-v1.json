@@ -1,0 +1,326 @@
+{
+  "base": {
+    "commit": "be862b155d710573ec95356fc1cbe9a96a2b83b9",
+    "r4_status": "permanently_unissued",
+    "r5_status": "permanently_unissued",
+    "reserved_absent_paths": [
+      "audit/evidence/ksg-rev4-m1a-composite-hosted-capture-v4-2026-08-15.json",
+      "audit/evidence/ksg-rev4-m1a-composite-receipt-v4-2026-08-15.json",
+      "audit/evidence/ksg-rev4-m1a-composite-receipt-v5-2026-08-18.json",
+      "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-hosted-capture-v5-2026-08-18.json"
+    ],
+    "tree": "37ae61554284a2fabb460d3a20a731b6ade5f8f4"
+  },
+  "c6": {
+    "delta": [
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v5.yml",
+        "role": "retired_v5_no_credit_workflow",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v6.yml",
+        "role": "dedicated_v6_hosted_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "AGENTS.md",
+        "role": "operational_and_scientific_object_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "CHANGELOG.md",
+        "role": "append_only_change_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/completion-active-resume.md",
+        "role": "current_replay_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v6-2026-08-18.json",
+        "role": "predecessor_failure_hosted_capture",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v6-boundary-2026-08-18.md",
+        "role": "operational_boundary_record",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v6-boundary-visual-receipt-2026-08-18.md",
+        "role": "operational_boundary_visual_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v6-path-policy-v1.json",
+        "role": "c6_r6_path_policy",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json",
+        "role": "current_lean_replay_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+        "role": "durable_active_plan",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+        "role": "lean_replay_process_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+        "role": "current_replay_scientific_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/ksg-m1a-composite-v6-boundary/c5-failure-c6-r6.pdf",
+        "role": "operational_boundary_vector_derivative",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/figures/ksg-m1a-composite-v6-boundary/c5-failure-c6-r6.svg",
+        "role": "operational_boundary_vector_source",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/latex/ksg-m1a-composite-v6-boundary.tex",
+        "role": "operational_boundary_latex_source",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v6.schema.json",
+        "role": "dual_phase_hosted_capture_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json",
+        "role": "local_l6_closure_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v6.schema.json",
+        "role": "dual_capture_typed_receipt_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "role": "current_replay_claim_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+        "role": "current_replay_decision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+        "role": "current_replay_evidence_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+        "role": "current_replay_revision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "justfile",
+        "role": "local_command_wiring",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "output/pdf/ksg-m1a-composite-v6-boundary.pdf",
+        "role": "operational_boundary_publication_pdf",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "output/pdf/ksg-m1a-composite-v6-boundary.rendering-receipt.tsv",
+        "role": "operational_boundary_rendering_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/README.md",
+        "role": "script_process_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+        "role": "bounded_local_l6_closure_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v6.py",
+        "role": "bounded_dual_phase_hosted_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+        "role": "certified_sxpid2_claim_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-certified-sxpid2-claim.py",
+        "role": "certified_sxpid2_claim_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-formal-pdf-set.sh",
+        "role": "formal_pdf_inventory_and_versioned_adjudication_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-formal-pdf-style.py",
+        "role": "formal_pdf_style_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh",
+        "role": "operational_boundary_pdf_gate_self_test",
+        "status": "A"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh",
+        "role": "operational_boundary_pdf_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh",
+        "role": "immutable_predecessor_pdf_portability_hostile_suite",
+        "status": "A"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-ksg-m1a-composite-v6-pdf-portability.sh",
+        "role": "immutable_predecessor_pdf_portability_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v6-self-test.py",
+        "role": "composite_v6_hostile_suite",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v6.py",
+        "role": "composite_v6_semantic_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+        "role": "lean_replay_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze.py",
+        "role": "lean_replay_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/generate-lean-4.33-replay.py",
+        "role": "lean_replay_generator",
+        "status": "M"
+      }
+    ],
+    "direct_parent_role": "published_c5_contract",
+    "message": "Repair KSG M1a composite v6 contract\n"
+  },
+  "nonimplications": [
+    "This policy describes an exact C6 and conditional R6 path topology; it is not prior authorization to create either commit or any evidence artifact.",
+    "Path, mode, role, status, Git topology, message, hash, or checker conformance does not authenticate bytes, authorship, provider observations, or trusted time.",
+    "C5 was published, but its hosted qualification attempt failed; the predecessor-failure capture is zero-credit failure evidence and cannot issue or substitute for R5.",
+    "R5 is permanently unissued; neither C6 nor R6 creates, reconstructs, renames, backdates, or revives it.",
+    "R6 requires fresh local qualification of the exact C6 commit and fresh attempt-1, exact-C6, all-success repository CI, CodeQL, and dedicated-v6 hosted qualification; partial success, retries, or predecessor observations cannot transfer.",
+    "The R6 local-closure record must be produced outside the repository from a clean exact C6 checkout, then installed byte-for-byte; its fixed command, clean endpoint observations, selected tool identities, and bounded output are unauthenticated correlated operational evidence, not a first-attempt or complete-executable-closure authority.",
+    "The local record's redacted environment routes, timestamps, process observations, and secret scan do not prove hermetic execution, trusted time, atomicity, descendant termination, absence of passwd-derived fallback, or absence of every sensitive value.",
+    "The clean endpoints use ordinary Git status plus selected metadata checks; rejecting core.excludesFile removes one ignore-routing overlay, but repository-ignored products and uninspected Git metadata remain outside the observation and may remain side inputs, so this is not a hermetic closure.",
+    "C6 repairs one named Cartesian report/figure association-rule failure surface manifested in the immutable v4/v5 PDF gate lanes; reproduced residues and stale digests do not establish a unique cause or that C6 is the only possible remedy.",
+    "Operational publications, process documentation, workflow results, captures, and receipts are not scientific authorities and establish no PID definition, mathematical proof, estimator validity, security certification, release, or application approval.",
+    "No evidence transfers among KSG mutual information, categorical or continuous shared exclusions, I_min, PID2, PID3, quantized or mixed-support routes, resampling procedures, or downstream objectives.",
+    "Repeated provider retrievals, checker agreement, and same-renderer comparisons do not establish independence or reproducibility.",
+    "Git and SHA-256 identities bind named bytes and topology only; they do not establish authorship, authenticity, independent reproduction, or indefinite storage durability."
+  ],
+  "r6": {
+    "delta": [
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-local-closure-v6-2026-08-18.json",
+        "role": "durable_local_l6_closure",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-receipt-v6-2026-08-18.json",
+        "role": "derived_v6_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-hosted-capture-v6-2026-08-18.json",
+        "role": "fresh_successor_hosted_capture",
+        "status": "A"
+      }
+    ],
+    "direct_parent_role": "c6_contract_repair",
+    "message": "Record KSG M1a composite v6 receipt\n"
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-m1a-composite-v6-path-policy",
+  "schema_revision": 1
+}

@@ -1,0 +1,517 @@
+{
+  "$defs": {
+    "artifactDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "byteBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "body_base64",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+(?![\\s\\S])",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "snapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "alternates": {
+          "const": "absent"
+        },
+        "common_dir": {
+          "const": "<REPOSITORY_ROOT>/.git"
+        },
+        "config_overlays": {
+          "const": "absent"
+        },
+        "git_dir": {
+          "const": "<REPOSITORY_ROOT>/.git"
+        },
+        "grafts": {
+          "const": "absent"
+        },
+        "head": {
+          "$ref": "#/$defs/commit"
+        },
+        "http_alternates": {
+          "const": "absent"
+        },
+        "info_attributes_rules": {
+          "const": "absent"
+        },
+        "info_exclude_rules": {
+          "const": "absent"
+        },
+        "message": {
+          "const": "Repair KSG M1a composite v6 contract\n"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "observed_at": {
+          "type": "string"
+        },
+        "parent": {
+          "const": "be862b155d710573ec95356fc1cbe9a96a2b83b9"
+        },
+        "replacement_refs": {
+          "const": []
+        },
+        "shallow": {
+          "const": "absent"
+        },
+        "status": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "worktree_root": {
+          "const": "<REPOSITORY_ROOT>"
+        }
+      },
+      "required": [
+        "alternates",
+        "common_dir",
+        "config_overlays",
+        "git_dir",
+        "grafts",
+        "head",
+        "http_alternates",
+        "info_attributes_rules",
+        "info_exclude_rules",
+        "message",
+        "object_format",
+        "observed_at",
+        "parent",
+        "replacement_refs",
+        "shallow",
+        "status",
+        "tree",
+        "worktree_root"
+      ],
+      "type": "object"
+    },
+    "tool": {
+      "additionalProperties": false,
+      "properties": {
+        "executable_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executable_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "enum": [
+            "bash",
+            "chktex",
+            "fc-match",
+            "git",
+            "just",
+            "lacheck",
+            "latexmk",
+            "lualatex",
+            "pdfinfo",
+            "pdffonts",
+            "pdftocairo",
+            "pdftotext",
+            "python3",
+            "rsvg-convert",
+            "xmllint"
+          ]
+        },
+        "route": {
+          "pattern": "^<(?:SYSTEM|USR_LOCAL|HOMEBREW|TEXLIVE)_BIN>/[A-Za-z0-9._+-]+$",
+          "type": "string"
+        },
+        "version_argv": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 2,
+          "type": "array"
+        },
+        "version_exit_code": {
+          "const": 0
+        },
+        "version_stderr": {
+          "$ref": "#/$defs/versionByteBinding"
+        },
+        "version_stdout": {
+          "$ref": "#/$defs/versionByteBinding"
+        }
+      },
+      "required": [
+        "executable_sha256",
+        "executable_size_bytes",
+        "name",
+        "route",
+        "version_argv",
+        "version_exit_code",
+        "version_stderr",
+        "version_stdout"
+      ],
+      "type": "object"
+    },
+    "versionByteBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "body_base64",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorities": {
+      "items": {
+        "$ref": "#/$defs/artifactDescriptor"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "invocation": {
+      "additionalProperties": false,
+      "properties": {
+        "argv": {
+          "const": [
+            "just",
+            "ksg-composite-v6"
+          ]
+        },
+        "cwd": {
+          "const": "<REPOSITORY_ROOT>"
+        },
+        "elapsed_monotonic_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "environment": {
+          "additionalProperties": false,
+          "properties": {
+            "GIT_CONFIG_GLOBAL": {
+              "const": "<NULL_DEVICE>"
+            },
+            "GIT_CONFIG_NOSYSTEM": {
+              "const": "1"
+            },
+            "GIT_NO_REPLACE_OBJECTS": {
+              "const": "1"
+            },
+            "GIT_OPTIONAL_LOCKS": {
+              "const": "0"
+            },
+            "GIT_TERMINAL_PROMPT": {
+              "const": "0"
+            },
+            "LANG": {
+              "const": "C"
+            },
+            "LC_ALL": {
+              "const": "C"
+            },
+            "PATH": {
+              "const": "<SANITIZED_TOOL_PATH>"
+            },
+            "PYTHONDONTWRITEBYTECODE": {
+              "const": "1"
+            },
+            "TEXMFCACHE": {
+              "const": "<PRIVATE_TEMP_TEXMF_CACHE>"
+            },
+            "TEXMFCONFIG": {
+              "const": "<PRIVATE_TEMP_TEXMF_CONFIG>"
+            },
+            "TEXMFHOME": {
+              "const": "<PRIVATE_TEMP_TEXMF_HOME>"
+            },
+            "TEXMFVAR": {
+              "const": "<PRIVATE_TEMP_TEXMF_VAR>"
+            },
+            "TMPDIR": {
+              "const": "<PRIVATE_TEMP_ROOT>"
+            },
+            "TZ": {
+              "const": "UTC"
+            },
+            "XDG_CACHE_HOME": {
+              "const": "<PRIVATE_TEMP_XDG_CACHE>"
+            },
+            "XDG_CONFIG_HOME": {
+              "const": "<PRIVATE_TEMP_XDG_CONFIG>"
+            },
+            "XDG_DATA_HOME": {
+              "const": "<PRIVATE_TEMP_XDG_DATA>"
+            }
+          },
+          "required": [
+            "GIT_CONFIG_GLOBAL",
+            "GIT_CONFIG_NOSYSTEM",
+            "GIT_NO_REPLACE_OBJECTS",
+            "GIT_OPTIONAL_LOCKS",
+            "GIT_TERMINAL_PROMPT",
+            "LANG",
+            "LC_ALL",
+            "PATH",
+            "PYTHONDONTWRITEBYTECODE",
+            "TEXMFCACHE",
+            "TEXMFCONFIG",
+            "TEXMFHOME",
+            "TEXMFVAR",
+            "TMPDIR",
+            "TZ",
+            "XDG_CACHE_HOME",
+            "XDG_CONFIG_HOME",
+            "XDG_DATA_HOME"
+          ],
+          "type": "object"
+        },
+        "environment_routes_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "exit_code": {
+          "const": 0
+        },
+        "finished_at": {
+          "type": "string"
+        },
+        "monotonic_finish_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "monotonic_start_ns": {
+          "const": 0
+        },
+        "signal": {
+          "const": null
+        },
+        "started_at": {
+          "type": "string"
+        },
+        "stderr": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "stdout": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "timed_out": {
+          "const": false
+        },
+        "timeout_seconds": {
+          "const": 14400
+        },
+        "umask": {
+          "const": "0077"
+        }
+      },
+      "required": [
+        "argv",
+        "cwd",
+        "elapsed_monotonic_ns",
+        "environment",
+        "environment_routes_sha256",
+        "exit_code",
+        "finished_at",
+        "monotonic_finish_ns",
+        "monotonic_start_ns",
+        "signal",
+        "started_at",
+        "stderr",
+        "stdout",
+        "timeout_seconds",
+        "timed_out",
+        "umask"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "const": [
+        "This unsigned local record is an unauthenticated operator-side observation; it has no signer or attestation authority.",
+        "One local execution is correlated with the C6 checkout and is neither an independent replication nor a first-attempt authority.",
+        "Wall-clock and monotonic ordering plus clean pre/post observations are not trusted time or an atomic worktree snapshot.",
+        "Executable hashes, version output, and captured command output do not prove which bytes the operating system executed or exclude unobserved interference.",
+        "The reviewed executable roster is a bounded named subset, not a complete inventory of scripts, shell builtins, libraries, TeX helpers, or transitive processes.",
+        "The redacted environment-route digest is an opaque correlated capture-time fingerprint, not a publicly recomputable path authority.",
+        "HOME is absent from the constructed environment; isolated XDG and TeX roots reduce but do not prove the absence of every passwd-derived user-path fallback.",
+        "The bounded pipe-drain rule rejects an escaped descriptor holder but does not prove that every descendant process was identified or terminated.",
+        "The bounded secret and private-path scan can reject named patterns but cannot prove that output contains no sensitive information.",
+        "The clean endpoints use ordinary Git status plus selected metadata checks; rejecting core.excludesFile removes one ignore-routing overlay, but repository-ignored products and uninspected Git metadata remain outside the observation and may remain side inputs, so this is not a hermetic closure.",
+        "A local closure pass is operational evidence only; it is not PID, KSG, mathematical, scientific, security, application, PDF/UA, renderer-independence, or cross-platform reproducibility evidence."
+      ]
+    },
+    "platform": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "enum": [
+            "arm64",
+            "aarch64"
+          ]
+        },
+        "operating_system": {
+          "const": "Darwin"
+        },
+        "operating_system_release": {
+          "pattern": "^[0-9A-Za-z._+-]{1,128}$",
+          "type": "string"
+        },
+        "python_implementation": {
+          "const": "CPython"
+        },
+        "python_version": {
+          "pattern": "^3\\.(?:1[1-9]|[2-9][0-9])\\.[0-9]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "architecture",
+        "operating_system",
+        "operating_system_release",
+        "python_implementation",
+        "python_version"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "repository_state": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "$ref": "#/$defs/snapshot"
+        },
+        "before": {
+          "$ref": "#/$defs/snapshot"
+        }
+      },
+      "required": [
+        "after",
+        "before"
+      ],
+      "type": "object"
+    },
+    "reviewed_executables": {
+      "items": {
+        "$ref": "#/$defs/tool"
+      },
+      "maxItems": 15,
+      "minItems": 15,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-local-closure/v1"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c5_parent": {
+          "const": "be862b155d710573ec95356fc1cbe9a96a2b83b9"
+        },
+        "c6_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c6_message": {
+          "const": "Repair KSG M1a composite v6 contract\n"
+        },
+        "c6_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "c5_parent",
+        "c6_commit",
+        "c6_message",
+        "c6_tree"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "authorities",
+    "invocation",
+    "nonimplications",
+    "platform",
+    "repository",
+    "repository_state",
+    "reviewed_executables",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "type": "object"
+}

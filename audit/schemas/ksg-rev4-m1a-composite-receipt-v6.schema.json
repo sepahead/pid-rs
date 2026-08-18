@@ -1,0 +1,765 @@
+{
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "archive_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "artifact_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "members_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "archive_sha256",
+        "archive_size_bytes",
+        "artifact_id",
+        "members_sha256",
+        "name"
+      ],
+      "type": "object"
+    },
+    "captureBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "phase": {
+          "$ref": "#/$defs/phase"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "phase",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}(?![\\s\\S])",
+      "type": "string"
+    },
+    "contractAuthority": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "minLength": 1,
+          "pattern": "^[a-z0-9_]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "failedJobLog": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Validate the bounded successor publication"
+              ]
+            },
+            "job_id": {
+              "const": 95619716898
+            },
+            "job_name": {
+              "const": "Validate the composite-v5 correction contract"
+            },
+            "observed_markers": {
+              "const": [
+                "composite-v5 boundary PDF check: PDF structure embedded Form content differs from standalone figure"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        },
+        {
+          "properties": {
+            "failed_steps": {
+              "const": [
+                "Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders"
+              ]
+            },
+            "job_id": {
+              "const": 95619717365
+            },
+            "job_name": {
+              "const": "Formal LaTeX / PDF inventory and cross-toolchain structure"
+            },
+            "observed_markers": {
+              "const": [
+                "composite-v4 process PDF check: PDF object structure changed: embedded custody Form content differs from the standalone figure"
+              ]
+            }
+          },
+          "required": [
+            "failed_steps",
+            "job_id",
+            "job_name",
+            "observed_markers"
+          ]
+        }
+      ],
+      "properties": {
+        "failed_steps": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "job_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "observed_markers": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "failed_steps",
+        "job_id",
+        "job_name",
+        "observed_markers",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "localCommandObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "argv": {
+          "const": [
+            "just",
+            "ksg-composite-v6"
+          ]
+        },
+        "elapsed_monotonic_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "environment_routes_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "exit_code": {
+          "const": 0
+        },
+        "finished_at": {
+          "$ref": "#/$defs/localUtcTimestamp"
+        },
+        "started_at": {
+          "$ref": "#/$defs/localUtcTimestamp"
+        },
+        "stderr_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stderr_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stdout_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "timed_out": {
+          "const": false
+        },
+        "umask": {
+          "const": "0077"
+        }
+      },
+      "required": [
+        "argv",
+        "elapsed_monotonic_ns",
+        "environment_routes_sha256",
+        "exit_code",
+        "finished_at",
+        "started_at",
+        "stderr_sha256",
+        "stderr_size_bytes",
+        "stdout_sha256",
+        "stdout_size_bytes",
+        "timed_out",
+        "umask"
+      ],
+      "type": "object"
+    },
+    "localPlatformObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "enum": [
+            "arm64",
+            "aarch64"
+          ]
+        },
+        "operating_system": {
+          "const": "Darwin"
+        },
+        "operating_system_release": {
+          "pattern": "^[0-9A-Za-z._+-]{1,128}$",
+          "type": "string"
+        },
+        "python_implementation": {
+          "const": "CPython"
+        },
+        "python_version": {
+          "pattern": "^3\\.(?:1[1-9]|[2-9][0-9])\\.[0-9]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "architecture",
+        "operating_system",
+        "operating_system_release",
+        "python_implementation",
+        "python_version"
+      ],
+      "type": "object"
+    },
+    "localQualification": {
+      "additionalProperties": false,
+      "properties": {
+        "observation": {
+          "$ref": "#/$defs/localQualificationObservation"
+        },
+        "record_binding": {
+          "$ref": "#/$defs/localRecordBinding"
+        }
+      },
+      "required": [
+        "observation",
+        "record_binding"
+      ],
+      "type": "object"
+    },
+    "localQualificationObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "authorities_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "command": {
+          "$ref": "#/$defs/localCommandObservation"
+        },
+        "platform": {
+          "$ref": "#/$defs/localPlatformObservation"
+        },
+        "repository_state": {
+          "$ref": "#/$defs/localRepositoryStateObservation"
+        },
+        "reviewed_executables_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-composite-local-qualification-observation/v1"
+        }
+      },
+      "required": [
+        "authorities_sha256",
+        "command",
+        "platform",
+        "repository_state",
+        "reviewed_executables_sha256",
+        "schema"
+      ],
+      "type": "object"
+    },
+    "localRecordBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "const": "audit/evidence/ksg-rev4-m1a-composite-local-closure-v6-2026-08-18.json"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "localRepositoryStateObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "after_observed_at": {
+          "$ref": "#/$defs/localUtcTimestamp"
+        },
+        "after_status_sha256": {
+          "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "after_status_size_bytes": {
+          "const": 0
+        },
+        "before_observed_at": {
+          "$ref": "#/$defs/localUtcTimestamp"
+        },
+        "before_status_sha256": {
+          "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "before_status_size_bytes": {
+          "const": 0
+        },
+        "c6_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c6_tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "http_alternates": {
+          "const": "absent"
+        },
+        "info_attributes_rules": {
+          "const": "absent"
+        },
+        "info_exclude_rules": {
+          "const": "absent"
+        }
+      },
+      "required": [
+        "after_observed_at",
+        "after_status_sha256",
+        "after_status_size_bytes",
+        "before_observed_at",
+        "before_status_sha256",
+        "before_status_size_bytes",
+        "c6_commit",
+        "c6_tree",
+        "http_alternates",
+        "info_attributes_rules",
+        "info_exclude_rules"
+      ],
+      "type": "object"
+    },
+    "localUtcTimestamp": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$",
+      "type": "string"
+    },
+    "observation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/artifact"
+          },
+          "maxItems": 32,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "artifacts_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "codeql_alerts_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "codeql_analyses_sha256": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/sha256"
+            }
+          ]
+        },
+        "codeql_analysis_ids": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maxItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "failed_job_logs": {
+          "items": {
+            "$ref": "#/$defs/failedJobLog"
+          },
+          "maxItems": 64,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "failed_job_logs_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "job_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "job_ids": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maxItems": 45,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "jobs_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "kind": {
+          "enum": [
+            "ci",
+            "codeql",
+            "contract"
+          ]
+        },
+        "role": {
+          "enum": [
+            "predecessor_ci",
+            "predecessor_codeql",
+            "predecessor_contract",
+            "successor_ci",
+            "successor_codeql",
+            "successor_contract"
+          ]
+        },
+        "run": {
+          "$ref": "#/$defs/run"
+        }
+      },
+      "required": [
+        "artifacts",
+        "artifacts_sha256",
+        "codeql_alerts_sha256",
+        "codeql_analysis_ids",
+        "codeql_analyses_sha256",
+        "failed_job_logs",
+        "failed_job_logs_sha256",
+        "job_count",
+        "job_ids",
+        "jobs_sha256",
+        "kind",
+        "role",
+        "run"
+      ],
+      "type": "object"
+    },
+    "phase": {
+      "enum": [
+        "predecessor_failure",
+        "successor_qualification"
+      ]
+    },
+    "phaseObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "phase": {
+          "$ref": "#/$defs/phase"
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/$defs/observation"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "capture_sha256",
+        "phase",
+        "roles"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+(?![\\s\\S])",
+      "type": "string"
+    },
+    "run": {
+      "additionalProperties": false,
+      "properties": {
+        "conclusion": {
+          "enum": [
+            "failure",
+            "success"
+          ]
+        },
+        "event": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "head_branch": {
+          "const": "main"
+        },
+        "head_sha": {
+          "$ref": "#/$defs/commit"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "repository_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "run_attempt": {
+          "const": 1
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "workflow_id": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "conclusion",
+        "event",
+        "head_branch",
+        "head_sha",
+        "name",
+        "path",
+        "repository_id",
+        "run_attempt",
+        "run_id",
+        "status",
+        "workflow_id"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v6.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capture_bindings": {
+      "items": {
+        "$ref": "#/$defs/captureBinding"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "contract_authorities": {
+      "items": {
+        "$ref": "#/$defs/contractAuthority"
+      },
+      "maxItems": 32,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "local_qualification": {
+      "$ref": "#/$defs/localQualification"
+    },
+    "nonimplications": {
+      "const": [
+        "C5 is a published commit, but its hosted qualification attempt failed and receives zero qualification, R5-receipt, mathematical, estimator, or application-validation credit.",
+        "R5 is permanently unissued; the v6 repair does not create, reconstruct, rename, or backdate a v5 receipt.",
+        "C6 repairs one named Cartesian report/figure association-rule failure surface, manifested in the immutable v4/v5 PDF gate lanes; it does not rewrite C5 history; R6 records fresh attempt-1 hosted success, and neither proves a unique root cause or only possible remedy.",
+        "The two retrieval repetitions are correlated provider observations, not independent replications or a transparency log.",
+        "CodeQL analysis and alert observations are repository-level current-state snapshots, not run-historical foreign-key evidence.",
+        "Captured provider bytes and identifiers do not authenticate themselves or establish trusted provider time.",
+        "Failed-job log bytes preserve observed output but do not by themselves prove a unique defect cause or that the successor repair is the only possible remedy.",
+        "The durable local closure is an unsigned, unauthenticated, correlated operator-side observation; it is neither independent reproduction nor a first-attempt authority.",
+        "Local wall-clock and monotonic ordering plus clean pre/post observations are not trusted time or an atomic worktree snapshot.",
+        "The local reviewed-executable roster is a bounded named subset, not a complete transitive executable inventory; its hashes and version output do not prove which bytes the operating system executed.",
+        "The redacted local environment-route digest is an opaque capture-time fingerprint; HOME remains absent and isolated XDG/TeX roots do not prove that every passwd-derived fallback was excluded.",
+        "The local secret/private-path and pipe-drain checks reject named hazards but do not prove absence of every sensitive value, identify every descendant, or prove descendant termination.",
+        "The clean endpoints use ordinary Git status plus selected metadata checks; rejecting core.excludesFile removes one ignore-routing overlay, but repository-ignored products and uninspected Git metadata remain outside the observation and may remain side inputs, so this is not a hermetic closure.",
+        "A passing checker, workflow, capture, or receipt is not mathematical proof, estimator validation, security certification, scientific review, or application approval.",
+        "No result transfers among KSG mutual information, categorical or continuous shared exclusions, I_min, PID2, PID3, quantized or mixed-support routes, resampling procedures, or downstream objectives.",
+        "Git and SHA-256 identities bind named bytes and topology only; they do not establish authorship, authenticity, independent reproduction, or indefinite storage durability."
+      ]
+    },
+    "observations": {
+      "items": {
+        "$ref": "#/$defs/phaseObservation"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v6"
+    },
+    "schema_revision": {
+      "const": 6
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c5_commit": {
+          "const": "be862b155d710573ec95356fc1cbe9a96a2b83b9"
+        },
+        "c5_tree": {
+          "const": "37ae61554284a2fabb460d3a20a731b6ade5f8f4"
+        },
+        "c6_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c6_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "c5_commit",
+        "c5_tree",
+        "c6_commit",
+        "c6_tree"
+      ],
+      "type": "object"
+    },
+    "verdict": {
+      "additionalProperties": false,
+      "properties": {
+        "c5_hosted_qualification": {
+          "const": "failed_zero_credit"
+        },
+        "c5_publication": {
+          "const": "published"
+        },
+        "c6_bounded_repair": {
+          "const": "pass"
+        },
+        "c6_hosted_observation": {
+          "const": "pass"
+        },
+        "c6_local_qualification": {
+          "const": "pass"
+        },
+        "r5_receipt_issued": {
+          "const": false
+        },
+        "r6_receipt_issued": {
+          "const": true
+        },
+        "scientific_validation": {
+          "const": "not_adjudicated"
+        }
+      },
+      "required": [
+        "c5_hosted_qualification",
+        "c5_publication",
+        "c6_bounded_repair",
+        "c6_hosted_observation",
+        "c6_local_qualification",
+        "r5_receipt_issued",
+        "r6_receipt_issued",
+        "scientific_validation"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "capture_bindings",
+    "contract_authorities",
+    "local_qualification",
+    "nonimplications",
+    "observations",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject",
+    "verdict"
+  ],
+  "type": "object"
+}

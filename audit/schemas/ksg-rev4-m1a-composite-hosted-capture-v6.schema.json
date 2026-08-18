@@ -1,0 +1,574 @@
+{
+  "$defs": {
+    "bodyBase64": {
+      "pattern": "^[A-Za-z0-9+/]*={0,2}(?![\\s\\S])",
+      "type": "string"
+    },
+    "capture": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/jsonCapture"
+        },
+        {
+          "$ref": "#/$defs/logCapture"
+        },
+        {
+          "$ref": "#/$defs/zipCapture"
+        }
+      ]
+    },
+    "captureArray": {
+      "items": {
+        "$ref": "#/$defs/capture"
+      },
+      "maxItems": 4096,
+      "minItems": 12,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "captureToolDescriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "const": "scripts/capture-ksg-m1a-composite-v6.py"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}(?![\\s\\S])",
+      "type": "string"
+    },
+    "jsonCapture": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "$ref": "#/$defs/bodyBase64"
+        },
+        "body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "body_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "logical_request": {
+          "$ref": "#/$defs/logicalRequest"
+        },
+        "media_type": {
+          "enum": [
+            "application/json",
+            "application/octet-stream"
+          ]
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/[ -~]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "redirect": {
+          "const": null
+        },
+        "repetition": {
+          "$ref": "#/$defs/repetition"
+        },
+        "response_kind": {
+          "const": "json"
+        },
+        "status_code": {
+          "const": 200
+        }
+      },
+      "required": [
+        "body_base64",
+        "body_sha256",
+        "body_size_bytes",
+        "logical_request",
+        "media_type",
+        "page",
+        "path",
+        "redirect",
+        "repetition",
+        "response_kind",
+        "status_code"
+      ],
+      "type": "object"
+    },
+    "logCapture": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "$ref": "#/$defs/bodyBase64"
+        },
+        "body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "body_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "logical_request": {
+          "$ref": "#/$defs/logicalRequest"
+        },
+        "media_type": {
+          "enum": [
+            "application/octet-stream",
+            "text/plain"
+          ]
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/actions/jobs/[0-9]+/logs(?![\\s\\S])",
+          "type": "string"
+        },
+        "redirect": {
+          "$ref": "#/$defs/redirect"
+        },
+        "repetition": {
+          "$ref": "#/$defs/repetition"
+        },
+        "response_kind": {
+          "const": "log"
+        },
+        "status_code": {
+          "const": 200
+        }
+      },
+      "required": [
+        "body_base64",
+        "body_sha256",
+        "body_size_bytes",
+        "logical_request",
+        "media_type",
+        "page",
+        "path",
+        "redirect",
+        "repetition",
+        "response_kind",
+        "status_code"
+      ],
+      "type": "object"
+    },
+    "logicalRequest": {
+      "pattern": "^(?:predecessor_(?:ci|codeql|contract)_(?:run|jobs|artifacts|artifact_[0-9]+|failed_job_[0-9]+_log)|successor_(?:ci|codeql|contract)_(?:run|jobs|artifacts|artifact_[0-9]+)|successor_codeql_(?:analyses|alerts_(?:open|dismissed|fixed)))(?![\\s\\S])",
+      "type": "string"
+    },
+    "nonimplications": {
+      "const": [
+        "Captured HTTPS response bytes do not authenticate themselves.",
+        "The two retrieval repetitions are correlated observations of provider state, not independent replications.",
+        "The predecessor failure phase records C5's terminal hosted failure; it grants no hosted-success, R5-receipt, mathematical, estimator, or application-validation credit.",
+        "A successful successor run is not mathematical, estimator, security, or application validation.",
+        "Code-scanning analysis and alert endpoints are repository-level current-state snapshots, not observations foreign-keyed to the workflow run or its historical execution window.",
+        "Failed-job log bytes record provider output but do not by themselves establish a unique defect cause, generic portability defect, or remediation.",
+        "Capture time, network completeness, provider response order, and trusted provider time are not claimed.",
+        "The capture makes no claim about any PID functional, objective, estimator, or downstream use."
+      ]
+    },
+    "page": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "predecessorDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_tool": {
+          "$ref": "#/$defs/captureToolDescriptor"
+        },
+        "captures": {
+          "$ref": "#/$defs/captureArray"
+        },
+        "immutable_v5_primitives": {
+          "$ref": "#/$defs/v5Descriptor"
+        },
+        "nonimplications": {
+          "$ref": "#/$defs/nonimplications"
+        },
+        "phase": {
+          "const": "predecessor_failure"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retry_events": {
+          "$ref": "#/$defs/retryArray"
+        },
+        "runs": {
+          "$ref": "#/$defs/predecessorRuns"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-composite-hosted-capture/v6"
+        },
+        "schema_revision": {
+          "const": 6
+        },
+        "subject": {
+          "$ref": "#/$defs/predecessorSubject"
+        }
+      },
+      "required": [
+        "capture_tool",
+        "captures",
+        "immutable_v5_primitives",
+        "nonimplications",
+        "phase",
+        "repository",
+        "retry_events",
+        "runs",
+        "schema",
+        "schema_revision",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "predecessorRuns": {
+      "additionalProperties": false,
+      "properties": {
+        "predecessor_ci": {
+          "const": 32107469096
+        },
+        "predecessor_codeql": {
+          "const": 32107469060
+        },
+        "predecessor_contract": {
+          "const": 32107469077
+        }
+      },
+      "required": [
+        "predecessor_ci",
+        "predecessor_codeql",
+        "predecessor_contract"
+      ],
+      "type": "object"
+    },
+    "predecessorSubject": {
+      "additionalProperties": false,
+      "properties": {
+        "predecessor_commit": {
+          "const": "be862b155d710573ec95356fc1cbe9a96a2b83b9"
+        },
+        "predecessor_tree": {
+          "const": "37ae61554284a2fabb460d3a20a731b6ade5f8f4"
+        }
+      },
+      "required": [
+        "predecessor_commit",
+        "predecessor_tree"
+      ],
+      "type": "object"
+    },
+    "redirect": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/redirectObject"
+        }
+      ]
+    },
+    "redirectObject": {
+      "additionalProperties": false,
+      "properties": {
+        "status_code": {
+          "enum": [
+            301,
+            302,
+            303,
+            307,
+            308
+          ]
+        },
+        "target_host": {
+          "pattern": "^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:blob\\.core\\.windows\\.net|githubusercontent\\.com)(?![\\s\\S])",
+          "type": "string"
+        },
+        "target_url_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "status_code",
+        "target_host",
+        "target_url_sha256"
+      ],
+      "type": "object"
+    },
+    "repetition": {
+      "enum": [
+        1,
+        2
+      ]
+    },
+    "retryArray": {
+      "items": {
+        "$ref": "#/$defs/retryEvent"
+      },
+      "maxItems": 8192,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "retryEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "category": {
+          "enum": [
+            "http_429",
+            "http_502",
+            "http_503",
+            "http_504",
+            "transport"
+          ]
+        },
+        "logical_request": {
+          "pattern": "^(?:predecessor|successor)_[a-z0-9_]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "page": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/[ -~]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "repetition": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "response_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "response_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "attempt",
+        "category",
+        "logical_request",
+        "page",
+        "path",
+        "repetition",
+        "response_sha256",
+        "response_size_bytes"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "type": "string"
+    },
+    "successorDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_tool": {
+          "$ref": "#/$defs/captureToolDescriptor"
+        },
+        "captures": {
+          "$ref": "#/$defs/captureArray"
+        },
+        "immutable_v5_primitives": {
+          "$ref": "#/$defs/v5Descriptor"
+        },
+        "nonimplications": {
+          "$ref": "#/$defs/nonimplications"
+        },
+        "phase": {
+          "const": "successor_qualification"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retry_events": {
+          "$ref": "#/$defs/retryArray"
+        },
+        "runs": {
+          "$ref": "#/$defs/successorRuns"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-composite-hosted-capture/v6"
+        },
+        "schema_revision": {
+          "const": 6
+        },
+        "subject": {
+          "$ref": "#/$defs/successorSubject"
+        }
+      },
+      "required": [
+        "capture_tool",
+        "captures",
+        "immutable_v5_primitives",
+        "nonimplications",
+        "phase",
+        "repository",
+        "retry_events",
+        "runs",
+        "schema",
+        "schema_revision",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "successorRuns": {
+      "additionalProperties": false,
+      "properties": {
+        "successor_ci": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "successor_codeql": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "successor_contract": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "successor_ci",
+        "successor_codeql",
+        "successor_contract"
+      ],
+      "type": "object"
+    },
+    "successorSubject": {
+      "additionalProperties": false,
+      "properties": {
+        "predecessor_commit": {
+          "const": "be862b155d710573ec95356fc1cbe9a96a2b83b9"
+        },
+        "predecessor_tree": {
+          "const": "37ae61554284a2fabb460d3a20a731b6ade5f8f4"
+        },
+        "successor_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "successor_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "predecessor_commit",
+        "predecessor_tree",
+        "successor_commit",
+        "successor_tree"
+      ],
+      "type": "object"
+    },
+    "v5Descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "const": "scripts/capture-ksg-m1a-composite-v5.py"
+        },
+        "sha256": {
+          "const": "a0e955c9645c852276a3750ee24c49c8feb029d748a73909461d4f71777b3a11"
+        },
+        "size_bytes": {
+          "const": 41566
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "zipCapture": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "$ref": "#/$defs/bodyBase64"
+        },
+        "body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "body_size_bytes": {
+          "minimum": 4,
+          "type": "integer"
+        },
+        "logical_request": {
+          "$ref": "#/$defs/logicalRequest"
+        },
+        "media_type": {
+          "enum": [
+            "application/octet-stream",
+            "application/zip"
+          ]
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/actions/artifacts/[0-9]+/zip(?![\\s\\S])",
+          "type": "string"
+        },
+        "redirect": {
+          "$ref": "#/$defs/redirect"
+        },
+        "repetition": {
+          "$ref": "#/$defs/repetition"
+        },
+        "response_kind": {
+          "const": "zip"
+        },
+        "status_code": {
+          "const": 200
+        }
+      },
+      "required": [
+        "body_base64",
+        "body_sha256",
+        "body_size_bytes",
+        "logical_request",
+        "media_type",
+        "page",
+        "path",
+        "redirect",
+        "repetition",
+        "response_kind",
+        "status_code"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v6.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/predecessorDocument"
+    },
+    {
+      "$ref": "#/$defs/successorDocument"
+    }
+  ]
+}

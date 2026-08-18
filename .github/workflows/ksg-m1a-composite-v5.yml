@@ -1,121 +1,26 @@
-name: KSG M1a composite v5
+name: KSG M1a composite v5 (retired)
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: ksg-m1a-composite-v5-${{ github.sha }}
-  cancel-in-progress: false
-
 jobs:
-  validate-contract:
-    name: Validate the composite-v5 correction contract
+  retired:
+    name: Refuse retired composite-v5 qualification
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          ref: "${{ github.sha }}"
-      - name: Normalize only the reviewed inert checkout residue
-        run: python3 -I -S -B scripts/normalize-actions-checkout-worktree-config.py
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.11"
-      - name: Install the hash-pinned PDF verifier dependency
-        run: |
-          python -m pip install \
-            --disable-pip-version-check \
-            --no-cache-dir \
-            --no-deps \
-            --require-hashes \
-            --requirement audit/formal/requirements-pdf.txt
-      - name: Install the runner PDF toolchain
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends \
-            chktex \
-            fontconfig \
-            latexmk \
-            lacheck \
-            librsvg2-bin \
-            libxml2-utils \
-            lmodern \
-            poppler-utils \
-            texlive-fonts-extra \
-            texlive-fonts-recommended \
-            texlive-latex-extra \
-            texlive-luatex \
-            texlive-plain-generic
-      - name: Recheck every bounded C4 failure surface
+      - name: Preserve the failed attempt-1 boundary
+        env:
+          PUBLISHED_C5: be862b155d710573ec95356fc1cbe9a96a2b83b9
+          FAILED_CI_ATTEMPT_1_RUN: "32107469096"
+          SUCCESSFUL_CODEQL_ATTEMPT_1_RUN: "32107469060"
+          FAILED_CONTRACT_ATTEMPT_1_RUN: "32107469077"
         run: |
           set -euo pipefail
-          python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          scripts/check-release-state-self-test.sh
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.json"
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/zeta.json" "${RUNNER_TEMP}/zeta.optimized.json"
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-          python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-          python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-      - name: Validate the bounded successor publication
-        run: |
-          set -euo pipefail
-          scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh --cross-toolchain
-      - name: Validate fresh replay and current-source custody
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -I -S -B scripts/check-current-source-state-v1.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1.py
-          python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-      - name: Validate static v5 contract in normal and optimized modes
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v5.py --self-test \
-            > "${RUNNER_TEMP}/capture-v5-self-test.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v5.py --self-test \
-            > "${RUNNER_TEMP}/capture-v5-self-test.optimized.json"
-          cmp --silent \
-            "${RUNNER_TEMP}/capture-v5-self-test.json" \
-            "${RUNNER_TEMP}/capture-v5-self-test.optimized.json"
-          unlink -- "${RUNNER_TEMP}/capture-v5-self-test.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v5.py --validate-static \
-            > "${RUNNER_TEMP}/ksg-m1a-composite-v5-static.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v5.py --validate-static \
-            > "${RUNNER_TEMP}/ksg-m1a-composite-v5-static.optimized.json"
-          cmp --silent \
-            "${RUNNER_TEMP}/ksg-m1a-composite-v5-static.json" \
-            "${RUNNER_TEMP}/ksg-m1a-composite-v5-static.optimized.json"
-          unlink -- "${RUNNER_TEMP}/ksg-m1a-composite-v5-static.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py \
-            > "${RUNNER_TEMP}/composite-v5-self-test.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v5-self-test.py \
-            > "${RUNNER_TEMP}/composite-v5-self-test.optimized.json"
-          cmp --silent \
-            "${RUNNER_TEMP}/composite-v5-self-test.json" \
-            "${RUNNER_TEMP}/composite-v5-self-test.optimized.json"
-      - name: Upload the exact v5 static result
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          compression-level: 0
-          if-no-files-found: error
-          name: ksg-m1a-composite-v5-static-${{ github.sha }}
-          path: ${{ runner.temp }}/ksg-m1a-composite-v5-static.json
-          retention-days: 90
+          echo "Composite v5 is retired after failed attempt-1 CI run ${FAILED_CI_ATTEMPT_1_RUN} and contract run ${FAILED_CONTRACT_ATTEMPT_1_RUN} for ${PUBLISHED_C5}." >&2
+          echo "CodeQL run ${SUCCESSFUL_CODEQL_ATTEMPT_1_RUN} cannot transfer qualification credit across the failed C5 boundary." >&2
+          echo "R5 is permanently unissued; use the composite-v6 workflow for a fresh C6 qualification." >&2
+          exit 1

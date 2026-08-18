@@ -62,13 +62,16 @@ merging PID families or proof/certificate/application statuses.
 
 ## Status-separated research inventory
 
-This inventory is a coordination snapshot bound to the C4-era catalog, not a novelty claim or a
-completion percentage. The rows are **not additive**: a dependency, workflow composition,
+This inventory is a coordination snapshot bound to the C4/C5/C6 engineering lineage and the
+unchanged catalog, not a novelty claim or a completion percentage. The rows are **not additive**:
+a dependency, workflow composition,
 validation package, theorem, solver obligation, and PID definition are different object types.
 Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` changed no PID definition,
-estimator, theorem source, or scientific code. Composite-v5 preserves that zero-science scope.
-Those are exact tree/diff observations for named commits, not permission to infer the same about a
-future descendant without recomputing it.
+estimator, theorem source, or scientific code. Published C5 commit
+`be862b155d710573ec95356fc1cbe9a96a2b83b9` preserves that zero-science scope, and composite-v6
+defines the same bounded zero-science scope for a future C6. Those are exact tree/diff observations
+for named published commits or a frozen contract for a future commit, not permission to infer the
+same about a future descendant without recomputing it.
 
 | Category | Landed inventory | Open inventory and boundary |
 |---|---:|---|
@@ -81,8 +84,8 @@ future descendant without recomputing it.
 | PID/KSG-relevant source-written Lean theorems | **275** | The total is 246 bridge/convergence, 19 KSG integer-harmonic, 7 exact-log-product, and 3 descriptor-factorization theorems. No arbitrary theorem-count target is asserted. |
 | Exact solver obligations | **9** | Five PID-algebra QF\_LRA obligations and four conditional KSG QF\_UFLIRA obligations are landed; solver answers are not kernel proof objects. Future obligations follow the named open packets rather than a predeclared count. |
 | Categorical MGW SxPID3 | Stable implementation computes the **18-antichain** three-source lattice | The stronger assurance program is **0/5 Programs A--E** and **0/108 component-coordinates** complete. Do not transfer the implementation status into certification status. |
-| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5 qualification lineage are engineering/evidence work and are counted separately. |
-| Mutable plan checklist | **21/62 checked; 41 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
+| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5/C6 qualification lineage are engineering/evidence work and are counted separately. |
+| Mutable plan checklist | **25/66 checked; 41 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
 
 The catalog currently contains 73 method rows and 45 references: 17 paper-defined, 15
 paper-derived, and 41 project-defined. Every row records `scientific_novelty_claim = none`.
@@ -171,15 +174,17 @@ experiments, and review.
 
 ### Anti-infrastructure-drift priority
 
-Published C4 failed hosted qualification and R4 remained unissued. Composite-v5 C5/R5 is the
-smallest append-only operational correction and the final general evidence-contract migration in
-this phase. After C5 is exact and hosted-green and R5 is issued, work must move to the seven named P4 science units and their
+Published C4 failed hosted qualification and R4 remained unissued. Published C5 also failed its
+attempt-1 hosted qualification: CodeQL passed, while repository CI and the dedicated-v5 route
+failed, so R5 is permanently unissued. Composite-v6 C6/R6 is the smallest append-only operational
+correction and the final general evidence-contract migration in this phase. After C6 is exact and
+hosted-green and R6 is issued, work must move to the seven named P4 science units and their
 publication packets. Do not start another repository-wide harness, receipt generation, formal
 replay, schema family, or CI expansion merely because it is possible. Additional infrastructure is
 authorized only when a named scientific claim packet identifies a concrete failure mode, shows
 that the existing machinery cannot express or check it, and bounds the smallest required change.
 
-The harness is a means to trustworthy research, not the research endpoint. Priority after C5/R5 is
+The harness is a means to trustworthy research, not the research endpoint. Priority after C6/R6 is
 KSG M1c correspondence, PID2 revision 4, categorical MGW SxPID3 Programs A--E and 108 coordinates,
 high-value consumer APIs with exact object identities, and thesis/publication-ready positive and
 negative results. Ecosystem usefulness is a downstream requirement, not permission to replace the
@@ -325,10 +330,15 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   receipt. Composite-v4 published unsigned direct-child C4
   `da253576a5f76e99633fff4de5cf1118f967b90d`, but its first hosted qualification failed: CodeQL
   passed, while repository CI had four terminal failed jobs and the dedicated v4 route failed in
-  static-validation preflight. R4 is permanently unissued. Composite-v5 is the bounded append-only
-  replacement: publish direct-child C5 with the predecessor failure, five operational repairs, the
-  boundary PDF, and fresh replay r10; require exact-C5 attempt-1 local, CI, CodeQL, and dedicated-v5
-  success; then permit direct-child R5 to add the successor capture and dual-capture receipt while
+  static-validation preflight. R4 is permanently unissued. Composite-v5 published direct-child C5
+  `be862b155d710573ec95356fc1cbe9a96a2b83b9`, tree
+  `37ae61554284a2fabb460d3a20a731b6ade5f8f4`, with the predecessor failure, five operational
+  repairs, the boundary PDF, and fresh replay r10. Exact-C5 attempt-1 CodeQL succeeded, but
+  repository CI and the dedicated-v5 route failed, so R5 is permanently unissued. Composite-v6 is
+  the bounded append-only replacement: publish direct-child C6 with the association-rule repair,
+  its separately versioned boundary and qualification machinery, and fresh replay r11; require
+  exact-C6 local, attempt-1 CI, CodeQL, and dedicated-v6 success; then permit direct-child R6 to add
+  only its durable local closure record, successor hosted capture, and typed receipt while
   regenerating current-source last. Neither commit may alter scientific code or promote M1a beyond
   `integration_no_go`.
 
@@ -413,14 +423,17 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   as bounded execution-custody evidence, with zero C4-publication, hosted, scientific,
   accepted-current-replay, or independence credit. Final r9 was generated fresh, validated, and
   published in C4 without overwriting or relabelling the rejected document.
-- [ ] After all C5 operational bytes settle, preserve finalized r6, r7, r8, and r9 as exact prior
+- [x] After all C5 operational bytes settle, preserve finalized r6, r7, r8, and r9 as exact prior
   evidence and generate
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`. Here r10
   is the tenth receipt in the versioned sequence that originated on 12 August and the eleventh
   current-project replay receipt overall; the 11 August historical receipt is outside that
   sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
   or independence revision. C5 receives execution credit only when that exact receipt exists and
-  validates under normal and optimized custody checks; regenerate current-source last.
+  validates under normal and optimized custody checks; regenerate current-source last. Published
+  C5 carries the accepted 135,997-byte r10 at SHA-256
+  `ee8990136f16eda164b97cd6769ddc9cd3ef6446e5d84577d3517d4272df956f`; it validates as exact
+  finalized prior evidence.
 - [x] Preserve and withdraw unpublished local C5 candidate
   `08cf441c34b0d7a547d906ed682693c57ff29e25`, tree
   `c599c698faae5a1afae9b0fb7bde123c5525fd1c`. Its 135,997-byte `r10` had SHA-256
@@ -441,11 +454,27 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   hosted failure, keep both v4 capture/receipt paths absent, and record R4 as permanently unissued.
   C4 is `da253576a5f76e99633fff4de5cf1118f967b90d`; its CodeQL route passed but CI and the dedicated
   v4 route did not, so no partial or rerun credit is granted.
-- [ ] Publish composite-v5 C5 and conditional R5 as separate unsigned, human-attributed
-  fast-forward milestones. C5 must retain the predecessor capture, five bounded repairs,
-  publication-quality boundary PDF/SVG and receipts, fresh r10, exact path policy, and regenerated
-  current-source. Only fresh attempt-1 exact-C5 CI, CodeQL, and dedicated-v5 success permits R5;
-  R5 adds the successor capture and dual-capture typed receipt and regenerates current-source last.
+- [x] Publish composite-v5 C5 and adjudicate conditional R5 as separate unsigned, human-attributed
+  fast-forward milestones. C5 is exact published commit
+  `be862b155d710573ec95356fc1cbe9a96a2b83b9`, with publication-quality boundary PDF/SVG and
+  receipts, fresh r10, exact path policy, and current-source regenerated last. Its fresh attempt-1
+  CodeQL run succeeded, while repository CI and dedicated-v5 failed; therefore R5 is permanently
+  unissued and no partial or rerun credit is granted.
+- [x] After all C6 operational bytes settle, preserve finalized r10 byte-for-byte and generate
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json`. Here r11
+  is the eleventh receipt in the versioned sequence that originated on 12 August and the twelfth
+  current-project replay receipt overall; the 11 August historical receipt remains outside that
+  sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
+  or independence revision. No Lean theorem source changes. C6 receives execution credit only
+  when that exact receipt exists and validates under normal and optimized custody checks; generate
+  it only after every other operational byte settles and regenerate current-source last.
+- [ ] Publish composite-v6 C6 and conditional R6 as separate unsigned, human-attributed
+  fast-forward milestones. C6 must be the exact single-parent direct child of published C5 and
+  retain the bounded association-rule repair, separately versioned boundary and qualification
+  machinery, fresh r11, exact path policy, and current-source regenerated last. Only one fresh
+  exact-C6 local closure observation plus attempt-1 exact-C6 CI, CodeQL, and dedicated-v6 success
+  permits R6. If permitted, R6 adds exactly the durable local closure record, successor hosted
+  capture, and typed receipt while modifying current-source last; otherwise R6 remains unissued.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

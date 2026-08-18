@@ -699,7 +699,9 @@ def validate_checker_source_mutations(anchor_raw: bytes, candidate_raw: bytes) -
     expect_checker_source_rejection(
         "support-gate-rebind-inventory-expanded",
         anchor_raw,
-        replace_checker_mapping(candidate_raw, SUPPORT_GATE_ASSIGNMENT, expanded_support),
+        replace_checker_mapping(
+            candidate_raw, SUPPORT_GATE_ASSIGNMENT, expanded_support
+        ),
         "candidate support-gate rebind path inventory changed",
     )
 
@@ -2541,9 +2543,11 @@ def main() -> int:
                     ),
                 ),
                 "justfile",
-                lambda text: text
-                + "\nunused-retained-claim-gate:\n"
-                + "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n",
+                lambda text: (
+                    text
+                    + "\nunused-retained-claim-gate:\n"
+                    + "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n"
+                ),
             ),
             "revision-3 executable gate must occur once as an active command",
         ),
@@ -2554,11 +2558,11 @@ def main() -> int:
                 "justfile",
                 (
                     " formal-finite-convergence lean-toolchain-freeze "
-                    "ksg-composite-v5 certified-sxpid citation-edge-countermodel "
+                    "ksg-composite-v6 certified-sxpid citation-edge-countermodel "
                 ),
                 (
                     " formal-finite-convergence lean-toolchain-freeze "
-                    "ksg-composite-v5 citation-edge-countermodel "
+                    "ksg-composite-v6 citation-edge-countermodel "
                 ),
             ),
             "revision-3 release-audit dependency missing",
@@ -2569,11 +2573,11 @@ def main() -> int:
                 baseline,
                 "justfile",
                 (
-                    "lean-toolchain-freeze ksg-composite-v5 certified-sxpid "
+                    "lean-toolchain-freeze ksg-composite-v6 certified-sxpid "
                     "citation-edge-countermodel formal-pdfs"
                 ),
                 (
-                    "lean-toolchain-freeze ksg-composite-v5  certified-sxpid "
+                    "lean-toolchain-freeze ksg-composite-v6  certified-sxpid "
                     "citation-edge-countermodel formal-pdfs"
                 ),
             ),

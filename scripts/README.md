@@ -649,6 +649,88 @@ can permit R5, whose exact three-path delta adds the successor capture and typed
 regenerates current-source last. The receipt binds both captures. Passing a subset, rerunning an
 attempt, or changing C5 requires another append-only contract version.
 
+That condition was not met. Published C5 commit
+`be862b155d710573ec95356fc1cbe9a96a2b83b9` retained a successful attempt-1 CodeQL route, but its
+dedicated-v5 publication step failed and the repository-CI formal-PDF job exposed the analogous
+immutable-v4 lane; repository CI ended with 44 successful jobs and that one failure. Both old
+cross-toolchain gates compared every report with every fresh and
+committed standalone figure even though the TeX reports name the committed figure. R5 is therefore
+permanently unissued. Preserve C5, r10, and both old gate scripts exactly; their failed hosted
+observations receive no R5, scientific, authentication, or independence credit.
+
+Composite-v6 adds a separately versioned keyed portability adjudicator and boundary publication.
+Each rebuilt or committed report must match the exact committed figure its TeX source names. The
+fresh standalone figure is checked separately against the committed standalone figure through
+closed object-safety, text, page geometry, subset-neutral font-family, and bounded color/grayscale
+same-renderer predicates. A decoded-content-different no-op positive proves the cross-toolchain
+figure relation does not collapse back to byte identity, while the same fixture must be rejected
+as a report's associated figure. Run the local exact lane from frozen bytes with:
+
+```text
+just ksg-composite-v6
+scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --exact
+scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --exact
+scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
+scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
+```
+
+The dedicated Ubuntu v6 workflow runs the same two gate pairs with `--cross-toolchain`; it does
+not claim that Linux can reproduce the committed macOS PDF bytes. C6 must be C5's exact unsigned
+direct child and publishes fresh replay r11. From an exact clean committed C6 checkout, the typed
+local recorder runs only the fixed `just ksg-composite-v6` command under its constructed
+environment and writes a new mode-0600 staging file outside the repository:
+
+```text
+local_closure_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c6-local-closure.XXXXXX")"
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py \
+  --output "$local_closure_dir/local-closure.json"
+```
+
+The staged record binds exact C6 topology, the fixed command, clean pre/post observations, bounded
+stdout/stderr, and a reviewed executable subset. It is an unsigned correlated local observation,
+not a first-attempt authority, complete transitive executable inventory, atomic snapshot,
+authentication, trusted time, or independent reproduction. Install its exact bytes at
+`audit/evidence/ksg-rev4-m1a-composite-local-closure-v6-2026-08-18.json` only after its schema and
+semantic checks pass.
+
+The clean endpoints use ordinary Git status plus selected metadata checks. Rejecting
+`core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
+uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
+hermetic closure.
+
+After the successor hosted capture also validates, derive the candidate receipt from two distinct
+new mode-0600 staging files. The derivation route accepts no evidentiary stdin route and requires
+both inputs at offset zero through stable, single-link regular-file descriptors:
+
+```text
+set -o noclobber
+umask 077
+local_record="$local_closure_dir/local-closure.json"
+successor_capture="/absolute/private/path/successor-capture.json"
+receipt_staging="/absolute/private/path/composite-v6-receipt.json"
+python3 -I -S -B scripts/check-ksg-m1a-composite-v6.py \
+  --derive-receipt --local-closure-fd 3 --successor-capture-fd 4 \
+  3<"$local_record" 4<"$successor_capture" >"$receipt_staging"
+```
+
+Do not install the derived bytes until the checker validates the staged receipt and both input
+records against the exact C6/R6 contract. The two private staging paths are transport locations,
+not evidence locators or durable authorities.
+
+R6 remains an exact conditional four-path child: that local record, the fresh successor hosted
+capture, the deterministically derived receipt, and current-source regenerated last. It is
+permitted only after the fresh exact-C6 local closure and fresh attempt-1 repository CI, all four
+CodeQL language jobs, and dedicated-v6 success for the same exact C6 SHA. The receipt validates and
+binds the predecessor capture, local record, and successor capture before recording all four terms.
+Any false, absent, nonterminal, wrong-attempt, or wrong-SHA hosted term—or an absent or invalid local
+record—leaves R6 unissued and requires another append-only contract version.
+
+This portability correction is one project-defined report/figure association repair manifested in
+two immutable predecessor gates. It is not evidence that either committed publication is
+defective, is not a generic PDF-equivalence theorem, and grants no PID, KSG, mathematical,
+scientific, security, application, PDF/UA, renderer-independence, authentication, or independent
+reproduction status.
+
 The v4 capture and receipt commands documented by the historical process report described a
 conditional route that was never admitted. C4's attempt-1 qualification failed, R4 is permanently
 unissued, and the two reserved v4 evidence paths must remain absent. Do not run the v4 live capture,
@@ -865,13 +947,13 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
 finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt,
-finalized `r8` receipt, and finalized `r9` receipt remain exact-hash-bound prior evidence with their
-original v1, v2, v2, v2, v2, v2, v2, v2, v2, and v2 schema identities. The `r10` suffix denotes
-only the tenth receipt in the versioned sequence that originated on 12 August, and therefore the
-eleventh current-project replay receipt overall; the 11 August historical receipt is outside that
+finalized `r8` receipt, finalized `r9` receipt, and finalized `r10` receipt remain exact-hash-bound
+prior evidence with their original v1 and ten v2 schema identities. The `r11` suffix denotes only
+the eleventh receipt in the versioned sequence that originated on 12 August, and therefore the
+twelfth current-project replay receipt overall; the 11 August historical receipt is outside that
 versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 route receives current execution credit only when that exact receipt exists and validates.
@@ -916,24 +998,24 @@ checker reconstructs its zero-placeholder replay source and allows no other chec
 replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
 two-edit finalization and normal/optimized checker plus self-test replay.
 
-The runner also refuses to start unless the three-way composite-v5 checksum cut is invocation
+The runner also refuses to start unless the three-way composite-v6 checksum cut is invocation
 ready. The replay projection must still be the unique exact zero-placeholder source expression;
-the Lean composite-v5 scalar and the `scripts/check-ksg-m1a-composite-v5.py` operational-map row
-must be equal nonzero literals hashing the exact final v5 checker; and the v5 checker's unique
+the Lean composite-v6 scalar and the `scripts/check-ksg-m1a-composite-v6.py` operational-map row
+must be equal nonzero literals hashing the exact final v6 checker; and the v6 checker's unique
 nonzero `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal must reproduce the Lean source after
-normalizing exactly the projection, v5 scalar, and v5 operational row to their reviewed placeholder
-forms. The retained v4 checker, its ordinary operational-map row, and r9 receipt are immutable
-prior evidence: they are neither rewritten nor part of the r10 normalization cut.
+normalizing exactly the projection, v6 scalar, and v6 operational row to their reviewed placeholder
+forms. The retained v4/v5 checkers, their ordinary operational-map rows, and r9/r10 receipts are
+immutable prior evidence: they are neither rewritten nor part of the r11 normalization cut.
 
-Finalization is deliberately acyclic. First freeze the v5 self-test, this guide, the freeze guide,
+Finalization is deliberately acyclic. First freeze the v6 self-test, this guide, the freeze guide,
 and every other non-cut byte and digest row. With all three Lean cut positions in placeholder form,
-compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v5 checker.
-Then freeze the v5 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
-only the Lean v5 scalar and v5 operational row. Leave the replay projection as `"0" * 64`, rerun
+compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v6 checker.
+Then freeze the v6 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
+only the Lean v6 scalar and v6 operational row. Leave the replay projection as `"0" * 64`, rerun
 the normal and optimized hostile suites, and invoke the zero-argument replay generator exactly
-once. Only after it no-clobber-publishes the provisional r10 receipt may the established two-edit
+once. Only after it no-clobber-publishes the provisional r11 receipt may the established two-edit
 receipt finalization replace the projection literal and the projection-omitted live Lean-checker
-custody digest. Any change to the v5 self-test or another normalized Lean input after `H_L` was
+custody digest. Any change to the v6 self-test or another normalized Lean input after `H_L` was
 computed invalidates the cut and requires restarting this sequence. The generator predicates run
 before replay commands and publication; the hostile suites exercise causal checker drift,
 projection-finalized, missing, duplicated, mismatched, normalized-cut, and operational-map-omission

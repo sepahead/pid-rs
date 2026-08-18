@@ -38,7 +38,7 @@ SCRIPT = Path(os.path.abspath(os.fspath(Path(__file__))))
 ROOT = SCRIPT.parent.parent
 PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
-RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json"
+RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json"
 RECEIPT = ROOT / RECEIPT_RELATIVE
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -50,8 +50,8 @@ EXPECTED_CLEAN_BUILD_STDOUT_STREAM = {
 # This literal is deliberately one line so the append-only receipt can reconstruct
 # the exact pre-pin checker bytes without a checksum cycle.
 # fmt: off
-EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "f7875094b8b19c98bd97508633885abcc20e385512df60b87c73f639ffc8c559"
-EXPECTED_COMPOSITE_V5_CHECKER_OPERATIONAL_SHA256 = "b510e3e1a9831a41f6904fd9fd259c227c426b11436ead11789a04ad474a8c30"
+EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "d6fdadc85b144d0af9687e137a797d690a76421efc2e0f31f851bbc889044fdc"
+EXPECTED_COMPOSITE_V6_CHECKER_OPERATIONAL_SHA256 = "6708de55bd0ffd938d1a567630b64d2a6d577cccd09b2285abe00ccf31cba494"
 # fmt: on
 EXPECTED_LOCAL_REPLAY_ROUTES = {
     "archive": (
@@ -262,6 +262,9 @@ PRESERVED_PRIOR_REPLAY_HASHES = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json": (
         "e9136696563e007f98498080bb7a769c60353df83537ee90976ee9cc66c0873f"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json": (
+        "ee8990136f16eda164b97cd6769ddc9cd3ef6446e5d84577d3517d4272df956f"
+    ),
 }
 PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": (
@@ -294,12 +297,15 @@ PRESERVED_PRIOR_REPLAY_SCHEMAS = {
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json": (
         "pid-rs/lean-current-project-replay/v2"
     ),
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json": (
+        "pid-rs/lean-current-project-replay/v2"
+    ),
 }
 EXPECTED_POLICY_SHA256 = (
     "db0c403f61af1c49996ed217fd025007bd76743de8c57ff147fa12ed319eb204"
 )
 EXPECTED_ACTIVE_RESUME_SHA256 = (
-    "16d8b97fd2aa2d31f9315252ca152d08498ca7fa9b262a7462fb9826f1abf667"
+    "1200d6f6b996b95ff38fa9a8f66c721e2723113a54f8960d5278b7ceebe87a9b"
 )
 OPTION = "set_option backward.isDefEq.respectTransparency.types false in"
 EXPECTED_OPTION_LINES = {
@@ -441,13 +447,13 @@ EXPECTED_CURRENT_REPLAY_POINTER_PATHS = (
     "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
     "scripts/README.md",
 )
-EXPECTED_R10_SEQUENCE_EXPLANATION_PATHS = EXPECTED_CURRENT_REPLAY_POINTER_PATHS
+EXPECTED_R11_SEQUENCE_EXPLANATION_PATHS = EXPECTED_CURRENT_REPLAY_POINTER_PATHS
 EXPECTED_ACTIVE_RESUME_HASHES = {
     "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": (
         "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0"
     ),
     "audit/evidence/completion-active-resume.md": (
-        "16d8b97fd2aa2d31f9315252ca152d08498ca7fa9b262a7462fb9826f1abf667"
+        "1200d6f6b996b95ff38fa9a8f66c721e2723113a54f8960d5278b7ceebe87a9b"
     ),
 }
 EXPECTED_PENDING_ACTIVE_RESUME_PATHS = tuple(
@@ -459,9 +465,10 @@ PENDING_OPERATIONAL_SHA256 = "0" * 64
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "61283264499a7b6069a4e5e9563c72541ab101b69379f3ace75a12cd4bf4b175",
     ".github/workflows/ksg-m1a-composite-v4.yml": "3952fdfb596ce15e176795d8a6ec76aaad9d8d66e830129784d3b919ddc5cda5",
-    ".github/workflows/ksg-m1a-composite-v5.yml": "7f41177c175d785c92512beb23cfd860c5cf94f12dd2a4aa0d4f414963c86593",
-    "AGENTS.md": "a0b637a6ba0dc93c380372a24e93d1691e208a7ff4dd09777b5ceeddcfb1d539",
-    "CHANGELOG.md": "022ea036511cfb7c1a2f661eeb05e158c208d41eab3c45ff423ad140cd8992c5",
+    ".github/workflows/ksg-m1a-composite-v5.yml": "7668120a4d4f67db90ae3af0aed048a8ccdf1ae27eb7c96732dfa33852cd14ed",
+    ".github/workflows/ksg-m1a-composite-v6.yml": "41d5c0f2000c26f35b0a703890dfcf86a9da91bb00b51b65e0570cfb0df39791",
+    "AGENTS.md": "6912796a9e02a7f9990741a1bcdf1b84dfee373f4f1a7281d69c117c2940e923",
+    "CHANGELOG.md": "1d305fa510632e0f6a24b06b4bc4b27712f2b6c6d888b5c4c3c89eea81cf8df3",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": "538690ae27c6e52bb5bbb6844acb3cd8f32d46f8f08ef770e09dae8d33ae9bb6",
     "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
     "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md": "85bb7aed98e33f924a12bb882d8aba396a8d31b66b1432caebc48627b1e0b292",
@@ -480,15 +487,21 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md": "6596e3c7e4a8bca989ad4724efb2f9c7592564b359b29f3a2a7a224ce2270a29",
     "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-visual-receipt-2026-08-18.md": "8e73300fb5b4a0ad3d56b5b2230a9a9a45c63295c9445e9ef91fa2805ee68420",
     "audit/evidence/ksg-rev4-m1a-composite-v5-path-policy-v1.json": "dc030a357eb9a18beb8d55a5ecb23bf79c8e55676a0c50bf6661847ce5b9a89c",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v6-2026-08-18.json": "d19760db0acf2a2c5219f65773c43c64e3fb3fffba1e12165558edcdd2f1a442",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-boundary-2026-08-18.md": "a0a1a675e470169f411c35f0ae4b496848f8cbe44300cbca0a763d1ec20a57f9",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-boundary-visual-receipt-2026-08-18.md": "ce04b42e37b2db4030452402403c4535c0739b8587a29eed40c091ad60450b67",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-path-policy-v1.json": "5d0ca02a7c0570cacac8dd57880390d69a4466af12f7166a036eca46ade49e50",
     "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json": "fb162cc40da3059b61eab9024f4aa38cf6daf2d84ef7e1d8a26dc7d345291e70",
     "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md": "cc604d039f1c6a488f3d25f3ca1d16bc7624db0cc4074608475bc662a8920a46",
-    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "c05898e692cce675a01dda5a2ff1703b9aedb06963eb47de0ba750abfd755517",
-    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "1d05f596f25a3fbd835e56eb741b2013b2a01de928c29b2c0c16847d37e95c4b",
-    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "56154607d698b6b95672b13b772df34d470daf4f9c308826387d424988b93656",
+    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "20a478cdd1e7872fff4d5b44a03d2a3f83287fe95c18e2f2b17195342260ce6e",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "4adb22e23d3c3cfd931ab70cb85f615d9510d060a39a857ce2e79e7235ce6bbb",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "e868c91d7b7f2e2d47d3d7e8d419a10d92ba30350411006e6811cccc58099a47",
     "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.pdf": "9111ff1ae77c011d9b75999852136880746f3e33b137ade877bee80f6e354499",
     "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.svg": "9022812adeb3845e9d494428fb5e2f6489bb7cf938444c1c96c364c38d4f6095",
     "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.pdf": "2b7f97c1491b8ab05a6223e958c9dfd2e74e2d1a41c7973d4098ae7cafd4d2d3",
     "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.svg": "2f5040914e30e2db84c43035c3983a5e7a0150288a1ea53f8291cd4b5e7bc081",
+    "audit/formal/latex/figures/ksg-m1a-composite-v6-boundary/c5-failure-c6-r6.pdf": "20484c4321daf9b742fe0bf12092a10bbebb10b5ea6441cf5bef57f9dca913e5",
+    "audit/formal/latex/figures/ksg-m1a-composite-v6-boundary/c5-failure-c6-r6.svg": "ce4e53c93a45c99c949e6c8408eeceb282a10cd13459f04874b022ea4692c9fd",
     "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
     "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
     "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "0960ae0cbfdf74118111fb994ed08acd6ab6246f2176e552b317cf9fc4ffdbad",
@@ -499,33 +512,41 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
     "audit/formal/latex/ksg-m1a-composite-v4-process.tex": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657",
     "audit/formal/latex/ksg-m1a-composite-v5-boundary.tex": "8f32bf892c102b73c20d507c92b631d2387ab07b686ab7e0a163eae7f1f52527",
+    "audit/formal/latex/ksg-m1a-composite-v6-boundary.tex": "d75ed1834dbc5d210bafb2a1f65784e13e465c199dcb36dc461eb27be3857e12",
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": "deb0cf82f4ddaa2ecfeb858d1130df12d9a3831feaf9f3215fa176c8a2f9aae1",
     "audit/formal/requirements-pdf.txt": "f1f2171ff6481ee900b72df600d8326140d001a1a024977b41386461e2b57d36",
     "audit/schemas/current-source-state-v1.schema.json": "501ed8fcca211ae598e041a5596b44574c48da46a9143cafe7266a7493b93f53",
     "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json": "7512e24e3256baaacca2d75a23a9ae2a530cd987f6460788d2b431175f41c8d1",
     "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v5.schema.json": "cbacb1bd7b5896a497312fd2a2809a33e43699bb3e4eb081d19cde6803b69c24",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v6.schema.json": "5d075f383729818a7e15f321058dc973416492c3fabbc152f8b6e584ec001df6",
+    "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json": "4ab719785b6f89ce63d1061813a31e17289fa94cf4300aab00946de2c045f3fd",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json": "797e7c5a0dc7122aff6c16319749c3a18683ebbe21e94dd039cdc5b7a330d42c",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json": "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v4.schema.json": "8492da6dfd704667515e7b9da88d501de34903e5e2b52582106211b07f48528e",
     "audit/schemas/ksg-rev4-m1a-composite-receipt-v5.schema.json": "7fc4fac9fdf923610768df6a5e4c90440d85400572d31e48b45367eeeb8f8e9d",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v6.schema.json": "65504b10c0fff4e2f287a0271364553d89cf6a6dfef7c6418ab8780e7e28f00f",
     "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json": "b477f8c4c3cb2066c0eb9c09a98cb9fbbc3ba330951aed440d2011fcace4d672",
     "audit/schemas/post-commit-source-state-v2.schema.json": "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a",
-    "justfile": "f0ba67880981b7ff1b8ca38e8f1218df1de1c9dc8be92e8c4930dc0b16617c7e",
+    "justfile": "7654a4ea10c71dced82ce492717a55568f91fbe9d09471aa3e306d830907873c",
     "output/pdf/ksg-m1a-composite-v4-process.pdf": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
     "output/pdf/ksg-m1a-composite-v5-boundary.pdf": "bf932cfb2dbe70500458cc8de0d4ce2f3718bfe5d135755e2a9147c3d6621a79",
     "output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv": "7730f32febfb3a0ce2bc90b8300980aa299c6afd1d957ada7a14daaeae741413",
+    "output/pdf/ksg-m1a-composite-v6-boundary.pdf": "52751c8701ad527040907e399f41ee6579616bc63db1af174bea65e5303da09a",
+    "output/pdf/ksg-m1a-composite-v6-boundary.rendering-receipt.tsv": "333bb16caf3a793d383b06b70c51e3a30fa881f8c5743cd9a8798c4c20b5725d",
     "output/pdf/mathematical-problem-solving-workflow.pdf": "6abf5af2ab7fb5cf0b40c37977dc38156d4bdf251b6f2948815c472fc77f1288",
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": "95a6e38797f6f4086ae0094bf187649bc01834a54e6a2d6c7aae9b2a4ae3b63d",
-    "scripts/README.md": "67350d26d69a0d5774bdedb6e59ad4b46ef07c211ecf10340baad7a6c352ff47",
+    "scripts/README.md": "f32b5aec8af703b3f21b2f4daaee6ac756fb197dd1910e098282a1142d4a6cfd",
     "scripts/capture-ksg-m1a-composite-v4.py": "7cf9a6fe57c2a828def8789524069e14a21d35739a5019b4310613c8f44065ef",
     "scripts/capture-ksg-m1a-composite-v5.py": "a0e955c9645c852276a3750ee24c49c8feb029d748a73909461d4f71777b3a11",
-    "scripts/check-certified-sxpid2-claim-self-test.py": "c4fc122de0908ad076ebd029e6bde80e9debb0ee3f187f39f71a644a6dc81327",
-    "scripts/check-certified-sxpid2-claim.py": "54c64e7a9d21d6d1186d5e6d446c54584663318505ab96cc539a65ff986056e1",
+    "scripts/capture-ksg-m1a-composite-v6-local-closure.py": "5f16ac70cc8a927efd85ab19770a976f928125ab60c003fdf8959ea9039f748a",
+    "scripts/capture-ksg-m1a-composite-v6.py": "8089cce79cd9ff14e9eda1b46c51a746b508b026f2cbf5a83cb295e7860d7efa",
+    "scripts/check-certified-sxpid2-claim-self-test.py": "9c5c9b1c55162054b5a91a6acaad9fd02a180f6b9632f44d44a53e5805b2e6ea",
+    "scripts/check-certified-sxpid2-claim.py": "db4c2b9cc6519858f6a100963414bf0a9379b6239b90b769d560af171078b55b",
     "scripts/check-current-release-state.sh": "a97a690a6e2df35b2bbe957c901c65418ced7104d2df6ea93ddb22f2cc03d99a",
     "scripts/check-current-source-state-v1-self-test.py": "3dc2d846f2512e10f871ad21dbda8d45817884998942c1325cf2b78138d5753e",
     "scripts/check-current-source-state-v1.py": "1d9561909cee8ace366802c76ba108cb5418499d9549946aad34c809fff57bd7",
-    "scripts/check-formal-pdf-set.sh": "e26970509de4fef73e271083d203c82e871fa8e70ec5826b6b769ed4a41541c2",
-    "scripts/check-formal-pdf-style.py": "624661dd734fa91728e77798708b2fa5a9fcbf4d799bb32f1b5388f7a661ce7e",
+    "scripts/check-formal-pdf-set.sh": "75a812752a710863a4b42da6f08be81a45fc74f74ee260bef91d83b1895bd4a8",
+    "scripts/check-formal-pdf-style.py": "a696171c87d3e285c2bc07b46f0ceed9a0c262f67d8cb436dcf4cc4b6c9c802e",
     "scripts/check-ksg-m1a-custody-correction-self-test.py": "a466461b9eecd4afd3f839aa8137a6fc6b4de13e1aa6e18dc81b0862c6f0fdcb",
     "scripts/check-ksg-m1a-custody-correction.py": "e504fb1617fc93abd096ced451d82c74745011edb4a3b4673bd2dd8c4cea3147",
     "scripts/check-ksg-m1a-hosted-recovery-self-test.py": "0ebd801ce758203ce12111ccec8802bc9a6c68ad80033105abc59f6e60d05787",
@@ -539,6 +560,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh": "81c7e8efbec07dc7a1c26e0d63075a4bbae6c0125547d6daac70596940beb61c",
     "scripts/check-ksg-m1a-composite-v5-self-test.py": "61024e4df9ee0999fdf03e79c505dcf8c268188779b5424665143808679b24aa",
     "scripts/check-ksg-m1a-composite-v5.py": "b510e3e1a9831a41f6904fd9fd259c227c426b11436ead11789a04ad474a8c30",
+    "scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh": "c2a42bebb2f33f2e3e1d34ddce1abc0b8c2c554524e4ea7881c13ff489bc6625",
+    "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh": "087d3fa3ac9467d63423fc2a246216cfcd61e176ceceae3eb9dff7428b141b35",
+    "scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh": "170d596cd2f179a984d59a652660e1d283508af4c7b6673c444a8061f38574e5",
+    "scripts/check-ksg-m1a-composite-v6-pdf-portability.sh": "d4f6416ef9aee5f158e9ab5b5f7909d75e45ccc9e49d77405e92fa0db59431af",
+    "scripts/check-ksg-m1a-composite-v6-self-test.py": "3430e7c0e083fd444de4649d432051a9fa54659d974b6d4384337857d79b7265",
+    "scripts/check-ksg-m1a-composite-v6.py": "6708de55bd0ffd938d1a567630b64d2a6d577cccd09b2285abe00ccf31cba494",
     "scripts/check-mathematical-workflow-pdf-self-test.sh": "b8f42aa6dbd403861479c5a27960934bbf63f1d1372ec11caf8efc5a2a9d0228",
     "scripts/check-mathematical-workflow-pdf.sh": "7af9d7acde3f2f61022007eb3ad1bd1c1862b18636071f2df6f48d346ce7678f",
     "scripts/check-post-commit-source-state-v2-self-test.py": "b1f45814efca5754bdb33c0b41258be9f1874fd404ff7620505878a7c8fa4657",
@@ -546,7 +573,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "scripts/check-release-state-self-test.sh": "e9fec4e65a42653b9488b5fb02ceee669aeb7d374ddd34334c6755fb7eff6f0d",
     "scripts/check-zeta-pid-transfer-firewall-self-test.py": "8803595bc5af615cf88215b9bdd40d7a8d227724b410c4b04802a63e81b0704e",
     "scripts/check-zeta-pid-transfer-firewall.py": "97d45807f7b58b9fb8a62a2c4007e514adfdc5aeadf811daf590010cb313b65f",
-    "scripts/generate-lean-4.33-replay.py": "2a5b4a1b588f4b1fe66b30fd8814be2268584511a1b7306720cc158ea43115b9",
+    "scripts/generate-lean-4.33-replay.py": "e373c3484357f85c100fe53871b0203d8ef6575a1aed1a3a2a8c1d2a07d040a8",
     "scripts/normalize-actions-checkout-worktree-config-self-test.py": "3eb085d0a49ff463aa3c419352d7c926d4804ff988e92edebbd3dd5ac013b101",
     "scripts/normalize-actions-checkout-worktree-config.py": "8887789f2039c8603a61f40f2518b707fa37f2311ccbd613e8c927fb6856be18",
 }
@@ -562,13 +589,13 @@ EXPECTED_ABSENT_OPERATIONAL_PATHS = (
 EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "1402245ded95bf69c8088a087de9e6951acb0094c443265e3014d7abf4035e44",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "4dd3f1f6f830c23c0787fcda5b3c40e92b5969d1f0d5beca042529fa85a5a332",
     "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "cca911f47befd9f47948a9233677fa0a5a909bcd13d7f803172cc542e1c68637",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "76ec940dae7d2b98c52f51cb44b49e00bb835708cb0b11b02b076bfcba61af41",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "f2f6dd264bfb4bc14a55365517ae7a774d6136e9ff1e3cc8269aeb1c30eee5a5",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "5d96ca4bc81421e365f3d30331efbe1bc874f512519606c975d7b142ff9cd8d0",
     "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
     "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
-    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "1008f44776f7a063a5a21632666266dd21e752c42639d53926119b03d0568f99",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "c9560bc987558bca1cc75db31b0ef1a19c1c33968ae2a0deb750e0b0a2bf6ada",
     "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
     "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
     "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
@@ -1792,7 +1819,7 @@ def check_active_resume_split() -> None:
         "current completion pointer lost freeze semantics",
     )
     require(
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json" in text
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json" in text
         and "first 11 August replay" in text
         and "first 12 August replay" in text
         and "finalized r2 replay" in text
@@ -1802,6 +1829,8 @@ def check_active_resume_split() -> None:
         and "finalized r6 replay" in text
         and "finalized r7 replay" in text
         and "finalized r8 replay" in text
+        and "finalized r9 replay" in text
+        and "finalized r10 replay" in text
         and "prior evidence, not current runner custody" in text,
         "current completion pointer lost current/prior replay separation",
     )
@@ -1818,7 +1847,7 @@ def check_active_resume_split() -> None:
 
 def check_current_replay_pointers() -> None:
     current_leaf = (
-        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json"
+        "lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json"
     )
     bound_paths = {
         *EXPECTED_ACTIVE_CLAIM_HASHES,
@@ -1830,9 +1859,9 @@ def check_current_replay_pointers() -> None:
         "current replay pointer inventory is not fully hash-bound",
     )
     require(
-        set(EXPECTED_R10_SEQUENCE_EXPLANATION_PATHS)
+        set(EXPECTED_R11_SEQUENCE_EXPLANATION_PATHS)
         <= set(EXPECTED_CURRENT_REPLAY_POINTER_PATHS),
-        "r10 sequence explanation inventory is not pointer-bound",
+        "r11 sequence explanation inventory is not pointer-bound",
     )
     for relative in EXPECTED_CURRENT_REPLAY_POINTER_PATHS:
         text = stable_read(
@@ -1845,27 +1874,29 @@ def check_current_replay_pointers() -> None:
             and "r6" in normalized
             and "r7" in normalized
             and "r8" in normalized
+            and "r9" in normalized
+            and "r10" in normalized
             and "execution credit only" in normalized
             and "exists and validates" in normalized,
-            f"current/prior r10 replay pointer semantics drifted: {relative}",
+            f"current/prior r11 replay pointer semantics drifted: {relative}",
         )
-    for relative in EXPECTED_R10_SEQUENCE_EXPLANATION_PATHS:
+    for relative in EXPECTED_R11_SEQUENCE_EXPLANATION_PATHS:
         text = stable_read(
-            ROOT / relative, f"r10 sequence explanation: {relative}"
+            ROOT / relative, f"r11 sequence explanation: {relative}"
         ).raw.decode("utf-8", errors="strict")
         normalized = " ".join(text.split())
         require(
-            "tenth receipt" in normalized
+            "eleventh receipt" in normalized
             and "versioned sequence" in normalized
             and "originated on 12 August" in normalized
-            and "eleventh current-project replay receipt overall" in normalized
+            and "twelfth current-project replay receipt overall" in normalized
             and "11 August historical receipt is outside" in normalized
             and "calendar date" in normalized
             and "schema" in normalized
             and "theorem" in normalized
             and "review" in normalized
             and "independence" in normalized,
-            f"r10 sequencing/non-conflation boundary drifted: {relative}",
+            f"r11 sequencing/non-conflation boundary drifted: {relative}",
         )
 
 
