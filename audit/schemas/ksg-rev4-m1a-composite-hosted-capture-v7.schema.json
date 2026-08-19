@@ -1,0 +1,404 @@
+{
+  "$defs": {
+    "capture": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+          "type": "string"
+        },
+        "body_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "body_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "logical_request": {
+          "type": "string"
+        },
+        "media_type": {
+          "type": "string"
+        },
+        "page": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path": {
+          "pattern": "^/repos/sepahead/pid-rs/[ -~]+(?![\\s\\S])",
+          "type": "string"
+        },
+        "redirect": {
+          "oneOf": [
+            {
+              "const": null
+            },
+            {
+              "$ref": "#/$defs/redirect"
+            }
+          ]
+        },
+        "repetition": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "response_kind": {
+          "enum": [
+            "json",
+            "log",
+            "zip"
+          ]
+        },
+        "status_code": {
+          "minimum": 100,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "body_base64",
+        "body_sha256",
+        "body_size_bytes",
+        "logical_request",
+        "media_type",
+        "page",
+        "path",
+        "redirect",
+        "repetition",
+        "response_kind",
+        "status_code"
+      ],
+      "type": "object"
+    },
+    "captureArray": {
+      "items": {
+        "$ref": "#/$defs/capture"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "predecessorDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_tool": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "captures": {
+          "$ref": "#/$defs/captureArray"
+        },
+        "immutable_v6_primitives": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "nonimplications": {
+          "$ref": "#/$defs/nonimplications"
+        },
+        "phase": {
+          "const": "predecessor_failure"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retry_events": {
+          "$ref": "#/$defs/retryArray"
+        },
+        "runs": {
+          "$ref": "#/$defs/predecessorRuns"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-composite-hosted-capture/v7"
+        },
+        "schema_revision": {
+          "const": 7
+        },
+        "subject": {
+          "$ref": "#/$defs/predecessorSubject"
+        }
+      },
+      "required": [
+        "capture_tool",
+        "captures",
+        "immutable_v6_primitives",
+        "nonimplications",
+        "phase",
+        "repository",
+        "retry_events",
+        "runs",
+        "schema",
+        "schema_revision",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "predecessorRuns": {
+      "additionalProperties": false,
+      "properties": {
+        "predecessor_ci": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "predecessor_codeql": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "predecessor_contract": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "predecessor_ci",
+        "predecessor_codeql",
+        "predecessor_contract"
+      ],
+      "type": "object"
+    },
+    "predecessorSubject": {
+      "additionalProperties": false,
+      "properties": {
+        "predecessor_commit": {
+          "const": "0c3afa0ab5b264370072a18d24655df35b90574c"
+        },
+        "predecessor_tree": {
+          "const": "ad28fd5ec3eed76fca1315b24c2e047fb5e6cff4"
+        }
+      },
+      "required": [
+        "predecessor_commit",
+        "predecessor_tree"
+      ],
+      "type": "object"
+    },
+    "redirect": {
+      "additionalProperties": false,
+      "properties": {
+        "status_code": {
+          "enum": [
+            301,
+            302,
+            303,
+            307,
+            308
+          ]
+        },
+        "target_host": {
+          "type": "string"
+        },
+        "target_url_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "status_code",
+        "target_host",
+        "target_url_sha256"
+      ],
+      "type": "object"
+    },
+    "retry": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "category": {
+          "enum": [
+            "http_429",
+            "http_502",
+            "http_503",
+            "http_504",
+            "transport"
+          ]
+        },
+        "logical_request": {
+          "type": "string"
+        },
+        "page": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path": {
+          "type": "string"
+        },
+        "repetition": {
+          "enum": [
+            1,
+            2
+          ]
+        },
+        "response_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "response_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "attempt",
+        "category",
+        "logical_request",
+        "page",
+        "path",
+        "repetition",
+        "response_sha256",
+        "response_size_bytes"
+      ],
+      "type": "object"
+    },
+    "retryArray": {
+      "items": {
+        "$ref": "#/$defs/retry"
+      },
+      "type": "array"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "successorDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_tool": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "captures": {
+          "$ref": "#/$defs/captureArray"
+        },
+        "immutable_v6_primitives": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "nonimplications": {
+          "$ref": "#/$defs/nonimplications"
+        },
+        "phase": {
+          "const": "successor_qualification"
+        },
+        "repository": {
+          "const": "sepahead/pid-rs"
+        },
+        "retry_events": {
+          "$ref": "#/$defs/retryArray"
+        },
+        "runs": {
+          "$ref": "#/$defs/successorRuns"
+        },
+        "schema": {
+          "const": "pid-rs/ksg-rev4-m1a-composite-hosted-capture/v7"
+        },
+        "schema_revision": {
+          "const": 7
+        },
+        "subject": {
+          "$ref": "#/$defs/successorSubject"
+        }
+      },
+      "required": [
+        "capture_tool",
+        "captures",
+        "immutable_v6_primitives",
+        "nonimplications",
+        "phase",
+        "repository",
+        "retry_events",
+        "runs",
+        "schema",
+        "schema_revision",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "successorRuns": {
+      "additionalProperties": false,
+      "properties": {
+        "successor_ci": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "successor_codeql": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "successor_contract": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "successor_ci",
+        "successor_codeql",
+        "successor_contract"
+      ],
+      "type": "object"
+    },
+    "successorSubject": {
+      "additionalProperties": false,
+      "properties": {
+        "predecessor_commit": {
+          "const": "0c3afa0ab5b264370072a18d24655df35b90574c"
+        },
+        "predecessor_tree": {
+          "const": "ad28fd5ec3eed76fca1315b24c2e047fb5e6cff4"
+        },
+        "successor_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "successor_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "predecessor_commit",
+        "predecessor_tree",
+        "successor_commit",
+        "successor_tree"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v7.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/predecessorDocument"
+    },
+    {
+      "$ref": "#/$defs/successorDocument"
+    }
+  ]
+}

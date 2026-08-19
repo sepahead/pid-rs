@@ -555,6 +555,7 @@ jobs:
             libxml2-utils \
             lmodern \
             poppler-utils \
+            ripgrep \
             texlive-fonts-extra \
             texlive-fonts-recommended \
             texlive-latex-extra \
@@ -563,6 +564,9 @@ jobs:
       - name: Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders
         run: |
           set -euo pipefail
+          /usr/bin/test -x /usr/bin/rg
+          test "$(command -v rg)" = "/usr/bin/rg"
+          /usr/bin/rg --version >/dev/null
           gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
           elan_home="$HOME/.elan"

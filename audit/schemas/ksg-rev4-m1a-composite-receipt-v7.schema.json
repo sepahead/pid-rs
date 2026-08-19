@@ -1,0 +1,553 @@
+{
+  "$defs": {
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "pattern": "^[a-z0-9_]+$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "captureBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "phase": {
+          "enum": [
+            "predecessor_failure",
+            "successor_qualification"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "phase",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "defect": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/binding"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "id": {
+          "enum": [
+            "c6_hosted_missing_rg",
+            "c6_local_authority_bound_contradiction"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "hosted_dependency_closure",
+            "immutable_local_recorder"
+          ]
+        },
+        "status": {
+          "enum": [
+            "failed_zero_credit",
+            "impossible_zero_credit"
+          ]
+        }
+      },
+      "required": [
+        "evidence",
+        "id",
+        "scope",
+        "status"
+      ],
+      "type": "object"
+    },
+    "localQualification": {
+      "additionalProperties": false,
+      "properties": {
+        "authorities_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "command": {
+          "additionalProperties": false,
+          "properties": {
+            "argv": {
+              "const": [
+                "just",
+                "ksg-composite-v7"
+              ]
+            },
+            "elapsed_monotonic_ns": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "exit_code": {
+              "const": 0
+            },
+            "stderr_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "stderr_size_bytes": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "stdout_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "stdout_size_bytes": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "timed_out": {
+              "const": false
+            }
+          },
+          "required": [
+            "argv",
+            "elapsed_monotonic_ns",
+            "exit_code",
+            "stderr_sha256",
+            "stderr_size_bytes",
+            "stdout_sha256",
+            "stdout_size_bytes",
+            "timed_out"
+          ],
+          "type": "object"
+        },
+        "platform": {
+          "additionalProperties": false,
+          "properties": {
+            "architecture": {
+              "enum": [
+                "aarch64",
+                "arm64"
+              ]
+            },
+            "operating_system": {
+              "const": "Darwin"
+            },
+            "python_implementation": {
+              "const": "CPython"
+            }
+          },
+          "required": [
+            "architecture",
+            "operating_system",
+            "python_implementation"
+          ],
+          "type": "object"
+        },
+        "record_binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "reviewed_executables_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "subject": {
+          "additionalProperties": false,
+          "properties": {
+            "c7_commit": {
+              "$ref": "#/$defs/commit"
+            },
+            "c7_tree": {
+              "$ref": "#/$defs/commit"
+            }
+          },
+          "required": [
+            "c7_commit",
+            "c7_tree"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "authorities_sha256",
+        "command",
+        "platform",
+        "record_binding",
+        "reviewed_executables_sha256",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "observation": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "normalized_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "phase": {
+          "enum": [
+            "predecessor_failure",
+            "successor_qualification"
+          ]
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/$defs/roleObservation"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "capture_sha256",
+        "normalized_sha256",
+        "phase",
+        "roles"
+      ],
+      "type": "object"
+    },
+    "publication": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_markdown": {
+          "$ref": "#/$defs/binding"
+        },
+        "boundary_pdf": {
+          "$ref": "#/$defs/binding"
+        },
+        "figure_pdf": {
+          "$ref": "#/$defs/binding"
+        },
+        "figure_svg": {
+          "$ref": "#/$defs/binding"
+        },
+        "latex_source": {
+          "$ref": "#/$defs/binding"
+        },
+        "pdf_gate": {
+          "$ref": "#/$defs/binding"
+        },
+        "pdf_gate_self_test": {
+          "$ref": "#/$defs/binding"
+        },
+        "rendering_receipt": {
+          "$ref": "#/$defs/binding"
+        },
+        "status": {
+          "const": "validated"
+        },
+        "visual_receipt": {
+          "$ref": "#/$defs/binding"
+        }
+      },
+      "required": [
+        "boundary_markdown",
+        "boundary_pdf",
+        "figure_pdf",
+        "figure_svg",
+        "latex_source",
+        "pdf_gate",
+        "pdf_gate_self_test",
+        "rendering_receipt",
+        "status",
+        "visual_receipt"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "type": "string"
+    },
+    "roleObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_names": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "conclusion": {
+          "enum": [
+            "failure",
+            "success"
+          ]
+        },
+        "failed_job_ids": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "job_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "jobs_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "role": {
+          "enum": [
+            "predecessor_ci",
+            "predecessor_codeql",
+            "predecessor_contract",
+            "successor_ci",
+            "successor_codeql",
+            "successor_contract"
+          ]
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "workflow_path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_names",
+        "conclusion",
+        "failed_job_ids",
+        "job_count",
+        "jobs_sha256",
+        "role",
+        "run_id",
+        "workflow_path"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v7.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capture_bindings": {
+      "items": {
+        "$ref": "#/$defs/captureBinding"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "contract_authorities": {
+      "items": {
+        "$ref": "#/$defs/authority"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "defects": {
+      "items": {
+        "$ref": "#/$defs/defect"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "local_qualification": {
+      "$ref": "#/$defs/localQualification"
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "observations": {
+      "items": {
+        "$ref": "#/$defs/observation"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "publication": {
+      "$ref": "#/$defs/publication"
+    },
+    "replay": {
+      "additionalProperties": false,
+      "properties": {
+        "current_r12": {
+          "$ref": "#/$defs/binding"
+        },
+        "current_source": {
+          "$ref": "#/$defs/binding"
+        },
+        "predicate": {
+          "const": "fresh_post_c6_r12_and_current_source_match_c7"
+        },
+        "retained_r11": {
+          "$ref": "#/$defs/binding"
+        }
+      },
+      "required": [
+        "current_r12",
+        "current_source",
+        "predicate",
+        "retained_r11"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v7"
+    },
+    "schema_revision": {
+      "const": 7
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c6_commit": {
+          "const": "0c3afa0ab5b264370072a18d24655df35b90574c"
+        },
+        "c6_tree": {
+          "const": "ad28fd5ec3eed76fca1315b24c2e047fb5e6cff4"
+        },
+        "c7_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c7_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "c6_commit",
+        "c6_tree",
+        "c7_commit",
+        "c7_tree"
+      ],
+      "type": "object"
+    },
+    "verdict": {
+      "additionalProperties": false,
+      "properties": {
+        "c6_hosted_qualification": {
+          "const": "failed_zero_credit"
+        },
+        "c6_local_qualification": {
+          "const": "impossible_zero_credit"
+        },
+        "c6_publication": {
+          "const": "published_unchanged"
+        },
+        "c7_bounded_repair": {
+          "const": "pass"
+        },
+        "c7_hosted_observation": {
+          "const": "pass"
+        },
+        "c7_local_qualification": {
+          "const": "pass"
+        },
+        "r4_receipt_issued": {
+          "const": false
+        },
+        "r5_receipt_issued": {
+          "const": false
+        },
+        "r6_receipt_issued": {
+          "const": false
+        },
+        "r7_receipt_issued": {
+          "const": true
+        },
+        "scientific_validation": {
+          "const": "not_adjudicated"
+        }
+      },
+      "required": [
+        "c6_hosted_qualification",
+        "c6_local_qualification",
+        "c6_publication",
+        "c7_bounded_repair",
+        "c7_hosted_observation",
+        "c7_local_qualification",
+        "r4_receipt_issued",
+        "r5_receipt_issued",
+        "r6_receipt_issued",
+        "r7_receipt_issued",
+        "scientific_validation"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "capture_bindings",
+    "contract_authorities",
+    "defects",
+    "local_qualification",
+    "nonimplications",
+    "observations",
+    "publication",
+    "replay",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject",
+    "verdict"
+  ],
+  "type": "object"
+}

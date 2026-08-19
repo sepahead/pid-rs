@@ -1,132 +1,30 @@
-name: KSG M1a composite v6
+name: KSG M1a composite v6 (retired)
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: ksg-m1a-composite-v6-${{ github.sha }}
-  cancel-in-progress: false
-
 jobs:
-  validate-contract:
-    name: Validate the composite-v6 correction contract
+  retired:
+    name: Refuse retired composite-v6 qualification
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          ref: "${{ github.sha }}"
-      - name: Normalize only the reviewed inert checkout residue
-        run: python3 -I -S -B scripts/normalize-actions-checkout-worktree-config.py
-      - name: Refuse retries and non-main qualification events
+      - name: Preserve the failed attempt-1 and local-recorder boundaries
+        env:
+          PUBLISHED_C6: 0c3afa0ab5b264370072a18d24655df35b90574c
+          FAILED_CI_ATTEMPT_1_RUN: "32139920717"
+          SUCCESSFUL_CODEQL_ATTEMPT_1_RUN: "32139921184"
+          FAILED_CONTRACT_ATTEMPT_1_RUN: "32139920743"
         run: |
           set -euo pipefail
-          test "${GITHUB_EVENT_NAME}" = "push"
-          test "${GITHUB_REF}" = "refs/heads/main"
-          test "${GITHUB_RUN_ATTEMPT}" = "1"
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.11"
-      - name: Install the hash-pinned PDF verifier dependency
-        run: |
-          python -m pip install \
-            --disable-pip-version-check \
-            --no-cache-dir \
-            --no-deps \
-            --require-hashes \
-            --requirement audit/formal/requirements-pdf.txt
-      - name: Install the runner PDF toolchain
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends \
-            chktex \
-            fontconfig \
-            latexmk \
-            lacheck \
-            librsvg2-bin \
-            libxml2-utils \
-            lmodern \
-            poppler-utils \
-            texlive-fonts-extra \
-            texlive-fonts-recommended \
-            texlive-latex-extra \
-            texlive-luatex \
-            texlive-plain-generic
-      - name: Recheck retained C5 operational surfaces
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          scripts/check-release-state-self-test.sh
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.json"
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/zeta.json" "${RUNNER_TEMP}/zeta.optimized.json"
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-          python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-          python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py --self-test > "${RUNNER_TEMP}/local-closure-self-test.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py --self-test > "${RUNNER_TEMP}/local-closure-self-test.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/local-closure-self-test.json" "${RUNNER_TEMP}/local-closure-self-test.optimized.json"
-      - name: Validate immutable predecessor PDF portability and the bounded successor publication
-        run: |
-          set -euo pipefail
-          scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --cross-toolchain
-      - name: Validate fresh replay and current-source custody
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -I -S -B scripts/check-current-source-state-v1.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1.py
-          python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-      - name: Validate static v6 contract in normal and optimized modes
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v6.py --self-test \
-            > "${RUNNER_TEMP}/capture-v6-self-test.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v6.py --self-test \
-            > "${RUNNER_TEMP}/capture-v6-self-test.optimized.json"
-          cmp --silent \
-            "${RUNNER_TEMP}/capture-v6-self-test.json" \
-            "${RUNNER_TEMP}/capture-v6-self-test.optimized.json"
-          unlink -- "${RUNNER_TEMP}/capture-v6-self-test.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v6.py --validate-static \
-            > "${RUNNER_TEMP}/ksg-m1a-composite-v6-static.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v6.py --validate-static \
-            > "${RUNNER_TEMP}/ksg-m1a-composite-v6-static.optimized.json"
-          cmp --silent \
-            "${RUNNER_TEMP}/ksg-m1a-composite-v6-static.json" \
-            "${RUNNER_TEMP}/ksg-m1a-composite-v6-static.optimized.json"
-          unlink -- "${RUNNER_TEMP}/ksg-m1a-composite-v6-static.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v6-self-test.py \
-            > "${RUNNER_TEMP}/composite-v6-self-test.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v6-self-test.py \
-            > "${RUNNER_TEMP}/composite-v6-self-test.optimized.json"
-          cmp --silent \
-            "${RUNNER_TEMP}/composite-v6-self-test.json" \
-            "${RUNNER_TEMP}/composite-v6-self-test.optimized.json"
-      - name: Upload the exact v6 static result
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          compression-level: 0
-          if-no-files-found: error
-          name: ksg-m1a-composite-v6-static-${{ github.sha }}
-          path: ${{ runner.temp }}/ksg-m1a-composite-v6-static.json
-          retention-days: 90
+          test "${FAILED_CI_ATTEMPT_1_RUN}" != "0"
+          echo "Composite v6 is retired after failed attempt-1 CI run ${FAILED_CI_ATTEMPT_1_RUN} and contract run ${FAILED_CONTRACT_ATTEMPT_1_RUN} for ${PUBLISHED_C6}." >&2
+          echo "Repository CI terminated with 45 jobs: 44 success and sole failure job 95719898423 at step 11, Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders." >&2
+          echo "Both hosted failures reached the bounded missing-rg dependency surface; CodeQL run ${SUCCESSFUL_CODEQL_ATTEMPT_1_RUN} cannot transfer qualification credit." >&2
+          echo "Exact hosted diagnostic: composite publication PDF v6 adjudication: missing command: rg" >&2
+          echo "The exact C6 local recorder is separately unsatisfiable because its 65536-byte internal-command cap is smaller than two required authority blobs." >&2
+          echo "R6 is permanently unissued; use the composite-v7 workflow for a fresh C7 qualification." >&2
+          exit 1

@@ -9,6 +9,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Published composite-v6 C6 as exact commit `0c3afa0ab5b264370072a18d24655df35b90574c`.
+  Its attempt-1 CodeQL run passed, while repository CI and dedicated-v6 failed because `rg` was
+  absent from the hosted dependency closure; R6 is permanently unissued. Composite-v7 is the
+  append-only direct-child successor: it preserves C6 and finalized `r11`, records the exact
+  local-recorder bound counterexample and predecessor hosted failure, adds the bounded dependency
+  repair, publishes a separately versioned boundary, and requires one fresh exact-C7 local closure
+  plus fresh attempt-1 CI, CodeQL, and dedicated-v7 success before any R7. Conditional R7 remains
+  an exact four-path delta: local record, successor capture, derived receipt, and current-source
+  regenerated last. The current replay pointer becomes
+  [`r12`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json);
+  finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, and finalized
+  `r11` remain exact prior evidence. Here `r12` is the twelfth receipt in the versioned sequence
+  that originated on 12 August and the thirteenth current-project replay receipt overall; the
+  11 August historical receipt is outside that versioned sequence. The suffix does not denote a
+  calendar date, schema, theorem, review, assurance tier, or independence revision. No Lean
+  theorem source changes. C7 receives execution credit only when that exact r12 receipt exists and
+  validates under normal and optimized custody checks. This is a project-defined operational
+  dependency/custody repair, not a new PID definition, estimator, theorem, numerical result,
+  scientific validation, authentication, independence result, release, or application approval.
 - Published composite-v5 C5 as exact commit
   `be862b155d710573ec95356fc1cbe9a96a2b83b9` with fresh Lean 4.33 replay `r10`.
   Its attempt-1 CodeQL run passed, but dedicated-v5 run `32107469077` failed in the bounded

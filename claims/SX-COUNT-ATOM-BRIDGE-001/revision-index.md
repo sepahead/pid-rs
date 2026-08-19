@@ -7,7 +7,7 @@
 
 Revision 2 does not rewrite revision 1. Mutable shared conventions, evidence matrix, and theorem
 map now describe revision 2. Current execution is bound by the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json).
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json).
 The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -19,8 +19,9 @@ and [finalized r7 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-curren
 and [finalized r8 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json)
 and [finalized r9 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json)
 and [finalized r10 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json)
-remain prior execution evidence. Here `r11` denotes only the eleventh receipt in the versioned sequence
-that originated on 12 August, and therefore the twelfth current-project replay receipt overall; the
+and [finalized r11 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json)
+remain prior execution evidence. Here `r12` denotes only the twelfth receipt in the versioned sequence
+that originated on 12 August, and therefore the thirteenth current-project replay receipt overall; the
 11 August historical receipt is outside that versioned sequence. The suffix does not denote a
 calendar date, schema, theorem, review, assurance tier, or independence revision. The current route
 receives execution credit only when its exact receipt exists and validates.

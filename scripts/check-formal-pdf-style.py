@@ -31,6 +31,7 @@ EXPECTED = (
     "ksg-m1a-composite-v4-process.tex",
     "ksg-m1a-composite-v5-boundary.tex",
     "ksg-m1a-composite-v6-boundary.tex",
+    "ksg-m1a-composite-v7-boundary.tex",
     "mathematical-problem-solving-workflow.tex",
     "support-change-tolerant-averaged-sxpid-continuity.tex",
     "two-source-sxpid-count-atom-bridge.tex",

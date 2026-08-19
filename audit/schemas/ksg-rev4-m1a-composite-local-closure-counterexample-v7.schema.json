@@ -1,0 +1,725 @@
+{
+  "$defs": {
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "blob_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "mode": {
+          "const": "100644"
+        },
+        "path": {
+          "enum": [
+            "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json",
+            "justfile",
+            "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+            "scripts/check-ksg-m1a-composite-v6-self-test.py",
+            "scripts/check-ksg-m1a-composite-v6.py"
+          ]
+        },
+        "role": {
+          "enum": [
+            "bounded_local_l6_closure_capture_tool",
+            "composite_v6_hostile_suite",
+            "composite_v6_semantic_gate",
+            "local_command_wiring",
+            "local_l6_closure_schema"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 2097152,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "blob_sha1",
+        "mode",
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "bounds": {
+      "additionalProperties": false,
+      "properties": {
+        "committed_internal_stream_bound_bytes": {
+          "const": 65536
+        },
+        "committed_internal_stream_bound_expression": {
+          "const": "64 * 1024"
+        },
+        "largest_complete_stdout_accepted_bytes": {
+          "const": 65536
+        },
+        "local_authority_bound_bytes": {
+          "const": 2097152
+        },
+        "local_authority_bound_expression": {
+          "const": "2 * 1024 * 1024"
+        },
+        "overflow_predicate": {
+          "const": "len(destination) > maximum_stream_bytes"
+        },
+        "stream_bound_symbol": {
+          "const": "MAX_VERSION_STREAM_BYTES"
+        }
+      },
+      "required": [
+        "committed_internal_stream_bound_bytes",
+        "committed_internal_stream_bound_expression",
+        "largest_complete_stdout_accepted_bytes",
+        "local_authority_bound_bytes",
+        "local_authority_bound_expression",
+        "overflow_predicate",
+        "stream_bound_symbol"
+      ],
+      "type": "object"
+    },
+    "conclusion": {
+      "additionalProperties": false,
+      "properties": {
+        "complete_authority_list_constructible": {
+          "const": false
+        },
+        "exact_authority_equality_satisfiable": {
+          "const": false
+        },
+        "first_blocking_path": {
+          "const": "scripts/check-ksg-m1a-composite-v6-self-test.py"
+        },
+        "immutable_c6_local_record_issuable": {
+          "const": false
+        },
+        "reason": {
+          "const": "required_committed_blob_exceeds_internal_stdout_bound"
+        },
+        "result": {
+          "const": "static_contract_contradiction"
+        },
+        "scope": {
+          "const": "immutable_c6_local_recorder"
+        }
+      },
+      "required": [
+        "complete_authority_list_constructible",
+        "exact_authority_equality_satisfiable",
+        "first_blocking_path",
+        "immutable_c6_local_record_issuable",
+        "reason",
+        "result",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "counterexample": {
+      "additionalProperties": false,
+      "properties": {
+        "committed_blob_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "committed_stdout_size_bytes": {
+          "minimum": 65537,
+          "type": "integer"
+        },
+        "complete_stdout_accepted_by_run_bounded": {
+          "const": false
+        },
+        "exact_equality_return_possible": {
+          "const": false
+        },
+        "excess_over_stream_bound_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "enum": [
+            "scripts/check-ksg-m1a-composite-v6-self-test.py",
+            "scripts/check-ksg-m1a-composite-v6.py"
+          ]
+        },
+        "required_by_authority_roles": {
+          "const": true
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_within_local_authority_bound": {
+          "const": true
+        }
+      },
+      "required": [
+        "committed_blob_sha1",
+        "committed_stdout_size_bytes",
+        "complete_stdout_accepted_by_run_bounded",
+        "exact_equality_return_possible",
+        "excess_over_stream_bound_bytes",
+        "path",
+        "required_by_authority_roles",
+        "sha256",
+        "size_within_local_authority_bound"
+      ],
+      "type": "object"
+    },
+    "derivation": {
+      "additionalProperties": false,
+      "properties": {
+        "all_authorities_required": {
+          "const": true
+        },
+        "authority_count": {
+          "const": 5
+        },
+        "authority_order": {
+          "const": [
+            "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json",
+            "justfile",
+            "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+            "scripts/check-ksg-m1a-composite-v6-self-test.py",
+            "scripts/check-ksg-m1a-composite-v6.py"
+          ]
+        },
+        "complete_authority_binding_precedes_local_command": {
+          "const": true
+        },
+        "exact_local_committed_equality_required": {
+          "const": true
+        },
+        "first_oversized_authority_index_zero_based": {
+          "const": 3
+        },
+        "oversized_required_authority_count": {
+          "const": 2
+        },
+        "proof_rule": {
+          "const": "for each required authority, local_size <= local_authority_bound and committed_stdout_size > committed_internal_stream_bound implies run_bounded cannot return the complete committed bytes required by raw == committed"
+        },
+        "result": {
+          "const": "contradiction"
+        }
+      },
+      "required": [
+        "all_authorities_required",
+        "authority_count",
+        "authority_order",
+        "complete_authority_binding_precedes_local_command",
+        "exact_local_committed_equality_required",
+        "first_oversized_authority_index_zero_based",
+        "oversized_required_authority_count",
+        "proof_rule",
+        "result"
+      ],
+      "type": "object"
+    },
+    "rederivation": {
+      "additionalProperties": false,
+      "properties": {
+        "content_command_template": {
+          "const": [
+            "git",
+            "show",
+            "0c3afa0ab5b264370072a18d24655df35b90574c:<PATH>"
+          ]
+        },
+        "size_command_template": {
+          "const": [
+            "git",
+            "cat-file",
+            "-s",
+            "0c3afa0ab5b264370072a18d24655df35b90574c:<PATH>"
+          ]
+        },
+        "source_anchor_definition": {
+          "const": "inclusive one-based LF-terminated line slices of the exact C6 capture-tool blob"
+        }
+      },
+      "required": [
+        "content_command_template",
+        "size_command_template",
+        "source_anchor_definition"
+      ],
+      "type": "object"
+    },
+    "route": {
+      "additionalProperties": false,
+      "properties": {
+        "authority_iteration": {
+          "const": "sorted(AUTHORITY_ROLES.items())"
+        },
+        "call_chain": {
+          "const": [
+            "authority_descriptors",
+            "git_output",
+            "internal_command",
+            "run_bounded"
+          ]
+        },
+        "capture_execution_order": {
+          "const": [
+            "toolchain_observation",
+            "repository_snapshot",
+            "authority_descriptors",
+            "run_bounded(COMMAND_ARGV, ...)"
+          ]
+        },
+        "committed_blob_read": {
+          "const": "git_output(git_path, environment, \"show\", f\"{head}:{relative}\")"
+        },
+        "committed_blob_transport": {
+          "const": "git show stdout"
+        },
+        "equality_guard": {
+          "const": "require(raw == committed, \"local authority differs from the C6 tree\")"
+        },
+        "internal_command_bound_argument": {
+          "const": "MAX_VERSION_STREAM_BYTES"
+        },
+        "local_blob_read": {
+          "const": "read_regular(ROOT / relative, 2 * 1024 * 1024, 0o644)"
+        },
+        "stream_accumulation": {
+          "const": "destination.extend(chunk)"
+        }
+      },
+      "required": [
+        "authority_iteration",
+        "call_chain",
+        "capture_execution_order",
+        "committed_blob_read",
+        "committed_blob_transport",
+        "equality_guard",
+        "internal_command_bound_argument",
+        "local_blob_read",
+        "stream_accumulation"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "sourceAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "enum": [
+            "authority_descriptor_route",
+            "authority_roles",
+            "capture_execution_order",
+            "committed_read_call_chain",
+            "identity_and_bounds",
+            "local_regular_file_bound",
+            "stream_overflow_guard"
+          ]
+        },
+        "line_end": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "line_start": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "const": "scripts/capture-ksg-m1a-composite-v6-local-closure.py"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "line_end",
+        "line_start",
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_message": {
+          "const": "Repair KSG M1a composite v6 contract\n"
+        },
+        "commit_object_sha1": {
+          "const": "0c3afa0ab5b264370072a18d24655df35b90574c"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "parent_commit_sha1": {
+          "const": "be862b155d710573ec95356fc1cbe9a96a2b83b9"
+        },
+        "source_basis": {
+          "const": "immutable_commit_tree"
+        },
+        "tree_object_sha1": {
+          "const": "ad28fd5ec3eed76fca1315b24c2e047fb5e6cff4"
+        }
+      },
+      "required": [
+        "commit_message",
+        "commit_object_sha1",
+        "object_format",
+        "parent_commit_sha1",
+        "source_basis",
+        "tree_object_sha1"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-local-closure-counterexample-v7.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorities": {
+      "items": false,
+      "maxItems": 5,
+      "minItems": 5,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/authority"
+            },
+            {
+              "const": {
+                "blob_sha1": "e67c8da4cea810aac634a7d9c7c0bc8e819d8740",
+                "mode": "100644",
+                "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json",
+                "role": "local_l6_closure_schema",
+                "sha256": "4ab719785b6f89ce63d1061813a31e17289fa94cf4300aab00946de2c045f3fd",
+                "size_bytes": 13620
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/authority"
+            },
+            {
+              "const": {
+                "blob_sha1": "18377b4b2c84b4093fab701fd976c35249549205",
+                "mode": "100644",
+                "path": "justfile",
+                "role": "local_command_wiring",
+                "sha256": "7654a4ea10c71dced82ce492717a55568f91fbe9d09471aa3e306d830907873c",
+                "size_bytes": 32358
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/authority"
+            },
+            {
+              "const": {
+                "blob_sha1": "827bbf321d1bf140228526976209eff7e35879f8",
+                "mode": "100644",
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "role": "bounded_local_l6_closure_capture_tool",
+                "sha256": "5f16ac70cc8a927efd85ab19770a976f928125ab60c003fdf8959ea9039f748a",
+                "size_bytes": 57021
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/authority"
+            },
+            {
+              "const": {
+                "blob_sha1": "98dd4a2e2f1c76cb3c56555f2a895fa3d7dd8bbb",
+                "mode": "100644",
+                "path": "scripts/check-ksg-m1a-composite-v6-self-test.py",
+                "role": "composite_v6_hostile_suite",
+                "sha256": "3430e7c0e083fd444de4649d432051a9fa54659d974b6d4384337857d79b7265",
+                "size_bytes": 69573
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/authority"
+            },
+            {
+              "const": {
+                "blob_sha1": "10fe04f7b8f776bb54ffdb2dd705cf9e8bb32cbb",
+                "mode": "100644",
+                "path": "scripts/check-ksg-m1a-composite-v6.py",
+                "role": "composite_v6_semantic_gate",
+                "sha256": "6708de55bd0ffd938d1a567630b64d2a6d577cccd09b2285abe00ccf31cba494",
+                "size_bytes": 124520
+              }
+            }
+          ]
+        }
+      ],
+      "type": "array"
+    },
+    "bounds": {
+      "$ref": "#/$defs/bounds"
+    },
+    "conclusion": {
+      "$ref": "#/$defs/conclusion"
+    },
+    "counterexamples": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/counterexample"
+            },
+            {
+              "const": {
+                "committed_blob_sha1": "98dd4a2e2f1c76cb3c56555f2a895fa3d7dd8bbb",
+                "committed_stdout_size_bytes": 69573,
+                "complete_stdout_accepted_by_run_bounded": false,
+                "exact_equality_return_possible": false,
+                "excess_over_stream_bound_bytes": 4037,
+                "path": "scripts/check-ksg-m1a-composite-v6-self-test.py",
+                "required_by_authority_roles": true,
+                "sha256": "3430e7c0e083fd444de4649d432051a9fa54659d974b6d4384337857d79b7265",
+                "size_within_local_authority_bound": true
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/counterexample"
+            },
+            {
+              "const": {
+                "committed_blob_sha1": "10fe04f7b8f776bb54ffdb2dd705cf9e8bb32cbb",
+                "committed_stdout_size_bytes": 124520,
+                "complete_stdout_accepted_by_run_bounded": false,
+                "exact_equality_return_possible": false,
+                "excess_over_stream_bound_bytes": 58984,
+                "path": "scripts/check-ksg-m1a-composite-v6.py",
+                "required_by_authority_roles": true,
+                "sha256": "6708de55bd0ffd938d1a567630b64d2a6d577cccd09b2285abe00ccf31cba494",
+                "size_within_local_authority_bound": true
+              }
+            }
+          ]
+        }
+      ],
+      "type": "array"
+    },
+    "derivation": {
+      "$ref": "#/$defs/derivation"
+    },
+    "nonimplications": {
+      "items": false,
+      "maxItems": 6,
+      "minItems": 6,
+      "prefixItems": [
+        {
+          "const": "This static counterexample is not an invocation record and does not claim a runtime, host, environment, operator, wall-clock time, monotonic interval, authentication event, or first-attempt chronology."
+        },
+        {
+          "const": "It does not claim that any C6 local closure command, checker, self-test, formal proof, PDF gate, or hosted workflow was reached by a local invocation."
+        },
+        {
+          "const": "It diagnoses only the immutable C6 local recorder's committed-authority transport bound; it does not establish a defect in the bound authority files, KSG, PID, formal proofs, PDFs, or scientific results."
+        },
+        {
+          "const": "It does not authenticate Git objects, an operating-system execution, toolchain bytes, or an off-host observation; the stated object identities are repository content bindings."
+        },
+        {
+          "const": "It does not authorize mutation of C6 bytes or history, retroactive issuance of a C6 local record, or transfer of evidence between revisions."
+        },
+        {
+          "const": "It does not establish that a C7 successor repair, local record, hosted run, receipt, or publication passes; each requires separate evidence."
+        }
+      ],
+      "type": "array"
+    },
+    "rederivation": {
+      "$ref": "#/$defs/rederivation"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "route": {
+      "$ref": "#/$defs/route"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-v6-local-closure-counterexample-v7/v1"
+    },
+    "source_anchors": {
+      "items": false,
+      "maxItems": 7,
+      "minItems": 7,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "identity_and_bounds",
+                "line_end": 64,
+                "line_start": 49,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "3752fb310e0eb758ee4f994ee56d6e1ac26644b42e159d5152e2c51d62e3bda7",
+                "size_bytes": 733
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "authority_roles",
+                "line_end": 142,
+                "line_start": 136,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "7b417702cb0274e6f4740b7495b6776a7300ee1888645b2a3067484981488af2",
+                "size_bytes": 285
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "local_regular_file_bound",
+                "line_end": 203,
+                "line_start": 190,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "c9cb0e38b4926b98be6cd39af69d08f7943cff2a4a483ad6f7af48d8d36e45fe",
+                "size_bytes": 564
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "stream_overflow_guard",
+                "line_end": 448,
+                "line_start": 442,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "6a65cb6283ac87333d1e602ce8d7f5a31af283c1c8ababdd9ab50b8a2bb3b12d",
+                "size_bytes": 339
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "committed_read_call_chain",
+                "line_end": 487,
+                "line_start": 459,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "17e07e69d7a0ca8242c50f704a6749f0d564c778ec1b73e40b7767281787bb05",
+                "size_bytes": 801
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "authority_descriptor_route",
+                "line_end": 773,
+                "line_start": 757,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "470826af1cef617e1e4f0545be38e3460e1a6a50529b49a36429fa26f66401fb",
+                "size_bytes": 662
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/sourceAnchor"
+            },
+            {
+              "const": {
+                "id": "capture_execution_order",
+                "line_end": 1465,
+                "line_start": 1456,
+                "path": "scripts/capture-ksg-m1a-composite-v6-local-closure.py",
+                "sha256": "7906370b0d74dcceb939ff9ccc8b33a10659897d39b1f2713312ede1f5e4ab2f",
+                "size_bytes": 478
+              }
+            }
+          ]
+        }
+      ],
+      "type": "array"
+    },
+    "subject": {
+      "$ref": "#/$defs/subject"
+    }
+  },
+  "required": [
+    "authorities",
+    "bounds",
+    "conclusion",
+    "counterexamples",
+    "derivation",
+    "nonimplications",
+    "rederivation",
+    "repository",
+    "route",
+    "schema",
+    "source_anchors",
+    "subject"
+  ],
+  "type": "object"
+}

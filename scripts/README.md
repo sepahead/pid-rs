@@ -731,6 +731,59 @@ defective, is not a generic PDF-equivalence theorem, and grants no PID, KSG, mat
 scientific, security, application, PDF/UA, renderer-independence, authentication, or independent
 reproduction status.
 
+Published C6 `0c3afa0ab5b264370072a18d24655df35b90574c` retains that bounded repair and
+fresh finalized replay r11. Its attempt-1 CodeQL route passed, while repository CI and the
+dedicated-v6 route failed because `rg` was absent from the hosted dependency closure. R6 is
+permanently unissued; preserve the exact C6 failure and do not assign rerun credit.
+
+Composite-v7 is the append-only direct-child repair. It adds the reviewed `rg` dependency/probe,
+binds the immutable C6 local-recorder counterexample and predecessor failure, publishes its own
+boundary family, and moves current Lean custody to r12 without changing theorem sources. During
+precommit assembly, run the individual draft-safe gates:
+
+```text
+scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --exact
+scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh --exact
+python3 -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py
+```
+
+Run the full topology-sensitive recipe only from the exact clean committed C7 checkout:
+
+```text
+just ksg-composite-v7
+```
+
+C7 must be C6's exact unsigned direct child and publishes fresh replay r12. Its typed local
+recorder runs only the fixed command from an exact clean committed C7 checkout and installs no
+record until the schema and semantic gate accept the staged mode-0600 bytes:
+
+```text
+local_closure_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c7-local-closure.XXXXXX")"
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v7-local-closure.py \
+  --output "$local_closure_dir/local-closure.json"
+```
+
+After a distinct successor hosted capture validates, derive the candidate R7 receipt only through
+the two reviewed file descriptors:
+
+```text
+set -o noclobber
+umask 077
+local_record="$local_closure_dir/local-closure.json"
+successor_capture="/absolute/private/path/successor-capture.json"
+receipt_staging="/absolute/private/path/composite-v7-receipt.json"
+python3 -I -S -B scripts/check-ksg-m1a-composite-v7.py \
+  --derive-receipt --local-closure-fd 3 --successor-capture-fd 4 \
+  3<"$local_record" 4<"$successor_capture" >"$receipt_staging"
+```
+
+R7 is conditional and exact: local record, successor capture, derived receipt, and current-source
+regenerated last. It is permitted only after fresh exact-C7 local closure plus attempt-1 repository
+CI, all four CodeQL languages, and dedicated-v7 success for the same C7 SHA. Otherwise R7 remains
+unissued. These are project-defined operational observations, not scientific or authentication
+evidence.
+
 The v4 capture and receipt commands documented by the historical process report described a
 conditional route that was never admitted. C4's attempt-1 qualification failed, R4 is permanently
 unissued, and the two reserved v4 evidence paths must remain absent. Do not run the v4 live capture,
@@ -947,13 +1000,13 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
 finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt,
-finalized `r8` receipt, finalized `r9` receipt, and finalized `r10` receipt remain exact-hash-bound
-prior evidence with their original v1 and ten v2 schema identities. The `r11` suffix denotes only
-the eleventh receipt in the versioned sequence that originated on 12 August, and therefore the
-twelfth current-project replay receipt overall; the 11 August historical receipt is outside that
+finalized `r8` receipt, finalized `r9` receipt, finalized `r10` receipt, and finalized `r11` receipt
+remain exact-hash-bound prior evidence with their original v1 and eleven v2 schema identities. The
+`r12` suffix denotes only the twelfth receipt in the versioned sequence that originated on 12
+August, and therefore the thirteenth current-project replay receipt overall; the 11 August historical receipt is outside that
 versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 route receives current execution credit only when that exact receipt exists and validates.
@@ -998,24 +1051,24 @@ checker reconstructs its zero-placeholder replay source and allows no other chec
 replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
 two-edit finalization and normal/optimized checker plus self-test replay.
 
-The runner also refuses to start unless the three-way composite-v6 checksum cut is invocation
+The runner also refuses to start unless the three-way composite-v7 checksum cut is invocation
 ready. The replay projection must still be the unique exact zero-placeholder source expression;
-the Lean composite-v6 scalar and the `scripts/check-ksg-m1a-composite-v6.py` operational-map row
-must be equal nonzero literals hashing the exact final v6 checker; and the v6 checker's unique
+the Lean composite-v7 scalar and the `scripts/check-ksg-m1a-composite-v7.py` operational-map row
+must be equal nonzero literals hashing the exact final v7 checker; and the v7 checker's unique
 nonzero `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal must reproduce the Lean source after
-normalizing exactly the projection, v6 scalar, and v6 operational row to their reviewed placeholder
-forms. The retained v4/v5 checkers, their ordinary operational-map rows, and r9/r10 receipts are
-immutable prior evidence: they are neither rewritten nor part of the r11 normalization cut.
+normalizing exactly the projection, v7 scalar, and v7 operational row to their reviewed placeholder
+forms. The retained v4/v5/v6 checkers, their ordinary operational-map rows, and r9/r10/r11 receipts are
+immutable prior evidence: they are neither rewritten nor part of the r12 normalization cut.
 
-Finalization is deliberately acyclic. First freeze the v6 self-test, this guide, the freeze guide,
+Finalization is deliberately acyclic. First freeze the v7 self-test, this guide, the freeze guide,
 and every other non-cut byte and digest row. With all three Lean cut positions in placeholder form,
-compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v6 checker.
-Then freeze the v6 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
-only the Lean v6 scalar and v6 operational row. Leave the replay projection as `"0" * 64`, rerun
+compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v7 checker.
+Then freeze the v7 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
+only the Lean v7 scalar and v7 operational row. Leave the replay projection as `"0" * 64`, rerun
 the normal and optimized hostile suites, and invoke the zero-argument replay generator exactly
-once. Only after it no-clobber-publishes the provisional r11 receipt may the established two-edit
+once. Only after it no-clobber-publishes the provisional r12 receipt may the established two-edit
 receipt finalization replace the projection literal and the projection-omitted live Lean-checker
-custody digest. Any change to the v6 self-test or another normalized Lean input after `H_L` was
+custody digest. Any change to the v7 self-test or another normalized Lean input after `H_L` was
 computed invalidates the cut and requires restarting this sequence. The generator predicates run
 before replay commands and publication; the hostile suites exercise causal checker drift,
 projection-finalized, missing, duplicated, mismatched, normalized-cut, and operational-map-omission
