@@ -1,131 +1,44 @@
-name: KSG M1a composite v7
+name: KSG M1a composite v7 (retired)
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: ksg-m1a-composite-v7-${{ github.sha }}
-  cancel-in-progress: false
-
 jobs:
-  validate-contract:
-    name: Validate the composite-v7 bounded correction contract
+  retired:
+    name: Refuse retired composite-v7 qualification
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          ref: "${{ github.sha }}"
-      - name: Normalize only the reviewed inert checkout residue
-        run: python3 -I -S -B scripts/normalize-actions-checkout-worktree-config.py
-      - name: Refuse retries and non-main qualification events
+      - name: Preserve both terminal C7 hosted defect boundaries and refuse credit
+        env:
+          CI_ATTEMPT_1_FAILED_JOB: "96080962981"
+          CI_ATTEMPT_1_LOG_SHA256: b760292f9e448ce4e83148adc9a7675697193cac4904716eb450494f4646ff9c
+          CI_ATTEMPT_1_LOG_SIZE: "126388"
+          CI_ATTEMPT_1_RUN: "32257016662"
+          FAILED_ACTION_ROUTE: actions/upload-artifact
+          FAILED_CONTRACT_ATTEMPT_1_JOB: "96080963533"
+          FAILED_CONTRACT_ATTEMPT_1_LOG_SHA256: b935661a497e3dc257b7ba552c866d1ff52bc8269182a75f961b3e9dfa193b01
+          FAILED_CONTRACT_ATTEMPT_1_LOG_SIZE: "1843"
+          FAILED_CONTRACT_ATTEMPT_1_RUN: "32257017103"
+          PUBLISHED_C7: 23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e
+          TRUNCATED_UPLOAD_ARTIFACT_REF: 043fb46d1a93c77aae656e7c1c64a875d1fc6a0
         run: |
           set -euo pipefail
-          test "${GITHUB_EVENT_NAME}" = "push"
-          test "${GITHUB_REF}" = "refs/heads/main"
-          test "${GITHUB_RUN_ATTEMPT}" = "1"
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.11"
-      - name: Install the hash-pinned PDF verifier dependency
-        run: |
-          python -m pip install \
-            --disable-pip-version-check \
-            --no-cache-dir \
-            --no-deps \
-            --require-hashes \
-            --requirement audit/formal/requirements-pdf.txt
-      - name: Install the complete reviewed PDF command set
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends \
-            chktex \
-            fontconfig \
-            latexmk \
-            lacheck \
-            librsvg2-bin \
-            libxml2-utils \
-            lmodern \
-            poppler-utils \
-            ripgrep \
-            texlive-fonts-extra \
-            texlive-fonts-recommended \
-            texlive-latex-extra \
-            texlive-luatex \
-            texlive-plain-generic
-      - name: Recheck retained C6 operational surfaces
-        run: |
-          set -euo pipefail
-          /usr/bin/test -x /usr/bin/rg
-          test "$(command -v rg)" = "/usr/bin/rg"
-          /usr/bin/rg --version >/dev/null
-          python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          scripts/check-release-state-self-test.sh
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.json"
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/zeta.json" "${RUNNER_TEMP}/zeta.optimized.json"
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-      - name: Recheck the unchanged v6 publications after dependency closure
-        run: |
-          set -euo pipefail
-          /usr/bin/test -x /usr/bin/rg
-          test "$(command -v rg)" = "/usr/bin/rg"
-          /usr/bin/rg --version >/dev/null
-          scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --cross-toolchain
-      - name: Validate the composite-v7 publication family and hostile suite
-        run: |
-          set -euo pipefail
-          /usr/bin/test -x /usr/bin/rg
-          test "$(command -v rg)" = "/usr/bin/rg"
-          /usr/bin/rg --version >/dev/null
-          scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --cross-toolchain
-      - name: Validate fresh replay and current-source custody
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -I -S -B scripts/check-current-source-state-v1.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1.py
-          python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-      - name: Validate static v7 contract in normal and optimized modes
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v7.py --self-test > "${RUNNER_TEMP}/capture-v7.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v7.py --self-test > "${RUNNER_TEMP}/capture-v7.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/capture-v7.json" "${RUNNER_TEMP}/capture-v7.optimized.json"
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v7-local-closure.py --self-test > "${RUNNER_TEMP}/local-v7.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v7-local-closure.py --self-test > "${RUNNER_TEMP}/local-v7.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/local-v7.json" "${RUNNER_TEMP}/local-v7.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v7.py --validate-static > "${RUNNER_TEMP}/ksg-m1a-composite-v7-static.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v7.py --validate-static > "${RUNNER_TEMP}/ksg-m1a-composite-v7-static.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/ksg-m1a-composite-v7-static.json" "${RUNNER_TEMP}/ksg-m1a-composite-v7-static.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py > "${RUNNER_TEMP}/self-v7.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py > "${RUNNER_TEMP}/self-v7.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/self-v7.json" "${RUNNER_TEMP}/self-v7.optimized.json"
-      - name: Upload the exact v7 static result
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0 # v7.0.1
-        with:
-          compression-level: 0
-          if-no-files-found: error
-          name: ksg-m1a-composite-v7-static-${{ github.sha }}
-          path: ${{ runner.temp }}/ksg-m1a-composite-v7-static.json
-          retention-days: 90
+          test "${FAILED_CONTRACT_ATTEMPT_1_RUN}" != "0"
+          test "${FAILED_CONTRACT_ATTEMPT_1_JOB}" != "0"
+          test "${#TRUNCATED_UPLOAD_ARTIFACT_REF}" = "39"
+          test "${CI_ATTEMPT_1_RUN}" != "0"
+          test "${CI_ATTEMPT_1_FAILED_JOB}" != "0"
+          echo "Composite v7 is retired after dedicated attempt-1 run ${FAILED_CONTRACT_ATTEMPT_1_RUN}, job ${FAILED_CONTRACT_ATTEMPT_1_JOB}, failed during Set up job for ${PUBLISHED_C7}; raw log ${FAILED_CONTRACT_ATTEMPT_1_LOG_SIZE} bytes sha256 ${FAILED_CONTRACT_ATTEMPT_1_LOG_SHA256}." >&2
+          echo "##[error]The action ${FAILED_ACTION_ROUTE}@${TRUNCATED_UPLOAD_ARTIFACT_REF} is not allowed in sepahead/pid-rs because all actions must be pinned to a full-length commit SHA." >&2
+          echo "No checkout or repository command ran in that dedicated hosted attempt, and no dedicated v7 static artifact was uploaded." >&2
+          echo "Repository CI attempt-1 run ${CI_ATTEMPT_1_RUN} completed failure with 44 successful jobs and sole failed job ${CI_ATTEMPT_1_FAILED_JOB}, step 11 Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders; raw failed-job log ${CI_ATTEMPT_1_LOG_SIZE} bytes sha256 ${CI_ATTEMPT_1_LOG_SHA256}." >&2
+          echo "mathematical workflow PDF check: extracted report text/layout changed across toolchains" >&2
+          echo "That CI run retained coverage, source-state, and SBOM artifacts only; it retained no generated workflow PDF, extracted text, or text diff." >&2
+          echo "The committed workflow PDF/content is not classified as defective by this marker; the strict layout comparator was the reached failure." >&2
+          echo "CodeQL attempt 1 succeeded, but no C7 hosted observation transfers qualification to C8; no L7 record is installed and R7 is permanently unissued." >&2
+          echo "Use the composite-v8 workflow and a fresh identity-bound L8 record for C8 qualification." >&2
+          exit 1

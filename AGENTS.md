@@ -302,28 +302,34 @@ attempt-1 CodeQL run passed, while repository CI and the dedicated-v6 route fail
 was absent from the hosted dependency closure. R6 is permanently unissued. Preserve C6, the exact
 failed observations, and finalized `r11`; do not rerun them for attempt-1 credit or revive R6.
 
-The operative append-only successor is composite-v7, documented in
-[`ksg-rev4-m1a-composite-v7-boundary-2026-08-18.md`](audit/evidence/ksg-rev4-m1a-composite-v7-boundary-2026-08-18.md).
+Published C7 commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` retained C6 and fresh Lean
+`r12`. Its attempt-1 CodeQL run passed, while the dedicated-v7 route failed during job setup on a
+39-hex upload-action ref and repository CI separately failed at the final mathematical-workflow
+cross-toolchain layout comparator. R7 is permanently unissued. Preserve C7, the two distinct
+hosted failure records, and finalized `r12`; do not rerun them for attempt-1 credit or revive R7.
+
+The operative append-only successor is composite-v8, documented in
+[`ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md`](audit/evidence/ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md).
 From a clean committed checkout run:
 
 ```text
-just ksg-composite-v7
+just ksg-composite-v8
 ```
 
-C7 and R7 are separate unsigned, human-attributed milestones. C7 must be the exact direct child of
-C6. It retains the failed C6 qualification, adds the bounded hosted `rg` dependency repair, binds
-the immutable C6 local-recorder counterexample and predecessor-failure capture, publishes a
-separately versioned boundary, and publishes a fresh Lean `r12` replay. R7 is permitted only after
-one fresh exact-C7 local closure and fresh attempt-1 CI, CodeQL, and dedicated-v7 success for that
-same commit. The local observation has no attempt-number authority: a separately typed recorder
-must run the fixed `just ksg-composite-v7` command from an exact clean C7 checkout, retain bounded
+C8 and R8 are separate unsigned, human-attributed milestones. C8 must be the exact direct child of
+C7. It retains both failed C7 hosted observations, repairs the one-character action pin and the
+bounded workflow-PDF portability comparator, publishes no new PDF, and publishes a fresh Lean
+`r13` replay. R8 is permitted only after one fresh exact-C8 local closure and fresh attempt-1 CI,
+CodeQL, and dedicated-v8 success for that same commit. The local observation has no attempt-number
+authority: a separately typed recorder must run the fixed `just ksg-composite-v8` command from an
+exact clean C8 checkout, retain bounded
 output and clean endpoint observations in a
 mode-0600 staging file outside the repository, and install those exact bytes only after validation.
 Those endpoints use ordinary Git status plus selected metadata checks. Rejecting
 `core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
 uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
 hermetic closure.
-R7 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
+R8 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
 and the deterministically derived receipt, then regenerates current-source last. The receipt binds
 and validates the predecessor capture, local record, and successor capture. Neither milestone may
 change scientific code, issue a v3/v4/v5 receipt, recreate a missing historical index, promote KSG
@@ -351,11 +357,12 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json`;
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
-finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, and finalized
-`r11` receipts are exact-hash-bound prior replays. Here `r12` denotes only the twelfth receipt in
-the versioned sequence that originated on 12 August, and therefore the thirteenth current-project replay receipt
+finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, finalized `r11`,
+and finalized `r12` receipts are exact-hash-bound prior replays. Here `r13` denotes only the
+thirteenth receipt in the versioned sequence that originated on 12 August, and therefore the
+fourteenth current-project replay receipt
 overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.

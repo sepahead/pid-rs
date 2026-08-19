@@ -50,11 +50,11 @@ trap cleanup EXIT
 
 PASS_COUNT=0
 RESULT_LOG="$TEST_ROOT/result.log"
-# C3 adds six mechanically separated control families to the 203-control predecessor suite.  A
-# moving aggregate can hide accidental deletion from one family behind addition to another, so the
-# final gate freezes all seven partitions and the 322-control total.  Keep these counters in
-# portable scalar shell variables: the supported Darwin system Bash does not provide associative
-# arrays.
+# C3 adds six mechanically separated control families to the 203-control predecessor suite.  C8
+# adds one text-portability family without reclassifying any predecessor control.  A moving
+# aggregate can hide accidental deletion from one family behind addition to another, so the final
+# gate freezes every partition.  Keep these counters in portable scalar shell variables: the
+# supported Darwin system Bash does not provide associative arrays.
 C3_ACTIVE_FAMILY=""
 C3_BOUNDED_PROBE_COUNT=0
 C3_ENTRY_WRAPPER_COUNT=0
@@ -62,6 +62,7 @@ C3_RUNTIME_MAP_COUNT=0
 C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
+C8_TEXT_PORTABILITY_COUNT=0
 EXPECTED_PREDECESSOR_CONTROL_COUNT=203
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
@@ -69,7 +70,8 @@ EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
-EXPECTED_TOTAL_CONTROL_COUNT=322
+EXPECTED_C8_TEXT_PORTABILITY_COUNT=44
+EXPECTED_TOTAL_CONTROL_COUNT=366
 # This suite never compiles the 83-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -832,6 +834,9 @@ pass() {
       ;;
     format-custody)
       C3_FORMAT_CUSTODY_COUNT=$((C3_FORMAT_CUSTODY_COUNT + 1))
+      ;;
+    c8-text-portability)
+      C8_TEXT_PORTABILITY_COUNT=$((C8_TEXT_PORTABILITY_COUNT + 1))
       ;;
     *)
       fail "unknown active C3 control family: $C3_ACTIVE_FAMILY"
@@ -1994,6 +1999,7 @@ FORMAT_REPLAY_VALIDATOR="$TEST_ROOT/verify-captured-format.py"
 TEXMFDEBIAN_QUERY_VALIDATOR="$TEST_ROOT/validate-texmfdebian-query.sh"
 ENTRY_WRAPPER_WRITER="$TEST_ROOT/write-entry-wrapper.py"
 FLS_CLOSURE_VALIDATOR="$TEST_ROOT/validate-fls-closure.py"
+TEXT_PORTABILITY_VALIDATOR="$TEST_ROOT/validate-text-portability.py"
 extract_heredoc_containing "$CHECKER" "def read_regular_beneath" "$CAPTURE_VALIDATOR"
 extract_heredoc_containing \
   "$CHECKER" \
@@ -2045,9 +2051,464 @@ extract_heredoc_containing \
   "$CHECKER" \
   "def is_forbidden_tex_map_path" \
   "$FLS_CLOSURE_VALIDATOR"
+extract_heredoc_containing \
+  "$CHECKER" \
+  "def validate_projection" \
+  "$TEXT_PORTABILITY_VALIDATOR"
 bash -n "$RENDERED_TEXT_VALIDATOR"
 bash -n "$TEXMFDEBIAN_QUERY_VALIDATOR"
 pass "production validator heredocs and rendered-text/font-query regions extract uniquely and parse"
+
+validate_text_portability_source() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+
+
+def fail(detail: str) -> None:
+    raise SystemExit(f"text-portability source invariant drifted: {detail}")
+
+
+required_once = (
+    "extract_report_text() {",
+    '''local -a projection_arguments=()
+  case "$projection" in
+    default)
+      ;;
+    layout)
+      projection_arguments=(-layout)
+      ;;
+    *)
+      echo "$CHECK_NAME: internal text-projection mode error: $projection" >&2
+      exit 2
+      ;;
+  esac''',
+    'pdftotext "${projection_arguments[@]}" "$pdf" "$output"',
+    'echo "$CHECK_NAME: Poppler text extraction failed: $label" >&2',
+    'echo "$CHECK_NAME: Poppler emitted a text-extraction diagnostic: $label" >&2',
+    'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.txt" built-layout layout',
+    'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.plain.txt" built-default default',
+    '"$BUILD_ROOT/committed.plain.txt" \\\n    committed-default \\\n    default',
+    '"$BUILD_ROOT/committed.txt" \\\n    committed-layout \\\n    layout',
+    'def validate_projection(path: Path, label: str, expected_pages: int)',
+    'reviewed_layout_relocations = {',
+    '10: (("Comparison", "result"), ("Suite", "3", "·", "corpus"))',
+    '("premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes")',
+    'if built_default_raw != committed_default_raw:',
+    'if built_counter != committed_counter:',
+    """python3 -I -S - \\
+    "$BUILD_ROOT/built.plain.txt" \\
+    "$BUILD_ROOT/committed.plain.txt" \\
+    "$BUILD_ROOT/built.txt" \\
+    "$BUILD_ROOT/committed.txt" \\
+    "$EXPECTED_PAGES" <<'PY'""",
+)
+for literal in required_once:
+    if text.count(literal) != 1:
+        fail(f"required exact literal count differs from one: {literal!r}")
+if text.count('if [[ -s "$diagnostic" ]]') != 2:
+    fail("render and text diagnostic guards are not both present")
+if text.count('extract_report_text \\\n    "$SNAPSHOT_ROOT/$COMMITTED"') != 2:
+    fail("committed default/layout extraction call inventory differs from two")
+try:
+    helper = text.index("extract_report_text() {")
+    built_layout = text.index(
+        'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.txt" built-layout layout'
+    )
+    rendered_sentinels = text.index("required_text=(", built_layout)
+    cross_branch = text.index('elif [[ "$MODE" == "--cross-toolchain" ]]; then', built_layout)
+    built_default = text.index(
+        'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.plain.txt" built-default default',
+        cross_branch,
+    )
+    committed_default = text.index("committed-default \\\n    default", built_default)
+    committed_layout = text.index("committed-layout \\\n    layout", committed_default)
+    comparator = text.index("def validate_projection", committed_layout)
+    structure = text.index("built.structure", comparator)
+except ValueError as error:
+    fail(f"ordered production route is absent: {error}")
+if not helper < built_layout < rendered_sentinels < cross_branch:
+    fail("built layout extraction does not precede rendered-text checks and cross mode")
+if not cross_branch < built_default < committed_default < committed_layout < comparator < structure:
+    fail("cross-toolchain extraction/comparator/structure order is not strict")
+PY
+}
+
+make_text_portability_fixture() {
+  local directory="$1"
+  local variant="$2"
+  mkdir "$directory"
+  python3 -I -S - "$directory" "$variant" <<'PY'
+from pathlib import Path
+import sys
+
+
+root = Path(sys.argv[1])
+variant = sys.argv[2]
+expected_pages = 83
+
+
+def find_once(tokens: list[str], needle: list[str]) -> int:
+    matches = [
+        index
+        for index in range(len(tokens) - len(needle) + 1)
+        if tokens[index : index + len(needle)] == needle
+    ]
+    if len(matches) != 1:
+        raise SystemExit(f"fixture needle occurrence drifted: {needle!r}: {matches!r}")
+    return matches[0]
+
+
+def remove_once(tokens: list[str], needle: list[str]) -> int:
+    index = find_once(tokens, needle)
+    del tokens[index : index + len(needle)]
+    return index
+
+
+def layout_tokens(page_number: int) -> list[str]:
+    if page_number == 10:
+        return [
+            "Layout", "page-10", "prefix-a", "prefix-b",
+            "Comparison", "result", "Suite", "3", "·", "corpus",
+            "suffix-a", "suffix-b",
+        ]
+    if page_number == 12:
+        return [
+            "Layout", "page-12", "prefix-a", "prefix-b", "Checker",
+            "premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes",
+            "suffix-a", "suffix-b",
+        ]
+    return ["Layout", f"page-{page_number}", "alpha", "beta", "gamma"]
+
+
+plain_built = [f"Plain page-{number} alpha beta gamma\n" for number in range(1, expected_pages + 1)]
+plain_committed = list(plain_built)
+layout_built = [layout_tokens(number) for number in range(1, expected_pages + 1)]
+layout_committed = [list(tokens) for tokens in layout_built]
+
+if variant == "exact":
+    pass
+elif variant == "whitespace":
+    pass
+elif variant == "label-flip":
+    for page_number, label, anchor in (
+        (10, ["Comparison", "result"], ["Suite", "3", "·", "corpus"]),
+        (12, ["Checker"], ["premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes"]),
+    ):
+        tokens = layout_built[page_number - 1]
+        remove_once(tokens, label)
+        anchor_index = find_once(tokens, anchor)
+        tokens[anchor_index + len(anchor) : anchor_index + len(anchor)] = label
+elif variant == "plain-content":
+    plain_committed[2] = plain_committed[2].replace("alpha", "delta", 1)
+elif variant == "plain-whitespace":
+    plain_committed[2] = plain_committed[2].replace(" alpha", "  alpha", 1)
+elif variant == "plain-order":
+    plain_committed[2] = plain_committed[2].replace("alpha beta", "beta alpha", 1)
+elif variant in {
+    "layout-substitute", "layout-drop", "layout-duplicate", "layout-page-move",
+    "layout-order", "layout-order-p10", "layout-order-p12",
+}:
+    if variant == "layout-substitute":
+        layout_committed[2][find_once(layout_committed[2], ["gamma"])] = "delta"
+    elif variant == "layout-drop":
+        remove_once(layout_committed[2], ["gamma"])
+    elif variant == "layout-duplicate":
+        layout_committed[2].append("gamma")
+    elif variant == "layout-page-move":
+        remove_once(layout_committed[2], ["gamma"])
+        layout_committed[3].append("gamma")
+    elif variant == "layout-order":
+        layout_committed[2][-2:] = reversed(layout_committed[2][-2:])
+    elif variant == "layout-order-p10":
+        layout_committed[9][-2:] = reversed(layout_committed[9][-2:])
+    else:
+        layout_committed[11][-2:] = reversed(layout_committed[11][-2:])
+elif variant.startswith("page10-label-") or variant.startswith("page12-label-"):
+    page_number = 10 if variant.startswith("page10") else 12
+    label = ["Comparison", "result"] if page_number == 10 else ["Checker"]
+    for tokens in (layout_built[page_number - 1], layout_committed[page_number - 1]):
+        original = remove_once(tokens, label)
+        if variant.endswith("absent"):
+            continue
+        if variant.endswith("duplicate"):
+            tokens[original:original] = label + label
+        elif variant.endswith("moved"):
+            tokens[1:1] = label
+        else:
+            raise SystemExit(f"unknown label mutation: {variant}")
+elif variant.startswith("page10-anchor-") or variant.startswith("page12-anchor-"):
+    page_number = 10 if variant.startswith("page10") else 12
+    anchor = (
+        ["Suite", "3", "·", "corpus"]
+        if page_number == 10
+        else ["premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes"]
+    )
+    for tokens in (layout_built[page_number - 1], layout_committed[page_number - 1]):
+        original = remove_once(tokens, anchor)
+        if variant.endswith("absent"):
+            continue
+        if variant.endswith("duplicate"):
+            tokens[original:original] = anchor + anchor
+        else:
+            raise SystemExit(f"unknown anchor mutation: {variant}")
+elif variant in {
+    "control-cr", "control-vt", "control-nul", "control-del", "control-c1",
+    "control-bom", "control-zero-width", "control-nbsp", "control-em-space",
+}:
+    controls = {
+        "control-cr": "\r",
+        "control-vt": "\v",
+        "control-nul": "\x00",
+        "control-del": "\x7f",
+        "control-c1": "\x85",
+        "control-bom": "\ufeff",
+        "control-zero-width": "\u200b",
+        "control-nbsp": "\u00a0",
+        "control-em-space": "\u2003",
+    }
+    layout_committed[0].append("control" + controls[variant] + "byte")
+elif variant not in {"invalid-utf8", "missing-ff", "extra-ff", "nonterminal-ff", "empty-page"}:
+    raise SystemExit(f"unknown text-portability fixture variant: {variant}")
+
+
+def plain_bytes(pages: list[str]) -> bytes:
+    return "".join(page + "\f" for page in pages).encode("utf-8")
+
+
+def render_layout(pages: list[list[str]], side: str) -> bytes:
+    rendered = []
+    for page_number, tokens in enumerate(pages, start=1):
+        if variant == "whitespace" and page_number == 5:
+            separator = " \t\n  " if side == "built" else "   "
+        else:
+            separator = " "
+        rendered.append(separator.join(tokens) + "\n\f")
+    return "".join(rendered).encode("utf-8")
+
+
+outputs = {
+    "built.plain.txt": plain_bytes(plain_built),
+    "committed.plain.txt": plain_bytes(plain_committed),
+    "built.layout.txt": render_layout(layout_built, "built"),
+    "committed.layout.txt": render_layout(layout_committed, "committed"),
+}
+if variant == "invalid-utf8":
+    raw = outputs["committed.plain.txt"]
+    outputs["committed.plain.txt"] = raw[:-1] + b"\xff" + raw[-1:]
+elif variant == "missing-ff":
+    outputs["committed.plain.txt"] = outputs["committed.plain.txt"].replace(b"\f", b"", 1)
+elif variant == "extra-ff":
+    outputs["committed.plain.txt"] = outputs["committed.plain.txt"].replace(b"\f", b"\f\f", 1)
+elif variant == "nonterminal-ff":
+    outputs["committed.plain.txt"] += b"trailing"
+elif variant == "empty-page":
+    plain_committed[20] = " \t\n"
+    outputs["committed.plain.txt"] = plain_bytes(plain_committed)
+
+for name, payload in outputs.items():
+    (root / name).write_bytes(payload)
+PY
+}
+
+run_text_portability_validator() {
+  local directory="$1"
+  python3 -I -S "$TEXT_PORTABILITY_VALIDATOR" \
+    "$directory/built.plain.txt" \
+    "$directory/committed.plain.txt" \
+    "$directory/built.layout.txt" \
+    "$directory/committed.layout.txt" \
+    "$EXPECTED_PAGES"
+}
+
+text_portability_case() {
+  local variant="$1"
+  local directory="$TEST_ROOT/text-portability-$variant"
+  make_text_portability_fixture "$directory" "$variant"
+  printf '%s\n' "$directory"
+}
+
+C3_ACTIVE_FAMILY="c8-text-portability"
+expect_accept \
+  "text portability accepts exact default and layout projections" \
+  run_text_portability_validator "$(text_portability_case exact)"
+expect_accept \
+  "text portability admits only ASCII layout-whitespace drift" \
+  run_text_portability_validator "$(text_portability_case whitespace)"
+expect_accept \
+  "text portability admits the two reviewed diagram-label flips across exact anchors" \
+  run_text_portability_validator "$(text_portability_case label-flip)"
+
+for variant in plain-content plain-whitespace plain-order; do
+  expect_reject \
+    "text portability rejects $variant drift in default extraction" \
+    "default extraction bytes differ on page 3" \
+    run_text_portability_validator "$(text_portability_case "$variant")"
+done
+expect_reject \
+  "text portability rejects invalid UTF-8" \
+  "committed default extraction is not strict UTF-8" \
+  run_text_portability_validator "$(text_portability_case invalid-utf8)"
+expect_reject \
+  "text portability rejects a missing form feed" \
+  "committed default extraction form-feed inventory is 82, expected 83" \
+  run_text_portability_validator "$(text_portability_case missing-ff)"
+expect_reject \
+  "text portability rejects an extra form feed" \
+  "committed default extraction form-feed inventory is 84, expected 83" \
+  run_text_portability_validator "$(text_portability_case extra-ff)"
+expect_reject \
+  "text portability rejects bytes after the terminal form feed" \
+  "committed default extraction does not end at its final form feed" \
+  run_text_portability_validator "$(text_portability_case nonterminal-ff)"
+expect_reject \
+  "text portability rejects an empty page" \
+  "committed default extraction page 21 is empty" \
+  run_text_portability_validator "$(text_portability_case empty-page)"
+
+for variant_and_code in \
+  "control-cr U+000D" \
+  "control-vt U+000B" \
+  "control-nul U+0000" \
+  "control-del U+007F" \
+  "control-c1 U+0085" \
+  "control-bom U+FEFF" \
+  "control-zero-width U+200B"; do
+  variant="${variant_and_code%% *}"
+  codepoint="${variant_and_code#* }"
+  expect_reject \
+    "text portability rejects $variant" \
+    "committed layout extraction contains forbidden $codepoint on page 1" \
+    run_text_portability_validator "$(text_portability_case "$variant")"
+done
+for variant_and_code in "control-nbsp U+00A0" "control-em-space U+2003"; do
+  variant="${variant_and_code%% *}"
+  codepoint="${variant_and_code#* }"
+  expect_reject \
+    "text portability rejects $variant" \
+    "committed layout extraction contains non-ASCII whitespace $codepoint on page 1" \
+    run_text_portability_validator "$(text_portability_case "$variant")"
+done
+
+for variant in layout-substitute layout-drop layout-duplicate layout-page-move; do
+  expect_reject \
+    "text portability rejects $variant token-frequency drift" \
+    "layout token frequencies differ on page 3" \
+    run_text_portability_validator "$(text_portability_case "$variant")"
+done
+expect_reject \
+  "text portability rejects ordinary-page layout token reordering" \
+  "layout token order differs on page 3" \
+  run_text_portability_validator "$(text_portability_case layout-order)"
+expect_reject \
+  "text portability rejects non-label prose reordering on reviewed page 10" \
+  "layout residual token order differs on reviewed page 10" \
+  run_text_portability_validator "$(text_portability_case layout-order-p10)"
+expect_reject \
+  "text portability rejects non-label prose reordering on reviewed page 12" \
+  "layout residual token order differs on reviewed page 12" \
+  run_text_portability_validator "$(text_portability_case layout-order-p12)"
+
+for page_number in 10 12; do
+  expect_reject \
+    "text portability rejects absent reviewed label on page $page_number" \
+    "layout page $page_number reviewed label occurrence count is 0" \
+    run_text_portability_validator \
+      "$(text_portability_case "page${page_number}-label-absent")"
+  expect_reject \
+    "text portability rejects duplicated reviewed label on page $page_number" \
+    "layout page $page_number reviewed label occurrence count is 2" \
+    run_text_portability_validator \
+      "$(text_portability_case "page${page_number}-label-duplicate")"
+  expect_reject \
+    "text portability rejects reviewed label moved away from its anchor on page $page_number" \
+    "layout page $page_number reviewed label is not immediately before or after its exact anchor" \
+    run_text_portability_validator \
+      "$(text_portability_case "page${page_number}-label-moved")"
+  expect_reject \
+    "text portability rejects absent reviewed anchor on page $page_number" \
+    "layout page $page_number reviewed anchor occurrence count is 0" \
+    run_text_portability_validator \
+      "$(text_portability_case "page${page_number}-anchor-absent")"
+  expect_reject \
+    "text portability rejects duplicated reviewed anchor on page $page_number" \
+    "layout page $page_number reviewed anchor occurrence count is 2" \
+    run_text_portability_validator \
+      "$(text_portability_case "page${page_number}-anchor-duplicate")"
+done
+
+expect_accept \
+  "production source binds diagnostic-clean default/layout extraction and comparator order" \
+  validate_text_portability_source "$CHECKER"
+
+case_file="$TEST_ROOT/text-portability-default-mode-rerouted.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.plain.txt" built-default default' \
+  'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.plain.txt" built-default layout'
+expect_reject \
+  "text-portability source custody rejects default extraction rerouted through layout mode" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+
+case_file="$TEST_ROOT/text-portability-default-arguments-aliased.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'local -a projection_arguments=()' \
+  'local -a projection_arguments=(-layout)'
+expect_reject \
+  "text-portability source custody rejects default projection arguments aliased to layout" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+
+case_file="$TEST_ROOT/text-portability-layout-mode-rerouted.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  $'committed-layout \\\n    layout' \
+  $'committed-layout \\\n    default'
+expect_reject \
+  "text-portability source custody rejects committed layout extraction rerouted through default mode" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+
+case_file="$TEST_ROOT/text-portability-comparator-argv-aliased.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  '"$BUILD_ROOT/committed.plain.txt" \
+    "$BUILD_ROOT/built.txt"' \
+  '"$BUILD_ROOT/built.plain.txt" \
+    "$BUILD_ROOT/built.txt"'
+expect_reject \
+  "text-portability source custody rejects comparator argument aliasing" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+
+case_file="$TEST_ROOT/text-portability-comparator-bypassed.sh"
+cp "$CHECKER" "$case_file"
+replace_once "$case_file" 'def validate_projection' 'def bypassed_projection'
+expect_reject \
+  "text-portability source custody rejects comparator bypass" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+
+case_file="$TEST_ROOT/text-portability-diagnostic-guard-bypassed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  $'if [[ -s "$diagnostic" ]]; then\n      cat "$diagnostic" >&2\n      echo "$CHECK_NAME: Poppler emitted a text-extraction diagnostic: $label" >&2' \
+  $'if false; then\n      cat "$diagnostic" >&2\n      echo "$CHECK_NAME: Poppler emitted a text-extraction diagnostic: $label" >&2'
+expect_reject \
+  "text-portability source custody rejects text-extraction diagnostic bypass" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+C3_ACTIVE_FAMILY=""
 
 run_texmfdebian_query_validator() {
   local query_status="$1"
@@ -6182,7 +6643,7 @@ c3_control_count=$((
   + C3_EXECUTABLE_CUSTODY_COUNT
   + C3_FORMAT_CUSTODY_COUNT
 ))
-predecessor_control_count=$((PASS_COUNT - c3_control_count))
+predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT))
 if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_BOUNDED_PROBE_COUNT" -ne "$EXPECTED_C3_BOUNDED_PROBE_COUNT" \
     || "$C3_ENTRY_WRAPPER_COUNT" -ne "$EXPECTED_C3_ENTRY_WRAPPER_COUNT" \
@@ -6190,12 +6651,13 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_FLS_MAP_PATH_COUNT" -ne "$EXPECTED_C3_FLS_MAP_PATH_COUNT" \
     || "$C3_EXECUTABLE_CUSTODY_COUNT" -ne "$EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT" \
     || "$C3_FORMAT_CUSTODY_COUNT" -ne "$EXPECTED_C3_FORMAT_CUSTODY_COUNT" \
+    || "$C8_TEXT_PORTABILITY_COUNT" -ne "$EXPECTED_C8_TEXT_PORTABILITY_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
@@ -6203,4 +6665,5 @@ printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen fa
   "$C3_RUNTIME_MAP_COUNT" \
   "$C3_FLS_MAP_PATH_COUNT" \
   "$C3_EXECUTABLE_CUSTODY_COUNT" \
-  "$C3_FORMAT_CUSTODY_COUNT"
+  "$C3_FORMAT_CUSTODY_COUNT" \
+  "$C8_TEXT_PORTABILITY_COUNT"

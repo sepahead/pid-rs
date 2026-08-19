@@ -431,9 +431,8 @@ ksg-composite-v6:
     python3 -O -I -S -B scripts/check-ksg-m1a-composite-v6-self-test.py > "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
 
-# Append-only composite-v7 successor: preserve exact C6/r11/v6 authorities, close the
-# hosted ripgrep dependency and local authority-stream bounds, publish fresh r12 custody,
-# and permit R7 only after fresh exact-C7 local and attempt-1 hosted qualification.
+# Retained historical composite-v7 self-check authority. C7 later failed two hosted routes;
+# this callable recipe grants zero qualification credit and cannot issue permanently-unissued R7.
 ksg-composite-v7:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -481,6 +480,66 @@ ksg-composite-v7:
     cmp "$result_root/static.json" "$result_root/static.optimized.json"
     python3 -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py > "$result_root/self-test.json"
     python3 -O -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py > "$result_root/self-test.optimized.json"
+    cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
+
+# Composite-v8 repairs the C7 hosted setup pin and the inherited workflow-PDF portability
+# comparator, preserves the exact C7 publication family, and requires fresh identity-bound L8 and
+# hosted evidence.
+ksg-composite-v8:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    umask 077
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v8.XXXXXX")"
+    trap 'rm -rf -- "$result_root"' EXIT
+    command -v rg >/dev/null
+    rg --version >/dev/null
+    python3 -I -S -B scripts/check-github-action-pins.py > "$result_root/action-pins.json"
+    python3 -O -I -S -B scripts/check-github-action-pins.py > "$result_root/action-pins.optimized.json"
+    cmp "$result_root/action-pins.json" "$result_root/action-pins.optimized.json"
+    python3 -I -S -B scripts/check-github-action-pins-self-test.py > "$result_root/action-pins-self.json"
+    python3 -O -I -S -B scripts/check-github-action-pins-self-test.py > "$result_root/action-pins-self.optimized.json"
+    cmp "$result_root/action-pins-self.json" "$result_root/action-pins-self.optimized.json"
+    python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
+    python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
+    scripts/check-release-state-self-test.sh
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.json"
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.optimized.json"
+    cmp "$result_root/zeta.json" "$result_root/zeta.optimized.json"
+    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
+    python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
+    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v8-local-closure.py --self-test > "$result_root/local.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v8-local-closure.py --self-test > "$result_root/local.optimized.json"
+    cmp "$result_root/local.json" "$result_root/local.optimized.json"
+    scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --exact
+    scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --exact
+    scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
+    scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
+    scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh --exact
+    scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --exact
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf-self-test.sh
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh --exact
+    python3 -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
+    python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+    python3 -I -S -B scripts/check-current-source-state-v1.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1.py
+    python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
+    python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v8.py --self-test > "$result_root/capture.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v8.py --self-test > "$result_root/capture.optimized.json"
+    cmp "$result_root/capture.json" "$result_root/capture.optimized.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v8.py --validate-static > "$result_root/static.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8.py --validate-static > "$result_root/static.optimized.json"
+    cmp "$result_root/static.json" "$result_root/static.optimized.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py > "$result_root/self-test.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py > "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
@@ -566,7 +625,7 @@ formal-mathematical-workflow-pdf:
     /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-formal-pdf-log-self-test.sh
     /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc -c 'python3 -I -S scripts/compare-formal-pdf-renders-self-test.py && python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py'
     /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf-self-test.sh
-    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh
+    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh --exact
 
 # Require a one-to-one inventory of formal LaTeX sources and rendered PDFs, then replay
 # every warning-free deterministic PDF build.
@@ -594,7 +653,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v7 certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v8 certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

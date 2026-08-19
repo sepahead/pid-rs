@@ -84,5 +84,5 @@ scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal LaTeX source has one warning-free same-toolchain-reproducible PDF"
 else
-  echo "OK: every declared formal LaTeX source has one warning-free cross-toolchain-structurally-equivalent PDF"
+  echo "OK: every declared formal LaTeX source passed its warning-free bounded cross-toolchain PDF gate"
 fi

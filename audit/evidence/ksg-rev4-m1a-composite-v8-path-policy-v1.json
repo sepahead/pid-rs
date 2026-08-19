@@ -1,0 +1,337 @@
+{
+  "base": {
+    "commit": "23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e",
+    "message": "Repair KSG M1a composite v7 contract\n",
+    "parent": "0c3afa0ab5b264370072a18d24655df35b90574c",
+    "r4_status": "permanently_unissued",
+    "r5_status": "permanently_unissued",
+    "r6_status": "permanently_unissued",
+    "r7_status": "permanently_unissued",
+    "tree": "bb952adb0d24657a75458372d5fff1e45ad2ce81"
+  },
+  "c7_disposition": {
+    "codeql_attempt_1": {
+      "conclusion": "success",
+      "run": 32257015218
+    },
+    "dedicated_attempt_1": {
+      "conclusion": "failure",
+      "failed_step": {
+        "name": "Set up job",
+        "number": 1
+      },
+      "job": 96080963533,
+      "raw_log_sha256": "b935661a497e3dc257b7ba552c866d1ff52bc8269182a75f961b3e9dfa193b01",
+      "raw_log_size_bytes": 1843,
+      "run": 32257017103,
+      "truncated_action_ref": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0"
+    },
+    "local_recorder": {
+      "credit": "zero",
+      "l7_record": "absent_unissued",
+      "recorder": "satisfiable_retained_no_installed_record"
+    },
+    "repository_ci_attempt_1": {
+      "conclusion": "failure",
+      "failed_step": {
+        "name": "Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders",
+        "number": 11
+      },
+      "job": 96080962981,
+      "raw_log_sha256": "b760292f9e448ce4e83148adc9a7675697193cac4904716eb450494f4646ff9c",
+      "raw_log_size_bytes": 126388,
+      "retained_artifacts": [
+        "coverage-lcov",
+        "post-commit-source-state-v2-23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e",
+        "workspace-sbom"
+      ],
+      "roster": {
+        "failure": 1,
+        "success": 44,
+        "total": 45
+      },
+      "run": 32257016662,
+      "workflow_pdf_or_text_artifact_retained": false
+    }
+  },
+  "c8": {
+    "commit_message": "Repair KSG M1a composite v8 contract\n",
+    "delta": [
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ci.yml",
+        "role": "repository_ci_action_pin_guard",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v7.yml",
+        "role": "retired_v7_no_credit_workflow",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v8.yml",
+        "role": "dedicated_v8_hosted_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "AGENTS.md",
+        "role": "operational_and_scientific_object_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "CHANGELOG.md",
+        "role": "append_only_change_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/completion-active-resume.md",
+        "role": "current_replay_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v8-2026-08-19.json",
+        "role": "predecessor_failure_hosted_capture",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md",
+        "role": "operational_boundary_record",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v8-path-policy-v1.json",
+        "role": "c8_r8_path_policy",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json",
+        "role": "current_lean_replay_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+        "role": "durable_active_plan",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+        "role": "lean_replay_process_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+        "role": "current_replay_scientific_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v8.schema.json",
+        "role": "dual_phase_hosted_capture_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v8.schema.json",
+        "role": "local_l8_closure_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v8.schema.json",
+        "role": "dual_capture_typed_receipt_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "role": "current_replay_claim_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+        "role": "current_replay_decision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+        "role": "current_replay_evidence_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+        "role": "current_replay_revision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "justfile",
+        "role": "local_command_wiring",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/README.md",
+        "role": "script_process_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v8-local-closure.py",
+        "role": "bounded_local_l8_closure_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v8.py",
+        "role": "bounded_dual_phase_hosted_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-formal-pdf-set.sh",
+        "role": "formal_pdf_aggregate_wording",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-github-action-pins-self-test.py",
+        "role": "github_action_pin_hostile_suite",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-github-action-pins.py",
+        "role": "github_action_pin_semantic_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v8-self-test.py",
+        "role": "composite_v8_hostile_suite",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v8.py",
+        "role": "composite_v8_semantic_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+        "role": "lean_replay_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze.py",
+        "role": "lean_replay_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
+        "role": "workflow_pdf_portability_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-mathematical-workflow-pdf.sh",
+        "role": "workflow_pdf_portability_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/generate-lean-4.33-replay.py",
+        "role": "lean_replay_generator",
+        "status": "M"
+      }
+    ],
+    "delta_state": "final_exact",
+    "parent": "23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e",
+    "tree": null,
+    "tree_derivation": "derive_from_the_exact_unsigned_direct_child_commit"
+  },
+  "nonimplications": [
+    "This policy describes an exact C8 and conditional R8 topology; it does not itself authorize, authenticate, qualify, or issue a commit or receipt.",
+    "The two recorded C7 hosted defect classes are a dedicated setup-time action-ref length defect and an inherited strict workflow-PDF layout-comparator portability defect revealed in repository CI; neither is a PID, estimator, theorem, numerical-result, security, accessibility, or application finding.",
+    "The absence of an installed L7 record grants no C8 or R8 credit and does not claim any operator-invocation history for the retained recorder.",
+    "C7 hosted observations and retained r12 do not transfer qualification or replay credit to C8.",
+    "The reviewed upload-action object is source-identity custody, not an authenticity, reproducible-build, or runtime-behaviour claim.",
+    "The later native-arm64 Ubuntu PDF diagnostic is correlated reproduction evidence, not C7 provider evidence or independent replication; exact default extraction and the bounded layout/raster relation do not prove identical layout, mathematical correctness, accessibility, or cross-toolchain PDF byte identity.",
+    "Git and SHA-256 identities bind named bytes and topology only; they do not establish authorship, provider completeness, trusted time, independent reproduction, or durability."
+  ],
+  "publication": {
+    "c8_new_pdf": "none",
+    "retained_family": "exact_composite_v7_publication_unchanged",
+    "workflow_pdf": {
+      "committed_pdf": "unchanged",
+      "portability_gate": "modified_bounded_comparator_only",
+      "source": "unchanged"
+    }
+  },
+  "r8": {
+    "commit_message": "Record KSG M1a composite v8 receipt\n",
+    "delta": [
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-local-closure-v8-2026-08-19.json",
+        "role": "durable_local_l8_closure",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-receipt-v8-2026-08-19.json",
+        "role": "derived_v8_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-hosted-capture-v8-2026-08-19.json",
+        "role": "fresh_successor_hosted_capture",
+        "status": "A"
+      }
+    ],
+    "evidence_state": "conditional_absent_at_c8",
+    "parent": "derive_exact_c8_commit"
+  },
+  "replay": {
+    "current": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json",
+    "predicate": "fresh_post_c7_r13_and_current_source_match_c8",
+    "retained_prior": {
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json",
+      "sha256": "67e20c7e45ac710d042b2eccd52aa6249f61fdab9b35d8c5fa427a764d0b3592",
+      "size_bytes": 142303
+    }
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v8-path-policy/v1",
+  "schema_revision": 1
+}

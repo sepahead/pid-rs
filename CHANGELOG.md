@@ -9,23 +9,46 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Published composite-v7 C7 as exact commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e`.
+  Attempt-1 CodeQL passed; dedicated-v7 failed during job setup on one 39-hex upload-action ref;
+  repository CI separately completed with 44 successful jobs and one formal-PDF failure at the
+  final mathematical-workflow cross-toolchain layout comparator. R7 is permanently unissued.
+  Composite-v8 is the append-only direct-child successor: it preserves the exact C7 publication
+  family and finalized `r12`, changes the action ref by one hexadecimal character, narrows only the
+  inherited workflow-PDF portability comparator with exact default extraction, bounded
+  page-local layout-label relocation, token, raster, navigation, font, and geometry controls, and
+  publishes no new PDF. It requires one fresh exact-C8 local closure plus fresh attempt-1 CI,
+  CodeQL, and dedicated-v8 success before any R8. Conditional R8 remains an exact four-path delta:
+  local record, successor capture, derived receipt, and current-source regenerated last. The
+  current replay pointer becomes
+  [`r13`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json);
+  finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, finalized `r11`, and finalized
+  `r12` remain exact prior evidence. Here `r13` is the thirteenth receipt in the versioned sequence
+  that originated on 12 August and the fourteenth current-project replay receipt overall; the
+  11 August historical receipt is outside that versioned sequence. The suffix does not denote a
+  calendar date, schema, theorem, review, assurance tier, or independence revision. No Lean
+  theorem source changes. C8 receives execution credit only when exact r13 exists and validates
+  under normal and optimized custody checks. This is a project-defined operational repair, not a
+  new PID definition, estimator, theorem, numerical result, scientific validation,
+  authentication, independence result, release, or application approval.
 - Published composite-v6 C6 as exact commit `0c3afa0ab5b264370072a18d24655df35b90574c`.
   Its attempt-1 CodeQL run passed, while repository CI and dedicated-v6 failed because `rg` was
-  absent from the hosted dependency closure; R6 is permanently unissued. Composite-v7 is the
-  append-only direct-child successor: it preserves C6 and finalized `r11`, records the exact
-  local-recorder bound counterexample and predecessor hosted failure, adds the bounded dependency
-  repair, publishes a separately versioned boundary, and requires one fresh exact-C7 local closure
-  plus fresh attempt-1 CI, CodeQL, and dedicated-v7 success before any R7. Conditional R7 remains
-  an exact four-path delta: local record, successor capture, derived receipt, and current-source
-  regenerated last. The current replay pointer becomes
+  absent from the hosted dependency closure; R6 is permanently unissued. At that point,
+  composite-v7 was the append-only direct-child successor: it preserved C6 and finalized `r11`,
+  recorded the exact local-recorder bound counterexample and predecessor hosted failure, added the
+  bounded dependency repair, published a separately versioned boundary, and required one fresh
+  exact-C7 local closure plus fresh attempt-1 CI, CodeQL, and dedicated-v7 success before any R7.
+  The contract reserved conditional R7 as an exact four-path delta: local record, successor
+  capture, derived receipt, and current-source regenerated last. It made the current replay pointer
   [`r12`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json);
   finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, and finalized
   `r11` remain exact prior evidence. Here `r12` is the twelfth receipt in the versioned sequence
   that originated on 12 August and the thirteenth current-project replay receipt overall; the
   11 August historical receipt is outside that versioned sequence. The suffix does not denote a
   calendar date, schema, theorem, review, assurance tier, or independence revision. No Lean
-  theorem source changes. C7 receives execution credit only when that exact r12 receipt exists and
-  validates under normal and optimized custody checks. This is a project-defined operational
+  theorem source changes. Under that predecessor contract, C7 was to receive execution credit only
+  when that exact r12 receipt existed and validated under normal and optimized custody checks. This
+  was a project-defined operational
   dependency/custody repair, not a new PID definition, estimator, theorem, numerical result,
   scientific validation, authentication, independence result, release, or application approval.
 - Published composite-v5 C5 as exact commit

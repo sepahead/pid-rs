@@ -56,6 +56,15 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.11"
+      - name: Enforce exact GitHub Action pins and mutation closure
+        run: |
+          set -euo pipefail
+          python3 -I -S -B scripts/check-github-action-pins.py > "${RUNNER_TEMP}/action-pins.json"
+          python3 -O -I -S -B scripts/check-github-action-pins.py > "${RUNNER_TEMP}/action-pins.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/action-pins.json" "${RUNNER_TEMP}/action-pins.optimized.json"
+          python3 -I -S -B scripts/check-github-action-pins-self-test.py > "${RUNNER_TEMP}/action-pins-self.json"
+          python3 -O -I -S -B scripts/check-github-action-pins-self-test.py > "${RUNNER_TEMP}/action-pins-self.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/action-pins-self.json" "${RUNNER_TEMP}/action-pins-self.optimized.json"
       - name: Replay the frozen arithmetic corpus and exact enclosure
         run: |
           set -euo pipefail

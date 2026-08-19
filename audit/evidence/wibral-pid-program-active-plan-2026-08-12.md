@@ -62,17 +62,20 @@ merging PID families or proof/certificate/application statuses.
 
 ## Status-separated research inventory
 
-This inventory is a coordination snapshot bound to the C4/C5/C6/C7 engineering lineage and the
-unchanged catalog, not a novelty claim or a completion percentage. The rows are **not additive**:
+This inventory is a coordination snapshot bound to the published C4/C5/C6/C7 engineering lineage,
+the operative composite-v8 successor contract, and the unchanged catalog, not a novelty claim or
+a completion percentage. The rows are **not additive**:
 a dependency, workflow composition,
 validation package, theorem, solver obligation, and PID definition are different object types.
 Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` changed no PID definition,
 estimator, theorem source, or scientific code. Published C5 commit
 `be862b155d710573ec95356fc1cbe9a96a2b83b9` preserves that zero-science scope. Published C6 commit
-`0c3afa0ab5b264370072a18d24655df35b90574c` preserves it again, and composite-v7 defines the same
-bounded zero-science scope for a future C7. Those are exact tree/diff observations for named
-published commits or a frozen contract for a future commit, not permission to infer the same about
-a future descendant without recomputing it.
+`0c3afa0ab5b264370072a18d24655df35b90574c` preserves it again. Published C7 commit
+`23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` preserves the same zero-science scope, but its hosted
+qualification terminated with two distinct failures and R7 is permanently unissued. Composite-v8
+defines the same bounded zero-science scope for the prospective direct-child C8 repair. Those are
+exact tree/diff observations for named published commits or the current frozen successor contract,
+not permission to infer the same about a future descendant without recomputing it.
 
 | Category | Landed inventory | Open inventory and boundary |
 |---|---:|---|
@@ -85,8 +88,8 @@ a future descendant without recomputing it.
 | PID/KSG-relevant source-written Lean theorems | **275** | The total is 246 bridge/convergence, 19 KSG integer-harmonic, 7 exact-log-product, and 3 descriptor-factorization theorems. No arbitrary theorem-count target is asserted. |
 | Exact solver obligations | **9** | Five PID-algebra QF\_LRA obligations and four conditional KSG QF\_UFLIRA obligations are landed; solver answers are not kernel proof objects. Future obligations follow the named open packets rather than a predeclared count. |
 | Categorical MGW SxPID3 | Stable implementation computes the **18-antichain** three-source lattice | The stronger assurance program is **0/5 Programs A--E** and **0/108 component-coordinates** complete. Do not transfer the implementation status into certification status. |
-| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5/C6/C7 qualification lineage are engineering/evidence work and are counted separately. |
-| Mutable plan checklist | **26/68 checked; 42 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
+| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5/C6/C7/C8 qualification lineage are engineering/evidence work and are counted separately. |
+| Mutable plan checklist | **28/70 checked; 42 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
 
 The catalog currently contains 73 method rows and 45 references: 17 paper-defined, 15
 paper-derived, and 41 project-defined. Every row records `scientific_novelty_claim = none`.
@@ -177,15 +180,17 @@ experiments, and review.
 
 Published C4 failed hosted qualification and R4 remained unissued. Published C5 also failed its
 attempt-1 hosted qualification, so R5 is permanently unissued. Published C6 failed because `rg`
-was absent from the hosted dependency closure, so R6 is permanently unissued. Composite-v7 C7/R7
-is the smallest append-only operational correction and the final general evidence-contract
-migration in this phase. After C7 is exact and hosted-green and R7 is issued, work must move to the seven named P4 science units and their
-publication packets. Do not start another repository-wide harness, receipt generation, formal
+was absent from the hosted dependency closure, so R6 is permanently unissued. Published C7 then
+exposed two distinct hosted defects, so R7 is permanently unissued. Composite-v8 C8/R8 is the
+smallest append-only two-defect correction and the final bounded evidence-contract migration in
+this phase. After exact C8 local and attempt-1 hosted qualification issues R8, work must move to
+the seven named P4 science units and their publication packets. Do not start another
+repository-wide harness, receipt generation, formal
 replay, schema family, or CI expansion merely because it is possible. Additional infrastructure is
 authorized only when a named scientific claim packet identifies a concrete failure mode, shows
 that the existing machinery cannot express or check it, and bounds the smallest required change.
 
-The harness is a means to trustworthy research, not the research endpoint. Priority after C7/R7 is
+The harness is a means to trustworthy research, not the research endpoint. Priority after C8/R8 is
 KSG M1c correspondence, PID2 revision 4, categorical MGW SxPID3 Programs A--E and 108 coordinates,
 high-value consumer APIs with exact object identities, and thesis/publication-ready positive and
 negative results. Ecosystem usefulness is a downstream requirement, not permission to replace the
@@ -338,10 +343,14 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   repository CI and the dedicated-v5 route failed, so R5 is permanently unissued. Composite-v6
   published direct-child C6 `0c3afa0ab5b264370072a18d24655df35b90574c` with the bounded
   association-rule repair and fresh replay r11. Exact-C6 CodeQL succeeded, while repository CI and
-  dedicated-v6 failed because `rg` was absent; R6 is permanently unissued. Composite-v7 is the
-  bounded append-only replacement: publish direct-child C7 with the dependency repair,
-  its separately versioned boundary and qualification machinery, and fresh replay r12; require
-  exact-C7 local, attempt-1 CI, CodeQL, and dedicated-v7 success; then permit direct-child R7 to add
+  dedicated-v6 failed because `rg` was absent; R6 is permanently unissued. Composite-v7 published
+  direct-child C7 `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` with the dependency repair and
+  fresh replay r12. Exact-C7 CodeQL succeeded, while dedicated-v7 failed during setup on a 39-hex
+  upload-action ref and repository CI separately failed at the final mathematical-workflow
+  cross-toolchain layout comparator; R7 is permanently unissued. Composite-v8 is the bounded
+  append-only replacement: publish direct-child C8 with those two operational repairs and fresh
+  replay r13; require exact-C8 local, attempt-1 CI, CodeQL, and dedicated-v8 success; then permit
+  direct-child R8 to add
   only its durable local closure record, successor hosted capture, and typed receipt while
   regenerating current-source last. Neither commit may alter scientific code or promote M1a beyond
   `integration_no_go`.
@@ -475,18 +484,31 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] Publish composite-v6 C6 and adjudicate conditional R6. C6 is exact commit
   `0c3afa0ab5b264370072a18d24655df35b90574c`; its CodeQL route passed, while repository CI and
   dedicated-v6 failed because `rg` was absent. R6 is permanently unissued; no rerun credit applies.
-- [ ] After every non-cut C7 byte settles, preserve finalized r11 byte-for-byte and generate
+- [x] After every non-cut C7 byte settles, preserve finalized r11 byte-for-byte and generate
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json`. Here r12
   is the twelfth receipt in the versioned sequence that originated on 12 August and the thirteenth
   current-project replay receipt overall; the 11 August historical receipt remains outside that
   sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
   or independence revision. No Lean theorem source changes. C7 receives execution credit only
   when that exact receipt exists and validates under normal and optimized custody checks.
-- [ ] Publish composite-v7 C7 and conditional R7 as separate unsigned, human-attributed
-  fast-forward milestones. C7 must be the exact direct child of C6 and retain its two failed
-  attempt-1 observations, add only the bounded dependency/custody repair, publish fresh r12, and
-  regenerate current-source last. Only fresh exact-C7 local, CI, CodeQL, and dedicated-v7 success
-  permits R7; otherwise R7 remains unissued.
+- [x] Publish composite-v7 C7 and adjudicate conditional R7. C7 is exact commit
+  `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e`; CodeQL passed, while dedicated-v7 failed at setup
+  on a 39-hex upload-action ref and repository CI separately failed at the reached final
+  mathematical-workflow cross-toolchain layout comparator. No L7 record is installed and R7 is
+  permanently unissued; no rerun or predecessor-transfer credit applies.
+- [ ] After every non-cut C8 byte settles, preserve finalized r12 byte-for-byte and generate
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`. Here r13
+  is the thirteenth receipt in the versioned sequence that originated on 12 August and the
+  fourteenth current-project replay receipt overall; the 11 August historical receipt remains
+  outside that sequence. The suffix does not denote a calendar date, schema, theorem, review,
+  assurance tier, or independence revision. No Lean theorem source changes. C8 receives execution
+  credit only when that exact receipt exists and validates under normal and optimized custody
+  checks.
+- [ ] Publish composite-v8 C8 and conditional R8 as separate unsigned, human-attributed
+  fast-forward milestones. C8 must be the exact direct child of C7, retain both failed C7 hosted
+  observations and exact publication bytes, add only the action-pin and workflow-PDF comparator
+  repairs, publish fresh r13, and regenerate current-source last. Only fresh exact-C8 local, CI,
+  CodeQL, and dedicated-v8 success permits R8; otherwise R8 remains unissued.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

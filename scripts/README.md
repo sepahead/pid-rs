@@ -736,10 +736,11 @@ fresh finalized replay r11. Its attempt-1 CodeQL route passed, while repository 
 dedicated-v6 route failed because `rg` was absent from the hosted dependency closure. R6 is
 permanently unissued; preserve the exact C6 failure and do not assign rerun credit.
 
-Composite-v7 is the append-only direct-child repair. It adds the reviewed `rg` dependency/probe,
-binds the immutable C6 local-recorder counterexample and predecessor failure, publishes its own
-boundary family, and moves current Lean custody to r12 without changing theorem sources. During
-precommit assembly, run the individual draft-safe gates:
+Composite-v7 was the append-only direct-child repair attempt. It added the reviewed `rg`
+dependency/probe, bound the immutable C6 local-recorder counterexample and predecessor failure,
+published its own boundary family, and moved current Lean custody to r12 without changing theorem
+sources. The following commands document that historical pre-failure route only; do not run them
+for qualification or attempt to issue R7. Its individual draft-safe gates were:
 
 ```text
 scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --exact
@@ -748,15 +749,15 @@ python3 -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py
 python3 -O -I -S -B scripts/check-ksg-m1a-composite-v7-self-test.py
 ```
 
-Run the full topology-sensitive recipe only from the exact clean committed C7 checkout:
+Its full topology-sensitive recipe was restricted to the exact clean committed C7 checkout:
 
 ```text
 just ksg-composite-v7
 ```
 
-C7 must be C6's exact unsigned direct child and publishes fresh replay r12. Its typed local
-recorder runs only the fixed command from an exact clean committed C7 checkout and installs no
-record until the schema and semantic gate accept the staged mode-0600 bytes:
+C7 is C6's exact unsigned direct child and publishes fresh replay r12. The now-retired typed local
+recorder was designed to run only the fixed command from an exact clean committed C7 checkout and
+to install no record until the schema and semantic gate accepted staged mode-0600 bytes:
 
 ```text
 local_closure_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c7-local-closure.XXXXXX")"
@@ -764,8 +765,8 @@ python3 -I -S -B scripts/capture-ksg-m1a-composite-v7-local-closure.py \
   --output "$local_closure_dir/local-closure.json"
 ```
 
-After a distinct successor hosted capture validates, derive the candidate R7 receipt only through
-the two reviewed file descriptors:
+The historical, never-completed issuance route would have derived candidate R7 only after a
+distinct successor hosted capture and only through the two reviewed file descriptors:
 
 ```text
 set -o noclobber
@@ -778,11 +779,35 @@ python3 -I -S -B scripts/check-ksg-m1a-composite-v7.py \
   3<"$local_record" 4<"$successor_capture" >"$receipt_staging"
 ```
 
-R7 is conditional and exact: local record, successor capture, derived receipt, and current-source
-regenerated last. It is permitted only after fresh exact-C7 local closure plus attempt-1 repository
-CI, all four CodeQL languages, and dedicated-v7 success for the same C7 SHA. Otherwise R7 remains
-unissued. These are project-defined operational observations, not scientific or authentication
-evidence.
+The dedicated-v7 attempt failed during hosted job setup on one 39-hex upload-action ref, and
+repository CI separately failed at the reached final mathematical-workflow cross-toolchain layout
+comparator. No L7 record is installed and R7 is permanently unissued. Preserve those distinct C7
+facts and exact r12 bytes; no predecessor observation transfers credit to a successor.
+
+Composite-v8 is the exact direct-child, two-defect operational repair. It changes only the reviewed
+upload-action ref to its 40-hex object and the bounded mathematical-workflow portability gate,
+retains the exact C7 publication family and existing 83-page workflow PDF/source, and publishes no
+new PDF. Draft-safe controls are:
+
+```text
+python3 -I -S -B scripts/check-github-action-pins.py
+python3 -O -I -S -B scripts/check-github-action-pins.py
+python3 -I -S -B scripts/check-github-action-pins-self-test.py
+python3 -O -I -S -B scripts/check-github-action-pins-self-test.py
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v8.py --self-test
+python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v8.py --self-test
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v8-local-closure.py --self-test
+python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v8-local-closure.py --self-test
+python3 -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py
+```
+
+Run `just ksg-composite-v8` only from the exact clean committed C8 checkout. That local route uses
+the workflow-PDF hostile suite plus same-toolchain `--exact`; ordinary CI and dedicated-v8 use the
+same hostile suite plus `--cross-toolchain`. R8 remains conditional and exact: local record,
+successor capture, derived receipt, and current-source regenerated last, after fresh exact-C8 local
+closure and fresh attempt-1 repository CI, all four CodeQL languages, and dedicated-v8 success.
+These are project-defined operational observations, not scientific or authentication evidence.
 
 The v4 capture and receipt commands documented by the historical process report described a
 conditional route that was never admitted. C4's attempt-1 qualification failed, R4 is permanently
@@ -1000,13 +1025,13 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
 finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt,
-finalized `r8` receipt, finalized `r9` receipt, finalized `r10` receipt, and finalized `r11` receipt
-remain exact-hash-bound prior evidence with their original v1 and eleven v2 schema identities. The
-`r12` suffix denotes only the twelfth receipt in the versioned sequence that originated on 12
-August, and therefore the thirteenth current-project replay receipt overall; the 11 August historical receipt is outside that
+finalized `r8` receipt, finalized `r9` receipt, finalized `r10` receipt, finalized `r11` receipt,
+and finalized `r12` receipt remain exact-hash-bound prior evidence with their original v1 and
+twelve v2 schema identities. The `r13` suffix denotes only the thirteenth receipt in the versioned
+sequence that originated on 12 August, and therefore the fourteenth current-project replay receipt overall; the 11 August historical receipt is outside that
 versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 route receives current execution credit only when that exact receipt exists and validates.
@@ -1051,24 +1076,25 @@ checker reconstructs its zero-placeholder replay source and allows no other chec
 replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
 two-edit finalization and normal/optimized checker plus self-test replay.
 
-The runner also refuses to start unless the three-way composite-v7 checksum cut is invocation
+The runner also refuses to start unless the three-way composite-v8 checksum cut is invocation
 ready. The replay projection must still be the unique exact zero-placeholder source expression;
-the Lean composite-v7 scalar and the `scripts/check-ksg-m1a-composite-v7.py` operational-map row
-must be equal nonzero literals hashing the exact final v7 checker; and the v7 checker's unique
+the Lean composite-v8 scalar and the `scripts/check-ksg-m1a-composite-v8.py` operational-map row
+must be equal nonzero literals hashing the exact final v8 checker; and the v8 checker's unique
 nonzero `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal must reproduce the Lean source after
-normalizing exactly the projection, v7 scalar, and v7 operational row to their reviewed placeholder
-forms. The retained v4/v5/v6 checkers, their ordinary operational-map rows, and r9/r10/r11 receipts are
-immutable prior evidence: they are neither rewritten nor part of the r12 normalization cut.
+normalizing exactly the projection, v8 scalar, and v8 operational row to their reviewed placeholder
+forms. The retained v4/v5/v6/v7 checkers, their ordinary operational-map rows, and
+r9/r10/r11/r12 receipts are immutable prior evidence: they are neither rewritten nor part of the
+r13 normalization cut.
 
-Finalization is deliberately acyclic. First freeze the v7 self-test, this guide, the freeze guide,
+Finalization is deliberately acyclic. First freeze the v8 self-test, this guide, the freeze guide,
 and every other non-cut byte and digest row. With all three Lean cut positions in placeholder form,
-compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v7 checker.
-Then freeze the v7 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
-only the Lean v7 scalar and v7 operational row. Leave the replay projection as `"0" * 64`, rerun
+compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v8 checker.
+Then freeze the v8 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
+only the Lean v8 scalar and v8 operational row. Leave the replay projection as `"0" * 64`, rerun
 the normal and optimized hostile suites, and invoke the zero-argument replay generator exactly
-once. Only after it no-clobber-publishes the provisional r12 receipt may the established two-edit
+once. Only after it no-clobber-publishes the provisional r13 receipt may the established two-edit
 receipt finalization replace the projection literal and the projection-omitted live Lean-checker
-custody digest. Any change to the v7 self-test or another normalized Lean input after `H_L` was
+custody digest. Any change to the v8 self-test or another normalized Lean input after `H_L` was
 computed invalidates the cut and requires restarting this sequence. The generator predicates run
 before replay commands and publication; the hostile suites exercise causal checker drift,
 projection-finalized, missing, duplicated, mismatched, normalized-cut, and operational-map-omission
@@ -1624,11 +1650,18 @@ correspondence, or proves a PID claim.
 differ, if an unexpected paper is present without an explicit inventory update, or if any
 individual PDF gate fails. Its default `--exact` mode requires byte identity and is therefore a
 same-toolchain reproducibility check. Its `--cross-toolchain` mode rebuilds warning-free PDFs and
-compares extracted text/layout, page count and geometry, and font embedding. CI uses the latter
-because an unpinned runner TeX installation cannot defensibly promise byte identity with the
-maintainer toolchain. The structural mode is not a pixel-identity or cross-toolchain byte-
-reproducibility claim. These checks prevent a mathematical source or rendered paper from being
-silently omitted. They verify artifact completeness and rendering properties, not theorem truth.
+applies each artifact's declared bounded portability relation. For the 83-page mathematical
+workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
+default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
+tab, and line-feed runs, except for the uniquely identified `Comparison result` and `Checker`
+diagram labels moving only across their exact adjacent anchors on pages 10 and 12; exact per-page
+token frequencies everywhere; and the existing page, geometry, navigation, font, and bounded
+same-renderer color/grayscale raster predicates. CI uses cross-toolchain mode because an unpinned
+runner TeX installation cannot defensibly promise byte identity with the maintainer toolchain.
+This relation does not prove identical layout, mathematical correctness, accessibility,
+renderer independence, pixel identity, or cross-toolchain PDF byte identity. These checks prevent
+a mathematical source or rendered paper from being silently omitted. They verify artifact
+completeness and bounded rendering properties, not theorem truth.
 
 Before any PDF build, `check-formal-pdf-style.py` enforces the twelve-paper shared visual-system
 contract: every paper loads the common package and title/section/header helpers exactly once,

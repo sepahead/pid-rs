@@ -3181,7 +3181,50 @@ compare_render_sets() {
     --large-delta 24 \
     --max-mean-abs 0.20 \
     --max-changed-fraction 0.01 \
-    --max-large-fraction 0.001
+      --max-large-fraction 0.001
+}
+
+extract_report_text() {
+  local pdf="$1"
+  local output="$2"
+  local label="$3"
+  local projection="$4"
+  local -a projection_arguments=()
+  case "$projection" in
+    default)
+      ;;
+    layout)
+      projection_arguments=(-layout)
+      ;;
+    *)
+      echo "$CHECK_NAME: internal text-projection mode error: $projection" >&2
+      exit 2
+      ;;
+  esac
+  local stdout="$BUILD_ROOT/$label.pdftotext.stdout"
+  local stderr="$BUILD_ROOT/$label.pdftotext.stderr"
+  if ! env -i \
+    "${CLEAN_BASE_ENV[@]}" \
+    "HOME=$BUILD_ROOT/pdf-tools-home" \
+    "TMPDIR=$BUILD_ROOT/tmp" \
+    pdftotext "${projection_arguments[@]}" "$pdf" "$output" \
+      >"$stdout" 2>"$stderr"; then
+    cat "$stdout" "$stderr" >&2
+    echo "$CHECK_NAME: Poppler text extraction failed: $label" >&2
+    exit 1
+  fi
+  local diagnostic
+  for diagnostic in "$stdout" "$stderr"; do
+    if [[ -s "$diagnostic" ]]; then
+      cat "$diagnostic" >&2
+      echo "$CHECK_NAME: Poppler emitted a text-extraction diagnostic: $label" >&2
+      exit 1
+    fi
+  done
+  if [[ ! -f "$output" || -L "$output" ]]; then
+    echo "$CHECK_NAME: Poppler did not create a direct text-extraction file: $label" >&2
+    exit 1
+  fi
 }
 
 PAIR_ROOT="$BUILD_ROOT/figure-pairs"
@@ -3855,7 +3898,7 @@ for run_dir in run_directories:
         )
 PY
 
-pdftotext -layout "$BUILT_A" "$BUILD_ROOT/built.txt"
+extract_report_text "$BUILT_A" "$BUILD_ROOT/built.txt" built-layout layout
 required_text=(
   'Mathematical Problem-Solving Workflow'
   'Keep the scientific objects distinct'
@@ -4896,11 +4939,226 @@ if [[ "$MODE" == "--exact" ]]; then
     exit 1
   fi
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
-  pdftotext -layout "$SNAPSHOT_ROOT/$COMMITTED" "$BUILD_ROOT/committed.txt"
-  if ! cmp -s "$BUILD_ROOT/built.txt" "$BUILD_ROOT/committed.txt"; then
-    echo "$CHECK_NAME: extracted report text/layout changed across toolchains" >&2
-    exit 1
-  fi
+  extract_report_text "$BUILT_A" "$BUILD_ROOT/built.plain.txt" built-default default
+  extract_report_text \
+    "$SNAPSHOT_ROOT/$COMMITTED" \
+    "$BUILD_ROOT/committed.plain.txt" \
+    committed-default \
+    default
+  extract_report_text \
+    "$SNAPSHOT_ROOT/$COMMITTED" \
+    "$BUILD_ROOT/committed.txt" \
+    committed-layout \
+    layout
+  python3 -I -S - \
+    "$BUILD_ROOT/built.plain.txt" \
+    "$BUILD_ROOT/committed.plain.txt" \
+    "$BUILD_ROOT/built.txt" \
+    "$BUILD_ROOT/committed.txt" \
+    "$EXPECTED_PAGES" <<'PY'
+from collections import Counter
+import hashlib
+import json
+from pathlib import Path
+import re
+import sys
+import unicodedata
+
+
+def fail(detail: str) -> None:
+    raise SystemExit(f"mathematical workflow PDF check: {detail}")
+
+
+def digest_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+def digest_tokens(tokens: list[str]) -> str:
+    encoded = json.dumps(
+        tokens,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return digest_bytes(encoded)
+
+
+def digest_counter(counter: Counter[str]) -> str:
+    encoded = json.dumps(
+        sorted(counter.items()),
+        ensure_ascii=False,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return digest_bytes(encoded)
+
+
+def validate_projection(path: Path, label: str, expected_pages: int) -> tuple[bytes, list[str]]:
+    try:
+        raw = path.read_bytes()
+    except OSError as error:
+        fail(f"{label} extraction cannot be read: {error}")
+    if not 1 <= len(raw) <= 16 * 1024 * 1024:
+        fail(f"{label} extraction size is outside 1..16777216 bytes: {len(raw)}")
+    try:
+        text = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError:
+        fail(f"{label} extraction is not strict UTF-8")
+    form_feeds = text.count("\f")
+    if form_feeds != expected_pages:
+        fail(
+            f"{label} extraction form-feed inventory is {form_feeds}, "
+            f"expected {expected_pages}"
+        )
+    if not text.endswith("\f"):
+        fail(f"{label} extraction does not end at its final form feed")
+    pages = text[:-1].split("\f")
+    if len(pages) != expected_pages:
+        fail(f"{label} extraction page partition is not exactly {expected_pages}")
+    for page_number, page in enumerate(pages, start=1):
+        if not page.strip(" \t\n"):
+            fail(
+                f"{label} extraction page {page_number} is empty after admitted "
+                "layout whitespace is removed"
+            )
+        for character in page:
+            if character in " \t\n":
+                continue
+            category = unicodedata.category(character)
+            if category in {"Cc", "Cf"}:
+                fail(
+                    f"{label} extraction contains forbidden U+{ord(character):04X} "
+                    f"on page {page_number}"
+                )
+            if ord(character) > 127 and character.isspace():
+                fail(
+                    f"{label} extraction contains non-ASCII whitespace U+"
+                    f"{ord(character):04X} on page {page_number}"
+                )
+    return raw, pages
+
+
+def page_tokens(page: str) -> list[str]:
+    return [token for token in re.split(r"[ \t\n]+", page.strip(" \t\n")) if token]
+
+
+def subsequence_starts(tokens: list[str], subsequence: tuple[str, ...]) -> list[int]:
+    width = len(subsequence)
+    return [
+        index
+        for index in range(len(tokens) - width + 1)
+        if tuple(tokens[index : index + width]) == subsequence
+    ]
+
+
+def remove_reviewed_label(
+    tokens: list[str],
+    label: tuple[str, ...],
+    anchor: tuple[str, ...],
+    page_number: int,
+    side: str,
+) -> list[str]:
+    label_starts = subsequence_starts(tokens, label)
+    if len(label_starts) != 1:
+        fail(
+            f"layout page {page_number} reviewed label occurrence count is "
+            f"{len(label_starts)} on {side}, expected one"
+        )
+    label_start = label_starts[0]
+    residual = tokens[:label_start] + tokens[label_start + len(label) :]
+    anchor_starts = subsequence_starts(residual, anchor)
+    if len(anchor_starts) != 1:
+        fail(
+            f"layout page {page_number} reviewed anchor occurrence count is "
+            f"{len(anchor_starts)} on {side}, expected one"
+        )
+    anchor_start = anchor_starts[0]
+    if label_start not in {anchor_start, anchor_start + len(anchor)}:
+        fail(
+            f"layout page {page_number} reviewed label is not immediately before or "
+            f"after its exact anchor on {side}"
+        )
+    return residual
+
+
+try:
+    expected_pages_raw = sys.argv[5]
+    expected_pages = int(expected_pages_raw)
+except (IndexError, ValueError):
+    fail("expected-page argument is not a decimal integer")
+if expected_pages_raw != str(expected_pages) or expected_pages != 83:
+    fail("expected-page argument is not the exact reviewed value 83")
+
+built_default_raw, built_default_pages = validate_projection(
+    Path(sys.argv[1]), "built default", expected_pages
+)
+committed_default_raw, committed_default_pages = validate_projection(
+    Path(sys.argv[2]), "committed default", expected_pages
+)
+built_layout_raw, built_layout_pages = validate_projection(
+    Path(sys.argv[3]), "built layout", expected_pages
+)
+committed_layout_raw, committed_layout_pages = validate_projection(
+    Path(sys.argv[4]), "committed layout", expected_pages
+)
+
+if built_default_raw != committed_default_raw:
+    mismatch_page = next(
+        (
+            page_number
+            for page_number, (built_page, committed_page) in enumerate(
+                zip(built_default_pages, committed_default_pages), start=1
+            )
+            if built_page != committed_page
+        ),
+        0,
+    )
+    fail(
+        f"default extraction bytes differ on page {mismatch_page}: "
+        f"built={len(built_default_raw)}/{digest_bytes(built_default_raw)}; "
+        f"committed={len(committed_default_raw)}/{digest_bytes(committed_default_raw)}"
+    )
+
+reviewed_layout_relocations = {
+    10: (("Comparison", "result"), ("Suite", "3", "·", "corpus")),
+    12: (
+        ("Checker",),
+        ("premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes"),
+    ),
+}
+for page_number, (built_page, committed_page) in enumerate(
+    zip(built_layout_pages, committed_layout_pages), start=1
+):
+    built_tokens = page_tokens(built_page)
+    committed_tokens = page_tokens(committed_page)
+    built_counter = Counter(built_tokens)
+    committed_counter = Counter(committed_tokens)
+    if built_counter != committed_counter:
+        fail(
+            f"layout token frequencies differ on page {page_number}: "
+            f"built={len(built_tokens)}/{len(built_counter)}/{digest_counter(built_counter)}; "
+            f"committed={len(committed_tokens)}/{len(committed_counter)}/"
+            f"{digest_counter(committed_counter)}"
+        )
+    if page_number in reviewed_layout_relocations:
+        label, anchor = reviewed_layout_relocations[page_number]
+        built_residual = remove_reviewed_label(
+            built_tokens, label, anchor, page_number, "built"
+        )
+        committed_residual = remove_reviewed_label(
+            committed_tokens, label, anchor, page_number, "committed"
+        )
+        if built_residual != committed_residual:
+            fail(
+                f"layout residual token order differs on reviewed page {page_number}: "
+                f"built={len(built_residual)}/{digest_tokens(built_residual)}; "
+                f"committed={len(committed_residual)}/{digest_tokens(committed_residual)}"
+            )
+    elif built_tokens != committed_tokens:
+        fail(
+            f"layout token order differs on page {page_number}: "
+            f"built={len(built_tokens)}/{digest_tokens(built_tokens)}; "
+            f"committed={len(committed_tokens)}/{digest_tokens(committed_tokens)}"
+        )
+PY
   grep -E '^(Pages|Page size|PDF version):' "$BUILD_ROOT/built-a.info" \
     >"$BUILD_ROOT/built.structure"
   grep -E '^(Pages|Page size|PDF version):' "$BUILD_ROOT/committed.info" \
@@ -5873,7 +6131,7 @@ PYPDF_MANIFEST_DIGEST="$(sha256_file "$BUILD_ROOT/pypdf.before.tsv")"
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and $EXPECTED_PAGES-page dual-render receipt are exact ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
-  echo "OK: workflow PDF and four SVG/PDF pairs preserve text, structure, and bounded same-renderer color/grayscale pixels across toolchains; $EXPECTED_PAGES report pages rendered ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
+  echo "OK: workflow PDF and four SVG/PDF pairs passed their bounded cross-toolchain gates; the report has exact default Poppler extraction bytes, exact per-page layout tokens except the two reviewed adjacent diagram-label relocations, and bounded same-renderer color/grayscale pixels across $EXPECTED_PAGES pages ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 else
   echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; a new scoped visual-review receipt must now be bound before --exact can pass"
 fi
