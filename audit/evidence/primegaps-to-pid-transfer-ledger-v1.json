@@ -1,0 +1,1065 @@
+{
+  "council": {
+    "integrator_rule": "The integrator reconstructs decisive claims from pinned primary sources, adjudicates every objection, and owns the final scope. Agent agreement, confidence, and role labels cannot upgrade an evidence class.",
+    "roles": [
+      {
+        "independence_limit": "Same root environment, shared source corpus, and shared repository context; this is an integrator judgment, not institutional independence.",
+        "role": "integrator",
+        "scope": "PrimeGaps theorem and artifact reconstruction, PID context mapping, 20-lens adjudication, and final claim calibration."
+      },
+      {
+        "independence_limit": "Read-only source audit used the same public repository and provider surfaces as the integrator.",
+        "role": "source-auditor",
+        "scope": "Exact PrimeGaps source, proof-document graph, certificate, history, workflow, and hosted-run inventory."
+      },
+      {
+        "independence_limit": "Same model family and local custody; separately recomputed finite SxPID3 algebra but did not supply external human review.",
+        "role": "transfer-designer",
+        "scope": "SxPID3 exact formulas, semantic mass DAG, reduced-rational plan, Lean/SMT/Rust route design, shard completeness, and nontransfer firewall."
+      },
+      {
+        "independence_limit": "Same institution, model lineage, and filesystem; dissent improves local error discovery but is not external custody.",
+        "role": "transfer-adversary",
+        "scope": "Attack semantic analogy, novelty, statistical and continuous overreach, existing-work duplication, evidence quality, and durability."
+      }
+    ]
+  },
+  "design_decisions": [
+    {
+      "decision": "adopt-conditionally",
+      "id": "typed-semantic-mass-dag",
+      "reason": "It preserves the provenance of N, T, U, and V mass occurrences, exposes missing and orphan semantic routes, and supports a proved evaluation bridge without merging different events merely because their numeric counts coincide.",
+      "required_controls": [
+        "Exact frozen event and stable antichain keys.",
+        "Forward completeness from every required occurrence to one graph route.",
+        "Backward soundness from every reachable graph node to one required semantic occurrence.",
+        "Rejection of numeric aliasing across semantically different masses.",
+        "Independent reconstruction from canonical count-table bytes.",
+        "Equivalence and time, memory, and certificate-size benchmarks against the existing direct exact route."
+      ],
+      "scope": "Internal assurance representation for empirical categorical three-source shared exclusions."
+    },
+    {
+      "decision": "adopt",
+      "id": "separate-reduced-rational-plan",
+      "reason": "Arithmetic cancellation and exact sign require aggregation by reduced positive-rational value, while semantic identity requires a separate origin graph. One dictionary cannot safely serve both roles.",
+      "required_controls": [
+        "Direct net ratio equals informative ratio divided by misinformative ratio.",
+        "Exact integer exponents after count clearing.",
+        "Exact product comparison with one after preflight.",
+        "Nonsyntactic product-one and negative-net mutations.",
+        "Origin digest remains separate from arithmetic normalization."
+      ],
+      "scope": "All 54 cumulative and 54 atom exact-product plans in SxPID3."
+    },
+    {
+      "decision": "adopt-conditionally",
+      "id": "factor-dag-revision-boundary",
+      "reason": "The DAG may instantiate the existing proposed revision only while certificate fields, coordinate semantics, normalization, and resource admission remain unchanged. Acceptance-bearing graph fields or changed limits alter the claim and require re-adjudication.",
+      "required_controls": [
+        "Compare the implementation against the frozen revision-1 resource policy.",
+        "Keep graph details internal unless a new schema and claim revision are approved.",
+        "Bind the producer and verifier to the same public mathematical coordinate registry without shared load-bearing code."
+      ],
+      "scope": "Claim revision governance for SX-CERTIFIED-AVERAGED-PID3-001."
+    },
+    {
+      "decision": "adopt",
+      "id": "content-addressed-sharded-replay",
+      "reason": "The 20,348-table, 2,197,584-verdict corpus needs explicit half-open coverage, adjacency, no-overlap, common source identity, and terminal completion rather than one opaque long process or expiring CI artifact.",
+      "required_controls": [
+        "Canonical count-vector ordinal.",
+        "Half-open shard ranges with first and last keys.",
+        "Identical claim, source, schema, toolchain, binary, and input identities.",
+        "Root proof of sorted adjacency and exact totals.",
+        "Raw shard digest or Merkle root and retained failure shards."
+      ],
+      "scope": "Bounded binary SxPID3 qualification corpus only."
+    },
+    {
+      "decision": "defer",
+      "id": "custom-packed-trees",
+      "reason": "PrimeGaps packing solves a demonstrated large exact-computation problem. SxPID3 should first use the simplest auditable streaming checker and add custom packing only after profiling under the frozen resource contract.",
+      "required_controls": [
+        "A correct uncompressed reference route.",
+        "Measured material bottleneck.",
+        "Local packing soundness and completeness theorem.",
+        "Mutation tests for width, index, truncation, and alias errors."
+      ],
+      "scope": "Potential future performance optimization, not current correctness evidence."
+    },
+    {
+      "decision": "reject",
+      "id": "direct-prime-gap-mathematics-transfer",
+      "reason": "The sieve weights, factorial moments, admissible 50-tuple, variational quotient, Bombieri-Vinogradov premise, and the bound 246 have no typed mathematical map to any PID functional or estimator.",
+      "required_controls": [
+        "Retain the rejection as a nontransfer firewall.",
+        "Reject shared-vocabulary arguments that cite factors, moments, lattices, or positivity without a mapping theorem."
+      ],
+      "scope": "All PID mathematics and estimator claims."
+    }
+  ],
+  "lens_review": [
+    {
+      "disposition": "NARROW",
+      "evidence": [
+        "PrimeGaps Bounded246 states a conditional prime-gap theorem; the SxPID3 packet states one deterministic empirical categorical functional."
+      ],
+      "findings": [
+        "Only proof-engineering form transfers; the estimands and conclusions remain disjoint."
+      ],
+      "lens": 1,
+      "name": "Estimand",
+      "nonimplications": [
+        "No prime-gap definition, inequality, or numerical constant becomes a PID object."
+      ]
+    },
+    {
+      "disposition": "PASS",
+      "evidence": [
+        "PrimeGaps separates labelled JSON, packed Nat data, explicit rational certificates, analytic L2 witnesses, and theorem hypotheses.",
+        "The proposed PID design separately types count rows, semantic masses, rational plans, intervals, reports, and dispositions."
+      ],
+      "findings": [
+        "Typed object boundaries are strongly transferable."
+      ],
+      "lens": 2,
+      "name": "Types",
+      "nonimplications": [
+        "Type separation alone does not establish faithful paper-to-formula correspondence."
+      ]
+    },
+    {
+      "disposition": "PASS",
+      "evidence": [
+        "The final Lean theorem keeps BombieriVinogradov as an explicit premise and uses an existential finite certificate.",
+        "The SxPID3 design fixes one finite empirical input before making per-coordinate conclusions."
+      ],
+      "findings": [
+        "Conditionality and quantifier order must remain visible in reports and APIs."
+      ],
+      "lens": 3,
+      "name": "Quantifiers",
+      "nonimplications": [
+        "An existential exact certificate is not a universal algorithmic, population, or statistical theorem."
+      ]
+    },
+    {
+      "disposition": "NEGATIVE",
+      "evidence": [
+        "No theorem maps the GPY/Maynard variational objects, factorial moments, or prime tuple to shared-exclusions PID."
+      ],
+      "findings": [
+        "The only permitted mapping is between assurance roles, not mathematical values or propositions."
+      ],
+      "lens": 4,
+      "name": "Mappings",
+      "nonimplications": [
+        "Similar words or diagram shapes do not license cross-domain theorem transfer."
+      ]
+    },
+    {
+      "disposition": "NARROW",
+      "evidence": [
+        "PrimeGaps analytic support and measure premises are specific to its simplex and sieve argument.",
+        "SxPID3 uses positive empirical support and explicitly excludes continuous, singular, mixed-dimensional, or unknown-support laws."
+      ],
+      "findings": [
+        "Support conditions must be reconstructed from the target method, never inherited from the source analogy."
+      ],
+      "lens": 5,
+      "name": "Support/reference measure",
+      "nonimplications": [
+        "A finite categorical certificate supplies no absolute-continuity or KSG support evidence."
+      ]
+    },
+    {
+      "disposition": "PASS",
+      "evidence": [
+        "The SxPID3 packet independently specifies exactly 18 antichains, entrywise redundancy order, 129 zeta ones, and a 65-nonzero integer inverse.",
+        "The proposed graph uses stable antichain keys rather than implementation positions."
+      ],
+      "findings": [
+        "Sparse completeness and stable-key reconstruction are appropriate for the exact three-source lattice."
+      ],
+      "lens": 6,
+      "name": "Lattice/source count",
+      "nonimplications": [
+        "PrimeGaps signatures and the SxPID antichain lattice are different mathematical carriers."
+      ]
+    },
+    {
+      "disposition": "PASS",
+      "evidence": [
+        "SxPID3 fixes natural logarithms and nats; PrimeGaps certificate inequalities are dimensionless exact rationals in a different problem."
+      ],
+      "findings": [
+        "The report states units separately and permits no numerical conversion between domains."
+      ],
+      "lens": 7,
+      "name": "Units/gauge",
+      "nonimplications": [
+        "A positive rational margin in PrimeGaps is not a PID information value or error bound."
+      ]
+    },
+    {
+      "disposition": "PASS",
+      "evidence": [
+        "The SxPID3 target is the deterministic functional of one finite empirical PMF; its packet excludes population inference and binary64 estimator correctness."
+      ],
+      "findings": [
+        "Exact empirical arithmetic, estimator output, and population quantity remain separate layers."
+      ],
+      "lens": 8,
+      "name": "Population/empirical",
+      "nonimplications": [
+        "Exact empirical SxPID does not establish unbiasedness, consistency, or scientific generalization."
+      ]
+    },
+    {
+      "disposition": "N/A",
+      "evidence": [
+        "The narrow SxPID3 certificate implication is deterministic conditional on canonical count bytes and makes no sampling claim."
+      ],
+      "findings": [
+        "Sampling assumptions become mandatory only for a later population or inferential claim."
+      ],
+      "lens": 9,
+      "name": "Sampling",
+      "nonimplications": [
+        "This N/A disposition cannot be reused by a bootstrap, permutation, confidence, or population route."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "PrimeGaps records a successful exact candidate but not a complete selection, stopping, or alternative-candidate ledger.",
+        "The PID workflow already requires pre-registered candidate and judge boundaries, exposure logs, and fresh confirmation where empirical selection is involved."
+      ],
+      "findings": [
+        "Autoresearch can generate witnesses and implementation candidates, but selection effects need their own records."
+      ],
+      "lens": 10,
+      "name": "Selection/UQ",
+      "nonimplications": [
+        "Repeated rediscovery, model consensus, or a selected exact witness does not establish search completeness or statistical calibration."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "PrimeGaps contains an explicit-to-abstract Lean bridge, but the public paper graph uses mutable links and has status/link mismatches.",
+        "SxPID3 still requires a pinned independent MGW paper-to-formula source map."
+      ],
+      "findings": [
+        "Formal correspondence is load-bearing and remains open for the target PID claim."
+      ],
+      "lens": 11,
+      "name": "Formal correspondence",
+      "nonimplications": [
+        "A kernel proof of a convenient formal statement does not establish the intended paper semantics."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "PrimeGaps pins Lean and resolved dependencies in its manifest and declares comparator axiom allowlists.",
+        "The reviewed CI did not run comparator, leanchecker, or nanoda and preserved no such receipt; one dependency is requested from mutable main."
+      ],
+      "findings": [
+        "The architecture is useful, but the inspected public qualification is incomplete."
+      ],
+      "lens": 12,
+      "name": "Kernel/axioms/toolchain",
+      "nonimplications": [
+        "A successful lake build does not prove comparator replay, axiom closure, or a fresh dependency reconstruction."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "PrimeGaps direct formulas, packed kernels, and optional comparator diversify some implementation cuts but share the mathematical interpretation and certificate data.",
+        "The PID design records C-MGW, C-DECODE, C-EVENT, C-LATTICE, C-PRODUCT, C-LOG, C-EXEC, and C-EVIDENCE as shared cuts."
+      ],
+      "findings": [
+        "Independence is a vector, not a route count. External human and custody dimensions remain open."
+      ],
+      "lens": 13,
+      "name": "Route dependency diversity",
+      "nonimplications": [
+        "Different files, agents, solvers, or kernels do not remove a shared wrong source interpretation."
+      ]
+    },
+    {
+      "disposition": "NARROW",
+      "evidence": [
+        "PrimeGaps converts an approximate search result into an exact rational inequality.",
+        "SxPID3 separates exact rational sign from directed logarithm magnitude and explicitly excludes current Rust binary64 certification."
+      ],
+      "findings": [
+        "The exact-search replacement pattern transfers only to finite algebraic obligations."
+      ],
+      "lens": 14,
+      "name": "Numerical/binary64",
+      "nonimplications": [
+        "Exact rational PID products do not certify floating estimators, interval implementations, or platform math libraries."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "Current SxPID3 specialized, general, feature, debug, release, platform, and Python paths have not been keyed against all 108 exact identities."
+      ],
+      "findings": [
+        "An audit-only semantic trace and bound-binary replay are still required."
+      ],
+      "lens": 15,
+      "name": "Compiled/wrapper parity",
+      "nonimplications": [
+        "A formal factor-DAG theorem cannot by itself establish Rust, Python, serialization, or error-surface conformance."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "The SxPID3 packet retains event, mask-order, weighting, exact-zero, product-one, and negative-net witnesses.",
+        "The proposed attack matrix adds DAG alias, sparse-completeness, shard, resource, parser, formal, and claim-language mutations."
+      ],
+      "findings": [
+        "The final implementation must demonstrate causal rejection under normal and optimized execution."
+      ],
+      "lens": 16,
+      "name": "Counterexample/mutation",
+      "nonimplications": [
+        "Passing the named mutations does not prove completeness of the mutation model."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "PrimeGaps has no reviewed release artifact, comparator receipt, certificate provenance digest, or external-custody replay.",
+        "The PID plan requires candidate-inaccessible judges, refusal on unavailable verification, and separate archive custody."
+      ],
+      "findings": [
+        "Local hashes and same-environment councils are insufficient for high-assurance custody."
+      ],
+      "lens": 17,
+      "name": "Custody/threat/refusal",
+      "nonimplications": [
+        "Provider availability or a public repository does not prove durable retention or independent review."
+      ]
+    },
+    {
+      "disposition": "NARROW",
+      "evidence": [
+        "PrimeGaps cites its analytic and numerical origins and marks its repository as a formalization.",
+        "The PID packet distinguishes paper-defined MGW mathematics from project-defined certificate and workflow infrastructure."
+      ],
+      "findings": [
+        "The process distinction transfers; no scientific novelty is claimed for the assurance design."
+      ],
+      "lens": 18,
+      "name": "Citations/novelty",
+      "nonimplications": [
+        "Implementation, composition, or proof-engineering novelty is not a new PID theorem or estimator."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "The PrimeGaps paper graph is useful for navigation but lacks a same-revision immutable receipt and contains mutable source links.",
+        "The PID target needs exact claim, source, theorem, executable, and consumer authority directions."
+      ],
+      "findings": [
+        "A revision-pinned evidence DAG should replace status inferred from a mutable website projection."
+      ],
+      "lens": 19,
+      "name": "Ecosystem/authority",
+      "nonimplications": [
+        "A status badge, linked declaration, or site graph does not itself accept a scientific claim."
+      ]
+    },
+    {
+      "disposition": "OPEN",
+      "evidence": [
+        "PrimeGaps demonstrates useful theory/certificate build separation and packed computation, but the reviewed CI is warm-cache, minimal, and receipt-free.",
+        "The SxPID3 packet fixes exact parser, term, exponent, projected-bit, memory, and corpus limits."
+      ],
+      "findings": [
+        "Simple streaming correctness, content-addressed shards, fresh replay, release artifacts, and external archive remain required before acceptance."
+      ],
+      "lens": 20,
+      "name": "Resource/platform/release",
+      "nonimplications": [
+        "Fast cached execution does not establish cold reproducibility, platform scope, or durable evidence."
+      ]
+    }
+  ],
+  "nontransfer_firewalls": [
+    "Prime-gap mathematics, constants, tuple data, factorial moments, and Bombieri-Vinogradov reasoning have no PID mathematical transfer.",
+    "An exact finite categorical product certificate does not establish continuous shared exclusions, KSG support, KSG consistency, bias, variance, calibration, or confidence coverage.",
+    "A deterministic interval enclosing one empirical functional is not a statistical confidence interval.",
+    "A fitted or fixed quantizer changes or fixes an estimand and cannot establish equivalence with an unquantized continuous estimand without a separate theorem.",
+    "Formal proof checks the encoded theorem under its imports and axioms; paper-to-formal faithfulness is a separate reviewed obligation.",
+    "Source hashes and CI success bind bytes and one execution; they do not establish truth, authenticity, novelty, external custody, or long-term availability.",
+    "Agent, prompt, session, solver, or kernel multiplicity does not establish independence when load-bearing assumptions or custody are shared."
+  ],
+  "open_obligations": [
+    "Preserve and adjudicate the unpublished SX-CERTIFIED-AVERAGED-PID3-001 packet on a reviewed main descendant before implementation.",
+    "Complete an independent pinned MGW paper-to-formula source map for event, component, averaging, units, and order semantics.",
+    "Decide whether the semantic mass DAG is internal revision-1 machinery or an acceptance-bearing claim-v2 object.",
+    "Implement and separately review the semantic mass DAG, reduced-rational plan, forward/backward completeness, and exact evaluation bridge.",
+    "Implement the concrete Lean carrier/event/product route and an independently encoded SMT finite route with mutation models.",
+    "Implement dependency-disjoint producer and verifier paths without shared event, lattice, product, or generated graph code.",
+    "Add a bound audit-only Rust semantic trace and reconcile specialized, general, feature, build, platform, and Python paths by stable key.",
+    "Freeze canonical corpus ordinals, execute all 20,348 tables and 2,197,584 coordinate verdicts in content-addressed shards, and prove coverage.",
+    "Obtain fresh-extraction, first-result, mutation, binary/toolchain, release, and independent-custody records before any accepted disposition.",
+    "Keep every population, statistical, continuous, KSG, and binary64 claim open unless a separately typed route supplies its own evidence."
+  ],
+  "review_date": "2026-08-19",
+  "reviewed_source_commit": "1faa7b14e82ddebc2772dfb9153922f01b106477",
+  "schema": "pid-rs/primegaps-to-pid-transfer-ledger/v1",
+  "source_manifest": [
+    {
+      "artifact_id": "primegaps-git-tree",
+      "durability": "hash-only-external",
+      "kind": "git-tree",
+      "locator": "https://github.com/AxiomMath/PrimeGapsLib/tree/1faa7b14e82ddebc2772dfb9153922f01b106477",
+      "revision": "commit 1faa7b14e82ddebc2772dfb9153922f01b106477; tree 611f4b1caccb7850996cf425aefb1a6c42ed629f; sha256 over raw root-tree object bytes; bytes are not retained by this ledger",
+      "sha256": "898fbafacfba703605273c62814e2161be4fb9c67c632103e417280e92e8ddab",
+      "size_bytes": 970,
+      "status": "reviewed-git-object"
+    },
+    {
+      "artifact_id": "primegaps-interactive-paper",
+      "durability": "hash-only-external",
+      "kind": "html",
+      "locator": "https://primegaps.axiommath.ai/paper/",
+      "revision": "retrieved 2026-08-19; bytes are not retained by this ledger",
+      "sha256": "8ab349b59a897780ee7b023ec9b350442fc77b36aec84873019bff2612a97c90",
+      "size_bytes": 10793548,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "primegaps-blueprint-pdf",
+      "durability": "hash-only-external",
+      "kind": "pdf",
+      "locator": "https://primegaps.axiommath.ai/blueprint.pdf",
+      "revision": "retrieved 2026-08-19; 132 A4 pages; bytes are not retained by this ledger",
+      "sha256": "c93efd077ff4236926379d9879cc82e124a12f4eecc1c43a685054b6ba866117",
+      "size_bytes": 1153093,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "primegaps-blueprint-layout-text",
+      "durability": "hash-only-external",
+      "kind": "text",
+      "locator": "urn:pid-rs:derived:primegaps-blueprint-layout-text",
+      "revision": "derived locally with pdftotext -layout from the reviewed blueprint PDF on 2026-08-19; bytes are not retained by this ledger",
+      "sha256": "1ea1f0fb79561a91edba050bc767325882aee83c51dd1ba169e2e0a5e25bd8cf",
+      "size_bytes": 495392,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "primegaps-certificate-json",
+      "durability": "hash-only-external",
+      "kind": "json",
+      "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/k50e25d25n1295.json",
+      "revision": "1,295 source rows at exact repository commit; bytes are not retained by this ledger",
+      "sha256": "99808e1d95204c5bbc0cde845641cfdbb41ea950fa7fa9858df8bd093111787a",
+      "size_bytes": 55303,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "primegaps-ci-job-log",
+      "durability": "hash-only-external",
+      "kind": "workflow-log",
+      "locator": "https://github.com/AxiomMath/PrimeGapsLib/actions/runs/32171224732/job/95822587109",
+      "revision": "provider log retrieved 2026-08-19; bytes are not retained by this ledger",
+      "sha256": "408c6b2193069268c2250227e326d0aabdd233244b1b6de804c9c98d4750c2b5",
+      "size_bytes": 33294,
+      "status": "provider-observation"
+    },
+    {
+      "artifact_id": "sxpid3-packet-bindings",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/bindings.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed packet, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "bffd5f422b109335070011fd315034d4d4aa7bed54032a4c9426d43dd2a6507b",
+      "size_bytes": 10446,
+      "source_sha256": "95f56e43223e7d98ed768ef14c1d12054810a0776c733dbc891a302e241f9d7a",
+      "source_size_bytes": 10466,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-claim-v1",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed packet, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "3c0ce09a17d1925a01f54d35733c6f01effbdd6ae3d081d194a7fadf6e04b31b",
+      "size_bytes": 10608,
+      "source_sha256": "197318e901f08184356f97bcb272918175dae189da4ffb7ffe69312950f9df64",
+      "source_size_bytes": 10626,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-conventions",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed packet, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7",
+      "size_bytes": 11831,
+      "source_sha256": "d97975ca5ec377c5a20b4f7754ec4ac5b13214efde5a4c071a65359f48ec9b2c",
+      "source_size_bytes": 11951,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-decision",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed packet, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "122c17693ada4dea23e1757f99d9aec9b0970317435b16de944668ebb751211b",
+      "size_bytes": 6532,
+      "source_sha256": "6718d0cb98309e28638b30a64146b0d51705b33553b4485e14e70c979ae9c37b",
+      "source_size_bytes": 6538,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-evidence-matrix",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed packet, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "ee3db98b1eca36616f0eb28f97a7c478a6d49b56bbd97c769d14b292f0fc4c4a",
+      "size_bytes": 8436,
+      "source_sha256": "aa9f7df9161bc0d582859c0425e033aceb24358addf994f77391d6868eb35cde",
+      "source_size_bytes": 8468,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-failure-count-weighting",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/count-weighting.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; retained negative evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "4871c0c4b3d456ea6839ef2eb0353813f972bbeaee3b863b69e11c24a26a4d50",
+      "size_bytes": 1694,
+      "source_sha256": "64adcf0701cde2a76c4e3935d0ea709015cd4031af2fa080d1bc7c327aba9488",
+      "source_size_bytes": 1708,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-failure-event-connective-target",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/event-connective-and-target-mutations.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; retained negative evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "b16b5210f98b5f5f148faa27a4cb4d27ed235d9fec30624214cf6bf6ebf339ad",
+      "size_bytes": 2478,
+      "source_sha256": "0d4e71d5a423a57d9d9dccef03de17028cf49bdc06eb52d01acc37a6004eda75",
+      "source_size_bytes": 2512,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-failure-exact-zero-product-one",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/exact-zero-and-product-one.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; retained negative evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "99fbc4535501ee0adc2e3624e8c42763563a4de15acf95d98ff1a65ac1267161",
+      "size_bytes": 2514,
+      "source_sha256": "b97dafe456486612d96bb08208869b808e727d7c386a123fb14e281a54b0968a",
+      "source_size_bytes": 2522,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-failure-mask-array-order",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/mask-and-array-order.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; retained negative evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "d198e7c4a29a5363d6e182c6dee3c3ff1ed63b4d383c3224b33fd312830a24e8",
+      "size_bytes": 1501,
+      "source_sha256": "9a6087d2f297d327ce7f5e16e1a36092e27d5808cf5e7beb4748e78eec665b19",
+      "source_size_bytes": 1517,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-failure-negative-net-atom",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/negative-net-atom.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; retained negative evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "59fc673aa47659d578269ed80edf895a25ebc45548351fe9a4ec9ce3c18e57bf",
+      "size_bytes": 1553,
+      "source_sha256": "703b9ee1ee2c44c69f1751be3eca85adfc361327da4bae44c217a0d5e1c98611",
+      "source_size_bytes": 1559,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-obligations",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; all Programs A--E remain open; this manifest does not itself prove semantic equivalence",
+      "sha256": "054bfc40bc18bdbc86918b1b47f169aa69b7e6343d5faa85e4940933583269fe",
+      "size_bytes": 13533,
+      "source_sha256": "70c738567e65bc4be91501397528bcf4d89d5ceb2fd3b5243298a77f0f6e0523",
+      "source_size_bytes": 13549,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-revision-index",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed packet, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "cf33f912f12793739b3e7a4a4b41b974709ead47df59fcfca37f8de443d4719e",
+      "size_bytes": 1392,
+      "source_sha256": "cf33f912f12793739b3e7a4a4b41b974709ead47df59fcfca37f8de443d4719e",
+      "source_size_bytes": 1392,
+      "status": "reviewed-exact-bytes"
+    },
+    {
+      "artifact_id": "sxpid3-packet-routes",
+      "durability": "repository-path",
+      "kind": "text",
+      "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/routes.md",
+      "revision": "protected-worktree preimage bound by source_sha256/source_size_bytes; repository bytes received formatting-only Markdown normalization before integration; proposed routes, not accepted evidence; this manifest does not itself prove semantic equivalence",
+      "sha256": "609b737d494da09cc1e47410c1c318661a46fd417549e98d21033eeaedbf967b",
+      "size_bytes": 12609,
+      "source_sha256": "4e2a71eda6fd86f85e53dc04b394ef4e8a24f158293e3a905cba02a9c61fc551",
+      "source_size_bytes": 12619,
+      "status": "reviewed-exact-bytes"
+    }
+  ],
+  "source_manifest_boundary": "Repository-path entries are byte-checked local recovery inputs. Every external entry is hash-only: this ledger records its observed digest, size, locator, and bounded status but does not retain the bytes, guarantee retrieval, or establish durable custody.",
+  "subject": "PrimeGapsLib proof-engineering lessons for pid-rs verification and discovery",
+  "transfer_entries": [
+    {
+      "changed_assumptions": [
+        "PrimeGaps theory concerns a sieve argument and an analytic number-theory hypothesis; PID theory concerns a finite empirical information functional.",
+        "The PID composite must additionally bind source semantics, units, lattice order, exact products, intervals, and executable refinement."
+      ],
+      "disposition": "accept",
+      "id": "theory-certificate-composite-lanes",
+      "pid_analogue": "Separate the paper-defined SxPID3 semantics and general lemmas, the exact finite certificate data, and the theorem or report that combines them for one bound input.",
+      "preserved_assumptions": [
+        "Every lane is typed and independently buildable.",
+        "The composite references the exact same source revision and refuses stale or mixed evidence.",
+        "A passing component lane does not silently qualify the composite."
+      ],
+      "prohibited_inferences": [
+        "Theory and certificate success separately imply the final PID claim without a checked bridge.",
+        "The prime-gap theorem or finite values have PID content."
+      ],
+      "rationale": "The separation improves reviewability and failure localization while preserving explicit bridge obligations.",
+      "required_evidence": [
+        "Same-commit source and artifact identities.",
+        "Checked semantic and exact-arithmetic bridges.",
+        "Composite normal and hostile tests that reject mixed revisions."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/README.md#L13-L21",
+          "meaning": "Repository-level separation of theory, certificate computation, and composite library."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGaps/Bounded246.lean#L8-L31",
+          "meaning": "The composite imports exact witness and analytic endgame before stating the conditional result."
+        }
+      ],
+      "source_semantics": "PrimeGapsTheory develops the mathematical route without the large numerical computation, PrimeGapsCert checks the finite certificate, and PrimeGaps combines them."
+    },
+    {
+      "changed_assumptions": [
+        "SxPID3 candidate data are event masses and rational log products, not polynomial sieve coefficients or factorial moments.",
+        "The PID verifier must reconstruct the 18-node event lattice and 108-coordinate registry from canonical input.",
+        "Unlike an existential witness route, a PID result is a deterministic function of the exact count table, so parser fidelity and rejection of integer coercions are acceptance-bearing."
+      ],
+      "disposition": "accept",
+      "id": "untrusted-discovery-small-checker",
+      "pid_analogue": "Let search, autoresearch, and generators propose count tables, near-zero examples, graph layouts, or product plans; accept only output independently reconstructed by a smaller exact checker.",
+      "preserved_assumptions": [
+        "Candidate generation is untrusted.",
+        "The checker derives its result from a frozen mathematical specification and canonical input.",
+        "Generated compression or tables receive no authority without local soundness checks."
+      ],
+      "prohibited_inferences": [
+        "A generator's self-check or repeated candidate rediscovery supplies independent verification.",
+        "The PrimeGaps kernel can be reused as a PID kernel without new semantics and soundness lemmas.",
+        "A decoder that happens to produce some valid witness is acceptable for PID when it changes the submitted data semantics."
+      ],
+      "rationale": "This is the strongest transferable architecture: exploratory computation retains freedom while promotion has a narrow exact trust boundary.",
+      "required_evidence": [
+        "Separate producer and verifier dependency graphs.",
+        "Exact source and input identities.",
+        "Strict canonical decoding that rejects negative-to-natural coercion, aliases, duplicate members, and noncanonical serialization.",
+        "Semantic, graph, arithmetic, parser, resource, and reseal mutations.",
+        "Fresh reconstruction rather than producer-output trust."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Emit/SourceGen.lean#L10-L15",
+          "meaning": "The source generator is explicitly declared untrusted."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Emit/SourceGen.lean#L69-L89",
+          "meaning": "Some source integers are converted with Int.toNat; safe existential-witness semantics do not transfer to PID data decoding."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Kernel/Core.lean#L9-L14",
+          "meaning": "The hot checker has no explicit Mathlib or project-library imports; Lean core, runtime, elaborator, compiler, and kernel remain in the trusted computing base."
+        }
+      ],
+      "source_semantics": "PrimeGaps derives packed candidate data from one labelled source, then checks it through small kernels and proved soundness bridges rather than trusting generation."
+    },
+    {
+      "changed_assumptions": [
+        "The PID finite object is an exponent plan over positive empirical mass ratios rather than an explicit sieve polynomial.",
+        "The target semantic result is an empirical categorical log-product coordinate and interval rather than an L2 variational lower bound."
+      ],
+      "disposition": "accept",
+      "id": "finite-semantic-bridge",
+      "pid_analogue": "Prove that semantic mass exponents evaluate to the local ratios, cumulative plans evaluate to Q, Mobius plans evaluate to R, and exact product comparison plus a directed log route yields each declared coordinate.",
+      "preserved_assumptions": [
+        "The finite representation and the semantic object are separate types.",
+        "A named bridge proves correspondence rather than relying on matching output.",
+        "The final implication consumes the bridged object and retains all premises."
+      ],
+      "prohibited_inferences": [
+        "Exact product equality alone establishes logarithm enclosure.",
+        "A bridge for one empirical categorical functional establishes a population or continuous estimator theorem."
+      ],
+      "rationale": "This prevents the most common certificate error: verifying a convenient finite surrogate without proving it denotes the intended scientific object.",
+      "required_evidence": [
+        "Lean evaluation-commutation lemmas.",
+        "Source-blind algebraic reconstruction.",
+        "Direct-net versus quotient checks.",
+        "Exact sign and independent interval containment."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Gap246/Sieve/Certificate/Explicit.lean#L84-L97",
+          "meaning": "Finite explicit rational certificate structure."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Gap246/Sieve/Certificate/ExplicitToAbstract.lean#L687-L731",
+          "meaning": "The explicit finite witness is bridged to the analytic certificate."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Gap246/Sieve/Certificate/Abstract.lean#L31-L42",
+          "meaning": "The analytic certificate yields the variational inequality."
+        }
+      ],
+      "source_semantics": "PrimeGaps proves the finite rational formulas match integrals and an explicit polynomial, constructs an analytic L2 witness, then derives the abstract inequality."
+    },
+    {
+      "changed_assumptions": [
+        "PID reports additionally require estimand, support, units, sample-versus-population, and executable-status fields."
+      ],
+      "disposition": "accept",
+      "id": "explicit-premise-types",
+      "pid_analogue": "Keep empirical table identity, categorical support, natural-log units, paper-to-formula premise, interval runtime, and excluded population or continuous claims in the report type.",
+      "preserved_assumptions": [
+        "External analytic premises remain arguments rather than disappearing into prose.",
+        "Conditional conclusions retain their condition in every public rendering."
+      ],
+      "prohibited_inferences": [
+        "A concise headline may omit a load-bearing condition.",
+        "The exact certificate alone establishes the end-to-end claim."
+      ],
+      "rationale": "Visible premises prevent correct conditional results from being promoted into stronger false statements.",
+      "required_evidence": [
+        "Schema and wording gates.",
+        "Cross-artifact identity checks.",
+        "Mutations that remove or weaken each premise."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Gap246/Sieve/Certificate/Hypothesis.lean#L16-L22",
+          "meaning": "The existence and epsilon premises are explicit."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGaps/Bounded246.lean#L21-L31",
+          "meaning": "The final results retain BombieriVinogradov as a theorem argument."
+        }
+      ],
+      "source_semantics": "The certificate existential and the final theorem retain their exact parameters and analytic hypothesis in Lean types."
+    },
+    {
+      "changed_assumptions": [
+        "PID needs a claim-specific challenge covering its own theorem roster, imports, axioms, semantic source map, and possibly executable bridges.",
+        "The reviewed PrimeGaps comparator configuration is not itself a completed or independent run receipt."
+      ],
+      "disposition": "accept-conditionally",
+      "id": "challenge-comparator",
+      "pid_analogue": "Freeze a human-readable SxPID3 theorem challenge and compare the implementation theorem against it under an exact import and axiom allowlist, with optional second-kernel replay.",
+      "preserved_assumptions": [
+        "The challenge statement remains outside candidate write authority.",
+        "The theorem roster and permitted axioms are explicit.",
+        "Unavailable comparison fails closed."
+      ],
+      "prohibited_inferences": [
+        "A documented but unexecuted comparator supplies verification credit.",
+        "Statement equality or kernel replay establishes paper-to-formal faithfulness."
+      ],
+      "rationale": "A comparator is valuable only when its own identity, execution, result, and limits are fully recorded.",
+      "required_evidence": [
+        "Pinned comparator and export binaries.",
+        "Exact challenge and solution modules.",
+        "Normal and hostile CI replay with complete raw logs.",
+        "Independent statement-faithfulness review."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/Challenge/Basic.lean#L8-L48",
+          "meaning": "Human-controlled Mathlib-only challenge statements."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/Comparator/comparator.json#L2-L9",
+          "meaning": "Exact theorem roster, permitted axioms, and nanoda configuration."
+        }
+      ],
+      "source_semantics": "PrimeGaps supplies a small challenge module and comparator configuration separate from the implementation theorem."
+    },
+    {
+      "changed_assumptions": [
+        "The PID graph must bind claim, theorem, source, evidence, and implementation identities rather than paper entities alone.",
+        "Every source link and status needs an immutable same-revision receipt."
+      ],
+      "disposition": "accept-conditionally",
+      "id": "proof-document-dag",
+      "pid_analogue": "Publish a revision-pinned claim and evidence DAG that exposes open cuts, central dependencies, theorem mappings, and invalidation reach.",
+      "preserved_assumptions": [
+        "Edges have typed meanings such as statement use, proof use, semantic bridge, or evidence support.",
+        "The graph is derived from authoritative revisioned data and can be regenerated."
+      ],
+      "prohibited_inferences": [
+        "A colored status or source link is itself evidence that a theorem is proved or faithful.",
+        "Mutable main-branch links provide immutable correspondence."
+      ],
+      "rationale": "The graph concept is excellent for review and planning, but the observed mutable implementation cannot carry assurance credit.",
+      "required_evidence": [
+        "Pinned document, source tree, entity registry, edges, source spans, and status digest.",
+        "No dangling targets, cycles where prohibited, or status/link inconsistency.",
+        "Explicit authority direction from claim and evidence records to the rendered site."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://primegaps.axiommath.ai/paper/",
+          "meaning": "Interactive statement/proof graph and Lean-link projection."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Tactic/PaperTag.lean#L14-L33",
+          "meaning": "Lean-side paper tag registration."
+        }
+      ],
+      "source_semantics": "The interactive paper links mathematical entities, dependencies, proof uses, statuses, and selected Lean declarations."
+    },
+    {
+      "changed_assumptions": [
+        "SxPID3 sparse nodes are semantic event masses and reduced ratios, not factorial-moment states.",
+        "The bounded replay is naturally partitioned by canonical count-vector ordinal rather than the PrimeGaps recurrence indices."
+      ],
+      "disposition": "accept-conditionally",
+      "id": "sparse-dag-and-shards",
+      "pid_analogue": "Use a provenance-preserving semantic mass DAG, a separate arithmetic exponent plan, and content-addressed half-open shards with exact coverage proofs.",
+      "preserved_assumptions": [
+        "Sparse storage receives forward completeness and backward soundness checks.",
+        "Shard boundaries are half-open, ordered, adjacent, and common-identity bound.",
+        "A completion barrier rejects gaps, overlap, duplicates, or partial status."
+      ],
+      "prohibited_inferences": [
+        "Packing or sharding itself proves mathematical correctness.",
+        "A primitive-law deduplication may replace the required 20,348 labeled-table replay.",
+        "A nonzero sparse exponent vector proves a nonunit product; raw integer masses are multiplicatively dependent.",
+        "Numerically equal masses with different event roles may be merged without losing semantic fault observability."
+      ],
+      "rationale": "This is a potentially useful keyed SxPID3 extension of the repository's existing exact-expression pipeline. It remains conditional until a direct route is correct, an evaluation theorem closes a named obligation, and benchmarks show a material benefit.",
+      "required_evidence": [
+        "Typed graph keys and evaluation theorem.",
+        "A distinct normalized positive-rational or exact cross-product lane for equality and sign.",
+        "The (2*6)/(3*4)=1 negative control and semantic-role alias mutations.",
+        "Forward/backward sparse-completeness theorem and mutations.",
+        "Canonical ordinal specification and shard root checker.",
+        "Exact total of 20,348 tables and 2,197,584 verdicts.",
+        "Equivalence and resource benchmarks against the simple direct exact route."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Certificate/Fast.lean#L393-L559",
+          "meaning": "Sparse factorial-moment DAG and direct mathematical soundness architecture."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Moments/Gather.lean#L17-L40",
+          "meaning": "Checked range gathering and completion barrier."
+        }
+      ],
+      "source_semantics": "PrimeGaps stores only a reachable exact computation graph, proves stored values match direct recurrences, and assembles checked ranges into a complete result."
+    },
+    {
+      "changed_assumptions": [
+        "pid-rs must preserve raw attempts, failures, inputs, binaries, and source manifests across dirty worktrees and branch retirement.",
+        "Public release and restricted or scholarly archive may require different custody and disclosure rules."
+      ],
+      "disposition": "accept",
+      "id": "content-addressed-durable-promotion",
+      "pid_analogue": "Move accepted milestones through scratch, frozen candidate, local commit, reviewed remote main, release, and durable archive with explicit manifests and recovery checks.",
+      "preserved_assumptions": [
+        "Artifact identity and semantic acceptance are distinct.",
+        "A later state cannot erase a retained failure or rejected route.",
+        "Cleanup follows preservation and verification."
+      ],
+      "prohibited_inferences": [
+        "A Git branch, CI artifact, local hash, or temporary worktree is durable scholarly storage.",
+        "Deletion is safe because content looks superseded."
+      ],
+      "rationale": "PrimeGaps exposes provenance and receipt gaps that pid-rs can avoid with a stricter promotion and storage ladder.",
+      "required_evidence": [
+        "Dirty and ignored path manifest before migration.",
+        "Secret-screened restricted snapshot for unpublished material.",
+        "Exact-path integration with remote-main ancestry proof.",
+        "Release or verified external archive locator and recovery drill.",
+        "Per-worktree retirement eligibility check."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Emit/SourceGen.lean#L19-L31",
+          "meaning": "The tracked certificate JSON is transitively Git-bound, but has no explicit sidecar digest or search/candidate-generation receipt."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/.github/workflows/lean.yml#L1-L17",
+          "meaning": "The reviewed workflow builds but preserves no comparator or certificate artifact."
+        }
+      ],
+      "source_semantics": "The reviewed public project Git-binds its tracked source and certificate, but provides no release, explicit certificate/search provenance receipt, complete proof receipt, or durable external archive binding."
+    },
+    {
+      "changed_assumptions": [
+        "PrimeGaps needs some valid existential coefficient witness, whereas a PID report is a deterministic function of exact submitted count bytes and must reject parser or identity drift.",
+        "PID autoresearch searches semantic counterexamples, exact count tables, interval stress cases, and implementation layouts rather than sieve coefficients.",
+        "PID empirical estimator or implementation selection may require holdout, sequential-inference, or other selection-aware controls that are not supplied by an exact existential witness theorem.",
+        "Pre-registration, candidate-inaccessible judging, complete exposure logging, and durable retention of rejected or selection-bearing candidates are pid-rs promotion controls; the reviewed PrimeGaps materials do not establish them."
+      ],
+      "disposition": "accept-conditionally",
+      "id": "autoresearch-promotion-boundary",
+      "pid_analogue": "Use adaptive search to find minimal falsifiers, near-product-one cases, permutation failures, resource extrema, and candidate implementations, but promote only canonical exact objects through a candidate-inaccessible judge.",
+      "preserved_assumptions": [
+        "Candidate generation may be heuristic and remains outside the trusted conclusion.",
+        "The promoted finite mathematical conclusion depends on a separately checked exact witness, not on search frequency, score, or the numerical discovery trajectory."
+      ],
+      "prohibited_inferences": [
+        "Search frequency, score, model consensus, or successful generation is evidence of the mathematical claim.",
+        "A verifier visible and writable to the candidate remains an independent judge."
+      ],
+      "rationale": "Discovery gains speed without allowing optimization against a mutable or self-authored acceptance predicate.",
+      "required_evidence": [
+        "Pre-registered objective, candidate grammar, seed, budget, stopping rule, and retention policy.",
+        "Candidate-inaccessible exact checker or a separately controlled confirmation route.",
+        "Complete exposure and adaptation ledger.",
+        "Canonical count bytes and independent exact reconstruction for promotion."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Emit/SourceGen.lean#L10-L15",
+          "meaning": "Candidate generation is explicitly outside the trusted kernel."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsCert/Gap246/Witness.lean#L19-L71",
+          "meaning": "Only checked stored-data bridges and the terminal exact inequality enter the witness."
+        }
+      ],
+      "source_semantics": "A numerical candidate can be found by heuristic search because the final theorem depends on an exact checked witness rather than the discovery trajectory."
+    },
+    {
+      "changed_assumptions": [
+        "There is no changed assumption under which these number-theory statements become PID statements without a new positive mapping theorem."
+      ],
+      "disposition": "reject",
+      "id": "prime-gap-mathematics",
+      "pid_analogue": "No PID analogue is asserted.",
+      "preserved_assumptions": [
+        "The source statements retain their number-theory meaning only."
+      ],
+      "prohibited_inferences": [
+        "Transfer the GPY sum, variational quotient, coefficient vector, admissible tuple, the number 246, or Bombieri-Vinogradov premise into PID.",
+        "Infer a PID lattice or information inequality from the presence of factors, moments, positivity, or a DAG."
+      ],
+      "rationale": "No typed objects, functions, assumptions, or conclusions coincide across the two mathematical domains.",
+      "required_evidence": [
+        "Retain this rejection in every public report and wording gate."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGaps/Bounded246.lean#L21-L31",
+          "meaning": "The exact source conclusion is about conditional prime gaps."
+        }
+      ],
+      "source_semantics": "The main result is a conditional analytic-number-theory theorem about consecutive primes."
+    },
+    {
+      "changed_assumptions": [
+        "Continuous KSG depends on full-dimensional support declarations, neighbor geometry, finite-sample behavior, dependence, numerical execution, and estimator theory absent from finite categorical exact products."
+      ],
+      "disposition": "reject",
+      "id": "exact-certificate-to-continuous-validity",
+      "pid_analogue": "No direct analogue is permitted; any fixed quantization defines a separate categorical estimand and requires a new typed claim.",
+      "preserved_assumptions": [
+        "Only the generic discipline of separating discovery from checking may transfer."
+      ],
+      "prohibited_inferences": [
+        "An exact SxPID3 product validates KSG, continuous shared exclusions, a mixed-dimensional PID, or unquantized population PID.",
+        "A deterministic interval is a confidence interval or calibration theorem."
+      ],
+      "rationale": "The mathematical objects, support assumptions, error models, and inferential conclusions differ fundamentally.",
+      "required_evidence": [
+        "A separately adjudicated continuous estimator or mapping theorem with its own support, sampling, numerical, and statistical routes."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Gap246/Sieve/Certificate/Abstract.lean#L31-L42",
+          "meaning": "The source certificate implication is specific to its analytic variational functional."
+        }
+      ],
+      "source_semantics": "The exact certificate proves one finite inequality that feeds a specific analytic bridge; it is not a generic validation principle for unrelated estimators."
+    },
+    {
+      "changed_assumptions": [
+        "pid-rs high-consequence acceptance requires explicit human authority or separately controlled custody where claimed, complete receipts, and fail-closed replay."
+      ],
+      "disposition": "reject",
+      "id": "cached-ci-or-self-review-as-sufficient",
+      "pid_analogue": "Use internal automated review as adversarial input only; do not treat it as independent scientific acceptance.",
+      "preserved_assumptions": [
+        "Automated builds and internal review remain useful diagnostics."
+      ],
+      "prohibited_inferences": [
+        "A warm-cache build, self-assessed formalization, zero required approvals, or same-lineage council proves correctness or review independence.",
+        "Public availability implies archival durability."
+      ],
+      "rationale": "Verification strength depends on the exact route, custody, and preserved result, not the prestige or number of agents involved.",
+      "required_evidence": [
+        "Fresh and pinned replay.",
+        "Complete raw result and artifact receipt.",
+        "Named independence vector.",
+        "External human or custody record when such credit is claimed."
+      ],
+      "source_anchors": [
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/formalization.yaml#L67-L77",
+          "meaning": "Project metadata describes automated and internal review."
+        },
+        {
+          "locator": "https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/.github/workflows/lean.yml#L1-L17",
+          "meaning": "The reviewed CI route is a build workflow, not a complete comparator and custody pipeline."
+        }
+      ],
+      "source_semantics": "The public project supplies a build and self-described review process, but the reviewed surfaces do not establish independent comparator replay or external acceptance."
+    }
+  ]
+}

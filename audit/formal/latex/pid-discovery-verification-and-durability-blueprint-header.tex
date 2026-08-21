@@ -1,0 +1,89 @@
+\usepackage{xcolor}
+\definecolor{PidNavy}{HTML}{12313F}
+\definecolor{PidBlue}{HTML}{1F607A}
+\definecolor{PidGreen}{HTML}{277053}
+\definecolor{PidRed}{HTML}{7C2428}
+\definecolor{PidPale}{HTML}{EAF3F1}
+\definecolor{PidCode}{HTML}{F2F6F7}
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{fvextra}
+\usepackage{etoolbox}
+\usepackage{seqsplit}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{PidNavy}PID discovery, verification, and durability}
+\fancyhead[R]{\footnotesize\color{PidBlue}PrimeGaps lessons without semantic transfer}
+\fancyfoot[L]{\footnotesize\color{gray}pid-rs research blueprint · 19 August 2026}
+\fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+\setlength{\headheight}{15pt}
+
+\titleformat{\section}
+  {\Large\bfseries\color{PidNavy}}
+  {\thesection}{0.7em}{}
+\titleformat{\subsection}
+  {\large\bfseries\color{PidBlue}}
+  {\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{PidGreen}}
+  {\thesubsubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus .5ex}{1.0ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus .4ex}{.8ex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em plus 0.1em minus 0.08em}
+\setlist{leftmargin=1.65em,itemsep=.25em,topsep=.35em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{.5em}
+\setlength{\LTpost}{.7em}
+\renewcommand{\arraystretch}{1.16}
+% Long source digests and Lean declaration names are exact evidence.  Let them wrap at character
+% boundaries inside narrow table cells instead of clipping into neighbouring columns.
+\AtBeginEnvironment{longtable}{%
+  \footnotesize\RaggedRight
+  \let\pidoldtexttt\texttt
+  \renewcommand{\texttt}[1]{\pidoldtexttt{\seqsplit{#1}}}%
+}
+\captionsetup{font=small,labelfont={bf,color=PidNavy}}
+
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaklines,
+  breakanywhere,
+  commandchars=\\\{\},
+  fontsize=\small,
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{PidBlue}
+}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \pagecolor{PidNavy}\color{white}
+    \vspace*{1.0cm}
+    {\Large\bfseries\color{cyan!45}PID-RS RESEARCH PROGRAM\par}
+    \vspace{2.0cm}
+    {\fontsize{34}{40}\selectfont\bfseries\@title\par}
+    \vfill
+    \begin{minipage}{0.86\textwidth}
+      \large
+      A source-pinned, 20-lens review of proof engineering, exact categorical SxPID3,
+      autoresearch promotion, formal-method limits, and durable repository practice.
+    \end{minipage}\par
+    \vspace{1.4cm}
+    {\large\@date\par}
+    \vspace{.6cm}
+    {\small Canonical narrative: \texttt{PID\_DISCOVERY\_VERIFICATION\_AND\_DURABILITY\_BLUEPRINT.md}\par}
+  \end{titlepage}
+  \nopagecolor\color{black}
+}
+\makeatother

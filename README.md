@@ -63,6 +63,15 @@ from methods to papers, external reference code, Rust/Python entry points, featu
 contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machine-readable source
 is [`method-catalog.json`](method-catalog.json).
 
+The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
+its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the
+PrimeGaps proof-engineering review, semantic nontransfer firewall, exact categorical SxPID3
+proposal, autoresearch protocol, formal-tool limits, and durable branch/worktree promotion process.
+Its [machine-readable transfer ledger](audit/evidence/primegaps-to-pid-transfer-ledger-v1.json)
+binds the 20-lens review and exact anchors. The SxPID3 Programs A--E remain open; these artifacts are
+a research design and audit record, not an accepted higher-source certificate or evidence for KSG,
+continuous PID, population inference, or scientific novelty.
+
 The [ecosystem capability and gap matrix](ECOSYSTEM_CAPABILITIES.md) projects this catalog and the
 assurance registry onto four exact historical consumer snapshots. Its
 [machine-readable contract](ecosystem-capabilities.json) records retained boundaries and missing
