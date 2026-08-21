@@ -784,10 +784,10 @@ repository CI separately failed at the reached final mathematical-workflow cross
 comparator. No L7 record is installed and R7 is permanently unissued. Preserve those distinct C7
 facts and exact r12 bytes; no predecessor observation transfers credit to a successor.
 
-Composite-v8 is the exact direct-child, two-defect operational repair. It changes only the reviewed
+Composite-v8 was the exact direct-child, two-defect operational repair. It changed the reviewed
 upload-action ref to its 40-hex object and the bounded mathematical-workflow portability gate,
-retains the exact C7 publication family and existing 83-page workflow PDF/source, and publishes no
-new PDF. Draft-safe controls are:
+retained the exact C7 publication family and existing 83-page workflow PDF/source, and published no
+new PDF. Its historical draft-safe controls were:
 
 ```text
 python3 -I -S -B scripts/check-github-action-pins.py
@@ -802,12 +802,143 @@ python3 -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py
 python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py
 ```
 
-Run `just ksg-composite-v8` only from the exact clean committed C8 checkout. That local route uses
-the workflow-PDF hostile suite plus same-toolchain `--exact`; ordinary CI and dedicated-v8 use the
-same hostile suite plus `--cross-toolchain`. R8 remains conditional and exact: local record,
-successor capture, derived receipt, and current-source regenerated last, after fresh exact-C8 local
-closure and fresh attempt-1 repository CI, all four CodeQL languages, and dedicated-v8 success.
-These are project-defined operational observations, not scientific or authentication evidence.
+Do not run `just ksg-composite-v8` for qualification. Published C8
+`7c80d48db415279fc4d744eadb1515797606912b` passed attempt-1 CodeQL, while repository CI and the
+dedicated-v8 route both reached the retained certified-SxPID2 checker and failed on
+`release-audit just dependency line exact digest changed`. The marker is the first reached
+comparison, not the complete mismatch inventory. Read-only sequential digest-repin analysis
+identified five changed bindings—the release-audit dependency line, complete CI workflow,
+complete justfile, complete scripts guide, and complete formal-PDF aggregate gate—and the
+all-five repin passes. Source reconstruction guards that exact changed set; neither observation
+establishes a unique counterfactual necessity set or ordering. No L8 record is installed; no
+operator-invocation history is claimed. R8 is permanently unissued and has zero successor credit.
+
+Composite-v9 is the minimal append-only successor. It preserves the exact C8 theorem sources and
+statements, mathematical-claim semantics, estimator results, numerical results, workflow PDF,
+workflow-PDF source/gate/hostile suite, and publication bytes. Claim-packet edits are limited to
+replay-custody pointer prose. It repins only the five stale retained operational bindings and their
+binding-difference hostile fixture; retires the v8 workflow fail closed; adds versioned v9
+lifecycle machinery; and advances current Lean custody to r14. It publishes no new PDF.
+Draft-safe controls are:
+
+```text
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v9.py --self-test
+python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v9.py --self-test
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v9-local-closure.py --self-test
+python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v9-local-closure.py --self-test
+python3 -I -S -B scripts/check-ksg-m1a-composite-v9-self-test.py
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v9-self-test.py
+```
+
+Before C9 is committed, preserve the already-terminal C8 predecessor observation in a private
+mode-0600 staging file. The token is supplied only through descriptor 3; do not place it in an
+argument or environment variable:
+
+```text
+capture_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c9-predecessor.XXXXXX")"
+token_file="/absolute/private/path/github-token"
+predecessor_staging="$capture_dir/predecessor-failure.json"
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/capture-ksg-m1a-composite-v9.py \
+   --phase predecessor_failure --token-fd 3 \
+   3<"$token_file" >"$predecessor_staging")
+```
+
+Do not install those bytes merely because retrieval returned zero. A successful capture command
+emits only after two bounded provider passes validate strict response shape and identity, the exact
+run/subject/conclusion, a common repository ID, and stable failed-job identities and partition.
+It does not validate the emitted record against the v9 JSON Schema or require full normalized
+equality of both repetitions; those checks first occur in `--validate-static`. There is no separate
+staged-predecessor validation mode. Inspect the canonical record and retain its exact mode, size,
+and digest before installing the reviewed bytes at
+`audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v9-2026-08-19.json`.
+`--validate-draft` checks draft source shape and frozen byte bindings, not the capture's semantics.
+Rerun draft validation and the hostile suite in normal and optimized isolated Python after
+installation; the first separate checker-side repository parse of the committed predecessor is
+`--validate-static` from the exact C9 commit, and C9 must not be pushed unless both modes pass. This
+capture can never issue R8 and supplies no C9 qualification credit.
+
+Run `just ksg-composite-v9` only from the exact clean committed C9 checkout. If it succeeds, the
+typed recorder runs exactly that fixed command and writes L9 to a fresh mode-0600 path outside the
+repository:
+
+```text
+local_closure_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c9-local-closure.XXXXXX")"
+local_record="$local_closure_dir/local-closure.json"
+python3 -I -S -B scripts/capture-ksg-m1a-composite-v9-local-closure.py \
+  --output "$local_record"
+```
+
+Install no L9 record merely because the recorder returns zero. The receipt-derivation command below
+is the separate checker-side staged validator for both L9 and the successor capture: it checks the
+exact C9 commit/tree/message, the fixed local command, both clean endpoints, the applicable schemas,
+and both semantic projections before it emits a receipt. It reuses the exact committed local
+recorder's record validator and immutable hosted-capture primitives, so this is not an
+implementation-independent reproduction. L9 is a bounded correlated local observation, not
+attempt-number authority, a hermetic transitive-executable inventory, an atomic filesystem
+snapshot, authentication, or trusted time.
+
+Only after fresh attempt-1 repository CI, all four CodeQL language jobs, and the dedicated-v9
+workflow succeed for that same C9 SHA may the successor observation be captured. Supply the exact
+C9 commit, tree, and three distinct provider run IDs explicitly:
+
+```text
+successor_capture="/absolute/private/path/successor-qualification.json"
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/capture-ksg-m1a-composite-v9.py \
+   --phase successor_qualification \
+   --successor-commit "$c9_commit" --successor-tree "$c9_tree" \
+   --successor-ci-run "$ci_run" --successor-codeql-run "$codeql_run" \
+   --successor-contract-run "$contract_run" --token-fd 3 \
+   3<"$token_file" >"$successor_capture")
+```
+
+Validate the staged L9 and successor capture together, and derive the candidate receipt in the same
+fail-closed operation, only through two distinct, stable, single-link regular-file descriptors at
+offset zero:
+
+```text
+receipt_staging="/absolute/private/path/composite-v9-receipt.json"
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/check-ksg-m1a-composite-v9.py \
+   --derive-receipt --local-closure-fd 3 --successor-capture-fd 4 \
+   3<"$local_record" 4<"$successor_capture" >"$receipt_staging")
+```
+
+R9 remains an exact four-path unsigned direct child: the durable L9 record, fresh successor
+capture, deterministically derived receipt, and current-source regenerated last. Freeze the first
+three installed bytes before regenerating the self-excluding manifest in both Python modes and
+requiring exact equality:
+
+```text
+state_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c9-current-source.XXXXXX")"
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/check-current-source-state-v1.py --emit \
+   >"$state_dir/current-source.json"
+ python3 -O -I -S -B scripts/check-current-source-state-v1.py --emit \
+   >"$state_dir/current-source.optimized.json")
+cmp "$state_dir/current-source.json" "$state_dir/current-source.optimized.json"
+```
+
+Install only the equal reviewed manifest bytes. From the exact R9 commit, validate that the staged
+receipt bytes equal the committed receipt and satisfy their derivation, then validate the complete
+static contract in both Python modes:
+
+```text
+python3 -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-receipt \
+  < "$receipt_staging"
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-receipt \
+  < "$receipt_staging"
+python3 -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-static
+python3 -O -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-static
+just ksg-composite-v9
+just release-audit
+```
+
+The final command reruns the complete release route. Any false,
+missing, nonterminal, wrong-attempt, wrong-SHA, or later-generation term leaves R9 unissued and
+requires another append-only contract version. All four artifacts are project-defined operational
+observations, not mathematical, scientific, authentication, or independent-replication evidence.
 
 The v4 capture and receipt commands documented by the historical process report described a
 conditional route that was never admitted. C4's attempt-1 qualification failed, R4 is permanently
@@ -1025,13 +1156,13 @@ python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
 The current append-only receipt path is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`.
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
 finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt,
 finalized `r8` receipt, finalized `r9` receipt, finalized `r10` receipt, finalized `r11` receipt,
-and finalized `r12` receipt remain exact-hash-bound prior evidence with their original v1 and
-twelve v2 schema identities. The `r13` suffix denotes only the thirteenth receipt in the versioned
-sequence that originated on 12 August, and therefore the fourteenth current-project replay receipt overall; the 11 August historical receipt is outside that
+finalized `r12` receipt, and finalized `r13` receipt remain exact-hash-bound prior evidence with
+their original v1 and thirteen v2 schema identities. The `r14` suffix denotes only the fourteenth
+receipt in the versioned sequence that originated on 12 August, and therefore the fifteenth current-project replay receipt overall; the 11 August historical receipt is outside that
 versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 route receives current execution credit only when that exact receipt exists and validates.
@@ -1076,25 +1207,25 @@ checker reconstructs its zero-placeholder replay source and allows no other chec
 replay/final-byte difference. The provisional no-clobber receipt becomes immutable only after this
 two-edit finalization and normal/optimized checker plus self-test replay.
 
-The runner also refuses to start unless the three-way composite-v8 checksum cut is invocation
+The runner also refuses to start unless the three-way composite-v9 checksum cut is invocation
 ready. The replay projection must still be the unique exact zero-placeholder source expression;
-the Lean composite-v8 scalar and the `scripts/check-ksg-m1a-composite-v8.py` operational-map row
-must be equal nonzero literals hashing the exact final v8 checker; and the v8 checker's unique
+the Lean composite-v9 scalar and the `scripts/check-ksg-m1a-composite-v9.py` operational-map row
+must be equal nonzero literals hashing the exact final v9 checker; and the v9 checker's unique
 nonzero `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal must reproduce the Lean source after
-normalizing exactly the projection, v8 scalar, and v8 operational row to their reviewed placeholder
-forms. The retained v4/v5/v6/v7 checkers, their ordinary operational-map rows, and
-r9/r10/r11/r12 receipts are immutable prior evidence: they are neither rewritten nor part of the
-r13 normalization cut.
+normalizing exactly the projection, v9 scalar, and v9 operational row to their reviewed placeholder
+forms. The retained v4/v5/v6/v7/v8 checkers, their ordinary operational-map rows, and
+r9/r10/r11/r12/r13 receipts are immutable prior evidence: they are neither rewritten nor part of
+the r14 normalization cut.
 
-Finalization is deliberately acyclic. First freeze the v8 self-test, this guide, the freeze guide,
+Finalization is deliberately acyclic. First freeze the v9 self-test, this guide, the freeze guide,
 and every other non-cut byte and digest row. With all three Lean cut positions in placeholder form,
-compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v8 checker.
-Then freeze the v8 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
-only the Lean v8 scalar and v8 operational row. Leave the replay projection as `"0" * 64`, rerun
+compute `H_L` from that exactly normalized Lean source and write only `H_L` into the v9 checker.
+Then freeze the v9 checker, compute `H_V` from its exact final bytes, and write the same `H_V` into
+only the Lean v9 scalar and v9 operational row. Leave the replay projection as `"0" * 64`, rerun
 the normal and optimized hostile suites, and invoke the zero-argument replay generator exactly
-once. Only after it no-clobber-publishes the provisional r13 receipt may the established two-edit
+once. Only after it no-clobber-publishes the provisional r14 receipt may the established two-edit
 receipt finalization replace the projection literal and the projection-omitted live Lean-checker
-custody digest. Any change to the v8 self-test or another normalized Lean input after `H_L` was
+custody digest. Any change to the v9 self-test or another normalized Lean input after `H_L` was
 computed invalidates the cut and requires restarting this sequence. The generator predicates run
 before replay commands and publication; the hostile suites exercise causal checker drift,
 projection-finalized, missing, duplicated, mismatched, normalized-cut, and operational-map-omission

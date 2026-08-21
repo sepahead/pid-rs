@@ -1,0 +1,651 @@
+{
+  "$defs": {
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "pattern": "^[a-z0-9_]+$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "captureBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "phase": {
+          "enum": [
+            "predecessor_failure",
+            "successor_qualification"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "phase",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "observation": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_names": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "conclusion": {
+          "enum": [
+            "failure",
+            "success"
+          ]
+        },
+        "failed_job_ids": {
+          "items": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "job_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "jobs_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "role": {
+          "enum": [
+            "predecessor_ci",
+            "predecessor_codeql",
+            "predecessor_contract",
+            "successor_ci",
+            "successor_codeql",
+            "successor_contract"
+          ]
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "workflow_path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_names",
+        "conclusion",
+        "failed_job_ids",
+        "job_count",
+        "jobs_sha256",
+        "role",
+        "run_id",
+        "workflow_path"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v9.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "capture_bindings": {
+      "items": {
+        "$ref": "#/$defs/captureBinding"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "contract_authorities": {
+      "items": {
+        "$ref": "#/$defs/authority"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "defects": {
+      "items": false,
+      "maxItems": 1,
+      "minItems": 1,
+      "prefixItems": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "evidence": {
+              "items": false,
+              "maxItems": 2,
+              "minItems": 2,
+              "prefixItems": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "capture": {
+                      "$ref": "#/$defs/binding"
+                    },
+                    "job": {
+                      "const": 96176246476
+                    },
+                    "raw_log_sha256": {
+                      "const": "0c475bce091b1f2ae414b6325ec0b46caae5f375ee5b4e87bd989688915d6fc4"
+                    },
+                    "raw_log_size_bytes": {
+                      "const": 136873
+                    },
+                    "route": {
+                      "const": "repository_ci"
+                    },
+                    "run": {
+                      "const": 32286213706
+                    }
+                  },
+                  "required": [
+                    "capture",
+                    "job",
+                    "raw_log_sha256",
+                    "raw_log_size_bytes",
+                    "route",
+                    "run"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "capture": {
+                      "$ref": "#/$defs/binding"
+                    },
+                    "job": {
+                      "const": 96176246257
+                    },
+                    "raw_log_sha256": {
+                      "const": "63be55db45dbf212881ede76b8c4ae70cd4bad28de0c49bd4b12d0b70a515d0e"
+                    },
+                    "raw_log_size_bytes": {
+                      "const": 59731
+                    },
+                    "route": {
+                      "const": "dedicated_v8"
+                    },
+                    "run": {
+                      "const": 32286213774
+                    }
+                  },
+                  "required": [
+                    "capture",
+                    "job",
+                    "raw_log_sha256",
+                    "raw_log_size_bytes",
+                    "route",
+                    "run"
+                  ],
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "id": {
+              "const": "c8_certified_sxpid2_retained_binding_staleness"
+            },
+            "observed_marker": {
+              "const": "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed"
+            },
+            "scope": {
+              "const": [
+                "hosted_repository_ci_step_22",
+                "hosted_dedicated_v8_step_10"
+              ]
+            },
+            "stale_binding_count": {
+              "const": 5
+            },
+            "stale_bindings": {
+              "const": [
+                "execution-container:.github/workflows/ci.yml",
+                "execution-container:justfile",
+                "release-audit-line:justfile",
+                "reviewed-documentation:scripts/README.md",
+                "support-gate:scripts/check-formal-pdf-set.sh"
+              ]
+            },
+            "status": {
+              "const": "failed_zero_credit"
+            }
+          },
+          "required": [
+            "evidence",
+            "id",
+            "observed_marker",
+            "scope",
+            "stale_binding_count",
+            "stale_bindings",
+            "status"
+          ],
+          "type": "object"
+        }
+      ],
+      "type": "array"
+    },
+    "local_qualification": {
+      "additionalProperties": false,
+      "properties": {
+        "authorities_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "command": {
+          "additionalProperties": false,
+          "properties": {
+            "argv": {
+              "const": [
+                "just",
+                "ksg-composite-v9"
+              ]
+            },
+            "elapsed_monotonic_ns": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "exit_code": {
+              "const": 0
+            },
+            "stderr_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "stderr_size_bytes": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "stdout_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "stdout_size_bytes": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "timed_out": {
+              "const": false
+            }
+          },
+          "required": [
+            "argv",
+            "elapsed_monotonic_ns",
+            "exit_code",
+            "stderr_sha256",
+            "stderr_size_bytes",
+            "stdout_sha256",
+            "stdout_size_bytes",
+            "timed_out"
+          ],
+          "type": "object"
+        },
+        "platform": {
+          "additionalProperties": false,
+          "properties": {
+            "architecture": {
+              "enum": [
+                "aarch64",
+                "arm64"
+              ]
+            },
+            "operating_system": {
+              "const": "Darwin"
+            },
+            "python_implementation": {
+              "const": "CPython"
+            }
+          },
+          "required": [
+            "architecture",
+            "operating_system",
+            "python_implementation"
+          ],
+          "type": "object"
+        },
+        "record_binding": {
+          "$ref": "#/$defs/binding"
+        },
+        "reviewed_executables_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "subject": {
+          "additionalProperties": false,
+          "properties": {
+            "c9_commit": {
+              "$ref": "#/$defs/commit"
+            },
+            "c9_tree": {
+              "$ref": "#/$defs/commit"
+            }
+          },
+          "required": [
+            "c9_commit",
+            "c9_tree"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "authorities_sha256",
+        "command",
+        "platform",
+        "record_binding",
+        "reviewed_executables_sha256",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "observations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "capture_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "normalized_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "phase": {
+            "enum": [
+              "predecessor_failure",
+              "successor_qualification"
+            ]
+          },
+          "roles": {
+            "items": {
+              "$ref": "#/$defs/observation"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "type": "array"
+          }
+        },
+        "required": [
+          "capture_sha256",
+          "normalized_sha256",
+          "phase",
+          "roles"
+        ],
+        "type": "object"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "predecessor_local": {
+      "additionalProperties": false,
+      "properties": {
+        "credit": {
+          "const": "zero"
+        },
+        "l8_record": {
+          "const": "absent_unissued"
+        },
+        "r8_receipt_issued": {
+          "const": false
+        },
+        "recorder": {
+          "const": "satisfiable_retained_no_installed_record"
+        }
+      },
+      "required": [
+        "credit",
+        "l8_record",
+        "r8_receipt_issued",
+        "recorder"
+      ],
+      "type": "object"
+    },
+    "publication": {
+      "additionalProperties": false,
+      "properties": {
+        "authorities": {
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          },
+          "minProperties": 1,
+          "type": "object"
+        },
+        "c9_new_pdf": {
+          "const": false
+        },
+        "status": {
+          "const": "retained_exact_c8_family"
+        },
+        "workflow_pdf": {
+          "additionalProperties": false,
+          "properties": {
+            "committed_pdf": {
+              "$ref": "#/$defs/binding"
+            },
+            "portability_gate": {
+              "$ref": "#/$defs/binding"
+            },
+            "source": {
+              "$ref": "#/$defs/binding"
+            },
+            "status": {
+              "const": "unchanged_pdf_source_and_gate"
+            }
+          },
+          "required": [
+            "committed_pdf",
+            "portability_gate",
+            "source",
+            "status"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "authorities",
+        "c9_new_pdf",
+        "status",
+        "workflow_pdf"
+      ],
+      "type": "object"
+    },
+    "replay": {
+      "additionalProperties": false,
+      "properties": {
+        "current_r14": {
+          "$ref": "#/$defs/binding"
+        },
+        "current_source": {
+          "$ref": "#/$defs/binding"
+        },
+        "predicate": {
+          "const": "fresh_post_c8_r14_and_current_source_match_c9"
+        },
+        "retained_r13": {
+          "$ref": "#/$defs/binding"
+        }
+      },
+      "required": [
+        "current_r14",
+        "current_source",
+        "predicate",
+        "retained_r13"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v9"
+    },
+    "schema_revision": {
+      "const": 9
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c8_commit": {
+          "const": "7c80d48db415279fc4d744eadb1515797606912b"
+        },
+        "c8_tree": {
+          "const": "ba01abdd86a542b359df75e9058fccf28cfc5a3d"
+        },
+        "c9_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c9_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "c8_commit",
+        "c8_tree",
+        "c9_commit",
+        "c9_tree"
+      ],
+      "type": "object"
+    },
+    "verdict": {
+      "additionalProperties": false,
+      "properties": {
+        "c8_hosted_qualification": {
+          "const": "failed_zero_credit"
+        },
+        "c8_local_qualification": {
+          "const": "absent_zero_credit"
+        },
+        "c8_publication": {
+          "const": "published_unchanged"
+        },
+        "c9_bounded_repair": {
+          "const": "pass"
+        },
+        "c9_hosted_observation": {
+          "const": "pass"
+        },
+        "c9_local_qualification": {
+          "const": "pass"
+        },
+        "r4_receipt_issued": {
+          "const": false
+        },
+        "r5_receipt_issued": {
+          "const": false
+        },
+        "r6_receipt_issued": {
+          "const": false
+        },
+        "r7_receipt_issued": {
+          "const": false
+        },
+        "r8_receipt_issued": {
+          "const": false
+        },
+        "r9_receipt_issued": {
+          "const": true
+        },
+        "scientific_validation": {
+          "const": "not_adjudicated"
+        }
+      },
+      "required": [
+        "c8_hosted_qualification",
+        "c8_local_qualification",
+        "c8_publication",
+        "c9_bounded_repair",
+        "c9_hosted_observation",
+        "c9_local_qualification",
+        "r4_receipt_issued",
+        "r5_receipt_issued",
+        "r6_receipt_issued",
+        "r7_receipt_issued",
+        "r8_receipt_issued",
+        "r9_receipt_issued",
+        "scientific_validation"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "capture_bindings",
+    "contract_authorities",
+    "defects",
+    "local_qualification",
+    "nonimplications",
+    "observations",
+    "predecessor_local",
+    "publication",
+    "replay",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject",
+    "verdict"
+  ],
+  "type": "object"
+}

@@ -6,7 +6,7 @@ The active formal project is pinned exactly to `leanprover/lean4:v4.33.0`, Lean 
 [`lake-manifest.json`](lean/lake-manifest.json). The active policy is machine-readable in
 [`toolchain-freeze-policy.json`](lean/toolchain-freeze-policy.json), and the bounded Darwin replay
 is recorded separately in
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -20,9 +20,10 @@ and [finalized r9 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project
 and [finalized r10 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json)
 and [finalized r11 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json)
 and [finalized r12 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json)
+and [finalized r13 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json)
 remain byte-preserved prior execution evidence. The 11 August receipt predates the hardened
-runner; none is current runner custody. The `r13` suffix denotes only the thirteenth receipt in the
-versioned sequence that originated on 12 August, and therefore the fourteenth current-project replay
+runner; none is current runner custody. The `r14` suffix denotes only the fourteenth receipt in the
+versioned sequence that originated on 12 August, and therefore the fifteenth current-project replay
 receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, replay schema, theorem, review, assurance tier, or independence
 revision; the current receipt remains schema v2 and receives execution credit only when it exists
@@ -131,8 +132,18 @@ path or executable authority:
 ```text
 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14 \
   -I -S -B \
-  /private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/scripts/generate-lean-4.33-replay.py
+/private/tmp/pid-rs-c9-diagnostic.GIjveb/repo/scripts/generate-lean-4.33-replay.py
 ```
+
+Finalized r6--r13 receipts retain their exact historical observed routes and bytes. Before r14
+exists, the hostile suite uses r13 only as a non-evidentiary shape seed inside a disposable
+fixture: it rehomes the synthetic execution root, command working directories, dependency
+working directories, and the nine root-check output streams to the reviewed C9 route. It also
+refreshes all checker-bound active/current and preservation inventory fields in the disposable
+fixture and recomputes its synthetic projection/custody values. Every one of those changes is
+confined to the non-evidentiary fixture: it never rewrites a retained receipt or assigns fresh
+execution credit. The exact historical receipts remain independently hash- and schema-bound, while
+the simulated r14 route must satisfy the current literal route checks.
 
 Any extra argument is rejected before runner-controlled repository/archive/output lookup,
 repository-module load, child launch, or write. The runner opens the pinned
@@ -159,19 +170,20 @@ command streams, current evidence, and claim inventories. Within `custody_gate_s
 checker digest is omitted from that projection to avoid a checker/receipt digest cycle; the
 self-test digest remains reviewed, and both custody digests are compared directly with live files.
 Before any replay command, the zero-argument runner independently checks the complete acyclic
-composite-v8 cut state from source bytes. The replay-projection line is exactly the unique zero
-placeholder. The Lean composite-v8 scalar and its v8 operational-map row are identical nonzero
-literals equal to the final composite-v8 checker SHA-256. That v8 checker contains one nonzero
+composite-v9 cut state from source bytes. The replay-projection line is exactly the unique zero
+placeholder. The Lean composite-v9 scalar and its v9 operational-map row are identical nonzero
+literals equal to the final composite-v9 checker SHA-256. That v9 checker contains one nonzero
 `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal equal to the Lean checker hash after normalizing
-exactly the projection, v8 scalar, and v8 operational row to their exact placeholder forms. The
-immutable composite-v4/v5/v6/v7 checkers and r9/r10/r11/r12 receipts remain prior evidence; none
-is rewritten, and the ordinary retained v4/v5/v6/v7 operational rows are outside this normalization.
+exactly the projection, v9 scalar, and v9 operational row to their exact placeholder forms. The
+immutable composite-v4/v5/v6/v7/v8 checkers and r9/r10/r11/r12/r13 receipts remain prior evidence;
+none is rewritten, and the ordinary retained v4/v5/v6/v7/v8 operational rows are outside this
+normalization.
 
-The cut is finalized in one direction. Freeze the v8 self-test and every non-cut Lean input first;
-compute `H_L` from the three-placeholder Lean normalization and place only `H_L` in the v8
-checker; hash those final v8 checker bytes as `H_V`; place the same `H_V` in only the Lean v8 scalar
-and v8 operational row; and keep the replay projection as the zero expression until the one-shot
-generator succeeds. Changing the v8 self-test, documentation, or any other normalized Lean input
+The cut is finalized in one direction. Freeze the v9 self-test and every non-cut Lean input first;
+compute `H_L` from the three-placeholder Lean normalization and place only `H_L` in the v9
+checker; hash those final v9 checker bytes as `H_V`; place the same `H_V` in only the Lean v9 scalar
+and v9 operational row; and keep the replay projection as the zero expression until the one-shot
+generator succeeds. Changing the v9 self-test, documentation, or any other normalized Lean input
 after computing `H_L` invalidates the sequence. Missing, duplicated, stale, mismatched, causally
 changed, or prematurely finalized cuts stop the runner before publication. The self-tests exercise
 the positive construction plus checker-drift, projection-finalized, missing-cut, duplicated-cut,

@@ -308,28 +308,40 @@ Published C7 commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` retained C6 and f
 cross-toolchain layout comparator. R7 is permanently unissued. Preserve C7, the two distinct
 hosted failure records, and finalized `r12`; do not rerun them for attempt-1 credit or revive R7.
 
-The operative append-only successor is composite-v8, documented in
-[`ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md`](audit/evidence/ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md).
+Published C8 commit `7c80d48db415279fc4d744eadb1515797606912b` retained C7 and fresh Lean
+`r13`. Its attempt-1 CodeQL run passed. Repository CI and the dedicated-v8 route both reached the
+retained certified-SxPID2 checker and failed on the exact marker `release-audit just dependency
+line exact digest changed`. The first reached marker identifies one stale binding. Read-only
+sequential digest-repin analysis identified the exact five changed operational bindings, and
+source reconstruction guards that difference set without establishing unique counterfactual
+necessity or order. No L8 record is installed; no operator-invocation history is claimed. R8 is
+permanently unissued. Preserve C8, finalized `r13`, and the exact failed hosted observations; do
+not rerun them for attempt-1 credit or revive R8.
+
+The operative append-only successor is composite-v9, documented in
+[`ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md`](audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md).
 From a clean committed checkout run:
 
 ```text
-just ksg-composite-v8
+just ksg-composite-v9
 ```
 
-C8 and R8 are separate unsigned, human-attributed milestones. C8 must be the exact direct child of
-C7. It retains both failed C7 hosted observations, repairs the one-character action pin and the
-bounded workflow-PDF portability comparator, publishes no new PDF, and publishes a fresh Lean
-`r13` replay. R8 is permitted only after one fresh exact-C8 local closure and fresh attempt-1 CI,
-CodeQL, and dedicated-v8 success for that same commit. The local observation has no attempt-number
-authority: a separately typed recorder must run the fixed `just ksg-composite-v8` command from an
-exact clean C8 checkout, retain bounded
+C9 and R9 are separate unsigned, human-attributed milestones. C9 must be the exact direct child of
+C8. It retains the exact C8 publication family and failed hosted observations, and repins exactly
+the five stale operational bindings without changing certified theorem statements, mathematical-
+claim semantics, estimator results, or PDF bytes. The claim packet changes only its replay-custody
+pointer prose. C9 retires the v8 workflow, publishes no new PDF, and publishes a fresh Lean `r14`
+replay. R9 is permitted only after one fresh exact-C9 local closure and fresh attempt-1 CI, CodeQL,
+and dedicated-v9 success for that same commit. The local observation has no attempt-number
+authority: a separately typed recorder must run the fixed `just ksg-composite-v9` command from an
+exact clean C9 checkout, retain bounded
 output and clean endpoint observations in a
 mode-0600 staging file outside the repository, and install those exact bytes only after validation.
 Those endpoints use ordinary Git status plus selected metadata checks. Rejecting
 `core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
 uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
 hermetic closure.
-R8 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
+R9 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
 and the deterministically derived receipt, then regenerates current-source last. The receipt binds
 and validates the predecessor capture, local record, and successor capture. Neither milestone may
 change scientific code, issue a v3/v4/v5 receipt, recreate a missing historical index, promote KSG
@@ -357,12 +369,12 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`;
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
 finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, finalized `r11`,
-and finalized `r12` receipts are exact-hash-bound prior replays. Here `r13` denotes only the
-thirteenth receipt in the versioned sequence that originated on 12 August, and therefore the
-fourteenth current-project replay receipt
+finalized `r12`, and finalized `r13` receipts are exact-hash-bound prior replays. Here `r14`
+denotes only the fourteenth receipt in the versioned sequence that originated on 12 August, and
+therefore the fifteenth current-project replay receipt
 overall; the 11 August historical receipt is outside that versioned sequence. The suffix
 does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.

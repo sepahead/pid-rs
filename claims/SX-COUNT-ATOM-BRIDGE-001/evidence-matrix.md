@@ -23,7 +23,7 @@ routes may help find discrepancies after explicit comparison; they cannot silent
 refinement edges.
 
 Current identities, inventories, and command outcomes are recorded in the
-[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json),
+[`current versioned Lean 4.33 replay`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json),
 with the [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -37,8 +37,9 @@ and [finalized r9 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-curren
 and [finalized r10 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json)
 and [finalized r11 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json)
 and [finalized r12 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json)
-retained as prior execution evidence. Here `r13` denotes only the thirteenth receipt in the versioned
-sequence that originated on 12 August, and therefore the fourteenth current-project replay receipt
+and [finalized r13 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json)
+retained as prior execution evidence. Here `r14` denotes only the fourteenth receipt in the versioned
+sequence that originated on 12 August, and therefore the fifteenth current-project replay receipt
 overall; the 11 August historical receipt is outside that versioned sequence. The suffix does not
 denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
 current route receives execution credit only when its exact receipt exists and validates.

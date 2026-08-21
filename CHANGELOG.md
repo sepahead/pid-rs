@@ -9,6 +9,30 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Published composite-v8 C8 as exact commit `7c80d48db415279fc4d744eadb1515797606912b`
+  with tree `ba01abdd86a542b359df75e9058fccf28cfc5a3d`. Attempt-1 CodeQL passed;
+  repository CI and dedicated-v8 both reached the retained certified-SxPID2 checker and failed on
+  the exact `release-audit just dependency line exact digest changed` marker. The first marker is
+  not the complete mismatch inventory. Read-only sequential digest-repin analysis found the exact
+  five changed bindings for the release-audit line, complete CI workflow, complete justfile,
+  complete scripts guide, and complete formal-PDF aggregate gate; source reconstruction guards
+  that difference set without establishing unique counterfactual necessity or order. No L8 record
+  is installed; no operator-invocation history is claimed. R8 is permanently unissued.
+  Composite-v9 is the minimal append-only
+  direct-child successor. It retains the exact C8 publication family, repins only those five
+  operational bindings and their binding-difference hostile fixture, retires the v8 workflow fail
+  closed, publishes no new PDF, and changes no certified
+  theorem statement, mathematical-claim semantic content, estimator result, or numerical result.
+  Claim-packet edits are limited to replay-custody pointer prose. The current replay pointer becomes
+  [`r14`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json),
+  with finalized `r13` byte-preserved as prior evidence. Here `r14` is the fourteenth receipt in
+  the versioned sequence that originated on 12 August and the fifteenth current-project replay
+  receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
+  does not denote a calendar date, schema, theorem, review, assurance tier, or independence
+  revision. Conditional R9 remains an exact four-path delta after fresh exact-C9 L9 and fresh
+  attempt-1 CI, CodeQL, and dedicated-v9 success: local record, successor capture, derived receipt,
+  and current-source regenerated last. This is project-defined operational custody repair, not
+  scientific, authentication, independence, release, or application evidence.
 - Published composite-v7 C7 as exact commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e`.
   Attempt-1 CodeQL passed; dedicated-v7 failed during job setup on one 39-hex upload-action ref;
   repository CI separately completed with 44 successful jobs and one formal-PDF failure at the
