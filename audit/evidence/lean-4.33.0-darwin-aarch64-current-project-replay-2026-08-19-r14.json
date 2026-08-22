@@ -1,0 +1,3720 @@
+{
+  "active_claim_authority_sha256": {
+    "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "b893fa9c0d48b6092211af114ca24eb45c0ada87b93305efa8a5d30646857bed",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/conventions.md": "9968de732de7477a5e6342893731affbd222a216ca822209e4059baebb6b6e74",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md": "92541f1f358578ced9f36c46c3cad1d894e0515f447d9018c510bf7c0fc7a3ec",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md": "19c059d218256771da239ac16d554b82418bb0f5da7953083fcb6ebbbf2eff65",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/formal/theorem-map.md": "552d754b8332ae41a6ded0a5f607deb357c0e8fdfb8e96eaf09708f29396be8f",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/obligations-v2.md": "47e573e617088b38243a7b23b75e7e2624754b3f8d86be64de498086fa1b6ad7",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md": "a258cdce0f63d2de836772c6829d3f1e3730c11eda120f146a674b8f22a9eaa1",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/routes-v2.md": "517f59f595acc57197c267e295952389d67c7e2c47af6990127862ae9340f4b9",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/claim-v2.md": "4e8fc1dda680b5fdf0ffcdb3af7cbe97017fa6421a4cd3393983d4047a87ff7b",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/conventions.md": "344c78c61d017af3cf1b21d5585826e06ac4a4149f6e7b1b2b3c372df8155cb6",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/decision-v2.md": "663fc625c3ede8c1530aaad07d1446d01da022d5835650a489c7a9f0977b8445",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/evidence-matrix.md": "c2bc3f6a0fb551371c5385c79c5a272e9bd493eb37987108bc4193fc608c76df",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md": "f765416999303ba151a51f9706053c8546b0fc02216b780b4e9523ea157f6994",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/obligations-v2.md": "4257fbfc0af90d9a7d8247bc6d765b2348e618a5febcd9e37fb7cff8e0c057cc",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md": "8127e06261aec8953dcbf21d6880b6143bece27b7c9957d8ff026ab71e51d498",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/routes-v2.md": "8a41fb691e76104ad6e28a8b439ca2de836ad2a2dd42fd39cace7d8a0e2a2c11"
+  },
+  "active_configuration": {
+    "audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+  },
+  "active_resume_sha256": {
+    "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0",
+    "audit/evidence/completion-active-resume.md": "2e8ab92a6369f54afd01dd0aafe13debe96d5f5e4e1899f78689db38d577a622"
+  },
+  "checker_sha256": {
+    "scripts/check-ksg-harmonic-revision-self-test.py": "2abbfe7a54e0c2e3263f3dbe1b8776b197ae13cd8fedacc6d1cc1997f94ee6f0",
+    "scripts/check-ksg-harmonic-revision.py": "cf4692597bc49448d520580d96e1e6d23b4fc65834539095152bb561ec6450e9",
+    "scripts/check-lean-citation-edge-countermodel-self-test.py": "7f2dbb5fdc8c1c50f9cf31d0bd03465465c3c235039db42c95c6192b3b0bbca3",
+    "scripts/check-lean-citation-edge-countermodel.py": "63d80960a09014fb18daabe1649e2db2dbce92408313944837ee91e9e106feb8",
+    "scripts/check-lean-descriptor-factorization-self-test.py": "678c1c722bc8d64d28e883c9615a8773a97bf046cc7e12f2ebd76456ce0e9c2a",
+    "scripts/check-lean-descriptor-factorization.py": "7d1c4e4942d4430c6732c9b25492afa847c06aac371ce3dbbd648ba9cfde2bd0",
+    "scripts/check-lean-exact-log-product.py": "52510a18ac5fa8b94113bfeba84f61cb28bdbe56be278fc76fb4d55407cb2dcd",
+    "scripts/check-lean-finite-convergence-self-test.py": "0a199a1cb373c37531667d821bcad977a2d6fbe7978b939e68a2fd56f8089989",
+    "scripts/check-lean-finite-convergence.py": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "scripts/check-lean-ksg-integer-harmonic-self-test.py": "0bb0c999ad8bc20137deda54620d2983a5bd0ecaf4a74f81cbde23f997560517",
+    "scripts/check-lean-ksg-integer-harmonic.py": "020034884471ace9bcae1c8aa0b303a223758964278b6a0b1ac9ff5eeea94684"
+  },
+  "command_records": [
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lean",
+        "--version"
+      ],
+      "argv_logical": [
+        "lean",
+        "--version"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:29:50.719405Z",
+      "exit_code": 0,
+      "name": "lean_version_probe",
+      "start_utc": "2026-08-22T19:29:50.514025Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 106,
+        "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "--version"
+      ],
+      "argv_logical": [
+        "lake",
+        "--version"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:29:50.780746Z",
+      "exit_code": 0,
+      "name": "lake_version_probe",
+      "start_utc": "2026-08-22T19:29:50.719501Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53,
+        "sha256": "91f4400b78be82a22d826a45a18f024b3121af765a09e1ab07dc76e4f1606676"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "--quiet",
+        "--wfail",
+        "build",
+        "PidFiniteConvergence"
+      ],
+      "argv_logical": [
+        "lake",
+        "--quiet",
+        "--wfail",
+        "build",
+        "PidFiniteConvergence"
+      ],
+      "cache_state": {
+        "dependency_packages_directory_present_before": true,
+        "project_build_directory_absent_before": true,
+        "project_config_directory_absent_before": true,
+        "project_oleans_reused": false
+      },
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:16.352756Z",
+      "exit_code": 0,
+      "name": "clean_build",
+      "start_utc": "2026-08-22T19:29:50.780944Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:18.746344Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence.lean",
+      "start_utc": "2026-08-22T19:30:16.352954Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Dependence.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Dependence.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:21.937814Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/Dependence.lean",
+      "start_utc": "2026-08-22T19:30:18.746435Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Deterministic.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:24.371289Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/Deterministic.lean",
+      "start_utc": "2026-08-22T19:30:21.937913Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/FractionalCover.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/FractionalCover.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:26.783419Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/FractionalCover.lean",
+      "start_utc": "2026-08-22T19:30:24.371383Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/LocalContinuity.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/LocalContinuity.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:35.447805Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/LocalContinuity.lean",
+      "start_utc": "2026-08-22T19:30:26.783514Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SupportChangeContinuity.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SupportChangeContinuity.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:38.097658Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/SupportChangeContinuity.lean",
+      "start_utc": "2026-08-22T19:30:35.447912Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:40.669342Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/SxEventBridge.lean",
+      "start_utc": "2026-08-22T19:30:38.097752Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:43.600733Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+      "start_utc": "2026-08-22T19:30:40.669444Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:47.289440Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+      "start_utc": "2026-08-22T19:30:43.600823Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSemanticContract.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSemanticContract.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:50.298301Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergenceSemanticContract.lean",
+      "start_utc": "2026-08-22T19:30:47.289563Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSxPid2AtomSemanticContract.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "-t",
+        "0",
+        "PidFiniteConvergenceSxPid2AtomSemanticContract.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:30:53.069282Z",
+      "exit_code": 0,
+      "name": "direct_lean_t0:PidFiniteConvergenceSxPid2AtomSemanticContract.lean",
+      "start_utc": "2026-08-22T19:30:50.298396Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "leanchecker",
+        "--fresh",
+        "PidFiniteConvergence"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "leanchecker",
+        "--fresh",
+        "PidFiniteConvergence"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:34:37.830996Z",
+      "exit_code": 0,
+      "name": "leanchecker_fresh",
+      "start_utc": "2026-08-22T19:30:53.069389Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "--stdin"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "--stdin"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:34:40.696242Z",
+      "exit_code": 0,
+      "name": "theorem_axiom_audit",
+      "start_utc": "2026-08-22T19:34:38.253195Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 18200,
+        "sha256": "30acaa1de98051b247a91b735eb8ab08f2870a7f6e23b81c18c362815681b2e4"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+        "env",
+        "lean",
+        "../../evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean"
+      ],
+      "argv_logical": [
+        "lake",
+        "env",
+        "lean",
+        "../../evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean",
+      "cwd_repo_relative": "audit/formal/lean",
+      "end_utc": "2026-08-22T19:34:43.017967Z",
+      "exit_code": 0,
+      "name": "derived_instance_query",
+      "start_utc": "2026-08-22T19:34:40.696338Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1850,
+        "sha256": "37863241a6c106465dacea3cae3f90817eaadb82291754d38b04f16b0f6f3314"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:34:45.562060Z",
+      "exit_code": 0,
+      "name": "citation_checker:normal",
+      "start_utc": "2026-08-22T19:34:43.018069Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 857,
+        "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:34:48.130917Z",
+      "exit_code": 0,
+      "name": "citation_checker:optimized",
+      "start_utc": "2026-08-22T19:34:45.562154Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 857,
+        "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:34:59.109118Z",
+      "exit_code": 0,
+      "name": "citation_self_test:normal",
+      "start_utc": "2026-08-22T19:34:48.131001Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1249,
+        "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-citation-edge-countermodel-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:10.155050Z",
+      "exit_code": 0,
+      "name": "citation_self_test:optimized",
+      "start_utc": "2026-08-22T19:34:59.109201Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1249,
+        "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:13.666908Z",
+      "exit_code": 0,
+      "name": "descriptor_checker:normal",
+      "start_utc": "2026-08-22T19:35:10.155140Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3421,
+        "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:17.171549Z",
+      "exit_code": 0,
+      "name": "descriptor_checker:optimized",
+      "start_utc": "2026-08-22T19:35:13.666989Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3421,
+        "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:27.466646Z",
+      "exit_code": 0,
+      "name": "descriptor_self_test:normal",
+      "start_utc": "2026-08-22T19:35:17.171633Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 13428,
+        "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-descriptor-factorization-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:37.094125Z",
+      "exit_code": 0,
+      "name": "descriptor_self_test:optimized",
+      "start_utc": "2026-08-22T19:35:27.466743Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 13428,
+        "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:40.142219Z",
+      "exit_code": 0,
+      "name": "exact_product_checker:normal",
+      "start_utc": "2026-08-22T19:35:37.094223Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 780,
+        "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-exact-log-product.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:35:43.233737Z",
+      "exit_code": 0,
+      "name": "exact_product_checker:optimized",
+      "start_utc": "2026-08-22T19:35:40.142313Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 780,
+        "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T19:39:41.147717Z",
+      "exit_code": 0,
+      "name": "finite_checker:normal",
+      "start_utc": "2026-08-22T19:35:43.233837Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 570,
+        "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:46:03.196120Z",
+      "exit_code": 0,
+      "name": "finite_checker:optimized",
+      "start_utc": "2026-08-22T19:39:41.147811Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 570,
+        "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:47:36.112814Z",
+      "exit_code": 0,
+      "name": "finite_self_test:normal",
+      "start_utc": "2026-08-22T20:46:03.196189Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1103,
+        "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-finite-convergence-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:51:49.914395Z",
+      "exit_code": 0,
+      "name": "finite_self_test:optimized",
+      "start_utc": "2026-08-22T20:47:36.112888Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 1103,
+        "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:52:05.067125Z",
+      "exit_code": 0,
+      "name": "ksg_checker:normal",
+      "start_utc": "2026-08-22T20:51:49.914670Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3023,
+        "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:52:07.360028Z",
+      "exit_code": 0,
+      "name": "ksg_checker:optimized",
+      "start_utc": "2026-08-22T20:52:05.067196Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 3023,
+        "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:52:07.434542Z",
+      "exit_code": 0,
+      "name": "ksg_revision_checker:normal",
+      "start_utc": "2026-08-22T20:52:07.360107Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:52:07.496562Z",
+      "exit_code": 0,
+      "name": "ksg_revision_checker:optimized",
+      "start_utc": "2026-08-22T20:52:07.434615Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 176,
+        "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:52:40.978513Z",
+      "exit_code": 0,
+      "name": "ksg_revision_self_test:normal",
+      "start_utc": "2026-08-22T20:52:07.496636Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 349,
+        "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-ksg-harmonic-revision-self-test.py",
+        "--claim-only"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:53:54.916955Z",
+      "exit_code": 0,
+      "name": "ksg_revision_self_test:optimized",
+      "start_utc": "2026-08-22T20:52:40.978580Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 349,
+        "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:55:28.202331Z",
+      "exit_code": 0,
+      "name": "ksg_self_test:normal",
+      "start_utc": "2026-08-22T20:53:54.917170Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 2634,
+        "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+      }
+    },
+    {
+      "argv_executed": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "argv_logical": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-ksg-integer-harmonic-self-test.py"
+      ],
+      "cache_state": null,
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo",
+      "cwd_repo_relative": ".",
+      "end_utc": "2026-08-22T20:56:37.379941Z",
+      "exit_code": 0,
+      "name": "ksg_self_test:optimized",
+      "start_utc": "2026-08-22T20:55:28.202410Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 2634,
+        "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+      }
+    }
+  ],
+  "compatibility_scope": {
+    "broad_or_file_global_occurrences": 0,
+    "command_scoped_fintype_derivation_occurrences": 3,
+    "option": "set_option backward.isDefEq.respectTransparency.types false in",
+    "proof_term_local_occurrences": 4,
+    "total_occurrences": 7
+  },
+  "current_evidence_sha256": {
+    "audit/evidence/foundational-sxpid-descriptor-factorization-lean-4.33.0.json": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b",
+    "audit/evidence/foundational-sxpid-descriptor-factorization-mutations-4.33.0.json": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe",
+    "audit/evidence/lean-4.33.0-manifest-regeneration-2026-08-11.json": "9710525fd40ebe72c6ff6d5759014ce4aae05e18c2f9a5544833e17f0fa3f5a6",
+    "audit/evidence/lean-citation-edge-countermodel-4.33.0.json": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7",
+    "audit/evidence/lean-ksg-integer-harmonic-4.33.0.json": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35",
+    "audit/evidence/sxpid2-exact-product-lean-check-4.33.0.json": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+  },
+  "custody_gate_sha256": {
+    "scripts/check-lean-toolchain-freeze-self-test.py": "4ccbf3c3ba2f2274221f7d2b41eb796ac7dce7acaf90e909cd79d0c2e71f1138",
+    "scripts/check-lean-toolchain-freeze.py": "cde75634c5da1d635cf76c3a66c0550036e1167a5a0f7d210fc3333264307644"
+  },
+  "dependency_checkout_preflight": [
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-22T19:29:49.884569Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli local config inventory",
+      "start_utc": "2026-08-22T19:29:49.641671Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-22T19:29:49.898020Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli root check",
+      "start_utc": "2026-08-22T19:29:49.884765Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 89,
+        "sha256": "405160c04124f899ab7a5ade39b2b6fb63bf86e20a94c60908665aab548db44d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-22T19:29:49.911366Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli revision check",
+      "start_utc": "2026-08-22T19:29:49.898211Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "300616b42565e3af8371bcac27ec8e33232d8bd511b3abc74ce438ace7a7ed4b"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-22T19:29:49.923536Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli origin check",
+      "start_utc": "2026-08-22T19:29:49.911547Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 40,
+        "sha256": "c0c02deff1a1a3fba1f471202c853e7ca2bda0764a0f6b3e95d0bf5e90c4ca79"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Cli",
+      "end_utc": "2026-08-22T19:29:49.937555Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Cli cleanliness check",
+      "start_utc": "2026-08-22T19:29:49.923731Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-22T19:29:49.949905Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient local config inventory",
+      "start_utc": "2026-08-22T19:29:49.937845Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-22T19:29:49.961548Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient root check",
+      "start_utc": "2026-08-22T19:29:49.950112Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 102,
+        "sha256": "3de950605cd3c2d40ef5e582a897dde05f2a50933d4dd3577ff68542e7523e56"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-22T19:29:49.972965Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient revision check",
+      "start_utc": "2026-08-22T19:29:49.961722Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "4d0336c7ba0fcd5eb2f72acfcbc62d27a785c823fdd5e7e21a77ed3f529ba9b8"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-22T19:29:49.985127Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient origin check",
+      "start_utc": "2026-08-22T19:29:49.973148Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 57,
+        "sha256": "619333dd697b0876afa6e558ee619ba42cc147c8ac9eb415d66d06cb3d13e196"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/LeanSearchClient",
+      "end_utc": "2026-08-22T19:29:49.998577Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "LeanSearchClient cleanliness check",
+      "start_utc": "2026-08-22T19:29:49.985312Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-22T19:29:50.011309Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq local config inventory",
+      "start_utc": "2026-08-22T19:29:49.998839Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-22T19:29:50.023236Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq root check",
+      "start_utc": "2026-08-22T19:29:50.011504Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 88,
+        "sha256": "a95eae5508c33476a58b50848a054e3b44fe77acd790e6dfd38831fa00618ff1"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-22T19:29:50.034915Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq revision check",
+      "start_utc": "2026-08-22T19:29:50.023414Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "2d7411c117d0e100d30993222f71939f4200b1982179b5c8651c332382e48655"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-22T19:29:50.046230Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq origin check",
+      "start_utc": "2026-08-22T19:29:50.035103Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 47,
+        "sha256": "0edd7e60b5329aa479be59427897c3d131a4bed960e8a4faf0aaa6f3c176fe66"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/Qq",
+      "end_utc": "2026-08-22T19:29:50.059311Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "Qq cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.046401Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-22T19:29:50.070841Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop local config inventory",
+      "start_utc": "2026-08-22T19:29:50.059558Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-22T19:29:50.081880Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop root check",
+      "start_utc": "2026-08-22T19:29:50.071022Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 91,
+        "sha256": "8a49b4d512f42b5e089e902f28229212a39b5a7a1597ff4eb43b3eddd4a3d566"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-22T19:29:50.093879Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop revision check",
+      "start_utc": "2026-08-22T19:29:50.082054Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "4c072408d27377ff5b35ed2858b23f6f83466a241898fe2c4c4a215ba2128652"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-22T19:29:50.105494Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop origin check",
+      "start_utc": "2026-08-22T19:29:50.094063Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 46,
+        "sha256": "007ad2ffb6cd1115e54eb06162448481b6e57a2b38a5721fe9306aa73f377411"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/aesop",
+      "end_utc": "2026-08-22T19:29:50.120179Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "aesop cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.105663Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-22T19:29:50.133293Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries local config inventory",
+      "start_utc": "2026-08-22T19:29:50.120443Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-22T19:29:50.145329Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries root check",
+      "start_utc": "2026-08-22T19:29:50.133494Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 95,
+        "sha256": "ce4e91f0dd8af002bad39173ca8533d5e18f3322fea1372dbd26b0c447441390"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-22T19:29:50.157922Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries revision check",
+      "start_utc": "2026-08-22T19:29:50.145508Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "f11675294ae9a5b8bd697f96d60b337c9aa0ffa5ed7cc89b8acfd5103044b82d"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-22T19:29:50.170355Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries origin check",
+      "start_utc": "2026-08-22T19:29:50.158124Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 50,
+        "sha256": "163e9977daaaf557a111a95edb87a473e4dabdef0c7ae0451d8d76ba9a6f1232"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/batteries",
+      "end_utc": "2026-08-22T19:29:50.186648Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "batteries cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.170522Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-22T19:29:50.200633Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph local config inventory",
+      "start_utc": "2026-08-22T19:29:50.186935Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-22T19:29:50.213641Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph root check",
+      "start_utc": "2026-08-22T19:29:50.200840Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 97,
+        "sha256": "b4e1111543bbfbab1941e9efd06c10d4a220ff18df77a791eb63ed8f62e750f3"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-22T19:29:50.226085Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph revision check",
+      "start_utc": "2026-08-22T19:29:50.213828Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "1c21dc61032d91e32449c4295a2a30bf8c68c4b8d984bf0f46a73d53d180ce2e"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-22T19:29:50.238357Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph origin check",
+      "start_utc": "2026-08-22T19:29:50.226264Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53,
+        "sha256": "e1308c66f365e49e7b8c10bd874950ac425bcc14aefe9881baf03c4f65f25cf1"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/importGraph",
+      "end_utc": "2026-08-22T19:29:50.253004Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "importGraph cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.238533Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-22T19:29:50.266555Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib local config inventory",
+      "start_utc": "2026-08-22T19:29:50.253271Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-22T19:29:50.279707Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib root check",
+      "start_utc": "2026-08-22T19:29:50.266763Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 93,
+        "sha256": "9ac4df4fae0ae48a55bb95b5480efb275762f50983788eeda282e738f1d6679c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-22T19:29:50.292407Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib revision check",
+      "start_utc": "2026-08-22T19:29:50.279900Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "076d2b7106570246bbf17ed01d37856c4be15aef549c823ddcd95e94559cc9dc"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-22T19:29:50.304913Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib origin check",
+      "start_utc": "2026-08-22T19:29:50.292608Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53,
+        "sha256": "03e534cb626b55a5210b43c74776926d0ef07ac36b774832c9934433ee3c9d4c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/mathlib",
+      "end_utc": "2026-08-22T19:29:50.376630Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "mathlib cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.305077Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-22T19:29:50.390708Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible local config inventory",
+      "start_utc": "2026-08-22T19:29:50.376929Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-22T19:29:50.403527Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible root check",
+      "start_utc": "2026-08-22T19:29:50.390907Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 95,
+        "sha256": "cb2693cfcefa0d7c6b076cc9cddefd60773cd5c5a6ec30bc66a2d6476406b775"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-22T19:29:50.416271Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible revision check",
+      "start_utc": "2026-08-22T19:29:50.403705Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "805ea619fc405904b6e9ac21504fad9d1b144b97838b0ea93a6c5bacf0f9d917"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-22T19:29:50.429726Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible origin check",
+      "start_utc": "2026-08-22T19:29:50.416486Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 50,
+        "sha256": "f9e157058f246ccb009bd17773f68233dd8dade976dbb829338d6c201cf8599f"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/plausible",
+      "end_utc": "2026-08-22T19:29:50.444695Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "plausible cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.429915Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--name-only",
+        "--list"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-22T19:29:50.457718Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets local config inventory",
+      "start_utc": "2026-08-22T19:29:50.445001Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 152,
+        "sha256": "a9f9014f3f4eea5f8855ad6026e9b48e6bfb2c2e06eca50fe6e2c5b9bb0ded3c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-22T19:29:50.471242Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets root check",
+      "start_utc": "2026-08-22T19:29:50.457949Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 98,
+        "sha256": "06ef2e04b1d1c205ec287f88ed197057e9cb14f70eca79221ba1f0a62f099743"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "rev-parse",
+        "--verify",
+        "HEAD"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-22T19:29:50.484654Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets revision check",
+      "start_utc": "2026-08-22T19:29:50.471436Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 41,
+        "sha256": "d9c675d1d0b71316cbd8bced943dd9983f09a32dc9a229039acc3afdfe2375b6"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "config",
+        "--no-includes",
+        "--local",
+        "--get",
+        "remote.origin.url"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-22T19:29:50.497905Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets origin check",
+      "start_utc": "2026-08-22T19:29:50.484841Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 54,
+        "sha256": "d85a5cc11983798fb902072b68e0a279bae40189de64fe4ccaa3f969f8e7414c"
+      }
+    },
+    {
+      "argv_executed": [
+        "/usr/bin/git",
+        "-c",
+        "core.fsmonitor=false",
+        "-c",
+        "core.hooksPath=/dev/null",
+        "-c",
+        "core.attributesFile=/dev/null",
+        "-c",
+        "diff.external=",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all"
+      ],
+      "cwd_observed_absolute": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/audit/formal/lean/.lake/packages/proofwidgets",
+      "end_utc": "2026-08-22T19:29:50.513552Z",
+      "executable_snapshot_equal_before_after": true,
+      "exit_code": 0,
+      "name": "proofwidgets cleanliness check",
+      "start_utc": "2026-08-22T19:29:50.498142Z",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdin": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "derived_instance_evidence_sha256": {
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-2026-08-11.json": "4b84e78ecc13444bf2d222438ccb5e66b5e33287d1affebf39103be62de277e4",
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-4.32.0.stdout": "fa9e2582d609716cf27f67717616cfddba08451c886ff7534ba9ae2223071421",
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-4.33.0.stdout": "37863241a6c106465dacea3cae3f90817eaadb82291754d38b04f16b0f6f3314",
+    "audit/evidence/lean-4.32.0-to-4.33.0-derived-instances-query.lean": "468a05edeb997400264cb31c269435c130193ccf07006886f19101ae48a03ada"
+  },
+  "environment_policy": {
+    "ambient_environment_inherited": false,
+    "command_timeout_seconds": 3600,
+    "effective_nonsecret_environment": {
+      "GIT_CONFIG_GLOBAL": "/dev/null",
+      "GIT_CONFIG_NOSYSTEM": "1",
+      "GIT_NO_REPLACE_OBJECTS": "1",
+      "GIT_OPTIONAL_LOCKS": "0",
+      "GIT_PAGER": "cat",
+      "GIT_TERMINAL_PROMPT": "0",
+      "HOME": "/private/tmp/pid-rs-lean433-replay-env.rplr7f6s/home",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "PAGER": "cat",
+      "PATH": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin:/usr/bin:/bin",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "TMPDIR": "/private/tmp/pid-rs-lean433-replay-env.rplr7f6s/tmp",
+      "TZ": "UTC"
+    },
+    "isolated_home_initially_empty": true,
+    "isolated_tmpdir_identity_retained": true,
+    "isolated_tmpdir_initially_empty": true,
+    "max_stderr_bytes": 16777216,
+    "max_stdout_bytes": 16777216,
+    "new_session_process_group_each_command": true,
+    "process_group_cleanup_bounded_best_effort": true,
+    "python_isolation_flags": [
+      "-I",
+      "-S",
+      "-B"
+    ],
+    "routing_variables_inherited": [],
+    "signal_dispositions": {
+      "SIGCHLD": "SIG_DFL",
+      "SIGHUP": "SIG_DFL",
+      "SIGINT": "SIG_DFL",
+      "SIGPIPE": "SIG_DFL",
+      "SIGTERM": "SIG_DFL"
+    },
+    "signal_mask": [],
+    "stdin_inherited": false,
+    "umask_octal": "0077"
+  },
+  "execution_environment": {
+    "executable_link_counts": {
+      "git": 78,
+      "lake": 1,
+      "lean": 1,
+      "leanchecker": 1,
+      "python": 1
+    },
+    "executable_sha256": {
+      "git": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818",
+      "lake": "58261a1a2fa1a362376c71e02ca854a093e71cc5e6ea64b287a931cb2565273d",
+      "lean": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+      "leanchecker": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+      "python": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+    },
+    "executable_size_bytes": {
+      "git": 118928,
+      "lake": 51840,
+      "lean": 49968,
+      "leanchecker": 78128,
+      "python": 52448
+    },
+    "git_executable": "/usr/bin/git",
+    "lake_executable": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lake",
+    "lean_bin_directory": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin",
+    "lean_executable": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/lean",
+    "leanchecker_executable": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64/bin/leanchecker",
+    "python_executable": "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+    "repo_root_observed": "/private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo"
+  },
+  "execution_window": {
+    "end_utc": "2026-08-22T20:56:37.379941Z",
+    "start_utc": "2026-08-22T19:29:50.514025Z"
+  },
+  "historical_preservation_sha256": {
+    "audit/evidence/completion-active-resume-lean-4.32.2-route-correction-2026-08-08.historical.md": "4d636774f58d48212ac5ae83ea68fff106c07bb407b2dbf449503d792490e2e0",
+    "audit/evidence/foundational-sxpid-descriptor-factorization-lean.json": "63c124ceb985313083ec83aad0aea3c8f0fe328ed16abfe43fc91eb5c1fa68a6",
+    "audit/evidence/foundational-sxpid-descriptor-factorization-mutations.json": "b644060ac17f58a966aaebd996ceffe6c707fe4d489864fac20ef64cb0218bb9",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.raw.json": "374bc2eb53881cae4c7b989944dff3daff0fc02c2340ce39bd920a4ddb08723a",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-observation-2026-08-07.receipt.json": "4720cb4b6d0be274d52f36e2a16d63dcf6542ed47520b9370b956cc1d7d2a903",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-reviewed-pins-promotion-2026-08-07.receipt.json": "bfa40273b4f857ebc0a09a2cd87b0f37b5b4a3260e5d518e1c922cfc5196b821",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-route-correction-p2-2026-08-08.receipt.json": "0478b2b20af4a83da5c133a9a3d704d0bd0b5f08838a066693d0da361f9d73a8",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-2026-08-08.raw.json": "167632a1087504a34b82db5afa6da8d3024e5752b29fe8ef328db40b4b8c2d5d",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.failure.json": "9dfa00952af0ac6d28be6e0401d5406b05858e729a65ade6c59805351ce511df",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stderr": "08f1429a37d040d20ea1c1a470cc6d779d8a06a1f45627867b5fe59827c8d93c",
+    "audit/evidence/lean-4.32.2-darwin-aarch64-strict-replay-q1-2026-08-08.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit/evidence/lean-citation-edge-countermodel.json": "86c61895abc54e61a95b48082f7fd6ad7f47de230dbbc83b520f7f32f053267b",
+    "audit/evidence/sxpid2-exact-product-lean-check.json": "3b4f5eb4efb1fa354f9b9c772508b0c7d7b900f61f3d2075fe58a1c5811a63e8",
+    "audit/formal/lean/toolchain-release-v4.32.2.json": "c9cfcd4c38c0d73a1e765c1abaaf8b36e73bb230fbb6b700047abf0fb58e590f",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v2.md": "1068d90dcfe7a20b5237305c0468a6a74eedeb5b91196ff6bfe9969dec300c10",
+    "claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md": "322c3f633d0e1316a401e92b10afb541ee82cb9ba94afef88f4a2937c934b6ff",
+    "claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md": "d884b0be6d63baed08abf29220d657a99eb2599893bb2f28d1ee79e19f6f0a1e",
+    "claims/SX-COUNT-EVENT-BRIDGE-001/phase-a-verification-2026-07-25.md": "19def113939240dbebb0305fbca6e21bf50c75cb84fa0ea522bd9cc4cbf80860",
+    "claims/SX-SUPPORT-FREE-CONTINUITY-001/route-memos/formal.md": "a6ae70a99f8c106865a3b38115353d5104c54e708439cfe535f45bdfb807f981"
+  },
+  "lake_identity": {
+    "lean_version": "4.33.0",
+    "version": "5.0.0-src+d8b1897"
+  },
+  "lake_version_line": "Lake version 5.0.0-src+d8b1897 (Lean version 4.33.0)\n",
+  "lake_version_stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "lean_identity": {
+    "build": "Release",
+    "commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "platform": "arm64-apple-darwin24.6.0",
+    "version": "4.33.0"
+  },
+  "lean_version_line": "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)\n",
+  "lean_version_stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "official_archive": {
+    "file_name": "lean-4.33.0-darwin_aarch64.tar.zst",
+    "sha256": "db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
+    "size_bytes": 556168134
+  },
+  "official_archive_observation": {
+    "end_utc": "2026-08-22T19:29:49.499679Z",
+    "path_observed_absolute": "/private/tmp/pid-rs-lean4330-extract.wGhf6H/lean-4.33.0-darwin_aarch64.tar.zst",
+    "sha256": "db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
+    "single_link_regular_file": true,
+    "size_bytes": 556168134,
+    "stable_descriptor_identity": true,
+    "start_utc": "2026-08-22T19:29:49.176837Z"
+  },
+  "operational_wiring_sha256": {
+    ".github/workflows/ci.yml": "9a70c744b57ccf5ca222fc9e8d0cd3f159276db8927f454a647d5d2be4bcd219",
+    ".github/workflows/ksg-m1a-composite-v4.yml": "3952fdfb596ce15e176795d8a6ec76aaad9d8d66e830129784d3b919ddc5cda5",
+    ".github/workflows/ksg-m1a-composite-v5.yml": "7668120a4d4f67db90ae3af0aed048a8ccdf1ae27eb7c96732dfa33852cd14ed",
+    ".github/workflows/ksg-m1a-composite-v6.yml": "0717fa37b2b40e5325ed2e436fd3d4f9a83475a136c7d0f41e3cfa0316d13c16",
+    ".github/workflows/ksg-m1a-composite-v7.yml": "0ce8cbdd875b05aea19f7c17352aec81fd991ffd47db22f1b0e48e4b91ef4ec1",
+    ".github/workflows/ksg-m1a-composite-v8.yml": "4c934572fa831a78dd9622dc6e6f00cc8281a93f1f557424b393b0c3be1c651b",
+    ".github/workflows/ksg-m1a-composite-v9.yml": "b8bcc6302c6625562b54a5f989aeeadc36fe631482d1071749a1c23aebf42002",
+    "AGENTS.md": "4f036fe931509aef794a90a3ae46b417083d6f8479ca56a9d0d53988a16f35f0",
+    "CHANGELOG.md": "307a5dad5fd1e8c69ce482ef900d0008ac9b49b819b912ff44f5331f94ba9ef5",
+    "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": "538690ae27c6e52bb5bbb6844acb3cd8f32d46f8f08ef770e09dae8d33ae9bb6",
+    "audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md": "f0e8fed8fa0319eb5f56d4b942821f2c2f1aa77b41b4f99bc7bbf3a6b73a2bc8",
+    "audit/evidence/ksg-m1a-composite-v4-process-visual-receipt-2026-08-17.md": "f014f36f8f3cd6325a5fa9f74eda2fb7a7d9b2202eea0cb81b4af2b6387e0b81",
+    "audit/evidence/ksg-rev4-m1a-candidate-boundary-2026-08-13.md": "85bb7aed98e33f924a12bb882d8aba396a8d31b66b1432caebc48627b1e0b292",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v5-2026-08-18.json": "d64886ca605cf82eb501fba9020938ed3f0e1adf7f635b19f3fcda8d8909bd69",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v6-2026-08-18.json": "d19760db0acf2a2c5219f65773c43c64e3fb3fffba1e12165558edcdd2f1a442",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v7-2026-08-18.json": "e9a1d574cb4127263d8aaec3e291e78836b849f9b402af8a0daa5eb37cc70104",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v8-2026-08-19.json": "97fdbd5f0ac403e85e3c0341bf2dcdf46e38a87543b7e0a0889089fe9966763f",
+    "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v9-2026-08-19.json": "6742201727a12583f9ea47cdce58e2907ee4242ad592d20b1d054dac257024b6",
+    "audit/evidence/ksg-rev4-m1a-composite-v3-impossibility-2026-08-15.json": "735925734c1eeb41cf4fa6a48ed20ccbb5dd0d7da786239b2ab5723b7a632b6b",
+    "audit/evidence/ksg-rev4-m1a-composite-v4-path-policy-v1.json": "9b6522e8ed8c3fc797dd89bedb933e677c16491c55296c3d919ae0f933872262",
+    "audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md": "c821cd7fefb472a99d2b2df5a66b7f6deb18c9c9a9c5472046abb547f4047d30",
+    "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md": "6596e3c7e4a8bca989ad4724efb2f9c7592564b359b29f3a2a7a224ce2270a29",
+    "audit/evidence/ksg-rev4-m1a-composite-v5-boundary-visual-receipt-2026-08-18.md": "8e73300fb5b4a0ad3d56b5b2230a9a9a45c63295c9445e9ef91fa2805ee68420",
+    "audit/evidence/ksg-rev4-m1a-composite-v5-path-policy-v1.json": "dc030a357eb9a18beb8d55a5ecb23bf79c8e55676a0c50bf6661847ce5b9a89c",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-boundary-2026-08-18.md": "a0a1a675e470169f411c35f0ae4b496848f8cbe44300cbca0a763d1ec20a57f9",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-boundary-visual-receipt-2026-08-18.md": "ce04b42e37b2db4030452402403c4535c0739b8587a29eed40c091ad60450b67",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-local-closure-counterexample-v7-2026-08-18.json": "cabcd565f25e11d14c4082532ea7efe1987eb0d700c115a8fbf36937486eede2",
+    "audit/evidence/ksg-rev4-m1a-composite-v6-path-policy-v1.json": "5d0ca02a7c0570cacac8dd57880390d69a4466af12f7166a036eca46ade49e50",
+    "audit/evidence/ksg-rev4-m1a-composite-v7-boundary-2026-08-18.md": "c666f0ffff37d45eb1d78830d2fcc766a6fdb63d327afee1ed6dec6c69ba7642",
+    "audit/evidence/ksg-rev4-m1a-composite-v7-boundary-visual-receipt-2026-08-18.md": "0ec8104d6f71dac55025c09e59dab3665ca50204b71a05aab9db1a98ac5b5afe",
+    "audit/evidence/ksg-rev4-m1a-composite-v7-path-policy-v1.json": "604480901de6a446ecc18ab92bdf9983b00a3246f1d8036e7cfc3e1a96d162e0",
+    "audit/evidence/ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md": "90a4e376be9270707247b587b3a320244579dd8a47c1aee9d87ed9a7eb4a98cb",
+    "audit/evidence/ksg-rev4-m1a-composite-v8-path-policy-v1.json": "42d6bcdbc9738d5ab91e54e84fedaee264cfc9b7b8443ec7ec344dcd07c3205f",
+    "audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md": "d9fc273b4b2b2750b9da1893e3590b416a22a643dff68fa817573521b48946be",
+    "audit/evidence/ksg-rev4-m1a-composite-v9-path-policy-v1.json": "8434bd234567d70ba5e31b09891ac3368e6c80575f761e42ff6c48aac4bc36ab",
+    "audit/evidence/ksg-rev4-m1a-custody-correction-boundary-2026-08-13.md": "591bccc8e770b9b51ab34ce8cce9d2ac54973c50185141e1a598fd90260dcc16",
+    "audit/evidence/ksg-rev4-m1a-custody-correction-ci-run-31724449805-failure.json": "d9ec2ef753ee8f8f4f3d1d3bcc11aab791b4c127445088f250e7a53d71d896f5",
+    "audit/evidence/ksg-rev4-m1a-custody-correction-path-policy-v1.json": "8797335e0f23240f6f018c4403caff1a6c209f9c110ffeaa91fb47503bf331ed",
+    "audit/evidence/ksg-rev4-m1a-hosted-recovery-boundary-2026-08-13.md": "3f0d5facb1c65b269c4e8633699773c2ef12d92ecdebfd9d85c9da7347f94ca4",
+    "audit/evidence/ksg-rev4-m1a-hosted-recovery-path-policy-v1.json": "3bb78b296e9a1898ee72a2ae88988c1a73bbb81c3247054a500935f3690a4916",
+    "audit/evidence/ksg-rev4-m1a-path-policy-v1.json": "7f4944ae0d4f9578c08a16f5bd5ba251e30339f574e11fa75840857a3710942e",
+    "audit/evidence/ksg-rev4-public-ci-run-31686107959-failure.json": "f4a187516847c9826e9729c83906e1598df4657bc069c54a5527e71bdde17dc5",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9-prepublication-closure-rejected-2026-08-17.json": "fb162cc40da3059b61eab9024f4aa38cf6daf2d84ef7e1d8a26dc7d345291e70",
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md": "cc604d039f1c6a488f3d25f3ca1d16bc7624db0cc4074608475bc662a8920a46",
+    "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md": "9f664de65b0054d4f183ac7c7e8ed7bf02b3b3bc63ab0e3b76be0705aa2def43",
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": "b437672a192699654a068b406c8ecd8e1a9b38377556fd34133d1ef1bdb345b6",
+    "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md": "1eb6173125cd4af33b9af015643361292d944ef3ffc6e450e7098ebfbfaaa6da",
+    "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.pdf": "9111ff1ae77c011d9b75999852136880746f3e33b137ade877bee80f6e354499",
+    "audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.svg": "9022812adeb3845e9d494428fb5e2f6489bb7cf938444c1c96c364c38d4f6095",
+    "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.pdf": "2b7f97c1491b8ab05a6223e958c9dfd2e74e2d1a41c7973d4098ae7cafd4d2d3",
+    "audit/formal/latex/figures/ksg-m1a-composite-v5-boundary/c4-failure-c5-r5.svg": "2f5040914e30e2db84c43035c3983a5e7a0150288a1ea53f8291cd4b5e7bc081",
+    "audit/formal/latex/figures/ksg-m1a-composite-v6-boundary/c5-failure-c6-r6.pdf": "20484c4321daf9b742fe0bf12092a10bbebb10b5ea6441cf5bef57f9dca913e5",
+    "audit/formal/latex/figures/ksg-m1a-composite-v6-boundary/c5-failure-c6-r6.svg": "ce4e53c93a45c99c949e6c8408eeceb282a10cd13459f04874b022ea4692c9fd",
+    "audit/formal/latex/figures/ksg-m1a-composite-v7-boundary/c6-failure-c7-r7.pdf": "545a1e278038fa0bc82809dbf1bf5407fba6ca0fe032839b69477a1064e96482",
+    "audit/formal/latex/figures/ksg-m1a-composite-v7-boundary/c6-failure-c7-r7.svg": "bf5b4a2bacbf6f7e34a354dafa27610fcdd80ca7ab6e6ee81d6b07261ab64a28",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "0960ae0cbfdf74118111fb994ed08acd6ab6246f2176e552b317cf9fc4ffdbad",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg": "8c38292e6fcb0b848ebdbc745f48e8e85d9842b7a8184bd7305c593778c7b70e",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": "8d730825723c81f4610b188e6f290b85ee89bf2b228337a6ff887bd24ad9423c",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg": "2e8edce85d47398482b277fe35218f6d0c245975d3052109fe76a7db61ce97f9",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": "e067092709715babc62027fa5d8f7da122ebb1837c4eee0ff90ad9c2f2766527",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
+    "audit/formal/latex/ksg-m1a-composite-v4-process.tex": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657",
+    "audit/formal/latex/ksg-m1a-composite-v5-boundary.tex": "8f32bf892c102b73c20d507c92b631d2387ab07b686ab7e0a163eae7f1f52527",
+    "audit/formal/latex/ksg-m1a-composite-v6-boundary.tex": "d75ed1834dbc5d210bafb2a1f65784e13e465c199dcb36dc461eb27be3857e12",
+    "audit/formal/latex/ksg-m1a-composite-v7-boundary.tex": "8bb1461d5fc5e7fd883d040b0865a47276e060696176b0c1b4ae8e9c797e5b8b",
+    "audit/formal/latex/mathematical-problem-solving-workflow.tex": "deb0cf82f4ddaa2ecfeb858d1130df12d9a3831feaf9f3215fa176c8a2f9aae1",
+    "audit/formal/requirements-pdf.txt": "f1f2171ff6481ee900b72df600d8326140d001a1a024977b41386461e2b57d36",
+    "audit/schemas/current-source-state-v1.schema.json": "501ed8fcca211ae598e041a5596b44574c48da46a9143cafe7266a7493b93f53",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json": "7512e24e3256baaacca2d75a23a9ae2a530cd987f6460788d2b431175f41c8d1",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v5.schema.json": "cbacb1bd7b5896a497312fd2a2809a33e43699bb3e4eb081d19cde6803b69c24",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v6.schema.json": "5d075f383729818a7e15f321058dc973416492c3fabbc152f8b6e584ec001df6",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v7.schema.json": "401dae966fe4e61ab81a660af9aef56992b44271c3bdf9198349a4fe2d45a103",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v8.schema.json": "30a03331a7f41165ce3dd7cce5f98837b642dc981878e46b0f9fed14d1dec08b",
+    "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v9.schema.json": "25ba4b03f3c6b50a21b8377ef9baf060aa0c4e2abeb9f7f13994b1816c823502",
+    "audit/schemas/ksg-rev4-m1a-composite-local-closure-counterexample-v7.schema.json": "d06f0437cd5eddce35a88be9eccd5653ddc36b29b361ff924c33578d15a4de7b",
+    "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json": "4ab719785b6f89ce63d1061813a31e17289fa94cf4300aab00946de2c045f3fd",
+    "audit/schemas/ksg-rev4-m1a-composite-local-closure-v7.schema.json": "7da6e51680f3aef6d41cc24196eea6ec4f11385f02a62762cec7e6617f7dd99b",
+    "audit/schemas/ksg-rev4-m1a-composite-local-closure-v8.schema.json": "f841d0b85573e602f98d88ee7371db11e9c5502b378c4a59c0d948d7567ef228",
+    "audit/schemas/ksg-rev4-m1a-composite-local-closure-v9.schema.json": "754a4ecf56371b313ddae52fcd68a3361f0471099193aa1e19e7f3d9c3c4521d",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v2.schema.json": "797e7c5a0dc7122aff6c16319749c3a18683ebbe21e94dd039cdc5b7a330d42c",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v3.schema.json": "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v4.schema.json": "8492da6dfd704667515e7b9da88d501de34903e5e2b52582106211b07f48528e",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v5.schema.json": "7fc4fac9fdf923610768df6a5e4c90440d85400572d31e48b45367eeeb8f8e9d",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v6.schema.json": "65504b10c0fff4e2f287a0271364553d89cf6a6dfef7c6418ab8780e7e28f00f",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v7.schema.json": "a4f2f991864322e727549d527180e4937528d4f2f94408031cddb82ac9819c44",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v8.schema.json": "406ae6aeea724e1decadb120662265205ea705c58bd1a5f2238df282a3b5610d",
+    "audit/schemas/ksg-rev4-m1a-composite-receipt-v9.schema.json": "2b8b33a7aead1f7e4bca2f62d45b24f7430551773a9c538a9020f55258ce85d3",
+    "audit/schemas/ksg-rev4-m1a-receipt-v1.schema.json": "b477f8c4c3cb2066c0eb9c09a98cb9fbbc3ba330951aed440d2011fcace4d672",
+    "audit/schemas/post-commit-source-state-v2.schema.json": "2f4531f4cde575d3bbb573d09a85a27664fef5c4f0fde32b232498460c9a198a",
+    "justfile": "93399171cfbb743dba93c7be1ec85e446a33193e41ada3977d198b0e4ecc6437",
+    "output/pdf/ksg-m1a-composite-v4-process.pdf": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
+    "output/pdf/ksg-m1a-composite-v5-boundary.pdf": "bf932cfb2dbe70500458cc8de0d4ce2f3718bfe5d135755e2a9147c3d6621a79",
+    "output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv": "7730f32febfb3a0ce2bc90b8300980aa299c6afd1d957ada7a14daaeae741413",
+    "output/pdf/ksg-m1a-composite-v6-boundary.pdf": "52751c8701ad527040907e399f41ee6579616bc63db1af174bea65e5303da09a",
+    "output/pdf/ksg-m1a-composite-v6-boundary.rendering-receipt.tsv": "333bb16caf3a793d383b06b70c51e3a30fa881f8c5743cd9a8798c4c20b5725d",
+    "output/pdf/ksg-m1a-composite-v7-boundary.pdf": "2b05eb2e9d1e694d2f2f04b2bed3acf9b7f1c2eb1ac6672c48757ef9d067d33f",
+    "output/pdf/ksg-m1a-composite-v7-boundary.rendering-receipt.tsv": "f7be03f0cd1c89e046225b7743e0334f189c3216ead4d74ab309cf0243b9816e",
+    "output/pdf/mathematical-problem-solving-workflow.pdf": "6abf5af2ab7fb5cf0b40c37977dc38156d4bdf251b6f2948815c472fc77f1288",
+    "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": "95a6e38797f6f4086ae0094bf187649bc01834a54e6a2d6c7aae9b2a4ae3b63d",
+    "scripts/README.md": "98b894f6548dbbfc8aef52e9d90f8d3c675925497a5deb250516b6805207b534",
+    "scripts/capture-ksg-m1a-composite-v4.py": "7cf9a6fe57c2a828def8789524069e14a21d35739a5019b4310613c8f44065ef",
+    "scripts/capture-ksg-m1a-composite-v5.py": "a0e955c9645c852276a3750ee24c49c8feb029d748a73909461d4f71777b3a11",
+    "scripts/capture-ksg-m1a-composite-v6-local-closure.py": "5f16ac70cc8a927efd85ab19770a976f928125ab60c003fdf8959ea9039f748a",
+    "scripts/capture-ksg-m1a-composite-v6.py": "8089cce79cd9ff14e9eda1b46c51a746b508b026f2cbf5a83cb295e7860d7efa",
+    "scripts/capture-ksg-m1a-composite-v7-local-closure.py": "5268322d756e546f29ed9d2ded58264800808570be286adfba562f7decb284c1",
+    "scripts/capture-ksg-m1a-composite-v7.py": "2139176d51809853e98c558ec792eff61f0631ed027d04cc1a9d6d8f8ac1f06c",
+    "scripts/capture-ksg-m1a-composite-v8-local-closure.py": "b9b0a41cb2027d1cba464040843656bc2486e317f8cf1d3079cb58b02f7c6ba7",
+    "scripts/capture-ksg-m1a-composite-v8.py": "79ffbe59dc57ed99d2b4032aa71cac300448d0978a42a52fcf7b40b08236ae6f",
+    "scripts/capture-ksg-m1a-composite-v9-local-closure.py": "6082c89dcd3e930bdc84e37d607ec132e134d0db7185a5b52e72a5bd32c48cad",
+    "scripts/capture-ksg-m1a-composite-v9.py": "f322005e5604c2bd8edc92c2d1b3c8f2e37831ad086bf448f43a61b61316900f",
+    "scripts/check-certified-sxpid2-claim-self-test.py": "2b3481e1ff735ddc2055a4979606a16c5032f54fc4cfd4717d227f68b9e9fb82",
+    "scripts/check-certified-sxpid2-claim.py": "ad438e2ad236fe471ba40545799931da3a256cf5dc095178ef8bfb6398590a37",
+    "scripts/check-current-release-state.sh": "a97a690a6e2df35b2bbe957c901c65418ced7104d2df6ea93ddb22f2cc03d99a",
+    "scripts/check-current-source-state-v1-self-test.py": "3dc2d846f2512e10f871ad21dbda8d45817884998942c1325cf2b78138d5753e",
+    "scripts/check-current-source-state-v1.py": "1d9561909cee8ace366802c76ba108cb5418499d9549946aad34c809fff57bd7",
+    "scripts/check-formal-pdf-set.sh": "5369b6ee7e112e12b21e2276b6becdf4b530e1799989a26a5d7651180b11debd",
+    "scripts/check-formal-pdf-style.py": "6a8290e88efe5728de70be97f2d2ac8520e8e5ba348faa5798d1c218bdb72d9e",
+    "scripts/check-github-action-pins-self-test.py": "36f6a078cc339ce8fe495d9ee61a362f777825afb9dff594ae4791032391d044",
+    "scripts/check-github-action-pins.py": "c2b160fd385f884d4064309e5a44c62a66d392269dc93f7e6896f0cb656bd189",
+    "scripts/check-ksg-m1a-composite-v4-process-pdf.sh": "8881f819da0a5ba8e6db31a007aa2465fbac7982de4c662b3d48d477bedfcf83",
+    "scripts/check-ksg-m1a-composite-v4-self-test.py": "4a40f43396e5b45aa0a5762995eabb908b61d850b1a215aa817c731140a6078b",
+    "scripts/check-ksg-m1a-composite-v4.py": "8fb61c4fcc831be1847ddec7448e2dbeb6f2f51b915b4b6cd91df561c491b5bb",
+    "scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh": "fe8aa30908d1d2f8fc603b50708a2f57011a8b7a46b95e82e1ec45b311660079",
+    "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh": "81c7e8efbec07dc7a1c26e0d63075a4bbae6c0125547d6daac70596940beb61c",
+    "scripts/check-ksg-m1a-composite-v5-self-test.py": "61024e4df9ee0999fdf03e79c505dcf8c268188779b5424665143808679b24aa",
+    "scripts/check-ksg-m1a-composite-v5.py": "b510e3e1a9831a41f6904fd9fd259c227c426b11436ead11789a04ad474a8c30",
+    "scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh": "c2a42bebb2f33f2e3e1d34ddce1abc0b8c2c554524e4ea7881c13ff489bc6625",
+    "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh": "087d3fa3ac9467d63423fc2a246216cfcd61e176ceceae3eb9dff7428b141b35",
+    "scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh": "170d596cd2f179a984d59a652660e1d283508af4c7b6673c444a8061f38574e5",
+    "scripts/check-ksg-m1a-composite-v6-pdf-portability.sh": "d4f6416ef9aee5f158e9ab5b5f7909d75e45ccc9e49d77405e92fa0db59431af",
+    "scripts/check-ksg-m1a-composite-v6-self-test.py": "3430e7c0e083fd444de4649d432051a9fa54659d974b6d4384337857d79b7265",
+    "scripts/check-ksg-m1a-composite-v6.py": "6708de55bd0ffd938d1a567630b64d2a6d577cccd09b2285abe00ccf31cba494",
+    "scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh": "a88b769182dd0f28078354ce170a8c69881eabbe8213d82b1c2951267fdbdcb2",
+    "scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh": "cb38f112bf25b807c6688742f22dcc253eef7235f14830e8220b83603c7c2526",
+    "scripts/check-ksg-m1a-composite-v7-self-test.py": "da29201919922914e138b766a8c7e911d1227c6b21785d0efd41c46a5559bb63",
+    "scripts/check-ksg-m1a-composite-v7.py": "7b9ac4f2e050594ca4f51d8c9609708d714e4a2fec80b1ac17e3b04df53b4993",
+    "scripts/check-ksg-m1a-composite-v8-self-test.py": "483713bf21d615953f8eb759afa9f80e859de0c6436d8903736e383b8b69ed1a",
+    "scripts/check-ksg-m1a-composite-v8.py": "ed0404c2e3cd2c3f2bd9f8fa177649c26ca87f620280e2e6e4f5ac49c551d1df",
+    "scripts/check-ksg-m1a-composite-v9-self-test.py": "f4afb43ab4917f232f542a677064ea3e2da355f05718fdd9cacde4a066d83eb9",
+    "scripts/check-ksg-m1a-composite-v9.py": "73364320fd95cfc6dea0db57c98cdc04b1c0c2531df5ead79920bd7dfb358d48",
+    "scripts/check-ksg-m1a-custody-correction-self-test.py": "a466461b9eecd4afd3f839aa8137a6fc6b4de13e1aa6e18dc81b0862c6f0fdcb",
+    "scripts/check-ksg-m1a-custody-correction.py": "e504fb1617fc93abd096ced451d82c74745011edb4a3b4673bd2dd8c4cea3147",
+    "scripts/check-ksg-m1a-hosted-recovery-self-test.py": "0ebd801ce758203ce12111ccec8802bc9a6c68ad80033105abc59f6e60d05787",
+    "scripts/check-ksg-m1a-hosted-recovery.py": "7bbbe8d32e4f6ad631f9c2d5074f4a06e7872492945404ad26fd2195664592ee",
+    "scripts/check-ksg-m1a-phase-self-test.py": "851299dfb62de6cbec9f77f893ea5992839bc007e77e5772c30689281307873c",
+    "scripts/check-ksg-m1a-phase.py": "433b493a52af6f7c738ba96fed99cf1f5183d975785527c0a040848a0ae14d42",
+    "scripts/check-mathematical-workflow-pdf-self-test.sh": "5cae1ad0057e12b32ea74ad3b82229d6840d450e5ff729c3fe3dc3124ef17543",
+    "scripts/check-mathematical-workflow-pdf.sh": "c1d9a2d7201a0175550d3d71b3a3762c2bb68472cb0f826637ad5c8e52e1b7f8",
+    "scripts/check-post-commit-source-state-v2-self-test.py": "b1f45814efca5754bdb33c0b41258be9f1874fd404ff7620505878a7c8fa4657",
+    "scripts/check-post-commit-source-state-v2.py": "06fa6721d366fd33b9bd8997d108c31578bc32da4bcdcda8ccf5aeb22fad94d3",
+    "scripts/check-release-state-self-test.sh": "e9fec4e65a42653b9488b5fb02ceee669aeb7d374ddd34334c6755fb7eff6f0d",
+    "scripts/check-zeta-pid-transfer-firewall-self-test.py": "8803595bc5af615cf88215b9bdd40d7a8d227724b410c4b04802a63e81b0704e",
+    "scripts/check-zeta-pid-transfer-firewall.py": "97d45807f7b58b9fb8a62a2c4007e514adfdc5aeadf811daf590010cb313b65f",
+    "scripts/generate-lean-4.33-replay.py": "e2ba93a6677db0789333f52e440df4067d916dcbea1b9e2b40d498f7eea886c6",
+    "scripts/normalize-actions-checkout-worktree-config-self-test.py": "3eb085d0a49ff463aa3c419352d7c926d4804ff988e92edebbd3dd5ac013b101",
+    "scripts/normalize-actions-checkout-worktree-config.py": "8887789f2039c8603a61f40f2518b707fa37f2311ccbd613e8c927fb6856be18"
+  },
+  "package_pins": {
+    "Cli": {
+      "inherited": true,
+      "input_revision": "v4.33.0",
+      "revision": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "url": "https://github.com/leanprover/lean4-cli"
+    },
+    "LeanSearchClient": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "url": "https://github.com/leanprover-community/LeanSearchClient"
+    },
+    "Qq": {
+      "inherited": true,
+      "input_revision": "master",
+      "revision": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "url": "https://github.com/leanprover-community/quote4"
+    },
+    "aesop": {
+      "inherited": true,
+      "input_revision": "master",
+      "revision": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "url": "https://github.com/leanprover-community/aesop"
+    },
+    "batteries": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "url": "https://github.com/leanprover-community/batteries"
+    },
+    "importGraph": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "url": "https://github.com/leanprover-community/import-graph"
+    },
+    "mathlib": {
+      "inherited": false,
+      "input_revision": "v4.33.0",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "url": "https://github.com/leanprover-community/mathlib4.git"
+    },
+    "plausible": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "url": "https://github.com/leanprover-community/plausible"
+    },
+    "proofwidgets": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "url": "https://github.com/leanprover-community/ProofWidgets4"
+    }
+  },
+  "prior_replay_preservation_sha256": {
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": "46a6d20351cd81d49fbcf56e0e35820fc5f57c0ddaa7a62bf81ce181ffc89d74",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": "94f444735aaf112ab60c5af879710ae2e22de4e34d3ef9fe4a19afda337472c5",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json": "1258f5daa742a59758c3ccd6aa6be421e6b56e343bde6f4e8c252acb5cc04253",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json": "ddbf0a107c7e74fe5f3309ab33d295f6ad7a495353ac05bb14bbecfec6fb3382",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json": "235088aa9c87701955a190134f4a94d01cd531449ac577221e9f09a23b43772a",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json": "872175ca504efb24752633704fe13e57802e43ae25bb3c463c4fb8c9dfd073f7",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json": "f14e7a33c01909055cc868fc955e6b2520ae15ebf0d598730911ec57a7f4c5ea",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json": "3dd2df7d7064bac93cf4806cdeac28d9ecc747444689162a4636029228822abb",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json": "86251c48c0f720d1ca021dcac87dfbf6e1a54adf409ea8a8981102cea1769611",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json": "e9136696563e007f98498080bb7a769c60353df83537ee90976ee9cc66c0873f",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json": "ee8990136f16eda164b97cd6769ddc9cd3ef6446e5d84577d3517d4272df956f",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json": "2d72cd2a170d06fff824ec69f0cb4b722739bdfb64782d553313d35cedeec83e",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json": "67e20c7e45ac710d042b2eccd52aa6249f61fdab9b35d8c5fa427a764d0b3592",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json": "373a5ef518f096628c070e2a107ff78f4ef872695dbc1bf37ac13308853eea12"
+  },
+  "prior_replay_schema": {
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json": "pid-rs/lean-current-project-replay/v1",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r3.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r4.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r5.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json": "pid-rs/lean-current-project-replay/v2",
+    "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json": "pid-rs/lean-current-project-replay/v2"
+  },
+  "provider_observations": {
+    "classification": "unauthenticated provider observations and equality to advertised bytes; not publisher authentication",
+    "lean_release": {
+      "asset_created_utc": "2026-08-10T06:08:40Z",
+      "asset_digest_advertised": "sha256:db5274b669be270af048b5e4f1e0ce571df6750e411956b3e1e6fcc2012410c2",
+      "asset_size_bytes": 556168134,
+      "asset_state": "uploaded",
+      "asset_updated_utc": "2026-08-10T06:09:26Z",
+      "draft": false,
+      "prerelease": false,
+      "published_utc": "2026-08-10T06:09:46Z",
+      "tag": "v4.33.0",
+      "tag_kind": "lightweight_commit",
+      "tag_target_commit": "d8b18978322de05a8f3dba51ef03cf5461676c17"
+    },
+    "mathlib_release": {
+      "commit_time_utc": "2026-08-10T09:12:31Z",
+      "subject": "chore: bump toolchain to v4.33.0 (#42604)",
+      "tag": "v4.33.0",
+      "tag_kind": "lightweight_commit",
+      "tag_target_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "tree": "797420f01ffbca473c4cd972670394965e55208a"
+    }
+  },
+  "python_optimization_parity": {
+    "all_equal": true,
+    "pairs": {
+      "citation_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 857,
+          "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 857,
+          "sha256": "86ea83c01a6aa745734db873773ae8930b49ef323ef08f0120b562c4d00c4da7"
+        }
+      },
+      "citation_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 1249,
+          "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 1249,
+          "sha256": "bb989c5ebf19e081db2ef3e2baa0280e76b92a7c135b029d9b8ae4feebae933c"
+        }
+      },
+      "descriptor_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 3421,
+          "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 3421,
+          "sha256": "9b084e930cd24e3aa6066be6a080e7f7f00963e4a77f7110f064ed23e032003b"
+        }
+      },
+      "descriptor_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 13428,
+          "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 13428,
+          "sha256": "856b51ce90f23ef61e334f4504065d86f379493a0d246eba406311c3e377fdfe"
+        }
+      },
+      "exact_product_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 780,
+          "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 780,
+          "sha256": "9742bd6c5e45049a7576781fb00b112b93e9dda20359ae73a4fcc93e2b659a6d"
+        }
+      },
+      "finite_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 570,
+          "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 570,
+          "sha256": "52ff892591b36d176a9b2de53b1e12ae1dd470de6872474ba23f5c228db92206"
+        }
+      },
+      "finite_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 1103,
+          "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 1103,
+          "sha256": "d29a1f167ff0059e3d8d1558ff2042e03e9f365a126c024d37f097fe2bacd37b"
+        }
+      },
+      "ksg_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 3023,
+          "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 3023,
+          "sha256": "d25f18530305e404d1d24a6eab2bda5f57b226d3db97c50ba4265c0c85ee9c35"
+        }
+      },
+      "ksg_revision_checker": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 176,
+          "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 176,
+          "sha256": "75e314458409374824d7e60ce9eb87bf5589955f2a792d4735a72ea94dcb20a3"
+        }
+      },
+      "ksg_revision_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 349,
+          "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 349,
+          "sha256": "83a968cacc900ce6aef8a3f7ac442c8ac6f5029c2f0b802c8de79dfa62c87c55"
+        }
+      },
+      "ksg_self_test": {
+        "normal_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "normal_stdout": {
+          "bytes": 2634,
+          "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+        },
+        "optimized_stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optimized_stdout": {
+          "bytes": 2634,
+          "sha256": "551e1021a09d26383f6e2aa6a5af254be501d2bbfa27e439a639186adb547dd6"
+        }
+      }
+    }
+  },
+  "replay_custody_gate_sha256": {
+    "scripts/check-lean-toolchain-freeze-self-test.py": "4ccbf3c3ba2f2274221f7d2b41eb796ac7dce7acaf90e909cd79d0c2e71f1138",
+    "scripts/check-lean-toolchain-freeze.py": "40f1ade4874174744907db3e35de31efd97a1080b68061806686efa7369b142a"
+  },
+  "schema": "pid-rs/lean-current-project-replay/v2",
+  "scope_boundary": [
+    "Archive digest equality is an observed provider-byte relationship; it does not establish executed-tree-to-archive byte provenance or publisher authentication.",
+    "This is not a reproducible build from the reported Lean source commit.",
+    "Kernel replay is bounded evidence, not a proof of kernel soundness.",
+    "The compatibility port is not a theorem of semantic equivalence between Lean releases.",
+    "Exact-real theorem replay does not establish refinement to Rust or binary64 arithmetic.",
+    "Pretty-printed derived declarations do not expose or compare generated helper proof bodies.",
+    "This replay does not establish theorem intent, scientific validity, estimator validity, sampling claims, or application correctness; pre/post static endpoint equality is not an atomic snapshot.",
+    "The zero-argument runner removes caller-controlled path authority but does not authenticate its pinned host-local executables.",
+    "Stable executable snapshots immediately before launch and after replay do not prove the operating system executed those exact bytes atomically.",
+    "Pinned executable leaf hashes do not bind dynamic-loader inputs, shared libraries, Python standard-library or extension modules, or the wider runtime closure.",
+    "Per-command process-group cleanup is bounded best effort, not a sandbox or containment guarantee; escaped descendants and process-group identifier reuse are outside its claim."
+  ],
+  "source_sha256": {
+    "audit/formal/lean/PidFiniteConvergence.lean": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+    "audit/formal/lean/PidFiniteConvergence/Dependence.lean": "39419a78bd294abdf7d545083ae6207c7e1db9ffbe88c3c03d2545c8397f709e",
+    "audit/formal/lean/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean": "4ea504a565a69f5222c205e01050b750e780ed17cb02558fe08e0c32e2f5718c",
+    "audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean": "ac390d977bce813c7e882f719f33fdaed106fd2b776304f7c119f01bb0483756",
+    "audit/formal/lean/PidFiniteConvergence/SupportChangeContinuity.lean": "f5b8b110f69e9d879edbc46948fa67153932540c2cf0ad791771fd6fe30c8370",
+    "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean": "fa3a1c5450648da4c4768dbd88e261abf1bcd3051f5af4526a63631c83f8648a",
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean": "bc282ca506f50ac5af661b87b166cc76561a4da308ffe39892ad8df7f2fd875e",
+    "audit/formal/lean/PidFiniteConvergenceSemanticContract.lean": "79705d3313c4cc479b978449d404d4a49b60890d42050e8860c8b6dfebafd703",
+    "audit/formal/lean/PidFiniteConvergenceSxPid2AtomSemanticContract.lean": "536844605093f3aa3be480919de8c1fccff29f25930b3459a2cbfc995e739c47"
+  },
+  "status": "passed",
+  "verification": {
+    "bound_static_surface": {
+      "atomic_snapshot_claimed": false,
+      "custody_gate_endpoint_identity_equal": true,
+      "custody_gate_files": 2,
+      "post_commands": "passed",
+      "pre_commands": "passed"
+    },
+    "clean_build": {
+      "dependency_cache_reused": true,
+      "project_oleans_reused": false,
+      "status": "passed",
+      "stdout_exact": "",
+      "warnings": 0,
+      "warnings_fail_build": true
+    },
+    "direct_lean_t0": {
+      "count": 11,
+      "status": "passed",
+      "stderr_empty": true,
+      "stdout_empty": true
+    },
+    "forbidden_placeholder_hits": 0,
+    "imported_modules": 8,
+    "leanchecker": {
+      "status": "passed",
+      "stderr_empty": true,
+      "stdout_empty": true
+    },
+    "named_source_theorems": 246,
+    "permitted_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "python_checker_pairs": 11,
+    "source_written_declarations": 339,
+    "theorem_axiom_audit": {
+      "named_theorems": 246,
+      "status": "passed",
+      "stderr_empty": true,
+      "stdout_empty": true
+    }
+  }
+}

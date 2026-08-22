@@ -1,0 +1,610 @@
+{
+  "base": {
+    "commit": "7c80d48db415279fc4d744eadb1515797606912b",
+    "message": "Repair KSG M1a composite v8 contract\n",
+    "parent": "23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e",
+    "r4_status": "permanently_unissued",
+    "r5_status": "permanently_unissued",
+    "r6_status": "permanently_unissued",
+    "r7_status": "permanently_unissued",
+    "r8_status": "permanently_unissued",
+    "tree": "ba01abdd86a542b359df75e9058fccf28cfc5a3d"
+  },
+  "c8_disposition": {
+    "codeql_attempt_1": {
+      "conclusion": "success",
+      "run": 32286212997
+    },
+    "dedicated_attempt_1": {
+      "conclusion": "failure",
+      "failed_step": {
+        "name": "Recheck retained C7 operational surfaces",
+        "number": 10
+      },
+      "job": 96176246257,
+      "later_static_and_upload_steps": "skipped",
+      "raw_log_sha256": "63be55db45dbf212881ede76b8c4ae70cd4bad28de0c49bd4b12d0b70a515d0e",
+      "raw_log_size_bytes": 59731,
+      "run": 32286213774
+    },
+    "local_recorder": {
+      "credit": "zero",
+      "l8_record": "absent_unissued",
+      "recorder": "satisfiable_retained_no_installed_record"
+    },
+    "repository_ci_attempt_1": {
+      "conclusion": "failure",
+      "failed_step": {
+        "name": "Run python3 -I -S -B scripts/check-certified-sxpid2-claim.py",
+        "number": 22
+      },
+      "failed_surface": "certified_sxpid2_retained_operational_bindings",
+      "job": 96176246476,
+      "raw_log_sha256": "0c475bce091b1f2ae414b6325ec0b46caae5f375ee5b4e87bd989688915d6fc4",
+      "raw_log_size_bytes": 136873,
+      "retained_artifacts": [
+        "coverage-lcov",
+        "post-commit-source-state-v2-7c80d48db415279fc4d744eadb1515797606912b",
+        "workspace-sbom"
+      ],
+      "roster": {
+        "failure": 1,
+        "success": 44,
+        "total": 45
+      },
+      "run": 32286213706
+    }
+  },
+  "c9": {
+    "commit_message": "Repair KSG M1a composite v9 contract\n",
+    "delta": [
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v8.yml",
+        "role": "retired_v8_no_credit_workflow",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v9.yml",
+        "role": "dedicated_v9_hosted_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "AGENTS.md",
+        "role": "operational_and_scientific_object_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "CHANGELOG.md",
+        "role": "append_only_change_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/completion-active-resume.md",
+        "role": "current_replay_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-predecessor-failure-hosted-capture-v9-2026-08-19.json",
+        "role": "predecessor_failure_hosted_capture",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md",
+        "role": "operational_boundary_record",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v9-path-policy-v1.json",
+        "role": "c9_r9_path_policy",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json",
+        "role": "current_lean_replay_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/wibral-pid-program-active-plan-2026-08-12.md",
+        "role": "durable_active_plan",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+        "role": "lean_replay_process_record",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
+        "role": "current_replay_scientific_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v9.schema.json",
+        "role": "dual_phase_hosted_capture_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v9.schema.json",
+        "role": "local_l9_closure_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v9.schema.json",
+        "role": "dual_capture_typed_receipt_schema",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md",
+        "role": "current_replay_claim_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md",
+        "role": "current_replay_decision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/evidence-matrix.md",
+        "role": "current_replay_evidence_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "claims/SX-COUNT-ATOM-BRIDGE-001/revision-index.md",
+        "role": "current_replay_revision_pointer",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "justfile",
+        "role": "local_command_wiring",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/README.md",
+        "role": "script_process_guide",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v9-local-closure.py",
+        "role": "bounded_local_l9_closure_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v9.py",
+        "role": "bounded_dual_phase_hosted_capture_tool",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+        "role": "retained_operational_binding_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-certified-sxpid2-claim.py",
+        "role": "retained_operational_binding_repin",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v9-self-test.py",
+        "role": "composite_v9_hostile_suite",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v9.py",
+        "role": "composite_v9_semantic_gate",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze-self-test.py",
+        "role": "lean_replay_hostile_suite",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze.py",
+        "role": "lean_replay_gate",
+        "status": "M"
+      },
+      {
+        "mode": "100755",
+        "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
+        "role": "workflow_pdf_portability_hostile_suite_fixture_mode_correction",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "scripts/generate-lean-4.33-replay.py",
+        "role": "lean_replay_generator",
+        "status": "M"
+      }
+    ],
+    "delta_state": "closed_expected_path_mode_status_set",
+    "parent": "7c80d48db415279fc4d744eadb1515797606912b",
+    "tree": null,
+    "tree_derivation": "derive_from_the_exact_unsigned_direct_child_commit"
+  },
+  "diagnosis": {
+    "analysis": "read_only_sequential_digest_repin",
+    "binding_difference_set": [
+      "execution-container:.github/workflows/ci.yml",
+      "execution-container:justfile",
+      "release-audit-line:justfile",
+      "reviewed-documentation:scripts/README.md",
+      "support-gate:scripts/check-formal-pdf-set.sh"
+    ],
+    "evidence_scope": "exact_changed_binding_set_not_unique_counterfactual_necessity_or_order",
+    "observed_first_marker": "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed",
+    "source_guard": "anchor_candidate_assignment_difference_set"
+  },
+  "fixture_correction": {
+    "destination_count": 6,
+    "destination_mode": "0644",
+    "diagnostic_umask_022_rollback_observation": "separate_umask_022_diagnostic_fault_injected_copy_of_otherwise_byte_unchanged_c8_production_writer_restored_exact_original_bytes_and_mode_0644_as_single_link_regular_files_without_staging_residue_zero_qualification_credit_no_inode_claim",
+    "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
+    "pre_correction_destination_mode_under_077": "0600",
+    "predecessor": {
+      "mode": "100755",
+      "sha256": "a800c3ee9f9cc0f442c898b3265ac61157a56ff8d70430a083dabecbabafe2b3",
+      "size_bytes": 276971
+    },
+    "production_writer_bytes": "unchanged",
+    "scientific_publication_artifact_bytes": "unchanged",
+    "scope": "pre_existing_refresh_destination_fixture_setup_only",
+    "successor": {
+      "mode": "100755",
+      "sha256": "5cae1ad0057e12b32ea74ad3b82229d6840d450e5ff729c3fe3dc3124ef17543",
+      "size_bytes": 277141
+    },
+    "test_umask": "077"
+  },
+  "interpreter_correction": {
+    "credit": "operational_compatibility_only_no_prior_execution_or_scientific_transfer",
+    "hosted_pre_setup_bootstrap": "one_runner_python_checkout_normalizer_call_and_four_normal_optimized_action_pin_checker_self_test_calls_outside_exact_3_14_6_scope",
+    "hosted_predecessor_selection": "gil_enabled_cpython_3_11_family_selected_by_predecessor_workflow",
+    "predecessor_route_state": "latent_unreached_after_earlier_c8_failure",
+    "reason": "immutable_v7_ast_dump_projection_is_cpython_minor_sensitive",
+    "scope": "local_full_recipe_via_inherited_and_clean_pdf_preflights_and_hosted_post_setup_retained_and_c9_gates",
+    "successor_complete_function_binding": "raw_source_slice_sha256_documentary_review_equal_on_exact_cpython_3_11_13_3_12_11_3_13_7_and_3_14_6_no_qualification_or_portability_credit",
+    "successor_selection": "local_inherited_and_clean_pdf_preflights_and_hosted_post_setup_exact_gil_enabled_cpython_3_14_6"
+  },
+  "nonimplications": [
+    "This policy describes an exact C9 and conditional R9 topology; it does not itself authorize, authenticate, qualify, or issue a commit or receipt.",
+    "The C8 marker identifies one stale operational-binding defect reached in repository CI and the dedicated v8 workflow; it is not a PID, estimator, theorem, numerical-result, security, accessibility, or application finding.",
+    "The first fail-closed marker is not the complete mismatch inventory: read-only sequential digest-repin analysis identified five changed bindings, and source reconstruction guards that exact set; neither establishes a unique counterfactual necessity set or ordering.",
+    "The absent L8 record grants no C9 or R9 credit and does not claim any operator-invocation history for the retained recorder.",
+    "C8 hosted observations and retained r13 do not transfer qualification or replay credit to C9.",
+    "Git and SHA-256 identities bind named bytes and topology only; they do not establish authorship, provider completeness, trusted time, independent reproduction, semantic correctness, or durability.",
+    "The six-destination pre-existing refresh-destination fixture correction is not a sixth C8 stale binding, production-writer repair, PDF change, theorem change, estimator change, or scientific finding.",
+    "The local-recipe and hosted-post-setup exact GIL-enabled CPython 3.14.6 selection is a separate latent compatibility correction; the pre-setup hosted checkout normalizer and action-pin checker/self-test calls remain runner-Python surfaces outside that runtime scope. This is not a sixth C8 stale binding, fixture repair, cross-minor portability result, interpreter authentication, or scientific finding.",
+    "At the recorded observations, three mutable provider archive refs supplied recovery locators for three rejected candidates and their archived r14s; they grant no C9, R9, L9, hosted, scientific, accepted-current-replay, or independence credit or durability claim.",
+    "The deterministic checker binds the recorded rejected identifiers but does not query provider archive, main, or workflow-run endpoints or require the sibling commit object; their observed relation and run count are documentary, not a live custody proof.",
+    "The checker AST/source-route and hostile-mutation analyses are finite regression evidence for a fixed lexical roster, not semantic soundness, causal-execution, or non-bypass proofs; dynamic namespace mutation and arbitrary execution custody remain outside that analysis, so exact whole-file, tree, replay, and human-review custody remain authoritative within their stated bounds.",
+    "Python route preflights observe implementation, exact patch, GIL state, and flags at bounded command points; they do not authenticate the interpreter, bind its executable bytes, prove atomicity or absence of later path mutation, or enumerate every transitive process.",
+    "The C9 repair changes no theorem statement, mathematical-claim semantic content, estimator result, numerical result, scientific publication byte, or PDF byte; claim-packet edits are replay-custody pointer prose only."
+  ],
+  "publication": {
+    "c9_new_pdf": "none",
+    "retained_family": "exact_composite_v8_publication_unchanged",
+    "workflow_pdf": {
+      "committed_pdf": "unchanged",
+      "portability_gate": "unchanged",
+      "source": "unchanged"
+    }
+  },
+  "r9": {
+    "commit_message": "Record KSG M1a composite v9 receipt\n",
+    "delta": [
+      {
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json",
+        "role": "self_excluding_source_state",
+        "status": "M"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-local-closure-v9-2026-08-19.json",
+        "role": "durable_local_l9_closure",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-receipt-v9-2026-08-19.json",
+        "role": "derived_v9_receipt",
+        "status": "A"
+      },
+      {
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-hosted-capture-v9-2026-08-19.json",
+        "role": "fresh_successor_hosted_capture",
+        "status": "A"
+      }
+    ],
+    "evidence_state": "conditional_absent_at_c9",
+    "parent": "derive_exact_c9_commit"
+  },
+  "rejected_candidate": {
+    "archive_ref": "refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821",
+    "archive_ref_kind": "mutable_provider_recovery_locator",
+    "archive_ref_observation_date": "2026-08-21",
+    "archive_ref_observed_target": "0a6ece9c525ad7aad061f55b3edea83554891b42",
+    "archive_relation_scope": "documentary_observation_not_live_ref_main_or_workflow_run_endpoint_or_sibling_object_revalidation",
+    "commit": "0a6ece9c525ad7aad061f55b3edea83554891b42",
+    "credit": "zero",
+    "github_main_observed_target_after_archive": "7c80d48db415279fc4d744eadb1515797606912b",
+    "parent": "7c80d48db415279fc4d744eadb1515797606912b",
+    "publication_status": "not_observed_accepted_or_published_on_main_as_c9",
+    "qualification": {
+      "complete_raw_transcript": "not_retained",
+      "diagnostic_workflow_pdf_self_test": {
+        "credit": "zero",
+        "evidence_scope": "documentary_observation_not_replayed_by_checker",
+        "result": "passed_366_of_366",
+        "umask": "022"
+      },
+      "github_actions_workflow_runs": {
+        "count": 0,
+        "observation_date": "2026-08-21"
+      },
+      "l9_record": "absent_unissued",
+      "last_confirmed_control": 273,
+      "last_confirmed_output_line": "ok 273 - refresh writer reports an injected second-replacement failure",
+      "required_umask_077_result": "failure",
+      "stable_failure_marker_path_suffix": "/root/output/pdf/workflow.pdf",
+      "stable_failure_marker_prefix": "refresh destination mode drifted: ",
+      "whole_run_digest": "not_retained"
+    },
+    "r14": {
+      "lineage": "archive_only_outside_prior_replay",
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json",
+      "sha256": "2a882358e158ebeae06dbdf8d1cd35637d698f59ce217c1e2fbecf1d8787dfb7",
+      "size_bytes": 145611
+    },
+    "reason": "required_umask_077_route_failed_on_pre_existing_refresh_destination_mode_fixture",
+    "tree": "1d5446f19d34b742feeb51429bf58a0706750757"
+  },
+  "rejected_fixed_point_candidate": {
+    "archive_ref": "refs/heads/archive/composite-v9-rejected-r14-fixed-point-20260822",
+    "archive_ref_kind": "mutable_provider_recovery_locator",
+    "archive_ref_observation_date": "2026-08-22",
+    "archive_ref_observed_target": "113cbad2e58a9cfa40cf43b1c0ffc260b566aa92",
+    "archive_relation_scope": "documentary_observation_not_live_ref_main_or_workflow_run_endpoint_or_sibling_object_revalidation",
+    "commit": "113cbad2e58a9cfa40cf43b1c0ffc260b566aa92",
+    "credit": "zero",
+    "github_main_observed_target_after_archive": "7c80d48db415279fc4d744eadb1515797606912b",
+    "parent": "7c80d48db415279fc4d744eadb1515797606912b",
+    "publication_status": "not_observed_accepted_or_published_on_main_as_c9",
+    "qualification": {
+      "certified_sxpid2_baseline": {
+        "expected_justfile_sha256": "74fb7bfd4500d8b121666a738a412fbdb409e7acf673b156645d215453ab310f",
+        "failure_marker": "certified SxPID2 claim check failed: reviewed revision-3 execution container digest changed for justfile: expected 74fb7bfd4500d8b121666a738a412fbdb409e7acf673b156645d215453ab310f, observed 93399171cfbb743dba93c7be1ec85e446a33193e41ada3977d198b0e4ecc6437",
+        "normal_result": "failure",
+        "observed_justfile_sha256": "93399171cfbb743dba93c7be1ec85e446a33193e41ada3977d198b0e4ecc6437",
+        "optimized_result": "failure",
+        "self_test_evidence_scope": "operator_observation_not_r14_command_or_stdout_custody",
+        "self_test_result": "passed_124_mutations_both_modes_but_did_not_establish_baseline",
+        "self_test_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "self_test_stderr_size_bytes": 0,
+        "self_test_stdout_sha256": "2f163d400569a0897533ef5f5bdae357bd97962d0888ac2bbf68cfa5fe753351",
+        "self_test_stdout_size_bytes": 58,
+        "stderr_sha256": "5994ccdfb8dcfe35fac7646050c15ef4f19eee8524233b1cd57f651d19d78611",
+        "stderr_size_bytes": 255,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "documentation_review": {
+        "affected_paths": [
+          "audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md",
+          "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+          "scripts/README.md"
+        ],
+        "defect": "self_test_named_output_conflated_with_r14_command_custody",
+        "generator_guard": "same_validator_at_separate_call_site_evaluated_once_before_replay_sequence_with_full_static_and_custody_endpoint_checks_bracketing_sequence_before_publication_correlated_not_per_command_or_atomic",
+        "outer_lean_self_test": {
+          "evidence_scope": "operator_observation_not_r14_command_or_stdout_custody_common_validator_implementation",
+          "normal_and_optimized_stdout_equal": "observed",
+          "reported_mutations": 132,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_size_bytes": 0,
+          "stdout_sha256": "a77c6d4634ad134975d9a42520a4dc16cd696d51879614a1a4f711eab8ce9f93",
+          "stdout_size_bytes": 268
+        },
+        "r14_absent_exact_command_paths": [
+          "scripts/check-certified-sxpid2-claim-self-test.py",
+          "scripts/check-certified-sxpid2-claim.py",
+          "scripts/check-ksg-m1a-composite-v9-self-test.py",
+          "scripts/check-lean-toolchain-freeze-self-test.py"
+        ],
+        "r14_canonical_receipt_literal_live_marker_occurrences": 0,
+        "r14_other_named_self_test_command_records": 10,
+        "r14_stream_payload_representation": "byte_count_and_sha256_only_not_embedded_raw_stdout_or_stderr",
+        "scope": "documentation_nonconflation_failure_not_replay_checksum_or_mathematical_failure"
+      },
+      "github_actions_workflow_runs": {
+        "count": 0,
+        "observation_date": "2026-08-22"
+      },
+      "l9_record": "absent_unissued",
+      "post_rejection_recovery_review": {
+        "baseline_result": "failure_after_justfile_repin_before_documentation_repin",
+        "evidence_scope": "operator_observed_recovery_worktree_not_archived_candidate_qualification_or_r14_custody",
+        "expected_scripts_readme_sha256": "daedd86d0307984df8885849528ddfdd2d096a7b9d2799e308358ad4af59b33a",
+        "failure_marker": "certified SxPID2 claim check failed: immutable reviewed certified-SxPID documentation digest changed for scripts/README.md: expected daedd86d0307984df8885849528ddfdd2d096a7b9d2799e308358ad4af59b33a, observed c7fd28e0180bc19ebb09644840266e47f5a93c9b5af7e9062c7f0bbd2012e857",
+        "observed_scripts_readme_sha256": "c7fd28e0180bc19ebb09644840266e47f5a93c9b5af7e9062c7f0bbd2012e857",
+        "resolution": "repin_live_documentation_and_bind_all_five_mutable_certified_surfaces_plus_exact_ci_job_and_just_recipe_subblocks",
+        "stderr_sha256": "e94271b9e1c1b7e885fb78d1839b2d8dacebf79aa6a72e6233db5773ded93ade",
+        "stderr_size_bytes": 273
+      },
+      "r14_replay": {
+        "command_record_count": 39,
+        "credit": "zero_rejected_before_c9_acceptance_archive_commit_only",
+        "final_sha256": "9ae3b4915f3cf4fd062723c8b80d80e0319ddc9db250662c50584b3f764d373c",
+        "internal_status": "receipt_checks_passed_before_external_precommit_rejection",
+        "provisional_sha256": "41fafe5dfdfbaf23c206ae366913082ff255e6e5f92217f02cfc95b83a5fc048",
+        "receipt_records_with_exit_code_zero": 39,
+        "size_bytes": 145356
+      }
+    },
+    "r14": {
+      "lineage": "archive_only_outside_prior_replay",
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json",
+      "sha256": "9ae3b4915f3cf4fd062723c8b80d80e0319ddc9db250662c50584b3f764d373c",
+      "size_bytes": 145356
+    },
+    "reason": "precommit_certified_sxpid2_baseline_failed_and_documentation_conflated_self_test_output_with_r14_command_custody",
+    "tree": "ae3204d72c012dddaa5b634d9f5c4c745d5823d2"
+  },
+  "rejected_local_authority_candidate": {
+    "archive_ref": "refs/heads/archive/composite-v9-rejected-local-authority-oversize-20260822",
+    "archive_ref_kind": "mutable_provider_recovery_locator",
+    "archive_ref_observation_date": "2026-08-22",
+    "archive_ref_observed_target": "769547a6d6ed70a074707d90bc2f55393fd34fa4",
+    "archive_relation_scope": "documentary_observation_not_live_ref_main_or_workflow_run_endpoint_or_sibling_object_revalidation",
+    "commit": "769547a6d6ed70a074707d90bc2f55393fd34fa4",
+    "credit": "zero",
+    "current_source": {
+      "lineage": "archive_only_outside_accepted_current_source",
+      "path": "audit/evidence/current-source-state-v1.json",
+      "sha256": "23d37f444b52d2bb8854e6cc7df53d0207074eceee6a080c89ace6729a850243",
+      "size_bytes": 202419
+    },
+    "github_main_observed_target_after_archive": "7c80d48db415279fc4d744eadb1515797606912b",
+    "parent": "7c80d48db415279fc4d744eadb1515797606912b",
+    "publication_status": "not_observed_accepted_or_published_on_main_as_c9",
+    "qualification": {
+      "direct_and_sanitized_command_diagnostics": {
+        "argv": [
+          "just",
+          "ksg-composite-v9"
+        ],
+        "credit": "zero",
+        "direct": {
+          "exit_code": 0,
+          "stderr_sha256": "c73f68757307c6c5d44f354043b10b0a4e62b579d3500b7cf152449a5e863009",
+          "stderr_size_bytes": 434,
+          "stdout_sha256": "acf47c3a89810bd9cd47a5f3454d4cd5b519766dc3544cafd8565f94816bd41c",
+          "stdout_size_bytes": 32248
+        },
+        "evidence_scope": "separate_correlated_operator_diagnostics_not_local_recorder_invocation_or_stream_custody",
+        "sanitized": {
+          "exit_code": 0,
+          "stderr_sha256": "c73f68757307c6c5d44f354043b10b0a4e62b579d3500b7cf152449a5e863009",
+          "stderr_size_bytes": 434,
+          "stdout_sha256": "acf47c3a89810bd9cd47a5f3454d4cd5b519766dc3544cafd8565f94816bd41c",
+          "stdout_size_bytes": 32248
+        },
+        "stream_equality": "observed_identical"
+      },
+      "github_actions_workflow_runs": {
+        "count": 0,
+        "observation_date": "2026-08-22"
+      },
+      "l9_record": "absent_unissued",
+      "local_authority_size_classification": {
+        "authority_stream_maximum_bytes": 2097152,
+        "capture_tool_sha256": "08727be34fb1b0c5807531486e4f8dacae7806c1d08f326ee6218f41b19b3749",
+        "capture_tool_size_bytes": 42299,
+        "classification_threshold_bytes": 65536,
+        "defect": "c9_self_test_exceeded_classification_threshold_but_was_absent_from_expected_named_oversize_set",
+        "expected_named_oversize_membership": "absent",
+        "path": "scripts/check-ksg-m1a-composite-v9-self-test.py",
+        "scope": "named_roster_classification_defect_not_authority_stream_size_exhaustion",
+        "sha256": "a704698097be3ffb0702a66f5fd0f9c794ca0a4ffbe137e6c3b94bd1825544db",
+        "size_bytes": 129911
+      },
+      "production_local_recorder": {
+        "credit": "zero",
+        "generic_stderr": {
+          "line": "ERROR: bounded local closure capture failed closed",
+          "sha256": "11da5230cf3da2dc9a8e4a1378e4707e90ba5b612f8cab4830e392d268cc5b40",
+          "size_bytes": 51
+        },
+        "generic_stderr_scope": "alone_exposes_neither_failure_stage_nor_production_command_streams",
+        "result": "failed_closed",
+        "stream_custody": "production_command_stdout_and_stderr_not_retained_or_authenticated_by_the_generic_recorder_error"
+      },
+      "r14_replay": {
+        "command_record_count": 39,
+        "credit": "zero_rejected_before_c9_acceptance_archive_commit_only",
+        "final_sha256": "66fdc640aad886c6de25a3a544a24ba016f4f2e73989abe5319f562da1c08919",
+        "internal_status": "receipt_checks_passed_before_external_local_closure_rejection",
+        "provisional_reconstruction": {
+          "evidence_scope": "deterministic_single_digest_substitution_reconstruction_not_retained_observed_artifact",
+          "final_lean_custody_sha256": "281b7504b96cabe88e4faa4db46c04d32832b4d42a3540f462951ffd68aea07c",
+          "replay_lean_custody_sha256": "15d5fa25c532380db6d7f0a938dac84300ecfacf6c559332eda99bf7bc09fd96",
+          "sha256": "eece30e6d8477cb7aa3464df31d3fae590393a8b0dc47e21ea759ae5f3d6ab17"
+        },
+        "receipt_records_with_exit_code_zero": 39,
+        "size_bytes": 145356
+      },
+      "source_order": {
+        "evidence_scope": "exact_rejected_source_order_not_production_execution_stage_or_stream_custody",
+        "order": "run_bounded_returns_before_validate_record_value_whose_post_command_validation_calls_validate_authority_roster"
+      },
+      "substituted_postcondition_diagnostic": {
+        "credit": "zero",
+        "diagnosed_stage": "post_command_validate_authority_roster_within_validate_record_value_in_the_substituted_route",
+        "evidence_scope": "separate_one_call_substitution_diagnostic_not_production_execution_or_custody",
+        "log_lines": [
+          "FAIL CaptureError: local closure named-oversize authority inventory changed",
+          "substituted_command_calls=1"
+        ],
+        "log_sha256": "4c9309bb307c001cd7231caff0dc92a9e6d6d2900116fece68ebe13a5b61dd81",
+        "log_size_bytes": 104,
+        "result": "failure",
+        "substituted_command_calls": 1
+      }
+    },
+    "r14": {
+      "lineage": "archive_only_outside_prior_replay",
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json",
+      "sha256": "66fdc640aad886c6de25a3a544a24ba016f4f2e73989abe5319f562da1c08919",
+      "size_bytes": 145356
+    },
+    "reason": "production_local_recorder_failed_closed_without_stage_or_stream_disclosure_and_a_separate_substituted_postcondition_diagnostic_isolated_the_stale_named_oversize_roster",
+    "tree": "fb89c31922454dfc6d3da3d8ffa26dbe491b353e"
+  },
+  "replay": {
+    "current": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json",
+    "predicate": "fresh_post_c8_r14_excluding_all_three_rejected_same_slot_final_r14_artifacts_from_current_and_prior_replay_and_current_source_match_c9",
+    "retained_prior": {
+      "path": "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json",
+      "sha256": "373a5ef518f096628c070e2a107ff78f4ef872695dbc1bf37ac13308853eea12",
+      "size_bytes": 144286
+    }
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v9-path-policy/v1",
+  "schema_revision": 1
+}

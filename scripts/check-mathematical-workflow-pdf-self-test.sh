@@ -5074,11 +5074,15 @@ make_refresh_fixture() {
   printf 'old-pdf-bytes\n' >"$directory/root/output/pdf/workflow.pdf"
   printf 'old-receipt-bytes\n' >"$directory/root/output/pdf/workflow.tsv"
   printf 'new-pdf-bytes\n' >"$directory/source/workflow.pdf"
+  chmod 0644 \
+    "$directory/root/output/pdf/workflow.pdf" \
+    "$directory/root/output/pdf/workflow.tsv"
   for stem in "${figure_stems[@]}"; do
     printf '<svg id="%s"/>\n' "$stem" \
       >"$directory/root/$figure_directory/$stem.svg"
     printf 'old-%s-pdf-bytes\n' "$stem" \
       >"$directory/root/$figure_directory/$stem.pdf"
+    chmod 0644 "$directory/root/$figure_directory/$stem.pdf"
     printf 'new-%s-pdf-bytes\n' "$stem" \
       >"$directory/source/figures/$stem.pdf"
   done
