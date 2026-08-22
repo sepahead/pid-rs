@@ -174,6 +174,15 @@ REVIEWED_DOCUMENTATION_PATHS = frozenset(
 SUPPORT_GATE_PATHS = frozenset({"scripts/check-formal-pdf-set.sh"})
 AUDIT_TOOL_README = "audit/tools/certified-sxpid/README.md"
 SCRIPTS_README = "scripts/README.md"
+EXPECTED_C8_FAILURE_BINDING_DIFFERENCES = frozenset(
+    {
+        "execution-container:.github/workflows/ci.yml",
+        "execution-container:justfile",
+        "release-audit-line:justfile",
+        "reviewed-documentation:scripts/README.md",
+        "support-gate:scripts/check-formal-pdf-set.sh",
+    }
+)
 ANCHOR_GATE_COMMANDS = (
     "python3 audit/tools/certified-sxpid/scripts/check-exact-products.py",
     "python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
@@ -552,6 +561,32 @@ def validate_checker_source_reconstruction(
         candidate_documentation[AUDIT_TOOL_README]
         == anchor_documentation[AUDIT_TOOL_README],
         "audit-tool README digest changed",
+    )
+    binding_differences = {
+        *(
+            f"execution-container:{path}"
+            for path in EXECUTION_CONTAINER_PATHS
+            if candidate_execution[path] != anchor_execution[path]
+        ),
+        *(
+            f"reviewed-documentation:{path}"
+            for path in REVIEWED_DOCUMENTATION_PATHS
+            if candidate_documentation[path] != anchor_documentation[path]
+        ),
+        *(
+            f"support-gate:{path}"
+            for path in SUPPORT_GATE_PATHS
+            if candidate_support[path] != anchor_support[path]
+        ),
+        *(
+            ("release-audit-line:justfile",)
+            if candidate_release_digest != anchor_release_digest
+            else ()
+        ),
+    }
+    require(
+        binding_differences == EXPECTED_C8_FAILURE_BINDING_DIFFERENCES,
+        "C8 failure five-binding difference set changed",
     )
 
     normalized_anchor = anchor_source
@@ -948,6 +983,7 @@ def safe_environment() -> dict[str, str]:
         "PATH": "/usr/bin:/bin",
         "PYTHONDONTWRITEBYTECODE": "1",
         "PYTHONNOUSERSITE": "1",
+        "TMPDIR": "/tmp",
     }
 
 
@@ -2558,11 +2594,11 @@ def main() -> int:
                 "justfile",
                 (
                     " formal-finite-convergence lean-toolchain-freeze "
-                    "ksg-composite-v7 certified-sxpid citation-edge-countermodel "
+                    "ksg-composite-v9 certified-sxpid citation-edge-countermodel "
                 ),
                 (
                     " formal-finite-convergence lean-toolchain-freeze "
-                    "ksg-composite-v7 citation-edge-countermodel "
+                    "ksg-composite-v9 citation-edge-countermodel "
                 ),
             ),
             "revision-3 release-audit dependency missing",
@@ -2573,11 +2609,11 @@ def main() -> int:
                 baseline,
                 "justfile",
                 (
-                    "lean-toolchain-freeze ksg-composite-v7 certified-sxpid "
+                    "lean-toolchain-freeze ksg-composite-v9 certified-sxpid "
                     "citation-edge-countermodel formal-pdfs"
                 ),
                 (
-                    "lean-toolchain-freeze ksg-composite-v7  certified-sxpid "
+                    "lean-toolchain-freeze ksg-composite-v9  certified-sxpid "
                     "citation-edge-countermodel formal-pdfs"
                 ),
             ),
