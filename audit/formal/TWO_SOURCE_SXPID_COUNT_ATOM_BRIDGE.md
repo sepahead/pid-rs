@@ -13,7 +13,7 @@ The checked source extends the completed supplied-count event bridge from four s
 cumulatives to every informative, misinformative, and signed-net cumulative and two-source
 Möbius atom. It gives one quantified result over a fixed 24-coordinate type. Exact identities,
 the current 80-route change registry, document checks, and review boundaries are recorded in the
-[current versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json).
+[current versioned Lean 4.33 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -27,10 +27,12 @@ and [finalized r9 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project
 and [finalized r10 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json)
 and [finalized r11 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json)
 and [finalized r12 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json)
-are retained byte-for-byte as prior execution evidence. Here `r13` denotes only the thirteenth receipt
-in the versioned sequence that originated on 12 August, and therefore the fourteenth current-project replay
-receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
-does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
+and [finalized r13 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json)
+are retained byte-for-byte as prior execution evidence. Here `r14` is the fourteenth accepted slot
+in the sequence beginning 12 August. Counting the separate 11 August historical receipt, it is the
+fifteenth receipt in the accepted/historical lineage. Rejected same-slot artifacts are additional
+zero-credit documents; no total count of every generated receipt is claimed. The suffix does not
+denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
 The current route receives execution credit only when its exact receipt exists and validates.
 The [phase-A receipt](../../claims/SX-COUNT-ATOM-BRIDGE-001/phase-a-verification-2026-08-10.md)
 remains the immutable historical Lean 4.32 observation of the earlier 71-route suite.

@@ -1,193 +1,42 @@
-name: KSG M1a composite v8
+name: KSG M1a composite v8 (retired)
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: ksg-m1a-composite-v8-${{ github.sha }}
-  cancel-in-progress: false
-
 jobs:
-  validate-contract:
-    name: Validate the composite-v8 bounded correction contract
+  retired:
+    name: Refuse retired composite-v8 qualification
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          ref: "${{ github.sha }}"
-      - name: Normalize only the reviewed inert checkout residue
-        run: python3 -I -S -B scripts/normalize-actions-checkout-worktree-config.py
-      - name: Refuse retries and non-main qualification events
+      - name: Preserve the terminal C8 retained-binding defect and refuse credit
+        env:
+          CI_ATTEMPT_1_FAILED_JOB: "96176246476"
+          CI_ATTEMPT_1_LOG_SHA256: 0c475bce091b1f2ae414b6325ec0b46caae5f375ee5b4e87bd989688915d6fc4
+          CI_ATTEMPT_1_LOG_SIZE: "136873"
+          CI_ATTEMPT_1_RUN: "32286213706"
+          FAILED_CONTRACT_ATTEMPT_1_JOB: "96176246257"
+          FAILED_CONTRACT_ATTEMPT_1_LOG_SHA256: 63be55db45dbf212881ede76b8c4ae70cd4bad28de0c49bd4b12d0b70a515d0e
+          FAILED_CONTRACT_ATTEMPT_1_LOG_SIZE: "59731"
+          FAILED_CONTRACT_ATTEMPT_1_RUN: "32286213774"
+          FAILURE_MARKER: "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed"
+          PUBLISHED_C8: 7c80d48db415279fc4d744eadb1515797606912b
+          STALE_BINDING_COUNT: "5"
         run: |
           set -euo pipefail
-          test "${GITHUB_EVENT_NAME}" = "push"
-          test "${GITHUB_REF}" = "refs/heads/main"
-          test "${GITHUB_RUN_ATTEMPT}" = "1"
-      - name: Validate every external action pin and the truncation hostile
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/check-github-action-pins.py > "${RUNNER_TEMP}/action-pins.json"
-          python3 -O -I -S -B scripts/check-github-action-pins.py > "${RUNNER_TEMP}/action-pins.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/action-pins.json" "${RUNNER_TEMP}/action-pins.optimized.json"
-          python3 -I -S -B scripts/check-github-action-pins-self-test.py > "${RUNNER_TEMP}/action-pins-self.json"
-          python3 -O -I -S -B scripts/check-github-action-pins-self-test.py > "${RUNNER_TEMP}/action-pins-self.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/action-pins-self.json" "${RUNNER_TEMP}/action-pins-self.optimized.json"
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: "3.11"
-      - name: Install the hash-pinned PDF verifier dependency
-        run: |
-          python -m pip install \
-            --disable-pip-version-check \
-            --no-cache-dir \
-            --no-deps \
-            --require-hashes \
-            --requirement audit/formal/requirements-pdf.txt
-      - name: Install the complete reviewed PDF command set
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends \
-            chktex \
-            fontconfig \
-            latexmk \
-            lacheck \
-            librsvg2-bin \
-            libxml2-utils \
-            lmodern \
-            poppler-utils \
-            ripgrep \
-            texlive-fonts-extra \
-            texlive-fonts-recommended \
-            texlive-latex-extra \
-            texlive-luatex \
-            texlive-plain-generic
-      - name: Stage the reviewed Ubuntu luaotfload tool beneath setup-python
-        run: |
-          set -euo pipefail
-          formal_tool_path="$pythonLocation/bin/luaotfload-tool"
-          luaotfload_source="$(/usr/bin/readlink -f /usr/bin/luaotfload-tool)"
-          if [[ "$luaotfload_source" != "/usr/share/texlive/texmf-dist/scripts/luaotfload/luaotfload-tool.lua" ]]; then
-            echo "unexpected Ubuntu luaotfload-tool target: $luaotfload_source" >&2
-            exit 1
-          fi
-          if [[ -e "$formal_tool_path" || -L "$formal_tool_path" ]]; then
-            echo "refusing to replace a pre-existing setup-python luaotfload-tool path" >&2
-            exit 1
-          fi
-          formal_tool_stage="$(/usr/bin/mktemp "$pythonLocation/bin/.pid-rs-luaotfload-tool.XXXXXX")"
-          cleanup_formal_tool_stage() {
-            if [[ -n "$formal_tool_stage" ]]; then
-              /usr/bin/rm -f -- "$formal_tool_stage"
-            fi
-          }
-          trap cleanup_formal_tool_stage EXIT
-          /usr/bin/install -m 0755 "$luaotfload_source" "$formal_tool_stage"
-          /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_stage"
-          if ! /usr/bin/ln -T -- "$formal_tool_stage" "$formal_tool_path"; then
-            echo "setup-python luaotfload-tool destination appeared before publication" >&2
-            exit 1
-          fi
-          /usr/bin/rm -- "$formal_tool_stage"
-          formal_tool_stage=""
-          trap - EXIT
-          /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_path"
-      - name: Recheck retained C7 operational surfaces
-        run: |
-          set -euo pipefail
-          /usr/bin/test -x /usr/bin/rg
-          test "$(command -v rg)" = "/usr/bin/rg"
-          /usr/bin/rg --version >/dev/null
-          python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-          scripts/check-release-state-self-test.sh
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.json"
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "${RUNNER_TEMP}/zeta.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/zeta.json" "${RUNNER_TEMP}/zeta.optimized.json"
-          python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
-          python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-          python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-      - name: Recheck the unchanged v6 and v7 publications
-        run: |
-          set -euo pipefail
-          /usr/bin/test -x /usr/bin/rg
-          test "$(command -v rg)" = "/usr/bin/rg"
-          /usr/bin/rg --version >/dev/null
-          scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh --cross-toolchain
-          scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --cross-toolchain
-      - name: Validate the repaired mathematical-workflow PDF portability gate
-        run: |
-          set -euo pipefail
-          gate_home="$RUNNER_TEMP/pid-rs-v8-workflow-pdf-home"
-          gate_tmp="$RUNNER_TEMP/pid-rs-v8-workflow-pdf-tmp"
-          workflow_path="$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-          for clean_path in "$gate_home" "$gate_tmp"; do
-            if [[ -e "$clean_path" || -L "$clean_path" ]]; then
-              echo "refusing a pre-existing v8 workflow-PDF clean-state path: $clean_path" >&2
-              exit 1
-            fi
-          done
-          /usr/bin/mkdir -m 0700 -- "$gate_home" "$gate_tmp"
-          /usr/bin/env -i \
-            "PATH=$workflow_path" \
-            "HOME=$gate_home" \
-            "TMPDIR=$gate_tmp" \
-            LC_ALL=C \
-            LANG=C \
-            TZ=UTC \
-            bash --noprofile --norc scripts/check-mathematical-workflow-pdf-self-test.sh
-          /usr/bin/env -i \
-            "PATH=$workflow_path" \
-            "HOME=$gate_home" \
-            "TMPDIR=$gate_tmp" \
-            LC_ALL=C \
-            LANG=C \
-            TZ=UTC \
-            bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh --cross-toolchain
-      - name: Validate fresh replay and current-source custody
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
-          python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-          python3 -I -S -B scripts/check-current-source-state-v1.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1.py
-          python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
-          python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-      - name: Validate static v8 contract in normal and optimized modes
-        run: |
-          set -euo pipefail
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v8.py --self-test > "${RUNNER_TEMP}/capture-v8.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v8.py --self-test > "${RUNNER_TEMP}/capture-v8.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/capture-v8.json" "${RUNNER_TEMP}/capture-v8.optimized.json"
-          python3 -I -S -B scripts/capture-ksg-m1a-composite-v8-local-closure.py --self-test > "${RUNNER_TEMP}/local-v8.json"
-          python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v8-local-closure.py --self-test > "${RUNNER_TEMP}/local-v8.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/local-v8.json" "${RUNNER_TEMP}/local-v8.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v8.py --validate-static > "${RUNNER_TEMP}/ksg-m1a-composite-v8-static.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8.py --validate-static > "${RUNNER_TEMP}/ksg-m1a-composite-v8-static.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/ksg-m1a-composite-v8-static.json" "${RUNNER_TEMP}/ksg-m1a-composite-v8-static.optimized.json"
-          python3 -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py > "${RUNNER_TEMP}/self-v8.json"
-          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py > "${RUNNER_TEMP}/self-v8.optimized.json"
-          cmp --silent "${RUNNER_TEMP}/self-v8.json" "${RUNNER_TEMP}/self-v8.optimized.json"
-      - name: Upload the exact v8 static result
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          compression-level: 0
-          if-no-files-found: error
-          name: ksg-m1a-composite-v8-static-${{ github.sha }}
-          path: ${{ runner.temp }}/ksg-m1a-composite-v8-static.json
-          retention-days: 90
+          test "${FAILED_CONTRACT_ATTEMPT_1_RUN}" != "0"
+          test "${FAILED_CONTRACT_ATTEMPT_1_JOB}" != "0"
+          test "${CI_ATTEMPT_1_RUN}" != "0"
+          test "${CI_ATTEMPT_1_FAILED_JOB}" != "0"
+          test "${STALE_BINDING_COUNT}" = "5"
+          echo "Composite v8 is retired at ${PUBLISHED_C8}." >&2
+          echo "${FAILURE_MARKER}" >&2
+          echo "Dedicated attempt-1 run ${FAILED_CONTRACT_ATTEMPT_1_RUN}, job ${FAILED_CONTRACT_ATTEMPT_1_JOB}, failed at step 10 after reaching the retained certified-SxPID2 surface; raw log ${FAILED_CONTRACT_ATTEMPT_1_LOG_SIZE} bytes sha256 ${FAILED_CONTRACT_ATTEMPT_1_LOG_SHA256}; later PDF, static-contract, and artifact-upload steps were skipped." >&2
+          echo "Repository CI attempt-1 run ${CI_ATTEMPT_1_RUN} completed failure with 44 successful jobs and sole failed job ${CI_ATTEMPT_1_FAILED_JOB}, step 22; raw failed-job log ${CI_ATTEMPT_1_LOG_SIZE} bytes sha256 ${CI_ATTEMPT_1_LOG_SHA256}." >&2
+          echo "The marker is the first fail-closed edge. Read-only sequential digest-repin analysis identified five changed bindings, and source reconstruction guards that exact set without establishing unique counterfactual necessity or order. The diagnosis changed no theorem statement, mathematical-claim semantic content, estimator result, or PDF byte." >&2
+          echo "CodeQL attempt 1 succeeded, but no C8 observation transfers qualification to C9; no L8 record is installed and R8 is permanently unissued." >&2
+          echo "Use the composite-v9 workflow and a fresh identity-bound L9 record for C9 qualification." >&2
+          exit 1

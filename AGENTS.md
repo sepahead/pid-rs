@@ -308,28 +308,89 @@ Published C7 commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` retained C6 and f
 cross-toolchain layout comparator. R7 is permanently unissued. Preserve C7, the two distinct
 hosted failure records, and finalized `r12`; do not rerun them for attempt-1 credit or revive R7.
 
-The operative append-only successor is composite-v8, documented in
-[`ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md`](audit/evidence/ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md).
+Published C8 commit `7c80d48db415279fc4d744eadb1515797606912b` retained C7 and fresh Lean
+`r13`. Its attempt-1 CodeQL run passed. Repository CI and the dedicated-v8 route both reached the
+retained certified-SxPID2 checker and failed on the exact marker `certified SxPID2 claim check
+failed: release-audit just dependency line exact digest changed`. The first reached marker identifies one stale binding. Read-only
+sequential digest-repin analysis identified the exact five changed operational bindings, and
+source reconstruction guards that difference set without establishing unique counterfactual
+necessity or order. No L8 record is installed; no operator-invocation history is claimed. R8 is
+permanently unissued. Preserve C8, finalized `r13`, and the exact failed hosted observations; do
+not rerun them for attempt-1 credit or revive R8.
+
+The operative append-only successor is composite-v9, documented in
+[`ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md`](audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md).
 From a clean committed checkout run:
 
 ```text
-just ksg-composite-v8
+just ksg-composite-v9
 ```
 
-C8 and R8 are separate unsigned, human-attributed milestones. C8 must be the exact direct child of
-C7. It retains both failed C7 hosted observations, repairs the one-character action pin and the
-bounded workflow-PDF portability comparator, publishes no new PDF, and publishes a fresh Lean
-`r13` replay. R8 is permitted only after one fresh exact-C8 local closure and fresh attempt-1 CI,
-CodeQL, and dedicated-v8 success for that same commit. The local observation has no attempt-number
-authority: a separately typed recorder must run the fixed `just ksg-composite-v8` command from an
-exact clean C8 checkout, retain bounded
+C9 and R9 are separate unsigned, human-attributed milestones. C9 must be the exact direct child of
+C8. It retains the exact C8 publication family and failed hosted observations, and repins exactly
+the five stale operational bindings without changing certified theorem statements,
+mathematical-claim semantics, estimator results, or PDF bytes. The claim packet changes only its replay-custody
+pointer prose. C9 retires the v8 workflow, publishes no new PDF, and publishes a fresh Lean `r14`
+replay. R9 is permitted only after one fresh exact-C9 local closure and fresh attempt-1 CI, CodeQL,
+and dedicated-v9 success for that same commit. The local observation has no attempt-number
+authority: a separately typed recorder must run the fixed `just ksg-composite-v9` command from an
+exact clean C9 checkout, retain bounded
 output and clean endpoint observations in a
 mode-0600 staging file outside the repository, and install those exact bytes only after validation.
 Those endpoints use ordinary Git status plus selected metadata checks. Rejecting
 `core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
 uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
 hermetic closure.
-R8 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
+
+Candidate `0a6ece9c525ad7aad061f55b3edea83554891b42`, tree
+`1d5446f19d34b742feeb51429bf58a0706750757`, was not observed accepted or published on `main` as C9 in the bounded provider/history checks and
+receives zero credit. The required composite run under inherited `umask 077` had
+`ok 273 - refresh writer reports an injected second-replacement failure` as its last confirmed
+output line; the next observed
+stable diagnostic had prefix `refresh destination mode drifted: ` and path suffix
+`/root/output/pdf/workflow.pdf`. No complete raw transcript or whole-run digest of that required run
+was retained. A separate direct workflow-PDF self-test under `umask 022` passed 366/366 controls but
+is documentary only, was not checker-replayed as a C9 qualification run, and receives zero
+qualification credit. Its
+145,611-byte `r14` (SHA-256
+`2a882358e158ebeae06dbdf8d1cd35637d698f59ce217c1e2fbecf1d8787dfb7`) is archive-only and outside
+every accepted `prior_replay_*` lineage. The mutable provider ref
+`refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821` was observed at the candidate
+commit; it is a recovery locator, not authentication, durability, or accepted-on-main C9
+publication status or credit. The deterministic checker binds the recorded identifiers but does not
+query provider archive, main, or workflow-run endpoints or require the sibling commit object. The
+candidate had no L9, and GitHub exposed no workflow run for it on 21 August while `main` remained
+exact C8. Do not
+merge or cherry-pick the rejected commit or reuse/copy its `r14` or evidence. Reapplying reviewed
+non-evidentiary source/contract bytes onto a fresh C8 child is permitted; byte reuse transfers no
+execution, replay, qualification, or acceptance credit.
+The corrected same-version C9 is a fresh direct child of C8. Its changed-path set contains 32
+paths; the rejected candidate's changed-path set contained 31. The sole path-set membership
+difference is the fresh C9 addition of `scripts/check-mathematical-workflow-pdf-self-test.sh`;
+this is a set-membership statement, not a claim that shared paths have identical bytes. The added
+path carries one four-line test-fixture correction: set mode `0644` on six synthetic pre-existing workflow-PDF destinations
+under the inherited restrictive umask. The PDF, LaTeX source, production portability gate, and
+writer remain exact C8 bytes. This is not a sixth stale C8 binding or a theorem, estimator, PDF,
+scientific, or production-writer change. A third, disjoint latent compatibility correction selects
+exact GIL-enabled CPython 3.14.6 for local-recipe and hosted-post-setup C9 qualification because
+immutable V7 contains a minor-sensitive
+`ast.dump` projection that does not match C8's inherited 3.11 route; C8 failed before reaching that
+route. New v9 complete-function guards use raw source-slice hashes whose selected slices were equal
+in a documentary review on exact CPython 3.11.13, 3.12.11, 3.13.7, and 3.14.6, but immutable V7
+remains runtime-bound; that comparison receives no qualification or portability credit. One hosted
+pre-setup checkout-normalizer call plus four normal/optimized action-pin checker/self-test calls
+remain runner-Python surfaces outside the exact-3.14.6 lane. Runtime preflights observe a bounded
+command point; they do not
+authenticate the interpreter, bind its executable bytes, prove atomicity or absence of later path
+mutation, or enumerate every transitive process. The AST/source-route checks and hostile mutations
+are finite regression evidence for a fixed lexical roster, not proofs of semantic soundness, causal
+execution, or non-bypass. Dynamic namespace mutation and arbitrary execution custody remain
+outside those analyses. Exact whole-file, tree, replay, and human-review custody remain authoritative
+within their stated bounds. This is not a sixth stale binding, cross-minor portability
+result, interpreter authentication, or scientific evidence. A completely fresh one-shot `r14` is
+mandatory.
+
+R9 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
 and the deterministically derived receipt, then regenerates current-source last. The receipt binds
 and validates the predecessor capture, local record, and successor capture. Neither milestone may
 change scientific code, issue a v3/v4/v5 receipt, recreate a missing historical index, promote KSG
@@ -357,14 +418,15 @@ then create and check a fresh current Lean 4.33 replay/reseal before generating 
 manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
 observed run as 4.33, and never transfer a historical receipt to the current descendant.
 The current 4.33 receipt is
-`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`;
+`audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
 finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, finalized `r11`,
-and finalized `r12` receipts are exact-hash-bound prior replays. Here `r13` denotes only the
-thirteenth receipt in the versioned sequence that originated on 12 August, and therefore the
-fourteenth current-project replay receipt
-overall; the 11 August historical receipt is outside that versioned sequence. The suffix
-does not denote a calendar date, schema, theorem, review, assurance tier, or independence revision.
+finalized `r12`, and finalized `r13` receipts are exact-hash-bound prior replays. Here `r14` is the
+fourteenth accepted slot in the sequence beginning 12 August. Counting the separate 11 August
+historical receipt, it is the fifteenth receipt in the accepted/historical lineage. Rejected
+same-slot artifacts are additional zero-credit documents; no total count of every generated
+receipt is claimed. The suffix does not denote a calendar date, schema, theorem, review, assurance
+tier, or independence revision.
 The route receives current execution credit only when that exact receipt exists and validates.
 
 ## Workspace layout

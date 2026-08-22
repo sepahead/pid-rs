@@ -62,9 +62,9 @@ merging PID families or proof/certificate/application statuses.
 
 ## Status-separated research inventory
 
-This inventory is a coordination snapshot bound to the published C4/C5/C6/C7 engineering lineage,
-the operative composite-v8 successor contract, and the unchanged catalog, not a novelty claim or
-a completion percentage. The rows are **not additive**:
+This inventory is a coordination snapshot bound to the published C4/C5/C6/C7/C8 engineering
+lineage, the operative composite-v9 successor contract, and the unchanged catalog, not a novelty
+claim or a completion percentage. The rows are **not additive**:
 a dependency, workflow composition,
 validation package, theorem, solver obligation, and PID definition are different object types.
 Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` changed no PID definition,
@@ -72,10 +72,13 @@ estimator, theorem source, or scientific code. Published C5 commit
 `be862b155d710573ec95356fc1cbe9a96a2b83b9` preserves that zero-science scope. Published C6 commit
 `0c3afa0ab5b264370072a18d24655df35b90574c` preserves it again. Published C7 commit
 `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` preserves the same zero-science scope, but its hosted
-qualification terminated with two distinct failures and R7 is permanently unissued. Composite-v8
-defines the same bounded zero-science scope for the prospective direct-child C8 repair. Those are
-exact tree/diff observations for named published commits or the current frozen successor contract,
-not permission to infer the same about a future descendant without recomputing it.
+qualification terminated with two distinct failures and R7 is permanently unissued. Published C8
+commit `7c80d48db415279fc4d744eadb1515797606912b` preserves that scope again; its hosted
+qualification failed at the retained certified-SxPID2 binding edge and R8 is permanently unissued.
+Composite-v9 defines the same bounded zero-science scope for the prospective direct-child C9
+repair. Those are exact tree/diff observations for named published commits or the current frozen
+successor contract, not permission to infer the same about a future descendant without recomputing
+it.
 
 | Category | Landed inventory | Open inventory and boundary |
 |---|---:|---|
@@ -88,8 +91,8 @@ not permission to infer the same about a future descendant without recomputing i
 | PID/KSG-relevant source-written Lean theorems | **275** | The total is 246 bridge/convergence, 19 KSG integer-harmonic, 7 exact-log-product, and 3 descriptor-factorization theorems. No arbitrary theorem-count target is asserted. |
 | Exact solver obligations | **9** | Five PID-algebra QF\_LRA obligations and four conditional KSG QF\_UFLIRA obligations are landed; solver answers are not kernel proof objects. Future obligations follow the named open packets rather than a predeclared count. |
 | Categorical MGW SxPID3 | Stable implementation computes the **18-antichain** three-source lattice | The stronger assurance program is **0/5 Programs A--E** and **0/108 component-coordinates** complete. Do not transfer the implementation status into certification status. |
-| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5/C6/C7/C8 qualification lineage are engineering/evidence work and are counted separately. |
-| Mutable plan checklist | **28/70 checked; 42 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
+| Named core-science work units | **0/7 current units closed** | KSG M1c correspondence (1), PID2 revision 4 represented-sum assurance (1), and categorical MGW SxPID3 Programs A--E (5). Python verifier custody and the C4/C5/C6/C7/C8/C9 qualification lineage are engineering/evidence work and are counted separately. |
+| Mutable plan checklist | **31/73 checked; 42 open** | This is task bookkeeping, not evidence strength, scientific completion, or a weighted percent. |
 
 The catalog currently contains 73 method rows and 45 references: 17 paper-defined, 15
 paper-derived, and 41 project-defined. Every row records `scientific_novelty_claim = none`.
@@ -181,16 +184,19 @@ experiments, and review.
 Published C4 failed hosted qualification and R4 remained unissued. Published C5 also failed its
 attempt-1 hosted qualification, so R5 is permanently unissued. Published C6 failed because `rg`
 was absent from the hosted dependency closure, so R6 is permanently unissued. Published C7 then
-exposed two distinct hosted defects, so R7 is permanently unissued. Composite-v8 C8/R8 is the
-smallest append-only two-defect correction and the final bounded evidence-contract migration in
-this phase. After exact C8 local and attempt-1 hosted qualification issues R8, work must move to
+exposed two distinct hosted defects, so R7 is permanently unissued. Published C8 then exposed one
+five-binding retained operational-custody defect through both repository CI and dedicated-v8. No
+L8 record is installed; no operator-invocation history is claimed. R8 is permanently unissued.
+Composite-v9 C9/R9 is the bounded selected
+append-only correction and the current evidence-contract migration in this phase. After
+exact C9 local and attempt-1 hosted qualification issues R9, work must move to
 the seven named P4 science units and their publication packets. Do not start another
 repository-wide harness, receipt generation, formal
 replay, schema family, or CI expansion merely because it is possible. Additional infrastructure is
 authorized only when a named scientific claim packet identifies a concrete failure mode, shows
 that the existing machinery cannot express or check it, and bounds the smallest required change.
 
-The harness is a means to trustworthy research, not the research endpoint. Priority after C8/R8 is
+The harness is a means to trustworthy research, not the research endpoint. Priority after C9/R9 is
 KSG M1c correspondence, PID2 revision 4, categorical MGW SxPID3 Programs A--E and 108 coordinates,
 high-value consumer APIs with exact object identities, and thesis/publication-ready positive and
 negative results. Ecosystem usefulness is a downstream requirement, not permission to replace the
@@ -347,10 +353,29 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   direct-child C7 `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` with the dependency repair and
   fresh replay r12. Exact-C7 CodeQL succeeded, while dedicated-v7 failed during setup on a 39-hex
   upload-action ref and repository CI separately failed at the final mathematical-workflow
-  cross-toolchain layout comparator; R7 is permanently unissued. Composite-v8 is the bounded
-  append-only replacement: publish direct-child C8 with those two operational repairs and fresh
-  replay r13; require exact-C8 local, attempt-1 CI, CodeQL, and dedicated-v8 success; then permit
-  direct-child R8 to add
+  cross-toolchain layout comparator; R7 is permanently unissued. Composite-v8 published exact
+  direct-child C8 `7c80d48db415279fc4d744eadb1515797606912b` with those two operational
+  repairs and fresh replay r13. Its CodeQL route passed, while repository CI and dedicated-v8 both
+  reached the retained certified-SxPID2 checker and failed on
+  `certified SxPID2 claim check failed: release-audit just dependency line exact digest changed`.
+  Read-only sequential digest-repin analysis found the exact five changed operational
+  bindings; source reconstruction guards that difference set without establishing unique
+  counterfactual necessity or order. No L8 record is installed; no operator-invocation history is
+  claimed. R8 is permanently unissued. Composite-v9 is the bounded append-only
+  replacement: publish direct-child C9 with that five-binding custody repair, the disjoint
+  six-destination pre-existing refresh-destination fixture correction, a third disjoint exact
+  GIL-enabled CPython 3.14.6 correction for the local recipe and hosted post-setup gates, and fresh
+  replay r14. The fresh C9 changed-path set contains 32 paths; the rejected candidate's changed-path
+  set contained 31. The sole path-set membership difference is the fresh C9 addition of
+  `scripts/check-mathematical-workflow-pdf-self-test.sh`; this is a set-membership statement, not a
+  claim that shared paths have identical bytes. One hosted pre-setup
+  checkout-normalizer call plus
+  four normal/optimized action-pin checker/self-test calls remain runner-Python surfaces outside the
+  exact-3.14.6 lane. Exact source-slice equality observed on CPython 3.11.13, 3.12.11, 3.13.7, and
+  3.14.6 is documentary only and receives no qualification or portability credit;
+  require exact-C9 local,
+  attempt-1 CI, CodeQL, and dedicated-v9 success; then permit
+  direct-child R9 to add
   only its durable local closure record, successor hosted capture, and typed receipt while
   regenerating current-source last. Neither commit may alter scientific code or promote M1a beyond
   `integration_no_go`.
@@ -384,7 +409,7 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   schema-v2 scientific boundary. Receipt r4 is finalized and exact-SHA hosted replay is green.
 - [x] After the KSG M1a claim, runtime, lifecycle, CI, and documentation bytes are frozen, preserve
   finalized `r4` byte-for-byte and generate append-only `r5` as the fifth receipt in the versioned
-  sequence that originated on 12 August and the sixth current-project replay receipt overall. The
+  sequence that originated on 12 August and the sixth receipt in the accepted/historical lineage. The
   11 August historical receipt is outside that sequence; the suffix does not denote a calendar
   date, schema, theorem, review, or independence revision. No Lean theorem source changes, and r5
   receives execution credit only when its exact receipt exists and validates under normal and
@@ -393,8 +418,8 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] After the M1a composite custody-correction bytes are frozen, preserve finalized `r5`
   byte-for-byte and generate append-only
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r6.json` as the sixth
-  receipt in the versioned sequence that originated on 12 August and the seventh current-project
-  replay receipt overall. The 11 August
+  receipt in the versioned sequence that originated on 12 August and the seventh receipt in the
+  accepted/historical lineage. The 11 August
   historical receipt is outside that sequence; the suffix does not denote a calendar date, schema,
   theorem, review, assurance tier, or independence revision. No Lean theorem source changes, and
   r6 receives execution credit only when its exact receipt exists and validates under normal and
@@ -403,8 +428,8 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] After the failed public correction observation and hosted-recovery bytes are frozen, preserve
   finalized `r6` byte-for-byte and generate append-only
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-13-r7.json` as the
-  seventh receipt in the versioned sequence that originated on 12 August and the eighth
-  current-project replay receipt overall. The 11 August historical receipt remains outside that
+  seventh receipt in the versioned sequence that originated on 12 August and the eighth receipt in
+  the accepted/historical lineage. The 11 August historical receipt remains outside that
   sequence; the suffix does not denote a calendar date, schema, theorem, review, assurance tier,
   or independence revision. No Lean theorem source changes, and r7 receives execution credit only
   when its exact receipt exists and validates under normal and optimized custody checks. Finalized
@@ -413,8 +438,8 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] After the failed r7-based local seal is recorded and the append-only verifier repair is frozen,
   preserve finalized `r7` byte-for-byte and generate append-only
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-14-r8.json` as the eighth
-  receipt in the versioned sequence that originated on 12 August and the ninth current-project
-  replay receipt overall. The 11 August historical receipt remains outside that sequence; the
+  receipt in the versioned sequence that originated on 12 August and the ninth receipt in the
+  accepted/historical lineage. The 11 August historical receipt remains outside that sequence; the
   suffix does not denote a calendar date, schema, theorem, review, assurance tier, or independence
   revision. No Lean theorem source changes, and r8 receives execution credit only when its exact
   receipt exists and validates under normal and optimized custody checks. Finalized r8 is exact
@@ -423,8 +448,8 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] After every composite-v4 C4 operational byte, process document, and PDF is frozen, preserve
   finalized r8 byte-for-byte and generate append-only
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-15-r9.json` as the ninth
-  receipt in the versioned sequence that originated on 12 August and the tenth current-project
-  replay receipt overall. The 11 August historical receipt remains outside that sequence. The
+  receipt in the versioned sequence that originated on 12 August and the tenth receipt in the
+  accepted/historical lineage. The 11 August historical receipt remains outside that sequence. The
   suffix does not denote a calendar date, schema, theorem, review, assurance tier, or independence
   revision. No Lean theorem source changes, and r9 receives execution credit only when that exact
   receipt exists and validates under normal and optimized custody checks. Generate it only after
@@ -434,13 +459,13 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   mismatch against the current-source generator's newline-free compact projection. Preserve that
   exact 132,710-byte candidate at the explicit `prepublication-closure-rejected-2026-08-17` path
   as bounded execution-custody evidence, with zero C4-publication, hosted, scientific,
-  accepted-current-replay, or independence credit. Final r9 was generated fresh, validated, and
+  accepted-current-replay, or independence credit. Finalized r9 was generated fresh, validated, and
   published in C4 without overwriting or relabelling the rejected document.
 - [x] After all C5 operational bytes settle, preserve finalized r6, r7, r8, and r9 as exact prior
   evidence and generate
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`. Here r10
   is the tenth receipt in the versioned sequence that originated on 12 August and the eleventh
-  current-project replay receipt overall; the 11 August historical receipt is outside that
+  receipt in the accepted/historical lineage; the 11 August historical receipt is outside that
   sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
   or independence revision. C5 receives execution credit only when that exact receipt exists and
   validates under normal and optimized custody checks; regenerate current-source last. Published
@@ -454,8 +479,10 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   and receipt-finalization checks, but the required local composite-v5 recipe then exposed a stale
   positive fixture: under its intentional `umask 077`, the checkout-normalizer self-test created a
   claimed mode-0644 residue as mode 0600. Archive commit
-  `062025c3fc283db9bdb105219dbcc82719771175` retains the exact candidate/raw receipt at
-  `archive/composite-v5-rejected-umask-20260818` with zero main-line authority. The corrected suite
+  `062025c3fc283db9bdb105219dbcc82719771175` has the rejected candidate's exact tree and raw receipt.
+  The mutable provider ref `refs/heads/archive/composite-v5-rejected-umask-20260818` was observed at
+  that archive commit. That dated observation supplies a recovery locator, not durable preservation,
+  authentication, accepted-on-main C5 publication status or credit, or main-line authority. The corrected suite
   makes its restrictive umask explicit, binds causal fixture modes, and adds a separate 0600
   hostile. Do not merge, relabel, or credit the withdrawn candidate; reopen C5 only with all
   corrected bytes frozen, a fresh one-shot `r10`, current-source regenerated last, and the complete
@@ -476,7 +503,7 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] After all C6 operational bytes settle, preserve finalized r10 byte-for-byte and generate
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json`. Here r11
   is the eleventh receipt in the versioned sequence that originated on 12 August and the twelfth
-  current-project replay receipt overall; the 11 August historical receipt remains outside that
+  receipt in the accepted/historical lineage; the 11 August historical receipt remains outside that
   sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
   or independence revision. No Lean theorem source changes. C6 receives execution credit only
   when that exact receipt exists and validates under normal and optimized custody checks; generate
@@ -487,7 +514,7 @@ sources and evidence; a vote or same-system consensus is not scientific independ
 - [x] After every non-cut C7 byte settles, preserve finalized r11 byte-for-byte and generate
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json`. Here r12
   is the twelfth receipt in the versioned sequence that originated on 12 August and the thirteenth
-  current-project replay receipt overall; the 11 August historical receipt remains outside that
+  receipt in the accepted/historical lineage; the 11 August historical receipt remains outside that
   sequence. The suffix does not denote a calendar date, schema, theorem, review, assurance tier,
   or independence revision. No Lean theorem source changes. C7 receives execution credit only
   when that exact receipt exists and validates under normal and optimized custody checks.
@@ -496,19 +523,77 @@ sources and evidence; a vote or same-system consensus is not scientific independ
   on a 39-hex upload-action ref and repository CI separately failed at the reached final
   mathematical-workflow cross-toolchain layout comparator. No L7 record is installed and R7 is
   permanently unissued; no rerun or predecessor-transfer credit applies.
-- [ ] After every non-cut C8 byte settles, preserve finalized r12 byte-for-byte and generate
+- [x] After every non-cut C8 byte settled, preserve finalized r12 byte-for-byte and generate
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`. Here r13
   is the thirteenth receipt in the versioned sequence that originated on 12 August and the
-  fourteenth current-project replay receipt overall; the 11 August historical receipt remains
+  fourteenth receipt in the accepted/historical lineage; the 11 August historical receipt remains
   outside that sequence. The suffix does not denote a calendar date, schema, theorem, review,
   assurance tier, or independence revision. No Lean theorem source changes. C8 receives execution
   credit only when that exact receipt exists and validates under normal and optimized custody
   checks.
-- [ ] Publish composite-v8 C8 and conditional R8 as separate unsigned, human-attributed
-  fast-forward milestones. C8 must be the exact direct child of C7, retain both failed C7 hosted
-  observations and exact publication bytes, add only the action-pin and workflow-PDF comparator
-  repairs, publish fresh r13, and regenerate current-source last. Only fresh exact-C8 local, CI,
-  CodeQL, and dedicated-v8 success permits R8; otherwise R8 remains unissued.
+- [x] Publish composite-v8 C8 and adjudicate conditional R8. C8 is exact commit
+  `7c80d48db415279fc4d744eadb1515797606912b`; CodeQL passed, while repository CI and
+  dedicated-v8 both reached the retained certified-SxPID2 checker and failed on
+  `certified SxPID2 claim check failed: release-audit just dependency line exact digest changed`.
+  No L8 record is installed; no operator-invocation history is
+  claimed. R8 is permanently unissued; predecessor reruns and partial successes receive zero
+  credit.
+- [x] Reject C9 candidate `0a6ece9c525ad7aad061f55b3edea83554891b42`, tree
+  `1d5446f19d34b742feeb51429bf58a0706750757`, which was not observed accepted or published on
+  `main` as C9 in the bounded provider/history checks, with zero credit. The required inherited-
+  `umask 077` composite run's last confirmed output line was
+  `ok 273 - refresh writer reports an injected second-replacement failure`; the next
+  observed stable diagnostic had prefix `refresh destination mode drifted: ` and path suffix
+  `/root/output/pdf/workflow.pdf`. No complete raw transcript or whole-run digest of that required
+  run was retained. A separate direct workflow-PDF self-test under `umask 022` passed 366/366
+  controls but is documentary only, was not checker-replayed as a C9 qualification run, and receives
+  zero qualification credit.
+  Its 145,611-byte r14, SHA-256
+  `2a882358e158ebeae06dbdf8d1cd35637d698f59ce217c1e2fbecf1d8787dfb7`, is archive-only outside
+  `prior_replay_*`. Mutable provider ref
+  `refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821` was observed at the
+  candidate commit but is only a mutable recovery locator, not authentication, durability,
+  accepted-on-main C9 publication status or credit, or qualification. The deterministic checker
+  binds the recorded identifiers but does not query provider archive, main, or workflow-run
+  endpoints or require the sibling commit object. There is no L9;
+  GitHub exposed no workflow run for the candidate on 21 August and still resolved `main` to exact
+  C8. Do not merge or cherry-pick the rejected commit or reuse/copy its `r14` or evidence.
+  Reapplying reviewed non-evidentiary source/contract bytes onto a fresh C8 child is permitted; byte
+  reuse transfers no execution, replay, qualification, or acceptance credit. Rebuild the same C9
+  slot as a fresh direct child of C8. The fresh C9 changed-path set contains 32 paths; the rejected
+  candidate's changed-path set contained 31. The sole path-set membership difference is the fresh
+  C9 addition of `scripts/check-mathematical-workflow-pdf-self-test.sh`; this is a set-membership
+  statement, not a claim that shared paths have identical bytes. Normalize exactly six synthetic
+  pre-existing refresh-destination fixture files to `0644`, retain the exact C8
+  PDF/source/production gate, and generate a completely fresh one-shot r14. The repair is not a
+  sixth stale C8 binding, production-writer change, PDF change, theorem change, estimator change,
+  or scientific result. A third disjoint operational correction selects exact GIL-enabled CPython
+  3.14.6 for the local recipe and hosted post-setup gates. One hosted pre-setup checkout-normalizer
+  call plus four normal/optimized action-pin checker/self-test calls remain runner-Python surfaces
+  outside that lane. Exact source-slice equality observed on CPython 3.11.13, 3.12.11, 3.13.7, and
+  3.14.6 is documentary only and receives no qualification or portability credit. Bounded runtime
+  preflights do not authenticate interpreter bytes, prove atomicity or TOCTOU absence, or enumerate
+  every transitive process. The AST/source-route checks and hostile mutations are finite regression
+  evidence for a fixed lexical roster, not proofs of semantic soundness, causal execution, or
+  non-bypass. Dynamic namespace mutation and arbitrary execution custody remain outside those
+  analyses. Exact whole-file, tree, replay, and human-review custody remain authoritative within
+  their stated bounds.
+- [ ] After every non-cut C9 byte settles, preserve finalized r13 byte-for-byte and generate
+  `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`. Here r14
+  is the fourteenth accepted slot in the sequence beginning 12 August. Counting the separate 11
+  August historical receipt, it is the fifteenth receipt in the accepted/historical lineage.
+  Rejected same-slot artifacts are additional zero-credit documents; no total count of every
+  generated receipt is claimed. The suffix does not denote a calendar date, schema, theorem,
+  review, assurance tier, or independence revision. No Lean theorem source changes. C9 receives
+  execution credit only when that exact receipt exists and validates under normal and optimized
+  custody checks.
+- [ ] Publish composite-v9 C9 and conditional R9 as separate unsigned, human-attributed
+  fast-forward milestones. C9 must be the exact direct child of C8, retain the exact C8 publication
+  family and failed hosted observations, repin only the five stale operational bindings and the
+  binding-difference hostile fixture, correct only the six-destination pre-existing workflow-PDF
+  destination fixture, publish no new PDF, publish fresh r14, and regenerate
+  current-source last. Only fresh exact-C9 L9, CI,
+  CodeQL, and dedicated-v9 success permits the exact four-path R9; otherwise R9 remains unissued.
 - [ ] Run Rust, Python, method/catalog, release/review, formal, PDF, security, identity, package,
   platform, and downstream gates proportionate to changed surfaces.
 - [ ] Commit unsigned with human-only attribution, fast-forward push to `main`, and require terminal

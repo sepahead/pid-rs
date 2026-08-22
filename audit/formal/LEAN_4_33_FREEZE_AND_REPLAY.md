@@ -6,7 +6,7 @@ The active formal project is pinned exactly to `leanprover/lean4:v4.33.0`, Lean 
 [`lake-manifest.json`](lean/lake-manifest.json). The active policy is machine-readable in
 [`toolchain-freeze-policy.json`](lean/toolchain-freeze-policy.json), and the bounded Darwin replay
 is recorded separately in
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json).
 The [first 11 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -20,13 +20,15 @@ and [finalized r9 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project
 and [finalized r10 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json)
 and [finalized r11 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json)
 and [finalized r12 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json)
+and [finalized r13 replay](../evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json)
 remain byte-preserved prior execution evidence. The 11 August receipt predates the hardened
-runner; none is current runner custody. The `r13` suffix denotes only the thirteenth receipt in the
-versioned sequence that originated on 12 August, and therefore the fourteenth current-project replay
-receipt overall; the 11 August historical receipt is outside that versioned sequence. The suffix
-does not denote a calendar date, replay schema, theorem, review, assurance tier, or independence
-revision; the current receipt remains schema v2 and receives execution credit only when it exists
-and validates.
+runner; none is current runner custody. The `r14` suffix denotes the fourteenth accepted slot in the
+sequence beginning 12 August. Counting the separate 11 August historical receipt, it is the
+fifteenth receipt in the accepted/historical lineage. Rejected same-slot artifacts are additional
+zero-credit documents; no total count of every generated receipt is claimed. The suffix does not
+denote a calendar date, replay schema, theorem, review, assurance tier, or independence revision;
+the current receipt remains schema v2 and receives execution credit only when it exists and
+validates.
 
 One additional schema-v2 document is retained as a failed-publication attempt rather than as an
 accepted current member of that sequence. Its [bounded execution and receipt-finalization
@@ -43,6 +45,52 @@ composite checker's 132,894 bytes with one terminal line feed hash to
 receives no C4-publication, hosted, scientific, accepted-current-replay, or independence credit.
 The corrected current receipt must bind those raw bytes as retained pre-publication closure
 evidence outside the accepted replay lineage, without renumbering or relabelling them.
+
+Published C8's repository CI and dedicated-v8 route both ended at the exact marker
+`certified SxPID2 claim check failed: release-audit just dependency line exact digest changed`.
+That is the first reached comparison, not a complete mismatch inventory.
+
+A later same-slot `r14` from C9 candidate
+`0a6ece9c525ad7aad061f55b3edea83554891b42`, tree
+`1d5446f19d34b742feeb51429bf58a0706750757`, which was not observed accepted or published on `main`
+as C9 in the bounded provider/history checks, is likewise outside the accepted sequence. Its exact
+145,611 bytes hash to
+`2a882358e158ebeae06dbdf8d1cd35637d698f59ce217c1e2fbecf1d8787dfb7`. Lean execution and
+receipt finalization passed for those candidate bytes, but the subsequent required
+`just ksg-composite-v9` run inherited `umask 077`; its last confirmed output line was
+`ok 273 - refresh writer reports an injected second-replacement failure`, and the next observed
+stable diagnostic had prefix `refresh destination mode drifted: ` and path suffix
+`/root/output/pdf/workflow.pdf`. No complete raw transcript or whole-run digest of that required run
+was retained. A separate direct workflow-PDF self-test under `umask 022` passed 366/366 controls but
+is documentary only, was not checker-replayed as a C9 qualification run, and receives zero
+qualification credit. No L8 record is installed; no operator-invocation history is claimed. No L9
+exists; GitHub exposed no workflow run for the candidate on 21 August and
+still resolved `main` to exact C8. Mutable provider ref
+`refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821` was observed at the candidate
+commit and is only a mutable recovery locator, not authentication, durability, or accepted-on-main
+C9 publication. The deterministic checker binds the recorded identifiers but does not query the
+provider archive, main, or workflow-run endpoints or require the sibling commit object. The rejected
+receipt receives zero C9/R9,
+accepted-current-replay, scientific, hosted, qualification, or independence credit; it must not
+enter `prior_replay_*`, be copied, or be relabelled. A corrected fresh direct child of C8 must
+generate a completely fresh one-shot `r14` after every operational byte settles. Reusing the same
+relative pathname and sequence slot does not identify the bytes or transfer credit. The fresh C9
+changed-path set contains 32 paths; the rejected candidate's changed-path set contained 31. The
+sole path-set membership difference is the fresh C9 addition of
+`scripts/check-mathematical-workflow-pdf-self-test.sh`; this is a set-membership statement, not a
+claim that shared paths have identical bytes. That path is not a sixth stale binding,
+production-writer, PDF, theorem, or estimator change.
+Local-recipe and hosted-post-setup qualification select exact GIL-enabled CPython 3.14.6, while one
+hosted pre-setup checkout-normalizer call plus four normal/optimized action-pin checker/self-test
+calls remain runner-Python surfaces outside that lane. Exact
+source-slice equality observed on CPython 3.11.13, 3.12.11, 3.13.7, and 3.14.6 is documentary only
+and receives no qualification or portability credit; bounded preflights do not authenticate
+interpreter bytes, prove atomicity or TOCTOU absence, or enumerate every transitive process. The
+AST/source-route checks and hostile mutations are finite regression evidence for a fixed lexical
+roster, not proofs of semantic soundness, causal execution, or non-bypass. Dynamic namespace
+mutation and arbitrary execution custody remain outside those analyses. Exact whole-file, tree,
+replay, and human-review custody remain authoritative within their stated bounds.
+
 The exact dependency revisions were also checked against the separately generated manifest in the
 bounded, retrospective
 [`manifest-regeneration observation`](../evidence/lean-4.33.0-manifest-regeneration-2026-08-11.json).
@@ -131,8 +179,18 @@ path or executable authority:
 ```text
 /opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14 \
   -I -S -B \
-  /private/tmp/pid-rs-sxpid2-atom-bridge.LHX9JM/repo/scripts/generate-lean-4.33-replay.py
+/private/tmp/pid-rs-c9-rebuild.vVNPnk/repo/scripts/generate-lean-4.33-replay.py
 ```
+
+Finalized r6--r13 receipts retain their exact historical observed routes and bytes. Before r14
+exists, the hostile suite uses r13 only as a non-evidentiary shape seed inside a disposable
+fixture: it rehomes the synthetic execution root, command working directories, dependency
+working directories, and the nine root-check output streams to the reviewed C9 route. It also
+refreshes all checker-bound active/current and preservation inventory fields in the disposable
+fixture and recomputes its synthetic projection/custody values. Every one of those changes is
+confined to the non-evidentiary fixture: it never rewrites a retained receipt or assigns fresh
+execution credit. The exact historical receipts remain independently hash- and schema-bound, while
+the simulated r14 route must satisfy the current literal route checks.
 
 Any extra argument is rejected before runner-controlled repository/archive/output lookup,
 repository-module load, child launch, or write. The runner opens the pinned
@@ -159,23 +217,36 @@ command streams, current evidence, and claim inventories. Within `custody_gate_s
 checker digest is omitted from that projection to avoid a checker/receipt digest cycle; the
 self-test digest remains reviewed, and both custody digests are compared directly with live files.
 Before any replay command, the zero-argument runner independently checks the complete acyclic
-composite-v8 cut state from source bytes. The replay-projection line is exactly the unique zero
-placeholder. The Lean composite-v8 scalar and its v8 operational-map row are identical nonzero
-literals equal to the final composite-v8 checker SHA-256. That v8 checker contains one nonzero
+composite-v9 cut state from source bytes. The replay-projection line is exactly the unique zero
+placeholder. The Lean composite-v9 scalar and its v9 operational-map row are identical nonzero
+literals equal to the final composite-v9 checker SHA-256. That v9 checker contains one nonzero
 `EXPECTED_NORMALIZED_LEAN_CHECKER_SHA256` literal equal to the Lean checker hash after normalizing
-exactly the projection, v8 scalar, and v8 operational row to their exact placeholder forms. The
-immutable composite-v4/v5/v6/v7 checkers and r9/r10/r11/r12 receipts remain prior evidence; none
-is rewritten, and the ordinary retained v4/v5/v6/v7 operational rows are outside this normalization.
+exactly the projection, v9 scalar, and v9 operational row to their exact placeholder forms. The
+immutable composite-v4/v5/v6/v7/v8 checkers and r9/r10/r11/r12/r13 receipts remain prior evidence;
+none is rewritten, and the ordinary retained v4/v5/v6/v7/v8 operational rows are outside this
+normalization.
 
-The cut is finalized in one direction. Freeze the v8 self-test and every non-cut Lean input first;
-compute `H_L` from the three-placeholder Lean normalization and place only `H_L` in the v8
-checker; hash those final v8 checker bytes as `H_V`; place the same `H_V` in only the Lean v8 scalar
-and v8 operational row; and keep the replay projection as the zero expression until the one-shot
-generator succeeds. Changing the v8 self-test, documentation, or any other normalized Lean input
+The cut is finalized in one direction. Freeze the v9 self-test and every non-cut Lean input first;
+compute `H_L` from the three-placeholder Lean normalization and place only `H_L` in the v9
+checker; hash those final v9 checker bytes as `H_V`; place the same `H_V` in only the Lean v9 scalar
+and v9 operational row; and keep the replay projection as the zero expression until the one-shot
+generator succeeds. Changing the v9 self-test, documentation, or any other normalized Lean input
 after computing `H_L` invalidates the sequence. Missing, duplicated, stale, mismatched, causally
 changed, or prematurely finalized cuts stop the runner before publication. The self-tests exercise
 the positive construction plus checker-drift, projection-finalized, missing-cut, duplicated-cut,
 mismatched-cut, normalized-cut, and operational-map-omission mutations.
+The v9 hostile suite must also exercise the live pre-replay state: when the projection is the unique
+zero placeholder and the scalar/map cuts bind the final v9 checker, the normalized-Lean binding in
+that checker must be one unique one-line literal equal to the three-placeholder Lean hash. Synthetic
+cut mutations do not establish this live readiness predicate. The Lean self-test therefore calls
+the generator's own side-effect-free live cut validator in that state and emits
+`live-pre-replay-ready`, which the replay transcript preserves; the distinct
+`authoring-placeholders-not-generator-ready` result carries no readiness credit. The first fresh-C9 generator
+invocation demonstrated the distinction by failing closed on a multiline binding before any Lean
+child command, build/config creation, or receipt publication; it created no `r14`. The cut was reset
+to placeholders, the live guard was added, and every affected digest must be recomputed before a
+separately reviewed later invocation. That preflight failure has zero replay, execution,
+qualification, or scientific credit.
 The separate fully projected `replay_custody_gate_sha256` records the checker and self-test bytes
 that were stable at both replay endpoints. The runner first no-clobber-publishes a provisional
 receipt with the zero-placeholder checker. It constructs the receipt through a retained descriptor

@@ -19,7 +19,7 @@ The 339-entry source-written aggregate Lean surface and all 246 named source the
 replay under the frozen Lean 4.33.0 project. Two separately SHA-bound semantic contracts compile
 with `lean -t 0`. The self-test rejects 80 registered source/semantic changes and 11 hostile
 release-identity probes under normal and optimized Python. The current versioned replay is
-[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json).
+[`lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json).
 The [first 11 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-11.json)
 and [first 12 August replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12.json)
 and [finalized r2 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-12-r2.json)
@@ -33,10 +33,12 @@ and [finalized r9 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-curren
 and [finalized r10 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json)
 and [finalized r11 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json)
 and [finalized r12 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json)
-remain byte-preserved prior evidence. Here `r13` denotes only the thirteenth receipt in the versioned
-sequence that originated on 12 August, and therefore the fourteenth current-project replay receipt
-overall; the 11 August historical receipt is outside that versioned sequence. The suffix does not
-denote a calendar date, schema, theorem, review, assurance tier, or independence revision. The
+and [finalized r13 replay](../../audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json)
+remain byte-preserved prior evidence. Here `r14` is the fourteenth accepted slot in the sequence
+beginning 12 August. Counting the separate 11 August historical receipt, it is the fifteenth receipt
+in the accepted/historical lineage. Rejected same-slot artifacts are additional zero-credit
+documents; no total count of every generated receipt is claimed. The suffix does not denote a
+calendar date, schema, theorem, review, assurance tier, or independence revision. The
 current route receives execution credit only when its exact receipt exists and validates.
 [`phase-a-verification-2026-08-10.md`](phase-a-verification-2026-08-10.md) remains the historical
 4.32.0 promotion record; its observed bytes and version are intentionally not rewritten.

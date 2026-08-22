@@ -9,6 +9,82 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Published composite-v8 C8 as exact commit `7c80d48db415279fc4d744eadb1515797606912b`
+  with tree `ba01abdd86a542b359df75e9058fccf28cfc5a3d`. Attempt-1 CodeQL passed;
+  repository CI and dedicated-v8 both reached the retained certified-SxPID2 checker and failed on
+  the exact `certified SxPID2 claim check failed: release-audit just dependency line exact digest
+  changed` marker. The first marker is
+  not the complete mismatch inventory. Read-only sequential digest-repin analysis found the exact
+  five changed bindings for the release-audit line, complete CI workflow, complete justfile,
+  complete scripts guide, and complete formal-PDF aggregate gate; source reconstruction guards
+  that difference set without establishing unique counterfactual necessity or order. No L8 record
+  is installed; no operator-invocation history is claimed. R8 is permanently unissued.
+  Composite-v9 is the bounded selected append-only
+  direct-child successor. It retains the exact C8 publication family, repins only those five
+  operational bindings and their binding-difference hostile fixture, retires the v8 workflow fail
+  closed, publishes no new PDF, and changes no certified
+  theorem statement, mathematical-claim semantic content, estimator result, or numerical result.
+  A first candidate, `0a6ece9c525ad7aad061f55b3edea83554891b42` (tree
+  `1d5446f19d34b742feeb51429bf58a0706750757`), was not observed accepted or published on `main` as
+  C9 in the bounded provider/history checks.
+  The required inherited-`umask 077` composite run's last confirmed output line was
+  `ok 273 - refresh writer reports an injected second-replacement failure`; the next observed
+  stable diagnostic had prefix `refresh destination mode drifted: ` and path suffix
+  `/root/output/pdf/workflow.pdf`. No complete raw transcript or whole-run digest of that required
+  run was retained. A separate direct workflow-PDF self-test under `umask 022` passed 366/366
+  controls but is documentary only, was not checker-replayed as a C9 qualification run, and receives
+  zero qualification credit. Its 145,611-byte `r14` (SHA-256
+  `2a882358e158ebeae06dbdf8d1cd35637d698f59ce217c1e2fbecf1d8787dfb7`) is archive-only outside
+  `prior_replay_*`; the mutable provider ref
+  `refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821` was observed at that
+  commit but grants no authentication, accepted-on-main C9 publication status or credit,
+  qualification, durability, or acceptance. The deterministic checker binds the recorded
+  identifiers but does not query provider archive, main, or workflow-run endpoints or require the
+  sibling commit object.
+  The candidate had no L9; GitHub exposed no workflow run for it on 21 August and still resolved
+  `main` to exact C8. It receives zero C9/R9, scientific,
+  accepted-current-replay, or independence credit. Do not merge or cherry-pick the rejected commit
+  or reuse/copy its `r14` or evidence. Reapplying reviewed non-evidentiary source/contract bytes
+  onto a fresh C8 child is permitted; byte reuse transfers no execution, replay, qualification, or
+  acceptance credit. The fresh same-version C9 changed-path set contains 32 paths; the rejected
+  candidate's changed-path set contained 31. The sole path-set membership difference is the fresh
+  C9 addition of `scripts/check-mathematical-workflow-pdf-self-test.sh`; this is a set-membership
+  statement, not a claim that shared paths have identical bytes. As an additional disjoint fixture
+  correction, it
+  makes six
+  synthetic pre-existing refresh-destination fixture files explicitly mode `0644` under inherited
+  `umask 077`. Separate exact byte comparisons verify that the PDF, LaTeX source, production gate,
+  and embedded writer equal C8; the checker admits the workflow-PDF self-test only when it equals
+  exact C8 bytes plus the two reviewed insertion blocks. This fixture correction is not a sixth C8
+  stale binding or a mathematical, estimator, PDF, production-writer, or scientific change.
+  A third, disjoint operational correction selects exact GIL-enabled CPython 3.14.6 for the C9 local
+  recipe and hosted post-setup qualification lane: C8 selected 3.11 but failed before reaching the retained
+  minor-sensitive V7 `ast.dump` projection. The v9 checker replaces that demonstrated dependency
+  in its new guards with raw complete-function source-slice hashes whose selected slices were equal
+  in a documentary review on exact CPython 3.11.13, 3.12.11, 3.13.7, and 3.14.6; immutable V7
+  remains runtime-bound and the comparison receives no qualification or portability credit. The
+  one hosted pre-setup checkout-normalizer call plus four normal/optimized action-pin
+  checker/self-test calls remain runner-Python surfaces outside the exact-3.14.6 lane. Runtime
+  preflights do not authenticate the interpreter,
+  bind executable bytes, prove atomicity or absence of later path mutation, or enumerate every
+  transitive process. The AST/source-route checks and hostile mutations are finite regression
+  evidence for a fixed lexical roster, not proofs of semantic soundness, causal execution, or
+  non-bypass. Dynamic namespace mutation and arbitrary execution custody remain outside those
+  analyses. Exact whole-file, tree, replay, and human-review custody remain authoritative within
+  their stated bounds.
+  This selection is not a sixth stale binding, cross-minor portability result, interpreter
+  authentication, execution-credit transfer, or scientific change.
+  Claim-packet edits are limited to replay-custody pointer prose. The current replay pointer becomes
+  [`r14`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json),
+  with finalized `r13` byte-preserved as prior evidence. Here `r14` is the fourteenth accepted slot
+  in the sequence beginning 12 August. Counting the separate 11 August historical receipt, it is
+  the fifteenth receipt in the accepted/historical lineage. Rejected same-slot artifacts are
+  additional zero-credit documents; no total count of every generated receipt is claimed. The
+  suffix does not denote a calendar date, schema, theorem, review, assurance tier, or independence
+  revision. Conditional R9 remains an exact four-path delta after fresh exact-C9 L9 and fresh
+  attempt-1 CI, CodeQL, and dedicated-v9 success: local record, successor capture, derived receipt,
+  and current-source regenerated last. This is project-defined operational custody repair, not
+  scientific, authentication, independence, release, or application evidence.
 - Published composite-v7 C7 as exact commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e`.
   Attempt-1 CodeQL passed; dedicated-v7 failed during job setup on one 39-hex upload-action ref;
   repository CI separately completed with 44 successful jobs and one formal-PDF failure at the
@@ -24,7 +100,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   [`r13`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r13.json);
   finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, finalized `r11`, and finalized
   `r12` remain exact prior evidence. Here `r13` is the thirteenth receipt in the versioned sequence
-  that originated on 12 August and the fourteenth current-project replay receipt overall; the
+  that originated on 12 August and the fourteenth receipt in the accepted/historical lineage; the
   11 August historical receipt is outside that versioned sequence. The suffix does not denote a
   calendar date, schema, theorem, review, assurance tier, or independence revision. No Lean
   theorem source changes. C8 receives execution credit only when exact r13 exists and validates
@@ -43,7 +119,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   [`r12`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r12.json);
   finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, and finalized
   `r11` remain exact prior evidence. Here `r12` is the twelfth receipt in the versioned sequence
-  that originated on 12 August and the thirteenth current-project replay receipt overall; the
+  that originated on 12 August and the thirteenth receipt in the accepted/historical lineage; the
   11 August historical receipt is outside that versioned sequence. The suffix does not denote a
   calendar date, schema, theorem, review, assurance tier, or independence revision. No Lean
   theorem source changes. Under that predecessor contract, C7 was to receive execution credit only
@@ -72,7 +148,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   capture, derived receipt, and current-source regenerated last. The current replay pointer becomes
   [`r11`](audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r11.json);
   finalized `r10` remains exact prior evidence. Here `r11` is the eleventh receipt in the versioned
-  sequence that originated on 12 August and the twelfth current-project replay receipt overall; the
+  sequence that originated on 12 August and the twelfth receipt in the accepted/historical lineage; the
   11 August historical receipt is outside that sequence. The suffix does not denote a calendar
   date, schema, theorem, review, assurance tier, or independence revision. No Lean theorem source
   changes. C6 receives execution credit only when that exact r11 receipt exists and validates under
@@ -98,7 +174,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   The current replay pointer is
   `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-18-r10.json`; finalized
   r6, r7, r8, and r9 remain exact prior evidence. Here r10 is the tenth receipt in the versioned
-  sequence that originated on 12 August and the eleventh current-project replay receipt overall;
+  sequence that originated on 12 August and the eleventh receipt in the accepted/historical lineage;
   the 11 August historical receipt is outside that sequence. The suffix does not denote a calendar
   date, schema, theorem, review, or independence revision. C5 receives execution credit only when
   that exact receipt exists and validates under normal and optimized custody checks.
@@ -111,9 +187,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   production normalizer correctly rejected that different mode. The corrected hostile suite sets
   and restores the restrictive umask, assigns 0644 explicitly to causal byte/shape fixtures, and
   separately rejects an explicit 0600 residue. Archive commit
-  `062025c3fc283db9bdb105219dbcc82719771175` retains the exact candidate and raw receipt under
-  `archive/composite-v5-rejected-umask-20260818`. That host/provider observation is preservation,
-  not authentication or main-line authority. The candidate receives no C5 publication,
+  `062025c3fc283db9bdb105219dbcc82719771175` has the rejected candidate's exact tree and raw
+  receipt. The mutable provider ref `refs/heads/archive/composite-v5-rejected-umask-20260818` was
+  observed at that archive commit. That dated observation supplies a recovery locator, not durable
+  preservation, authentication, or main-line authority. The candidate receives no accepted-on-main
+  C5 publication status or credit,
   qualification, accepted-current-replay, hosted-success, receipt-lineage, scientific, or
   independence credit and must not be merged or relabelled; final C5 requires a fresh replay after
   every corrected operational byte settles. This is a C5 gate-fixture correction, not a sixth C4
@@ -221,7 +299,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   composite-v4 operational surface, while preserving finalized r8 byte-for-byte at SHA-256
   `86251c48c0f720d1ca021dcac87dfbf6e1a54adf409ea8a8981102cea1769611`. The `r9`
   suffix denotes only the ninth receipt in the versioned sequence that originated on 12 August and
-  the tenth current-project replay receipt overall; the 11 August historical receipt is outside
+  the tenth receipt in the accepted/historical lineage; the 11 August historical receipt is outside
   that sequence. It does not denote a calendar date, schema, theorem, review, assurance tier, or
   independence revision. The one-shot generator now rejects a finalized projection, missing or
   unequal composite-v4 checker cuts, an unbound checker byte image, and a missing or incorrect
@@ -255,7 +333,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   repaired hosted-recovery operational surface. Finalized r7 remains byte-for-byte prior evidence
   at SHA-256 `3dd2df7d7064bac93cf4806cdeac28d9ecc747444689162a4636029228822abb`.
   The r8 suffix denotes only the eighth receipt in the versioned sequence that originated on
-  12 August and the ninth current-project replay receipt overall; the 11 August historical receipt
+  12 August and the ninth receipt in the accepted/historical lineage; the 11 August historical receipt
   is outside that sequence. It does not denote a calendar date, schema, theorem, review, assurance
   tier, or independence revision. The current route receives execution credit only when the exact
   r8 receipt exists and validates under normal and optimized custody checks.
@@ -264,7 +342,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   preserving finalized receipt `r5` byte-for-byte at SHA-256
   `872175ca504efb24752633704fe13e57802e43ae25bb3c463c4fb8c9dfd073f7`. The `r6`
   suffix denotes only the sixth receipt in the versioned sequence that originated on 12 August,
-  and therefore the seventh current-project replay receipt overall; the 11 August historical
+  and the seventh receipt in the accepted/historical lineage; the 11 August historical
   receipt is outside that sequence. It does not denote a calendar date, schema, theorem, review,
   assurance tier, or independence revision. No Lean theorem source is changed, and the route
   receives execution credit only when the exact r6 receipt exists and validates under normal and
@@ -273,7 +351,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   preserving finalized receipt `r4` byte-for-byte at SHA-256
   `ddbf0a107c7e74fe5f3309ab33d295f6ad7a495353ac05bb14bbecfec6fb3382`. The `r5`
   suffix denotes only the fifth receipt in the versioned sequence that originated on 12 August,
-  and therefore the sixth current-project replay receipt overall; the 11 August historical receipt
+  and the sixth receipt in the accepted/historical lineage; the 11 August historical receipt
   is outside that sequence. It does not denote a calendar date, schema, theorem, review, assurance
   tier, or independence revision. No Lean theorem source is changed, and the route receives
   execution credit only when the exact r5 receipt exists and validates under normal and optimized

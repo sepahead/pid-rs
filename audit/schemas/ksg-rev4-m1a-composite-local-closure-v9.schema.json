@@ -1,0 +1,448 @@
+{
+  "$defs": {
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/repositoryPath"
+        },
+        "role": {
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "byteBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "body_base64",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "commit": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "descriptor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "const": "scripts/capture-ksg-m1a-composite-v8-local-closure.py"
+        },
+        "sha256": {
+          "const": "b9b0a41cb2027d1cba464040843656bc2486e317f8cf1d3079cb58b02f7c6ba7"
+        },
+        "size_bytes": {
+          "const": 40584
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "repositoryPath": {
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "snapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "alternates": {
+          "const": "absent"
+        },
+        "common_dir": {
+          "const": "<REPOSITORY_ROOT>/.git"
+        },
+        "config_overlays": {
+          "const": "absent"
+        },
+        "git_dir": {
+          "const": "<REPOSITORY_ROOT>/.git"
+        },
+        "grafts": {
+          "const": "absent"
+        },
+        "head": {
+          "$ref": "#/$defs/commit"
+        },
+        "http_alternates": {
+          "const": "absent"
+        },
+        "info_attributes_rules": {
+          "const": "absent"
+        },
+        "info_exclude_rules": {
+          "const": "absent"
+        },
+        "message": {
+          "const": "Repair KSG M1a composite v9 contract\n"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "observed_at": {
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$",
+          "type": "string"
+        },
+        "parent": {
+          "const": "7c80d48db415279fc4d744eadb1515797606912b"
+        },
+        "replacement_refs": {
+          "items": {},
+          "maxItems": 0,
+          "type": "array"
+        },
+        "shallow": {
+          "const": "absent"
+        },
+        "status": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "tree": {
+          "$ref": "#/$defs/commit"
+        },
+        "worktree_root": {
+          "const": "<REPOSITORY_ROOT>"
+        }
+      },
+      "required": [
+        "alternates",
+        "common_dir",
+        "config_overlays",
+        "git_dir",
+        "grafts",
+        "head",
+        "http_alternates",
+        "info_attributes_rules",
+        "info_exclude_rules",
+        "message",
+        "object_format",
+        "observed_at",
+        "parent",
+        "replacement_refs",
+        "shallow",
+        "status",
+        "tree",
+        "worktree_root"
+      ],
+      "type": "object"
+    },
+    "tool": {
+      "additionalProperties": false,
+      "properties": {
+        "executable_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executable_size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "route": {
+          "pattern": "^<(?:SYSTEM|USR_LOCAL|HOMEBREW|TEXLIVE)_BIN>/[^/]+$",
+          "type": "string"
+        },
+        "version_argv": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "version_exit_code": {
+          "const": 0
+        },
+        "version_stderr": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "version_stdout": {
+          "$ref": "#/$defs/byteBinding"
+        }
+      },
+      "required": [
+        "executable_sha256",
+        "executable_size_bytes",
+        "name",
+        "route",
+        "version_argv",
+        "version_exit_code",
+        "version_stderr",
+        "version_stdout"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-local-closure-v9.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorities": {
+      "items": {
+        "$ref": "#/$defs/authority"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "immutable_v8_primitives": {
+      "$ref": "#/$defs/descriptor"
+    },
+    "invocation": {
+      "additionalProperties": false,
+      "properties": {
+        "argv": {
+          "const": [
+            "just",
+            "ksg-composite-v9"
+          ]
+        },
+        "cwd": {
+          "const": "<REPOSITORY_ROOT>"
+        },
+        "elapsed_monotonic_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "environment": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "environment_routes_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "exit_code": {
+          "const": 0
+        },
+        "finished_at": {
+          "type": "string"
+        },
+        "monotonic_finish_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "monotonic_start_ns": {
+          "const": 0
+        },
+        "signal": {
+          "const": null
+        },
+        "started_at": {
+          "type": "string"
+        },
+        "stderr": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "stdout": {
+          "$ref": "#/$defs/byteBinding"
+        },
+        "timed_out": {
+          "const": false
+        },
+        "timeout_seconds": {
+          "const": 14400
+        },
+        "umask": {
+          "const": "0077"
+        }
+      },
+      "required": [
+        "argv",
+        "cwd",
+        "elapsed_monotonic_ns",
+        "environment",
+        "environment_routes_sha256",
+        "exit_code",
+        "finished_at",
+        "monotonic_finish_ns",
+        "monotonic_start_ns",
+        "signal",
+        "started_at",
+        "stderr",
+        "stdout",
+        "timed_out",
+        "timeout_seconds",
+        "umask"
+      ],
+      "type": "object"
+    },
+    "limits": {
+      "additionalProperties": false,
+      "properties": {
+        "authority_stream_bytes": {
+          "const": 2097152
+        },
+        "command_stream_bytes": {
+          "const": 8388608
+        },
+        "executable_bytes": {
+          "const": 268435456
+        },
+        "record_bytes": {
+          "const": 33554432
+        },
+        "version_stream_bytes": {
+          "const": 65536
+        }
+      },
+      "required": [
+        "authority_stream_bytes",
+        "command_stream_bytes",
+        "executable_bytes",
+        "record_bytes",
+        "version_stream_bytes"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "platform": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "enum": [
+            "aarch64",
+            "arm64"
+          ]
+        },
+        "gil_enabled": {
+          "const": true
+        },
+        "operating_system": {
+          "const": "Darwin"
+        },
+        "operating_system_release": {
+          "type": "string"
+        },
+        "python_implementation": {
+          "const": "CPython"
+        },
+        "python_version": {
+          "const": "3.14.6"
+        }
+      },
+      "required": [
+        "architecture",
+        "gil_enabled",
+        "operating_system",
+        "operating_system_release",
+        "python_implementation",
+        "python_version"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "repository_state": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "$ref": "#/$defs/snapshot"
+        },
+        "before": {
+          "$ref": "#/$defs/snapshot"
+        }
+      },
+      "required": [
+        "after",
+        "before"
+      ],
+      "type": "object"
+    },
+    "reviewed_executables": {
+      "items": {
+        "$ref": "#/$defs/tool"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-local-closure/v5"
+    },
+    "schema_revision": {
+      "const": 5
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c8_parent": {
+          "const": "7c80d48db415279fc4d744eadb1515797606912b"
+        },
+        "c9_commit": {
+          "$ref": "#/$defs/commit"
+        },
+        "c9_message": {
+          "const": "Repair KSG M1a composite v9 contract\n"
+        },
+        "c9_tree": {
+          "$ref": "#/$defs/commit"
+        }
+      },
+      "required": [
+        "c8_parent",
+        "c9_commit",
+        "c9_message",
+        "c9_tree"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "authorities",
+    "immutable_v8_primitives",
+    "invocation",
+    "limits",
+    "nonimplications",
+    "platform",
+    "repository",
+    "repository_state",
+    "reviewed_executables",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "type": "object"
+}
