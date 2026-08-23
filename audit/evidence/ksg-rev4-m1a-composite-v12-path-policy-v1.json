@@ -1,0 +1,73 @@
+{
+  "authority_contract": {
+    "aggregate_limit_bytes": 16777216,
+    "concurrency_boundary": "complete_probe_start_end_metadata_config_ref_head_status_revalidation_pass_not_atomic_transient_or_same_uid_privileged_mutation_not_excluded",
+    "default_limit_bytes": 2097152,
+    "descriptor_read": "repository_root_dirfd_component_openat_no_follow_exact_size_and_eof_stable_identity",
+    "frozen_v11_reuse": "exact_size_sha256_mode_single_link_descriptor_read_then_checksum_bound_module_execution_with_v12_wrapper_semantics",
+    "git_binding": "exact_tree_mode_blob_oid_and_python_verified_commit_tree_blob_object_hashes",
+    "live_binding": "exact_mode_single_link_regular_file_stable_descriptor_read",
+    "single_structure": "AuthoritySpec",
+    "special_limits": []
+  },
+  "c11": {
+    "commit": "91d954160a7e717ae46b6088175ae52e92570127",
+    "failure_record": "audit/evidence/ksg-rev4-m1a-composite-v11-local-closure-failure-v12-2026-08-23.json",
+    "l11": "consumed_failed",
+    "q11": false,
+    "r11": "permanently_unissued",
+    "tree": "97841c6eda10573ddc3537c9e3b2ca41a93a3fa1"
+  },
+  "c12": {
+    "identity": "derived_from_the_unique_unsigned_direct_child_commit_and_tree_not_embedded_in_c12_owned_bytes",
+    "message": "Repair KSG M1a composite v12 contract\n",
+    "parent": "91d954160a7e717ae46b6088175ae52e92570127",
+    "relationship_to_c11": "append_only_repair_descendant_with_zero_qualification_credit"
+  },
+  "current_source_generation": {
+    "fresh_after_exact_c12_bytes_settle": true,
+    "generation_slot": 17,
+    "namespace": "current_source_generation_slot_distinct_from_composite_r12_receipt_lean_r14_replay_and_current_source_schema_revision",
+    "precondition": "c11_failure_diagnostic_reviewed_and_added_before_manifest_generation",
+    "prior_manifest_reuse": false,
+    "status": "generated_fresh"
+  },
+  "l12": {
+    "attempt_semantics": "one_shot_per_exact_c12_identity_any_production_launch_outcome_consumes_attempt",
+    "capture_command": "python3 -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --output <new-outside-repository-path>",
+    "operator_uniqueness_provable_by_recorder": false,
+    "preflight_command_normal": "python3 -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --preflight-live",
+    "preflight_command_optimized": "python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --preflight-live",
+    "preflight_consumes_attempt": false,
+    "status": "not_produced"
+  },
+  "nonimplications": [
+    "The C11 command failure and the downstream source diagnosis are distinct observations; latent bindings were not reached by L11.",
+    "C11, its consumed failed L11, false Q11, and permanently unissued R11 provide no L12, hosted, ancestry, or receipt credit.",
+    "Finite static checks, mutation suites, source hashes, and formal tools are bounded evidence, not proof of non-bypass, causal execution, hermeticity, or semantic soundness.",
+    "Q12 is operational qualification only, not PID, KSG, theorem, numerical, security, privacy, accessibility, or application validation.",
+    "Provider responses, timestamps, software digests, and unsigned Git objects do not authenticate themselves or establish trusted time."
+  ],
+  "qualification": {
+    "attempt": 1,
+    "formula": "Q12 = L12 AND CI12_attempt1 AND CodeQL12_attempt1 AND Dedicated12_attempt1",
+    "same_exact_c12_commit_and_tree": true,
+    "status": "not_run",
+    "terms": [
+      "L12",
+      "CI12_attempt1",
+      "CodeQL12_attempt1",
+      "Dedicated12_attempt1"
+    ]
+  },
+  "r12": {
+    "derive_command": "python3 -I -S -B scripts/check-ksg-m1a-composite-v12.py --derive-receipt --local-fd 3 --successor-fd 4 3< <L12-mode-0600-file> 4< <successor-mode-0600-file>",
+    "issuance": "if_and_only_if_Q12",
+    "message": "Record KSG M1a composite v12 receipt\n",
+    "status": "unissued"
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v12-path-policy/v1",
+  "schema_revision": 1,
+  "state": "candidate_authoring_no_evidence"
+}

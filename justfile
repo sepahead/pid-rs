@@ -611,15 +611,20 @@ ksg-composite-v9:
     test -s "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
 
-# Fresh direct-C9 composite-v11 closure. This preserves the substantive v9 gate
-# families while replacing the rejected C10 lifecycle with independently checked
-# v11 capture, authority, topology, and hostile controls.
+# C11's only L11 attempt failed and cannot be replayed or converted into evidence.
 ksg-composite-v11:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "C11 L11 attempt is permanently consumed; refusing replay" >&2
+    exit 1
+
+# Shared non-evidence gates used by both the authoring audit and exact L12 command.
+_ksg-composite-v12-common:
     #!/usr/bin/env bash
     set -euo pipefail
     umask 077
     python3 -I -S -B -c 'import sys; raise SystemExit(0 if sys.implementation.name == "cpython" and sys.version_info == (3, 14, 6, "final", 0) and sys._is_gil_enabled() else 1)'
-    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v11.XXXXXX")"
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12.XXXXXX")"
     trap 'rm -rf -- "$result_root"' EXIT
     command -v rg >/dev/null
     rg --version >/dev/null
@@ -661,20 +666,37 @@ ksg-composite-v11:
     python3 -O -I -S -B scripts/check-current-source-state-v1.py
     python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
     python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v11.py --self-test > "$result_root/hosted.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v11.py --self-test > "$result_root/hosted.opt.json"
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v12.py --self-test > "$result_root/hosted.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12.py --self-test > "$result_root/hosted.opt.json"
     cmp "$result_root/hosted.json" "$result_root/hosted.opt.json"
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --self-test > "$result_root/local.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --self-test > "$result_root/local.opt.json"
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --self-test > "$result_root/local.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --self-test > "$result_root/local.opt.json"
     cmp "$result_root/local.json" "$result_root/local.opt.json"
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --preflight-live > "$result_root/preflight.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --preflight-live > "$result_root/preflight.opt.json"
+    python3 -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --preflight-live > "$result_root/preflight.json"
+    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --preflight-live > "$result_root/preflight.opt.json"
     cmp "$result_root/preflight.json" "$result_root/preflight.opt.json"
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v11-self-test.py > "$result_root/self-test.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v11-self-test.py > "$result_root/self-test.opt.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v12-self-test.py > "$result_root/self-test.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-self-test.py > "$result_root/self-test.opt.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.opt.json"
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v11.py --candidate > "$result_root/static.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v11.py --candidate > "$result_root/static.opt.json"
+
+# Sole L12 production command. Do not run before exact C12 is frozen and committed.
+ksg-composite-v12: _ksg-composite-v12-common
+    #!/usr/bin/env bash
+    set -euo pipefail
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12-static.XXXXXX")"
+    trap 'rm -rf -- "$result_root"' EXIT
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v12.py --auto > "$result_root/static.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12.py --auto > "$result_root/static.opt.json"
+    cmp "$result_root/static.json" "$result_root/static.opt.json"
+
+# Repeatable authoring-only gate; it cannot produce or qualify L12 evidence.
+ksg-composite-v12-authoring: _ksg-composite-v12-common
+    #!/usr/bin/env bash
+    set -euo pipefail
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12-authoring.XXXXXX")"
+    trap 'rm -rf -- "$result_root"' EXIT
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v12.py --authoring > "$result_root/static.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12.py --authoring > "$result_root/static.opt.json"
     cmp "$result_root/static.json" "$result_root/static.opt.json"
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
@@ -788,7 +810,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v11 certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v12 certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

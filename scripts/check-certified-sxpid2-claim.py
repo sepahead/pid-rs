@@ -52,13 +52,13 @@ EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
     "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7"
 )
 EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
-    "8ec3a9d007658116e7c400a09a05a3f58f085db39b8fc2ca5e865b4dd3c98ea6"
+    "95e16c0525da9423e1f13f181cf734b7c5a57b4c339e9b526f2c926ccf14d128"
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "9a70c744b57ccf5ca222fc9e8d0cd3f159276db8927f454a647d5d2be4bcd219"
+        "17b252ff25e881b4f1d01af13f88572c54ed6b221e4b5157fcacc7aae7efafc5"
     ),
-    "justfile": ("93399171cfbb743dba93c7be1ec85e446a33193e41ada3977d198b0e4ecc6437"),
+    "justfile": ("e67d265b6b92fadc47f342a5ee399cc3656de537ebc3cc84e59f7fba3feeb885"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (

@@ -1,0 +1,146 @@
+{
+  "$defs": {
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-v11-failure-v12.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "credit": {
+      "const": {
+        "c12_qualification": "none",
+        "l11": "consumed_failed",
+        "q11": false,
+        "r11": "permanently_unissued"
+      }
+    },
+    "diagnosis": {
+      "additionalProperties": false,
+      "properties": {
+        "complete": {
+          "const": true
+        },
+        "surfaces": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "classification": {
+                "enum": [
+                  "first_observed_blocker",
+                  "latent_not_reached",
+                  "unchanged_positive_control"
+                ]
+              },
+              "expected_sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "observed_sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "surface": {
+                "enum": [
+                  "certified_ci_job",
+                  "certified_just_recipe",
+                  "ci_full_file",
+                  "just_full_file",
+                  "release_audit_line"
+                ]
+              }
+            },
+            "required": [
+              "classification",
+              "expected_sha256",
+              "observed_sha256",
+              "surface"
+            ],
+            "type": "object"
+          },
+          "maxItems": 5,
+          "minItems": 5,
+          "type": "array"
+        }
+      },
+      "required": [
+        "complete",
+        "surfaces"
+      ],
+      "type": "object"
+    },
+    "first_observed_failure": {
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "const": [
+            "just",
+            "ksg-composite-v11"
+          ]
+        },
+        "error": {
+          "const": "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed"
+        },
+        "exit_code": {
+          "const": 1
+        },
+        "phase": {
+          "const": "local_L11_command"
+        },
+        "production_launch_consumed": {
+          "const": true
+        },
+        "record_emitted": {
+          "const": false
+        }
+      },
+      "required": [
+        "command",
+        "error",
+        "exit_code",
+        "phase",
+        "production_launch_consumed",
+        "record_emitted"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-v11-local-closure-failure/v12"
+    },
+    "schema_revision": {
+      "const": 12
+    },
+    "subject": {
+      "const": {
+        "c11_commit": "91d954160a7e717ae46b6088175ae52e92570127",
+        "c11_message": "Repair KSG M1a composite v11 contract\n",
+        "c11_parent": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+        "c11_tree": "97841c6eda10573ddc3537c9e3b2ca41a93a3fa1"
+      }
+    }
+  },
+  "required": [
+    "credit",
+    "diagnosis",
+    "first_observed_failure",
+    "nonimplications",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "title": "pid-rs KSG M1a composite C11 consumed-L11 failure",
+  "type": "object"
+}

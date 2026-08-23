@@ -431,7 +431,9 @@ def synthesize_pre_receipt_fixture(checker: ModuleType, destination: Path) -> No
         checker.EXPECTED_DERIVED_EVIDENCE_HASHES
     )
     receipt["historical_preservation_sha256"] = checker.PRESERVED_HISTORICAL_HASHES
-    receipt["operational_wiring_sha256"] = checker.EXPECTED_OPERATIONAL_WIRING_HASHES
+    receipt["operational_wiring_sha256"] = (
+        checker.PRESERVED_R14_OPERATIONAL_WIRING_HASHES
+    )
     receipt["prior_replay_preservation_sha256"] = checker.PRESERVED_PRIOR_REPLAY_HASHES
     receipt["prior_replay_schema"] = checker.PRESERVED_PRIOR_REPLAY_SCHEMAS
     receipt["source_sha256"] = checker.EXPECTED_SOURCE_HASHES
@@ -757,6 +759,30 @@ def mutate_receipt_noncanonical(_checker: ModuleType, root: Path) -> None:
         / "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json"
     )
     path.write_text(path.read_text(encoding="utf-8") + " ", encoding="utf-8")
+
+
+def mutate_receipt_repin_to_current_wiring(checker: ModuleType, root: Path) -> None:
+    canonical_json(
+        root / CURRENT_RECEIPT_RELATIVE,
+        lambda value: value.__setitem__(
+            "operational_wiring_sha256",
+            dict(checker.EXPECTED_OPERATIONAL_WIRING_HASHES),
+        ),
+    )
+
+
+def mutate_preserved_r14_operational_digest(checker: ModuleType, _root: Path) -> None:
+    checker.PRESERVED_R14_OPERATIONAL_WIRING_HASHES[".github/workflows/ci.yml"] = (
+        "0" * 64
+    )
+
+
+def mutate_collapse_historical_current_wiring_split(
+    checker: ModuleType, _root: Path
+) -> None:
+    checker.PRESERVED_R14_OPERATIONAL_WIRING_HASHES = (
+        checker.EXPECTED_OPERATIONAL_WIRING_HASHES
+    )
 
 
 def mutate_self_test_with_coordinated_receipt_hash(
@@ -1113,10 +1139,6 @@ def refresh_operational_wiring_binding(
 ) -> None:
     digest = hashlib.sha256((root / relative).read_bytes()).hexdigest()
     checker.EXPECTED_OPERATIONAL_WIRING_HASHES[relative] = digest
-    canonical_json(
-        root / CURRENT_RECEIPT_RELATIVE,
-        lambda value: value["operational_wiring_sha256"].__setitem__(relative, digest),
-    )
 
 
 def refresh_active_claim_binding(
@@ -3075,7 +3097,22 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "coordinated-self-test-custody-rewrite",
         mutate_self_test_with_coordinated_receipt_hash,
-        "replay receipt reviewed projection drifted",
+        "historical r14 final custody inventory drifted",
+    ),
+    (
+        "historical-receipt-repin-to-current-wiring",
+        mutate_receipt_repin_to_current_wiring,
+        "historical r14 operational wiring inventory drifted",
+    ),
+    (
+        "preserved-r14-operational-digest",
+        mutate_preserved_r14_operational_digest,
+        "historical r14 operational wiring inventory drifted",
+    ),
+    (
+        "collapsed-historical-current-wiring-split",
+        mutate_collapse_historical_current_wiring_split,
+        "preserved-r14/current-C12 operational path split drifted",
     ),
     (
         "final-custody-missing-path",
@@ -3090,7 +3127,7 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "custody-path-in-operational-inventory",
         mutate_custody_in_operational_inventory,
-        "custody-gate path entered an ordinary digest inventory: operational wiring",
+        "custody-gate path entered an ordinary digest inventory: current C12 operational wiring",
     ),
     (
         "custody-path-in-checker-inventory",
@@ -3100,7 +3137,7 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "replay-checker-endpoint-digest",
         mutate_replay_checker_endpoint_hash,
-        "replay checker pre-pin reconstruction drifted",
+        "historical r14 replay-time custody inventory drifted",
     ),
     ("broad-transparency", mutate_broad_option, "transparency scope inventory drifted"),
     (
@@ -3551,7 +3588,7 @@ MUTATIONS: tuple[Mutation, ...] = (
     (
         "prior-replay-operational-role-overlap",
         mutate_prior_replay_operational_overlap,
-        "operational wiring overlaps preserved prior replay evidence",
+        "current operational wiring overlaps preserved prior replay evidence",
     ),
     (
         "derived-output-drift",

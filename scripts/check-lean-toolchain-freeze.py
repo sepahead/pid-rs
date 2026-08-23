@@ -452,6 +452,22 @@ EXPECTED_CUSTODY_GATE_PATHS = (
     "scripts/check-lean-toolchain-freeze-self-test.py",
     "scripts/check-lean-toolchain-freeze.py",
 )
+PRESERVED_R14_FINAL_CUSTODY_HASHES = {
+    "scripts/check-lean-toolchain-freeze-self-test.py": (
+        "4ccbf3c3ba2f2274221f7d2b41eb796ac7dce7acaf90e909cd79d0c2e71f1138"
+    ),
+    "scripts/check-lean-toolchain-freeze.py": (
+        "cde75634c5da1d635cf76c3a66c0550036e1167a5a0f7d210fc3333264307644"
+    ),
+}
+PRESERVED_R14_REPLAY_CUSTODY_HASHES = {
+    "scripts/check-lean-toolchain-freeze-self-test.py": (
+        "4ccbf3c3ba2f2274221f7d2b41eb796ac7dce7acaf90e909cd79d0c2e71f1138"
+    ),
+    "scripts/check-lean-toolchain-freeze.py": (
+        "40f1ade4874174744907db3e35de31efd97a1080b68061806686efa7369b142a"
+    ),
+}
 EXPECTED_CURRENT_REPLAY_POINTER_PATHS = (
     "AGENTS.md",
     "CHANGELOG.md",
@@ -478,7 +494,7 @@ EXPECTED_PENDING_ACTIVE_RESUME_PATHS = tuple(
     if digest == "0" * 64
 )
 PENDING_OPERATIONAL_SHA256 = "0" * 64
-EXPECTED_OPERATIONAL_WIRING_HASHES = {
+PRESERVED_R14_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "9a70c744b57ccf5ca222fc9e8d0cd3f159276db8927f454a647d5d2be4bcd219",
     ".github/workflows/ksg-m1a-composite-v4.yml": "3952fdfb596ce15e176795d8a6ec76aaad9d8d66e830129784d3b919ddc5cda5",
     ".github/workflows/ksg-m1a-composite-v5.yml": "7668120a4d4f67db90ae3af0aed048a8ccdf1ae27eb7c96732dfa33852cd14ed",
@@ -637,6 +653,19 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "scripts/generate-lean-4.33-replay.py": "e2ba93a6677db0789333f52e440df4067d916dcbea1b9e2b40d498f7eea886c6",
     "scripts/normalize-actions-checkout-worktree-config-self-test.py": "3eb085d0a49ff463aa3c419352d7c926d4804ff988e92edebbd3dd5ac013b101",
     "scripts/normalize-actions-checkout-worktree-config.py": "8887789f2039c8603a61f40f2518b707fa37f2311ccbd613e8c927fb6856be18",
+}
+EXPECTED_OPERATIONAL_WIRING_HASHES = {
+    **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
+    ".github/workflows/ci.yml": "17b252ff25e881b4f1d01af13f88572c54ed6b221e4b5157fcacc7aae7efafc5",
+    ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
+    "CHANGELOG.md": "edb458e4079cd8096797a014cdcb783e91d7cba60d3b0fbebd02056731fd77af",
+    "justfile": "e67d265b6b92fadc47f342a5ee399cc3656de537ebc3cc84e59f7fba3feeb885",
+    "scripts/check-certified-sxpid2-claim-self-test.py": (
+        "45166f4ed4dfe247e65fd39f4aa1b88a05ad630ffd6654613a758143c171b149"
+    ),
+    "scripts/check-certified-sxpid2-claim.py": (
+        "0743cbb515ad081b36ac95d1eff7130fb56579c2464cd0d527e83d971baa9c07"
+    ),
 }
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
     relative
@@ -2095,7 +2124,8 @@ def check_no_self_digest_cycle() -> None:
         "active Lean checker": EXPECTED_CHECKER_HASHES,
         "current 4.33 evidence": EXPECTED_CURRENT_EVIDENCE_HASHES,
         "derived-instance evidence": EXPECTED_DERIVED_EVIDENCE_HASHES,
-        "operational wiring": EXPECTED_OPERATIONAL_WIRING_HASHES,
+        "current C12 operational wiring": EXPECTED_OPERATIONAL_WIRING_HASHES,
+        "preserved r14 operational wiring": (PRESERVED_R14_OPERATIONAL_WIRING_HASHES),
         "preserved historical 4.32 evidence": PRESERVED_HISTORICAL_HASHES,
         "preserved prior 4.33 replay": PRESERVED_PRIOR_REPLAY_HASHES,
         "active Lean source": EXPECTED_SOURCE_HASHES,
@@ -2119,7 +2149,21 @@ def check_no_self_digest_cycle() -> None:
         not (
             set(EXPECTED_OPERATIONAL_WIRING_HASHES) & set(PRESERVED_PRIOR_REPLAY_HASHES)
         ),
-        "operational wiring overlaps preserved prior replay evidence",
+        "current operational wiring overlaps preserved prior replay evidence",
+    )
+    require(
+        not (
+            set(PRESERVED_R14_OPERATIONAL_WIRING_HASHES)
+            & set(PRESERVED_PRIOR_REPLAY_HASHES)
+        ),
+        "preserved r14 operational wiring overlaps preserved prior replay evidence",
+    )
+    require(
+        EXPECTED_OPERATIONAL_WIRING_HASHES
+        is not PRESERVED_R14_OPERATIONAL_WIRING_HASHES
+        and tuple(EXPECTED_OPERATIONAL_WIRING_HASHES)
+        == tuple(PRESERVED_R14_OPERATIONAL_WIRING_HASHES),
+        "preserved-r14/current-C12 operational path split drifted",
     )
 
 
@@ -2305,8 +2349,9 @@ def check_replay_receipt() -> None:
         "replay active claim authority drifted",
     )
     require(
-        receipt.get("operational_wiring_sha256") == EXPECTED_OPERATIONAL_WIRING_HASHES,
-        "replay operational wiring inventory drifted",
+        receipt.get("operational_wiring_sha256")
+        == PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
+        "historical r14 operational wiring inventory drifted",
     )
     custody = receipt.get("custody_gate_sha256")
     require(isinstance(custody, dict), "replay custody-gate inventory is malformed")
@@ -2319,15 +2364,10 @@ def check_replay_receipt() -> None:
         and set(custody).isdisjoint(receipt["operational_wiring_sha256"]),
         "replay custody-gate paths entered an ordinary receipt inventory",
     )
-    for relative, digest in custody.items():
-        require(
-            isinstance(digest, str) and SHA256_TEXT.fullmatch(digest) is not None,
-            f"replay custody-gate digest is malformed: {relative}",
-        )
-        require(
-            stable_read(ROOT / relative, f"custody gate: {relative}").sha256 == digest,
-            f"replay custody-gate digest mismatch: {relative}",
-        )
+    require(
+        custody == PRESERVED_R14_FINAL_CUSTODY_HASHES,
+        "historical r14 final custody inventory drifted",
+    )
     replay_custody = receipt.get("replay_custody_gate_sha256")
     require(
         isinstance(replay_custody, dict),
@@ -2342,38 +2382,14 @@ def check_replay_receipt() -> None:
         and set(replay_custody).isdisjoint(receipt["operational_wiring_sha256"]),
         "replay-time custody-gate paths entered an ordinary receipt inventory",
     )
-    for relative, digest in replay_custody.items():
-        require(
-            isinstance(digest, str) and SHA256_TEXT.fullmatch(digest) is not None,
-            f"replay-time custody-gate digest is malformed: {relative}",
-        )
-    self_test_path, checker_path = EXPECTED_CUSTODY_GATE_PATHS
+    require(
+        replay_custody == PRESERVED_R14_REPLAY_CUSTODY_HASHES,
+        "historical r14 replay-time custody inventory drifted",
+    )
+    self_test_path, _checker_path = EXPECTED_CUSTODY_GATE_PATHS
     require(
         replay_custody[self_test_path] == custody[self_test_path],
         "replay-time and final self-test custody diverged",
-    )
-    checker_source = stable_read(
-        ROOT / checker_path, "final Lean freeze checker reconstruction"
-    ).raw.decode("utf-8", errors="strict")
-    final_projection_line = (
-        "EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = "
-        f'"{EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256}"'
-    )
-    placeholder_projection_line = (
-        "EXPECTED_REPLAY_RECEIPT_PROJECTION_SHA256 = " + '"0"' + " * 64"
-    )
-    require(
-        checker_source.count(final_projection_line) == 1
-        and placeholder_projection_line not in checker_source,
-        "final replay-projection literal is not uniquely reconstructable",
-    )
-    replay_checker_source = checker_source.replace(
-        final_projection_line, placeholder_projection_line, 1
-    ).encode("utf-8")
-    require(
-        hashlib.sha256(replay_checker_source).hexdigest()
-        == replay_custody[checker_path],
-        "replay checker pre-pin reconstruction drifted",
     )
     verification = receipt.get("verification")
     require(isinstance(verification, dict), "replay verification summary is malformed")
@@ -2541,7 +2557,7 @@ def check_static_without_receipt() -> None:
     check_current_evidence()
     check_derived_instance_evidence()
     check_hashes(EXPECTED_ACTIVE_CLAIM_HASHES, "active claim authority")
-    check_hashes(EXPECTED_OPERATIONAL_WIRING_HASHES, "operational wiring")
+    check_hashes(EXPECTED_OPERATIONAL_WIRING_HASHES, "current C12 operational wiring")
     check_absent_operational_paths()
     check_hashes(PRESERVED_HISTORICAL_HASHES, "preserved historical 4.32 evidence")
     check_prior_replay_preservation()
@@ -2564,7 +2580,8 @@ def main() -> int:
     print(
         "OK: Lean 4.33.0 remains frozen to the exact release/commit, nine-package "
         "closure, 11 source files, 3 Fintype-derivation command scopes plus 4 proof-term "
-        "scopes, current replay evidence, six derived-instance printed-skeleton "
+        "scopes, current replay evidence, current C12 operational wiring kept separate "
+        "from the historical r14 receipt, six derived-instance printed-skeleton "
         "comparisons, and "
         f"{len(PRESERVED_HISTORICAL_HASHES)} byte-preserved historical 4.32 artifacts, "
         f"plus {len(PRESERVED_PRIOR_REPLAY_HASHES)} byte-preserved prior 4.33 replay"

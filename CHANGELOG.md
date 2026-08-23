@@ -9,6 +9,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Preserve exact C11 (`91d954160a7e717ae46b6088175ae52e92570127`) as a consumed,
+  failed L11 lifecycle with no Q11 or R11 credit. Composite-v12 is an append-only direct-child
+  repair that coordinates all certified-SxPID execution-container bindings, retires the v11 push
+  and local qualification paths, and admits only fresh L12 plus exact-C12 attempt-1 CI, CodeQL,
+  and dedicated-v12 success into the conditional R12 receipt. This is operational custody work;
+  it changes no PID definition, estimator, theorem, or numerical result. A non-production,
+  pre-L12 authoring run then exposed a separate Lean-freeze operational-wiring failure at the
+  exact CI-workflow digest. Complete source diagnosis found six intentional C9-to-C12 wiring
+  changes. The repair preserves the r14 receipt as exact C9 history, checks current C12 bytes
+  through a separate live map, and independently verifies the historical receipt and custody
+  maps against reachable C9 Git objects. This later finding is not an L11 observation, does not
+  consume L12, and does not imply any Lean theorem or replay result failed.
+
 - Published composite-v8 C8 as exact commit `7c80d48db415279fc4d744eadb1515797606912b`
   with tree `ba01abdd86a542b359df75e9058fccf28cfc5a3d`. Attempt-1 CodeQL passed;
   repository CI and dedicated-v8 both reached the retained certified-SxPID2 checker and failed on

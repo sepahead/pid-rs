@@ -1,0 +1,345 @@
+{
+  "$defs": {
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "binding_state": {
+          "const": "bound_to_head"
+        },
+        "git_blob_oid": {
+          "$ref": "#/$defs/oid"
+        },
+        "git_mode": {
+          "enum": [
+            "100644",
+            "100755"
+          ]
+        },
+        "limit_class": {
+          "const": "ordinary_2mib"
+        },
+        "live_blob_oid": {
+          "$ref": "#/$defs/oid"
+        },
+        "live_mode": {
+          "enum": [
+            "0644",
+            "0755"
+          ]
+        },
+        "path": {
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\u0000]+$",
+          "type": "string"
+        },
+        "role": {
+          "pattern": "^[a-z0-9_]+$",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 2097152,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "binding_state",
+        "git_blob_oid",
+        "git_mode",
+        "limit_class",
+        "live_blob_oid",
+        "live_mode",
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "binding": {
+      "additionalProperties": false,
+      "properties": {
+        "body_base64": {
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 8388608,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "body_base64",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "fileBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "invocation": {
+      "additionalProperties": false,
+      "properties": {
+        "argv": {
+          "const": [
+            "just",
+            "ksg-composite-v12"
+          ]
+        },
+        "cwd": {
+          "const": "<REPOSITORY_ROOT>"
+        },
+        "elapsed_monotonic_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "environment": {
+          "type": "object"
+        },
+        "environment_routes_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "exit_code": {
+          "const": 0
+        },
+        "finished_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "monotonic_finish_ns": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "monotonic_start_ns": {
+          "const": 0
+        },
+        "signal": {
+          "type": "null"
+        },
+        "started_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "stderr": {
+          "$ref": "#/$defs/binding"
+        },
+        "stdout": {
+          "$ref": "#/$defs/binding"
+        },
+        "timed_out": {
+          "const": false
+        },
+        "timeout_seconds": {
+          "const": 14400
+        },
+        "umask": {
+          "const": "0077"
+        }
+      },
+      "required": [
+        "argv",
+        "cwd",
+        "elapsed_monotonic_ns",
+        "environment",
+        "environment_routes_sha256",
+        "exit_code",
+        "finished_at",
+        "monotonic_finish_ns",
+        "monotonic_start_ns",
+        "signal",
+        "started_at",
+        "stderr",
+        "stdout",
+        "timeout_seconds",
+        "timed_out",
+        "umask"
+      ],
+      "type": "object"
+    },
+    "oid": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "timestamp": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-local-closure-v12.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorities": {
+      "items": {
+        "$ref": "#/$defs/authority"
+      },
+      "maxItems": 34,
+      "minItems": 34,
+      "type": "array"
+    },
+    "immutable_v11_primitives": {
+      "$ref": "#/$defs/fileBinding"
+    },
+    "immutable_v8_primitives": {
+      "$ref": "#/$defs/fileBinding"
+    },
+    "invocation": {
+      "$ref": "#/$defs/invocation"
+    },
+    "limits": {
+      "const": {
+        "authority_aggregate_bytes": 16777216,
+        "command_stream_bytes": 8388608,
+        "executable_bytes": 268435456,
+        "ordinary_authority_bytes": 2097152,
+        "record_bytes": 33554432,
+        "version_stream_bytes": 65536
+      }
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 10,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "platform": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "enum": [
+            "arm64",
+            "aarch64"
+          ]
+        },
+        "gil_enabled": {
+          "const": true
+        },
+        "operating_system": {
+          "const": "Darwin"
+        },
+        "operating_system_release": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "python_implementation": {
+          "const": "CPython"
+        },
+        "python_version": {
+          "const": "3.14.6"
+        }
+      },
+      "required": [
+        "architecture",
+        "gil_enabled",
+        "operating_system",
+        "operating_system_release",
+        "python_implementation",
+        "python_version"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "repository_state": {
+      "additionalProperties": false,
+      "properties": {
+        "after": {
+          "type": "object"
+        },
+        "before": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "after",
+        "before"
+      ],
+      "type": "object"
+    },
+    "reviewed_executables": {
+      "items": {
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-local-closure/v12"
+    },
+    "schema_revision": {
+      "const": 12
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c11_parent": {
+          "const": "91d954160a7e717ae46b6088175ae52e92570127"
+        },
+        "c12_commit": {
+          "$ref": "#/$defs/oid"
+        },
+        "c12_message": {
+          "const": "Repair KSG M1a composite v12 contract\n"
+        },
+        "c12_tree": {
+          "$ref": "#/$defs/oid"
+        }
+      },
+      "required": [
+        "c11_parent",
+        "c12_commit",
+        "c12_message",
+        "c12_tree"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "authorities",
+    "immutable_v8_primitives",
+    "immutable_v11_primitives",
+    "invocation",
+    "limits",
+    "nonimplications",
+    "platform",
+    "repository",
+    "repository_state",
+    "reviewed_executables",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "title": "pid-rs KSG M1a composite v12 local closure",
+  "type": "object"
+}

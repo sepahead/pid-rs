@@ -202,8 +202,14 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ksg-m1a-composite-v11.yml",
-        "sha256": "7c81f4b374cf9e446aef103c7893df227e54988c2018f9418c1fc82b87cc6a5f",
-        "size_bytes": 5549
+        "sha256": "dd2a03a8c3b2744db2a31e26344b551930e88096b91222493eb52d3d799e40d2",
+        "size_bytes": 433
+      },
+      {
+        "git_mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v12.yml",
+        "sha256": "f6e58072ba2fdd3a7346b638fec4f671b8d256bd8ffbde469f295c331f945bab",
+        "size_bytes": 5577
       },
       {
         "git_mode": "100644",
@@ -286,8 +292,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "307a5dad5fd1e8c69ce482ef900d0008ac9b49b819b912ff44f5331f94ba9ef5",
-        "size_bytes": 212701
+        "sha256": "edb458e4079cd8096797a014cdcb783e91d7cba60d3b0fbebd02056731fd77af",
+        "size_bytes": 213804
       },
       {
         "git_mode": "100644",
@@ -1113,9 +1119,27 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v11-local-closure-failure-v12-2026-08-23.json",
+        "sha256": "59cf66dd640283ebd5394893e1ab91434a8fcf312447a0a8e1e8c0af8854ef2e",
+        "size_bytes": 3087
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/ksg-rev4-m1a-composite-v11-path-policy-v1.json",
         "sha256": "575b041fa5ed52b836d67ced1c8781730be7d178f05e14bd54ef9e9955745155",
         "size_bytes": 3785
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md",
+        "sha256": "86a7e12ead9d0ccd454bbe1a933042392f606f22946dbb88d148c15b075fa022",
+        "size_bytes": 9354
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v12-path-policy-v1.json",
+        "sha256": "1c316334c2f16f3089b108c98c9c7a2295b8ebf163ff717f184e2e3c26baef07",
+        "size_bytes": 4042
       },
       {
         "git_mode": "100644",
@@ -2223,6 +2247,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v12.schema.json",
+        "sha256": "68105ab85232db25df0ea41ffa6e3e36e57b7b80c9e6b6653f50459709382055",
+        "size_bytes": 6806
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v4.schema.json",
         "sha256": "7512e24e3256baaacca2d75a23a9ae2a530cd987f6460788d2b431175f41c8d1",
         "size_bytes": 6664
@@ -2271,6 +2301,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v12.schema.json",
+        "sha256": "40ee3152c3d97df3477a9ffbb8d694ae1588366944c377fa3f1e9334d3174bda",
+        "size_bytes": 7563
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v6.schema.json",
         "sha256": "4ab719785b6f89ce63d1061813a31e17289fa94cf4300aab00946de2c045f3fd",
         "size_bytes": 13620
@@ -2298,6 +2334,12 @@
         "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v11.schema.json",
         "sha256": "784a25e3506f401c2a4d3add126f0496da06f28fd54cdba6761979265cb2c698",
         "size_bytes": 2756
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v12.schema.json",
+        "sha256": "c00bcde8cea4427fd9218e5586d14b2707c9f88c3e74e9c46135a282af5cc171",
+        "size_bytes": 3386
       },
       {
         "git_mode": "100644",
@@ -2346,6 +2388,12 @@
         "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v9.schema.json",
         "sha256": "2b8b33a7aead1f7e4bca2f62d45b24f7430551773a9c538a9020f55258ce85d3",
         "size_bytes": 16222
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-v11-failure-v12.schema.json",
+        "sha256": "284170a439c9f145cf7a39f471f8e160c06c1051062fe660c659675d5a9e53df",
+        "size_bytes": 3643
       },
       {
         "git_mode": "100644",
@@ -4228,8 +4276,8 @@
       {
         "git_mode": "100644",
         "path": "justfile",
-        "sha256": "ec035caae045135ffdc73da3d06ead1bf8815ad4dfc9f9a82893d91c82e7353a",
-        "size_bytes": 51987
+        "sha256": "e67d265b6b92fadc47f342a5ee399cc3656de537ebc3cc84e59f7fba3feeb885",
+        "size_bytes": 52965
       },
       {
         "git_mode": "100644",
@@ -4371,6 +4419,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v12-local-closure.py",
+        "sha256": "ffd43dba75939f62aa9e27631bed77573596bb410c88b1c3b1efac13b0203159",
+        "size_bytes": 30150
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v12.py",
+        "sha256": "825bb6e2475f78ffb0033fdf8793261eba495e0ed2f523c86f4f79a17a7fe06c",
+        "size_bytes": 16945
+      },
+      {
+        "git_mode": "100644",
         "path": "scripts/capture-ksg-m1a-composite-v4.py",
         "sha256": "7cf9a6fe57c2a828def8789524069e14a21d35739a5019b4310613c8f44065ef",
         "size_bytes": 34626
@@ -4468,13 +4528,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim-self-test.py",
-        "sha256": "2b3481e1ff735ddc2055a4979606a16c5032f54fc4cfd4717d227f68b9e9fb82",
-        "size_bytes": 119743
+        "sha256": "45166f4ed4dfe247e65fd39f4aa1b88a05ad630ffd6654613a758143c171b149",
+        "size_bytes": 119747
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "ad438e2ad236fe471ba40545799931da3a256cf5dc095178ef8bfb6398590a37",
+        "sha256": "0743cbb515ad081b36ac95d1eff7130fb56579c2464cd0d527e83d971baa9c07",
         "size_bytes": 82193
       },
       {
@@ -4662,6 +4722,18 @@
         "path": "scripts/check-ksg-m1a-composite-v11.py",
         "sha256": "96aedfa1b4cf251d054203e32f8fb1dc425e6dcfdcbce60dfe89ce3ff8e1c9f8",
         "size_bytes": 147682
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v12-self-test.py",
+        "sha256": "45e979f8c88816a27d8743773ce9679f95c031b21ba258a49b606f78858f7b30",
+        "size_bytes": 25366
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v12.py",
+        "sha256": "fb28f2a4e1c27c1f8f15def1ff4dfa16647f21a555888c46371614695dcb897c",
+        "size_bytes": 81394
       },
       {
         "git_mode": "100755",
@@ -4918,14 +4990,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze-self-test.py",
-        "sha256": "4ccbf3c3ba2f2274221f7d2b41eb796ac7dce7acaf90e909cd79d0c2e71f1138",
-        "size_bytes": 132270
+        "sha256": "bf7dbdc1f4f05406d36aa84a6a0bd2e98bf5748a3550f7aa26f017dc1664623b",
+        "size_bytes": 133426
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "cde75634c5da1d635cf76c3a66c0550036e1167a5a0f7d210fc3333264307644",
-        "size_bytes": 119325
+        "sha256": "b35bc9f2ce173bee70fda01c31ded6a2a84ffabfcf2633b9c789451339a66dcf",
+        "size_bytes": 120170
       },
       {
         "git_mode": "100644",
@@ -5264,8 +5336,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "c2ac71ba24843b1698c34f8d1f36410973736ef22c40079511ca0db1a05a71f6",
-    "entry_count": 853
+    "entries_sha256": "53ea4f7487770915ec46437094555b687fa138aee090ec3e2e19d48923d90344",
+    "entry_count": 865
   },
   "subprojections": [
     {
@@ -5293,7 +5365,7 @@
       ]
     },
     {
-      "entries_sha256": "e9460587da763ed587ecb260d3723bbb561e82d7ae5884804989477a0c7c4676",
+      "entries_sha256": "53ff2b82f091f753d07f089061aa139adcc28611154cde3cb5cc09b54fb0d6ac",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

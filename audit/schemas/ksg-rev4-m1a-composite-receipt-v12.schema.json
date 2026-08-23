@@ -1,0 +1,154 @@
+{
+  "$defs": {
+    "fileBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "maximum": 33554432,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "oid": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v12.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bindings": {
+      "additionalProperties": false,
+      "properties": {
+        "hosted_capture": {
+          "$ref": "#/$defs/fileBinding"
+        },
+        "local_closure": {
+          "$ref": "#/$defs/fileBinding"
+        }
+      },
+      "required": [
+        "hosted_capture",
+        "local_closure"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "qualification": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "const": 1
+        },
+        "formula": {
+          "const": "Q12 = L12 AND CI12_attempt1 AND CodeQL12_attempt1 AND Dedicated12_attempt1"
+        },
+        "terms": {
+          "additionalProperties": false,
+          "properties": {
+            "CI12_attempt1": {
+              "const": true
+            },
+            "CodeQL12_attempt1": {
+              "const": true
+            },
+            "Dedicated12_attempt1": {
+              "const": true
+            },
+            "L12": {
+              "const": true
+            }
+          },
+          "required": [
+            "CI12_attempt1",
+            "CodeQL12_attempt1",
+            "Dedicated12_attempt1",
+            "L12"
+          ],
+          "type": "object"
+        },
+        "value": {
+          "const": true
+        }
+      },
+      "required": [
+        "attempt",
+        "formula",
+        "terms",
+        "value"
+      ],
+      "type": "object"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v12"
+    },
+    "schema_revision": {
+      "const": 12
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "$ref": "#/$defs/oid"
+        },
+        "message": {
+          "const": "Repair KSG M1a composite v12 contract\n"
+        },
+        "parent": {
+          "const": "91d954160a7e717ae46b6088175ae52e92570127"
+        },
+        "tree": {
+          "$ref": "#/$defs/oid"
+        }
+      },
+      "required": [
+        "commit",
+        "message",
+        "parent",
+        "tree"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "bindings",
+    "nonimplications",
+    "qualification",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "title": "pid-rs KSG M1a composite v12 receipt",
+  "type": "object"
+}

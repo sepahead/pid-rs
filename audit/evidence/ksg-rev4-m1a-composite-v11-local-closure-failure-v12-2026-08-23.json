@@ -1,0 +1,70 @@
+{
+  "credit": {
+    "c12_qualification": "none",
+    "l11": "consumed_failed",
+    "q11": false,
+    "r11": "permanently_unissued"
+  },
+  "diagnosis": {
+    "complete": true,
+    "surfaces": [
+      {
+        "classification": "latent_not_reached",
+        "expected_sha256": "9a70c744b57ccf5ca222fc9e8d0cd3f159276db8927f454a647d5d2be4bcd219",
+        "observed_sha256": "17b252ff25e881b4f1d01af13f88572c54ed6b221e4b5157fcacc7aae7efafc5",
+        "surface": "ci_full_file"
+      },
+      {
+        "classification": "unchanged_positive_control",
+        "expected_sha256": "6c173cbf90fe27bbd43342f37ebe0378db76a1e4e8e22a92aa4d5416f9789bda",
+        "observed_sha256": "6c173cbf90fe27bbd43342f37ebe0378db76a1e4e8e22a92aa4d5416f9789bda",
+        "surface": "certified_ci_job"
+      },
+      {
+        "classification": "unchanged_positive_control",
+        "expected_sha256": "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7",
+        "observed_sha256": "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7",
+        "surface": "certified_just_recipe"
+      },
+      {
+        "classification": "latent_not_reached",
+        "expected_sha256": "93399171cfbb743dba93c7be1ec85e446a33193e41ada3977d198b0e4ecc6437",
+        "observed_sha256": "ec035caae045135ffdc73da3d06ead1bf8815ad4dfc9f9a82893d91c82e7353a",
+        "surface": "just_full_file"
+      },
+      {
+        "classification": "first_observed_blocker",
+        "expected_sha256": "8ec3a9d007658116e7c400a09a05a3f58f085db39b8fc2ca5e865b4dd3c98ea6",
+        "observed_sha256": "3b5707c46f519d34af265340f4ccc707a12ada38ff64d29d648cff4da4fb107c",
+        "surface": "release_audit_line"
+      }
+    ]
+  },
+  "first_observed_failure": {
+    "command": [
+      "just",
+      "ksg-composite-v11"
+    ],
+    "error": "certified SxPID2 claim check failed: release-audit just dependency line exact digest changed",
+    "exit_code": 1,
+    "phase": "local_L11_command",
+    "production_launch_consumed": true,
+    "record_emitted": false
+  },
+  "nonimplications": [
+    "The first observed release-line mismatch does not imply that either latent whole-file mismatch was reached by L11.",
+    "The later source diagnosis is not a reconstruction of a local closure record; the v11 recorder emitted no L11 record on failure.",
+    "A diagnostic replay of just ksg-composite-v11 cannot become L11 or reverse the one-shot consumption rule.",
+    "The mismatch does not imply a PID, KSG, theorem, estimator, numerical, security, privacy, accessibility, or application defect.",
+    "The repaired bindings and their finite hostile suites do not prove absence of every semantic bypass or execution interference."
+  ],
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v11-local-closure-failure/v12",
+  "schema_revision": 12,
+  "subject": {
+    "c11_commit": "91d954160a7e717ae46b6088175ae52e92570127",
+    "c11_message": "Repair KSG M1a composite v11 contract\n",
+    "c11_parent": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+    "c11_tree": "97841c6eda10573ddc3537c9e3b2ca41a93a3fa1"
+  }
+}
