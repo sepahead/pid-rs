@@ -1,0 +1,62 @@
+{
+  "credit": {
+    "c10_ancestry_for_c11": "none",
+    "hosted_qualification": "none",
+    "l10": "unissued",
+    "r15": "rejected_not_reused",
+    "r10": "unissued"
+  },
+  "diagnostic_boundary": {
+    "c10_commit": "8a9c52c4871f62cf4165102fa5d1c671f866ae73",
+    "c10_parent": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+    "c10_tree": "c33fdfd8340594c8233128034baf1804084abc75",
+    "candidate_added_paths": 17,
+    "candidate_clean_when_observed": true,
+    "candidate_modified_paths": 22,
+    "candidate_total_changed_paths": 39,
+    "c10_object_and_source_bytes_durable": false,
+    "candidate_unsigned": true,
+    "classification": "recorded_full_identity_metadata_not_recovered_Git_object_or_source_custody",
+    "raw_failure_record_durable": false
+  },
+  "first_observed_rejection": {
+    "authority_limit_bytes": 2097152,
+    "authority_observed_bytes": 2264350,
+    "authority_path": "audit/evidence/ksg-rev4-m1a-composite-c9-terminal-hosted-capture-v10-2026-08-23.json",
+    "bytes_over_limit": 167198,
+    "failure_phase": "local_L10_capture_authority_descriptors",
+    "ordering": "lexicographically_first_rejected_authority",
+    "status": "observed_blocker"
+  },
+  "fresh_repair_rule": {
+    "c11_message": "Repair KSG M1a composite v11 contract\n",
+    "c11_parent": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+    "c11_relationship_to_c10": "fresh_sibling_not_descendant",
+    "c10_merge_or_cherry_pick": false,
+    "reapply_scope": "independently_reviewed_non_evidentiary_repairs_only"
+  },
+  "latent_not_reached_defects": [
+    {
+      "git_mode": "100755",
+      "path": "scripts/check-current-source-state-v1-self-test.py",
+      "v10_parallel_map_expected_live_mode": "0644",
+      "worktree_mode": "0755"
+    },
+    {
+      "git_mode": "100755",
+      "path": "scripts/check-current-source-state-v1.py",
+      "v10_parallel_map_expected_live_mode": "0644",
+      "worktree_mode": "0755"
+    }
+  ],
+  "nonimplications": [
+    "The two mode-policy defects were latent later blockers; they were not reached and are not co-causes of the first observed oversize rejection.",
+    "The oversize rejection does not imply that the captured public provider responses were false, authenticated, complete, or qualification-bearing.",
+    "This diagnostic record reconstructs no missing C10 source, commit object, L10 observation, hosted success, or accepted R15 replay.",
+    "No PID, KSG, theorem, numerical, security, privacy, accessibility, or application conclusion follows from this operational failure."
+  ],
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v10-diagnostic-failure/v1",
+  "schema_revision": 1,
+  "status": "rejected_off_main_zero_credit"
+}

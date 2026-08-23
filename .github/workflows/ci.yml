@@ -435,6 +435,8 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
+      - name: Normalize reviewed Git info/exclude checkout residue
+        run: python3 -I -S -B scripts/normalize-actions-checkout-git-info-exclude.py
       - name: Select compatible Python 3.12 series for packet policy self-tests
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
@@ -501,6 +503,8 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
           persist-credentials: false
+      - name: Normalize reviewed Git info/exclude checkout residue
+        run: python3 -I -S -B scripts/normalize-actions-checkout-git-info-exclude.py
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
@@ -1116,12 +1120,13 @@ jobs:
           persist-credentials: false
       - uses: dtolnay/rust-toolchain@4be7066ada62dd38de10e7b70166bc74ed198c30
         with:
-          toolchain: stable
+          toolchain: 1.98.0
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.11"
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
-      - run: cargo install cargo-semver-checks --locked --version 0.48.0
+      - run: cargo install cargo-semver-checks --locked --version 0.49.0
+      - run: test "$(cargo semver-checks --version)" = "cargo-semver-checks 0.49.0"
       - run: cargo install cargo-machete --locked --version 0.9.2
       - run: cargo install cargo-local-registry --locked --version 0.2.12
       - run: python -m pip install cffconvert==2.0.0
@@ -1241,6 +1246,7 @@ jobs:
           # Construct a high-entropy-looking public digest without embedding a 64-hex fixture in CI.
           digest = "0123456789abcdef" * 4
           quote = '"'
+          pid3_public_prose = "18-key serialization order, " + "108-coordinate certificate"
           positive_only = (
               (
                   "audit/evidence/repository-snapshot.json",
@@ -1257,6 +1263,10 @@ jobs:
               (
                   "audit/evidence/fable5-ksg-rev4-settled-hostile-20260727T120200Z-context.md",
                   f'123 {quote}public_api_snapshot_sha256{quote}: {quote}{digest}{quote},',
+              ),
+              (
+                  "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md",
+                  pid3_public_prose,
               ),
           )
           cases = (
@@ -1361,14 +1371,27 @@ jobs:
                       "job_api_sha256",
                       "mutant_token_stream_sha256",
                       "token_stream_sha256",
+                      pid3_public_prose,
                   )
                   if candidate in line
               )
               original_negatives = (
                   ("nearby_path", path + ".nearby", line),
                   ("nearby_key", path, line.replace(key, "nearby_" + key, 1)),
-                  ("nonhex_value", path, line.replace(digest, "g" + digest[1:], 1)),
-                  ("secret_prefix", path, line.replace(digest, "secret_" + digest, 1)),
+                  (
+                      "nonhex_value",
+                      path,
+                      line.replace(digest, "g" + digest[1:], 1)
+                      if digest in line
+                      else line.replace("108-coordinate", "109-coordinate", 1),
+                  ),
+                  (
+                      "secret_prefix",
+                      path,
+                      line.replace(digest, "secret_" + digest, 1)
+                      if digest in line
+                      else line.replace("18-key", "secret_18-key", 1),
+                  ),
               )
               for negative_class, negative_path, negative_line in original_negatives:
                   code, findings, stderr = scan(((negative_path, negative_line),))
@@ -1379,6 +1402,19 @@ jobs:
                       )
                   detected += 1
 
+          prose_path = "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md"
+          for malformed_prose in (
+              "prefix " + pid3_public_prose,
+              "19-key serialization order, " + "108-coordinate certificate",
+          ):
+              code, findings, stderr = scan(((prose_path, malformed_prose),))
+              if code != 1 or len(findings) != 1 or findings[0].get("RuleID") != "generic-api-key":
+                  raise SystemExit(
+                      "malformed public-prose control escaped: "
+                      f"exit={code}, findings={len(findings)}, stderr={stderr}"
+                  )
+              detected += 1
+
           for path, _, malformed in cases:
               for line in malformed:
                   code, findings, stderr = scan(((path, line),))
@@ -1388,9 +1424,9 @@ jobs:
                           f"exit={code}, findings={len(findings)}, stderr={stderr}"
                       )
                   detected += 1
-          if detected != 56:
-              raise SystemExit(f"expected 56 rejected controls, observed {detected}")
-          print("Gitleaks public-digest allowlist self-test passed: 9 intended, 56 rejected")
+          if detected != 62:
+              raise SystemExit(f"expected 62 rejected controls, observed {detected}")
+          print("Gitleaks narrow-allowlist self-test passed: 10 intended, 62 rejected")
           PY
       - run: /tmp/gitleaks git --redact --no-banner --log-opts="--all" .
 

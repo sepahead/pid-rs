@@ -258,10 +258,11 @@ fn tracked_path_has_external_filter(root: &Path, git_program: &OsStr) -> Option<
     if fields.last() == Some(&&[][..]) {
         fields.pop();
     }
-    if fields.len() % 3 != 0 {
+    let (records, remainder) = fields.as_chunks::<3>();
+    if !remainder.is_empty() {
         return None;
     }
-    Some(fields.chunks_exact(3).any(|record| record[1] == b"filter"))
+    Some(records.iter().any(|record| record[1] == b"filter"))
 }
 
 fn tracked_path_has_symlink_or_gitlink(root: &Path, git_program: &OsStr) -> Option<bool> {
@@ -691,13 +692,14 @@ fn git_config_origins(root: &Path) -> Option<(Vec<PathBuf>, bool)> {
         .split(|byte| *byte == 0)
         .filter(|field| !field.is_empty())
         .collect::<Vec<_>>();
-    if fields.len() % 2 != 0 {
+    let (records, remainder) = fields.as_chunks::<2>();
+    if !remainder.is_empty() {
         return None;
     }
 
     let mut origins = BTreeSet::new();
     let mut has_include_directive = false;
-    for record in fields.chunks_exact(2) {
+    for record in records {
         let origin = std::str::from_utf8(record[0]).ok()?;
         let setting = std::str::from_utf8(record[1]).ok()?;
         if let Some(path) = origin.strip_prefix("file:") {

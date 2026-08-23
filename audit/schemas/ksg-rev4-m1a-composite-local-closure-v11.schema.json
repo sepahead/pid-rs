@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-local-closure-v11.schema.json",
+  "title": "pid-rs KSG M1a composite v11 local closure",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "authorities",
+    "immutable_v8_primitives",
+    "invocation",
+    "limits",
+    "nonimplications",
+    "platform",
+    "repository",
+    "repository_state",
+    "reviewed_executables",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "properties": {
+    "authorities": {
+      "type": "array",
+      "minItems": 23,
+      "maxItems": 23,
+      "items": { "$ref": "#/$defs/authority" }
+    },
+    "immutable_v8_primitives": { "$ref": "#/$defs/fileBinding" },
+    "invocation": { "$ref": "#/$defs/invocation" },
+    "limits": {
+      "const": {
+        "authority_aggregate_bytes": 16777216,
+        "command_stream_bytes": 8388608,
+        "executable_bytes": 268435456,
+        "ordinary_authority_bytes": 2097152,
+        "record_bytes": 33554432,
+        "terminal_c9_capture_bytes": 4194304,
+        "version_stream_bytes": 65536
+      }
+    },
+    "nonimplications": {
+      "type": "array",
+      "minItems": 10,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "platform": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "architecture",
+        "gil_enabled",
+        "operating_system",
+        "operating_system_release",
+        "python_implementation",
+        "python_version"
+      ],
+      "properties": {
+        "architecture": { "enum": ["arm64", "aarch64"] },
+        "gil_enabled": { "const": true },
+        "operating_system": { "const": "Darwin" },
+        "operating_system_release": { "type": "string", "minLength": 1 },
+        "python_implementation": { "const": "CPython" },
+        "python_version": { "const": "3.14.6" }
+      }
+    },
+    "repository": { "const": "sepahead/pid-rs" },
+    "repository_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["after", "before"],
+      "properties": {
+        "after": { "type": "object" },
+        "before": { "type": "object" }
+      }
+    },
+    "reviewed_executables": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "object" }
+    },
+    "schema": { "const": "pid-rs/ksg-rev4-m1a-composite-local-closure/v11" },
+    "schema_revision": { "const": 11 },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["c11_commit", "c11_message", "c11_tree", "c9_parent"],
+      "properties": {
+        "c11_commit": { "$ref": "#/$defs/oid" },
+        "c11_message": { "const": "Repair KSG M1a composite v11 contract\n" },
+        "c11_tree": { "$ref": "#/$defs/oid" },
+        "c9_parent": { "const": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5" }
+      }
+    }
+  },
+  "$defs": {
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding_state",
+        "git_blob_oid",
+        "git_mode",
+        "limit_class",
+        "live_blob_oid",
+        "live_mode",
+        "path",
+        "role",
+        "sha256",
+        "size_bytes"
+      ],
+      "properties": {
+        "binding_state": { "const": "bound_to_head" },
+        "git_blob_oid": { "$ref": "#/$defs/oid" },
+        "git_mode": { "enum": ["100644", "100755"] },
+        "limit_class": { "enum": ["ordinary_2mib", "terminal_c9_capture_4mib"] },
+        "live_blob_oid": { "$ref": "#/$defs/oid" },
+        "live_mode": { "enum": ["0644", "0755"] },
+        "path": { "type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\u0000]+$" },
+        "role": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 1, "maximum": 4194304 }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["body_base64", "sha256", "size_bytes"],
+      "properties": {
+        "body_base64": { "type": "string" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 0, "maximum": 8388608 }
+      }
+    },
+    "fileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "argv",
+        "cwd",
+        "elapsed_monotonic_ns",
+        "environment",
+        "environment_routes_sha256",
+        "exit_code",
+        "finished_at",
+        "monotonic_finish_ns",
+        "monotonic_start_ns",
+        "signal",
+        "started_at",
+        "stderr",
+        "stdout",
+        "timeout_seconds",
+        "timed_out",
+        "umask"
+      ],
+      "properties": {
+        "argv": { "const": ["just", "ksg-composite-v11"] },
+        "cwd": { "const": "<REPOSITORY_ROOT>" },
+        "elapsed_monotonic_ns": { "type": "integer", "minimum": 1 },
+        "environment": { "type": "object" },
+        "environment_routes_sha256": { "$ref": "#/$defs/sha256" },
+        "exit_code": { "const": 0 },
+        "finished_at": { "$ref": "#/$defs/timestamp" },
+        "monotonic_finish_ns": { "type": "integer", "minimum": 1 },
+        "monotonic_start_ns": { "const": 0 },
+        "signal": { "type": "null" },
+        "started_at": { "$ref": "#/$defs/timestamp" },
+        "stderr": { "$ref": "#/$defs/binding" },
+        "stdout": { "$ref": "#/$defs/binding" },
+        "timeout_seconds": { "const": 14400 },
+        "timed_out": { "const": false },
+        "umask": { "const": "0077" }
+      }
+    },
+    "oid": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$" }
+  }
+}

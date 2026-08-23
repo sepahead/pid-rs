@@ -1,0 +1,75 @@
+{
+  "authority_contract": {
+    "aggregate_limit_bytes": 16777216,
+    "concurrency_boundary": "complete_probe_start_end_metadata_config_ref_head_status_revalidation_pass_not_atomic_transient_or_same_uid_privileged_mutation_not_excluded",
+    "default_limit_bytes": 2097152,
+    "descriptor_read": "repository_root_dirfd_component_openat_no_follow_exact_size_and_eof_stable_identity",
+    "git_binding": "exact_tree_mode_blob_oid_and_python_verified_commit_tree_blob_object_hashes",
+    "live_binding": "exact_mode_single_link_regular_file_stable_descriptor_read",
+    "single_structure": "AuthoritySpec",
+    "special_limits": [
+      {
+        "limit_bytes": 4194304,
+        "limit_class": "terminal_c9_capture_4mib",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-c9-terminal-hosted-capture-v10-2026-08-23.json"
+      }
+    ]
+  },
+  "c10": {
+    "ancestry_credit": "none",
+    "diagnostic_record": "audit/evidence/ksg-rev4-m1a-composite-v10-diagnostic-failure-2026-08-23.json",
+    "disposition": "rejected_off_main",
+    "merge_or_cherry_pick": false,
+    "r15_credit": "none"
+  },
+  "c11": {
+    "identity": "derived_from_the_unique_unsigned_direct_child_commit_and_tree_not_embedded_in_c11_owned_bytes",
+    "message": "Repair KSG M1a composite v11 contract\n",
+    "parent": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+    "relationship_to_c10": "fresh_sibling"
+  },
+  "l11": {
+    "attempt_semantics": "one_shot_per_exact_c11_identity_any_production_launch_outcome_consumes_attempt",
+    "capture_command": "python3 -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --output <new-outside-repository-path>",
+    "operator_uniqueness_provable_by_recorder": false,
+    "preflight_command_normal": "python3 -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --preflight-live",
+    "preflight_command_optimized": "python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v11-local-closure.py --preflight-live",
+    "preflight_consumes_attempt": false,
+    "status": "not_produced"
+  },
+  "nonimplications": [
+    "C9 operational failures remain separate provider observations; no common cause is inferred.",
+    "C10, its unissued L10/R10, its rejected R15, and any lost C10-local bytes provide no C11 qualification or ancestry credit.",
+    "Finite static checks, mutation suites, source hashes, and formal tools are bounded evidence, not a proof of non-bypass, causal execution, hermeticity, or semantic soundness.",
+    "Q11 is operational qualification only, not PID, KSG, theorem, numerical, security, privacy, accessibility, or application validation.",
+    "Provider responses, timestamps, software digests, and unsigned Git objects do not authenticate themselves or establish trusted time."
+  ],
+  "qualification": {
+    "attempt": 1,
+    "formula": "Q11 = L11 AND CI11_attempt1 AND CodeQL11_attempt1 AND Dedicated11_attempt1",
+    "same_exact_c11_commit_and_tree": true,
+    "status": "not_run",
+    "terms": [
+      "L11",
+      "CI11_attempt1",
+      "CodeQL11_attempt1",
+      "Dedicated11_attempt1"
+    ]
+  },
+  "r11": {
+    "derive_command": "python3 -I -S -B scripts/check-ksg-m1a-composite-v11.py --derive-receipt --local-fd 3 --successor-fd 4 3< <L11-mode-0600-file> 4< <successor-mode-0600-file>",
+    "issuance": "if_and_only_if_Q11",
+    "message": "Record KSG M1a composite v11 receipt\n",
+    "status": "unissued"
+  },
+  "repository": "sepahead/pid-rs",
+  "r16_current_source": {
+    "accepted_r15_reuse": false,
+    "fresh_after_exact_c11_bytes_settle": true,
+    "precondition": "fresh_terminal_c9_capture_reviewed_and_added_before_all_c11_bytes_settle",
+    "status": "not_generated"
+  },
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v11-path-policy/v1",
+  "schema_revision": 1,
+  "state": "candidate_authoring_no_evidence"
+}

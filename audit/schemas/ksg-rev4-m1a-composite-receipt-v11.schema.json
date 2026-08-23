@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-receipt-v11.schema.json",
+  "title": "pid-rs KSG M1a composite v11 receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bindings",
+    "nonimplications",
+    "qualification",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "properties": {
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hosted_capture", "local_closure"],
+      "properties": {
+        "hosted_capture": { "$ref": "#/$defs/fileBinding" },
+        "local_closure": { "$ref": "#/$defs/fileBinding" }
+      }
+    },
+    "nonimplications": {
+      "type": "array",
+      "minItems": 5,
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "qualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt", "formula", "terms", "value"],
+      "properties": {
+        "attempt": { "const": 1 },
+        "formula": { "const": "Q11 = L11 AND CI11_attempt1 AND CodeQL11_attempt1 AND Dedicated11_attempt1" },
+        "terms": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["CI11_attempt1", "CodeQL11_attempt1", "Dedicated11_attempt1", "L11"],
+          "properties": {
+            "CI11_attempt1": { "const": true },
+            "CodeQL11_attempt1": { "const": true },
+            "Dedicated11_attempt1": { "const": true },
+            "L11": { "const": true }
+          }
+        },
+        "value": { "const": true }
+      }
+    },
+    "repository": { "const": "sepahead/pid-rs" },
+    "schema": { "const": "pid-rs/ksg-rev4-m1a-composite-receipt/v11" },
+    "schema_revision": { "const": 11 },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "message", "parent", "tree"],
+      "properties": {
+        "commit": { "$ref": "#/$defs/oid" },
+        "message": { "const": "Repair KSG M1a composite v11 contract\n" },
+        "parent": { "const": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5" },
+        "tree": { "$ref": "#/$defs/oid" }
+      }
+    }
+  },
+  "$defs": {
+    "fileBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "size_bytes"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "size_bytes": { "type": "integer", "minimum": 1, "maximum": 33554432 }
+      }
+    },
+    "oid": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

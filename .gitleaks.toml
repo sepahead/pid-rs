@@ -75,3 +75,10 @@ id = "generic-api-key"
   regexTarget = "line"
   regexes = ['''^\s*token_stream_sha256\s*=\s*"[0-9a-f]{64}",?\s*$''']
   paths = ['''^scripts/check-z3-ksg-integer-harmonic\.py$''']
+
+  [[rules.allowlists]]
+  description = "Exact public SxPID3 coordinate-count prose, not a credential"
+  condition = "AND"
+  regexTarget = "line"
+  regexes = ['''^18-key serialization order, 108-coordinate certificate$''']
+  paths = ['''^claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1\.md$''']
