@@ -298,8 +298,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "20378ad3efedd86e358fb04c39d1be599dc66ad211b986763b08c539e2aac7c0",
-        "size_bytes": 215020
+        "sha256": "a0806a0e7c0eb025b8b780ad277586aba672ecd6288c9dda4f7ddf51f61d0fc4",
+        "size_bytes": 215183
       },
       {
         "git_mode": "100644",
@@ -5026,7 +5026,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "0b53e25f82f069b08e7f63aebf12b678b9c16af4000f40abb49a8fe9b606f7c0",
+        "sha256": "1a3f9092a6d802c454f480fed8cc33ae4f7351c1ed626aa0b2ec44b815d77df1",
         "size_bytes": 120263
       },
       {
@@ -5314,14 +5314,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/normalize-actions-checkout-git-info-exclude-self-test.py",
-        "sha256": "1af9c0384adc123a07bf0c5c145c44a79859a0b8359ccfaa5ecde266d65c0630",
-        "size_bytes": 6510
+        "sha256": "d6dc6ed5b994781750019638942ec3dec5543a9f24441b22a4f05fcc9a6dabb8",
+        "size_bytes": 6734
       },
       {
         "git_mode": "100644",
         "path": "scripts/normalize-actions-checkout-git-info-exclude.py",
-        "sha256": "0e968621abdc4465d8810150c9e17187581d201342be14f62a8113483f122f80",
-        "size_bytes": 8207
+        "sha256": "64470f6e75f4e7133f06bb4cb6fad920547de910daa5ae5a181928edc2a8b2d3",
+        "size_bytes": 8713
       },
       {
         "git_mode": "100755",
@@ -5366,7 +5366,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "745745c282ba875c4029128c9d99fc55c661c9c4cfe9726929e2d9b897c4b9ef",
+    "entries_sha256": "3ea323db5669fc5a89031a41d3a5b2f7d877c5323c2551eeeb2aaa064b66e6c0",
     "entry_count": 870
   },
   "subprojections": [
@@ -5395,7 +5395,7 @@
       ]
     },
     {
-      "entries_sha256": "936fac2f699d5bad59c3b229798f1b4c8e5d4f47328b0a312bcb7b23f8b52b04",
+      "entries_sha256": "2b08ea42d03d3c153cb97164cc768431e541187ffeb73586dc553dfb0e923f5f",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

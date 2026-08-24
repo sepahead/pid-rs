@@ -658,7 +658,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
     ".github/workflows/ci.yml": "17b252ff25e881b4f1d01af13f88572c54ed6b221e4b5157fcacc7aae7efafc5",
     ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
-    "CHANGELOG.md": "20378ad3efedd86e358fb04c39d1be599dc66ad211b986763b08c539e2aac7c0",
+    "CHANGELOG.md": "a0806a0e7c0eb025b8b780ad277586aba672ecd6288c9dda4f7ddf51f61d0fc4",
     "justfile": "97372911d19cef1accfa785fd5df74976958fccecb1a82293a4246a69132a76d",
     "scripts/README.md": "785faa69ba7fc4e8d3c82419b50b7efda5c4a43de9a939add9470cf4e2d14b87",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
