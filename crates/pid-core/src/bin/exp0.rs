@@ -19,7 +19,7 @@ use pid_core::diagnostics::{
 use pid_core::experimental::continuous::raw_scalars::{
     co_information_pairwise, isx_redundancy, ksg_mi, ksg_mi_concat_xy,
 };
-use pid_core::experimental::continuous::{IsxConfig, IsxMethod};
+use pid_core::experimental::continuous::{IsxConfig, IsxMethod, Pid2Estimate, Pid2Result};
 use pid_core::experimental::pipelines::{
     bootstrap_rows_stats, permutation_rows_pvalue, BlockLengthSelection, BootstrapConfig,
     ResamplingValidityDeclaration, RowBootstrapStat, RowPermutationStat, RowResampleScheme,
@@ -3394,14 +3394,11 @@ fn optional_synergy_outcome(
 ) -> ScientificOutcome<f64> {
     match redundancy {
         ScientificOutcome::Produced(redundancy) => {
-            let synergy = mi_s1s2_t - mi_s1_t - mi_s2_t + redundancy;
-            if synergy.is_finite() {
-                ScientificOutcome::Produced(synergy)
-            } else {
-                ScientificOutcome::Abstained {
+            Pid2Result::from_estimate(Pid2Estimate::new(mi_s1_t, mi_s2_t, mi_s1s2_t, redundancy))
+                .map(|pid| ScientificOutcome::Produced(pid.synergy))
+                .unwrap_or(ScientificOutcome::Abstained {
                     reason: AbstentionReason::NumericalInstability,
-                }
-            }
+                })
         }
         ScientificOutcome::Abstained { reason } => ScientificOutcome::Abstained { reason },
         ScientificOutcome::NotRequested => ScientificOutcome::NotRequested,

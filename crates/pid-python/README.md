@@ -208,6 +208,22 @@ out-of-range policy. Use `"clamp_to_boundary"` only when boundary clamping is pa
 observation/quantization model. The default `"error"` policy fails on held-out values outside the
 fitted training range.
 
+The report also exposes `distinct_binary64_edge_value_counts`,
+`positive_width_interval_counts`, `reachable_binary64_label_counts`, `observed_label_counts`,
+`reachable_joint_cardinality`, `structurally_unreachable_joint_cells`, and
+`unobserved_reachable_joint_cells`. Nominal counts describe the requested partition; reachable
+counts describe the fitted finite-binary64 map; observed counts describe this transform call.
+Reachability is not population support, positive probability, or evidence that the bin count is
+adequate. Adjacent representable endpoints can collapse nominal labels, and reachable labels need
+not be contiguous. The implementation reports that structure without compacting labels.
+
+Categorical SxPID final empirical-PMF component averages and selected two-source PID synergy
+formulas use one correctly rounded reduction of already represented finite binary64 operands;
+pointwise SxPID Möbius inversion remains compensated. This can change persisted averaged-atom or
+synergy last bits and removes operand-order effects only for those named final multisets. It does
+not make the estimator, probabilities, products, or logarithms exact. Python binding parity does
+not widen that arithmetic or scientific claim.
+
 For independent reimplementation, the three SHA-256 domains (including the final NUL byte shown as
 `\0`) are `pid-rs/quantizer/training-input/f64-bits-le/v1\0`,
 `pid-rs/quantizer/transform-input/f64-bits-le/v1\0`, and

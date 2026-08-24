@@ -8,9 +8,27 @@ use pid_core::stable::quantized::{
     fitted_quantized_sxpid2_with_budget, fitted_quantized_sxpid3,
     fitted_quantized_sxpid3_resource_estimate, fitted_quantized_sxpid3_with_budget,
     fitted_quantized_sxpid_n, fitted_quantized_sxpid_n_resource_estimate,
-    fitted_quantized_sxpid_n_with_budget, EqualWidthQuantizer, QuantizerConfig,
+    fitted_quantized_sxpid_n_with_budget, EqualWidthQuantizer, QuantizationReport, QuantizerConfig,
 };
 use pid_core::{MatRef, PidError, ResourceBudget};
+
+fn quantization_report_copy_cost(report: &QuantizationReport) -> (u128, u128) {
+    let edge_count = report.bin_edges.iter().map(Vec::len).sum::<usize>() as u128;
+    let diagnostic_count = [
+        report.distinct_binary64_edge_value_counts.len(),
+        report.positive_width_interval_counts.len(),
+        report.reachable_binary64_label_counts.len(),
+        report.observed_label_counts.len(),
+    ]
+    .into_iter()
+    .sum::<usize>() as u128;
+    let string_bytes = report.scaling_description.len() as u128;
+    let heap_bytes = report.bin_edges.len() as u128 * std::mem::size_of::<Vec<f64>>() as u128
+        + edge_count * std::mem::size_of::<f64>() as u128
+        + diagnostic_count * std::mem::size_of::<usize>() as u128
+        + string_bytes;
+    (heap_bytes, edge_count + diagnostic_count + string_bytes)
+}
 
 fn assert_close(left: f64, right: f64, context: &str) {
     assert!(
@@ -118,6 +136,7 @@ fn composed_quantized_sxpid_serializes_edges_hashes_and_occupancy_with_pid() {
     .unwrap();
     let quantized_estimate = fitted_quantized_sxpid2_resource_estimate(&s1, &s2, &target).unwrap();
     assert!(quantized_estimate.estimated_bytes > categorical_estimate.estimated_bytes);
+    assert!(quantized_estimate.operations_hint > categorical_estimate.operations_hint);
     let default_budget = ResourceBudget::default();
     let max_bytes = u64::try_from(quantized_estimate.estimated_bytes - 1).unwrap();
     let report_limited_budget = ResourceBudget::new(
@@ -133,6 +152,23 @@ fn composed_quantized_sxpid_serializes_edges_hashes_and_occupancy_with_pid() {
             resource: "bytes",
             ..
         })
+    ));
+    let operation_limited_budget = ResourceBudget::new(
+        default_budget.max_bytes,
+        default_budget.max_pairwise_distances,
+        quantized_estimate.operations_hint - 1,
+        default_budget.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        fitted_quantized_sxpid2_with_budget(&s1, &s2, &target, operation_limited_budget),
+        Err(PidError::ResourceLimitExceeded {
+            resource: "operations_hint",
+            requested,
+            limit,
+            ..
+        }) if requested == quantized_estimate.operations_hint
+            && limit == quantized_estimate.operations_hint - 1
     ));
 
     let result = fitted_quantized_sxpid2(&s1, &s2, &target).unwrap();
@@ -168,6 +204,191 @@ fn composed_quantized_sxpid_serializes_edges_hashes_and_occupancy_with_pid() {
         .is_some());
     assert_eq!(json["target_quantization"]["observed_joint_cardinality"], 2);
     assert!(json["pid"]["mi_s1s2_t"].as_f64().unwrap().is_finite());
+}
+
+#[test]
+fn fitted_quantized_sxpid_resource_estimates_track_mutated_report_payloads_exactly() {
+    let training = [0.0, 1.0, 2.0, 3.0];
+    let quantizer = EqualWidthQuantizer::fit(
+        MatRef::new(&training, 4, 1).unwrap(),
+        2,
+        QuantizerConfig::default(),
+    )
+    .unwrap();
+    let mut s1 = quantizer
+        .transform_with_report(MatRef::new(&training, 4, 1).unwrap())
+        .unwrap();
+    let mut s2 = quantizer
+        .transform_with_report(MatRef::new(&training, 4, 1).unwrap())
+        .unwrap();
+    let mut target = quantizer
+        .transform_with_report(MatRef::new(&training, 4, 1).unwrap())
+        .unwrap();
+    s1.report.bin_edges = vec![vec![-1.0, 0.0], vec![1.0; 3]];
+    s1.report.distinct_binary64_edge_value_counts = vec![0; 2];
+    s1.report.positive_width_interval_counts = vec![0; 3];
+    s1.report.reachable_binary64_label_counts = vec![0; 5];
+    s1.report.observed_label_counts = vec![0; 7];
+    s1.report.scaling_description = "σ→τ".to_owned();
+    s2.report.bin_edges = vec![vec![], vec![2.0; 4], vec![3.0]];
+    s2.report.distinct_binary64_edge_value_counts = vec![0; 11];
+    s2.report.positive_width_interval_counts = vec![0; 13];
+    s2.report.reachable_binary64_label_counts = vec![0; 17];
+    s2.report.observed_label_counts = vec![0; 19];
+    s2.report.scaling_description = "µm²".to_owned();
+    target.report.bin_edges = vec![vec![4.0; 2], vec![5.0; 5]];
+    target.report.distinct_binary64_edge_value_counts = vec![0; 23];
+    target.report.positive_width_interval_counts = vec![0; 29];
+    target.report.reachable_binary64_label_counts = vec![0; 31];
+    target.report.observed_label_counts = vec![0; 37];
+    target.report.scaling_description = "Δt→∞".to_owned();
+    let sources = [&s1, &s2];
+    let categorical_sources = [s1.matrix.as_ref(), s2.matrix.as_ref()];
+    let fixed_base = discrete_sxpid2_resource_estimate(
+        categorical_sources[0],
+        categorical_sources[1],
+        target.matrix.as_ref(),
+        false,
+    )
+    .unwrap();
+    let n_base =
+        discrete_sxpid_n_resource_estimate(&categorical_sources, target.matrix.as_ref(), false)
+            .unwrap();
+    let report_costs = [&s1.report, &s2.report, &target.report].map(quantization_report_copy_cost);
+    let report_heap_bytes = report_costs.iter().map(|cost| cost.0).sum::<u128>();
+    let report_copy_operations = report_costs.iter().map(|cost| cost.1).sum::<u128>();
+    let fixed_expected_bytes = fixed_base.estimated_bytes + report_heap_bytes;
+    let fixed_expected_operations = fixed_base.operations_hint + report_copy_operations;
+    let n_expected_bytes = n_base.estimated_bytes
+        + report_heap_bytes
+        + sources.len() as u128 * std::mem::size_of::<QuantizationReport>() as u128;
+    let n_expected_operations = n_base.operations_hint + report_copy_operations;
+    let fixed_estimate = fitted_quantized_sxpid2_resource_estimate(&s1, &s2, &target).unwrap();
+    let n_estimate = fitted_quantized_sxpid_n_resource_estimate(&sources, &target).unwrap();
+
+    assert_eq!(
+        [
+            (
+                fixed_estimate.estimated_bytes,
+                fixed_estimate.operations_hint,
+                fixed_estimate.pairwise_distances,
+            ),
+            (
+                n_estimate.estimated_bytes,
+                n_estimate.operations_hint,
+                n_estimate.pairwise_distances,
+            ),
+        ],
+        [
+            (
+                fixed_expected_bytes,
+                fixed_expected_operations,
+                fixed_base.pairwise_distances,
+            ),
+            (
+                n_expected_bytes,
+                n_expected_operations,
+                n_base.pairwise_distances,
+            ),
+        ]
+    );
+
+    let defaults = ResourceBudget::default();
+    let fixed_exact_budget = ResourceBudget::new(
+        u64::try_from(fixed_expected_bytes).unwrap(),
+        defaults.max_pairwise_distances,
+        fixed_expected_operations,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(fitted_quantized_sxpid2_with_budget(&s1, &s2, &target, fixed_exact_budget).is_ok());
+    let fixed_byte_limited_budget = ResourceBudget::new(
+        u64::try_from(fixed_expected_bytes - 1).unwrap(),
+        defaults.max_pairwise_distances,
+        fixed_expected_operations,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        fitted_quantized_sxpid2_with_budget(&s1, &s2, &target, fixed_byte_limited_budget),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "fitted_quantized_sxpid2",
+            resource: "bytes",
+            requested,
+            limit,
+            ..
+        }) if requested == fixed_expected_bytes && limit == fixed_expected_bytes - 1
+    ));
+    let fixed_operation_limited_budget = ResourceBudget::new(
+        u64::try_from(fixed_expected_bytes).unwrap(),
+        defaults.max_pairwise_distances,
+        fixed_expected_operations - 1,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        fitted_quantized_sxpid2_with_budget(
+            &s1,
+            &s2,
+            &target,
+            fixed_operation_limited_budget
+        ),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "fitted_quantized_sxpid2",
+            resource: "operations_hint",
+            requested,
+            limit,
+            ..
+        }) if requested == fixed_expected_operations
+            && limit == fixed_expected_operations - 1
+    ));
+
+    let n_exact_budget = ResourceBudget::new(
+        u64::try_from(n_expected_bytes).unwrap(),
+        defaults.max_pairwise_distances,
+        n_expected_operations,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(fitted_quantized_sxpid_n_with_budget(&sources, &target, n_exact_budget).is_ok());
+    let n_byte_limited_budget = ResourceBudget::new(
+        u64::try_from(n_expected_bytes - 1).unwrap(),
+        defaults.max_pairwise_distances,
+        n_expected_operations,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        fitted_quantized_sxpid_n_with_budget(&sources, &target, n_byte_limited_budget),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "fitted_quantized_sxpid_n",
+            resource: "bytes",
+            requested,
+            limit,
+            ..
+        }) if requested == n_expected_bytes && limit == n_expected_bytes - 1
+    ));
+    let n_operation_limited_budget = ResourceBudget::new(
+        u64::try_from(n_expected_bytes).unwrap(),
+        defaults.max_pairwise_distances,
+        n_expected_operations - 1,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        fitted_quantized_sxpid_n_with_budget(
+            &sources,
+            &target,
+            n_operation_limited_budget
+        ),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "fitted_quantized_sxpid_n",
+            resource: "operations_hint",
+            requested,
+            limit,
+            ..
+        }) if requested == n_expected_operations && limit == n_expected_operations - 1
+    ));
 }
 
 #[test]

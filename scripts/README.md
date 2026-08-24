@@ -323,6 +323,22 @@ Python standard library and the published event-probability definition, does not
 its bindings, and makes no claim beyond that finite bound. The Rust integration test compares all
 494 tables against the generated corpus.
 
+`generate-exact-binary64-sum-oracle.py` independently rebuilds a 561-case conformance corpus for
+the private exact reduction of already represented finite binary64 operands. The standard-library
+generator converts payloads to exact `Fraction` values and rounds each exact real sum once using
+round-to-nearest with ties to even. The Rust unit test checks all positional permutations for
+arities through five and four declared orderings for the 63--65-term cases through both array and
+streaming reducers. Normal and optimized-Python
+no-write runs verify the committed JSON, checksum, and exact live-generator snapshot; the Rust
+custody test independently binds that snapshot into the compiled test. `--write` is the
+maintainer-only regeneration route and refreshes all three generated artifacts from the live
+generator bytes. It is a deterministic sequential write, not an atomic multi-file transaction.
+The subsequent no-write checks fail closed on an interrupted or inconsistent refresh. The corpus
+tests the fixed-limb
+implementation, not an estimator: its operands can already contain logarithm, probability,
+product, MI, or redundancy approximation error. It is finite-corpus conformance evidence, not a
+universal floating-point proof, an estimator-error bound, or independent review.
+
 `generate-ksg-local-arithmetic-oracle.py` independently rebuilds 8,198 exact-harmonic/Decimal
 reference values for the KSG local digamma expression, exhaustively through 16 samples and across
 fixed stress tuples through one million samples. The in-module Rust test compares every value.
@@ -2044,6 +2060,8 @@ official x86-64 Linux Z3 4.16.0 archive and verifies its pinned SHA-256 digest b
 python3 scripts/generate-finite-alphabet-plugin-oracle.py
 python3 scripts/generate-dependency-colored-sxpid-oracle.py
 python3 scripts/generate-support-change-tolerant-sxpid-oracle.py
+python3 scripts/generate-exact-binary64-sum-oracle.py
+python3 -O scripts/generate-exact-binary64-sum-oracle.py
 python3 scripts/generate-ksg-local-arithmetic-oracle.py
 python3 scripts/generate-sxpid2-exhaustive-oracle.py
 python3 scripts/check-markdown-math.py
@@ -2065,6 +2083,7 @@ python3 scripts/check-review-evidence.py --write
 python3 scripts/generate-finite-alphabet-plugin-oracle.py --write
 python3 scripts/generate-dependency-colored-sxpid-oracle.py --write
 python3 scripts/generate-support-change-tolerant-sxpid-oracle.py --write
+python3 scripts/generate-exact-binary64-sum-oracle.py --write  # corpus + sidecar + source snapshot
 python3 scripts/generate-ksg-local-arithmetic-oracle.py --write
 python3 scripts/generate-sxpid2-exhaustive-oracle.py --write
 ```

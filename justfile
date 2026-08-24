@@ -45,7 +45,7 @@ doc:
 
 # Estimator benchmarks
 bench:
-    cargo bench -p pid-core
+    cargo bench --locked -p pid-core --all-features --bench estimators
 
 # Supply-chain audit (advisories + licenses + bans + sources).
 # --all-features so the `parallel` (rayon) dependency subtree is scanned, matching CI;
@@ -83,6 +83,8 @@ version-check:
     python3 scripts/generate-finite-alphabet-plugin-oracle.py
     python3 scripts/generate-dependency-colored-sxpid-oracle.py
     python3 scripts/generate-support-change-tolerant-sxpid-oracle.py
+    python3 scripts/generate-exact-binary64-sum-oracle.py
+    python3 -O scripts/generate-exact-binary64-sum-oracle.py
     python3 scripts/generate-ksg-local-arithmetic-oracle.py
     python3 scripts/generate-sxpid2-exhaustive-oracle.py
     python3 scripts/check-markdown-math.py

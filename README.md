@@ -425,6 +425,21 @@ quantization reports—including exact edges, separate domain-tagged training-in
 transform-input, and categorical-output hashes, out-of-range policy, and occupancy—alongside the
 PID and observed cardinalities.
 
+Each report separates requested nominal labels, labels with at least one finite-binary64 preimage
+under the fitted map, and labels actually observed in this transform call. Structural collapse and
+reachable-but-unobserved cells are reported separately; map reachability is not population support,
+positive probability, or evidence that the bin count is scientifically adequate. Interior edges
+are overflow-safe, finite, in range, and nondecreasing, but adjacent representable endpoints can
+still collapse nominal bins.
+
+Categorical SxPID final empirical-PMF component averaging and selected two-source PID synergy
+formulas now sum their already represented binary64 operands exactly and round once, ties-to-even;
+pointwise SxPID Möbius inversion remains compensated. This removes incidental operand-order
+effects only for those named final multisets, not estimator, logarithm, probability, or sampling
+error. The scoped counterexamples, rejected pointwise/$I_{\min}$ PID3 transfers, cost model,
+oracle boundary, and migration guidance are documented in
+[the numerical-assurance note](NUMERICAL_ASSURANCE.md).
+
 Those SHA-256 preimages are reproducible outside Rust. Their NUL-terminated domains are
 `pid-rs/quantizer/training-input/f64-bits-le/v1\0`,
 `pid-rs/quantizer/transform-input/f64-bits-le/v1\0`, and

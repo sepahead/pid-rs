@@ -120,6 +120,63 @@ The review-source quantization hash names and meanings changed before the first 
   categorical-output digests are always reported. Python's `quantized.values` is read-only; copy it
   explicitly before any downstream mutation.
 
+`QuantizationReport` adds seven Rust/Python fields. Consumers that deserialize a closed schema or
+mirror the Python stub must add:
+
+- `distinct_binary64_edge_value_counts`, `positive_width_interval_counts`,
+  `reachable_binary64_label_counts`, and `observed_label_counts`;
+- `reachable_joint_cardinality`, `structurally_unreachable_joint_cells`, and
+  `unobserved_reachable_joint_cells`.
+
+`bins_per_dimension` and `nominal_joint_cardinality` remain requested, nominal quantities.
+Binary64 edge collapse can make some nominal labels impossible under the fitted map, while other
+reachable labels may simply be absent from one transform sample. Accordingly,
+`structurally_unreachable_joint_cells = nominal - reachable` and
+`unobserved_reachable_joint_cells = reachable - observed` whenever the relevant products fit in
+`u128`. The legacy `empty_joint_cells = nominal - observed` is unchanged and equals the sum of
+those two fields when all three are representable. `None` means only that the documented product
+overflowed `u128`; an inconsistent subtraction fails closed. Reachability means that a label has
+at least one accepted finite-binary64 preimage under the fitted endpoint and partition rules. It
+does not mean population support, positive probability, joint-law support, or sampling adequacy,
+and reachable labels need not be contiguous.
+
+Fitted endpoints are now stored exactly. Interior edges use overflow-safe interpolation and must
+be finite, in range, and nondecreasing. Adjacent binary64 endpoints can still collapse interior
+edges; the report exposes that structure and does not compact or invent labels. This can change
+fitted edges, labels, categorical-output hashes, and downstream quantized PID values on extreme or
+very narrow ranges. Constant fits remain valid and map the equal value to label 0. Under the
+`Error` out-of-range policy, an unequal held-out value is rejected; under
+`ClampToBoundary`, it maps to label 0.
+
+## Represented-operand reductions and PID reconstruction
+
+PID formulas and estimands are unchanged. Categorical SxPID final empirical-PMF component
+averaging, categorical $I_{\min}$ PID2 synergy, and continuous PID2 synergy now sum their supplied
+finite binary64 operands exactly and round the exact sum once to binary64 using
+round-to-nearest, ties-to-even. Pointwise SxPID Möbius inversion retains its prior compensated
+reduction after bounded reachable-table searches found no pointwise source-exchange bit witness.
+The exact-reduced operands—MI or redundancy estimates and products such as empirical probability
+times a pointwise component—were already rounded. This removes reduction-order dependence only for
+the named final operand multisets; it does not make an estimator exact, bound upstream logarithm
+or kNN error, prove global source-permutation equivariance, or establish statistical validity.
+Persisted averaged-atom or synergy last bits can change, exact cancellation is canonicalized to
+positive zero, and the more conservative SxPID and PID2 resource estimates can require a higher
+configured operation or memory ceiling.
+The categorical $I_{\min}$ PID3 Möbius reduction deliberately remains compensated rather than
+adopting this contract. Temporary probes reported no reachable defect in 245,156 binary tables
+through total mass seven for $S_0\leftrightarrow S_1$, or in 200,000 additional tables checked
+under all three source transpositions. Their executables and raw logs were not retained, so these
+totals are unqualified historical observations with zero current release-evidence credit. They do
+not prove a witness impossible. The durable migration decision is narrower: retained evidence does
+not justify transferring this numerical policy between different PID measures.
+
+`Pid2Result::from_estimate` can now fail closed if its separately rounded atoms do not reconstruct
+all three supplied MI coordinates within the documented inclusive 32-position ordered-binary64
+guard. The synergy coordinate has the source-order-independent represented-input meaning
+`RN-even(exact(J - I1 - I2 + R))`; it is not perturbed to hide rounding in the unique atoms. The
+guard is a project-defined representability check, not an estimator theorem and not a claim that
+PID identities hold exactly in binary64.
+
 ## Continuous estimates
 
 - Bare default continuous configurations are intentionally non-runnable. Make the population-law

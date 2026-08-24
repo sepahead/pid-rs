@@ -173,6 +173,10 @@ use crate::discrete_pid::{
     try_clone_quantization_report_with_cancellation,
 };
 use crate::error::{PidError, PidResult};
+use crate::exact_binary64::{
+    ExactBinary64Accumulator, EXACT_BINARY64_ADD_LIMB_VISIT_BOUND,
+    EXACT_BINARY64_TOTAL_LIMB_VISIT_BOUND,
+};
 use crate::matrix::DiscreteMatRef;
 #[cfg(feature = "experimental-pipelines")]
 use crate::matrix::MatRef;
@@ -757,6 +761,30 @@ impl NeumaierAccumulator {
     }
 }
 
+fn add_exact_component(
+    accumulator: &mut ExactBinary64Accumulator,
+    value: f64,
+    context: &'static str,
+) -> PidResult<()> {
+    if accumulator.add(value) {
+        Ok(())
+    } else {
+        Err(PidError::NumericalInstability { context })
+    }
+}
+
+fn exact_component_total(
+    accumulator: &ExactBinary64Accumulator,
+    context: &'static str,
+) -> PidResult<f64> {
+    let total = accumulator.total();
+    if total.is_finite() {
+        Ok(total)
+    } else {
+        Err(PidError::NumericalInstability { context })
+    }
+}
+
 /// Empirical joint PMF counts over distinct realizations in deterministic lexicographic order.
 /// Keeping integer mass lets event probabilities sum exactly before their single division.
 struct EmpiricalPmf {
@@ -1129,15 +1157,20 @@ fn checked_resource_mul(operation: &'static str, left: u128, right: u128) -> Pid
         .ok_or(PidError::SizeOverflow { operation })
 }
 
-fn add_sxpid_estimate_bytes(
+fn add_sxpid_estimate_resources(
     operation: &'static str,
     estimate: ResourceEstimate,
     extra_bytes: u128,
+    extra_operations: u128,
 ) -> PidResult<ResourceEstimate> {
     Ok(ResourceEstimate {
         estimated_bytes: checked_resource_add(operation, estimate.estimated_bytes, extra_bytes)?,
         pairwise_distances: estimate.pairwise_distances,
-        operations_hint: estimate.operations_hint,
+        operations_hint: checked_resource_add(
+            operation,
+            estimate.operations_hint,
+            extra_operations,
+        )?,
     })
 }
 
@@ -1151,6 +1184,15 @@ fn quantization_reports_heap_bytes(
             sum,
             quantization_report_heap_bytes(operation, report)?,
         )
+    })
+}
+
+fn quantization_reports_copy_operations(
+    operation: &'static str,
+    reports: &[&QuantizationReport],
+) -> PidResult<u128> {
+    reports.iter().try_fold(0u128, |sum, report| {
+        checked_resource_add(operation, sum, report.copy_operations_hint(operation)?)
     })
 }
 
@@ -1343,7 +1385,7 @@ fn sxpid_resource_estimate_from_dimensions(
         checked_resource_mul(
             operation,
             lattice_nodes,
-            std::mem::size_of::<[NeumaierAccumulator; 2]>() as u128,
+            std::mem::size_of::<[ExactBinary64Accumulator; 2]>() as u128,
         )?,
         checked_resource_mul(
             operation,
@@ -1407,21 +1449,37 @@ fn sxpid_resource_estimate_from_dimensions(
             )?,
         )?,
     )?;
+    // Pointwise Möbius inversion retains the established compensated path. Only final empirical-
+    // PMF averaging uses the fixed exact accumulator: two full carry traversals are charged per
+    // represented addend and four full scans per finalization. These conservative limb-visit
+    // envelopes are resource-accounting units, not CPU-instruction counts.
+    let exact_add_work = EXACT_BINARY64_ADD_LIMB_VISIT_BOUND as u128;
+    let exact_total_work = EXACT_BINARY64_TOTAL_LIMB_VISIT_BOUND as u128;
     let mobius_work = checked_resource_mul(
         operation,
         n,
         checked_resource_mul(operation, lattice_nodes, lattice_nodes)?,
+    )?;
+    let average_reduction_work = checked_resource_add(
+        operation,
+        checked_resource_mul(operation, n, exact_add_work)?,
+        exact_total_work,
+    )?;
+    let average_work = checked_resource_mul(
+        operation,
+        checked_resource_mul(operation, lattice_nodes, 2)?,
+        average_reduction_work,
     )?;
     let histogram_work = checked_resource_mul(
         operation,
         checked_resource_mul(operation, subset_count, n)?,
         checked_resource_mul(operation, sxpid_ceil_log2(n_rows), coordinates.max(1))?,
     )?;
-    let operations_hint = checked_resource_add(
-        operation,
-        checked_resource_add(operation, event_scans, mobius_work)?,
-        histogram_work,
-    )?;
+    let operations_hint = [event_scans, mobius_work, average_work, histogram_work]
+        .into_iter()
+        .try_fold(0u128, |sum, work| {
+            checked_resource_add(operation, sum, work)
+        })?;
     Ok(ResourceEstimate {
         estimated_bytes,
         pairwise_distances: 0,
@@ -1715,10 +1773,12 @@ pub fn fitted_quantized_sxpid2_resource_estimate(
         target.matrix.as_ref(),
         false,
     )?;
-    add_sxpid_estimate_bytes(
+    let reports = [&s1.report, &s2.report, &target.report];
+    add_sxpid_estimate_resources(
         OPERATION,
         estimate,
-        quantization_reports_heap_bytes(OPERATION, &[&s1.report, &s2.report, &target.report])?,
+        quantization_reports_heap_bytes(OPERATION, &reports)?,
+        quantization_reports_copy_operations(OPERATION, &reports)?,
     )
 }
 
@@ -1882,7 +1942,8 @@ fn sxpid2_from_states_with_cancellation(
         budget,
     )?;
     // Averaged accumulators for [unq1, unq2, syn, red] × (plus, minus).
-    let mut avg = [[NeumaierAccumulator::default(); 2]; 4];
+    let mut avg: [[ExactBinary64Accumulator; 2]; 4] =
+        std::array::from_fn(|_| std::array::from_fn(|_| ExactBinary64Accumulator::default()));
 
     for (realization_index, (rlz, count)) in pmf.entries.iter().enumerate() {
         check_cancellation(
@@ -1907,8 +1968,16 @@ fn sxpid2_from_states_with_cancellation(
         let atoms: [SxPointwiseAtom; 4] =
             std::array::from_fn(|i| SxPointwiseAtom::new(pi_plus[i], pi_minus[i]));
         for i in 0..4 {
-            avg[i][0].add(empirical_probability * atoms[i].informative_nats());
-            avg[i][1].add(empirical_probability * atoms[i].misinformative_nats());
+            add_exact_component(
+                &mut avg[i][0],
+                empirical_probability * atoms[i].informative_nats(),
+                "discrete_sxpid2 informative average",
+            )?;
+            add_exact_component(
+                &mut avg[i][1],
+                empirical_probability * atoms[i].misinformative_nats(),
+                "discrete_sxpid2 misinformative average",
+            )?;
         }
 
         if include_pointwise {
@@ -1942,18 +2011,19 @@ fn sxpid2_from_states_with_cancellation(
     }
     cancellation.check(OPERATION, pmf.entries.len(), pmf.entries.len())?;
 
-    let mk = |a: [NeumaierAccumulator; 2]| {
-        let informative = a[0].total();
-        let misinformative = a[1].total();
-        SxAveragedAtom::new(informative, misinformative)
+    let mk = |a: &[ExactBinary64Accumulator; 2]| -> PidResult<SxAveragedAtom> {
+        let informative = exact_component_total(&a[0], "discrete_sxpid2 informative average")?;
+        let misinformative =
+            exact_component_total(&a[1], "discrete_sxpid2 misinformative average")?;
+        Ok(SxAveragedAtom::new(informative, misinformative))
     };
     Ok(DiscreteSxPid2Result {
         pointwise,
         pointwise_included: include_pointwise,
-        unq1: mk(avg[0]),
-        unq2: mk(avg[1]),
-        syn: mk(avg[2]),
-        red: mk(avg[3]),
+        unq1: mk(&avg[0])?,
+        unq2: mk(&avg[1])?,
+        syn: mk(&avg[2])?,
+        red: mk(&avg[3])?,
         mi_s1_t,
         mi_s2_t,
         mi_s1s2_t,
@@ -2093,13 +2163,12 @@ pub fn fitted_quantized_sxpid3_resource_estimate(
         target.matrix.as_ref(),
         false,
     )?;
-    add_sxpid_estimate_bytes(
+    let reports = [&s0.report, &s1.report, &s2.report, &target.report];
+    add_sxpid_estimate_resources(
         OPERATION,
         estimate,
-        quantization_reports_heap_bytes(
-            OPERATION,
-            &[&s0.report, &s1.report, &s2.report, &target.report],
-        )?,
+        quantization_reports_heap_bytes(OPERATION, &reports)?,
+        quantization_reports_copy_operations(OPERATION, &reports)?,
     )
 }
 
@@ -2232,10 +2301,10 @@ fn sxpid3_from_states_with_cancellation(
         pointwise_capacity,
         budget,
     )?;
-    let mut avg = try_vec_filled(
+    let mut avg: Vec<[ExactBinary64Accumulator; 2]> = try_vec_filled(
         "discrete_sxpid3 averaged accumulators",
         m,
-        [NeumaierAccumulator::default(); 2],
+        std::array::from_fn(|_| ExactBinary64Accumulator::default()),
         budget,
     )?;
 
@@ -2263,8 +2332,16 @@ fn sxpid3_from_states_with_cancellation(
         let mut atoms = try_vec_with_capacity("discrete_sxpid3 pointwise atoms", m, budget)?;
         for i in 0..m {
             let a = SxPointwiseAtom::new(pi_plus[i].value, pi_minus[i].value);
-            avg[i][0].add(empirical_probability * a.informative_nats());
-            avg[i][1].add(empirical_probability * a.misinformative_nats());
+            add_exact_component(
+                &mut avg[i][0],
+                empirical_probability * a.informative_nats(),
+                "discrete_sxpid3 informative average",
+            )?;
+            add_exact_component(
+                &mut avg[i][1],
+                empirical_probability * a.misinformative_nats(),
+                "discrete_sxpid3 misinformative average",
+            )?;
             atoms.push(a);
         }
 
@@ -2304,8 +2381,9 @@ fn sxpid3_from_states_with_cancellation(
 
     let mut atoms_avg = try_vec_with_capacity("discrete_sxpid3 averaged atoms", m, budget)?;
     for a in &avg {
-        let informative = a[0].total();
-        let misinformative = a[1].total();
+        let informative = exact_component_total(&a[0], "discrete_sxpid3 informative average")?;
+        let misinformative =
+            exact_component_total(&a[1], "discrete_sxpid3 misinformative average")?;
         atoms_avg.push(SxAveragedAtom::new(informative, misinformative));
     }
 
@@ -2746,6 +2824,16 @@ pub fn fitted_quantized_sxpid_n_resource_estimate(
             )
         },
     )?;
+    let report_copy_operations = sources.iter().try_fold(
+        target.report.copy_operations_hint(OPERATION)?,
+        |sum, source| {
+            checked_resource_add(
+                OPERATION,
+                sum,
+                source.report.copy_operations_hint(OPERATION)?,
+            )
+        },
+    )?;
     let report_vector_bytes = checked_resource_mul(
         OPERATION,
         sources.len() as u128,
@@ -2757,10 +2845,11 @@ pub fn fitted_quantized_sxpid_n_resource_estimate(
         target.matrix.as_ref(),
         false,
     )?;
-    add_sxpid_estimate_bytes(
+    add_sxpid_estimate_resources(
         OPERATION,
         estimate,
         checked_resource_add(OPERATION, reports_heap, report_vector_bytes)?,
+        report_copy_operations,
     )
 }
 
@@ -2903,10 +2992,10 @@ fn sxpid_n_from_states_with_cancellation(
         pointwise_capacity,
         budget,
     )?;
-    let mut avg = try_vec_filled(
+    let mut avg: Vec<[ExactBinary64Accumulator; 2]> = try_vec_filled(
         "discrete_sxpid_n averaged accumulators",
         m,
-        [NeumaierAccumulator::default(); 2],
+        std::array::from_fn(|_| ExactBinary64Accumulator::default()),
         budget,
     )?;
 
@@ -2937,8 +3026,16 @@ fn sxpid_n_from_states_with_cancellation(
         for i in 0..m {
             check_cancellation(cancellation, OPERATION, i, m)?;
             let a = SxPointwiseAtom::new(pi_plus[i], pi_minus[i]);
-            avg[i][0].add(empirical_probability * a.informative_nats());
-            avg[i][1].add(empirical_probability * a.misinformative_nats());
+            add_exact_component(
+                &mut avg[i][0],
+                empirical_probability * a.informative_nats(),
+                "discrete_sxpid_n informative average",
+            )?;
+            add_exact_component(
+                &mut avg[i][1],
+                empirical_probability * a.misinformative_nats(),
+                "discrete_sxpid_n misinformative average",
+            )?;
             atoms.push(a);
         }
         if include_pointwise {
@@ -2960,8 +3057,9 @@ fn sxpid_n_from_states_with_cancellation(
     let mut atoms_avg = try_vec_with_capacity("discrete_sxpid_n averaged atoms", m, budget)?;
     for (index, a) in avg.iter().enumerate() {
         check_cancellation(cancellation, OPERATION, index, avg.len())?;
-        let informative = a[0].total();
-        let misinformative = a[1].total();
+        let informative = exact_component_total(&a[0], "discrete_sxpid_n informative average")?;
+        let misinformative =
+            exact_component_total(&a[1], "discrete_sxpid_n misinformative average")?;
         atoms_avg.push(SxAveragedAtom::new(informative, misinformative));
     }
     cancellation.check(OPERATION, avg.len(), avg.len())?;
@@ -3153,7 +3251,7 @@ mod tests {
     }
 
     #[test]
-    fn neumaier_accumulator_retains_small_signed_expectation_term() {
+    fn neumaier_accumulator_retains_small_signed_pointwise_term() {
         let mut accumulator = NeumaierAccumulator::default();
         for value in [1.0e16, 1.0, -1.0e16] {
             accumulator.add(value);

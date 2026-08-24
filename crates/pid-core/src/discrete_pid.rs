@@ -110,6 +110,9 @@
 //!   or for scalar/low-d action spaces.
 
 use crate::error::{PidError, PidResult};
+use crate::exact_binary64::{
+    exact_binary64_sum, EXACT_BINARY64_ADD_LIMB_VISIT_BOUND, EXACT_BINARY64_TOTAL_LIMB_VISIT_BOUND,
+};
 use crate::matrix::DiscreteMatRef;
 #[cfg(feature = "experimental-pipelines")]
 use crate::matrix::MatRef;
@@ -664,7 +667,10 @@ fn imin_pid2_states_with_cancellation(
     // 4. Derive PID atoms.
     let unique_s1 = mi_s1_t - redundancy;
     let unique_s2 = mi_s2_t - redundancy;
-    let synergy = mi_s1s2_t - mi_s1_t - mi_s2_t + redundancy;
+    // Give the symmetric Williams--Beer PID2 residual one order-independent interpretation over
+    // the four already represented coordinates. This does not make the MI or I_min estimators
+    // exact and does not transfer any shared-exclusions claim into I_min.
+    let synergy = exact_binary64_sum([mi_s1s2_t, -mi_s1_t, -mi_s2_t, redundancy]);
 
     let (input, empirical_pmf) = imin_input_metadata_with_cancellation(
         &[s1_bins, s2_bins, t_bins],
@@ -806,11 +812,62 @@ pub(crate) fn quantization_report_heap_bytes(
             )?,
         )
     })?;
+    let diagnostic_values = [
+        report.distinct_binary64_edge_value_counts.len(),
+        report.positive_width_interval_counts.len(),
+        report.reachable_binary64_label_counts.len(),
+        report.observed_label_counts.len(),
+    ]
+    .into_iter()
+    .try_fold(0u128, |sum, count| {
+        checked_add_resource(
+            operation,
+            sum,
+            checked_mul_resource(
+                operation,
+                count as u128,
+                std::mem::size_of::<usize>() as u128,
+            )?,
+        )
+    })?;
     checked_add_resource(
         operation,
-        checked_add_resource(operation, outer_headers, edge_values)?,
+        checked_add_resource(
+            operation,
+            checked_add_resource(operation, outer_headers, edge_values)?,
+            diagnostic_values,
+        )?,
         report.scaling_description.len() as u128,
     )
+}
+
+fn try_clone_usize_report_values(
+    operation: &'static str,
+    values: &[usize],
+    budget: ResourceBudget,
+) -> PidResult<Vec<usize>> {
+    let mut copy = try_vec_with_capacity(operation, values.len(), budget)?;
+    copy.extend_from_slice(values);
+    Ok(copy)
+}
+
+fn try_clone_usize_report_values_with_cancellation(
+    operation: &'static str,
+    values: &[usize],
+    budget: ResourceBudget,
+    cancellation: &CancellationToken,
+    completed_units: &mut usize,
+    total_units: usize,
+) -> PidResult<Vec<usize>> {
+    let mut copy = try_vec_with_capacity(operation, values.len(), budget)?;
+    for chunk in values.chunks(CANCELLATION_CHECK_INTERVAL) {
+        cancellation.check(operation, *completed_units, total_units)?;
+        copy.extend_from_slice(chunk);
+        *completed_units = completed_units
+            .checked_add(chunk.len())
+            .ok_or(PidError::SizeOverflow { operation })?;
+    }
+    Ok(copy)
 }
 
 pub(crate) fn try_clone_quantization_report(
@@ -824,6 +881,17 @@ pub(crate) fn try_clone_quantization_report(
         copied_edges.extend_from_slice(edges);
         bin_edges.push(copied_edges);
     }
+    let distinct_binary64_edge_value_counts = try_clone_usize_report_values(
+        operation,
+        &report.distinct_binary64_edge_value_counts,
+        budget,
+    )?;
+    let positive_width_interval_counts =
+        try_clone_usize_report_values(operation, &report.positive_width_interval_counts, budget)?;
+    let reachable_binary64_label_counts =
+        try_clone_usize_report_values(operation, &report.reachable_binary64_label_counts, budget)?;
+    let observed_label_counts =
+        try_clone_usize_report_values(operation, &report.observed_label_counts, budget)?;
     let string_bytes =
         ResourceEstimate::contiguous::<u8>(operation, report.scaling_description.len())?;
     budget.check(operation, string_bytes)?;
@@ -846,9 +914,16 @@ pub(crate) fn try_clone_quantization_report(
         n_samples: report.n_samples,
         dimensions: report.dimensions,
         bins_per_dimension: report.bins_per_dimension,
+        distinct_binary64_edge_value_counts,
+        positive_width_interval_counts,
+        reachable_binary64_label_counts,
+        observed_label_counts,
         nominal_joint_cardinality: report.nominal_joint_cardinality,
+        reachable_joint_cardinality: report.reachable_joint_cardinality,
         observed_joint_cardinality: report.observed_joint_cardinality,
         empty_joint_cells: report.empty_joint_cells,
+        structurally_unreachable_joint_cells: report.structurally_unreachable_joint_cells,
+        unobserved_reachable_joint_cells: report.unobserved_reachable_joint_cells,
         low_count_joint_cells: report.low_count_joint_cells,
         minimum_observed_cell_count: report.minimum_observed_cell_count,
         maximum_observed_cell_count: report.maximum_observed_cell_count,
@@ -867,8 +942,20 @@ pub(crate) fn try_clone_quantization_report_with_cancellation(
             .checked_add(edges.len())
             .ok_or(PidError::SizeOverflow { operation })
     })?;
+    let diagnostic_count = [
+        report.distinct_binary64_edge_value_counts.len(),
+        report.positive_width_interval_counts.len(),
+        report.reachable_binary64_label_counts.len(),
+        report.observed_label_counts.len(),
+    ]
+    .into_iter()
+    .try_fold(0usize, |sum, count| {
+        sum.checked_add(count)
+            .ok_or(PidError::SizeOverflow { operation })
+    })?;
     let total_units = edge_count
-        .checked_add(report.scaling_description.len())
+        .checked_add(diagnostic_count)
+        .and_then(|value| value.checked_add(report.scaling_description.len()))
         .ok_or(PidError::SizeOverflow { operation })?;
     cancellation.check(operation, 0, total_units)?;
     let mut completed_units = 0usize;
@@ -884,6 +971,38 @@ pub(crate) fn try_clone_quantization_report_with_cancellation(
         }
         bin_edges.push(copied_edges);
     }
+    let distinct_binary64_edge_value_counts = try_clone_usize_report_values_with_cancellation(
+        operation,
+        &report.distinct_binary64_edge_value_counts,
+        budget,
+        cancellation,
+        &mut completed_units,
+        total_units,
+    )?;
+    let positive_width_interval_counts = try_clone_usize_report_values_with_cancellation(
+        operation,
+        &report.positive_width_interval_counts,
+        budget,
+        cancellation,
+        &mut completed_units,
+        total_units,
+    )?;
+    let reachable_binary64_label_counts = try_clone_usize_report_values_with_cancellation(
+        operation,
+        &report.reachable_binary64_label_counts,
+        budget,
+        cancellation,
+        &mut completed_units,
+        total_units,
+    )?;
+    let observed_label_counts = try_clone_usize_report_values_with_cancellation(
+        operation,
+        &report.observed_label_counts,
+        budget,
+        cancellation,
+        &mut completed_units,
+        total_units,
+    )?;
     let string_bytes =
         ResourceEstimate::contiguous::<u8>(operation, report.scaling_description.len())?;
     budget.check(operation, string_bytes)?;
@@ -911,9 +1030,16 @@ pub(crate) fn try_clone_quantization_report_with_cancellation(
         n_samples: report.n_samples,
         dimensions: report.dimensions,
         bins_per_dimension: report.bins_per_dimension,
+        distinct_binary64_edge_value_counts,
+        positive_width_interval_counts,
+        reachable_binary64_label_counts,
+        observed_label_counts,
         nominal_joint_cardinality: report.nominal_joint_cardinality,
+        reachable_joint_cardinality: report.reachable_joint_cardinality,
         observed_joint_cardinality: report.observed_joint_cardinality,
         empty_joint_cells: report.empty_joint_cells,
+        structurally_unreachable_joint_cells: report.structurally_unreachable_joint_cells,
+        unobserved_reachable_joint_cells: report.unobserved_reachable_joint_cells,
         low_count_joint_cells: report.low_count_joint_cells,
         minimum_observed_cell_count: report.minimum_observed_cell_count,
         maximum_observed_cell_count: report.maximum_observed_cell_count,
@@ -921,15 +1047,20 @@ pub(crate) fn try_clone_quantization_report_with_cancellation(
     })
 }
 
-fn add_estimate_bytes(
+fn add_estimate_resources(
     operation: &'static str,
     estimate: ResourceEstimate,
     extra_bytes: u128,
+    extra_operations: u128,
 ) -> PidResult<ResourceEstimate> {
     Ok(ResourceEstimate {
         estimated_bytes: checked_add_resource(operation, estimate.estimated_bytes, extra_bytes)?,
         pairwise_distances: estimate.pairwise_distances,
-        operations_hint: estimate.operations_hint,
+        operations_hint: checked_add_resource(
+            operation,
+            estimate.operations_hint,
+            extra_operations,
+        )?,
     })
 }
 
@@ -953,10 +1084,14 @@ fn quantized_imin_resource_estimate(
             )
         },
     )?;
-    add_estimate_bytes(
+    let report_copy_operations = reports.iter().try_fold(0u128, |sum, report| {
+        checked_add_resource(operation, sum, report.copy_operations_hint(operation)?)
+    })?;
+    add_estimate_resources(
         operation,
         imin_resource_estimate_impl(operation, sources, target)?,
         reports_heap,
+        report_copy_operations,
     )
 }
 
@@ -1100,42 +1235,54 @@ fn imin_resource_estimate_from_dimensions(
         checked_mul_resource(operation, n, vec_header_bytes)?,
     )?;
 
-    let (histogram_passes, specific_tables, fixed_output_bytes) = match source_count {
-        2 => (20u128, 2u128, 0u128),
-        3 => {
-            let antichains = discrete_antichains_3();
-            let total_sets = antichains
-                .iter()
-                .map(|antichain| antichain.iter().filter(|&&mask| mask != 0).count() as u128)
-                .try_fold(0u128, |sum, count| {
-                    checked_add_resource(operation, sum, count)
-                })?;
-            let histogram_passes = checked_add_resource(
-                operation,
-                44,
-                checked_mul_resource(operation, total_sets, 4)?,
-            )?;
-            let fixed_output_bytes = checked_add_resource(
-                operation,
-                checked_mul_resource(
+    let exact_add_work = EXACT_BINARY64_ADD_LIMB_VISIT_BOUND as u128;
+    let exact_total_work = EXACT_BINARY64_TOTAL_LIMB_VISIT_BOUND as u128;
+    let (histogram_passes, specific_tables, fixed_output_bytes, exact_reduction_work) =
+        match source_count {
+            2 => (
+                20u128,
+                2u128,
+                0u128,
+                checked_add_resource(
                     operation,
-                    antichains.len() as u128,
-                    std::mem::size_of::<IminPid3Atom>() as u128,
+                    checked_mul_resource(operation, 4, exact_add_work)?,
+                    exact_total_work,
                 )?,
-                checked_mul_resource(
+            ),
+            3 => {
+                let antichains = discrete_antichains_3();
+                let total_sets = antichains
+                    .iter()
+                    .map(|antichain| antichain.iter().filter(|&&mask| mask != 0).count() as u128)
+                    .try_fold(0u128, |sum, count| {
+                        checked_add_resource(operation, sum, count)
+                    })?;
+                let histogram_passes = checked_add_resource(
                     operation,
-                    antichains.len() as u128,
-                    std::mem::size_of::<f64>() as u128,
-                )?,
-            )?;
-            (histogram_passes, 3, fixed_output_bytes)
-        }
-        _ => {
-            return Err(PidError::NotImplemented {
-                feature: "I_min resource estimates support exactly 2 or 3 sources",
-            });
-        }
-    };
+                    44,
+                    checked_mul_resource(operation, total_sets, 4)?,
+                )?;
+                let fixed_output_bytes = checked_add_resource(
+                    operation,
+                    checked_mul_resource(
+                        operation,
+                        antichains.len() as u128,
+                        std::mem::size_of::<IminPid3Atom>() as u128,
+                    )?,
+                    checked_mul_resource(
+                        operation,
+                        antichains.len() as u128,
+                        std::mem::size_of::<f64>() as u128,
+                    )?,
+                )?;
+                (histogram_passes, 3, fixed_output_bytes, 0)
+            }
+            _ => {
+                return Err(PidError::NotImplemented {
+                    feature: "I_min resource estimates support exactly 2 or 3 sources",
+                });
+            }
+        };
 
     // This intentionally counts every repeated histogram allocation, not merely the largest one.
     // It is a conservative upper bound on allocation exposure and includes pointer/count headers
@@ -1160,7 +1307,11 @@ fn imin_resource_estimate_from_dimensions(
         checked_mul_resource(operation, ceil_log2(n_rows), coordinates.max(1))?,
     )?;
     let join_work = checked_mul_resource(operation, n, source_coordinates)?;
-    let operations_hint = checked_add_resource(operation, comparison_work, join_work)?;
+    let operations_hint = checked_add_resource(
+        operation,
+        checked_add_resource(operation, comparison_work, join_work)?,
+        exact_reduction_work,
+    )?;
     Ok(ResourceEstimate {
         estimated_bytes,
         pairwise_distances: 0,

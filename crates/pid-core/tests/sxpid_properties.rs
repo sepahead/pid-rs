@@ -133,17 +133,18 @@ fn resource_estimates_bind_asymmetric_source_and_target_coordinate_totals() {
     let target = DiscreteMatRef::new(&target_data, N, 4).unwrap();
 
     // For three sources, 18 lattice nodes and seven nonempty subsets give:
-    // event scans 20_736 + Möbius work 2_592 + histogram work
-    // 7 * N * ceil(log2(N)) * (1 + 2 + 3 + 4) = 1_680.
+    // event scans 20_736 + compensated Möbius work 2_592 + exact final-averaging work 24_480 +
+    // histogram work 7 * N * ceil(log2(N)) * (1 + 2 + 3 + 4) = 1_680.
     assert_eq!(
         discrete_sxpid3_resource_estimate(source_1, source_2, source_3, target, true)
             .unwrap()
             .operations_hint,
-        25_008
+        49_488
     );
 
     // The three-source I_min lattice has 31 antichain sets, hence 168 histogram passes:
-    // 168 * N * ceil(log2(N)) * 10 coordinate values + N * 6 source coordinates.
+    // 168 * N * ceil(log2(N)) * 10 coordinate values + N * 6 source coordinates. Its Möbius
+    // inversion deliberately retains the pre-existing compensated reduction.
     assert_eq!(
         imin_pid3_resource_estimate(source_1, source_2, source_3, target)
             .unwrap()
@@ -155,8 +156,8 @@ fn resource_estimates_bind_asymmetric_source_and_target_coordinate_totals() {
 #[test]
 fn same_sample_sxpid_aggregate_gate_matches_direct_first_rejection_boundaries() {
     let check_two_sources = || {
-        const N: usize = 17_676;
-        const REQUESTED: u128 = 10_000_780_308;
+        const N: usize = 17_667;
+        const REQUESTED: u128 = 10_000_212_101;
         let labels = vec![0usize; N];
         let values = vec![0.0f64; N];
         let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
@@ -196,8 +197,8 @@ fn same_sample_sxpid_aggregate_gate_matches_direct_first_rejection_boundaries() 
     };
 
     let check_three_sources = || {
-        const N: usize = 5_555;
-        const REQUESTED: u128 = 10_001_821_940;
+        const N: usize = 5_551;
+        const REQUESTED: u128 = 10_001_019_556;
         let labels = vec![0usize; N];
         let values = vec![0.0f64; N];
         let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();
@@ -244,8 +245,8 @@ fn same_sample_sxpid_aggregate_gate_matches_direct_first_rejection_boundaries() 
     };
 
     let check_four_sources = || {
-        const N: usize = 1_119;
-        const REQUESTED: u128 = 10_008_977_187;
+        const N: usize = 1_118;
+        const REQUESTED: u128 = 10_016_409_510;
         let labels = vec![0usize; N];
         let values = vec![0.0f64; N];
         let categorical_before = DiscreteMatRef::new(&labels[..N - 1], N - 1, 1).unwrap();

@@ -516,9 +516,9 @@ fn vul_degree_discrete_is_bit_identical_across_repeated_calls() {
 // ── Frozen serial bit patterns (`experimental-pipelines`, without `parallel`) ──
 //
 // The KSG/ISX/PID2/PID3 values below reflect the integer-harmonic range evaluation used by the
-// candidate KSG arithmetic. Estimator topology, neighbor selection, signed PID reconstruction,
-// and the parent PID2 implementation are unchanged. These bits pin the resulting serial
-// implementation; they are not an independent accuracy oracle.
+// candidate KSG arithmetic. The PID2 synergy coordinate additionally reflects the exact,
+// order-independent reduction of its four already-rounded constituent estimates. These bits pin
+// the resulting serial implementation; they are not an independent accuracy oracle.
 const KSG_LOCAL_TERMS_CHECKSUM: u64 = 13714940533915299;
 const KSG_LOCAL_TERM_0: u64 = 4611372573292626839;
 const KSG_LOCAL_TERM_MID: u64 = 4608683422432580648;
@@ -527,7 +527,7 @@ const ISX_REDUNDANCY_BITS: u64 = 4608069949341512143;
 const PID2_RED_BITS: u64 = 4608069949341512143;
 const PID2_UNQ1_BITS: u64 = 4590324628665003600;
 const PID2_UNQ2_BITS: u64 = 13821388618758275492;
-const PID2_SYN_BITS: u64 = 4591732782175321776;
+const PID2_SYN_BITS: u64 = 4591732782175321784;
 const PID3_ATOM_CHECKSUM: u64 = 9260367673031411424;
 const PID3_RED_CHECKSUM: u64 = 12358916445650220;
 const PID3_ATOM_001_BITS: u64 = 13803885910316517056;

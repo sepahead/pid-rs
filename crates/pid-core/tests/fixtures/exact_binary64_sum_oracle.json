@@ -1,0 +1,6972 @@
+{
+  "arithmetic": {
+    "input_domain": "zero or more finite IEEE-754 binary64 bit patterns at a declared tested arity",
+    "rounding": "round-to-nearest, ties-to-even",
+    "zero_sign": "positive on exact cancellation"
+  },
+  "bounds": {
+    "core_arity": 4,
+    "deterministic_case_count": 512,
+    "named_case_count": 24,
+    "tested_arities": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      63,
+      64,
+      65
+    ],
+    "total_case_count": 561,
+    "variable_arity_case_count": 25
+  },
+  "cases": [
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "exact-cancellation-positive-zero",
+      "inputs_bits": [
+        "0x0000000000000001",
+        "0x8000000000000001",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "signed-zero-inputs-return-positive-zero",
+      "inputs_bits": [
+        "0x8000000000000000",
+        "0x0000000000000000",
+        "0x8000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000002",
+      "id": "minimum-subnormal-addition",
+      "inputs_bits": [
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x3ff0000000000000",
+      "id": "halfway-even-down-at-one",
+      "inputs_bits": [
+        "0x3ff0000000000000",
+        "0x3ca0000000000000",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x3ff0000000000002",
+      "id": "halfway-even-up-at-one",
+      "inputs_bits": [
+        "0x3ff0000000000001",
+        "0x3ca0000000000000",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x3ff0000000000001",
+      "id": "halfway-plus-sticky-at-one",
+      "inputs_bits": [
+        "0x3ff0000000000000",
+        "0x3ca0000000000000",
+        "0x0000000000000001",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0xbff0000000000001",
+      "id": "negative-halfway-plus-sticky-at-one",
+      "inputs_bits": [
+        "0xbff0000000000000",
+        "0xbca0000000000000",
+        "0x8000000000000001",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x4000000000000000",
+      "id": "rounding-carry-to-two",
+      "inputs_bits": [
+        "0x3fffffffffffffff",
+        "0x3ca0000000000000",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x4000000000000000",
+      "id": "exact-carry-to-two",
+      "inputs_bits": [
+        "0x3fffffffffffffff",
+        "0x3cb0000000000000",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x0010000000000000",
+      "id": "maximum-subnormal-plus-minimum-subnormal",
+      "inputs_bits": [
+        "0x000fffffffffffff",
+        "0x0000000000000001",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x8010000000000000",
+      "id": "negative-maximum-subnormal-plus-minimum-subnormal",
+      "inputs_bits": [
+        "0x800fffffffffffff",
+        "0x8000000000000001",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x000fffffffffffff",
+      "id": "minimum-normal-minus-minimum-subnormal",
+      "inputs_bits": [
+        "0x0010000000000000",
+        "0x8000000000000001",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000001",
+      "id": "minimum-normal-minus-maximum-subnormal",
+      "inputs_bits": [
+        "0x0010000000000000",
+        "0x800fffffffffffff",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x00d0000000000000",
+      "id": "cross-limb-carry",
+      "inputs_bits": [
+        "0x00cfffffffffffff",
+        "0x0000000000000800",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x80d0000000000000",
+      "id": "negative-cross-limb-carry",
+      "inputs_bits": [
+        "0x80cfffffffffffff",
+        "0x8000000000000800",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x00cfffffffffffff",
+      "id": "cross-limb-borrow",
+      "inputs_bits": [
+        "0x00d0000000000000",
+        "0x8000000000000800",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x7fefffffffffffff",
+      "id": "overflow-midpoint-minus-sticky",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7c90000000000000",
+        "0x8000000000000001",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "overflow-midpoint-ties-to-infinity",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7c90000000000000",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "overflow-midpoint-plus-sticky",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7c90000000000000",
+        "0x0000000000000001",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0xffefffffffffffff",
+      "id": "negative-overflow-midpoint-minus-sticky",
+      "inputs_bits": [
+        "0xffefffffffffffff",
+        "0xfc90000000000000",
+        "0x0000000000000001",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0xfff0000000000000",
+      "id": "negative-overflow-midpoint-ties-to-infinity",
+      "inputs_bits": [
+        "0xffefffffffffffff",
+        "0xfc90000000000000",
+        "0x0000000000000000",
+        "0x0000000000000000"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x3ff0000000000000",
+      "id": "maximum-cancellation-with-tiny-tail",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x3ff0000000000000",
+        "0x0000000000000001"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "four-positive-maximums-overflow",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0xfff0000000000000",
+      "id": "four-negative-maximums-overflow",
+      "inputs_bits": [
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff"
+      ],
+      "kind": "named-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "arity-000-empty",
+      "inputs_bits": [],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x7fefffffffffffff",
+      "id": "arity-001-maximum-finite",
+      "inputs_bits": [
+        "0x7fefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "arity-001-negative-zero-canonicalizes",
+      "inputs_bits": [
+        "0x8000000000000000"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000001",
+      "id": "arity-001-minimum-subnormal",
+      "inputs_bits": [
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "arity-002-maximum-cancellation",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "arity-002-positive-overflow",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "arity-002-subnormal-cancellation",
+      "inputs_bits": [
+        "0x0000000000000001",
+        "0x8000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000001",
+      "id": "arity-003-extreme-cancellation-positive-tail",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x8000000000000001",
+      "id": "arity-003-extreme-cancellation-negative-tail",
+      "inputs_bits": [
+        "0xffefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x8000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x3ff0000000000001",
+      "id": "arity-003-halfway-plus-subnormal-sticky",
+      "inputs_bits": [
+        "0x3ff0000000000000",
+        "0x3ca0000000000000",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x3ff0000000000001",
+      "id": "arity-005-halfway-plus-sticky-and-zeros",
+      "inputs_bits": [
+        "0x3ff0000000000000",
+        "0x3ca0000000000000",
+        "0x0000000000000001",
+        "0x0000000000000000",
+        "0x8000000000000000"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "arity-005-repeated-maximum-overflow",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x000000000000003f",
+      "id": "arity-063-repeated-minimum-subnormal",
+      "inputs_bits": [
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "arity-063-repeated-maximum-overflow",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000001",
+      "id": "arity-063-extreme-cancellation-positive-tail",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x405f7fffffffffff",
+      "id": "arity-063-repeated-full-significand-carry",
+      "inputs_bits": [
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000040",
+      "id": "arity-064-repeated-minimum-subnormal",
+      "inputs_bits": [
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "arity-064-repeated-maximum-overflow",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "arity-064-extreme-exact-cancellation",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x405fffffffffffff",
+      "id": "arity-064-repeated-full-significand-carry",
+      "inputs_bits": [
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000041",
+      "id": "arity-065-repeated-minimum-subnormal",
+      "inputs_bits": [
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x7ff0000000000000",
+      "id": "arity-065-repeated-maximum-overflow",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0xfff0000000000000",
+      "id": "arity-065-repeated-negative-maximum-overflow",
+      "inputs_bits": [
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x0000000000000001",
+      "id": "arity-065-extreme-cancellation-positive-tail",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffefffffffffffff",
+        "0x0000000000000001"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0x40603fffffffffff",
+      "id": "arity-065-repeated-full-significand-carry",
+      "inputs_bits": [
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff",
+        "0x3fffffffffffffff"
+      ],
+      "kind": "variable-arity-boundary"
+    },
+    {
+      "expected_bits": "0xfce2a3d34e4c2e36",
+      "id": "deterministic-0000",
+      "inputs_bits": [
+        "0x9443ec755d18e819",
+        "0x52ad046e1389ff89",
+        "0xfce2a3d34e4c2e36",
+        "0x5ed407b509c9fbea"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1b6c9276c8a31278",
+      "id": "deterministic-0001",
+      "inputs_bits": [
+        "0x181cbe728be3d29d",
+        "0x981cbe728be3d29d",
+        "0x1b6c9276c8a31278",
+        "0x97d8d087fb01ca5c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3e5d32ab95bad175",
+      "id": "deterministic-0002",
+      "inputs_bits": [
+        "0x3e3d32ab95bad175",
+        "0x3e3d32ab95bad175",
+        "0x3e3d32ab95bad175",
+        "0x3e3d32ab95bad175"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0003",
+      "inputs_bits": [
+        "0xf8918242b02a93d8",
+        "0x0696bcc50c6b30ff",
+        "0x8696bcc50c6b30ff",
+        "0x78918242b02a93d8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc3025f7483435e81",
+      "id": "deterministic-0004",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xc3025f7483435e81",
+        "0xa4f8b40661ba587c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800521ea02ac35aa",
+      "id": "deterministic-0005",
+      "inputs_bits": [
+        "0x800e0761a8447108",
+        "0x000fde5e83fdbbea",
+        "0x00060bee82d3fa1d",
+        "0x800d04d561397aa9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xefa9192adfe39e30",
+      "id": "deterministic-0006",
+      "inputs_bits": [
+        "0xb070000000000000",
+        "0xb06fffffffffffff",
+        "0xbf0b62f8a1c61418",
+        "0xefa9192adfe39e30"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc2134df29497239d",
+      "id": "deterministic-0007",
+      "inputs_bits": [
+        "0x103c329022abdda6",
+        "0xc2134df29497239d",
+        "0xa147255425314a9a",
+        "0x3005aa447564ce8f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7805c479b4c844d2",
+      "id": "deterministic-0008",
+      "inputs_bits": [
+        "0x7805c479b4c844d2",
+        "0x0f011d503c9ca0db",
+        "0xb51e135bb162cf5a",
+        "0x68e1810c3fd09c44"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x661f595dd9d580a0",
+      "id": "deterministic-0009",
+      "inputs_bits": [
+        "0x558606fa98f8ac7c",
+        "0xd58606fa98f8ac7c",
+        "0x5aef6b95c225c224",
+        "0x661f595dd9d580a0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2563f5266ca86be6",
+      "id": "deterministic-0010",
+      "inputs_bits": [
+        "0x2543f5266ca86be6",
+        "0x2543f5266ca86be6",
+        "0x2543f5266ca86be6",
+        "0x2543f5266ca86be6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0011",
+      "inputs_bits": [
+        "0x518330d772b477f3",
+        "0xed8f1259f80a83dc",
+        "0x6d8f1259f80a83dc",
+        "0xd18330d772b477f3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1b1877b7558c4d69",
+      "id": "deterministic-0012",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x1b1877b7558c4d69",
+        "0x95bce30e8eff2fb3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001612c2a4975f60",
+      "id": "deterministic-0013",
+      "inputs_bits": [
+        "0x8008a3466a7c0027",
+        "0x000dbd8dda6211e7",
+        "0x0004681083664c04",
+        "0x000c906ab14b019c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6870000000000000",
+      "id": "deterministic-0014",
+      "inputs_bits": [
+        "0x6860000000000000",
+        "0x685fffffffffffff",
+        "0x070a9eb2c8f87fbe",
+        "0x29304721dd03a0c1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x78a7fceb251a0cc6",
+      "id": "deterministic-0015",
+      "inputs_bits": [
+        "0x468da20dff89d4af",
+        "0x78a7fceb251a0cc6",
+        "0xddc505ef66f5c95f",
+        "0xcc456020967b950d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xb29bc891a3a883a5",
+      "id": "deterministic-0016",
+      "inputs_bits": [
+        "0x0195862d39dd8167",
+        "0xb29bc891a3a883a5",
+        "0x14241a6a4d7f9be2",
+        "0x9483eb9d8dd5dc55"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf1d58f9f42661a68",
+      "id": "deterministic-0017",
+      "inputs_bits": [
+        "0x9d054af4fd69c2ad",
+        "0x1d054af4fd69c2ad",
+        "0xf1d58f9f42661a68",
+        "0x169e674ebe914c5c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5f051731676f7137",
+      "id": "deterministic-0018",
+      "inputs_bits": [
+        "0x5ee51731676f7137",
+        "0x5ee51731676f7137",
+        "0x5ee51731676f7137",
+        "0x5ee51731676f7137"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0019",
+      "inputs_bits": [
+        "0xff1c57c7b1a24fde",
+        "0xa46f57e2662b3cc1",
+        "0x246f57e2662b3cc1",
+        "0x7f1c57c7b1a24fde"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x64594ac2d5cbbaf6",
+      "id": "deterministic-0020",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x3a525f98bc2939c5",
+        "0x64594ac2d5cbbaf6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0007dd438a16057a",
+      "id": "deterministic-0021",
+      "inputs_bits": [
+        "0x0006253f63383b9b",
+        "0x800b03cd4edbcd2c",
+        "0x0001f963787cb1b6",
+        "0x000ac26dfd3ce555"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf28ffffffffffe91",
+      "id": "deterministic-0022",
+      "inputs_bits": [
+        "0xf280000000000000",
+        "0xf27fffffffffffff",
+        "0x199d5a7296df28cc",
+        "0x6fc6ecfa6a1b259d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfeba6943e2708f9b",
+      "id": "deterministic-0023",
+      "inputs_bits": [
+        "0xe7edf32aafab02bf",
+        "0xb61f575446971b7a",
+        "0xb53f655eff2babcc",
+        "0xfeba6943e2708f9b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5ce0ade10387a094",
+      "id": "deterministic-0024",
+      "inputs_bits": [
+        "0x51bae1ee38ece844",
+        "0x5ce0ade10387a094",
+        "0x20db9c7ec1d00ad5",
+        "0x8a6a7edb360bbf80"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xac1454578e9e9bae",
+      "id": "deterministic-0025",
+      "inputs_bits": [
+        "0x306e90dae48648ff",
+        "0xb06e90dae48648ff",
+        "0xac1454578e9e9bae",
+        "0x174d326e4f628d19"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x76fa9ae6d20b2adf",
+      "id": "deterministic-0026",
+      "inputs_bits": [
+        "0x76da9ae6d20b2adf",
+        "0x76da9ae6d20b2adf",
+        "0x76da9ae6d20b2adf",
+        "0x76da9ae6d20b2adf"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0027",
+      "inputs_bits": [
+        "0x2f4ab1acfc38eee0",
+        "0xd962bc39f85d273d",
+        "0x5962bc39f85d273d",
+        "0xaf4ab1acfc38eee0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5b11fe7dc4478ffb",
+      "id": "deterministic-0028",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x4a8c11891789e37d",
+        "0x5b11fe7dc4478ffb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001d3ed74136d964",
+      "id": "deterministic-0029",
+      "inputs_bits": [
+        "0x000ef3671d063958",
+        "0x000cdfd493cd632a",
+        "0x000eaa98830f736c",
+        "0x800d3efcf2ac368a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd5ea8387da36c2bf",
+      "id": "deterministic-0030",
+      "inputs_bits": [
+        "0x4460000000000000",
+        "0x445fffffffffffff",
+        "0xd5ea8387da36c2bf",
+        "0x9df04cfb4191e0fa"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x609fafb81ad6b885",
+      "id": "deterministic-0031",
+      "inputs_bits": [
+        "0x250ea8a15c73b400",
+        "0x1da85f65d2765368",
+        "0x4eaaf0b785b765ce",
+        "0x609fafb81ad6b885"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xee346d00213594b4",
+      "id": "deterministic-0032",
+      "inputs_bits": [
+        "0xee346d00213594b4",
+        "0xe0bafcfc7bbe529d",
+        "0xcc827470f47e2978",
+        "0x675dec4dd9678b2a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x66d8220558e2b421",
+      "id": "deterministic-0033",
+      "inputs_bits": [
+        "0x24fe2b6a772acebc",
+        "0xa4fe2b6a772acebc",
+        "0x66d8220558e2b421",
+        "0x124bc0ff8e685909"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x63621be1f4071eec",
+      "id": "deterministic-0034",
+      "inputs_bits": [
+        "0x63421be1f4071eec",
+        "0x63421be1f4071eec",
+        "0x63421be1f4071eec",
+        "0x63421be1f4071eec"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0035",
+      "inputs_bits": [
+        "0x548ae91d1c51fdd8",
+        "0x39be03585deb2823",
+        "0xb9be03585deb2823",
+        "0xd48ae91d1c51fdd8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd6f9997375b5aa6e",
+      "id": "deterministic-0036",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xd6f9997375b5ad88",
+        "0x5448cf230222a4d3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80018eda6159e935",
+      "id": "deterministic-0037",
+      "inputs_bits": [
+        "0x8002cf3b19bf0971",
+        "0x800ec594f7260b23",
+        "0x000c0f9b09c4eff5",
+        "0x0003f65aa5c63b6a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xeae0000000000000",
+      "id": "deterministic-0038",
+      "inputs_bits": [
+        "0xead0000000000000",
+        "0xeacfffffffffffff",
+        "0x1890b838571a66c7",
+        "0xb5f5c654aa6103ca"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcfffbc84e30e2ceb",
+      "id": "deterministic-0039",
+      "inputs_bits": [
+        "0xcfffbc84e30e2ceb",
+        "0x45562718383a6a72",
+        "0x9508dd62cfd2c226",
+        "0x949a80e3fafd2e22"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xb16068499a8186b5",
+      "id": "deterministic-0040",
+      "inputs_bits": [
+        "0xa089bd4d1e7b1cfe",
+        "0x2b70ac8153911547",
+        "0xb16068499a8186ad",
+        "0xae4ebbae84c08ee0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1d9e90cb8e846fb1",
+      "id": "deterministic-0041",
+      "inputs_bits": [
+        "0x4208ed8d97ccb7fd",
+        "0xc208ed8d97ccb7fd",
+        "0x0493ffa80a9571d2",
+        "0x1d9e90cb8e846fb1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x614168063f51f1f8",
+      "id": "deterministic-0042",
+      "inputs_bits": [
+        "0x612168063f51f1f8",
+        "0x612168063f51f1f8",
+        "0x612168063f51f1f8",
+        "0x612168063f51f1f8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0043",
+      "inputs_bits": [
+        "0xdc3484f12148d719",
+        "0xa700e220ca32a0f7",
+        "0x2700e220ca32a0f7",
+        "0x5c3484f12148d719"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdcb4f65318bbf23d",
+      "id": "deterministic-0044",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xdcb4f65318bbf23d",
+        "0x9227b40dbb03aa99"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8004a7fee94601a8",
+      "id": "deterministic-0045",
+      "inputs_bits": [
+        "0x000565ff7ba08fda",
+        "0x800746808c057845",
+        "0x00065f39a4a1c3f5",
+        "0x800926b77d82dd32"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8b4b8668abab36a9",
+      "id": "deterministic-0046",
+      "inputs_bits": [
+        "0x0a50000000000000",
+        "0x0a4fffffffffffff",
+        "0x0a3b10ff428c27a0",
+        "0x8b4b86b6342ad7ef"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf73121f128638659",
+      "id": "deterministic-0047",
+      "inputs_bits": [
+        "0xba65d1493f8cecb3",
+        "0x5ee7c9e8a00ab9aa",
+        "0xf73121f128638659",
+        "0x67405ec74c33f715"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe11ee7465bc2f5bb",
+      "id": "deterministic-0048",
+      "inputs_bits": [
+        "0xe11ee7465bc2f5bb",
+        "0xbd413298845f7e90",
+        "0x968a9ce38580646d",
+        "0x478a9db491d5dfe5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xb834dafcfef9b9c0",
+      "id": "deterministic-0049",
+      "inputs_bits": [
+        "0xfb361b6b6c492d1a",
+        "0x7b361b6b6c492d1a",
+        "0xb834dafcfef9b9c0",
+        "0x047e8f0dfb343ab3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x241d3b4678a8f2ba",
+      "id": "deterministic-0050",
+      "inputs_bits": [
+        "0x23fd3b4678a8f2ba",
+        "0x23fd3b4678a8f2ba",
+        "0x23fd3b4678a8f2ba",
+        "0x23fd3b4678a8f2ba"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0051",
+      "inputs_bits": [
+        "0x116aaa198533ade9",
+        "0xd7b4d755ae8b90f2",
+        "0x57b4d755ae8b90f2",
+        "0x916aaa198533ade9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x21da02b5a1993c5a",
+      "id": "deterministic-0052",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x8b565e97385ec591",
+        "0x21da02b5a1993c5a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x00138922c2568f75",
+      "id": "deterministic-0053",
+      "inputs_bits": [
+        "0x00023c1a688cd55a",
+        "0x8004986e5123da70",
+        "0x000adc9cbdb101c4",
+        "0x000b08d9ed3c92c7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdc94948decfa15c9",
+      "id": "deterministic-0054",
+      "inputs_bits": [
+        "0xd170000000000000",
+        "0xd16fffffffffffff",
+        "0x25a262f40b77cfd6",
+        "0xdc94948decfa15c9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x734a1da51cf3f74f",
+      "id": "deterministic-0055",
+      "inputs_bits": [
+        "0x406041522b91ac45",
+        "0xe88a2c62229f3e5d",
+        "0xe49f295dc81c3761",
+        "0x734a1da51cf3f74f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x37116afb521c2361",
+      "id": "deterministic-0056",
+      "inputs_bits": [
+        "0x37116afb521c2361",
+        "0x2309d3006112e367",
+        "0x0063fe9587c6ff61",
+        "0x26ad29c497248adf"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xa355aea1549b19a2",
+      "id": "deterministic-0057",
+      "inputs_bits": [
+        "0xa23e1cb16e67940a",
+        "0x223e1cb16e67940a",
+        "0xa355aea1549b19a2",
+        "0x18d820ba5de20711"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1c41fd5e437b18d1",
+      "id": "deterministic-0058",
+      "inputs_bits": [
+        "0x1c21fd5e437b18d1",
+        "0x1c21fd5e437b18d1",
+        "0x1c21fd5e437b18d1",
+        "0x1c21fd5e437b18d1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0059",
+      "inputs_bits": [
+        "0x145151f755fb0601",
+        "0xf66e2e9c05cb504d",
+        "0x766e2e9c05cb504d",
+        "0x945151f755fb0601"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xb8f4cb08a53f9379",
+      "id": "deterministic-0060",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x1139854b40128fe6",
+        "0xb8f4cb08a53f9379"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0011adfc176170fa",
+      "id": "deterministic-0061",
+      "inputs_bits": [
+        "0x800149e01750bed0",
+        "0x8002188b43d1abad",
+        "0x0006fe82133d43ba",
+        "0x000e11e55f4697bd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7580c05115a97df9",
+      "id": "deterministic-0062",
+      "inputs_bits": [
+        "0xaf30000000000000",
+        "0xaf2fffffffffffff",
+        "0x7580c05115a97df9",
+        "0x021213e510e67142"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5167920b31ac0a17",
+      "id": "deterministic-0063",
+      "inputs_bits": [
+        "0xb9ffda8f3066827a",
+        "0x03deaf29c41591fe",
+        "0x979fa1082a7c055d",
+        "0x5167920b31ac0a17"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x50cd22c8a20937c3",
+      "id": "deterministic-0064",
+      "inputs_bits": [
+        "0x50cd22c8a20937c3",
+        "0xc8b43115fd20b56c",
+        "0x0952b318d6562f06",
+        "0xca8ca5a2b22182d8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xaf425373b487a872",
+      "id": "deterministic-0065",
+      "inputs_bits": [
+        "0x5a861cfda0c477dd",
+        "0xda861cfda0c477dd",
+        "0xaf425373b487a872",
+        "0x1fb773bd704efba2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x74b1a9a871004608",
+      "id": "deterministic-0066",
+      "inputs_bits": [
+        "0x7491a9a871004608",
+        "0x7491a9a871004608",
+        "0x7491a9a871004608",
+        "0x7491a9a871004608"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0067",
+      "inputs_bits": [
+        "0x9578df9a698b384f",
+        "0x848a34b1e361ddff",
+        "0x048a34b1e361ddff",
+        "0x1578df9a698b384f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe72bd270e8325d18",
+      "id": "deterministic-0068",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xe72bd270e8325d18",
+        "0x958f9944b1927fa2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8020c45288a3ddf2",
+      "id": "deterministic-0069",
+      "inputs_bits": [
+        "0x800b38fac66b0c30",
+        "0x800839b264f2d628",
+        "0x800ec5511543b984",
+        "0x0000af592f59dff7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbdd064fd93c22f6b",
+      "id": "deterministic-0070",
+      "inputs_bits": [
+        "0x0690000000000000",
+        "0x068fffffffffffff",
+        "0xbdd064fd93c22f6b",
+        "0xa37cf22efe6911f5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x59c99c82bb5c0cc9",
+      "id": "deterministic-0071",
+      "inputs_bits": [
+        "0x492fa0d0c3cdfd2b",
+        "0x9bff8ef8b6b24c11",
+        "0x59c99c82bb5c0cc9",
+        "0x1a70a91fa590a690"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x78602f56ad9a23dd",
+      "id": "deterministic-0072",
+      "inputs_bits": [
+        "0x78602f56ad9a23dd",
+        "0xa351ab74a38640da",
+        "0x15e787ee16fc3adb",
+        "0x07a794b3da58146e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xecc66738faabb1c4",
+      "id": "deterministic-0073",
+      "inputs_bits": [
+        "0xec95deefd6e87fc6",
+        "0x6c95deefd6e87fc6",
+        "0x3f13cd3f81d09eb9",
+        "0xecc66738faabb1c4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x788cdc6df5549648",
+      "id": "deterministic-0074",
+      "inputs_bits": [
+        "0x786cdc6df5549648",
+        "0x786cdc6df5549648",
+        "0x786cdc6df5549648",
+        "0x786cdc6df5549648"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0075",
+      "inputs_bits": [
+        "0x61c37a4b613268b8",
+        "0x0a14eebbb2af2269",
+        "0x8a14eebbb2af2269",
+        "0xe1c37a4b613268b8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc69ba44dcbf3934c",
+      "id": "deterministic-0076",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xc69ba44dcbf3934c",
+        "0xc16584db903d276a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x00116253e728eaaa",
+      "id": "deterministic-0077",
+      "inputs_bits": [
+        "0x80066d5e9e832d71",
+        "0x000ae845480d576b",
+        "0x0002f38d852ff705",
+        "0x0009f3dfb86ec9ab"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfd5649b68e207560",
+      "id": "deterministic-0078",
+      "inputs_bits": [
+        "0x0410000000000000",
+        "0x040fffffffffffff",
+        "0x0313fa8ff78b72c5",
+        "0xfd5649b68e207560"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8899b39fc1227229",
+      "id": "deterministic-0079",
+      "inputs_bits": [
+        "0x01ef029c7fac7dd1",
+        "0x8899b39fc122716a",
+        "0x00ce6f0ea6012f08",
+        "0x85c7d976c04bef56"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6ee6b1ded53dc425",
+      "id": "deterministic-0080",
+      "inputs_bits": [
+        "0x59ee56c998ca6d08",
+        "0x8427e2980365bbd2",
+        "0x6ee6b1ded53dc425",
+        "0x1af3ef6bb2b816ed"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x66b709b165cc5995",
+      "id": "deterministic-0081",
+      "inputs_bits": [
+        "0x2fcd360432057d80",
+        "0xafcd360432057d80",
+        "0xde5782383a78177b",
+        "0x66b709b165cc5995"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x10c0dbece29103ee",
+      "id": "deterministic-0082",
+      "inputs_bits": [
+        "0x10a0dbece29103ee",
+        "0x10a0dbece29103ee",
+        "0x10a0dbece29103ee",
+        "0x10a0dbece29103ee"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0083",
+      "inputs_bits": [
+        "0x8bfd54fb20847124",
+        "0xc83407711871b0c6",
+        "0x483407711871b0c6",
+        "0x0bfd54fb20847124"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x59cf9f6a6b2b061a",
+      "id": "deterministic-0084",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x59cf9f6a6b2b061a",
+        "0x8420bc5438d39696"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8027d5479abafbf1",
+      "id": "deterministic-0085",
+      "inputs_bits": [
+        "0x800f1ef137e85d6b",
+        "0x800f32074a1fb711",
+        "0x80098ffaedfa6c3f",
+        "0x8007c99bc5737727"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5f8fffffffffffff",
+      "id": "deterministic-0086",
+      "inputs_bits": [
+        "0x5f80000000000000",
+        "0x5f7fffffffffffff",
+        "0x9099882b006e3f39",
+        "0x8232c5fa90080d07"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfe7ba15557f19775",
+      "id": "deterministic-0087",
+      "inputs_bits": [
+        "0x2fffb797f33348e4",
+        "0xfe7ba15557f19775",
+        "0x593dce1621e3091b",
+        "0x8942dcbdc7d3e9c9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x71d7b9e67fb91ce2",
+      "id": "deterministic-0088",
+      "inputs_bits": [
+        "0xcf6ea5b10d2b1c5a",
+        "0x71d7b9e67fb91ce2",
+        "0xc61c5dc7522b165b",
+        "0xb0e597ee59efb6b7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4e78bc74f13dc4d2",
+      "id": "deterministic-0089",
+      "inputs_bits": [
+        "0xdac87ca44053241a",
+        "0x5ac87ca44053241a",
+        "0x4e78bc74f13dc4d2",
+        "0xc56a107e7882cbdb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4642d58519c6bf3d",
+      "id": "deterministic-0090",
+      "inputs_bits": [
+        "0x4622d58519c6bf3d",
+        "0x4622d58519c6bf3d",
+        "0x4622d58519c6bf3d",
+        "0x4622d58519c6bf3d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0091",
+      "inputs_bits": [
+        "0x49a0ef0a2abd1981",
+        "0x06fb4c35757a23f2",
+        "0x86fb4c35757a23f2",
+        "0xc9a0ef0a2abd1981"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2024820297f0f65e",
+      "id": "deterministic-0092",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x2024820297f0f65e",
+        "0x83bef90ff04d4032"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001a2bb6617be7a4",
+      "id": "deterministic-0093",
+      "inputs_bits": [
+        "0x0006c2a0fa0120d5",
+        "0x000fc714700fb7d4",
+        "0x000a0876168eddbb",
+        "0x800666751f23cec0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2a50000000000000",
+      "id": "deterministic-0094",
+      "inputs_bits": [
+        "0x2a40000000000000",
+        "0x2a3fffffffffffff",
+        "0x8f00079b521ad66f",
+        "0x19ebfa8e88c09803"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf7f4e1775632414f",
+      "id": "deterministic-0095",
+      "inputs_bits": [
+        "0x2d7e58ceff7b47c0",
+        "0xf7f4e1775632414f",
+        "0x954147e9503d960d",
+        "0x16ad6b46a3fbce61"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x533d6740aaf981bd",
+      "id": "deterministic-0096",
+      "inputs_bits": [
+        "0x533d6740aaf981bd",
+        "0x4fdd930cde07bdfe",
+        "0x1dfc130babe10d05",
+        "0x27d4961139eb2e5f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfdd220134a1eb358",
+      "id": "deterministic-0097",
+      "inputs_bits": [
+        "0x8ce0957f1b1e8fc3",
+        "0x0ce0957f1b1e8fc3",
+        "0x4e920e16b74b221c",
+        "0xfdd220134a1eb358"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2fa8ad0eb166f50e",
+      "id": "deterministic-0098",
+      "inputs_bits": [
+        "0x2f88ad0eb166f50e",
+        "0x2f88ad0eb166f50e",
+        "0x2f88ad0eb166f50e",
+        "0x2f88ad0eb166f50e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0099",
+      "inputs_bits": [
+        "0x15cbd291f0a9ffae",
+        "0xd1fd52d8c96087d1",
+        "0x51fd52d8c96087d1",
+        "0x95cbd291f0a9ffae"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe889636b70fccd47",
+      "id": "deterministic-0100",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xe889636b70fccd47",
+        "0x4fb1c4630abc851d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000deb51d24189c",
+      "id": "deterministic-0101",
+      "inputs_bits": [
+        "0x00002e042093eca8",
+        "0x800f083bb35ee171",
+        "0x000431f08e4820f3",
+        "0x000b86fc21a6ec72"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5f5fffffffffffff",
+      "id": "deterministic-0102",
+      "inputs_bits": [
+        "0x5f50000000000000",
+        "0x5f4fffffffffffff",
+        "0xd0020538cc91fe50",
+        "0xbda31be935e549ac"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4e0cd1c626ec2b6b",
+      "id": "deterministic-0103",
+      "inputs_bits": [
+        "0x4d75bfa046dba92f",
+        "0x135f3f26aee3b5bd",
+        "0x4e0cc6e656c8bd96",
+        "0x0f33d3d62d22896d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfc1eb5b0f689373f",
+      "id": "deterministic-0104",
+      "inputs_bits": [
+        "0xfc1eb5b0f689373f",
+        "0xde93ddab06ec0a91",
+        "0x4474256ec73956c4",
+        "0x5dbdb206d4e81569"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x77618d97c679047c",
+      "id": "deterministic-0105",
+      "inputs_bits": [
+        "0xcebf51999fefbf03",
+        "0x4ebf51999fefbf03",
+        "0xd1843b1f21a5c0bd",
+        "0x77618d97c679047c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7eb7c2fc306012a6",
+      "id": "deterministic-0106",
+      "inputs_bits": [
+        "0x7e97c2fc306012a6",
+        "0x7e97c2fc306012a6",
+        "0x7e97c2fc306012a6",
+        "0x7e97c2fc306012a6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0107",
+      "inputs_bits": [
+        "0xd031b334413f6105",
+        "0xcd5081ee774bfe87",
+        "0x4d5081ee774bfe87",
+        "0x5031b334413f6105"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xffc20db9674175df",
+      "id": "deterministic-0108",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xffc20db9674175df",
+        "0x292e1dc12a8160f4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001c1487a7d28378",
+      "id": "deterministic-0109",
+      "inputs_bits": [
+        "0x00004b29ec1cc58c",
+        "0x0005fccf1e4a1f07",
+        "0x000d451b04e3aaf9",
+        "0x000887739887f3ec"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x57e4ba12d5c29948",
+      "id": "deterministic-0110",
+      "inputs_bits": [
+        "0xa2a0000000000000",
+        "0xa29fffffffffffff",
+        "0xa40cdfc2127766c5",
+        "0x57e4ba12d5c29948"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6520fc1ca6734eac",
+      "id": "deterministic-0111",
+      "inputs_bits": [
+        "0xce96b322e41cb466",
+        "0x8c3f6a949969548e",
+        "0xa43aa3740bd165a7",
+        "0x6520fc1ca6734eac"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcf2a89407b11c223",
+      "id": "deterministic-0112",
+      "inputs_bits": [
+        "0xa750fa706c5b8331",
+        "0x2d471e1f5aebd877",
+        "0x3648b7e541a8f207",
+        "0xcf2a89407b11c223"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x39e0cff7c3abe0e0",
+      "id": "deterministic-0113",
+      "inputs_bits": [
+        "0x99628c88151d0967",
+        "0x19628c88151d0967",
+        "0x1b0daf84f6338ab5",
+        "0x39e0cff7c3abe0e0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x672a2230ca7a727f",
+      "id": "deterministic-0114",
+      "inputs_bits": [
+        "0x670a2230ca7a727f",
+        "0x670a2230ca7a727f",
+        "0x670a2230ca7a727f",
+        "0x670a2230ca7a727f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0115",
+      "inputs_bits": [
+        "0x98c357de7b5a3062",
+        "0x20d447ddee28dc82",
+        "0xa0d447ddee28dc82",
+        "0x18c357de7b5a3062"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x72153e5218d2aff1",
+      "id": "deterministic-0116",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x72153e5218d2aff1",
+        "0x531178df706ad6ee"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80025fa3798c1499",
+      "id": "deterministic-0117",
+      "inputs_bits": [
+        "0x8000c2d7dc046db3",
+        "0x800473072c4169a8",
+        "0x000ea14f1d80817b",
+        "0x800bcb138ec6beb9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf4eaf3d60d630bff",
+      "id": "deterministic-0118",
+      "inputs_bits": [
+        "0x1ab0000000000000",
+        "0x1aafffffffffffff",
+        "0xf4eaf3d60d630bff",
+        "0x0ef823973c94d228"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6d7adf9c3b98e776",
+      "id": "deterministic-0119",
+      "inputs_bits": [
+        "0x36e5914a3fea9a6f",
+        "0x9bf14be66b48349b",
+        "0x09ec7b83b764e232",
+        "0x6d7adf9c3b98e776"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x66c03421c97e2d47",
+      "id": "deterministic-0120",
+      "inputs_bits": [
+        "0x2359b82f6f48cb38",
+        "0xceaf18ead39f94ae",
+        "0x61d1008c93464007",
+        "0x66c03421c97e2d47"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf573ee710f2c1d5c",
+      "id": "deterministic-0121",
+      "inputs_bits": [
+        "0x6aaca48ad17560dd",
+        "0xeaaca48ad17560dd",
+        "0xf573ee710f2c1d5c",
+        "0xe1bbff3681529266"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3849e1fbdcafe69f",
+      "id": "deterministic-0122",
+      "inputs_bits": [
+        "0x3829e1fbdcafe69f",
+        "0x3829e1fbdcafe69f",
+        "0x3829e1fbdcafe69f",
+        "0x3829e1fbdcafe69f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0123",
+      "inputs_bits": [
+        "0x27b839a0955704bc",
+        "0x4675f10a6a4105b5",
+        "0xc675f10a6a4105b5",
+        "0xa7b839a0955704bc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x58aa1ff7e1ae2bd6",
+      "id": "deterministic-0124",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xb8e836c938c97738",
+        "0x58aa1ff7e1ae2bd6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800f8c1396733bd6",
+      "id": "deterministic-0125",
+      "inputs_bits": [
+        "0x0001b928d042d43c",
+        "0x00009dc776f8de94",
+        "0x8002d81e49a20a29",
+        "0x800f0ae5940ce47d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7c0b6e316d96da6e",
+      "id": "deterministic-0126",
+      "inputs_bits": [
+        "0x52e0000000000000",
+        "0x52dfffffffffffff",
+        "0x013a2f8b2ddcaf30",
+        "0x7c0b6e316d96da6e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf08d8da6d0f4ff82",
+      "id": "deterministic-0127",
+      "inputs_bits": [
+        "0xf08d8da6d0f4ff82",
+        "0x8b955a225260b6fd",
+        "0xc50d8222499668d0",
+        "0x44ae138c45877001"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xec0e01dd70b6f25c",
+      "id": "deterministic-0128",
+      "inputs_bits": [
+        "0x4ec781aa6f925ea1",
+        "0xec0e01dd70b6f25c",
+        "0xa545b7d528d088b8",
+        "0xca4d2382a8e607a9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x79a941b1d297a665",
+      "id": "deterministic-0129",
+      "inputs_bits": [
+        "0x7607a5f5570f01e6",
+        "0xf607a5f5570f01e6",
+        "0x79a941b1d297a665",
+        "0xdb15853b80c5b069"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x069aa38e232c1d0b",
+      "id": "deterministic-0130",
+      "inputs_bits": [
+        "0x067aa38e232c1d0b",
+        "0x067aa38e232c1d0b",
+        "0x067aa38e232c1d0b",
+        "0x067aa38e232c1d0b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0131",
+      "inputs_bits": [
+        "0x34ba421079d5fbd6",
+        "0x07609bf4586065a1",
+        "0x87609bf4586065a1",
+        "0xb4ba421079d5fbd6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x31342e0258737f14",
+      "id": "deterministic-0132",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x31342e0258737f18",
+        "0xae11d23890335fe6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000ca4199e02d72b",
+      "id": "deterministic-0133",
+      "inputs_bits": [
+        "0x0006fbcc04bdf89d",
+        "0x00007c1f0481042c",
+        "0x0000cf2f20048d24",
+        "0x00045cff74bf4d3e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x48a0000000000000",
+      "id": "deterministic-0134",
+      "inputs_bits": [
+        "0x4890000000000000",
+        "0x488fffffffffffff",
+        "0x1ef5bb202b91e05c",
+        "0x139ffa441a8d549c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5ec096ae597d5f24",
+      "id": "deterministic-0135",
+      "inputs_bits": [
+        "0xa4ce265cfed42da7",
+        "0x852f5dd96fee0c3c",
+        "0x5ec096ae597d5f24",
+        "0x22f895c32848ec9a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6df74904c0e8441d",
+      "id": "deterministic-0136",
+      "inputs_bits": [
+        "0x5377324b96361bc3",
+        "0xcc4ca3c5818ce734",
+        "0xaf23917292a4b3fa",
+        "0x6df74904c0e8441d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc371e90e6e5bcffb",
+      "id": "deterministic-0137",
+      "inputs_bits": [
+        "0x78a9894d9c5133d5",
+        "0xf8a9894d9c5133d5",
+        "0x3c77500dbcbbc4f2",
+        "0xc371e90e6e5bcffb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x71b40cb6ba9d4869",
+      "id": "deterministic-0138",
+      "inputs_bits": [
+        "0x71940cb6ba9d4869",
+        "0x71940cb6ba9d4869",
+        "0x71940cb6ba9d4869",
+        "0x71940cb6ba9d4869"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0139",
+      "inputs_bits": [
+        "0x5a367d74db3a555b",
+        "0x3b0cbabb98d01731",
+        "0xbb0cbabb98d01731",
+        "0xda367d74db3a555b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfd513fb81df6b74d",
+      "id": "deterministic-0140",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x0dea173eaed0a641",
+        "0xfd513fb81df6b74d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000c7e8c07b3a71a",
+      "id": "deterministic-0141",
+      "inputs_bits": [
+        "0x0000a58d976a94ae",
+        "0x00081da7507aaa07",
+        "0x0004042728163e93",
+        "0x800048d00847d62e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x23c2f8d5fe6514a6",
+      "id": "deterministic-0142",
+      "inputs_bits": [
+        "0x1170000000000000",
+        "0x116fffffffffffff",
+        "0x23c2f8d5fe6514a6",
+        "0x120f2b070056370f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdf80db38a82ec0fb",
+      "id": "deterministic-0143",
+      "inputs_bits": [
+        "0x51515da3fb3a4190",
+        "0x2b129c5d98485113",
+        "0xc37c6b97f1ace571",
+        "0xdf80db38a82ec0fb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfe5dae4f14c326bd",
+      "id": "deterministic-0144",
+      "inputs_bits": [
+        "0x472c14028da5c3ba",
+        "0xfe5dae4f14c326bd",
+        "0x839ed9a78194afb0",
+        "0xa3970152eb946aef"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf2224d3bc470c749",
+      "id": "deterministic-0145",
+      "inputs_bits": [
+        "0x0e0a6a9015f019fa",
+        "0x8e0a6a9015f019fa",
+        "0xf2224d3bc470c749",
+        "0xc54f519f1e2ed487"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x550279edd91b65ff",
+      "id": "deterministic-0146",
+      "inputs_bits": [
+        "0x54e279edd91b65ff",
+        "0x54e279edd91b65ff",
+        "0x54e279edd91b65ff",
+        "0x54e279edd91b65ff"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0147",
+      "inputs_bits": [
+        "0xaa1523bd4442e2d3",
+        "0x9238aa721584b3d6",
+        "0x1238aa721584b3d6",
+        "0x2a1523bd4442e2d3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6df236aef4df3e5d",
+      "id": "deterministic-0148",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xd33f92323fe94d07",
+        "0x6df236aef4df3e5d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001cdc70826914c9",
+      "id": "deterministic-0149",
+      "inputs_bits": [
+        "0x000a8781b687dcd3",
+        "0x000f7b3ce0d387aa",
+        "0x8005ace5c94c8a25",
+        "0x00088697b45a3a71"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfeb0000000000000",
+      "id": "deterministic-0150",
+      "inputs_bits": [
+        "0xfea0000000000000",
+        "0xfe9fffffffffffff",
+        "0x209b2b9fe1a2f361",
+        "0xc86ad766753f4ec7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfdc52fc799438c06",
+      "id": "deterministic-0151",
+      "inputs_bits": [
+        "0x85d483c1104a93d9",
+        "0x64905de073c9d0be",
+        "0xf88efda52273ac9f",
+        "0xfdc52fc799438c06"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xff8a82544b4989aa",
+      "id": "deterministic-0152",
+      "inputs_bits": [
+        "0x9721c973a22eca9e",
+        "0xebcb8d5bf69df08b",
+        "0xff8a82544b4989aa",
+        "0xb8c98a3b60fa3039"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x467c12c50205a25e",
+      "id": "deterministic-0153",
+      "inputs_bits": [
+        "0x7f4d2689ba82ea19",
+        "0xff4d2689ba82ea19",
+        "0x89df81e6c714498d",
+        "0x467c12c50205a25e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x34d43a00bb3435e7",
+      "id": "deterministic-0154",
+      "inputs_bits": [
+        "0x34b43a00bb3435e7",
+        "0x34b43a00bb3435e7",
+        "0x34b43a00bb3435e7",
+        "0x34b43a00bb3435e7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0155",
+      "inputs_bits": [
+        "0xe64011628eff7440",
+        "0xd5dcad532fe79aa8",
+        "0x55dcad532fe79aa8",
+        "0x664011628eff7440"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xedba39698b6d5014",
+      "id": "deterministic-0156",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xedba39698b6d5014",
+        "0xe7ea744e36450fb4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x00183d6ae2e9e0d3",
+      "id": "deterministic-0157",
+      "inputs_bits": [
+        "0x800835489a299555",
+        "0x000803e5d5ac333f",
+        "0x0009d6fa7a5e4499",
+        "0x000e97d32d08fe50"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe5b599fe65245b47",
+      "id": "deterministic-0158",
+      "inputs_bits": [
+        "0x0650000000000000",
+        "0x064fffffffffffff",
+        "0xdd96222ddda1ee5b",
+        "0xe5b599fe65245b47"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x44763fd1ff3c8fb7",
+      "id": "deterministic-0159",
+      "inputs_bits": [
+        "0xb6c3c0c2d3696a35",
+        "0x14736e3d8a9195a1",
+        "0x95e5787a9ac1feca",
+        "0x44763fd1ff3c8fb7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd6f57720c8941717",
+      "id": "deterministic-0160",
+      "inputs_bits": [
+        "0x33e71c19f4c7fb68",
+        "0x044cf9bf5481ae9e",
+        "0x505f9a28ab16ca43",
+        "0xd6f57720c8941717"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x68839710da17c8c5",
+      "id": "deterministic-0161",
+      "inputs_bits": [
+        "0xe13d112a1b101af9",
+        "0x613d112a1b101af9",
+        "0x86477213c167a48c",
+        "0x68839710da17c8c5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x79d8e07c4ed8b1f8",
+      "id": "deterministic-0162",
+      "inputs_bits": [
+        "0x79b8e07c4ed8b1f8",
+        "0x79b8e07c4ed8b1f8",
+        "0x79b8e07c4ed8b1f8",
+        "0x79b8e07c4ed8b1f8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0163",
+      "inputs_bits": [
+        "0x813481b1f308bdec",
+        "0x647e3057ea525797",
+        "0xe47e3057ea525797",
+        "0x013481b1f308bdec"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd5603c5660ca7b8a",
+      "id": "deterministic-0164",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xbc72790e6c6fe483",
+        "0xd5603c5660ca7b8a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800f2d8ed4ae83ff",
+      "id": "deterministic-0165",
+      "inputs_bits": [
+        "0x00008659135db2fa",
+        "0x8008f3eb2e76f71f",
+        "0x00008be1c1163d31",
+        "0x80074bde7aab7d0b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5dfb27104602e163",
+      "id": "deterministic-0166",
+      "inputs_bits": [
+        "0xd880000000000000",
+        "0xd87fffffffffffff",
+        "0x5dfb27104602e163",
+        "0x837469ba02d8dc61"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6e8e181e8dbbfffb",
+      "id": "deterministic-0167",
+      "inputs_bits": [
+        "0xeb85daff65f6bb72",
+        "0xd421e1d6a4f5ca84",
+        "0x6e8e181e8dbc0011",
+        "0x88a26d70e7075c51"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x735d25ccc2c3ebe4",
+      "id": "deterministic-0168",
+      "inputs_bits": [
+        "0x9760305be1c666a9",
+        "0xa5be4c692b016024",
+        "0x735d25ccc2c3ebe4",
+        "0x3f94596fbca61533"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xee17a96abc4abf72",
+      "id": "deterministic-0169",
+      "inputs_bits": [
+        "0x0e9dcc5e634e75d9",
+        "0x8e9dcc5e634e75d9",
+        "0xee17a96abc4abf72",
+        "0x0d30d3f9416bb68c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x382b1d658de7f424",
+      "id": "deterministic-0170",
+      "inputs_bits": [
+        "0x380b1d658de7f424",
+        "0x380b1d658de7f424",
+        "0x380b1d658de7f424",
+        "0x380b1d658de7f424"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0171",
+      "inputs_bits": [
+        "0xa317592c5b1d8c37",
+        "0x27745d77c0905aef",
+        "0xa7745d77c0905aef",
+        "0x2317592c5b1d8c37"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7b5d01e1431beeaf",
+      "id": "deterministic-0172",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x7b5d01e1431beeaf",
+        "0x0d759eb61fd792b2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80019f093e23321e",
+      "id": "deterministic-0173",
+      "inputs_bits": [
+        "0x800ec994a26b290f",
+        "0x80050ceacdfe5c9d",
+        "0x000ddd3de2a92764",
+        "0x00045a384f9d2c2a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4160000000000000",
+      "id": "deterministic-0174",
+      "inputs_bits": [
+        "0x4150000000000000",
+        "0x414fffffffffffff",
+        "0x98e2554fcdbf70cb",
+        "0x25ac9c636a355cea"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe8cfd32b7e77028a",
+      "id": "deterministic-0175",
+      "inputs_bits": [
+        "0xe8cfd32b7e77028a",
+        "0x41b743a849040e0f",
+        "0xb5aa7cb512f265d3",
+        "0x3565b6bfa34495d8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4f10196a4a7a6af3",
+      "id": "deterministic-0176",
+      "inputs_bits": [
+        "0x4f10196a4a7a6af3",
+        "0x19afb0d1c8e642e6",
+        "0x2bd7d7a9757df7e3",
+        "0xa96930d9ef8e94cc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xeffbd695dda46dd0",
+      "id": "deterministic-0177",
+      "inputs_bits": [
+        "0x5c0833e818a73ae5",
+        "0xdc0833e818a73ae5",
+        "0xeffbd695dda46dd0",
+        "0xebf51a87b0a8510b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x661ceaa23ba7856f",
+      "id": "deterministic-0178",
+      "inputs_bits": [
+        "0x65fceaa23ba7856f",
+        "0x65fceaa23ba7856f",
+        "0x65fceaa23ba7856f",
+        "0x65fceaa23ba7856f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0179",
+      "inputs_bits": [
+        "0x7c98986a87a43861",
+        "0xa9549a5dac0b4851",
+        "0x29549a5dac0b4851",
+        "0xfc98986a87a43861"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6429818039778ce4",
+      "id": "deterministic-0180",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x6429818039778ce4",
+        "0x3ff69f562080dafd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0005e6513756e922",
+      "id": "deterministic-0181",
+      "inputs_bits": [
+        "0x8003b762a17cb8ef",
+        "0x0008849098b19a5e",
+        "0x00084ff2fb79aeea",
+        "0x800736cfbb57a737"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdb4b048921ee4a95",
+      "id": "deterministic-0182",
+      "inputs_bits": [
+        "0xbe00000000000000",
+        "0xbdffffffffffffff",
+        "0x126c99330e1ad3b2",
+        "0xdb4b048921ee4a95"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7a95f45c166284d6",
+      "id": "deterministic-0183",
+      "inputs_bits": [
+        "0xc9ad230b83629866",
+        "0x7a95f45c166284d6",
+        "0xd06c86960ecbb45f",
+        "0xb7bcf6a04f5ed4f7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7cbd77727d16204f",
+      "id": "deterministic-0184",
+      "inputs_bits": [
+        "0xf5502b626bd7b49e",
+        "0xcc7546295490fc77",
+        "0x7cbd77727d16204f",
+        "0xeeb5ae7ae7f3ffcf"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe90c73e84a3290a0",
+      "id": "deterministic-0185",
+      "inputs_bits": [
+        "0x550f251586da0bf0",
+        "0xd50f251586da0bf0",
+        "0x2d047ab3dde543e7",
+        "0xe90c73e84a3290a0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x761b58d02499b47a",
+      "id": "deterministic-0186",
+      "inputs_bits": [
+        "0x75fb58d02499b47a",
+        "0x75fb58d02499b47a",
+        "0x75fb58d02499b47a",
+        "0x75fb58d02499b47a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0187",
+      "inputs_bits": [
+        "0xda1bc386e9135a8a",
+        "0x321c5e14f6389ebf",
+        "0xb21c5e14f6389ebf",
+        "0x5a1bc386e9135a8a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x48cdddb08543bb05",
+      "id": "deterministic-0188",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x8bb5aa13f4c89261",
+        "0x48cdddb08543bb05"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0002332a5f4d7e63",
+      "id": "deterministic-0189",
+      "inputs_bits": [
+        "0x800efc3e1c42a36f",
+        "0x8002a4b71f6d1de9",
+        "0x000a7c87328d9d92",
+        "0x00095798686fa229"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x56e1b8fa382f6558",
+      "id": "deterministic-0190",
+      "inputs_bits": [
+        "0x3420000000000000",
+        "0x341fffffffffffff",
+        "0xb346ffbe002c2dc3",
+        "0x56e1b8fa382f6558"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbffbb3b6e51157e4",
+      "id": "deterministic-0191",
+      "inputs_bits": [
+        "0x02b7b24fdd925bc9",
+        "0x1fcb6ee337baad3e",
+        "0xbffbb3b6e51157e4",
+        "0xa38bb92efee40c4b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf5b2b77825bfa08c",
+      "id": "deterministic-0192",
+      "inputs_bits": [
+        "0x20780d18f6b5b693",
+        "0x6a4b1c27ee9b193e",
+        "0xf5b2b77825bfa08c",
+        "0xb34b94b2b7977ccd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3b4e1d1174a52d15",
+      "id": "deterministic-0193",
+      "inputs_bits": [
+        "0x33d7c8b95a56c174",
+        "0xb3d7c8b95a56c174",
+        "0x0f3da8cd0690b1f6",
+        "0x3b4e1d1174a52d15"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5a4fd8fb7e3196cb",
+      "id": "deterministic-0194",
+      "inputs_bits": [
+        "0x5a2fd8fb7e3196cb",
+        "0x5a2fd8fb7e3196cb",
+        "0x5a2fd8fb7e3196cb",
+        "0x5a2fd8fb7e3196cb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0195",
+      "inputs_bits": [
+        "0x2b25bcc07c8ba81d",
+        "0x0deb9f019b81180d",
+        "0x8deb9f019b81180d",
+        "0xab25bcc07c8ba81d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3c4eea9d2db5ee2d",
+      "id": "deterministic-0196",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x3c4eea9d2db5ee2d",
+        "0x0bb4fb149a32aeb1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800580f70cf8ef17",
+      "id": "deterministic-0197",
+      "inputs_bits": [
+        "0x000cc009388a9437",
+        "0x8009296683666cdf",
+        "0x80068638b5ec77c6",
+        "0x800291610c309ea9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7fd718ec445f643f",
+      "id": "deterministic-0198",
+      "inputs_bits": [
+        "0xc470000000000000",
+        "0xc46fffffffffffff",
+        "0x7fd718ec445f643f",
+        "0x167dca550de73537"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6d1305de64871766",
+      "id": "deterministic-0199",
+      "inputs_bits": [
+        "0x9a52a26863e00b70",
+        "0x6d1305de64871766",
+        "0xbd0bae121af700c8",
+        "0xb474b8a1da89dcc9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbe50e0ce188fdd04",
+      "id": "deterministic-0200",
+      "inputs_bits": [
+        "0x27c84352bab2dd30",
+        "0x8fa4818101c2f48a",
+        "0x0e5fd3200a2b13e3",
+        "0xbe50e0ce188fdd04"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe9d6f0dc1a876675",
+      "id": "deterministic-0201",
+      "inputs_bits": [
+        "0xc03d084a5b9503be",
+        "0x403d084a5b9503be",
+        "0x368b3f9486670639",
+        "0xe9d6f0dc1a876675"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3a3b8ffdb391a512",
+      "id": "deterministic-0202",
+      "inputs_bits": [
+        "0x3a1b8ffdb391a512",
+        "0x3a1b8ffdb391a512",
+        "0x3a1b8ffdb391a512",
+        "0x3a1b8ffdb391a512"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0203",
+      "inputs_bits": [
+        "0x46842e5d1deb986f",
+        "0xe73e4e8cc705b49f",
+        "0x673e4e8cc705b49f",
+        "0xc6842e5d1deb986f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd9c0abbb1d337f1b",
+      "id": "deterministic-0204",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x17b0a8b44a3269c8",
+        "0xd9c0abbb1d337f1b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80031e937db9683c",
+      "id": "deterministic-0205",
+      "inputs_bits": [
+        "0x000d5c895e155389",
+        "0x000028bc1550bb6e",
+        "0x800239302d090198",
+        "0x800e6aa8c416759b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf77fffffffffffff",
+      "id": "deterministic-0206",
+      "inputs_bits": [
+        "0xf770000000000000",
+        "0xf76fffffffffffff",
+        "0x0b40e53be5ec130f",
+        "0x3ba28030ba90e8e9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf69e1b542d2d9ec4",
+      "id": "deterministic-0207",
+      "inputs_bits": [
+        "0xbbe905cbd0dd68de",
+        "0xa43965559623258f",
+        "0xe8ff52d1117fe004",
+        "0xf69e1b542d2d9ec4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe697d8c641909f50",
+      "id": "deterministic-0208",
+      "inputs_bits": [
+        "0x5b078c5d943af4f9",
+        "0xe697d8c641909f50",
+        "0x001f7b696e026a6e",
+        "0x8aa450161b7d353a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x68adff50056eadff",
+      "id": "deterministic-0209",
+      "inputs_bits": [
+        "0xbc19431ccd01c1d0",
+        "0x3c19431ccd01c1d0",
+        "0xcb4136aae077b653",
+        "0x68adff50056eadff"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x66fdb9edcef0c7ba",
+      "id": "deterministic-0210",
+      "inputs_bits": [
+        "0x66ddb9edcef0c7ba",
+        "0x66ddb9edcef0c7ba",
+        "0x66ddb9edcef0c7ba",
+        "0x66ddb9edcef0c7ba"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0211",
+      "inputs_bits": [
+        "0xca1031b9aebeef24",
+        "0x5972151f1848dbfa",
+        "0xd972151f1848dbfa",
+        "0x4a1031b9aebeef24"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6b5689d19c357f7e",
+      "id": "deterministic-0212",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x9bbb4c7b4381bd04",
+        "0x6b5689d19c357f7e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000abc1683c8f7d3",
+      "id": "deterministic-0213",
+      "inputs_bits": [
+        "0x000d7247987b7cf4",
+        "0x000aa65e0810370d",
+        "0x800ca84a5eaa7423",
+        "0x8000b444be18480b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x34927b8405de33b2",
+      "id": "deterministic-0214",
+      "inputs_bits": [
+        "0x2780000000000000",
+        "0x277fffffffffffff",
+        "0x021e5ff91f8b6eaf",
+        "0x34927b8405de33b2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7293b0c5f970776b",
+      "id": "deterministic-0215",
+      "inputs_bits": [
+        "0xeea1b01068f45c53",
+        "0xadfb07057eeec02b",
+        "0x7293b0c5f970776b",
+        "0xb76a59107af82d45"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf7127cbd706cfbc7",
+      "id": "deterministic-0216",
+      "inputs_bits": [
+        "0xf17705bfb9102c5f",
+        "0xf7127cbd706cfbc7",
+        "0x0bdfc481e92a33f0",
+        "0x3e06aa42d1249b97"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf2bc461f6d972ace",
+      "id": "deterministic-0217",
+      "inputs_bits": [
+        "0x319570232012d760",
+        "0xb19570232012d760",
+        "0xf2bc461f6d972ace",
+        "0xd37ef3443de9771b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x11428170a388e273",
+      "id": "deterministic-0218",
+      "inputs_bits": [
+        "0x11228170a388e273",
+        "0x11228170a388e273",
+        "0x11228170a388e273",
+        "0x11228170a388e273"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0219",
+      "inputs_bits": [
+        "0xac10fe150a16374f",
+        "0x45673d2532a428e1",
+        "0xc5673d2532a428e1",
+        "0x2c10fe150a16374f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd93f5e2fcd1ef415",
+      "id": "deterministic-0220",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xd93f5e2fcd1ef415",
+        "0x971945b5d2c16cbd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001e0180cddc4572",
+      "id": "deterministic-0221",
+      "inputs_bits": [
+        "0x000673a4e5f82bb7",
+        "0x0003645a7b0fd620",
+        "0x0009d6fd75d0418c",
+        "0x000a5283f704020f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfe30000000000000",
+      "id": "deterministic-0222",
+      "inputs_bits": [
+        "0xfe20000000000000",
+        "0xfe1fffffffffffff",
+        "0x10df8970992a01d8",
+        "0x93f09c27351523db"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcb3d160e16a653a0",
+      "id": "deterministic-0223",
+      "inputs_bits": [
+        "0x17cdb1b19bb52162",
+        "0xcb3d160e16a653a0",
+        "0xb2c9ffa48765f707",
+        "0x270a467a93a41d29"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7ad6c4abf79d85ed",
+      "id": "deterministic-0224",
+      "inputs_bits": [
+        "0xd256866472873f53",
+        "0x7ad6c4abf79d85ed",
+        "0xd95ed2703ce265a6",
+        "0xeb99a52bb96c08ed"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x35d19856ec38cf3f",
+      "id": "deterministic-0225",
+      "inputs_bits": [
+        "0x89c6c3a0a3794bbc",
+        "0x09c6c3a0a3794bbc",
+        "0x35d19855b94cd62b",
+        "0x34932ebf9140a547"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x63ff01e855ebb5a6",
+      "id": "deterministic-0226",
+      "inputs_bits": [
+        "0x63df01e855ebb5a6",
+        "0x63df01e855ebb5a6",
+        "0x63df01e855ebb5a6",
+        "0x63df01e855ebb5a6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0227",
+      "inputs_bits": [
+        "0x65f47cba6320fd10",
+        "0x06c8764831aff8ea",
+        "0x86c8764831aff8ea",
+        "0xe5f47cba6320fd10"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6d21af3e1ccbd331",
+      "id": "deterministic-0228",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x6d21af3e1ccbd331",
+        "0x988bb0bf79cea8d7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8000928a50a15f43",
+      "id": "deterministic-0229",
+      "inputs_bits": [
+        "0x800cd6f3c78c0de2",
+        "0x00072e26184e2d79",
+        "0x00076e401c9ccf63",
+        "0x800257fcbe004e3d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf2cfffffffffffff",
+      "id": "deterministic-0230",
+      "inputs_bits": [
+        "0xf2c0000000000000",
+        "0xf2bfffffffffffff",
+        "0xaa82fea61910ed62",
+        "0x56428894a4c5d438"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf8a1bc845b650ce1",
+      "id": "deterministic-0231",
+      "inputs_bits": [
+        "0x5e2aa84ebbd48933",
+        "0xf8a1bc845b650ce1",
+        "0xe4a1039e967cdeb8",
+        "0xacbc2b92bdba8905"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6926ae5b9ded19b0",
+      "id": "deterministic-0232",
+      "inputs_bits": [
+        "0x6926ae5b9ded1d57",
+        "0xb12fe22b176172ad",
+        "0xe67d3b4bc156bb08",
+        "0x9659c3d07ce7d47e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5a5c175467fa96de",
+      "id": "deterministic-0233",
+      "inputs_bits": [
+        "0xb8d7b51d97c8c456",
+        "0x38d7b51d97c8c456",
+        "0x913e635246e0805e",
+        "0x5a5c175467fa96de"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x58a0286f73c7329b",
+      "id": "deterministic-0234",
+      "inputs_bits": [
+        "0x5880286f73c7329b",
+        "0x5880286f73c7329b",
+        "0x5880286f73c7329b",
+        "0x5880286f73c7329b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0235",
+      "inputs_bits": [
+        "0x280680337ca744a1",
+        "0x2501584edfcb0268",
+        "0xa501584edfcb0268",
+        "0xa80680337ca744a1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf5faa11621cd25de",
+      "id": "deterministic-0236",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xf5faa11621cd25de",
+        "0x0b50611dca560815"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800972d33b2eb089",
+      "id": "deterministic-0237",
+      "inputs_bits": [
+        "0x8009f1cfde52c307",
+        "0x8007b06d03bc4741",
+        "0x000cd8bf215ccf8f",
+        "0x8004a9557a7c75d0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe56fffffffffffff",
+      "id": "deterministic-0238",
+      "inputs_bits": [
+        "0xe560000000000000",
+        "0xe55fffffffffffff",
+        "0x5508f41280746409",
+        "0xa8b5d88d69eeae81"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf297d37a59ed774b",
+      "id": "deterministic-0239",
+      "inputs_bits": [
+        "0x400c73920533697b",
+        "0xd146ceca621e3169",
+        "0xf297d37a59ed774b",
+        "0x5a0798a346201f65"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x73e277ccec8bba30",
+      "id": "deterministic-0240",
+      "inputs_bits": [
+        "0x864ec109c771261b",
+        "0x12fb7efe695b2297",
+        "0x88bbb4950537d112",
+        "0x73e277ccec8bba30"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfd487da91193e1ae",
+      "id": "deterministic-0241",
+      "inputs_bits": [
+        "0x86739c7d62722144",
+        "0x06739c7d62722144",
+        "0x64b1487f681a1406",
+        "0xfd487da91193e1ae"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x12e667cc092cf876",
+      "id": "deterministic-0242",
+      "inputs_bits": [
+        "0x12c667cc092cf876",
+        "0x12c667cc092cf876",
+        "0x12c667cc092cf876",
+        "0x12c667cc092cf876"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0243",
+      "inputs_bits": [
+        "0xaee18355fb76b0af",
+        "0xcb309c307725960e",
+        "0x4b309c307725960e",
+        "0x2ee18355fb76b0af"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xba779bd3b60078c0",
+      "id": "deterministic-0244",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x95403da604788e9d",
+        "0xba779bd3b60078c0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000b2bcf68a39335",
+      "id": "deterministic-0245",
+      "inputs_bits": [
+        "0x000e1acd6efee848",
+        "0x000ef55c99a00798",
+        "0x80031c670b4fa197",
+        "0x800ec7f394abbb14"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6a00000000000000",
+      "id": "deterministic-0246",
+      "inputs_bits": [
+        "0x69f0000000000000",
+        "0x69efffffffffffff",
+        "0x0787802d70d524b0",
+        "0x23ba5dbcfe19a2f9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xa86d3b0d0bf0e87c",
+      "id": "deterministic-0247",
+      "inputs_bits": [
+        "0x835229b016c424e3",
+        "0x819465c7aba8f46a",
+        "0x1f11690c2e4bff02",
+        "0xa86d3b0d0bf0e87c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf7f9fe8369421dcf",
+      "id": "deterministic-0248",
+      "inputs_bits": [
+        "0x889d62e2dd8a96ac",
+        "0x52caeba27943a881",
+        "0xbc27e955476b2f90",
+        "0xf7f9fe8369421dcf"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6a0673062e938b20",
+      "id": "deterministic-0249",
+      "inputs_bits": [
+        "0x48a139d068c60a34",
+        "0xc8a139d068c60a34",
+        "0x6a0673062e938b20",
+        "0x525d95293f246436"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2ff10ace05c20d3c",
+      "id": "deterministic-0250",
+      "inputs_bits": [
+        "0x2fd10ace05c20d3c",
+        "0x2fd10ace05c20d3c",
+        "0x2fd10ace05c20d3c",
+        "0x2fd10ace05c20d3c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0251",
+      "inputs_bits": [
+        "0x07c9c46057d41f1a",
+        "0xb534863982d731a4",
+        "0x3534863982d731a4",
+        "0x87c9c46057d41f1a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xaab4a673817d05f6",
+      "id": "deterministic-0252",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x9c8a883111a481b5",
+        "0xaab4a673817d05f6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000b05eea93157f9",
+      "id": "deterministic-0253",
+      "inputs_bits": [
+        "0x800bfc1bc69d1cea",
+        "0x80005e554d6c5c53",
+        "0x000d2cc0d73df02b",
+        "0x000a339ee5fce10b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6e72974d6a1160bd",
+      "id": "deterministic-0254",
+      "inputs_bits": [
+        "0x95c0000000000000",
+        "0x95bfffffffffffff",
+        "0x9597c8598197e03d",
+        "0x6e72974d6a1160bd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf7df917597a0fe8a",
+      "id": "deterministic-0255",
+      "inputs_bits": [
+        "0x9d2be33d352fe7a6",
+        "0xdaa92d82db9a91e9",
+        "0xf7df917597a0fe8a",
+        "0x0677d704308f5df7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7206c6c87296eff5",
+      "id": "deterministic-0256",
+      "inputs_bits": [
+        "0x83019eb84d9fde8c",
+        "0xc5fc78602540c231",
+        "0x7206c6c87296eff5",
+        "0x459d4366a4e29f6a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x52264b46231fccd9",
+      "id": "deterministic-0257",
+      "inputs_bits": [
+        "0x058071168349c0d4",
+        "0x858071168349c0d4",
+        "0xc3cf6c76888fe655",
+        "0x52264b46231fccd9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3e4405f596cac6ca",
+      "id": "deterministic-0258",
+      "inputs_bits": [
+        "0x3e2405f596cac6ca",
+        "0x3e2405f596cac6ca",
+        "0x3e2405f596cac6ca",
+        "0x3e2405f596cac6ca"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0259",
+      "inputs_bits": [
+        "0xa6483853e6451fa2",
+        "0x2024266609003d1d",
+        "0xa024266609003d1d",
+        "0x26483853e6451fa2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdc3674584113d79f",
+      "id": "deterministic-0260",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x411661ecf0873437",
+        "0xdc3674584113d79f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8009de8d47b2824e",
+      "id": "deterministic-0261",
+      "inputs_bits": [
+        "0x000b425f01bc1617",
+        "0x8007e7dc458e0bfb",
+        "0x8000e8424da0892c",
+        "0x800c50cdb640033e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7760000000000000",
+      "id": "deterministic-0262",
+      "inputs_bits": [
+        "0x7750000000000000",
+        "0x774fffffffffffff",
+        "0x0c0360d1cd45d5a1",
+        "0x364e61f7a98a164a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe277fc45928f69bd",
+      "id": "deterministic-0263",
+      "inputs_bits": [
+        "0x0f13e11097319ac7",
+        "0xd3f502521945a832",
+        "0x8da88dce86df6fe2",
+        "0xe277fc45928f69bd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfdd41e07271bb82e",
+      "id": "deterministic-0264",
+      "inputs_bits": [
+        "0xfdd41e07271bb82e",
+        "0xd8cbe26d110244de",
+        "0x3c54ca98ac84b7d7",
+        "0x052184a37cfaab78"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfb6a5b1bbc052873",
+      "id": "deterministic-0265",
+      "inputs_bits": [
+        "0x340a2367519a802e",
+        "0xb40a2367519a802e",
+        "0x790b57fe54c07eae",
+        "0xfb6a5b1bbc0595d3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x47651f940536a12c",
+      "id": "deterministic-0266",
+      "inputs_bits": [
+        "0x47451f940536a12c",
+        "0x47451f940536a12c",
+        "0x47451f940536a12c",
+        "0x47451f940536a12c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0267",
+      "inputs_bits": [
+        "0x4bef9ea6ea492f07",
+        "0xd39b150529049c99",
+        "0x539b150529049c99",
+        "0xcbef9ea6ea492f07"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xded5158fd51ecf5a",
+      "id": "deterministic-0268",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xded5158fd51ecf5a",
+        "0x31788f2a9c646444"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800c95de6cc2f5fb",
+      "id": "deterministic-0269",
+      "inputs_bits": [
+        "0x000364fc8618bdde",
+        "0x800b10d798ca3b25",
+        "0x8008242ace37c613",
+        "0x00033a2774264d5f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf96fffffffffffff",
+      "id": "deterministic-0270",
+      "inputs_bits": [
+        "0xf960000000000000",
+        "0xf95fffffffffffff",
+        "0x1391e2b8ac6e6e29",
+        "0x5b2f6c0b3a0218b5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf324ede413e51eb3",
+      "id": "deterministic-0271",
+      "inputs_bits": [
+        "0x80040cea5fa4bde7",
+        "0x6abb9e802f306d5c",
+        "0x00f891ed5bd2da86",
+        "0xf324ede413e51eb3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf9028ee2ffccd4d5",
+      "id": "deterministic-0272",
+      "inputs_bits": [
+        "0x51ca5de1b1cf184e",
+        "0x145d43c9499f55fe",
+        "0xf9028ee2ffccd4d5",
+        "0x70fdcb80e3e4d83c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf63569ba9d386da0",
+      "id": "deterministic-0273",
+      "inputs_bits": [
+        "0x50b9cc76bd0a9e8c",
+        "0xd0b9cc76bd0a9e8c",
+        "0x8225f7ed1064a8b1",
+        "0xf63569ba9d386da0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4e01bc4de509fd51",
+      "id": "deterministic-0274",
+      "inputs_bits": [
+        "0x4de1bc4de509fd51",
+        "0x4de1bc4de509fd51",
+        "0x4de1bc4de509fd51",
+        "0x4de1bc4de509fd51"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0275",
+      "inputs_bits": [
+        "0x4d11bb38bbad093a",
+        "0xf8a9406b3bef5da8",
+        "0x78a9406b3bef5da8",
+        "0xcd11bb38bbad093a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfa7c8182f7f966a9",
+      "id": "deterministic-0276",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xfa7c8182f7f966a9",
+        "0xe71e07f71cd21e24"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0020113f0ca4c076",
+      "id": "deterministic-0277",
+      "inputs_bits": [
+        "0x000e5c4a437b4376",
+        "0x8006f88a31a3a870",
+        "0x000e618ade64f320",
+        "0x000a5d33290cf2c6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcb7f19ffc2896780",
+      "id": "deterministic-0278",
+      "inputs_bits": [
+        "0xb4e0000000000000",
+        "0xb4dfffffffffffff",
+        "0x43f0665892ecab56",
+        "0xcb7f19ffc2896780"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd1a69efbc928952e",
+      "id": "deterministic-0279",
+      "inputs_bits": [
+        "0x9e6c5b234b0f51a5",
+        "0xd16e6ad528f58646",
+        "0xd1a4b84e76993cca",
+        "0x9ec0fb3493c47c33"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4a982d6bb46c980b",
+      "id": "deterministic-0280",
+      "inputs_bits": [
+        "0x4a982d6bb46c980b",
+        "0x2d08e717acd523fb",
+        "0xbcd9e3de3c43177c",
+        "0x419e843d6eb5ce52"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x683f83271aa4782c",
+      "id": "deterministic-0281",
+      "inputs_bits": [
+        "0xa74b1a1ae24d714e",
+        "0x274b1a1ae24d714e",
+        "0x683f83271aa4782c",
+        "0x340d33a60532bbdc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x759aa9cfc817d438",
+      "id": "deterministic-0282",
+      "inputs_bits": [
+        "0x757aa9cfc817d438",
+        "0x757aa9cfc817d438",
+        "0x757aa9cfc817d438",
+        "0x757aa9cfc817d438"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0283",
+      "inputs_bits": [
+        "0x7621c6258dac612a",
+        "0x3486fe6b475a3368",
+        "0xb486fe6b475a3368",
+        "0xf621c6258dac612a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x76160eb9e5614628",
+      "id": "deterministic-0284",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xe86932acb9e7822c",
+        "0x76160eb9e5614628"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800712ea828a6830",
+      "id": "deterministic-0285",
+      "inputs_bits": [
+        "0x800daf1e23a24e6a",
+        "0x000b4acb1e57d076",
+        "0x0004c270a33da256",
+        "0x80097108207d8c92"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x73cf92ac2c9405ed",
+      "id": "deterministic-0286",
+      "inputs_bits": [
+        "0x8260000000000000",
+        "0x825fffffffffffff",
+        "0x73cf92ac2c9405ed",
+        "0x47b881f33c3df6a6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe2e7e402249a43c2",
+      "id": "deterministic-0287",
+      "inputs_bits": [
+        "0xe2e7e402249a43c2",
+        "0x41fbf3a7c1b1c7c5",
+        "0x95fda0f130aff50a",
+        "0x22724ecc5752a860"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcd200f1a643a1530",
+      "id": "deterministic-0288",
+      "inputs_bits": [
+        "0xcd200f1a643a1530",
+        "0x476efcb846e52d1a",
+        "0x96d0528de900e1c0",
+        "0x455db1d78ed49003"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfd1b7df001ebe5bf",
+      "id": "deterministic-0289",
+      "inputs_bits": [
+        "0xef9b8357b52b59e3",
+        "0x6f9b8357b52b59e3",
+        "0xb0fce04f148b1790",
+        "0xfd1b7df001ebe5bf"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5fac51281470cdcf",
+      "id": "deterministic-0290",
+      "inputs_bits": [
+        "0x5f8c51281470cdcf",
+        "0x5f8c51281470cdcf",
+        "0x5f8c51281470cdcf",
+        "0x5f8c51281470cdcf"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0291",
+      "inputs_bits": [
+        "0xf21f9e2745e4552e",
+        "0x813531c8d4d71604",
+        "0x013531c8d4d71604",
+        "0x721f9e2745e4552e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xaacb4c737477db92",
+      "id": "deterministic-0292",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xaacb4c737477db92",
+        "0x93b3408f555190a5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000815837d21875d",
+      "id": "deterministic-0293",
+      "inputs_bits": [
+        "0x000362722a364fe8",
+        "0x0004896338e2d977",
+        "0x000545b4df01a105",
+        "0x80051c06c4f94307"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd410000000000000",
+      "id": "deterministic-0294",
+      "inputs_bits": [
+        "0xd400000000000000",
+        "0xd3ffffffffffffff",
+        "0x9cbcb6d734d32521",
+        "0xb2a909421c81eb2b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5543917623d98d6a",
+      "id": "deterministic-0295",
+      "inputs_bits": [
+        "0xcdf56a67633bd7f9",
+        "0x0a60c6e2e5db7e16",
+        "0x5543917623d98d6a",
+        "0xb86d9f0741b024f0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x53c1d88f12227c90",
+      "id": "deterministic-0296",
+      "inputs_bits": [
+        "0x51242297d6d678b9",
+        "0xbf27321837e2da08",
+        "0xa0cdb4789f029dbc",
+        "0x53c1d88f12227787"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x39570ce3edb23050",
+      "id": "deterministic-0297",
+      "inputs_bits": [
+        "0x5d7c0e68af3b32a8",
+        "0xdd7c0e68af3b32a8",
+        "0x2e79d4410b66eecd",
+        "0x39570ce3edb23050"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x408555643d3852b0",
+      "id": "deterministic-0298",
+      "inputs_bits": [
+        "0x406555643d3852b0",
+        "0x406555643d3852b0",
+        "0x406555643d3852b0",
+        "0x406555643d3852b0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0299",
+      "inputs_bits": [
+        "0x3ab36f874b54be22",
+        "0x542d0fb3b895dfde",
+        "0xd42d0fb3b895dfde",
+        "0xbab36f874b54be22"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3e422aa1faef6128",
+      "id": "deterministic-0300",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x0b441d4cec93493a",
+        "0x3e422aa1faef6128"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x00111af31429a684",
+      "id": "deterministic-0301",
+      "inputs_bits": [
+        "0x000be4e30a0d5f90",
+        "0x000563d0a6e2a12f",
+        "0x8009dfa77478cfad",
+        "0x0009b1e6d7b27572"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4a80000000000000",
+      "id": "deterministic-0302",
+      "inputs_bits": [
+        "0x4a70000000000000",
+        "0x4a6fffffffffffff",
+        "0x415454663f7e7702",
+        "0x0e12e654f4a50b6c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4f04c29083ee1a9b",
+      "id": "deterministic-0303",
+      "inputs_bits": [
+        "0x31ad0e435d41eace",
+        "0x4f04c29083ee1a9b",
+        "0xa9694b309ae0006e",
+        "0x8cb7c16c74041bee"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe29531cc99d472a1",
+      "id": "deterministic-0304",
+      "inputs_bits": [
+        "0x0395265d7e252859",
+        "0xcf05e5ba400a5449",
+        "0xe29531cc99d472a1",
+        "0xb3420ced5fa75204"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x755e5ab171288e80",
+      "id": "deterministic-0305",
+      "inputs_bits": [
+        "0xc395154fbdcc1da0",
+        "0x4395154fbdcc1da0",
+        "0x57993f3a0932ed9b",
+        "0x755e5ab171288e80"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x11a912687b053e22",
+      "id": "deterministic-0306",
+      "inputs_bits": [
+        "0x118912687b053e22",
+        "0x118912687b053e22",
+        "0x118912687b053e22",
+        "0x118912687b053e22"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0307",
+      "inputs_bits": [
+        "0xc77921d75b04166a",
+        "0x78c021d73ff6c4c6",
+        "0xf8c021d73ff6c4c6",
+        "0x477921d75b04166a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5bde33b84f22d7d3",
+      "id": "deterministic-0308",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x5bde33b84f22d7d3",
+        "0x4cc333cea08b06bc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x001666f399bba327",
+      "id": "deterministic-0309",
+      "inputs_bits": [
+        "0x0007aa24e1e51911",
+        "0x000c94f11c84b763",
+        "0x800d80f744e606cd",
+        "0x000fa8d4e037d980"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7015e786d955dbb5",
+      "id": "deterministic-0310",
+      "inputs_bits": [
+        "0xea80000000000000",
+        "0xea7fffffffffffff",
+        "0x5036bef2a6fc955f",
+        "0x7015e786d955dbb5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf0d693c8def4ebb8",
+      "id": "deterministic-0311",
+      "inputs_bits": [
+        "0xf0d693c8def4ebb8",
+        "0x0ce6090fb7daec6f",
+        "0xad4a770c476da277",
+        "0x3250c994392304f3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x73f4fd4f333c2486",
+      "id": "deterministic-0312",
+      "inputs_bits": [
+        "0xbe6ef831057a1e3a",
+        "0x73f4fd4f333c2486",
+        "0xafb86c999c5dbd4f",
+        "0xb03716eb6449b5f5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x730c1d61b69e2fca",
+      "id": "deterministic-0313",
+      "inputs_bits": [
+        "0x0f62823361eefbde",
+        "0x8f62823361eefbde",
+        "0x103fe00280ba11a9",
+        "0x730c1d61b69e2fca"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0c34aedba1e41317",
+      "id": "deterministic-0314",
+      "inputs_bits": [
+        "0x0c14aedba1e41317",
+        "0x0c14aedba1e41317",
+        "0x0c14aedba1e41317",
+        "0x0c14aedba1e41317"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0315",
+      "inputs_bits": [
+        "0x8fc729eaea4cd082",
+        "0x6abbed3265fa29a3",
+        "0xeabbed3265fa29a3",
+        "0x0fc729eaea4cd082"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf01a537776f542b2",
+      "id": "deterministic-0316",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x6cafa968c2faf297",
+        "0xf01a537776f542b2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0012130142a25824",
+      "id": "deterministic-0317",
+      "inputs_bits": [
+        "0x000687991782d0ad",
+        "0x0009703b23945e4c",
+        "0x0001fe7bf0ed65f0",
+        "0x00001cb1169dc33b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xaec089d3bc6bd391",
+      "id": "deterministic-0318",
+      "inputs_bits": [
+        "0x2080000000000000",
+        "0x207fffffffffffff",
+        "0xaec089d3bc6bd391",
+        "0x28c1fc89fb79c076"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf71405027af173ba",
+      "id": "deterministic-0319",
+      "inputs_bits": [
+        "0x27e16793fd58882a",
+        "0xf71405027af173ba",
+        "0xb3cafa9693953fdd",
+        "0x5c2ae0b979c242e2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe901d3e44e333ee7",
+      "id": "deterministic-0320",
+      "inputs_bits": [
+        "0xe901d3e44e333ee7",
+        "0x93f77bee6f08015a",
+        "0x3ab540997e4d07d8",
+        "0xd49fdd98a8a56bd7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x68412264d47baca9",
+      "id": "deterministic-0321",
+      "inputs_bits": [
+        "0x0d48aab5745434c0",
+        "0x8d48aab5745434c0",
+        "0x68412264d47baca9",
+        "0x0ba14ec0d5cd51b0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x66be722b63d5469d",
+      "id": "deterministic-0322",
+      "inputs_bits": [
+        "0x669e722b63d5469d",
+        "0x669e722b63d5469d",
+        "0x669e722b63d5469d",
+        "0x669e722b63d5469d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0323",
+      "inputs_bits": [
+        "0xa18fb9540b44ff44",
+        "0xb291a946a2f127ba",
+        "0x3291a946a2f127ba",
+        "0x218fb9540b44ff44"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x146b65b32c8f2d8e",
+      "id": "deterministic-0324",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x146b65b32c8f2d8e",
+        "0x0c69a37bac069055"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8019e19e72226d5b",
+      "id": "deterministic-0325",
+      "inputs_bits": [
+        "0x8004a8edacc28307",
+        "0x8003e1f958d927c1",
+        "0x8003c2c5334545ce",
+        "0x800d93f239417cc5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf1a0000000000000",
+      "id": "deterministic-0326",
+      "inputs_bits": [
+        "0xf190000000000000",
+        "0xf18fffffffffffff",
+        "0x098e5ee8954428a2",
+        "0x9766ca390096c873"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd1a2c7cf90f56ad1",
+      "id": "deterministic-0327",
+      "inputs_bits": [
+        "0xd1a2c7cf90f56ad1",
+        "0x0f3cbc12b75c1444",
+        "0x36d61852bd673d6c",
+        "0x9af4bb9ff6532816"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe9b8b64b6780c188",
+      "id": "deterministic-0328",
+      "inputs_bits": [
+        "0x1b223b31affb4bc6",
+        "0x515a30ce42ac8cd1",
+        "0xe9b8b64b6780c188",
+        "0x8c932b934d58a20b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3981d9323d3519ac",
+      "id": "deterministic-0329",
+      "inputs_bits": [
+        "0xe94ad3ebcab5f18f",
+        "0x694ad3ebcab5f18f",
+        "0x3981d9323d3519ac",
+        "0xa1f1bfd08602989f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6bebe77f5cc8cf5a",
+      "id": "deterministic-0330",
+      "inputs_bits": [
+        "0x6bcbe77f5cc8cf5a",
+        "0x6bcbe77f5cc8cf5a",
+        "0x6bcbe77f5cc8cf5a",
+        "0x6bcbe77f5cc8cf5a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0331",
+      "inputs_bits": [
+        "0x5ef59a859ba1dcfa",
+        "0x2b3ae55f80f8e1c3",
+        "0xab3ae55f80f8e1c3",
+        "0xdef59a859ba1dcfa"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x596e661d6b5d8cce",
+      "id": "deterministic-0332",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x2f938be6b6146504",
+        "0x596e661d6b5d8cce"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8004e825cad722b5",
+      "id": "deterministic-0333",
+      "inputs_bits": [
+        "0x800a14f81f9422c3",
+        "0x000460d33a77da46",
+        "0x800ccee832596472",
+        "0x000d9ae74c9e8a3a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xda16b453517ff8c0",
+      "id": "deterministic-0334",
+      "inputs_bits": [
+        "0x2ab0000000000000",
+        "0x2aafffffffffffff",
+        "0x11ad040557a0aedd",
+        "0xda16b453517ff8c0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7e52b3658f2c7429",
+      "id": "deterministic-0335",
+      "inputs_bits": [
+        "0xb9e7a280f7be691f",
+        "0x6b337adeb0f2b20d",
+        "0x7e52b3658f2c7429",
+        "0x55647dd10ca80681"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x72bed40ba69b4605",
+      "id": "deterministic-0336",
+      "inputs_bits": [
+        "0x9b92e83d29f8d6cc",
+        "0x082809161f851461",
+        "0xb7fe3f953c612609",
+        "0x72bed40ba69b4605"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7b6ffd2b1ed4a92a",
+      "id": "deterministic-0337",
+      "inputs_bits": [
+        "0x165d2017dc5551c9",
+        "0x965d2017dc5551c9",
+        "0x7b6ffd2b1ed4a92a",
+        "0x925bda007d160af8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x21e04ee6fdb9d49c",
+      "id": "deterministic-0338",
+      "inputs_bits": [
+        "0x21c04ee6fdb9d49c",
+        "0x21c04ee6fdb9d49c",
+        "0x21c04ee6fdb9d49c",
+        "0x21c04ee6fdb9d49c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0339",
+      "inputs_bits": [
+        "0x235068910e932da3",
+        "0xb5bd1633eb810338",
+        "0x35bd1633eb810338",
+        "0xa35068910e932da3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2bc94ccfe325e896",
+      "id": "deterministic-0340",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x2bc94ccfe325e896",
+        "0x21c000dc850546c7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80014b8913c214eb",
+      "id": "deterministic-0341",
+      "inputs_bits": [
+        "0x800b63545e09c147",
+        "0x000a729e8ae76305",
+        "0x800234107b4ccc83",
+        "0x0001d93d3aad15da"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe98fffffffffffff",
+      "id": "deterministic-0342",
+      "inputs_bits": [
+        "0xe980000000000000",
+        "0xe97fffffffffffff",
+        "0x21e05a086f058dc3",
+        "0x817a0b4623309618"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6baef6d205f61858",
+      "id": "deterministic-0343",
+      "inputs_bits": [
+        "0x14dadd9cc7494cd6",
+        "0xe0099de352902bcf",
+        "0x6baef6d205f61858",
+        "0x8a1e61e1dba0e268"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfbefc6e49f3a39b0",
+      "id": "deterministic-0344",
+      "inputs_bits": [
+        "0xfbefc6e49f3a39ac",
+        "0x64668cd69201a6df",
+        "0xf8c0b1046f33f252",
+        "0x160a562d57374136"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe7d3ef2e89909f30",
+      "id": "deterministic-0345",
+      "inputs_bits": [
+        "0x9a1233ed6c07a234",
+        "0x1a1233ed6c07a234",
+        "0x5f75c7b20391a070",
+        "0xe7d3ef2e89909f30"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1baa0f2c8cd98d6a",
+      "id": "deterministic-0346",
+      "inputs_bits": [
+        "0x1b8a0f2c8cd98d6a",
+        "0x1b8a0f2c8cd98d6a",
+        "0x1b8a0f2c8cd98d6a",
+        "0x1b8a0f2c8cd98d6a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0347",
+      "inputs_bits": [
+        "0x37fb9fb6dc9a9816",
+        "0xf9ded7a315cb68a6",
+        "0x79ded7a315cb68a6",
+        "0xb7fb9fb6dc9a9816"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x97657b8cc47a4b62",
+      "id": "deterministic-0348",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x947de44e9e0e950c",
+        "0x97657b8cc47a4b26"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8001234f28d516ca",
+      "id": "deterministic-0349",
+      "inputs_bits": [
+        "0x000cbb27f63553ba",
+        "0x0000c89fb1c0979d",
+        "0x800f00304f9151f2",
+        "0x000059197ec64fd1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe6719c4b4a5e88a0",
+      "id": "deterministic-0350",
+      "inputs_bits": [
+        "0x2ad0000000000000",
+        "0x2acfffffffffffff",
+        "0xe6719c4b4a5e88a0",
+        "0x5c863012a11e1db1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x75bd72003edaaca4",
+      "id": "deterministic-0351",
+      "inputs_bits": [
+        "0x1d7c062b148ead91",
+        "0x30657f0e5daaf48a",
+        "0x641f57a9f2fbc3e3",
+        "0x75bd72003edaaca4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe618f601d9d889b5",
+      "id": "deterministic-0352",
+      "inputs_bits": [
+        "0x452b3401bc62b0fd",
+        "0x88f9b6d92411eadc",
+        "0x11a1898e536afe09",
+        "0xe618f601d9d889b5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5602dfacd0972949",
+      "id": "deterministic-0353",
+      "inputs_bits": [
+        "0x0068065f56b3f5e6",
+        "0x8068065f56b3f5e6",
+        "0x5602dfee6d452b8d",
+        "0xd520672b8090e29a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x33bed17b82163a54",
+      "id": "deterministic-0354",
+      "inputs_bits": [
+        "0x339ed17b82163a54",
+        "0x339ed17b82163a54",
+        "0x339ed17b82163a54",
+        "0x339ed17b82163a54"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0355",
+      "inputs_bits": [
+        "0x5b622c6a7f69ffc2",
+        "0x64522161776a9cbd",
+        "0xe4522161776a9cbd",
+        "0xdb622c6a7f69ffc2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbb735ca58bef64bb",
+      "id": "deterministic-0356",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xb81582c60ebb7715",
+        "0xbb735ca58bef64bb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000e8dc02cd9f9c1",
+      "id": "deterministic-0357",
+      "inputs_bits": [
+        "0x000afdd534204f60",
+        "0x00028488304bd7fe",
+        "0x0009b5c6b7837fd1",
+        "0x8008aa63ef15ad6e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf020000000000000",
+      "id": "deterministic-0358",
+      "inputs_bits": [
+        "0xf010000000000000",
+        "0xf00fffffffffffff",
+        "0xc42ff7f8044c3a8f",
+        "0x169b96a8a26fe13a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf54fe1072edf2618",
+      "id": "deterministic-0359",
+      "inputs_bits": [
+        "0xf54fe1072edf2618",
+        "0x3cd73dc54f201e54",
+        "0xcdcb57ef98a34b68",
+        "0xb51cc5e9a9d1d7fe"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe54bf042d309cb06",
+      "id": "deterministic-0360",
+      "inputs_bits": [
+        "0xca9edb22a3aa4bd1",
+        "0xe54bf042d309cb06",
+        "0xc09a760c1f9dd910",
+        "0x0b6ff5f916b2a6a2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbb2dd0501b3d68f3",
+      "id": "deterministic-0361",
+      "inputs_bits": [
+        "0x19394f454a3c2b6f",
+        "0x99394f454a3c2b6f",
+        "0xbb2dd0501b3d68f9",
+        "0x38062e0dc19e0c68"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x627e2aaeb96e5024",
+      "id": "deterministic-0362",
+      "inputs_bits": [
+        "0x625e2aaeb96e5024",
+        "0x625e2aaeb96e5024",
+        "0x625e2aaeb96e5024",
+        "0x625e2aaeb96e5024"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0363",
+      "inputs_bits": [
+        "0x1bc1253ba8ef5c13",
+        "0x06148351c33de66b",
+        "0x86148351c33de66b",
+        "0x9bc1253ba8ef5c13"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x75f8eec7b1e1026a",
+      "id": "deterministic-0364",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x5c7901119ecddd91",
+        "0x75f8eec7b1e1026a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x801051cae6c75def",
+      "id": "deterministic-0365",
+      "inputs_bits": [
+        "0x8005494e55adc015",
+        "0x00080e1467de3ed5",
+        "0x800aa963509497e8",
+        "0x80086d2da86344c7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd18cb6de24ca8590",
+      "id": "deterministic-0366",
+      "inputs_bits": [
+        "0x9810000000000000",
+        "0x980fffffffffffff",
+        "0xccda7a3d4499bca9",
+        "0xd18cb6de24ca8590"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4fa88f62361704a5",
+      "id": "deterministic-0367",
+      "inputs_bits": [
+        "0x1519727ecfeb7eb2",
+        "0xb689482e2ee344cf",
+        "0x3660d10501fa5186",
+        "0x4fa88f62361704a5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe83bcb92eb739700",
+      "id": "deterministic-0368",
+      "inputs_bits": [
+        "0x5f9f6e6ed0f6a3ec",
+        "0x9107d81c8fd435ab",
+        "0xe83bcb92eb739700",
+        "0x9bc9c49000fcb02e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7c9c385611bf604b",
+      "id": "deterministic-0369",
+      "inputs_bits": [
+        "0x441060af8c4882ce",
+        "0xc41060af8c4882ce",
+        "0x7c9c385611bf604b",
+        "0x554bab0fe6db6c4b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x34643af3482119c3",
+      "id": "deterministic-0370",
+      "inputs_bits": [
+        "0x34443af3482119c3",
+        "0x34443af3482119c3",
+        "0x34443af3482119c3",
+        "0x34443af3482119c3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0371",
+      "inputs_bits": [
+        "0xe7c4566af5961df6",
+        "0x584016409ede8c4d",
+        "0xd84016409ede8c4d",
+        "0x67c4566af5961df6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x633b18e401ce64d1",
+      "id": "deterministic-0372",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x633b18e401ce64d1",
+        "0xafff3a71ae7eec58"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800693931345d467",
+      "id": "deterministic-0373",
+      "inputs_bits": [
+        "0x80003933967e3bc8",
+        "0x800f7421c2db35bf",
+        "0x000218aa490c0c14",
+        "0x00070117fd07910c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf7d8608ec0481e14",
+      "id": "deterministic-0374",
+      "inputs_bits": [
+        "0x9990000000000000",
+        "0x998fffffffffffff",
+        "0xf7d8608ec0481e14",
+        "0x2cd3b3edda5d8b28"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x545f5fc5399b8bac",
+      "id": "deterministic-0375",
+      "inputs_bits": [
+        "0xb38d0a039d58904a",
+        "0x545f5fc5399b73ea",
+        "0x51d7c1944453ff8d",
+        "0x2fae8c2631b11b32"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc41568a1dafb3217",
+      "id": "deterministic-0376",
+      "inputs_bits": [
+        "0x43de7b61d9faf584",
+        "0xc4175057f89ae16f",
+        "0x0675cfe6f3246f6d",
+        "0xb9b4f7c9c3d25cf3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x239eb3bf3657932d",
+      "id": "deterministic-0377",
+      "inputs_bits": [
+        "0x8f5a8a95a648a48a",
+        "0x0f5a8a95a648a48a",
+        "0x83f43958a53a5743",
+        "0x239eb3bf3657932d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x17f6d47a6d98bd25",
+      "id": "deterministic-0378",
+      "inputs_bits": [
+        "0x17d6d47a6d98bd25",
+        "0x17d6d47a6d98bd25",
+        "0x17d6d47a6d98bd25",
+        "0x17d6d47a6d98bd25"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0379",
+      "inputs_bits": [
+        "0x8cfc0816e82131d3",
+        "0x5c94ffb625676770",
+        "0xdc94ffb625676770",
+        "0x0cfc0816e82131d3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe217f8c2ad4bc49f",
+      "id": "deterministic-0380",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x5d7ef1ee3d5c93b8",
+        "0xe217f8c2ad4bc49f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80161c2ce6d3a72f",
+      "id": "deterministic-0381",
+      "inputs_bits": [
+        "0x00057769a9cbb203",
+        "0x800f4ebdf57ac5a7",
+        "0x8009f0d9fb4db9ec",
+        "0x800253fe9fd6d99f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xa0ed2c03a1b4e10b",
+      "id": "deterministic-0382",
+      "inputs_bits": [
+        "0x0a30000000000000",
+        "0x0a2fffffffffffff",
+        "0xa0ed2c03a1b4e10b",
+        "0x816d2d5803fcaa09"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe1a9c01351cb34f8",
+      "id": "deterministic-0383",
+      "inputs_bits": [
+        "0x31f18487b03c43bf",
+        "0xe1a9c01351cb34f8",
+        "0xa3e43b0b5a189c91",
+        "0x111de8db8ac9a9e8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x48fc35a2556bf993",
+      "id": "deterministic-0384",
+      "inputs_bits": [
+        "0x053de1a73bfd40bb",
+        "0x91d1514ecb39f4fa",
+        "0x48fc35a2556bf993",
+        "0x103687eb614d2aa0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4144d05cc9298463",
+      "id": "deterministic-0385",
+      "inputs_bits": [
+        "0x3960ff37707b18f5",
+        "0xb960ff37707b18f5",
+        "0x1cffdb9c844b7384",
+        "0x4144d05cc9298463"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x03d69f1dc41c2434",
+      "id": "deterministic-0386",
+      "inputs_bits": [
+        "0x03b69f1dc41c2434",
+        "0x03b69f1dc41c2434",
+        "0x03b69f1dc41c2434",
+        "0x03b69f1dc41c2434"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0387",
+      "inputs_bits": [
+        "0xafb22b07ab086657",
+        "0x1cb3aec06c3b035b",
+        "0x9cb3aec06c3b035b",
+        "0x2fb22b07ab086657"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe454b9424f0a6916",
+      "id": "deterministic-0388",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xe454b9424f0a6918",
+        "0x611e811833b93bca"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8015bbd4ddbe7379",
+      "id": "deterministic-0389",
+      "inputs_bits": [
+        "0x000b7f5609e8fa2c",
+        "0x800fdc17813020d8",
+        "0x800dba2b0b137699",
+        "0x8003a4e85b63d634"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x736ca94ce5a196a1",
+      "id": "deterministic-0390",
+      "inputs_bits": [
+        "0x0890000000000000",
+        "0x088fffffffffffff",
+        "0x736ca94ce5a196a1",
+        "0x19aff2259d435dcc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdff14b18fffd2e68",
+      "id": "deterministic-0391",
+      "inputs_bits": [
+        "0x200b2fa6e80827e7",
+        "0xdff14b18fffd2e68",
+        "0x96e2594608ec4e34",
+        "0x46a7613a01789ba8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x687b51043917809f",
+      "id": "deterministic-0392",
+      "inputs_bits": [
+        "0x687b51043917809f",
+        "0xc14a68a6542a685e",
+        "0xb388a140890feb0e",
+        "0x44ec9c0c5836f758"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbfd14647c467b7dc",
+      "id": "deterministic-0393",
+      "inputs_bits": [
+        "0x4c8aea840abc4cb6",
+        "0xcc8aea840abc4cb6",
+        "0xaff1975d9772d9af",
+        "0xbfd14647c467b7dc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3b7b9e2a4e05bd6c",
+      "id": "deterministic-0394",
+      "inputs_bits": [
+        "0x3b5b9e2a4e05bd6c",
+        "0x3b5b9e2a4e05bd6c",
+        "0x3b5b9e2a4e05bd6c",
+        "0x3b5b9e2a4e05bd6c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0395",
+      "inputs_bits": [
+        "0x9f79b3b71c9a6082",
+        "0x35557ed271ad34c3",
+        "0xb5557ed271ad34c3",
+        "0x1f79b3b71c9a6082"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf6276859f1684de3",
+      "id": "deterministic-0396",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xf6276859f1684de3",
+        "0x06aa2c931a5585b8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8009ba7f7e9ff202",
+      "id": "deterministic-0397",
+      "inputs_bits": [
+        "0x800b48d0e079d72f",
+        "0x80067c247bab0f41",
+        "0x80022658ea49a91f",
+        "0x000a30cec7ce9d8d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf0702a38fca68ca2",
+      "id": "deterministic-0398",
+      "inputs_bits": [
+        "0x5170000000000000",
+        "0x516fffffffffffff",
+        "0x997954ab692c89f1",
+        "0xf0702a38fca68ca2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc78deb1541b0e2c3",
+      "id": "deterministic-0399",
+      "inputs_bits": [
+        "0x1b27a4a56c8fbaa9",
+        "0xb0218afcadd52f9c",
+        "0xc78deb1541b0e2c3",
+        "0xc150ab03bcdf53c6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf08c0a1ad2d5cbb2",
+      "id": "deterministic-0400",
+      "inputs_bits": [
+        "0x2eda7134dfc8dce1",
+        "0x460daca0f5ec5518",
+        "0xf08c0a1ad2d5cbb2",
+        "0xeced1809723ecca5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4797b39f8ad0ad0c",
+      "id": "deterministic-0401",
+      "inputs_bits": [
+        "0x933783d84605387c",
+        "0x133783d84605387c",
+        "0x4797b39f8ad0ad0c",
+        "0xa407a2df8ae3cf56"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x39c100982569b172",
+      "id": "deterministic-0402",
+      "inputs_bits": [
+        "0x39a100982569b172",
+        "0x39a100982569b172",
+        "0x39a100982569b172",
+        "0x39a100982569b172"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0403",
+      "inputs_bits": [
+        "0xdc6096c5c1773762",
+        "0x7248bd1e72cc418c",
+        "0xf248bd1e72cc418c",
+        "0x5c6096c5c1773762"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x713fb1c0a21ea1d3",
+      "id": "deterministic-0404",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x44668880b8722190",
+        "0x713fb1c0a21ea1d3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0013be05473480bb",
+      "id": "deterministic-0405",
+      "inputs_bits": [
+        "0x8002467185891dda",
+        "0x000920d155bc3961",
+        "0x000ab2186d933953",
+        "0x0002318d096e2be1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf880000000000000",
+      "id": "deterministic-0406",
+      "inputs_bits": [
+        "0xf870000000000000",
+        "0xf86fffffffffffff",
+        "0xd757e45b19e5de29",
+        "0xd659e4a012cebfd5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf777d219bf37bcf6",
+      "id": "deterministic-0407",
+      "inputs_bits": [
+        "0xe1b940036fb21985",
+        "0xf777d219bf37bcf6",
+        "0x9447e044ea262e0f",
+        "0x2f6bbc8a2c9e0193"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x56455b11eb5b9508",
+      "id": "deterministic-0408",
+      "inputs_bits": [
+        "0xc09cb201add53950",
+        "0x2b19c761f2aec722",
+        "0x365e96fa6646122c",
+        "0x56455b11eb5b9508"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf4bcd2b0261c7286",
+      "id": "deterministic-0409",
+      "inputs_bits": [
+        "0xadb1f124ac8d6022",
+        "0x2db1f124ac8d6022",
+        "0x0e4a9b6c0e4c3262",
+        "0xf4bcd2b0261c7286"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x72a25e3babf50774",
+      "id": "deterministic-0410",
+      "inputs_bits": [
+        "0x72825e3babf50774",
+        "0x72825e3babf50774",
+        "0x72825e3babf50774",
+        "0x72825e3babf50774"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0411",
+      "inputs_bits": [
+        "0xbb0ba6c6815a32a3",
+        "0x6e4ce900808c4e06",
+        "0xee4ce900808c4e06",
+        "0x3b0ba6c6815a32a3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe6047399b567743f",
+      "id": "deterministic-0412",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xe6047399b567743f",
+        "0x3fd9c9119b795517"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x801452d3580a0b1d",
+      "id": "deterministic-0413",
+      "inputs_bits": [
+        "0x800fffd0078c080b",
+        "0x000f1fdf203672db",
+        "0x8008a94dcc4dc8fe",
+        "0x800ac994a466acef"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x626c3106081f181f",
+      "id": "deterministic-0414",
+      "inputs_bits": [
+        "0x13d0000000000000",
+        "0x13cfffffffffffff",
+        "0xa71e31c1e4fb0e82",
+        "0x626c3106081f181f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdd4ebd5552cb164b",
+      "id": "deterministic-0415",
+      "inputs_bits": [
+        "0x8c729ae4398773ac",
+        "0xdd4ebd5552cb164b",
+        "0x35b58fe6cd2c72a7",
+        "0x8c9e4f1302fa6382"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6ad37b3cb99d37c5",
+      "id": "deterministic-0416",
+      "inputs_bits": [
+        "0x6ad37b3cb99d37c5",
+        "0x0e118761b88f5cea",
+        "0xa8a12c78c21238d3",
+        "0x5c91885660c64862"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x689eda85226fb93d",
+      "id": "deterministic-0417",
+      "inputs_bits": [
+        "0x88cc1bf50c7d9c72",
+        "0x08cc1bf50c7d9c72",
+        "0xb5b94a163d183bca",
+        "0x689eda85226fb93d"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2c712b483fe8d3dd",
+      "id": "deterministic-0418",
+      "inputs_bits": [
+        "0x2c512b483fe8d3dd",
+        "0x2c512b483fe8d3dd",
+        "0x2c512b483fe8d3dd",
+        "0x2c512b483fe8d3dd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0419",
+      "inputs_bits": [
+        "0x6d4e65eb4036b0cc",
+        "0x775c71f090596ead",
+        "0xf75c71f090596ead",
+        "0xed4e65eb4036b0cc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbd8cadba62ab3177",
+      "id": "deterministic-0420",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xbd8cadba62ab3177",
+        "0x043223356f26dad5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0002e7d19e7c7e3e",
+      "id": "deterministic-0421",
+      "inputs_bits": [
+        "0x00002a61dce25762",
+        "0x8009339a7bba0b4c",
+        "0x80016958b8122c5a",
+        "0x000d5a62f5665e82"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcb79b499b1dbfbb5",
+      "id": "deterministic-0422",
+      "inputs_bits": [
+        "0xad80000000000000",
+        "0xad7fffffffffffff",
+        "0xa95485520905579a",
+        "0xcb79b499b1dbfbb5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6151eb8c18066980",
+      "id": "deterministic-0423",
+      "inputs_bits": [
+        "0x6151eb8c18066980",
+        "0x8c23b165c63a0553",
+        "0x5598908b48af4599",
+        "0x13ddd0d527f85d52"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdc100ad70adab968",
+      "id": "deterministic-0424",
+      "inputs_bits": [
+        "0xdc100ad70adab968",
+        "0x2046f4c3e978561a",
+        "0x96dd4007fa106036",
+        "0x36d6ffce67168d76"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xb63f2a8e48f9dc97",
+      "id": "deterministic-0425",
+      "inputs_bits": [
+        "0x3268b2e0940d3dec",
+        "0xb268b2e0940d3dec",
+        "0xb63f2a8e48f9dc97",
+        "0x2f649d4d8451eaee"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6855bf488fc9ec1e",
+      "id": "deterministic-0426",
+      "inputs_bits": [
+        "0x6835bf488fc9ec1e",
+        "0x6835bf488fc9ec1e",
+        "0x6835bf488fc9ec1e",
+        "0x6835bf488fc9ec1e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0427",
+      "inputs_bits": [
+        "0xbd525fc23ec36d81",
+        "0x6f13838131e1ab1a",
+        "0xef13838131e1ab1a",
+        "0x3d525fc23ec36d81"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe35b2fe51618cf0e",
+      "id": "deterministic-0428",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x517e66395a79f5a5",
+        "0xe35b2fe51618cf0e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x800da7ba14feaead",
+      "id": "deterministic-0429",
+      "inputs_bits": [
+        "0x800632dfd1d0b603",
+        "0x8002ea49e3c0f7af",
+        "0x80001c0365cf7d80",
+        "0x80046e8cf99d837b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xcde61b089f993ff0",
+      "id": "deterministic-0430",
+      "inputs_bits": [
+        "0x3cc0000000000000",
+        "0x3cbfffffffffffff",
+        "0xcde61b089f993ff0",
+        "0x824e98c5ac09f18f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5c5d16c1f9f05076",
+      "id": "deterministic-0431",
+      "inputs_bits": [
+        "0x2c4a25440c07026f",
+        "0x2b29aaa98ac477ab",
+        "0x5acdaeb40d317584",
+        "0x5c5d16c1eb18f66f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6d54dd339b78bdfb",
+      "id": "deterministic-0432",
+      "inputs_bits": [
+        "0x3d934188c8b8bc43",
+        "0x6d54dd339b78bdfb",
+        "0x611f20bc915e5240",
+        "0xc3e648b288687ee4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x228b19f0b0168773",
+      "id": "deterministic-0433",
+      "inputs_bits": [
+        "0xf9fc08fbd6899719",
+        "0x79fc08fbd6899719",
+        "0x118fd78a754c6277",
+        "0x228b19f0b0168773"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6c3d6d819ba39fd0",
+      "id": "deterministic-0434",
+      "inputs_bits": [
+        "0x6c1d6d819ba39fd0",
+        "0x6c1d6d819ba39fd0",
+        "0x6c1d6d819ba39fd0",
+        "0x6c1d6d819ba39fd0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0435",
+      "inputs_bits": [
+        "0x6bf379ff3e6785a8",
+        "0x0ada5591e80920a3",
+        "0x8ada5591e80920a3",
+        "0xebf379ff3e6785a8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe130c048bb4e6db6",
+      "id": "deterministic-0436",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xe130c048bb4e6db6",
+        "0xb1d5cca58dcf5ced"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0010fd436ebc8d69",
+      "id": "deterministic-0437",
+      "inputs_bits": [
+        "0x000f501de24c36c7",
+        "0x80048d373289ff6a",
+        "0x00052d4c2d567614",
+        "0x00010d1091a3dff8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfd71af98b54a97bd",
+      "id": "deterministic-0438",
+      "inputs_bits": [
+        "0x27c0000000000000",
+        "0x27bfffffffffffff",
+        "0xa0475a9f401f1b4b",
+        "0xfd71af98b54a97bd"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe02a5bd6796334eb",
+      "id": "deterministic-0439",
+      "inputs_bits": [
+        "0x88a88c72c652d5c9",
+        "0x2a3742b5a9962222",
+        "0x2a35f27beec5c6e6",
+        "0xe02a5bd6796334eb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x40a1e250bb45a842",
+      "id": "deterministic-0440",
+      "inputs_bits": [
+        "0x40a1e250bb45a842",
+        "0x39b6de7099757392",
+        "0x9a352a16f0833df5",
+        "0x08d42fc9578fe6ce"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7d731dc0b760de58",
+      "id": "deterministic-0441",
+      "inputs_bits": [
+        "0x3252eb33cf068a83",
+        "0xb252eb33cf068a83",
+        "0x98078b2236c64756",
+        "0x7d731dc0b760de58"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3cf537dc8d8605f7",
+      "id": "deterministic-0442",
+      "inputs_bits": [
+        "0x3cd537dc8d8605f7",
+        "0x3cd537dc8d8605f7",
+        "0x3cd537dc8d8605f7",
+        "0x3cd537dc8d8605f7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0443",
+      "inputs_bits": [
+        "0xd745f1eb1413f1b0",
+        "0xad3513accc57ba53",
+        "0x2d3513accc57ba53",
+        "0x5745f1eb1413f1b0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xb59f2af9a2f2768d",
+      "id": "deterministic-0444",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xb59f27ccc12cca83",
+        "0xb4e9670e2d6053d6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x80146db87c941434",
+      "id": "deterministic-0445",
+      "inputs_bits": [
+        "0x8007f7a8b5e0e053",
+        "0x800dc5a42a1f5553",
+        "0x0004ac0eb1465f39",
+        "0x80035c7a4dda3dc7"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf3d698323d12157a",
+      "id": "deterministic-0446",
+      "inputs_bits": [
+        "0x3dd0000000000000",
+        "0x3dcfffffffffffff",
+        "0xb6455aae63ee9b4c",
+        "0xf3d698323d12157a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf26d6ae518b30470",
+      "id": "deterministic-0447",
+      "inputs_bits": [
+        "0x0f7f42d2148c1f8f",
+        "0xf26d6ae518b30470",
+        "0x8a4e97fa623d7e78",
+        "0xa815d4d983619a84"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x61524fde2a3378b1",
+      "id": "deterministic-0448",
+      "inputs_bits": [
+        "0x61524fde2a3378b1",
+        "0x9be232d351af1200",
+        "0x8cadd546e6c0cc24",
+        "0x317286f84bc2c4bc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x7f2a5e392468f0a9",
+      "id": "deterministic-0449",
+      "inputs_bits": [
+        "0xc850f278cf19ee35",
+        "0x4850f278cf19ee35",
+        "0x7f2a5e392468f0a9",
+        "0x7406045304192b08"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1de4650457e4c168",
+      "id": "deterministic-0450",
+      "inputs_bits": [
+        "0x1dc4650457e4c168",
+        "0x1dc4650457e4c168",
+        "0x1dc4650457e4c168",
+        "0x1dc4650457e4c168"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0451",
+      "inputs_bits": [
+        "0xe4500e09846ae8a2",
+        "0xdda9bd617b2a55f3",
+        "0x5da9bd617b2a55f3",
+        "0x64500e09846ae8a2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x556732f2a0261c88",
+      "id": "deterministic-0452",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x556732f2a0261c88",
+        "0x9a280adb6a1272b1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000bfb89680df27",
+      "id": "deterministic-0453",
+      "inputs_bits": [
+        "0x000ff9960abb978d",
+        "0x8006f7c5bd7ea3e2",
+        "0x0004674b719ae625",
+        "0x800ca9632856faa9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x724fb226a670b1a6",
+      "id": "deterministic-0454",
+      "inputs_bits": [
+        "0xc990000000000000",
+        "0xc98fffffffffffff",
+        "0x724fb226a670b1a6",
+        "0xe449b26c93aef945"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfd258be619892a9c",
+      "id": "deterministic-0455",
+      "inputs_bits": [
+        "0xfd258be619892a9c",
+        "0x384cdf00ad311fc9",
+        "0x058c14989cb9afb6",
+        "0x7412553a54cff169"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe68231e836b38877",
+      "id": "deterministic-0456",
+      "inputs_bits": [
+        "0x54f1aef2c42114cb",
+        "0x32d9bf7003310422",
+        "0xa5edcf8c52a62eaa",
+        "0xe68231e836b38877"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6e551ba32d94a342",
+      "id": "deterministic-0457",
+      "inputs_bits": [
+        "0x335e3f341e7c12a7",
+        "0xb35e3f341e7c12a7",
+        "0x6e551ba32d94a342",
+        "0xb56009f3af871a84"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6c946c8861e1219a",
+      "id": "deterministic-0458",
+      "inputs_bits": [
+        "0x6c746c8861e1219a",
+        "0x6c746c8861e1219a",
+        "0x6c746c8861e1219a",
+        "0x6c746c8861e1219a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0459",
+      "inputs_bits": [
+        "0xf5badf770dacbf3b",
+        "0x8276a8418e754885",
+        "0x0276a8418e754885",
+        "0x75badf770dacbf3b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd110e6f7d61fc072",
+      "id": "deterministic-0460",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xd110e6f7d61fc072",
+        "0xcc4d0c9700a9a372"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8009f1309978e011",
+      "id": "deterministic-0461",
+      "inputs_bits": [
+        "0x0004613eff1332b7",
+        "0x8008f94f92535912",
+        "0x00050c1404c3fb20",
+        "0x800a65340afcb4d6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x9ddd4ae498db9762",
+      "id": "deterministic-0462",
+      "inputs_bits": [
+        "0x9800000000000000",
+        "0x97ffffffffffffff",
+        "0x14aa2b1cf561168f",
+        "0x9ddd4ae498db9762"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf1a840fdc1da0e04",
+      "id": "deterministic-0463",
+      "inputs_bits": [
+        "0xa30128b7e23efcbd",
+        "0xf1a840fdc1da0e04",
+        "0x572a8d027b2abb18",
+        "0x294013c1b2cd286e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6d21faf9674de0ed",
+      "id": "deterministic-0464",
+      "inputs_bits": [
+        "0x01c81a0df49369be",
+        "0x6d21faf9674de0ed",
+        "0x05a3de713a3ee06c",
+        "0x3b18353a86a706ac"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x75d71f8d907027aa",
+      "id": "deterministic-0465",
+      "inputs_bits": [
+        "0x0b8f6e597dfc63a1",
+        "0x8b8f6e597dfc63a1",
+        "0x7542b1b39a275326",
+        "0x75d71634b6a31400"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x10603c639f316e8c",
+      "id": "deterministic-0466",
+      "inputs_bits": [
+        "0x10403c639f316e8c",
+        "0x10403c639f316e8c",
+        "0x10403c639f316e8c",
+        "0x10403c639f316e8c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0467",
+      "inputs_bits": [
+        "0x77c1379aad51e3f2",
+        "0x5c79e6ef0967fcb5",
+        "0xdc79e6ef0967fcb5",
+        "0xf7c1379aad51e3f2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xc628344841318918",
+      "id": "deterministic-0468",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0xc628344841318918",
+        "0x3d0d27f3f4e6ac0a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x8010a61eb5061a0c",
+      "id": "deterministic-0469",
+      "inputs_bits": [
+        "0x000476814ce2a17f",
+        "0x800cd25a9506dbfd",
+        "0x00075a30a8f1890a",
+        "0x800fa47615d36898"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe5c37a519a839dd9",
+      "id": "deterministic-0470",
+      "inputs_bits": [
+        "0x57e0000000000000",
+        "0x57dfffffffffffff",
+        "0xe5c37a519a839dd9",
+        "0xbdbb8e4673aecca2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf7bb0e81f67dc688",
+      "id": "deterministic-0471",
+      "inputs_bits": [
+        "0xf7bb0e81f67dc688",
+        "0xdb1a424dec3b9f05",
+        "0xa31f4dfc1812897b",
+        "0xd4f2e43c90fd92a9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbe1ea49c1d247b0b",
+      "id": "deterministic-0472",
+      "inputs_bits": [
+        "0x31fb5514a375e3cc",
+        "0xbe1ea49c1d247b0b",
+        "0x10b5fbb5c11b913d",
+        "0x24bff9a50ce4495f"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xacdcde35bae5a921",
+      "id": "deterministic-0473",
+      "inputs_bits": [
+        "0x472fa3019ade360d",
+        "0xc72fa3019ade360d",
+        "0xacdcde35bae5a921",
+        "0x8c03e607c9b80a33"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x5b770a9025058c0a",
+      "id": "deterministic-0474",
+      "inputs_bits": [
+        "0x5b570a9025058c0a",
+        "0x5b570a9025058c0a",
+        "0x5b570a9025058c0a",
+        "0x5b570a9025058c0a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0475",
+      "inputs_bits": [
+        "0xada2b0ad538f2ac2",
+        "0x13926b9c8794c417",
+        "0x93926b9c8794c417",
+        "0x2da2b0ad538f2ac2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1eb951c64c309de8",
+      "id": "deterministic-0476",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x1eb951c64c309de8",
+        "0x02092515d29486d3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x00082f9c4d9f7185",
+      "id": "deterministic-0477",
+      "inputs_bits": [
+        "0x00075ed822f2d748",
+        "0x80034be4b527e0e6",
+        "0x800b91a864e756a7",
+        "0x000fae5144bbd1ca"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xdbd0000000000000",
+      "id": "deterministic-0478",
+      "inputs_bits": [
+        "0xdbc0000000000000",
+        "0xdbbfffffffffffff",
+        "0x1e4dec2020e3d580",
+        "0xd4563e22c6b1722b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x66e6ce35fd18ee3b",
+      "id": "deterministic-0479",
+      "inputs_bits": [
+        "0x66e6ce35fd18ee3b",
+        "0x5cb5ab49af503127",
+        "0x2632fbd29f2c3885",
+        "0x8b74d57eb564e1b4"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfb53afd407eec577",
+      "id": "deterministic-0480",
+      "inputs_bits": [
+        "0xfb53afd407eec577",
+        "0x755b648ac684a53d",
+        "0x49bc652c60e94337",
+        "0x71558ede52fcbc71"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x4a659133381fc684",
+      "id": "deterministic-0481",
+      "inputs_bits": [
+        "0x711ed5f8346a7949",
+        "0xf11ed5f8346a7949",
+        "0x8b51b3b82e43dffb",
+        "0x4a659133381fc684"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x766a6bdad8bb43f9",
+      "id": "deterministic-0482",
+      "inputs_bits": [
+        "0x764a6bdad8bb43f9",
+        "0x764a6bdad8bb43f9",
+        "0x764a6bdad8bb43f9",
+        "0x764a6bdad8bb43f9"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0483",
+      "inputs_bits": [
+        "0xa922c0428dc38ae1",
+        "0x797ad614220e95b4",
+        "0xf97ad614220e95b4",
+        "0x2922c0428dc38ae1"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x52d6e7916b3083cd",
+      "id": "deterministic-0484",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x52d6e7916b3083cd",
+        "0x89fda81df6abb18a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0014451f43d58a6f",
+      "id": "deterministic-0485",
+      "inputs_bits": [
+        "0x0006ce898e45af3a",
+        "0x00032314ec1daae4",
+        "0x0007d20d2691a8b1",
+        "0x00028173a2e087a0"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x9ca6ff405754b832",
+      "id": "deterministic-0486",
+      "inputs_bits": [
+        "0x94e0000000000000",
+        "0x94dfffffffffffff",
+        "0x9ca6ff405754b832",
+        "0x124b43e52e565dc2"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x791a2648876840da",
+      "id": "deterministic-0487",
+      "inputs_bits": [
+        "0xc59351b1841f303a",
+        "0x791a2648876840da",
+        "0x9d39181309dbe6db",
+        "0x20f3440f2a4687d6"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x78916e105e530ad9",
+      "id": "deterministic-0488",
+      "inputs_bits": [
+        "0x41e8ae970bfb3f59",
+        "0x227d42e7c2063f67",
+        "0x78916e105e530ad9",
+        "0xd3dad5fdfe6e3a8c"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x3857fd51b230e432",
+      "id": "deterministic-0489",
+      "inputs_bits": [
+        "0xc9bf127fd2bfc5f9",
+        "0x49bf127fd2bfc5f9",
+        "0x3857fd51b230e432",
+        "0xa7713356131fc97a"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x1f125e658ad19bb8",
+      "id": "deterministic-0490",
+      "inputs_bits": [
+        "0x1ef25e658ad19bb8",
+        "0x1ef25e658ad19bb8",
+        "0x1ef25e658ad19bb8",
+        "0x1ef25e658ad19bb8"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0491",
+      "inputs_bits": [
+        "0xb696bf9b014e6da3",
+        "0x49bc46ca5a13f9b8",
+        "0xc9bc46ca5a13f9b8",
+        "0x3696bf9b014e6da3"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x2180048aded4b452",
+      "id": "deterministic-0492",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x1eb680e51fc4e94c",
+        "0x2180048aded4b39e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0003b91964ad9e32",
+      "id": "deterministic-0493",
+      "inputs_bits": [
+        "0x800d1e379b18f415",
+        "0x000643acedeb60bd",
+        "0x00033c53d087393c",
+        "0x000757504153f84e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xf54b28b874beb2cb",
+      "id": "deterministic-0494",
+      "inputs_bits": [
+        "0x0f10000000000000",
+        "0x0f0fffffffffffff",
+        "0x9547a0e0eb96f6a6",
+        "0xf54b28b874beb2cb"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xd2f5bb4eaa36ab21",
+      "id": "deterministic-0495",
+      "inputs_bits": [
+        "0x857a8b4761727ad4",
+        "0xd2f5bb4eaa36ab21",
+        "0x49ff898c33c22e37",
+        "0x1e68ae3a11bec7ab"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xed131667b31130e4",
+      "id": "deterministic-0496",
+      "inputs_bits": [
+        "0xed131667b31130e4",
+        "0x314b638ac92dab85",
+        "0xc0340b914181b192",
+        "0x1e08c55f19be9671"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xe7a84572c9a588f3",
+      "id": "deterministic-0497",
+      "inputs_bits": [
+        "0xc6e655e8b4dc571d",
+        "0x46e655e8b4dc571d",
+        "0xe7a84572c9a588f3",
+        "0xce25f8ebca0e9f22"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x30fe3884a853ef89",
+      "id": "deterministic-0498",
+      "inputs_bits": [
+        "0x30de3884a853ef89",
+        "0x30de3884a853ef89",
+        "0x30de3884a853ef89",
+        "0x30de3884a853ef89"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0499",
+      "inputs_bits": [
+        "0x9bb7fab01bce0ae5",
+        "0x105ca87556478fb0",
+        "0x905ca87556478fb0",
+        "0x1bb7fab01bce0ae5"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6f113c6c83133a88",
+      "id": "deterministic-0500",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x53a4efe47a7ed9fb",
+        "0x6f113c6c83133a88"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x000d4baed8c19a9c",
+      "id": "deterministic-0501",
+      "inputs_bits": [
+        "0x80019778e2906041",
+        "0x000da0b65ac770c1",
+        "0x00008e54b576ee60",
+        "0x0000b41cab139bbc"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xbe97ccf1eadad4ec",
+      "id": "deterministic-0502",
+      "inputs_bits": [
+        "0x8680000000000000",
+        "0x867fffffffffffff",
+        "0xbe97ccf1eadad4ec",
+        "0x0214280651adda45"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x6fadc4cac5025da3",
+      "id": "deterministic-0503",
+      "inputs_bits": [
+        "0xae998464b0101990",
+        "0x6fadc4cac5025da3",
+        "0xbd3e4204f81b51d8",
+        "0xb4ef1ab5bff2117b"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfb0698698cdf9186",
+      "id": "deterministic-0504",
+      "inputs_bits": [
+        "0x6a340a5cfd14cb99",
+        "0x3f025b8bd033244e",
+        "0xfb0698698cdf9186",
+        "0x55188a8484588f25"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xec87aadc09423c03",
+      "id": "deterministic-0505",
+      "inputs_bits": [
+        "0x50b79f152461577b",
+        "0xd0b79f152461577b",
+        "0x81cfe8c86ab92b15",
+        "0xec87aadc09423c03"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x33a4778f55f2c5ca",
+      "id": "deterministic-0506",
+      "inputs_bits": [
+        "0x3384778f55f2c5ca",
+        "0x3384778f55f2c5ca",
+        "0x3384778f55f2c5ca",
+        "0x3384778f55f2c5ca"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x0000000000000000",
+      "id": "deterministic-0507",
+      "inputs_bits": [
+        "0xbb559ac048cbc7fe",
+        "0x19e08c565db66ff1",
+        "0x99e08c565db66ff1",
+        "0x3b559ac048cbc7fe"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x41b7de825cb8da0a",
+      "id": "deterministic-0508",
+      "inputs_bits": [
+        "0x7fefffffffffffff",
+        "0xffefffffffffffff",
+        "0x41b7de825cb8da0a",
+        "0x0f6d80d3bf0a693e"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0x00086dcba7484246",
+      "id": "deterministic-0509",
+      "inputs_bits": [
+        "0x80092d03410ac51d",
+        "0x00074c9c323437d7",
+        "0x000b600195574a78",
+        "0x800111cedf387aec"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xfc54653e67adb93b",
+      "id": "deterministic-0510",
+      "inputs_bits": [
+        "0xd6e0000000000000",
+        "0xd6dfffffffffffff",
+        "0xfc54653e67adb93b",
+        "0x6c22c0cfde39cc89"
+      ],
+      "kind": "deterministic-adversarial"
+    },
+    {
+      "expected_bits": "0xba8274ab61c43946",
+      "id": "deterministic-0511",
+      "inputs_bits": [
+        "0x387ff23fe5cf662a",
+        "0xba8274ab61d43266",
+        "0x19bebe0f4353c382",
+        "0x1e704a62785fc485"
+      ],
+      "kind": "deterministic-adversarial"
+    }
+  ],
+  "generator": {
+    "imports_pid_rs": false,
+    "path": "scripts/generate-exact-binary64-sum-oracle.py",
+    "sha256": "05f0a45113132028f691ecaf5e1de4994626931cd46c6f1f2ebeec68a985fe81",
+    "third_party_dependencies": []
+  },
+  "limitations": [
+    "the finite corpus does not prove the universal fixed-limb implementation claim",
+    "the expected path uses exact Fraction and integer arithmetic, not host floating point",
+    "the oracle checks represented-input summation, not upstream estimator accuracy",
+    "implementation-path diversity is not independent human review"
+  ],
+  "schema": "pid-rs/exact-binary64-sum-oracle",
+  "schema_revision": 2
+}

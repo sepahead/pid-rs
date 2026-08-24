@@ -1068,6 +1068,7 @@
       "code_availability": "local",
       "constraints": [
         "PID identities require unclamped component MI values; the result inherits assumptions from KSG and continuous shared exclusions.",
+        "The synergy coordinate exactly reduces four already represented binary64 estimator terms and rounds once; this does not make those terms exact. The project-defined inclusive 32-position reconstruction guard can reject a finite represented atom tuple.",
         "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
         "Relative source units and preprocessing define the shared-exclusions estimand and must be held fixed and reported.",
         "The continuous construction uses the stated lower-order branch-intersection assumption when leading-order overlap terms are dropped."
@@ -1081,7 +1082,7 @@
       "id": "pid.continuous-pid2",
       "implementation_origin": "local-implementation",
       "implementation_status": "experimental",
-      "new_in_pid_rs": "Provides a typed Rust implementation of the paper-defined atom reconstruction plus project-defined reports, cross-fit and split-sample diagnostics, provenance, and resource preflight.",
+      "new_in_pid_rs": "Provides a typed Rust implementation of the paper-defined atom reconstruction plus project-defined represented-binary64 reconstruction checks, reports, cross-fit and split-sample diagnostics, provenance, and resource preflight.",
       "python_entry_points": [
         "pid_core_rs.experimental.migration.compute_pid2",
         "pid_core_rs.experimental.migration.compute_pid2_report"
@@ -1114,6 +1115,7 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
+        "crates/pid-core/src/exact_binary64.rs",
         "crates/pid-core/src/pid2.rs"
       ],
       "source_marker_files": [
@@ -1123,6 +1125,7 @@
       "title": "Continuous two-source shared-exclusions PID",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "audit/formal/z3/pid2-reconstruction.smt2",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
@@ -1130,11 +1133,15 @@
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/pid2.rs",
           "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
           "scripts/check-ksg-harmonic-exact-enclosure.py",
           "scripts/check-ksg-harmonic-revision-self-test.py",
           "scripts/check-ksg-harmonic-revision.py",
+          "scripts/generate-exact-binary64-sum-oracle.py",
           "scripts/generate-ksg-local-arithmetic-oracle.py"
         ],
         "level": "formal-and-property",
@@ -1160,7 +1167,7 @@
       "id": "pid.fitted-quantized-imin",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Composes reusable fitted quantizer outputs with categorical I_min while retaining each input's quantization report.",
+      "new_in_pid_rs": "Composes reusable fitted quantizer outputs with categorical I_min while retaining each input's nominal, binary64-map-reachable, and observed quantization diagnostics.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -1198,14 +1205,15 @@
       "validation": {
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
           "crates/pid-core/tests/imin.rs"
         ],
         "level": "property-and-integration",
-        "limitations": "Transform and result propagation tests do not justify a bin count or remove empirical-PMF bias. The companion Rust composition check is bounded software evidence; the Decimal fixture does not contain quantizer inputs. It is not a population theorem or a global binary64 bound.",
-        "scope": "Fixed-edge report retention, categorical metadata propagation, resource preflight for two- and three-source fitted inputs, and one bounded quantizer-to-I_min comparison."
+        "limitations": "Transform and result propagation tests do not justify a bin count or remove empirical-PMF bias. Map reachability is not population support or positive probability. The companion Rust composition check is bounded software evidence; the Decimal fixture does not contain quantizer inputs. It is not a population theorem or a global binary64 bound.",
+        "scope": "Fixed-edge report retention; nominal, binary64-map-reachable, and observed cardinality propagation; categorical metadata propagation; actual-payload byte and operation preflight for two- and three-source fitted inputs; and one bounded quantizer-to-I_min comparison."
       }
     },
     {
@@ -1214,6 +1222,7 @@
       "code_availability": "local",
       "constraints": [
         "This is the Williams-Beer redundancy definition on an empirical categorical PMF and must not be pooled with shared-exclusions atoms.",
+        "Only the two-source synergy receives the exact represented-binary64 four-term reduction. The three-source Mobius path retains its prior compensated reduction. Larger temporary S0<->S1 exhaustive and all-three-transposition random probes reported no reachable source-swap bit witness, but their executable and raw log were not retained; they have zero current release-evidence credit and do not prove global equivariance.",
         "On independent two-bit COPY, I_min assigns ln(2) nats of redundancy, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
         "The exact-real plug-in convergence result applies to the fixed two- and three-source lattices on fixed finite alphabets; it allows minimum ties but does not claim differentiability or a binary64 asymptotic limit."
       ],
@@ -1223,7 +1232,7 @@
       "id": "pid.imin",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Provides deterministic two- and three-source empirical implementations with categorical provenance and budgets; the two-source path also exposes cooperative cancellation.",
+      "new_in_pid_rs": "Provides deterministic two- and three-source empirical implementations with categorical provenance and budgets; the two-source path also exposes cooperative cancellation and a witnessed order-independent represented-binary64 synergy reduction.",
       "python_entry_points": [
         "pid_core_rs.compute_categorical_imin_pid2"
       ],
@@ -1252,7 +1261,8 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/discrete_pid.rs"
+        "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/exact_binary64.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/discrete_pid.rs"
@@ -1262,6 +1272,7 @@
       "validation": {
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "NUMERICAL_ASSURANCE.md",
           "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/src/discrete_pid.rs",
           "crates/pid-core/tests/cross_validation.rs",
@@ -1269,12 +1280,16 @@
           "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/imin.rs",
-          "crates/pid-core/tests/sxpid_axioms.rs"
+          "crates/pid-core/tests/sxpid_axioms.rs",
+          "scripts/generate-exact-binary64-sum-oracle.py"
         ],
         "level": "property-and-integration",
-        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min. The Lean artifact proves generic deterministic continuity lemmas, not the I_min definition, sampling theorem, or Rust arithmetic.",
-        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, direct three-source lattice reconstruction and source-swap equivariance, minimum-tie crossings, metadata, the documented identity-axiom counterexample, two-/three-source resource bounds, and an exact-real convergence argument."
+        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min. The Lean artifact proves generic deterministic continuity lemmas, not the I_min definition, sampling theorem, or Rust arithmetic. Exact reduction applies only to the supplied, already rounded two-source synergy operands; it does not make probabilities, logarithms, MI, redundancy, or PID exact. The 561-case variable-arity arithmetic corpus is bounded conformance evidence, not a universal floating-point proof or estimator-error bound. The larger reported I_min3 negative searches are unqualified historical observations whose executable and raw log were not retained; they receive zero current release-evidence credit and do not prove that no larger witness exists.",
+        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, a pinned two-source source-exchange bit witness and exact represented-operand synergy reduction, direct three-source lattice reconstruction and retained source-swap equivariance tests, an explicit zero-credit disposition for unretained larger I_min3 negative searches, minimum-tie crossings, metadata, the documented identity-axiom counterexample, two-/three-source resource bounds, and an exact-real convergence argument."
       }
     },
     {
@@ -1472,7 +1487,8 @@
         "Deprecated Python compute_discrete_pid2 and compute_discrete_pid3 return flat dictionaries and discard the Rust wrapper's num_bins-only provenance component, input identity, empirical-PMF metadata, and training/evaluation distinction.",
         "Before calling the Rust wrapper, deprecated Python retains a conservative legacy O(columns times (num_bins+1)) preflight. It can reject large bin counts that the Rust exact-significand transform can represent; admitted Python calls use the Rust transform, but the accepted input domains are not identical.",
         "The returned atoms use the Williams-Beer I_min redundancy functional. They are not categorical Makkeh-Gutknecht-Wibral shared-exclusions atoms, an Ehrlich continuous shared-exclusions estimate, or a fallback for failed KSG estimation; independent two-bit COPY has identical mutual-information coordinates but I_min redundancy ln(2) versus categorical shared-exclusions redundancy ln(4/3).",
-        "This evaluation-row-fitted adapter is distinct from pid.fitted-quantized-imin, whose reusable fitted quantizers retain edges, hashes, occupancies, and training/evaluation identities."
+        "This evaluation-row-fitted adapter is distinct from pid.fitted-quantized-imin, whose reusable fitted quantizers retain edges, hashes, occupancies, and training/evaluation identities.",
+        "The two-source I_min result inherits the witnessed exact represented-binary64 synergy reduction; the three-source result retains the compensated Mobius path. This arithmetic distinction does not identify or merge PID measures."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1522,6 +1538,7 @@
       "title": "Same-sample quantized Williams-Beer I_min",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/src/discrete_pid.rs",
           "crates/pid-core/tests/discrete_pid_properties.rs",
           "crates/pid-core/tests/sxpid_properties.rs",
@@ -1540,7 +1557,8 @@
       "category": "pipeline",
       "code_availability": "local",
       "constraints": [
-        "The mutual-information.ksg1-raw dependency is research-only; screening thresholds and data reuse choices are exploratory and do not inherit validity from downstream estimators."
+        "The mutual-information.ksg1-raw dependency is research-only; screening thresholds and data reuse choices are exploratory and do not inherit validity from downstream estimators.",
+        "Any selected PID2 result inherits the exact represented-binary64 synergy and project-defined reconstruction guard; neither property calibrates screening or post-selection inference."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1572,6 +1590,7 @@
       "title": "Hierarchy screening pipeline",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
@@ -1597,7 +1616,8 @@
       "category": "pipeline",
       "code_availability": "local",
       "constraints": [
-        "Pair ranking is exploratory and remains subject to selection bias and component-estimator assumptions."
+        "Pair ranking is exploratory and remains subject to selection bias and component-estimator assumptions.",
+        "Screened PID2 values inherit the exact represented-binary64 synergy and project-defined reconstruction guard; neither property supplies post-selection inference."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1627,6 +1647,7 @@
       "title": "PID2 pair-screening workflow",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
@@ -1789,7 +1810,8 @@
         "The result retains the bin count, typed atom-summary status, every replicate outcome, original row count, percentile alpha, effective resample length, scheme, dependence/seed/algorithm provenance, and named signed-net order; no edge vector is materialized and per-replicate transform/input identities are not retained.",
         "Percentile summaries are exploratory and require declared dependence, exchangeability, split, and target-use assumptions.",
         "Each typed summary identifies the original-point-plus-moving-block scope, signed-net component, descriptive resampling evidential limit, and empirical-PMF averaged SxPID estimand; extracting RowBootstrapStat alone discards that interpretation.",
-        "The four percentile ranges are marginal summaries rather than a simultaneous region; their endpoints need not satisfy PID reconstruction, while retained aligned replicate vectors support joint analysis."
+        "The four percentile ranges are marginal summaries rather than a simultaneous region; their endpoints need not satisfy PID reconstruction, while retained aligned replicate vectors support joint analysis.",
+        "The categorical SxPID2 original-sample result and each bootstrap replicate inherit exact final empirical-PMF component averaging over already represented weighted pointwise terms; pointwise Mobius inversion remains compensated. This does not calibrate bootstrap coverage or make changing per-replicate transforms comparable population estimands."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1838,6 +1860,7 @@
       "title": "Quantized SxPID2 bootstrap workflow",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/tests/sxpid_bootstrap.rs"
         ],
         "level": "property-and-integration",
@@ -2268,7 +2291,8 @@
       "category": "preprocessing",
       "code_availability": "local",
       "constraints": [
-        "Equal-width bins define categorical variables; the transform changes the estimand and is not a continuous estimator."
+        "Equal-width bins define categorical variables; the transform changes the estimand and is not a continuous estimator.",
+        "Binary64-map reachability is not population support, positive probability, joint-law support, or sampling adequacy; reachable labels need not be contiguous."
       ],
       "definition_origin": "paper-derived",
       "depends_on": [],
@@ -2276,7 +2300,7 @@
       "id": "quantization.equal-width",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds training-fitted reusable edges, held-out out-of-range policy, occupancy diagnostics, hashes, and resource bounds.",
+      "new_in_pid_rs": "Adds training-fitted reusable overflow-safe edges, held-out out-of-range policy, nominal/map-reachable/observed diagnostics, hashes, actual-payload resource bounds, and a labels-only Rust execution path sharing the report path's bin assignment.",
       "python_entry_points": [
         "pid_core_rs.EqualWidthQuantizer"
       ],
@@ -2304,12 +2328,14 @@
       "title": "Equal-width quantization",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/src/quantizer.rs",
-          "crates/pid-core/tests/fitted_quantized_sxpid.rs"
+          "crates/pid-core/tests/fitted_quantized_sxpid.rs",
+          "crates/pid-python/tests/test_v1.py"
         ],
         "level": "property-and-integration",
-        "limitations": "Transform correctness does not imply that a selected bin count preserves the desired scientific quantity.",
-        "scope": "Fit/evaluation separation, edge cases, out-of-range policies, and hashes."
+        "limitations": "Transform correctness does not imply that a selected bin count preserves the desired scientific quantity. Finite monotone edges can repeat when requested bins exceed binary64 resolution. Map reachability is not population or joint-law support, positive probability, or sampling adequacy, and the diagnostics do not compact labels or select a bin count. The Rust labels-only path keeps conservative report-sized resource admission and omits provenance construction; Python intentionally retains the report path. A local benchmark is not a portable latency guarantee.",
+        "scope": "Fit/evaluation separation; exact fitted endpoints; finite in-range nondecreasing interior edges across ordinary, adjacent, signed-zero, constant, narrow, and opposite-extreme ranges; out-of-range policies; nominal, reachable, and observed per-dimension and joint-cardinality diagnostics; exact bin-assignment and out-of-range-error parity between labels-only and report paths through their shared labeling helper, while report-specific allocation and cancellation failures remain distinct; unchanged conservative resource admission; actual-vector-length clone bounds; large-bin transform report-copy operation bounds; cancellation; Python parity; hashes; and focused release benchmarks."
       }
     },
     {
@@ -2707,6 +2733,7 @@
       "code_availability": "local",
       "constraints": [
         "Uses the empirical categorical PMF in binary64 for two to four sources; separate informative and misinformative components and their signed net atoms are retained.",
+        "Pointwise Mobius inversion retains deterministic compensated accumulation. Only final empirical-PMF component averaging exactly reduces its supplied, already rounded finite binary64 weighted terms. This removes incidental averaging-order dependence for that multiset but does not make event probabilities, logarithms, products, pointwise atoms, averaged atoms, or the estimator exact.",
         "On independent two-bit COPY, averaged shared-exclusions redundancy is ln(4/3) nats, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
         "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID.",
         "The exact-real plug-in convergence result uses fixed finite alphabets, a fixed lattice, eventual support equality, and realization keys; it is not a binary64 asymptotic result.",
@@ -2721,7 +2748,7 @@
       "id": "shared-exclusions.categorical",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Provides a safe-Rust direct empirical-PMF and Mobius implementation with pointwise atoms, deterministic lattice order, provenance, budgets, and cancellation.",
+      "new_in_pid_rs": "Provides a safe-Rust direct empirical-PMF and compensated Mobius implementation with pointwise atoms, deterministic lattice order, witnessed order-independent represented-binary64 final component averaging, provenance, budgets, and cancellation.",
       "python_entry_points": [
         "pid_core_rs.compute_categorical_sxpid2",
         "pid_core_rs.compute_categorical_sxpid3",
@@ -2777,6 +2804,7 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
+        "crates/pid-core/src/exact_binary64.rs",
         "crates/pid-core/src/sxpid.rs"
       ],
       "source_marker_files": [
@@ -2787,6 +2815,7 @@
       "validation": {
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "NUMERICAL_ASSURANCE.md",
           "SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
           "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
           "audit/formal/latex/two-source-sxpid-count-atom-bridge.tex",
@@ -2815,6 +2844,9 @@
           "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json",
           "crates/pid-core/tests/fixtures/support_change_tolerant_sxpid_oracle.json.sha256",
           "crates/pid-core/tests/support_change_tolerant_sxpid_oracle.rs",
@@ -2824,11 +2856,12 @@
           "crates/pid-core/tests/sxpid_properties.rs",
           "crates/pid-core/tests/sxpid_reference.rs",
           "output/pdf/two-source-sxpid-count-atom-bridge.pdf",
-          "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh"
+          "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh",
+          "scripts/generate-exact-binary64-sum-oracle.py"
         ],
         "level": "exhaustive-oracle",
-        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. Lean checks finite categorical keyed events and all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, plus the listed deterministic subclaims. It does not check bytes-to-counts, Rust NODES2 or invert2, result fields, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, sampling or population theorems, calibration, or consumer validity.",
-        "scope": "All nonempty binary PID2 count tables through total mass four, bounded implementation-separated Decimal comparisons for two to four sources, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet, and a Lean supplied-exact-count bridge for all 24 fixed two-source informative, misinformative, and signed-net cumulative and atom coordinates with exact products and sign and zero equivalences."
+        "limitations": "Exhaustive bounded count tables and reference agreement do not cover arbitrary state spaces, population sampling error, every proposed PID axiom, or all multivariate cross-subsystem consistency desiderata. Lean checks finite categorical keyed events and all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, plus the listed deterministic subclaims. It does not check bytes-to-counts, Rust NODES2 or invert2, result fields, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, sampling or population theorems, calibration, or consumer validity. The represented-binary64 reducer sums only supplied finite operands exactly; probabilities, products, logarithms, pointwise atoms, and population quantities remain approximate. Pointwise Mobius inversion remains compensated. Its 561-case variable-arity arithmetic corpus and reachable final-average source-exchange witnesses are bounded implementation evidence, not a universal floating-point theorem, formal Rust refinement, or estimator-error bound. Larger reported negative pointwise searches are unqualified historical observations with zero current release-evidence credit because their executable and raw log were not retained.",
+        "scope": "All nonempty binary SxPID2 count tables through total mass four, bounded implementation-separated Decimal comparisons for two to four sources, pinned reachable 2-, 3-, and 4-source final-average source-exchange bit witnesses, finite-corpus exact represented-operand reducer conformance, bounded negative searches for a pointwise Mobius source-exchange witness, canonical external values, paper-specific pointwise and Mobius properties, the documented identity-axiom counterexample, permutations, an exact-real fixed-support convergence argument, an exact-real support-change-tolerant continuity theorem for averaged quantities on a fixed complete finite alphabet, and a Lean supplied-exact-count bridge for all 24 fixed two-source informative, misinformative, and signed-net cumulative and atom coordinates with exact products and sign and zero equivalences."
       }
     },
     {
@@ -3103,7 +3136,7 @@
       "id": "shared-exclusions.fitted-quantized",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Composes reusable fitted equal-width transforms with categorical shared exclusions while retaining every edge, occupancy, hash, and source-order record.",
+      "new_in_pid_rs": "Composes reusable fitted equal-width transforms with categorical shared exclusions while retaining every edge, nominal/map-reachable/observed diagnostic, hash, and source-order record.",
       "python_entry_points": [
         "pid_core_rs.compute_fitted_quantized_sxpid2"
       ],
@@ -3140,14 +3173,15 @@
       "validation": {
         "evidence_paths": [
           "FINITE_ALPHABET_PLUGIN_CONVERGENCE.md",
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
           "crates/pid-core/tests/fitted_quantized_sxpid.rs",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json",
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256"
         ],
         "level": "property-and-integration",
-        "limitations": "Transform and composition tests do not establish equivalence to continuous PID or an optimal binning rule. The companion Rust composition check is bounded software evidence; the Decimal fixture does not contain quantizer inputs. It is not a population theorem or a global binary64 bound.",
-        "scope": "Two-, three-, and four-source fit/evaluation separation, fixed-edge reuse, ordered provenance, numerical equivalence to categorical results, resource preflight, and one bounded quantizer-to-SxPID comparison."
+        "limitations": "Transform and composition tests do not establish equivalence to continuous PID or an optimal binning rule. Binary64-map reachability is not population support or positive probability. The companion Rust composition check is bounded software evidence; the Decimal fixture does not contain quantizer inputs. It is not a population theorem or a global binary64 bound.",
+        "scope": "Two-, three-, and four-source fit/evaluation separation, overflow-safe fixed-edge reuse, nominal/map-reachable/observed diagnostics, ordered provenance, numerical equivalence to categorical results, actual-payload byte and operation preflight for fixed-array and variable-source report containers, and one bounded quantizer-to-SxPID comparison."
       }
     },
     {
@@ -3162,7 +3196,8 @@
         "Deprecated Python compute_quantized_sxpid2, compute_quantized_sxpid3, and compute_quantized_sxpid_n call the same Rust adapters but return flat dictionaries, discarding the quantization-provenance component's num_bins field together with input/PMF metadata and typed atom interpretation.",
         "Before calling the Rust wrapper, deprecated Python retains a conservative legacy O(columns times (num_bins+1)) preflight. It can reject large bin counts that the Rust exact-significand transform can represent; admitted Python calls use the Rust transform, but the accepted input domains are not identical.",
         "The returned atoms use the categorical Makkeh-Gutknecht-Wibral shared-exclusions functional. They are not Williams-Beer I_min atoms, an Ehrlich continuous shared-exclusions estimate, or a fallback for failed KSG estimation; independent two-bit COPY has identical mutual-information coordinates but categorical shared-exclusions redundancy ln(4/3) versus I_min redundancy ln(2).",
-        "This evaluation-row-fitted adapter is distinct from shared-exclusions.fitted-quantized, whose reusable fitted quantizers retain edges, hashes, occupancies, source order, and training/evaluation identities."
+        "This evaluation-row-fitted adapter is distinct from shared-exclusions.fitted-quantized, whose reusable fitted quantizers retain edges, hashes, occupancies, source order, and training/evaluation identities.",
+        "The categorical result inherits witnessed exact represented-binary64 final empirical-PMF component averaging while pointwise Mobius inversion remains compensated; this does not transfer an MGW theorem to the same-sample quantizer or to another PID family."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -3215,6 +3250,7 @@
       "title": "Same-sample quantized categorical MGW shared exclusions",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/src/sxpid.rs",
           "crates/pid-core/tests/sxpid_axioms.rs",
           "crates/pid-core/tests/sxpid_properties.rs",
@@ -3368,7 +3404,8 @@
       "category": "software",
       "code_availability": "local",
       "constraints": [
-        "The Python 0.9 review surface is proposed for 1.0 but does not yet promise 1.x compatibility."
+        "The Python 0.9 review surface is proposed for 1.0 but does not yet promise 1.x compatibility.",
+        "Python binding parity does not widen the represented-binary64, quantizer-map, or scientific claim of an underlying Rust method."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -3387,7 +3424,7 @@
       "id": "software.python-v1-bindings",
       "implementation_origin": "binding",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Provides typed PyO3 and NumPy bindings, structured exception classes, GIL release, cancellation, and stable-surface allowlisting.",
+      "new_in_pid_rs": "Provides typed PyO3 and NumPy bindings, including nominal/map-reachable/observed quantization diagnostics, structured exception classes, GIL release, cancellation, and stable-surface allowlisting.",
       "python_entry_points": [
         "pid_core_rs.Antichain",
         "pid_core_rs.AntichainAtom",
@@ -3455,17 +3492,21 @@
       "title": "Python v1 binding surface",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
           "crates/pid-python/tests/test_v1.py",
           "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
           "scripts/check-ksg-harmonic-exact-enclosure.py",
           "scripts/check-ksg-harmonic-revision-self-test.py",
           "scripts/check-ksg-harmonic-revision.py",
+          "scripts/generate-exact-binary64-sum-oracle.py",
           "scripts/generate-ksg-local-arithmetic-oracle.py"
         ],
         "level": "unit-and-integration",
@@ -3478,7 +3519,8 @@
       "category": "software",
       "code_availability": "local",
       "constraints": [
-        "Resource estimates are conservative engineering preflight values, not runtime or complexity guarantees."
+        "Resource estimates are conservative engineering preflight values, not runtime or complexity guarantees.",
+        "Exact-binary64 reduction operation hints count conservative limb visits, not CPU instructions or latency."
       ],
       "definition_origin": "project-defined",
       "depends_on": [],
@@ -3486,7 +3528,7 @@
       "id": "software.resource-cancellation-contracts",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds checked allocation and operation ceilings plus cooperative cancellation shared across estimators.",
+      "new_in_pid_rs": "Adds checked allocation and operation ceilings, including represented-binary64 accumulator storage, limb-visit envelopes, and actual-payload quantization-report copy work, plus cooperative cancellation shared across estimators.",
       "python_entry_points": [
         "pid_core_rs.ResourceBudget",
         "pid_core_rs.ResourceEstimate"
@@ -3502,7 +3544,11 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/resource.rs"
+        "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/exact_binary64.rs",
+        "crates/pid-core/src/quantizer.rs",
+        "crates/pid-core/src/resource.rs",
+        "crates/pid-core/src/sxpid.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/lib.rs"
@@ -3511,12 +3557,16 @@
       "title": "Resource and cancellation contracts",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/tests/continuous_resource_contracts.rs",
-          "crates/pid-core/tests/discrete_resource_contracts.rs"
+          "crates/pid-core/tests/discrete_resource_contracts.rs",
+          "crates/pid-core/tests/fitted_quantized_sxpid.rs",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/imin.rs"
         ],
         "level": "property-and-integration",
-        "limitations": "Preflight bounds cannot prevent every platform-level allocation or scheduling failure.",
-        "scope": "Overflow, byte and operation ceilings, cancellation points, and estimator propagation."
+        "limitations": "Preflight bounds cannot prevent every platform-level allocation or scheduling failure. Limb-visit envelopes are conservative accounting units, not CPU-instruction counts, benchmark results, or latency guarantees.",
+        "scope": "Overflow, byte and operation ceilings, represented-binary64 accumulator storage and limb-visit accounting, actual-edge/diagnostic/string report-copy accounting, cancellation points, and estimator propagation."
       }
     },
     {
@@ -4366,7 +4416,8 @@
       "category": "diagnostic",
       "code_availability": "local",
       "constraints": [
-        "The default high-dimensional sweep is diagnostic; only the curated strict band has an enforced Gaussian MI oracle verdict."
+        "The default high-dimensional sweep is diagnostic; only the curated strict band has an enforced Gaussian MI oracle verdict.",
+        "Optional PID2 findings inherit the represented-binary64 synergy and reconstruction guard, but remain explicitly non-adjudicated and do not enter the MI verdict."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -4414,6 +4465,7 @@
       "title": "exp0 validation diagnostic",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",

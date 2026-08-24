@@ -131,7 +131,7 @@ def test_software_identity_matches_typed_rust_serialization_contract():
     assert identity["package_version"].strip()
     assert identity["public_rust_api_signature_identity"] == {
         "epoch": 0,
-        "revision": 3,
+        "revision": 4,
         "scope": "proposed_release_scope_profiles",
         "status": "pre_1_0_review",
     }
@@ -355,6 +355,16 @@ def test_fitted_quantizer_reuses_edges_and_returns_shaped_numpy():
     assert not output.values.flags.writeable
     np.testing.assert_array_equal(output.values, np.array([[0], [1]], dtype=np.int64))
     assert output.report.bin_edges == quantizer.edges
+    assert output.report.distinct_binary64_edge_value_counts == [3]
+    assert output.report.positive_width_interval_counts == [2]
+    assert output.report.reachable_binary64_label_counts == [2]
+    assert output.report.observed_label_counts == [2]
+    assert output.report.nominal_joint_cardinality == 2
+    assert output.report.reachable_joint_cardinality == 2
+    assert output.report.observed_joint_cardinality == 2
+    assert output.report.structurally_unreachable_joint_cells == 0
+    assert output.report.unobserved_reachable_joint_cells == 0
+    assert output.report.empty_joint_cells == 0
     assert quantizer.training_input_hash_sha256 == (
         "9d1158bcc0470bf1212ba4db233cba701c34f67b6a13a375a1d2bba84a604f90"
     )
@@ -388,10 +398,59 @@ def test_fitted_quantizer_reuses_edges_and_returns_shaped_numpy():
         4,
         preprocessing_description="declared constant feature",
     )
-    np.testing.assert_array_equal(
-        constant.transform(np.array([[3.0]], dtype=np.float64)).values,
-        np.array([[0]], dtype=np.int64),
+    constant_output = constant.transform(np.array([[3.0]], dtype=np.float64))
+    np.testing.assert_array_equal(constant_output.values, np.array([[0]], dtype=np.int64))
+    assert constant_output.report.distinct_binary64_edge_value_counts == [1]
+    assert constant_output.report.positive_width_interval_counts == [0]
+    assert constant_output.report.reachable_binary64_label_counts == [1]
+    assert constant_output.report.observed_label_counts == [1]
+    assert constant_output.report.nominal_joint_cardinality == 4
+    assert constant_output.report.reachable_joint_cardinality == 1
+    assert constant_output.report.structurally_unreachable_joint_cells == 3
+    assert constant_output.report.unobserved_reachable_joint_cells == 0
+    assert "labels were not compacted" in constant_output.report.warnings[-1]
+
+
+def test_quantizer_binary64_reachability_handles_adjacent_signed_zero_and_overflow():
+    adjacent = np.nextafter(np.float64(1.0), np.float64(np.inf))
+    two_steps = np.nextafter(adjacent, np.float64(np.inf))
+    quantizer = pid.EqualWidthQuantizer.fit(
+        np.array([[1.0], [two_steps]], dtype=np.float64),
+        4,
+        preprocessing_description="adjacent binary64 reachability",
     )
+    output = quantizer.transform(np.array([[1.0], [two_steps]], dtype=np.float64))
+    assert output.report.distinct_binary64_edge_value_counts == [3]
+    assert output.report.positive_width_interval_counts == [2]
+    assert output.report.reachable_binary64_label_counts == [3]
+    assert output.report.observed_label_counts == [2]
+    assert output.report.reachable_joint_cardinality == 3
+    assert output.report.structurally_unreachable_joint_cells == 1
+    assert output.report.unobserved_reachable_joint_cells == 1
+    assert output.report.empty_joint_cells == 2
+    np.testing.assert_array_equal(output.values[:, 0], np.array([0, 3]))
+
+    signed_zero = pid.EqualWidthQuantizer.fit(
+        np.array([[-0.0], [0.0]], dtype=np.float64),
+        4,
+        preprocessing_description="signed-zero structural diagnostic",
+    ).transform(np.array([[-0.0], [0.0]], dtype=np.float64))
+    assert signed_zero.report.distinct_binary64_edge_value_counts == [2]
+    assert signed_zero.report.positive_width_interval_counts == [0]
+    assert signed_zero.report.reachable_binary64_label_counts == [1]
+    assert signed_zero.report.observed_label_counts == [1]
+
+    dimensions = 129
+    constant_data = np.ones((1, dimensions), dtype=np.float64)
+    overflow = pid.EqualWidthQuantizer.fit(
+        constant_data,
+        2,
+        preprocessing_description="u128 nominal-cardinality overflow",
+    ).transform(constant_data)
+    assert overflow.report.nominal_joint_cardinality is None
+    assert overflow.report.reachable_joint_cardinality == 1
+    assert overflow.report.structurally_unreachable_joint_cells is None
+    assert overflow.report.unobserved_reachable_joint_cells == 0
 
 
 def test_quantizer_out_of_range_policy_is_structured():

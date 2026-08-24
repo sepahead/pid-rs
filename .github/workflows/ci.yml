@@ -846,6 +846,8 @@ jobs:
       - run: python3 scripts/generate-finite-alphabet-plugin-oracle.py
       - run: python3 scripts/generate-dependency-colored-sxpid-oracle.py
       - run: python3 scripts/generate-support-change-tolerant-sxpid-oracle.py
+      - run: python3 scripts/generate-exact-binary64-sum-oracle.py
+      - run: python3 -O scripts/generate-exact-binary64-sum-oracle.py
       - run: python3 scripts/generate-ksg-local-arithmetic-oracle.py
       - run: python3 scripts/generate-sxpid2-exhaustive-oracle.py
       - run: python3 scripts/check-markdown-math.py

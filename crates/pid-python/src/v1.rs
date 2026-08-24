@@ -3350,11 +3350,25 @@ struct PyQuantizationReport {
     #[pyo3(get)]
     num_bins: usize,
     #[pyo3(get)]
+    distinct_binary64_edge_value_counts: Vec<usize>,
+    #[pyo3(get)]
+    positive_width_interval_counts: Vec<usize>,
+    #[pyo3(get)]
+    reachable_binary64_label_counts: Vec<usize>,
+    #[pyo3(get)]
+    observed_label_counts: Vec<usize>,
+    #[pyo3(get)]
     nominal_joint_cardinality: Option<u128>,
+    #[pyo3(get)]
+    reachable_joint_cardinality: Option<u128>,
     #[pyo3(get)]
     observed_joint_cardinality: usize,
     #[pyo3(get)]
     empty_joint_cells: Option<u128>,
+    #[pyo3(get)]
+    structurally_unreachable_joint_cells: Option<u128>,
+    #[pyo3(get)]
+    unobserved_reachable_joint_cells: Option<u128>,
     #[pyo3(get)]
     low_count_joint_cells: usize,
     #[pyo3(get)]
@@ -3385,6 +3399,16 @@ impl From<CoreQuantizationReport> for PyQuantizationReport {
                 "held-out values outside the fitted range are clamped to boundary bins by explicit policy".to_owned(),
             );
         }
+        if value
+            .reachable_binary64_label_counts
+            .iter()
+            .any(|&count| count < value.bins_per_dimension)
+        {
+            warnings.push(
+                "some requested nominal labels have no finite binary64 preimage under the fitted edges; labels were not compacted"
+                    .to_owned(),
+            );
+        }
         Self {
             bin_edges: value.bin_edges,
             training_input_hash_sha256: value.training_input_hash.map(hex_digest),
@@ -3395,9 +3419,16 @@ impl From<CoreQuantizationReport> for PyQuantizationReport {
             n_rows: value.n_samples,
             n_features: value.dimensions,
             num_bins: value.bins_per_dimension,
+            distinct_binary64_edge_value_counts: value.distinct_binary64_edge_value_counts,
+            positive_width_interval_counts: value.positive_width_interval_counts,
+            reachable_binary64_label_counts: value.reachable_binary64_label_counts,
+            observed_label_counts: value.observed_label_counts,
             nominal_joint_cardinality: value.nominal_joint_cardinality,
+            reachable_joint_cardinality: value.reachable_joint_cardinality,
             observed_joint_cardinality: value.observed_joint_cardinality,
             empty_joint_cells: value.empty_joint_cells,
+            structurally_unreachable_joint_cells: value.structurally_unreachable_joint_cells,
+            unobserved_reachable_joint_cells: value.unobserved_reachable_joint_cells,
             low_count_joint_cells: value.low_count_joint_cells,
             minimum_observed_cell_count: value.minimum_observed_cell_count,
             maximum_observed_cell_count: value.maximum_observed_cell_count,
@@ -3559,7 +3590,7 @@ impl PyEqualWidthQuantizer {
             })?;
         let aggregate_fit_operations = (training_elements as u128)
             .checked_mul(3)
-            .and_then(|value| value.checked_add(edge_count as u128))
+            .and_then(|value| value.checked_add((edge_count as u128).checked_mul(2)?))
             .and_then(|value| value.checked_add(preprocessing_description.len() as u128))
             .ok_or_else(|| {
                 resource_error(

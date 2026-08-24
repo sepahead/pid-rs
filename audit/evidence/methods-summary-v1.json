@@ -306,14 +306,14 @@
       "summary": "Stable composition of fixed fitted quantizer outputs with categorical Williams-Beer I_min.",
       "title": "Fitted-quantized I_min composition",
       "validation": {
-        "evidence_path_count": 5,
+        "evidence_path_count": 6,
         "level": "property-and-integration"
       }
     },
     {
       "category": "estimator",
       "code_availability": "local",
-      "constraint_count": 3,
+      "constraint_count": 4,
       "definition_origin": "paper-defined",
       "depends_on": [],
       "feature_gates": [],
@@ -335,7 +335,7 @@
       "summary": "Williams-Beer I_min PID on empirical categorical distributions.",
       "title": "Categorical I_min PID",
       "validation": {
-        "evidence_path_count": 10,
+        "evidence_path_count": 15,
         "level": "property-and-integration"
       }
     },
@@ -426,7 +426,7 @@
     {
       "category": "preprocessing",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "paper-derived",
       "depends_on": [],
       "feature_gates": [],
@@ -447,7 +447,7 @@
       "summary": "Reusable training-fitted equal-width quantization with explicit edge and occupancy provenance.",
       "title": "Equal-width quantization",
       "validation": {
-        "evidence_path_count": 2,
+        "evidence_path_count": 4,
         "level": "property-and-integration"
       }
     },
@@ -535,7 +535,7 @@
     {
       "category": "estimator",
       "code_availability": "local",
-      "constraint_count": 6,
+      "constraint_count": 7,
       "definition_origin": "paper-defined",
       "depends_on": [
         "software.resource-cancellation-contracts"
@@ -560,7 +560,7 @@
       "summary": "Direct empirical categorical shared-exclusions PID for two to four sources.",
       "title": "Categorical shared-exclusions PID",
       "validation": {
-        "evidence_path_count": 39,
+        "evidence_path_count": 44,
         "level": "exhaustive-oracle"
       }
     },
@@ -592,7 +592,7 @@
       "summary": "Project-defined composition of training-fitted equal-width quantization and categorical shared-exclusions PID.",
       "title": "Fitted quantized shared-exclusions PID",
       "validation": {
-        "evidence_path_count": 5,
+        "evidence_path_count": 6,
         "level": "property-and-integration"
       }
     },
@@ -626,7 +626,7 @@
     {
       "category": "software",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [
         "diagnostics.distance-concentration",
@@ -657,14 +657,14 @@
       "summary": "Default Python binding surface for stable empirical, quantized, KSG-report, and diagnostic APIs.",
       "title": "Python v1 binding surface",
       "validation": {
-        "evidence_path_count": 12,
+        "evidence_path_count": 16,
         "level": "unit-and-integration"
       }
     },
     {
       "category": "software",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [],
       "feature_gates": [],
@@ -687,7 +687,7 @@
       "summary": "Bounded resource preflight and cooperative cancellation infrastructure.",
       "title": "Resource and cancellation contracts",
       "validation": {
-        "evidence_path_count": 2,
+        "evidence_path_count": 6,
         "level": "property-and-integration"
       }
     },
@@ -1038,7 +1038,7 @@
     {
       "category": "estimator",
       "code_availability": "local",
-      "constraint_count": 4,
+      "constraint_count": 5,
       "definition_origin": "paper-defined",
       "depends_on": [
         "mutual-information.ksg1-report",
@@ -1066,7 +1066,7 @@
       "summary": "Paper-defined two-source PID atom reconstruction from KSG mutual information and continuous shared exclusions.",
       "title": "Continuous two-source shared-exclusions PID",
       "validation": {
-        "evidence_path_count": 13,
+        "evidence_path_count": 18,
         "level": "formal-and-property"
       }
     },
@@ -1107,7 +1107,7 @@
     {
       "category": "pipeline",
       "code_availability": "local",
-      "constraint_count": 6,
+      "constraint_count": 7,
       "definition_origin": "project-defined",
       "depends_on": [
         "pid.imin",
@@ -1136,14 +1136,14 @@
       "summary": "Project-defined same-evaluation-sample quantization composition for categorical Williams-Beer I_min.",
       "title": "Same-sample quantized Williams-Beer I_min",
       "validation": {
-        "evidence_path_count": 5,
+        "evidence_path_count": 6,
         "level": "property-and-integration"
       }
     },
     {
       "category": "pipeline",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [
         "mutual-information.ksg1-raw",
@@ -1168,14 +1168,14 @@
       "summary": "Exploratory hierarchy that screens candidate source groups before slower continuous PID calls.",
       "title": "Hierarchy screening pipeline",
       "validation": {
-        "evidence_path_count": 12,
+        "evidence_path_count": 13,
         "level": "property-and-integration"
       }
     },
     {
       "category": "pipeline",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [
         "pid.continuous-pid2"
@@ -1198,7 +1198,7 @@
       "summary": "Exploratory pairwise screening over continuous PID2 statistics.",
       "title": "PID2 pair-screening workflow",
       "validation": {
-        "evidence_path_count": 12,
+        "evidence_path_count": 13,
         "level": "unit-and-integration"
       }
     },
@@ -1270,7 +1270,7 @@
     {
       "category": "resampling",
       "code_availability": "local",
-      "constraint_count": 5,
+      "constraint_count": 6,
       "definition_origin": "project-defined",
       "depends_on": [
         "resampling.moving-block-bootstrap",
@@ -1297,7 +1297,7 @@
       "summary": "Exploratory moving-block summaries that recompute same-sample exact-significand quantization inside every SxPID2 replicate.",
       "title": "Quantized SxPID2 bootstrap workflow",
       "validation": {
-        "evidence_path_count": 1,
+        "evidence_path_count": 2,
         "level": "property-and-integration"
       }
     },
@@ -1571,7 +1571,7 @@
     {
       "category": "pipeline",
       "code_availability": "local",
-      "constraint_count": 6,
+      "constraint_count": 7,
       "definition_origin": "project-defined",
       "depends_on": [
         "pipelines.same-sample-quantization",
@@ -1601,7 +1601,7 @@
       "summary": "Project-defined same-evaluation-sample quantization composition for categorical MGW shared-exclusions PID.",
       "title": "Same-sample quantized categorical MGW shared exclusions",
       "validation": {
-        "evidence_path_count": 4,
+        "evidence_path_count": 5,
         "level": "property-and-integration"
       }
     },
@@ -2037,7 +2037,7 @@
     {
       "category": "diagnostic",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [
         "diagnostics.distance-concentration",
@@ -2064,7 +2064,7 @@
       "summary": "End-to-end diagnostic sweep for MI coherence, geometry, and explicitly non-adjudicated PID findings.",
       "title": "exp0 validation diagnostic",
       "validation": {
-        "evidence_path_count": 12,
+        "evidence_path_count": 13,
         "level": "diagnostic-only"
       }
     },
@@ -2220,6 +2220,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa"
+    "sha256": "cce228367a9f84a7126669421ee87fa576a70e7f826d9d928e803e866e5731bb"
   }
 }

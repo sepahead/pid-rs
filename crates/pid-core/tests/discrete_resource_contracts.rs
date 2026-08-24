@@ -73,7 +73,11 @@ fn imin_preflight_includes_repeated_histograms_and_rejects_tiny_budget() {
 
     assert!(two_source.estimated_bytes > raw_payload_bytes);
     assert!(three_source.estimated_bytes > two_source.estimated_bytes);
-    assert_eq!(two_source.operations_hint, 1_456);
+    // The witnessed PID2 synergy repair charges two 34-limb carry traversals per addend and four
+    // 34-limb scans for its one finalization. I_min3 retains its pre-existing compensated
+    // reduction because an exhaustive S0<->S1 search and a separate all-transposition random
+    // probe found no reachable swap defect.
+    assert_eq!(two_source.operations_hint, 1_456 + (4 * 2 + 4) * 34);
     assert_eq!(three_source.operations_hint, 16_152);
     assert!(matches!(
         imin_pid2_with_budget(s0, s1, target, one_byte_budget()),

@@ -4,7 +4,7 @@
 //! and the discrete SxPID lattice as a function of sample size. Run with:
 //!
 //! ```text
-//! cargo bench -p pid-core
+//! cargo bench --locked -p pid-core --all-features --bench estimators
 //! ```
 //!
 //! Inputs are drawn from a tiny self-contained deterministic RNG so benchmarks are reproducible
@@ -13,26 +13,54 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 use pid_core::experimental::continuous::raw_scalars::{isx_redundancy, ksg_mi};
 use pid_core::experimental::continuous::{pid2_isx, IsxConfig, Pid2Config};
-use pid_core::stable::categorical::discrete_sxpid2;
+use pid_core::stable::categorical::{
+    discrete_sxpid2, discrete_sxpid2_averaged, discrete_sxpid3_averaged, discrete_sxpid_n_averaged,
+};
 use pid_core::stable::continuous::KsgConfig;
+use pid_core::stable::imin::imin_pid2;
 use pid_core::stable::quantized::{EqualWidthQuantizer, QuantizerConfig};
-use pid_core::MatRef;
+use pid_core::{DiscreteMatRef, MatRef};
 use std::hint::black_box;
 
 /// xorshift64* + Box–Muller — deterministic, dependency-free.
 struct Rng(u64);
 impl Rng {
-    fn unit(&mut self) -> f64 {
+    fn next_u64(&mut self) -> u64 {
         self.0 ^= self.0 << 13;
         self.0 ^= self.0 >> 7;
         self.0 ^= self.0 << 17;
-        (self.0 >> 11) as f64 / ((1u64 << 53) as f64)
+        self.0
+    }
+
+    fn unit(&mut self) -> f64 {
+        (self.next_u64() >> 11) as f64 / ((1u64 << 53) as f64)
     }
     fn normal(&mut self) -> f64 {
         let u1 = self.unit().max(1e-12);
         let u2 = self.unit();
         (-2.0 * u1.ln()).sqrt() * (std::f64::consts::TAU * u2).cos()
     }
+}
+
+fn make_categorical_system(
+    n: usize,
+    source_count: usize,
+    alphabet_size: usize,
+) -> (Vec<Vec<usize>>, Vec<usize>) {
+    let mut rng = Rng(0xD1B5_4A32_D192_ED03);
+    let mut sources = vec![vec![0; n]; source_count];
+    let mut target = vec![0; n];
+    for row in 0..n {
+        let mut source_sum = 0usize;
+        for source in &mut sources {
+            let value = rng.next_u64() as usize % alphabet_size;
+            source[row] = value;
+            source_sum = source_sum.wrapping_add(value);
+        }
+        let noise = usize::from(rng.next_u64().is_multiple_of(5));
+        target[row] = source_sum.wrapping_add(noise) % alphabet_size;
+    }
+    (sources, target)
 }
 
 /// Additive synthetic system: `T = S1 + S2 + noise` (both sources inform T).
@@ -120,11 +148,83 @@ fn bench_quantized_sxpid2(c: &mut Criterion) {
     g.finish();
 }
 
+fn bench_quantizer_transform_paths(c: &mut Criterion) {
+    const N: usize = 100_000;
+    const DIMENSIONS: usize = 4;
+    const BINS: usize = 256;
+
+    let mut rng = Rng(0xA409_3822_299F_31D0);
+    let data = (0..N * DIMENSIONS)
+        .map(|_| rng.normal())
+        .collect::<Vec<_>>();
+    let matrix = MatRef::new(&data, N, DIMENSIONS).unwrap();
+    let quantizer = EqualWidthQuantizer::fit(matrix, BINS, QuantizerConfig::default()).unwrap();
+
+    let mut group = c.benchmark_group("equal_width_quantizer_transform");
+    group.bench_function("labels_only", |b| {
+        b.iter(|| quantizer.transform(black_box(matrix)).unwrap());
+    });
+    group.bench_function("with_report", |b| {
+        b.iter(|| quantizer.transform_with_report(black_box(matrix)).unwrap());
+    });
+    group.finish();
+}
+
+fn bench_categorical_pid_latency(c: &mut Criterion) {
+    let mut group = c.benchmark_group("categorical_pid_latency");
+
+    let (sources, target) = make_categorical_system(128, 2, 4);
+    let s0 = DiscreteMatRef::new(&sources[0], 128, 1).unwrap();
+    let s1 = DiscreteMatRef::new(&sources[1], 128, 1).unwrap();
+    let target_ref = DiscreteMatRef::new(&target, 128, 1).unwrap();
+    group.bench_function("imin2_n128_q4", |b| {
+        b.iter(|| imin_pid2(black_box(s0), black_box(s1), black_box(target_ref)).unwrap());
+    });
+    group.bench_function("sx2_averaged_n128_q4", |b| {
+        b.iter(|| {
+            discrete_sxpid2_averaged(black_box(s0), black_box(s1), black_box(target_ref)).unwrap()
+        });
+    });
+
+    let (sources, target) = make_categorical_system(64, 3, 2);
+    let s0 = DiscreteMatRef::new(&sources[0], 64, 1).unwrap();
+    let s1 = DiscreteMatRef::new(&sources[1], 64, 1).unwrap();
+    let s2 = DiscreteMatRef::new(&sources[2], 64, 1).unwrap();
+    let target_ref = DiscreteMatRef::new(&target, 64, 1).unwrap();
+    group.bench_function("sx3_averaged_n64_q2", |b| {
+        b.iter(|| {
+            discrete_sxpid3_averaged(
+                black_box(s0),
+                black_box(s1),
+                black_box(s2),
+                black_box(target_ref),
+            )
+            .unwrap()
+        });
+    });
+
+    let (sources, target) = make_categorical_system(32, 4, 2);
+    let source_refs = sources
+        .iter()
+        .map(|source| DiscreteMatRef::new(source, 32, 1).unwrap())
+        .collect::<Vec<_>>();
+    let target_ref = DiscreteMatRef::new(&target, 32, 1).unwrap();
+    group.bench_function("sx4_averaged_n32_q2", |b| {
+        b.iter(|| {
+            discrete_sxpid_n_averaged(black_box(&source_refs), black_box(target_ref)).unwrap()
+        });
+    });
+
+    group.finish();
+}
+
 criterion_group!(
     benches,
     bench_ksg_mi,
     bench_isx_redundancy,
     bench_pid2,
-    bench_quantized_sxpid2
+    bench_quantized_sxpid2,
+    bench_quantizer_transform_paths,
+    bench_categorical_pid_latency
 );
 criterion_main!(benches);

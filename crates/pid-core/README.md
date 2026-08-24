@@ -117,6 +117,24 @@ the averaged PID. Same-sample one-shot binning exists only under the conspicuous
 `ExploratorySameSampleQuantizedResult<T>` so the exact `num_bins` remains outside stable
 categorical encoding enums while travelling beside the categorical result.
 
+`QuantizationReport` distinguishes nominal, binary64-map-reachable, and observed label counts in
+each dimension and at joint-cardinality level. `empty_joint_cells` retains its legacy
+nominal-minus-observed meaning; the structural and reachable-but-unobserved parts are also exposed.
+Reachability means only that at least one accepted finite binary64 value maps to the label. It is
+not population support, positive probability, joint-law support, or sampling adequacy, and the
+reachable label set need not be contiguous. Interior edges are constructed with overflow-safe
+interpolation and validated as finite, in range, and nondecreasing; adjacent representable
+endpoints can still collapse nominal intervals.
+
+Categorical SxPID final empirical-PMF component averaging, categorical `I_min` PID2 synergy, and
+continuous PID2 synergy use exact reduction of their already represented finite binary64 operands
+followed by one round-to-nearest, ties-to-even. Pointwise SxPID Möbius inversion remains
+compensated. This removes reduction-order dependence only for the named final operand multisets.
+It does not make upstream probabilities, products, logarithms, MI/redundancy estimates, or PID
+exact and supplies no estimator error or calibration theorem. See the workspace
+[`NUMERICAL_ASSURANCE.md`](../../NUMERICAL_ASSURANCE.md) for witnesses, rejected transfers, costs,
+and the finite-corpus oracle boundary.
+
 The SHA-256 provenance preimages are a cross-language contract. Each domain string below includes
 the final NUL byte shown as `\0`:
 
@@ -308,7 +326,7 @@ assert_eq!(identity.reference_artifacts().len(), 2);
 ```
 
 The result keeps public-Rust-signature revision, source route, selected build context, forensic
-reference artifacts, and attestation status in separate typed fields. Signature revision 3 covers
+reference artifacts, and attestation status in separate typed fields. Signature revision 4 covers
 only the exact proposed release-scope feature profiles; it excludes Python API/ABI, estimator and
 estimand definitions, numerical behavior, package versions, scientific evidence, and executable
 bytes. Source state is route-scoped: workspace Git and Cargo package metadata have different

@@ -14,6 +14,9 @@
 use serde::Serialize;
 
 use crate::error::{PidError, PidResult};
+use crate::exact_binary64::{
+    exact_binary64_sum, EXACT_BINARY64_ADD_LIMB_VISIT_BOUND, EXACT_BINARY64_TOTAL_LIMB_VISIT_BOUND,
+};
 use crate::isx::{
     isx_redundancy_report_with_local_terms, isx_redundancy_with_budget,
     isx_report_resource_estimate, isx_resource_estimate_for_method, IsxConfig, IsxLocalDiagnostic,
@@ -1310,6 +1313,16 @@ pub fn pid2_resource_estimate_for_threads(
                 operation: OPERATION,
             })?;
     }
+    // One result construction performs the four-addend synergy reduction and three identity
+    // reconstructions with 2, 2, and 4 addends: 12 exact adds and four finalizations. The public
+    // constituent-estimate-only call conservatively retains this fixed allowance because it shares
+    // this preflight with the result-returning path.
+    aggregate.operations_hint = aggregate
+        .operations_hint
+        .checked_add(pid2_exact_reconstruction_work())
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
     aggregate.estimated_bytes = aggregate
         .estimated_bytes
         .checked_add(std::mem::size_of::<Pid2Estimate>() as u128)
@@ -1391,6 +1404,12 @@ fn pid2_report_resource_estimate_with_provenance(
                 operation: OPERATION,
             })?;
     }
+    estimate.operations_hint = estimate
+        .operations_hint
+        .checked_add(pid2_exact_reconstruction_work())
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
     let joined_elements = s1
         .ncols()
         .checked_add(s2.ncols())
@@ -1422,6 +1441,11 @@ fn pid2_report_resource_estimate_with_provenance(
                 operation: OPERATION,
             })?;
     Ok(estimate)
+}
+
+fn pid2_exact_reconstruction_work() -> u128 {
+    12 * EXACT_BINARY64_ADD_LIMB_VISIT_BOUND as u128
+        + 4 * EXACT_BINARY64_TOTAL_LIMB_VISIT_BOUND as u128
 }
 
 /// Enforce the KSG/ISX parameter-consistency contract shared by every path that mixes KSG MI
@@ -1482,13 +1506,21 @@ fn validate_pid2_config(cfg: &Pid2Config) -> PidResult<()> {
 }
 
 impl Pid2Result {
-    /// Form PID atoms from already-computed MI/redundancy estimates.
+    /// Form a checked PID2 atom tuple from already represented MI and redundancy coordinates.
+    ///
+    /// Write `I1 = est.mi_s1_t`, `I2 = est.mi_s2_t`, `J = est.mi_s1s2_t`, and
+    /// `R = est.redundancy_isx`. The synergy field is
+    /// `RN-even(exact(J - I1 - I2 + R))`: the four represented binary64 terms are accumulated
+    /// exactly and rounded once. This source-order-independent arithmetic contract does not make
+    /// the represented estimator coordinates exact or establish their statistical validity.
     ///
     /// # Errors
     ///
-    /// Returns [`PidError::NumericalInstability`] if an input is non-finite or the atom
-    /// subtractions overflow. Estimator entry points are bounded in ordinary regimes, but this
-    /// checked public boundary also protects callers constructing [`Pid2Estimate`] directly.
+    /// Returns [`PidError::NumericalInstability`] if an input is non-finite, an atom is non-finite,
+    /// or the represented atoms cannot reconstruct all three supplied MI coordinates within the
+    /// fixed inclusive 32-position ordered-binary64 guard. Estimator entry points are bounded in
+    /// ordinary regimes, but this checked public boundary also protects callers constructing
+    /// [`Pid2Estimate`] directly.
     pub fn from_estimate(est: Pid2Estimate) -> PidResult<Self> {
         if [est.mi_s1_t, est.mi_s2_t, est.mi_s1s2_t, est.redundancy_isx]
             .iter()
@@ -1501,16 +1533,10 @@ impl Pid2Result {
         let red = est.redundancy_isx;
         let unq1 = est.mi_s1_t - red;
         let unq2 = est.mi_s2_t - red;
-        let syn_direct = est.mi_s1s2_t - est.mi_s1_t - est.mi_s2_t + red;
-        // Preserve the established ordinary-regime arithmetic bit-for-bit whenever its represented
-        // atoms satisfy the PID identities. An exact reduction is needed immediately after an
-        // overflow and may also be needed below when finite left-associated arithmetic erased a
-        // small residual during cancellation.
-        let mut syn = if syn_direct.is_finite() {
-            syn_direct
-        } else {
-            exact_linear_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red])
-        };
+        // Give the represented-input formula one symmetric binary64 meaning. Do not perturb this
+        // field to compensate for rounding in the separately computed unique atoms; the identity
+        // guard below fails closed when the rounded tuple cannot represent both contracts.
+        let syn = exact_binary64_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red]);
         if [red, unq1, unq2, syn]
             .iter()
             .any(|value| !value.is_finite())
@@ -1519,15 +1545,7 @@ impl Pid2Result {
                 context: "Pid2Result::from_estimate atoms",
             });
         }
-        // Finite atoms are not sufficient: if a small MI residual lies below the resolution of
-        // much larger cancelling atoms, returning them would silently violate the defining PID
-        // identities. Check the represented atoms themselves with an exactly accumulated,
-        // once-rounded reduction and fail when the original MI cannot be reconstructed to a small
-        // ULP budget.
-        if !pid2_identities_match(&est, red, unq1, unq2, syn) && syn_direct.is_finite() {
-            syn = exact_linear_sum([est.mi_s1s2_t, -est.mi_s1_t, -est.mi_s2_t, red]);
-        }
-        if !syn.is_finite() || !pid2_identities_match(&est, red, unq1, unq2, syn) {
+        if !pid2_identities_match(&est, red, unq1, unq2, syn) {
             return Err(PidError::NumericalInstability {
                 context: "Pid2Result::from_estimate atoms cannot represent PID identities",
             });
@@ -1556,181 +1574,8 @@ fn pid2_identities_match(
         )
 }
 
-// Every finite binary64 is an integer multiple of 2^-1074. The largest significand occupies
-// 2,098 bits at that scale; summing at most usize::MAX terms needs at most usize::BITS more.
-const FINITE_SUM_LIMBS: usize = (2_098 + usize::BITS as usize).div_ceil(64);
-
-fn exact_linear_sum<const N: usize>(terms: [f64; N]) -> f64 {
-    let mut positive = [0_u64; FINITE_SUM_LIMBS];
-    let mut negative = [0_u64; FINITE_SUM_LIMBS];
-
-    for term in terms {
-        let bits = term.to_bits();
-        let exponent = ((bits >> 52) & 0x7ff) as usize;
-        let fraction = bits & ((1_u64 << 52) - 1);
-        let significand = if exponent == 0 {
-            fraction
-        } else {
-            (1_u64 << 52) | fraction
-        };
-        if significand == 0 {
-            continue;
-        }
-        let shift = exponent.saturating_sub(1);
-        let accumulator = if bits >> 63 == 0 {
-            &mut positive
-        } else {
-            &mut negative
-        };
-        if !add_shifted_significand(accumulator, significand, shift) {
-            return if bits >> 63 == 0 {
-                f64::INFINITY
-            } else {
-                f64::NEG_INFINITY
-            };
-        }
-    }
-
-    match positive.iter().rev().cmp(negative.iter().rev()) {
-        std::cmp::Ordering::Equal => 0.0,
-        std::cmp::Ordering::Greater => {
-            let magnitude = subtract_finite_sum_limbs(&positive, &negative);
-            round_finite_sum(&magnitude, false)
-        }
-        std::cmp::Ordering::Less => {
-            let magnitude = subtract_finite_sum_limbs(&negative, &positive);
-            round_finite_sum(&magnitude, true)
-        }
-    }
-}
-
-fn add_shifted_significand(
-    accumulator: &mut [u64; FINITE_SUM_LIMBS],
-    significand: u64,
-    shift: usize,
-) -> bool {
-    let limb = shift / 64;
-    let offset = shift % 64;
-    if !add_finite_sum_limb(accumulator, limb, significand << offset) {
-        return false;
-    }
-    offset == 0 || add_finite_sum_limb(accumulator, limb + 1, significand >> (64 - offset))
-}
-
-fn add_finite_sum_limb(
-    accumulator: &mut [u64; FINITE_SUM_LIMBS],
-    mut index: usize,
-    value: u64,
-) -> bool {
-    if value == 0 {
-        return true;
-    }
-    if index >= accumulator.len() {
-        return false;
-    }
-    let (sum, mut carry) = accumulator[index].overflowing_add(value);
-    accumulator[index] = sum;
-    while carry {
-        index += 1;
-        if index >= accumulator.len() {
-            return false;
-        }
-        let (sum, next_carry) = accumulator[index].overflowing_add(1);
-        accumulator[index] = sum;
-        carry = next_carry;
-    }
-    true
-}
-
-fn subtract_finite_sum_limbs(
-    larger: &[u64; FINITE_SUM_LIMBS],
-    smaller: &[u64; FINITE_SUM_LIMBS],
-) -> [u64; FINITE_SUM_LIMBS] {
-    let mut difference = [0_u64; FINITE_SUM_LIMBS];
-    let mut borrow = false;
-    for index in 0..FINITE_SUM_LIMBS {
-        let (without_value, value_borrow) = larger[index].overflowing_sub(smaller[index]);
-        let (value, carry_borrow) = without_value.overflowing_sub(u64::from(borrow));
-        difference[index] = value;
-        borrow = value_borrow || carry_borrow;
-    }
-    debug_assert!(!borrow);
-    difference
-}
-
-fn highest_finite_sum_bit(value: &[u64; FINITE_SUM_LIMBS]) -> Option<usize> {
-    value
-        .iter()
-        .rposition(|&limb| limb != 0)
-        .map(|index| index * 64 + (63 - value[index].leading_zeros() as usize))
-}
-
-fn finite_sum_bit(value: &[u64; FINITE_SUM_LIMBS], bit: usize) -> bool {
-    value
-        .get(bit / 64)
-        .is_some_and(|limb| limb & (1_u64 << (bit % 64)) != 0)
-}
-
-fn any_finite_sum_bits_below(value: &[u64; FINITE_SUM_LIMBS], bit_exclusive: usize) -> bool {
-    let full_limbs = bit_exclusive / 64;
-    if value[..full_limbs.min(value.len())]
-        .iter()
-        .any(|&limb| limb != 0)
-    {
-        return true;
-    }
-    let remaining = bit_exclusive % 64;
-    remaining != 0
-        && full_limbs < value.len()
-        && value[full_limbs] & ((1_u64 << remaining) - 1) != 0
-}
-
-fn low_finite_sum_u64_after_shift(value: &[u64; FINITE_SUM_LIMBS], shift: usize) -> u64 {
-    let limb = shift / 64;
-    let offset = shift % 64;
-    let low = value.get(limb).copied().unwrap_or(0) >> offset;
-    if offset == 0 {
-        low
-    } else {
-        low | (value.get(limb + 1).copied().unwrap_or(0) << (64 - offset))
-    }
-}
-
-/// Round an exact nonzero integer multiple of 2^-1074 to binary64, ties to even.
-fn round_finite_sum(magnitude: &[u64; FINITE_SUM_LIMBS], negative: bool) -> f64 {
-    let sign = if negative { 1_u64 << 63 } else { 0 };
-    let Some(highest) = highest_finite_sum_bit(magnitude) else {
-        return f64::from_bits(sign);
-    };
-    if highest < 52 {
-        return f64::from_bits(sign | magnitude[0]);
-    }
-
-    let cutoff = highest - 52;
-    let mut significand = low_finite_sum_u64_after_shift(magnitude, cutoff);
-    if cutoff > 0 {
-        let halfway = finite_sum_bit(magnitude, cutoff - 1);
-        let sticky = any_finite_sum_bits_below(magnitude, cutoff - 1);
-        if halfway && (sticky || significand & 1 != 0) {
-            significand += 1;
-        }
-    }
-
-    let mut exponent = highest as i32 - 1074;
-    if significand == 1_u64 << 53 {
-        significand >>= 1;
-        exponent += 1;
-    }
-    if exponent > 1023 {
-        return f64::from_bits(sign | (0x7ff_u64 << 52));
-    }
-    let exponent_bits = (exponent + 1023) as u64;
-    let fraction_bits = significand - (1_u64 << 52);
-    f64::from_bits(sign | (exponent_bits << 52) | fraction_bits)
-}
-
 fn identity_matches<const N: usize>(expected: f64, terms: [f64; N]) -> bool {
-    let reconstructed = exact_linear_sum(terms);
+    let reconstructed = exact_binary64_sum(terms);
     if !reconstructed.is_finite() {
         return false;
     }
@@ -1749,7 +1594,14 @@ fn ordered_float_bits(value: f64) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{Pid2Estimate, Pid2Result};
+    use super::{pid2_exact_reconstruction_work, Pid2Estimate, Pid2Result};
+
+    #[test]
+    fn exact_reconstruction_limb_visits_are_fully_charged() {
+        // Synergy plus the three identity checks have 4+2+2+4 represented addends and four
+        // finalizations. With 34 limbs, the conservative envelope is 12*68 + 4*136 = 1,360.
+        assert_eq!(pid2_exact_reconstruction_work(), 1_360);
+    }
 
     #[test]
     fn checked_constructor_rejects_finite_atoms_that_erase_an_mi_identity() {

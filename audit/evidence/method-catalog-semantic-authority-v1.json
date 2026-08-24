@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa",
+  "catalog_sha256": "cce228367a9f84a7126669421ee87fa576a70e7f826d9d928e803e866e5731bb",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -281,7 +281,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "5583591fbc3d27a752a38e197a7770c53294435c112b7504183c24c2cc63476d"
+      "payload_sha256": "7d0b0d0084b44bb138e2846a3f863027ec73322f2aba319a8a1a7743d9d9b7e4"
     },
     {
       "facts": {
@@ -294,7 +294,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "73477ee272881a8ae922c076d7f76d7f26214bc28015a13c2ced0cad6f69b2f1"
+      "payload_sha256": "e6cf6d5090bf456e198468f369f1d72de51c40318fa46fe888e36ab918e9dd0c"
     },
     {
       "facts": {
@@ -307,7 +307,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "639d881daf5385a257a7ba431a928caaf2fe47be0ccaa462a6a4a382537be525"
+      "payload_sha256": "ee9089d7ffd4de64e22484f377ccf5728063e3526e9dbe362dd5bb28e5ff2437"
     },
     {
       "facts": {
@@ -353,7 +353,7 @@
         "mgw-categorical-shared-exclusions",
         "williams-beer-imin"
       ],
-      "payload_sha256": "c624ebda3e0ed63a2cbaaf1ac00da372324c2d1ce036175abe10dd420edd3ca9"
+      "payload_sha256": "d69e9abef2441e7db6901b6261e7a0ede967a28e5ddffcdd60f07758180f7a0c"
     },
     {
       "facts": {
@@ -368,7 +368,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "9019d20f831bc4bcacaf5436a62d9d84f2125414c0be12c18d33e41b3a93235c"
+      "payload_sha256": "28d2d802293b188dc806cbccb7f3d7729b3006d0a4f6a32bba2f4d343ef6263f"
     },
     {
       "facts": {
@@ -383,7 +383,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "60ad7661f998a5a1d9f4237ca1893b944371bb13ba5b9446dfb70ba44b2487d3"
+      "payload_sha256": "8b3321c253fb89b2dfd9e77d41889d42d84d05d1d687f91884e9c3d3fa942e5a"
     },
     {
       "facts": {
@@ -424,7 +424,7 @@
       },
       "method_id": "pipelines.quantized-sxpid-bootstrap",
       "observed_alias_families": [],
-      "payload_sha256": "070d550c225aad45cb2fb01b0530ac4bf8819a133b30d4ee7398570d3c51b424"
+      "payload_sha256": "4c4e8aa3f0cb053b3a7bba4785c372ad69db6d1da78d630b2358c45350d0e530"
     },
     {
       "facts": {
@@ -525,7 +525,7 @@
       },
       "method_id": "quantization.equal-width",
       "observed_alias_families": [],
-      "payload_sha256": "b57883991082dc2cc84353bc5227a7906cae60b6a3db54a593852e7b841d540e"
+      "payload_sha256": "6336948883a7df94fcbeae0db5a7c25bd4980d9b444140f5e1091a8c1decb4c1"
     },
     {
       "facts": {
@@ -619,7 +619,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "523aef520d346bb6edefe02fa545cad5555ee175f094593ec0a9a2d5ee98ac54"
+      "payload_sha256": "4a7ec2e31ecdd49e0627889d505aa45e8ff33bd4e2327f94c5dc5457fa3525b8"
     },
     {
       "facts": {
@@ -675,7 +675,7 @@
       },
       "method_id": "shared-exclusions.fitted-quantized",
       "observed_alias_families": [],
-      "payload_sha256": "2cb1f9b7d35b5b14e15dedf2b4479cddea7f197303b9e5106c93eff69e875590"
+      "payload_sha256": "480e2410476441385ca642ae8b76eafd1350cd3ef9bc470ae6954542b73deaa8"
     },
     {
       "facts": {
@@ -691,7 +691,7 @@
         "mgw-categorical-shared-exclusions",
         "williams-beer-imin"
       ],
-      "payload_sha256": "b5ebc9a1aa9aef2251ff947d95eca98be66be1a0ec2e0b0d763c925d7179e3c8"
+      "payload_sha256": "4f917b2486b7c9f00f79bb5c064c505adc6080be17d5d79687f67e75c82e058f"
     },
     {
       "facts": {
@@ -732,7 +732,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "2ede8aea679a1e1502f5af100b91c2b540c5e6430b84b2f013f8ea87f991252b"
+      "payload_sha256": "53954fca4e0af2a234151c027ed2e741b6cca64b3297f7705c3c2ab8dbbe01da"
     },
     {
       "facts": {
@@ -743,7 +743,7 @@
       },
       "method_id": "software.resource-cancellation-contracts",
       "observed_alias_families": [],
-      "payload_sha256": "f910ca12f1121edc9016115a619089e2b5ae9acf7360342c3e7b68bd53d892f0"
+      "payload_sha256": "30d26005a74f4359f13a853e187b3de0a749d8b1bde19bc1d2f77bb9428ca81c"
     },
     {
       "facts": {
@@ -899,7 +899,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "ceb6c695f492f5297de5cbd9a0c196b2d92c1e2e183ba97368e2b74538810a61"
+      "payload_sha256": "32878ebc85e82a5ecb321681dcf7c2078f1e6eafbcb50059247fd8b38dcc7deb"
     },
     {
       "facts": {
@@ -975,7 +975,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "21146bb4a01e1133c41a67b38cf2050b274c1ea5594ff26f814f9365d52ca8cf",
+  "ordered_root_sha256": "a3ed51df5cb0a5acf671c25693cd74689e61c7e14b23f27ba237cc3b0b8d123a",
   "reference_registry_sha256": "97de94fd1fe77e4f04b027d49b47304a2368cc77d6492d81df5955d285531373",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

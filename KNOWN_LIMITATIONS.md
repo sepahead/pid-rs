@@ -81,6 +81,42 @@ quantized variables. Results depend on fitted edges, scaling, bin count, trainin
 empty/sparse occupancy. Quantization does not solve the curse of dimensionality and cannot silently
 turn a mixed or singular law into a continuous estimand.
 
+### Represented-binary64 reduction boundary
+
+SxPID final empirical-PMF component averaging and selected two-source PID synergy formulas use a
+fixed-limb accumulator that sums the supplied finite binary64 operands exactly and rounds once to
+binary64 using round-to-nearest, ties-to-even. Pointwise SxPID Möbius inversion retains its prior
+compensated reduction. This is exact reduction of represented operands at the named final sums,
+not exact PID. The inputs can already contain empirical-PMF error, estimator bias, logarithm
+rounding, probability rounding, product rounding, or KSG error. It does not supply a global
+floating-point bound, a conditioning theorem, cross-platform estimator identity, or statistical
+calibration.
+
+The committed 561-case fixture compares this private implementation with a standard-library
+`Fraction`/integer oracle. It exercises arities 0, 1, 2, 3, 4, 5, 63, 64, and 65, tests every
+positional permutation through arity five, and tests four declared orderings for each longer case.
+That is bounded implementation-conformance evidence, not a universal proof, independent review,
+or an error bound for any PID estimator. Reachable source-swap counterexamples justify the SxPID2,
+SxPID3, and SxPID4 **final-average** changes and the $I_{\min}$ PID2 synergy change; they do not
+witness a pointwise SxPID Möbius defect. Committed bounded reachable-table suites likewise found no
+such pointwise defect, so that path remains compensated.
+
+Larger temporary probes reported no pointwise SxPID witness and no $I_{\min}$ PID3 atom-bit witness,
+including 245,156 binary $I_{\min}$ PID3 tables through total mass seven for
+$S_0\leftrightarrow S_1$ and 200,000 additional tables checked under all three transpositions.
+Their executables and raw logs were not retained. Those counts are therefore unqualified historical
+observations with **zero current release-evidence credit**, not replayable qualification evidence.
+They do not prove global bit equivariance or rule out a larger witness. The durable disposition is
+only that current retained evidence does not justify changing the $I_{\min}$ PID3 compensated path
+or transferring a numerical policy from shared exclusions into a different PID family.
+
+Quantizer map reachability is also narrower than scientific support. A reported reachable label
+has at least one accepted finite-binary64 preimage under the fitted endpoint and partition rules.
+It need not have positive probability, belong to the joint-law support, or be adequately sampled;
+reachable labels need not be contiguous. Conversely, structurally unreachable nominal labels can
+arise when a requested partition is finer than the representable values between fitted endpoints.
+The report diagnoses this collapse but does not compact labels or select an appropriate bin count.
+
 ### Exact-real finite-alphabet convergence boundary
 
 The [finite-alphabet plug-in convergence note](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md) is new

@@ -259,20 +259,16 @@ fn pid2_checked_constructor_recovers_representable_synergy_after_intermediate_ov
 }
 
 #[test]
-fn pid2_checked_constructor_preserves_tiny_identity_across_extreme_atom_cancellation() {
+fn pid2_checked_constructor_rejects_tiny_identity_erased_by_exact_atom_reconstruction() {
     let tiny = f64::from_bits(50);
     let estimate = Pid2Estimate::new(f64::MAX, -f64::MAX, 2.0 * tiny, tiny);
 
-    let result = Pid2Result::from_estimate(estimate).unwrap();
-    assert_eq!(
-        [
-            result.redundancy,
-            result.unique_s1,
-            result.unique_s2,
-            result.synergy,
-        ],
-        [tiny, f64::MAX, -f64::MAX, tiny]
-    );
+    assert!(matches!(
+        Pid2Result::from_estimate(estimate),
+        Err(PidError::NumericalInstability {
+            context: "Pid2Result::from_estimate atoms cannot represent PID identities"
+        })
+    ));
 }
 
 #[test]
@@ -290,4 +286,78 @@ fn pid2_checked_constructor_recovers_tiny_synergy_after_finite_cancellation() {
         ],
         [0.0, f64::MAX, -f64::MAX, tiny]
     );
+}
+
+#[test]
+fn pid2_checked_constructor_accepts_inclusive_32_position_near_zero_boundary() {
+    let near_zero = f64::from_bits(32);
+    let estimate = Pid2Estimate::new(near_zero, 1.0, near_zero, 1.0);
+
+    let result = Pid2Result::from_estimate(estimate)
+        .expect("the reconstruction guard must include its 32-position boundary");
+
+    // `near_zero - 1.0` rounds to -1.0, so both affected identity reconstructions are exactly
+    // +0.0. Positive subnormal payload 32 is exactly 32 ordered-binary64 positions above +0.0.
+    assert_eq!(result.redundancy.to_bits(), 1.0_f64.to_bits());
+    assert_eq!(result.unique_s1.to_bits(), (-1.0_f64).to_bits());
+    assert_eq!(result.unique_s2.to_bits(), 0.0_f64.to_bits());
+    assert_eq!(result.synergy.to_bits(), 0.0_f64.to_bits());
+}
+
+#[test]
+fn pid2_checked_constructor_rejects_33_position_near_zero_boundary() {
+    let near_zero = f64::from_bits(33);
+    let estimate = Pid2Estimate::new(near_zero, 1.0, near_zero, 1.0);
+
+    assert!(matches!(
+        Pid2Result::from_estimate(estimate),
+        Err(PidError::NumericalInstability {
+            context: "Pid2Result::from_estimate atoms cannot represent PID identities"
+        })
+    ));
+}
+
+#[test]
+fn pid2_checked_constructor_accepts_signed_zero_and_canonicalizes_exact_reductions() {
+    let result = Pid2Result::from_estimate(Pid2Estimate::new(-0.0, 0.0, -0.0, 0.0))
+        .expect("signed-zero inputs are within the ordered-binary64 guard");
+
+    assert_eq!(result.redundancy.to_bits(), 0.0_f64.to_bits());
+    assert_eq!(result.unique_s1.to_bits(), (-0.0_f64).to_bits());
+    assert_eq!(result.unique_s2.to_bits(), 0.0_f64.to_bits());
+    assert_eq!(result.synergy.to_bits(), 0.0_f64.to_bits());
+}
+
+#[test]
+fn pid2_checked_constructor_exact_synergy_is_source_order_independent() {
+    for small in [f64::from_bits(1), f64::from_bits(0x3c90_0000_0000_0000)] {
+        let original = Pid2Result::from_estimate(Pid2Estimate::new(1.0, small, 1.0, small))
+            .expect("exactly cancelling represented inputs should be accepted");
+        let swapped = Pid2Result::from_estimate(Pid2Estimate::new(small, 1.0, 1.0, small))
+            .expect("source exchange should preserve exact cancellation");
+
+        let historical_original = ((1.0 - 1.0) - small) + small;
+        let historical_swapped = ((1.0 - small) - 1.0) + small;
+        assert_eq!(historical_original.to_bits(), 0);
+        assert_eq!(historical_swapped.to_bits(), small.to_bits());
+        assert_eq!(original.synergy.to_bits(), 0);
+        assert_eq!(swapped.synergy.to_bits(), 0);
+    }
+}
+
+#[test]
+fn pid2_checked_constructor_kills_empirical_source_order_residual() {
+    let small = f64::from_bits(0x3fb5_bf40_6b54_3dad);
+    let large = f64::from_bits(0x3fe1_fea6_45f0_ef4e);
+    let original = Pid2Result::from_estimate(Pid2Estimate::new(small, large, large, small))
+        .expect("exact represented-input cancellation should be accepted");
+    let swapped = Pid2Result::from_estimate(Pid2Estimate::new(large, small, large, small))
+        .expect("source exchange should preserve exact represented-input cancellation");
+
+    let historical_original = ((large - small) - large) + small;
+    let historical_swapped = ((large - large) - small) + small;
+    assert_eq!(historical_original.to_bits(), 0x3c70_0000_0000_0000);
+    assert_eq!(historical_swapped.to_bits(), 0);
+    assert_eq!(original.synergy.to_bits(), 0);
+    assert_eq!(swapped.synergy.to_bits(), 0);
 }

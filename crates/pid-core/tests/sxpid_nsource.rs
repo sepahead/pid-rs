@@ -23,7 +23,8 @@
 //! equality with signed-zero bit identity.
 
 use pid_core::stable::categorical::{
-    discrete_sxpid2, discrete_sxpid3, discrete_sxpid_n, DiscreteSxPid2Result, DiscreteSxPid3Result,
+    discrete_sxpid2, discrete_sxpid2_averaged, discrete_sxpid3, discrete_sxpid3_averaged,
+    discrete_sxpid_n, discrete_sxpid_n_averaged, DiscreteSxPid2Result, DiscreteSxPid3Result,
     DiscreteSxPidNResult, EmpiricalPmfDiagnostics, SxAveragedAtom, SxPointwise2, SxPointwiseAtom,
 };
 use pid_core::DiscreteMatRef;
@@ -38,6 +39,7 @@ const THREE_SOURCE_CASE_COUNT: usize = 968;
 const THREE_SOURCE_POINTWISE_STATE_COUNT: usize = 2_448;
 const MAX_PATH_DIFFERENCE_EPSILONS: f64 = 64.0;
 const TWO_SOURCE_ANTICHAINS: [&[u8]; 4] = [&[0b01], &[0b10], &[0b11], &[0b01, 0b10]];
+type FourSourceRows = (Vec<usize>, Vec<usize>, Vec<usize>, Vec<usize>, Vec<usize>);
 
 fn leq(a: &[u8], b: &[u8]) -> bool {
     b.iter().all(|bb| a.iter().any(|aa| aa & !bb == 0))
@@ -99,12 +101,73 @@ fn binary_three_source_rows(counts: &[usize]) -> (Vec<usize>, Vec<usize>, Vec<us
     (source_zero, source_one, source_two, target)
 }
 
+fn binary_four_source_rows(counts: &[usize]) -> FourSourceRows {
+    let total_mass = counts.iter().sum();
+    let mut source_zero = Vec::with_capacity(total_mass);
+    let mut source_one = Vec::with_capacity(total_mass);
+    let mut source_two = Vec::with_capacity(total_mass);
+    let mut source_three = Vec::with_capacity(total_mass);
+    let mut target = Vec::with_capacity(total_mass);
+    for (cell, &count) in counts.iter().enumerate() {
+        source_zero.extend(std::iter::repeat_n((cell >> 4) & 1, count));
+        source_one.extend(std::iter::repeat_n((cell >> 3) & 1, count));
+        source_two.extend(std::iter::repeat_n((cell >> 2) & 1, count));
+        source_three.extend(std::iter::repeat_n((cell >> 1) & 1, count));
+        target.extend(std::iter::repeat_n(cell & 1, count));
+    }
+    (source_zero, source_one, source_two, source_three, target)
+}
+
 fn assert_same_bits(left: f64, right: f64, context: &str, case_index: usize) {
     assert_eq!(
         left.to_bits(),
         right.to_bits(),
         "{context} differs in case {case_index}: left={left:.17e}, right={right:.17e}"
     );
+}
+
+fn averaged_atom_bits(atom: SxAveragedAtom) -> [u64; 3] {
+    [
+        atom.informative_nats().to_bits(),
+        atom.misinformative_nats().to_bits(),
+        atom.net_nats().to_bits(),
+    ]
+}
+
+fn historical_neumaier(values: impl IntoIterator<Item = f64>) -> f64 {
+    let mut sum = 0.0_f64;
+    let mut correction = 0.0_f64;
+    for value in values {
+        let next = sum + value;
+        if sum.abs() >= value.abs() {
+            correction += (sum - next) + value;
+        } else {
+            correction += (value - next) + sum;
+        }
+        sum = next;
+    }
+    sum + correction
+}
+
+fn historical_average_bits(
+    weighted_atoms: impl IntoIterator<Item = (f64, SxPointwiseAtom)> + Clone,
+) -> [u64; 3] {
+    let informative = historical_neumaier(
+        weighted_atoms
+            .clone()
+            .into_iter()
+            .map(|(probability, atom)| probability * atom.informative_nats()),
+    );
+    let misinformative = historical_neumaier(
+        weighted_atoms
+            .into_iter()
+            .map(|(probability, atom)| probability * atom.misinformative_nats()),
+    );
+    [
+        informative.to_bits(),
+        misinformative.to_bits(),
+        (informative - misinformative).to_bits(),
+    ]
 }
 
 fn assert_same_pmf_diagnostics(
@@ -882,6 +945,205 @@ fn all_968_binary_three_source_count_tables_through_three_samples_match_general_
         atom_component_comparisons,
         216 * (THREE_SOURCE_CASE_COUNT + THREE_SOURCE_POINTWISE_STATE_COUNT)
     );
+}
+
+#[test]
+fn pinned_two_source_average_is_bit_equivariant_after_source_swap() {
+    let counts = [0, 1, 1, 1, 2, 1, 5, 1];
+    let (source_one, source_two, target) = binary_two_source_rows(&counts);
+    let n = target.len();
+    let source_one = DiscreteMatRef::new(&source_one, n, 1).unwrap();
+    let source_two = DiscreteMatRef::new(&source_two, n, 1).unwrap();
+    let target = DiscreteMatRef::new(&target, n, 1).unwrap();
+
+    let original = discrete_sxpid2(source_one, source_two, target).unwrap();
+    let swapped = discrete_sxpid2(source_two, source_one, target).unwrap();
+    let original_averaged = discrete_sxpid2_averaged(source_one, source_two, target).unwrap();
+    let swapped_averaged = discrete_sxpid2_averaged(source_two, source_one, target).unwrap();
+    let original_general = discrete_sxpid_n(&[source_one, source_two], target).unwrap();
+    let swapped_general = discrete_sxpid_n(&[source_two, source_one], target).unwrap();
+    let original_general_averaged =
+        discrete_sxpid_n_averaged(&[source_one, source_two], target).unwrap();
+    let swapped_general_averaged =
+        discrete_sxpid_n_averaged(&[source_two, source_one], target).unwrap();
+
+    let expected = [
+        0x3fc8_ef0d_df2c_10fb,
+        0x3fbd_c0ce_b963_b913,
+        0x3fb4_1d4d_04f4_68e3,
+    ];
+    for atom in [
+        original.syn,
+        swapped.syn,
+        original_averaged.syn,
+        swapped_averaged.syn,
+        original_general.atom(&[0b11]).unwrap(),
+        swapped_general.atom(&[0b11]).unwrap(),
+        original_general_averaged.atom(&[0b11]).unwrap(),
+        swapped_general_averaged.atom(&[0b11]).unwrap(),
+    ] {
+        assert_eq!(averaged_atom_bits(atom), expected);
+    }
+
+    let historical_original = historical_average_bits(
+        original
+            .pointwise
+            .iter()
+            .map(|point| (point.empirical_probability, point.syn)),
+    );
+    let historical_swapped = historical_average_bits(
+        swapped
+            .pointwise
+            .iter()
+            .map(|point| (point.empirical_probability, point.syn)),
+    );
+    assert_eq!(historical_original[2], 0x3fb4_1d4d_04f4_68e3);
+    assert_eq!(historical_swapped[2], 0x3fb4_1d4d_04f4_68e4);
+    assert_ne!(historical_original, historical_swapped);
+}
+
+#[test]
+fn pinned_three_source_average_components_are_bit_equivariant_after_source_swap() {
+    let counts = [4, 0, 3, 2, 1, 1, 0, 4, 0, 0, 1, 1, 3, 4, 0, 0];
+    let (source_zero, source_one, source_two, target) = binary_three_source_rows(&counts);
+    let n = target.len();
+    let source_zero = DiscreteMatRef::new(&source_zero, n, 1).unwrap();
+    let source_one = DiscreteMatRef::new(&source_one, n, 1).unwrap();
+    let source_two = DiscreteMatRef::new(&source_two, n, 1).unwrap();
+    let target = DiscreteMatRef::new(&target, n, 1).unwrap();
+
+    let original = discrete_sxpid3(source_zero, source_one, source_two, target).unwrap();
+    let swapped = discrete_sxpid3(source_one, source_zero, source_two, target).unwrap();
+    let original_averaged =
+        discrete_sxpid3_averaged(source_zero, source_one, source_two, target).unwrap();
+    let swapped_averaged =
+        discrete_sxpid3_averaged(source_one, source_zero, source_two, target).unwrap();
+    let original_general =
+        discrete_sxpid_n(&[source_zero, source_one, source_two], target).unwrap();
+    let swapped_general = discrete_sxpid_n(&[source_one, source_zero, source_two], target).unwrap();
+    let original_general_averaged =
+        discrete_sxpid_n_averaged(&[source_zero, source_one, source_two], target).unwrap();
+    let swapped_general_averaged =
+        discrete_sxpid_n_averaged(&[source_one, source_zero, source_two], target).unwrap();
+
+    let expected = [
+        0x3fa3_b012_4a6b_77db,
+        0x3f8a_61d9_7c81_3f4d,
+        0x3f9a_2f37_d696_5010,
+    ];
+    for atom in [
+        original.atom(&[0b001, 0b110]).unwrap(),
+        swapped.atom(&[0b010, 0b101]).unwrap(),
+        original_averaged.atom(&[0b001, 0b110]).unwrap(),
+        swapped_averaged.atom(&[0b010, 0b101]).unwrap(),
+        original_general.atom(&[0b001, 0b110]).unwrap(),
+        swapped_general.atom(&[0b010, 0b101]).unwrap(),
+        original_general_averaged.atom(&[0b001, 0b110]).unwrap(),
+        swapped_general_averaged.atom(&[0b010, 0b101]).unwrap(),
+    ] {
+        assert_eq!(averaged_atom_bits(atom), expected);
+    }
+
+    let original_index = original
+        .antichains
+        .iter()
+        .position(|antichain| antichain == &[0b001, 0b110])
+        .unwrap();
+    let swapped_index = swapped
+        .antichains
+        .iter()
+        .position(|antichain| antichain == &[0b010, 0b101])
+        .unwrap();
+    let historical_original = historical_average_bits(
+        original
+            .pointwise
+            .iter()
+            .map(|point| (point.empirical_probability, point.atoms[original_index])),
+    );
+    let historical_swapped = historical_average_bits(
+        swapped
+            .pointwise
+            .iter()
+            .map(|point| (point.empirical_probability, point.atoms[swapped_index])),
+    );
+    assert_ne!(
+        historical_original, historical_swapped,
+        "the historical compensated final average must retain this reachable source-order defect"
+    );
+}
+
+#[test]
+fn pinned_four_source_average_components_are_bit_equivariant_after_source_swap() {
+    // At parent 01466e8, the incidental final-average order changed the averaged misinformative
+    // component by one bit under S0/S1 exchange for this reachable empirical table. Exact
+    // represented-term final averaging removes that defect without claiming exact pointwise
+    // atoms, probabilities, logarithms, or PID.
+    let counts = [
+        4, 4, 3, 1, 1, 4, 5, 0, 5, 3, 2, 0, 0, 1, 1, 2, 3, 1, 3, 0, 3, 2, 3, 4, 0, 2, 5, 4, 3, 2,
+        3, 1,
+    ];
+    let (source_zero, source_one, source_two, source_three, target) =
+        binary_four_source_rows(&counts);
+    let n = target.len();
+    assert_eq!(n, 75);
+    let source_zero = DiscreteMatRef::new(&source_zero, n, 1).unwrap();
+    let source_one = DiscreteMatRef::new(&source_one, n, 1).unwrap();
+    let source_two = DiscreteMatRef::new(&source_two, n, 1).unwrap();
+    let source_three = DiscreteMatRef::new(&source_three, n, 1).unwrap();
+    let target = DiscreteMatRef::new(&target, n, 1).unwrap();
+
+    let original =
+        discrete_sxpid_n(&[source_zero, source_one, source_two, source_three], target).unwrap();
+    let swapped =
+        discrete_sxpid_n(&[source_one, source_zero, source_two, source_three], target).unwrap();
+    let original_averaged =
+        discrete_sxpid_n_averaged(&[source_zero, source_one, source_two, source_three], target)
+            .unwrap();
+    let swapped_averaged =
+        discrete_sxpid_n_averaged(&[source_one, source_zero, source_two, source_three], target)
+            .unwrap();
+
+    let expected = [
+        0x3f73_2f6d_ea98_a14d,
+        0x3f72_1964_bc3d_4223,
+        0x3f31_6092_e5b5_f2a0,
+    ];
+    for atom in [
+        original.atom(&[0b0001, 0b0100, 0b1010]).unwrap(),
+        swapped.atom(&[0b0010, 0b0100, 0b1001]).unwrap(),
+        original_averaged.atom(&[0b0001, 0b0100, 0b1010]).unwrap(),
+        swapped_averaged.atom(&[0b0010, 0b0100, 0b1001]).unwrap(),
+    ] {
+        assert_eq!(averaged_atom_bits(atom), expected);
+    }
+
+    let original_index = original
+        .antichains
+        .iter()
+        .position(|antichain| antichain == &[0b0001, 0b0100, 0b1010])
+        .unwrap();
+    let swapped_index = swapped
+        .antichains
+        .iter()
+        .position(|antichain| antichain == &[0b0010, 0b0100, 0b1001])
+        .unwrap();
+    let historical_original = historical_average_bits(
+        original
+            .pointwise
+            .iter()
+            .map(|point| (point.empirical_probability, point.atoms[original_index])),
+    );
+    let historical_swapped = historical_average_bits(
+        swapped
+            .pointwise
+            .iter()
+            .map(|point| (point.empirical_probability, point.atoms[swapped_index])),
+    );
+    assert_eq!(historical_original[1], 0x3f72_1964_bc3d_4223);
+    assert_eq!(historical_swapped[1], 0x3f72_1964_bc3d_4222);
+    assert_eq!(historical_original[2], 0x3f31_6092_e5b5_f2a0);
+    assert_eq!(historical_swapped[2], 0x3f31_6092_e5b5_f2b0);
+    assert_ne!(historical_original, historical_swapped);
 }
 
 #[test]

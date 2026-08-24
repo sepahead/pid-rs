@@ -73,6 +73,7 @@ mod ci;
 mod discrete_pid;
 mod distance_matrix;
 mod error;
+mod exact_binary64;
 mod geometry;
 #[cfg(feature = "experimental-hierarchy")]
 mod hierarchy;

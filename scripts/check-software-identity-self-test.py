@@ -187,7 +187,7 @@ def main() -> int:
     expect_failure(
         "wrong-api-revision",
         manifest_mutation(
-            lambda value: value["api_signature_identity"].update({"revision": 4})
+            lambda value: value["api_signature_identity"].update({"revision": 5})
         ),
         "schema validation failed",
     )
@@ -231,7 +231,7 @@ def main() -> int:
     )
     expect_failure(
         "stub-api-revision-literal",
-        pyi_mutation("    revision: Literal[3]", "    revision: Literal[4]"),
+        pyi_mutation("    revision: Literal[4]", "    revision: Literal[5]"),
         "identity Literal _PublicRustApiSignatureIdentity.revision mismatch",
     )
     expect_failure(

@@ -176,12 +176,36 @@ pub struct QuantizationReport {
     pub scaling_description: String,
     pub n_samples: usize,
     pub dimensions: usize,
+    /// Requested nominal label count for every dimension. Binary64 edge collapse can make fewer
+    /// labels structurally reachable; see [`Self::reachable_binary64_label_counts`].
     pub bins_per_dimension: usize,
+    /// Per-dimension number of distinct stored binary64 edge payloads. `-0.0` and `+0.0` count as
+    /// distinct payloads even though the transform compares them as the same numeric value.
+    pub distinct_binary64_edge_value_counts: Vec<usize>,
+    /// Per-dimension number of adjacent edge intervals with positive numeric width (`e_j <
+    /// e_{j+1}`). This is structural transform metadata, not a support or occupancy estimate.
+    pub positive_width_interval_counts: Vec<usize>,
+    /// Per-dimension number of labels having at least one accepted finite binary64 preimage under
+    /// the exact endpoint and partition semantics of this fitted transform.
+    pub reachable_binary64_label_counts: Vec<usize>,
+    /// Per-dimension number of labels present in this transform call's categorical output.
+    pub observed_label_counts: Vec<usize>,
     /// `None` means `bins_per_dimension.pow(dimensions)` exceeds `u128`.
     pub nominal_joint_cardinality: Option<u128>,
+    /// Product of [`Self::reachable_binary64_label_counts`], or `None` only when that product
+    /// exceeds `u128`. This is map reachability, not population support or positive probability.
+    pub reachable_joint_cardinality: Option<u128>,
     pub observed_joint_cardinality: usize,
-    /// `None` when nominal cardinality is not representable as `u128`.
+    /// Nominal minus observed joint cells. This backwards-compatible field combines structurally
+    /// unreachable nominal cells and reachable-but-unobserved cells; `None` means the nominal
+    /// cardinality exceeds `u128`.
     pub empty_joint_cells: Option<u128>,
+    /// Nominal minus binary64-reachable joint cells. `None` means nominal cardinality exceeds
+    /// `u128`; it never means an inconsistent subtraction was ignored.
+    pub structurally_unreachable_joint_cells: Option<u128>,
+    /// Binary64-reachable minus observed joint cells. `None` means reachable joint cardinality
+    /// exceeds `u128`; it never means an inconsistent subtraction was ignored.
+    pub unobserved_reachable_joint_cells: Option<u128>,
     pub low_count_joint_cells: usize,
     pub minimum_observed_cell_count: usize,
     pub maximum_observed_cell_count: usize,
@@ -189,6 +213,29 @@ pub struct QuantizationReport {
 }
 
 impl QuantizationReport {
+    pub(crate) fn copy_operations_hint(&self, operation: &'static str) -> PidResult<u128> {
+        let edge_count = self.bin_edges.iter().try_fold(0u128, |total, column| {
+            total
+                .checked_add(column.len() as u128)
+                .ok_or(PidError::SizeOverflow { operation })
+        })?;
+        let diagnostic_count = [
+            self.distinct_binary64_edge_value_counts.len(),
+            self.positive_width_interval_counts.len(),
+            self.reachable_binary64_label_counts.len(),
+            self.observed_label_counts.len(),
+        ]
+        .into_iter()
+        .try_fold(0u128, |sum, length| {
+            sum.checked_add(length as u128)
+                .ok_or(PidError::SizeOverflow { operation })
+        })?;
+        edge_count
+            .checked_add(diagnostic_count)
+            .and_then(|value| value.checked_add(self.scaling_description.len() as u128))
+            .ok_or(PidError::SizeOverflow { operation })
+    }
+
     /// Fallibly deep-copy report provenance and fitted edges under an aggregate budget.
     pub fn try_clone_with_budget(&self, budget: ResourceBudget) -> PidResult<Self> {
         let edge_count = self.bin_edges.iter().try_fold(0usize, |total, column| {
@@ -198,12 +245,29 @@ impl QuantizationReport {
                     operation: "QuantizationReport::try_clone_with_budget",
                 })
         })?;
+        let diagnostic_count = [
+            self.distinct_binary64_edge_value_counts.len(),
+            self.positive_width_interval_counts.len(),
+            self.reachable_binary64_label_counts.len(),
+            self.observed_label_counts.len(),
+        ]
+        .into_iter()
+        .try_fold(0usize, |sum, length| {
+            sum.checked_add(length).ok_or(PidError::SizeOverflow {
+                operation: "QuantizationReport::try_clone_with_budget",
+            })
+        })?;
         let estimated_bytes = (edge_count as u128)
             .checked_mul(std::mem::size_of::<f64>() as u128)
             .and_then(|value| {
                 value.checked_add(
                     (self.bin_edges.len() as u128)
                         .checked_mul(std::mem::size_of::<Vec<f64>>() as u128)?,
+                )
+            })
+            .and_then(|value| {
+                value.checked_add(
+                    (diagnostic_count as u128).checked_mul(std::mem::size_of::<usize>() as u128)?,
                 )
             })
             .and_then(|value| value.checked_add(self.scaling_description.len() as u128))
@@ -215,7 +279,8 @@ impl QuantizationReport {
             ResourceEstimate {
                 estimated_bytes,
                 pairwise_distances: 0,
-                operations_hint: edge_count as u128,
+                operations_hint: self
+                    .copy_operations_hint("QuantizationReport::try_clone_with_budget")?,
             },
         )?;
         Ok(Self {
@@ -236,9 +301,32 @@ impl QuantizationReport {
             n_samples: self.n_samples,
             dimensions: self.dimensions,
             bins_per_dimension: self.bins_per_dimension,
+            distinct_binary64_edge_value_counts: try_clone_usize_counts(
+                "QuantizationReport::try_clone_with_budget",
+                &self.distinct_binary64_edge_value_counts,
+                budget,
+            )?,
+            positive_width_interval_counts: try_clone_usize_counts(
+                "QuantizationReport::try_clone_with_budget",
+                &self.positive_width_interval_counts,
+                budget,
+            )?,
+            reachable_binary64_label_counts: try_clone_usize_counts(
+                "QuantizationReport::try_clone_with_budget",
+                &self.reachable_binary64_label_counts,
+                budget,
+            )?,
+            observed_label_counts: try_clone_usize_counts(
+                "QuantizationReport::try_clone_with_budget",
+                &self.observed_label_counts,
+                budget,
+            )?,
             nominal_joint_cardinality: self.nominal_joint_cardinality,
+            reachable_joint_cardinality: self.reachable_joint_cardinality,
             observed_joint_cardinality: self.observed_joint_cardinality,
             empty_joint_cells: self.empty_joint_cells,
+            structurally_unreachable_joint_cells: self.structurally_unreachable_joint_cells,
+            unobserved_reachable_joint_cells: self.unobserved_reachable_joint_cells,
             low_count_joint_cells: self.low_count_joint_cells,
             minimum_observed_cell_count: self.minimum_observed_cell_count,
             maximum_observed_cell_count: self.maximum_observed_cell_count,
@@ -288,7 +376,11 @@ impl EqualWidthQuantizer {
             ResourceEstimate {
                 estimated_bytes: edge_bytes,
                 pairwise_distances: 0,
-                operations_hint: edge_count as u128,
+                operations_hint: (edge_count as u128)
+                    .checked_add(self.config.scaling_description.len() as u128)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: "EqualWidthQuantizer::try_clone_with_budget",
+                    })?,
             },
         )?;
         Ok(Self {
@@ -329,7 +421,7 @@ impl EqualWidthQuantizer {
         let operations_hint = (train.nrows() as u128)
             .checked_mul(train.ncols() as u128)
             .and_then(|value| value.checked_mul(2))
-            .and_then(|value| value.checked_add(edge_count as u128))
+            .and_then(|value| value.checked_add((edge_count as u128).checked_mul(2)?))
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
             })?;
@@ -396,6 +488,7 @@ impl EqualWidthQuantizer {
         };
         let total_work = coordinate_count
             .checked_add(edge_count)
+            .and_then(|value| value.checked_add(edge_count))
             .and_then(|value| value.checked_add(hash_count))
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
@@ -429,9 +522,19 @@ impl EqualWidthQuantizer {
                     column_edges.push(stable_lerp(minimum, maximum, fraction));
                     completed_work += 1;
                 }
-                column_edges[0] = minimum;
-                column_edges[bins] = maximum;
             }
+            // Endpoint assignment is exact, including the distinct signs of a signed-zero range.
+            column_edges[0] = minimum;
+            column_edges[bins] = maximum;
+            validate_fitted_edges(
+                &column_edges,
+                bins,
+                minimum,
+                maximum,
+                cancellation,
+                &mut completed_work,
+                total_work,
+            )?;
             edges.push(column_edges);
         }
 
@@ -468,8 +571,20 @@ impl EqualWidthQuantizer {
         data: MatRef<'_>,
         cancellation: &CancellationToken,
     ) -> PidResult<DiscreteMatOwned> {
-        self.transform_with_report_with_cancellation(data, cancellation)
-            .map(|result| result.matrix)
+        const OPERATION: &str = "EqualWidthQuantizer::transform";
+        let output_len = self.validate_transform_input(data)?;
+        // COMPATIBILITY: This public estimate predates the labels-only fast path. Preserve its
+        // report-sized admission envelope so existing resource budgets keep the same outcome.
+        self.config
+            .resource_budget
+            .check(OPERATION, self.transform_resource_estimate(data)?)?;
+
+        let mut completed_work = 0usize;
+        check_cancellation(cancellation, OPERATION, completed_work, output_len)?;
+        let labels =
+            self.label_data_with_cancellation(data, cancellation, &mut completed_work, output_len)?;
+        check_cancellation(cancellation, OPERATION, output_len, output_len)?;
+        DiscreteMatOwned::new(labels, data.nrows(), data.ncols())
     }
 
     /// Preflight labels, occupancy sorting, report copies, and transform work.
@@ -498,6 +613,15 @@ impl EqualWidthQuantizer {
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
             })?;
+        let observed_label_flag_count =
+            data.ncols()
+                .checked_mul(self.bins)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
+        let diagnostic_count = data.ncols().checked_mul(4).ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
         let report_bytes = (edge_count as u128)
             .checked_mul(std::mem::size_of::<f64>() as u128)
             .and_then(|value| {
@@ -506,21 +630,37 @@ impl EqualWidthQuantizer {
                         .checked_mul(std::mem::size_of::<Vec<f64>>() as u128)?,
                 )
             })
+            .and_then(|value| {
+                value.checked_add(
+                    (diagnostic_count as u128).checked_mul(std::mem::size_of::<usize>() as u128)?,
+                )
+            })
             .and_then(|value| value.checked_add(self.config.scaling_description.len() as u128))
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
             })?;
         let log_rows = ceil_log2(data.nrows());
         let log_bins = ceil_log2(self.bins);
-        let per_coordinate_work = 3u128
+        let per_coordinate_work = 4u128
             .checked_add(log_rows as u128)
             .and_then(|value| value.checked_add(log_bins as u128))
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
             })?;
+        let report_diagnostic_work =
+            (diagnostic_count as u128)
+                .checked_add((data.ncols() as u128).checked_mul(2).ok_or(
+                    PidError::SizeOverflow {
+                        operation: OPERATION,
+                    },
+                )?)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
         Ok(ResourceEstimate {
             estimated_bytes: label_bytes
                 .checked_add(row_order_bytes)
+                .and_then(|value| value.checked_add(observed_label_flag_count as u128))
                 .and_then(|value| value.checked_add(report_bytes))
                 .ok_or(PidError::SizeOverflow {
                     operation: OPERATION,
@@ -528,7 +668,10 @@ impl EqualWidthQuantizer {
             pairwise_distances: 0,
             operations_hint: (output_len as u128)
                 .checked_mul(per_coordinate_work)
-                .and_then(|value| value.checked_add(edge_count as u128))
+                .and_then(|value| value.checked_add(observed_label_flag_count as u128))
+                .and_then(|value| value.checked_add((edge_count as u128).checked_mul(3)?))
+                .and_then(|value| value.checked_add(report_diagnostic_work))
+                .and_then(|value| value.checked_add(self.config.scaling_description.len() as u128))
                 .ok_or(PidError::SizeOverflow {
                     operation: OPERATION,
                 })?,
@@ -549,44 +692,37 @@ impl EqualWidthQuantizer {
         cancellation: &CancellationToken,
     ) -> PidResult<QuantizedData> {
         const OPERATION: &str = "EqualWidthQuantizer::transform";
-        if data.ncols() != self.edges.len() {
-            return Err(PidError::ShapeMismatch {
-                context: OPERATION,
-                expected_len: self.edges.len(),
-                actual_len: data.ncols(),
-            });
-        }
-        if data.nrows() == 0 {
-            return Err(PidError::InvalidConfig {
-                context: OPERATION,
-                message: "data must contain at least one row",
-            });
-        }
-        let output_len = data
-            .nrows()
-            .checked_mul(data.ncols())
-            .ok_or(PidError::SizeOverflow {
-                operation: OPERATION,
-            })?;
+        let output_len = self.validate_transform_input(data)?;
         self.config
             .resource_budget
             .check(OPERATION, self.transform_resource_estimate(data)?)?;
+        let diagnostic_edge_count = self.edges.iter().try_fold(0usize, |total, edges| {
+            total
+                .checked_add(edges.len())
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })
+        })?;
+        let observed_label_flag_count =
+            data.ncols()
+                .checked_mul(self.bins)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
         let total_work = output_len
-            .checked_mul(3)
+            .checked_mul(4)
             .and_then(|value| value.checked_add(data.nrows()))
+            .and_then(|value| value.checked_add(diagnostic_edge_count.checked_mul(3)?))
+            .and_then(|value| value.checked_add(observed_label_flag_count))
+            .and_then(|value| value.checked_add(data.ncols().checked_mul(2)?))
+            .and_then(|value| value.checked_add(self.config.scaling_description.len()))
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
             })?;
         let mut completed_work = 0usize;
         check_cancellation(cancellation, OPERATION, completed_work, total_work)?;
-        let mut labels = try_vec_with_capacity(OPERATION, output_len, self.config.resource_budget)?;
-        for row in 0..data.nrows() {
-            for column in 0..data.ncols() {
-                check_cancellation(cancellation, OPERATION, completed_work, total_work)?;
-                labels.push(self.bin_value(column, data.row(row)[column])?);
-                completed_work += 1;
-            }
-        }
+        let labels =
+            self.label_data_with_cancellation(data, cancellation, &mut completed_work, total_work)?;
         let report = self.occupancy_report_with_cancellation(
             data,
             &labels,
@@ -615,7 +751,66 @@ impl EqualWidthQuantizer {
         &self.config
     }
 
+    fn validate_transform_input(&self, data: MatRef<'_>) -> PidResult<usize> {
+        const OPERATION: &str = "EqualWidthQuantizer::transform";
+        if data.ncols() != self.edges.len() {
+            return Err(PidError::ShapeMismatch {
+                context: OPERATION,
+                expected_len: self.edges.len(),
+                actual_len: data.ncols(),
+            });
+        }
+        if data.nrows() == 0 {
+            return Err(PidError::InvalidConfig {
+                context: OPERATION,
+                message: "data must contain at least one row",
+            });
+        }
+        data.nrows()
+            .checked_mul(data.ncols())
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })
+    }
+
+    fn label_data_with_cancellation(
+        &self,
+        data: MatRef<'_>,
+        cancellation: &CancellationToken,
+        completed_work: &mut usize,
+        total_work: usize,
+    ) -> PidResult<Vec<usize>> {
+        const OPERATION: &str = "EqualWidthQuantizer::transform";
+        let output_len = data
+            .nrows()
+            .checked_mul(data.ncols())
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?;
+        let mut labels = try_vec_with_capacity(OPERATION, output_len, self.config.resource_budget)?;
+        for row in 0..data.nrows() {
+            for column in 0..data.ncols() {
+                check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+                labels.push(self.bin_value(column, data.row(row)[column])?);
+                *completed_work = completed_work
+                    .checked_add(1)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: OPERATION,
+                    })?;
+            }
+        }
+        Ok(labels)
+    }
+
     fn bin_value(&self, column: usize, value: f64) -> PidResult<usize> {
+        // Public transform inputs already pass through `MatRef`'s finite-value gate. Retain this
+        // local guard so the partition helper cannot silently classify NaN if its internal call
+        // boundary changes in the future.
+        if !value.is_finite() {
+            return Err(PidError::NonFiniteInput {
+                context: "EqualWidthQuantizer::transform",
+            });
+        }
         let edges = &self.edges[column];
         let minimum = edges[0];
         let maximum = edges[self.bins];
@@ -653,6 +848,9 @@ impl EqualWidthQuantizer {
                 }),
                 OutOfRangePolicy::ClampToBoundary => Ok(self.bins - 1),
             };
+        }
+        if value == minimum {
+            return Ok(0);
         }
         if value == maximum {
             return Ok(self.bins - 1);
@@ -736,6 +934,92 @@ impl EqualWidthQuantizer {
                 })?;
             start = end;
         }
+
+        let observed_label_flag_count =
+            dimensions
+                .checked_mul(self.bins)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
+        let mut observed_label_flags = try_vec_with_capacity(
+            OPERATION,
+            observed_label_flag_count,
+            self.config.resource_budget,
+        )?;
+        while observed_label_flags.len() < observed_label_flag_count {
+            check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+            let chunk_len = CANCELLATION_CHECK_INTERVAL
+                .min(observed_label_flag_count - observed_label_flags.len());
+            observed_label_flags.extend(std::iter::repeat_n(0_u8, chunk_len));
+            *completed_work =
+                completed_work
+                    .checked_add(chunk_len)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: OPERATION,
+                    })?;
+        }
+        let mut observed_label_counts =
+            try_vec_with_capacity(OPERATION, dimensions, self.config.resource_budget)?;
+        for _ in 0..dimensions {
+            check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+            observed_label_counts.push(0usize);
+            *completed_work = completed_work
+                .checked_add(1)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
+        }
+        for row in 0..data.nrows() {
+            for column in 0..dimensions {
+                check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+                let label = labels[row * dimensions + column];
+                let flag_index = column
+                    .checked_mul(self.bins)
+                    .and_then(|offset| offset.checked_add(label))
+                    .ok_or(PidError::SizeOverflow {
+                        operation: OPERATION,
+                    })?;
+                let Some(flag) = observed_label_flags.get_mut(flag_index) else {
+                    return Err(PidError::NumericalInstability {
+                        context: "EqualWidthQuantizer::transform label outside fitted range",
+                    });
+                };
+                if *flag == 0 {
+                    *flag = 1;
+                    observed_label_counts[column] = observed_label_counts[column]
+                        .checked_add(1)
+                        .ok_or(PidError::SizeOverflow {
+                            operation: OPERATION,
+                        })?;
+                }
+                *completed_work = completed_work
+                    .checked_add(1)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: OPERATION,
+                    })?;
+            }
+        }
+
+        let mut distinct_binary64_edge_value_counts =
+            try_vec_with_capacity(OPERATION, dimensions, self.config.resource_budget)?;
+        let mut positive_width_interval_counts =
+            try_vec_with_capacity(OPERATION, dimensions, self.config.resource_budget)?;
+        let mut reachable_binary64_label_counts =
+            try_vec_with_capacity(OPERATION, dimensions, self.config.resource_budget)?;
+        for edges in &self.edges {
+            let (distinct_edges, positive_widths, reachable_labels) =
+                binary64_dimension_structure_with_cancellation(
+                    edges,
+                    self.bins,
+                    cancellation,
+                    completed_work,
+                    total_work,
+                )?;
+            distinct_binary64_edge_value_counts.push(distinct_edges);
+            positive_width_interval_counts.push(positive_widths);
+            reachable_binary64_label_counts.push(reachable_labels);
+        }
+
         let nominal_joint_cardinality = checked_pow_u128_with_cancellation(
             self.bins as u128,
             data.ncols(),
@@ -744,21 +1028,77 @@ impl EqualWidthQuantizer {
             *completed_work,
             total_work,
         )?;
-        let empty_joint_cells = nominal_joint_cardinality
-            .and_then(|nominal| nominal.checked_sub(observed_joint_cardinality as u128));
+        let mut reachable_joint_cardinality = Some(1_u128);
+        for &count in &reachable_binary64_label_counts {
+            check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+            reachable_joint_cardinality =
+                reachable_joint_cardinality.and_then(|value| value.checked_mul(count as u128));
+            *completed_work = completed_work
+                .checked_add(1)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
+        }
+        let observed_joint_cardinality_u128 = observed_joint_cardinality as u128;
+        let empty_joint_cells = checked_optional_cardinality_difference(
+            nominal_joint_cardinality,
+            observed_joint_cardinality_u128,
+            "EqualWidthQuantizer nominal joint cardinality below observed cardinality",
+        )?;
+        let structurally_unreachable_joint_cells = match (
+            nominal_joint_cardinality,
+            reachable_joint_cardinality,
+        ) {
+            (Some(nominal), Some(reachable)) => Some(nominal.checked_sub(reachable).ok_or(
+                PidError::NumericalInstability {
+                    context:
+                        "EqualWidthQuantizer reachable joint cardinality exceeds nominal cardinality",
+                },
+            )?),
+            (None, _) => None,
+            (Some(_), None) => {
+                return Err(PidError::NumericalInstability {
+                    context:
+                        "EqualWidthQuantizer reachable cardinality overflowed below finite nominal cardinality",
+                });
+            }
+        };
+        let unobserved_reachable_joint_cells = checked_optional_cardinality_difference(
+            reachable_joint_cardinality,
+            observed_joint_cardinality_u128,
+            "EqualWidthQuantizer reachable joint cardinality below observed cardinality",
+        )?;
+        if let (Some(empty), Some(structural), Some(unobserved)) = (
+            empty_joint_cells,
+            structurally_unreachable_joint_cells,
+            unobserved_reachable_joint_cells,
+        ) {
+            if structural.checked_add(unobserved) != Some(empty) {
+                return Err(PidError::NumericalInstability {
+                    context: "EqualWidthQuantizer empty-cell partition is inconsistent",
+                });
+            }
+        }
         let bin_edges = try_clone_edges_with_cancellation(
             OPERATION,
             &self.edges,
             self.config.resource_budget,
             cancellation,
-            *completed_work,
+            completed_work,
             total_work,
         )?;
+        cancellation.check(OPERATION, *completed_work, total_work)?;
         let scaling_description = try_string_copy(
             OPERATION,
             &self.config.scaling_description,
             self.config.resource_budget,
         )?;
+        *completed_work = completed_work
+            .checked_add(self.config.scaling_description.len())
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?;
+        cancellation.check(OPERATION, *completed_work, total_work)?;
         let transform_input_hash = hash_matrix_with_cancellation(
             data,
             TRANSFORM_INPUT_HASH_DOMAIN,
@@ -786,9 +1126,16 @@ impl EqualWidthQuantizer {
             n_samples: data.nrows(),
             dimensions: data.ncols(),
             bins_per_dimension: self.bins,
+            distinct_binary64_edge_value_counts,
+            positive_width_interval_counts,
+            reachable_binary64_label_counts,
+            observed_label_counts,
             nominal_joint_cardinality,
+            reachable_joint_cardinality,
             observed_joint_cardinality,
             empty_joint_cells,
+            structurally_unreachable_joint_cells,
+            unobserved_reachable_joint_cells,
             low_count_joint_cells,
             minimum_observed_cell_count,
             maximum_observed_cell_count,
@@ -814,8 +1161,152 @@ fn stable_lerp(minimum: f64, maximum: f64, fraction: f64) -> f64 {
     } else if fraction == 1.0 {
         maximum
     } else {
-        minimum * (1.0 - fraction) + maximum * fraction
+        let span = maximum - minimum;
+        let candidate = if span.is_finite() {
+            minimum + fraction * span
+        } else {
+            // A finite-endpoint subtraction can overflow only across a sufficiently wide
+            // opposite-sign interval. Each convex term is then finite and has the endpoint's
+            // sign, so their sum remains within the mathematical interval.
+            minimum * (1.0 - fraction) + maximum * fraction
+        };
+        if candidate.is_finite() {
+            candidate.max(minimum).min(maximum)
+        } else {
+            candidate
+        }
     }
+}
+
+fn validate_fitted_edges(
+    edges: &[f64],
+    bins: usize,
+    minimum: f64,
+    maximum: f64,
+    cancellation: &CancellationToken,
+    completed_work: &mut usize,
+    total_work: usize,
+) -> PidResult<()> {
+    const CONTEXT: &str = "EqualWidthQuantizer::fit edges";
+    if edges.len() != bins + 1
+        || edges
+            .first()
+            .is_none_or(|edge| edge.to_bits() != minimum.to_bits())
+        || edges
+            .last()
+            .is_none_or(|edge| edge.to_bits() != maximum.to_bits())
+    {
+        return Err(PidError::NumericalInstability { context: CONTEXT });
+    }
+    for (index, &edge) in edges.iter().enumerate() {
+        check_cancellation(
+            cancellation,
+            "EqualWidthQuantizer::fit",
+            *completed_work,
+            total_work,
+        )?;
+        if !edge.is_finite()
+            || edge < minimum
+            || edge > maximum
+            || (index > 0 && edges[index - 1] > edge)
+        {
+            return Err(PidError::NumericalInstability { context: CONTEXT });
+        }
+        *completed_work = completed_work
+            .checked_add(1)
+            .ok_or(PidError::SizeOverflow {
+                operation: "EqualWidthQuantizer::fit",
+            })?;
+    }
+    Ok(())
+}
+
+fn binary64_dimension_structure_with_cancellation(
+    edges: &[f64],
+    bins: usize,
+    cancellation: &CancellationToken,
+    completed_work: &mut usize,
+    total_work: usize,
+) -> PidResult<(usize, usize, usize)> {
+    const OPERATION: &str = "EqualWidthQuantizer::transform";
+    let mut positive_width_intervals = 0usize;
+    let mut has_negative_zero = false;
+    let mut has_positive_zero = false;
+    for (index, &edge) in edges.iter().enumerate() {
+        check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+        has_negative_zero |= edge.to_bits() == (-0.0_f64).to_bits();
+        has_positive_zero |= edge.to_bits() == 0.0_f64.to_bits();
+        if index > 0 && edges[index - 1] < edge {
+            positive_width_intervals =
+                positive_width_intervals
+                    .checked_add(1)
+                    .ok_or(PidError::SizeOverflow {
+                        operation: OPERATION,
+                    })?;
+        }
+        *completed_work = completed_work
+            .checked_add(1)
+            .ok_or(PidError::SizeOverflow {
+                operation: OPERATION,
+            })?;
+    }
+    // Monotone finite nonzero values have one binary64 payload per numeric value. A strictly
+    // wider adjacent interval therefore introduces exactly one new value; signed zero is the
+    // only numerically equal pair with two payloads.
+    let distinct_binary64_edges = positive_width_intervals
+        .checked_add(1)
+        .and_then(|value| value.checked_add(usize::from(has_negative_zero && has_positive_zero)))
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
+
+    let minimum = edges[0];
+    let maximum = edges[bins];
+    let mut reachable_labels = if minimum == maximum { 1usize } else { 2usize };
+    if minimum != maximum {
+        for label in 1..bins - 1 {
+            check_cancellation(cancellation, OPERATION, *completed_work, total_work)?;
+            let lower = edges[label];
+            let upper = edges[label + 1];
+            // Endpoint overrides make labels 0 and B-1 reachable. For an interior label j, the
+            // accepted finite preimage is [e_j,e_{j+1}) intersected with (m,M). When e_j=m, the
+            // next representable value must still lie strictly below e_{j+1}; subtraction would
+            // lose exactly the adjacent-value cases this diagnostic is intended to expose.
+            if (lower > minimum && lower < upper) || (lower == minimum && minimum.next_up() < upper)
+            {
+                reachable_labels =
+                    reachable_labels
+                        .checked_add(1)
+                        .ok_or(PidError::SizeOverflow {
+                            operation: OPERATION,
+                        })?;
+            }
+            *completed_work = completed_work
+                .checked_add(1)
+                .ok_or(PidError::SizeOverflow {
+                    operation: OPERATION,
+                })?;
+        }
+    }
+    Ok((
+        distinct_binary64_edges,
+        positive_width_intervals,
+        reachable_labels,
+    ))
+}
+
+fn checked_optional_cardinality_difference(
+    total: Option<u128>,
+    part: u128,
+    context: &'static str,
+) -> PidResult<Option<u128>> {
+    total
+        .map(|value| {
+            value
+                .checked_sub(part)
+                .ok_or(PidError::NumericalInstability { context })
+        })
+        .transpose()
 }
 
 fn check_cancellation(
@@ -940,33 +1431,46 @@ fn try_clone_edges(
     Ok(cloned)
 }
 
+fn try_clone_usize_counts(
+    operation: &'static str,
+    counts: &[usize],
+    budget: ResourceBudget,
+) -> PidResult<Vec<usize>> {
+    let mut cloned = try_vec_with_capacity(operation, counts.len(), budget)?;
+    cloned.extend_from_slice(counts);
+    Ok(cloned)
+}
+
 fn try_clone_edges_with_cancellation(
     operation: &'static str,
     edges: &[Vec<f64>],
     budget: ResourceBudget,
     cancellation: &CancellationToken,
-    completed_work: usize,
+    completed_work: &mut usize,
     total_work: usize,
 ) -> PidResult<Vec<Vec<f64>>> {
-    cancellation.check(operation, completed_work, total_work)?;
+    cancellation.check(operation, *completed_work, total_work)?;
     let mut cloned = try_vec_with_capacity(operation, edges.len(), budget)?;
     for column in edges {
         let mut cloned_column = try_vec_with_capacity(operation, column.len(), budget)?;
         for chunk in column.chunks(CANCELLATION_CHECK_INTERVAL) {
-            cancellation.check(operation, completed_work, total_work)?;
+            cancellation.check(operation, *completed_work, total_work)?;
             cloned_column.extend_from_slice(chunk);
+            *completed_work = completed_work
+                .checked_add(chunk.len())
+                .ok_or(PidError::SizeOverflow { operation })?;
         }
         cloned.push(cloned_column);
     }
-    cancellation.check(operation, completed_work, total_work)?;
+    cancellation.check(operation, *completed_work, total_work)?;
     Ok(cloned)
 }
 
 #[cfg(test)]
 mod tests {
     use super::{
-        hash_categorical_matrix_with_cancellation, EqualWidthQuantizer, OutOfRangePolicy,
-        QuantizerConfig,
+        ceil_log2, hash_categorical_matrix_with_cancellation, EqualWidthQuantizer,
+        OutOfRangePolicy, QuantizationReport, QuantizerConfig,
     };
     use crate::error::PidError;
     use crate::matrix::MatRef;
@@ -1023,6 +1527,26 @@ mod tests {
     }
 
     #[test]
+    fn labels_only_transform_with_cancellation_honors_a_pre_cancelled_token() {
+        let training = [0.0, 1.0, 2.0, 3.0];
+        let matrix = MatRef::new(&training, 4, 1).unwrap();
+        let quantizer = EqualWidthQuantizer::fit(matrix, 2, QuantizerConfig::default()).unwrap();
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+
+        let result = quantizer.transform_with_cancellation(matrix, &cancellation);
+
+        assert!(matches!(
+            result,
+            Err(PidError::Cancelled {
+                operation: "EqualWidthQuantizer::transform",
+                completed_units: 0,
+                total_units: 4,
+            })
+        ));
+    }
+
+    #[test]
     fn uncancelled_quantizer_path_matches_compatibility_entry_points_exactly() {
         let training = [0.0, 1.0, 2.0, 3.0];
         let matrix = MatRef::new(&training, 4, 1).unwrap();
@@ -1064,6 +1588,237 @@ mod tests {
     }
 
     #[test]
+    fn labels_only_transform_matches_report_matrix_across_binary64_edge_cases() {
+        let cases = [
+            (vec![7.0, 7.0], 4),
+            (vec![-0.0, 0.0], 4),
+            (vec![1.0, 1.0_f64.next_up()], 9),
+            (vec![-f64::MAX, f64::MAX], 100),
+        ];
+
+        for (training, bins) in cases {
+            let matrix = MatRef::new(&training, training.len(), 1).unwrap();
+            let quantizer =
+                EqualWidthQuantizer::fit(matrix, bins, QuantizerConfig::default()).unwrap();
+
+            assert_eq!(
+                quantizer.transform(matrix).unwrap(),
+                quantizer.transform_with_report(matrix).unwrap().matrix
+            );
+        }
+    }
+
+    #[test]
+    fn labels_only_and_report_paths_match_out_of_range_policies() {
+        let training = [0.0, 10.0];
+        let evaluation = [-1.0, 0.0, 5.0, 10.0, 11.0];
+        let training_matrix = MatRef::new(&training, 2, 1).unwrap();
+        let evaluation_matrix = MatRef::new(&evaluation, 5, 1).unwrap();
+        let clamp_config = QuantizerConfig::new(
+            OutOfRangePolicy::ClampToBoundary,
+            true,
+            5,
+            "none; raw input units",
+            ResourceBudget::default(),
+        )
+        .unwrap();
+        let clamp_quantizer = EqualWidthQuantizer::fit(training_matrix, 2, clamp_config).unwrap();
+
+        assert_eq!(
+            clamp_quantizer.transform(evaluation_matrix).unwrap(),
+            clamp_quantizer
+                .transform_with_report(evaluation_matrix)
+                .unwrap()
+                .matrix
+        );
+
+        let error_quantizer =
+            EqualWidthQuantizer::fit(training_matrix, 2, QuantizerConfig::default()).unwrap();
+        assert!(matches!(
+            error_quantizer.transform(evaluation_matrix),
+            Err(PidError::QuantizerOutOfRange {
+                column: 0,
+                value: -1.0,
+                training_min: 0.0,
+                training_max: 10.0,
+            })
+        ));
+        assert!(matches!(
+            error_quantizer.transform_with_report(evaluation_matrix),
+            Err(PidError::QuantizerOutOfRange {
+                column: 0,
+                value: -1.0,
+                training_min: 0.0,
+                training_max: 10.0,
+            })
+        ));
+    }
+
+    #[test]
+    fn adjacent_binary64_endpoints_keep_order_range_and_endpoint_labels() {
+        for (minimum, maximum) in [
+            (1.0, f64::from_bits(1.0_f64.to_bits() + 1)),
+            (f64::from_bits(f64::MAX.to_bits() - 1), f64::MAX),
+            (-f64::MAX, -f64::from_bits(f64::MAX.to_bits() - 1)),
+            (f64::from_bits(1), f64::from_bits(2)),
+        ] {
+            for bins in [2, 3, 9, 100] {
+                let training = [minimum, maximum];
+                let matrix = MatRef::new(&training, 2, 1).unwrap();
+                let quantizer =
+                    EqualWidthQuantizer::fit(matrix, bins, QuantizerConfig::default()).unwrap();
+                let edges = &quantizer.edges()[0];
+
+                assert_eq!(edges.len(), bins + 1);
+                assert_eq!(edges[0].to_bits(), minimum.to_bits());
+                assert_eq!(edges[bins].to_bits(), maximum.to_bits());
+                assert!(edges
+                    .iter()
+                    .all(|edge| { edge.is_finite() && *edge >= minimum && *edge <= maximum }));
+                assert!(edges.windows(2).all(|pair| pair[0] <= pair[1]));
+
+                let transformed = quantizer.transform(matrix).unwrap();
+                assert_eq!(transformed.data(), &[0, bins - 1]);
+            }
+        }
+    }
+
+    #[test]
+    fn difference_first_interpolation_repairs_legacy_edge_below_training_minimum() {
+        let minimum = f64::from_bits(0x7fef_ffff_ffff_fffd);
+        let maximum = f64::from_bits(0x7fef_ffff_ffff_fffe);
+        let fraction = 3.0 / 7.0;
+        let legacy_convex = minimum * (1.0 - fraction) + maximum * fraction;
+        assert_eq!(legacy_convex.to_bits(), 0x7fef_ffff_ffff_fffc);
+        assert!(legacy_convex < minimum);
+
+        let training = [minimum, maximum];
+        let matrix = MatRef::new(&training, 2, 1).unwrap();
+        let quantizer = EqualWidthQuantizer::fit(matrix, 7, QuantizerConfig::default()).unwrap();
+        let edges = &quantizer.edges()[0];
+
+        assert_eq!(edges[3].to_bits(), minimum.to_bits());
+        assert!(edges
+            .iter()
+            .all(|edge| *edge >= minimum && *edge <= maximum));
+        assert!(edges.windows(2).all(|pair| pair[0] <= pair[1]));
+    }
+
+    #[test]
+    fn report_separates_nominal_reachable_and_observed_labels() {
+        let adjacent = 1.0_f64.next_up();
+        let two_steps = adjacent.next_up();
+        let cases = [
+            // requested bins, training, distinct edge payloads, positive widths, reachable,
+            // observed, structural nominal empties, reachable sampling empties
+            (4, vec![7.0, 7.0], 1, 0, 1, 1, 3, 0),
+            (4, vec![-0.0, 0.0], 2, 0, 1, 1, 3, 0),
+            (4, vec![1.0, adjacent], 2, 1, 2, 2, 2, 0),
+            (4, vec![1.0, two_steps], 3, 2, 3, 2, 1, 1),
+        ];
+
+        for (
+            bins,
+            training,
+            distinct_edges,
+            positive_widths,
+            reachable,
+            observed,
+            structural,
+            unobserved,
+        ) in cases
+        {
+            let matrix = MatRef::new(&training, training.len(), 1).unwrap();
+            let quantizer =
+                EqualWidthQuantizer::fit(matrix, bins, QuantizerConfig::default()).unwrap();
+            let transformed = quantizer.transform_with_report(matrix).unwrap();
+            let report = transformed.report;
+
+            assert_eq!(report.distinct_binary64_edge_value_counts, [distinct_edges]);
+            assert_eq!(report.positive_width_interval_counts, [positive_widths]);
+            assert_eq!(report.reachable_binary64_label_counts, [reachable]);
+            assert_eq!(report.observed_label_counts, [observed]);
+            assert_eq!(report.nominal_joint_cardinality, Some(bins as u128));
+            assert_eq!(report.reachable_joint_cardinality, Some(reachable as u128));
+            assert_eq!(report.observed_joint_cardinality, observed);
+            assert_eq!(
+                report.structurally_unreachable_joint_cells,
+                Some(structural)
+            );
+            assert_eq!(report.unobserved_reachable_joint_cells, Some(unobserved));
+            assert_eq!(report.empty_joint_cells, Some(structural + unobserved));
+        }
+    }
+
+    #[test]
+    fn report_reachable_label_count_handles_noncontiguous_preimage() {
+        let minimum = 1.0_f64;
+        let middle = minimum.next_up();
+        let maximum = middle.next_up();
+        let training = [minimum, maximum];
+        let matrix = MatRef::new(&training, 2, 1).unwrap();
+        let quantizer = EqualWidthQuantizer::fit(matrix, 4, QuantizerConfig::default()).unwrap();
+        let transformed = quantizer.transform_with_report(matrix).unwrap();
+
+        assert_eq!(
+            quantizer.edges()[0],
+            [minimum, minimum, middle, maximum, maximum]
+        );
+        assert_eq!(transformed.matrix.data(), &[0, 3]);
+        assert_eq!(
+            transformed.report.reachable_binary64_label_counts,
+            [3],
+            "the exact reachable label set is noncontiguous: {{0,2,3}}"
+        );
+        assert_eq!(transformed.report.observed_label_counts, [2]);
+        assert_eq!(transformed.report.unobserved_reachable_joint_cells, Some(1));
+    }
+
+    #[test]
+    fn report_cardinality_none_means_only_u128_product_overflow() {
+        const DIMENSIONS: usize = 129;
+        let constant_training = vec![1.0; DIMENSIONS];
+        let constant_matrix = MatRef::new(&constant_training, 1, DIMENSIONS).unwrap();
+        let constant_quantizer =
+            EqualWidthQuantizer::fit(constant_matrix, 2, QuantizerConfig::default()).unwrap();
+        let constant_report = constant_quantizer
+            .transform_with_report(constant_matrix)
+            .unwrap()
+            .report;
+        assert_eq!(constant_report.nominal_joint_cardinality, None);
+        assert_eq!(constant_report.reachable_joint_cardinality, Some(1));
+        assert_eq!(constant_report.structurally_unreachable_joint_cells, None);
+        assert_eq!(constant_report.unobserved_reachable_joint_cells, Some(0));
+
+        let mut resolved_training = vec![0.0; DIMENSIONS];
+        resolved_training.extend(std::iter::repeat_n(1.0, DIMENSIONS));
+        let resolved_matrix = MatRef::new(&resolved_training, 2, DIMENSIONS).unwrap();
+        let resolved_quantizer =
+            EqualWidthQuantizer::fit(resolved_matrix, 2, QuantizerConfig::default()).unwrap();
+        let resolved_report = resolved_quantizer
+            .transform_with_report(resolved_matrix)
+            .unwrap()
+            .report;
+        assert_eq!(resolved_report.nominal_joint_cardinality, None);
+        assert_eq!(resolved_report.reachable_joint_cardinality, None);
+        assert_eq!(resolved_report.structurally_unreachable_joint_cells, None);
+        assert_eq!(resolved_report.unobserved_reachable_joint_cells, None);
+    }
+
+    #[test]
+    fn opposite_extreme_endpoints_use_a_finite_monotone_convex_fallback() {
+        let training = [-f64::MAX, f64::MAX];
+        let matrix = MatRef::new(&training, 2, 1).unwrap();
+        let quantizer = EqualWidthQuantizer::fit(matrix, 100, QuantizerConfig::default()).unwrap();
+        let edges = &quantizer.edges()[0];
+
+        assert!(edges.iter().all(|edge| edge.is_finite()));
+        assert!(edges.windows(2).all(|pair| pair[0] <= pair[1]));
+        assert_eq!(edges[50].to_bits(), 0.0_f64.to_bits());
+        assert_eq!(quantizer.transform(matrix).unwrap().data(), &[0, 99]);
+    }
+
+    #[test]
     fn held_out_outlier_obeys_explicit_error_policy() {
         let training = [0.0, 10.0];
         let evaluation = [11.0];
@@ -1078,6 +1833,26 @@ mod tests {
             quantizer.transform(MatRef::new(&evaluation, 1, 1).unwrap()),
             Err(PidError::QuantizerOutOfRange { column: 0, .. })
         ));
+    }
+
+    #[test]
+    fn internal_partition_fails_closed_on_nonfinite_values() {
+        let training = [0.0, 1.0];
+        let quantizer = EqualWidthQuantizer::fit(
+            MatRef::new(&training, 2, 1).unwrap(),
+            2,
+            QuantizerConfig::default(),
+        )
+        .unwrap();
+
+        for value in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+            assert!(matches!(
+                quantizer.bin_value(0, value),
+                Err(PidError::NonFiniteInput {
+                    context: "EqualWidthQuantizer::transform"
+                })
+            ));
+        }
     }
 
     #[test]
@@ -1101,6 +1876,22 @@ mod tests {
 
         assert_eq!(json["bin_edges"], serde_json::json!([[0.0, 1.0, 2.0, 3.0]]));
         assert_eq!(json["observed_joint_cardinality"], 3);
+        assert_eq!(
+            json["distinct_binary64_edge_value_counts"],
+            serde_json::json!([4])
+        );
+        assert_eq!(
+            json["positive_width_interval_counts"],
+            serde_json::json!([3])
+        );
+        assert_eq!(
+            json["reachable_binary64_label_counts"],
+            serde_json::json!([3])
+        );
+        assert_eq!(json["observed_label_counts"], serde_json::json!([3]));
+        assert_eq!(json["reachable_joint_cardinality"], 3);
+        assert_eq!(json["structurally_unreachable_joint_cells"], 0);
+        assert_eq!(json["unobserved_reachable_joint_cells"], 0);
         assert!(json.get("training_input_hash").is_some());
         assert!(json.get("transform_input_hash").is_some());
         assert!(json.get("categorical_output_hash").is_some());
@@ -1299,5 +2090,275 @@ mod tests {
                 .unwrap(),
             quantizer
         );
+    }
+
+    #[test]
+    fn fitted_quantizer_clone_preflight_tracks_edges_and_utf8_scaling_work_exactly() {
+        let training = [0.0, 1.0];
+        let scaling_description = "σ→τ".repeat(1_024);
+        let config = QuantizerConfig::new(
+            OutOfRangePolicy::Error,
+            true,
+            5,
+            &scaling_description,
+            ResourceBudget::default(),
+        )
+        .unwrap();
+        let quantizer =
+            EqualWidthQuantizer::fit(MatRef::new(&training, 2, 1).unwrap(), 17, config).unwrap();
+        let edge_count = quantizer.edges.iter().map(Vec::len).sum::<usize>() as u128;
+        let expected_bytes = edge_count * std::mem::size_of::<f64>() as u128
+            + quantizer.edges.len() as u128 * std::mem::size_of::<Vec<f64>>() as u128
+            + scaling_description.len() as u128;
+        let expected_operations = edge_count + scaling_description.len() as u128;
+        let defaults = ResourceBudget::default();
+        let exact_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations,
+            defaults.max_threads,
+        )
+        .unwrap();
+        let byte_limited_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes - 1).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations,
+            defaults.max_threads,
+        )
+        .unwrap();
+        let operation_limited_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations - 1,
+            defaults.max_threads,
+        )
+        .unwrap();
+
+        assert_eq!(
+            quantizer.try_clone_with_budget(exact_budget).unwrap(),
+            quantizer
+        );
+        assert!(matches!(
+            quantizer.try_clone_with_budget(byte_limited_budget),
+            Err(PidError::ResourceLimitExceeded {
+                operation: "EqualWidthQuantizer::try_clone_with_budget",
+                resource: "bytes",
+                requested,
+                limit,
+                ..
+            }) if requested == expected_bytes && limit == expected_bytes - 1
+        ));
+        assert!(matches!(
+            quantizer.try_clone_with_budget(operation_limited_budget),
+            Err(PidError::ResourceLimitExceeded {
+                operation: "EqualWidthQuantizer::try_clone_with_budget",
+                resource: "operations_hint",
+                requested,
+                limit,
+                ..
+            }) if requested == expected_operations && limit == expected_operations - 1
+        ));
+    }
+
+    #[test]
+    fn transform_preflight_tracks_large_bin_report_copy_work_exactly() {
+        let training = [0.0, 1.0];
+        let evaluation = [0.5];
+        let bins = 4_096usize;
+        let scaling_description = "σ→τ".repeat(128);
+        let config = QuantizerConfig::new(
+            OutOfRangePolicy::Error,
+            true,
+            5,
+            &scaling_description,
+            ResourceBudget::default(),
+        )
+        .unwrap();
+        let mut quantizer =
+            EqualWidthQuantizer::fit(MatRef::new(&training, 2, 1).unwrap(), bins, config).unwrap();
+        let data = MatRef::new(&evaluation, 1, 1).unwrap();
+        let estimate = quantizer.transform_resource_estimate(data).unwrap();
+        let edge_count = (bins + 1) as u128;
+        let diagnostic_count = 4u128;
+        let per_coordinate_work = 4u128 + ceil_log2(1) as u128 + ceil_log2(bins) as u128;
+        let expected_bytes = std::mem::size_of::<usize>() as u128
+            + std::mem::size_of::<usize>() as u128
+            + bins as u128
+            + edge_count * std::mem::size_of::<f64>() as u128
+            + std::mem::size_of::<Vec<f64>>() as u128
+            + diagnostic_count * std::mem::size_of::<usize>() as u128
+            + scaling_description.len() as u128;
+        let expected_operations = per_coordinate_work
+            + bins as u128
+            + 3 * edge_count
+            + diagnostic_count
+            + 2
+            + scaling_description.len() as u128;
+
+        assert_eq!(
+            (estimate.estimated_bytes, estimate.operations_hint),
+            (expected_bytes, expected_operations)
+        );
+
+        let defaults = ResourceBudget::default();
+        let exact_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations,
+            defaults.max_threads,
+        )
+        .unwrap();
+        quantizer.config.resource_budget = exact_budget;
+        assert!(quantizer.transform_with_report(data).is_ok());
+        let operation_limited_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations - 1,
+            defaults.max_threads,
+        )
+        .unwrap();
+        quantizer.config.resource_budget = operation_limited_budget;
+        assert!(matches!(
+            quantizer.transform_with_report(data),
+            Err(PidError::ResourceLimitExceeded {
+                operation: "EqualWidthQuantizer::transform",
+                resource: "operations_hint",
+                requested,
+                limit,
+                ..
+            }) if requested == expected_operations && limit == expected_operations - 1
+        ));
+    }
+
+    #[test]
+    fn labels_only_transform_preserves_report_sized_budget_admission() {
+        let training = [0.0, 1.0];
+        let evaluation = [0.5];
+        let mut quantizer = EqualWidthQuantizer::fit(
+            MatRef::new(&training, 2, 1).unwrap(),
+            4_096,
+            QuantizerConfig::default(),
+        )
+        .unwrap();
+        let data = MatRef::new(&evaluation, 1, 1).unwrap();
+        let estimate = quantizer.transform_resource_estimate(data).unwrap();
+        let defaults = ResourceBudget::default();
+        quantizer.config.resource_budget = ResourceBudget::new(
+            u64::try_from(estimate.estimated_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            estimate.operations_hint,
+            defaults.max_threads,
+        )
+        .unwrap();
+        assert_eq!(quantizer.transform(data).unwrap().data(), &[2_048]);
+
+        quantizer.config.resource_budget = ResourceBudget::new(
+            u64::try_from(estimate.estimated_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            estimate.operations_hint - 1,
+            defaults.max_threads,
+        )
+        .unwrap();
+
+        let result = quantizer.transform(data);
+
+        assert!(matches!(
+            result,
+            Err(PidError::ResourceLimitExceeded {
+                operation: "EqualWidthQuantizer::transform",
+                resource: "operations_hint",
+                requested,
+                limit,
+                ..
+            }) if requested == estimate.operations_hint && limit + 1 == requested
+        ));
+    }
+
+    fn irregular_mutable_report() -> QuantizationReport {
+        let training = [0.0, 1.0];
+        let quantizer = EqualWidthQuantizer::fit(
+            MatRef::new(&training, 2, 1).unwrap(),
+            2,
+            QuantizerConfig::default(),
+        )
+        .unwrap();
+        let mut report = quantizer
+            .transform_with_report(MatRef::new(&training, 2, 1).unwrap())
+            .unwrap()
+            .report;
+        report.bin_edges = vec![vec![-1.0, 0.0], vec![], vec![1.0; 5]];
+        report.distinct_binary64_edge_value_counts = vec![0; 2];
+        report.positive_width_interval_counts = vec![0; 3];
+        report.reachable_binary64_label_counts = vec![0; 5];
+        report.observed_label_counts = vec![0; 7];
+        report.scaling_description = "σ→τ".to_owned();
+        assert_eq!(report.scaling_description.chars().count(), 3);
+        assert_eq!(report.scaling_description.len(), 7);
+        report
+    }
+
+    #[test]
+    fn report_clone_preflight_tracks_actual_heap_and_copy_work_exactly() {
+        let report = irregular_mutable_report();
+        let edge_count = report.bin_edges.iter().map(Vec::len).sum::<usize>();
+        let diagnostic_count = [
+            report.distinct_binary64_edge_value_counts.len(),
+            report.positive_width_interval_counts.len(),
+            report.reachable_binary64_label_counts.len(),
+            report.observed_label_counts.len(),
+        ]
+        .into_iter()
+        .sum::<usize>();
+        let expected_bytes = edge_count as u128 * std::mem::size_of::<f64>() as u128
+            + report.bin_edges.len() as u128 * std::mem::size_of::<Vec<f64>>() as u128
+            + diagnostic_count as u128 * std::mem::size_of::<usize>() as u128
+            + report.scaling_description.len() as u128;
+        let expected_operations = edge_count as u128
+            + diagnostic_count as u128
+            + report.scaling_description.len() as u128;
+        let defaults = ResourceBudget::default();
+        let exact_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations,
+            defaults.max_threads,
+        )
+        .unwrap();
+        let byte_limited_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes - 1).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations,
+            defaults.max_threads,
+        )
+        .unwrap();
+        let operation_limited_budget = ResourceBudget::new(
+            u64::try_from(expected_bytes).unwrap(),
+            defaults.max_pairwise_distances,
+            expected_operations - 1,
+            defaults.max_threads,
+        )
+        .unwrap();
+
+        assert_eq!(report.try_clone_with_budget(exact_budget).unwrap(), report);
+        assert!(matches!(
+            report.try_clone_with_budget(byte_limited_budget),
+            Err(PidError::ResourceLimitExceeded {
+                operation: "QuantizationReport::try_clone_with_budget",
+                resource: "bytes",
+                requested,
+                limit,
+                ..
+            }) if requested == expected_bytes && limit == expected_bytes - 1
+        ));
+        assert!(matches!(
+            report.try_clone_with_budget(operation_limited_budget),
+            Err(PidError::ResourceLimitExceeded {
+                operation: "QuantizationReport::try_clone_with_budget",
+                resource: "operations_hint",
+                requested,
+                limit,
+                ..
+            }) if requested == expected_operations && limit == expected_operations - 1
+        ));
     }
 }

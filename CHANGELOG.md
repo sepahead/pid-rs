@@ -9,6 +9,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Advance the pre-1.0 public Rust API signature identity from revision 3 to revision 4 for the
+  additive `QuantizationReport` fields; the prior revision snapshots remain immutable.
+
 - Tighten the Actions checkout-residue normalizer to an exact reviewed mode allowlist. A hosted
   descendant run exposed Ubuntu 24.04's Git-template mode `0755`; that exact mode is now accepted
   because it adds no group/other write access, while nearby and special-bit modes remain rejected.
@@ -16,6 +19,30 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   stable-read, and no-follow checks. Add one exact
   history-scoped Gitleaks fingerprint for prose on an unrelated remote publication branch that
   matched `generic-api-key`; this does not suppress the rule, path, line, or any other commit.
+
+- Keep PID formulas, estimands, and units unchanged while hardening selected represented-binary64
+  reductions. Categorical SxPID final empirical-PMF component averaging, categorical $I_{\min}$
+  PID2 synergy, and continuous shared-exclusions PID2 synergy now exactly reduce their already
+  represented finite operands and round once, ties-to-even. Pointwise SxPID Möbius inversion
+  remains compensated: retained bounded suites establish mapped pointwise agreement only within
+  their documented floating tolerance, whereas pinned 2-, 3-, and 4-source final-average bit
+  witnesses justify the narrower change. A pinned two-source $I_{\min}$ source-exchange witness
+  justifies its synergy repair;
+  $I_{\min}$ PID3 retains its compensated path. Larger reported SxPID pointwise and $I_{\min}$
+  PID3 negative searches are retained only as unqualified historical observations with zero
+  release-evidence credit because their executables and raw logs were not preserved. The checked
+  PID2 constructor can
+  now fail closed at its documented inclusive 32-position reconstruction guard. Fitted
+  equal-width edges are overflow-safe and validated, and Rust/Python quantization reports add
+  per-dimension edge/interval/reachable/observed counts plus reachable, structurally unreachable,
+  and reachable-but-unobserved joint cardinalities. Quantizer/report cloning and fitted-quantized
+  I_min/SxPID preflights now charge actual edge, diagnostic-vector, and UTF-8 scaling payloads in
+  both byte and operation ceilings; transform preflight conservatively includes report-copy work.
+  The already labels-only Rust `EqualWidthQuantizer::transform` now shares the report path's exact
+  bin assignment but skips report construction after unchanged admission, while Python and
+  report-returning Rust calls retain full provenance.
+  Extreme-data bits, hashes, resource estimates, and closed serialized schemas can change; none of
+  this makes an estimator exact or asserts a flaw in a defining PID publication.
 
 - Preserve exact C11 (`91d954160a7e717ae46b6088175ae52e92570127`) as a consumed,
   failed L11 lifecycle with no Q11 or R11 credit. Composite-v12 is an append-only direct-child

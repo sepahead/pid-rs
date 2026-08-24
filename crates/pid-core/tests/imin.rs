@@ -4,8 +4,26 @@ use pid_core::stable::imin::{
     imin_pid3_quantized_resource_estimate, imin_pid3_quantized_with_budget,
     imin_pid3_resource_estimate, IminInputEncoding, IminPid3Result,
 };
-use pid_core::stable::quantized::{EqualWidthQuantizer, QuantizerConfig};
+use pid_core::stable::quantized::{EqualWidthQuantizer, QuantizationReport, QuantizerConfig};
 use pid_core::{DiscreteMatRef, MatRef, PidError, ResourceBudget};
+
+fn quantization_report_copy_cost(report: &QuantizationReport) -> (u128, u128) {
+    let edge_count = report.bin_edges.iter().map(Vec::len).sum::<usize>() as u128;
+    let diagnostic_count = [
+        report.distinct_binary64_edge_value_counts.len(),
+        report.positive_width_interval_counts.len(),
+        report.reachable_binary64_label_counts.len(),
+        report.observed_label_counts.len(),
+    ]
+    .into_iter()
+    .sum::<usize>() as u128;
+    let string_bytes = report.scaling_description.len() as u128;
+    let heap_bytes = report.bin_edges.len() as u128 * std::mem::size_of::<Vec<f64>>() as u128
+        + edge_count * std::mem::size_of::<f64>() as u128
+        + diagnostic_count * std::mem::size_of::<usize>() as u128
+        + string_bytes;
+    (heap_bytes, edge_count + diagnostic_count + string_bytes)
+}
 
 fn assert_close(left: f64, right: f64, context: &str) {
     assert!(
@@ -218,6 +236,65 @@ fn categorical_imin_records_empirical_pmf_metadata() {
 }
 
 #[test]
+fn categorical_imin_pid2_pinned_synergy_is_bit_equivariant_under_source_swap() {
+    let source_one = [2, 1, 0, 2, 0, 0, 2, 1, 0, 2, 1, 0];
+    let source_two = [2, 2, 3, 2, 1, 1, 0, 3, 3, 2, 2, 0];
+    let target = [2, 0, 1, 0, 2, 0, 0, 1, 2, 2, 1, 0];
+    let n = target.len();
+    let source_one = DiscreteMatRef::new(&source_one, n, 1).unwrap();
+    let source_two = DiscreteMatRef::new(&source_two, n, 1).unwrap();
+    let target = DiscreteMatRef::new(&target, n, 1).unwrap();
+
+    let original = imin_pid2(source_one, source_two, target).unwrap();
+    let swapped = imin_pid2(source_two, source_one, target).unwrap();
+    let expected = [
+        0x3fcb_65a8_c841_cbb6,
+        0x3fa1_4cc2_9dd5_1034,
+        0x3fc3_1cb2_a6c6_c002,
+        0x3fc6_5cf8_95b1_f81f,
+        0x3fcf_b8d9_6fb7_0fc3,
+        0x3fd7_412d_b784_45dc,
+        0x3fe2_4ca1_2b0b_f1f9,
+    ];
+
+    assert_eq!(
+        [
+            original.redundancy.to_bits(),
+            original.unique_s1.to_bits(),
+            original.unique_s2.to_bits(),
+            original.synergy.to_bits(),
+            original.mi_s1_t.to_bits(),
+            original.mi_s2_t.to_bits(),
+            original.mi_s1s2_t.to_bits(),
+        ],
+        expected
+    );
+    assert_eq!(
+        [
+            swapped.redundancy.to_bits(),
+            swapped.unique_s2.to_bits(),
+            swapped.unique_s1.to_bits(),
+            swapped.synergy.to_bits(),
+            swapped.mi_s2_t.to_bits(),
+            swapped.mi_s1_t.to_bits(),
+            swapped.mi_s1s2_t.to_bits(),
+        ],
+        expected
+    );
+
+    // Executable negative control for the historical left-associated four-term residual. The
+    // defining Williams--Beer formula is symmetric; these differing payloads are solely an
+    // association-order artifact over the same represented coordinate multiset.
+    let historical_original =
+        ((original.mi_s1s2_t - original.mi_s1_t) - original.mi_s2_t) + original.redundancy;
+    let historical_swapped =
+        ((swapped.mi_s1s2_t - swapped.mi_s1_t) - swapped.mi_s2_t) + swapped.redundancy;
+    assert_eq!(historical_original.to_bits(), 0x3fc6_5cf8_95b1_f81e);
+    assert_eq!(historical_swapped.to_bits(), 0x3fc6_5cf8_95b1_f81f);
+    assert_ne!(historical_original.to_bits(), historical_swapped.to_bits());
+}
+
+#[test]
 fn fitted_quantized_imin_serializes_every_fixed_transform_report() {
     let training = [0.0, 1.0, 2.0, 3.0];
     let evaluation_s1 = [0.25, 0.75, 2.25, 2.75];
@@ -247,6 +324,7 @@ fn fitted_quantized_imin_serializes_every_fixed_transform_report() {
     .unwrap();
     let quantized_estimate = imin_pid2_quantized_resource_estimate(&s1, &s2, &target).unwrap();
     assert!(quantized_estimate.estimated_bytes > categorical_estimate.estimated_bytes);
+    assert!(quantized_estimate.operations_hint > categorical_estimate.operations_hint);
     let default_budget = ResourceBudget::default();
     let max_bytes = u64::try_from(quantized_estimate.estimated_bytes - 1).unwrap();
     let report_limited_budget = ResourceBudget::new(
@@ -262,6 +340,23 @@ fn fitted_quantized_imin_serializes_every_fixed_transform_report() {
             resource: "bytes",
             ..
         })
+    ));
+    let operation_limited_budget = ResourceBudget::new(
+        default_budget.max_bytes,
+        default_budget.max_pairwise_distances,
+        quantized_estimate.operations_hint - 1,
+        default_budget.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        imin_pid2_quantized_with_budget(&s1, &s2, &target, operation_limited_budget),
+        Err(PidError::ResourceLimitExceeded {
+            resource: "operations_hint",
+            requested,
+            limit,
+            ..
+        }) if requested == quantized_estimate.operations_hint
+            && limit == quantized_estimate.operations_hint - 1
     ));
 
     let result = imin_pid2_quantized(&s1, &s2, &target).unwrap();
@@ -279,6 +374,111 @@ fn fitted_quantized_imin_serializes_every_fixed_transform_report() {
         serde_json::json!([[0.0, 1.5, 3.0]])
     );
     assert_eq!(json["empirical_pmf"]["sample_count"], 4);
+}
+
+#[test]
+fn fitted_quantized_imin_resource_estimate_tracks_mutated_report_payloads_exactly() {
+    let training = [0.0, 1.0, 2.0, 3.0];
+    let quantizer = EqualWidthQuantizer::fit(
+        MatRef::new(&training, 4, 1).unwrap(),
+        2,
+        QuantizerConfig::default(),
+    )
+    .unwrap();
+    let mut s1 = quantizer
+        .transform_with_report(MatRef::new(&training, 4, 1).unwrap())
+        .unwrap();
+    let mut s2 = quantizer
+        .transform_with_report(MatRef::new(&training, 4, 1).unwrap())
+        .unwrap();
+    let mut target = quantizer
+        .transform_with_report(MatRef::new(&training, 4, 1).unwrap())
+        .unwrap();
+    s1.report.bin_edges = vec![vec![-1.0, 0.0], vec![1.0; 3]];
+    s1.report.distinct_binary64_edge_value_counts = vec![0; 2];
+    s1.report.positive_width_interval_counts = vec![0; 3];
+    s1.report.reachable_binary64_label_counts = vec![0; 5];
+    s1.report.observed_label_counts = vec![0; 7];
+    s1.report.scaling_description = "σ→τ".to_owned();
+    s2.report.bin_edges = vec![vec![], vec![2.0; 4], vec![3.0]];
+    s2.report.distinct_binary64_edge_value_counts = vec![0; 11];
+    s2.report.positive_width_interval_counts = vec![0; 13];
+    s2.report.reachable_binary64_label_counts = vec![0; 17];
+    s2.report.observed_label_counts = vec![0; 19];
+    s2.report.scaling_description = "µm²".to_owned();
+    target.report.bin_edges = vec![vec![4.0; 2], vec![5.0; 5]];
+    target.report.distinct_binary64_edge_value_counts = vec![0; 23];
+    target.report.positive_width_interval_counts = vec![0; 29];
+    target.report.reachable_binary64_label_counts = vec![0; 31];
+    target.report.observed_label_counts = vec![0; 37];
+    target.report.scaling_description = "Δt→∞".to_owned();
+    let base = imin_pid2_resource_estimate(
+        s1.matrix.as_ref(),
+        s2.matrix.as_ref(),
+        target.matrix.as_ref(),
+    )
+    .unwrap();
+    let report_costs = [&s1.report, &s2.report, &target.report].map(quantization_report_copy_cost);
+    let report_heap_bytes = report_costs.iter().map(|cost| cost.0).sum::<u128>();
+    let report_copy_operations = report_costs.iter().map(|cost| cost.1).sum::<u128>();
+    let expected_bytes = base.estimated_bytes
+        + 3 * std::mem::size_of::<QuantizationReport>() as u128
+        + report_heap_bytes;
+    let expected_operations = base.operations_hint + report_copy_operations;
+    let estimate = imin_pid2_quantized_resource_estimate(&s1, &s2, &target).unwrap();
+
+    assert_eq!(
+        (
+            estimate.estimated_bytes,
+            estimate.operations_hint,
+            estimate.pairwise_distances,
+        ),
+        (expected_bytes, expected_operations, base.pairwise_distances,)
+    );
+
+    let defaults = ResourceBudget::default();
+    let exact_budget = ResourceBudget::new(
+        u64::try_from(expected_bytes).unwrap(),
+        defaults.max_pairwise_distances,
+        expected_operations,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(imin_pid2_quantized_with_budget(&s1, &s2, &target, exact_budget).is_ok());
+    let byte_limited_budget = ResourceBudget::new(
+        u64::try_from(expected_bytes - 1).unwrap(),
+        defaults.max_pairwise_distances,
+        expected_operations,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        imin_pid2_quantized_with_budget(&s1, &s2, &target, byte_limited_budget),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "imin_pid2_quantized",
+            resource: "bytes",
+            requested,
+            limit,
+            ..
+        }) if requested == expected_bytes && limit == expected_bytes - 1
+    ));
+    let operation_limited_budget = ResourceBudget::new(
+        u64::try_from(expected_bytes).unwrap(),
+        defaults.max_pairwise_distances,
+        expected_operations - 1,
+        defaults.max_threads,
+    )
+    .unwrap();
+    assert!(matches!(
+        imin_pid2_quantized_with_budget(&s1, &s2, &target, operation_limited_budget),
+        Err(PidError::ResourceLimitExceeded {
+            operation: "imin_pid2_quantized",
+            resource: "operations_hint",
+            requested,
+            limit,
+            ..
+        }) if requested == expected_operations && limit == expected_operations - 1
+    ));
 }
 
 #[test]

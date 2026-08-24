@@ -27,7 +27,7 @@ _SxUnsupportedInferenceTuple = tuple[
 
 class _PublicRustApiSignatureIdentity(TypedDict):
     epoch: Literal[0]
-    revision: Literal[3]
+    revision: Literal[4]
     scope: Literal["proposed_release_scope_profiles"]
     status: Literal["pre_1_0_review"]
 
@@ -436,9 +436,16 @@ class QuantizationReport:
     n_rows: int
     n_features: int
     num_bins: int
+    distinct_binary64_edge_value_counts: list[int]
+    positive_width_interval_counts: list[int]
+    reachable_binary64_label_counts: list[int]
+    observed_label_counts: list[int]
     nominal_joint_cardinality: int | None
+    reachable_joint_cardinality: int | None
     observed_joint_cardinality: int
     empty_joint_cells: int | None
+    structurally_unreachable_joint_cells: int | None
+    unobserved_reachable_joint_cells: int | None
     low_count_joint_cells: int
     minimum_observed_cell_count: int
     maximum_observed_cell_count: int
