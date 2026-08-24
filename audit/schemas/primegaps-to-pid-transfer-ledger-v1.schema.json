@@ -1,0 +1,409 @@
+{
+  "$defs": {
+    "councilRole": {
+      "additionalProperties": false,
+      "properties": {
+        "independence_limit": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "role": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "independence_limit",
+        "role",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "designDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "decision": {
+          "enum": [
+            "adopt",
+            "adopt-conditionally",
+            "defer",
+            "reject"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "required_controls": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "decision",
+        "id",
+        "reason",
+        "required_controls",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "pattern": "^[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+      "type": "string"
+    },
+    "lensEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "disposition": {
+          "enum": [
+            "PASS",
+            "CORRECT",
+            "NARROW",
+            "OPEN",
+            "NEGATIVE",
+            "N/A"
+          ]
+        },
+        "evidence": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "findings": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "lens": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "enum": [
+            "Estimand",
+            "Types",
+            "Quantifiers",
+            "Mappings",
+            "Support/reference measure",
+            "Lattice/source count",
+            "Units/gauge",
+            "Population/empirical",
+            "Sampling",
+            "Selection/UQ",
+            "Formal correspondence",
+            "Kernel/axioms/toolchain",
+            "Route dependency diversity",
+            "Numerical/binary64",
+            "Compiled/wrapper parity",
+            "Counterexample/mutation",
+            "Custody/threat/refusal",
+            "Citations/novelty",
+            "Ecosystem/authority",
+            "Resource/platform/release"
+          ],
+          "type": "string"
+        },
+        "nonimplications": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        }
+      },
+      "required": [
+        "disposition",
+        "evidence",
+        "findings",
+        "lens",
+        "name",
+        "nonimplications"
+      ],
+      "type": "object"
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nonEmptyStringArray": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "sourceAnchor": {
+      "additionalProperties": false,
+      "properties": {
+        "locator": {
+          "pattern": "(?:https://github\\.com/AxiomMath/PrimeGapsLib/blob/[0-9A-Za-z._-]+/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+#L[0-9]+-L[0-9]+|https://primegaps\\.axiommath\\.ai/paper/)",
+          "type": "string"
+        },
+        "meaning": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "locator",
+        "meaning"
+      ],
+      "type": "object"
+    },
+    "sourceArtifact": {
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "durability": {
+              "const": "repository-path"
+            },
+            "locator": {
+              "pattern": "claims/SX-CERTIFIED-AVERAGED-PID3-001/(?:[a-z0-9-]+\\.md|failures/[a-z0-9-]+\\.md)",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_sha256",
+            "source_size_bytes"
+          ]
+        },
+        {
+          "properties": {
+            "durability": {
+              "const": "hash-only-external"
+            },
+            "locator": {
+              "pattern": "(?:https://github\\.com/AxiomMath/PrimeGapsLib/(?:tree/[0-9a-f]{40}|blob/[0-9a-f]{40}/[A-Za-z0-9._~!$&'()*+,;=:@%/-]+|actions/runs/[0-9]+/job/[0-9]+)|https://primegaps\\.axiommath\\.ai/(?:paper/|blueprint\\.pdf)|urn:pid-rs:derived:[a-z0-9-]+)",
+              "type": "string"
+            }
+          },
+          "required": [
+            "durability",
+            "locator"
+          ]
+        }
+      ],
+      "properties": {
+        "artifact_id": {
+          "$ref": "#/$defs/id"
+        },
+        "durability": {
+          "enum": [
+            "repository-path",
+            "hash-only-external"
+          ]
+        },
+        "kind": {
+          "enum": [
+            "git-tree",
+            "html",
+            "pdf",
+            "text",
+            "json",
+            "workflow-log"
+          ]
+        },
+        "locator": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "revision": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_size_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "reviewed-exact-bytes",
+            "reviewed-git-object",
+            "provider-observation"
+          ]
+        }
+      },
+      "required": [
+        "artifact_id",
+        "durability",
+        "kind",
+        "locator",
+        "revision",
+        "sha256",
+        "size_bytes",
+        "status"
+      ],
+      "type": "object"
+    },
+    "transferEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_assumptions": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "disposition": {
+          "enum": [
+            "accept",
+            "accept-conditionally",
+            "defer",
+            "reject"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "pid_analogue": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "preserved_assumptions": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "prohibited_inferences": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "rationale": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "required_evidence": {
+          "$ref": "#/$defs/nonEmptyStringArray"
+        },
+        "source_anchors": {
+          "items": {
+            "$ref": "#/$defs/sourceAnchor"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "source_semantics": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "changed_assumptions",
+        "disposition",
+        "id",
+        "pid_analogue",
+        "preserved_assumptions",
+        "prohibited_inferences",
+        "rationale",
+        "required_evidence",
+        "source_anchors",
+        "source_semantics"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "urn:pid-rs:schema:primegaps-to-pid-transfer-ledger:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "council": {
+      "additionalProperties": false,
+      "properties": {
+        "integrator_rule": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "roles": {
+          "items": {
+            "$ref": "#/$defs/councilRole"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "integrator_rule",
+        "roles"
+      ],
+      "type": "object"
+    },
+    "design_decisions": {
+      "items": {
+        "$ref": "#/$defs/designDecision"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "lens_review": {
+      "items": {
+        "$ref": "#/$defs/lensEntry"
+      },
+      "maxItems": 20,
+      "minItems": 20,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nontransfer_firewalls": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "open_obligations": {
+      "$ref": "#/$defs/nonEmptyStringArray"
+    },
+    "review_date": {
+      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+      "type": "string"
+    },
+    "reviewed_source_commit": {
+      "const": "1faa7b14e82ddebc2772dfb9153922f01b106477"
+    },
+    "schema": {
+      "const": "pid-rs/primegaps-to-pid-transfer-ledger/v1"
+    },
+    "source_manifest": {
+      "items": {
+        "$ref": "#/$defs/sourceArtifact"
+      },
+      "maxItems": 19,
+      "minItems": 19,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "source_manifest_boundary": {
+      "const": "Repository-path entries are byte-checked local recovery inputs. Every external entry is hash-only: this ledger records its observed digest, size, locator, and bounded status but does not retain the bytes, guarantee retrieval, or establish durable custody."
+    },
+    "subject": {
+      "const": "PrimeGapsLib proof-engineering lessons for pid-rs verification and discovery"
+    },
+    "transfer_entries": {
+      "items": {
+        "$ref": "#/$defs/transferEntry"
+      },
+      "maxItems": 12,
+      "minItems": 12,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "council",
+    "design_decisions",
+    "lens_review",
+    "nontransfer_firewalls",
+    "open_obligations",
+    "review_date",
+    "reviewed_source_commit",
+    "schema",
+    "source_manifest",
+    "source_manifest_boundary",
+    "subject",
+    "transfer_entries"
+  ],
+  "title": "PrimeGaps-to-PID semantic transfer ledger v1",
+  "type": "object"
+}

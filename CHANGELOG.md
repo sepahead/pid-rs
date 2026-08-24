@@ -1264,6 +1264,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a source-pinned research blueprint and machine-readable transfer ledger for the
+  PrimeGapsLib review. The canonical Markdown and derived 20-page PDF record the reviewed sieve
+  theorem's conditional proof architecture, a 20-lens semantic-transfer council, formal-tool and
+  autoresearch limits, the exact averaged empirical categorical SxPID3 pilot formulas, and one
+  reusable branch/worktree durability process. The ledger binds the reviewed source commit,
+  repository anchors, external hash-only observations, nonclaims, and the proposed 13-file
+  SxPID3 assurance packet; its isolated normal/optimized checker and 36-mutation hostile suite
+  fail closed on semantic, roster, anchor, custody, and independence drift. Programs A--E remain
+  open. This is a research design and audit record, not an accepted higher-source certificate,
+  estimator validation, population-PID result, scientific-novelty claim, external-byte recovery
+  guarantee, or independent human review.
 - Added a separate kernel-checked two-source categorical SxPID count-to-atom bridge. Starting from
   the completed supplied-count event boundary, it fixes the four cumulative nodes, four concrete
   Möbius atoms, three components, and all 24 cumulative/atom coordinates; proves exact inverse and

@@ -2032,6 +2032,37 @@ log-product theorem, claim binding, and supply-chain policy, plus the typed cita
 countermodel. These lanes remain deliberately separate: passing all of them is a layered assurance
 result, not one end-to-end theorem connecting arbitrary Rust executions to population PID claims.
 
+## PrimeGaps-to-PID research blueprint
+
+`check-primegaps-to-pid-transfer-ledger.py` validates the source-pinned transfer ledger behind the
+canonical PID discovery, verification, and durability blueprint. It binds the exact reviewed
+PrimeGapsLib commit and repository anchors, the canonical 20-lens registry, transfer cards,
+decision and council rosters, the proposed 13-file averaged categorical SxPID3 packet, and explicit
+nonclaims. External web, paper, CI, and certificate observations are hash-only references: the
+checker does not turn them into recovered bytes, publisher authentication, theorem truth, or
+independent review. Its hostile self-test reseals and rejects 36 causal mutations in normal and
+optimized isolated Python.
+
+`build-pid-discovery-verification-blueprint.sh` derives the human PDF only from the canonical
+Markdown, reviewed header/filter, and two handcrafted SVGs. It performs two isolated same-toolchain
+LuaLaTeX builds, requires exact byte equality, A4 geometry, semantic text anchors, embedded Unicode
+fonts, and a warning-free log, and installs the PDF atomically. Same-toolchain equality is not a
+cross-toolchain rendering theorem; rendered-page inspection remains required. The PDF explains one
+general promotion state machine for branches and worktrees rather than generating a new PDF for
+each migration.
+
+```text
+python3 -I -S -B scripts/check-primegaps-to-pid-transfer-ledger.py
+python3 -O -I -S -B scripts/check-primegaps-to-pid-transfer-ledger.py
+python3 -I -S -B scripts/check-primegaps-to-pid-transfer-ledger-self-test.py
+python3 -O -I -S -B scripts/check-primegaps-to-pid-transfer-ledger-self-test.py
+bash scripts/build-pid-discovery-verification-blueprint.sh
+```
+
+These artifacts adopt proof roles and assurance structure only. They do not transfer sieve
+formulas, bounds, constants, or conclusions to PID, and they grant no KSG, continuous-support,
+population-inference, calibration, scientific-novelty, or higher-source-certificate claim.
+
 `check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
 rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX
 outside math, unsafe table delimiters, display-only constructs in inline math, and commands that
