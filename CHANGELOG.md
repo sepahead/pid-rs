@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Tighten the Actions checkout-residue normalizer to accept only owner-readable/writable
+  `.git/info/exclude` modes with optional group/other read bits, report rejected modes exactly,
+  and retain byte, object-type, link-count, stable-read, and no-follow checks. Add one exact
+  history-scoped Gitleaks fingerprint for prose on an unrelated remote publication branch that
+  matched `generic-api-key`; this does not suppress the rule, path, line, or any other commit.
+
 - Preserve exact C11 (`91d954160a7e717ae46b6088175ae52e92570127`) as a consumed,
   failed L11 lifecycle with no Q11 or R11 credit. Composite-v12 is an append-only direct-child
   repair that coordinates all certified-SxPID execution-container bindings, retires the v11 push
@@ -21,6 +27,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   through a separate live map, and independently verifies the historical receipt and custody
   maps against reachable C9 Git objects. This later finding is not an L11 observation, does not
   consume L12, and does not imply any Lean theorem or replay result failed.
+
+- Preserve the now-terminal exact-C12 hosted cut without reviving it: attempt-1 CodeQL succeeded,
+  while attempt-1 repository CI and dedicated-v12 failed, so Q12 is false for either possible L12
+  value and R12 is permanently unissued. L12 remains explicitly not adjudicated. A canonical
+  JSON record and closed schema bind the exact C12 topology, run/job identities, five retrieved
+  failed-job log byte identities, and the zero-credit nonimplications. The original C12 checker
+  and workflow remain recoverable from exact C12 Git objects; the live workflow and Just target
+  now provide preservation-only checking and replay refusal. This is operational lifecycle
+  custody, not a mathematical, estimator, scientific, or security conclusion.
 
 - Published composite-v8 C8 as exact commit `7c80d48db415279fc4d744eadb1515797606912b`
   with tree `ba01abdd86a542b359df75e9058fccf28cfc5a3d`. Attempt-1 CodeQL passed;

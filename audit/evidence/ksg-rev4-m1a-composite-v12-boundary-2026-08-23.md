@@ -5,7 +5,8 @@
 - Fixed C11 tree: `97841c6eda10573ddc3537c9e3b2ca41a93a3fa1`
 - Required C12 message: `Repair KSG M1a composite v12 contract\n`
 - Conditional R12 message: `Record KSG M1a composite v12 receipt\n`
-- State: candidate authoring; L12 and the hosted C12 qualification terms have not run.
+- State: terminal hosted failure; Q12 is false and R12 is permanently unissued. L12 is not
+  adjudicated by the terminal record.
 
 ## Why C11 cannot be retried or credited
 
@@ -88,7 +89,8 @@ C12, R11, and R12 messages may not be reused. None of the three R11 evidence pat
 any reachable commit. The C11 failure diagnostic must be introduced by C12 and is zero-credit
 negative evidence.
 
-R12, if it is ever issued, is exactly one unsigned direct child of C12 with a four-row delta:
+The now-unreachable prospective R12 contract required exactly one unsigned direct child of C12
+with a four-row delta:
 
 1. modify the self-excluding current-source manifest;
 2. add the fresh L12 local closure;
@@ -103,30 +105,47 @@ merge, split introduction, message reuse, or a near-name provides no credit.
 
 For one exact C12 commit and tree,
 
-\[
+$$
 Q_{12}=L_{12}\land CI_{12}^{(1)}\land CodeQL_{12}^{(1)}\land Dedicated_{12}^{(1)}.
-\]
+$$
 
-Every hosted term is attempt 1, terminal success, and bound to the same C12 identity. L12 is one
-fresh successful bounded execution of `just ksg-composite-v12`. A timeout, signal, nonzero exit,
-recorder failure, or unusable output consumes that exact-C12 attempt and leaves Q12 false. Offline
-self-tests and `--preflight-live` are explicitly non-evidence operations.
+The prospective contract required every hosted term to be attempt 1, terminal success, and bound
+to the same C12 identity. The observed exact-C12 cut does not satisfy that requirement. Attempt-1
+CodeQL run `32665994793` completed successfully with all four jobs successful. Attempt-1 repository
+CI run `32665995643` completed in failure with 41 successful and four failed jobs. Attempt-1
+dedicated-v12 run `32665995620` completed in failure with its sole job failed. Therefore Q12 is
+false for either Boolean value of L12. The terminal record makes no statement about whether L12
+ran or about any L12 outcome; `L12 = not_adjudicated` is not a failure claim.
+
+The canonical machine record is
+`audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json`. It records the exact
+run and failed-job identities plus byte counts and SHA-256 values for five retrieved job logs.
+Those log bindings are unauthenticated retrieval evidence; the raw logs are not committed. Three
+logs contain the bounded marker `ERROR: git exclude mode changed`, but neither the actual hosted
+mode nor its cause is adjudicated. The secret-scan finding is likewise not adjudicated here.
+The C12-owned `ksg-rev4-m1a-composite-v12-path-policy-v1.json` remains a historical prospective
+snapshot and therefore retains its pre-run candidate fields; it is not the current terminal-state
+authority and is not silently rewritten as if C12 had contained future observations.
 
 The v11 push workflow and the v11 Just entry point are retired to explicit refusal. The active v12
-workflow can qualify only exact C12. Later pushes are preservation checks and cannot create another
-L12, hosted attempt-1 term, or receipt authority.
+workflow is now a nonqualifying terminal-preservation lane, and `just ksg-composite-v12` refuses
+replay. `just ksg-composite-v12-preservation` checks the terminal record, exact C12 topology,
+historical C12 checker/workflow blobs, absence of every R12 message/evidence path, and
+record-introduction/preservation history. Later pushes cannot create L12, another hosted
+attempt-1 term, qualification credit, or receipt authority.
 
 ## Source and evidence ordering
 
-Three independent numbering namespaces are deliberately kept separate. Composite `R12` is the
-conditional receipt commit defined above. Lean `r14` is the preserved fourteenth replay receipt.
+Three independent numbering namespaces are deliberately kept separate. Composite `R12` was the
+conditional receipt commit defined above and is now permanently unissued. Lean `r14` is the
+preserved fourteenth replay receipt.
 `current_source_generation.generation_slot = 17` is only the next current-source generation slot
 after the rejected C10 slot 15 and C11 slot 16; it is neither of those receipts and is not
 `pid-rs/current-source-state` schema revision 1. The policy records `generated_fresh` because the
 self-excluding slot-17 manifest was generated only after the other C12 source and the C11 failure
 diagnostic had settled. That status does not claim a containing commit or any qualification term.
 
-The authoring order is strict:
+The prospective authoring order was:
 
 1. settle and review all v12 source except the C11 failure record and current-source manifest;
 2. install and review the canonical C11 failure diagnostic without treating it as L11;
@@ -137,11 +156,17 @@ The authoring order is strict:
 7. derive the receipt from mode-0600 local and hosted inputs through descriptor-only inputs; and
 8. issue exact R12 only if all four Q12 terms are true.
 
+The failed hosted conjunction permanently prevents steps 7 and 8. This retrospective statement
+does not adjudicate step 5 or infer an L12 outcome from the hosted failures.
+
 ## Trust and nonimplications
 
-The v12 checker checksum-binds and reuses frozen v11 primitives for descriptor reads, Git object
+The historical exact-C12 v12 checker checksum-binds and reuses frozen v11 primitives for
+descriptor reads, Git object
 verification, bounded subprocesses, canonical JSON, ZIP preflight/streaming, and complete-probe
-bracketing. The v12 wrapper supplies new lifecycle semantics and is separately mutation-tested.
+bracketing. Its wrapper supplies the original lifecycle semantics and is separately
+mutation-tested. The terminal overlay does not rerun that production route; its narrower checker
+instead binds the exact historical checker/workflow blobs and the immutable terminal disposition.
 This reduces duplicated implementation, but it does not make the v11 code, Python runtime, Git,
 ZIP library, filesystem, provider, or wrapper infallible.
 

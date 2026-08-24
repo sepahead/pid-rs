@@ -108,9 +108,9 @@ expected-red success convention is used.
 
 For one exact C11 commit and tree:
 
-\[
+$$
 Q_{11}=L_{11}\land CI_{11}^{(1)}\land CodeQL_{11}^{(1)}\land Dedicated_{11}^{(1)}.
-\]
+$$
 
 Every hosted term is attempt 1, terminal success, and bound to that same exact commit and tree.
 L11 is a fresh successful local closure of `just ksg-composite-v11`. If any term is absent,

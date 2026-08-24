@@ -1101,6 +1101,35 @@ derive an R4 receipt, reinterpret a rerun as attempt 1, or seed evidence from it
 Composite-v5 uses separately versioned predecessor/successor captures and a separately typed R5
 receipt; those artifacts preserve the failed observation without reviving or renaming R4.
 
+Exact C12 `01466e88b0550333c2718f1716289e9642e30dc6` is terminal with zero qualification
+credit. Attempt-1 CodeQL succeeded; attempt-1 repository CI and dedicated-v12 failed. Thus Q12 is
+false for either possible L12 value and R12 is permanently unissued, while L12 itself remains
+`not_adjudicated`. The canonical terminal record and schema are:
+
+```text
+audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json
+audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json
+```
+
+The record binds five retrieved failed-job log byte counts and SHA-256 values but does not retain
+the logs or authenticate the retrieval. It does not infer the actual hosted `.git/info/exclude`
+mode from the shared failure marker, adjudicate the secret-scan finding, or claim an L12 outcome.
+The original checker and dedicated-workflow bytes remain recoverable from exact C12 Git objects.
+The C12-owned path-policy JSON remains an unchanged prospective pre-run snapshot; its candidate
+fields are historical source, not a competing current-state authority.
+Descendants run only the repeatable refusal/preservation surface:
+
+```text
+just ksg-composite-v12                 # always refuses replay
+just ksg-composite-v12-preservation    # zero-credit terminal preservation
+```
+
+The preservation checker and its 34-mutation hostile suite run in normal and optimized isolated
+Python modes. They require the exact C12 commit/tree/parent/message/delta, false Q12, permanently
+unissued R12, `L12 = not_adjudicated`, absence of reachable R12 messages/evidence, one terminal
+record introduction, immutable descendant preservation, and exact historical C12 source recovery.
+The repurposed dedicated workflow is nonqualifying and cannot create an attempt-1 term or receipt.
+
 The schema alone grants no status. Hosted identifiers, times, logs, alerts, and artifacts remain
 unauthenticated observations. M1a stays `integration_no_go`; this route provides no KSG M1c,
 estimator, support, calibration, categorical MGW, Schick--Poland, Ehrlich continuous, `I_min`,

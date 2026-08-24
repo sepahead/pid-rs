@@ -1,0 +1,528 @@
+{
+  "$defs": {
+    "codeqlJob": {
+      "additionalProperties": false,
+      "properties": {
+        "completed_at": {
+          "type": "string"
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "started_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "completed_at",
+        "conclusion",
+        "job_id",
+        "name",
+        "started_at"
+      ],
+      "type": "object"
+    },
+    "codeqlRun": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "const": 1
+        },
+        "conclusion": {
+          "const": "success"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "event": {
+          "const": "dynamic"
+        },
+        "head_branch": {
+          "const": "main"
+        },
+        "head_sha": {
+          "const": "01466e88b0550333c2718f1716289e9642e30dc6"
+        },
+        "html_url": {
+          "const": "https://github.com/sepahead/pid-rs/actions/runs/32665994793"
+        },
+        "job_counts": {
+          "$ref": "#/$defs/jobCounts"
+        },
+        "jobs": {
+          "items": {
+            "$ref": "#/$defs/codeqlJob"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array"
+        },
+        "logs_captured_by_this_record": {
+          "const": false
+        },
+        "run_attempt": {
+          "const": 1
+        },
+        "run_id": {
+          "const": 32665994793
+        },
+        "run_number": {
+          "const": 138
+        },
+        "run_started_at": {
+          "type": "string"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "workflow_definition_name": {
+          "const": "CodeQL"
+        },
+        "workflow_id": {
+          "const": 310582096
+        }
+      },
+      "required": [
+        "attempt",
+        "conclusion",
+        "created_at",
+        "event",
+        "head_branch",
+        "head_sha",
+        "html_url",
+        "job_counts",
+        "jobs",
+        "logs_captured_by_this_record",
+        "run_attempt",
+        "run_id",
+        "run_number",
+        "run_started_at",
+        "status",
+        "updated_at",
+        "workflow_definition_name",
+        "workflow_id"
+      ],
+      "type": "object"
+    },
+    "failedJob": {
+      "additionalProperties": false,
+      "properties": {
+        "bounded_log_marker": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "completed_at": {
+          "type": "string"
+        },
+        "conclusion": {
+          "const": "failure"
+        },
+        "finding_adjudication": {
+          "type": "string"
+        },
+        "job_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "log_retrieval": {
+          "$ref": "#/$defs/logRetrieval"
+        },
+        "mode_or_cause_adjudication": {
+          "const": "not_adjudicated"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "started_at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "bounded_log_marker",
+        "completed_at",
+        "conclusion",
+        "job_id",
+        "log_retrieval",
+        "name",
+        "started_at"
+      ],
+      "type": "object"
+    },
+    "jobCounts": {
+      "additionalProperties": false,
+      "properties": {
+        "failure": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "other": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "success": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "total": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "failure",
+        "other",
+        "success",
+        "total"
+      ],
+      "type": "object"
+    },
+    "logRetrieval": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "const": "unauthenticated_retrieval_bytes"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "size_bytes": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "classification",
+        "sha256",
+        "size_bytes"
+      ],
+      "type": "object"
+    },
+    "terminalRun": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "const": 1
+        },
+        "conclusion": {
+          "const": "failure"
+        },
+        "created_at": {
+          "type": "string"
+        },
+        "event": {
+          "const": "push"
+        },
+        "failed_jobs": {
+          "items": {
+            "$ref": "#/$defs/failedJob"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "head_branch": {
+          "const": "main"
+        },
+        "head_sha": {
+          "const": "01466e88b0550333c2718f1716289e9642e30dc6"
+        },
+        "html_url": {
+          "pattern": "^https://github\\.com/sepahead/pid-rs/actions/runs/[0-9]+$",
+          "type": "string"
+        },
+        "job_counts": {
+          "$ref": "#/$defs/jobCounts"
+        },
+        "run_attempt": {
+          "const": 1
+        },
+        "run_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "run_number": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "run_started_at": {
+          "type": "string"
+        },
+        "status": {
+          "const": "completed"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "workflow_definition_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "workflow_id": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "attempt",
+        "conclusion",
+        "created_at",
+        "event",
+        "failed_jobs",
+        "head_branch",
+        "head_sha",
+        "html_url",
+        "job_counts",
+        "run_attempt",
+        "run_id",
+        "run_number",
+        "run_started_at",
+        "status",
+        "updated_at",
+        "workflow_definition_name",
+        "workflow_id"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "custody": {
+      "additionalProperties": false,
+      "properties": {
+        "checker_path": {
+          "const": "scripts/check-ksg-m1a-composite-v12-terminal.py"
+        },
+        "forbidden_r12_evidence_paths": {
+          "const": [
+            "audit/evidence/ksg-rev4-m1a-composite-local-closure-v12-2026-08-23.json",
+            "audit/evidence/ksg-rev4-m1a-composite-receipt-v12-2026-08-23.json",
+            "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-hosted-capture-v12-2026-08-23.json"
+          ]
+        },
+        "forbidden_r12_message": {
+          "const": "Record KSG M1a composite v12 receipt\n"
+        },
+        "introduction_rule": {
+          "const": "This record must first appear in exactly one HEAD-reachable descendant of C12 and remain byte-and-mode identical in every HEAD-reachable descendant of that introduction."
+        },
+        "raw_logs_retained_in_repository": {
+          "const": false
+        },
+        "record_path": {
+          "const": "audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json"
+        },
+        "schema_path": {
+          "const": "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json"
+        },
+        "self_test_path": {
+          "const": "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py"
+        },
+        "successor_workflow_role": {
+          "const": "nonqualifying_terminal_preservation_only"
+        }
+      },
+      "required": [
+        "checker_path",
+        "forbidden_r12_evidence_paths",
+        "forbidden_r12_message",
+        "introduction_rule",
+        "raw_logs_retained_in_repository",
+        "record_path",
+        "schema_path",
+        "self_test_path",
+        "successor_workflow_role"
+      ],
+      "type": "object"
+    },
+    "historical_c12_source": {
+      "additionalProperties": false,
+      "properties": {
+        "recovery_boundary": {
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "git_blob_oid": {
+                "pattern": "^[0-9a-f]{40}$",
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "size_bytes": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "git_blob_oid",
+              "path",
+              "role",
+              "sha256",
+              "size_bytes"
+            ],
+            "type": "object"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "recovery_boundary",
+        "sources"
+      ],
+      "type": "object"
+    },
+    "hosted_attempt_1": {
+      "additionalProperties": false,
+      "properties": {
+        "codeql": {
+          "$ref": "#/$defs/codeqlRun"
+        },
+        "dedicated_v12": {
+          "$ref": "#/$defs/terminalRun"
+        },
+        "repository_ci": {
+          "$ref": "#/$defs/terminalRun"
+        }
+      },
+      "required": [
+        "codeql",
+        "dedicated_v12",
+        "repository_ci"
+      ],
+      "type": "object"
+    },
+    "nonimplications": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 11,
+      "minItems": 11,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "qualification": {
+      "const": {
+        "ci12_attempt_1": "terminal_failure",
+        "codeql12_attempt_1": "terminal_success",
+        "dedicated12_attempt_1": "terminal_failure",
+        "formula": "Q12 = L12 AND CI12_attempt1 AND CodeQL12_attempt1 AND Dedicated12_attempt1",
+        "hosted_qualification_credit": "zero",
+        "l12": "not_adjudicated",
+        "q12": false,
+        "q12_evaluation": "false_for_either_boolean_value_of_L12_because_CI12_attempt1_and_Dedicated12_attempt1_are_false",
+        "r12": "permanently_unissued"
+      }
+    },
+    "repository": {
+      "const": "sepahead/pid-rs"
+    },
+    "schema": {
+      "const": "pid-rs/ksg-rev4-m1a-composite-v12-terminal-failure/v1"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "subject": {
+      "additionalProperties": false,
+      "properties": {
+        "c11_parent": {
+          "const": "91d954160a7e717ae46b6088175ae52e92570127"
+        },
+        "c12_commit": {
+          "const": "01466e88b0550333c2718f1716289e9642e30dc6"
+        },
+        "c12_delta_count": {
+          "const": 20
+        },
+        "c12_delta_paths": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "change": {
+                "enum": [
+                  "A",
+                  "M"
+                ]
+              },
+              "mode": {
+                "const": "100644"
+              },
+              "path": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "change",
+              "mode",
+              "path"
+            ],
+            "type": "object"
+          },
+          "maxItems": 20,
+          "minItems": 20,
+          "type": "array"
+        },
+        "c12_message": {
+          "const": "Repair KSG M1a composite v12 contract\n"
+        },
+        "c12_tree": {
+          "const": "c445a647963ac12fbe1c352cc042956a82c7d69e"
+        },
+        "c12_unsigned": {
+          "const": true
+        }
+      },
+      "required": [
+        "c11_parent",
+        "c12_commit",
+        "c12_delta_count",
+        "c12_delta_paths",
+        "c12_message",
+        "c12_tree",
+        "c12_unsigned"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "custody",
+    "historical_c12_source",
+    "hosted_attempt_1",
+    "nonimplications",
+    "qualification",
+    "repository",
+    "schema",
+    "schema_revision",
+    "subject"
+  ],
+  "title": "pid-rs KSG M1a composite C12 terminal hosted failure preservation",
+  "type": "object"
+}

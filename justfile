@@ -618,86 +618,27 @@ ksg-composite-v11:
     echo "C11 L11 attempt is permanently consumed; refusing replay" >&2
     exit 1
 
-# Shared non-evidence gates used by both the authoring audit and exact L12 command.
-_ksg-composite-v12-common:
+# Exact C12 has terminal failed attempt-1 CI and dedicated terms. Q12 is false and R12 is
+# permanently unissued; L12 is deliberately not adjudicated by the terminal record.
+ksg-composite-v12:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "C12 qualification is permanently closed; refusing replay" >&2
+    exit 1
+
+# Repeatable, zero-credit check of the immutable terminal C12 boundary.
+ksg-composite-v12-preservation:
     #!/usr/bin/env bash
     set -euo pipefail
     umask 077
-    python3 -I -S -B -c 'import sys; raise SystemExit(0 if sys.implementation.name == "cpython" and sys.version_info == (3, 14, 6, "final", 0) and sys._is_gil_enabled() else 1)'
-    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12.XXXXXX")"
+    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12-preservation.XXXXXX")"
     trap 'rm -rf -- "$result_root"' EXIT
-    command -v rg >/dev/null
-    rg --version >/dev/null
-    python3 -I -S -B scripts/check-github-action-pins.py > "$result_root/action-pins.json"
-    python3 -O -I -S -B scripts/check-github-action-pins.py > "$result_root/action-pins.opt.json"
-    cmp "$result_root/action-pins.json" "$result_root/action-pins.opt.json"
-    python3 -I -S -B scripts/check-github-action-pins-self-test.py > "$result_root/action-pins-self.json"
-    python3 -O -I -S -B scripts/check-github-action-pins-self-test.py > "$result_root/action-pins-self.opt.json"
-    cmp "$result_root/action-pins-self.json" "$result_root/action-pins-self.opt.json"
-    python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-    python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-    python3 -I -S -B scripts/normalize-actions-checkout-git-info-exclude-self-test.py
-    python3 -O -I -S -B scripts/normalize-actions-checkout-git-info-exclude-self-test.py
-    scripts/check-release-state-self-test.sh
-    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.json"
-    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.opt.json"
-    cmp "$result_root/zeta.json" "$result_root/zeta.opt.json"
-    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-    python3 -I -S -B scripts/check-certified-sxpid2-claim.py
-    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
-    python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-    python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-    scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --exact
-    scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --exact
-    scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
-    scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
-    scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh --exact
-    scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --exact
-    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf-self-test.sh
-    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh --exact
-    python3 -I -S -B scripts/check-lean-toolchain-freeze.py
-    python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
-    python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-    python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-    python3 -I -S -B scripts/check-current-source-state-v1.py
-    python3 -O -I -S -B scripts/check-current-source-state-v1.py
-    python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
-    python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v12.py --self-test > "$result_root/hosted.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12.py --self-test > "$result_root/hosted.opt.json"
-    cmp "$result_root/hosted.json" "$result_root/hosted.opt.json"
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --self-test > "$result_root/local.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --self-test > "$result_root/local.opt.json"
-    cmp "$result_root/local.json" "$result_root/local.opt.json"
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --preflight-live > "$result_root/preflight.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v12-local-closure.py --preflight-live > "$result_root/preflight.opt.json"
-    cmp "$result_root/preflight.json" "$result_root/preflight.opt.json"
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v12-self-test.py > "$result_root/self-test.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-self-test.py > "$result_root/self-test.opt.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py > "$result_root/check.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py > "$result_root/check.opt.json"
+    cmp "$result_root/check.json" "$result_root/check.opt.json"
+    python3 -I -S -B scripts/check-ksg-m1a-composite-v12-terminal-self-test.py > "$result_root/self-test.json"
+    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-terminal-self-test.py > "$result_root/self-test.opt.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.opt.json"
-
-# Sole L12 production command. Do not run before exact C12 is frozen and committed.
-ksg-composite-v12: _ksg-composite-v12-common
-    #!/usr/bin/env bash
-    set -euo pipefail
-    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12-static.XXXXXX")"
-    trap 'rm -rf -- "$result_root"' EXIT
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v12.py --auto > "$result_root/static.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12.py --auto > "$result_root/static.opt.json"
-    cmp "$result_root/static.json" "$result_root/static.opt.json"
-
-# Repeatable authoring-only gate; it cannot produce or qualify L12 evidence.
-ksg-composite-v12-authoring: _ksg-composite-v12-common
-    #!/usr/bin/env bash
-    set -euo pipefail
-    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v12-authoring.XXXXXX")"
-    trap 'rm -rf -- "$result_root"' EXIT
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v12.py --authoring > "$result_root/static.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12.py --authoring > "$result_root/static.opt.json"
-    cmp "$result_root/static.json" "$result_root/static.opt.json"
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
@@ -810,7 +751,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v12 certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

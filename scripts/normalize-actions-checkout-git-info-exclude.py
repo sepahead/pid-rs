@@ -49,7 +49,8 @@ EXPECTED: Final[bytes] = (
     b"# *~\n"
 )
 EXPECTED_SHA256: Final[str] = hashlib.sha256(EXPECTED).hexdigest()
-ALLOWED_MODES: Final[frozenset[int]] = frozenset((0o644, 0o664))
+REQUIRED_MODE_BITS: Final[int] = 0o600
+PERMITTED_MODE_BITS: Final[int] = 0o644
 
 
 class NormalizationError(RuntimeError):
@@ -72,6 +73,14 @@ def identity(info: os.stat_result) -> tuple[int, ...]:
         info.st_size,
         info.st_mtime_ns,
         info.st_ctime_ns,
+    )
+
+
+def reviewed_mode(mode: int) -> bool:
+    """Accept owner-rw modes with only optional group/other read bits."""
+    return (
+        mode & REQUIRED_MODE_BITS == REQUIRED_MODE_BITS
+        and mode & ~PERMITTED_MODE_BITS == 0
     )
 
 
@@ -122,7 +131,7 @@ def normalize(root: Path) -> dict[str, object]:
                     before = os.stat("exclude", dir_fd=info_fd, follow_symlinks=False)
                 except FileNotFoundError:
                     return {
-                        "allowed_modes": ["0644", "0664"],
+                        "allowed_modes": ["0600", "0604", "0640", "0644"],
                         "disposition": "already_absent",
                         "expected_sha256": EXPECTED_SHA256,
                         "path": RELATIVE,
@@ -132,7 +141,12 @@ def normalize(root: Path) -> dict[str, object]:
                 )
                 require(before.st_nlink == 1, "git exclude is hard-linked")
                 observed_mode = stat.S_IMODE(before.st_mode)
-                require(observed_mode in ALLOWED_MODES, "git exclude mode changed")
+                require(
+                    reviewed_mode(observed_mode),
+                    "git exclude mode rejected: "
+                    f"observed={observed_mode:04o}; "
+                    "required_bits=0600; permitted_bits=0644",
+                )
                 require(before.st_size == len(EXPECTED), "git exclude size changed")
                 flags = os.O_RDONLY
                 if hasattr(os, "O_CLOEXEC"):
@@ -188,7 +202,7 @@ def normalize(root: Path) -> dict[str, object]:
     finally:
         os.close(root_fd)
     return {
-        "allowed_modes": ["0644", "0664"],
+        "allowed_modes": ["0600", "0604", "0640", "0644"],
         "disposition": "reviewed_default_residue_removed",
         "expected_sha256": EXPECTED_SHA256,
         "observed_mode": f"{observed_mode:04o}",

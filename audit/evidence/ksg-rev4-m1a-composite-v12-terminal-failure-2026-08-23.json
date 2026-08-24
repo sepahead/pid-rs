@@ -1,0 +1,349 @@
+{
+  "custody": {
+    "checker_path": "scripts/check-ksg-m1a-composite-v12-terminal.py",
+    "forbidden_r12_evidence_paths": [
+      "audit/evidence/ksg-rev4-m1a-composite-local-closure-v12-2026-08-23.json",
+      "audit/evidence/ksg-rev4-m1a-composite-receipt-v12-2026-08-23.json",
+      "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-hosted-capture-v12-2026-08-23.json"
+    ],
+    "forbidden_r12_message": "Record KSG M1a composite v12 receipt\n",
+    "introduction_rule": "This record must first appear in exactly one HEAD-reachable descendant of C12 and remain byte-and-mode identical in every HEAD-reachable descendant of that introduction.",
+    "raw_logs_retained_in_repository": false,
+    "record_path": "audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json",
+    "schema_path": "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json",
+    "self_test_path": "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py",
+    "successor_workflow_role": "nonqualifying_terminal_preservation_only"
+  },
+  "historical_c12_source": {
+    "recovery_boundary": "These exact blobs are recoverable from the local exact-C12 Git object graph. That is byte-identity evidence, not execution, provider-authentication, authorship, or durable-archive evidence.",
+    "sources": [
+      {
+        "git_blob_oid": "05f8659dafd2ab07c0e03278c26c2cbf920996b7",
+        "path": ".github/workflows/ksg-m1a-composite-v12.yml",
+        "role": "historical_exact_c12_dedicated_workflow_source",
+        "sha256": "f6e58072ba2fdd3a7346b638fec4f671b8d256bd8ffbde469f295c331f945bab",
+        "size_bytes": 5577
+      },
+      {
+        "git_blob_oid": "827b33aced620110e55576987e5a064adda16643",
+        "path": "scripts/check-ksg-m1a-composite-v12.py",
+        "role": "historical_exact_c12_checker_source_not_reached_by_dedicated_failure",
+        "sha256": "fb28f2a4e1c27c1f8f15def1ff4dfa16647f21a555888c46371614695dcb897c",
+        "size_bytes": 81394
+      }
+    ]
+  },
+  "hosted_attempt_1": {
+    "codeql": {
+      "attempt": 1,
+      "conclusion": "success",
+      "created_at": "2026-08-23T20:57:13Z",
+      "event": "dynamic",
+      "head_branch": "main",
+      "head_sha": "01466e88b0550333c2718f1716289e9642e30dc6",
+      "html_url": "https://github.com/sepahead/pid-rs/actions/runs/32665994793",
+      "job_counts": {
+        "failure": 0,
+        "other": 0,
+        "success": 4,
+        "total": 4
+      },
+      "jobs": [
+        {
+          "completed_at": "2026-08-23T20:59:40Z",
+          "conclusion": "success",
+          "job_id": 97259336021,
+          "name": "Analyze (python)",
+          "started_at": "2026-08-23T20:57:25Z"
+        },
+        {
+          "completed_at": "2026-08-23T20:58:35Z",
+          "conclusion": "success",
+          "job_id": 97259336162,
+          "name": "Analyze (javascript-typescript)",
+          "started_at": "2026-08-23T20:57:26Z"
+        },
+        {
+          "completed_at": "2026-08-23T21:00:35Z",
+          "conclusion": "success",
+          "job_id": 97259336240,
+          "name": "Analyze (rust)",
+          "started_at": "2026-08-23T20:58:08Z"
+        },
+        {
+          "completed_at": "2026-08-23T20:59:05Z",
+          "conclusion": "success",
+          "job_id": 97259336277,
+          "name": "Analyze (actions)",
+          "started_at": "2026-08-23T20:58:25Z"
+        }
+      ],
+      "logs_captured_by_this_record": false,
+      "run_attempt": 1,
+      "run_id": 32665994793,
+      "run_number": 138,
+      "run_started_at": "2026-08-23T20:57:13Z",
+      "status": "completed",
+      "updated_at": "2026-08-23T21:00:36Z",
+      "workflow_definition_name": "CodeQL",
+      "workflow_id": 310582096
+    },
+    "dedicated_v12": {
+      "attempt": 1,
+      "conclusion": "failure",
+      "created_at": "2026-08-23T20:57:14Z",
+      "event": "push",
+      "failed_jobs": [
+        {
+          "bounded_log_marker": "ERROR: git exclude mode changed",
+          "completed_at": "2026-08-23T20:57:23Z",
+          "conclusion": "failure",
+          "job_id": 97259335595,
+          "log_retrieval": {
+            "classification": "unauthenticated_retrieval_bytes",
+            "sha256": "c538c753e823f32dad7865f5fda61a763dd0972f2283fd052903764c5dfa0387",
+            "size_bytes": 18127
+          },
+          "mode_or_cause_adjudication": "not_adjudicated",
+          "name": "Validate fresh C11-to-C12 bounded contract",
+          "started_at": "2026-08-23T20:57:16Z"
+        }
+      ],
+      "head_branch": "main",
+      "head_sha": "01466e88b0550333c2718f1716289e9642e30dc6",
+      "html_url": "https://github.com/sepahead/pid-rs/actions/runs/32665995620",
+      "job_counts": {
+        "failure": 1,
+        "other": 0,
+        "success": 0,
+        "total": 1
+      },
+      "run_attempt": 1,
+      "run_id": 32665995620,
+      "run_number": 1,
+      "run_started_at": "2026-08-23T20:57:14Z",
+      "status": "completed",
+      "updated_at": "2026-08-23T20:57:23Z",
+      "workflow_definition_name": "KSG M1a composite v12",
+      "workflow_id": 340771655
+    },
+    "repository_ci": {
+      "attempt": 1,
+      "conclusion": "failure",
+      "created_at": "2026-08-23T20:57:14Z",
+      "event": "push",
+      "failed_jobs": [
+        {
+          "bounded_log_marker": "ERROR: git exclude mode changed",
+          "completed_at": "2026-08-23T20:57:24Z",
+          "conclusion": "failure",
+          "job_id": 97259335615,
+          "log_retrieval": {
+            "classification": "unauthenticated_retrieval_bytes",
+            "sha256": "e341d9602c79bf08bcea689ad6090255065efd5e100ec454c3e22813074e050c",
+            "size_bytes": 15674
+          },
+          "mode_or_cause_adjudication": "not_adjudicated",
+          "name": "Formal proof cores, frozen Lean 4.33.0 replay, and historical packet custody",
+          "started_at": "2026-08-23T20:57:16Z"
+        },
+        {
+          "bounded_log_marker": "ERROR: git exclude mode changed",
+          "completed_at": "2026-08-23T20:57:23Z",
+          "conclusion": "failure",
+          "job_id": 97259335637,
+          "log_retrieval": {
+            "classification": "unauthenticated_retrieval_bytes",
+            "sha256": "ed322ede641abd781aaa326e1052c1507b2a8ee2080767e9fea97cbbb8f30930",
+            "size_bytes": 15664
+          },
+          "mode_or_cause_adjudication": "not_adjudicated",
+          "name": "Formal LaTeX / PDF inventory and cross-toolchain structure",
+          "started_at": "2026-08-23T20:57:16Z"
+        },
+        {
+          "bounded_log_marker": "Markdown math check failed with 6 finding(s)",
+          "completed_at": "2026-08-23T21:01:47Z",
+          "conclusion": "failure",
+          "finding_adjudication": "six_reported_source_format_findings_not_a_mathematical_correctness_adjudication",
+          "job_id": 97259335845,
+          "log_retrieval": {
+            "classification": "unauthenticated_retrieval_bytes",
+            "sha256": "39d73fd91f09e933991d9b5aa1b03ddc69991a9531cc458f2a0bf7c39038fc0f",
+            "size_bytes": 108732
+          },
+          "name": "Release scope and scientific evidence coherence",
+          "started_at": "2026-08-23T20:59:42Z"
+        },
+        {
+          "bounded_log_marker": "leaks found: 1",
+          "completed_at": "2026-08-23T21:00:22Z",
+          "conclusion": "failure",
+          "finding_adjudication": "not_adjudicated",
+          "job_id": 97259335897,
+          "log_retrieval": {
+            "classification": "unauthenticated_retrieval_bytes",
+            "sha256": "c3441e9d78a95c26489165e3d11a419e395507b914ce9cd75223f6f05dcb2d22",
+            "size_bytes": 33225
+          },
+          "name": "Secret scan (full history)",
+          "started_at": "2026-08-23T20:59:35Z"
+        }
+      ],
+      "head_branch": "main",
+      "head_sha": "01466e88b0550333c2718f1716289e9642e30dc6",
+      "html_url": "https://github.com/sepahead/pid-rs/actions/runs/32665995643",
+      "job_counts": {
+        "failure": 4,
+        "other": 0,
+        "success": 41,
+        "total": 45
+      },
+      "run_attempt": 1,
+      "run_id": 32665995643,
+      "run_number": 204,
+      "run_started_at": "2026-08-23T20:57:14Z",
+      "status": "completed",
+      "updated_at": "2026-08-23T22:35:44Z",
+      "workflow_definition_name": "CI",
+      "workflow_id": 297369773
+    }
+  },
+  "nonimplications": [
+    "The provider metadata, timestamps, job conclusions, retrieved log bytes, and their digests do not authenticate themselves or establish trusted time.",
+    "The recorded log digests and sizes do not retain the raw logs, prove future provider availability, or create an archive of those logs.",
+    "The shared 'git exclude mode changed' marker does not establish the actual hosted mode, why that mode arose, or whether one cause explains every occurrence.",
+    "The one reported secret-scan finding is not adjudicated here as a secret, a false positive, or a security defect.",
+    "The six Markdown-math findings are source-format diagnostics and do not establish an error in a formula, theorem, proof, estimator, or PID result.",
+    "No statement is made here about whether L12 ran, succeeded, failed, timed out, emitted a record, or was otherwise usable; its state is not adjudicated.",
+    "CodeQL success is a bounded tool outcome, not proof of security, absence of vulnerabilities, or correctness.",
+    "Successful individual CI jobs do not override the terminal failure of the repository-CI conjunction and do not transfer qualification credit.",
+    "Q12 and R12 are operational lifecycle conclusions only; they validate no PID functional, KSG estimator, theorem, numerical result, scientific claim, or application.",
+    "A later descendant repair or green run cannot become an exact-C12 attempt-1 term, revive Q12, issue R12, or rewrite these terminal C12 facts.",
+    "Exact bytes recovered from unsigned Git objects are byte-identity evidence, not provider authentication, authorship, execution evidence, or durable preservation."
+  ],
+  "qualification": {
+    "ci12_attempt_1": "terminal_failure",
+    "codeql12_attempt_1": "terminal_success",
+    "dedicated12_attempt_1": "terminal_failure",
+    "formula": "Q12 = L12 AND CI12_attempt1 AND CodeQL12_attempt1 AND Dedicated12_attempt1",
+    "hosted_qualification_credit": "zero",
+    "l12": "not_adjudicated",
+    "q12": false,
+    "q12_evaluation": "false_for_either_boolean_value_of_L12_because_CI12_attempt1_and_Dedicated12_attempt1_are_false",
+    "r12": "permanently_unissued"
+  },
+  "repository": "sepahead/pid-rs",
+  "schema": "pid-rs/ksg-rev4-m1a-composite-v12-terminal-failure/v1",
+  "schema_revision": 1,
+  "subject": {
+    "c11_parent": "91d954160a7e717ae46b6088175ae52e92570127",
+    "c12_commit": "01466e88b0550333c2718f1716289e9642e30dc6",
+    "c12_delta_count": 20,
+    "c12_delta_paths": [
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v11.yml"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": ".github/workflows/ksg-m1a-composite-v12.yml"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "CHANGELOG.md"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "audit/evidence/current-source-state-v1.json"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v11-local-closure-failure-v12-2026-08-23.json"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/evidence/ksg-rev4-m1a-composite-v12-path-policy-v1.json"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-hosted-capture-v12.schema.json"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-local-closure-v12.schema.json"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-receipt-v12.schema.json"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "audit/schemas/ksg-rev4-m1a-composite-v11-failure-v12.schema.json"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "justfile"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v12-local-closure.py"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "scripts/capture-ksg-m1a-composite-v12.py"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "scripts/check-certified-sxpid2-claim-self-test.py"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "scripts/check-certified-sxpid2-claim.py"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v12-self-test.py"
+      },
+      {
+        "change": "A",
+        "mode": "100644",
+        "path": "scripts/check-ksg-m1a-composite-v12.py"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze-self-test.py"
+      },
+      {
+        "change": "M",
+        "mode": "100644",
+        "path": "scripts/check-lean-toolchain-freeze.py"
+      }
+    ],
+    "c12_message": "Repair KSG M1a composite v12 contract\n",
+    "c12_tree": "c445a647963ac12fbe1c352cc042956a82c7d69e",
+    "c12_unsigned": true
+  }
+}
