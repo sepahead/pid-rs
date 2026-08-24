@@ -2594,11 +2594,12 @@ def main() -> int:
                 "justfile",
                 (
                     " formal-finite-convergence lean-toolchain-freeze "
-                    "ksg-composite-v12 certified-sxpid citation-edge-countermodel "
+                    "ksg-composite-v12-preservation certified-sxpid "
+                    "citation-edge-countermodel "
                 ),
                 (
                     " formal-finite-convergence lean-toolchain-freeze "
-                    "ksg-composite-v12 citation-edge-countermodel "
+                    "ksg-composite-v12-preservation citation-edge-countermodel "
                 ),
             ),
             "revision-3 release-audit dependency missing",
@@ -2609,11 +2610,11 @@ def main() -> int:
                 baseline,
                 "justfile",
                 (
-                    "lean-toolchain-freeze ksg-composite-v12 certified-sxpid "
+                    "lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid "
                     "citation-edge-countermodel formal-pdfs"
                 ),
                 (
-                    "lean-toolchain-freeze ksg-composite-v12  certified-sxpid "
+                    "lean-toolchain-freeze ksg-composite-v12-preservation  certified-sxpid "
                     "citation-edge-countermodel formal-pdfs"
                 ),
             ),
