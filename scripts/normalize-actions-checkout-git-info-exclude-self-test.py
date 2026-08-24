@@ -81,15 +81,20 @@ def run_cases(module) -> int:
 
         absent_root, _ = fixture(parent, "absent")
         absent = module.normalize(absent_root)
-        require(absent["disposition"] == "already_absent", "absent positive")
+        require(
+            absent["disposition"] == "already_absent"
+            and absent["allowed_modes"] == list(module.ALLOWED_MODE_SPELLINGS),
+            "absent positive",
+        )
 
-        for mode in (0o600, 0o604, 0o640, 0o644):
+        for mode in (0o600, 0o604, 0o640, 0o644, 0o755):
             exact_root, exact_path = fixture(parent, f"exact-{mode:o}")
             write_exact(exact_path, module.EXPECTED, mode)
             exact = module.normalize(exact_root)
             require(
                 exact["disposition"] == "reviewed_default_residue_removed"
                 and exact["observed_mode"] == f"{mode:04o}"
+                and exact["allowed_modes"] == list(module.ALLOWED_MODE_SPELLINGS)
                 and not os.path.lexists(exact_path),
                 f"exact {mode:o} positive",
             )
@@ -130,14 +135,14 @@ def run_cases(module) -> int:
         directory_path.mkdir()
         expect_rejection(module, directory_root, "git exclude is not a regular file")
 
-        for mode in (0o400, 0o620, 0o664, 0o744):
+        for mode in (0o400, 0o620, 0o664, 0o700, 0o744, 0o775, 0o4755):
             mode_root, mode_path = fixture(parent, f"mode-{mode:o}")
             write_exact(mode_path, module.EXPECTED, mode)
             expect_rejection(
                 module,
                 mode_root,
                 "git exclude mode rejected: "
-                f"observed={mode:04o}; required_bits=0600; permitted_bits=0644",
+                f"observed={mode:04o}; allowed_modes=0600,0604,0640,0644,0755",
             )
             require(
                 mode_path.read_bytes() == module.EXPECTED
@@ -165,8 +170,8 @@ def run_cases(module) -> int:
         )
 
     print(
-        "OK: Git info/exclude normalizer accepted 5 positive states and rejected "
-        "13 hostile route/filesystem/byte states"
+        "OK: Git info/exclude normalizer accepted 6 positive states and rejected "
+        "16 hostile route/filesystem/byte states"
     )
     return 0
 

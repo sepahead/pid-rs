@@ -9,9 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Tighten the Actions checkout-residue normalizer to accept only owner-readable/writable
-  `.git/info/exclude` modes with optional group/other read bits, report rejected modes exactly,
-  and retain byte, object-type, link-count, stable-read, and no-follow checks. Add one exact
+- Tighten the Actions checkout-residue normalizer to an exact reviewed mode allowlist. A hosted
+  descendant run exposed Ubuntu 24.04's Git-template mode `0755`; that exact mode is now accepted
+  because it adds no group/other write access, while nearby and special-bit modes remain rejected.
+  The normalizer still reports rejected modes exactly and retains byte, object-type, link-count,
+  stable-read, and no-follow checks. Add one exact
   history-scoped Gitleaks fingerprint for prose on an unrelated remote publication branch that
   matched `generic-api-key`; this does not suppress the rule, path, line, or any other commit.
 

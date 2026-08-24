@@ -49,8 +49,19 @@ EXPECTED: Final[bytes] = (
     b"# *~\n"
 )
 EXPECTED_SHA256: Final[str] = hashlib.sha256(EXPECTED).hexdigest()
-REQUIRED_MODE_BITS: Final[int] = 0o600
-PERMITTED_MODE_BITS: Final[int] = 0o644
+# The Git template installed by the hosted Ubuntu 24.04 image is mode 0755; this
+# was observed independently in jobs 97292206996 and 97292207140 of run
+# 32678998559.  Execute bits on this exact regular, public, comment-only file do
+# not grant write access.  Keep an exact allowlist rather than generalizing from
+# that observation; every accepted mode still has owner read/write and no
+# group/other write or special bits.
+ALLOWED_MODES: Final[frozenset[int]] = frozenset(
+    (0o600, 0o604, 0o640, 0o644, 0o755)
+)
+ALLOWED_MODE_SPELLINGS: Final[tuple[str, ...]] = tuple(
+    f"{mode:04o}" for mode in sorted(ALLOWED_MODES)
+)
+ALLOWED_MODE_SUMMARY: Final[str] = ",".join(ALLOWED_MODE_SPELLINGS)
 
 
 class NormalizationError(RuntimeError):
@@ -77,11 +88,8 @@ def identity(info: os.stat_result) -> tuple[int, ...]:
 
 
 def reviewed_mode(mode: int) -> bool:
-    """Accept owner-rw modes with only optional group/other read bits."""
-    return (
-        mode & REQUIRED_MODE_BITS == REQUIRED_MODE_BITS
-        and mode & ~PERMITTED_MODE_BITS == 0
-    )
+    """Accept only the reviewed checkout-template modes."""
+    return mode in ALLOWED_MODES
 
 
 def directory_flags() -> int:
@@ -131,7 +139,7 @@ def normalize(root: Path) -> dict[str, object]:
                     before = os.stat("exclude", dir_fd=info_fd, follow_symlinks=False)
                 except FileNotFoundError:
                     return {
-                        "allowed_modes": ["0600", "0604", "0640", "0644"],
+                        "allowed_modes": list(ALLOWED_MODE_SPELLINGS),
                         "disposition": "already_absent",
                         "expected_sha256": EXPECTED_SHA256,
                         "path": RELATIVE,
@@ -145,7 +153,7 @@ def normalize(root: Path) -> dict[str, object]:
                     reviewed_mode(observed_mode),
                     "git exclude mode rejected: "
                     f"observed={observed_mode:04o}; "
-                    "required_bits=0600; permitted_bits=0644",
+                    f"allowed_modes={ALLOWED_MODE_SUMMARY}",
                 )
                 require(before.st_size == len(EXPECTED), "git exclude size changed")
                 flags = os.O_RDONLY
@@ -202,7 +210,7 @@ def normalize(root: Path) -> dict[str, object]:
     finally:
         os.close(root_fd)
     return {
-        "allowed_modes": ["0600", "0604", "0640", "0644"],
+        "allowed_modes": list(ALLOWED_MODE_SPELLINGS),
         "disposition": "reviewed_default_residue_removed",
         "expected_sha256": EXPECTED_SHA256,
         "observed_mode": f"{observed_mode:04o}",
