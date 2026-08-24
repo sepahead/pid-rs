@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "cce228367a9f84a7126669421ee87fa576a70e7f826d9d928e803e866e5731bb",
+  "catalog_sha256": "a21cd0e2f24ab07e8e4de5b7818b3c86007788b44c8915a68a95e236422787be",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -281,7 +281,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "7d0b0d0084b44bb138e2846a3f863027ec73322f2aba319a8a1a7743d9d9b7e4"
+      "payload_sha256": "76b433d9ec3f2c172400900c62d614b912cc7f1531ffe18b6a7878845c3d0a55"
     },
     {
       "facts": {
@@ -619,7 +619,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "4a7ec2e31ecdd49e0627889d505aa45e8ff33bd4e2327f94c5dc5457fa3525b8"
+      "payload_sha256": "77499b7c6a34cca0f46f5cb66ff4952a45928ed5a71277e3cd130c141b16cee1"
     },
     {
       "facts": {
@@ -975,7 +975,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "a3ed51df5cb0a5acf671c25693cd74689e61c7e14b23f27ba237cc3b0b8d123a",
+  "ordered_root_sha256": "1702ca7220d7fcac5cafc941d580bbcebcb37ccebcc20e69770ce652361f88a4",
   "reference_registry_sha256": "97de94fd1fe77e4f04b027d49b47304a2368cc77d6492d81df5955d285531373",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

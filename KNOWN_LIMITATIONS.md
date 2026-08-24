@@ -97,9 +97,10 @@ The committed 561-case fixture compares this private implementation with a stand
 positional permutation through arity five, and tests four declared orderings for each longer case.
 That is bounded implementation-conformance evidence, not a universal proof, independent review,
 or an error bound for any PID estimator. Reachable source-swap counterexamples justify the SxPID2,
-SxPID3, and SxPID4 **final-average** changes and the $I_{\min}$ PID2 synergy change; they do not
-witness a pointwise SxPID Möbius defect. Committed bounded reachable-table suites likewise found no
-such pointwise defect, so that path remains compensated.
+SxPID3, and SxPID4 **final-average** changes and the $I_{\min}$ PID2 synergy change. Exact mapped
+pointwise-bit assertions cover those three named SxPID tables, but the general bounded suites use a
+floating tolerance and include a signed-zero raw-bit boundary. They are not a general raw-bit search
+and do not witness a pointwise SxPID Möbius defect, so that path remains compensated.
 
 Larger temporary probes reported no pointwise SxPID witness and no $I_{\min}$ PID3 atom-bit witness,
 including 245,156 binary $I_{\min}$ PID3 tables through total mass seven for
@@ -109,6 +110,14 @@ observations with **zero current release-evidence credit**, not replayable quali
 They do not prove global bit equivariance or rule out a larger witness. The durable disposition is
 only that current retained evidence does not justify changing the $I_{\min}$ PID3 compensated path
 or transferring a numerical policy from shared exclusions into a different PID family.
+
+The continuous `Pid2Result::from_estimate` identity guard is an inherited project compatibility
+policy, not a derived forward-error, conditioning, or relative-accuracy bound. Against reconstructed
+positive zero, its inclusive 32-position ordered-binary64 threshold accepts expected positive
+payload 32 and negative payload 31, but rejects positive payload 33 and negative payload 32. This
+sign asymmetry follows because the ordered map distinguishes signed zeros; accepted boundary cases
+have complete relative loss. The guard must not be cited as formal verification of identity,
+representability, estimator validity, or application accuracy.
 
 Quantizer map reachability is also narrower than scientific support. A reported reachable label
 has at least one accepted finite-binary64 preimage under the fitted endpoint and partition rules.
@@ -370,10 +379,12 @@ of unbiasedness or universal consistency is made. The disjunctive common-radius 
 relative source units and preprocessing. Equal ambient source dimensions are necessary for the
 implemented comparison; they do not establish equal intrinsic dimensions or compatible measures.
 
-PID2 atoms are algebraically reconstructed from separately estimated MI/redundancy terms. Exact
-reconstruction of those represented terms does not eliminate their different finite-sample biases.
-The atom reconstruction is defined in Ehrlich et al.; pid-rs's structured report, split-sample, and
-cross-fit workflows are project-defined additions.
+PID2 atoms follow exact-real algebra over separately estimated MI/redundancy terms. Only the
+four-operand represented synergy expression is exactly reduced and rounded once; the unique atoms
+are separately rounded and the resulting represented tuple passes only the documented compatibility
+guard. None of this eliminates the terms' different finite-sample biases. The atom reconstruction is
+defined in Ehrlich et al.; pid-rs's structured report, split-sample, and cross-fit workflows are
+project-defined additions.
 The complete PID2 report's covariance matrices describe aligned local estimator contributions; they
 are not calibrated sampling covariance, standard errors, or confidence intervals. Cross-fit reports
 keep fold-specific gauges and neighborhood coordinates separate and deliberately do not pool them.

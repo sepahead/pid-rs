@@ -542,7 +542,11 @@ pub struct Pid2CrossFitReport {
 }
 
 /// 2-source PID atoms (Red, Unq₁, Unq₂, Syn) from KSG mutual information and the `I^sx_∩`
-/// redundancy, satisfying `Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)` by construction.
+/// redundancy. Their defining exact-real algebra satisfies
+/// `Red + Unq₁ + Unq₂ + Syn = I(S1,S2;T)`. The represented-binary64 constructor exactly reduces
+/// the four represented synergy operands, then admits the separately rounded atom tuple only under
+/// its documented 32-position compatibility guard; this is not exact binary64 identity or an
+/// estimator-validity theorem.
 ///
 /// The redundancy term follows `cfg.isx.method`. `IsxMethod::EhrlichKsg` (the default) is the
 /// cited restricted-domain construction; the crate does not claim a general consistency theorem.
@@ -569,7 +573,8 @@ pub struct Pid2CrossFitReport {
 /// let s2 = MatRef::new(&s2, 8, 1)?;
 /// let t = MatRef::new(&t, 8, 1)?;
 /// let pid = pid2_isx(s1, s2, t, &Pid2Config::assume_regular_full_dimensional())?;
-/// // Atoms reconstruct the joint MI by construction.
+/// // A returned tuple passed the represented-coordinate compatibility guard; exact f64 equality
+/// // and statistical validity do not follow.
 /// let sum = pid.redundancy + pid.unique_s1 + pid.unique_s2 + pid.synergy;
 /// assert!(sum.is_finite());
 /// # Ok::<(), pid_core::PidError>(())
@@ -980,6 +985,11 @@ fn labeled_description(
 const PID2_CONSTITUENT_ORDER: [&str; 4] =
     ["I(S1;T)", "I(S2;T)", "I((S1,S2);T)", "Icap_sx(S1,S2;T)"];
 const PID2_ATOM_ORDER: [&str; 4] = ["redundancy", "unique_s1", "unique_s2", "synergy"];
+// Compatibility policy inherited by the checked constructor. This is not a derived forward-error
+// bound: near zero it can accept complete relative loss. Because ordered_float_bits distinguishes
+// signed zeros, expected payload +32 versus reconstructed +0 passes and +33 fails, whereas -31
+// passes and -32 fails. Keep this sign-asymmetric compatibility boundary explicit and tested.
+const PID2_RECONSTRUCTION_MAX_ORDERED_POSITIONS: u64 = 32;
 const PID2_ATOM_TRANSFORM: [[f64; 4]; 4] = [
     [0.0, 0.0, 0.0, 1.0],
     [1.0, 0.0, 0.0, -1.0],
@@ -1518,9 +1528,12 @@ impl Pid2Result {
     ///
     /// Returns [`PidError::NumericalInstability`] if an input is non-finite, an atom is non-finite,
     /// or the represented atoms cannot reconstruct all three supplied MI coordinates within the
-    /// fixed inclusive 32-position ordered-binary64 guard. Estimator entry points are bounded in
-    /// ordinary regimes, but this checked public boundary also protects callers constructing
-    /// [`Pid2Estimate`] directly.
+    /// fixed inclusive 32-position ordered-binary64 guard. That guard is a project compatibility
+    /// policy, not a derived forward-error or relative-accuracy bound. In particular, an expected
+    /// positive subnormal with payload 32 and a reconstructed positive zero passes despite complete
+    /// relative loss; payload 33 fails. Because the ordered representation distinguishes signed
+    /// zero, negative payload 31 passes against positive zero while negative payload 32 fails. This
+    /// checked public boundary also protects callers constructing [`Pid2Estimate`] directly.
     pub fn from_estimate(est: Pid2Estimate) -> PidResult<Self> {
         if [est.mi_s1_t, est.mi_s2_t, est.mi_s1s2_t, est.redundancy_isx]
             .iter()
@@ -1547,7 +1560,8 @@ impl Pid2Result {
         }
         if !pid2_identities_match(&est, red, unq1, unq2, syn) {
             return Err(PidError::NumericalInstability {
-                context: "Pid2Result::from_estimate atoms cannot represent PID identities",
+                context:
+                    "Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard",
             });
         }
         Ok(Self {
@@ -1579,7 +1593,8 @@ fn identity_matches<const N: usize>(expected: f64, terms: [f64; N]) -> bool {
     if !reconstructed.is_finite() {
         return false;
     }
-    ordered_float_bits(reconstructed).abs_diff(ordered_float_bits(expected)) <= 32
+    ordered_float_bits(reconstructed).abs_diff(ordered_float_bits(expected))
+        <= PID2_RECONSTRUCTION_MAX_ORDERED_POSITIONS
 }
 
 fn ordered_float_bits(value: f64) -> u64 {

@@ -5,7 +5,7 @@
       "role": "method_provenance_and_availability",
       "schema": "pid-rs/method-catalog",
       "schema_revision": 1,
-      "sha256": "cce228367a9f84a7126669421ee87fa576a70e7f826d9d928e803e866e5731bb"
+      "sha256": "a21cd0e2f24ab07e8e4de5b7818b3c86007788b44c8915a68a95e236422787be"
     },
     {
       "path": "audit/source-errata.json",
@@ -1202,7 +1202,7 @@
           "doi": null,
           "locator": "method-catalog.json schema revision 1",
           "observed_revision": "pid-rs/method-catalog revision 1",
-          "observed_sha256": "cce228367a9f84a7126669421ee87fa576a70e7f826d9d928e803e866e5731bb",
+          "observed_sha256": "a21cd0e2f24ab07e8e4de5b7818b3c86007788b44c8915a68a95e236422787be",
           "pin_status": "project_catalog_revision",
           "reference_id": "pid-rs-project-definition",
           "title": "pid-rs project-defined wrapper and composition records"

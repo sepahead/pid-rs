@@ -13,7 +13,7 @@ mod common;
 use common::Rng64;
 
 #[test]
-fn pid2_identities_hold_by_construction() {
+fn pid2_estimator_composition_matches_exact_real_identities_within_tolerance() {
     // This is not an "exact ground truth" test. It asserts the PID2 identities are satisfied
     // (within floating tolerance) when MI and redundancy are computed with the same estimator
     // configuration.
@@ -266,7 +266,8 @@ fn pid2_checked_constructor_rejects_tiny_identity_erased_by_exact_atom_reconstru
     assert!(matches!(
         Pid2Result::from_estimate(estimate),
         Err(PidError::NumericalInstability {
-            context: "Pid2Result::from_estimate atoms cannot represent PID identities"
+            context:
+                "Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard"
         })
     ));
 }
@@ -312,7 +313,32 @@ fn pid2_checked_constructor_rejects_33_position_near_zero_boundary() {
     assert!(matches!(
         Pid2Result::from_estimate(estimate),
         Err(PidError::NumericalInstability {
-            context: "Pid2Result::from_estimate atoms cannot represent PID identities"
+            context:
+                "Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard"
+        })
+    ));
+}
+
+#[test]
+fn pid2_checked_constructor_accepts_negative_31_position_near_zero_boundary() {
+    let near_zero = -f64::from_bits(31);
+    let estimate = Pid2Estimate::new(near_zero, 1.0, near_zero, 1.0);
+
+    Pid2Result::from_estimate(estimate).expect(
+        "negative payload 31 is 32 ordered positions from canonical positive zero and must pass",
+    );
+}
+
+#[test]
+fn pid2_checked_constructor_rejects_negative_32_position_near_zero_boundary() {
+    let near_zero = -f64::from_bits(32);
+    let estimate = Pid2Estimate::new(near_zero, 1.0, near_zero, 1.0);
+
+    assert!(matches!(
+        Pid2Result::from_estimate(estimate),
+        Err(PidError::NumericalInstability {
+            context:
+                "Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard"
         })
     ));
 }
@@ -346,7 +372,7 @@ fn pid2_checked_constructor_exact_synergy_is_source_order_independent() {
 }
 
 #[test]
-fn pid2_checked_constructor_kills_empirical_source_order_residual() {
+fn pid2_checked_constructor_kills_represented_coordinate_source_order_residual() {
     let small = f64::from_bits(0x3fb5_bf40_6b54_3dad);
     let large = f64::from_bits(0x3fe1_fea6_45f0_ef4e);
     let original = Pid2Result::from_estimate(Pid2Estimate::new(small, large, large, small))

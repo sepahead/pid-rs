@@ -154,7 +154,9 @@ PID formulas and estimands are unchanged. Categorical SxPID final empirical-PMF 
 averaging, categorical $I_{\min}$ PID2 synergy, and continuous PID2 synergy now sum their supplied
 finite binary64 operands exactly and round the exact sum once to binary64 using
 round-to-nearest, ties-to-even. Pointwise SxPID Möbius inversion retains its prior compensated
-reduction after bounded reachable-table searches found no pointwise source-exchange bit witness.
+reduction. Retained bounded suites establish pointwise source-exchange agreement only within their
+documented floating tolerance; exact mapped pointwise-bit assertions cover the three named
+final-average witnesses, while larger raw-bit probes are unretained and receive zero release credit.
 The exact-reduced operands—MI or redundancy estimates and products such as empirical probability
 times a pointwise component—were already rounded. This removes reduction-order dependence only for
 the named final operand multisets; it does not make an estimator exact, bound upstream logarithm
@@ -170,12 +172,17 @@ totals are unqualified historical observations with zero current release-evidenc
 not prove a witness impossible. The durable migration decision is narrower: retained evidence does
 not justify transferring this numerical policy between different PID measures.
 
-`Pid2Result::from_estimate` can now fail closed if its separately rounded atoms do not reconstruct
-all three supplied MI coordinates within the documented inclusive 32-position ordered-binary64
-guard. The synergy coordinate has the source-order-independent represented-input meaning
+`Pid2Result::from_estimate` retains its inherited fail-closed check when separately rounded atoms do
+not reconstruct all three supplied MI coordinates within the inclusive 32-position
+ordered-binary64 guard; this work explicitly documents and adversarially pins that policy. It is not
+a forward-error or relative-accuracy theorem.
+Against reconstructed positive zero it accepts expected positive payload 32 and negative payload
+31, while positive payload 33 and negative payload 32 fail; the sign asymmetry comes from treating
+signed zeros as adjacent ordered positions. The synergy coordinate has the source-order-independent
+represented-input meaning
 `RN-even(exact(J - I1 - I2 + R))`; it is not perturbed to hide rounding in the unique atoms. The
-guard is a project-defined representability check, not an estimator theorem and not a claim that
-PID identities hold exactly in binary64.
+guard must not be described as verified identity or representability, an estimator theorem, or a
+claim that PID identities hold exactly in binary64.
 
 ## Continuous estimates
 

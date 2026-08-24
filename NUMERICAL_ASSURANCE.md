@@ -24,8 +24,8 @@ The work has four outcomes:
    PID2 synergy, and continuous shared-exclusions PID2 synergy;
 3. overflow-safe fitted equal-width edges and diagnostics that distinguish nominal, reachable, and
    observed labels; and
-4. explicit negative results that prevent the same arithmetic policy from being transferred to
-   pointwise SxPID Möbius inversion or $I_{\min}$ PID3 without a reachable defect.
+4. explicit negative dispositions that prevent the same arithmetic policy from being transferred
+   to pointwise SxPID Möbius inversion or $I_{\min}$ PID3 without retained evidence of a defect.
 
 ## 1. Why the change was needed
 
@@ -39,8 +39,10 @@ The defect is numerical, not statistical and not a flaw in a defining paper. For
 table, the old final reductions could evaluate the same represented multiset through two different
 floating-point association trees. Compensated summation greatly reduces ordinary error but does
 not define an order-independent result for every cancelling input. This observation alone does not
-justify changing every compensated sum: the repository requires a reachable defect at the actual
-call site, which the pointwise SxPID and $I_{\min}$ PID3 searches did not find.
+justify changing every compensated sum: the repository requires retained evidence at the actual
+call site. The retained bounded pointwise SxPID suites establish only tolerance agreement, and the
+larger raw-bit SxPID and $I_{\min}$ PID3 probes were not retained; neither route justifies a broader
+scalar change.
 
 Fitted equal-width quantization had a different boundary. The mathematical interpolation
 
@@ -149,10 +151,12 @@ exclusions, or another PID.
 #### Negative result: no promoted pointwise Möbius change
 
 An earlier candidate also applied the exact reducer inside pointwise Möbius inversion. The three
-pinned SxPID witnesses did not support that broader change: on exact parent
-`01466e88b0550333c2718f1716289e9642e30dc6`, every mapped pointwise atom in those tables was already
-bit-identical, and exactly reducing only the old weighted pointwise terms reproduced each repaired
-average payload.
+pinned SxPID witnesses did not support that broader change: committed tests now require every
+mapped pointwise informative, misinformative, and net payload in those exact two-, three-, and
+four-source tables to be raw-bit identical under the named source exchange, while exactly reducing
+only their old weighted pointwise terms reproduces each repaired average payload. This is a
+three-table statement, not a general raw-bit theorem; the bounded general suites deliberately use a
+floating tolerance and contain a signed-zero bit counterexample.
 
 A temporary, uncommitted release-mode red-team probe then exercised the parent through public APIs.
 Its executable and raw log were not preserved, so the counts below are an append-only historical
@@ -172,11 +176,12 @@ specialized and general-$n$ paths; four sources has only the general path. It fo
 
 In total, the unqualified run reported 405,649 tables, 194,865,076 mapped pointwise atom pairs, and
 584,595,228 component payload comparisons. Those totals are not independently replayable and must
-not appear in a qualification numerator. The durable evidence is narrower: committed bounded
-exhaustive tests, the retained seeds and recipe above, and the decision not to promote an unwitnessed
-change. Pointwise Möbius inversion therefore remains on the prior compensated path. This prevents
-unnecessary scalar churn and prevents a general arithmetic capability from being mistaken for
-evidence that every eligible-looking call site needed modification.
+not appear in a qualification numerator. The durable evidence is narrower: tolerance-based bounded
+suites, exact raw-bit assertions for the three named final-average witnesses, the retained seeds and
+recipe above, and the decision not to promote an unwitnessed change. Pointwise Möbius inversion
+therefore remains on the prior compensated path. This prevents unnecessary scalar churn and
+prevents a general arithmetic capability from being mistaken for evidence that every
+eligible-looking call site needed modification.
 
 ### 3.2 Williams--Beer $I_{\min}$ PID2
 
@@ -229,14 +234,24 @@ turn the estimator into an exact-real PID.
 
 `Pid2Result::from_estimate` also reconstructs the supplied $I_1$, $I_2$, and $J$ coordinates from
 the separately rounded atoms. It fails closed if any reconstruction lies outside an inclusive
-32-position ordered-binary64 guard. This is a project-defined representability check, not a
-theorem that the statistical estimates satisfy exact PID identities in binary64. Synergy is not
-perturbed to conceal rounding in the two unique atoms.
+32-position ordered-binary64 guard. This inherited project policy is not a derived forward-error,
+conditioning, relative-accuracy, or statistical bound. Against a reconstructed positive zero, its
+near-zero boundary accepts an expected positive-subnormal payload 32 and rejects payload 33.
+Because the ordered mapping distinguishes signed zeros, it instead accepts negative payload 31 and
+rejects negative payload 32. Accepted boundary cases have complete relative loss. The guard must
+therefore not be presented as verified identity or representability. Synergy is not perturbed to
+conceal rounding in the two unique atoms.
+
+This threshold's 32 ordered-binary64 **positions** is unrelated to the KSG integer-harmonic
+fixture's separate `32 * f64::EPSILON`-**nat** finite-corpus ceiling. They measure different
+objects, use different units, and provide no evidence for one another.
 
 ## 4. Reproducible counterexamples
 
-The examples below are valid empirical count tables, not synthetic non-PID operand lists. Cell
-order is lexicographic in the listed binary state bits, with the target bit last.
+Sections 4.1--4.4 use valid empirical count tables rather than synthetic non-PID operand lists; cell
+order is lexicographic in the listed binary state bits, with the target bit last. Section 4.5 is
+deliberately different: it is a represented-coordinate public-constructor tuple, not retained
+estimator output.
 
 ### 4.1 Two-source categorical SxPID
 
@@ -310,6 +325,24 @@ symmetric coordinate bit-for-bit, and swaps only the two unique coordinates.
 
 These witnesses establish that the repaired cases were real. They do not establish a universal
 floating-point theorem for every atom, estimator, build, platform, or source permutation.
+
+### 4.5 Continuous PID2 represented-coordinate/API witness
+
+The continuous PID2 arithmetic repair also has a public-constructor witness, but not a retained
+dataset whose Ehrlich/KSG estimator calls emitted these coordinates. Let
+
+```text
+small = f64::from_bits(0x3fb5bf406b543dad)
+large = f64::from_bits(0x3fe1fea645f0ef4e)
+```
+
+and call `Pid2Result::from_estimate` first with
+$(I_1,I_2,J,R)=(\mathtt{small},\mathtt{large},\mathtt{large},\mathtt{small})$, then with the first
+two coordinates exchanged. The historical left-associated synergy produced
+`0x3c70000000000000` for the first order and positive zero for the second. Exact reduction of the
+same four represented operands produces positive zero for both. This establishes a reachable
+constructor-level source-order defect and its algebraic repair. It does not establish how often an
+Ehrlich/KSG estimator pipeline emits such a tuple, nor validate that estimator.
 
 ## 5. Binary64-aware equal-width quantization
 
@@ -427,8 +460,9 @@ averaged categorical SxPID at two, three, and four sources. A local `--quick` ob
 | Quantizer with report, same fixture | 26.250 ms median |
 
 These are machine-specific smoke observations of the whole calls, not portable latency promises,
-not isolated exact-reducer overhead, and not a statistically adequate performance study. Reproduce
-or supersede them with
+not isolated exact-reducer overhead, and not a statistically adequate performance study. Their raw
+Criterion output and exact dirty-worktree source identity were not retained, so they receive zero
+release-qualification credit. Reproduce or supersede them with
 `cargo bench --locked -p pid-core --all-features --bench estimators -- categorical_pid_latency`
 on deployment hardware. The order-of-magnitude jump at four sources is consistent with the
 166-node lattice and event scans; it must not be attributed solely to the exact accumulator.
@@ -496,10 +530,12 @@ The assurance stack deliberately separates different questions:
 1. **Arithmetic corpus:** 561 oracle cases: all positional permutations for arities through five,
    plus original, reverse, and two rotations for the 63--65-term streaming cases.
 2. **Reachable empirical witnesses:** pinned SxPID2, SxPID3, and SxPID4 final-average defects and
-   one $I_{\min}$ PID2 synergy defect.
-3. **Negative promotion disposition:** committed bounded exhaustive suites found no promoted
-   pointwise witness; larger reported probe totals are retained as unqualified history with zero
-   release-evidence credit because their executable and raw log were lost.
+   one $I_{\min}$ PID2 synergy defect; a separate continuous PID2 witness is constructed at the
+   represented-coordinate API boundary rather than emitted by a retained estimator dataset.
+3. **Negative promotion disposition:** retained bounded pointwise suites establish tolerance
+   agreement, not a general raw-bit nonfinding. The three named categorical witnesses now carry
+   exact mapped pointwise-bit assertions. Larger reported raw-bit probe totals remain unqualified
+   history with zero release-evidence credit because their executable and raw log were lost.
 4. **Bounded exhaustive agreement:** every binary SxPID2 count table through four samples and every
    binary SxPID3 table through three samples, including source exchange.
 5. **Quantizer boundary tests:** constants, signed zero, adjacent values, noncontiguous reachable
@@ -508,7 +544,9 @@ The assurance stack deliberately separates different questions:
    and boundary-case Python tests.
 7. **Resource/cancellation tests:** preflight includes accumulator/report storage and long loops
    remain cooperatively cancellable.
-8. **Build diversity:** stable, no-default-feature, parallel, all-feature, and release-mode gates.
+8. **Build diversity required at final source:** stable, no-default-feature, parallel, all-feature,
+   and release-mode gates. Earlier local passes do not qualify a later integrated source; terminal
+   final-source evidence remains a release-closure obligation.
 
 Passing one layer does not imply another. In particular, a rational arithmetic oracle does not
 validate a paper correspondence, population support, neighbour geometry, estimator consistency,
@@ -591,3 +629,44 @@ It does not establish:
 That narrower conclusion is intentional. It is stronger than an undocumented numerical patch
 because its semantics, counterexamples, negative results, resource cost, API consequences, and
 evidence limitations are all explicit—and weaker than claims the evidence cannot support.
+
+## 11. Deferred numerical and ecosystem closure roadmap
+
+The following work is intentionally **not** claimed by this change. It is retained as an ordered
+roadmap rather than being compressed into an unjustified release cutoff:
+
+1. Add a non-breaking typed reconstruction diagnostic for each supplied coordinate $I_1$, $I_2$,
+   and $J$: supplied value, exactly reduced reconstructed value, signed-zero-aware ordered-position
+   distance, policy revision, and admitted limit. Preserve `Pid2Result::from_estimate` as the
+   compatibility wrapper. Carry the diagnostic through complete Rust reports, resource accounting,
+   Python reports/stubs, hierarchy, pair screening, and cross-fit rather than exposing it in only one
+   language or path.
+2. Derive and review an IEEE-binary64 forward-error envelope from constituent absolute sums under
+   explicit no-overflow premises. Report it beside a conditioning diagnostic; do not call it
+   statistical accuracy, and do not use relative error at zero. Compare it against the inherited
+   ordered-position policy before considering any behavioral change.
+3. Expand retained adversarial coverage across signed zeros, subnormal/normal boundaries,
+   cancellation scales, overflow-adjacent values, source permutations, serial/parallel modes,
+   platforms, and compiler profiles. Include mutation controls and preserve exact generator,
+   fixture, command, source, environment, and raw-output custody.
+4. Run estimator-level experiments separately from constructor arithmetic: analytic Gaussian
+   regimes where applicable, categorical exact oracles, varied dependence/support/sample-size
+   regimes, and explicit abstention for unsupported mixed or singular laws. A constructor witness
+   must never be relabeled as an estimator-dataset result.
+5. Replace the current zero-credit performance observations with revision-bound benchmark receipts,
+   repeated confidence intervals, warm/cold and batch latency, peak memory, and representative
+   two-/three-/four-source workloads on deployment-class hardware. Optimize only after profiling,
+   and require exact output parity plus resource/cancellation preservation for every fast path.
+6. Design ecosystem APIs around report-first provenance and explicit latency/resource budgets:
+   pre-fitted reusable quantizers, labels-only categorical transforms, batch PID2 reports, typed
+   partial-failure retention for screening, and stable serialization. Do not introduce a new
+   estimator merely to obtain lower latency; an estimator addition requires its own assumptions,
+   calibration evidence, method provenance, and validation scope.
+7. Re-run the full numerical, statistical, formal, API-snapshot, Python-wheel, cross-platform, and
+   publication gates on the final exact source. Formal tools remain supporting evidence with stated
+   bounds; mathematical and statistical review remain independent obligations.
+
+The preferred long-term design is item 1, followed by item 2 as a separately scoped theorem-backed
+diagnostic. Returning exact-dyadic expansions or splitting formula-synergy from closure-synergy are
+research alternatives, but they would materially change the API and interpretation and are not
+needed for the present repair.

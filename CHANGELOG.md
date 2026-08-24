@@ -26,13 +26,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   represented finite operands and round once, ties-to-even. Pointwise SxPID Möbius inversion
   remains compensated: retained bounded suites establish mapped pointwise agreement only within
   their documented floating tolerance, whereas pinned 2-, 3-, and 4-source final-average bit
-  witnesses justify the narrower change. A pinned two-source $I_{\min}$ source-exchange witness
-  justifies its synergy repair;
+  witnesses justify the narrower change; those three named cases also assert mapped pointwise raw
+  bits. A pinned two-source $I_{\min}$ source-exchange witness justifies its synergy repair.
   $I_{\min}$ PID3 retains its compensated path. Larger reported SxPID pointwise and $I_{\min}$
   PID3 negative searches are retained only as unqualified historical observations with zero
   release-evidence credit because their executables and raw logs were not preserved. The checked
-  PID2 constructor can
-  now fail closed at its documented inclusive 32-position reconstruction guard. Fitted
+  PID2 constructor retains its inherited fail-closed inclusive 32-position reconstruction guard,
+  now explicitly documented and adversarially pinned. That project policy is not a forward-error or
+  relative-accuracy bound and can
+  accept complete relative loss at its sign-asymmetric near-zero boundaries: positive payload 32
+  and negative payload 31 pass against reconstructed positive zero, while the next payload on
+  either side fails. Fitted
   equal-width edges are overflow-safe and validated, and Rust/Python quantization reports add
   per-dimension edge/interval/reachable/observed counts plus reachable, structurally unreachable,
   and reachable-but-unobserved joint cardinalities. Quantizer/report cloning and fitted-quantized

@@ -264,6 +264,120 @@ fn assert_pointwise_atom_close(
     3
 }
 
+fn assert_pointwise_atom_bits(left: SxPointwiseAtom, right: SxPointwiseAtom, context: &str) {
+    assert_eq!(left.interpretation(), right.interpretation());
+    assert_eq!(
+        [
+            left.informative_nats().to_bits(),
+            left.misinformative_nats().to_bits(),
+            left.net_nats().to_bits(),
+        ],
+        [
+            right.informative_nats().to_bits(),
+            right.misinformative_nats().to_bits(),
+            right.net_nats().to_bits(),
+        ],
+        "{context}"
+    );
+}
+
+fn assert_named_two_source_pointwise_swap_bits(
+    original: &DiscreteSxPid2Result,
+    swapped: &DiscreteSxPid2Result,
+) {
+    let atom_permutation = [1, 0, 2, 3];
+    for original_point in &original.pointwise {
+        let swapped_point = swapped
+            .pointwise
+            .iter()
+            .find(|point| {
+                point.s1 == original_point.s2
+                    && point.s2 == original_point.s1
+                    && point.t == original_point.t
+            })
+            .expect("named source swap must preserve every pointwise realization");
+        let original_atoms = two_source_pointwise_atoms(original_point);
+        let swapped_atoms = two_source_pointwise_atoms(swapped_point);
+        for (original_index, &swapped_index) in atom_permutation.iter().enumerate() {
+            assert_pointwise_atom_bits(
+                original_atoms[original_index],
+                swapped_atoms[swapped_index],
+                "named two-source mapped pointwise atom must be raw-bit identical",
+            );
+        }
+    }
+}
+
+fn assert_named_three_source_pointwise_swap_bits(
+    original: &DiscreteSxPid3Result,
+    swapped: &DiscreteSxPid3Result,
+) {
+    let atom_permutation = original
+        .antichains
+        .iter()
+        .map(|antichain| {
+            find_antichain(
+                &swapped.antichains,
+                &swapped_first_two_source_antichain(antichain),
+            )
+        })
+        .collect::<Vec<_>>();
+    for original_point in &original.pointwise {
+        let swapped_point = swapped
+            .pointwise
+            .iter()
+            .find(|point| {
+                point.s0 == original_point.s1
+                    && point.s1 == original_point.s0
+                    && point.s2 == original_point.s2
+                    && point.t == original_point.t
+            })
+            .expect("named source swap must preserve every pointwise realization");
+        for (original_index, &swapped_index) in atom_permutation.iter().enumerate() {
+            assert_pointwise_atom_bits(
+                original_point.atoms[original_index],
+                swapped_point.atoms[swapped_index],
+                "named three-source mapped pointwise atom must be raw-bit identical",
+            );
+        }
+    }
+}
+
+fn assert_named_general_pointwise_swap_bits(
+    original: &DiscreteSxPidNResult,
+    swapped: &DiscreteSxPidNResult,
+) {
+    let atom_permutation = original
+        .antichains
+        .iter()
+        .map(|antichain| {
+            find_antichain(
+                &swapped.antichains,
+                &swapped_first_two_source_antichain(antichain),
+            )
+        })
+        .collect::<Vec<_>>();
+    for original_point in &original.pointwise {
+        let swapped_point = swapped
+            .pointwise
+            .iter()
+            .find(|point| {
+                point.realization.len() == original_point.realization.len()
+                    && point.realization[0] == original_point.realization[1]
+                    && point.realization[1] == original_point.realization[0]
+                    && point.realization[2..] == original_point.realization[2..]
+            })
+            .expect("named source swap must preserve every pointwise realization");
+        for (original_index, &swapped_index) in atom_permutation.iter().enumerate() {
+            assert_pointwise_atom_bits(
+                original_point.atoms[original_index],
+                swapped_point.atoms[swapped_index],
+                "named general-n mapped pointwise atom must be raw-bit identical",
+            );
+        }
+    }
+}
+
 fn two_source_averaged_atoms(result: &DiscreteSxPid2Result) -> [SxAveragedAtom; 4] {
     [result.unq1, result.unq2, result.syn, result.red]
 }
@@ -967,6 +1081,9 @@ fn pinned_two_source_average_is_bit_equivariant_after_source_swap() {
     let swapped_general_averaged =
         discrete_sxpid_n_averaged(&[source_two, source_one], target).unwrap();
 
+    assert_named_two_source_pointwise_swap_bits(&original, &swapped);
+    assert_named_general_pointwise_swap_bits(&original_general, &swapped_general);
+
     let expected = [
         0x3fc8_ef0d_df2c_10fb,
         0x3fbd_c0ce_b963_b913,
@@ -1025,6 +1142,9 @@ fn pinned_three_source_average_components_are_bit_equivariant_after_source_swap(
         discrete_sxpid_n_averaged(&[source_zero, source_one, source_two], target).unwrap();
     let swapped_general_averaged =
         discrete_sxpid_n_averaged(&[source_one, source_zero, source_two], target).unwrap();
+
+    assert_named_three_source_pointwise_swap_bits(&original, &swapped);
+    assert_named_general_pointwise_swap_bits(&original_general, &swapped_general);
 
     let expected = [
         0x3fa3_b012_4a6b_77db,
@@ -1102,6 +1222,8 @@ fn pinned_four_source_average_components_are_bit_equivariant_after_source_swap()
     let swapped_averaged =
         discrete_sxpid_n_averaged(&[source_one, source_zero, source_two, source_three], target)
             .unwrap();
+
+    assert_named_general_pointwise_swap_bits(&original, &swapped);
 
     let expected = [
         0x3f73_2f6d_ea98_a14d,
