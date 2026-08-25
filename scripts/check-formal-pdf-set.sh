@@ -11,7 +11,7 @@ MODE="${1:---exact}"
 # unrelated recursive scan.  The explicit override exists for isolated gate
 # runners and is subject to the same boundary.
 FORMAL_TMP_ROOT_INPUT="${PID_RS_PDF_GATE_TMPDIR:-${TMPDIR:-/tmp}}"
-if ! FORMAL_TMP_ROOT="$(cd "$FORMAL_TMP_ROOT_INPUT" && pwd -P)"; then
+if ! FORMAL_TMP_ROOT="$(CDPATH='' cd -- "$FORMAL_TMP_ROOT_INPUT" && pwd -P)"; then
   echo "formal PDF set: cannot canonicalize temporary root: $FORMAL_TMP_ROOT_INPUT" >&2
   exit 2
 fi
@@ -113,14 +113,54 @@ scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh "$MODE"
 WORKFLOW_GATE_PATH="${PID_RS_PDF_GATE_PATH:-/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin}"
 WORKFLOW_GATE_HOME="${PID_RS_PDF_GATE_HOME:-/nonexistent}"
 WORKFLOW_GATE_TMPDIR="$FORMAL_TMP_ROOT"
-/usr/bin/env -i \
+WORKFLOW_GATE_STDERR="$(mktemp "$FORMAL_TMP_ROOT/pid-rs-formal-workflow-stderr.XXXXXX")"
+cleanup_workflow_gate_stderr() {
+  local status="$1"
+  local cleanup_failed=0
+  trap - EXIT INT TERM
+  case "${WORKFLOW_GATE_STDERR:-}" in
+    "$FORMAL_TMP_ROOT"/pid-rs-formal-workflow-stderr.*)
+      rm -f -- "$WORKFLOW_GATE_STDERR" || cleanup_failed=1
+      ;;
+    "") ;;
+    *)
+      echo "formal PDF set: refusing to remove unexpected workflow diagnostic path" >&2
+      cleanup_failed=1
+      ;;
+  esac
+  if [[ "$status" -eq 0 && "$cleanup_failed" -ne 0 ]]; then
+    status=1
+  fi
+  exit "$status"
+}
+trap 'cleanup_workflow_gate_stderr "$?"' EXIT
+trap 'cleanup_workflow_gate_stderr 130' INT
+trap 'cleanup_workflow_gate_stderr 143' TERM
+if /usr/bin/env -i \
   "PATH=$WORKFLOW_GATE_PATH" \
   "HOME=$WORKFLOW_GATE_HOME" \
   "TMPDIR=$WORKFLOW_GATE_TMPDIR" \
   LC_ALL=C \
   LANG=C \
   TZ=UTC \
-  bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh "$MODE"
+  bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh "$MODE" \
+    2>"$WORKFLOW_GATE_STDERR"; then
+  WORKFLOW_GATE_STATUS=0
+else
+  WORKFLOW_GATE_STATUS=$?
+fi
+if [[ "$WORKFLOW_GATE_STATUS" -ne 0 || -s "$WORKFLOW_GATE_STDERR" ]]; then
+  cat "$WORKFLOW_GATE_STDERR" >&2
+  if [[ "$WORKFLOW_GATE_STATUS" -eq 0 ]]; then
+    echo "formal PDF set: workflow gate emitted a diagnostic despite status zero" >&2
+    exit 1
+  fi
+  echo "formal PDF set: workflow gate failed with status $WORKFLOW_GATE_STATUS" >&2
+  exit "$WORKFLOW_GATE_STATUS"
+fi
+rm -f -- "$WORKFLOW_GATE_STDERR"
+WORKFLOW_GATE_STDERR=""
+trap - EXIT INT TERM
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
