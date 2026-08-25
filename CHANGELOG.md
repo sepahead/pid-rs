@@ -9,6 +9,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add two implementation-disjoint-under-shared-semantics exact SxPID3 audit lanes over all 20,348
+  labelled binary count tables of total mass one through five. Each independently reproduces an
+  externally pinned, route-neutral v2 stream for all 2,197,584 evaluations of 108 keyed scalar
+  audit expressions: 18 source-antichain positions times cumulative/Möbius representation stages
+  times informative, misinformative, and signed-net components. Preserve the exact six-block
+  sign/zero census, including negative signed-net witnesses, and add a fail-closed lexical lane
+  that binds the Rust three-source key order and positional route with mutation and repeated-read
+  controls. This is bounded computational and lexical evidence, not 108 PID atoms, lattice nodes,
+  or independent degrees of freedom; not paper correspondence, an unrestricted theorem, Rust
+  numeric/binary64 refinement, population validation, or scientific novelty. The standalone
+  routes do not bind or execute one another, so paired agreement still requires a later closed
+  receipt.
+
 - Extend the aggregate formal-PDF gate's fail-closed self-tests across successful cleanup,
   cleanup failure, status-zero diagnostics, and nonzero child failures with and without captured
   diagnostics. Align the mathematical-workflow Bash `-u` portability probe with the production
