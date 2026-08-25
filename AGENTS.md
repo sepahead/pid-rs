@@ -654,13 +654,15 @@ python3 scripts/check-ksg-harmonic-modular-certificate.py
 python3 -O scripts/check-ksg-harmonic-modular-certificate.py
 python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py  # 28 scientific/custody + 2 JSON controls
 python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
-# The unscoped revision checker must remain nonzero with all 13 gates open at integration_no_go.
-python3 scripts/check-ksg-harmonic-revision.py --claim-only
-python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
-python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only  # exact typed partition printed by the checker
-python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-python3 scripts/check-ksg-harmonic-revision-self-test.py  # exact route partition printed by the checker
-python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+# The unscoped historical checker remains nonzero with 13 open gates. The descendant wrapper
+# replays five live-applicable routes, invokes the current catalog gate, and retains release-only
+# plus the frozen catalog route only through exact-tree replay. Its self-test has 35 controls.
+python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
 # Replays the immutable C3 checkpoint as both a clean commit and its exact parent-plus-overlay
 # candidate, then replays the settled hosted-follow-up gate at its own immutable direct-child
 # commit. The historical lifecycle is required by the hostile suite that creates test commits;

@@ -36,6 +36,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   tie-breaking; a changed numeric synergy can alter order, but a sign-zero-only bit change cannot.
   No ranking-change witness or inferential theorem is claimed.
 
+- Add a versioned preservation wrapper for the immutable KSG revision-4 checker, self-test,
+  exact commit/tree, current catalog authority, and literal-tree materializer. Its default mode
+  replays five still-applicable historical routes and the current 85-mutation catalog authority
+  separately in normal and optimized Python. Exact-tree replay retains both the superseded
+  `--release-only` route and the separately historical-only frozen `--catalog-only` projection,
+  including the historical 241- and 147-mutation suites. Thirty-five hostile controls now reject
+  high-level route, catalog, full-suite, claim-suite, and exact-tree call erasure in addition to
+  roster, digest, filesystem-alias, status, stderr, output, and parity faults. The returned tuples
+  are bounded control-flow receipts, not authenticity, atomicity, theorem, estimator, support, or
+  PID evidence.
+
 - Advance the pre-1.0 public Rust API signature identity from revision 3 to revision 4 for the
   additive `QuantizationReport` fields; the prior revision snapshots remain immutable.
 

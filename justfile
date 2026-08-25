@@ -151,6 +151,8 @@ formal-pid2:
 
 # Bounded positive-integer KSG/Ehrlich arithmetic and fail-closed candidate custody.
 # The unscoped main checker is intentionally omitted while the active packet is integration_no_go.
+# The descendant preservation wrapper keeps five live routes separate from the current catalog;
+# exact-tree replay alone retains release-only and the frozen historical catalog projection.
 ksg-revision:
     python3 scripts/generate-ksg-local-arithmetic-oracle.py
     python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
@@ -164,12 +166,12 @@ ksg-revision:
     python3 -O scripts/check-ksg-harmonic-modular-certificate.py
     python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py
     python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
-    python3 scripts/check-ksg-harmonic-revision.py --claim-only
-    python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
-    python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-    python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-    python3 scripts/check-ksg-harmonic-revision-self-test.py
-    python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+    python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+    python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+    python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+    python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+    python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
     python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
     python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
     python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
@@ -182,7 +184,7 @@ ksg-revision:
     # END KSG_M1A_HOSTED_RECOVERY_JUST_V1
     scripts/check-ksg-c3-checkpoint.sh
 
-# This gate is intentionally red until every integration gate is closed and the packet is promoted.
+# Historical diagnostic only; revision 4 remains permanently preclosure.
 ksg-integration-decision:
     python3 scripts/check-ksg-harmonic-revision.py
     python3 -O scripts/check-ksg-harmonic-revision.py
@@ -755,7 +757,7 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity ksg-integration-decision formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 

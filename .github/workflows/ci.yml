@@ -86,24 +86,15 @@ jobs:
       - name: Replay every scoped revision route and its mutations
         run: |
           set -euo pipefail
-          for route in \
-            --claim-only \
-            --release-only \
-            --source-only \
-            --exact-only \
-            --binary64-only \
-            --enclosure-only \
-            --catalog-only
-          do
-            python3 scripts/check-ksg-harmonic-revision.py "$route"
-            python3 -O scripts/check-ksg-harmonic-revision.py "$route"
-          done
-          # The self-tests also require the unscoped lifecycle gate to remain red while the
-          # active packet is integration_no_go.
-          python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-          python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-          python3 scripts/check-ksg-harmonic-revision-self-test.py
-          python3 -O scripts/check-ksg-harmonic-revision-self-test.py
+          # The descendant gate replays five live-applicable revision-4 routes and the complete
+          # current catalog authority. Exact-tree replay alone retains the superseded release-only
+          # route and the separately historical-only frozen catalog route.
+          python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+          python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+          python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+          python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+          python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+          python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
       - name: Verify the exact KSG-only Git phase envelope
         run: |
           set -euo pipefail

@@ -385,6 +385,28 @@ that disposition remains red. Only a separate descendant/re-anchored M1c milesto
 the immutable final evidence matrix and decision; preclosure evidence cannot grant that authority
 early.
 
+The revision-4 `--catalog-only` route and monolithic self-test freeze their execution-anchor
+catalog projection. They are historical replay objects, not live gates over an evolving catalog;
+do not repin them or revert later semantic corrections to make that projection green. The
+versioned descendant wrapper pins the immutable checker and self-test, the current catalog
+checker/self-test and schema helper, and the reviewed four-argument literal-tree materializer. Its
+default mode replays exactly five still-applicable claim/source/exact/binary64/enclosure routes,
+then invokes the complete current 73-row catalog authority and its 85-mutation suite separately,
+all in normal and optimized Python. The historical `--release-only` route is superseded by six
+separately scoped release-family revisions of represented-input PID2 synergy; `--catalog-only` is
+historical-only for the distinct frozen-projection reason. Exact-tree replay retains both without
+weakening or repinning either route.
+
+The opt-in historical mode requires the pinned revision-4 SHA-1 commit/tree to be an ancestor of
+the checked `HEAD`, materializes that exact tree, and replays its 241-mutation full suite and
+147-mutation claim suite in normal and optimized Python. The companion rejects 35 hostile
+controls, including erasure of the five-route call, current-catalog call, exact-tree call, full
+suite, or claim suite. Returned tuples are bounded in-process execution receipts under this
+pinned checker/mutation model. Stable-byte observations are not an atomic filesystem snapshot and
+do not prove authenticity, prevent coordinated transient substitution or checker/self-test
+rewrite, make the historical catalog current, promote the lifecycle, or establish theorem,
+estimator, support, PID, or application validity.
+
 `check-ksg-m1a-phase.py` is the current-descendant lifecycle gate; it does not replace or reinterpret
 the immutable historical C3 wrapper. Run it under isolated Python. Policy-only and hostile modes
 are non-credit diagnostics. Creditable precommit mode requires an independently constructed exact
@@ -1252,17 +1274,19 @@ python3 -O scripts/check-z3-ksg-integer-harmonic.py
 python3 scripts/check-z3-ksg-integer-harmonic-self-test.py
 python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
 
-python3 scripts/check-ksg-harmonic-revision.py --claim-only
-python3 -O scripts/check-ksg-harmonic-revision.py --claim-only
-python3 scripts/check-ksg-harmonic-revision-self-test.py --claim-only
-python3 -O scripts/check-ksg-harmonic-revision-self-test.py --claim-only
+python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
+python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
+python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
 ```
 
-The `--exact-only`, `--binary64-only`, `--enclosure-only`, and `--claim-only` switches are scoped
-diagnostic routes. This revision checker is permanently preclosure-only: its default route
-intentionally exits nonzero with the exact lifecycle status and it has no positive final parser.
-It cannot substitute for the separately reviewed versioned M1c checker required after catalog,
-release, source, identity, phase-isolation, and real M1a evidence are settled.
+The five live-applicable historical switches are scoped diagnostic routes. The superseded
+`--release-only` switch and separately historical-only `--catalog-only` switch are retained only
+through exact-tree replay. The revision-4 checker remains permanently preclosure-only: its default
+route intentionally exits nonzero with the exact lifecycle status and has no positive final
+parser. The descendant wrapper is likewise not an M1c authority.
 
 `generate-finite-alphabet-plugin-oracle.py` independently rebuilds a 100-digit Decimal corpus for
 the listed two-, three-, and four-source SxPID tables and the listed two- and three-source `I_min`
