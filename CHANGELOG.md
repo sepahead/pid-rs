@@ -1316,6 +1316,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Added a separate Lean 4.33 lane for the exact finite categorical informative
+  source-marginal factorization.  For a fixed finite source alphabet and supplied source-only
+  event family, it proves that each averaged informative cumulative factors through the complete
+  joint source marginal, remains invariant across different finite target alphabets with that
+  marginal fixed, and retains the equality under any one literally fixed finite linear transform.
+  Probability-law corollaries make nonnegativity, normalization, positive support, and nonempty
+  event families explicit.  A bounded exact route separately aggregates the 16 joint cells and
+  eight source cells for all 20,348 labelled binary tables of total count one through five,
+  checking 366,264 informative cumulatives and 366,264 Möbius-transformed coordinates; a
+  16-mutation suite and a misinformative/net counterexample prevent semantic widening.  A stable
+  Rust public-API regression pins the exact 18 antichain labels and compares constant, injective,
+  and within-source split target channels with a source-only oracle.  A dedicated three-job
+  workflow replays the Lean, exact-arithmetic, and Rust layers under isolated Python and pinned
+  Actions.  This is a formalized consequence, not a correction to the MGW/Wibral mathematics.
+  It does not establish MGW event/lattice or Möbius correspondence, a universal Rust refinement
+  theorem, misinformative/net invariance, sampling-to-population inference, continuous-estimator
+  validity, causality, calibration, priority, or complete SxPID3 certification; publication
+  promotion and hosted evidence remain separate obligations.
+
 - Added a source-pinned research blueprint and machine-readable transfer ledger for the
   PrimeGapsLib review. The canonical Markdown and derived 20-page PDF record the reviewed sieve
   theorem's conditional proof architecture, a 20-lens semantic-transfer council, formal-tool and
