@@ -78,7 +78,13 @@ make_fixture() {
 
 run_inventory() {
   local fixture="$1"
-  (cd "$fixture" && "$fixture/scripts/check-formal-pdf-set.sh" --inventory-only)
+  if [[ -n "${PID_RS_SELF_TEST_TMP_OVERRIDE:-}" ]]; then
+    (cd "$fixture" && \
+      PID_RS_PDF_GATE_TMPDIR="$PID_RS_SELF_TEST_TMP_OVERRIDE" \
+      "$fixture/scripts/check-formal-pdf-set.sh" --inventory-only)
+  else
+    (cd "$fixture" && "$fixture/scripts/check-formal-pdf-set.sh" --inventory-only)
+  fi
 }
 
 PASS_COUNT=0
@@ -90,9 +96,11 @@ pass() {
 expect_success() {
   local label="$1"
   local fixture="$2"
+  local temp_override="${3:-}"
   local stdout="$TEST_ROOT/success-$PASS_COUNT.stdout"
   local stderr="$TEST_ROOT/success-$PASS_COUNT.stderr"
-  if ! run_inventory "$fixture" >"$stdout" 2>"$stderr"; then
+  if ! PID_RS_SELF_TEST_TMP_OVERRIDE="$temp_override" \
+      run_inventory "$fixture" >"$stdout" 2>"$stderr"; then
     cat "$stdout" "$stderr" >&2
     echo "$CHECK_NAME: $label failed" >&2
     return 1
@@ -110,9 +118,11 @@ expect_failure() {
   local label="$1"
   local fixture="$2"
   local expected="$3"
+  local temp_override="${4:-}"
   local stdout="$TEST_ROOT/failure-$PASS_COUNT.stdout"
   local stderr="$TEST_ROOT/failure-$PASS_COUNT.stderr"
-  if run_inventory "$fixture" >"$stdout" 2>"$stderr"; then
+  if PID_RS_SELF_TEST_TMP_OVERRIDE="$temp_override" \
+      run_inventory "$fixture" >"$stdout" 2>"$stderr"; then
     cat "$stdout" "$stderr" >&2
     echo "$CHECK_NAME: $label was accepted" >&2
     return 1
@@ -128,6 +138,11 @@ expect_failure() {
 fixture="$TEST_ROOT/baseline"
 make_fixture "$fixture"
 expect_success "declared source-typed inventory is accepted" "$fixture"
+expect_success "slash-terminated temporary root is canonicalized" "$fixture" "$TEST_ROOT/"
+expect_failure "filesystem root is rejected as temporary root" "$fixture" \
+  "refusing filesystem root as temporary root" "/"
+expect_failure "absent temporary root is rejected" "$fixture" \
+  "cannot canonicalize temporary root" "$TEST_ROOT/absent"
 
 fixture="$TEST_ROOT/missing-fragment"
 make_fixture "$fixture"

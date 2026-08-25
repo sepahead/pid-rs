@@ -5,6 +5,22 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "$ROOT"
 MODE="${1:---exact}"
 
+# Kpathsea treats a double slash in a search path as a recursive-directory
+# request.  Canonicalize the aggregate gate's temporary root once so an
+# ambient slash-terminated TMPDIR cannot turn each TeX build into an
+# unrelated recursive scan.  The explicit override exists for isolated gate
+# runners and is subject to the same boundary.
+FORMAL_TMP_ROOT_INPUT="${PID_RS_PDF_GATE_TMPDIR:-${TMPDIR:-/tmp}}"
+if ! FORMAL_TMP_ROOT="$(cd "$FORMAL_TMP_ROOT_INPUT" && pwd -P)"; then
+  echo "formal PDF set: cannot canonicalize temporary root: $FORMAL_TMP_ROOT_INPUT" >&2
+  exit 2
+fi
+if [[ "$FORMAL_TMP_ROOT" == "/" ]]; then
+  echo "formal PDF set: refusing filesystem root as temporary root" >&2
+  exit 2
+fi
+export TMPDIR="$FORMAL_TMP_ROOT"
+
 if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" \
     && "$MODE" != "--inventory-only" ]]; then
   echo "usage: $0 [--exact|--cross-toolchain|--inventory-only]" >&2
@@ -96,7 +112,7 @@ scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh "$MODE"
 scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh "$MODE"
 WORKFLOW_GATE_PATH="${PID_RS_PDF_GATE_PATH:-/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin}"
 WORKFLOW_GATE_HOME="${PID_RS_PDF_GATE_HOME:-/nonexistent}"
-WORKFLOW_GATE_TMPDIR="${PID_RS_PDF_GATE_TMPDIR:-/tmp}"
+WORKFLOW_GATE_TMPDIR="$FORMAL_TMP_ROOT"
 /usr/bin/env -i \
   "PATH=$WORKFLOW_GATE_PATH" \
   "HOME=$WORKFLOW_GATE_HOME" \
