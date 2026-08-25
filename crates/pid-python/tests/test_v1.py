@@ -338,6 +338,54 @@ def test_explicit_imin_comparator_remains_measure_separated():
     assert "different redundancy measure" in imin.warnings[0]
 
 
+def test_categorical_imin_pid2_preserves_exact_source_swap_bits():
+    # Pinned minimal count table [0, 0, 0, 1, 1, 0, 0, 2] in (S1, S2, T)
+    # lexicographic bit order. Before the exact represented-operand sum, the two source
+    # orders reconstructed synergy as 2^-56 and +0 respectively.
+    source_one = np.array([[0], [1], [1], [1]], dtype=np.int64)
+    source_two = np.array([[1], [0], [1], [1]], dtype=np.int64)
+    target = np.array([[1], [0], [1], [1]], dtype=np.int64)
+
+    original = pid.compute_categorical_imin_pid2(source_one, source_two, target)
+    swapped = pid.compute_categorical_imin_pid2(source_two, source_one, target)
+
+    def bits(value: float) -> int:
+        return int(np.float64(value).view(np.uint64))
+
+    mapped_original = (
+        bits(original.redundancy_nats),
+        bits(original.unique_s1_nats),
+        bits(original.unique_s2_nats),
+        bits(original.synergy_nats),
+        bits(original.mi_s1_t_nats),
+        bits(original.mi_s2_t_nats),
+        bits(original.mi_s1s2_t_nats),
+    )
+    mapped_swapped = (
+        bits(swapped.redundancy_nats),
+        bits(swapped.unique_s2_nats),
+        bits(swapped.unique_s1_nats),
+        bits(swapped.synergy_nats),
+        bits(swapped.mi_s2_t_nats),
+        bits(swapped.mi_s1_t_nats),
+        bits(swapped.mi_s1s2_t_nats),
+    )
+    assert mapped_original == mapped_swapped
+    assert bits(original.synergy_nats) == 0
+    assert bits(swapped.synergy_nats) == 0
+
+    historical_original = (
+        (original.mi_s1s2_t_nats - original.mi_s1_t_nats)
+        - original.mi_s2_t_nats
+    ) + original.redundancy_nats
+    historical_swapped = (
+        (swapped.mi_s1s2_t_nats - swapped.mi_s1_t_nats)
+        - swapped.mi_s2_t_nats
+    ) + swapped.redundancy_nats
+    assert bits(historical_original) == 0x3C70000000000000
+    assert bits(historical_swapped) == 0
+
+
 def test_fitted_quantizer_reuses_edges_and_returns_shaped_numpy():
     training = np.array([[0.0], [10.0]], dtype=np.float64)
     held_out = np.array([[2.0], [8.0]], dtype=np.float64)

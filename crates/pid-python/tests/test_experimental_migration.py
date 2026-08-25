@@ -57,6 +57,10 @@ def migration():
     return pid.experimental.migration
 
 
+def f64_bits(value: float) -> int:
+    return int(np.float64(value).view(np.uint64))
+
+
 def test_migration_public_surface_matches_exact_allowlist():
     module = migration()
     expected = MIGRATION_POLICY_ATTRIBUTES | MIGRATION_CLASSES | MIGRATION_FUNCTIONS
@@ -119,6 +123,42 @@ def test_compute_invariants_returns_coherent_bounded_summary():
     assert np.isfinite(result["v_bar"])
 
 
+def test_continuous_pid2_scalar_and_report_routes_preserve_atom_bits():
+    rng = np.random.default_rng(81_733)
+    latent = rng.normal(size=(96, 1))
+    source_one = np.ascontiguousarray(latent + 0.31 * rng.normal(size=(96, 1)))
+    source_two = np.ascontiguousarray(0.7 * latent + 0.47 * rng.normal(size=(96, 1)))
+    target = np.ascontiguousarray(
+        0.8 * source_one - 0.35 * source_two + 0.29 * rng.normal(size=(96, 1))
+    )
+
+    atoms = migration().compute_pid2(
+        source_one,
+        source_two,
+        target,
+        k=3,
+        method="ehrlich_ksg",
+        support_contract="assume_regular_full_dimensional",
+    )
+    report = migration().compute_pid2_report(
+        source_one,
+        source_two,
+        target,
+        k=3,
+        method="ehrlich_ksg",
+        support_contract="assume_regular_full_dimensional",
+        source1_preprocessing_description="identity",
+        source2_preprocessing_description="identity",
+        target_preprocessing_description="identity",
+        observation_model_description="seeded full-rank Gaussian fixture",
+    )
+
+    keys = ("redundancy", "unique_s1", "unique_s2", "synergy")
+    assert tuple(f64_bits(atoms[key]) for key in keys) == tuple(
+        f64_bits(report["atoms"][key]) for key in keys
+    )
+
+
 @pytest.mark.parametrize(
     "method",
     [
@@ -165,6 +205,25 @@ def test_formula_labelled_heuristics_are_reachable_through_declared_wrappers(
     assert abs(redundancy - paper_redundancy) > 1e-6
     assert atoms["redundancy"] == pytest.approx(redundancy, rel=0.0, abs=1e-12)
     assert all(np.isfinite(value) for value in atoms.values())
+
+    # The scalar compatibility wrapper deliberately permits formula-labelled heuristics;
+    # the complete report does not, because those baselines have no cited neighborhood report.
+    with pytest.raises(
+        ValueError,
+        match="complete PID2 reports require the cited IsxMethod::EhrlichKsg construction",
+    ):
+        migration().compute_pid2_report(
+            s1,
+            s2,
+            target,
+            k=3,
+            method=method,
+            support_contract="assume_regular_full_dimensional",
+            source1_preprocessing_description="identity",
+            source2_preprocessing_description="identity",
+            target_preprocessing_description="identity",
+            observation_model_description="synthetic continuous fixture",
+        )
 
 
 def test_formula_labelled_heuristic_method_token_is_not_ignored():

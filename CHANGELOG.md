@@ -17,6 +17,25 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   implementation results, not a population theorem, global binary64 bound, internal argmin
   certificate, or correction to the Williams--Beer definition.
 
+- Correct six estimator-revision identities that remained stale after the represented-binary64
+  PID2 reductions changed reachable outputs: stable and same-sample Williams--Beer `I_min`, direct
+  continuous PID2, heuristic PID2, hierarchy screening, and pair screening. Their definition
+  revisions remain unchanged. Internal `I_min` specific-information lookups now fail closed with a
+  typed numerical-instability error if a private table invariant is breached or a stored value is
+  non-finite; valid public inputs retain the prior PID2 and PID3 reduction order and bits. This is
+  implementation and metadata repair, not a claim that the Williams--Beer or Wibral-group
+  mathematics is wrong and not a transfer between their distinct PID functionals. Stable Python
+  `I_min` now preserves all seven mapped fields on the pinned bit witness, while the continuous
+  scalar and Ehrlich-report wrappers agree bit-for-bit on a seeded same-process,
+  single-built-extension fixture. Configured Rust `pid2_isx*` and Python `compute_pid2` propagate
+  heuristic redundancy through the revised constructor; complete Rust and Python report routes
+  reject heuristic methods. The Python scalar docstrings distinguish those project-defined
+  baselines from the Ehrlich `I^sx_∩` functional. Hierarchy selection is unchanged. Pair
+  screening sorts descending
+  represented numeric synergy, treating opposite signed zeros as tied before source-index
+  tie-breaking; a changed numeric synergy can alter order, but a sign-zero-only bit change cannot.
+  No ranking-change witness or inferential theorem is claimed.
+
 - Advance the pre-1.0 public Rust API signature identity from revision 3 to revision 4 for the
   additive `QuantizationReport` fields; the prior revision snapshots remain immutable.
 

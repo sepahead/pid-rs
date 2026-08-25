@@ -24,7 +24,7 @@ SEMANTIC_AUTHORITY_SCHEMA = (
     ROOT / "audit/schemas/method-catalog-semantic-authority-v1.schema.json"
 )
 MARKDOWN = ROOT / "METHODS.md"
-EXPECTED_MUTATION_COUNT = 82
+EXPECTED_MUTATION_COUNT = 85
 MUTATION_COUNT = 0
 
 
@@ -38,7 +38,14 @@ def canonical_write(path: Path, value: Any) -> None:
 def run_checker(*arguments: str) -> subprocess.CompletedProcess[str]:
     optimization_flags = [] if __debug__ else ["-O"]
     return subprocess.run(
-        [sys.executable, *optimization_flags, str(CHECKER), *arguments],
+        [
+            sys.executable,
+            *optimization_flags,
+            "-S",
+            "-B",
+            str(CHECKER),
+            *arguments,
+        ],
         cwd=ROOT,
         check=False,
         stdout=subprocess.PIPE,
@@ -385,6 +392,40 @@ def main() -> int:
                 {
                     "summary": "These formulas consistently estimate continuous shared exclusions for every population law."
                 }
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "heuristic-report-route-conflation",
+            base,
+            lambda value: method(
+                value, "shared-exclusions.continuous-heuristics"
+            )["python_entry_points"].append(
+                "pid_core_rs.experimental.migration.compute_pid2_report"
+            ),
+            "migration owner claims disagree",
+        )
+        expect_failure(
+            directory,
+            "hierarchy-selected-pid-evidence-erasure",
+            base,
+            lambda value: method(value, "pipelines.hierarchy-screening")[
+                "validation"
+            ]["evidence_paths"].remove(
+                "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json"
+            ),
+            semantic_freeze_error,
+        )
+        expect_failure(
+            directory,
+            "pid2-screening-ordering-erasure",
+            base,
+            lambda value: method(value, "pipelines.pid2-screening")[
+                "constraints"
+            ].__setitem__(
+                1,
+                "Pair ordering cannot change when represented synergy bits change.",
             ),
             semantic_freeze_error,
         )

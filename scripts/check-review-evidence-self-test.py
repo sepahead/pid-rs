@@ -471,11 +471,437 @@ expect_assurance_rejected(
 )
 
 mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin_numerical = imin["layers"]["floating_point_numerical_behavior"]["assurance"]
+imin_numerical["claim"] = replace_once(
+    imin_numerical["claim"],
+    "correctly rounded, ties-to-even exact sum",
+    "approximately rounded sum",
+    "represented PID2 sum semantics",
+)
+expect_assurance_rejected("represented PID2 sum weakening", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin_numerical = imin["layers"]["floating_point_numerical_behavior"]["assurance"]
+imin_numerical["claim"] = replace_once(
+    imin_numerical["claim"],
+    "meaning supported (table, target-value) pairs rather than 5,070 distinct tables",
+    "meaning 5,070 distinct tables",
+    "I_min tie-event scope",
+)
+expect_assurance_rejected("I_min tie-event/table conflation", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin_numerical = imin["layers"]["floating_point_numerical_behavior"]["assurance"]
+imin_numerical["claim"] = replace_once(
+    imin_numerical["claim"],
+    "It does not validate Ehrlich shared exclusions or another PID",
+    "It validates Ehrlich shared exclusions and every other PID",
+    "PID-definition separation",
+)
+expect_assurance_rejected("PID-definition evidence conflation", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin_numerical = imin["layers"]["floating_point_numerical_behavior"]["assurance"]
+imin_numerical["claim"] = replace_once(
+    imin_numerical["claim"],
+    "PID3 numerical outputs are not part of the represented-synergy revision",
+    "PID3 numerical outputs are included in this revision",
+    "PID3 numerical scope",
+)
+expect_assurance_rejected("PID3 scope promotion", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin["layers"]["floating_point_numerical_behavior"]["assurance"]["evidence"].remove(
+    "crates/pid-core/src/exact_binary64.rs"
+)
+expect_assurance_rejected("represented PID2 sum evidence erasure", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin_numerical = imin["layers"]["floating_point_numerical_behavior"]["assurance"]
+imin_numerical["claim"] = replace_once(
+    imin_numerical["claim"],
+    "It is not a deductive all-input Rust/compiler refinement proof",
+    "It is a deductive all-input Rust/compiler refinement proof",
+    "represented PID2 all-input boundary",
+)
+expect_assurance_rejected("represented PID2 all-input promotion", mutation)
+
+mutation = copy.deepcopy(assurance)
+continuous = assurance_family(mutation, "pid-core.experimental.continuous.pid2")
+continuous_numerical = continuous["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+continuous_numerical["claim"] = replace_once(
+    continuous_numerical["claim"],
+    "Exact reduction can therefore change constructor admission",
+    "Exact reduction cannot change constructor admission",
+    "continuous constructor admission",
+)
+expect_assurance_rejected("continuous constructor-admission erasure", mutation)
+
+mutation = copy.deepcopy(assurance)
+continuous = assurance_family(mutation, "pid-core.experimental.continuous.pid2")
+continuous_numerical = continuous["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+continuous_numerical["claim"] = replace_once(
+    continuous_numerical["claim"],
+    "unchanged inclusive 32-position ordered-binary64 guard",
+    "derived universal 32-position error theorem",
+    "continuous reconstruction guard",
+)
+expect_assurance_rejected("continuous reconstruction-guard promotion", mutation)
+
+mutation = copy.deepcopy(assurance)
+heuristic = assurance_family(mutation, "pid-core.research.isx-heuristics")
+heuristic_numerical = heuristic["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+heuristic_numerical["claim"] = replace_once(
+    heuristic_numerical["claim"],
+    "configured Rust pid2_isx and pid2_isx_with_budget plus experimental Python compute_pid2 compose",
+    "every heuristic scalar route composes",
+    "heuristic configured route",
+)
+expect_assurance_rejected("heuristic scalar-route overreach", mutation)
+
+mutation = copy.deepcopy(assurance)
+heuristic = assurance_family(mutation, "pid-core.research.isx-heuristics")
+heuristic_numerical = heuristic["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+heuristic_numerical["claim"] = replace_once(
+    heuristic_numerical["claim"],
+    "configured Rust pid2_isx and pid2_isx_with_budget plus experimental Python compute_pid2 compose",
+    "only experimental Python compute_pid2 composes",
+    "heuristic Rust route erasure",
+)
+expect_assurance_rejected("heuristic Rust-route erasure", mutation)
+
+mutation = copy.deepcopy(assurance)
+heuristic = assurance_family(mutation, "pid-core.research.isx-heuristics")
+heuristic_numerical = heuristic["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+heuristic_numerical["claim"] = replace_once(
+    heuristic_numerical["claim"],
+    "plus Python compute_pid2_report reject heuristic methods",
+    "plus Python compute_pid2_report accept heuristic methods",
+    "heuristic report rejection",
+)
+expect_assurance_rejected("heuristic report-route conflation", mutation)
+
+mutation = copy.deepcopy(assurance)
+hierarchy = assurance_family(mutation, "pid-core.experimental.hierarchy")
+hierarchy_numerical = hierarchy["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+hierarchy_numerical["claim"] = replace_once(
+    hierarchy_numerical["claim"],
+    "screening and pair selection are unchanged",
+    "screening and pair selection changed",
+    "hierarchy selection boundary",
+)
+expect_assurance_rejected("hierarchy selection overreach", mutation)
+
+mutation = copy.deepcopy(assurance)
+screening = assurance_family(
+    mutation, "pid-core.experimental.pipelines.pid2-screening"
+)
+screening_numerical = screening["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+screening_numerical["claim"] = replace_once(
+    screening_numerical["claim"],
+    "A changed numeric synergy can alter tie membership or result order",
+    "A changed numeric synergy cannot alter tie membership or result order",
+    "pair-screening ordering boundary",
+)
+expect_assurance_rejected("pair-screening ordering erasure", mutation)
+
+mutation = copy.deepcopy(assurance)
+screening = assurance_family(
+    mutation, "pid-core.experimental.pipelines.pid2-screening"
+)
+screening_numerical = screening["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+screening_numerical["claim"] = replace_once(
+    screening_numerical["claim"],
+    "a sign-zero-only bit change cannot",
+    "a sign-zero-only bit change can",
+    "pair-screening signed-zero boundary",
+)
+expect_assurance_rejected("pair-screening signed-zero overreach", mutation)
+
+mutation = copy.deepcopy(assurance)
+continuous = assurance_family(mutation, "pid-core.experimental.continuous.pid2")
+continuous_layer = continuous["layers"]["floating_point_numerical_behavior"]
+continuous_assumption = continuous_layer["assumptions"][0]
+continuous_assumption["statement"] = replace_once(
+    continuous_assumption["statement"],
+    "they are not a global runtime-call inventory",
+    "they are a global runtime-call inventory",
+    "represented PID2 family partition",
+)
+expect_assurance_rejected("represented PID2 global-call-inventory promotion", mutation)
+
+mutation = copy.deepcopy(assurance)
+screening = assurance_family(
+    mutation, "pid-core.experimental.pipelines.pid2-screening"
+)
+screening_numerical = screening["layers"]["floating_point_numerical_behavior"][
+    "assurance"
+]
+screening_numerical["claim"] = replace_once(
+    screening_numerical["claim"],
+    "No retained ranking-change witness",
+    "A retained ranking-change witness",
+    "pair-screening witness boundary",
+)
+expect_assurance_rejected("pair-screening invented witness", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin_numerical = imin["layers"]["floating_point_numerical_behavior"]["assurance"]
+imin_numerical["claim"] = replace_once(
+    imin_numerical["claim"],
+    "not cross-platform identity",
+    "cross-platform identity",
+    "stable I_min Python route boundary",
+)
+expect_assurance_rejected("stable I_min Python portability promotion", mutation)
+
+for family_id, evidence_path in (
+    ("pid-core.stable.imin", "crates/pid-python/tests/test_v1.py"),
+    (
+        "pid-core.experimental.continuous.pid2",
+        "crates/pid-python/tests/test_experimental_migration.py",
+    ),
+):
+    mutation = copy.deepcopy(assurance)
+    family = assurance_family(mutation, family_id)
+    family["layers"]["floating_point_numerical_behavior"]["assurance"][
+        "evidence"
+    ].remove(evidence_path)
+    expect_assurance_rejected(f"{family_id} Python route evidence erasure", mutation)
+
+mutation = copy.deepcopy(assurance)
+imin = assurance_family(mutation, "pid-core.stable.imin")
+imin["layers"]["floating_point_numerical_behavior"]["assurance"][
+    "evidence"
+].remove("crates/pid-core/tests/imin_numerical_boundary.rs")
+expect_assurance_rejected("I_min boundary evidence erasure", mutation)
+
+for family_id, predecessor_revision in sorted(
+    checker.REPRESENTED_PID2_PREDECESSOR_REVISIONS.items()
+):
+    mutation = copy.deepcopy(assurance)
+    family = assurance_family(mutation, family_id)
+    family["estimator_revision"] = predecessor_revision
+    expect_assurance_rejected(
+        f"{family_id} estimator-revision rollback",
+        mutation,
+    )
+
+for family_id, definition_revision in sorted(
+    checker.REPRESENTED_PID2_DEFINITION_REVISIONS.items()
+):
+    mutation = copy.deepcopy(assurance)
+    family = assurance_family(mutation, family_id)
+    family["definition_revision"] = definition_revision + "-drift"
+    expect_assurance_rejected(
+        f"{family_id} definition-revision drift",
+        mutation,
+    )
+
+mutation = copy.deepcopy(assurance)
+quantization_only = assurance_family(
+    mutation, "pid-core.experimental.pipelines.same-sample-quantization"
+)
+quantization_only["estimator_revision"] = (
+    "exact-significand-same-sample-plus-empirical-imin-v2"
+)
+expect_assurance_rejected("same-sample custody/emitter conflation", mutation)
+
+original_categorical_evidence = checker.FAMILY_EVIDENCE[
+    "pid-core.stable.categorical"
+]
+checker.FAMILY_EVIDENCE["pid-core.stable.categorical"] = (
+    *original_categorical_evidence,
+    checker.REPRESENTED_PID2_SUM_COMMON_EVIDENCE[0],
+)
+try:
+    checker.require_represented_pid2_synergy_evidence_scope()
+except checker.ReviewEvidenceError as error:
+    if "reached a non-covered release-scope family" not in str(error):
+        raise SystemExit(
+            f"represented PID2 evidence fanout failed for the wrong reason: {error}"
+        ) from error
+    record_rejection()
+else:
+    raise SystemExit("represented PID2 evidence unexpectedly reached categorical SxPID")
+finally:
+    checker.FAMILY_EVIDENCE["pid-core.stable.categorical"] = (
+        original_categorical_evidence
+    )
+
+original_continuous_pid2_evidence = checker.FAMILY_EVIDENCE[
+    "pid-core.experimental.continuous.pid2"
+]
+original_affected_evidence_sha256 = (
+    checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256
+)
+checker.FAMILY_EVIDENCE["pid-core.experimental.continuous.pid2"] = (
+    *original_continuous_pid2_evidence,
+    checker.IMIN_NUMERICAL_BOUNDARY_EVIDENCE[0],
+)
+checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = checker.semantic_sha256(
+    {
+        family_id: list(checker.FAMILY_EVIDENCE[family_id])
+        for family_id in sorted(checker.REPRESENTED_PID2_SYNERGY_FAMILIES)
+    }
+)
+try:
+    checker.require_represented_pid2_synergy_evidence_scope()
+except checker.ReviewEvidenceError as error:
+    if "reached a non-I_min family" not in str(error):
+        raise SystemExit(
+            f"I_min boundary fanout failed for the wrong reason: {error}"
+        ) from error
+    record_rejection()
+else:
+    raise SystemExit("I_min boundary evidence unexpectedly reached continuous PID2")
+finally:
+    checker.FAMILY_EVIDENCE["pid-core.experimental.continuous.pid2"] = (
+        original_continuous_pid2_evidence
+    )
+    checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = (
+        original_affected_evidence_sha256
+    )
+
+for family_id in sorted(checker.REPRESENTED_PID2_SYNERGY_FAMILIES):
+    original_evidence = checker.FAMILY_EVIDENCE[family_id]
+    original_roster_sha256 = (
+        checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256
+    )
+    removed_path = checker.REPRESENTED_PID2_SUM_COMMON_EVIDENCE[0]
+    checker.FAMILY_EVIDENCE[family_id] = tuple(
+        path for path in original_evidence if path != removed_path
+    )
+    checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = (
+        checker.semantic_sha256(
+            {
+                affected_id: list(checker.FAMILY_EVIDENCE[affected_id])
+                for affected_id in sorted(
+                    checker.REPRESENTED_PID2_SYNERGY_FAMILIES
+                )
+            }
+        )
+    )
+    try:
+        checker.require_represented_pid2_synergy_evidence_scope()
+    except checker.ReviewEvidenceError as error:
+        if "evidence is incomplete" not in str(error):
+            raise SystemExit(
+                f"common evidence removal from {family_id} failed for the wrong reason: {error}"
+            ) from error
+        record_rejection()
+    else:
+        raise SystemExit(f"common evidence removal from {family_id} unexpectedly passed")
+    finally:
+        checker.FAMILY_EVIDENCE[family_id] = original_evidence
+        checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = (
+            original_roster_sha256
+        )
+
+for family_id in sorted(checker.REPRESENTED_PID2_IMIN_FAMILIES):
+    original_evidence = checker.FAMILY_EVIDENCE[family_id]
+    original_roster_sha256 = (
+        checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256
+    )
+    removed_path = checker.IMIN_NUMERICAL_BOUNDARY_EVIDENCE[0]
+    checker.FAMILY_EVIDENCE[family_id] = tuple(
+        path for path in original_evidence if path != removed_path
+    )
+    checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = (
+        checker.semantic_sha256(
+            {
+                affected_id: list(checker.FAMILY_EVIDENCE[affected_id])
+                for affected_id in sorted(
+                    checker.REPRESENTED_PID2_SYNERGY_FAMILIES
+                )
+            }
+        )
+    )
+    try:
+        checker.require_represented_pid2_synergy_evidence_scope()
+    except checker.ReviewEvidenceError as error:
+        if "numerical-boundary evidence is incomplete" not in str(error):
+            raise SystemExit(
+                f"I_min boundary removal from {family_id} failed for the wrong reason: {error}"
+            ) from error
+        record_rejection()
+    else:
+        raise SystemExit(f"I_min boundary removal from {family_id} unexpectedly passed")
+    finally:
+        checker.FAMILY_EVIDENCE[family_id] = original_evidence
+        checker.EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = (
+            original_roster_sha256
+        )
+
+for family_id, route_path in (
+    ("pid-core.stable.imin", "crates/pid-python/tests/test_v1.py"),
+    (
+        "pid-core.experimental.continuous.pid2",
+        "crates/pid-python/tests/test_experimental_migration.py",
+    ),
+):
+    original_evidence = checker.FAMILY_EVIDENCE[family_id]
+    checker.FAMILY_EVIDENCE[family_id] = tuple(
+        path for path in original_evidence if path != route_path
+    )
+    try:
+        checker.require_represented_pid2_synergy_evidence_scope()
+    except checker.ReviewEvidenceError as error:
+        if "affected-family evidence roster changed" not in str(error):
+            raise SystemExit(
+                f"Python route removal from {family_id} failed for the wrong reason: {error}"
+            ) from error
+        record_rejection()
+    else:
+        raise SystemExit(f"Python route removal from {family_id} unexpectedly passed")
+    finally:
+        checker.FAMILY_EVIDENCE[family_id] = original_evidence
+
+mutation = copy.deepcopy(assurance)
 protected = assurance_family(mutation, "pid-core.infrastructure")
 protected["layers"]["rust_refinement"]["assurance"]["claim"] = (
     "changed protected family"
 )
 expect_assurance_rejected("non-KSG protected-family drift", mutation)
+
+mutation = copy.deepcopy(assurance)
+protected_ksg = assurance_family(mutation, "pid-core.stable.continuous")
+protected_ksg["layers"]["rust_refinement"]["assurance"]["claim"] = (
+    "changed protected unaffected KSG family"
+)
+try:
+    checker.validate_protected_unaffected_ksg_projection(mutation["families"])
+except checker.ReviewEvidenceError as error:
+    if "unaffected KSG assurance-family projection" not in str(error):
+        raise SystemExit(
+            f"unaffected KSG protected projection failed for the wrong reason: {error}"
+        ) from error
+    record_rejection()
+else:
+    raise SystemExit("unaffected KSG protected projection unexpectedly passed")
 
 try:
     checker.validate_assurance_registry(
@@ -626,6 +1052,51 @@ task_138["scope_note"] = replace_once(
 )
 expect_tasks_rejected("T138 integration promotion", mutation)
 
+baseline_t138 = next(task for task in tasks["tasks"] if task["task_id"] == "T138")
+for label, field, value, expected_message in (
+    (
+        "scope append",
+        "scope_note",
+        baseline_t138["scope_note"] + " Unreviewed extension.",
+        "T138 scope differs",
+    ),
+    (
+        "evidence append",
+        "evidence",
+        [*baseline_t138["evidence"], "README.md"],
+        "T138 evidence differs",
+    ),
+    (
+        "record-field drift",
+        "reason_code",
+        "UNREVIEWED_REASON",
+        "T138 record differs",
+    ),
+):
+    task_mutation = copy.deepcopy(baseline_t138)
+    task_mutation[field] = value
+    try:
+        checker.validate_t138_ksg_boundary(task_mutation)
+    except checker.ReviewEvidenceError as error:
+        if expected_message not in str(error):
+            raise SystemExit(
+                f"T138 {label} failed for the wrong reason: {error}"
+            ) from error
+        record_rejection()
+    else:
+        raise SystemExit(f"T138 {label} unexpectedly passed")
+
+try:
+    checker.validate_task_dispositions(tasks_raw + b"\n")
+except checker.ReviewEvidenceError as error:
+    if "bytes differ from the protected baseline" not in str(error):
+        raise SystemExit(
+            f"task-disposition byte drift failed for the wrong reason: {error}"
+        ) from error
+    record_rejection()
+else:
+    raise SystemExit("task-disposition byte drift unexpectedly passed")
+
 mutation = copy.deepcopy(tasks)
 protected_task = next(task for task in mutation["tasks"] if task["task_id"] == "T137")
 protected_task["scope_note"] = "changed protected task"
@@ -667,6 +1138,58 @@ try:
 finally:
     checker.KSG_INTEGER_HARMONIC_EVIDENCE = original_ksg_evidence
     checker.EXPECTED_KSG_EVIDENCE_SHA256 = original_ksg_evidence_sha256
+
+original_ksg_revisions = checker.KSG_INTEGER_HARMONIC_REVISIONS
+checker.KSG_INTEGER_HARMONIC_REVISIONS = dict(original_ksg_revisions)
+first_ksg_family = sorted(checker.KSG_INTEGER_HARMONIC_REVISIONS)[0]
+checker.KSG_INTEGER_HARMONIC_REVISIONS[first_ksg_family] += "-drift"
+try:
+    checker.validate_ksg_evidence_inventory()
+except checker.ReviewEvidenceError as error:
+    if "historical KSG integer-harmonic revision map changed" not in str(error):
+        raise SystemExit(
+            f"historical KSG revision drift failed for the wrong reason: {error}"
+        ) from error
+    record_rejection()
+else:
+    raise SystemExit("historical KSG revision drift unexpectedly passed")
+finally:
+    checker.KSG_INTEGER_HARMONIC_REVISIONS = original_ksg_revisions
+
+for attribute, label, expected_message in (
+    (
+        "REPRESENTED_PID2_SYNERGY_REVISIONS",
+        "current revision map",
+        "reviewed revision map changed",
+    ),
+    (
+        "REPRESENTED_PID2_PREDECESSOR_REVISIONS",
+        "predecessor revision map",
+        "predecessor revision map changed",
+    ),
+    (
+        "REPRESENTED_PID2_DEFINITION_REVISIONS",
+        "definition revision map",
+        "reviewed definition map changed",
+    ),
+):
+    original_map = getattr(checker, attribute)
+    mutated_map = dict(original_map)
+    first_family = sorted(mutated_map)[0]
+    mutated_map[first_family] += "-drift"
+    setattr(checker, attribute, mutated_map)
+    try:
+        checker.build_assurance_registry()
+    except checker.ReviewEvidenceError as error:
+        if expected_message not in str(error):
+            raise SystemExit(
+                f"{label} drift failed for the wrong reason: {error}"
+            ) from error
+        record_rejection()
+    else:
+        raise SystemExit(f"{label} drift unexpectedly passed")
+    finally:
+        setattr(checker, attribute, original_map)
 
 original_handoff_commit = checker.HANDOFF_LEDGER_DECLARED_COMMIT
 checker.HANDOFF_LEDGER_DECLARED_COMMIT = checker.TAGGED_COMMIT
@@ -721,14 +1244,14 @@ mutation_rows[0]["generated"] = "true"
 mutation_rows[0]["generator"] = "not applicable"
 expect_ledger_rejected("missing generator", mutation_rows)
 
-expected_mutations = 71
+expected_mutations = 125
 if mutations_rejected != expected_mutations:
     raise SystemExit(
         "review-evidence mutation inventory changed: "
         f"{mutations_rejected} != {expected_mutations}"
     )
 print(
-    f"OK: {mutations_rejected} family/layer, KSG-boundary, task/status, "
+    f"OK: {mutations_rejected} family/layer, KSG/PID2-numerical-boundary, task/status, "
     "tag-inventory, digest, generator, review-claim, and index-binding mutations "
     "were rejected"
 )

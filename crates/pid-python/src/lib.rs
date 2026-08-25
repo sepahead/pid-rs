@@ -953,7 +953,12 @@ fn compute_mi_report(
     }
 }
 
-/// Compute continuous I_sx_intersect redundancy.
+/// Compute the selected continuous redundancy scalar.
+///
+/// `method="ehrlich_ksg"` selects the paper-defined continuous shared-exclusions
+/// `I^sx_∩` estimator. The other accepted method tokens select project-defined,
+/// formula-labelled heuristic baselines; their outputs are not estimates of that
+/// shared-exclusions functional.
 #[pyfunction]
 #[allow(clippy::too_many_arguments)]
 #[pyo3(signature = (s1, s2, target, k=3, method="ehrlich_ksg", metric="chebyshev", tie_epsilon=0.0, support_contract="unspecified"))]
@@ -999,8 +1004,12 @@ fn compute_co_information(
     co_information_pairwise(s1_mat, s2_mat, t_mat, &cfg).map_err(pid_err)
 }
 
-/// 2-source PID atoms (redundancy / unique_s1 / unique_s2 / synergy) from KSG MI plus the
-/// continuous shared-exclusions redundancy `I^sx_∩`, in nats.
+/// 2-source PID atoms (redundancy / unique_s1 / unique_s2 / synergy), in nats.
+///
+/// All methods use KSG MI terms. `method="ehrlich_ksg"` composes them with the
+/// paper-defined continuous shared-exclusions redundancy `I^sx_∩`; the other
+/// accepted method tokens instead compose project-defined, formula-labelled
+/// heuristic baselines and must not be interpreted as the Ehrlich functional.
 ///
 /// The MI terms feeding the atoms are always computed unclamped (the core forces
 /// `NegativeHandling::Allow`) so that `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)` holds by

@@ -431,8 +431,8 @@
           "components": [
             {
               "claim_sha256": "2018e0bf0453fedcee03dc985e741943d60d2a615ef987d9aedaf02b7a47c467",
-              "evidence_path_count": 25,
-              "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+              "evidence_path_count": 35,
+              "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
               "layer": "definition",
               "source_assurance_id": "ASSUR-F004-DEF",
               "source_evidence_tier": "DOCUMENTATION",
@@ -447,8 +447,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 25,
-          "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+          "evidence_path_count": 35,
+          "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
           "id": "EDGE-F004-E1",
           "meaning": "Transcription of formulas, units, domains, support, and source errata.",
           "review_record_ids": [],
@@ -458,8 +458,8 @@
           "components": [
             {
               "claim_sha256": "59dbbcce9186498ea7383e582d92ce9295fecf37bc63f1c1e7df6e0dacbefa1e",
-              "evidence_path_count": 25,
-              "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+              "evidence_path_count": 35,
+              "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
               "layer": "exact_algebra",
               "source_assurance_id": "ASSUR-F004-ALG",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -474,8 +474,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 25,
-          "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+          "evidence_path_count": 35,
+          "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
           "id": "EDGE-F004-E2",
           "meaning": "Correspondence between the repository statement and a formal statement.",
           "review_record_ids": [],
@@ -497,8 +497,8 @@
           "components": [
             {
               "claim_sha256": "4a8fc62d3c2286938b1512bbbbd86bc7c308ea58a6e51f53e3698ae191e7ddb2",
-              "evidence_path_count": 25,
-              "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+              "evidence_path_count": 35,
+              "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
               "layer": "rust_refinement",
               "source_assurance_id": "ASSUR-F004-RUST",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -506,9 +506,9 @@
               "source_status": "TESTED"
             },
             {
-              "claim_sha256": "f7ce209111296052317c4476efe9f4de8891392f2d767743a0fbad4d0127b289",
-              "evidence_path_count": 25,
-              "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+              "claim_sha256": "7f105713c655aefc32f020843c741961960740f4c491db00343f8ea2c87e4e6b",
+              "evidence_path_count": 35,
+              "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
               "layer": "floating_point_numerical_behavior",
               "source_assurance_id": "ASSUR-F004-NUM",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -523,8 +523,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 25,
-          "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+          "evidence_path_count": 35,
+          "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
           "id": "EDGE-F004-E4",
           "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary.",
           "review_record_ids": [],
@@ -534,8 +534,8 @@
           "components": [
             {
               "claim_sha256": "6b0ef0f848449bd90d4d2291a3b299bdf59926081e6b859a0c5d9be230bce6e2",
-              "evidence_path_count": 25,
-              "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+              "evidence_path_count": 35,
+              "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
               "layer": "statistical_application_validity",
               "source_assurance_id": "ASSUR-F004-STAT",
               "source_evidence_tier": "ASSUMPTION_DECLARATION",
@@ -550,15 +550,15 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 25,
-          "evidence_paths_sha256": "426933830c48318dd9dc18b42f9754368477eee49df2408aa6556fbf55ba190e",
+          "evidence_path_count": 35,
+          "evidence_paths_sha256": "ce4e29d98da5efe79060adea4b3b0128ad3f584cd056f77322ffda7951a3c6db",
           "id": "EDGE-F004-E5",
           "meaning": "Sampling, support, calibration, and application-domain validity.",
           "review_record_ids": [],
           "source_component_status": "assumption_gated"
         }
       ],
-      "estimator_revision": "empirical-specific-information-minimum-with-quantized-provenance-v1",
+      "estimator_revision": "empirical-specific-information-minimum-with-quantized-provenance-and-represented-input-exact-pid2-synergy-sum-v2",
       "family_id": "pid-core.stable.imin",
       "software_stability": "stable",
       "transitive_five_edge_chain_claimed": false
@@ -1805,8 +1805,8 @@
           "components": [
             {
               "claim_sha256": "fb6b813e97e8089f9895edfc1f33322fa7bdd1fd8085a252d397741c5583dcff",
-              "evidence_path_count": 48,
-              "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+              "evidence_path_count": 56,
+              "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
               "layer": "definition",
               "source_assurance_id": "ASSUR-F014-DEF",
               "source_evidence_tier": "DOCUMENTATION",
@@ -1821,8 +1821,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 48,
-          "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+          "evidence_path_count": 56,
+          "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
           "id": "EDGE-F014-E1",
           "meaning": "Transcription of formulas, units, domains, support, and source errata.",
           "review_record_ids": [],
@@ -1832,8 +1832,8 @@
           "components": [
             {
               "claim_sha256": "30e76d1b4cd988edf5a9b55fdad7fd956b546d96bfd3e7280490a3bd8064a222",
-              "evidence_path_count": 48,
-              "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+              "evidence_path_count": 56,
+              "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
               "layer": "exact_algebra",
               "source_assurance_id": "ASSUR-F014-ALG",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -1848,8 +1848,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 48,
-          "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+          "evidence_path_count": 56,
+          "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
           "id": "EDGE-F014-E2",
           "meaning": "Correspondence between the repository statement and a formal statement.",
           "review_record_ids": [],
@@ -1871,8 +1871,8 @@
           "components": [
             {
               "claim_sha256": "3fa4f05eb1d7a3be51c1a0fd1cf1eaeef24328ba0e24ce99835849dcad72ae2a",
-              "evidence_path_count": 48,
-              "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+              "evidence_path_count": 56,
+              "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
               "layer": "rust_refinement",
               "source_assurance_id": "ASSUR-F014-RUST",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -1880,9 +1880,9 @@
               "source_status": "TESTED"
             },
             {
-              "claim_sha256": "290a3534f9fde517b5b66157038863626c06c72f7dc9cfe49526acf1502e9114",
-              "evidence_path_count": 48,
-              "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+              "claim_sha256": "5053d1c014171429e111b6bbe2a6069d8f8ff969ec592cc9d6d904456fc50e0a",
+              "evidence_path_count": 56,
+              "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
               "layer": "floating_point_numerical_behavior",
               "source_assurance_id": "ASSUR-F014-NUM",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -1897,8 +1897,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 48,
-          "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+          "evidence_path_count": 56,
+          "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
           "id": "EDGE-F014-E4",
           "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary.",
           "review_record_ids": [],
@@ -1908,8 +1908,8 @@
           "components": [
             {
               "claim_sha256": "801d187aeb4ed37e8312bb2944866b29e28a03750b5d8da70959f81be00e417c",
-              "evidence_path_count": 48,
-              "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+              "evidence_path_count": 56,
+              "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
               "layer": "statistical_application_validity",
               "source_assurance_id": "ASSUR-F014-STAT",
               "source_evidence_tier": "ASSUMPTION_DECLARATION",
@@ -1924,15 +1924,15 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 48,
-          "evidence_paths_sha256": "7e2428e309fc273925436571f1857b340d47ede8ca966d497043cabad0d96471",
+          "evidence_path_count": 56,
+          "evidence_paths_sha256": "782c83b6d30096ccdde9aedd95fdf5944321322120a022a2be4bf18e1f665690",
           "id": "EDGE-F014-E5",
           "meaning": "Sampling, support, calibration, and application-domain validity.",
           "review_record_ids": [],
           "source_component_status": "open_or_not_claimed"
         }
       ],
-      "estimator_revision": "separate-biased-term-pid2-integer-harmonic-v2",
+      "estimator_revision": "separate-biased-term-pid2-with-integer-harmonic-inputs-and-represented-input-exact-synergy-sum-v3",
       "family_id": "pid-core.experimental.continuous.pid2",
       "software_stability": "experimental",
       "transitive_five_edge_chain_claimed": false
@@ -2500,8 +2500,8 @@
           "components": [
             {
               "claim_sha256": "1ca8ed5199cfca94d5043d55e90722ce73b943e98ec77cefdf5099c7ef824065",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+              "evidence_path_count": 52,
+              "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
               "layer": "definition",
               "source_assurance_id": "ASSUR-F019-DEF",
               "source_evidence_tier": "DOCUMENTATION",
@@ -2516,8 +2516,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+          "evidence_path_count": 52,
+          "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
           "id": "EDGE-F019-E1",
           "meaning": "Transcription of formulas, units, domains, support, and source errata.",
           "review_record_ids": [],
@@ -2527,8 +2527,8 @@
           "components": [
             {
               "claim_sha256": "a8db3cdd1a780d27bec12753f4a5bce443d90db728a47972609419512753a50e",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+              "evidence_path_count": 52,
+              "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
               "layer": "exact_algebra",
               "source_assurance_id": "ASSUR-F019-ALG",
               "source_evidence_tier": "NONE",
@@ -2543,8 +2543,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+          "evidence_path_count": 52,
+          "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
           "id": "EDGE-F019-E2",
           "meaning": "Correspondence between the repository statement and a formal statement.",
           "review_record_ids": [],
@@ -2566,8 +2566,8 @@
           "components": [
             {
               "claim_sha256": "3fa4f05eb1d7a3be51c1a0fd1cf1eaeef24328ba0e24ce99835849dcad72ae2a",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+              "evidence_path_count": 52,
+              "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
               "layer": "rust_refinement",
               "source_assurance_id": "ASSUR-F019-RUST",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -2575,9 +2575,9 @@
               "source_status": "TESTED"
             },
             {
-              "claim_sha256": "290a3534f9fde517b5b66157038863626c06c72f7dc9cfe49526acf1502e9114",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+              "claim_sha256": "e8ae8d5339f7cc521cac75a1d4b9f2ad463975c1983b66cbfbe89c8a8827e410",
+              "evidence_path_count": 52,
+              "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
               "layer": "floating_point_numerical_behavior",
               "source_assurance_id": "ASSUR-F019-NUM",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -2592,8 +2592,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+          "evidence_path_count": 52,
+          "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
           "id": "EDGE-F019-E4",
           "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary.",
           "review_record_ids": [],
@@ -2603,8 +2603,8 @@
           "components": [
             {
               "claim_sha256": "801d187aeb4ed37e8312bb2944866b29e28a03750b5d8da70959f81be00e417c",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+              "evidence_path_count": 52,
+              "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
               "layer": "statistical_application_validity",
               "source_assurance_id": "ASSUR-F019-STAT",
               "source_evidence_tier": "ASSUMPTION_DECLARATION",
@@ -2619,15 +2619,15 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "e2f8cf507ab14bfb14d9c07b72379d885c2f5b0307e093dabd139930b3a202b6",
+          "evidence_path_count": 52,
+          "evidence_paths_sha256": "375ded527c8d5a5e98b5802714940ee0daffe88fa2e3c81b0ff21caf505e62f4",
           "id": "EDGE-F019-E5",
           "meaning": "Sampling, support, calibration, and application-domain validity.",
           "review_record_ids": [],
           "source_component_status": "open_or_not_claimed"
         }
       ],
-      "estimator_revision": "heuristic-baselines-with-integer-harmonic-ksg-v2",
+      "estimator_revision": "heuristic-baselines-with-integer-harmonic-ksg-and-configured-pid2-represented-input-exact-synergy-sum-v3",
       "family_id": "pid-core.research.isx-heuristics",
       "software_stability": "research-only",
       "transitive_five_edge_chain_claimed": false
@@ -2917,8 +2917,8 @@
           "components": [
             {
               "claim_sha256": "c11b26a7efae1c82756b4423256b153552052cc073b958cfa50ddeb31b0c4912",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
               "layer": "definition",
               "source_assurance_id": "ASSUR-F022-DEF",
               "source_evidence_tier": "DOCUMENTATION",
@@ -2933,8 +2933,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
           "id": "EDGE-F022-E1",
           "meaning": "Transcription of formulas, units, domains, support, and source errata.",
           "review_record_ids": [],
@@ -2944,8 +2944,8 @@
           "components": [
             {
               "claim_sha256": "89b0f14e60d23f1d01af87fc24ecef148a0f5709e68929d679d736a2f1772ed2",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
               "layer": "exact_algebra",
               "source_assurance_id": "ASSUR-F022-ALG",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -2960,8 +2960,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
           "id": "EDGE-F022-E2",
           "meaning": "Correspondence between the repository statement and a formal statement.",
           "review_record_ids": [],
@@ -2983,8 +2983,8 @@
           "components": [
             {
               "claim_sha256": "3fa4f05eb1d7a3be51c1a0fd1cf1eaeef24328ba0e24ce99835849dcad72ae2a",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
               "layer": "rust_refinement",
               "source_assurance_id": "ASSUR-F022-RUST",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -2992,9 +2992,9 @@
               "source_status": "TESTED"
             },
             {
-              "claim_sha256": "290a3534f9fde517b5b66157038863626c06c72f7dc9cfe49526acf1502e9114",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+              "claim_sha256": "b13a7ddd00a5fe96df9c2e2a9f37733c7477aba2321c920ed9722b5aae9d50da",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
               "layer": "floating_point_numerical_behavior",
               "source_assurance_id": "ASSUR-F022-NUM",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -3009,8 +3009,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
           "id": "EDGE-F022-E4",
           "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary.",
           "review_record_ids": [],
@@ -3020,8 +3020,8 @@
           "components": [
             {
               "claim_sha256": "801d187aeb4ed37e8312bb2944866b29e28a03750b5d8da70959f81be00e417c",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
               "layer": "statistical_application_validity",
               "source_assurance_id": "ASSUR-F022-STAT",
               "source_evidence_tier": "ASSUMPTION_DECLARATION",
@@ -3036,15 +3036,15 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "c2a947788dac8005f782565b49b43880254b7771553963c5748e4bc5f7c2c87e",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "47f61fb75665292c8eeee560c7543795dde6a9bd424dd0307697729ac79235cc",
           "id": "EDGE-F022-E5",
           "meaning": "Sampling, support, calibration, and application-domain validity.",
           "review_record_ids": [],
           "source_component_status": "open_or_not_claimed"
         }
       ],
-      "estimator_revision": "hierarchy-screening-with-integer-harmonic-ksg-v2",
+      "estimator_revision": "hierarchy-screening-with-integer-harmonic-ksg-and-represented-input-exact-pid2-synergy-sum-v3",
       "family_id": "pid-core.experimental.hierarchy",
       "software_stability": "experimental",
       "transitive_five_edge_chain_claimed": false
@@ -4410,8 +4410,8 @@
           "components": [
             {
               "claim_sha256": "002ed6bc099c8ee1868fc6045688c21f2f9b1570a556ae2480872c92d8e2843b",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
               "layer": "definition",
               "source_assurance_id": "ASSUR-F033-DEF",
               "source_evidence_tier": "DOCUMENTATION",
@@ -4426,8 +4426,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
           "id": "EDGE-F033-E1",
           "meaning": "Transcription of formulas, units, domains, support, and source errata.",
           "review_record_ids": [],
@@ -4437,8 +4437,8 @@
           "components": [
             {
               "claim_sha256": "89b0f14e60d23f1d01af87fc24ecef148a0f5709e68929d679d736a2f1772ed2",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
               "layer": "exact_algebra",
               "source_assurance_id": "ASSUR-F033-ALG",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -4453,8 +4453,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
           "id": "EDGE-F033-E2",
           "meaning": "Correspondence between the repository statement and a formal statement.",
           "review_record_ids": [],
@@ -4476,8 +4476,8 @@
           "components": [
             {
               "claim_sha256": "3fa4f05eb1d7a3be51c1a0fd1cf1eaeef24328ba0e24ce99835849dcad72ae2a",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
               "layer": "rust_refinement",
               "source_assurance_id": "ASSUR-F033-RUST",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -4485,9 +4485,9 @@
               "source_status": "TESTED"
             },
             {
-              "claim_sha256": "290a3534f9fde517b5b66157038863626c06c72f7dc9cfe49526acf1502e9114",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+              "claim_sha256": "7602dc2ca441d2183cde006c65ffa5c64eacd1ccf8977ff59a8644004d543e08",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
               "layer": "floating_point_numerical_behavior",
               "source_assurance_id": "ASSUR-F033-NUM",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -4502,8 +4502,8 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
           "id": "EDGE-F033-E4",
           "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary.",
           "review_record_ids": [],
@@ -4513,8 +4513,8 @@
           "components": [
             {
               "claim_sha256": "801d187aeb4ed37e8312bb2944866b29e28a03750b5d8da70959f81be00e417c",
-              "evidence_path_count": 42,
-              "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+              "evidence_path_count": 50,
+              "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
               "layer": "statistical_application_validity",
               "source_assurance_id": "ASSUR-F033-STAT",
               "source_evidence_tier": "ASSUMPTION_DECLARATION",
@@ -4529,15 +4529,15 @@
             "execution_evidence",
             "formal_proof"
           ],
-          "evidence_path_count": 42,
-          "evidence_paths_sha256": "d1ab915c04b6e1070757ea473e6259e6ef6b20d4924f733c865ef54308ee0303",
+          "evidence_path_count": 50,
+          "evidence_paths_sha256": "a82c106a649a8a38ca60e4e713d08c0cef221d986f9d6aceb2aa0ebd415ac8ca",
           "id": "EDGE-F033-E5",
           "meaning": "Sampling, support, calibration, and application-domain validity.",
           "review_record_ids": [],
           "source_component_status": "open_or_not_claimed"
         }
       ],
-      "estimator_revision": "deterministic-pair-enumeration-with-integer-harmonic-pid2-v2",
+      "estimator_revision": "deterministic-pair-enumeration-with-integer-harmonic-and-represented-input-exact-pid2-synergy-sum-v3",
       "family_id": "pid-core.experimental.pipelines.pid2-screening",
       "software_stability": "experimental",
       "transitive_five_edge_chain_claimed": false
@@ -4819,8 +4819,8 @@
           "components": [
             {
               "claim_sha256": "13a9ff91fbb3debe2a0c9a7a0db7806873dfc927d42b27f9e6632a1b38bbdf26",
-              "evidence_path_count": 9,
-              "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+              "evidence_path_count": 18,
+              "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
               "layer": "definition",
               "source_assurance_id": "ASSUR-F036-DEF",
               "source_evidence_tier": "DOCUMENTATION",
@@ -4834,8 +4834,8 @@
             "documentation",
             "execution_evidence"
           ],
-          "evidence_path_count": 9,
-          "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+          "evidence_path_count": 18,
+          "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
           "id": "EDGE-F036-E1",
           "meaning": "Transcription of formulas, units, domains, support, and source errata.",
           "review_record_ids": [],
@@ -4845,8 +4845,8 @@
           "components": [
             {
               "claim_sha256": "133c45e4970de73cb84397c0ec35ca8aa49bbfd112df487e54a4024fab7890d5",
-              "evidence_path_count": 9,
-              "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+              "evidence_path_count": 18,
+              "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
               "layer": "exact_algebra",
               "source_assurance_id": "ASSUR-F036-ALG",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -4860,8 +4860,8 @@
             "documentation",
             "execution_evidence"
           ],
-          "evidence_path_count": 9,
-          "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+          "evidence_path_count": 18,
+          "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
           "id": "EDGE-F036-E2",
           "meaning": "Correspondence between the repository statement and a formal statement.",
           "review_record_ids": [],
@@ -4883,8 +4883,8 @@
           "components": [
             {
               "claim_sha256": "4a8fc62d3c2286938b1512bbbbd86bc7c308ea58a6e51f53e3698ae191e7ddb2",
-              "evidence_path_count": 9,
-              "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+              "evidence_path_count": 18,
+              "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
               "layer": "rust_refinement",
               "source_assurance_id": "ASSUR-F036-RUST",
               "source_evidence_tier": "IMPLEMENTATION_TEST",
@@ -4892,9 +4892,9 @@
               "source_status": "TESTED"
             },
             {
-              "claim_sha256": "f7ce209111296052317c4476efe9f4de8891392f2d767743a0fbad4d0127b289",
-              "evidence_path_count": 9,
-              "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+              "claim_sha256": "d0c0069a78caf03d9d5f68f26934ae84e6329e815cd7ab9a4c1b2e083c4ba5b3",
+              "evidence_path_count": 18,
+              "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
               "layer": "floating_point_numerical_behavior",
               "source_assurance_id": "ASSUR-F036-NUM",
               "source_evidence_tier": "BOUNDED_TEST",
@@ -4908,8 +4908,8 @@
             "documentation",
             "execution_evidence"
           ],
-          "evidence_path_count": 9,
-          "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+          "evidence_path_count": 18,
+          "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
           "id": "EDGE-F036-E4",
           "meaning": "Refinement to Rust/Python plus the separately recorded finite-precision boundary.",
           "review_record_ids": [],
@@ -4919,8 +4919,8 @@
           "components": [
             {
               "claim_sha256": "801d187aeb4ed37e8312bb2944866b29e28a03750b5d8da70959f81be00e417c",
-              "evidence_path_count": 9,
-              "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+              "evidence_path_count": 18,
+              "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
               "layer": "statistical_application_validity",
               "source_assurance_id": "ASSUR-F036-STAT",
               "source_evidence_tier": "ASSUMPTION_DECLARATION",
@@ -4934,15 +4934,15 @@
             "documentation",
             "execution_evidence"
           ],
-          "evidence_path_count": 9,
-          "evidence_paths_sha256": "31ae71650ef1e38793e89007822f316659bb58f3a0b3f5e1f8796e1549366502",
+          "evidence_path_count": 18,
+          "evidence_paths_sha256": "f2826bd943fb7b6c00b47eb499076787a69be0ed1b49059666b5f206126969db",
           "id": "EDGE-F036-E5",
           "meaning": "Sampling, support, calibration, and application-domain validity.",
           "review_record_ids": [],
           "source_component_status": "open_or_not_claimed"
         }
       ],
-      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-imin-v2",
+      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-imin-with-represented-input-exact-pid2-synergy-sum-v3",
       "family_id": "pid-core.experimental.pipelines.same-sample-quantized-imin",
       "software_stability": "experimental",
       "transitive_five_edge_chain_claimed": false
@@ -5180,7 +5180,7 @@
     "path": "audit/evidence/assurance-registry.json",
     "schema": "pid-rs/assurance-registry",
     "schema_revision": 2,
-    "sha256": "516322630e0f99eebc46fb8493d85c5bb1cb06962ef4f6d62bc977fee0ced9bd"
+    "sha256": "63e4025a5deef88d6f1f5fe49651b6aa7d835f500db2df67c0bdf766d26a70d5"
   },
   "transitive_chain_status": "not_established"
 }

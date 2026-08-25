@@ -1069,6 +1069,7 @@
       "constraints": [
         "PID identities require unclamped component MI values; the result inherits assumptions from KSG and continuous shared exclusions.",
         "The synergy coordinate exactly reduces four already represented binary64 estimator terms and rounds once; this does not make those terms exact. The inherited inclusive 32-position ordered-binary64 reconstruction guard is a project compatibility policy, not a derived forward-error, conditioning, relative-accuracy, or representability theorem. Against reconstructed positive zero it accepts expected positive-subnormal payload 32 and rejects payload 33; because its ordering distinguishes signed zeros, it accepts negative payload 31 and rejects negative payload 32. The accepted boundaries permit complete relative loss.",
+        "The experimental Python compute_pid2 and Ehrlich-only compute_pid2_report routes reach the same revised constructor. A seeded 96-row same-process test against one built extension module compares their four atom fields bit-for-bit; it is bounded wrapper evidence, not cross-platform identity or an all-input theorem.",
         "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
         "Relative source units and preprocessing define the shared-exclusions estimand and must be held fixed and reported.",
         "The continuous construction uses the stated lower-order branch-intersection assumption when leading-order overlap terms are dropped."
@@ -1116,7 +1117,8 @@
       "scientific_novelty_claim": "none",
       "source_files": [
         "crates/pid-core/src/exact_binary64.rs",
-        "crates/pid-core/src/pid2.rs"
+        "crates/pid-core/src/pid2.rs",
+        "crates/pid-python/src/lib.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/pid2.rs"
@@ -1131,12 +1133,15 @@
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+          "crates/pid-core/src/exact_binary64.rs",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
           "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
           "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/pid2.rs",
+          "crates/pid-python/src/lib.rs",
+          "crates/pid-python/tests/test_experimental_migration.py",
           "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
           "scripts/check-ksg-harmonic-exact-enclosure.py",
           "scripts/check-ksg-harmonic-revision-self-test.py",
@@ -1223,6 +1228,7 @@
       "constraints": [
         "This is the Williams-Beer redundancy definition on an empirical categorical PMF and must not be pooled with shared-exclusions atoms.",
         "Only the two-source synergy receives the exact represented-binary64 four-term reduction. The three-source Mobius path retains its prior compensated reduction. Larger temporary S0<->S1 exhaustive and all-three-transposition random probes reported no reachable source-swap bit witness, but their executable and raw log were not retained; they have zero current release-evidence credit and do not prove global equivariance.",
+        "The stable categorical Python binding maps the pinned four-row witness bit-for-bit across all seven public scalar fields under source exchange in one process against one built extension module. This is binding-route evidence, not cross-platform identity or an all-input theorem.",
         "On independent two-bit COPY, I_min assigns ln(2) nats of redundancy, whereas the Harder identity axiom requires redundancy equal to I(S1;S2), which is zero for these independent sources.",
         "The exact-real plug-in convergence result applies to the fixed two- and three-source lattices on fixed finite alphabets; it allows minimum ties but does not claim differentiability or a binary64 asymptotic limit."
       ],
@@ -1232,7 +1238,7 @@
       "id": "pid.imin",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Provides deterministic two- and three-source empirical implementations with categorical provenance and budgets; the two-source path also exposes cooperative cancellation and a witnessed order-independent represented-binary64 synergy reduction.",
+      "new_in_pid_rs": "Provides deterministic two- and three-source empirical implementations with categorical provenance and budgets; the two-source path also exposes cooperative cancellation and a witnessed order-independent represented-binary64 synergy reduction, while private specific-information table inconsistencies fail closed.",
       "python_entry_points": [
         "pid_core_rs.compute_categorical_imin_pid2"
       ],
@@ -1275,6 +1281,7 @@
           "NUMERICAL_ASSURANCE.md",
           "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
           "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/src/exact_binary64.rs",
           "crates/pid-core/tests/cross_validation.rs",
           "crates/pid-core/tests/discrete_resource_contracts.rs",
           "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
@@ -1284,12 +1291,15 @@
           "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
           "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/imin.rs",
+          "crates/pid-core/tests/imin_numerical_boundary.rs",
           "crates/pid-core/tests/sxpid_axioms.rs",
+          "crates/pid-python/src/v1.rs",
+          "crates/pid-python/tests/test_v1.py",
           "scripts/generate-exact-binary64-sum-oracle.py"
         ],
         "level": "property-and-integration",
-        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min. The Lean artifact proves generic deterministic continuity lemmas, not the I_min definition, sampling theorem, or Rust arithmetic. Exact reduction applies only to the supplied, already rounded two-source synergy operands; it does not make probabilities, logarithms, MI, redundancy, or PID exact. The 561-case variable-arity arithmetic corpus is bounded conformance evidence, not a universal floating-point proof or estimator-error bound. The larger reported I_min3 negative searches are unqualified historical observations whose executable and raw log were not retained; they receive zero current release-evidence credit and do not prove that no larger witness exists.",
-        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, a pinned two-source source-exchange bit witness and exact represented-operand synergy reduction, direct three-source lattice reconstruction and retained source-swap equivariance tests, an explicit zero-credit disposition for unretained larger I_min3 negative searches, minimum-tie crossings, metadata, the documented identity-axiom counterexample, two-/three-source resource bounds, and an exact-real convergence argument."
+        "limitations": "Empirical-PMF agreement does not resolve the two-bit COPY identity-axiom failure or other conceptual limitations of I_min. The Lean artifact proves generic deterministic continuity lemmas, not the I_min definition, sampling theorem, or Rust arithmetic. Exact reduction applies only to the supplied, already rounded two-source synergy operands; it does not make probabilities, logarithms, MI, redundancy, or PID exact. The 561-case variable-arity arithmetic corpus and the 12,869-table binary total-at-most-eight boundary census are bounded conformance evidence, not universal floating-point proofs, estimator-error bounds, or population results. The larger reported I_min3 negative searches are unqualified historical observations whose executable and raw log were not retained; they receive zero current release-evidence credit and do not prove that no larger witness exists.",
+        "scope": "Direct two-source canonical-gate and independent empirical-PMF reconstruction, a pinned two-source source-exchange bit witness and exact represented-operand synergy reduction, exact-product target-specific minimum-tie checks and source-swap comparison over all 12,869 nonempty binary tables through total count eight, direct three-source lattice reconstruction and retained source-swap equivariance tests, an explicit zero-credit disposition for unretained larger I_min3 negative searches, metadata, the documented identity-axiom counterexample, two-/three-source resource bounds, and an exact-real convergence argument."
       }
     },
     {
@@ -1488,7 +1498,8 @@
         "Before calling the Rust wrapper, deprecated Python retains a conservative legacy O(columns times (num_bins+1)) preflight. It can reject large bin counts that the Rust exact-significand transform can represent; admitted Python calls use the Rust transform, but the accepted input domains are not identical.",
         "The returned atoms use the Williams-Beer I_min redundancy functional. They are not categorical Makkeh-Gutknecht-Wibral shared-exclusions atoms, an Ehrlich continuous shared-exclusions estimate, or a fallback for failed KSG estimation; independent two-bit COPY has identical mutual-information coordinates but I_min redundancy ln(2) versus categorical shared-exclusions redundancy ln(4/3).",
         "This evaluation-row-fitted adapter is distinct from pid.fitted-quantized-imin, whose reusable fitted quantizers retain edges, hashes, occupancies, and training/evaluation identities.",
-        "The two-source I_min result inherits the witnessed exact represented-binary64 synergy reduction; the three-source result retains the compensated Mobius path. This arithmetic distinction does not identify or merge PID measures."
+        "The two-source I_min result inherits the witnessed exact represented-binary64 synergy reduction; the three-source result retains the compensated Mobius path. This arithmetic distinction does not identify or merge PID measures.",
+        "The Rust two-source wrapper is exercised on the pinned source-swap witness. The deprecated Python wrapper retains bounded warning, shape, and rejection tests but has no separate exact-bit parity or portable-identity claim."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1527,6 +1538,7 @@
       "scientific_novelty_claim": "none",
       "source_files": [
         "crates/pid-core/src/discrete_pid.rs",
+        "crates/pid-core/src/exact_binary64.rs",
         "crates/pid-core/src/lib.rs",
         "crates/pid-core/src/same_sample.rs",
         "crates/pid-python/src/lib.rs"
@@ -1540,14 +1552,21 @@
         "evidence_paths": [
           "NUMERICAL_ASSURANCE.md",
           "crates/pid-core/src/discrete_pid.rs",
+          "crates/pid-core/src/exact_binary64.rs",
           "crates/pid-core/tests/discrete_pid_properties.rs",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
+          "crates/pid-core/tests/imin_numerical_boundary.rs",
           "crates/pid-core/tests/sxpid_properties.rs",
           "crates/pid-core/tests/sxpid_axioms.rs",
-          "crates/pid-python/tests/test_experimental_migration.py"
+          "crates/pid-python/src/lib.rs",
+          "crates/pid-python/tests/test_experimental_migration.py",
+          "scripts/generate-exact-binary64-sum-oracle.py"
         ],
         "level": "property-and-integration",
-        "limitations": "The tests establish bounded wrapper propagation, deterministic sample dependence, warning text, categorical identities, and the Python legacy-preflight rejection boundary. They do not justify a bin count, establish held-out inference, remove empirical-PMF bias, prove convergence for changing same-sample transforms, make Python and Rust accepted domains identical, or map I_min to MGW or Ehrlich shared exclusions.",
-        "scope": "Two- and three-source same-row range derivation, exact-significand label assignment, requested-bin propagation in Rust, direct/wrapper first-rejection resource parity, the outlier-appending relabeling witness, Python warning/shape/exception compatibility, identical three-source I_min/MGW antichain-key sets that cannot identify the functional, and the exact independent-COPY counterexample separating I_min from categorical shared exclusions despite identical mutual-information coordinates."
+        "limitations": "The tests establish bounded wrapper propagation, deterministic sample dependence, warning text, categorical identities, one source-swap wrapper witness, and the Python legacy-preflight rejection boundary. They do not justify a bin count, establish held-out inference, remove empirical-PMF bias, prove convergence for changing same-sample transforms, make Python and Rust accepted domains identical, or map I_min to MGW or Ehrlich shared exclusions. The exhaustive binary-table census exercises the direct categorical route; it does not exhaust the wrapper's numeric input domain.",
+        "scope": "Two- and three-source same-row range derivation, exact-significand label assignment, requested-bin propagation in Rust, direct/wrapper first-rejection resource parity, the outlier-appending relabeling witness, a two-source exact represented-synergy and source-swap wrapper comparison, Python warning/shape/exception compatibility, identical three-source I_min/MGW antichain-key sets that cannot identify the functional, and the exact independent-COPY counterexample separating I_min from categorical shared exclusions despite identical mutual-information coordinates."
       }
     },
     {
@@ -1558,7 +1577,7 @@
       "code_availability": "local",
       "constraints": [
         "The mutual-information.ksg1-raw dependency is research-only; screening thresholds and data reuse choices are exploratory and do not inherit validity from downstream estimators.",
-        "Any selected PID2 result inherits the exact represented-binary64 synergy and project-defined reconstruction guard; neither property calibrates screening or post-selection inference."
+        "Only selected held-out PairwiseScreen.pid values produced by hierarchical_pairwise_split and hierarchical_pairwise_split_with_budget inherit the exact represented-binary64 PID2 construction. Same-sample pairwise/triplet screening, co-information scores, selection masks and ordering, split identities, and unselected pid=None records are unchanged; no calibration or post-selection theorem follows."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1577,11 +1596,15 @@
       ],
       "rust_entry_points": [
         "pid_core::experimental::hierarchy::hierarchical_pairwise",
+        "pid_core::experimental::hierarchy::hierarchical_pairwise_split",
+        "pid_core::experimental::hierarchy::hierarchical_pairwise_split_with_budget",
         "pid_core::experimental::hierarchy::hierarchical_triplet"
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/hierarchy.rs"
+        "crates/pid-core/src/exact_binary64.rs",
+        "crates/pid-core/src/hierarchy.rs",
+        "crates/pid-core/src/pid2.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/hierarchy.rs"
@@ -1595,13 +1618,20 @@
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+          "crates/pid-core/src/exact_binary64.rs",
+          "crates/pid-core/src/pid2.rs",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/hierarchy.rs",
+          "crates/pid-core/tests/pid2.rs",
           "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
           "scripts/check-ksg-harmonic-exact-enclosure.py",
           "scripts/check-ksg-harmonic-revision-self-test.py",
           "scripts/check-ksg-harmonic-revision.py",
+          "scripts/generate-exact-binary64-sum-oracle.py",
           "scripts/generate-ksg-local-arithmetic-oracle.py"
         ],
         "level": "property-and-integration",
@@ -1617,7 +1647,7 @@
       "code_availability": "local",
       "constraints": [
         "Pair ranking is exploratory and remains subject to selection bias and component-estimator assumptions.",
-        "Screened PID2 values inherit the exact represented-binary64 synergy and project-defined reconstruction guard; neither property supplies post-selection inference."
+        "Every Pid2ScreenEntry.result inherits the revised represented-input-exact PID2 construction. Pair enumeration is unchanged. The returned vector is sorted by descending represented numeric synergy: numeric equality, including +0.0 versus -0.0, is treated as a tie; otherwise total_cmp is used, then source indices break ties. A changed numeric synergy can alter tie membership or order, while a sign-zero-only bit change cannot. No retained ranking-change witness, ranking-stability result, calibration result, or post-selection theorem is claimed."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
@@ -1634,10 +1664,13 @@
         "pid-core.experimental.pipelines.pid2-screening"
       ],
       "rust_entry_points": [
-        "pid_core::experimental::pipelines::screen_pid2_pairs"
+        "pid_core::experimental::pipelines::screen_pid2_pairs",
+        "pid_core::experimental::pipelines::screen_pid2_pairs_with_budget"
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
+        "crates/pid-core/src/exact_binary64.rs",
+        "crates/pid-core/src/pid2.rs",
         "crates/pid-core/src/pipeline.rs"
       ],
       "source_marker_files": [
@@ -1652,13 +1685,21 @@
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+          "crates/pid-core/src/exact_binary64.rs",
+          "crates/pid-core/src/pid2.rs",
           "crates/pid-core/src/pipeline.rs",
+          "crates/pid-core/tests/cross_validation.rs",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
+          "crates/pid-core/tests/pid2.rs",
           "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
           "scripts/check-ksg-harmonic-exact-enclosure.py",
           "scripts/check-ksg-harmonic-revision-self-test.py",
           "scripts/check-ksg-harmonic-revision.py",
+          "scripts/generate-exact-binary64-sum-oracle.py",
           "scripts/generate-ksg-local-arithmetic-oracle.py"
         ],
         "level": "unit-and-integration",
@@ -2871,11 +2912,13 @@
       "category": "diagnostic",
       "code_availability": "local",
       "constraints": [
-        "Formula-labelled baselines do not estimate the Ehrlich et al. continuous shared-exclusions functional."
+        "Formula-labelled baselines do not estimate the Ehrlich et al. continuous shared-exclusions functional.",
+        "Configured Rust pid2_isx and pid2_isx_with_budget plus experimental Python compute_pid2 compose a heuristic redundancy with the revised represented-input-exact PID2 constructor; hierarchy and pair-screening propagation are documented by their own family rows. Standalone Rust heuristic redundancy functions and Python compute_redundancy remain scalar-only. Rust pid2_isx_report and pid2_isx_report_with_budget plus Python compute_pid2_report reject heuristic methods before PID2 report construction because complete reports require the cited Ehrlich construction. Exact final summation neither validates a heuristic redundancy nor turns it into the Ehrlich functional."
       ],
       "definition_origin": "project-defined",
       "depends_on": [
-        "mutual-information.ksg1-raw"
+        "mutual-information.ksg1-raw",
+        "pid.continuous-pid2"
       ],
       "external_code": null,
       "id": "shared-exclusions.continuous-heuristics",
@@ -2903,7 +2946,10 @@
       ],
       "scientific_novelty_claim": "none",
       "source_files": [
-        "crates/pid-core/src/isx.rs"
+        "crates/pid-core/src/exact_binary64.rs",
+        "crates/pid-core/src/isx.rs",
+        "crates/pid-core/src/pid2.rs",
+        "crates/pid-python/src/lib.rs"
       ],
       "source_marker_files": [
         "crates/pid-core/src/isx.rs"
@@ -2912,17 +2958,27 @@
       "title": "Continuous shared-exclusions heuristics",
       "validation": {
         "evidence_paths": [
+          "NUMERICAL_ASSURANCE.md",
           "claims/KSG-INTEGER-HARMONIC-001/behavioral-witnesses-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/call-site-map.md",
           "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
           "claims/KSG-INTEGER-HARMONIC-001/failures/decimal-reference-metric-conflation-v4.md",
+          "crates/pid-core/src/exact_binary64.rs",
+          "crates/pid-core/src/pid2.rs",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+          "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+          "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json",
           "crates/pid-core/tests/fixtures/ksg_local_arithmetic_oracle.json.sha256",
           "crates/pid-core/tests/isx.rs",
+          "crates/pid-core/tests/pid2.rs",
+          "crates/pid-python/src/lib.rs",
+          "crates/pid-python/tests/test_experimental_migration.py",
           "scripts/check-ksg-harmonic-exact-enclosure-self-test.py",
           "scripts/check-ksg-harmonic-exact-enclosure.py",
           "scripts/check-ksg-harmonic-revision-self-test.py",
           "scripts/check-ksg-harmonic-revision.py",
+          "scripts/generate-exact-binary64-sum-oracle.py",
           "scripts/generate-ksg-local-arithmetic-oracle.py"
         ],
         "level": "unit-and-integration",

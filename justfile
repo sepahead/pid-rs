@@ -74,8 +74,10 @@ version-check:
     scripts/check-release-state-self-test.sh
     python3 scripts/check-software-identity.py
     python3 scripts/check-software-identity-self-test.py
-    python3 scripts/check-method-catalog.py
-    python3 scripts/check-method-catalog-self-test.py
+    python3 -S -B scripts/check-method-catalog.py
+    python3 -O -S -B scripts/check-method-catalog.py
+    python3 -S -B scripts/check-method-catalog-self-test.py
+    python3 -O -S -B scripts/check-method-catalog-self-test.py
     python3 scripts/check-ecosystem-capabilities.py
     python3 scripts/check-ecosystem-capabilities-self-test.py
     scripts/check-handoff-intake.py

@@ -238,7 +238,7 @@
     {
       "cargo_feature": null,
       "definition_revision": "williams-beer-2010-imin-plus-fixed-quantizer-composition-v1",
-      "estimator_revision": "empirical-specific-information-minimum-with-quantized-provenance-v1",
+      "estimator_revision": "empirical-specific-information-minimum-with-quantized-provenance-and-represented-input-exact-pid2-synergy-sum-v2",
       "id": "pid-core.stable.imin",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -248,6 +248,7 @@
         "resource preflight rejection",
         "cancellation",
         "checked size overflow",
+        "numerical instability",
         "sample count above exact f64 integer range"
       ],
       "mathematical_family": "Williams\u2013Beer I_min comparator on empirical categorical PMFs, including a project-defined fixed-quantizer composition",
@@ -715,7 +716,7 @@
     {
       "cargo_feature": "experimental-continuous",
       "definition_revision": "continuous-isx-pid2-algebra-v1",
-      "estimator_revision": "separate-biased-term-pid2-integer-harmonic-v2",
+      "estimator_revision": "separate-biased-term-pid2-with-integer-harmonic-inputs-and-represented-input-exact-synergy-sum-v3",
       "id": "pid-core.experimental.continuous.pid2",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -915,7 +916,7 @@
     {
       "cargo_feature": "experimental-heuristics",
       "definition_revision": "heuristic-baselines-v1",
-      "estimator_revision": "heuristic-baselines-with-integer-harmonic-ksg-v2",
+      "estimator_revision": "heuristic-baselines-with-integer-harmonic-ksg-and-configured-pid2-represented-input-exact-synergy-sum-v3",
       "id": "pid-core.research.isx-heuristics",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1087,7 +1088,7 @@
     {
       "cargo_feature": "experimental-hierarchy",
       "definition_revision": "hierarchy-screening-v1",
-      "estimator_revision": "hierarchy-screening-with-integer-harmonic-ksg-v2",
+      "estimator_revision": "hierarchy-screening-with-integer-harmonic-ksg-and-represented-input-exact-pid2-synergy-sum-v3",
       "id": "pid-core.experimental.hierarchy",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1550,7 +1551,7 @@
     {
       "cargo_feature": "experimental-pipelines",
       "definition_revision": "pid2-pair-screen-v1",
-      "estimator_revision": "deterministic-pair-enumeration-with-integer-harmonic-pid2-v2",
+      "estimator_revision": "deterministic-pair-enumeration-with-integer-harmonic-and-represented-input-exact-pid2-synergy-sum-v3",
       "id": "pid-core.experimental.pipelines.pid2-screening",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers; no downstream compatibility claimed"
@@ -1673,7 +1674,7 @@
     {
       "cargo_feature": "experimental-pipelines",
       "definition_revision": "williams-beer-imin-evaluation-sample-exact-significand-composition-v2",
-      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-imin-v2",
+      "estimator_revision": "exact-significand-same-evaluation-sample-plus-empirical-imin-with-represented-input-exact-pid2-synergy-sum-v3",
       "id": "pid-core.experimental.pipelines.same-sample-quantized-imin",
       "intended_ecosystem_consumers": [
         "standalone pid-rs callers performing explicitly exploratory cross-estimand sensitivity analysis; no downstream compatibility claimed"
@@ -1685,6 +1686,7 @@
         "non-finite input",
         "checked size or allocation failure",
         "aggregate categorical I_min resource rejection before quantization",
+        "categorical I_min numerical instability",
         "same-sample fitting is not held-out inference",
         "treating exact-significand bin selection as binary64-equivalent to the stable fitted-edge quantizer",
         "treating admitted Python-to-Rust parity as equality of accepted domains despite Python's stricter legacy bin-count preflight",

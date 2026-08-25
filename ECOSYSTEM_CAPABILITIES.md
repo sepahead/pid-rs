@@ -16,9 +16,9 @@ The checker separately binds the inventory boundary plus all consumer records to
 
 | Authority | Path | SHA-256 | Role |
 |---|---|---|---|
-| `assurance-registry` | `audit/evidence/assurance-registry.json` | `516322630e0f99eebc46fb8493d85c5bb1cb06962ef4f6d62bc977fee0ced9bd` | Release-family assurance layers and explicit gaps. |
-| `method-catalog` | `method-catalog.json` | `a21cd0e2f24ab07e8e4de5b7818b3c86007788b44c8915a68a95e236422787be` | Method origin, implementation status, constraints, and evidence. |
-| `release-scope` | `release-scope-1.0.json` | `3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8` | Proposed 1.0 family boundary and integration claim status. |
+| `assurance-registry` | `audit/evidence/assurance-registry.json` | `63e4025a5deef88d6f1f5fe49651b6aa7d835f500db2df67c0bdf766d26a70d5` | Release-family assurance layers and explicit gaps. |
+| `method-catalog` | `method-catalog.json` | `fa131a1a5d1a084af61aebc17e03ce857e3b315be99f50dd2cb623d11d46966d` | Method origin, implementation status, constraints, and evidence. |
+| `release-scope` | `release-scope-1.0.json` | `5cd220e815307ebd87012d7bb0045bd8a28669cede139389a3fd6c11dfccb06e` | Proposed 1.0 family boundary and integration claim status. |
 | `repository-snapshot` | `audit/evidence/repository-snapshot.json` | `b57e506bbf30183c29bea4ff062a3711a3e471400dd91ebbdd8f787152af4b56` | Historical repository identity evidence only. |
 
 The repository snapshot records historical identity evidence. It does not prove API compatibility or current repository state.

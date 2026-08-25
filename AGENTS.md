@@ -237,6 +237,13 @@ Durable routing and validation:
   assurance authority. [`audit/evidence/assurance-registry-typed-view-v1.json`](audit/evidence/assurance-registry-typed-view-v1.json)
   is only a deterministic derived query view; never edit it as a competing authority or infer a
   closed five-edge chain.
+- The represented-input exact PID2-synergy revision is bound to exactly six release-scope families
+  whose outputs directly emit or transitively contain the revised two-source synergy: stable and
+  same-sample Williams--Beer `I_min`, continuous PID2, configured heuristic PID2, hierarchy, and
+  pair screening. This is an evidence partition, not a global runtime-call inventory; `exp0` also
+  calls the constructor as a diagnostic. The revision does not cover PID3 or the quantization-only
+  same-sample custody family, and the bounded `I_min` census cannot validate Ehrlich shared
+  exclusions or another PID.
 - [`METHODS_SUMMARY.md`](METHODS_SUMMARY.md) is a generated stable-first navigation view; it does
   not replace the catalog or exhaustive `METHODS.md`. [`PID_MATHEMATICAL_AUDIT_PROTOCOL.md`](PID_MATHEMATICAL_AUDIT_PROTOCOL.md)
   is a generated object-card review aid that keeps PID2, incomplete PID3, and the full research
@@ -265,6 +272,10 @@ python3 scripts/check-assurance-registry-typed-view-v1.py
 python3 -O scripts/check-assurance-registry-typed-view-v1.py
 python3 scripts/check-assurance-registry-typed-view-v1-self-test.py
 python3 -O scripts/check-assurance-registry-typed-view-v1-self-test.py
+python3 -S -B scripts/check-method-catalog.py
+python3 -O -S -B scripts/check-method-catalog.py
+python3 -S -B scripts/check-method-catalog-self-test.py
+python3 -O -S -B scripts/check-method-catalog-self-test.py
 python3 scripts/check-methods-summary.py
 python3 -O scripts/check-methods-summary.py
 python3 scripts/check-methods-summary-self-test.py

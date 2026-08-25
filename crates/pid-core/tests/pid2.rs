@@ -1,6 +1,8 @@
 #![cfg(feature = "experimental-continuous")]
 
 use pid_core::experimental::continuous::raw_scalars::{ksg_mi, ksg_mi_concat_xy};
+#[cfg(feature = "experimental-heuristics")]
+use pid_core::experimental::continuous::IsxMethod;
 use pid_core::experimental::continuous::{
     pid2_isx, pid2_isx_report, IsxConfig, Pid2Config, Pid2Estimate, Pid2MethodStatus,
     Pid2Provenance, Pid2ReportWarning, Pid2Result,
@@ -125,6 +127,66 @@ fn pid2_report_keeps_restricted_status_configuration_and_provenance_attached() {
         .contains(&Pid2ReportWarning::ExperimentalIsxBaseline));
     assert!(report.atoms.synergy.is_finite());
     assert!(report.estimate_terms.mi_s1s2_t.is_finite());
+}
+
+#[cfg(feature = "experimental-heuristics")]
+#[test]
+fn configured_heuristic_pid2_scalar_route_succeeds_while_report_route_rejects() {
+    let mut rng = Rng64::new(2_031);
+    let n = 250;
+    let mut source_one = Vec::with_capacity(n);
+    let mut source_two = Vec::with_capacity(n);
+    let mut target = Vec::with_capacity(n);
+    for _ in 0..n {
+        let base = rng.normal();
+        source_one.push(base + 0.01 * rng.normal());
+        source_two.push(base + 0.01 * rng.normal());
+        target.push(base);
+    }
+
+    let source_one = MatRef::new(&source_one, n, 1).unwrap();
+    let source_two = MatRef::new(&source_two, n, 1).unwrap();
+    let target = MatRef::new(&target, n, 1).unwrap();
+    let provenance = Pid2Provenance::new(
+        "identity",
+        "identity",
+        "identity",
+        "deterministic full-rank continuous fixture",
+    )
+    .unwrap();
+
+    for method in [
+        IsxMethod::HeuristicSketch,
+        IsxMethod::LocalMinKsg,
+        IsxMethod::DisjunctionFromLocalMi,
+    ] {
+        let mut config = Pid2Config::assume_regular_full_dimensional();
+        config.isx.method = method;
+
+        let result = pid2_isx(source_one, source_two, target, &config)
+            .expect("configured heuristic PID2 scalar route must reach the result constructor");
+        assert!(
+            [
+                result.redundancy,
+                result.unique_s1,
+                result.unique_s2,
+                result.synergy,
+            ]
+            .iter()
+            .all(|value| value.is_finite()),
+            "configured {method:?} PID2 scalar route returned a non-finite atom"
+        );
+
+        let error = pid2_isx_report(source_one, source_two, target, &config, &provenance)
+            .expect_err("complete heuristic PID2 reports must fail closed");
+        assert!(matches!(
+            error,
+            PidError::InvalidConfig {
+                context: "pid2_isx_report",
+                message: "complete PID2 reports require the cited IsxMethod::EhrlichKsg construction; heuristic scalar baselines do not have complete neighborhood reports",
+            }
+        ));
+    }
 }
 
 #[test]

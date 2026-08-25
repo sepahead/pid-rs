@@ -105,6 +105,74 @@ KSG_INTEGER_HARMONIC_REVISIONS = {
 KSG_INTEGER_HARMONIC_FAMILIES = frozenset(KSG_INTEGER_HARMONIC_REVISIONS)
 KSG_PROTECTED_CONFIG_FAMILY = "pid-core.experimental.continuous.shared-ksg-config"
 KSG_PROTECTED_CONFIG_REVISION = "ksg-chebyshev-config-v1"
+REPRESENTED_PID2_SYNERGY_REVISIONS = {
+    "pid-core.stable.imin": (
+        "empirical-specific-information-minimum-with-quantized-provenance-and-"
+        "represented-input-exact-pid2-synergy-sum-v2"
+    ),
+    "pid-core.experimental.continuous.pid2": (
+        "separate-biased-term-pid2-with-integer-harmonic-inputs-and-represented-"
+        "input-exact-synergy-sum-v3"
+    ),
+    "pid-core.research.isx-heuristics": (
+        "heuristic-baselines-with-integer-harmonic-ksg-and-configured-pid2-"
+        "represented-input-exact-synergy-sum-v3"
+    ),
+    "pid-core.experimental.hierarchy": (
+        "hierarchy-screening-with-integer-harmonic-ksg-and-represented-input-"
+        "exact-pid2-synergy-sum-v3"
+    ),
+    "pid-core.experimental.pipelines.pid2-screening": (
+        "deterministic-pair-enumeration-with-integer-harmonic-and-represented-"
+        "input-exact-pid2-synergy-sum-v3"
+    ),
+    "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+        "exact-significand-same-evaluation-sample-plus-empirical-imin-with-"
+        "represented-input-exact-pid2-synergy-sum-v3"
+    ),
+}
+REPRESENTED_PID2_SYNERGY_FAMILIES = frozenset(REPRESENTED_PID2_SYNERGY_REVISIONS)
+REPRESENTED_PID2_PREDECESSOR_REVISIONS = {
+    "pid-core.stable.imin": (
+        "empirical-specific-information-minimum-with-quantized-provenance-v1"
+    ),
+    "pid-core.experimental.continuous.pid2": (
+        "separate-biased-term-pid2-integer-harmonic-v2"
+    ),
+    "pid-core.research.isx-heuristics": (
+        "heuristic-baselines-with-integer-harmonic-ksg-v2"
+    ),
+    "pid-core.experimental.hierarchy": (
+        "hierarchy-screening-with-integer-harmonic-ksg-v2"
+    ),
+    "pid-core.experimental.pipelines.pid2-screening": (
+        "deterministic-pair-enumeration-with-integer-harmonic-pid2-v2"
+    ),
+    "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+        "exact-significand-same-evaluation-sample-plus-empirical-imin-v2"
+    ),
+}
+REPRESENTED_PID2_DEFINITION_REVISIONS = {
+    "pid-core.stable.imin": (
+        "williams-beer-2010-imin-plus-fixed-quantizer-composition-v1"
+    ),
+    "pid-core.experimental.continuous.pid2": "continuous-isx-pid2-algebra-v1",
+    "pid-core.research.isx-heuristics": "heuristic-baselines-v1",
+    "pid-core.experimental.hierarchy": "hierarchy-screening-v1",
+    "pid-core.experimental.pipelines.pid2-screening": "pid2-pair-screen-v1",
+    "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+        "williams-beer-imin-evaluation-sample-exact-significand-composition-v2"
+    ),
+}
+REPRESENTED_PID2_KSG_DESCENDANTS = (
+    REPRESENTED_PID2_SYNERGY_FAMILIES & KSG_INTEGER_HARMONIC_FAMILIES
+)
+REPRESENTED_PID2_IMIN_FAMILIES = frozenset(
+    {
+        "pid-core.stable.imin",
+        "pid-core.experimental.pipelines.same-sample-quantized-imin",
+    }
+)
 KSG_INTEGER_HARMONIC_EVIDENCE = (
     "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
     "audit/formal/z3-ksg-harmonic/ksg-digamma-cancellation.smt2",
@@ -150,6 +218,18 @@ KSG_ASSURANCE_EVIDENCE = (
     *KSG_INTEGER_HARMONIC_EVIDENCE,
     *KSG_ASSURANCE_FAILURE_EVIDENCE,
 )
+REPRESENTED_PID2_SUM_COMMON_EVIDENCE = (
+    "NUMERICAL_ASSURANCE.md",
+    "crates/pid-core/src/exact_binary64.rs",
+    "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json",
+    "crates/pid-core/tests/fixtures/exact_binary64_sum_oracle.json.sha256",
+    "crates/pid-core/tests/fixtures/generate-exact-binary64-sum-oracle.py.snapshot",
+    "method-catalog.json",
+    "scripts/generate-exact-binary64-sum-oracle.py",
+)
+IMIN_NUMERICAL_BOUNDARY_EVIDENCE = (
+    "crates/pid-core/tests/imin_numerical_boundary.rs",
+)
 EXPECTED_KSG_EVIDENCE_COUNT = 35
 EXPECTED_KSG_EVIDENCE_SHA256 = (
     "4bef37f6314ea6f955ac3f838c6d08a34ea8d8950906d694578f3b63769117ee"
@@ -158,17 +238,49 @@ EXPECTED_KSG_ASSURANCE_EVIDENCE_COUNT = 37
 EXPECTED_KSG_ASSURANCE_EVIDENCE_SHA256 = (
     "353f84f40e9d3702756a3f505f7a0db8aef86edd2ef2ee08fd067c656f1002bc"
 )
+EXPECTED_KSG_INTEGER_HARMONIC_REVISIONS_SHA256 = (
+    "f75ecd5d50c1f9cd4d98b318b7155ba28b2a0d462a44c1ad14d4194d2d6d4b9f"
+)
+EXPECTED_REPRESENTED_PID2_SYNERGY_REVISIONS_SHA256 = (
+    "7a8fd7de3575fdcdaeaf594bbf45442ff9cba9ba24c7b0e7b11a2bb7c8d1d7cf"
+)
+EXPECTED_REPRESENTED_PID2_PREDECESSOR_REVISIONS_SHA256 = (
+    "e022f901beb25a19afc6da1c5e3e6577f7665f2621ba8e0027d32856b20cabf8"
+)
+EXPECTED_REPRESENTED_PID2_DEFINITION_REVISIONS_SHA256 = (
+    "63f79ed628b99f29d49c4c986d652c0371bf4377e9a45b4d134ad10e40fee9c9"
+)
+EXPECTED_REPRESENTED_PID2_SUM_COMMON_EVIDENCE_COUNT = 7
+EXPECTED_REPRESENTED_PID2_SUM_COMMON_EVIDENCE_SHA256 = (
+    "d106a83d0e767fd04e6649a33ea1130da16a0e90d19702fcf5cdf049b13f099b"
+)
+EXPECTED_IMIN_NUMERICAL_BOUNDARY_EVIDENCE_COUNT = 1
+EXPECTED_IMIN_NUMERICAL_BOUNDARY_EVIDENCE_SHA256 = (
+    "53046cfe77da02fd4783c0f45d0347b8fb3e2c464f29ed19c5805cc6c2def5cf"
+)
+EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256 = (
+    "b5848b911b4afe74de22af49679883a5820f81ee73dc0980ebf9cd3e944aec50"
+)
 EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256 = (
-    "e3163a80c3040a32f1f50af71954de81be25d7c3cbd7d121b25dbc03eb3f507e"
+    "e48ea786857afd7e022a54930164a2308bcde78d47188f140c34c1fd5a5dcde8"
+)
+EXPECTED_PROTECTED_UNAFFECTED_KSG_ASSURANCE_SHA256 = (
+    "71e27def1bef7e88f421de5b17e76cd105335ec37297a3e1934eafeebaa47a64"
 )
 EXPECTED_PROTECTED_TASKS_SHA256 = (
     "b154c6621bb571d40567c49d54d255e774935b3c918a992b8f6cd95d06c3430f"
 )
+EXPECTED_T138_TASK_SHA256 = (
+    "2d9d98a3d44b291d9e6753a07065991ea7d272cba8a592d1520f4c9d0564e656"
+)
+EXPECTED_TASK_DISPOSITIONS_SHA256 = (
+    "0ace29ac18e004f6a225f6c968eda8aa53ccb213b38466bed7b86d9558034ce0"
+)
 EXPECTED_FILE_REVIEW_LEDGER_SHA256 = (
     "54c055943937fca2b0b382118e788b90ad4cbe94a0f57ac71d39de46c72f5778"
 )
-EXPECTED_KSG_RELEASE_SCOPE_SHA256 = (
-    "3322d66f9426f3f948704096506dc65a1b73ae39e94a08ba455d7941f92828b8"
+EXPECTED_RELEASE_SCOPE_SHA256 = (
+    "5cd220e815307ebd87012d7bb0045bd8a28669cede139389a3fd6c11dfccb06e"
 )
 T138_SXPID2_EVIDENCE = (
     "scripts/generate-sxpid2-exhaustive-oracle.py",
@@ -258,6 +370,180 @@ KSG_NUMERICAL_FAILURE_CONSEQUENCE = (
     "all-input Rust, estimator, support, PID, consumer, or application validity would invalidate "
     "the recorded numerical boundary."
 )
+REPRESENTED_PID2_SUM_COMMON_NUMERICAL_CLAIM = (
+    "The named PID2 contract makes final synergy the correctly rounded, ties-to-even exact sum "
+    "of exactly four already represented finite binary64 operands: joint MI, two negated "
+    "marginal MIs, and redundancy. A retained 561-case variable-arity corpus gives bounded "
+    "conformance evidence for the summation implementation. It is not a deductive all-input "
+    "Rust/compiler refinement proof and does not make upstream probabilities, logarithms, MI, "
+    "redundancy, or PID exact."
+)
+REPRESENTED_PID2_SUM_IMIN_NUMERICAL_CLAIM = (
+    "For categorical Williams--Beer I_min, a pinned source-order witness kills the historical "
+    "left-associated residual. All seven public PID2 scalar fields are bit-equivariant under "
+    "source exchange on the 12,869 nonempty binary count tables of total mass at most eight; the "
+    "same census has 5,070 exact target-specific minimum-tie events, meaning supported (table, "
+    "target-value) pairs rather than 5,070 distinct tables. Private missing or non-finite "
+    "specific-information values now fail closed without changing admitted PID2 or PID3 bits. "
+    "The census is not a population theorem, global error bound, or internal argmin certificate. "
+    "It does not validate Ehrlich shared exclusions or another PID, and PID3 numerical outputs "
+    "are not part of the represented-synergy revision."
+)
+REPRESENTED_PID2_SUM_STABLE_IMIN_PYTHON_NUMERICAL_CLAIM = (
+    "The stable categorical Python binding has a four-row same-process check against one built "
+    "extension module that maps all seven "
+    "public scalar fields bit-for-bit under source exchange and retains the historical residual as "
+    "a negative control. This is binding-route evidence, not cross-platform identity."
+)
+REPRESENTED_PID2_SUM_SAME_SAMPLE_IMIN_NUMERICAL_CLAIM = (
+    "The experimental same-sample quantized two-source Rust wrapper is exercised on the pinned "
+    "source-swap witness. Its deprecated Python wrapper has bounded warning, shape, and rejection "
+    "tests but no separate exact-bit parity claim."
+)
+REPRESENTED_PID2_SUM_CONTINUOUS_NUMERICAL_CLAIM = (
+    "For continuous PID2, a represented-coordinate source-order witness exercises final synergy. "
+    "Pid2Result::from_estimate also exactly reduces the two two-operand marginal reconstructions "
+    "and the four-operand joint reconstruction before applying the unchanged inclusive "
+    "32-position ordered-binary64 guard. Exact reduction can therefore change constructor "
+    "admission as well as returned synergy bits. The constructor feeds both experimental Python "
+    "compute_pid2 and, for the paper-defined Ehrlich method, compute_pid2_report. The guard is "
+    "project policy, not a derived identity, representability, conditioning, forward-error, "
+    "relative-accuracy, calibration, or statistical theorem. A seeded 96-row same-process Python "
+    "test against one built extension module checks exact atom-bit parity between those scalar "
+    "and report routes for Ehrlich; it is not a cross-platform or all-input result."
+)
+REPRESENTED_PID2_SUM_HEURISTIC_NUMERICAL_CLAIM = (
+    "For the heuristic family, configured Rust pid2_isx and pid2_isx_with_budget plus "
+    "experimental Python compute_pid2 compose a heuristic redundancy with the revised PID2 "
+    "result. The hierarchy and pair-screening families separately record propagation through "
+    "their configured PID2 result fields. Rust pid2_isx_report and pid2_isx_report_with_budget "
+    "plus Python compute_pid2_report reject heuristic methods because complete reports require "
+    "the cited Ehrlich construction. Standalone Rust heuristic redundancy functions and Python "
+    "compute_redundancy emit no PID2 tuple and did not change."
+)
+REPRESENTED_PID2_SUM_HIERARCHY_NUMERICAL_CLAIM = (
+    "For hierarchy, screening and pair selection are unchanged; only selected PairwiseScreen.pid "
+    "values inherit the represented-synergy contract. This supplies no additional estimator, "
+    "ranking, or selection theorem."
+)
+REPRESENTED_PID2_SUM_SCREENING_NUMERICAL_CLAIM = (
+    "For pair screening, Pid2ScreenEntry.result values inherit the represented-synergy contract. "
+    "Pair enumeration is unchanged. Sorting is by descending represented numeric synergy: numeric "
+    "equality, including +0.0 versus -0.0, is treated as a tie; otherwise total_cmp is used, then "
+    "source indices break ties. A changed numeric synergy can alter tie membership or result order; "
+    "a sign-zero-only bit change cannot. No retained ranking-change witness or statistical "
+    "selection theorem is claimed."
+)
+REPRESENTED_PID2_SUM_COMMON_NUMERICAL_ASSUMPTION = (
+    "Only the named two-source synergy constructor contract and its four finite represented "
+    "operands are covered. The six entries form a release-scope family evidence partition whose "
+    "outputs directly emit or transitively contain that revised synergy; they are not a global "
+    "runtime-call inventory, and the exp0 diagnostic's direct constructor call is outside this "
+    "family partition. The exact-sum primitive is not an upstream-accuracy oracle. Distinct PID "
+    "definitions, larger domains, platforms, compiler profiles, and downstream uses require "
+    "separate evidence."
+)
+REPRESENTED_PID2_SUM_COMMON_NUMERICAL_FAILURE_CONSEQUENCE = (
+    "Changing the operand set, rounding rule, family-specific revision topology, or emitting-route "
+    "boundary invalidates this milestone. Promoting bounded conformance to all-input refinement, "
+    "exact upstream mathematics, another PID definition, or application validity exceeds it."
+)
+
+
+def represented_pid2_numerical_claim(family_id: str) -> str:
+    suffixes = {
+        "pid-core.stable.imin": (
+            REPRESENTED_PID2_SUM_IMIN_NUMERICAL_CLAIM
+            + " "
+            + REPRESENTED_PID2_SUM_STABLE_IMIN_PYTHON_NUMERICAL_CLAIM
+        ),
+        "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+            REPRESENTED_PID2_SUM_IMIN_NUMERICAL_CLAIM
+            + " "
+            + REPRESENTED_PID2_SUM_SAME_SAMPLE_IMIN_NUMERICAL_CLAIM
+        ),
+        "pid-core.experimental.continuous.pid2": (
+            REPRESENTED_PID2_SUM_CONTINUOUS_NUMERICAL_CLAIM
+        ),
+        "pid-core.research.isx-heuristics": (
+            REPRESENTED_PID2_SUM_CONTINUOUS_NUMERICAL_CLAIM
+            + " "
+            + REPRESENTED_PID2_SUM_HEURISTIC_NUMERICAL_CLAIM
+        ),
+        "pid-core.experimental.hierarchy": (
+            REPRESENTED_PID2_SUM_CONTINUOUS_NUMERICAL_CLAIM
+            + " "
+            + REPRESENTED_PID2_SUM_HIERARCHY_NUMERICAL_CLAIM
+        ),
+        "pid-core.experimental.pipelines.pid2-screening": (
+            REPRESENTED_PID2_SUM_CONTINUOUS_NUMERICAL_CLAIM
+            + " "
+            + REPRESENTED_PID2_SUM_SCREENING_NUMERICAL_CLAIM
+        ),
+    }
+    return REPRESENTED_PID2_SUM_COMMON_NUMERICAL_CLAIM + " " + suffixes[family_id]
+
+
+def represented_pid2_numerical_assumption(family_id: str) -> str:
+    if family_id in REPRESENTED_PID2_IMIN_FAMILIES:
+        suffix = (
+            "The bounded I_min census covers binary alphabets through total mass eight; 5,070 is "
+            "a count of supported (table, target-value) tie events. PID3 valid-result parity is "
+            "separate from the PID2 represented-synergy revision."
+        )
+    elif family_id == "pid-core.research.isx-heuristics":
+        suffix = (
+            "Configured Rust pid2_isx and pid2_isx_with_budget plus Python compute_pid2 reach the "
+            "revised heuristic PID2 constructor. Their report counterparts reject heuristic "
+            "method tokens, and direct heuristic redundancy plus compute_redundancy remain "
+            "outside this revision."
+        )
+    elif family_id == "pid-core.experimental.hierarchy":
+        suffix = (
+            "Hierarchy screening and pair selection are unchanged; only selected outputs that "
+            "contain PID2 results are revised."
+        )
+    elif family_id == "pid-core.experimental.pipelines.pid2-screening":
+        suffix = (
+            "Pair enumeration is unchanged. The existing sort first ties numerically equal "
+            "synergies, including opposite signed zeros, otherwise orders by descending total_cmp, "
+            "then by source indices. A changed numeric value can alter ordering; a sign-zero-only "
+            "bit change cannot. No ranking-change witness is retained."
+        )
+    else:
+        suffix = (
+            "The three reconstruction checks retain the inclusive 32-position guard, whose "
+            "admission behavior is policy rather than an error theorem."
+        )
+    return REPRESENTED_PID2_SUM_COMMON_NUMERICAL_ASSUMPTION + " " + suffix
+
+
+def represented_pid2_numerical_failure_consequence(family_id: str) -> str:
+    if family_id in REPRESENTED_PID2_IMIN_FAMILIES:
+        suffix = (
+            "Conflating target-specific tie events with tables, exposing an unrecorded argmin, "
+            "or transferring I_min evidence to another PID invalidates the I_min boundary."
+        )
+    elif family_id == "pid-core.research.isx-heuristics":
+        suffix = (
+            "Claiming that compute_pid2_report accepts heuristic methods, or that direct heuristic "
+            "redundancy changed, would misstate the configured-PID2 propagation boundary."
+        )
+    elif family_id == "pid-core.experimental.hierarchy":
+        suffix = (
+            "Extending the revision to hierarchy screening or pair selection would be false."
+        )
+    elif family_id == "pid-core.experimental.pipelines.pid2-screening":
+        suffix = (
+            "Claiming pair enumeration changed, or claiming either impossible ordering effects or "
+            "a witnessed ranking change, would overstate the recorded boundary."
+        )
+    else:
+        suffix = (
+            "Ignoring the three reconstruction reductions or claiming the 32-position guard "
+            "cannot affect admission would understate the continuous constructor boundary."
+        )
+    return REPRESENTED_PID2_SUM_COMMON_NUMERICAL_FAILURE_CONSEQUENCE + " " + suffix
 T138_KSG_SCOPE_PARAGRAPH = (
     "Revision-4 KSG evidence covers 8,198 unique ordered integer local-count rows: 6,920 "
     "exhaustive rectangular-arithmetic outer-box rows through 16 samples and 1,278 declared stress "
@@ -432,9 +718,13 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
     ),
     "pid-core.stable.imin": (
         *FINITE_ALPHABET_CONVERGENCE_EVIDENCE,
+        *REPRESENTED_PID2_SUM_COMMON_EVIDENCE,
+        *IMIN_NUMERICAL_BOUNDARY_EVIDENCE,
         "crates/pid-core/src/discrete_pid.rs",
         "crates/pid-core/tests/discrete_pid_properties.rs",
         "crates/pid-core/tests/imin.rs",
+        "crates/pid-python/src/v1.rs",
+        "crates/pid-python/tests/test_v1.py",
         *PID2_Z3_EVIDENCE,
     ),
     "pid-core.stable.continuous": (
@@ -484,9 +774,12 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "scripts/generate-ksg-local-arithmetic-oracle.py",
     ),
     "pid-core.experimental.continuous.pid2": (
+        *REPRESENTED_PID2_SUM_COMMON_EVIDENCE,
         "crates/pid-core/src/pid2.rs",
         "crates/pid-core/tests/gaussian_pid_atoms.rs",
         "crates/pid-core/tests/pid2.rs",
+        "crates/pid-python/src/lib.rs",
+        "crates/pid-python/tests/test_experimental_migration.py",
         *PID2_Z3_EVIDENCE,
     ),
     "pid-core.experimental.continuous.incomplete-pid3": (
@@ -511,8 +804,13 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/tests/continuous_reports.rs",
     ),
     "pid-core.research.isx-heuristics": (
+        *REPRESENTED_PID2_SUM_COMMON_EVIDENCE,
         "crates/pid-core/src/isx.rs",
+        "crates/pid-core/src/pid2.rs",
         "crates/pid-core/tests/known_failures.rs",
+        "crates/pid-core/tests/pid2.rs",
+        "crates/pid-python/src/lib.rs",
+        "crates/pid-python/tests/test_experimental_migration.py",
     ),
     "pid-core.research.mixed-dimension-pid3": (
         "crates/pid-core/src/pid3.rs",
@@ -525,8 +823,11 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/tests/hyperbolic_mi.rs",
     ),
     "pid-core.experimental.hierarchy": (
+        *REPRESENTED_PID2_SUM_COMMON_EVIDENCE,
         "crates/pid-core/src/hierarchy.rs",
+        "crates/pid-core/src/pid2.rs",
         "crates/pid-core/tests/hierarchy.rs",
+        "crates/pid-core/tests/pid2.rs",
     ),
     "pid-core.experimental.pipelines.block-resampling": (
         "crates/pid-core/src/bootstrap.rs",
@@ -572,8 +873,11 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/tests/cross_validation.rs",
     ),
     "pid-core.experimental.pipelines.pid2-screening": (
+        *REPRESENTED_PID2_SUM_COMMON_EVIDENCE,
         "crates/pid-core/src/pipeline.rs",
+        "crates/pid-core/src/pid2.rs",
         "crates/pid-core/tests/cross_validation.rs",
+        "crates/pid-core/tests/pid2.rs",
     ),
     "pid-core.experimental.pipelines.gaussian-noise-provenance": (
         "crates/pid-core/src/observation.rs",
@@ -586,11 +890,14 @@ FAMILY_EVIDENCE: dict[str, tuple[str, ...]] = {
         "crates/pid-core/tests/preprocess.rs",
     ),
     "pid-core.experimental.pipelines.same-sample-quantized-imin": (
+        *REPRESENTED_PID2_SUM_COMMON_EVIDENCE,
+        *IMIN_NUMERICAL_BOUNDARY_EVIDENCE,
         "crates/pid-core/src/discrete_pid.rs",
         "crates/pid-core/src/same_sample.rs",
         "crates/pid-core/tests/discrete_pid_properties.rs",
         "crates/pid-core/tests/sxpid_axioms.rs",
         "crates/pid-core/tests/sxpid_properties.rs",
+        "crates/pid-python/src/lib.rs",
         "crates/pid-python/tests/test_experimental_migration.py",
     ),
     "pid-core.experimental.pipelines.same-sample-quantized-sxpid": (
@@ -622,6 +929,69 @@ def require_two_source_count_atom_evidence_scope() -> None:
             "two-source count-to-atom evidence must bind only the stable categorical family: "
             f"{sorted(actual_families)!r}"
         )
+
+
+def require_represented_pid2_synergy_evidence_scope() -> None:
+    affected_projection = {
+        family_id: list(FAMILY_EVIDENCE[family_id])
+        for family_id in sorted(REPRESENTED_PID2_SYNERGY_FAMILIES)
+    }
+    if (
+        semantic_sha256(affected_projection)
+        != EXPECTED_REPRESENTED_PID2_FAMILY_EVIDENCE_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "represented-PID2-sum affected-family evidence roster changed"
+        )
+    common_paths = set(REPRESENTED_PID2_SUM_COMMON_EVIDENCE)
+    if (
+        len(REPRESENTED_PID2_SUM_COMMON_EVIDENCE)
+        != EXPECTED_REPRESENTED_PID2_SUM_COMMON_EVIDENCE_COUNT
+        or len(common_paths) != len(REPRESENTED_PID2_SUM_COMMON_EVIDENCE)
+        or semantic_sha256(list(REPRESENTED_PID2_SUM_COMMON_EVIDENCE))
+        != EXPECTED_REPRESENTED_PID2_SUM_COMMON_EVIDENCE_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "represented-PID2-sum common evidence inventory changed"
+        )
+    for family_id, paths in FAMILY_EVIDENCE.items():
+        overlap = common_paths.intersection(paths)
+        if family_id in REPRESENTED_PID2_SYNERGY_FAMILIES:
+            if overlap != common_paths:
+                missing = sorted(common_paths - overlap)
+                raise ReviewEvidenceError(
+                    f"represented-PID2-sum evidence is incomplete for {family_id}: "
+                    f"{missing!r}"
+                )
+        elif overlap:
+            raise ReviewEvidenceError(
+                "represented-PID2-sum evidence reached a non-covered release-scope family: "
+                f"{family_id!r} -> {sorted(overlap)!r}"
+            )
+
+    boundary_paths = set(IMIN_NUMERICAL_BOUNDARY_EVIDENCE)
+    if (
+        len(IMIN_NUMERICAL_BOUNDARY_EVIDENCE)
+        != EXPECTED_IMIN_NUMERICAL_BOUNDARY_EVIDENCE_COUNT
+        or len(boundary_paths) != len(IMIN_NUMERICAL_BOUNDARY_EVIDENCE)
+        or semantic_sha256(list(IMIN_NUMERICAL_BOUNDARY_EVIDENCE))
+        != EXPECTED_IMIN_NUMERICAL_BOUNDARY_EVIDENCE_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "I_min numerical-boundary evidence inventory changed"
+        )
+    for family_id, paths in FAMILY_EVIDENCE.items():
+        overlap = boundary_paths.intersection(paths)
+        if family_id in REPRESENTED_PID2_IMIN_FAMILIES:
+            if overlap != boundary_paths:
+                raise ReviewEvidenceError(
+                    f"I_min numerical-boundary evidence is incomplete for {family_id}"
+                )
+        elif overlap:
+            raise ReviewEvidenceError(
+                "I_min numerical-boundary evidence reached a non-I_min family: "
+                f"{family_id!r}"
+            )
 
 
 ALGEBRA_NOT_APPLICABLE = {
@@ -767,6 +1137,13 @@ def validate_ksg_evidence_inventory() -> None:
         raise ReviewEvidenceError(
             "KSG integer-harmonic release-family inventory changed"
         )
+    if (
+        semantic_sha256(KSG_INTEGER_HARMONIC_REVISIONS)
+        != EXPECTED_KSG_INTEGER_HARMONIC_REVISIONS_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "historical KSG integer-harmonic revision map changed"
+        )
     if len(KSG_INTEGER_HARMONIC_EVIDENCE) != EXPECTED_KSG_EVIDENCE_COUNT:
         raise ReviewEvidenceError("KSG integer-harmonic evidence count changed")
     if len(KSG_INTEGER_HARMONIC_EVIDENCE) != len(set(KSG_INTEGER_HARMONIC_EVIDENCE)):
@@ -836,14 +1213,43 @@ def validate_protected_assurance_projection(families: list[dict[str, Any]]) -> N
         family
         for family in families
         if family["family_id"]
-        not in KSG_INTEGER_HARMONIC_FAMILIES | {KSG_PROTECTED_CONFIG_FAMILY}
+        not in (
+            KSG_INTEGER_HARMONIC_FAMILIES
+            | REPRESENTED_PID2_SYNERGY_FAMILIES
+            | {KSG_PROTECTED_CONFIG_FAMILY}
+        )
     ]
-    if len(protected) != 21:
+    if len(protected) != 19:
         raise ReviewEvidenceError("protected assurance-family count changed")
     actual = semantic_sha256(protected)
     if actual != EXPECTED_PROTECTED_ASSURANCE_FAMILIES_SHA256:
         raise ReviewEvidenceError(
             "non-KSG assurance-family projection differs from the protected baseline"
+        )
+
+
+def validate_protected_unaffected_ksg_projection(
+    families: list[dict[str, Any]],
+) -> None:
+    protected_ids = (
+        (KSG_INTEGER_HARMONIC_FAMILIES - REPRESENTED_PID2_KSG_DESCENDANTS)
+        | {KSG_PROTECTED_CONFIG_FAMILY}
+    )
+    protected = [
+        family for family in families if family["family_id"] in protected_ids
+    ]
+    if len(protected_ids) != 12 or len(protected) != 12:
+        raise ReviewEvidenceError(
+            "protected unaffected KSG assurance-family count changed"
+        )
+    if {family["family_id"] for family in protected} != protected_ids:
+        raise ReviewEvidenceError(
+            "protected unaffected KSG assurance-family membership changed"
+        )
+    actual = semantic_sha256(protected)
+    if actual != EXPECTED_PROTECTED_UNAFFECTED_KSG_ASSURANCE_SHA256:
+        raise ReviewEvidenceError(
+            "unaffected KSG assurance-family projection differs from the protected baseline"
         )
 
 
@@ -859,15 +1265,18 @@ def validate_protected_task_projection(tasks: list[dict[str, Any]]) -> None:
 
 
 def validate_t138_ksg_boundary(task: dict[str, Any]) -> None:
-    if not task["scope_note"].startswith(T138_SXPID2_SCOPE_SENTENCE + " "):
+    expected_scope = T138_SXPID2_SCOPE_SENTENCE + " " + T138_KSG_SCOPE_PARAGRAPH
+    if task["scope_note"] != expected_scope:
         raise ReviewEvidenceError(
-            "T138 lost its protected baseline SxPID2 scope sentence"
+            "T138 scope differs from the exact protected SxPID2-plus-KSG boundary"
         )
-    evidence = task["evidence"]
-    if not all(path in evidence for path in T138_SXPID2_EVIDENCE):
-        raise ReviewEvidenceError("T138 lost protected baseline SxPID2 evidence")
-    if not all(path in evidence for path in KSG_INTEGER_HARMONIC_EVIDENCE):
-        raise ReviewEvidenceError("T138 is missing revision-4 KSG evidence")
+    expected_evidence = (*T138_SXPID2_EVIDENCE, *KSG_INTEGER_HARMONIC_EVIDENCE)
+    if tuple(task["evidence"]) != expected_evidence:
+        raise ReviewEvidenceError(
+            "T138 evidence differs from the exact protected SxPID2-plus-KSG inventory"
+        )
+    if semantic_sha256(task) != EXPECTED_T138_TASK_SHA256:
+        raise ReviewEvidenceError("T138 record differs from the protected baseline")
 
 
 def load_json_bytes(raw: bytes, *, label: str) -> Any:
@@ -1236,6 +1645,10 @@ def assurance_claim(
                 "isolated-tree closure passes."
             )
         if layer_name == "floating_point_numerical_behavior":
+            if family_id in REPRESENTED_PID2_KSG_DESCENDANTS:
+                return KSG_NUMERICAL_CLAIM + " " + represented_pid2_numerical_claim(
+                    family_id
+                )
             return KSG_NUMERICAL_CLAIM
     if (
         family_id == KSG_PROTECTED_CONFIG_FAMILY
@@ -1247,6 +1660,11 @@ def assurance_claim(
             "the separate revision-4 integer-harmonic migration. Its revision-4 evidence is a "
             "negative identity control, not numerical, estimator, support, or PID validation."
         )
+    if (
+        family_id in REPRESENTED_PID2_SYNERGY_FAMILIES
+        and layer_name == "floating_point_numerical_behavior"
+    ):
+        return baseline + " " + represented_pid2_numerical_claim(family_id)
     return baseline
 
 
@@ -1392,6 +1810,16 @@ def assumption_statement(
                 "primality correctness.",
             )
         if layer_name == "floating_point_numerical_behavior":
+            if family_id in REPRESENTED_PID2_KSG_DESCENDANTS:
+                return (
+                    "maintainers",
+                    KSG_NUMERICAL_ASSUMPTION
+                    + " "
+                    + represented_pid2_numerical_assumption(family_id),
+                    KSG_NUMERICAL_FAILURE_CONSEQUENCE
+                    + " "
+                    + represented_pid2_numerical_failure_consequence(family_id),
+                )
             return (
                 "maintainers",
                 KSG_NUMERICAL_ASSUMPTION,
@@ -1407,6 +1835,17 @@ def assumption_statement(
             "retains estimator revision ksg-chebyshev-config-v1.",
             "Relabeling the unchanged configuration for a numerical migration would conflate "
             "policy identity with emitted estimator behavior.",
+        )
+    if (
+        family_id in REPRESENTED_PID2_SYNERGY_FAMILIES
+        and layer_name == "floating_point_numerical_behavior"
+    ):
+        return (
+            owner,
+            statement + " " + represented_pid2_numerical_assumption(family_id),
+            consequence
+            + " "
+            + represented_pid2_numerical_failure_consequence(family_id),
         )
     return owner, statement, consequence
 
@@ -1443,9 +1882,9 @@ def gap_record(layer_name: str, status: str) -> tuple[str, str]:
 def build_assurance_registry() -> dict[str, Any]:
     scope, scope_raw = load_release_scope()
     scope_sha256 = hashlib.sha256(scope_raw).hexdigest()
-    if scope_sha256 != EXPECTED_KSG_RELEASE_SCOPE_SHA256:
+    if scope_sha256 != EXPECTED_RELEASE_SCOPE_SHA256:
         raise ReviewEvidenceError(
-            "release scope differs from the settled KSG-only revision-4 projection"
+            "release scope differs from the reviewed post-KSG PID2 numerical projection"
         )
     families = scope["families"]
     scope_ids = [family.get("id") for family in families]
@@ -1461,20 +1900,83 @@ def build_assurance_registry() -> dict[str, Any]:
         )
     validate_ksg_evidence_inventory()
     scope_by_id = {family["id"]: family for family in families}
-    actual_ksg_revisions = {
+    if (
+        semantic_sha256(REPRESENTED_PID2_SYNERGY_REVISIONS)
+        != EXPECTED_REPRESENTED_PID2_SYNERGY_REVISIONS_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "represented-PID2-synergy reviewed revision map changed"
+        )
+    if (
+        semantic_sha256(REPRESENTED_PID2_PREDECESSOR_REVISIONS)
+        != EXPECTED_REPRESENTED_PID2_PREDECESSOR_REVISIONS_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "represented-PID2-synergy predecessor revision map changed"
+        )
+    if set(REPRESENTED_PID2_PREDECESSOR_REVISIONS) != REPRESENTED_PID2_SYNERGY_FAMILIES:
+        raise ReviewEvidenceError(
+            "represented-PID2-synergy predecessor revision membership changed"
+        )
+    if (
+        semantic_sha256(REPRESENTED_PID2_DEFINITION_REVISIONS)
+        != EXPECTED_REPRESENTED_PID2_DEFINITION_REVISIONS_SHA256
+    ):
+        raise ReviewEvidenceError(
+            "represented-PID2-synergy reviewed definition map changed"
+        )
+    actual_represented_pid2_revisions = {
+        family_id: scope_by_id[family_id]["estimator_revision"]
+        for family_id in REPRESENTED_PID2_SYNERGY_FAMILIES
+    }
+    if actual_represented_pid2_revisions != REPRESENTED_PID2_SYNERGY_REVISIONS:
+        raise ReviewEvidenceError(
+            "represented-PID2-synergy estimator revisions differ from closure"
+        )
+    actual_represented_pid2_definitions = {
+        family_id: scope_by_id[family_id]["definition_revision"]
+        for family_id in REPRESENTED_PID2_SYNERGY_FAMILIES
+    }
+    if actual_represented_pid2_definitions != REPRESENTED_PID2_DEFINITION_REVISIONS:
+        raise ReviewEvidenceError(
+            "represented-PID2-synergy definition revisions changed unexpectedly"
+        )
+    actual_unaffected_ksg_revisions = {
         family_id: scope_by_id[family_id]["estimator_revision"]
         for family_id in KSG_INTEGER_HARMONIC_FAMILIES
+        if family_id not in REPRESENTED_PID2_KSG_DESCENDANTS
     }
-    if actual_ksg_revisions != KSG_INTEGER_HARMONIC_REVISIONS:
+    expected_unaffected_ksg_revisions = {
+        family_id: revision
+        for family_id, revision in KSG_INTEGER_HARMONIC_REVISIONS.items()
+        if family_id not in REPRESENTED_PID2_KSG_DESCENDANTS
+    }
+    if actual_unaffected_ksg_revisions != expected_unaffected_ksg_revisions:
         raise ReviewEvidenceError(
-            "KSG integer-harmonic estimator revisions differ from closure"
+            "unaffected KSG integer-harmonic estimator revisions differ from closure"
         )
+    if REPRESENTED_PID2_KSG_DESCENDANTS != {
+        "pid-core.experimental.continuous.pid2",
+        "pid-core.research.isx-heuristics",
+        "pid-core.experimental.hierarchy",
+        "pid-core.experimental.pipelines.pid2-screening",
+    }:
+        raise ReviewEvidenceError("post-KSG PID2 descendant inventory changed")
     if (
         scope_by_id[KSG_PROTECTED_CONFIG_FAMILY]["estimator_revision"]
         != KSG_PROTECTED_CONFIG_REVISION
     ):
         raise ReviewEvidenceError(
             "shared KSG configuration estimator revision was over-bumped"
+        )
+    if (
+        scope_by_id["pid-core.experimental.pipelines.same-sample-quantization"][
+            "estimator_revision"
+        ]
+        != "not-an-estimator-v1"
+    ):
+        raise ReviewEvidenceError(
+            "quantization-only same-sample custody was conflated with an I_min emitter"
         )
 
     records: list[dict[str, Any]] = []
@@ -1534,6 +2036,7 @@ def build_assurance_registry() -> dict[str, Any]:
             }
         )
     validate_protected_assurance_projection(records)
+    validate_protected_unaffected_ksg_projection(records)
 
     return {
         "families": records,
@@ -1947,6 +2450,7 @@ def validate_evidence_paths(value: dict[str, Any]) -> None:
 
 def validate_assurance_registry(raw: bytes) -> dict[str, Any]:
     require_two_source_count_atom_evidence_scope()
+    require_represented_pid2_synergy_evidence_scope()
     value = load_json_bytes(raw, label="assurance-registry.json")
     schema = load_schema(ASSURANCE_SCHEMA)
     validate_json_schema(value, schema, name="assurance-registry.json")
@@ -1984,6 +2488,10 @@ def validate_assurance_registry(raw: bytes) -> dict[str, Any]:
 
 
 def validate_task_dispositions(raw: bytes) -> dict[str, Any]:
+    if hashlib.sha256(raw).hexdigest() != EXPECTED_TASK_DISPOSITIONS_SHA256:
+        raise ReviewEvidenceError(
+            "task-dispositions bytes differ from the protected baseline"
+        )
     value = load_json_bytes(raw, label="task-dispositions.json")
     schema = load_schema(TASK_SCHEMA)
     validate_json_schema(value, schema, name="task-dispositions.json")

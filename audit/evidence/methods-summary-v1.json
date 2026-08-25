@@ -313,7 +313,7 @@
     {
       "category": "estimator",
       "code_availability": "local",
-      "constraint_count": 4,
+      "constraint_count": 5,
       "definition_origin": "paper-defined",
       "depends_on": [],
       "feature_gates": [],
@@ -335,7 +335,7 @@
       "summary": "Williams-Beer I_min PID on empirical categorical distributions.",
       "title": "Categorical I_min PID",
       "validation": {
-        "evidence_path_count": 15,
+        "evidence_path_count": 19,
         "level": "property-and-integration"
       }
     },
@@ -1038,7 +1038,7 @@
     {
       "category": "estimator",
       "code_availability": "local",
-      "constraint_count": 5,
+      "constraint_count": 6,
       "definition_origin": "paper-defined",
       "depends_on": [
         "mutual-information.ksg1-report",
@@ -1066,7 +1066,7 @@
       "summary": "Paper-defined two-source PID atom reconstruction from KSG mutual information and continuous shared exclusions.",
       "title": "Continuous two-source shared-exclusions PID",
       "validation": {
-        "evidence_path_count": 18,
+        "evidence_path_count": 21,
         "level": "formal-and-property"
       }
     },
@@ -1107,7 +1107,7 @@
     {
       "category": "pipeline",
       "code_availability": "local",
-      "constraint_count": 7,
+      "constraint_count": 8,
       "definition_origin": "project-defined",
       "depends_on": [
         "pid.imin",
@@ -1136,7 +1136,7 @@
       "summary": "Project-defined same-evaluation-sample quantization composition for categorical Williams-Beer I_min.",
       "title": "Same-sample quantized Williams-Beer I_min",
       "validation": {
-        "evidence_path_count": 6,
+        "evidence_path_count": 13,
         "level": "property-and-integration"
       }
     },
@@ -1158,17 +1158,17 @@
       "public_surface": {
         "python_count": 0,
         "python_examples": [],
-        "rust_count": 2,
+        "rust_count": 4,
         "rust_examples": [
           "pid_core::experimental::hierarchy::hierarchical_pairwise",
-          "pid_core::experimental::hierarchy::hierarchical_triplet"
+          "pid_core::experimental::hierarchy::hierarchical_pairwise_split"
         ]
       },
       "scientific_novelty_claim": "none",
       "summary": "Exploratory hierarchy that screens candidate source groups before slower continuous PID calls.",
       "title": "Hierarchy screening pipeline",
       "validation": {
-        "evidence_path_count": 13,
+        "evidence_path_count": 20,
         "level": "property-and-integration"
       }
     },
@@ -1189,16 +1189,17 @@
       "public_surface": {
         "python_count": 0,
         "python_examples": [],
-        "rust_count": 1,
+        "rust_count": 2,
         "rust_examples": [
-          "pid_core::experimental::pipelines::screen_pid2_pairs"
+          "pid_core::experimental::pipelines::screen_pid2_pairs",
+          "pid_core::experimental::pipelines::screen_pid2_pairs_with_budget"
         ]
       },
       "scientific_novelty_claim": "none",
       "summary": "Exploratory pairwise screening over continuous PID2 statistics.",
       "title": "PID2 pair-screening workflow",
       "validation": {
-        "evidence_path_count": 13,
+        "evidence_path_count": 21,
         "level": "unit-and-integration"
       }
     },
@@ -1929,10 +1930,11 @@
     {
       "category": "diagnostic",
       "code_availability": "local",
-      "constraint_count": 1,
+      "constraint_count": 2,
       "definition_origin": "project-defined",
       "depends_on": [
-        "mutual-information.ksg1-raw"
+        "mutual-information.ksg1-raw",
+        "pid.continuous-pid2"
       ],
       "feature_gates": [
         "experimental-heuristics"
@@ -1956,7 +1958,7 @@
       "summary": "Research-only heuristic baselines for comparison with continuous shared exclusions.",
       "title": "Continuous shared-exclusions heuristics",
       "validation": {
-        "evidence_path_count": 12,
+        "evidence_path_count": 22,
         "level": "unit-and-integration"
       }
     },
@@ -2220,6 +2222,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "a21cd0e2f24ab07e8e4de5b7818b3c86007788b44c8915a68a95e236422787be"
+    "sha256": "fa131a1a5d1a084af61aebc17e03ce857e3b315be99f50dd2cb623d11d46966d"
   }
 }

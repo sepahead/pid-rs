@@ -313,6 +313,17 @@ two JSON registries; the tagged file ledger is verified but never rewritten. The
 removes and duplicates families/tasks/files, changes evidence tiers and dispositions, escalates
 completion, alters digests, invents review metadata, and checks untracked and post-index-dirty
 evidence paths to prove those changes fail closed.
+The current projection preserves the settled revision-4 KSG evidence inventory while separately
+binding the later represented-input PID2-synergy milestone to exactly six release-scope families
+whose outputs directly emit or transitively contain the revised two-source synergy. This is an
+evidence partition, not a global runtime-call inventory; `exp0` also calls the constructor as a
+diagnostic. Four families are post-KSG descendants; stable and same-sample Williams--Beer `I_min`
+are distinct categorical routes. The common exact-sum evidence may reach only those six families,
+while the 12,869-table/5,070-target-tie-event boundary test may reach only the two `I_min`
+emitters. The checker pins every current revision string, keeps the quantization-only same-sample
+custody family at `not-an-estimator-v1`, and states explicitly that bounded `I_min` evidence does
+not validate continuous Ehrlich shared exclusions, PID3, or another PID definition. The self-test
+rejects 125 registered mutations in normal and optimized Python.
 Regeneration additionally requires the locally retained handoff commit object so its recorded
 non-ancestry can be checked directly. Ordinary clean-clone validation still binds the verified
 handoff-ledger digest and checks that lineage whenever the older object is available.

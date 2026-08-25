@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "a21cd0e2f24ab07e8e4de5b7818b3c86007788b44c8915a68a95e236422787be",
+  "catalog_sha256": "fa131a1a5d1a084af61aebc17e03ce857e3b315be99f50dd2cb623d11d46966d",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -281,7 +281,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "76b433d9ec3f2c172400900c62d614b912cc7f1531ffe18b6a7878845c3d0a55"
+      "payload_sha256": "c464275322d2c9d9d37de9ce98472dce0dbbc60551f5c715d14a8d18f3dde346"
     },
     {
       "facts": {
@@ -307,7 +307,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "ee9089d7ffd4de64e22484f377ccf5728063e3526e9dbe362dd5bb28e5ff2437"
+      "payload_sha256": "f3bc274e354ed9cdb5e05dd969ecf21ee87e6422178ee25730e3272e6e9243c4"
     },
     {
       "facts": {
@@ -353,7 +353,7 @@
         "mgw-categorical-shared-exclusions",
         "williams-beer-imin"
       ],
-      "payload_sha256": "d69e9abef2441e7db6901b6261e7a0ede967a28e5ddffcdd60f07758180f7a0c"
+      "payload_sha256": "aa9a7ac4a41cf57284d06830e14a178af50e72c082f366ca1bb3e1f2d61516e1"
     },
     {
       "facts": {
@@ -368,7 +368,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "28d2d802293b188dc806cbccb7f3d7729b3006d0a4f6a32bba2f4d343ef6263f"
+      "payload_sha256": "0b21df1b2f9b7a59b32edccec088ccfd42313565a2e6b7aac35da7b16a732b4f"
     },
     {
       "facts": {
@@ -383,7 +383,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "8b3321c253fb89b2dfd9e77d41889d42d84d05d1d687f91884e9c3d3fa942e5a"
+      "payload_sha256": "8d23597feeaf67c5cb1561c4254605d92dce801ec37796b1c83f4a3460a12361"
     },
     {
       "facts": {
@@ -634,7 +634,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "bf31c45668423fb5d16ccb062b19a8448d8c248cf9d44d5767616a7b080a4263"
+      "payload_sha256": "7a72d260510ddd8c451c905f3a19bcc8a947c73d8a9080ec07a48c79bd2f7229"
     },
     {
       "facts": {
@@ -975,7 +975,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "1702ca7220d7fcac5cafc941d580bbcebcb37ccebcc20e69770ce652361f88a4",
+  "ordered_root_sha256": "535268ca2df175478702339982d8b90fa0e3fd094329836646ac54c21f0678a8",
   "reference_registry_sha256": "97de94fd1fe77e4f04b027d49b47304a2368cc77d6492d81df5955d285531373",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1
