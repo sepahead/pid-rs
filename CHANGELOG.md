@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Extend the aggregate formal-PDF gate's fail-closed self-tests across successful cleanup,
+  cleanup failure, status-zero diagnostics, and nonzero child failures with and without captured
+  diagnostics. Align the mathematical-workflow Bash `-u` portability probe with the production
+  function-local command-array scope; no renderer, mathematical statement, or publication PDF is
+  changed.
+
 - Preserve five exact July 2026 advisory-prompt bytes in a non-authoritative, inert archive with a
   canonical schema/index, explicit scientific and semantic nonclaims, current-successor routing,
   ten hash-only withheld companion observations, and ten candidates that remain

@@ -2064,10 +2064,13 @@ validate_text_portability_source() {
   # The quoted program is intentionally interpreted by the child Bash, not this shell.
   # shellcheck disable=SC2016
   if ! array_probe="$("$SELF_TEST_BASH" --noprofile --norc -u -c '
-projection_command=(pdftotext)
-printf "%s\\n" "${projection_command[@]}"
-projection_command+=(-layout)
-printf "%s\\n" "${projection_command[@]}"
+probe_projection_command_array() {
+  local -a projection_command=(pdftotext)
+  printf "%s\\n" "${projection_command[@]}"
+  projection_command+=(-layout)
+  printf "%s\\n" "${projection_command[@]}"
+}
+probe_projection_command_array
 ')"; then
     echo "text-portability source invariant drifted: nonempty command-array probe failed" >&2
     return 1

@@ -182,9 +182,12 @@ required = (
     'trap \'cleanup_workflow_gate_stderr 130\' INT',
     'trap \'cleanup_workflow_gate_stderr 143\' TERM',
     '2>"$WORKFLOW_GATE_STDERR"; then',
+    'WORKFLOW_GATE_STATUS=0',
     'WORKFLOW_GATE_STATUS=$?',
     'if [[ "$WORKFLOW_GATE_STATUS" -ne 0 || -s "$WORKFLOW_GATE_STDERR" ]]; then',
+    'cat "$WORKFLOW_GATE_STDERR" >&2',
     'formal PDF set: workflow gate emitted a diagnostic despite status zero',
+    'exit "$WORKFLOW_GATE_STATUS"',
     'rm -f -- "$WORKFLOW_GATE_STDERR"\nWORKFLOW_GATE_STDERR=""\ntrap - EXIT INT TERM',
 )
 for literal in required:
@@ -215,6 +218,7 @@ set -euo pipefail
 FORMAL_TMP_ROOT="$1"
 WORKFLOW_GATE_STDERR="$2"
 {block}case "$3" in
+  success) exit 0 ;;
   ordinary) exit 7 ;;
   int) kill -INT "$$"; exit 99 ;;
   term) kill -TERM "$$"; exit 99 ;;
@@ -258,6 +262,131 @@ run_workflow_cleanup_probe() {
     echo "$CHECK_NAME: $label emitted an unexpected diagnostic" >&2
     return 1
   fi
+  pass "$label"
+}
+
+run_workflow_cleanup_failure_probe() {
+  local probe="$1"
+  local label="$2"
+  local probe_root="$TEST_ROOT/workflow-cleanup-forced-failure"
+  local diagnostic="$probe_root/pid-rs-formal-workflow-stderr.probe"
+  local stdout="$probe_root/stdout"
+  local stderr="$probe_root/stderr"
+  local status
+  mkdir -p "$diagnostic"
+  if bash --noprofile --norc "$probe" "$probe_root" "$diagnostic" success \
+      >"$stdout" 2>"$stderr"; then
+    status=0
+  else
+    status=$?
+  fi
+  if [[ "$status" -ne 1 ]]; then
+    cat "$stdout" "$stderr" >&2
+    echo "$CHECK_NAME: $label returned $status, expected 1" >&2
+    return 1
+  fi
+  if [[ ! -d "$diagnostic" || -L "$diagnostic" ]]; then
+    echo "$CHECK_NAME: $label did not retain the forced-failure directory" >&2
+    return 1
+  fi
+  if [[ -s "$stdout" || ! -s "$stderr" ]]; then
+    cat "$stdout" "$stderr" >&2
+    echo "$CHECK_NAME: $label did not expose the cleanup failure" >&2
+    return 1
+  fi
+  pass "$label"
+}
+
+make_workflow_decision_probe() {
+  python3 -I -S - "$PRODUCTION_GATE" "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+source = Path(sys.argv[1]).read_text(encoding="utf-8")
+start = 'if [[ "$WORKFLOW_GATE_STATUS" -ne 0 || -s "$WORKFLOW_GATE_STDERR" ]]; then\n'
+end = '  exit "$WORKFLOW_GATE_STATUS"\nfi\n'
+if source.count(start) != 1 or source.count(end) != 1:
+    raise SystemExit("workflow decision probe extraction anchors drifted")
+begin = source.index(start)
+finish = source.index(end, begin) + len(end)
+block = source[begin:finish]
+probe = f'''#!/usr/bin/env bash
+set -euo pipefail
+WORKFLOW_GATE_STATUS="$1"
+WORKFLOW_GATE_STDERR="$2"
+{block}exit 0
+'''
+Path(sys.argv[2]).write_text(probe, encoding="utf-8", newline="\n")
+PY
+  chmod 0755 "$1"
+}
+
+run_workflow_decision_probe() {
+  local probe="$1"
+  local label="$2"
+  local mode="$3"
+  local child_status="$4"
+  local expected_status="$5"
+  local probe_root="$TEST_ROOT/workflow-decision-$mode"
+  local diagnostic="$probe_root/pid-rs-formal-workflow-stderr.probe"
+  local stdout="$probe_root/stdout"
+  local stderr="$probe_root/stderr"
+  local status
+  mkdir -p "$probe_root"
+  : >"$diagnostic"
+  if [[ "$mode" == *-diagnostic ]]; then
+    printf 'bounded decision diagnostic\n' >"$diagnostic"
+  fi
+  if bash --noprofile --norc "$probe" "$child_status" "$diagnostic" \
+      >"$stdout" 2>"$stderr"; then
+    status=0
+  else
+    status=$?
+  fi
+  if [[ "$status" -ne "$expected_status" || -s "$stdout" ]]; then
+    cat "$stdout" "$stderr" >&2
+    echo "$CHECK_NAME: $label returned $status, expected $expected_status" >&2
+    return 1
+  fi
+  case "$mode" in
+    zero-silent)
+      if [[ -s "$stderr" ]]; then
+        cat "$stderr" >&2
+        echo "$CHECK_NAME: $label emitted a diagnostic" >&2
+        return 1
+      fi
+      ;;
+    zero-diagnostic)
+      if ! grep -Fq 'bounded decision diagnostic' "$stderr" || \
+          ! grep -Fq 'workflow gate emitted a diagnostic despite status zero' "$stderr" || \
+          grep -Fq 'workflow gate failed with status' "$stderr"; then
+        cat "$stderr" >&2
+        echo "$CHECK_NAME: $label did not preserve the status-zero diagnostic branch" >&2
+        return 1
+      fi
+      ;;
+    nonzero-silent)
+      if ! grep -Fq 'workflow gate failed with status 7' "$stderr" || \
+          grep -Fq 'bounded decision diagnostic' "$stderr"; then
+        cat "$stderr" >&2
+        echo "$CHECK_NAME: $label did not preserve the silent child failure" >&2
+        return 1
+      fi
+      ;;
+    nonzero-diagnostic)
+      if ! grep -Fq 'bounded decision diagnostic' "$stderr" || \
+          ! grep -Fq 'workflow gate failed with status 7' "$stderr"; then
+        cat "$stderr" >&2
+        echo "$CHECK_NAME: $label did not replay the causal child failure" >&2
+        return 1
+      fi
+      ;;
+    *)
+      echo "$CHECK_NAME: unknown workflow decision probe mode: $mode" >&2
+      return 1
+      ;;
+  esac
   pass "$label"
 }
 
@@ -349,11 +478,26 @@ pass "workflow status-zero stderr bypass is rejected"
 cleanup_probe="$TEST_ROOT/workflow-cleanup-probe.sh"
 make_workflow_cleanup_probe "$cleanup_probe"
 run_workflow_cleanup_probe "$cleanup_probe" \
+  "workflow cleanup preserves success and removes its diagnostic" success 0
+run_workflow_cleanup_probe "$cleanup_probe" \
   "workflow cleanup preserves an ordinary nonzero status" ordinary 7
 run_workflow_cleanup_probe "$cleanup_probe" \
   "workflow cleanup preserves direct SIGINT as status 130" int 130
 run_workflow_cleanup_probe "$cleanup_probe" \
   "workflow cleanup preserves direct SIGTERM as status 143" term 143
+run_workflow_cleanup_failure_probe "$cleanup_probe" \
+  "workflow cleanup failure escalates successful status to one"
+
+decision_probe="$TEST_ROOT/workflow-decision-probe.sh"
+make_workflow_decision_probe "$decision_probe"
+run_workflow_decision_probe "$decision_probe" \
+  "workflow decision accepts zero status with silent stderr" zero-silent 0 0
+run_workflow_decision_probe "$decision_probe" \
+  "workflow decision rejects zero status with stderr" zero-diagnostic 0 1
+run_workflow_decision_probe "$decision_probe" \
+  "workflow decision preserves nonzero status with silent stderr" nonzero-silent 7 7
+run_workflow_decision_probe "$decision_probe" \
+  "workflow decision preserves nonzero status while replaying stderr" nonzero-diagnostic 7 7
 
 fixture="$TEST_ROOT/missing-fragment"
 make_fixture "$fixture"
