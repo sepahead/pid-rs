@@ -1,0 +1,784 @@
+{
+  "$schema": "INDEX.schema.json",
+  "archive_id": "advisory-councils-20260725-20260726",
+  "archive_period": {
+    "end": "2026-07-26",
+    "start": "2026-07-25",
+    "within_day_ordering": "not established except the timestamp-like frontier filename; no custody inference"
+  },
+  "authority": {
+    "current_authority": false,
+    "evidence_authority": false,
+    "model_output_class": "advisory only"
+  },
+  "classification": "historical-prompt-archive",
+  "execution_policy": {
+    "executable": false,
+    "importable": false,
+    "inert_payloads_only": true,
+    "payload_use": "human historical inspection only"
+  },
+  "format": "pid-rs/advisory-councils-archive/v1",
+  "license_boundary": {
+    "authorship_or_external_rights_verified": false,
+    "basis": "Project-material publication designation for this archive milestone; it does not authenticate authorship or grant rights over any separately withheld response or context.",
+    "expression": "MIT OR Apache-2.0",
+    "external_payload_embedded": false
+  },
+  "payloads": [
+    {
+      "archive_path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-completion-triage-prompt.md",
+      "bytes": 4966,
+      "chronology_within_date": "not_established",
+      "current_authority": false,
+      "current_successors": [
+        {
+          "path": "AGENTS.md",
+          "role": "current scientific-object and evidence policy"
+        },
+        {
+          "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
+          "role": "current object-card review workflow"
+        },
+        {
+          "path": "audit/evidence/assurance-registry.json",
+          "role": "current assurance authority"
+        },
+        {
+          "path": "audit/evidence/completion-run-ledger-2026-07-25.md",
+          "role": "retained process ledger with its own bounded status"
+        }
+      ],
+      "evidence_authority": false,
+      "executable": false,
+      "id": "completion-triage-20260725",
+      "importable": false,
+      "inert": true,
+      "known_risks": [
+        "The prompt freezes a stale handoff and asks about multiple distinct scientific objects in one packet.",
+        "Its named findings, observed failure, work-package labels, and suggested priority are assertions to recheck, not results.",
+        "The external handoff path is not archived here and the prompt cannot establish completeness of that input."
+      ],
+      "license": {
+        "authorship_or_external_rights_verified": false,
+        "basis": "Project-material publication designation for this archive milestone; it does not authenticate authorship or grant rights over any separately withheld response or context.",
+        "expression": "MIT OR Apache-2.0",
+        "external_payload_embedded": false
+      },
+      "original_path": "audit/evidence/fable5-completion-triage-prompt.md",
+      "privacy": {
+        "absolute_user_path_occurrences": 1,
+        "exact_bytes_preserved_without_redaction": true,
+        "known_credential_values_intentionally_retained": false,
+        "literal_local_path_disclosed": true,
+        "scan_claim_boundary": "Gitleaks is a bounded pattern scan, not proof that sensitive information is absent.",
+        "scan_result": "gitleaks 8.30.1 dir scan of the five exact payload files reported no leaks on 2026-08-25."
+      },
+      "prohibited_inferences": [
+        "Do not treat the prompt or its requested checks as scientific evidence.",
+        "Do not infer that a requested proposition is true, novel, necessary, or current.",
+        "Do not infer human, institutional, semantic, data, implementation, or custody independence.",
+        "Do not infer that a response, cited companion, or claimed execution result was retained or validated.",
+        "Do not use this payload as a method, estimator, test fixture, executable input, or authority surface.",
+        "Do not merge conclusions across categorical MGW SxPID, Williams--Beer I_min, Ehrlich continuous shared exclusions, KSG, or PID3."
+      ],
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "scientific_value": "Preserves a broad first-principles triage design that separates candidate categorical SxPID, Williams--Beer I_min, KSG arithmetic, dependency-coloring, and continuous-PID3 work packages and asks for falsifiers and critical cuts.",
+      "sha256": "653e9aad00bfffce440f70c8c4fe254893a389866e3a1ccf20dfd9fd530b6961",
+      "source_date": "2026-07-25",
+      "status": "historical-prompt"
+    },
+    {
+      "archive_path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-imin-tie-swap-review-prompt.md",
+      "bytes": 3491,
+      "chronology_within_date": "not_established",
+      "current_authority": false,
+      "current_successors": [
+        {
+          "path": "NUMERICAL_ASSURANCE.md",
+          "role": "current numerical assurance and nonclaim boundary"
+        },
+        {
+          "path": "crates/pid-core/tests/imin_numerical_boundary.rs",
+          "role": "current executable finite-domain and boundary evidence"
+        },
+        {
+          "path": "audit/evidence/assurance-registry.json",
+          "role": "current assurance authority"
+        },
+        {
+          "path": "method-catalog.json",
+          "role": "current method provenance authority"
+        }
+      ],
+      "evidence_authority": false,
+      "executable": false,
+      "id": "imin-tie-swap-20260725",
+      "importable": false,
+      "inert": true,
+      "known_risks": [
+        "The prompt's retained counterexamples, 12,869-table census, tie counts, and minimality claims are not evidence in this archive.",
+        "An exact I_min branch comparison and a PID2 returned-atom reduction concern different semantic layers.",
+        "Correctly rounding one represented linear form does not guarantee every consumer regrouping identity or estimator validity."
+      ],
+      "license": {
+        "authorship_or_external_rights_verified": false,
+        "basis": "Project-material publication designation for this archive milestone; it does not authenticate authorship or grant rights over any separately withheld response or context.",
+        "expression": "MIT OR Apache-2.0",
+        "external_payload_embedded": false
+      },
+      "original_path": "audit/evidence/fable5-imin-tie-swap-review-prompt.md",
+      "privacy": {
+        "absolute_user_path_occurrences": 1,
+        "exact_bytes_preserved_without_redaction": true,
+        "known_credential_values_intentionally_retained": false,
+        "literal_local_path_disclosed": true,
+        "scan_claim_boundary": "Gitleaks is a bounded pattern scan, not proof that sensitive information is absent.",
+        "scan_result": "gitleaks 8.30.1 dir scan of the five exact payload files reported no leaks on 2026-08-25."
+      },
+      "prohibited_inferences": [
+        "Do not treat the prompt or its requested checks as scientific evidence.",
+        "Do not infer that a requested proposition is true, novel, necessary, or current.",
+        "Do not infer human, institutional, semantic, data, implementation, or custody independence.",
+        "Do not infer that a response, cited companion, or claimed execution result was retained or validated.",
+        "Do not use this payload as a method, estimator, test fixture, executable input, or authority surface.",
+        "Do not relabel Williams--Beer I_min atoms as MGW or Ehrlich shared-exclusions atoms.",
+        "Do not infer a population theorem, universal binary64 error bound, or estimator calibration from a finite categorical census."
+      ],
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "scientific_value": "Preserves a discriminating review design for two separate questions: exact target-specific I_min minima ties and represented-binary64 PID2 source-swap behavior.",
+      "sha256": "c510e9ce10d1a1526fbcae1455303dca45dcb94d24734edcfe3ec638ffb11202",
+      "source_date": "2026-07-25",
+      "status": "historical-prompt"
+    },
+    {
+      "archive_path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-pid2-represented-sum-review-prompt.md",
+      "bytes": 5306,
+      "chronology_within_date": "not_established",
+      "current_authority": false,
+      "current_successors": [
+        {
+          "path": "crates/pid-core/src/pid2.rs",
+          "role": "current executable constructor implementation"
+        },
+        {
+          "path": "NUMERICAL_ASSURANCE.md",
+          "role": "current numerical assurance and boundary statement"
+        },
+        {
+          "path": "release-scope-1.0.json",
+          "role": "current release-family authority"
+        },
+        {
+          "path": "audit/evidence/assurance-registry.json",
+          "role": "current assurance authority"
+        }
+      ],
+      "evidence_authority": false,
+      "executable": false,
+      "id": "pid2-represented-sum-20260725",
+      "importable": false,
+      "inert": true,
+      "known_risks": [
+        "The exact claim and embedded hashes describe a stale revision-1 packet and dirty-worktree snapshot.",
+        "An exact represented-binary64 reduction is not an exact-real estimator theorem and does not correct upstream inputs.",
+        "A constructor policy can change accepted bits or acceptance behavior without changing the paper-defined PID formula."
+      ],
+      "license": {
+        "authorship_or_external_rights_verified": false,
+        "basis": "Project-material publication designation for this archive milestone; it does not authenticate authorship or grant rights over any separately withheld response or context.",
+        "expression": "MIT OR Apache-2.0",
+        "external_payload_embedded": false
+      },
+      "original_path": "audit/evidence/fable5-pid2-represented-sum-review-prompt.md",
+      "privacy": {
+        "absolute_user_path_occurrences": 1,
+        "exact_bytes_preserved_without_redaction": true,
+        "known_credential_values_intentionally_retained": false,
+        "literal_local_path_disclosed": true,
+        "scan_claim_boundary": "Gitleaks is a bounded pattern scan, not proof that sensitive information is absent.",
+        "scan_result": "gitleaks 8.30.1 dir scan of the five exact payload files reported no leaks on 2026-08-25."
+      },
+      "prohibited_inferences": [
+        "Do not treat the prompt or its requested checks as scientific evidence.",
+        "Do not infer that a requested proposition is true, novel, necessary, or current.",
+        "Do not infer human, institutional, semantic, data, implementation, or custody independence.",
+        "Do not infer that a response, cited companion, or claimed execution result was retained or validated.",
+        "Do not use this payload as a method, estimator, test fixture, executable input, or authority surface.",
+        "Do not infer exact-real correctness, whole-result source symmetry, KSG or redundancy validity, statistical validity, or application readiness.",
+        "Do not infer that a release-family inventory in this prompt matches the current release scope."
+      ],
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "scientific_value": "Preserves an adversarial specification for one-round ties-to-even evaluation of a represented-input PID2 synergy linear form, including acceptance, call-site, mutation, and downstream-closure attacks.",
+      "sha256": "8607fec9c789e7963e905c799880d1a0e0c97250f86b3373e7d29dec9d7f4ecb",
+      "source_date": "2026-07-25",
+      "status": "historical-prompt"
+    },
+    {
+      "archive_path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-ksg-integer-harmonic-review-prompt.md",
+      "bytes": 6311,
+      "chronology_within_date": "not_established",
+      "current_authority": false,
+      "current_successors": [
+        {
+          "path": "claims/KSG-INTEGER-HARMONIC-001/claim-v4.md",
+          "role": "current scoped claim statement"
+        },
+        {
+          "path": "scripts/check-ksg-harmonic-revision.py",
+          "role": "current composite checker"
+        },
+        {
+          "path": "audit/evidence/assurance-registry.json",
+          "role": "current assurance authority"
+        },
+        {
+          "path": "crates/pid-core/src/stats.rs",
+          "role": "current arithmetic implementation"
+        }
+      ],
+      "evidence_authority": false,
+      "executable": false,
+      "id": "ksg-integer-harmonic-20260725",
+      "importable": false,
+      "inert": true,
+      "known_risks": [
+        "The prompt's 6,920-case, 8,198-cell, epsilon-bound, symmetry, and 85-mutation figures are frozen assertions, not evidence here.",
+        "Inclusive and exclusive neighbor-count conventions are not interchangeable and an off-by-one error changes the estimator.",
+        "Exact integer-harmonic algebra does not establish neighbor correctness, support premises, estimator consistency, PID validity, or calibration."
+      ],
+      "license": {
+        "authorship_or_external_rights_verified": false,
+        "basis": "Project-material publication designation for this archive milestone; it does not authenticate authorship or grant rights over any separately withheld response or context.",
+        "expression": "MIT OR Apache-2.0",
+        "external_payload_embedded": false
+      },
+      "original_path": "audit/evidence/fable5-ksg-integer-harmonic-review-prompt.md",
+      "privacy": {
+        "absolute_user_path_occurrences": 1,
+        "exact_bytes_preserved_without_redaction": true,
+        "known_credential_values_intentionally_retained": false,
+        "literal_local_path_disclosed": true,
+        "scan_claim_boundary": "Gitleaks is a bounded pattern scan, not proof that sensitive information is absent.",
+        "scan_result": "gitleaks 8.30.1 dir scan of the five exact payload files reported no leaks on 2026-08-25."
+      },
+      "prohibited_inferences": [
+        "Do not treat the prompt or its requested checks as scientific evidence.",
+        "Do not infer that a requested proposition is true, novel, necessary, or current.",
+        "Do not infer human, institutional, semantic, data, implementation, or custody independence.",
+        "Do not infer that a response, cited companion, or claimed execution result was retained or validated.",
+        "Do not use this payload as a method, estimator, test fixture, executable input, or authority surface.",
+        "Do not transfer KSG arithmetic evidence to MGW categorical SxPID, Ehrlich shared-exclusions atoms, population support, or application validity.",
+        "Do not promote finite Decimal comparisons to a universal rounding theorem."
+      ],
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "scientific_value": "Preserves an adversarial checklist for the positive-integer digamma-to-harmonic cancellation, KSG/shared-exclusions count-index maps, binary64 prefix arithmetic, bounded corpus checks, and protected call sites.",
+      "sha256": "ffd9df7bec08d218bdf114ae1efb3b91c14e5ee53d02f7e2dfab892e258aedd5",
+      "source_date": "2026-07-25",
+      "status": "historical-prompt"
+    },
+    {
+      "archive_path": "audit/archive/advisory-councils-20260725-20260726/payload/fable5-frontier-five-lens-prompt-20260726T084258Z.md",
+      "bytes": 11141,
+      "chronology_within_date": "single dated prompt; intraday creation time appears in filename but custody is not independently authenticated",
+      "current_authority": false,
+      "current_successors": [
+        {
+          "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
+          "role": "current discovery and durability workflow"
+        },
+        {
+          "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
+          "role": "current object-card review workflow"
+        },
+        {
+          "path": "KNOWN_LIMITATIONS.md",
+          "role": "current scientific limitations boundary"
+        },
+        {
+          "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001",
+          "role": "current categorical SxPID3 claim packet directory"
+        },
+        {
+          "path": "audit/evidence/assurance-registry.json",
+          "role": "current assurance authority"
+        }
+      ],
+      "evidence_authority": false,
+      "executable": false,
+      "id": "frontier-five-lens-20260726",
+      "importable": false,
+      "inert": true,
+      "known_risks": [
+        "The prompt deliberately bundles several distinct objects; none of its cross-object juxtaposition is a transfer theorem.",
+        "Its active-claim digests, proposed 18-node/108-coordinate closure, mixed-rank obstruction, and PID2 scaling falsifier require current-source rederivation.",
+        "The appended context, response, receipt, runner, and sanity material are withheld, so this prompt is not a replayable model-review packet."
+      ],
+      "license": {
+        "authorship_or_external_rights_verified": false,
+        "basis": "Project-material publication designation for this archive milestone; it does not authenticate authorship or grant rights over any separately withheld response or context.",
+        "expression": "MIT OR Apache-2.0",
+        "external_payload_embedded": false
+      },
+      "original_path": "audit/evidence/fable5-frontier-five-lens-prompt-20260726T084258Z.md",
+      "privacy": {
+        "absolute_user_path_occurrences": 1,
+        "exact_bytes_preserved_without_redaction": true,
+        "known_credential_values_intentionally_retained": false,
+        "literal_local_path_disclosed": true,
+        "scan_claim_boundary": "Gitleaks is a bounded pattern scan, not proof that sensitive information is absent.",
+        "scan_result": "gitleaks 8.30.1 dir scan of the five exact payload files reported no leaks on 2026-08-25."
+      },
+      "prohibited_inferences": [
+        "Do not treat the prompt or its requested checks as scientific evidence.",
+        "Do not infer that a requested proposition is true, novel, necessary, or current.",
+        "Do not infer human, institutional, semantic, data, implementation, or custody independence.",
+        "Do not infer that a response, cited companion, or claimed execution result was retained or validated.",
+        "Do not use this payload as a method, estimator, test fixture, executable input, or authority surface.",
+        "Do not infer equivalence among MGW categorical SxPID3, Ehrlich continuous shared exclusions, KSG arithmetic, or the project PID2 constructor.",
+        "Do not infer that a proposed formalization closes paper-to-definition, verifier-to-Rust, binary64, statistical, or application edges.",
+        "Do not infer any result from withheld context or response hashes."
+      ],
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "scientific_value": "Preserves a five-lens adversarial design spanning MGW categorical SxPID3 semantics, exact combinatorics, numerical refinement, continuous mixed-rank scope, KSG formal seams, PID2 scaling, evidence independence, and release impact.",
+      "sha256": "7cab7b0f5f6ca08d177ce95b503a1ea4fa5af9291c83205d00677ed4667f1a80",
+      "source_date": "2026-07-26",
+      "status": "historical-prompt"
+    }
+  ],
+  "privacy_boundary": {
+    "exact_prompt_bytes_authorized_for_this_public_archive": true,
+    "external_or_companion_payloads_authorized": false,
+    "literal_absolute_local_paths_retained": 5,
+    "privacy_review_scope": "five prompt payloads only",
+    "secrets_scan": {
+      "observed_at_utc": "2026-08-25T10:09:41Z",
+      "result": "no findings",
+      "scope": "five exact prompt payload files",
+      "tool": "gitleaks 8.30.1"
+    },
+    "secrets_scan_nonclaim": "Pattern scanning does not prove that sensitive information is absent."
+  },
+  "rederivation_queue": [
+    {
+      "candidate_statement": "Determine, from the Williams--Beer definition and current implementation, an exact predicate for target-specific specific-information minimum ties and whether a canonical permutation-equivariant branch policy preserves the declared empirical estimand.",
+      "id": "imin-exact-target-tie-predicate",
+      "required_closure": [
+        "exact source definition and units",
+        "fully quantified finite-domain statement",
+        "exact rational/log derivation or counterexample",
+        "implementation correspondence",
+        "permutation and genuine-near-zero falsifiers"
+      ],
+      "source_domain": "Williams--Beer finite-categorical I_min",
+      "source_prompt_ids": [
+        "completion-triage-20260725",
+        "imin-tie-swap-20260725"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Determine whether the current returned I_min PID2 fields are bitwise equivariant under source exchange over the declared admitted domain and isolate any failure to the exact reduction and field map that causes it.",
+      "id": "imin-pid2-source-swap-bit-equivariance",
+      "required_closure": [
+        "current-source call graph",
+        "raw-bit witness or exhaustive domain with exact scope",
+        "source-swap field mapping",
+        "normal/release/parallel/Python checks",
+        "nonclaim separating finite implementation evidence from population mathematics"
+      ],
+      "source_domain": "pid-rs Williams--Beer I_min PID2 binary64 implementation",
+      "source_prompt_ids": [
+        "imin-tie-swap-20260725"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Determine whether synergy should be the single correctly rounded ties-to-even value of the exact represented-input form J - I1 - I2 + R for every finite constructor input that satisfies the current admission policy, and characterize any acceptance-set change.",
+      "id": "pid2-represented-input-rounding",
+      "required_closure": [
+        "exact represented-input specification",
+        "fixed-accumulator proof and call-site binding",
+        "overflow/subnormal/signed-zero/tie analysis",
+        "acceptance counterexample search",
+        "downstream family inventory"
+      ],
+      "source_domain": "project-defined finite-binary64 PID2 constructor policy",
+      "source_prompt_ids": [
+        "completion-triage-20260725",
+        "imin-tie-swap-20260725",
+        "pid2-represented-sum-20260725"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Freshly rederive whether any admitted PID2 constructor input loses admission after exact coordinate scaling by two at a binary64 overflow or reconstruction boundary, and state the smallest exact raw-bit falsifier if one exists.",
+      "id": "pid2-scaling-acceptance-boundary",
+      "required_closure": [
+        "current constructor semantics",
+        "raw-bit witness replay",
+        "exact scaling and overflow premises",
+        "attainability explicitly separated",
+        "no inference about exact-real PID mathematics"
+      ],
+      "source_domain": "project-defined finite-binary64 PID2 constructor admission policy",
+      "source_prompt_ids": [
+        "frontier-five-lens-20260726"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Re-derive the positive-integer identity converting psi(k)+psi(n)-psi(x)-psi(y) to harmonic ranges, with explicit domains, coefficient signs, endpoints, and exact equality before any binary64 implementation claim.",
+      "id": "ksg-positive-integer-harmonic-cancellation",
+      "required_closure": [
+        "KSG source identity and integer digamma lemma",
+        "quantified index domains",
+        "independent algebraic and formal routes",
+        "endpoint counterexamples for each missing premise",
+        "nonclaim for geometry, consistency, calibration, and PID atoms"
+      ],
+      "source_domain": "KSG1 and shared-exclusions positive-integer digamma arithmetic at separately typed call sites",
+      "source_prompt_ids": [
+        "completion-triage-20260725",
+        "ksg-integer-harmonic-20260725",
+        "frontier-five-lens-20260726"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Prove or refute each current exclusive-count and anchor-inclusive-count mapping into the harmonic helper without transferring one convention to the other.",
+      "id": "ksg-count-index-correspondence",
+      "required_closure": [
+        "exact current call-site census",
+        "typed inclusive/exclusive definitions",
+        "off-by-one minimal falsifiers",
+        "Rust helper correspondence",
+        "protected noncancelling call-site checks"
+      ],
+      "source_domain": "pid-rs KSG and Ehrlich shared-exclusions neighbor-count conventions",
+      "source_prompt_ids": [
+        "ksg-integer-harmonic-20260725",
+        "frontier-five-lens-20260726"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Derive a finite count-table formula from the MGW target-restricted shared-exclusion event, preserving informative, misinformative, and net signs, empirical weighting, units, and source-permutation semantics.",
+      "id": "mgw-categorical-count-event-bridge",
+      "required_closure": [
+        "arXiv:2002.03356v5 or DOI-version defining source",
+        "fully typed event and empirical-PMF carriers",
+        "exact count/event theorem",
+        "zero-support and source-permutation cases",
+        "formal-to-Rust keyed correspondence"
+      ],
+      "source_domain": "Makkeh--Gutknecht--Wibral finite-categorical shared exclusions",
+      "source_prompt_ids": [
+        "completion-triage-20260725",
+        "frontier-five-lens-20260726"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Independently derive the correct three-source redundancy-lattice carrier, order orientation, coordinate inventory, and Mobius inversion needed for any claimed complete averaged SxPID3 closure; do not assume the prompt's 18-node or 108-coordinate figures.",
+      "id": "mgw-categorical-pid3-mobius-closure",
+      "required_closure": [
+        "defining categorical source",
+        "enumerated antichain lattice and orientation",
+        "pointwise-to-average semantics",
+        "exact inversion theorem and parser boundary",
+        "minimal orientation and missing-coordinate falsifiers"
+      ],
+      "source_domain": "Makkeh--Gutknecht--Wibral finite-categorical three-source shared-exclusions PID",
+      "source_prompt_ids": [
+        "frontier-five-lens-20260726"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Locate and rederive the exact regularity and domain conditions under which mixed-rank source-disjunction terms can or cannot share a common small-radius scaling, stating the equality criterion without the unquantified phrase generically unequal.",
+      "id": "continuous-mixed-rank-common-radius-criterion",
+      "required_closure": [
+        "exact defining or controlling source bytes",
+        "population support and regularity premises",
+        "local asymptotic derivation",
+        "equality and counterexample cases",
+        "separation of analytic functional, kNN estimator, consistency, and calibration"
+      ],
+      "source_domain": "Ehrlich purely continuous shared-exclusions estimator geometry",
+      "source_prompt_ids": [
+        "completion-triage-20260725",
+        "frontier-five-lens-20260726"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    },
+    {
+      "candidate_statement": "Determine whether a dependency or innovation-set coloring construction has a precise theorem whose graph assumptions entail exactly the independence premise required by a named SxPID composition; abstain if no typed mapping exists.",
+      "id": "dependency-coloring-independence-premise",
+      "required_closure": [
+        "named source and target objects",
+        "graph and probability-space definitions",
+        "premise-explicit mapping theorem or exact counterexample",
+        "fit/evaluation and sampling roles",
+        "bounded API and resource contract"
+      ],
+      "source_domain": "project candidate for dependency-aware empirical SxPID compilation",
+      "source_prompt_ids": [
+        "completion-triage-20260725"
+      ],
+      "status": "not_imported_requires_fresh_derivation"
+    }
+  ],
+  "source_observation": {
+    "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+    "observed_at_utc": "2026-08-25T09:57:13Z",
+    "observed_source_branch": "review/sx-count-event-bridge-r2",
+    "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+    "payload_tracked_state": "untracked",
+    "source_head_binds_payload": false,
+    "source_location_class": "protected primary worktree; absolute host locator intentionally omitted from the index",
+    "source_status_sha256": "6de84fa32b4a92a14a295ccae0ec1ed04cfd869c5a518edff473012748c7e943"
+  },
+  "withheld_records": [
+    {
+      "artifact_class": "advisory response",
+      "bytes": 8307,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "completion-triage-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-completion-triage-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "9d36c5967d1fad19e5c79227d02d3ab11b5bebdaacdbfbbd9141bc928b395611",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 9026,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "imin-tie-swap-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-imin-tie-swap-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "1fc1f05a2229f3d23d9eaa4dff2c6cde1f5c3913abf07bc7825db12fd369cf6e",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 19964,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "pid2-represented-sum-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-pid2-represented-sum-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "2c3ff67a869e112eb20be95d1365ad3694f333234d59a8fbed5fdaaba249b246",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 19403,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "ksg-integer-harmonic-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-ksg-integer-harmonic-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "b6657928d551a8440b149f0472dc5546436d6dcf037f47aff390bc9614608749",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "frozen context bundle",
+      "bytes": 1119380,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "frontier-five-lens-context-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-frontier-five-lens-20260726T084258Z-context.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "91564363da3b48721bcfc0cc251f16a2110fdb206386964675cae9fa4a4018dd",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "provider receipt",
+      "bytes": 10978,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "frontier-five-lens-receipt-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-frontier-five-lens-20260726T084258Z-receipt.json",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "17189a8b44e0de8ee623a791b32c5f03ce8faf8846e2854524fa718e044b6ea9",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 31911,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "frontier-five-lens-response-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-frontier-five-lens-20260726T084258Z-response.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "72d402c19ca6d933ea9dc231645b74f32b5684562a8d429ae699c39571437f8f",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "separate sanity note",
+      "bytes": 7050,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "frontier-five-lens-sanity-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-frontier-five-lens-independent-sanity-check-20260726T084258Z.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "eac7018e4392d447ffa822363a8a37d723458ede4b8fbed1743a7701e9d3e543",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "preflight failure note",
+      "bytes": 810,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "frontier-five-lens-preflight-failure-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-frontier-five-lens-preflight-failure-20260726T084258Z.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "98af79085d1449dab08c52a14894e0972bb263d4ad99afdc984901505507f727",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "runner source",
+      "bytes": 17291,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "frontier-five-lens-runner-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/fable5-frontier-five-lens-runner-20260726T084258Z.mjs",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "c04a00e33285bf0e08c71c773913a07c9a135e9f8eb5bb0a21191c4dedae519a",
+      "source_head_context_only": true
+    }
+  ]
+}

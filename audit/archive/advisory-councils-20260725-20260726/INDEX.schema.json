@@ -1,0 +1,567 @@
+{
+  "$defs": {
+    "gitOid": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "license": {
+      "additionalProperties": false,
+      "properties": {
+        "authorship_or_external_rights_verified": {
+          "const": false
+        },
+        "basis": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "expression": {
+          "const": "MIT OR Apache-2.0"
+        },
+        "external_payload_embedded": {
+          "const": false
+        }
+      },
+      "required": [
+        "authorship_or_external_rights_verified",
+        "basis",
+        "expression",
+        "external_payload_embedded"
+      ],
+      "type": "object"
+    },
+    "payload": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_path": {
+          "pattern": "^audit/archive/advisory-councils-20260725-20260726/payload/[A-Za-z0-9._-]+\\.md$",
+          "type": "string"
+        },
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "chronology_within_date": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "current_authority": {
+          "const": false
+        },
+        "current_successors": {
+          "items": {
+            "$ref": "#/$defs/successor"
+          },
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "evidence_authority": {
+          "const": false
+        },
+        "executable": {
+          "const": false
+        },
+        "id": {
+          "pattern": "^[a-z0-9-]+$",
+          "type": "string"
+        },
+        "importable": {
+          "const": false
+        },
+        "inert": {
+          "const": true
+        },
+        "known_risks": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 3,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "license": {
+          "$ref": "#/$defs/license"
+        },
+        "original_path": {
+          "pattern": "^audit/evidence/fable5-[A-Za-z0-9._-]+\\.md$",
+          "type": "string"
+        },
+        "privacy": {
+          "$ref": "#/$defs/privacy"
+        },
+        "prohibited_inferences": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 6,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "scientific_value": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_date": {
+          "format": "date",
+          "type": "string"
+        },
+        "status": {
+          "const": "historical-prompt"
+        }
+      },
+      "required": [
+        "archive_path",
+        "bytes",
+        "chronology_within_date",
+        "current_authority",
+        "current_successors",
+        "evidence_authority",
+        "executable",
+        "id",
+        "importable",
+        "inert",
+        "known_risks",
+        "license",
+        "original_path",
+        "privacy",
+        "prohibited_inferences",
+        "provenance",
+        "scientific_value",
+        "sha256",
+        "source_date",
+        "status"
+      ],
+      "type": "object"
+    },
+    "privacy": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute_user_path_occurrences": {
+          "const": 1
+        },
+        "exact_bytes_preserved_without_redaction": {
+          "const": true
+        },
+        "known_credential_values_intentionally_retained": {
+          "const": false
+        },
+        "literal_local_path_disclosed": {
+          "const": true
+        },
+        "scan_claim_boundary": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "scan_result": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "absolute_user_path_occurrences",
+        "known_credential_values_intentionally_retained",
+        "exact_bytes_preserved_without_redaction",
+        "literal_local_path_disclosed",
+        "scan_claim_boundary",
+        "scan_result"
+      ],
+      "type": "object"
+    },
+    "provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "frozen_intake_head": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "observed_source_branch": {
+          "const": "review/sx-count-event-bridge-r2"
+        },
+        "observed_source_head": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "source_head_binds_payload": {
+          "const": false
+        },
+        "tracked_state": {
+          "const": "untracked"
+        }
+      },
+      "required": [
+        "frozen_intake_head",
+        "observed_source_branch",
+        "observed_source_head",
+        "source_head_binds_payload",
+        "tracked_state"
+      ],
+      "type": "object"
+    },
+    "rederivation": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_statement": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9-]+$",
+          "type": "string"
+        },
+        "required_closure": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "source_domain": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_prompt_ids": {
+          "items": {
+            "pattern": "^[a-z0-9-]+$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "status": {
+          "const": "not_imported_requires_fresh_derivation"
+        }
+      },
+      "required": [
+        "candidate_statement",
+        "id",
+        "required_closure",
+        "source_domain",
+        "source_prompt_ids",
+        "status"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "successor": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
+          "type": "string"
+        },
+        "role": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "role"
+      ],
+      "type": "object"
+    },
+    "withheld": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_class": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "bytes": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "disposition": {
+          "const": "withheld_pending_semantic_privacy_rights_review"
+        },
+        "id": {
+          "pattern": "^[a-z0-9-]+$",
+          "type": "string"
+        },
+        "included": {
+          "const": false
+        },
+        "nonclaim": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "observation_kind": {
+          "const": "hash-only observation of exact bytes in the protected source worktree"
+        },
+        "original_path": {
+          "pattern": "^audit/evidence/fable5-[A-Za-z0-9._-]+\\.(?:json|md|mjs)$",
+          "type": "string"
+        },
+        "payload_path": {
+          "type": "null"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "recovery_locator_published": {
+          "const": false
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_head_context_only": {
+          "const": true
+        }
+      },
+      "required": [
+        "artifact_class",
+        "bytes",
+        "disposition",
+        "id",
+        "included",
+        "nonclaim",
+        "observation_kind",
+        "original_path",
+        "payload_path",
+        "provenance",
+        "recovery_locator_published",
+        "sha256",
+        "source_head_context_only"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "pid-rs/advisory-councils-archive-index/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "const": "INDEX.schema.json"
+    },
+    "archive_id": {
+      "const": "advisory-councils-20260725-20260726"
+    },
+    "archive_period": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "format": "date",
+          "type": "string"
+        },
+        "start": {
+          "format": "date",
+          "type": "string"
+        },
+        "within_day_ordering": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start",
+        "within_day_ordering"
+      ],
+      "type": "object"
+    },
+    "authority": {
+      "additionalProperties": false,
+      "properties": {
+        "current_authority": {
+          "const": false
+        },
+        "evidence_authority": {
+          "const": false
+        },
+        "model_output_class": {
+          "const": "advisory only"
+        }
+      },
+      "required": [
+        "current_authority",
+        "evidence_authority",
+        "model_output_class"
+      ],
+      "type": "object"
+    },
+    "classification": {
+      "const": "historical-prompt-archive"
+    },
+    "execution_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "executable": {
+          "const": false
+        },
+        "importable": {
+          "const": false
+        },
+        "inert_payloads_only": {
+          "const": true
+        },
+        "payload_use": {
+          "const": "human historical inspection only"
+        }
+      },
+      "required": [
+        "executable",
+        "importable",
+        "inert_payloads_only",
+        "payload_use"
+      ],
+      "type": "object"
+    },
+    "format": {
+      "const": "pid-rs/advisory-councils-archive/v1"
+    },
+    "license_boundary": {
+      "$ref": "#/$defs/license"
+    },
+    "payloads": {
+      "items": {
+        "$ref": "#/$defs/payload"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array"
+    },
+    "privacy_boundary": {
+      "additionalProperties": false,
+      "properties": {
+        "exact_prompt_bytes_authorized_for_this_public_archive": {
+          "const": true
+        },
+        "external_or_companion_payloads_authorized": {
+          "const": false
+        },
+        "literal_absolute_local_paths_retained": {
+          "const": 5
+        },
+        "privacy_review_scope": {
+          "const": "five prompt payloads only"
+        },
+        "secrets_scan": {
+          "additionalProperties": false,
+          "properties": {
+            "observed_at_utc": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "result": {
+              "const": "no findings"
+            },
+            "scope": {
+              "const": "five exact prompt payload files"
+            },
+            "tool": {
+              "const": "gitleaks 8.30.1"
+            }
+          },
+          "required": [
+            "observed_at_utc",
+            "result",
+            "scope",
+            "tool"
+          ],
+          "type": "object"
+        },
+        "secrets_scan_nonclaim": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "exact_prompt_bytes_authorized_for_this_public_archive",
+        "external_or_companion_payloads_authorized",
+        "literal_absolute_local_paths_retained",
+        "privacy_review_scope",
+        "secrets_scan",
+        "secrets_scan_nonclaim"
+      ],
+      "type": "object"
+    },
+    "rederivation_queue": {
+      "items": {
+        "$ref": "#/$defs/rederivation"
+      },
+      "maxItems": 10,
+      "minItems": 10,
+      "type": "array"
+    },
+    "source_observation": {
+      "additionalProperties": false,
+      "properties": {
+        "frozen_intake_head": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "observed_at_utc": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "observed_source_branch": {
+          "const": "review/sx-count-event-bridge-r2"
+        },
+        "observed_source_head": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "payload_tracked_state": {
+          "const": "untracked"
+        },
+        "source_head_binds_payload": {
+          "const": false
+        },
+        "source_location_class": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_status_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "frozen_intake_head",
+        "observed_at_utc",
+        "observed_source_branch",
+        "observed_source_head",
+        "payload_tracked_state",
+        "source_head_binds_payload",
+        "source_location_class",
+        "source_status_sha256"
+      ],
+      "type": "object"
+    },
+    "withheld_records": {
+      "items": {
+        "$ref": "#/$defs/withheld"
+      },
+      "maxItems": 10,
+      "minItems": 10,
+      "type": "array"
+    }
+  },
+  "required": [
+    "$schema",
+    "archive_id",
+    "archive_period",
+    "authority",
+    "classification",
+    "execution_policy",
+    "format",
+    "license_boundary",
+    "payloads",
+    "privacy_boundary",
+    "rederivation_queue",
+    "source_observation",
+    "withheld_records"
+  ],
+  "title": "pid-rs non-authoritative advisory-council prompt archive index",
+  "type": "object"
+}

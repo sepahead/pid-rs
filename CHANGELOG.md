@@ -9,6 +9,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Preserve five exact July 2026 advisory-prompt bytes in a non-authoritative, inert archive with a
+  canonical schema/index, explicit scientific and semantic nonclaims, current-successor routing,
+  ten hash-only withheld companion observations, and ten candidates that remain
+  `not_imported_requires_fresh_derivation`. A fail-closed checker and 36-mutation isolated hostile
+  suite reject payload, provenance, status, successor, license/privacy, withheld, authority-wiring,
+  execution/import, and README-iff drift. This archive adds no scientific evidence, theorem,
+  estimator, execution result, model-output validity, or release authority.
+
 - Make categorical `I_min` private specific-information lookups fail closed on missing or
   non-finite internal values while preserving admitted PID2/PID3 reduction order and bits. Add
   exact-product witnesses and a bounded census of all 12,869 nonempty binary count tables through
