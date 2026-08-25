@@ -445,8 +445,14 @@ C_K\exp\!\left(-\frac{n^2R_n^2}{2V_n}\right)
 $$
 
 If $R_n\le2$, then
-$\{\|\widehat P_n-P\|_1>D_n\}\subseteq
-\{\|\widehat P_n-P\|_1\ge R_n\}$, whose probability is at most $\alpha_n$. If $R_n>2$, then
+
+$$
+\{\|\widehat P_n-P\|_1>D_n\}
+\subseteq
+\{\|\widehat P_n-P\|_1\ge R_n\},
+$$
+
+whose probability is at most $\alpha_n$. If $R_n>2$, then
 $D_n=2$ and the strict failure event is empty because two probability laws have $L^1$ distance at
 most two. Thus
 

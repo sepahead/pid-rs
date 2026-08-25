@@ -12,7 +12,7 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
   exit 2
 fi
 
-commands=(latexmk cmp lacheck pdffonts pdfinfo pdftotext)
+commands=(latexmk cmp lacheck pdffonts pdfinfo pdftotext python3)
 for command in "${commands[@]}"; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "finite-alphabet PDF check: missing command: $command" >&2
@@ -25,6 +25,7 @@ BUILD_DIR="$(mktemp -d "$TMP_ROOT/pid-rs-finite-alphabet-pdf.XXXXXX")"
 trap 'rm -rf -- "$BUILD_DIR"' EXIT
 
 cd "$ROOT"
+python3 -I -S -B scripts/check-finite-convergence-document-semantics.py
 if ! lacheck "$SOURCE" >"$BUILD_DIR/lacheck.stdout" 2>&1; then
   cat "$BUILD_DIR/lacheck.stdout" >&2
   echo "finite-alphabet PDF check: static LaTeX lint failed" >&2
@@ -64,9 +65,20 @@ fi
 
 pdftotext "$BUILT" "$BUILD_DIR/built.semantic.txt"
 required_text=(
+  "What problem this note solves"
+  "FA-D1: cumulative-prefix empirical law"
+  "FA-1: Deterministic plug-in implication"
+  "FA-2: i.i.d. or stationary ergodic sampling"
+  "FA-3: time-uniform i.i.d. cumulative-prefix envelope"
   "Deterministic plug-in implication"
   "A time-uniform i.i.d. envelope"
+  "Independent frozen transforms"
+  "Conditional push-forward target"
+  "Counterexamples and invalid stronger claims"
   "Formal and executable evidence boundary"
+  "Correction ledger"
+  "Open Wibral-lineage work"
+  "Rota. On the Foundations of Combinatorial Theory"
 )
 for sentinel in "${required_text[@]}"; do
   if ! grep -F -- "$sentinel" "$BUILD_DIR/built.semantic.txt" >/dev/null; then

@@ -78,6 +78,10 @@ version-check:
     python3 -O -S -B scripts/check-method-catalog.py
     python3 -S -B scripts/check-method-catalog-self-test.py
     python3 -O -S -B scripts/check-method-catalog-self-test.py
+    python3 -S -B scripts/check-finite-convergence-document-semantics.py
+    python3 -O -S -B scripts/check-finite-convergence-document-semantics.py
+    python3 -S -B scripts/check-finite-convergence-document-semantics-self-test.py
+    python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
     python3 scripts/check-ecosystem-capabilities.py
     python3 scripts/check-ecosystem-capabilities-self-test.py
     scripts/check-handoff-intake.py

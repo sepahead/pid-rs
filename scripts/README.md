@@ -1510,12 +1510,23 @@ Comment and string masking prevents proof-escape words in non-code text from bec
 positives. The exact mutation counts and identifiers are emitted by the checker rather than
 duplicated in this prose.
 
+`check-finite-convergence-document-semantics.py` is a deliberately narrow semantic-drift guard for
+the two finite-convergence papers. It binds the named DC/FA definitions and theorems, the
+common-row-law/independence separation, Janson's exact $T^2=V_n$ provenance, the Weissman subset
+step, Rota's classical Möbius-inversion provenance, the conditional-transform target, retained
+counterexamples, and formal-evidence boundaries across Markdown, LaTeX, and the method catalog.
+Its isolated mutation suite runs under normal and optimized Python. The checker is a fail-closed
+change detector; exact phrases and catalog links cannot establish theorem truth, source
+applicability, or completeness of a literature review.
+
 `check-finite-alphabet-convergence-pdf.sh` builds the standalone mathematical paper from
 `audit/formal/latex/finite-alphabet-plugin-convergence.tex`. It fixes the build time and timezone,
 rejects LaTeX warnings and box defects, and requires exact byte equality with
 `output/pdf/finite-alphabet-plugin-convergence.pdf`. It needs `latexmk` and a pdfTeX installation.
-The check establishes deterministic document generation in that toolchain. It does not enlarge any
-mathematical claim.
+It first runs the semantic-drift guard and then requires the rendered PDF to expose the FA labels,
+motivation, conditional-transform target, counterexamples, correction ledger, open work, evidence
+boundary, and Rota citation. The check establishes deterministic document generation and rendered
+presence in that toolchain. It does not enlarge or prove any mathematical claim.
 
 `check-two-source-sxpid-count-atom-bridge-pdf.sh` applies the same deterministic,
 warning-free contract to the dedicated two-source count-to-atom bridge paper. It exact-rebuilds the
@@ -1526,8 +1537,11 @@ claims.
 
 `check-dependency-colored-sxpid-pdf.sh` applies the same deterministic, warning-free build contract
 to `audit/formal/latex/dependency-colored-sxpid-concentration.tex` and its committed PDF. The paper
-states the probability proof, formal boundary, numerical checks, and retained counterexamples.
-Exact PDF reproduction does not validate those scientific claims.
+states the probability proof, formal boundary, numerical checks, and retained counterexamples. The
+checker first runs the semantic-drift guard and requires the rendered artifact to expose the
+color-map motivation, every DC label, Janson theorem/equation anchor, four concrete designs,
+counterexamples, evidence boundary, and Rota citation. Exact reproduction and rendered sentinels
+do not validate those scientific claims.
 
 `check-support-change-tolerant-sxpid-pdf.sh` applies the same contract to the exact-real,
 support-change-tolerant averaged categorical SxPID theorem. Its LaTeX source is
@@ -2134,6 +2148,10 @@ python3 scripts/check-markdown-math.py
 python3 scripts/check-markdown-math-self-test.py
 python3 scripts/check-review-evidence.py
 python3 scripts/check-review-evidence-self-test.py
+python3 -S -B scripts/check-finite-convergence-document-semantics.py
+python3 -O -S -B scripts/check-finite-convergence-document-semantics.py
+python3 -S -B scripts/check-finite-convergence-document-semantics-self-test.py
+python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
 python3 scripts/check-z3-pid2-algebra.py
 python3 scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py

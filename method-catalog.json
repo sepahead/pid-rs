@@ -4365,6 +4365,7 @@
       "constraints": [
         "This entry records evidence for the existing categorical shared-exclusions implementation. It adds no estimator, public API, or scientific-origin claim.",
         "There is no PID measure called colored PID. Dependency coloring qualifies the sampling assumption and concentration proof, not the paper-defined SxPID functional; the composition and compound repository label are project-defined and are not attributed to Makkeh, Gutknecht, or Wibral.",
+        "The row-level project-defined origin applies to the combined repository validation and evidence contract. Its finite-sample concentration core is paper-derived: for the partition cover with w_a=1 and c_a=n_{a,n}, V_n=(sum_a sqrt(n_{a,n}))^2 is exactly Janson's cover-specific T^2 from the proof of Theorem 2.1, Equations (3.1)-(3.3), retained before the coarser theorem bound in Remark 3.3. Neither V_n, the class-load optimization that yields it, nor that cover-specific exponent is new in pid-rs. The telescoping all-prefix presentation, reference-law drift bookkeeping, SxPID continuity transfer, fixtures, and evidence boundary are repository-stated composition and validation; no mathematical-priority claim is made.",
         "The concentration theorem requires a fixed finite alphabet, a deterministic partition into nonempty color classes, a common row law, and mutual independence of complete rows within each class. Dependence across classes can be arbitrary.",
         "The displayed envelope proves almost-sure exact-real plug-in consistency under the sufficient condition that V_n log(n)/n^2 tends to zero; a fixed color count is sufficient. The displayed drift envelope also requires the explicit bias b_n to tend to zero. These are not necessary conditions under a stronger sampling theorem.",
         "The nonidentical-law extension concentrates about the average row law. Transfer to a reference law requires a separate deterministic drift bound.",
@@ -4383,16 +4384,16 @@
       "id": "validation.dependency-color-sxpid-concentration",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds project analysis for a color-size concentration proxy that is optimal within the declared H\u00f6lder\u2013Hoeffding proof scheme, a telescoping all-prefix envelope, explicit law drift separation, a one-Lambda cumulative SxPID modulus, general-source Mobius-row bounds, and complete two-source atom-specific bounds. Exact ordinary- and conditioned-diamond analysis sharpens only the synergy modulus to Lambda minus eta and adds endpoint-specific average caps. Exact conditioned-nested analysis characterizes the unique-information gradient diameter without reducing its uniform modulus. These are project-defined validation results for the paper-defined functional and make no scientific-priority claim. Lean checks the exact ordinary diameter, the exact conditioned-nested diameter and algebraic non-subtraction witness, the exact conditioned-diamond candidate-extrema form, a sharp-bound equality witness and normalized corollaries, the refined logarithmic linearization chain, and finite keyed-event and fractional-cover subclaims. A fraction-exact generator and Rust test challenge the ordinary- and conditioned-diamond identities, the conditioned-nested identity, all nine conditioned-diamond extremal regimes, retained counterexamples, and bounded numerical routes with normal or subnormal positive floors. The same suite compares all displayed two-source bounds on six committed law pairs and a fixed overlapping-window law with the categorical implementation.",
+      "new_in_pid_rs": "Adds an auditable validation package around published ingredients. The finite-sample concentration core and V_n are not new in pid-rs: V_n is exactly Janson's cover-specific T^2 for the declared partition. Repository-stated work comprises the explicit Janson-to-Weissman-to-SxPID composition, telescoping all-prefix presentation, reference-law drift bookkeeping, a one-Lambda cumulative SxPID modulus, general-source Mobius-row bounds, complete two-source atom-specific bounds, formal subclaims, fixtures, and bounded implementation checks. Classical finite-poset Mobius inversion is also not new in pid-rs. Exact ordinary- and conditioned-diamond analysis sharpens only the synergy modulus to Lambda minus eta and adds endpoint-specific average caps. Exact conditioned-nested analysis characterizes the unique-information gradient diameter without reducing its uniform modulus. These are project-defined validation compositions for the paper-defined functional and make no scientific-priority claim. Lean checks the exact ordinary diameter, the exact conditioned-nested diameter and algebraic non-subtraction witness, the exact conditioned-diamond candidate-extrema form, a sharp-bound equality witness and normalized corollaries, the refined logarithmic linearization chain, and finite keyed-event and fractional-cover subclaims. A fraction-exact generator and Rust test challenge the ordinary- and conditioned-diamond identities, the conditioned-nested identity, all nine conditioned-diamond extremal regimes, retained counterexamples, and bounded numerical routes with normal or subnormal positive floors. The same suite compares all displayed two-source bounds on six committed law pairs and a fixed overlapping-window law with the categorical implementation.",
       "python_entry_points": [],
       "reference_links": [
         {
-          "locator": "bounded independent-sum moment bound used within each color class",
+          "locator": "Equation (4.16), the bounded centered-variable moment bound used within each mutually independent color class",
           "reference_id": "hoeffding-1963",
           "role": "methodological-background"
         },
         {
-          "locator": "independent-class concentration method for partly dependent sums",
+          "locator": "Theorem 2.1 and proof Equations (3.1)-(3.3), whose exact partition specialization supplies the cover-specific T^2=V_n exponent",
           "reference_id": "janson-2004",
           "role": "methodological-background"
         },
@@ -4402,12 +4403,17 @@
           "role": "defining-paper"
         },
         {
-          "locator": "generalized Holder method used to combine dependent color-class moment bounds",
+          "locator": "later supporting generalized-Holder route across color classes; not the source of Janson's cover-specific T^2=V_n factor",
           "reference_id": "pelekis-ramon-wang-2017",
           "role": "methodological-background"
         },
         {
-          "locator": "finite-alphabet total-variation subset argument",
+          "locator": "classical finite-poset Mobius inversion used to pass from cumulative coordinates to atoms",
+          "reference_id": "rota-1964",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "Equations (14)-(16), the exact finite-alphabet total-variation subset identity and 2^K-2 union step",
           "reference_id": "weissman-2003",
           "role": "methodological-background"
         }
@@ -4428,6 +4434,8 @@
         "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean",
         "crates/pid-core/tests/dependency_colored_sxpid_oracle.rs",
         "scripts/check-dependency-colored-sxpid-pdf.sh",
+        "scripts/check-finite-convergence-document-semantics-self-test.py",
+        "scripts/check-finite-convergence-document-semantics.py",
         "scripts/check-lean-finite-convergence.py",
         "scripts/check-lean-finite-convergence-self-test.py",
         "scripts/generate-dependency-colored-sxpid-oracle.py"
@@ -4435,7 +4443,7 @@
       "source_marker_files": [
         "crates/pid-core/src/sxpid.rs"
       ],
-      "summary": "Evidence-only finite-alphabet concentration, drift, and shared-exclusions continuity analysis for rows with a declared independence coloring.",
+      "summary": "Evidence-only composition of Janson's cover-specific finite-alphabet concentration with project-specific prefix, drift, and categorical SxPID continuity analyses under a declared independence coloring.",
       "title": "SxPID concentration under a dependency coloring",
       "validation": {
         "evidence_paths": [
@@ -4456,13 +4464,15 @@
           "crates/pid-core/tests/fixtures/dependency_colored_sxpid_oracle.json.sha256",
           "output/pdf/dependency-colored-sxpid-concentration.pdf",
           "scripts/check-dependency-colored-sxpid-pdf.sh",
+          "scripts/check-finite-convergence-document-semantics-self-test.py",
+          "scripts/check-finite-convergence-document-semantics.py",
           "scripts/check-lean-finite-convergence-self-test.py",
           "scripts/check-lean-finite-convergence.py",
           "scripts/generate-dependency-colored-sxpid-oracle.py"
         ],
         "level": "formal-and-property",
-        "limitations": "The stochastic result, path integration, dependency-color-to-complete-SxPID composition, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported common-law perturbation or SxPID realizability. A separate Lean module checks all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, but not bytes-to-counts, support-change transfer between laws, Rust refinement, floating-point or certifier/parser execution, higher-source lattices, or statistical and population claims. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
-        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; exact color-size and coarse finite-sample bounds; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support local SxPID bounds with a Lambda-minus-eta synergy refinement; the separate support-change-tolerant averaged transfer without a positive support-mass floor; a supplied-exact-count bridge for all 24 fixed two-source cumulative and atom coordinates; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
+        "limitations": "The stochastic result, path integration, dependency-color-to-complete-SxPID composition, and published component nonnegativity are not machine-checked. The conditioned-nested zero-side-mass witness is algebraic and does not establish a supported perturbation under the common-row-law premise or SxPID realizability. A separate Lean module checks all 24 supplied exact-count two-source cumulative and concrete Mobius-atom coordinates, but not bytes-to-counts, support-change transfer between laws, Rust refinement, floating-point or certifier/parser execution, higher-source lattices, or statistical and population claims. The fixed fixtures and numerical stress cases are bounded internal evidence and give no interval implementation, global binary64, generic time-series, external-review, or consumer-validity guarantee.",
+        "scope": "Fixed finite alphabets; deterministic nonempty color classes with a common row law and mutual independence of complete rows within each class; Janson's cover-specific partition factor and a coarse color-count finite-sample bound; a telescoping all-prefix envelope; explicit average-law drift; one-Lambda cumulative, general-source Mobius-row, and complete two-source common-support local SxPID bounds with a Lambda-minus-eta synergy refinement; the separate support-change-tolerant averaged transfer without a positive support-mass floor; a supplied-exact-count bridge for all 24 fixed two-source cumulative and atom coordinates; bounded adaptive binary64 challenges; and one fixed-width iid-innovation window construction."
       }
     },
     {
@@ -4546,6 +4556,8 @@
       "code_availability": "local",
       "constraints": [
         "This entry records evidence for existing empirical categorical methods. It does not add a functional, estimator, public API, or scientific-origin claim.",
+        "The finite-poset Mobius inversion used to pass from cumulative PID quantities to atoms is classical incidence-algebra machinery, cited to Rota (1964), and is not a construction introduced by this repository.",
+        "FA-D1's cumulative-prefix empirical law is a document-defined name for the empirical law of an initial n-observation prefix in one nested sequence, not an invoked literature theorem. FA-3 is a repository-labeled composition of Hoeffding's published two-sided coordinate bound, the fixed spending sequence 6 alpha/(pi^2 n^2), and union bounds; it is not a new concentration inequality, not a confidence sequence for Rust output, and not a dependence theorem.",
         "The convergence theorem uses exact real arithmetic on fixed finite alphabets and a fixed finite lattice. This cross-family row claims Lean's deterministic continuity core, finite heterogeneous keyed source, target, and target-restricted Sx event layer, generic finite equivalence-union fractional-cover bounds, and the supplied-exact-count bridge for four fixed two-source signed-net cumulative logarithms and positive-support averages. The aggregate checker also imports the separately cataloged categorical-only count-to-atom bridge; checker co-location does not attach that 24-coordinate result to fitted quantization, I_min, Shannon invariants, or any other family. This row claims no bytes or rows to counts, stochastic limit theorem, concrete Mobius-atom or complete informative/misinformative family, I_min formalization, Rust refinement, floating-point or certifier/parser execution, calibration, or population validity.",
         "The sampling implications, displayed local I_min, Shannon, and ratio bounds, time-uniform i.i.d. envelope, and frozen-transform corollary are prose proofs and are not encoded in Lean.",
         "The Decimal-to-Rust fixture comparison covers only its committed empirical count tables and its stated binary64 envelope.",
@@ -4567,7 +4579,7 @@
       "id": "validation.finite-alphabet-plugin-convergence",
       "implementation_origin": "local-implementation",
       "implementation_status": "stable",
-      "new_in_pid_rs": "Adds an auditable exact-real convergence note, kernel-checked deterministic continuity, finite keyed-event and fractional-cover subclaims, a supplied-exact-count two-source signed-net cumulative bridge, and a hash-bound implementation-separated Decimal-to-Rust fixture for existing categorical plug-in methods.",
+      "new_in_pid_rs": "Adds an auditable exact-real convergence note, locally named FA-D1/FA-1--FA-3 exposition, kernel-checked deterministic continuity, finite keyed-event and fractional-cover subclaims, a supplied-exact-count two-source signed-net cumulative bridge, and a hash-bound implementation-separated Decimal-to-Rust fixture for existing categorical plug-in methods. FA-3 composes Hoeffding's published coordinate bound with a repository-chosen spending sequence and union bounds; it is not a new concentration inequality. The note uses, but does not claim as new, classical finite-poset Mobius inversion.",
       "python_entry_points": [],
       "reference_links": [
         {
@@ -4576,8 +4588,13 @@
           "role": "methodological-background"
         },
         {
-          "locator": "bounded-coordinate concentration used in the time-uniform i.i.d. envelope",
+          "locator": "published two-sided bounded-coordinate concentration used before the repository's spending-sequence and union-bound composition in FA-3",
           "reference_id": "hoeffding-1963",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "classical finite-poset Mobius inversion used to pass from cumulative coordinates to atoms",
+          "reference_id": "rota-1964",
           "role": "methodological-background"
         }
       ],
@@ -4601,6 +4618,8 @@
         "claims/SX-COUNT-EVENT-BRIDGE-001/formal/theorem-map.md",
         "crates/pid-core/tests/finite_alphabet_plugin_oracle.rs",
         "scripts/check-finite-alphabet-convergence-pdf.sh",
+        "scripts/check-finite-convergence-document-semantics-self-test.py",
+        "scripts/check-finite-convergence-document-semantics.py",
         "scripts/check-lean-finite-convergence.py",
         "scripts/check-lean-finite-convergence-self-test.py",
         "scripts/generate-finite-alphabet-plugin-oracle.py"
@@ -4608,7 +4627,7 @@
       "source_marker_files": [
         "crates/pid-core/src/sxpid.rs"
       ],
-      "summary": "Evidence-only exact-real convergence analysis and bounded executable checks for stable finite-alphabet plug-in methods.",
+      "summary": "Evidence-only exact-real convergence analysis, locally labeled cumulative-prefix composition, and bounded executable checks for stable finite-alphabet plug-in methods.",
       "title": "Finite-alphabet plug-in convergence evidence",
       "validation": {
         "evidence_paths": [
@@ -4639,6 +4658,8 @@
           "crates/pid-core/tests/fixtures/finite_alphabet_plugin_oracle.json.sha256",
           "output/pdf/finite-alphabet-plugin-convergence.pdf",
           "scripts/check-finite-alphabet-convergence-pdf.sh",
+          "scripts/check-finite-convergence-document-semantics-self-test.py",
+          "scripts/check-finite-convergence-document-semantics.py",
           "scripts/check-lean-finite-convergence-self-test.py",
           "scripts/check-lean-finite-convergence.py",
           "scripts/generate-finite-alphabet-plugin-oracle.py"
@@ -5545,6 +5566,18 @@
       "type": "paper",
       "url": "https://doi.org/10.1103/PhysRevE.100.032305",
       "year": 2019
+    },
+    {
+      "arxiv": null,
+      "authors": [
+        "Gian-Carlo Rota"
+      ],
+      "doi": "10.1007/BF00531932",
+      "id": "rota-1964",
+      "title": "On the Foundations of Combinatorial Theory I. Theory of M\u00f6bius Functions",
+      "type": "paper",
+      "url": "https://doi.org/10.1007/BF00531932",
+      "year": 1964
     },
     {
       "arxiv": "2106.12393",

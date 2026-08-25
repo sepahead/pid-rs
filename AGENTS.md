@@ -276,6 +276,10 @@ python3 -S -B scripts/check-method-catalog.py
 python3 -O -S -B scripts/check-method-catalog.py
 python3 -S -B scripts/check-method-catalog-self-test.py
 python3 -O -S -B scripts/check-method-catalog-self-test.py
+python3 -S -B scripts/check-finite-convergence-document-semantics.py
+python3 -O -S -B scripts/check-finite-convergence-document-semantics.py
+python3 -S -B scripts/check-finite-convergence-document-semantics-self-test.py
+python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
 python3 scripts/check-methods-summary.py
 python3 -O scripts/check-methods-summary.py
 python3 scripts/check-methods-summary-self-test.py

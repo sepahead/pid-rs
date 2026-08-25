@@ -85,6 +85,10 @@ For pid-rs SxPID, $m\in\{2,3,4\}$. For pid-rs $I_{\min}$, $m\in\{2,3\}$.
 
 ### Definition FA-D1 — cumulative-prefix empirical law
 
+The label FA-D1 and the phrase **cumulative-prefix empirical law** are definitions local to this
+document. They name the empirical law of the first $n$ observations in one nested sequence; they
+do not invoke a published theorem.
+
 Let $Z_1,Z_2,\ldots$ be one nested observation sequence. For every integer $n\ge1$, define the
 **cumulative-prefix empirical law** of its first $n$ observations by
 

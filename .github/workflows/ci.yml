@@ -826,6 +826,10 @@ jobs:
       - run: python3 -O -S -B scripts/check-method-catalog.py
       - run: python3 -S -B scripts/check-method-catalog-self-test.py
       - run: python3 -O -S -B scripts/check-method-catalog-self-test.py
+      - run: python3 -S -B scripts/check-finite-convergence-document-semantics.py
+      - run: python3 -O -S -B scripts/check-finite-convergence-document-semantics.py
+      - run: python3 -S -B scripts/check-finite-convergence-document-semantics-self-test.py
+      - run: python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
       - run: python3 scripts/check-ecosystem-capabilities.py
       - run: python3 scripts/check-ecosystem-capabilities-self-test.py
       - run: python3 scripts/check-z3-pid2-algebra.py

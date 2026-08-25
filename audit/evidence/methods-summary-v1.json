@@ -808,7 +808,7 @@
     {
       "category": "validation",
       "code_availability": "local",
-      "constraint_count": 9,
+      "constraint_count": 10,
       "definition_origin": "project-defined",
       "depends_on": [
         "shared-exclusions.categorical",
@@ -826,17 +826,17 @@
         "rust_examples": []
       },
       "scientific_novelty_claim": "none",
-      "summary": "Evidence-only finite-alphabet concentration, drift, and shared-exclusions continuity analysis for rows with a declared independence coloring.",
+      "summary": "Evidence-only composition of Janson's cover-specific finite-alphabet concentration with project-specific prefix, drift, and categorical SxPID continuity analyses under a declared independence coloring.",
       "title": "SxPID concentration under a dependency coloring",
       "validation": {
-        "evidence_path_count": 20,
+        "evidence_path_count": 22,
         "level": "formal-and-property"
       }
     },
     {
       "category": "validation",
       "code_availability": "local",
-      "constraint_count": 5,
+      "constraint_count": 7,
       "definition_origin": "project-defined",
       "depends_on": [
         "co-information.discrete",
@@ -860,10 +860,10 @@
         "rust_examples": []
       },
       "scientific_novelty_claim": "none",
-      "summary": "Evidence-only exact-real convergence analysis and bounded executable checks for stable finite-alphabet plug-in methods.",
+      "summary": "Evidence-only exact-real convergence analysis, locally labeled cumulative-prefix composition, and bounded executable checks for stable finite-alphabet plug-in methods.",
       "title": "Finite-alphabet plug-in convergence evidence",
       "validation": {
-        "evidence_path_count": 30,
+        "evidence_path_count": 32,
         "level": "formal-and-property"
       }
     },
@@ -2222,6 +2222,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "fa131a1a5d1a084af61aebc17e03ce857e3b315be99f50dd2cb623d11d46966d"
+    "sha256": "a7b1f4e7c7f89f88410f3b35cbfb009c673c1d33b5f86d919bf343340006c7b4"
   }
 }

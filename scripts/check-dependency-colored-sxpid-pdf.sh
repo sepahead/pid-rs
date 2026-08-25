@@ -12,7 +12,7 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
   exit 2
 fi
 
-commands=(latexmk cmp lacheck pdffonts pdfinfo pdftotext)
+commands=(latexmk cmp lacheck pdffonts pdfinfo pdftotext python3)
 for command in "${commands[@]}"; do
   if ! command -v "$command" >/dev/null 2>&1; then
     echo "dependency-colored SxPID PDF check: missing command: $command" >&2
@@ -25,6 +25,7 @@ BUILD_DIR="$(mktemp -d "$TMP_ROOT/pid-rs-dependency-colored-pdf.XXXXXX")"
 trap 'rm -rf -- "$BUILD_DIR"' EXIT
 
 cd "$ROOT"
+python3 -I -S -B scripts/check-finite-convergence-document-semantics.py
 if ! lacheck "$SOURCE" >"$BUILD_DIR/lacheck.stdout" 2>&1; then
   cat "$BUILD_DIR/lacheck.stdout" >&2
   echo "dependency-colored SxPID PDF check: static LaTeX lint failed" >&2
@@ -64,10 +65,25 @@ fi
 
 pdftotext "$BUILT" "$BUILD_DIR/built.semantic.txt"
 required_text=(
+  "Why the color map exists"
+  "The quantity denoted Vn is not new mathematics from pid-rs."
+  "DC-D1: complete rows, one common row law, and predeclared coloring"
+  "DC-D2: cumulative-prefix empirical law and class-load factor"
+  "DC-1: dependency-colored empirical-law bound"
+  "Janson’s proof of Theorem 2.1"
+  "Equations (3.1)–(3.3)"
+  "Four designs that expose the role of"
+  "DC-D3: one nested infinite sequence and its prefix loads"
+  "DC-2: Anytime law envelope for cumulative prefixes"
+  "DC-2a: fixed-width overlapping windows"
+  "DC-2b: strong"
+  "DC-3: average-law concentration and explicit reference-law drift"
   "Anytime law envelope"
   "Binary64 terminology and hypotheses"
   "closed algebraic coordinate inequality"
+  "Counterexamples and invalidated routes"
   "Formal and executable evidence boundary"
+  "Rota. On the foundations of combinatorial theory"
 )
 for sentinel in "${required_text[@]}"; do
   if ! grep -F -- "$sentinel" "$BUILD_DIR/built.semantic.txt" >/dev/null; then

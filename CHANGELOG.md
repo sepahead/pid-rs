@@ -1550,6 +1550,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added a separate
   [SxPID concentration under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
   analysis.
+  The revised exposition replaces informal references to an unnamed common-law theorem and prefix
+  law with the explicit DC-D1--DC-D3 definitions, DC-1--DC-3 theorems, and DC-2a/DC-2b
+  corollaries. It motivates the color map from overlapping-row designs, gives i.i.d., width-three,
+  copied-class, and singleton controls, and includes an accessible handcrafted vector figure that
+  carries class identity through letters and line patterns as well as color. The class-load factor
+  $V_n=(\sum_a\sqrt{n_{a,n}})^2$ is now attributed exactly to Janson's cover-specific $T^2$ in the
+  proof of Theorem 2.1, Equations (3.1)--(3.3), after $w_a=1$ and $c_a=n_{a,n}$. It is not claimed
+  as a project-defined concentration proxy. Weissman et al. supply the exact total-variation
+  subset identity and $2^K-2$ union step; classical finite-poset Möbius inversion is cited to Rota.
+  The project-specific contribution is the explicit proof composition, all-prefix allocation,
+  drift split, SxPID continuity transfer, evidence boundary, and executable challenge material.
   It gives finite-sample and all-prefix empirical-law bounds for a fixed deterministic coloring
   when all complete rows share one common finite law. Complete rows inside each color are mutually
   independent, and dependence across colors can be arbitrary. It also gives an explicit
@@ -1581,8 +1592,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   published sign premise, algebraic coordinates, and averaging into full SxPID atoms. It also
   does not prove Rust refinement or binary64 arithmetic.
   A fraction-exact Rust/Python check independently reconstructs the ordinary-diamond,
-  conditioned-nested, and conditioned-diamond exact identities on the rational cases. A
-  standalone LaTeX source, reproducible PDF, and fail-closed Markdown-math checker make the
+  conditioned-nested, and conditioned-diamond exact identities on the rational cases. The
+  companion finite-alphabet paper now uses the named FA-D1/FA-1--FA-3 chain and states the broader
+  conditional-i.i.d. frozen-transform target, including the failure symbol, conditional
+  push-forward law, and non-equivalence to the unconditional mixture. A dedicated cross-source
+  semantic guard binds these names, provenance distinctions, assumptions, counterexamples, and
+  evidence boundaries across Markdown, LaTeX, and the method catalog; its isolated hostile suite
+  runs under normal and optimized Python. Both deterministic PDF checkers require the repaired
+  labels, motivation, provenance, examples, and limitations to be present in rendered text.
+  Standalone LaTeX sources, reproducible PDFs, and fail-closed Markdown-math checks make the
   assumptions and evidence boundaries visible. The Rust fixture distinguishes scale-aware
   reconstruction checks from absolute categorical-output comparisons. Ten refined-modulus and
   six endpoint-ceiling binary64 cases now challenge branch seams, cancellation, ratio rounding,
