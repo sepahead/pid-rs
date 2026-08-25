@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1400" height="780" viewBox="0 0 1400 780"
+     role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">Width-three innovation blocks and the dependency-color proof chain</title>
+  <desc id="diagram-desc">
+    Six width-three rows are built from eight independent innovations. Rows one and four have
+    class A with long-dash outlines, rows two and five have class B with dotted outlines, and rows
+    three and six have class C with compound-dash outlines. Blocks with the same class label are
+    disjoint. A second panel
+    follows the predeclared map kappa through class loads two, two, two, the Janson factor V six
+    equal to eighteen, a law radius D six, and finally a deterministic SxPID continuity modulus.
+  </desc>
+
+  <defs>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#12304A" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M1 1 L11 6 L1 11 Z" fill="#0B7D77"/>
+    </marker>
+    <style>
+      .title { font: 700 34px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #12304A; }
+      .subtitle { font: 500 18px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #526979; }
+      .panel-title { font: 700 21px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #12304A; }
+      .label { font: 650 17px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #12304A; }
+      .small { font: 500 14px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #526979; }
+      .tiny { font: 600 12px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #526979; }
+      .formula { font: 650 19px "Times New Roman", Times, serif; fill: #12304A; }
+      .formula-small { font: 650 16px "Times New Roman", Times, serif; fill: #12304A; }
+      .white-label { font: 750 15px "Avenir Next", Inter, Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="780" fill="#FAF7F0"/>
+  <path d="M0 0 H1400 V18 H0 Z" fill="#0B7D77"/>
+  <text x="52" y="66" class="title">Width-3 dependence: from row design to an SxPID error bound</text>
+  <text x="52" y="96" class="subtitle">
+    Letters and patterns encode classes; color is supplementary. Same-class blocks are disjoint.
+  </text>
+
+  <g filter="url(#soft-shadow)">
+    <rect x="42" y="124" width="748" height="594" rx="22" fill="#FFFDFC" stroke="#D8DED9" stroke-width="2"/>
+    <rect x="812" y="124" width="546" height="594" rx="22" fill="#FFFDFC" stroke="#D8DED9" stroke-width="2"/>
+  </g>
+
+  <text x="72" y="162" class="panel-title">A. Width-three innovation blocks</text>
+  <text x="72" y="188" class="small">Z(t) = f(E(t), E(t+1), E(t+2)), with independent E1,...,E8</text>
+
+  <g aria-label="pattern legend">
+    <rect x="474" y="145" width="54" height="28" rx="7" fill="#DDF2EF" stroke="#0B7D77"
+          stroke-width="3" stroke-dasharray="12 4"/>
+    <text x="493" y="164" class="label">A</text>
+    <rect x="544" y="145" width="54" height="28" rx="7" fill="#FFF0C9" stroke="#B87908"
+          stroke-width="3" stroke-linecap="round" stroke-dasharray="1 6"/>
+    <text x="563" y="164" class="label">B</text>
+    <rect x="614" y="145" width="54" height="28" rx="7" fill="#E5EBF1" stroke="#244C68"
+          stroke-width="3" stroke-dasharray="9 3 2 3"/>
+    <text x="633" y="164" class="label">C</text>
+    <text x="680" y="164" class="tiny">kappa(t)</text>
+  </g>
+
+  <g aria-label="innovation labels">
+    <text x="206" y="231" class="tiny">E1</text>
+    <text x="276" y="231" class="tiny">E2</text>
+    <text x="346" y="231" class="tiny">E3</text>
+    <text x="416" y="231" class="tiny">E4</text>
+    <text x="486" y="231" class="tiny">E5</text>
+    <text x="556" y="231" class="tiny">E6</text>
+    <text x="626" y="231" class="tiny">E7</text>
+    <text x="696" y="231" class="tiny">E8</text>
+    <path d="M192 240 H744" stroke="#D8DED9" stroke-width="2"/>
+  </g>
+
+  <g aria-label="six overlapping rows">
+    <g>
+      <text x="77" y="281" class="label">Z1</text>
+      <rect x="119" y="258" width="48" height="30" rx="8" fill="#0B7D77"/>
+      <text x="137" y="279" class="white-label">A</text>
+      <rect x="192" y="253" width="210" height="42" rx="10" fill="#DDF2EF" stroke="#0B7D77"
+            stroke-width="3" stroke-dasharray="14 5"/>
+      <text x="276" y="280" class="formula-small">E1  E2  E3</text>
+    </g>
+    <g>
+      <text x="77" y="347" class="label">Z2</text>
+      <rect x="119" y="324" width="48" height="30" rx="8" fill="#B87908"/>
+      <text x="137" y="345" class="white-label">B</text>
+      <rect x="262" y="319" width="210" height="42" rx="10" fill="#FFF0C9" stroke="#B87908"
+            stroke-width="3" stroke-linecap="round" stroke-dasharray="1 7"/>
+      <text x="346" y="346" class="formula-small">E2  E3  E4</text>
+    </g>
+    <g>
+      <text x="77" y="413" class="label">Z3</text>
+      <rect x="119" y="390" width="48" height="30" rx="8" fill="#244C68"/>
+      <text x="137" y="411" class="white-label">C</text>
+      <rect x="332" y="385" width="210" height="42" rx="10" fill="#E5EBF1" stroke="#244C68"
+            stroke-width="3" stroke-dasharray="10 3 2 3"/>
+      <text x="416" y="412" class="formula-small">E3  E4  E5</text>
+    </g>
+    <g>
+      <text x="77" y="479" class="label">Z4</text>
+      <rect x="119" y="456" width="48" height="30" rx="8" fill="#0B7D77"/>
+      <text x="137" y="477" class="white-label">A</text>
+      <rect x="402" y="451" width="210" height="42" rx="10" fill="#DDF2EF" stroke="#0B7D77"
+            stroke-width="3" stroke-dasharray="14 5"/>
+      <text x="486" y="478" class="formula-small">E4  E5  E6</text>
+    </g>
+    <g>
+      <text x="77" y="545" class="label">Z5</text>
+      <rect x="119" y="522" width="48" height="30" rx="8" fill="#B87908"/>
+      <text x="137" y="543" class="white-label">B</text>
+      <rect x="472" y="517" width="210" height="42" rx="10" fill="#FFF0C9" stroke="#B87908"
+            stroke-width="3" stroke-linecap="round" stroke-dasharray="1 7"/>
+      <text x="556" y="544" class="formula-small">E5  E6  E7</text>
+    </g>
+    <g>
+      <text x="77" y="611" class="label">Z6</text>
+      <rect x="119" y="588" width="48" height="30" rx="8" fill="#244C68"/>
+      <text x="137" y="609" class="white-label">C</text>
+      <rect x="542" y="583" width="210" height="42" rx="10" fill="#E5EBF1" stroke="#244C68"
+            stroke-width="3" stroke-dasharray="10 3 2 3"/>
+      <text x="626" y="610" class="formula-small">E6  E7  E8</text>
+    </g>
+  </g>
+
+  <rect x="72" y="650" width="688" height="46" rx="12" fill="#EFF7F5" stroke="#B7DCD7"/>
+  <text x="91" y="670" class="small">Same letter -> disjoint blocks -> mutual independence within that class.</text>
+  <text x="91" y="690" class="small">Different letters may overlap and may be dependent.</text>
+
+  <text x="842" y="162" class="panel-title">B. The auditable proof chain</text>
+  <text x="842" y="188" class="small">Each arrow has a distinct obligation.</text>
+
+  <g aria-label="dependency color proof chain">
+    <rect x="868" y="216" width="434" height="70" rx="15" fill="#E8F4F2" stroke="#0B7D77" stroke-width="2"/>
+    <text x="1085" y="245" text-anchor="middle" class="formula">kappa(t) = t mod 3</text>
+    <text x="1085" y="269" text-anchor="middle" class="small">A = 1, B = 2, C = 0; fixed before outcomes</text>
+
+    <path d="M1085 289 V319" stroke="#0B7D77" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="868" y="326" width="434" height="70" rx="15" fill="#FFF4D8" stroke="#B87908" stroke-width="2"/>
+    <text x="1085" y="355" text-anchor="middle" class="formula">class loads at n = 6: (2, 2, 2)</text>
+    <text x="1085" y="379" text-anchor="middle" class="small">design bookkeeping, not an estimated sample size</text>
+
+    <path d="M1085 399 V429" stroke="#0B7D77" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="868" y="436" width="434" height="70" rx="15" fill="#E9EEF3" stroke="#244C68" stroke-width="2"/>
+    <text x="1085" y="465" text-anchor="middle" class="formula">V6 = (sqrt(2) + sqrt(2) + sqrt(2))^2 = 18 = 3n</text>
+    <text x="1085" y="489" text-anchor="middle" class="small">Janson's cover-specific T^2, partition case</text>
+
+    <path d="M1085 509 V539" stroke="#0B7D77" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="868" y="546" width="434" height="64" rx="15" fill="#E8F4F2" stroke="#0B7D77" stroke-width="2"/>
+    <text x="1085" y="573" text-anchor="middle" class="formula">law event: L1(P-hat(6), P) &lt;= D6</text>
+    <text x="1085" y="596" text-anchor="middle" class="small">probability theorem DC-2</text>
+
+    <path d="M1085 613 V638" stroke="#0B7D77" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="868" y="645" width="434" height="51" rx="15" fill="#12304A" stroke="#12304A" stroke-width="2"/>
+    <text x="1085" y="667" text-anchor="middle" class="white-label">if D6 &lt; 2 p_min and the support premises hold</text>
+    <text x="1085" y="687" text-anchor="middle" class="white-label">SxPID error &lt;= M(D6, p_min)</text>
+  </g>
+
+  <text x="812" y="748" class="tiny">Color constrains the sampling proof - not the PID functional.</text>
+  <text x="1358" y="748" text-anchor="end" class="tiny">Handcrafted vector | pid-rs</text>
+</svg>

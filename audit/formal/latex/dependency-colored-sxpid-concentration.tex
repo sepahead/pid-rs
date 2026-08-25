@@ -7,6 +7,7 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{booktabs,longtable,array}
 \usepackage{enumitem}
+\usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{pid-rs-report-tables}
 \usepackage{hyperref}
@@ -79,10 +80,10 @@ paper-defined functional is not new.  There is no measure called ``colored PID''
 qualifies the sampling theorem and comes from older dependence/concentration machinery, while its
 composition with SxPID here is project-defined.  The document derives a finite-sample concentration bound
 for the complete empirical joint law when all complete rows share one common finite law and a
-fixed coloring partitions observations into classes whose complete rows are mutually independent.
+predeclared coloring partitions observations into classes whose complete rows are mutually independent.
 Dependence across classes can be arbitrary.  A
-class-size proxy that is optimal within the declared H{\"o}lder--Hoeffding proof scheme improves
-the ordinary color-count factor for unbalanced classes.  A telescoping error allocation
+class-load factor, exactly Janson's cover-specific $T^2$ specialized to a partition, improves the
+ordinary color-count factor for unbalanced classes.  A telescoping error allocation
 gives a time-uniform envelope.  A nonidentical-law extension separates random error from explicit
 drift.  A stronger common-support modulus then transfers joint-law error to pointwise and averaged
 SxPID atoms.  The local result includes one-$\Lambda$ cumulative control, general-source
@@ -123,10 +124,10 @@ four sources; receives a finite-sample bound and an almost-sure exact-real consi
 when the displayed envelope vanishes \\
 Hoeffding bounded-variable inequality & Paper-defined classical result~\cite{hoeffding1963} & Used
 inside each independent color class \\
-Dependency-color concentration & Published background includes Janson's coloring method and later
-H{\"o}lder formulations~\cite{janson2004,pelekis2017} & Project-defined proof composition with a
-class-size proxy that is optimal within the declared H{\"o}lder--Hoeffding proof scheme; no novelty
-claim \\
+Dependency-color concentration & Paper-derived from Janson's exact fractional-cover argument;
+later H{\"o}lder formulations give a second route~\cite{janson2004,pelekis2017} & Partition
+specialization of Janson's cover-specific $T^2$, followed by the finite-alphabet subset reduction
+of Weissman et al.; transfer to SxPID is a project composition~\cite{weissman2003} \\
 Empirical-law $L^1$ deviation & Published independent and identically distributed (i.i.d.)\
 background includes Weissman
 et al.~\cite{weissman2003} & One-sided subset union bound under the stated color contract \\
@@ -138,8 +139,9 @@ Valid full-support SxPID paths have bounded near-attainment evidence, not an exa
 path-attainment theorem.  Endpoint constructions and one bounded law fixture give only local
 evidence for other coefficients; no result proves global sharpness of the complete atom or
 averaged bounds \\
-Drift envelope & Project-defined extension & Concentration about the average row law plus explicit
-bias to a reference law \\
+Drift envelope & Paper-derived row-specific centering under the same cover argument; project-defined
+reference-law/SxPID composition & Concentration about the average row law plus explicit bias to a
+reference law \\
 \bottomrule
 \end{longtable}
 
@@ -292,70 +294,144 @@ $I_Q(S_i;T)=0$.
 
 The concentration proof uses generalized H{\"o}lder, Hoeffding's lemma, the exponential
 Markov/Chernoff argument, the union bound, and Borel--Cantelli.  The local-modulus proof uses the
-fundamental theorem of calculus, finite-poset M{\"o}bius inversion, Cauchy--Schwarz, and
+fundamental theorem of calculus, finite-poset M{\"o}bius inversion~\cite{rota1964},
+Cauchy--Schwarz, and
 arithmetic--geometric mean inequalities.  These standard results are named at each application;
 their elementary statements are used but not independently reproved.  ``Exact real'' means
 mathematical real arithmetic, not a certified error bound for Rust binary64 operations.
 
+\subsection*{Why the color map exists}
+
+Categorical SxPID is evaluated from a complete empirical joint law.  In applications, adjacent
+rows may reuse measurements; for example, a width-three rolling feature shares two innovations
+with its neighbor.  An i.i.d.\ theorem cannot simply be applied to those rows.  A predeclared
+independence coloring is one auditable route when the construction really has the required
+independence structure.
+
+The complete reasoning chain is
+\begin{equation}\label{eq:causal-chain}
+\begin{aligned}
+  \boxed{\kappa\;\text{fixed before outcomes}}
+  &\ \longrightarrow\
+  \boxed{n_{a,n}=|\{i\le n:\kappa(i)=a\}|}
+  \ \longrightarrow\
+  \boxed{V_n=\left(\sum_a\sqrt{n_{a,n}}\right)^2},\\
+  V_n
+  &\ \longrightarrow\
+  \boxed{\normone{\Phat_n-P}\le D_n}
+  \ \longrightarrow\
+  \boxed{\text{SxPID error}\le\mathcal M(D_n,p_{\min})}.
+\end{aligned}
+\end{equation}
+The first three arrows are design bookkeeping, the fourth is a probability theorem, and the last
+is a deterministic continuity implication with additional support-floor premises.  Color labels
+never enter the SxPID definition, and this increment exposes no public color-map estimator.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{audit/formal/latex/figures/dependency-colored-sxpid/width-three-color-chain.pdf}
+  \caption{A width-three construction and the five logically distinct obligations in the proof.
+  The letters A, B, and C and their long-dash, dotted, and compound-dash outlines carry the class
+  encoding; color is supplementary.  Same-class innovation blocks are disjoint, whereas blocks in
+  different classes may overlap.  The right panel separates design bookkeeping, the probability
+  theorem, and the deterministic SxPID transfer.}
+  \label{fig:width-three-chain}
+\end{figure}
+
+The quantity denoted $V_n$ is not new mathematics from \texttt{pid-rs}.  It is exactly Janson's
+cover-specific $T^2$ in the proof of Theorem~2.1, Equations~(3.1)--(3.3), specialized to a
+partition with $w_a=1$ and squared-range sum $c_a=n_{a,n}$, so that
+$T^2=(\sum_a\sqrt{c_a})^2=V_n$.
+Remark~3.3 of that paper retains this cover-specific quantity before the coarser
+fractional-chromatic bound~\cite{janson2004}.  The finite-alphabet/SxPID composition, explicit
+contract, and evidence boundary are project-specific; no mathematical priority is claimed.
+
 \section{Finite setting and the dependence contract}
 
-Let $Z_1,\ldots,Z_n$ take values in a finite alphabet $\cZ$ with $|\cZ|=K$.  For SxPID, one row is
-the complete joint symbol
+\begin{definition}[DC-D1: complete rows, one common row law, and predeclared coloring]
+\label{def:dc-color}
+Fix $n\ge1$.  Let $Z_1,\ldots,Z_n$ take values in a finite alphabet $\cZ$ with
+$|\cZ|=K\ge1$.  For SxPID, one row is the complete joint symbol
 \begin{equation}
   Z_i=(S_{1i},\ldots,S_{mi},T_i).
 \end{equation}
-Dependence between source and target coordinates inside a row is unrestricted.  It is the signal
-that PID analyzes.
-
-For the common-law theorem, assume every row has marginal law $P$.  Let a deterministic color map
-partition the indices into occupied classes $C_1,\ldots,C_r$.  Define
-\begin{equation}
-  n_j=|C_j|>0,
-  \qquad
-  n=\sum_{j=1}^{r}n_j.
+Dependence between source and target coordinates inside a row is unrestricted; it is the signal
+that PID analyzes.  The common-row-law premise is
+\begin{equation}\label{eq:common-row-law}
+  \operatorname{Law}(Z_i)=P
+  \qquad\text{for every }i\in[n].
 \end{equation}
-	The complete rows $\{Z_i:i\in C_j\}$ must be mutually independent for every $j$.
-	Dependence across different classes can be arbitrary.  The color map must not depend on the
-	observed row values.
-	Pairwise independence inside a color is not sufficient.  Neither a covariance cutoff nor an
-	unspecified mixing label establishes this mutual-independence contract.
+This is identical distribution, not mutual independence.
 
-Define
+Let $\cC$ be finite or countable.  A predeclared coloring is a map
+$\kappa:[n]\to\cC$ fixed before the evaluation-row values are observed.  For every occupied label
+$a$, define
 \begin{equation}
-  \Phat_n(z)=\frac1n\sum_{i=1}^{n}\Ind\{Z_i=z\},
+  C_{a,n}=\{i\in[n]:\kappa(i)=a\},
   \qquad
-  V_n=\left(\sum_{j=1}^{r}\sqrt{n_j}\right)^2,
+  n_{a,n}=|C_{a,n}|>0.
+\end{equation}
+For each occupied $a$, the complete rows $(Z_i)_{i\in C_{a,n}}$ must be jointly mutually
+independent.  Dependence between distinct classes may be arbitrary.
+\end{definition}
+
+Pairwise independence inside a class is insufficient.  Neither a covariance cutoff nor an
+unspecified mixing label establishes Definition~\ref{def:dc-color}.  There is one precise
+conditional extension: if $\mathcal G$ describes an independent training or design artifact,
+$\kappa$ may be $\mathcal G$-measurable.  After conditioning on $\mathcal G$, it must be
+deterministic, all rows must have the stated common conditional law, and each class must contain
+mutually independent complete conditional rows.  A map selected from evaluation outcomes does not
+meet this premise merely because it becomes fixed after selection.
+
+\begin{definition}[DC-D2: cumulative-prefix empirical law and class-load factor]
+\label{def:dc-empirical}
+For $n\ge1$, define
+\begin{equation}
+  \Phat_n(z)=\frac1n\sum_{i=1}^{n}\Ind\{Z_i=z\}.
+\end{equation}
+Its masses are nonnegative and
+\begin{equation}
+  \sum_{z\in\cZ}\Phat_n(z)
+  =\frac1n\sum_{i=1}^n\sum_{z\in\cZ}\Ind\{Z_i=z\}=1,
+\end{equation}
+so it is a probability law.  It is the law of the first $n$ rows of one cumulative sequence, not a
+sliding-window law.  Define
+\begin{equation}
+  V_n=\left(\sum_{a:C_{a,n}\ne\varnothing}\sqrt{n_{a,n}}\right)^2,
   \qquad
   d_{\mathrm{eff},n}=\frac{V_n}{n}.
 \end{equation}
+\end{definition}
 
 \begin{proposition}[Effective-color range]\label{prop:effective-range}
-The deterministic proxy obeys
+If $r_n$ labels are occupied, then
 \begin{equation}
-  n\le V_n\le rn,
+  n\le V_n\le r_n n,
   \qquad
-  1\le d_{\mathrm{eff},n}\le r.
+  1\le d_{\mathrm{eff},n}\le r_n.
 \end{equation}
 \end{proposition}
 
 \begin{proof}
-For the lower bound, expand the square of a sum of nonnegative square roots and retain its diagonal
-terms.  For the upper bound, apply Cauchy--Schwarz:
+For the lower bound, expand the square of the nonnegative square roots and retain the diagonal
+terms.  For the upper bound, Cauchy--Schwarz gives
 \begin{equation}
-  \left(\sum_j\sqrt{n_j}\right)^2
-  \le\left(\sum_j1^2\right)\left(\sum_jn_j\right)=rn.
+  \left(\sum_a\sqrt{n_{a,n}}\right)^2
+  \le\left(\sum_a1^2\right)\left(\sum_an_{a,n}\right)=r_n n.
 \end{equation}
-	The Lean artifact proves both inequalities over exact real numbers.
+The Lean artifact checks both exact-real algebraic inequalities.
 \end{proof}
 
-	The upper bound is attained when the occupied color classes have equal sizes.
-	The value $d_{\mathrm{eff},n}$ is a proof constant derived from the declared class sizes.  It is not an
-	estimated effective sample size.
+The upper bound is attained for equal occupied class loads.  The value
+$d_{\mathrm{eff},n}$ is a deterministic concentration factor computed from a declared design, not
+an estimated effective sample size.  Lean does not check that a proposed $\kappa$ satisfies the
+probabilistic independence contract.
 
 \section{Finite-sample law concentration}
 
-\begin{theorem}[Dependency-colored empirical-law bound]\label{thm:finite}
-Assume $K\ge2$ and the contract in Section~2.  Then, for every $\varepsilon>0$,
+\begin{theorem}[DC-1: dependency-colored empirical-law bound]\label{thm:finite}
+Assume $K\ge2$, $n\ge1$, Equation~\eqref{eq:common-row-law}, and
+Definition~\ref{def:dc-color}.  Then, for every $\varepsilon>0$,
 \begin{equation}\label{eq:finite}
   \Prb\!\left(\normone{\Phat_n-P}\ge\varepsilon\right)
   \le
@@ -364,7 +440,7 @@ Assume $K\ge2$ and the contract in Section~2.  Then, for every $\varepsilon>0$,
     (2^K-2)\exp\!\left(-\frac{n^2\varepsilon^2}{2V_n}\right)
   \right\}.
 \end{equation}
-If at most $d$ colors are occupied, then
+If at most $d\ge1$ labels are occupied, then
 \begin{equation}\label{eq:coarse}
   \Prb\!\left(\normone{\Phat_n-P}\ge\varepsilon\right)
   \le
@@ -375,76 +451,112 @@ If at most $d$ colors are occupied, then
 \end{equation}
 \end{theorem}
 
+This is a paper-derived specialization and composition, not a new concentration method.  Janson's
+proof of Theorem~2.1, Equations~(3.1)--(3.3), gives the same cover-specific exponent when its exact
+fractional cover is specialized to this partition~\cite{janson2004}.  The proof below exposes the
+equivalent generalized-H{\"o}lder route directly; Pelekis, Ramon, and Wang give a later
+graph-color H{\"o}lder formulation~\cite{pelekis2017}.  The final total-variation identity and
+subset union follow Weissman et al., Equations~(14)--(16)~\cite{weissman2003}.
+
 \begin{proof}
+\medskip\noindent\textbf{Step 1: one event becomes a centered sum.}
 Fix a nonempty proper subset $A\subset\cZ$.  Put
 \begin{equation}
   Y_i=\Ind\{Z_i\in A\}-P(A),
   \qquad
-  S_j=\sum_{i\in C_j}Y_i.
+  S_a=\sum_{i\in C_{a,n}}Y_i.
 \end{equation}
-Let $R=\sum_j\sqrt{n_j}$ and select the H{\"o}lder exponents
+Then $\sum_aS_a=n(\Phat_n(A)-P(A))$.  Let
+$R=\sum_a\sqrt{n_{a,n}}$ and select
 \begin{equation}
-  p_j=\frac{R}{\sqrt{n_j}},
+  p_a=\frac{R}{\sqrt{n_{a,n}}},
   \qquad
-  \sum_j\frac1{p_j}=1.
+  \sum_a\frac1{p_a}=1.
 \end{equation}
-Each $p_j\ge1$ because $R\ge\sqrt{n_j}$, so these are valid H{\"o}lder exponents.
-For $\lambda>0$, generalized H{\"o}lder gives
+Each $p_a\ge1$ because $R\ge\sqrt{n_{a,n}}$, so these are valid H{\"o}lder exponents.
+
+\medskip\noindent\textbf{Step 2: H{\"o}lder is used across classes.}
+Cross-class dependence prevents factorization.  Generalized H{\"o}lder needs no cross-class
+independence and, for $\lambda>0$, gives
 \begin{align}
-  \E\exp\!\left(\lambda\sum_jS_j\right)
+  \E\exp\!\left(\lambda\sum_aS_a\right)
   &\le
-  \prod_j\left(\E e^{p_j\lambda S_j}\right)^{1/p_j}.
+  \prod_a\left(\E e^{p_a\lambda S_a}\right)^{1/p_a}.
 \end{align}
-	Rows are mutually independent inside each color.  Hoeffding's lemma for a centered random
-	variable with range length one gives
+
+\medskip\noindent\textbf{Step 3: factorization occurs only inside a class.}
+Each $Y_i$ has mean zero and lies in the interval $[-P(A),1-P(A)]$, whose length is one.
+Mutual independence in class $a$ gives
 \begin{equation}
-  \E e^{p_j\lambda S_j}
+  \E e^{p_a\lambda S_a}
+  =\prod_{i\in C_{a,n}}\E e^{p_a\lambda Y_i}.
+\end{equation}
+Hoeffding's lemma bounds each factor by $\exp(p_a^2\lambda^2/8)$, hence
+\begin{equation}
+  \E e^{p_a\lambda S_a}
   \le
-  \exp\!\left(\frac{n_jp_j^2\lambda^2}{8}\right).
-	\end{equation}
-	Raising the $j$th bound to $1/p_j$, multiplying, and using
-	$n_jp_j=R\sqrt{n_j}$ gives
-	\begin{align}
-	  \prod_j
-	  \left[
-	    \exp\!\left(\frac{n_jp_j^2\lambda^2}{8}\right)
-	  \right]^{1/p_j}
-	  &=
-	  \exp\!\left(\frac{\lambda^2}{8}\sum_jn_jp_j\right)\\
-	  &=
-	  \exp\!\left(\frac{\lambda^2}{8}
-	    R\sum_j\sqrt{n_j}\right)
-	  =
-	  \exp\!\left(\frac{\lambda^2V_n}{8}\right).
-	\end{align}
-	Therefore,
-	\begin{equation}\label{eq:mgf}
-  \E\exp\!\left(\lambda\sum_jS_j\right)
+  \exp\!\left(\frac{n_{a,n}p_a^2\lambda^2}{8}\right).
+\end{equation}
+Raising this bound to $1/p_a$, multiplying, and using
+$n_{a,n}p_a=R\sqrt{n_{a,n}}$ gives
+\begin{align}
+  \prod_a
+  \left[
+    \exp\!\left(\frac{n_{a,n}p_a^2\lambda^2}{8}\right)
+  \right]^{1/p_a}
+  &=
+  \exp\!\left(\frac{\lambda^2}{8}\sum_an_{a,n}p_a\right)\\
+  &=
+  \exp\!\left(\frac{\lambda^2}{8}R\sum_a\sqrt{n_{a,n}}\right)
+  =
+  \exp\!\left(\frac{\lambda^2V_n}{8}\right).
+\end{align}
+Therefore,
+\begin{equation}\label{eq:mgf}
+  \E\exp\!\left(\lambda\sum_aS_a\right)
   \le
   \exp\!\left(\frac{\lambda^2V_n}{8}\right).
 \end{equation}
-	For every $\lambda>0$, Chernoff's method and Equation~\eqref{eq:mgf} give
-	\begin{equation}
-	  \Prb\!\left(\sum_jS_j\ge nt\right)
-	  \le
-	  \exp\!\left(-\lambda nt+\frac{\lambda^2V_n}{8}\right).
-	\end{equation}
-	The exponent is a convex quadratic.  Its derivative
-	$-nt+\lambda V_n/4$ vanishes at $\lambda=4nt/V_n$; substitution gives
-	$-2n^2t^2/V_n$.  Hence
-	\begin{equation}\label{eq:subset-tail}
+
+\medskip\noindent\textbf{Step 4: optimize the exponential Markov bound.}
+For every $\lambda>0$,
+\begin{equation}
+  \Prb\!\left(\sum_aS_a\ge nt\right)
+  \le
+  \exp\!\left(-\lambda nt+\frac{\lambda^2V_n}{8}\right).
+\end{equation}
+The exponent has derivative $-nt+\lambda V_n/4$, so its minimum is at
+$\lambda=4nt/V_n$.  Substitution gives
+\begin{equation}\label{eq:subset-tail}
   \Prb\!\left(\Phat_n(A)-P(A)\ge t\right)
   \le
   \exp\!\left(-\frac{2n^2t^2}{V_n}\right).
 \end{equation}
-For any signed finite measure with total mass zero,
+
+\medskip\noindent\textbf{Step 5: recover $L^1$ error and count the union factor.}
+Put $\Delta(z)=\Phat_n(z)-P(z)$.  Since both laws have mass one,
+$\sum_z\Delta(z)=0$.  Let $A_+=\{z:\Delta(z)>0\}$.  Then
+\begin{equation}
+  \sum_{z\in A_+}\Delta(z)
+  =-\sum_{z\notin A_+}\Delta(z),
+\end{equation}
+so
+\begin{equation}
+  \normone{\Phat_n-P}
+  =\sum_{z\in A_+}\Delta(z)-\sum_{z\notin A_+}\Delta(z)
+  =2\sum_{z\in A_+}\Delta(z).
+\end{equation}
+For every $A\subseteq\cZ$,
+$\Delta(A)\le\sum_{z\in A_+}\Delta(z)$, with equality at $A=A_+$.  Therefore
 \begin{equation}\label{eq:tv}
   \frac12\normone{\Phat_n-P}
   =\max_{A\subseteq\cZ}\{\Phat_n(A)-P(A)\}.
 \end{equation}
-Set $t=\varepsilon/2$ and take a union bound over the $2^K-2$ nonempty proper subsets.  This proves
-Equation~\eqref{eq:finite}.  Complement subsets already encode the opposite sign, so no additional
-factor of two is required.  Proposition~\ref{prop:effective-range} gives
+If $\normone{\Phat_n-P}\ge\varepsilon>0$, the maximizing set $A_+$ is nonempty and proper and
+$\Phat_n(A_+)-P(A_+)\ge\varepsilon/2$.  Set $t=\varepsilon/2$ in
+Equation~\eqref{eq:subset-tail} and take a union bound over the $2^K-2$ nonempty proper subsets.
+This proves Equation~\eqref{eq:finite}.  Complement subsets already encode the opposite sign, so
+no additional factor of two is required.  Proposition~\ref{prop:effective-range} gives
 Equation~\eqref{eq:coarse}.
 \end{proof}
 
@@ -457,35 +569,71 @@ data are inspected, then $2^s-2$ can replace $2^K-2$.  An observed support size 
 population support size.  When $s=1$, the law distance is zero and the result is vacuous.
 
 \begin{proposition}[H{\"o}lder proxy optimum]\label{prop:holder-optimum}
-For $q_j>0$ with $\sum_jq_j^{-1}=1$,
+For $q_a>0$ with $\sum_aq_a^{-1}=1$,
 \begin{equation}
-  V_n\le\sum_jn_jq_j.
+  V_n\le\sum_an_{a,n}q_a.
 \end{equation}
-Equality holds for $q_j=R/\sqrt{n_j}$.
+Equality holds for $q_a=R/\sqrt{n_{a,n}}$.
 \end{proposition}
 
 \begin{proof}
-The exponent conditions force $q_j\ge1$ for every $j$.  Thus, they are valid H{\"o}lder
+The exponent conditions force $q_a\ge1$ for every $a$.  Thus, they are valid H{\"o}lder
 exponents.
 Cauchy--Schwarz gives
 \begin{equation}
-  \left(\sum_j\sqrt{n_j}\right)^2
-  =\left(\sum_j\sqrt{n_jq_j}\sqrt{q_j^{-1}}\right)^2
-  \le\left(\sum_jn_jq_j\right)\left(\sum_jq_j^{-1}\right).
+  \left(\sum_a\sqrt{n_{a,n}}\right)^2
+  =\left(\sum_a\sqrt{n_{a,n}q_a}\sqrt{q_a^{-1}}\right)^2
+  \le\left(\sum_an_{a,n}q_a\right)\left(\sum_aq_a^{-1}\right).
 \end{equation}
 The selected exponents make the two Cauchy--Schwarz vectors proportional.
 \end{proof}
 
-This is an optimum inside the H{\"o}lder--Hoeffding proof scheme for this partition.  It is not a
-claim that $V_n$ is the best possible constant for every admissible joint law.
+The selected exponents recover Janson's cover-specific $T^2=V_n$ and minimize this
+H{\"o}lder--Hoeffding proxy for the declared partition.  This is not a claim that $V_n$ is the best
+possible constant for every admissible joint law.
+
+\subsection*{Four designs that expose the role of \texorpdfstring{$\kappa$}{kappa}}
+
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{I.i.d.\ rows, one class.}  Set $\kappa(i)=0$.  Mutual independence holds,
+    $n_{0,n}=n$, and $V_n=n$.  The common row law alone would not justify this coloring.
+  \item \textbf{Width-three overlapping windows.}  Let
+    $Z_t=f(E_t,E_{t+1},E_{t+2})$ for i.i.d.\ innovations and one fixed finite-output map, and set
+    $\kappa(t)=t\bmod3$.  Rows in one class use disjoint innovation triples.  For $n=8$, the loads
+    are $3,3,2$ and $V_8=(2\sqrt3+\sqrt2)^2<24=3n$.
+  \item \textbf{Copied classes.}  Let $X_1,\ldots,X_m$ be independent fair bits.  Make $d$
+    classes and put one copy of every $X_j$ in each class.  Every class contains $m$ mutually
+    independent rows, but the classes are exact copies.  Hence $n=md$,
+    $V_n=(d\sqrt m)^2=dn$, and $n^2/V_n=m$.  The exponent correctly sees only $m$ distinct
+    random values; deleting the color factor would falsely claim an $md$-sample rate.
+  \item \textbf{Singleton coloring, a negative example.}  Set $\kappa(i)=i$.  Then
+    $V_n=n^2$ and the radius need not shrink.  If every row equals one common fair bit, the
+    coloring is valid but the empirical law does not converge to its fair marginal law.
+    Conversely, i.i.d.\ rows with this needlessly fine coloring still converge by the strong law.
+    The envelope condition is therefore sufficient, not necessary.
+\end{enumerate}
 
 \section{Time-uniform envelope and consistency}
 
-Assume $K\ge2$.  For an infinite sequence, require one fixed map from the positive integers to a finite or countable
-color set.  Only finitely many colors can be occupied in each prefix.  The entire infinite
-collection in each color must consist of mutually independent complete rows.  Let $V_n$ use the nonempty class
-sizes in the first $n$ rows.  A uniform bound of at most $d$ occupied colors is required only for
-the coarse radius in Equation~\eqref{eq:anytime-coarse}.
+\begin{definition}[DC-D3: one nested infinite sequence and its prefix loads]
+\label{def:dc-prefix}
+Assume $K\ge2$.  For one infinite row sequence, fix a single map
+$\kappa:\mathbb N_{\ge1}\to\cC$ before evaluation outcomes.  Prefix $n$ is always the first $n$
+rows of this same nested sequence.  Define
+\begin{equation}
+  C_{a,n}=\{i\le n:\kappa(i)=a\},
+  \qquad
+  n_{a,n}=|C_{a,n}|,
+  \qquad
+  V_n=\left(\sum_{a:n_{a,n}>0}\sqrt{n_{a,n}}\right)^2.
+\end{equation}
+The entire infinite collection in each label must consist of mutually independent complete rows.
+\end{definition}
+
+Only finitely many labels can be occupied in a finite prefix.  Definition~\ref{def:dc-prefix}
+therefore implies DC-D1 in every prefix.  It is not a sequence of maps refitted at each $n$, nor a
+sliding window.  A uniform bound of at most $d\ge1$ occupied labels is needed only for the coarse
+radius in Equation~\eqref{eq:anytime-coarse}.
 
 Fix $0<\alpha<1$ and define
 \begin{equation}
@@ -512,8 +660,8 @@ Define
   D_n&=\min\{2,R_n\}.
 \end{align}
 
-\begin{theorem}[Anytime law envelope]\label{thm:anytime}
-Under the infinite-sequence contract,
+\begin{theorem}[DC-2: Anytime law envelope for cumulative prefixes]\label{thm:anytime}
+Under DC-D3 and $\operatorname{Law}(Z_i)=P$ for every $i$,
 \begin{equation}\label{eq:anytime}
   \Prb\!\left(
     \forall n\ge1:\
@@ -525,12 +673,28 @@ Under the infinite-sequence contract,
 \begin{proof}
 For every $n$, substitution in Theorem~\ref{thm:finite} gives
 \begin{equation}
-  C_K\exp\!\left(-\frac{n^2R_n^2}{2V_n}\right)=\alpha_n.
+  C_K\exp\!\left(-\frac{n^2R_n^2}{2V_n}\right)
+  =\frac{\alpha}{n(n+1)}
+  =\alpha_n.
 \end{equation}
 The Lean artifact checks the algebraic exponent cancellation.  Positivity, the square-root
-substitution, and its probability interpretation remain in this prose proof.  A union bound and
-Equation~\eqref{eq:telescope} give simultaneous control by $R_n$.  Every probability-law $L^1$
-distance is also at most two.  Thus it is at most $D_n=\min\{2,R_n\}$.
+substitution, and its probability interpretation remain in this prose proof.
+
+If $R_n\le2$, then
+\begin{equation}
+  \{\normone{\Phat_n-P}>D_n\}
+  \subseteq
+  \{\normone{\Phat_n-P}\ge R_n\},
+\end{equation}
+whose probability is at most $\alpha_n$ by DC-1.  If $R_n>2$, then $D_n=2$ and the strict failure
+event is empty because the $L^1$ distance between probability laws is at most two.  Consequently,
+\begin{equation}
+  \Prb\!\left(\exists n\ge1:\normone{\Phat_n-P}>D_n\right)
+  \le\sum_{n\ge1}\alpha_n\le\alpha
+\end{equation}
+by the union bound and Equation~\eqref{eq:telescope}.  Taking complements gives the simultaneous
+non-strict conclusion.  The strict failure event is used deliberately, so no endpoint conversion
+from the non-strict DC-1 tail is hidden.
 \end{proof}
 
 The coarser $d$-color radius is
@@ -561,8 +725,8 @@ converge when a needlessly fine singleton coloring gives $V_n=n^2$.  The conditi
 for this declared-color envelope.  A singleton coloring also permits complete dependence across
 rows, so the theorem cannot infer convergence from that coloring alone.
 
-\begin{corollary}[Fixed-width overlapping windows]\label{cor:fixed-window}
-Let $E_t$ be i.i.d.\ innovations.  Fix $w\in\mathbb{N}$ before evaluation, and let
+\begin{corollary}[DC-2a: fixed-width overlapping windows]\label{cor:fixed-window}
+Let $E_t$ be i.i.d.\ innovations.  Fix $w\in\mathbb{N}$ with $w\ge1$ before evaluation, and let
 \begin{equation}
   Z_t=f(E_t,\ldots,E_{t+w-1})
 \end{equation}
@@ -576,25 +740,38 @@ is therefore mutually independent.  The fixed map and the i.i.d.\ innovation law
 row law.
 \end{proof}
 
+Writing $n=qw+s$ with $q\ge0$ and $0\le s<w$, exactly $s$ residue classes have load $q+1$ and
+the remaining $w-s$ have load $q$.  Thus
+\begin{equation}\label{eq:window-load}
+  V_n=\left(s\sqrt{q+1}+(w-s)\sqrt q\right)^2\le wn.
+\end{equation}
+When $n<w$, $q=0$ and $V_n=n^2$: the bound has no initial shrinking advantage.  The coarse
+improvement appears only after residue classes accumulate repeated disjoint windows.
+
 This corollary covers a fixed categorical overlapping-window construction from i.i.d.\
 innovations.  It does not cover circular wraparound windows, a width selected from evaluation
 outcomes, a rolling-start sequence of repeated claims, or innovations with unspecified time
 dependence.
 
-\begin{definition}[Strong $\ell$-dependence]
-Let $\ell\in\mathbb{N}_0$.  An ordered sequence is strongly $\ell$-dependent when
+\begin{corollary}[DC-2b: strong $\ell$-dependence]\label{cor:strong-dependence}
+Let $\ell\in\mathbb{N}_0$.  Suppose the ordered sequence is strongly $\ell$-dependent, meaning
 \begin{equation}
   \sigma(Z_i:i\le t)
   \quad\text{is independent of}\quad
   \sigma(Z_i:i\ge t+\ell+1)
 \end{equation}
-for every $t$.
-\end{definition}
-Coloring index $t$ by $t\bmod(\ell+1)$ separates consecutive members of each color by more than
-$\ell$.  Repeatedly separate the last row from the sigma-field generated by all preceding rows.
-This ordered induction proves mutual independence of all complete rows in each color.  Pairwise
-lag independence alone does not prove this property.  The common-law theorem still requires one
-common row law.  If row laws differ, the drift theorem and its additional premises apply.
+for every $t$.  Then $\kappa(t)=t\bmod(\ell+1)$ gives at most $\ell+1$ independence classes.
+\end{corollary}
+
+\begin{proof}
+Consecutive members of one residue class are separated by more than $\ell$.  Repeatedly separate
+the last row from the sigma-field generated by every preceding row in that class.  This ordered
+induction proves mutual independence of every finite collection of complete rows in the class.
+\end{proof}
+
+Pairwise lag independence alone does not establish the strong sigma-field premise.  The
+common-row-law conclusion also requires $\operatorname{Law}(Z_i)=P$ for every $i$.  If row laws
+differ, use DC-3 and meet its additional premises.
 
 \section{Nonidentical row laws and explicit drift}
 
@@ -605,7 +782,7 @@ mutual-independence contract.  Define
 \end{equation}
 Center the subset indicator for row $i$ by $P_i(A)$.  The H{\"o}lder--Hoeffding proof is unchanged.
 
-\begin{theorem}[Average-law and reference-law bounds]\label{thm:drift}
+\begin{theorem}[DC-3: average-law concentration and explicit reference-law drift]\label{thm:drift}
 For every $\varepsilon>0$,
 \begin{equation}\label{eq:average-law}
   \Prb\!\left(\normone{\Phat_n-\Pbar_n}\ge\varepsilon\right)
@@ -1108,7 +1285,7 @@ domination, and attainment.  It also proves that no positive quantity can be sub
 from $1/x_a$ over the nonnegative algebraic mass domain.  Its boundary witness sets
 $x_b=y_a=y_b=0$ and compares the full-event exclusive coordinate with the outside coordinate.
 This zero-side-mass construction is an algebraic gradient witness.  It is not by itself a
-supported common-law perturbation or an SxPID-realizability result.  The realizable two-cell atom
+supported common-row-law perturbation or an SxPID-realizability result.  The realizable two-cell atom
 counterexamples below separately show that unique information can attain the unrefined
 $\Lambda$ modulus.
 
@@ -1624,7 +1801,7 @@ continuous-estimator theorem.
 
 \section{Composition with SxPID}
 
-	For common-law sampling, empirical support is a subset of population support almost surely.  On
+	For common-row-law sampling, empirical support is a subset of population support almost surely.  On
 	the event in Theorem~\ref{thm:anytime}, the strict condition
 \begin{equation}
   D_n<2p_{\min}
@@ -1778,6 +1955,12 @@ support equality persists thereafter.  Equation~\eqref{eq:frozen-zero-failure} m
 extension on the fitting-failure event irrelevant to every almost-sure conclusion.
 \end{proof}
 
+A partial or per-row erroring transform is not the total map in
+Equation~\eqref{eq:frozen-map}.  It is covered only after either proving that it is defined
+$\mu$-almost surely and choosing a declared measurable almost-sure modification, or enlarging the
+finite alphabet with an explicit failure symbol.  Silently discarding failed rows or retaining
+only complete-success samples changes the sampling law and is not justified by this proposition.
+
 For $|\cZ|\ge2$, conditional on $\mathcal G$, Theorems~\ref{thm:finite}
 and~\ref{thm:anytime} apply with one occupied color and $V_n=n$.  The finite random quantity
 \begin{equation}
@@ -1810,14 +1993,15 @@ under an additional condition such as $P_\omega=P_{\mathrm{mix}}$ almost surely.
 nonlinearity also prevents interchanging the SxPID functional with the mixture expectation.
 
 The proposition is the held-out i.i.d.\ case and uses one color.  For a conditionally
-dependency-colored extension, the color map must be fixed after conditioning on $\mathcal G$, and
+dependency-colored extension, the color map must be $\mathcal G$-measurable and therefore fixed
+after conditioning on $\mathcal G$, and
 the common conditional row law and mutual independence of all complete rows inside every color
 must be proved.  Theorems~\ref{thm:finite} and~\ref{thm:anytime}, and their stated sufficient
 condition for convergence, can then be applied conditionally.  A positive-probability fitting
 failure, a transform selected from evaluation outcomes, or merely pairwise conditional
 independence does not meet this contract.
 
-	The displayed common-law envelope proves almost-sure exact-real finite-alphabet SxPID plug-in
+	The displayed common-row-law envelope proves almost-sure exact-real finite-alphabet SxPID plug-in
 	consistency under the sufficient condition $V_n\log(n)/n^2\to0$; fixed $d$ is sufficient.
 	Indeed, that condition makes $D_n\to0$.  For every $\alpha\in(0,1)$,
 	Theorem~\ref{thm:anytime} then places convergence on an event of probability at least
@@ -2088,7 +2272,8 @@ exact-real consistency under the sufficient condition $V_n\log(n)/n^2\to0$.  The
 reference-law result also uses $b_n\to0$.  These are not necessary conditions under a stronger
 sampling theorem.  The result separates
 four objects that must remain separate: sampling fluctuation, deterministic drift, support margin,
-and program arithmetic.  The color-size proxy improves the proof constant for unbalanced classes.
+and program arithmetic.  Janson's cover-specific class-load factor improves the retained proof
+constant for unbalanced classes relative to the coarser occupied-color count.
 The telescoping allocation gives a simple time-uniform statement.  The local logarithmic modulus
 gives a direct law-to-atom transfer once common support is justified.  Every weaker route listed
 in Section~8 is retained as invalidated work.
@@ -2128,6 +2313,13 @@ C.~Pelekis, J.~Ramon, and Y.~Wang.
 bounds.
 \newblock \emph{Indagationes Mathematicae}, 28(1):170--182, 2017.
 \newblock \url{https://doi.org/10.1016/j.indag.2016.11.017}.
+
+\bibitem{rota1964}
+G.-C.~Rota.
+\newblock On the foundations of combinatorial theory I. Theory of M{\"o}bius functions.
+\newblock \emph{Zeitschrift f{\"u}r Wahrscheinlichkeitstheorie und Verwandte Gebiete},
+2:340--368, 1964.
+\newblock \url{https://doi.org/10.1007/BF00531932}.
 
 \bibitem{weissman2003}
 T.~Weissman, E.~Ordentlich, G.~Seroussi, S.~Verd{\'u}, and M.~J. Weinberger.

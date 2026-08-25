@@ -32,12 +32,37 @@ The mathematical paper is available as
 derivations, proof boundaries, counterexamples, and correction ledger in a typeset form. The Lean
 artifact remains the machine-checked deterministic core.
 
-A separate [SxPID analysis under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md) gives a
-categorical shared-exclusions result for a declared deterministic coloring. Its common-law theorem
-requires all complete rows to share one finite law. Complete rows in each color must be mutually
-independent. It also separates nonidentical-law drift. That result does not change the i.i.d. and
-ergodic claims or limitations in this document. It does not cover generic mixing, adaptive colors,
-or continuous estimators.
+A separate [SxPID analysis under a dependency coloring](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md)
+gives a categorical shared-exclusions result for a predeclared independence coloring. Its theorem
+DC-1 separately assumes $\mathop{\rm Law}(Z_i)=P$ for every complete row and mutual independence
+inside each color class; it does not conflate identical distribution with independence. Theorem
+DC-3 handles nonidentical-law drift. Those results do not change the i.i.d. and ergodic claims or
+limitations in this document. They do not cover generic mixing, outcome-adaptive colors, or
+continuous estimators.
+
+## What problem this note solves
+
+An implementation can evaluate a published categorical functional at an empirical law, but code
+existence alone does not prove that the plug-in value approaches a population value. The key
+mathematical chain is
+
+$$
+\widehat P_n\to P
+\Longrightarrow
+\text{event masses converge and support stabilizes}
+\Longrightarrow
+\text{all required logarithms are eventually defined}
+\Longrightarrow
+\text{finite Möbius inversion and averaging preserve convergence}.
+$$
+
+FA-1 proves this chain deterministically. FA-2 supplies two standard stochastic routes to its
+premises. FA-3 adds a conservative time-uniform i.i.d. radius. Keeping those three layers separate
+prevents a strong law, a finite-sample bound, a PID identity, and binary64 behavior from being
+mistaken for one another.
+
+The finite-poset Möbius inversion used in the last arrow is classical incidence-algebra machinery,
+not a construction introduced here; see Rota (1964).
 
 ## 1. Fixed objects and notation
 
@@ -58,11 +83,24 @@ Fix the following objects:
 
 For pid-rs SxPID, $m\in\{2,3,4\}$. For pid-rs $I_{\min}$, $m\in\{2,3\}$.
 
-Let $Z_1,Z_2,\ldots$ be observations. Let the prefix empirical law be
+### Definition FA-D1 — cumulative-prefix empirical law
+
+Let $Z_1,Z_2,\ldots$ be one nested observation sequence. For every integer $n\ge1$, define the
+**cumulative-prefix empirical law** of its first $n$ observations by
 
 $$
 \widehat P_n(z)=\frac1n\sum_{j=1}^{n}\mathbf 1\{Z_j=z\}.
 $$
+
+It is a probability law because its masses are nonnegative and
+
+$$
+\sum_{z\in\mathcal Z}\widehat P_n(z)
+=\frac1n\sum_{j=1}^n\sum_{z\in\mathcal Z}\mathbf 1\{Z_j=z\}=1.
+$$
+
+Prefix $n+1$ contains every row from prefix $n$. FA-D1 is not a sliding-window law, a resampled
+law, or a sequence produced after refitting a transform at each $n$.
 
 Let
 
@@ -76,7 +114,7 @@ are in nats.
 
 ## 2. Main exact-real theorem
 
-### Theorem 1: deterministic plug-in implication
+### Theorem FA-1 — Deterministic plug-in implication
 
 Assume that a sequence of probability laws $Q_n$ has these properties:
 
@@ -102,9 +140,9 @@ Pointwise SxPID convergence is keyed by the joint realization. It is not keyed b
 record in a returned vector. A newly observed lexicographically earlier state can change all later
 positions.
 
-### Corollary 1: i.i.d. or stationary ergodic sampling
+### Corollary FA-2 — i.i.d. or stationary ergodic sampling
 
-The conditions of Theorem 1 hold almost surely in either of these cases:
+The conditions of FA-1 hold almost surely in either of these cases:
 
 - $Z_j$ are i.i.d. with law $P$; or
 - $(Z_j)$ is strictly stationary and ergodic, and its one-time marginal law is $P$.
@@ -265,7 +303,7 @@ $\mathrm{supp}(q)=S$. Each supported cell retains mass at least $p_{\min}/2$.
 ### $I_{\min}$ bound
 
 Assume $\mathrm{supp}(q)\subseteq S$ in addition to the section-wide condition
-$\delta\le p_{\min}/2$. For a supported target $t$, use the notation from Theorem 1. The
+$\delta\le p_{\min}/2$. For a supported target $t$, use the notation from FA-1. The
 conditional weights are $w=r/v$, where $r=q(s_a,t)$ and $v=q(t)$. The log term is
 $\ell=\log(r/(uv))$, where $u=q(s_a)$.
 
@@ -391,16 +429,19 @@ status. Equality at the threshold gives no eventual status guarantee.
 ## 5. Time-uniform i.i.d. bound
 
 This section gives an elementary, conservative result. Hoeffding's inequality and union bounds are
-published tools. Their use here is a paper-derived project bound. Its derivation is new in pid-rs,
-but pid-rs makes no scientific-novelty claim for it.
+published tools. The labeled composition is project documentation; no mathematical priority or
+scientific-novelty claim is made.
 
-Assume i.i.d. sampling from one fixed $K$-cell law. Let $0<\alpha<1$, and define
+### Theorem FA-3 — time-uniform i.i.d. cumulative-prefix envelope
+
+Assume the sequence in FA-D1 is i.i.d. from one fixed $K$-cell law $P$, with $K\ge1$. Let
+$0<\alpha<1$, and define
 
 $$
 \alpha_n=\frac{6\alpha}{\pi^2n^2}.
 $$
 
-For one cell, two-sided Hoeffding gives
+For one fixed cell $z$ and one fixed $n$, two-sided Hoeffding gives
 
 $$
 \Pr\left(
@@ -409,8 +450,14 @@ $$
 \le2e^{-2nx^2}.
 $$
 
-Apply a union bound over the $K$ cells and over all $n\ge1$. With probability at least
-$1-\alpha$, simultaneously for every $n\ge1$,
+Define
+
+$$
+x_n=\sqrt{\frac{\log\left(K\pi^2n^2/(3\alpha)\right)}{2n}}.
+$$
+
+Then $2K\exp(-2nx_n^2)=\alpha_n$. A union bound over the $K$ cells and every $n\ge1$ therefore
+gives, with probability at least $1-\alpha$, simultaneously for every $n\ge1$,
 
 $$
 \lVert\widehat P_n-P\rVert_1
@@ -446,8 +493,8 @@ $$
 \le Ke^{-Np_{\min}}.
 $$
 
-Once a state enters a cumulative prefix, it remains in every later prefix. This persistence does
-not hold for a sliding window.
+Once a state enters the FA-D1 cumulative prefix, it remains in every later prefix. This persistence
+does not hold for a sliding window.
 
 The bound needs a known positive lower bound on $p_{\min}$ to produce $N_0$. An empirical minimum
 is not a valid substitute because a rare population cell can be absent. The simultaneous $L^1$
@@ -464,7 +511,7 @@ failure, or the $2^{53}$ sample-count limit of the categorical PID paths.
 ## 6. Frozen-transform corollary
 
 Let $\mathcal G$ be the sigma-field generated by a training artifact and its fitted transform.
-Assume that the training artifact is independent of the raw evaluation sequence. Also assume:
+Assume:
 
 1. The raw evaluation space is standard Borel.
 2. A failure symbol $\bot$ is not in the finite output alphabet $\mathcal Z$.
@@ -475,13 +522,17 @@ Assume that the training artifact is independent of the raw evaluation sequence.
 6. Evaluation rows are conditionally i.i.d. given $\mathcal G$.
 7. $\Pr(Q(W_1)\ne\bot\mid\mathcal G)=1$ almost surely.
 
+An i.i.d. raw evaluation sequence independent of the training artifact is the important special
+case in which the common conditional row law does not depend on $\mathcal G$. Independence is not
+otherwise required once the full conditional-i.i.d. contract in item 6 has been proved.
+
 The transformed categorical law is the random conditional push-forward law
 
 $$
 P_Q(z)=\Pr(Q(W_1)=z\mid\mathcal G),\qquad z\in\mathcal Z.
 $$
 
-Condition on $\mathcal G$, and apply Corollary 1 to this finite law. The limit is the PID or Shannon
+Condition on $\mathcal G$, and apply FA-2 to this finite law. The limit is the PID or Shannon
 quantity of $P_Q$. It is not generally the same as the quantity of the unconditional mixture.
 These functionals are nonlinear in the law.
 
@@ -586,7 +637,7 @@ invalid formulations and the reason for each correction.
    $(n_{00},n_{01},n_{10},n_{11})=(2,0,0,2)$ and repeatedly append $01,10,00,11$. The empirical law
    converges to uniform independence, but empirical MI stays positive. Section 4 now says strict
    separation supplies a guarantee and equality supplies no guarantee.
-9. An early downstream draft used “independent” or “fixed-law” without a common-law or ergodicity
+9. An early downstream draft used “independent” or “fixed-law” without an identical-row-law or ergodicity
    condition. Independent non-identical blocks need not have limiting frequencies. A stationary
    latent-constant process has a fixed one-time marginal but is not ergodic. Section 10 now states
    the required row laws.
@@ -672,7 +723,7 @@ error-policy and clamp-policy wrappers. For the committed Decimal fixture cases,
 absolute acceptance envelope of $64\,\mathtt{f64::EPSILON}$ nats. This envelope is not a portable or
 global binary64 error bound.
 
-This is bounded implementation evidence. It is not a proof of Theorem 1, an external review, a
+This is bounded implementation evidence. It is not a proof of FA-1, an external review, a
 population validation, or a global floating-point bound.
 
 ## 10. Downstream contract audit
@@ -738,6 +789,9 @@ The following results remain open in pid-rs:
 - F. E. Rosas, P. A. M. Mediano, M. Gastpar, and H. J. Jensen, “Quantifying High-Order
   Interdependencies via Multivariate Extensions of the Mutual Information,” 2019,
   [doi:10.1103/PhysRevE.100.032305](https://doi.org/10.1103/PhysRevE.100.032305).
+- G.-C. Rota, “On the Foundations of Combinatorial Theory I. Theory of Möbius Functions,”
+  *Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete* 2, 340–368 (1964),
+  [doi:10.1007/BF00531932](https://doi.org/10.1007/BF00531932).
 - C. E. Shannon, “A Mathematical Theory of Communication,” 1948,
   [doi:10.1002/j.1538-7305.1948.tb01338.x](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x).
 - P. L. Williams and R. D. Beer, “Nonnegative Decomposition of Multivariate Information,” 2010,

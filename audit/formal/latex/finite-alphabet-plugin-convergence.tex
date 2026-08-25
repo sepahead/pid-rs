@@ -86,11 +86,12 @@ dependent-window validity, drift calibration, or scientific novelty.  Invalid st
 counterexamples remain in the document.
 \end{abstract}
 
-A separate repository paper on SxPID under a dependency coloring gives a categorical result for a declared
-deterministic coloring.  Its common-law theorem requires all complete rows to share one finite law.
-Complete rows in each color must be mutually independent.  It also separates nonidentical-law
-drift.  That result does not change the i.i.d.\ and ergodic claims in this paper, and it does not
-cover generic mixing, adaptive colors, or continuous estimators.
+A separate repository paper on SxPID under a dependency coloring gives a categorical result for a
+predeclared independence coloring.  Its Theorem DC-1 separately assumes
+$\operatorname{Law}(Z_i)=P$ for every complete row and mutual independence inside every color
+class; identical distribution and independence are not conflated.  Theorem DC-3 handles
+nonidentical-law drift.  Those results do not change the i.i.d.\ and ergodic claims in this paper,
+and they do not cover generic mixing, outcome-adaptive colors, or continuous estimators.
 
 \begingroup
 \small
@@ -153,6 +154,27 @@ covered by the result are:
 \end{itemize}
 \endgroup
 
+\subsection*{What problem this note solves}
+
+An implementation can evaluate a published categorical functional at an empirical law, but code
+existence alone does not prove that the plug-in value approaches a population value.  The key
+mathematical chain is
+\begin{equation}\label{eq:finite-causal-chain}
+\begin{aligned}
+  \Phat_n\to P
+  &\ \Longrightarrow\
+  \text{event masses converge and support stabilizes}\\
+  &\ \Longrightarrow\
+  \text{required logarithms are eventually defined}\\
+  &\ \Longrightarrow\
+  \text{finite M{\"o}bius inversion and averaging preserve convergence}.
+\end{aligned}
+\end{equation}
+FA-1 proves this chain deterministically.  FA-2 supplies two standard stochastic routes to its
+premises.  FA-3 adds a conservative time-uniform i.i.d.\ radius.  Keeping these layers separate
+prevents a strong law, a finite-sample bound, a PID identity, and binary64 behavior from being
+mistaken for one another.
+
 \section*{Reader's guide, foundational notation, and prerequisites}
 \addcontentsline{toc}{section}{Reader's guide, notation, and prerequisites}
 
@@ -210,7 +232,8 @@ before and after inversion.
 The proofs treat the following standard results as cited prerequisites rather than reproving them:
 the strong law of large numbers, the pointwise ergodic theorem, elementary continuity and the mean
 value theorem for $\log$, nonnegativity of Kullback--Leibler divergence, finite-poset M{\"o}bius
-inversion, Hoeffding's inequality, and the Fannes--Audenaert entropy-continuity inequality.
+inversion~\cite{rota1964}, Hoeffding's inequality, and the Fannes--Audenaert
+entropy-continuity inequality.
 Every application records its required finite-alphabet, support, independence, or denominator
 premise.  ``Exact real'' means arithmetic in the mathematical real numbers; it is deliberately
 distinct from a theorem about a particular binary64 implementation.
@@ -232,10 +255,22 @@ All logarithms are natural, so all information values use nats.  The redundancy 
 and finite.  Its nodes are nonempty antichains of nonempty source subsets.  In \texttt{pid-rs},
 $m\in\{2,3,4\}$ for SxPID and $m\in\{2,3\}$ for $\imin$.
 
-For observations $Z_1,Z_2,\ldots$, define the prefix empirical law
+\begin{definition}[FA-D1: cumulative-prefix empirical law]\label{def:fa-prefix}
+Let $Z_1,Z_2,\ldots$ be one nested observation sequence.  For every integer $n\ge1$, define the
+empirical law of its first $n$ rows by
 \begin{equation}
   \Phat_n(z)=\frac{1}{n}\sum_{j=1}^{n}\Ind\{Z_j=z\}.
 \end{equation}
+Its masses are nonnegative and
+\begin{equation}
+  \sum_{z\in\cZ}\Phat_n(z)
+  =\frac1n\sum_{j=1}^n\sum_{z\in\cZ}\Ind\{Z_j=z\}=1,
+\end{equation}
+so it is a probability law.  Prefix $n+1$ contains every row from prefix $n$.
+\end{definition}
+
+FA-D1 is not a sliding-window law, a resampled law, or a sequence produced after refitting a
+transform at every $n$.
 
 Fix a supported realization $z=(s_1,\ldots,s_m,t)$ and a lattice node $\alpha$.  Define
 \begin{align}
@@ -370,7 +405,7 @@ continuous coordinates remains continuous at a tie, although it need not be diff
 
 \section{Deterministic convergence and sampling corollary}
 
-\begin{theorem}[Deterministic plug-in implication]\label{thm:deterministic}
+\begin{theorem}[FA-1: Deterministic plug-in implication]\label{thm:deterministic}
 Let $Q_n$ be probability laws on $\cZ$.  Assume
 \begin{enumerate}[label=(\roman*)]
   \item $Q_n(z)\to P(z)$ for every $z\in\cZ$; and
@@ -415,7 +450,7 @@ $[0,1]$.  Each finite-alphabet entropy is a finite sum of $h$.  Marginalization 
 linear combinations preserve convergence.
 \end{proof}
 
-\begin{corollary}[I.i.d.\ and stationary ergodic sampling]\label{cor:sampling}
+\begin{corollary}[FA-2: i.i.d.\ or stationary ergodic sampling]\label{cor:sampling}
 The assumptions of Theorem~\ref{thm:deterministic} hold almost surely when either
 \begin{enumerate}[label=(\roman*)]
   \item the observations are i.i.d.\ with law $P$; or
@@ -815,11 +850,13 @@ Equality gives no eventual status guarantee.
 
 \section{A time-uniform i.i.d.\ envelope}
 
-This section uses Hoeffding's published inequality~\cite{hoeffding1963} and union bounds.  Their
-composition here is project-defined validation and makes no scientific-novelty claim.
+This section uses Hoeffding's published inequality~\cite{hoeffding1963} and union bounds.  The
+labeled composition is project documentation; no mathematical priority or scientific-novelty
+claim is made.
 
-\begin{theorem}[All-prefix empirical-law bound]\label{thm:anytime}
-Assume i.i.d.\ sampling from one fixed $K$-cell law.  Let $0<\alpha<1$ and
+\begin{theorem}[FA-3: time-uniform i.i.d.\ cumulative-prefix envelope]\label{thm:anytime}
+Assume the FA-D1 sequence is i.i.d.\ from one fixed $K$-cell law, with $K\ge1$.  Let
+$0<\alpha<1$ and
 \begin{equation}
   \alpha_n=\frac{6\alpha}{\pi^2n^2}.
 \end{equation}
@@ -832,7 +869,7 @@ With probability at least $1-\alpha$, simultaneously for every $n\ge1$,
 \end{theorem}
 
 \begin{proof}
-For one cell, Hoeffding's inequality gives
+For one fixed cell $z$ and one fixed $n$, Hoeffding's inequality gives
 \begin{equation}
   \Prb\bigl(|\Phat_n(z)-P(z)|\ge x\bigr)\le2e^{-2nx^2}.
 \end{equation}
@@ -840,7 +877,8 @@ Set
 \begin{equation}
   x_n=\sqrt{\frac{\log(K\pi^2n^2/(3\alpha))}{2n}}.
 \end{equation}
-The failure probability for one cell at time $n$ is at most $\alpha_n/K$.  A union bound over $K$
+Since $2K\exp(-2nx_n^2)=\alpha_n$, the failure probability for one cell at time $n$ is at most
+$\alpha_n/K$.  A union bound over $K$
 cells and all $n$ costs
 \begin{equation}
   \sum_{n\ge1}\alpha_n
@@ -1170,7 +1208,7 @@ The review process corrected the following defects in the current reviewed draft
     eventual \texttt{Defined} sequence.  At threshold zero, the nested count path
     $(n_{00},n_{01},n_{10},n_{11})=(2,0,0,2)$ followed by repeated additions
     $01,10,00,11$ converges to independence while empirical mutual information stays positive.
-  \item A downstream draft omitted common-law and ergodicity conditions.
+  \item A downstream draft omitted identical-row-law and ergodicity conditions.
   \item An evidence draft attributed quantizer inputs to the Decimal JSON\@.  They occur only in the
     companion Rust test.
   \item A valid first averaged-net bound used $2L$.  Applying the net cumulative range directly
@@ -1259,6 +1297,13 @@ F. E. Rosas, P. A. M. Mediano, M. Gastpar, and H. J. Jensen.
 Information.
 \newblock \emph{Physical Review E}, 100, 032305, 2019.
 \newblock \url{https://doi.org/10.1103/PhysRevE.100.032305}.
+
+\bibitem{rota1964}
+G.-C. Rota.
+\newblock On the Foundations of Combinatorial Theory I. Theory of M{\"o}bius Functions.
+\newblock \emph{Zeitschrift f{\"u}r Wahrscheinlichkeitstheorie und Verwandte Gebiete},
+2:340--368, 1964.
+\newblock \url{https://doi.org/10.1007/BF00531932}.
 
 \bibitem{shannon1948}
 C. E. Shannon.
