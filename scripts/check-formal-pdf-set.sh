@@ -5,12 +5,13 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "$ROOT"
 MODE="${1:---exact}"
 
-if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
-  echo "usage: $0 [--exact|--cross-toolchain]" >&2
+if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" \
+    && "$MODE" != "--inventory-only" ]]; then
+  echo "usage: $0 [--exact|--cross-toolchain|--inventory-only]" >&2
   exit 2
 fi
 
-EXPECTED=(
+STANDALONE_LATEX_PAPERS=(
   "certified-sxpid2-executable-assurance"
   "dependency-colored-sxpid-concentration"
   "ecosystem-compatibility-audit"
@@ -27,26 +28,52 @@ EXPECTED=(
   "two-source-sxpid-count-atom-bridge"
 )
 
+LATEX_RENDER_FRAGMENTS=(
+  "pid-discovery-verification-and-durability-blueprint-header"
+)
+
+expected_tex=()
+while IFS= read -r stem; do
+  expected_tex+=("$stem")
+done < <(
+  printf '%s\n' "${STANDALONE_LATEX_PAPERS[@]}" "${LATEX_RENDER_FRAGMENTS[@]}" \
+    | LC_ALL=C sort
+)
+
 actual_tex=()
 while IFS= read -r path; do
+  if [[ ! -f "$path" || -L "$path" ]]; then
+    echo "formal PDF set: TeX inventory entry is not a direct regular file: $path" >&2
+    exit 1
+  fi
   actual_tex+=("$(basename "$path" .tex)")
-done < <(find audit/formal/latex -maxdepth 1 -type f -name '*.tex' -print | LC_ALL=C sort)
+done < <(find audit/formal/latex -maxdepth 1 -name '*.tex' -print | LC_ALL=C sort)
 
 actual_pdf=()
 while IFS= read -r path; do
+  if [[ ! -f "$path" || -L "$path" ]]; then
+    echo "formal PDF set: PDF inventory entry is not a direct regular file: $path" >&2
+    exit 1
+  fi
   actual_pdf+=("$(basename "$path" .pdf)")
-done < <(find output/pdf -maxdepth 1 -type f -name '*.pdf' -print | LC_ALL=C sort)
+done < <(find output/pdf -maxdepth 1 -name '*.pdf' -print | LC_ALL=C sort)
 
-if [[ "${actual_tex[*]}" != "${EXPECTED[*]}" ]]; then
-  echo "formal PDF set: LaTeX source inventory differs from the declared set" >&2
+if [[ "${actual_tex[*]}" != "${expected_tex[*]}" ]]; then
+  echo "formal PDF set: typed TeX source inventory differs from the declared standalone/fragment set" >&2
   exit 1
 fi
 
-if [[ "${actual_pdf[*]}" != "${EXPECTED[*]}" ]]; then
-  echo "formal PDF set: rendered PDF inventory differs from the declared set" >&2
+if [[ "${actual_pdf[*]}" != "${STANDALONE_LATEX_PAPERS[*]}" ]]; then
+  echo "formal PDF set: rendered PDF inventory differs from the declared standalone-paper set" >&2
   exit 1
 fi
 
+if [[ "$MODE" == "--inventory-only" ]]; then
+  echo "OK: standalone-paper, renderer-fragment, and PDF inventories are exact and direct-regular"
+  exit 0
+fi
+
+scripts/check-formal-pdf-set-self-test.sh
 python3 scripts/check-formal-pdf-style.py
 python3 scripts/check-formal-pdf-style-self-test.py
 python3 -I -S scripts/sync-mathematical-workflow-tex.py --check
@@ -82,7 +109,7 @@ scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal LaTeX source has one warning-free same-toolchain-reproducible PDF"
+  echo "OK: every standalone formal LaTeX paper has one warning-free same-toolchain-reproducible PDF; renderer-fragment inventory is exact"
 else
-  echo "OK: every declared formal LaTeX source passed its warning-free bounded cross-toolchain PDF gate"
+  echo "OK: every standalone formal LaTeX paper passed its warning-free bounded cross-toolchain PDF gate; renderer-fragment inventory is exact"
 fi

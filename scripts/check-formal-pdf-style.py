@@ -2,9 +2,11 @@
 """Fail closed when the formal-PDF visual-system contract drifts.
 
 This checker is intentionally syntactic.  It protects the shared academic
-visual system, explicit table-header bands, and the absence of vertical table
-rules.  It does not establish that a table is readable after rendering and it
-does not validate any mathematical or scientific claim.
+visual system, explicit table-header bands, the absence of vertical table
+rules, and the standalone-document versus renderer-fragment boundary.  It
+does not establish that a table is readable after rendering, that a fragment
+compiles in every consumer, or that any mathematical or scientific claim is
+valid.
 """
 
 from __future__ import annotations
@@ -20,7 +22,7 @@ DEFAULT_ROOT = Path(__file__).resolve().parent.parent
 LATEX_RELATIVE = Path("audit/formal/latex")
 STYLE_NAME = "pid-rs-report-tables.sty"
 WORKFLOW_NAME = "mathematical-problem-solving-workflow.tex"
-EXPECTED = (
+STANDALONE_DOCUMENTS = (
     "certified-sxpid2-executable-assurance.tex",
     "dependency-colored-sxpid-concentration.tex",
     "ecosystem-compatibility-audit.tex",
@@ -35,6 +37,9 @@ EXPECTED = (
     "mathematical-problem-solving-workflow.tex",
     "support-change-tolerant-averaged-sxpid-continuity.tex",
     "two-source-sxpid-count-atom-bridge.tex",
+)
+RENDERER_FRAGMENTS = (
+    "pid-discovery-verification-and-durability-blueprint-header.tex",
 )
 REQUIRED_DOCUMENT_COMMANDS = (
     r"\usepackage{pid-rs-report-tables}",
@@ -67,6 +72,19 @@ VERTICAL_COLUMN = re.compile(
     r"(?:\{[^{}]*\})?\{[^\n}]*\|"
 )
 WORKFLOW_MARKDOWN_HOOK = r"\def\markdownLaTeXTopRule{\toprule\PidTableHeaderRow}%"
+FRAGMENT_REQUIRED_MARKERS = {
+    "pid-discovery-verification-and-durability-blueprint-header.tex": (
+        r"\usepackage{xcolor}",
+        r"\makeatletter",
+        r"\renewcommand{\maketitle}",
+        r"\makeatother",
+    ),
+}
+FRAGMENT_FORBIDDEN_MARKERS = (
+    r"\documentclass",
+    r"\begin{document}",
+    r"\end{document}",
+)
 
 
 @dataclass(frozen=True)
@@ -221,24 +239,63 @@ def check_document(path: Path) -> list[Finding]:
     return findings
 
 
+def check_renderer_fragment(path: Path) -> list[Finding]:
+    """Check the role boundary for a TeX fragment included by another renderer."""
+
+    findings: list[Finding] = []
+    text = path.read_text(encoding="utf-8")
+    for marker in FRAGMENT_REQUIRED_MARKERS[path.name]:
+        count = text.count(marker)
+        if count != 1:
+            findings.append(
+                Finding(
+                    path,
+                    None,
+                    f"renderer-fragment marker must occur once: {marker} (found {count})",
+                )
+            )
+    for marker in FRAGMENT_FORBIDDEN_MARKERS:
+        if marker in text:
+            findings.append(
+                Finding(
+                    path,
+                    None,
+                    f"renderer fragment must not become a standalone document: {marker}",
+                )
+            )
+    return findings
+
+
 def check(root: Path) -> list[Finding]:
     latex_dir = root / LATEX_RELATIVE
-    actual = tuple(path.name for path in sorted(latex_dir.glob("*.tex")))
+    tex_paths = tuple(sorted(latex_dir.glob("*.tex")))
+    actual = tuple(path.name for path in tex_paths)
+    expected = tuple(sorted((*STANDALONE_DOCUMENTS, *RENDERER_FRAGMENTS)))
     findings: list[Finding] = []
-    if actual != EXPECTED:
+    if actual != expected:
         findings.append(
             Finding(
                 latex_dir,
                 None,
-                "formal LaTeX inventory differs from the declared visual-system set: "
-                f"expected {EXPECTED!r}, found {actual!r}",
+                "formal LaTeX inventory differs from the declared standalone/fragment set: "
+                f"expected {expected!r}, found {actual!r}",
             )
         )
         return findings
 
+    for path in tex_paths:
+        if not path.is_file() or path.is_symlink():
+            findings.append(
+                Finding(path, None, "TeX inventory entry must be a direct regular file")
+            )
+    if findings:
+        return findings
+
     findings.extend(check_style(latex_dir / STYLE_NAME))
-    for name in EXPECTED:
+    for name in STANDALONE_DOCUMENTS:
         findings.extend(check_document(latex_dir / name))
+    for name in RENDERER_FRAGMENTS:
+        findings.extend(check_renderer_fragment(latex_dir / name))
     return findings
 
 
@@ -265,8 +322,9 @@ def main() -> int:
             print(f"{location}: {finding.message}", file=sys.stderr)
         return 1
     print(
-        f"OK: all {len(EXPECTED)} formal papers use the shared visual system, explicit header "
-        "bands, and no vertical table rules"
+        f"OK: all {len(STANDALONE_DOCUMENTS)} standalone formal papers use the shared "
+        f"visual system; {len(RENDERER_FRAGMENTS)} renderer fragment passed its "
+        "declared syntactic role contract"
     )
     return 0
 
