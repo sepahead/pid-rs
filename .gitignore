@@ -139,6 +139,7 @@ $RECYCLE.BIN/
 /tmp/
 /.tmp/
 /.cache/
+/.local/
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
 .playwright-mcp/
