@@ -2060,6 +2060,22 @@ bash -n "$TEXMFDEBIAN_QUERY_VALIDATOR"
 pass "production validator heredocs and rendered-text/font-query regions extract uniquely and parse"
 
 validate_text_portability_source() {
+  local array_probe
+  # The quoted program is intentionally interpreted by the child Bash, not this shell.
+  # shellcheck disable=SC2016
+  if ! array_probe="$("$SELF_TEST_BASH" --noprofile --norc -u -c '
+projection_command=(pdftotext)
+printf "%s\\n" "${projection_command[@]}"
+projection_command+=(-layout)
+printf "%s\\n" "${projection_command[@]}"
+')"; then
+    echo "text-portability source invariant drifted: nonempty command-array probe failed" >&2
+    return 1
+  fi
+  if [[ "$array_probe" != $'pdftotext\npdftotext\n-layout' ]]; then
+    echo "text-portability source invariant drifted: nonempty command-array probe changed" >&2
+    return 1
+  fi
   python3 -I -S - "$1" <<'PY'
 from pathlib import Path
 import sys
@@ -2074,19 +2090,19 @@ def fail(detail: str) -> None:
 
 required_once = (
     "extract_report_text() {",
-    '''local -a projection_arguments=()
+    '''local -a projection_command=(pdftotext)
   case "$projection" in
     default)
       ;;
     layout)
-      projection_arguments=(-layout)
+      projection_command+=(-layout)
       ;;
     *)
       echo "$CHECK_NAME: internal text-projection mode error: $projection" >&2
       exit 2
       ;;
   esac''',
-    'pdftotext "${projection_arguments[@]}" "$pdf" "$output"',
+    '"${projection_command[@]}" "$pdf" "$output"',
     'echo "$CHECK_NAME: Poppler text extraction failed: $label" >&2',
     'echo "$CHECK_NAME: Poppler emitted a text-extraction diagnostic: $label" >&2',
     'extract_report_text "$BUILT_A" "$BUILD_ROOT/built.txt" built-layout layout',
@@ -2459,8 +2475,8 @@ case_file="$TEST_ROOT/text-portability-default-arguments-aliased.sh"
 cp "$CHECKER" "$case_file"
 replace_once \
   "$case_file" \
-  'local -a projection_arguments=()' \
-  'local -a projection_arguments=(-layout)'
+  'local -a projection_command=(pdftotext)' \
+  'local -a projection_command=(pdftotext -layout)'
 expect_reject \
   "text-portability source custody rejects default projection arguments aliased to layout" \
   "text-portability source invariant drifted" \

@@ -3189,12 +3189,15 @@ extract_report_text() {
   local output="$2"
   local label="$3"
   local projection="$4"
-  local -a projection_arguments=()
+  # Keep the argv array nonempty. Darwin's supported Bash 3.2 treats expansion of a declared but
+  # empty array as an unbound variable under `set -u`; a command array also makes the default and
+  # layout projections explicit without relying on a version-sensitive empty expansion.
+  local -a projection_command=(pdftotext)
   case "$projection" in
     default)
       ;;
     layout)
-      projection_arguments=(-layout)
+      projection_command+=(-layout)
       ;;
     *)
       echo "$CHECK_NAME: internal text-projection mode error: $projection" >&2
@@ -3207,7 +3210,7 @@ extract_report_text() {
     "${CLEAN_BASE_ENV[@]}" \
     "HOME=$BUILD_ROOT/pdf-tools-home" \
     "TMPDIR=$BUILD_ROOT/tmp" \
-    pdftotext "${projection_arguments[@]}" "$pdf" "$output" \
+    "${projection_command[@]}" "$pdf" "$output" \
       >"$stdout" 2>"$stderr"; then
     cat "$stdout" "$stderr" >&2
     echo "$CHECK_NAME: Poppler text extraction failed: $label" >&2
