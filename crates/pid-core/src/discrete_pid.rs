@@ -748,8 +748,14 @@ fn discrete_imin_redundancy_with_cancellation(
     for (index, (t_key, ct)) in t_counts.iter().enumerate() {
         check_cancellation(cancellation, OPERATION, index, t_counts.len())?;
         let p_t = ct as f64 * inv_n;
-        let is1 = i_spec_s1.get(t_key).unwrap_or(0.0);
-        let is2 = i_spec_s2.get(t_key).unwrap_or(0.0);
+        let is1 = i_spec_s1.required(
+            t_key,
+            "I_min PID2 redundancy: missing or non-finite source-1 specific information",
+        )?;
+        let is2 = i_spec_s2.required(
+            t_key,
+            "I_min PID2 redundancy: missing or non-finite source-2 specific information",
+        )?;
         neumaier_add(p_t * is1.min(is2), &mut sum, &mut correction);
     }
     cancellation.check(OPERATION, t_counts.len(), t_counts.len())?;
@@ -1517,7 +1523,18 @@ impl SpecificInformationTable<'_> {
         self.targets
             .binary_search_by(|candidate| candidate.cmp(&target))
             .ok()
-            .map(|index| self.values[index])
+            .and_then(|index| self.values.get(index).copied())
+    }
+
+    fn required(&self, target: &[usize], context: &'static str) -> PidResult<f64> {
+        let value = self
+            .get(target)
+            .ok_or(PidError::NumericalInstability { context })?;
+        if value.is_finite() {
+            Ok(value)
+        } else {
+            Err(PidError::NumericalInstability { context })
+        }
     }
 }
 
@@ -2253,18 +2270,25 @@ fn discrete_imin_redundancy_3way(
 
     // Red = Σ_t p(t) min_s i_spec(S_s; t)
     let t_counts = count_dist(t_bins, budget)?;
-    Ok(compensated_sum(t_counts.iter().map(|(t_key, ct)| {
+    let mut sum = 0.0;
+    let mut correction = 0.0;
+    for (t_key, ct) in t_counts.iter() {
         let p_t = ct as f64 * inv_n;
         let mut min_is = f64::INFINITY;
         for is in &i_specs {
-            min_is = min_is.min(is.get(t_key).unwrap_or(0.0));
+            min_is = min_is.min(is.required(
+                t_key,
+                "I_min PID3 redundancy: missing or non-finite specific information",
+            )?);
         }
-        if min_is.is_finite() {
-            p_t * min_is
-        } else {
-            0.0
+        if !min_is.is_finite() {
+            return Err(PidError::NumericalInstability {
+                context: "I_min PID3 redundancy: no finite specific-information minimum",
+            });
         }
-    })))
+        neumaier_add(p_t * min_is, &mut sum, &mut correction);
+    }
+    Ok(sum + correction)
 }
 
 /// Möbius inversion on the 3-source redundancy lattice to obtain PID atoms.
@@ -2364,6 +2388,76 @@ fn discrete_topo_order_3(antichains: &[[u8; 3]]) -> Vec<usize> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn specific_information_table_fails_closed_when_target_is_missing() {
+        let target = [0usize];
+        let table = SpecificInformationTable {
+            targets: Vec::new(),
+            values: Vec::new(),
+        };
+
+        let result = table.required(&target, "specific information test");
+
+        assert!(matches!(
+            result,
+            Err(PidError::NumericalInstability {
+                context: "specific information test"
+            })
+        ));
+    }
+
+    #[test]
+    fn specific_information_table_fails_closed_when_value_is_missing() {
+        let target = [0usize];
+        let table = SpecificInformationTable {
+            targets: vec![target.as_slice()],
+            values: Vec::new(),
+        };
+
+        let result = table.required(&target, "specific information test");
+
+        assert!(matches!(
+            result,
+            Err(PidError::NumericalInstability {
+                context: "specific information test"
+            })
+        ));
+    }
+
+    #[test]
+    fn specific_information_table_fails_closed_when_value_is_non_finite() {
+        let target = [0usize];
+        let table = SpecificInformationTable {
+            targets: vec![target.as_slice()],
+            values: vec![f64::NAN],
+        };
+
+        let result = table.required(&target, "specific information test");
+
+        assert!(matches!(
+            result,
+            Err(PidError::NumericalInstability {
+                context: "specific information test"
+            })
+        ));
+    }
+
+    #[test]
+    fn specific_information_table_returns_a_present_finite_value_bit_exactly() {
+        let target = [0usize];
+        let value = f64::from_bits(0x3fd5_5555_5555_5555);
+        let table = SpecificInformationTable {
+            targets: vec![target.as_slice()],
+            values: vec![value],
+        };
+
+        let result = table
+            .required(&target, "specific information test")
+            .unwrap();
+
+        assert_eq!(result.to_bits(), value.to_bits());
+    }
 
     #[test]
     fn imin_pid2_with_cancellation_honors_a_pre_cancelled_token() {

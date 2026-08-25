@@ -133,7 +133,11 @@ compensated. This removes reduction-order dependence only for the named final op
 It does not make upstream probabilities, products, logarithms, MI/redundancy estimates, or PID
 exact and supplies no estimator error or calibration theorem. See the workspace
 [`NUMERICAL_ASSURANCE.md`](../../NUMERICAL_ASSURANCE.md) for witnesses, rejected transfers, costs,
-and the finite-corpus oracle boundary.
+and the finite-corpus oracle boundary. The categorical `I_min` implementation also fails closed if
+its private target-specific-information table is internally incomplete or non-finite; valid calls
+retain their prior reduction order. A bounded test enumerates all 12,869 nonempty binary count
+tables through total mass eight and records 5,070 supported `(table, target-value)` minimum-tie
+events, but it is not a population theorem, a global binary64 bound, or 5,070 distinct tied tables.
 
 The SHA-256 provenance preimages are a cross-language contract. Each domain string below includes
 the final NUL byte shown as `\0`:

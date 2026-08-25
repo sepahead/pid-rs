@@ -9,6 +9,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Make categorical `I_min` private specific-information lookups fail closed on missing or
+  non-finite internal values while preserving admitted PID2/PID3 reduction order and bits. Add
+  exact-product witnesses and a bounded census of all 12,869 nonempty binary count tables through
+  total mass eight, including 5,070 supported `(table, target-value)` minimum-tie events and
+  bitwise source-exchange equivariance for every public PID2 scalar. These are finite
+  implementation results, not a population theorem, global binary64 bound, internal argmin
+  certificate, or correction to the Williams--Beer definition.
+
 - Advance the pre-1.0 public Rust API signature identity from revision 3 to revision 4 for the
   additive `QuantizationReport` fields; the prior revision snapshots remain immutable.
 

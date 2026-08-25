@@ -100,10 +100,11 @@ intended to approximate.
 
 ### 2.3 Bounded conformance oracle
 
-The committed generator uses only the Python standard library. It converts binary64 payloads to
-exact integers and `Fraction` values, forms the exact rational sum, and independently implements
-ties-to-even binary64 rounding. The fixture includes the four-term PID residual cases as well as
-variable-arity streaming challenges at lengths 0, 1, 2, 3, 5, 63, 64, and 65. It covers signed
+The committed same-project generator uses only the Python standard library. It converts binary64
+payloads to exact integers and `Fraction` values, forms the exact rational sum, and implements
+ties-to-even binary64 rounding along a separate code route. The fixture includes the four-term PID
+residual cases as well as variable-arity streaming challenges at lengths 0, 1, 2, 3, 5, 63, 64,
+and 65. It covers signed
 zero, subnormals, normal-boundary transitions, long carry chains, cancellation, halfway rounding,
 overflow, and deterministic stress cases. Every four-term case is tested under all 24
 permutations; the 63--65-term cases are replayed in their original order, reverse order, and
@@ -201,6 +202,13 @@ where $I_1=I(S_1;T)$, $I_2=I(S_2;T)$, $J=I(S_1,S_2;T)$, and $R$ is Williams--Bee
 Only the four-operand represented synergy sum receives the new reduction contract. No
 shared-exclusions axiom or interpretation is imported.
 
+For every valid public call, each observed target produces one target-specific value in every
+source table. The implementation now treats violation of that private totality invariant, a
+target/value length mismatch, or a non-finite stored value as `NumericalInstability` instead of
+silently substituting zero. This changes no admitted result: the two-source accumulation and the
+three-source Neumaier order remain identical. It is an implementation fail-closed repair, not an
+observed estimator defect and not a correction to the Williams--Beer definition.
+
 The three-source $I_{\min}$ Möbius path deliberately retains its earlier compensated reduction.
 An uncommitted exhaustive search reported no $S_0\leftrightarrow S_1$ atom-bit witness among
 245,156 nonempty binary count tables through total mass seven. An internal release-mode red-team
@@ -233,10 +241,14 @@ change does not remove their distinct finite-sample biases, validate a support d
 turn the estimator into an exact-real PID.
 
 `Pid2Result::from_estimate` also reconstructs the supplied $I_1$, $I_2$, and $J$ coordinates from
-the separately rounded atoms. It fails closed if any reconstruction lies outside an inclusive
-32-position ordered-binary64 guard. This inherited project policy is not a derived forward-error,
-conditioning, relative-accuracy, or statistical bound. Against a reconstructed positive zero, its
-near-zero boundary accepts an expected positive-subnormal payload 32 and rejects payload 33.
+the separately rounded atoms. The three reconstructed sums use the same exact represented-input
+reducer over respectively two, two, and four atom operands; together with the four-operand synergy
+sum, construction performs four reductions over 12 represented addends. Exact reduction can change
+whether the public constructor admits or rejects a tuple. It fails closed if any reconstruction
+lies outside an inclusive 32-position ordered-binary64 guard. This inherited project policy is not
+a derived identity, representability, forward-error, conditioning, relative-accuracy, or
+statistical bound. Against a reconstructed positive zero, its near-zero boundary accepts an
+expected positive-subnormal payload 32 and rejects payload 33.
 Because the ordered mapping distinguishes signed zeros, it instead accepts negative payload 31 and
 rejects negative payload 32. Accepted boundary cases have complete relative loss. The guard must
 therefore not be presented as verified identity or representability. Synergy is not perturbed to
@@ -323,6 +335,24 @@ Before repair, source exchange changed the mapped synergy from `0x3fc65cf895b1f8
 `0x3fc65cf895b1f81f`. The repaired result selects the latter payload on both sides, preserves every
 symmetric coordinate bit-for-bit, and swaps only the two unique coordinates.
 
+The retained boundary suite additionally enumerates all 12,869 nonempty binary
+$(S_1,S_2,T)$ count tables of total mass one through eight. Exact rational-product comparison finds
+5,070 target-specific minimum-tie events—that is, supported `(table, target-value)` pairs, not
+5,070 distinct tables—split by total mass as
+
+```text
+8, 36, 104, 230, 464, 800, 1,344, 2,084
+```
+
+and symmetrically as 2,535 tie events for each target value. All seven public scalar fields are bitwise
+source-exchange equivariant on that bounded census. The suite also retains CE-003 as an exact tie
+while confirming that no internal argmin or tie field is public, an exact-zero no-clamp witness,
+and a positive-synergy witness whose exact exponentiated eight-sample ratio is
+$823543/800000>1$. Direct, budgeted, cancellable, fitted-quantized, and same-sample wrapper routes
+agree on the selected source-exchange witness. These are finite implementation results; the census
+does not expose or certify an internal argmin choice, exhaust larger alphabets or counts, bound
+elementary-function error globally, or establish population behavior.
+
 These witnesses establish that the repaired cases were real. They do not establish a universal
 floating-point theorem for every atom, estimator, build, platform, or source permutation.
 
@@ -337,8 +367,12 @@ large = f64::from_bits(0x3fe1fea645f0ef4e)
 ```
 
 and call `Pid2Result::from_estimate` first with
-$(I_1,I_2,J,R)=(\mathtt{small},\mathtt{large},\mathtt{large},\mathtt{small})$, then with the first
-two coordinates exchanged. The historical left-associated synergy produced
+
+$$
+(I_1,I_2,J,R)=(\mathtt{small},\mathtt{large},\mathtt{large},\mathtt{small}),
+$$
+
+then with the first two coordinates exchanged. The historical left-associated synergy produced
 `0x3c70000000000000` for the first order and positive zero for the second. Exact reduction of the
 same four represented operands produces positive zero for both. This establishes a reachable
 constructor-level source-order defect and its algebraic repair. It does not establish how often an
@@ -444,7 +478,9 @@ continuous PID2 reducers are short-lived stack values and their public `estimate
 not separately charge that stack storage. A worst-case add is charged as at most $2L=68$ limb
 visits; finalization is charged as at most $4L=136$ limb visits for comparison, subtraction,
 leading-bit search, and sticky-bit scan. These are conservative resource-accounting envelopes, not
-CPU-instruction counts.
+CPU-instruction counts. Continuous PID2 construction charges the synergy and three reconstruction
+reductions as 12 adds and four finalizations, or $12\cdot68+4\cdot136=1{,}360$ limb visits under
+this envelope.
 
 The repository also carries full-call Criterion benchmarks for categorical $I_{\min}$ PID2 and
 averaged categorical SxPID at two, three, and four sources. A local `--quick` observation on
