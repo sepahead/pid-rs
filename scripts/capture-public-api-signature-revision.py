@@ -227,6 +227,21 @@ def validate_pending_source_state() -> None:
 
 
 def isolated_environment(temp_root: Path) -> dict[str, str]:
+    original_path = os.environ.get("PATH")
+    if not original_path:
+        raise CaptureError("PATH is required to locate the pinned Rust tools")
+    rustup_path = shutil.which("rustup", path=original_path)
+    if rustup_path is None or not Path(rustup_path).is_absolute():
+        raise CaptureError("rustup must resolve to an absolute executable path")
+    proxy_directory = Path(rustup_path).parent.resolve(strict=True)
+    for executable_name in ("rustup", "cargo", "cargo-public-api"):
+        endpoint = proxy_directory / executable_name
+        if not endpoint.is_file() or not os.access(endpoint, os.X_OK):
+            raise CaptureError(
+                "the rustup proxy directory lacks an executable "
+                f"{executable_name} endpoint"
+            )
+
     keep = {
         name: os.environ[name]
         for name in (
@@ -234,7 +249,6 @@ def isolated_environment(temp_root: Path) -> dict[str, str]:
             "HTTPS_PROXY",
             "HTTP_PROXY",
             "NO_PROXY",
-            "PATH",
             "RUSTUP_HOME",
             "all_proxy",
             "https_proxy",
@@ -252,6 +266,9 @@ def isolated_environment(temp_root: Path) -> dict[str, str]:
             "HOME": home,
             "LANG": "C",
             "LC_ALL": "C",
+            # cargo-public-api launches Cargo internally. Keep the rustup proxy directory first
+            # even when an unrelated system Cargo appears earlier in the caller's PATH.
+            "PATH": os.fspath(proxy_directory) + os.pathsep + original_path,
             "RUSTUP_HOME": os.environ.get("RUSTUP_HOME", str(Path(home) / ".rustup")),
             "TMPDIR": str(temp_root),
             "TZ": "UTC",
@@ -274,9 +291,14 @@ def reject_ancestor_cargo_configs(source_root: Path) -> None:
         current = current.parent
 
 
-def generation_command(profile: dict[str, Any], *, rustdoc_target: str) -> list[str]:
+def generation_command(
+    profile: dict[str, Any],
+    *,
+    rustdoc_target: str,
+    rustup_executable: Path,
+) -> list[str]:
     command = [
-        "rustup",
+        os.fspath(rustup_executable),
         "run",
         TOOLCHAIN_ALIAS,
         "cargo",
@@ -303,10 +325,50 @@ def capture_profiles(
     reject_ancestor_cargo_configs(source_root)
     environment = isolated_environment(temp_root)
     (temp_root / "cargo-home").mkdir()
+    rustup_route = shutil.which("rustup", path=environment["PATH"])
+    cargo_proxy_route = shutil.which("cargo", path=environment["PATH"])
+    if rustup_route is None or cargo_proxy_route is None:
+        raise CaptureError("isolated Rust tool path omits rustup or Cargo")
+    rustup_executable = Path(rustup_route)
+    cargo_proxy = Path(cargo_proxy_route)
+    if (
+        not rustup_executable.is_absolute()
+        or not cargo_proxy.is_absolute()
+        or rustup_executable.parent != cargo_proxy.parent
+    ):
+        raise CaptureError("isolated Cargo is not the sibling rustup proxy")
+    proxy_cargo_version = run(
+        [os.fspath(cargo_proxy), f"+{TOOLCHAIN_ALIAS}", "--version"],
+        operation="cargo-proxy-version",
+        cwd=source_root,
+        env=environment,
+    ).stdout
+    rustup_cargo_version = run(
+        [
+            os.fspath(rustup_executable),
+            "run",
+            TOOLCHAIN_ALIAS,
+            "cargo",
+            "--version",
+        ],
+        operation="rustup-cargo-version",
+        cwd=source_root,
+        env=environment,
+    ).stdout
+    if proxy_cargo_version != rustup_cargo_version:
+        raise CaptureError(
+            "rustup Cargo proxy and pinned rustup-run Cargo versions disagree"
+        )
     expected_rustc = scope["api_snapshot_source"]["toolchain"]
     actual_rustc = (
         run(
-            ["rustup", "run", TOOLCHAIN_ALIAS, "rustc", "--version"],
+            [
+                os.fspath(rustup_executable),
+                "run",
+                TOOLCHAIN_ALIAS,
+                "rustc",
+                "--version",
+            ],
             operation="rustc-version",
             env=environment,
         )
@@ -318,7 +380,13 @@ def capture_profiles(
             f"public API rustc mismatch: expected {expected_rustc!r}, got {actual_rustc!r}"
         )
     verbose_rustc = run(
-        ["rustup", "run", TOOLCHAIN_ALIAS, "rustc", "-vV"],
+        [
+            os.fspath(rustup_executable),
+            "run",
+            TOOLCHAIN_ALIAS,
+            "rustc",
+            "-vV",
+        ],
         operation="rustc-verbose-version",
         env=environment,
     ).stdout.decode("utf-8")
@@ -332,7 +400,14 @@ def capture_profiles(
         )
     actual_tool = (
         run(
-            ["rustup", "run", TOOLCHAIN_ALIAS, "cargo", "public-api", "--version"],
+            [
+                os.fspath(rustup_executable),
+                "run",
+                TOOLCHAIN_ALIAS,
+                "cargo",
+                "public-api",
+                "--version",
+            ],
             operation="cargo-public-api-version",
             cwd=source_root,
             env=environment,
@@ -349,7 +424,7 @@ def capture_profiles(
     target_libdir = (
         run(
             [
-                "rustup",
+                os.fspath(rustup_executable),
                 "run",
                 TOOLCHAIN_ALIAS,
                 "rustc",
@@ -377,7 +452,7 @@ def capture_profiles(
     metadata_environment["CARGO_TARGET_DIR"] = str(temp_root / "target-metadata")
     run(
         [
-            "rustup",
+            os.fspath(rustup_executable),
             "run",
             TOOLCHAIN_ALIAS,
             "cargo",
@@ -403,6 +478,7 @@ def capture_profiles(
             generation_command(
                 profile,
                 rustdoc_target=rustdoc_target,
+                rustup_executable=rustup_executable,
             ),
             operation="generate-public-api-profile",
             cwd=source_root,

@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "0a5c9b39c0fd3e001604052d04b761ac5fed96cff988ba35c3be6b1af6531114",
-        "size_bytes": 231091
+        "sha256": "3b63848d5f25c94d02a3442c7c7f1d6838e0248d0f365c61436c4ee6df30ad5f",
+        "size_bytes": 231337
       },
       {
         "git_mode": "100644",
@@ -4684,8 +4684,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "9412841e1a89a1100e80bd64848afe64d02d30ff0cc43afc35e4431a4b7949bc",
-        "size_bytes": 179345
+        "sha256": "3463662a0f8d9c049c24978c2fbdd9b5a90eb36b095369f5745a98f4d12ec256",
+        "size_bytes": 179777
       },
       {
         "git_mode": "100755",
@@ -4780,8 +4780,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/capture-public-api-signature-revision.py",
-        "sha256": "6c69255d17999111e1bb7d862f0cdadcc2175b3a5286cb24a5a47b5da26d69ce",
-        "size_bytes": 24282
+        "sha256": "753d3084e2f2c7840f21452f749face8853cf8c21d34b111965fa7ffa5eec706",
+        "size_bytes": 27056
       },
       {
         "git_mode": "100755",
@@ -5464,8 +5464,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-public-api-capture-self-test.py",
-        "sha256": "9cbf1886162b13db0db5c319c14115ecfc1c2de9ed6216ff905e4fed3e970ede",
-        "size_bytes": 8040
+        "sha256": "27a40f1847a4dfa740af237eb0f33bac92f76733b1d4fd9ae7d3ccd9894fdac3",
+        "size_bytes": 9373
       },
       {
         "git_mode": "100755",
@@ -5476,14 +5476,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-public-api-snapshots-self-test.sh",
-        "sha256": "18024653f29b9140f6c69818af85722a114312c8a4416ebfe5339f88285ec6c5",
-        "size_bytes": 16125
+        "sha256": "5ed4172819dd5dc75376f081af790745fa144f5c593466cabf1c1838db02ec28",
+        "size_bytes": 17512
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-public-api-snapshots.sh",
-        "sha256": "b6bb56b843de322ca6a408a3bae7574097b52b8d5f6c22440777da57d0a8b387",
-        "size_bytes": 9678
+        "sha256": "5e75b60bc1efb79b995e096560dd47943b7eb410a60f76e415b357472dc4d2f7",
+        "size_bytes": 10905
       },
       {
         "git_mode": "100755",
@@ -5810,7 +5810,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "f47f7b4f4850137da8779ad58146c246aafeea5cea5caed0e05c3a40b96ad85e",
+    "entries_sha256": "3c3fd6117d2bccfdaca63e8fa8b947137372b4e02b5a365915778268febab67d",
     "entry_count": 944
   },
   "subprojections": [
@@ -5839,7 +5839,7 @@
       ]
     },
     {
-      "entries_sha256": "eaf1303fc1b14d4ae71a39e2f0d6abc675c2ef0c52a8f8f3b3b41406669eae23",
+      "entries_sha256": "1fc44f0d4caaae42cf4f91d4caa50c6694fb439a42fce198b0b6f9e442b16d7b",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

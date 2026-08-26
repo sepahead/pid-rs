@@ -17,10 +17,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `experimental-all` outputs agree byte-for-byte. All nine paths must first appear together in
   one single-parent evidence commit whose sole parent is the registered source commit. A versioned
   literal-tree materializer adds an absolute, isolated Python endpoint without changing the
-  historical materializer pinned by KSG revision-4 preservation. Normal/optimized hostile suites
-  exercise capture isolation, failure privacy, activation/path aliasing, source/evidence topology,
-  history rewriting, content drift, and shallow-history rejection. The evidence child also
-  refreshes the self-excluding current-source manifest. These records establish a bounded
+  historical materializer pinned by KSG revision-4 preservation. The capture and replay routes
+  resolve rustup once and put its proxy directory ahead of any unrelated system Cargo before
+  `cargo-public-api` launches its internal Cargo process; a competing-Cargo regression control
+  preserves that selection. Normal/optimized hostile suites exercise capture isolation, failure
+  privacy, activation/path aliasing, source/evidence topology, history rewriting, content drift,
+  and shallow-history rejection. The evidence child also refreshes the self-excluding
+  current-source manifest. These records establish a bounded
   declaration-snapshot and repository-history relation, not compatibility, authenticity,
   executable equivalence, scientific validity, or external transparency.
 

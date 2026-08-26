@@ -40,6 +40,28 @@ raise SystemExit(
 fi
 readonly API_PYTHON_EXECUTABLE
 
+if ! API_RUSTUP_EXECUTABLE="$(type -P rustup)" \
+  || [[ "$API_RUSTUP_EXECUTABLE" != /* || ! -f "$API_RUSTUP_EXECUTABLE" \
+    || ! -x "$API_RUSTUP_EXECUTABLE" ]]
+then
+  echo "public API evidence requires an absolute executable rustup route" >&2
+  exit 2
+fi
+API_RUSTUP_PROXY_DIR="$(
+  cd "$(dirname "$API_RUSTUP_EXECUTABLE")"
+  pwd -P
+)"
+API_RUSTUP_EXECUTABLE="$API_RUSTUP_PROXY_DIR/$(basename "$API_RUSTUP_EXECUTABLE")"
+for executable_name in rustup cargo cargo-public-api; do
+  executable_path="$API_RUSTUP_PROXY_DIR/$executable_name"
+  if [[ ! -f "$executable_path" || ! -x "$executable_path" ]]; then
+    echo "rustup proxy directory lacks executable $executable_name" >&2
+    exit 2
+  fi
+done
+API_TOOL_PATH="$API_RUSTUP_PROXY_DIR:${PATH:?PATH is required to locate the pinned tools}"
+readonly API_RUSTUP_EXECUTABLE API_RUSTUP_PROXY_DIR API_TOOL_PATH
+
 run_public_api() (
   local target_dir="$1"
   shift
@@ -53,7 +75,7 @@ run_public_api() (
     "LANG=C" \
     "LC_ALL=C" \
     "NO_PROXY=${NO_PROXY-}" \
-    "PATH=${PATH:?PATH is required to locate the pinned tools}" \
+    "PATH=$API_TOOL_PATH" \
     "RUSTUP_HOME=${RUSTUP_HOME:-$HOME/.rustup}" \
     "TMPDIR=$TMP" \
     "TZ=UTC" \
@@ -97,7 +119,14 @@ isolated_python "$SCRIPT_DIR/check-release-scope.py" --print-markdown >/dev/null
 reject_ancestor_cargo_configs "$REPO_ROOT"
 mkdir "$TMP/cargo-home"
 
-actual_rustc="$(rustup run "$TOOLCHAIN" rustc --version)"
+proxy_cargo_version="$("$API_RUSTUP_PROXY_DIR/cargo" "+$TOOLCHAIN" --version)"
+rustup_cargo_version="$("$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" cargo --version)"
+if [[ "$proxy_cargo_version" != "$rustup_cargo_version" ]]; then
+  echo "rustup Cargo proxy and pinned rustup-run Cargo versions disagree" >&2
+  exit 1
+fi
+
+actual_rustc="$("$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" rustc --version)"
 if [[ "$actual_rustc" != "$EXPECTED_RUSTC" ]]; then
   echo "public API toolchain mismatch: expected '$EXPECTED_RUSTC', got '$actual_rustc'" >&2
   exit 1
@@ -106,7 +135,7 @@ fi
 actual_tool="$(
   cd "$REPO_ROOT"
   run_public_api "$TMP/cargo-target-tool-version" \
-    rustup run "$TOOLCHAIN" cargo public-api --version
+    "$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" cargo public-api --version
 )"
 if [[ "$actual_tool" != "$EXPECTED_TOOL" ]]; then
   echo "public API tool mismatch: expected '$EXPECTED_TOOL', got '$actual_tool'" >&2
@@ -121,7 +150,7 @@ import sys
 print(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["api_snapshot_source"]["rustdoc_target_triple"])
 PY
 )"
-target_libdir="$(rustup run "$TOOLCHAIN" rustc --print target-libdir --target "$rustdoc_target")"
+target_libdir="$("$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" rustc --print target-libdir --target "$rustdoc_target")"
 if [[ ! -d "$target_libdir" ]]; then
   echo "public API rustdoc target is not installed: $rustdoc_target" >&2
   exit 1
@@ -208,7 +237,7 @@ prepare_tree() {
   (
     cd "$tree_root"
     run_public_api "$TMP/cargo-target-$label-lock-preflight" \
-      rustup run "$TOOLCHAIN" cargo metadata --locked --format-version 1 >/dev/null
+      "$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" cargo metadata --locked --format-version 1 >/dev/null
   )
   if ! cmp -s "$lock_snapshot" "$lock_path"; then
     echo "public API evidence observed Cargo.lock mutation during locked preflight: $label" >&2
@@ -225,7 +254,7 @@ check_tree() {
     local generated="$TMP/$label-$profile.txt"
     local committed="$REPO_ROOT/$relative_snapshot"
     local command=(
-      rustup run "$TOOLCHAIN" cargo public-api
+      "$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" cargo public-api
       --package pid-core
       --no-default-features
       --target "$rustdoc_target"

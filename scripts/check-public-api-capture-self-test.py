@@ -28,6 +28,7 @@ import hashlib
 import importlib.util
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -63,6 +64,32 @@ def expected_record(operation: str, status: str, stdout: bytes, stderr: bytes) -
 
 def inner_main() -> int:
     capture = load_capture()
+    with tempfile.TemporaryDirectory(prefix="pid-rs-api-tool-route-") as temp_name:
+        temp = Path(temp_name)
+        poison = temp / "poison-tools"
+        poison.mkdir()
+        hostile_cargo = poison / "cargo"
+        hostile_cargo.write_text("#!/bin/sh\nexit 97\n", encoding="utf-8")
+        hostile_cargo.chmod(0o700)
+        original_path = os.environ.get("PATH")
+        if not original_path:
+            raise SystemExit("capture self-test requires PATH")
+        os.environ["PATH"] = os.fspath(poison) + os.pathsep + original_path
+        try:
+            tool_environment = capture.isolated_environment(temp)
+        finally:
+            os.environ["PATH"] = original_path
+        selected_cargo = shutil.which("cargo", path=tool_environment["PATH"])
+        selected_rustup = shutil.which("rustup", path=tool_environment["PATH"])
+        if selected_cargo is None or selected_rustup is None:
+            raise SystemExit("isolated tool route omitted Cargo or rustup")
+        if Path(selected_cargo).parent != Path(selected_rustup).parent:
+            raise SystemExit(
+                "isolated tool route did not prioritize the rustup Cargo proxy"
+            )
+        if Path(selected_cargo) == hostile_cargo:
+            raise SystemExit("isolated tool route selected the competing system Cargo")
+
     private_argument = "/Users/private-owner/secret-capture-argument"
     private_stdout = b"private stdout /private/tmp/api-r4\n"
     private_stderr = b"private stderr /Users/private-owner/repository\n"
@@ -129,7 +156,7 @@ def inner_main() -> int:
     if any(token in combined for token in forbidden):
         raise SystemExit("privacy-normalized failure record disclosed raw failure data")
 
-    print("OK: 4 API-r4 capture failure/isolation controls passed")
+    print("OK: 5 API-r4 capture failure/isolation controls passed")
     return 0
 
 
@@ -187,7 +214,7 @@ def outer_main() -> int:
             raise SystemExit("isolated hostile-environment self-test failed")
         if (
             isolated.stdout
-            != "OK: 4 API-r4 capture failure/isolation controls passed\n"
+            != "OK: 5 API-r4 capture failure/isolation controls passed\n"
         ):
             raise SystemExit("isolated hostile-environment output drifted")
         if marker.exists():
@@ -223,7 +250,7 @@ def outer_main() -> int:
                 "non-isolated bootstrap unexpectedly executed sitecustomize"
             )
 
-    print("OK: 6 API-r4 capture failure/isolation controls passed")
+    print("OK: 7 API-r4 capture failure/isolation controls passed")
     return 0
 
 

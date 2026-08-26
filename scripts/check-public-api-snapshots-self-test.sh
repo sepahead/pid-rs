@@ -38,6 +38,28 @@ raise SystemExit(
 fi
 readonly API_PYTHON_EXECUTABLE
 
+if ! API_RUSTUP_EXECUTABLE="$(type -P rustup)" \
+  || [[ "$API_RUSTUP_EXECUTABLE" != /* || ! -f "$API_RUSTUP_EXECUTABLE" \
+    || ! -x "$API_RUSTUP_EXECUTABLE" ]]
+then
+  echo "public API self-test requires an absolute executable rustup route" >&2
+  exit 2
+fi
+API_RUSTUP_PROXY_DIR="$(
+  cd "$(dirname "$API_RUSTUP_EXECUTABLE")"
+  pwd -P
+)"
+API_RUSTUP_EXECUTABLE="$API_RUSTUP_PROXY_DIR/$(basename "$API_RUSTUP_EXECUTABLE")"
+for executable_name in rustup cargo cargo-public-api; do
+  executable_path="$API_RUSTUP_PROXY_DIR/$executable_name"
+  if [[ ! -f "$executable_path" || ! -x "$executable_path" ]]; then
+    echo "rustup proxy directory lacks executable $executable_name" >&2
+    exit 2
+  fi
+done
+API_TOOL_PATH="$API_RUSTUP_PROXY_DIR:${PATH:?PATH is required to locate the pinned tools}"
+readonly API_RUSTUP_EXECUTABLE API_RUSTUP_PROXY_DIR API_TOOL_PATH
+
 mkdir "$TMP/fixture-home"
 
 # Scratch repositories are test data, not extensions of the caller's Git session. Keep one
@@ -315,6 +337,13 @@ printf '%s\n' \
   'Path(os.environ["PID_RS_HOSTILE_SITE_MARKER"]).write_text("executed\\n")' \
   'raise RuntimeError("ambient sitecustomize was imported")' \
   >"$TMP/ambient-python-path/sitecustomize.py"
+mkdir "$TMP/competing-system-tools"
+printf '%s\n' \
+  '#!/bin/sh' \
+  'printf "executed\\n" >"$PID_RS_HOSTILE_CARGO_MARKER"' \
+  'exit 97' \
+  >"$TMP/competing-system-tools/cargo"
+chmod 700 "$TMP/competing-system-tools/cargo"
 CARGO_BUILD_TARGET=pid-rs-invalid-ambient-target \
 CARGO_BUILD_RUSTC="$TMP/nonexistent-cargo-build-rustc" \
 CARGO_BUILD_RUSTC_WRAPPER="$TMP/nonexistent-cargo-build-rustc-wrapper" \
@@ -327,6 +356,8 @@ CARGO_ENCODED_RUSTFLAGS=--definitely-invalid-ambient-encoded-flag \
 CARGO_FEATURE_DEFINITELY_INVALID_AMBIENT=1 \
 CARGO_REGISTRY_DEFAULT=definitely-invalid-ambient-registry \
 GIT_DIR="$TMP/nonexistent-ambient-git-dir" \
+PATH="$TMP/competing-system-tools:$PATH" \
+PID_RS_HOSTILE_CARGO_MARKER="$TMP/competing-system-cargo-executed" \
 PID_RS_HOSTILE_SITE_MARKER="$TMP/sitecustomize-executed" \
 PYTHONPATH="$TMP/ambient-python-path" \
 PYTHONOPTIMIZE=2 \
@@ -341,6 +372,10 @@ TAR_OPTIONS=--definitely-invalid-ambient-tar-option \
   "$SCRIPT_DIR/check-public-api-snapshots.sh"
 if [[ -e "$TMP/sitecustomize-executed" ]]; then
   echo "isolated public API Python route executed hostile sitecustomize" >&2
+  exit 1
+fi
+if [[ -e "$TMP/competing-system-cargo-executed" ]]; then
+  echo "isolated public API route executed competing system Cargo" >&2
   exit 1
 fi
 
@@ -373,8 +408,10 @@ PY
 )"
 (
   cd "$TMP/repo"
+  PATH="$API_TOOL_PATH" \
   CARGO_TARGET_DIR="$TMP/cargo-target" \
-    rustup run "$TOOLCHAIN" cargo public-api -p pid-core --no-default-features \
+    "$API_RUSTUP_EXECUTABLE" run "$TOOLCHAIN" cargo public-api \
+      -p pid-core --no-default-features \
       --target "$rustdoc_target" -sss --color never >"$generated"
 )
 

@@ -190,8 +190,13 @@ locale/timezone, and network-proxy routing) before selecting its own Cargo home 
 scrubbed `cargo metadata --locked` preflight rejects stale or missing locks, and lock bytes must
 remain unchanged through every declaration build. Version 2 also receives one already-resolved,
 absolute Python executable and requires Python 3.11+ with `-I -S -B`; it does not re-resolve the
-interpreter from a hostile path. `materialize-public-api-source.sh` is retained byte-for-byte as a
-historical KSG preservation component and is not the revision-0-4 capture route.
+interpreter from a hostile path. The capture and snapshot routes also resolve rustup once and put
+that executable's proxy directory first in the isolated build `PATH`. This matters because
+`cargo-public-api` starts Cargo internally: an unrelated system Cargo earlier in the caller's
+`PATH` can otherwise silently lose the selected nightly and fail only when rustdoc sees `-Z`.
+The hostile suite installs such a competing Cargo and requires the rustup proxy to win.
+`materialize-public-api-source.sh` is retained byte-for-byte as a historical KSG preservation
+component and is not the revision-0-4 capture route.
 
 The scope is a release-candidate claim boundary, not reviewer approval or scientific-validation
 evidence. Its profile comparison fails closed on any unrecorded stable-namespace feature delta;
