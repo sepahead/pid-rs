@@ -9,6 +9,34 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Close the bounded SxPID3 paired-route custody gap with a versioned source-to-receipt
+  lifecycle. The receipt-free source cut `S` must be an exact direct child of P5 commit
+  `9d1cdf287147e66f7ebbbf67bd9b5ed177d28ac3` with exactly six added lifecycle files and this
+  changelog change; it binds ten execution inputs and all twelve normal/optimized Python command
+  results by source, stdout byte count, and SHA-256 while requiring empty stderr and byte-identical
+  mode pairs. Fresh execution records the same route-neutral v2 digest and exact six-block
+  sign/zero census from both implementation-disjoint-under-shared-semantics routes, plus the
+  separately bounded lexical Rust source route. A no-clobber, two-phase `O_EXCL` capture retains a
+  mode-`0600` pending inode, invalidates caught pre-release failures to an exact non-JSON
+  tombstone, and distinguishes a post-validation descriptor-release error without claiming
+  `WROTE`; a prospectively validated receipt is deliberately normalized to live mode `0644`
+  before the receipt-only commit `E`.
+  The history checker derives the unique introduction frontier from the raw full `HEAD`-reachable
+  parent graph, requires `E` to be a one-file direct child of `S`, preserves the exact source
+  infrastructure on every `S`-to-`HEAD` ancestry-path commit, and preserves the exact receipt on
+  every `E`-to-`HEAD` ancestry-path commit, including merges and modify-then-revert paths.
+  Exact-HEAD and effective attribute probes, guarded Git configuration and closed local
+  filter/attribute/include routes, index/status checks, process-group cleanup, a closed receipt
+  schema, and real hostile DAGs fail closed; receipt-v1 intentionally rejects local filter,
+  attribute, or include configuration routes, every effective filter attribute on the probed path
+  roster, and stage-0 gitlinks, so future LFS/filter or submodule adoption requires a versioned
+  verifier migration. P1 remains adjacent provenance only, with no consumption, replay,
+  fresh-execution credit, or semantic transfer. This is bounded, owner-mutable repository custody,
+  not a transparency log, authenticity or attestation, a direct record-by-record comparison of the
+  two routes, paper-to-code correspondence, compiled-Rust/binary64 refinement, population theorem,
+  estimator validation, scientific novelty, or a claim that the 108 keyed scalar audit
+  expressions are PID atoms, lattice nodes, or independent degrees of freedom.
+
 - Add two implementation-disjoint-under-shared-semantics exact SxPID3 audit lanes over all 20,348
   labelled binary count tables of total mass one through five. Each independently reproduces an
   externally pinned, route-neutral v2 stream for all 2,197,584 evaluations of 108 keyed scalar

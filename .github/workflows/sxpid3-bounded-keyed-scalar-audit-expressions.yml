@@ -1,0 +1,141 @@
+name: Bounded SxPID3 keyed-scalar audit expressions
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sxpid3-bounded-keyed-scalar-audit-expressions-${{ github.workflow }}-${{ github.ref }}
+  # E never regenerates S's prospective receipt, so an E push must not cancel the S replay.
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Source, execution, and receipt custody
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Check out the exact event head with complete history
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Install CPython
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Require the exact non-synthetic event head
+        shell: bash
+        env:
+          EXPECTED_HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          test "$(git rev-parse --is-shallow-repository)" = false
+
+      - name: Replay both hostile suites with normal/optimized byte parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -S -B \
+            scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py \
+            > "$RUNNER_TEMP/capture-self-test.normal.json" \
+            2> "$RUNNER_TEMP/capture-self-test.normal.stderr"
+          python3 -O -I -S -B \
+            scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py \
+            > "$RUNNER_TEMP/capture-self-test.optimized.json" \
+            2> "$RUNNER_TEMP/capture-self-test.optimized.stderr"
+          test ! -s "$RUNNER_TEMP/capture-self-test.normal.stderr"
+          test ! -s "$RUNNER_TEMP/capture-self-test.optimized.stderr"
+          cmp \
+            "$RUNNER_TEMP/capture-self-test.normal.json" \
+            "$RUNNER_TEMP/capture-self-test.optimized.json"
+          cmp \
+            "$RUNNER_TEMP/capture-self-test.normal.stderr" \
+            "$RUNNER_TEMP/capture-self-test.optimized.stderr"
+          python3 -I -S -B \
+            scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py \
+            > "$RUNNER_TEMP/checker-self-test.normal.json" \
+            2> "$RUNNER_TEMP/checker-self-test.normal.stderr"
+          python3 -O -I -S -B \
+            scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py \
+            > "$RUNNER_TEMP/checker-self-test.optimized.json" \
+            2> "$RUNNER_TEMP/checker-self-test.optimized.stderr"
+          test ! -s "$RUNNER_TEMP/checker-self-test.normal.stderr"
+          test ! -s "$RUNNER_TEMP/checker-self-test.optimized.stderr"
+          cmp \
+            "$RUNNER_TEMP/checker-self-test.normal.json" \
+            "$RUNNER_TEMP/checker-self-test.optimized.json"
+          cmp \
+            "$RUNNER_TEMP/checker-self-test.normal.stderr" \
+            "$RUNNER_TEMP/checker-self-test.optimized.stderr"
+
+      - name: Validate the source or preserved-evidence lifecycle
+        shell: bash
+        env:
+          RECEIPT_PATH: audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json
+        run: |
+          set -euo pipefail
+          if test -z "$(git ls-tree --name-only HEAD -- "$RECEIPT_PATH")"; then
+            python3 -I -S -B \
+              scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --source-side > "$RUNNER_TEMP/source-side.normal.json" \
+              2> "$RUNNER_TEMP/source-side.normal.stderr"
+            python3 -O -I -S -B \
+              scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --source-side > "$RUNNER_TEMP/source-side.optimized.json" \
+              2> "$RUNNER_TEMP/source-side.optimized.stderr"
+            test ! -s "$RUNNER_TEMP/source-side.normal.stderr"
+            test ! -s "$RUNNER_TEMP/source-side.optimized.stderr"
+            cmp \
+              "$RUNNER_TEMP/source-side.normal.json" \
+              "$RUNNER_TEMP/source-side.optimized.json"
+            cmp \
+              "$RUNNER_TEMP/source-side.normal.stderr" \
+              "$RUNNER_TEMP/source-side.optimized.stderr"
+            python3 -I -S -B \
+              scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --write-receipt > "$RUNNER_TEMP/capture.json" \
+              2> "$RUNNER_TEMP/capture.stderr"
+            test ! -s "$RUNNER_TEMP/capture.stderr"
+            python3 -I -S -B \
+              scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --prospective > "$RUNNER_TEMP/prospective.normal.json" \
+              2> "$RUNNER_TEMP/prospective.normal.stderr"
+            python3 -O -I -S -B \
+              scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --prospective > "$RUNNER_TEMP/prospective.optimized.json" \
+              2> "$RUNNER_TEMP/prospective.optimized.stderr"
+            test ! -s "$RUNNER_TEMP/prospective.normal.stderr"
+            test ! -s "$RUNNER_TEMP/prospective.optimized.stderr"
+            cmp \
+              "$RUNNER_TEMP/prospective.normal.json" \
+              "$RUNNER_TEMP/prospective.optimized.json"
+            cmp \
+              "$RUNNER_TEMP/prospective.normal.stderr" \
+              "$RUNNER_TEMP/prospective.optimized.stderr"
+          else
+            python3 -I -S -B \
+              scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --committed-or-preserved > "$RUNNER_TEMP/preserved.normal.json" \
+              2> "$RUNNER_TEMP/preserved.normal.stderr"
+            python3 -O -I -S -B \
+              scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py \
+              --committed-or-preserved > "$RUNNER_TEMP/preserved.optimized.json" \
+              2> "$RUNNER_TEMP/preserved.optimized.stderr"
+            test ! -s "$RUNNER_TEMP/preserved.normal.stderr"
+            test ! -s "$RUNNER_TEMP/preserved.optimized.stderr"
+            cmp \
+              "$RUNNER_TEMP/preserved.normal.json" \
+              "$RUNNER_TEMP/preserved.optimized.json"
+            cmp \
+              "$RUNNER_TEMP/preserved.normal.stderr" \
+              "$RUNNER_TEMP/preserved.optimized.stderr"
+          fi

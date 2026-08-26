@@ -1,0 +1,667 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.schema.json",
+  "title": "pid-rs bounded SxPID3 keyed-scalar audit-expression execution receipt v1",
+  "description": "Closed receipt-v1 custody dialect: every numeric field is an exact JSON integer; floating tokens, including 1.0, are deliberately unsupported and rejected rather than treated as equal to integer 1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "schema_revision",
+    "result_id",
+    "captured_at_utc",
+    "source_package",
+    "execution_inputs",
+    "commands",
+    "findings",
+    "p1_adjacent_lane",
+    "validation",
+    "nonclaims",
+    "host_boundary"
+  ],
+  "properties": {
+    "schema": {
+      "const": "pid-rs/sxpid3-bounded-keyed-scalar-audit-expressions-receipt/v1"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "result_id": {
+      "const": "SXPID3-BOUNDED-KEYED-SCALAR-AUDIT-EXPRESSIONS"
+    },
+    "captured_at_utc": {
+      "$ref": "#/$defs/utc"
+    },
+    "source_package": {
+      "$ref": "#/$defs/sourcePackage"
+    },
+    "execution_inputs": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/executionInput"
+      }
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/command"
+      }
+    },
+    "findings": {
+      "$ref": "#/$defs/findings"
+    },
+    "p1_adjacent_lane": {
+      "$ref": "#/$defs/p1AdjacentLane"
+    },
+    "validation": {
+      "const": {
+        "all_commands_exit_zero": true,
+        "all_entrypoint_source_sha256_values_bound": true,
+        "entrypoint_escape_primitives_lexically_absent": true,
+        "all_stderr_empty": true,
+        "all_stdout_nonempty": true,
+        "all_stdout_sha256_values_pinned": true,
+        "execution_inputs_match_source_blobs_and_live_files": true,
+        "normal_optimized_pairs_byte_identical": true,
+        "prewrite_host_boundary_reverified": true,
+        "pending_placeholder_only_untracked": true,
+        "pending_placeholder_live_mode_0600": true,
+        "pending_placeholder_reread_exact": true,
+        "pre_finalization_source_reverified": true,
+        "pre_finalization_host_boundary_reverified": true,
+        "pre_finalization_status_exact": true,
+        "receipt_absent_from_source_commit": true,
+        "source_status_empty_before_input_selection": true,
+        "source_status_empty_immediately_before_pending_create": true
+      }
+    },
+    "nonclaims": {
+      "const": [
+        "The bounded census is not an arbitrary-alphabet, arbitrary-total, population, estimator-calibration, or general theorem.",
+        "The human transcription of MGW equations is an external premise; paper-to-code correspondence is not established.",
+        "The lexical Rust route does not establish Rust parsing, name resolution, compilation, execution, or numeric agreement.",
+        "No binary64 or certified-logarithm refinement is established.",
+        "The source and receipt bindings provide repository custody, not authenticity, authorship, priority, release identity, or attestation.",
+        "Sequential bounded reads and repeated configuration, attribute, source, index, and status checks are not an atomic snapshot, adversarial execution boundary, or live monitor and cannot exclude a transient change completed between observations; in particular, a concurrent Git/common info-attributes or configuration insertion could affect an in-flight Git process before a later check detects it.",
+        "Git status does not report ignored paths, writes outside the worktree, or transient changes that begin and end between observations.",
+        "Implementation-disjoint routes retain shared semantic premises, conventions, runtime, and human transcription.",
+        "SHA-256 bindings do not by themselves authenticate artifacts or exclude hash or host compromise.",
+        "GO statuses are lane-local checks, not scientific or application validation.",
+        "P1 is adjacent provenance only and was neither consumed nor replayed by this receipt.",
+        "The receipt does not output pointwise atom values; local event ratios appear only as factors in averaged exact products."
+        ,
+        "The receipt's two-route agreement observation is a matching neutral-v2 SHA-256 value plus six matching exact census blocks; it is not a direct record-by-record receipt comparison or a claim of logical independence.",
+        "Process-group cleanup cannot detect a child that deliberately escapes into another session; the six exact entrypoint sources were lexically screened for common escape primitives, not proven incapable of escape.",
+        "POSIX provides no atomic compare-and-unlink primitive; a caught pre-release write or postwrite exception attempts to invalidate the exact retained O_RDWR inode into a non-JSON mode-0600 tombstone (affecting every hard link to that inode), and O_EXCL prevents automatic overwrite; after finalized bytes, mode, path, source, status, host, file fsync, and parent fsync are verified, a descriptor-release error instead retains those bytes for prospective validation and never claims WROTE; process kill, power loss, crash atomicity, and close-error durability semantics are not covered.",
+        "Repeated executable-byte and version observations do not prove which interpreter bytes launched the already-running process and are not an atomic or authentic host snapshot."
+        ,
+        "captured_at_utc is a local wall-clock observation, not a trusted timestamp or external time attestation.",
+        "Receipt-v1 deliberately rejects any local filter, attribute, or include configuration route, every effective filter attribute on the probed path roster, and stage-0 gitlinks as verifier compatibility and nested-metadata bounds; a future repository adoption of LFS, another clean filter, or submodules requires a reviewed versioned verifier migration rather than weakening this evidence retrospectively.",
+        "Receipt preservation covers only the current non-shallow HEAD-reachable graph; it cannot detect absent, unreachable, or force-rewritten history and is not a transparency log or externally anchored immutability proof."
+      ]
+    },
+    "host_boundary": {
+      "$ref": "#/$defs/hostBoundary"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "gitOid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "gitMode": {
+      "enum": [
+        "100644",
+        "100755"
+      ]
+    },
+    "liveMode": {
+      "enum": [
+        "0644",
+        "0755"
+      ]
+    },
+    "utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "sourceDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "status",
+        "base_mode",
+        "source_mode",
+        "source_blob_oid",
+        "source_sha256",
+        "source_bytes"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "A",
+            "M"
+          ]
+        },
+        "base_mode": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/gitMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_mode": {
+          "$ref": "#/$defs/gitMode"
+        },
+        "source_blob_oid": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "sourcePackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "source_tree",
+        "sole_parent",
+        "base_tree",
+        "direct_child_of_required_base",
+        "source_delta",
+        "receipt_path",
+        "receipt_absent_from_source_commit"
+      ],
+      "properties": {
+        "source_commit": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "source_tree": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "sole_parent": {
+          "const": "9d1cdf287147e66f7ebbbf67bd9b5ed177d28ac3"
+        },
+        "base_tree": {
+          "const": "ab57c76ec584e0d91b830ebd02561b248444e5e0"
+        },
+        "direct_child_of_required_base": {
+          "const": true
+        },
+        "source_delta": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceDelta"
+          }
+        },
+        "receipt_path": {
+          "const": "audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json"
+        },
+        "receipt_absent_from_source_commit": {
+          "const": true
+        }
+      }
+    },
+    "executionInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "role",
+        "source_blob_oid",
+        "git_mode",
+        "live_mode",
+        "byte_count",
+        "sha256",
+        "source_blob_matches_live_file"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_blob_oid": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "git_mode": {
+          "$ref": "#/$defs/gitMode"
+        },
+        "live_mode": {
+          "$ref": "#/$defs/liveMode"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_blob_matches_live_file": {
+          "const": true
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "entrypoint",
+        "mode",
+        "argv",
+        "timeout_seconds",
+        "stdout_cap_bytes",
+        "stderr_cap_bytes",
+        "exit_status",
+        "timed_out",
+        "stdout_bytes",
+        "stdout_sha256",
+        "stdout_format",
+        "stderr_bytes",
+        "stderr_sha256",
+        "entrypoint_source_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+_(normal|optimized)$"
+        },
+        "entrypoint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mode": {
+          "enum": [
+            "normal",
+            "optimized"
+          ]
+        },
+        "argv": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "timeout_seconds": {
+          "const": 7200
+        },
+        "stdout_cap_bytes": {
+          "const": 4194304
+        },
+        "stderr_cap_bytes": {
+          "const": 1048576
+        },
+        "exit_status": {
+          "const": 0
+        },
+        "timed_out": {
+          "const": false
+        },
+        "stdout_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stdout_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "stdout_format": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stderr_bytes": {
+          "const": 0
+        },
+        "stderr_sha256": {
+          "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "entrypoint_source_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "findings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "domain",
+        "sign_semantics",
+        "sign_census",
+        "digests",
+        "lexical_rust_route",
+        "algebraic_dependencies",
+        "classification"
+      ],
+      "properties": {
+        "domain": {
+          "const": {
+            "object_kind": "keyed_scalar_audit_expression",
+            "labeled_binary_tables": 20348,
+            "total_count_minimum": 1,
+            "total_count_maximum": 5,
+            "tables_by_total": [
+              16,
+              136,
+              816,
+              3876,
+              15504
+            ],
+            "primitive_rational_laws": 20164,
+            "nonprimitive_rescaled_count_vectors": 184,
+            "full_support_16_cell_laws": 0,
+            "maximum_positive_cells": 5,
+            "antichain_positions": 18,
+            "representation_stages": [
+              "cumulative_values",
+              "mobius_atoms"
+            ],
+            "components": [
+              "informative",
+              "misinformative",
+              "net"
+            ],
+            "expressions_per_table": 108,
+            "expression_evaluations": 2197584,
+            "strictly_positive_exact_products": 2197584,
+            "pointwise_atom_values_output": 0,
+            "local_event_ratios_used_only_as_averaged_product_factors": true,
+            "census_weighting": "one_vote_per_labelled_count_vector_not_prevalence_or_probability"
+          }
+        },
+        "sign_semantics": {
+          "const": {
+            "exact_product_Q_strictly_positive": true,
+            "negative": "Q_lt_1",
+            "zero": "Q_eq_1_and_log_expression_eq_0_not_product_zero",
+            "positive": "Q_gt_1"
+          }
+        },
+        "sign_census": {
+          "const": {
+            "cumulative.informative": {
+              "negative": 0,
+              "positive": 321856,
+              "zero": 44408
+            },
+            "cumulative.misinformative": {
+              "negative": 0,
+              "positive": 278984,
+              "zero": 87280
+            },
+            "cumulative.net": {
+              "negative": 29496,
+              "positive": 252816,
+              "zero": 83952
+            },
+            "atom.informative": {
+              "negative": 0,
+              "positive": 145100,
+              "zero": 221164
+            },
+            "atom.misinformative": {
+              "negative": 0,
+              "positive": 71468,
+              "zero": 294796
+            },
+            "atom.net": {
+              "negative": 31284,
+              "positive": 96768,
+              "zero": 238212
+            }
+          }
+        },
+        "digests": {
+          "const": {
+            "route_neutral_v2_expression_stream_sha256": "20c234cc664ad903aa66689d33d95b2db5bca5da3b0f9ee0b497d1246e3139b8",
+            "primary_route_native_stream_sha256": "315592501f49021ed86218ba1c277b9e9b764ace9621c8b4df61bb5868f3ead0",
+            "independent_route_native_stream_sha256": "4996153f04315852492bbff45548ad241f8aeaacad11e25ab510bc86267c201a",
+            "primary_corpus_stream_sha256": "5eb678eba27eea449ea5c0875c2a930ec5fcd0764718aaddfae8283fbdfc6309",
+            "independent_corpus_stream_sha256": "474da2048645445d5f221f50c7d0992cadc8819eba3674107f2a69059ced9b4e",
+            "primary_audit_registry_sha256": "6ada33aa90382316ae0757ed7f449e9fa9a35db3a7d4aec8aa3660a4c6e3c3d5",
+            "independent_audit_registry_sha256": "da4d8e7ea2793983f8758a7c72dfa8b0ac1ffaeb67fba57711064f1ceb6840d4",
+            "primary_neutral_v2_framing_unit_sha256": "035c467bcf756e4009db452ec43f48747ce0f70ebdb43780d9925bf5124c24d2",
+            "independent_table_bound_framing_probe_sha256": "f115265206099bac95b22149dc83c98fed2de93c4265a001c232266e02f4d813",
+            "lexical_rust_route_manifest_sha256": "e0ef5a05bbade1ccbd83767ee0e1e39f05276790bb2b433dd8e5fff7ea83046a"
+          }
+        },
+        "lexical_rust_route": {
+          "const": {
+            "classification": "lexical_source_route_only",
+            "anchor_count": 21,
+            "route_manifest_sha256": "e0ef5a05bbade1ccbd83767ee0e1e39f05276790bb2b433dd8e5fff7ea83046a",
+            "numeric_rust_expressions_compared": 0,
+            "boundaries": [
+              "lexical_source_route_only",
+              "rust_name_resolution_not_formally_verified",
+              "compiled_rust_refinement_open",
+              "rust_numeric_values_not_compared",
+              "binary64_refinement_not_established",
+              "108_keyed_scalar_audit_expressions_not_108_atoms_or_nodes",
+              "108_keyed_scalar_audit_expressions_not_108_independent_degrees_of_freedom",
+              "git_commit_identity_not_established",
+              "release_identity_not_established",
+              "source_authenticity_not_established",
+              "artifact_authenticity_not_established",
+              "GO_is_lane_local_lexical_obligations_only_not_scientific_validation",
+              "bounded_repeated_read_race_detection_not_atomic_snapshot_live_monitor_or_authenticity",
+              "claimed_construct_outer_attributes_are_exactly_bounded",
+              "module_level_inner_cfg_and_cfg_attr_are_rejected",
+              "attribute_guard_is_conservative_lexical_not_full_Rust_parsing_or_cfg_evaluation"
+            ]
+          }
+        },
+        "algebraic_dependencies": {
+          "const": {
+            "cumulative_net_equals_informative_minus_misinformative_per_position": 18,
+            "atom_net_equals_informative_minus_misinformative_per_position": 18,
+            "zeta_cumulative_from_atom_identities": 54,
+            "component_base_rank_or_independence_adjudicated": false
+          }
+        },
+        "classification": {
+          "const": {
+            "bounded_exact_two_route_agreement": true,
+            "agreement_observation": "matching_neutral_v2_sha256_plus_six_exact_census_blocks_not_direct_record_by_record_receipt_comparison_or_logical_independence",
+            "route_and_representation_neutrality_scope": "explicit_v2_only",
+            "paper_correspondence": "external_premise_open",
+            "compiled_rust_refinement": "open",
+            "scientific_validation": false,
+            "new_pid_measure_or_priority_claim": false
+          }
+        }
+      }
+    },
+    "p1Path": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "baseline_blob_oid",
+        "source_blob_oid",
+        "git_mode",
+        "byte_count",
+        "sha256",
+        "unchanged_at_source"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_blob_oid": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "source_blob_oid": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "git_mode": {
+          "$ref": "#/$defs/gitMode"
+        },
+        "byte_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "unchanged_at_source": {
+          "const": true
+        }
+      }
+    },
+    "p1AdjacentLane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "baseline_commit",
+        "baseline_tree",
+        "adjacent_child_commit",
+        "adjacent_child_has_p1_as_sole_parent",
+        "baseline_is_ancestor_of_source",
+        "path_count",
+        "paths",
+        "consumed",
+        "replayed",
+        "fresh_execution_credit",
+        "semantic_transfer",
+        "relationship"
+      ],
+      "properties": {
+        "baseline_commit": {
+          "const": "c829dfb4c1683e6b3749b0642fdd1f0de64cdcea"
+        },
+        "baseline_tree": {
+          "const": "a326dbf538342a4c1f0c449234025f042e08bed8"
+        },
+        "adjacent_child_commit": {
+          "const": "9d1cdf287147e66f7ebbbf67bd9b5ed177d28ac3"
+        },
+        "adjacent_child_has_p1_as_sole_parent": {
+          "const": true
+        },
+        "baseline_is_ancestor_of_source": {
+          "const": true
+        },
+        "path_count": {
+          "const": 10
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/p1Path"
+          }
+        },
+        "consumed": {
+          "const": false
+        },
+        "replayed": {
+          "const": false
+        },
+        "fresh_execution_credit": {
+          "const": "none"
+        },
+        "semantic_transfer": {
+          "const": "none"
+        },
+        "relationship": {
+          "const": "adjacent_separate_lane_provenance_only"
+        }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_name",
+        "version",
+        "executable_sha256",
+        "executable_bytes"
+      ],
+      "properties": {
+        "public_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "executable_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "executable_bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "hostBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "python",
+        "git",
+        "required_python_flags",
+        "python_optimize",
+        "observation_class"
+      ],
+      "properties": {
+        "python": {
+          "$ref": "#/$defs/tool"
+        },
+        "git": {
+          "$ref": "#/$defs/tool"
+        },
+        "required_python_flags": {
+          "const": [
+            "-I",
+            "-S",
+            "-B"
+          ]
+        },
+        "python_optimize": {
+          "const": 0
+        },
+        "observation_class": {
+          "const": "bounded_local_execution_environment_observation_not_attestation"
+        }
+      }
+    }
+  }
+}
