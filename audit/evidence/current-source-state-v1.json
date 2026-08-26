@@ -30,7 +30,7 @@
     {
       "path": "release-scope-1.0.json",
       "role": "release_scope",
-      "sha256": "5cd220e815307ebd87012d7bb0045bd8a28669cede139389a3fd6c11dfccb06e",
+      "sha256": "98473c97b3f49877e6231350c6a798c1a8745fa2c78eff9abf624b9a88f60ecf",
       "size_bytes": 87691
     },
     {
@@ -472,8 +472,8 @@
       {
         "git_mode": "100644",
         "path": "RELEASE_SCOPE_1_0.md",
-        "sha256": "4899fabba9b088f39f4db40871017e30c42a709243b28ae3a86d2d0efea7855c",
-        "size_bytes": 62029
+        "sha256": "c1c6c2e7c7ee6dc695293671da6622c1c1a9efe00cd8deb20cfe7f1c143f88f3",
+        "size_bytes": 62827
       },
       {
         "git_mode": "100644",
@@ -502,8 +502,8 @@
       {
         "git_mode": "100644",
         "path": "audit/api/public-api/pid-core-signature-revisions.json",
-        "sha256": "30c32e6cfe88fde677502031a164a9fe972f81bd24666f7a84c057ae0238f428",
-        "size_bytes": 10657
+        "sha256": "8d3f86da3a09c64d21cd125c52f3e5ad20a49e8ce43cc165232d15023a2d6899",
+        "size_bytes": 14399
       },
       {
         "git_mode": "100644",
@@ -666,6 +666,60 @@
         "path": "audit/api/public-api/revisions/0-3/pid-core-research-mixed-dimension-pid3.txt",
         "sha256": "7d25d90583451b090db5ae03f540950c73c6dceeba1a038cded9f43083f42978",
         "size_bytes": 135457
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-default.txt",
+        "sha256": "063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f",
+        "size_bytes": 89641
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt",
+        "sha256": "59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d",
+        "size_bytes": 231846
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-experimental-continuous.txt",
+        "sha256": "0cc9a77a2e21a9ea67cab3575e9ad78a80911f9cb221e8442587ff0a60705bc5",
+        "size_bytes": 128789
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-experimental-heuristics.txt",
+        "sha256": "efd2847259724e27ad0b0f945e7d49587658696957caca489fa950e00c9c9967",
+        "size_bytes": 129708
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-experimental-hierarchy.txt",
+        "sha256": "96136cf58e6b5f69f1eb0d8fe6db14d2205de9f41a870eeac3c66e7df0c0a877",
+        "size_bytes": 136564
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-experimental-hyperbolic.txt",
+        "sha256": "8b4516023248ace6b5371db8ab0cf97861cd1ac98efd93a1a7a18c6d3172772f",
+        "size_bytes": 154136
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-experimental-pipelines.txt",
+        "sha256": "41b51f46cf3890b6e75a412541ebb0f371f3a6b3803eaedbe64a496fc016eaf3",
+        "size_bytes": 197805
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-parallel.txt",
+        "sha256": "063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f",
+        "size_bytes": 89641
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/api/public-api/revisions/0-4/pid-core-research-mixed-dimension-pid3.txt",
+        "sha256": "ba0fe9257be20c60ec17d805dc97dd6c252a6171fa7c3e1849b53042605551e9",
+        "size_bytes": 136227
       },
       {
         "git_mode": "100644",
@@ -3706,7 +3760,7 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/identity/software-identity-reference-v1.json",
-        "sha256": "677ecd32c051774dddac093f7d0bd22ee2f26d2c03abd8d929ab70bdd85cbc87",
+        "sha256": "1d3863d54de6d6404da9fbfcb89eff4d2c0bc61e80944bd4b597dbde270c8a5b",
         "size_bytes": 1453
       },
       {
@@ -4678,7 +4732,7 @@
       {
         "git_mode": "100644",
         "path": "release-scope-1.0.json",
-        "sha256": "5cd220e815307ebd87012d7bb0045bd8a28669cede139389a3fd6c11dfccb06e",
+        "sha256": "98473c97b3f49877e6231350c6a798c1a8745fa2c78eff9abf624b9a88f60ecf",
         "size_bytes": 87691
       },
       {
@@ -5810,8 +5864,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "3c3fd6117d2bccfdaca63e8fa8b947137372b4e02b5a365915778268febab67d",
-    "entry_count": 944
+    "entries_sha256": "8fc2d0792212ff5eaef45210323da8335a2f089599c15375573e1a455ab0cce8",
+    "entry_count": 953
   },
   "subprojections": [
     {

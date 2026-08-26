@@ -6,13 +6,13 @@
     "The exact stable Python import allowlist and serialized/CLI surfaces remain unfrozen and must be recorded before 1.0 qualification."
   ],
   "api_snapshot_source": {
-    "commit_sha": "279d6a1c4e62a6018b675528d3b876c64dbdad4c",
+    "commit_sha": "297c11caeacc7db3aade55a33490f6b16e630a44",
     "host_triple": "aarch64-apple-darwin",
     "rustdoc_target_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
-    "tree_sha": "ad72fd7cb1c1d19c9ff62c9944380e8047d0a680"
+    "tree_sha": "b666f5e11b471c2714a2aca90b5ec7f9a634fa1e"
   },
   "conditional_members": [],
   "families": [
@@ -1782,8 +1782,8 @@
       ],
       "id": "pid-core-default",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-default.txt",
-      "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-default.txt",
+      "public_api_snapshot_sha256": "063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::stable",
@@ -1810,8 +1810,8 @@
       ],
       "id": "pid-core-parallel",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-parallel.txt",
-      "public_api_snapshot_sha256": "65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-parallel.txt",
+      "public_api_snapshot_sha256": "063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f",
       "requested_features": [
         "parallel"
       ],
@@ -1837,8 +1837,8 @@
       ],
       "id": "pid-core-experimental-continuous",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-continuous.txt",
-      "public_api_snapshot_sha256": "ee834dac65a674545f43411d014a230b271e59cbdf6858ab622e5a319e5dd36b",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-continuous.txt",
+      "public_api_snapshot_sha256": "0cc9a77a2e21a9ea67cab3575e9ad78a80911f9cb221e8442587ff0a60705bc5",
       "requested_features": [
         "experimental-continuous"
       ],
@@ -1865,8 +1865,8 @@
       ],
       "id": "pid-core-experimental-hyperbolic",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-hyperbolic.txt",
-      "public_api_snapshot_sha256": "232fa14f39fc97f5a64e315336bc868d752d5d4cb25bdb9526b67a9819e21658",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-hyperbolic.txt",
+      "public_api_snapshot_sha256": "8b4516023248ace6b5371db8ab0cf97861cd1ac98efd93a1a7a18c6d3172772f",
       "requested_features": [
         "experimental-hyperbolic"
       ],
@@ -1893,8 +1893,8 @@
       ],
       "id": "pid-core-experimental-heuristics",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-heuristics.txt",
-      "public_api_snapshot_sha256": "db2eef8456b8d33845eb7973ec690c4f9f445cb8bf167e7bfdcdc4c98ec3f645",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-heuristics.txt",
+      "public_api_snapshot_sha256": "efd2847259724e27ad0b0f945e7d49587658696957caca489fa950e00c9c9967",
       "requested_features": [
         "experimental-heuristics"
       ],
@@ -1921,8 +1921,8 @@
       ],
       "id": "pid-core-experimental-hierarchy",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-hierarchy.txt",
-      "public_api_snapshot_sha256": "123385e5f88994dac4bccf41df25a8c8ba500841a5a655a9419d45e512f587e5",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-hierarchy.txt",
+      "public_api_snapshot_sha256": "96136cf58e6b5f69f1eb0d8fe6db14d2205de9f41a870eeac3c66e7df0c0a877",
       "requested_features": [
         "experimental-hierarchy"
       ],
@@ -1949,8 +1949,8 @@
       ],
       "id": "pid-core-research-mixed-dimension-pid3",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-research-mixed-dimension-pid3.txt",
-      "public_api_snapshot_sha256": "7d25d90583451b090db5ae03f540950c73c6dceeba1a038cded9f43083f42978",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-research-mixed-dimension-pid3.txt",
+      "public_api_snapshot_sha256": "ba0fe9257be20c60ec17d805dc97dd6c252a6171fa7c3e1849b53042605551e9",
       "requested_features": [
         "research-mixed-dimension-pid3"
       ],
@@ -1978,8 +1978,8 @@
       ],
       "id": "pid-core-experimental-pipelines",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-pipelines.txt",
-      "public_api_snapshot_sha256": "1a3a4b2a62e4a3ec4a7044eb6786d62b13dddcf08f30f2951b12acaa0edbf1bb",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-pipelines.txt",
+      "public_api_snapshot_sha256": "41b51f46cf3890b6e75a412541ebb0f371f3a6b3803eaedbe64a496fc016eaf3",
       "requested_features": [
         "experimental-pipelines"
       ],
@@ -2011,8 +2011,8 @@
       ],
       "id": "pid-core-experimental-all",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d",
       "requested_features": [
         "experimental-all"
       ],
@@ -2046,8 +2046,8 @@
       ],
       "id": "pid-core-all-features",
       "package": "pid-core",
-      "public_api_snapshot": "audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt",
-      "public_api_snapshot_sha256": "f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117",
+      "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt",
+      "public_api_snapshot_sha256": "59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d",
       "requested_features": [],
       "required_public_paths": [
         "pub mod pid_core::experimental::pipelines",
@@ -2114,7 +2114,7 @@
     "stable::quantized"
   ],
   "public_rust_api_signature_revision_registry": {
-    "canonical_json_sha256": "30c32e6cfe88fde677502031a164a9fe972f81bd24666f7a84c057ae0238f428",
+    "canonical_json_sha256": "8d3f86da3a09c64d21cd125c52f3e5ad20a49e8ce43cc165232d15023a2d6899",
     "repository_path": "audit/api/public-api/pid-core-signature-revisions.json",
     "schema": "pid-rs/public-rust-api-signature-revisions",
     "schema_revision": 1

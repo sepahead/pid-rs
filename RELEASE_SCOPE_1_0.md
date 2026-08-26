@@ -819,7 +819,7 @@ experimental namespace.
 
 The runtime declaration-signature identity is bound to the append-only registry
 `audit/api/public-api/pid-core-signature-revisions.json` (SHA-256
-`30c32e6cfe88fde677502031a164a9fe972f81bd24666f7a84c057ae0238f428`). Each revision records the exact
+`8d3f86da3a09c64d21cd125c52f3e5ad20a49e8ce43cc165232d15023a2d6899`). Each revision records the exact
 source commit/tree, generation context, and every proposed feature-profile snapshot
 digest. Here *signature* means a normalized list of public Rust declarations; it is
 not cryptographic signing. The source commit/tree identifies the code whose
@@ -842,12 +842,20 @@ objects
 presented to the checker. It cannot observe a never-merged branch that is no longer
 reachable, deleted references, or an externally replaced history without an
 independent remote or transparency witness.
+Revision 0-4 additionally binds ten logical activations to nine physical files.
+The all-features and experimental-all commands remain semantically distinct and
+are generated independently; they share a path only because their exact outputs
+match. All nine files must first appear together in one single-parent evidence
+commit whose sole parent is the registered source commit. The source/evidence pair
+therefore fails closed after squash, rebase, split addition, or cherry-pick onto a
+different parent; no unknown future evidence-commit hash is embedded in source.
 
 | Epoch | Revision | Status | Scope | Source commit | Source tree | Profiles |
 |---|---|---|---|---|---|---|
 | 0 | 1 | `pre_1_0_review` | `proposed_release_scope_profiles` | `633d4e2e77f7c74ff6e34054fd005706069ed7f8` | `70a233b7c4225a81e5eef78af7ffba13ce057108` | 10 |
 | 0 | 2 | `pre_1_0_review` | `proposed_release_scope_profiles` | `dab6d50dd0d59a8584c8af9db6c9a4340cd9b5d4` | `cf052e0349386ab3e27a6a52669a91b712696d3a` | 10 |
 | 0 | 3 | `pre_1_0_review` | `proposed_release_scope_profiles` | `279d6a1c4e62a6018b675528d3b876c64dbdad4c` | `ad72fd7cb1c1d19c9ff62c9944380e8047d0a680` | 10 |
+| 0 | 4 | `pre_1_0_review` | `proposed_release_scope_profiles` | `297c11caeacc7db3aade55a33490f6b16e630a44` | `b666f5e11b471c2714a2aca90b5ec7f9a634fa1e` | 10 |
 
 ## Optional integration claims
 
@@ -896,17 +904,18 @@ independent remote or transparency witness.
 ## Compiled public-API snapshots
 
 Snapshots were generated with the pinned tool recorded in this scope file. They are
-signature evidence, not scientific-validation evidence.
+ten logical activation results retained as nine physical files; they are signature
+evidence, not scientific-validation evidence.
 
 | Profile | Activation | Requested features | Feature closure | Snapshot | SHA-256 |
 |---|---|---|---|---|---|
-| `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/revisions/0-3/pid-core-default.txt` | `65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093` |
-| `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/revisions/0-3/pid-core-parallel.txt` | `65c72b14fdb77054c3e413973b6dcaf33bb03559f81f16b1c4675e666187e093` |
-| `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/revisions/0-3/pid-core-experimental-continuous.txt` | `ee834dac65a674545f43411d014a230b271e59cbdf6858ab622e5a319e5dd36b` |
-| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/revisions/0-3/pid-core-experimental-hyperbolic.txt` | `232fa14f39fc97f5a64e315336bc868d752d5d4cb25bdb9526b67a9819e21658` |
-| `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/revisions/0-3/pid-core-experimental-heuristics.txt` | `db2eef8456b8d33845eb7973ec690c4f9f445cb8bf167e7bfdcdc4c98ec3f645` |
-| `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/revisions/0-3/pid-core-experimental-hierarchy.txt` | `123385e5f88994dac4bccf41df25a8c8ba500841a5a655a9419d45e512f587e5` |
-| `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-3/pid-core-research-mixed-dimension-pid3.txt` | `7d25d90583451b090db5ae03f540950c73c6dceeba1a038cded9f43083f42978` |
-| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-3/pid-core-experimental-pipelines.txt` | `1a3a4b2a62e4a3ec4a7044eb6786d62b13dddcf08f30f2951b12acaa0edbf1bb` |
-| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt` | `f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117` |
-| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-3/pid-core-experimental-all.txt` | `f6b7b4929f4cee3b7620a399d36420a7237ba841f38cef41617ef53423180117` |
+| `pid-core-default` | explicit feature set |  |  | `audit/api/public-api/revisions/0-4/pid-core-default.txt` | `063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f` |
+| `pid-core-parallel` | explicit feature set | parallel | parallel | `audit/api/public-api/revisions/0-4/pid-core-parallel.txt` | `063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f` |
+| `pid-core-experimental-continuous` | explicit feature set | experimental-continuous | experimental-continuous | `audit/api/public-api/revisions/0-4/pid-core-experimental-continuous.txt` | `0cc9a77a2e21a9ea67cab3575e9ad78a80911f9cb221e8442587ff0a60705bc5` |
+| `pid-core-experimental-hyperbolic` | explicit feature set | experimental-hyperbolic | experimental-continuous; experimental-hyperbolic | `audit/api/public-api/revisions/0-4/pid-core-experimental-hyperbolic.txt` | `8b4516023248ace6b5371db8ab0cf97861cd1ac98efd93a1a7a18c6d3172772f` |
+| `pid-core-experimental-heuristics` | explicit feature set | experimental-heuristics | experimental-continuous; experimental-heuristics | `audit/api/public-api/revisions/0-4/pid-core-experimental-heuristics.txt` | `efd2847259724e27ad0b0f945e7d49587658696957caca489fa950e00c9c9967` |
+| `pid-core-experimental-hierarchy` | explicit feature set | experimental-hierarchy | experimental-continuous; experimental-hierarchy | `audit/api/public-api/revisions/0-4/pid-core-experimental-hierarchy.txt` | `96136cf58e6b5f69f1eb0d8fe6db14d2205de9f41a870eeac3c66e7df0c0a877` |
+| `pid-core-research-mixed-dimension-pid3` | explicit feature set | research-mixed-dimension-pid3 | experimental-continuous; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-4/pid-core-research-mixed-dimension-pid3.txt` | `ba0fe9257be20c60ec17d805dc97dd6c252a6171fa7c3e1849b53042605551e9` |
+| `pid-core-experimental-pipelines` | explicit feature set | experimental-pipelines | experimental-continuous; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-4/pid-core-experimental-pipelines.txt` | `41b51f46cf3890b6e75a412541ebb0f371f3a6b3803eaedbe64a496fc016eaf3` |
+| `pid-core-experimental-all` | explicit feature set | experimental-all | experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt` | `59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d` |
+| `pid-core-all-features` | `--all-features` |  | default; experimental-all; experimental-continuous; experimental-heuristics; experimental-hierarchy; experimental-hyperbolic; experimental-pipelines; parallel; research-mixed-dimension-pid3 | `audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt` | `59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d` |

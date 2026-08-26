@@ -201,6 +201,82 @@
       "snapshot_source_commit_sha": "279d6a1c4e62a6018b675528d3b876c64dbdad4c",
       "snapshot_source_tree_sha": "ad72fd7cb1c1d19c9ff62c9944380e8047d0a680",
       "status": "pre_1_0_review"
+    },
+    {
+      "epoch": 0,
+      "evidence_topology": {
+        "logical_profile_count": 10,
+        "physical_snapshot_count": 9,
+        "policy": "snapshot_first_add_direct_child_of_source",
+        "shared_snapshot_profile_ids": [
+          "pid-core-all-features",
+          "pid-core-experimental-all"
+        ]
+      },
+      "generation": {
+        "host_triple": "aarch64-apple-darwin",
+        "rustdoc_target_triple": "aarch64-apple-darwin",
+        "snapshot_format": "cargo-public-api simplified level 3, color disabled",
+        "tool": "cargo-public-api 0.52.0",
+        "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)"
+      },
+      "profiles": [
+        {
+          "id": "pid-core-all-features",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt",
+          "public_api_snapshot_sha256": "59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d"
+        },
+        {
+          "id": "pid-core-default",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-default.txt",
+          "public_api_snapshot_sha256": "063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f"
+        },
+        {
+          "id": "pid-core-experimental-all",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-all.txt",
+          "public_api_snapshot_sha256": "59ff7eff64273e4145541b8e87da3867af2e9f6049147c5cf1ca1e5d864de91d"
+        },
+        {
+          "id": "pid-core-experimental-continuous",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-continuous.txt",
+          "public_api_snapshot_sha256": "0cc9a77a2e21a9ea67cab3575e9ad78a80911f9cb221e8442587ff0a60705bc5"
+        },
+        {
+          "id": "pid-core-experimental-heuristics",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-heuristics.txt",
+          "public_api_snapshot_sha256": "efd2847259724e27ad0b0f945e7d49587658696957caca489fa950e00c9c9967"
+        },
+        {
+          "id": "pid-core-experimental-hierarchy",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-hierarchy.txt",
+          "public_api_snapshot_sha256": "96136cf58e6b5f69f1eb0d8fe6db14d2205de9f41a870eeac3c66e7df0c0a877"
+        },
+        {
+          "id": "pid-core-experimental-hyperbolic",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-hyperbolic.txt",
+          "public_api_snapshot_sha256": "8b4516023248ace6b5371db8ab0cf97861cd1ac98efd93a1a7a18c6d3172772f"
+        },
+        {
+          "id": "pid-core-experimental-pipelines",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-experimental-pipelines.txt",
+          "public_api_snapshot_sha256": "41b51f46cf3890b6e75a412541ebb0f371f3a6b3803eaedbe64a496fc016eaf3"
+        },
+        {
+          "id": "pid-core-parallel",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-parallel.txt",
+          "public_api_snapshot_sha256": "063c9d0ecb84160da444a1eb10411d6820c796f1297acc86944179ea56bc147f"
+        },
+        {
+          "id": "pid-core-research-mixed-dimension-pid3",
+          "public_api_snapshot": "audit/api/public-api/revisions/0-4/pid-core-research-mixed-dimension-pid3.txt",
+          "public_api_snapshot_sha256": "ba0fe9257be20c60ec17d805dc97dd6c252a6171fa7c3e1849b53042605551e9"
+        }
+      ],
+      "revision": 4,
+      "scope": "proposed_release_scope_profiles",
+      "snapshot_source_commit_sha": "297c11caeacc7db3aade55a33490f6b16e630a44",
+      "snapshot_source_tree_sha": "b666f5e11b471c2714a2aca90b5ec7f9a634fa1e",
+      "status": "pre_1_0_review"
     }
   ],
   "genesis_source_commit_sha": "633d4e2e77f7c74ff6e34054fd005706069ed7f8",
