@@ -149,11 +149,11 @@
       ],
       "properties": {
         "commit_sha": {
-          "const": "279d6a1c4e62a6018b675528d3b876c64dbdad4c",
-          "description": "The code commit whose public Rust declarations were generated; retained snapshot bytes are recorded by revision-scoped paths and need not exist in this source commit."
+          "$ref": "#/$defs/gitObject",
+          "description": "The code commit whose public Rust declarations were generated; the checker derives this value from the latest registry entry and, for revision 0-4, requires it to be the sole parent of the snapshot first-add commit. Retained snapshot bytes are recorded by revision-scoped paths and need not exist in this source commit."
         },
         "tree_sha": {
-          "const": "ad72fd7cb1c1d19c9ff62c9944380e8047d0a680",
+          "$ref": "#/$defs/gitObject",
           "description": "The code tree whose public Rust declarations were generated, not a tree required to contain the later snapshot evidence update."
         },
         "host_triple": { "const": "aarch64-apple-darwin" },

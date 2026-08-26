@@ -4,11 +4,41 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-TOOLCHAIN="${PID_RS_PUBLIC_API_TOOLCHAIN:-nightly}"
+TOOLCHAIN="${PID_RS_PUBLIC_API_TOOLCHAIN:-nightly-2026-06-16}"
 EXPECTED_RUSTC="rustc 1.98.0-nightly (01dfd7924 2026-06-15)"
 EXPECTED_TOOL="cargo-public-api 0.52.0"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-public-api.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
+
+if ! API_PYTHON_EXECUTABLE="$(type -P python3)" \
+  || [[ "$API_PYTHON_EXECUTABLE" != /* || ! -f "$API_PYTHON_EXECUTABLE" \
+    || ! -x "$API_PYTHON_EXECUTABLE" ]]
+then
+  echo "public API evidence requires an absolute executable python3 route" >&2
+  exit 2
+fi
+API_PYTHON_EXECUTABLE="$(
+  cd "$(dirname "$API_PYTHON_EXECUTABLE")"
+  printf '%s/%s\n' "$(pwd -P)" "$(basename "$API_PYTHON_EXECUTABLE")"
+)"
+if ! "$API_PYTHON_EXECUTABLE" -I -S -B -c '
+import sys
+raise SystemExit(
+    0
+    if sys.version_info >= (3, 11)
+    and sys.flags.isolated == 1
+    and sys.flags.safe_path
+    and sys.flags.no_site == 1
+    and sys.flags.ignore_environment == 1
+    and sys.dont_write_bytecode
+    and sys.flags.optimize == 0
+    else 1
+)
+'; then
+  echo "public API evidence requires Python 3.11+ -I -S -B without -O" >&2
+  exit 2
+fi
+readonly API_PYTHON_EXECUTABLE
 
 run_public_api() (
   local target_dir="$1"
@@ -40,7 +70,7 @@ isolated_python() (
     unset "$variable"
   done < <(compgen -A variable PYTHON || true)
   export PYTHONNOUSERSITE=1
-  command python3 "$@"
+  command "$API_PYTHON_EXECUTABLE" -I -S -B "$@"
 )
 
 reject_ancestor_cargo_configs() {
@@ -76,14 +106,14 @@ fi
 actual_tool="$(
   cd "$REPO_ROOT"
   run_public_api "$TMP/cargo-target-tool-version" \
-    cargo "+$TOOLCHAIN" public-api --version
+    rustup run "$TOOLCHAIN" cargo public-api --version
 )"
 if [[ "$actual_tool" != "$EXPECTED_TOOL" ]]; then
   echo "public API tool mismatch: expected '$EXPECTED_TOOL', got '$actual_tool'" >&2
   exit 1
 fi
 
-rustdoc_target="$(isolated_python -I - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
+rustdoc_target="$(isolated_python - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -97,7 +127,7 @@ if [[ ! -d "$target_libdir" ]]; then
   exit 1
 fi
 
-isolated_python -I - "$REPO_ROOT/release-scope-1.0.json" >"$TMP/profiles.tsv" <<'PY'
+isolated_python - "$REPO_ROOT/release-scope-1.0.json" >"$TMP/profiles.tsv" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -113,7 +143,37 @@ for profile in scope["feature_profiles"]:
     )
 PY
 
-source_commit="$(isolated_python -I - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
+isolated_python - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
+import json
+from pathlib import Path
+import sys
+
+scope = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+profiles = scope["feature_profiles"]
+by_id = {profile["id"]: profile for profile in profiles}
+if len(profiles) != 10 or len({item["public_api_snapshot"] for item in profiles}) != 9:
+    raise SystemExit("public API evidence requires ten logical profiles and nine physical snapshots")
+all_features = by_id["pid-core-all-features"]
+experimental_all = by_id["pid-core-experimental-all"]
+if (
+    not all_features["all_features"]
+    or all_features["requested_features"]
+    or all_features["generation_arguments"][-1:] != ["--all-features"]
+    or experimental_all["all_features"]
+    or experimental_all["requested_features"] != ["experimental-all"]
+    or experimental_all["generation_arguments"][-2:]
+    != ["--features", "experimental-all"]
+):
+    raise SystemExit("all-features and experimental-all activation semantics were conflated")
+if (
+    all_features["public_api_snapshot"] != experimental_all["public_api_snapshot"]
+    or all_features["public_api_snapshot_sha256"]
+    != experimental_all["public_api_snapshot_sha256"]
+):
+    raise SystemExit("the two activation routes no longer bind one shared exact snapshot")
+PY
+
+source_commit="$(isolated_python - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -121,7 +181,7 @@ import sys
 print(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["api_snapshot_source"]["commit_sha"])
 PY
 )"
-source_tree="$(isolated_python -I - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
+source_tree="$(isolated_python - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -129,8 +189,9 @@ import sys
 print(json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))["api_snapshot_source"]["tree_sha"])
 PY
 )"
-"$SCRIPT_DIR/materialize-public-api-source.sh" \
-  "$REPO_ROOT" "$source_commit" "$source_tree" "$TMP/snapshot-source"
+"$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
+  "$REPO_ROOT" "$source_commit" "$source_tree" "$TMP/snapshot-source" \
+  "$API_PYTHON_EXECUTABLE"
 reject_ancestor_cargo_configs "$TMP/snapshot-source"
 
 prepare_tree() {
@@ -147,7 +208,7 @@ prepare_tree() {
   (
     cd "$tree_root"
     run_public_api "$TMP/cargo-target-$label-lock-preflight" \
-      cargo "+$TOOLCHAIN" metadata --locked --format-version 1 >/dev/null
+      rustup run "$TOOLCHAIN" cargo metadata --locked --format-version 1 >/dev/null
   )
   if ! cmp -s "$lock_snapshot" "$lock_path"; then
     echo "public API evidence observed Cargo.lock mutation during locked preflight: $label" >&2
@@ -164,7 +225,7 @@ check_tree() {
     local generated="$TMP/$label-$profile.txt"
     local committed="$REPO_ROOT/$relative_snapshot"
     local command=(
-      cargo "+$TOOLCHAIN" public-api
+      rustup run "$TOOLCHAIN" cargo public-api
       --package pid-core
       --no-default-features
       --target "$rustdoc_target"
@@ -194,6 +255,17 @@ check_tree() {
     fi
     echo "OK: $profile ($label)"
   done <"$TMP/profiles.tsv"
+  if ! cmp -s \
+    "$TMP/$label-pid-core-all-features.txt" \
+    "$TMP/$label-pid-core-experimental-all.txt"
+  then
+    echo "public API activation drift: --all-features differs from experimental-all ($label)" >&2
+    diff -u \
+      "$TMP/$label-pid-core-experimental-all.txt" \
+      "$TMP/$label-pid-core-all-features.txt" | sed -n '1,240p' >&2 || true
+    exit 1
+  fi
+  echo "OK: all-features and experimental-all are byte-identical but independently generated ($label)"
 }
 
 # Reject configuration and dependency-resolution problems for both inputs before any expensive

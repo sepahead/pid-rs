@@ -16,7 +16,7 @@
   "properties": {
     "append_policy": {
       "const": "strict_prefix_by_epoch_revision",
-      "description": "Within the complete non-shallow history presented to the checker, every registry state at a HEAD-reachable registry-touch commit is an immutable prefix and one semantically meaningful contiguous entry may be appended at the source-to-evidence or committed-HEAD-to-working-tree boundary. After a registry entry first binds a snapshot path on an ancestor lineage, that path has the registered exact byte digest at every binding, HEAD/direct-parent boundary, and HEAD-reachable full-path-history touch state on that lineage. Pre-binding states and paths first bound only in the current working tree remain outside the historical interval. Never-merged unreachable branches, deleted references, and externally replaced history remain outside these claims."
+      "description": "Within the HEAD-reachable history that the presented repository lets the checker traverse after Git reports --is-shallow-repository=false, every registry state at a registry-touch commit is an immutable prefix and one semantically meaningful contiguous entry may be appended at the source-to-evidence or committed-HEAD-to-working-tree boundary. Git's non-shallow report does not establish local object completeness or exclude promisor-backed objects. After a registry entry first binds a snapshot path on an ancestor lineage, that path has the registered exact byte digest at every binding, HEAD/direct-parent boundary, and HEAD-reachable full-path-history touch state on that lineage. Pre-binding states and paths first bound only in the current working tree remain outside the historical interval. Revision 0-4 additionally requires all nine physical snapshots to have one common unique first-add commit whose sole parent is its exact source commit; ten logical activations remain distinct, with all-features and experimental-all sharing bytes only after independent equality. Never-merged unreachable branches, deleted references, externally replaced history, and unavailable promised objects remain outside these claims."
     },
     "entries": {
       "type": "array",
@@ -38,6 +38,29 @@
     "gitObject": {
       "type": "string",
       "pattern": "^[0-9a-f]{40}$"
+    },
+    "evidenceTopology": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "logical_profile_count",
+        "physical_snapshot_count",
+        "policy",
+        "shared_snapshot_profile_ids"
+      ],
+      "properties": {
+        "logical_profile_count": { "const": 10 },
+        "physical_snapshot_count": { "const": 9 },
+        "policy": {
+          "const": "snapshot_first_add_direct_child_of_source"
+        },
+        "shared_snapshot_profile_ids": {
+          "const": [
+            "pid-core-all-features",
+            "pid-core-experimental-all"
+          ]
+        }
+      }
     },
     "identifier": {
       "type": "string",
@@ -97,6 +120,7 @@
         "status"
       ],
       "properties": {
+        "evidence_topology": { "$ref": "#/$defs/evidenceTopology" },
         "epoch": { "type": "integer" },
         "generation": { "$ref": "#/$defs/snapshotGeneration" },
         "profiles": {

@@ -150,14 +150,33 @@ cannot cross the evidence boundary. The checker does not rewrite the snapshots. 
 a public method in an internal source module without touching `lib.rs` and proves the compiled
 signature changes.
 
+Revision 0-4 additionally distinguishes ten logical activation commands from nine physical
+snapshot files. The independently generated `--all-features` and `experimental-all` outputs
+share one retained path only after exact byte equality is established. All nine new snapshot paths
+must first appear together in a single-parent evidence commit whose sole parent is the registered
+source commit. `capture-public-api-signature-revision.py` creates the candidate only from that
+exact clean source commit; its isolation self-test and the separate topology hostile suite run in
+normal and optimized Python. The source commit is deliberately pending and must fail the canonical
+release-scope check only because the embedded identity is revision 0-4 while the retained registry
+still ends at 0-3. After capture, regenerate the self-excluding current-source manifest and commit
+the nine snapshots, registry, scope JSON, identity reference, rendered scope, and manifest together
+as the direct evidence child. The historical materializer remains frozen for KSG revision-4 replay;
+the revision-0-4 capture and regeneration routes use `materialize-public-api-source-v2.sh`.
+
 ```bash
-python3 scripts/check-release-scope.py
+python3 -I -S -B scripts/check-public-api-capture-self-test.py
+python3 -O -I -S -B scripts/check-public-api-capture-self-test.py
+python3 -I -S -B scripts/check-public-api-revision-topology-self-test.py
+python3 -O -I -S -B scripts/check-public-api-revision-topology-self-test.py
+PID_RS_PUBLIC_API_TOOLCHAIN=nightly-2026-06-16 \
+  python3 -I -S -B scripts/capture-public-api-signature-revision.py
+python3 -I -S -B scripts/check-release-scope.py
 scripts/check-release-scope-self-test.sh
 scripts/check-public-api-snapshots.sh
 scripts/check-public-api-snapshots-self-test.sh
 ```
 
-`materialize-public-api-source.sh` is the internal literal-tree boundary used by that gate. It
+`materialize-public-api-source-v2.sh` is the current literal-tree boundary used by that gate. It
 binds the canonical worktree and recorded commit tree while disabling ambient Git routing,
 configuration, replacement/graft overlays, lazy fetching, and alternate ref backends. The
 self-test installs a real replacement ref and proves that retained source bytes remain literal.
@@ -169,7 +188,10 @@ Snapshot generation rejects Cargo configuration in the source directory or any a
 the build environment to a documented minimal allowlist (tool paths/home, temporary directory,
 locale/timezone, and network-proxy routing) before selecting its own Cargo home and target. A
 scrubbed `cargo metadata --locked` preflight rejects stale or missing locks, and lock bytes must
-remain unchanged through every declaration build.
+remain unchanged through every declaration build. Version 2 also receives one already-resolved,
+absolute Python executable and requires Python 3.11+ with `-I -S -B`; it does not re-resolve the
+interpreter from a hostile path. `materialize-public-api-source.sh` is retained byte-for-byte as a
+historical KSG preservation component and is not the revision-0-4 capture route.
 
 The scope is a release-candidate claim boundary, not reviewer approval or scientific-validation
 evidence. Its profile comparison fails closed on any unrecorded stable-namespace feature delta;

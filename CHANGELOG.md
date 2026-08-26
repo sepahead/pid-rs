@@ -9,6 +9,21 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a fail-closed source-to-evidence capture lifecycle for public Rust API revision 0-4.
+  The clean source commit deliberately retains the revision-3 registry while declaring revision 4;
+  the capture accepts only that one pending release-scope failure, rebuilds ten distinct feature
+  activations with the pinned nightly and `cargo-public-api 0.52.0`, and retains nine physical
+  snapshot files only after the independently generated `--all-features` and
+  `experimental-all` outputs agree byte-for-byte. All nine paths must first appear together in
+  one single-parent evidence commit whose sole parent is the registered source commit. A versioned
+  literal-tree materializer adds an absolute, isolated Python endpoint without changing the
+  historical materializer pinned by KSG revision-4 preservation. Normal/optimized hostile suites
+  exercise capture isolation, failure privacy, activation/path aliasing, source/evidence topology,
+  history rewriting, content drift, and shallow-history rejection. The evidence child also
+  refreshes the self-excluding current-source manifest. These records establish a bounded
+  declaration-snapshot and repository-history relation, not compatibility, authenticity,
+  executable equivalence, scientific validity, or external transparency.
+
 - Close the bounded SxPID3 paired-route custody gap with a versioned source-to-receipt
   lifecycle. The receipt-free source cut `S` must be an exact direct child of P5 commit
   `9d1cdf287147e66f7ebbbf67bd9b5ed177d28ac3` with exactly six added lifecycle files and this

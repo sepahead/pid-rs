@@ -9,15 +9,88 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import sys
 import tomllib
+import types
 from typing import Any
 
-from json_schema_subset import SchemaValidationError, validate as validate_json_schema
-
-
 ROOT = Path(__file__).resolve().parent.parent
+JSON_SCHEMA_SUBSET_SHA256 = (
+    "067e6d6b10d33f5b9c1bab6bc621735267a06f2461d6c0da3c8342ac8bd391a6"
+)
+
+
+def load_schema_validator() -> tuple[type[ValueError], Any]:
+    """Compile the pinned script-local validator without relying on ``sys.path``."""
+
+    path = ROOT / "scripts/json_schema_subset.py"
+    try:
+        before = os.lstat(path)
+        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+            raise RuntimeError("validator is not a single-link regular file")
+        flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+        descriptor = os.open(path, flags)
+        try:
+            opened = os.fstat(descriptor)
+            source = bytearray()
+            while chunk := os.read(descriptor, 1024 * 1024):
+                source.extend(chunk)
+            closed = os.fstat(descriptor)
+        finally:
+            os.close(descriptor)
+        after = os.lstat(path)
+    except OSError as error:
+        errno = "none" if error.errno is None else str(error.errno)
+        raise RuntimeError(
+            "cannot read pinned local validator: "
+            f"os_error_type={type(error).__name__} os_errno={errno}"
+        ) from error
+
+    def identity(value: os.stat_result) -> tuple[int, ...]:
+        return (
+            value.st_dev,
+            value.st_ino,
+            value.st_mode,
+            value.st_nlink,
+            value.st_size,
+            value.st_mtime_ns,
+            value.st_ctime_ns,
+        )
+
+    if not (
+        identity(before) == identity(opened) == identity(closed) == identity(after)
+        and len(source) == before.st_size
+    ):
+        raise RuntimeError("pinned local validator changed during exact-source read")
+    observed_sha256 = hashlib.sha256(source).hexdigest()
+    if observed_sha256 != JSON_SCHEMA_SUBSET_SHA256:
+        raise RuntimeError(
+            "pinned local validator digest mismatch: "
+            f"expected {JSON_SCHEMA_SUBSET_SHA256}, got {observed_sha256}"
+        )
+
+    module = types.ModuleType("pid_rs_release_scope_json_schema_subset")
+    module.__file__ = str(path)
+    code = compile(
+        bytes(source),
+        str(path),
+        "exec",
+        dont_inherit=True,
+        optimize=sys.flags.optimize,
+    )
+    exec(code, module.__dict__)
+    return module.SchemaValidationError, module.validate
+
+
+try:
+    SchemaValidationError, validate_json_schema = load_schema_validator()
+except RuntimeError as error:
+    print(f"release scope bootstrap error: {error}", file=sys.stderr)
+    raise SystemExit(2) from error
+
+
 DEFAULT_SCOPE = ROOT / "release-scope-1.0.json"
 DEFAULT_MARKDOWN = ROOT / "RELEASE_SCOPE_1_0.md"
 DEFAULT_SCHEMA = ROOT / "audit/schemas/release-scope.schema.json"
@@ -34,15 +107,24 @@ DEFAULT_LIB_RS = ROOT / "crates/pid-core/src/lib.rs"
 DEFAULT_CARGO = ROOT / "crates/pid-core/Cargo.toml"
 SCHEMA = "pid-rs/release-scope"
 SCHEMA_REVISION = 1
-API_SNAPSHOT_SOURCE = {
-    "commit_sha": "279d6a1c4e62a6018b675528d3b876c64dbdad4c",
-    "tree_sha": "ad72fd7cb1c1d19c9ff62c9944380e8047d0a680",
+API_SNAPSHOT_GENERATION = {
     "host_triple": "aarch64-apple-darwin",
     "rustdoc_target_triple": "aarch64-apple-darwin",
     "snapshot_format": "cargo-public-api simplified level 3, color disabled",
     "tool": "cargo-public-api 0.52.0",
     "toolchain": "rustc 1.98.0-nightly (01dfd7924 2026-06-15)",
 }
+SOURCE_EVIDENCE_TOPOLOGY_REVISION = (0, 4)
+SOURCE_EVIDENCE_TOPOLOGY = {
+    "logical_profile_count": 10,
+    "physical_snapshot_count": 9,
+    "policy": "snapshot_first_add_direct_child_of_source",
+    "shared_snapshot_profile_ids": [
+        "pid-core-all-features",
+        "pid-core-experimental-all",
+    ],
+}
+SOURCE_EVIDENCE_RELATION_FORMAT = "pid-rs/public-api-source-evidence-relation/v1"
 SIGNATURE_REGISTRY_SCHEMA = "pid-rs/public-rust-api-signature-revisions"
 SIGNATURE_REGISTRY_SCHEMA_REVISION = 1
 SIGNATURE_REGISTRY_PATH = "audit/api/public-api/pid-core-signature-revisions.json"
@@ -75,10 +157,94 @@ MODULE_FEATURES = {
     "experimental::hierarchy": "experimental-hierarchy",
     "experimental::pipelines": "experimental-pipelines",
 }
+PRIVATE_FAILURE_TEXT_RE = re.compile(
+    r"(?:file://|/(?:Users|home)/|/(?:private/)?(?:tmp|var/folders|var/tmp)/|"
+    r"[A-Za-z]:[\\/])",
+    re.IGNORECASE,
+)
 
 
 class ScopeError(RuntimeError):
     """The machine scope, source exports, or rendered view disagree."""
+
+
+def byte_observation(label: str, raw: bytes) -> str:
+    """Describe untrusted bytes without reproducing their contents."""
+
+    return f"{label}_sha256={hashlib.sha256(raw).hexdigest()} {label}_bytes={len(raw)}"
+
+
+def text_observation(label: str, value: str) -> str:
+    """Bind untrusted text without reproducing it."""
+
+    return byte_observation(label, value.encode("utf-8", "surrogatepass"))
+
+
+def path_observation(value: os.PathLike[str] | str) -> str:
+    """Bind a local or repository path without printing private path material."""
+
+    return byte_observation("path", os.fsencode(value))
+
+
+def os_error_observation(error: OSError) -> str:
+    """Retain the error class/number while suppressing filenames and messages."""
+
+    errno = "none" if error.errno is None else str(error.errno)
+    fields = [f"os_error_type={type(error).__name__}", f"os_errno={errno}"]
+    for index, filename in enumerate(
+        (getattr(error, "filename", None), getattr(error, "filename2", None)), start=1
+    ):
+        if filename is not None:
+            fields.append(
+                byte_observation(f"os_filename{index}", os.fsencode(filename))
+            )
+    return " ".join(fields)
+
+
+def process_observation(
+    operation: str,
+    *,
+    returncode: int,
+    stdout: bytes,
+    stderr: bytes,
+) -> str:
+    """Return the privacy-safe failure form for one bounded subprocess."""
+
+    return (
+        f"operation={operation} returncode={returncode} "
+        f"{byte_observation('stdout', stdout)} "
+        f"{byte_observation('stderr', stderr)}"
+    )
+
+
+def run_git_subprocess(
+    operation: str, command: list[str], **kwargs: Any
+) -> subprocess.CompletedProcess[bytes]:
+    """Spawn Git without exposing an ``OSError`` filename or ambient message."""
+
+    try:
+        return subprocess.run(command, **kwargs)
+    except OSError as error:
+        raise ScopeError(
+            f"operation={operation} spawn failed; {os_error_observation(error)}; "
+            f"{byte_observation('stdout', b'')} "
+            f"{byte_observation('stderr', b'')}"
+        ) from error
+
+
+def public_failure_message(error: BaseException) -> str:
+    """Suppress any residual machine-private material in a CLI diagnostic."""
+
+    message = str(error)
+    forbidden_literals = (str(ROOT), str(Path.home()), sys.executable)
+    if PRIVATE_FAILURE_TEXT_RE.search(message) or any(
+        literal and literal in message for literal in forbidden_literals
+    ):
+        return (
+            "privacy-sensitive diagnostic suppressed; "
+            f"{text_observation('diagnostic', message)}"
+        )
+    return message
 
 
 GIT_ENVIRONMENT_KEYS = {
@@ -149,16 +315,22 @@ def read_utf8_with_sha256(
 ) -> tuple[str, str]:
     """Decode and hash exactly one byte observation, cached by resolved path."""
 
-    resolved = path.resolve(strict=True)
-    cached = observations.get(resolved)
-    if cached is not None:
-        return cached
     try:
+        resolved = path.resolve(strict=True)
+        cached = observations.get(resolved)
+        if cached is not None:
+            return cached
         raw = resolved.read_bytes()
         text = raw.decode("utf-8")
     except (OSError, UnicodeDecodeError) as error:
+        detail = (
+            os_error_observation(error)
+            if isinstance(error, OSError)
+            else "decode_error=unicode"
+        )
         raise ScopeError(
-            f"{label}: cannot read UTF-8 snapshot bytes: {error}"
+            f"{label}: cannot read UTF-8 snapshot bytes; "
+            f"{path_observation(path)}; {detail}"
         ) from error
     observed = (text, hashlib.sha256(raw).hexdigest())
     observations[resolved] = observed
@@ -169,7 +341,9 @@ def reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     result: dict[str, Any] = {}
     for key, value in pairs:
         if key in result:
-            raise ScopeError(f"duplicate JSON object key: {key!r}")
+            raise ScopeError(
+                f"duplicate JSON object key; {text_observation('duplicate_key', key)}"
+            )
         result[key] = value
     return result
 
@@ -180,26 +354,43 @@ def reject_non_finite_json_constant(token: str) -> None:
     raise ScopeError(f"non-finite JSON number is forbidden: {token}")
 
 
-def load_json(path: Path, *, canonical: bool = False) -> Any:
+def load_json(path: Path, *, canonical: bool = False, label: str = "JSON input") -> Any:
     try:
-        raw = path.read_text(encoding="utf-8")
+        raw_bytes = path.read_bytes()
+        raw = raw_bytes.decode("utf-8")
         value = json.loads(
             raw,
             object_pairs_hook=reject_duplicate_keys,
             parse_constant=reject_non_finite_json_constant,
         )
-    except (OSError, json.JSONDecodeError) as error:
-        raise ScopeError(f"cannot read {path}: {error}") from error
+    except OSError as error:
+        raise ScopeError(
+            f"{label}: cannot read JSON input; {path_observation(path)}; "
+            f"{os_error_observation(error)}"
+        ) from error
+    except UnicodeDecodeError as error:
+        raise ScopeError(
+            f"{label}: JSON input is not UTF-8; {path_observation(path)}; "
+            f"decode_start={error.start} decode_end={error.end}"
+        ) from error
+    except json.JSONDecodeError as error:
+        raise ScopeError(
+            f"{label}: cannot parse JSON; line={error.lineno} column={error.colno}; "
+            f"{byte_observation('input', raw_bytes)}"
+        ) from error
     if canonical:
         expected = json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
         if raw != expected:
             raise ScopeError(
-                f"{path} is not canonical sorted two-space JSON with one final LF"
+                f"{label} is not canonical sorted two-space JSON with one final LF; "
+                f"{byte_observation('input', raw_bytes)}"
             )
     return value
 
 
-def load_json_with_sha256(path: Path, *, canonical: bool = False) -> tuple[Any, str]:
+def load_json_with_sha256(
+    path: Path, *, canonical: bool = False, label: str = "JSON input"
+) -> tuple[Any, str]:
     """Parse and hash one immutable byte observation of a JSON artifact."""
 
     try:
@@ -210,13 +401,27 @@ def load_json_with_sha256(path: Path, *, canonical: bool = False) -> tuple[Any, 
             object_pairs_hook=reject_duplicate_keys,
             parse_constant=reject_non_finite_json_constant,
         )
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise ScopeError(f"cannot read {path}: {error}") from error
+    except OSError as error:
+        raise ScopeError(
+            f"{label}: cannot read JSON input; {path_observation(path)}; "
+            f"{os_error_observation(error)}"
+        ) from error
+    except UnicodeDecodeError as error:
+        raise ScopeError(
+            f"{label}: JSON input is not UTF-8; {path_observation(path)}; "
+            f"decode_start={error.start} decode_end={error.end}"
+        ) from error
+    except json.JSONDecodeError as error:
+        raise ScopeError(
+            f"{label}: cannot parse JSON; line={error.lineno} column={error.colno}; "
+            f"{byte_observation('input', raw_bytes)}"
+        ) from error
     if canonical:
         expected = json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
         if raw != expected:
             raise ScopeError(
-                f"{path} is not canonical sorted two-space JSON with one final LF"
+                f"{label} is not canonical sorted two-space JSON with one final LF; "
+                f"{byte_observation('input', raw_bytes)}"
             )
     return value, hashlib.sha256(raw_bytes).hexdigest()
 
@@ -228,60 +433,139 @@ def safe_repo_file(root: Path, relative: Any, *, label: str) -> Path:
         )
     candidate_relative = Path(relative)
     if candidate_relative.is_absolute() or ".." in candidate_relative.parts:
-        raise ScopeError(f"{label}: unsafe repository path {relative!r}")
+        raise ScopeError(
+            f"{label}: unsafe repository path; {path_observation(relative)}"
+        )
     candidate = root / candidate_relative
     current = root
     for component in candidate_relative.parts:
         current = current / component
         if current.is_symlink():
-            raise ScopeError(f"{label}: symlink paths are forbidden: {relative!r}")
+            raise ScopeError(
+                f"{label}: symlink paths are forbidden; {path_observation(relative)}"
+            )
     try:
         resolved = candidate.resolve(strict=True)
         resolved.relative_to(root.resolve(strict=True))
     except (OSError, ValueError) as error:
+        detail = (
+            os_error_observation(error)
+            if isinstance(error, OSError)
+            else "path_error=outside_repository"
+        )
         raise ScopeError(
-            f"{label}: file is missing or escapes the repository: {relative!r}"
+            f"{label}: file is missing or escapes the repository; "
+            f"{path_observation(relative)}; {detail}"
         ) from error
     if not resolved.is_file():
-        raise ScopeError(f"{label}: expected a regular file: {relative!r}")
+        raise ScopeError(
+            f"{label}: expected a regular file; {path_observation(relative)}"
+        )
     return resolved
 
 
 def git_output(root: Path, *args: str) -> str:
-    process = subprocess.run(
-        ["git", *args],
+    operation = args[0] if args and re.fullmatch(r"[a-z-]+", args[0]) else "read"
+    process = run_git_subprocess(
+        f"git-{operation}",
+        [
+            "git",
+            "-c",
+            "advice.graftFileDeprecated=false",
+            "-c",
+            f"core.hooksPath={os.devnull}",
+            *args,
+        ],
         cwd=root,
         env=scrubbed_git_environment(),
         check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True,
     )
     if process.returncode != 0:
-        detail = process.stderr.strip() or process.stdout.strip()
-        raise ScopeError(f"git {' '.join(args)} failed: {detail}")
-    return process.stdout.strip()
+        raise ScopeError(
+            f"Git {operation} failed; "
+            + process_observation(
+                f"git-{operation}",
+                returncode=process.returncode,
+                stdout=process.stdout,
+                stderr=process.stderr,
+            )
+        )
+    if process.stderr:
+        raise ScopeError(
+            f"Git {operation} emitted stderr despite success; "
+            + process_observation(
+                f"git-{operation}",
+                returncode=process.returncode,
+                stdout=process.stdout,
+                stderr=process.stderr,
+            )
+        )
+    try:
+        return process.stdout.decode("utf-8").strip()
+    except UnicodeDecodeError as error:
+        raise ScopeError(
+            f"Git {operation} output is not UTF-8; "
+            f"decode_start={error.start} decode_end={error.end}; "
+            f"{byte_observation('stdout', process.stdout)}"
+        ) from error
 
 
 def git_commit_is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
     """Return Git ancestry without a shell; distinguish 'not ancestor' from Git failure."""
 
-    process = subprocess.run(
-        ["git", "merge-base", "--is-ancestor", ancestor, descendant],
+    process = run_git_subprocess(
+        "git-merge-base-is-ancestor",
+        [
+            "git",
+            "-c",
+            "advice.graftFileDeprecated=false",
+            "-c",
+            f"core.hooksPath={os.devnull}",
+            "merge-base",
+            "--is-ancestor",
+            ancestor,
+            descendant,
+        ],
         cwd=root,
         env=scrubbed_git_environment(),
         check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True,
     )
     if process.returncode == 0:
+        if process.stdout or process.stderr:
+            raise ScopeError(
+                "Git ancestry check emitted output; "
+                + process_observation(
+                    "git-merge-base-is-ancestor",
+                    returncode=process.returncode,
+                    stdout=process.stdout,
+                    stderr=process.stderr,
+                )
+            )
         return True
     if process.returncode == 1:
+        if process.stdout or process.stderr:
+            raise ScopeError(
+                "Git ancestry negative result emitted output; "
+                + process_observation(
+                    "git-merge-base-is-ancestor",
+                    returncode=process.returncode,
+                    stdout=process.stdout,
+                    stderr=process.stderr,
+                )
+            )
         return False
-    detail = process.stderr.strip() or process.stdout.strip()
     raise ScopeError(
-        f"git merge-base --is-ancestor failed for {ancestor} and {descendant}: {detail}"
+        "Git merge-base --is-ancestor failed; "
+        + process_observation(
+            "git-merge-base-is-ancestor",
+            returncode=process.returncode,
+            stdout=process.stdout,
+            stderr=process.stderr,
+        )
     )
 
 
@@ -295,13 +579,11 @@ def validate_git_repository_context(root: Path) -> None:
         )
     except OSError as error:
         raise ScopeError(
-            f"cannot resolve release-scope Git worktree root: {error}"
+            "cannot resolve release-scope Git worktree root; "
+            f"{os_error_observation(error)}"
         ) from error
     if reported_root != expected_root:
-        raise ScopeError(
-            "release-scope Git worktree root mismatch: "
-            f"expected {expected_root}, got {reported_root}"
-        )
+        raise ScopeError("release-scope Git worktree root mismatch")
 
 
 def checkout_path_history_commits(
@@ -359,6 +641,28 @@ def checkout_history_commits(root: Path) -> list[tuple[str, str]]:
     )
 
 
+def checkout_path_addition_commits(root: Path, relative: str) -> list[str]:
+    """Return every HEAD-reachable commit that Git classifies as adding ``relative``."""
+
+    raw = git_output(
+        root,
+        "log",
+        "--format=%H",
+        "--diff-filter=A",
+        "--full-history",
+        "HEAD",
+        "--",
+        relative,
+    )
+    commits = raw.splitlines() if raw else []
+    if any(not re.fullmatch(r"[0-9a-f]{40}", commit) for commit in commits):
+        raise ScopeError(
+            "cannot resolve exact first-add history for signature snapshot; "
+            f"{path_observation(relative)}"
+        )
+    return list(dict.fromkeys(commits))
+
+
 def git_file_bytes_at_commit(root: Path, commit: str, relative: str) -> bytes | None:
     """Read exact tracked bytes, returning ``None`` when the path did not yet exist."""
 
@@ -366,9 +670,22 @@ def git_file_bytes_at_commit(root: Path, commit: str, relative: str) -> bytes | 
     if not listed:
         return None
     if listed != relative:
-        raise ScopeError(f"unexpected Git tree result for {relative!r}: {listed!r}")
-    process = subprocess.run(
-        ["git", "show", f"{commit}:{relative}"],
+        raise ScopeError(
+            "unexpected Git tree result; "
+            f"expected_{path_observation(relative)}; "
+            f"observed_{path_observation(listed)}"
+        )
+    process = run_git_subprocess(
+        "git-show-tracked-bytes",
+        [
+            "git",
+            "-c",
+            "advice.graftFileDeprecated=false",
+            "-c",
+            f"core.hooksPath={os.devnull}",
+            "show",
+            f"{commit}:{relative}",
+        ],
         cwd=root,
         env=scrubbed_git_environment(),
         check=False,
@@ -376,8 +693,27 @@ def git_file_bytes_at_commit(root: Path, commit: str, relative: str) -> bytes | 
         stderr=subprocess.PIPE,
     )
     if process.returncode != 0:
-        detail = process.stderr.decode("utf-8", errors="replace").strip()
-        raise ScopeError(f"cannot read {relative!r} at {commit}: {detail}")
+        raise ScopeError(
+            "cannot read tracked bytes; "
+            f"{path_observation(relative)}; "
+            + process_observation(
+                "git-show-tracked-bytes",
+                returncode=process.returncode,
+                stdout=process.stdout,
+                stderr=process.stderr,
+            )
+        )
+    if process.stderr:
+        raise ScopeError(
+            "Git show emitted stderr despite success; "
+            f"{path_observation(relative)}; "
+            + process_observation(
+                "git-show-tracked-bytes",
+                returncode=process.returncode,
+                stdout=process.stdout,
+                stderr=process.stderr,
+            )
+        )
     return process.stdout
 
 
@@ -390,7 +726,12 @@ def git_file_at_commit(root: Path, commit: str, relative: str) -> str | None:
     try:
         return raw.decode("utf-8")
     except UnicodeDecodeError as error:
-        raise ScopeError(f"{relative!r} at {commit} is not UTF-8") from error
+        raise ScopeError(
+            "tracked file is not UTF-8; "
+            f"{path_observation(relative)}; "
+            f"decode_start={error.start} decode_end={error.end}; "
+            f"{byte_observation('content', raw)}"
+        ) from error
 
 
 def load_canonical_json_text(raw: str, *, label: str) -> Any:
@@ -795,6 +1136,118 @@ def stable_namespace_lines(snapshot: str) -> set[str]:
     return lines
 
 
+def validate_public_api_profile_alias_contract(profiles: list[dict[str, Any]]) -> None:
+    """Keep ten activation semantics distinct while permitting nine retained files."""
+
+    by_id = {
+        profile.get("id"): profile
+        for profile in profiles
+        if isinstance(profile, dict) and isinstance(profile.get("id"), str)
+    }
+    if len(profiles) != SOURCE_EVIDENCE_TOPOLOGY["logical_profile_count"]:
+        raise ScopeError(
+            "public API profile roster must contain exactly ten logical activation profiles"
+        )
+    shared_ids = SOURCE_EVIDENCE_TOPOLOGY["shared_snapshot_profile_ids"]
+    try:
+        all_features = by_id[shared_ids[0]]
+        experimental_all = by_id[shared_ids[1]]
+    except KeyError as error:
+        raise ScopeError(
+            "public API profile roster omits the all-features/experimental-all pair"
+        ) from error
+
+    if (
+        all_features.get("all_features") is not True
+        or all_features.get("requested_features") != []
+        or all_features.get("generation_arguments", [])[-1:] != ["--all-features"]
+    ):
+        raise ScopeError(
+            "pid-core-all-features must retain distinct --all-features activation semantics"
+        )
+    if (
+        experimental_all.get("all_features") is not False
+        or experimental_all.get("requested_features") != ["experimental-all"]
+        or experimental_all.get("generation_arguments", [])[-2:]
+        != ["--features", "experimental-all"]
+    ):
+        raise ScopeError(
+            "pid-core-experimental-all must retain explicit umbrella-feature activation semantics"
+        )
+    if all_features.get("generation_arguments") == experimental_all.get(
+        "generation_arguments"
+    ):
+        raise ScopeError(
+            "all-features and experimental-all activation commands were conflated"
+        )
+    if set(all_features.get("feature_closure", [])) != set(
+        experimental_all.get("feature_closure", [])
+    ) | {"default", "parallel"}:
+        raise ScopeError(
+            "all-features closure must add exactly default and parallel to experimental-all"
+        )
+
+    shared_path = experimental_all.get("public_api_snapshot")
+    shared_digest = experimental_all.get("public_api_snapshot_sha256")
+    if (
+        all_features.get("public_api_snapshot") != shared_path
+        or all_features.get("public_api_snapshot_sha256") != shared_digest
+    ):
+        raise ScopeError(
+            "all-features and experimental-all must share one byte-identical retained snapshot"
+        )
+    paths = [profile.get("public_api_snapshot") for profile in profiles]
+    if len(set(paths)) != SOURCE_EVIDENCE_TOPOLOGY["physical_snapshot_count"]:
+        raise ScopeError(
+            "ten public API activation profiles must bind exactly nine physical snapshots"
+        )
+    if sum(path == shared_path for path in paths) != 2:
+        raise ScopeError(
+            "only all-features and experimental-all may share a public API snapshot path"
+        )
+
+
+def validate_signature_entry_profile_topology(entry: dict[str, Any]) -> None:
+    """Validate the revision-4 logical-to-physical snapshot mapping."""
+
+    profiles = entry.get("profiles")
+    if not isinstance(profiles, list):
+        raise ScopeError("revision-4 signature profiles must be an array")
+    profile_ids = [
+        profile.get("id") for profile in profiles if isinstance(profile, dict)
+    ]
+    if len(profile_ids) != len(profiles) or profile_ids != sorted(set(profile_ids)):
+        raise ScopeError("revision-4 signature profiles must have sorted unique ids")
+    if len(profiles) != SOURCE_EVIDENCE_TOPOLOGY["logical_profile_count"]:
+        raise ScopeError(
+            "revision-4 signature evidence omits a logical public API profile"
+        )
+    by_id = {profile.get("id"): profile for profile in profiles}
+    shared_ids = SOURCE_EVIDENCE_TOPOLOGY["shared_snapshot_profile_ids"]
+    if any(profile_id not in by_id for profile_id in shared_ids):
+        raise ScopeError(
+            "revision-4 signature evidence omits the all-features/experimental-all pair"
+        )
+    left = by_id[shared_ids[0]]
+    right = by_id[shared_ids[1]]
+    if left.get("public_api_snapshot") != right.get("public_api_snapshot") or left.get(
+        "public_api_snapshot_sha256"
+    ) != right.get("public_api_snapshot_sha256"):
+        raise ScopeError(
+            "revision-4 all-features and experimental-all evidence must share exact bytes"
+        )
+    paths = [profile.get("public_api_snapshot") for profile in profiles]
+    if len(set(paths)) != SOURCE_EVIDENCE_TOPOLOGY["physical_snapshot_count"]:
+        raise ScopeError(
+            "revision-4 signature evidence must contain exactly nine physical snapshots"
+        )
+    shared_path = left.get("public_api_snapshot")
+    if sum(path == shared_path for path in paths) != 2:
+        raise ScopeError(
+            "revision-4 shared snapshot path may bind only the two declared logical profiles"
+        )
+
+
 def validate_signature_registry_genesis(
     snapshot_source: dict[str, Any], *, historical_registry_present: bool
 ) -> None:
@@ -979,7 +1432,8 @@ def registry_snapshot_bindings(entries: list[dict[str, Any]]) -> dict[str, str]:
             prior = bindings.get(relative)
             if prior is not None and prior != digest:
                 raise ScopeError(
-                    f"signature snapshot path {relative!r} has conflicting registry digests"
+                    "signature snapshot path has conflicting registry digests; "
+                    f"{path_observation(relative)}"
                 )
             bindings[relative] = digest
     return bindings
@@ -1035,16 +1489,166 @@ def validate_signature_snapshot_history(
             raw = git_file_bytes_at_commit(root, commit, relative)
             if raw is None:
                 raise ScopeError(
-                    f"immutable signature snapshot {relative!r} was absent after registry "
-                    f"binding {binding_label} at {label} {commit}"
+                    "immutable signature snapshot was absent after registry binding; "
+                    f"{path_observation(relative)}; binding={binding_label}; "
+                    f"observation={label}; commit={commit}"
                 )
             observed_digest = hashlib.sha256(raw).hexdigest()
             if observed_digest != expected_digest:
                 raise ScopeError(
-                    f"immutable signature snapshot {relative!r} changed after registry "
-                    f"binding {binding_label} at {label} {commit}: expected "
-                    f"{expected_digest}, got {observed_digest}"
+                    "immutable signature snapshot changed after registry binding; "
+                    f"{path_observation(relative)}; binding={binding_label}; "
+                    f"observation={label}; commit={commit}; "
+                    f"expected_sha256={expected_digest}; observed_sha256={observed_digest}"
                 )
+
+
+def validate_revision_four_source_evidence_topology(
+    entry: dict[str, Any],
+    registry: dict[str, Any],
+    *,
+    root: Path,
+) -> dict[str, Any] | None:
+    """Bind revision 0-4 evidence to one direct child of its exact source commit."""
+
+    shallow = git_output(root, "rev-parse", "--is-shallow-repository")
+    if shallow not in {"true", "false"}:
+        raise ScopeError(f"unexpected Git shallow-repository state: {shallow!r}")
+    if shallow == "true":
+        raise ScopeError(
+            "revision-4 source/evidence relation requires Git to report a non-shallow "
+            "repository; that report does not establish local object completeness or "
+            "exclude promisor-backed objects"
+        )
+    if (entry.get("epoch"), entry.get("revision")) != SOURCE_EVIDENCE_TOPOLOGY_REVISION:
+        raise ScopeError(
+            "revision-4 topology validator received the wrong registry entry"
+        )
+    if entry.get("evidence_topology") != SOURCE_EVIDENCE_TOPOLOGY:
+        raise ScopeError("revision-4 source/evidence topology declaration mismatch")
+    if entry.get("generation") != API_SNAPSHOT_GENERATION:
+        raise ScopeError("revision-4 public API generation toolchain drifted")
+    validate_signature_entry_profile_topology(entry)
+
+    source_commit = entry["snapshot_source_commit_sha"]
+    source_tree = entry["snapshot_source_tree_sha"]
+    if git_output(root, "rev-parse", f"{source_commit}^{{tree}}") != source_tree:
+        raise ScopeError("revision-4 source tree does not match its source commit")
+
+    target_index = SOURCE_EVIDENCE_TOPOLOGY_REVISION[1] - 1
+    if (
+        len(registry["entries"]) <= target_index
+        or registry["entries"][target_index] != entry
+    ):
+        raise ScopeError("revision-4 entry is not in its contiguous registry slot")
+    expected_parent_registry = {
+        **registry,
+        "entries": registry["entries"][:target_index],
+    }
+    head = git_output(root, "rev-parse", "HEAD^{commit}")
+    committed_registry_raw = git_file_at_commit(root, head, SIGNATURE_REGISTRY_PATH)
+    if committed_registry_raw is None:
+        raise ScopeError(
+            "revision-4 topology requires a committed predecessor registry"
+        )
+    committed_registry = load_canonical_json_text(
+        committed_registry_raw,
+        label=f"{SIGNATURE_REGISTRY_PATH} at HEAD {head}",
+    )
+    committed_revision_four = (
+        len(committed_registry.get("entries", [])) > target_index
+        and committed_registry["entries"][target_index] == entry
+    )
+
+    snapshot_paths = sorted(
+        {profile["public_api_snapshot"] for profile in entry["profiles"]}
+    )
+    if not committed_revision_four:
+        # This is the only permitted pre-commit candidate state: the clean source commit is HEAD,
+        # its registry is the exact retained prefix, and none of the evidence paths exists there.
+        if head != source_commit:
+            raise ScopeError(
+                "uncommitted revision-4 evidence is permitted only at the exact source HEAD"
+            )
+        if committed_registry != expected_parent_registry:
+            raise ScopeError(
+                "uncommitted revision-4 registry does not extend the exact source prefix"
+            )
+        for relative in snapshot_paths:
+            if git_file_bytes_at_commit(root, source_commit, relative) is not None:
+                raise ScopeError(
+                    "revision-4 snapshot already exists in the source commit; "
+                    f"{path_observation(relative)}"
+                )
+        return None
+
+    addition_commit_by_path: dict[str, str] = {}
+    for relative in snapshot_paths:
+        additions = checkout_path_addition_commits(root, relative)
+        if len(additions) != 1:
+            raise ScopeError(
+                "revision-4 snapshot must have exactly one reachable first-add commit; "
+                f"{path_observation(relative)}"
+            )
+        addition_commit_by_path[relative] = additions[0]
+    evidence_commits = set(addition_commit_by_path.values())
+    if len(evidence_commits) != 1:
+        raise ScopeError(
+            "all nine revision-4 snapshots must first appear in one evidence commit"
+        )
+    evidence_commit = next(iter(evidence_commits))
+    evidence_fields = git_output(
+        root, "rev-list", "--parents", "-n", "1", evidence_commit
+    ).split()
+    if len(evidence_fields) != 2 or evidence_fields[0] != evidence_commit:
+        raise ScopeError("revision-4 evidence commit must have exactly one parent")
+    if evidence_fields[1] != source_commit:
+        raise ScopeError(
+            "revision-4 evidence commit sole parent is not the registered source commit"
+        )
+
+    evidence_registry_raw = git_file_at_commit(
+        root, evidence_commit, SIGNATURE_REGISTRY_PATH
+    )
+    source_registry_raw = git_file_at_commit(
+        root, source_commit, SIGNATURE_REGISTRY_PATH
+    )
+    if evidence_registry_raw is None or source_registry_raw is None:
+        raise ScopeError("revision-4 source/evidence registry boundary is incomplete")
+    evidence_registry = load_canonical_json_text(
+        evidence_registry_raw,
+        label=f"{SIGNATURE_REGISTRY_PATH} at evidence commit {evidence_commit}",
+    )
+    source_registry = load_canonical_json_text(
+        source_registry_raw,
+        label=f"{SIGNATURE_REGISTRY_PATH} at source commit {source_commit}",
+    )
+    if source_registry != expected_parent_registry:
+        raise ScopeError(
+            "revision-4 source commit does not contain the exact registry prefix"
+        )
+    expected_evidence_registry = {
+        **registry,
+        "entries": registry["entries"][: target_index + 1],
+    }
+    if evidence_registry != expected_evidence_registry:
+        raise ScopeError(
+            "revision-4 evidence commit does not add exactly the contiguous registry entry"
+        )
+
+    digest_by_path = registry_snapshot_bindings([entry])
+    for relative, expected_digest in digest_by_path.items():
+        raw = git_file_bytes_at_commit(root, evidence_commit, relative)
+        if raw is None or hashlib.sha256(raw).hexdigest() != expected_digest:
+            raise ScopeError(
+                "revision-4 evidence commit bytes do not match derived digest; "
+                f"{path_observation(relative)}"
+            )
+    return {
+        "evidence_commit": evidence_commit,
+        "evidence_parent_count": len(evidence_fields) - 1,
+        "source_commit": source_commit,
+    }
 
 
 def validate_signature_registry_entries(
@@ -1061,7 +1665,9 @@ def validate_signature_registry_entries(
         raise ScopeError(f"unexpected Git shallow-repository state: {shallow!r}")
     if shallow == "true":
         raise ScopeError(
-            "signature registry ancestry requires a complete, non-shallow Git history"
+            "signature registry ancestry requires Git to report a non-shallow repository; "
+            "that report does not establish local object completeness or exclude "
+            "promisor-backed objects"
         )
     head = git_output(root, "rev-parse", "HEAD^{commit}")
     previous_key: tuple[int, int] | None = None
@@ -1101,6 +1707,17 @@ def validate_signature_registry_entries(
                     f"signature registry entry {index}: pure revision-number bumps are forbidden"
                 )
         previous_key = key
+
+        if key == SOURCE_EVIDENCE_TOPOLOGY_REVISION:
+            if entry.get("evidence_topology") != SOURCE_EVIDENCE_TOPOLOGY:
+                raise ScopeError(
+                    "signature registry revision 0-4 lacks the exact source/evidence topology"
+                )
+            validate_signature_entry_profile_topology(entry)
+        elif key < SOURCE_EVIDENCE_TOPOLOGY_REVISION and "evidence_topology" in entry:
+            raise ScopeError(
+                f"signature registry entry {index}: historical revisions must not be retrofitted with revision-4 topology"
+            )
 
         profiles = entry.get("profiles")
         if not isinstance(profiles, list):
@@ -1188,7 +1805,7 @@ def validate_signature_revision_registry(
     identity_reference: Any,
     root: Path,
     observations: dict[Path, tuple[str, str]],
-) -> None:
+) -> dict[str, Any] | None:
     """Bind the runtime signature revision to exact, append-only snapshot evidence."""
 
     try:
@@ -1355,6 +1972,24 @@ def validate_signature_revision_registry(
             history_label=transition_label,
         )
 
+    revision_four = next(
+        (
+            entry
+            for entry in entries
+            if (entry.get("epoch"), entry.get("revision"))
+            == SOURCE_EVIDENCE_TOPOLOGY_REVISION
+        ),
+        None,
+    )
+    relation = None
+    if revision_four is not None:
+        relation = validate_revision_four_source_evidence_topology(
+            revision_four,
+            registry,
+            root=root,
+        )
+    return relation
+
 
 def validate_scope(
     scope: Any,
@@ -1368,7 +2003,7 @@ def validate_scope(
     signature_registry_schema: Any,
     identity_reference: Any,
     root: Path,
-) -> None:
+) -> dict[str, Any] | None:
     if not isinstance(scope, dict):
         raise ScopeError("scope root must be an object")
     try:
@@ -1468,7 +2103,13 @@ def validate_scope(
             if field not in family:
                 raise ScopeError(f"{family_id}: missing {field}")
 
-    parser = RustModuleExports(lib_rs.read_text(encoding="utf-8"))
+    source_observations: dict[Path, tuple[str, str]] = {}
+    lib_rs_text, _ = read_utf8_with_sha256(
+        lib_rs,
+        label="pid-core public module source",
+        observations=source_observations,
+    )
+    parser = RustModuleExports(lib_rs_text)
 
     public_modules = scope.get("public_modules")
     if (
@@ -1524,14 +2165,38 @@ def validate_scope(
             raise ScopeError(f"{module}: " + "; ".join(details))
 
     snapshot_source = scope.get("api_snapshot_source", {})
-    if snapshot_source != API_SNAPSHOT_SOURCE:
+    generation_differences = [
+        f"{field}: expected {expected!r}, got {snapshot_source.get(field)!r}"
+        for field, expected in API_SNAPSHOT_GENERATION.items()
+        if snapshot_source.get(field) != expected
+    ]
+    if generation_differences:
+        raise ScopeError(
+            "api snapshot generation identity drifted: "
+            + "; ".join(generation_differences)
+        )
+    unexpected_source_fields = set(snapshot_source) - {
+        "commit_sha",
+        "tree_sha",
+        *API_SNAPSHOT_GENERATION,
+    }
+    if unexpected_source_fields:
+        raise ScopeError(
+            "api snapshot source has unexpected fields: "
+            + ", ".join(sorted(unexpected_source_fields))
+        )
+    if set(snapshot_source) != {
+        "commit_sha",
+        "tree_sha",
+        *API_SNAPSHOT_GENERATION,
+    }:
         differences = [
-            f"{field}: expected {API_SNAPSHOT_SOURCE[field]!r}, got {snapshot_source.get(field)!r}"
-            for field in API_SNAPSHOT_SOURCE
-            if snapshot_source.get(field) != API_SNAPSHOT_SOURCE[field]
+            field
+            for field in ("commit_sha", "tree_sha", *API_SNAPSHOT_GENERATION)
+            if field not in snapshot_source
         ]
         raise ScopeError(
-            "api snapshot source is not the frozen source: " + "; ".join(differences)
+            "api snapshot source is missing fields: " + ", ".join(differences)
         )
     source_commit = snapshot_source.get("commit_sha")
     source_tree = snapshot_source.get("tree_sha")
@@ -1540,8 +2205,15 @@ def validate_scope(
     if git_output(root, "rev-parse", f"{source_commit}^{{tree}}") != source_tree:
         raise ScopeError("api snapshot source tree does not match its commit")
 
-    with cargo_toml.open("rb") as handle:
-        cargo = tomllib.load(handle)
+    cargo_toml_text, _ = read_utf8_with_sha256(
+        cargo_toml,
+        label="pid-core Cargo manifest",
+        observations=source_observations,
+    )
+    try:
+        cargo = tomllib.loads(cargo_toml_text)
+    except tomllib.TOMLDecodeError as error:
+        raise ScopeError("pid-core Cargo manifest is not valid TOML") from error
     features = cargo.get("features")
     if not isinstance(features, dict):
         raise ScopeError("pid-core Cargo features table is missing")
@@ -1632,12 +2304,14 @@ def validate_scope(
         for forbidden in profile.get("forbidden_public_paths", []):
             if forbidden in snapshot:
                 raise ScopeError(
-                    f"{profile_id}: forbidden public path is present: {forbidden}"
+                    f"{profile_id}: forbidden public path is present; "
+                    f"{text_observation('public_path', forbidden)}"
                 )
         for required in profile.get("required_public_paths", []):
             if required not in snapshot:
                 raise ScopeError(
-                    f"{profile_id}: required public path is absent: {required}"
+                    f"{profile_id}: required public path is absent; "
+                    f"{text_observation('public_path', required)}"
                 )
 
     if profile_ids != expected_profile_ids:
@@ -1647,6 +2321,8 @@ def validate_scope(
             + "; unexpected="
             + ",".join(sorted(profile_ids - expected_profile_ids))
         )
+
+    validate_public_api_profile_alias_contract(profiles)
 
     research_features = set(normalized_features) - {
         "default",
@@ -1678,30 +2354,46 @@ def validate_scope(
         path = member.get("public_path")
         feature = member.get("feature")
         if not isinstance(path, str) or not path or path in conditional_paths:
-            raise ScopeError(f"conditional public_path must be unique: {path!r}")
+            path_text = path if isinstance(path, str) else type(path).__name__
+            raise ScopeError(
+                "conditional public_path must be unique; "
+                f"{text_observation('public_path', path_text)}"
+            )
         conditional_paths.add(path)
         if member.get("stable_namespace_leak") is not True:
             raise ScopeError(
-                f"{path}: conditional members must disclose stable_namespace_leak"
+                "conditional member must disclose stable_namespace_leak; "
+                f"{text_observation('public_path', path)}"
             )
         profile = profile_by_feature.get(feature)
         if profile is None:
-            raise ScopeError(f"{path}: no individual profile for feature {feature!r}")
+            raise ScopeError(
+                "conditional member has no individual profile for feature; "
+                f"{text_observation('public_path', path)}"
+            )
         feature_snapshot = snapshot_text_by_id[profile["id"]]
         added_line = member.get("added_api_line")
         removed_line = member.get("removed_api_line")
         if not isinstance(added_line, str) or not added_line:
-            raise ScopeError(f"{path}: exact added_api_line is required")
+            raise ScopeError(
+                "conditional member exact added_api_line is required; "
+                f"{text_observation('public_path', path)}"
+            )
         if added_line in default_snapshot or added_line not in feature_snapshot:
             raise ScopeError(
-                f"{path}: exact added API line disagrees with compiled snapshots"
+                "conditional member exact added API line disagrees with compiled snapshots; "
+                f"{text_observation('public_path', path)}"
             )
         if removed_line is not None:
             if not isinstance(removed_line, str) or not removed_line:
-                raise ScopeError(f"{path}: removed_api_line must be null or non-empty")
+                raise ScopeError(
+                    "conditional member removed_api_line must be null or non-empty; "
+                    f"{text_observation('public_path', path)}"
+                )
             if removed_line not in default_snapshot or removed_line in feature_snapshot:
                 raise ScopeError(
-                    f"{path}: exact removed API line disagrees with compiled snapshots"
+                    "conditional member exact removed API line disagrees with compiled snapshots; "
+                    f"{text_observation('public_path', path)}"
                 )
 
     # Check complete activation profiles, not only one-feature requests. This catches public API
@@ -1716,7 +2408,7 @@ def validate_scope(
             conditional,
         )
 
-    validate_signature_revision_registry(
+    source_evidence_relation = validate_signature_revision_registry(
         scope,
         registry=signature_registry,
         registry_path=signature_registry_path,
@@ -1828,6 +2520,7 @@ def validate_scope(
 
     if len(set(reviewers_by_role.values())) != len(reviewers_by_role):
         raise ScopeError("maintainer and independent reviewer must be different people")
+    return source_evidence_relation
 
 
 def markdown_cell(value: Any) -> str:
@@ -1959,6 +2652,13 @@ def render_markdown(scope: dict[str, Any], signature_registry: dict[str, Any]) -
             "presented to the checker. It cannot observe a never-merged branch that is no longer",
             "reachable, deleted references, or an externally replaced history without an",
             "independent remote or transparency witness.",
+            "Revision 0-4 additionally binds ten logical activations to nine physical files.",
+            "The all-features and experimental-all commands remain semantically distinct and",
+            "are generated independently; they share a path only because their exact outputs",
+            "match. All nine files must first appear together in one single-parent evidence",
+            "commit whose sole parent is the registered source commit. The source/evidence pair",
+            "therefore fails closed after squash, rebase, split addition, or cherry-pick onto a",
+            "different parent; no unknown future evidence-commit hash is embedded in source.",
             "",
             "| Epoch | Revision | Status | Scope | Source commit | Source tree | Profiles |",
             "|---|---|---|---|---|---|---|",
@@ -2013,7 +2713,8 @@ def render_markdown(scope: dict[str, Any], signature_registry: dict[str, Any]) -
             "## Compiled public-API snapshots",
             "",
             "Snapshots were generated with the pinned tool recorded in this scope file. They are",
-            "signature evidence, not scientific-validation evidence.",
+            "ten logical activation results retained as nine physical files; they are signature",
+            "evidence, not scientific-validation evidence.",
             "",
             "| Profile | Activation | Requested features | Feature closure | Snapshot | SHA-256 |",
             "|---|---|---|---|---|---|",
@@ -2036,6 +2737,92 @@ def render_markdown(scope: dict[str, Any], signature_registry: dict[str, Any]) -
     return "\n".join(lines)
 
 
+def require_isolated_source_evidence_invocation() -> None:
+    """Require the publication bridge's exact supported Python execution modes."""
+
+    if not (
+        sys.version_info >= (3, 11)
+        and sys.flags.isolated == 1
+        and sys.flags.safe_path
+        and sys.flags.no_site == 1
+        and sys.flags.ignore_environment == 1
+        and sys.dont_write_bytecode
+        and sys.flags.optimize in {0, 1}
+    ):
+        raise ScopeError(
+            "--source-evidence-relation-json requires Python 3.11+ -I -S -B "
+            "and at most one -O"
+        )
+
+
+def require_canonical_source_evidence_inputs(args: argparse.Namespace) -> None:
+    """Forbid alternate fixture inputs from producing a canonical bridge result."""
+
+    expected_paths = {
+        "scope": DEFAULT_SCOPE,
+        "schema": DEFAULT_SCHEMA,
+        "markdown": DEFAULT_MARKDOWN,
+        "signature_registry": DEFAULT_SIGNATURE_REGISTRY,
+        "signature_registry_schema": DEFAULT_SIGNATURE_REGISTRY_SCHEMA,
+        "software_identity_reference": DEFAULT_SOFTWARE_IDENTITY_REFERENCE,
+        "lib_rs": DEFAULT_LIB_RS,
+        "cargo_toml": DEFAULT_CARGO,
+    }
+    for field, expected in expected_paths.items():
+        actual = Path(os.path.abspath(os.fspath(getattr(args, field))))
+        if actual != expected:
+            raise ScopeError(
+                "--source-evidence-relation-json accepts only canonical repository inputs"
+            )
+
+
+def source_evidence_result(relation: dict[str, Any] | None) -> dict[str, Any]:
+    """Build the bounded publication bridge, refusing the pre-evidence candidate state."""
+
+    if relation is None:
+        raise ScopeError(
+            "revision-4 source/evidence relation is pending; no passing relation is available"
+        )
+    if set(relation) != {
+        "source_commit",
+        "evidence_commit",
+        "evidence_parent_count",
+    }:
+        raise ScopeError("revision-4 source/evidence relation has an unexpected shape")
+    source_commit = relation["source_commit"]
+    evidence_commit = relation["evidence_commit"]
+    evidence_parent_count = relation["evidence_parent_count"]
+    if (
+        not isinstance(source_commit, str)
+        or re.fullmatch(r"[0-9a-f]{40}", source_commit) is None
+        or not isinstance(evidence_commit, str)
+        or re.fullmatch(r"[0-9a-f]{40}", evidence_commit) is None
+        or source_commit == evidence_commit
+        or not isinstance(evidence_parent_count, int)
+        or isinstance(evidence_parent_count, bool)
+        or evidence_parent_count != 1
+    ):
+        raise ScopeError("revision-4 source/evidence relation is invalid")
+    return {
+        "format": SOURCE_EVIDENCE_RELATION_FORMAT,
+        "source_evidence_relation": relation,
+        "status": "pass",
+    }
+
+
+def canonical_json(value: Any) -> str:
+    return (
+        json.dumps(
+            value,
+            indent=2,
+            sort_keys=True,
+            ensure_ascii=True,
+            allow_nan=False,
+        )
+        + "\n"
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scope", type=Path, default=DEFAULT_SCOPE)
@@ -2056,25 +2843,35 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--lib-rs", type=Path, default=DEFAULT_LIB_RS)
     parser.add_argument("--cargo-toml", type=Path, default=DEFAULT_CARGO)
-    parser.add_argument("--print-markdown", action="store_true")
+    output = parser.add_mutually_exclusive_group()
+    output.add_argument("--print-markdown", action="store_true")
+    output.add_argument("--source-evidence-relation-json", action="store_true")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
     try:
-        scope = load_json(args.scope, canonical=True)
-        schema = load_json(args.schema)
+        if args.source_evidence_relation_json:
+            require_isolated_source_evidence_invocation()
+            require_canonical_source_evidence_inputs(args)
+        scope = load_json(args.scope, canonical=True, label="release scope")
+        schema = load_json(args.schema, label="release scope schema")
         signature_registry, signature_registry_sha256 = load_json_with_sha256(
             args.signature_registry,
             canonical=True,
+            label="signature registry",
         )
-        signature_registry_schema = load_json(args.signature_registry_schema)
+        signature_registry_schema = load_json(
+            args.signature_registry_schema,
+            label="signature registry schema",
+        )
         identity_reference = load_json(
             args.software_identity_reference,
             canonical=True,
+            label="software identity reference",
         )
-        validate_scope(
+        source_evidence_relation = validate_scope(
             scope,
             schema=schema,
             lib_rs=args.lib_rs,
@@ -2094,19 +2891,46 @@ def main() -> int:
                 committed = args.markdown.read_text(encoding="utf-8")
             except OSError as error:
                 raise ScopeError(
-                    f"cannot read rendered scope {args.markdown}: {error}"
+                    "cannot read rendered scope; "
+                    f"{path_observation(args.markdown)}; {os_error_observation(error)}"
                 ) from error
             if committed != rendered:
                 raise ScopeError(
-                    f"{args.markdown} is stale; regenerate it with --print-markdown"
+                    "rendered scope is stale; regenerate it with --print-markdown; "
+                    f"{path_observation(args.markdown)}"
                 )
-            print(
-                f"OK: {len(scope['families'])} capability rows and "
-                f"{sum(len(item['symbols']) for item in scope['families'])} source exports match"
-            )
+            if args.source_evidence_relation_json:
+                latest_entry = signature_registry["entries"][-1]
+                if (
+                    latest_entry.get("epoch"),
+                    latest_entry.get("revision"),
+                ) != SOURCE_EVIDENCE_TOPOLOGY_REVISION:
+                    raise ScopeError(
+                        "source/evidence relation output requires revision 0-4 to be "
+                        "the current canonical API revision"
+                    )
+                print(
+                    canonical_json(source_evidence_result(source_evidence_relation)),
+                    end="",
+                )
+            else:
+                print(
+                    f"OK: {len(scope['families'])} capability rows and "
+                    f"{sum(len(item['symbols']) for item in scope['families'])} source exports match"
+                )
         return 0
     except ScopeError as error:
-        print(f"release scope error: {error}", file=sys.stderr)
+        print(
+            "release scope error: " + public_failure_message(error),
+            file=sys.stderr,
+        )
+        return 1
+    except OSError as error:
+        print(
+            "release scope error: unexpected filesystem failure; "
+            + os_error_observation(error),
+            file=sys.stderr,
+        )
         return 1
 
 

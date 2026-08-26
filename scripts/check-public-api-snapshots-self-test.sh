@@ -4,9 +4,39 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-TOOLCHAIN="${PID_RS_PUBLIC_API_TOOLCHAIN:-nightly}"
+TOOLCHAIN="${PID_RS_PUBLIC_API_TOOLCHAIN:-nightly-2026-06-16}"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-public-api-mutation.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
+
+if ! API_PYTHON_EXECUTABLE="$(type -P python3)" \
+  || [[ "$API_PYTHON_EXECUTABLE" != /* || ! -f "$API_PYTHON_EXECUTABLE" \
+    || ! -x "$API_PYTHON_EXECUTABLE" ]]
+then
+  echo "public API self-test requires an absolute executable python3 route" >&2
+  exit 2
+fi
+API_PYTHON_EXECUTABLE="$(
+  cd "$(dirname "$API_PYTHON_EXECUTABLE")"
+  printf '%s/%s\n' "$(pwd -P)" "$(basename "$API_PYTHON_EXECUTABLE")"
+)"
+if ! "$API_PYTHON_EXECUTABLE" -I -S -B -c '
+import sys
+raise SystemExit(
+    0
+    if sys.version_info >= (3, 11)
+    and sys.flags.isolated == 1
+    and sys.flags.safe_path
+    and sys.flags.no_site == 1
+    and sys.flags.ignore_environment == 1
+    and sys.dont_write_bytecode
+    and sys.flags.optimize == 0
+    else 1
+)
+'; then
+  echo "public API self-test requires Python 3.11+ -I -S -B without -O" >&2
+  exit 2
+fi
+readonly API_PYTHON_EXECUTABLE
 
 mkdir "$TMP/fixture-home"
 
@@ -127,16 +157,59 @@ then
   echo "fixture Git wrapper accepted an ambient replacement namespace" >&2
   exit 1
 fi
-"$SCRIPT_DIR/materialize-public-api-source.sh" \
-  "$TMP/replacement-fixture" "$literal_commit" "$literal_tree" "$TMP/materialized-source"
+"$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
+  "$TMP/replacement-fixture" "$literal_commit" "$literal_tree" \
+  "$TMP/materialized-source" "$API_PYTHON_EXECUTABLE"
 if [[ "$(cat "$TMP/materialized-source/value.txt")" != "literal source" ]]; then
   echo "public API source materialization followed a replacement ref" >&2
   exit 1
 fi
-printf 'value.txt export-ignore\n' >"$TMP/replacement-fixture/.git/info/attributes"
-if "$SCRIPT_DIR/materialize-public-api-source.sh" \
+mkdir "$TMP/hostile-path"
+printf '%s\n' \
+  '#!/bin/sh' \
+  'printf "executed\\n" >"$PID_RS_HOSTILE_PATH_MARKER"' \
+  'exit 99' \
+  >"$TMP/hostile-path/python3"
+chmod 700 "$TMP/hostile-path/python3"
+PATH="$TMP/hostile-path:$PATH" \
+PID_RS_HOSTILE_PATH_MARKER="$TMP/hostile-path-python-executed" \
+  "$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
   "$TMP/replacement-fixture" "$literal_commit" "$literal_tree" \
-  "$TMP/materialized-attribute-source" >"$TMP/attribute-stdout" 2>"$TMP/attribute-stderr"
+  "$TMP/materialized-hostile-path-source" "$API_PYTHON_EXECUTABLE"
+if [[ -e "$TMP/hostile-path-python-executed" ]]; then
+  echo "public API materializer re-resolved Python from hostile PATH" >&2
+  exit 1
+fi
+printf '%s\n' \
+  '#!/usr/bin/env bash' \
+  'set -euo pipefail' \
+  'arguments=()' \
+  'for argument in "$@"; do' \
+  '  if [[ "$argument" != "-I" ]]; then arguments+=("$argument"); fi' \
+  'done' \
+  "exec $(printf '%q' "$API_PYTHON_EXECUTABLE") \"\${arguments[@]}\"" \
+  >"$TMP/nonisolated-python"
+chmod 700 "$TMP/nonisolated-python"
+if "$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
+  "$TMP/replacement-fixture" "$literal_commit" "$literal_tree" \
+  "$TMP/materialized-nonisolated-source" "$TMP/nonisolated-python" \
+  >"$TMP/nonisolated-stdout" 2>"$TMP/nonisolated-stderr"
+then
+  echo "public API source materialization accepted a non-isolated Python helper" >&2
+  exit 1
+fi
+if ! grep -F "requires Python 3.11+ -I -S -B without -O" \
+  "$TMP/nonisolated-stderr" >/dev/null
+then
+  echo "non-isolated Python helper failed for the wrong reason" >&2
+  sed -n '1,20p' "$TMP/nonisolated-stderr" >&2
+  exit 1
+fi
+printf 'value.txt export-ignore\n' >"$TMP/replacement-fixture/.git/info/attributes"
+if "$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
+  "$TMP/replacement-fixture" "$literal_commit" "$literal_tree" \
+  "$TMP/materialized-attribute-source" "$API_PYTHON_EXECUTABLE" \
+  >"$TMP/attribute-stdout" 2>"$TMP/attribute-stderr"
 then
   echo "public API source materialization accepted an archive-altering info attribute" >&2
   exit 1
@@ -157,9 +230,9 @@ fixture_git "$TMP/symbolic-link-fixture" \
   commit -q --no-gpg-sign --no-verify -m symbolic-link-source
 symbolic_link_commit="$(fixture_git "$TMP/symbolic-link-fixture" rev-parse HEAD)"
 symbolic_link_tree="$(fixture_git "$TMP/symbolic-link-fixture" rev-parse 'HEAD^{tree}')"
-if "$SCRIPT_DIR/materialize-public-api-source.sh" \
+if "$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
   "$TMP/symbolic-link-fixture" "$symbolic_link_commit" "$symbolic_link_tree" \
-  "$TMP/materialized-symbolic-link-source" \
+  "$TMP/materialized-symbolic-link-source" "$API_PYTHON_EXECUTABLE" \
   >"$TMP/symbolic-link-stdout" 2>"$TMP/symbolic-link-stderr"
 then
   echo "public API source materialization accepted a tracked symbolic link" >&2
@@ -179,7 +252,7 @@ fixture_git "$TMP/gitlink-fixture" \
   -c user.name=pid-rs-tests -c user.email=tests@example.invalid \
   commit -q --no-gpg-sign --no-verify -m gitlink-target
 gitlink_target="$(fixture_git "$TMP/gitlink-fixture" rev-parse HEAD)"
-python3 -I - "$TMP/gitlink-fixture/zzz" <<'PY'
+"$API_PYTHON_EXECUTABLE" -I -S -B - "$TMP/gitlink-fixture/zzz" <<'PY'
 from pathlib import Path
 import sys
 
@@ -196,9 +269,9 @@ fixture_git "$TMP/gitlink-fixture" \
   commit -q --no-gpg-sign --no-verify -m gitlink-source
 gitlink_commit="$(fixture_git "$TMP/gitlink-fixture" rev-parse HEAD)"
 gitlink_tree="$(fixture_git "$TMP/gitlink-fixture" rev-parse 'HEAD^{tree}')"
-if "$SCRIPT_DIR/materialize-public-api-source.sh" \
+if "$SCRIPT_DIR/materialize-public-api-source-v2.sh" \
   "$TMP/gitlink-fixture" "$gitlink_commit" "$gitlink_tree" \
-  "$TMP/materialized-gitlink-source" \
+  "$TMP/materialized-gitlink-source" "$API_PYTHON_EXECUTABLE" \
   >"$TMP/gitlink-stdout" 2>"$TMP/gitlink-stderr"
 then
   echo "public API source materialization accepted a Git submodule entry" >&2
@@ -236,6 +309,12 @@ printf '[build]\nrustflags = ["--definitely-invalid-ambient-flag"]\n' \
 mkdir "$TMP/ambient-python-path"
 printf 'raise RuntimeError("ambient Python path was imported")\n' \
   >"$TMP/ambient-python-path/json.py"
+printf '%s\n' \
+  'import os' \
+  'from pathlib import Path' \
+  'Path(os.environ["PID_RS_HOSTILE_SITE_MARKER"]).write_text("executed\\n")' \
+  'raise RuntimeError("ambient sitecustomize was imported")' \
+  >"$TMP/ambient-python-path/sitecustomize.py"
 CARGO_BUILD_TARGET=pid-rs-invalid-ambient-target \
 CARGO_BUILD_RUSTC="$TMP/nonexistent-cargo-build-rustc" \
 CARGO_BUILD_RUSTC_WRAPPER="$TMP/nonexistent-cargo-build-rustc-wrapper" \
@@ -248,19 +327,28 @@ CARGO_ENCODED_RUSTFLAGS=--definitely-invalid-ambient-encoded-flag \
 CARGO_FEATURE_DEFINITELY_INVALID_AMBIENT=1 \
 CARGO_REGISTRY_DEFAULT=definitely-invalid-ambient-registry \
 GIT_DIR="$TMP/nonexistent-ambient-git-dir" \
+PID_RS_HOSTILE_SITE_MARKER="$TMP/sitecustomize-executed" \
 PYTHONPATH="$TMP/ambient-python-path" \
+PYTHONOPTIMIZE=2 \
+PYTHONSTARTUP="$TMP/ambient-python-path/sitecustomize.py" \
+PYTHONUSERBASE="$TMP/ambient-python-path" \
 RUSTC="$TMP/nonexistent-ambient-rustc" \
 RUSTDOC="$TMP/nonexistent-ambient-rustdoc" \
 RUSTDOCFLAGS=--definitely-invalid-ambient-rustdoc-flag \
 RUSTFLAGS=--definitely-invalid-ambient-rust-flag \
 TAR_OPTIONS=--definitely-invalid-ambient-tar-option \
-TAR_READER_OPTIONS=definitely-invalid-ambient-tar-reader-option \
+  TAR_READER_OPTIONS=definitely-invalid-ambient-tar-reader-option \
   "$SCRIPT_DIR/check-public-api-snapshots.sh"
+if [[ -e "$TMP/sitecustomize-executed" ]]; then
+  echo "isolated public API Python route executed hostile sitecustomize" >&2
+  exit 1
+fi
 
 mkdir "$TMP/repo"
 tar --exclude './.git' --exclude './target' -cf - -C "$REPO_ROOT" . \
   | tar -xf - -C "$TMP/repo"
-python3 - "$TMP/repo/crates/pid-core/src/report.rs" <<'PY'
+"$API_PYTHON_EXECUTABLE" -I -S -B - \
+  "$TMP/repo/crates/pid-core/src/report.rs" <<'PY'
 from pathlib import Path
 import sys
 
@@ -274,7 +362,8 @@ path.write_text(source.replace(needle, addition), encoding="utf-8")
 PY
 
 generated="$TMP/mutated-api.txt"
-rustdoc_target="$(python3 - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
+rustdoc_target="$("$API_PYTHON_EXECUTABLE" -I -S -B - \
+  "$REPO_ROOT/release-scope-1.0.json" <<'PY'
 import json
 from pathlib import Path
 import sys
@@ -285,11 +374,12 @@ PY
 (
   cd "$TMP/repo"
   CARGO_TARGET_DIR="$TMP/cargo-target" \
-    cargo "+$TOOLCHAIN" public-api -p pid-core --no-default-features \
+    rustup run "$TOOLCHAIN" cargo public-api -p pid-core --no-default-features \
       --target "$rustdoc_target" -sss --color never >"$generated"
 )
 
-committed_relative="$(python3 - "$REPO_ROOT/release-scope-1.0.json" <<'PY'
+committed_relative="$("$API_PYTHON_EXECUTABLE" -I -S -B - \
+  "$REPO_ROOT/release-scope-1.0.json" <<'PY'
 import json
 from pathlib import Path
 import sys

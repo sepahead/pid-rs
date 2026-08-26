@@ -7,6 +7,17 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-release-scope.XXXXXX")"
 trap 'rm -rf "$TMP"' EXIT
 
+summarize_file() {
+  python3 - "$1" <<'PY'
+import hashlib
+from pathlib import Path
+import sys
+
+raw = Path(sys.argv[1]).read_bytes()
+print(f"sha256={hashlib.sha256(raw).hexdigest()} bytes={len(raw)}", file=sys.stderr)
+PY
+}
+
 python3 "$SCRIPT_DIR/check-release-scope.py" --print-markdown >/dev/null
 
 for mutation in \
@@ -74,7 +85,7 @@ PY
   fi
   if ! grep -F "$expected" "$TMP/stderr" >/dev/null; then
     echo "stable $mutation failed for the wrong reason" >&2
-    sed -n '1,20p' "$TMP/stderr" >&2
+    summarize_file "$TMP/stderr"
     exit 1
   fi
 done
@@ -155,7 +166,8 @@ PY
     bad_semver) expected="stable families must enter the proposed 1.x SemVer scope" ;;
     bad_path) expected="JSON Schema validation failed" ;;
     duplicate_key) expected="duplicate JSON object key" ;;
-    fabricated_tool|old_snapshot_source) expected="JSON Schema validation failed" ;;
+    fabricated_tool) expected="JSON Schema validation failed" ;;
+    old_snapshot_source) expected="latest signature revision source does not equal api_snapshot_source" ;;
     partial_approval) expected="pending review fields must all remain null" ;;
     wrong_approval_commit) expected="review commit must equal the frozen api_snapshot_source commit" ;;
     missing_conflict) expected="a decided review requires reviewer, commit, evidence, and conflict disclosure" ;;
@@ -169,7 +181,7 @@ PY
   fi
   if ! grep -F "$expected" "$TMP/stderr" >/dev/null; then
     echo "scope mutation $mutation failed for the wrong reason" >&2
-    sed -n '1,20p' "$TMP/stderr" >&2
+    summarize_file "$TMP/stderr"
     exit 1
   fi
 done
@@ -199,8 +211,14 @@ mutation = sys.argv[5]
 scope = json.loads(scope_source.read_text(encoding="utf-8"))
 registry = json.loads(registry_source.read_text(encoding="utf-8"))
 
-if mutation in {"registry_digest_mismatch", "registry_profile_digest"}:
+if mutation == "registry_digest_mismatch":
     registry["entries"][-1]["profiles"][0]["public_api_snapshot_sha256"] = "0" * 64
+elif mutation == "registry_profile_digest":
+    next(
+        profile
+        for profile in registry["entries"][-1]["profiles"]
+        if profile["id"] == "pid-core-default"
+    )["public_api_snapshot_sha256"] = "0" * 64
 elif mutation == "registry_revision_gap":
     registry["entries"][0]["revision"] = 2
 elif mutation == "registry_negative_epoch":
@@ -215,8 +233,9 @@ elif mutation == "registry_revision_path_mismatch":
     latest = registry["entries"][-1]
     expected = f"/revisions/{latest['epoch']}-{latest['revision']}/"
     wrong = f"/revisions/{latest['epoch']}-{latest['revision'] + 1}/"
-    latest["profiles"][0]["public_api_snapshot"] = (
-        latest["profiles"][0]["public_api_snapshot"].replace(expected, wrong)
+    profile = next(item for item in latest["profiles"] if item["id"] == "pid-core-default")
+    profile["public_api_snapshot"] = (
+        profile["public_api_snapshot"].replace(expected, wrong)
     )
 elif mutation == "registry_identity_mismatch":
     registry["entries"][-1]["status"] = "candidate"
@@ -298,7 +317,7 @@ PY
   fi
   if ! grep -F "$expected" "$TMP/stderr" >/dev/null; then
     echo "signature registry mutation $mutation failed for the wrong reason" >&2
-    sed -n '1,20p' "$TMP/stderr" >&2
+    summarize_file "$TMP/stderr"
     exit 1
   fi
 done
@@ -662,8 +681,12 @@ def fixture_git(repo, *args, input_text=None):
     )
     if process.returncode != 0:
         raise SystemExit(
-            f"scratch Git {' '.join(args)} failed: "
-            f"{process.stderr.strip() or process.stdout.strip()}"
+            f"scratch Git operation {args[0]!r} failed: "
+            f"returncode={process.returncode} "
+            f"stdout_sha256={hashlib.sha256(process.stdout.encode()).hexdigest()} "
+            f"stdout_bytes={len(process.stdout.encode())} "
+            f"stderr_sha256={hashlib.sha256(process.stderr.encode()).hexdigest()} "
+            f"stderr_bytes={len(process.stderr.encode())}"
         )
     return process.stdout.strip()
 
@@ -1404,6 +1427,92 @@ try:
         raise SystemExit("local graft file hid true reachable ancestry")
 finally:
     graft_file.unlink()
+PY
+
+python3 - "$SCRIPT_DIR/check-release-scope.py" <<'PY'
+import hashlib
+import importlib.util
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+
+script = Path(sys.argv[1])
+spec = importlib.util.spec_from_file_location("check_release_scope_privacy", script)
+module = importlib.util.module_from_spec(spec)
+if spec.loader is None:
+    raise SystemExit("cannot load release-scope checker for privacy hostiles")
+spec.loader.exec_module(module)
+
+private = b"/Users/private-owner/private-worktree/do-not-echo"
+private_digest = hashlib.sha256(private).hexdigest().encode("ascii")
+
+
+def expect_private_failure(operation, expected):
+    try:
+        operation()
+    except module.ScopeError as error:
+        diagnostic = str(error).encode("utf-8", "surrogatepass")
+        if private in diagnostic:
+            raise SystemExit("private bytes escaped through release-scope failure")
+        if expected.encode("utf-8") not in diagnostic:
+            raise SystemExit(
+                "privacy hostile failed for the wrong reason; "
+                f"diagnostic_sha256={hashlib.sha256(diagnostic).hexdigest()} "
+                f"diagnostic_bytes={len(diagnostic)}"
+            )
+        if private_digest not in diagnostic:
+            raise SystemExit("privacy hostile failure omitted the private-byte digest")
+    else:
+        raise SystemExit("privacy hostile unexpectedly passed")
+
+
+fake = subprocess.CompletedProcess(
+    args=["bounded-hostile"],
+    returncode=17,
+    stdout=private,
+    stderr=private,
+)
+saved_run = module.subprocess.run
+try:
+    module.subprocess.run = lambda *args, **kwargs: fake
+    expect_private_failure(
+        lambda: module.git_output(Path.cwd(), "rev-parse", "HEAD"),
+        "returncode=17",
+    )
+    expect_private_failure(
+        lambda: module.git_commit_is_ancestor(Path.cwd(), "1" * 40, "2" * 40),
+        "returncode=17",
+    )
+    private_filename = private.decode("utf-8")
+
+    def fail_spawn(*_args, **_kwargs):
+        raise FileNotFoundError(2, "suppressed", private_filename)
+
+    module.subprocess.run = fail_spawn
+    expect_private_failure(
+        lambda: module.git_output(Path.cwd(), "rev-parse", "HEAD"),
+        "spawn failed",
+    )
+finally:
+    module.subprocess.run = saved_run
+
+with tempfile.TemporaryDirectory(prefix="pid-rs-release-scope-privacy-") as directory:
+    root = Path(directory)
+    expect_private_failure(
+        lambda: module.safe_repo_file(
+            root,
+            private.decode("utf-8"),
+            label="privacy-hostile",
+        ),
+        "unsafe repository path",
+    )
+
+suppressed = module.public_failure_message(
+    module.ScopeError(private.decode("utf-8"))
+).encode("utf-8")
+if private in suppressed or private_digest not in suppressed:
+    raise SystemExit("final release-scope CLI privacy suppression is not digest-bound")
 PY
 
 echo "OK: source and machine-scope mutations were rejected for the expected reasons"
