@@ -1,0 +1,757 @@
+{
+  "captured_at_utc": "2026-08-26T04:50:21Z",
+  "commands": [
+    {
+      "argv": [
+        "$PYTHON",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-bounded-full-coordinates.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-bounded-full-coordinates.py",
+      "entrypoint_source_sha256": "d9d1c540930855b31f8190fdb2095d215c736f6f6c3d19c60e2a353923be06d2",
+      "exit_status": 0,
+      "id": "primary_checker_normal",
+      "mode": "normal",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 12237,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-bounded-full-coordinates/v2",
+      "stdout_sha256": "69e0844fccff4b28b34bcc9f9f8b8edc04a73a14fbfcced1fdd2edd27da6498f",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-bounded-full-coordinates.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-bounded-full-coordinates.py",
+      "entrypoint_source_sha256": "d9d1c540930855b31f8190fdb2095d215c736f6f6c3d19c60e2a353923be06d2",
+      "exit_status": 0,
+      "id": "primary_checker_optimized",
+      "mode": "optimized",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 12237,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-bounded-full-coordinates/v2",
+      "stdout_sha256": "69e0844fccff4b28b34bcc9f9f8b8edc04a73a14fbfcced1fdd2edd27da6498f",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-bounded-full-coordinates-self-test.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-bounded-full-coordinates-self-test.py",
+      "entrypoint_source_sha256": "2f51c83502c3dc89952f04a9d046a472e76dae1b11a322173ef353be6976df5d",
+      "exit_status": 0,
+      "id": "primary_self_test_normal",
+      "mode": "normal",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1106,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-bounded-full-coordinates-self-test/v2",
+      "stdout_sha256": "971aaca8d31230b775f69d0f5f1e91e5f9ef9579dc853cff1b6d1c845dfa7e10",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-bounded-full-coordinates-self-test.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-bounded-full-coordinates-self-test.py",
+      "entrypoint_source_sha256": "2f51c83502c3dc89952f04a9d046a472e76dae1b11a322173ef353be6976df5d",
+      "exit_status": 0,
+      "id": "primary_self_test_optimized",
+      "mode": "optimized",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1106,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-bounded-full-coordinates-self-test/v2",
+      "stdout_sha256": "971aaca8d31230b775f69d0f5f1e91e5f9ef9579dc853cff1b6d1c845dfa7e10",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-all108-independent.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-all108-independent.py",
+      "entrypoint_source_sha256": "8670614f168408110109207b2da746664ea0f3a54196362c1e76be97ad418ad7",
+      "exit_status": 0,
+      "id": "independent_checker_normal",
+      "mode": "normal",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 16808,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "pid-rs.sxpid3-all108-independent-result.v2",
+      "stdout_sha256": "63e1470075f7fca88e9a8d82d52cdfcb56d389b4b3c7ac4d5ccba5071d6c2212",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-all108-independent.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-all108-independent.py",
+      "entrypoint_source_sha256": "8670614f168408110109207b2da746664ea0f3a54196362c1e76be97ad418ad7",
+      "exit_status": 0,
+      "id": "independent_checker_optimized",
+      "mode": "optimized",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 16808,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "pid-rs.sxpid3-all108-independent-result.v2",
+      "stdout_sha256": "63e1470075f7fca88e9a8d82d52cdfcb56d389b4b3c7ac4d5ccba5071d6c2212",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-all108-independent-self-test.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-all108-independent-self-test.py",
+      "entrypoint_source_sha256": "a1bebce9f63c8932706e3794c4453a2504ad5660187faf98dbd7b809845c03d0",
+      "exit_status": 0,
+      "id": "independent_self_test_normal",
+      "mode": "normal",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2788,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "pid-rs.sxpid3-all108-independent-mutations.v2",
+      "stdout_sha256": "1ee40d697aebd1b6d01ad5781ab46ad7a5265a50f1918cff67cda5e08775d8ae",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-all108-independent-self-test.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-all108-independent-self-test.py",
+      "entrypoint_source_sha256": "a1bebce9f63c8932706e3794c4453a2504ad5660187faf98dbd7b809845c03d0",
+      "exit_status": 0,
+      "id": "independent_self_test_optimized",
+      "mode": "optimized",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2788,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "pid-rs.sxpid3-all108-independent-mutations.v2",
+      "stdout_sha256": "1ee40d697aebd1b6d01ad5781ab46ad7a5265a50f1918cff67cda5e08775d8ae",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-p5-rust-source-route.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-p5-rust-source-route.py",
+      "entrypoint_source_sha256": "1bb15e5a45c2e5fdde8b8d933df64cc875f26b1d79fb048f2a68af57d9b3f603",
+      "exit_status": 0,
+      "id": "rust_source_route_checker_normal",
+      "mode": "normal",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 11054,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-p5-rust-source-route/v2",
+      "stdout_sha256": "a8cdab4307bf3bc46b03ad6487282a5ab4f0768959d1370f008860de978f22d0",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-p5-rust-source-route.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-p5-rust-source-route.py",
+      "entrypoint_source_sha256": "1bb15e5a45c2e5fdde8b8d933df64cc875f26b1d79fb048f2a68af57d9b3f603",
+      "exit_status": 0,
+      "id": "rust_source_route_checker_optimized",
+      "mode": "optimized",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 11054,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-p5-rust-source-route/v2",
+      "stdout_sha256": "a8cdab4307bf3bc46b03ad6487282a5ab4f0768959d1370f008860de978f22d0",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-p5-rust-source-route-self-test.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-p5-rust-source-route-self-test.py",
+      "entrypoint_source_sha256": "bed3303d604517151d54e4a37d91da3818b4c99b9ba3f3ba3affaa659f204de4",
+      "exit_status": 0,
+      "id": "rust_source_route_self_test_normal",
+      "mode": "normal",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 593,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-p5-rust-source-route-self-test/v2",
+      "stdout_sha256": "67ad8be5b31bb93a0c64df8a6a3cf91a8a0a669d82b73d8556b98060a93f0487",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    },
+    {
+      "argv": [
+        "$PYTHON",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "$REPOSITORY/scripts/check-sxpid3-p5-rust-source-route-self-test.py"
+      ],
+      "entrypoint": "scripts/check-sxpid3-p5-rust-source-route-self-test.py",
+      "entrypoint_source_sha256": "bed3303d604517151d54e4a37d91da3818b4c99b9ba3f3ba3affaa659f204de4",
+      "exit_status": 0,
+      "id": "rust_source_route_self_test_optimized",
+      "mode": "optimized",
+      "stderr_bytes": 0,
+      "stderr_cap_bytes": 1048576,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 593,
+      "stdout_cap_bytes": 4194304,
+      "stdout_format": "/pid-rs/sxpid3-p5-rust-source-route-self-test/v2",
+      "stdout_sha256": "67ad8be5b31bb93a0c64df8a6a3cf91a8a0a669d82b73d8556b98060a93f0487",
+      "timed_out": false,
+      "timeout_seconds": 7200
+    }
+  ],
+  "execution_inputs": [
+    {
+      "byte_count": 22056,
+      "git_mode": "100644",
+      "live_mode": "0644",
+      "path": "audit/schemas/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.schema.json",
+      "role": "closed_receipt_schema",
+      "sha256": "5eccc34fe786b3584970b7b967758ce0b09a7bf4c2cc9cdedafc8008d809d985",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "229d0d470f04deb9669791f593d1533d92d5784c"
+    },
+    {
+      "byte_count": 112503,
+      "git_mode": "100644",
+      "live_mode": "0644",
+      "path": "crates/pid-core/src/discrete_pid.rs",
+      "role": "three_source_antichain_and_mobius_source",
+      "sha256": "3136101f2d4f23c01ee87953291b501501512d4f55235f1c7c394bd838854e21",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "7278cf77e0669271291267b144233cdadc902222"
+    },
+    {
+      "byte_count": 134094,
+      "git_mode": "100644",
+      "live_mode": "0644",
+      "path": "crates/pid-core/src/sxpid.rs",
+      "role": "fixed_three_source_lexical_route_source",
+      "sha256": "ea51e92b5f23bd627f21dd239fb4dba63f9c1067be3ca3294c58d72b00ec0771",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "37fbcf999a4baf08179c5b9b174b73cd6dcf8de3"
+    },
+    {
+      "byte_count": 90444,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py",
+      "role": "no_clobber_receipt_generator",
+      "sha256": "449d62d65be8a7a6a108bb86f6a5cb9c7ef932fd8e242876931b34c4eb029c42",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "eda1262055939d68eed264ac9810ee9b27e212f6"
+    },
+    {
+      "byte_count": 25864,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/check-sxpid3-all108-independent-self-test.py",
+      "role": "independent_exact_lane_self_test",
+      "sha256": "a1bebce9f63c8932706e3794c4453a2504ad5660187faf98dbd7b809845c03d0",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "7b6f282a483643f1262738ff9d6f114f073fb339"
+    },
+    {
+      "byte_count": 62762,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/check-sxpid3-all108-independent.py",
+      "role": "independent_exact_lane",
+      "sha256": "8670614f168408110109207b2da746664ea0f3a54196362c1e76be97ad418ad7",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "76bcca738102ab840a70b1f5fe877f5625da6544"
+    },
+    {
+      "byte_count": 34513,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/check-sxpid3-bounded-full-coordinates-self-test.py",
+      "role": "primary_exact_lane_self_test",
+      "sha256": "2f51c83502c3dc89952f04a9d046a472e76dae1b11a322173ef353be6976df5d",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "8cc1eb6a3ec07b4176048a930001e829d48e36a4"
+    },
+    {
+      "byte_count": 63836,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/check-sxpid3-bounded-full-coordinates.py",
+      "role": "primary_exact_lane",
+      "sha256": "d9d1c540930855b31f8190fdb2095d215c736f6f6c3d19c60e2a353923be06d2",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "7c31c74ee7aae14c301ee20979e40d8e29d7cd53"
+    },
+    {
+      "byte_count": 45945,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/check-sxpid3-p5-rust-source-route-self-test.py",
+      "role": "lexical_rust_route_lane_self_test",
+      "sha256": "bed3303d604517151d54e4a37d91da3818b4c99b9ba3f3ba3affaa659f204de4",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "948309240ef279331cf7357fc0bd150ada113c77"
+    },
+    {
+      "byte_count": 39914,
+      "git_mode": "100755",
+      "live_mode": "0755",
+      "path": "scripts/check-sxpid3-p5-rust-source-route.py",
+      "role": "lexical_rust_route_lane",
+      "sha256": "1bb15e5a45c2e5fdde8b8d933df64cc875f26b1d79fb048f2a68af57d9b3f603",
+      "source_blob_matches_live_file": true,
+      "source_blob_oid": "170a5e0a2e1ae7c6e38660d4eef31d5ceaa61ee8"
+    }
+  ],
+  "findings": {
+    "algebraic_dependencies": {
+      "atom_net_equals_informative_minus_misinformative_per_position": 18,
+      "component_base_rank_or_independence_adjudicated": false,
+      "cumulative_net_equals_informative_minus_misinformative_per_position": 18,
+      "zeta_cumulative_from_atom_identities": 54
+    },
+    "classification": {
+      "agreement_observation": "matching_neutral_v2_sha256_plus_six_exact_census_blocks_not_direct_record_by_record_receipt_comparison_or_logical_independence",
+      "bounded_exact_two_route_agreement": true,
+      "compiled_rust_refinement": "open",
+      "new_pid_measure_or_priority_claim": false,
+      "paper_correspondence": "external_premise_open",
+      "route_and_representation_neutrality_scope": "explicit_v2_only",
+      "scientific_validation": false
+    },
+    "digests": {
+      "independent_audit_registry_sha256": "da4d8e7ea2793983f8758a7c72dfa8b0ac1ffaeb67fba57711064f1ceb6840d4",
+      "independent_corpus_stream_sha256": "474da2048645445d5f221f50c7d0992cadc8819eba3674107f2a69059ced9b4e",
+      "independent_route_native_stream_sha256": "4996153f04315852492bbff45548ad241f8aeaacad11e25ab510bc86267c201a",
+      "independent_table_bound_framing_probe_sha256": "f115265206099bac95b22149dc83c98fed2de93c4265a001c232266e02f4d813",
+      "lexical_rust_route_manifest_sha256": "e0ef5a05bbade1ccbd83767ee0e1e39f05276790bb2b433dd8e5fff7ea83046a",
+      "primary_audit_registry_sha256": "6ada33aa90382316ae0757ed7f449e9fa9a35db3a7d4aec8aa3660a4c6e3c3d5",
+      "primary_corpus_stream_sha256": "5eb678eba27eea449ea5c0875c2a930ec5fcd0764718aaddfae8283fbdfc6309",
+      "primary_neutral_v2_framing_unit_sha256": "035c467bcf756e4009db452ec43f48747ce0f70ebdb43780d9925bf5124c24d2",
+      "primary_route_native_stream_sha256": "315592501f49021ed86218ba1c277b9e9b764ace9621c8b4df61bb5868f3ead0",
+      "route_neutral_v2_expression_stream_sha256": "20c234cc664ad903aa66689d33d95b2db5bca5da3b0f9ee0b497d1246e3139b8"
+    },
+    "domain": {
+      "antichain_positions": 18,
+      "census_weighting": "one_vote_per_labelled_count_vector_not_prevalence_or_probability",
+      "components": [
+        "informative",
+        "misinformative",
+        "net"
+      ],
+      "expression_evaluations": 2197584,
+      "expressions_per_table": 108,
+      "full_support_16_cell_laws": 0,
+      "labeled_binary_tables": 20348,
+      "local_event_ratios_used_only_as_averaged_product_factors": true,
+      "maximum_positive_cells": 5,
+      "nonprimitive_rescaled_count_vectors": 184,
+      "object_kind": "keyed_scalar_audit_expression",
+      "pointwise_atom_values_output": 0,
+      "primitive_rational_laws": 20164,
+      "representation_stages": [
+        "cumulative_values",
+        "mobius_atoms"
+      ],
+      "strictly_positive_exact_products": 2197584,
+      "tables_by_total": [
+        16,
+        136,
+        816,
+        3876,
+        15504
+      ],
+      "total_count_maximum": 5,
+      "total_count_minimum": 1
+    },
+    "lexical_rust_route": {
+      "anchor_count": 21,
+      "boundaries": [
+        "lexical_source_route_only",
+        "rust_name_resolution_not_formally_verified",
+        "compiled_rust_refinement_open",
+        "rust_numeric_values_not_compared",
+        "binary64_refinement_not_established",
+        "108_keyed_scalar_audit_expressions_not_108_atoms_or_nodes",
+        "108_keyed_scalar_audit_expressions_not_108_independent_degrees_of_freedom",
+        "git_commit_identity_not_established",
+        "release_identity_not_established",
+        "source_authenticity_not_established",
+        "artifact_authenticity_not_established",
+        "GO_is_lane_local_lexical_obligations_only_not_scientific_validation",
+        "bounded_repeated_read_race_detection_not_atomic_snapshot_live_monitor_or_authenticity",
+        "claimed_construct_outer_attributes_are_exactly_bounded",
+        "module_level_inner_cfg_and_cfg_attr_are_rejected",
+        "attribute_guard_is_conservative_lexical_not_full_Rust_parsing_or_cfg_evaluation"
+      ],
+      "classification": "lexical_source_route_only",
+      "numeric_rust_expressions_compared": 0,
+      "route_manifest_sha256": "e0ef5a05bbade1ccbd83767ee0e1e39f05276790bb2b433dd8e5fff7ea83046a"
+    },
+    "sign_census": {
+      "atom.informative": {
+        "negative": 0,
+        "positive": 145100,
+        "zero": 221164
+      },
+      "atom.misinformative": {
+        "negative": 0,
+        "positive": 71468,
+        "zero": 294796
+      },
+      "atom.net": {
+        "negative": 31284,
+        "positive": 96768,
+        "zero": 238212
+      },
+      "cumulative.informative": {
+        "negative": 0,
+        "positive": 321856,
+        "zero": 44408
+      },
+      "cumulative.misinformative": {
+        "negative": 0,
+        "positive": 278984,
+        "zero": 87280
+      },
+      "cumulative.net": {
+        "negative": 29496,
+        "positive": 252816,
+        "zero": 83952
+      }
+    },
+    "sign_semantics": {
+      "exact_product_Q_strictly_positive": true,
+      "negative": "Q_lt_1",
+      "positive": "Q_gt_1",
+      "zero": "Q_eq_1_and_log_expression_eq_0_not_product_zero"
+    }
+  },
+  "host_boundary": {
+    "git": {
+      "executable_bytes": 3703376,
+      "executable_sha256": "5f0351f649aa1321345229d5256fc8043517778b134a3b4571ecdc3818f124b2",
+      "public_name": "$GIT",
+      "version": "git version 2.55.0"
+    },
+    "observation_class": "bounded_local_execution_environment_observation_not_attestation",
+    "python": {
+      "executable_bytes": 52448,
+      "executable_sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+      "public_name": "$PYTHON",
+      "version": "CPython 3.14.6"
+    },
+    "python_optimize": 0,
+    "required_python_flags": [
+      "-I",
+      "-S",
+      "-B"
+    ]
+  },
+  "nonclaims": [
+    "The bounded census is not an arbitrary-alphabet, arbitrary-total, population, estimator-calibration, or general theorem.",
+    "The human transcription of MGW equations is an external premise; paper-to-code correspondence is not established.",
+    "The lexical Rust route does not establish Rust parsing, name resolution, compilation, execution, or numeric agreement.",
+    "No binary64 or certified-logarithm refinement is established.",
+    "The source and receipt bindings provide repository custody, not authenticity, authorship, priority, release identity, or attestation.",
+    "Sequential bounded reads and repeated configuration, attribute, source, index, and status checks are not an atomic snapshot, adversarial execution boundary, or live monitor and cannot exclude a transient change completed between observations; in particular, a concurrent Git/common info-attributes or configuration insertion could affect an in-flight Git process before a later check detects it.",
+    "Git status does not report ignored paths, writes outside the worktree, or transient changes that begin and end between observations.",
+    "Implementation-disjoint routes retain shared semantic premises, conventions, runtime, and human transcription.",
+    "SHA-256 bindings do not by themselves authenticate artifacts or exclude hash or host compromise.",
+    "GO statuses are lane-local checks, not scientific or application validation.",
+    "P1 is adjacent provenance only and was neither consumed nor replayed by this receipt.",
+    "The receipt does not output pointwise atom values; local event ratios appear only as factors in averaged exact products.",
+    "The receipt's two-route agreement observation is a matching neutral-v2 SHA-256 value plus six matching exact census blocks; it is not a direct record-by-record receipt comparison or a claim of logical independence.",
+    "Process-group cleanup cannot detect a child that deliberately escapes into another session; the six exact entrypoint sources were lexically screened for common escape primitives, not proven incapable of escape.",
+    "POSIX provides no atomic compare-and-unlink primitive; a caught pre-release write or postwrite exception attempts to invalidate the exact retained O_RDWR inode into a non-JSON mode-0600 tombstone (affecting every hard link to that inode), and O_EXCL prevents automatic overwrite; after finalized bytes, mode, path, source, status, host, file fsync, and parent fsync are verified, a descriptor-release error instead retains those bytes for prospective validation and never claims WROTE; process kill, power loss, crash atomicity, and close-error durability semantics are not covered.",
+    "Repeated executable-byte and version observations do not prove which interpreter bytes launched the already-running process and are not an atomic or authentic host snapshot.",
+    "captured_at_utc is a local wall-clock observation, not a trusted timestamp or external time attestation.",
+    "Receipt-v1 deliberately rejects any local filter, attribute, or include configuration route, every effective filter attribute on the probed path roster, and stage-0 gitlinks as verifier compatibility and nested-metadata bounds; a future repository adoption of LFS, another clean filter, or submodules requires a reviewed versioned verifier migration rather than weakening this evidence retrospectively.",
+    "Receipt preservation covers only the current non-shallow HEAD-reachable graph; it cannot detect absent, unreachable, or force-rewritten history and is not a transparency log or externally anchored immutability proof."
+  ],
+  "p1_adjacent_lane": {
+    "adjacent_child_commit": "9d1cdf287147e66f7ebbbf67bd9b5ed177d28ac3",
+    "adjacent_child_has_p1_as_sole_parent": true,
+    "baseline_commit": "c829dfb4c1683e6b3749b0642fdd1f0de64cdcea",
+    "baseline_is_ancestor_of_source": true,
+    "baseline_tree": "a326dbf538342a4c1f0c449234025f042e08bed8",
+    "consumed": false,
+    "fresh_execution_credit": "none",
+    "path_count": 10,
+    "paths": [
+      {
+        "baseline_blob_oid": "2af737f67eb84c0660f1839e2d045e4706473d85",
+        "byte_count": 6354,
+        "git_mode": "100644",
+        "path": ".github/workflows/sxpid3-informative-invariance.yml",
+        "sha256": "f6b13f3d0e9d0c28b2d5bc234035f23570e8c9359558e9daa2b46664bbf07be1",
+        "source_blob_oid": "2af737f67eb84c0660f1839e2d045e4706473d85",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "c96bdf2bc73019c2a6511bb848e749b8593d1a34",
+        "byte_count": 2599,
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sxpid3-informative-invariance/AGENTS.md",
+        "sha256": "57caa77b6549116094081155406f44bf58d65505de71efb9a0a8327d1f533304",
+        "source_blob_oid": "c96bdf2bc73019c2a6511bb848e749b8593d1a34",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "74c4265d6008bb001b0531a9e18d8249a8aa340a",
+        "byte_count": 32338,
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean",
+        "sha256": "db597daac0c33fc941908571a72a6787b88fe610ace9360aeca9b4f9916a1dbb",
+        "source_blob_oid": "74c4265d6008bb001b0531a9e18d8249a8aa340a",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "cd0e41ab1d1ed3f684332c9ff6ef4e53686f9dd2",
+        "byte_count": 10736,
+        "git_mode": "100644",
+        "path": "crates/pid-core/tests/sxpid_informative_invariance.rs",
+        "sha256": "00fc8d60e6a5e9c78d5e8e538e85b03923b027f7cc232247150d517303fa3761",
+        "source_blob_oid": "cd0e41ab1d1ed3f684332c9ff6ef4e53686f9dd2",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "8b9e9cf2699e24710719700ad27fddf87a9f458a",
+        "byte_count": 1026,
+        "git_mode": "100644",
+        "path": "justfile.sxpid3-informative-invariance",
+        "sha256": "78e4bc8421438171e786f654a8b6ca1cd34a76e01f6758c91b309bd517e59cce",
+        "source_blob_oid": "8b9e9cf2699e24710719700ad27fddf87a9f458a",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "401948f9aab7219ccb40045bbb1016675245dd54",
+        "byte_count": 3833,
+        "git_mode": "100755",
+        "path": "scripts/check-lean-sxpid3-informative-invariance-parity.py",
+        "sha256": "e112c8b313efca724b60dc34e95fedbd8279b4089aee233bdc8515043b68e044",
+        "source_blob_oid": "401948f9aab7219ccb40045bbb1016675245dd54",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "4ef7b16131d77de66a92cd28d196ec5446878b7e",
+        "byte_count": 29728,
+        "git_mode": "100755",
+        "path": "scripts/check-lean-sxpid3-informative-invariance-self-test.py",
+        "sha256": "213531760b81a17bf9b65e4f99e63e1eede113cc4c6824191c459ced708228ad",
+        "source_blob_oid": "4ef7b16131d77de66a92cd28d196ec5446878b7e",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "5e154b4068b46dea6741c7f4e19e213d52e77803",
+        "byte_count": 17039,
+        "git_mode": "100755",
+        "path": "scripts/check-lean-sxpid3-informative-invariance.py",
+        "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+        "source_blob_oid": "5e154b4068b46dea6741c7f4e19e213d52e77803",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "c5307c0c3fa05481dc132f968e4251f68298265d",
+        "byte_count": 8874,
+        "git_mode": "100755",
+        "path": "scripts/check-sxpid3-informative-invariance-self-test.py",
+        "sha256": "bb822f168a0f8b056af1d5400ebdacf0bfa502630ecd2a04788a349507232365",
+        "source_blob_oid": "c5307c0c3fa05481dc132f968e4251f68298265d",
+        "unchanged_at_source": true
+      },
+      {
+        "baseline_blob_oid": "9e142ee84315aff646e124470c8105f95657698c",
+        "byte_count": 23750,
+        "git_mode": "100755",
+        "path": "scripts/check-sxpid3-informative-invariance.py",
+        "sha256": "f26d8108cae2b8bb5702ae4e27cafb55153e4757590fb39b75311c845cab5ca8",
+        "source_blob_oid": "9e142ee84315aff646e124470c8105f95657698c",
+        "unchanged_at_source": true
+      }
+    ],
+    "relationship": "adjacent_separate_lane_provenance_only",
+    "replayed": false,
+    "semantic_transfer": "none"
+  },
+  "result_id": "SXPID3-BOUNDED-KEYED-SCALAR-AUDIT-EXPRESSIONS",
+  "schema": "pid-rs/sxpid3-bounded-keyed-scalar-audit-expressions-receipt/v1",
+  "schema_revision": 1,
+  "source_package": {
+    "base_tree": "ab57c76ec584e0d91b830ebd02561b248444e5e0",
+    "direct_child_of_required_base": true,
+    "receipt_absent_from_source_commit": true,
+    "receipt_path": "audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json",
+    "sole_parent": "9d1cdf287147e66f7ebbbf67bd9b5ed177d28ac3",
+    "source_commit": "1be1ec235f2c0ed0e874864e98e8ef4dedaa5bcc",
+    "source_delta": [
+      {
+        "base_mode": null,
+        "path": ".github/workflows/sxpid3-bounded-keyed-scalar-audit-expressions.yml",
+        "source_blob_oid": "b76a493ef2ba258a1ad5670806170a01cd47898b",
+        "source_bytes": 6689,
+        "source_mode": "100644",
+        "source_sha256": "f2fc37628e395a75b255eb6ed6e0515878be1232120dabf48aed0115a096510d",
+        "status": "A"
+      },
+      {
+        "base_mode": "100644",
+        "path": "CHANGELOG.md",
+        "source_blob_oid": "adc65d028fc26e8365112f0b3ba33f41d3f4612b",
+        "source_bytes": 229806,
+        "source_mode": "100644",
+        "source_sha256": "c1250dff8af5a6272d0e11c0454b1cd9a13a1bd6dbd49e4b5306b8fb7b62adf5",
+        "status": "M"
+      },
+      {
+        "base_mode": null,
+        "path": "audit/schemas/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.schema.json",
+        "source_blob_oid": "229d0d470f04deb9669791f593d1533d92d5784c",
+        "source_bytes": 22056,
+        "source_mode": "100644",
+        "source_sha256": "5eccc34fe786b3584970b7b967758ce0b09a7bf4c2cc9cdedafc8008d809d985",
+        "status": "A"
+      },
+      {
+        "base_mode": null,
+        "path": "scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py",
+        "source_blob_oid": "4066a07b37aed7d9996a2a54424ebb40715bb9f3",
+        "source_bytes": 50521,
+        "source_mode": "100755",
+        "source_sha256": "5b8a0bfb4a3148cf3748a3eb41b2291a6de4f7cd50b1c627006fde46eaf8cfc9",
+        "status": "A"
+      },
+      {
+        "base_mode": null,
+        "path": "scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py",
+        "source_blob_oid": "eda1262055939d68eed264ac9810ee9b27e212f6",
+        "source_bytes": 90444,
+        "source_mode": "100755",
+        "source_sha256": "449d62d65be8a7a6a108bb86f6a5cb9c7ef932fd8e242876931b34c4eb029c42",
+        "status": "A"
+      },
+      {
+        "base_mode": null,
+        "path": "scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py",
+        "source_blob_oid": "db16d76510854db7c5f6481d55660bb9c1585cf1",
+        "source_bytes": 52556,
+        "source_mode": "100755",
+        "source_sha256": "1505f05000fae1941c7e43cf277fceade374e2417b65a9f5b8227cff2170c06d",
+        "status": "A"
+      },
+      {
+        "base_mode": null,
+        "path": "scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py",
+        "source_blob_oid": "aec3fec037b427518803432559e84923269cdeac",
+        "source_bytes": 61164,
+        "source_mode": "100755",
+        "source_sha256": "1dc5e65cb999f297a4645c0560093c30061acf9a7dc1a961a94a0ed076bee36c",
+        "status": "A"
+      }
+    ],
+    "source_tree": "326719a9c179d053353004317a94b4c59c294228"
+  },
+  "validation": {
+    "all_commands_exit_zero": true,
+    "all_entrypoint_source_sha256_values_bound": true,
+    "all_stderr_empty": true,
+    "all_stdout_nonempty": true,
+    "all_stdout_sha256_values_pinned": true,
+    "entrypoint_escape_primitives_lexically_absent": true,
+    "execution_inputs_match_source_blobs_and_live_files": true,
+    "normal_optimized_pairs_byte_identical": true,
+    "pending_placeholder_live_mode_0600": true,
+    "pending_placeholder_only_untracked": true,
+    "pending_placeholder_reread_exact": true,
+    "pre_finalization_host_boundary_reverified": true,
+    "pre_finalization_source_reverified": true,
+    "pre_finalization_status_exact": true,
+    "prewrite_host_boundary_reverified": true,
+    "receipt_absent_from_source_commit": true,
+    "source_status_empty_before_input_selection": true,
+    "source_status_empty_immediately_before_pending_create": true
+  }
+}
