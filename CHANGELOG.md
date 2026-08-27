@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a public, non-authoritative recovery receipt for the 2026-08-27 integration restart. It
+  distinguishes independently preserved source snapshots from a lost uncommitted temporary
+  synthesis, re-verifies 20 complete-history Git bundles by size, SHA-256, advertised object, and
+  `git bundle verify`, and strengthens the cleanup preconditions. The receipt establishes bounded
+  recoverability and migration discipline only; bundle integrity is not authenticity, scientific
+  correctness, semantic completeness, or proof of media durability.
+
 - Add a fail-closed source-to-evidence capture lifecycle for public Rust API revision 0-4.
   The clean source commit deliberately retains the revision-3 registry while declaring revision 4;
   the capture accepts only that one pending release-scope failure, rebuilds ten distinct feature
