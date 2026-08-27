@@ -37,6 +37,27 @@ jobs:
       - uses: Swatinem/rust-cache@e18b497796c12c097a38f9edb9d0641fb99eee32 # v2
       - run: cargo test --locked --workspace --exclude pid-python
 
+  advisory-archive-accounting:
+    name: Bounded inert advisory-archive accounting
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - name: Check bounded accounting and hostile mutations in both Python modes
+        run: |
+          set -euo pipefail
+          python3 -I -S -B scripts/check-advisory-councils-archive.py > "${RUNNER_TEMP}/advisory.json"
+          python3 -O -I -S -B scripts/check-advisory-councils-archive.py > "${RUNNER_TEMP}/advisory.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/advisory.json" "${RUNNER_TEMP}/advisory.optimized.json"
+          python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py > "${RUNNER_TEMP}/advisory-self.json"
+          python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py > "${RUNNER_TEMP}/advisory-self.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/advisory-self.json" "${RUNNER_TEMP}/advisory-self.optimized.json"
+
   ksg-harmonic-assurance:
     name: KSG integer-harmonic arithmetic and phase isolation
     runs-on: ubuntu-24.04

@@ -779,6 +779,321 @@
       "recovery_locator_published": false,
       "sha256": "c04a00e33285bf0e08c71c773913a07c9a135e9f8eb5bb0a21191c4dedae519a",
       "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory prompt",
+      "bytes": 5311,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-completion-triage-prompt-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-completion-triage-prompt.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "ea96212aaf7e2faedf93bf86f105666e6916cc1f21450edc2391c2cdebc5f687",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 54384,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-completion-triage-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-completion-triage-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "1f2a20a992e3c662f9693d61dcb2b1ae36bb7fec869ae589c18fa1a1191b0269",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 10003,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-imin-tie-swap-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-imin-tie-swap-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "923e502a28328ce7ff630672463a25cf77d85814a1fbe1220157798bd7952f33",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory prompt",
+      "bytes": 3489,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-imin-tie-swap-prompt-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-imin-tie-swap-review-prompt.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "da03fa2e462e63fc1df833f865a1f254030c6c1e2d822cb4091d0168ef22094b",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory prompt",
+      "bytes": 5335,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-ksg-integer-harmonic-prompt-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-ksg-integer-harmonic-review-prompt.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "209eed840c40e32e1261020cb8349a8d66c5ab39ae140446af1a644bdde83eb7",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory response",
+      "bytes": 49214,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-pid2-represented-sum-response-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-pid2-represented-sum-review-2026-07-25.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "f3b8e66a39030ab97eda476e3ae043f80271725bcd111814264d9a03c8dd8ffc",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory prompt",
+      "bytes": 5229,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-pid2-represented-sum-prompt-20260725",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-pid2-represented-sum-review-prompt.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "4f1871ca6feba5173f62c92fa270bad44da8a989397cb6294a47558328729f47",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "separate sanity note",
+      "bytes": 21971,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-sanity-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-independent-sanity-2026-07-26.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "95c6c331138dba52b0a2bdd8632cdd09f6b9ad831b69bf26c19fa238fe789dd5",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "provider metadata",
+      "bytes": 4671,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-metadata-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-metadata-2026-07-26.json",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "0138e3541341be46d13830605d2762ce40bf48b94d1496d8491676c81902ce39",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory prompt",
+      "bytes": 24989,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-prompt-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-prompt-2026-07-26.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "58759c2021ea0e591afb42a1a31d9df339ad7642f7aa5b7120a2be7630adc1f0",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "provider receipt stream",
+      "bytes": 993147,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-receipt-stream-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-receipt-2026-07-26.jsonl",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "308b1ad364023006c2060db20d43bfb157e13be52c5e6535b197624d625ebb16",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "worktree status snapshot",
+      "bytes": 12210,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-status-snapshot-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-status-2026-07-26.txt",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "a82c19ab7dadd9fa3969b91dfddf4c33079d71000766c6381aab515e6a86380b",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "empty stderr stream",
+      "bytes": 0,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-empty-stderr-20260726",
+      "included": false,
+      "nonclaim": "The digest is the universal SHA-256 of zero bytes. It does not identify or authenticate an execution, make another artifact recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-stderr-2026-07-26.txt",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "visible advisory response",
+      "bytes": 83620,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "opus-frontier-visible-response-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/opus5-wibral-frontier-hostile-review-visible-2026-07-26.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "13abc79721086a2f54823e0357ca0f87fc5d334f585e536ede0808f1fdf82db4",
+      "source_head_context_only": true
+    },
+    {
+      "artifact_class": "advisory prompt",
+      "bytes": 4533,
+      "disposition": "withheld_pending_semantic_privacy_rights_review",
+      "id": "pid2-m1-m2-final-adversarial-prompt-20260726",
+      "included": false,
+      "nonclaim": "The digest records a bounded local observation. It does not authenticate the bytes, make them recoverable, establish model execution or review validity, or import any contained claim.",
+      "observation_kind": "hash-only observation of exact bytes in the protected source worktree",
+      "original_path": "audit/evidence/pid2-m1-m2-final-adversarial-review-prompt-2026-07-26.md",
+      "payload_path": null,
+      "provenance": {
+        "frozen_intake_head": "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7",
+        "observed_source_branch": "review/sx-count-event-bridge-r2",
+        "observed_source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+        "source_head_binds_payload": false,
+        "tracked_state": "untracked"
+      },
+      "recovery_locator_published": false,
+      "sha256": "25af0a7be4ccf33992f9512136ce1202a0c92cff47ef4526ca105bc100eebb9e",
+      "source_head_context_only": true
     }
   ]
 }

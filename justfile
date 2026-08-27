@@ -68,6 +68,19 @@ py-test:
     maturin develop --release --locked -m crates/pid-python/Cargo.toml
     pytest crates/pid-python/tests -q
 
+# Inert July-2026 advisory archive: exact 30-path accounting and named hostile controls.
+advisory-archive:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    task_tmp="$(mktemp -d)"
+    trap 'rm -rf -- "$task_tmp"' EXIT
+    python3 -I -S -B scripts/check-advisory-councils-archive.py > "$task_tmp/check.json"
+    python3 -O -I -S -B scripts/check-advisory-councils-archive.py > "$task_tmp/check.optimized.json"
+    cmp --silent "$task_tmp/check.json" "$task_tmp/check.optimized.json"
+    python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py > "$task_tmp/self-test.json"
+    python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py > "$task_tmp/self-test.optimized.json"
+    cmp --silent "$task_tmp/self-test.json" "$task_tmp/self-test.optimized.json"
+
 # Version coherence (Cargo workspace version == CITATION.cff; CI also runs a tag mode on tag pushes)
 version-check:
     scripts/check-current-release-state.sh
@@ -761,10 +774,10 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check advisory-archive formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 
 # Core local gates. CI additionally runs OS/Python matrices, coverage, fuzz, SBOM, semver/package,
 # a full-history secret scan, and the pinned MSRV matrix.
-ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check lean-toolchain-freeze
+ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check advisory-archive lean-toolchain-freeze

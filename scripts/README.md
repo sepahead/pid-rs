@@ -315,6 +315,29 @@ python3 scripts/check-ecosystem-capabilities-self-test.py
 
 ## Review evidence, bounded algebra, and oracle checks
 
+`check-advisory-councils-archive.py` validates the inert July 2026 advisory archive as an exactly
+bounded preservation object: five byte-preserved prompt payloads, 25 hash-only companion
+observations whose raw bytes remain withheld, and ten candidate statements that remain explicitly
+unimported pending fresh derivation. It checks canonical JSON and closed inventory/schema
+cardinalities; exact file modes, sizes, and SHA-256 digests; source-status and privacy boundaries;
+successor routing; the empty-stream digest nonclaim; and the absence of archive wiring into
+scientific authorities or executable/import surfaces. Passing establishes only the declared
+30-path byte accounting. It does not validate any prompt claim, response, execution, theorem,
+estimator, or model output, and it does not grant publication rights over withheld material.
+
+The isolated self-test runs two clean baselines and 64 named hostile mutations in both ordinary
+and optimized Python. Those controls exercise payload/provenance/status/successor drift,
+license/privacy escalation, zero-byte/digest aliasing, withheld-byte import, authority or execution
+wiring, symlinks, schema/cardinality drift, and README-iff violations. Mode agreement checks for
+stripped-assertion dependencies; it is not an additional independent validation route.
+
+```text
+python3 -I -S -B scripts/check-advisory-councils-archive.py
+python3 -O -I -S -B scripts/check-advisory-councils-archive.py
+python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py
+python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py
+```
+
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical
 `assurance-registry.json` covers exactly the 37 release-scope families across definition, exact
 algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;

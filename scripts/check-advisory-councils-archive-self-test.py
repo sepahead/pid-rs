@@ -27,7 +27,7 @@ SCHEMA_REL = ARCHIVE_REL / "INDEX.schema.json"
 DISPOSITION_REL = ARCHIVE_REL / "DISPOSITION.md"
 EXPECTED_STDOUT = (
     '{"archive_id":"advisory-councils-20260725-20260726","payloads":5,'
-    '"rederivation_candidates":10,"status":"ok","withheld_hash_only":10}\n'
+    '"rederivation_candidates":10,"status":"ok","withheld_hash_only":25}\n'
 )
 AUTHORITY_SURFACES = (
     "method-catalog.json",
@@ -246,6 +246,13 @@ def mutate_execution_wire(root: Path) -> None:
     )
 
 
+def mutate_withheld_execution_wire(root: Path) -> None:
+    append_bytes(
+        root / "justfile",
+        b"\n# opus5-wibral-frontier-hostile-review-stderr-2026-07-26.txt\n",
+    )
+
+
 def mutate_missing_successor(root: Path) -> None:
     (root / "PID_MATHEMATICAL_AUDIT_PROTOCOL.md").unlink()
 
@@ -257,11 +264,23 @@ def mutate_original_prompt_copy(root: Path) -> None:
     path.chmod(0o644)
 
 
+def mutate_original_prompt_broken_symlink(root: Path) -> None:
+    path = root / "audit/evidence/fable5-completion-triage-prompt.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.symlink_to("absent-prompt-payload")
+
+
 def mutate_raw_withheld_copy(root: Path) -> None:
     path = root / "audit/evidence/fable5-completion-triage-review-2026-07-25.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("withheld\n", encoding="utf-8")
     path.chmod(0o644)
+
+
+def mutate_raw_withheld_broken_symlink(root: Path) -> None:
+    path = root / "audit/evidence/fable5-completion-triage-review-2026-07-25.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.symlink_to("absent-withheld-payload")
 
 
 def mutate_disposition(root: Path) -> None:
@@ -505,6 +524,203 @@ def main() -> int:
             ),
         ),
         (
+            "withheld-count",
+            "withheld-record count changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: value["withheld_records"].pop(),
+            ),
+        ),
+        (
+            "withheld-id",
+            "withheld-record id set changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value, ("withheld_records", 10, "id"), "invented-record"
+                ),
+            ),
+        ),
+        (
+            "withheld-extra-key",
+            "withheld record completion-triage-response-20260725 keys changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: value["withheld_records"][0].update(
+                    {"scientific_evidence": True}
+                ),
+            ),
+        ),
+        (
+            "withheld-observation-kind",
+            "completion-triage-response-20260725: withheld observation kind drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 0, "observation_kind"),
+                    "authenticated model execution",
+                ),
+            ),
+        ),
+        (
+            "withheld-generic-nonclaim",
+            "completion-triage-response-20260725: withheld nonclaim drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 0, "nonclaim"),
+                    "Binding scientific evidence.",
+                ),
+            ),
+        ),
+        (
+            "withheld-artifact-class",
+            "opus-completion-triage-prompt-20260725: withheld artifact class drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 10, "artifact_class"),
+                    "scientific proof",
+                ),
+            ),
+        ),
+        (
+            "withheld-canonical-frontier-id",
+            "withheld-record id set changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 17, "id"),
+                    "opus-wibral-frontier-sanity-20260726",
+                ),
+            ),
+        ),
+        (
+            "withheld-status-class",
+            "opus-frontier-status-snapshot-20260726: withheld artifact class drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 21, "artifact_class"),
+                    "execution status",
+                ),
+            ),
+        ),
+        (
+            "withheld-empty-stderr-class",
+            "opus-frontier-empty-stderr-20260726: withheld artifact class drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 22, "artifact_class"),
+                    "stderr stream",
+                ),
+            ),
+        ),
+        (
+            "withheld-visible-response-class",
+            "opus-frontier-visible-response-20260726: withheld artifact class drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 23, "artifact_class"),
+                    "visible transcript",
+                ),
+            ),
+        ),
+        (
+            "withheld-final-prompt-class",
+            "pid2-m1-m2-final-adversarial-prompt-20260726: withheld artifact class drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 24, "artifact_class"),
+                    "adversarial-review prompt",
+                ),
+            ),
+        ),
+        (
+            "withheld-recovery-locator",
+            (
+                "completion-triage-response-20260725.recovery_locator_published "
+                "must be exact boolean False"
+            ),
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 0, "recovery_locator_published"),
+                    True,
+                ),
+            ),
+        ),
+        (
+            "withheld-zero-byte-length",
+            "zero-byte withheld-record identity set changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value, ("withheld_records", 22, "bytes"), 1
+                ),
+            ),
+        ),
+        (
+            "withheld-zero-byte-digest",
+            "empty-digest withheld-record identity set changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value, ("withheld_records", 22, "sha256"), "0" * 64
+                ),
+            ),
+        ),
+        (
+            "withheld-empty-digest-aliased",
+            "empty-digest withheld-record identity set changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 0, "sha256"),
+                    "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                ),
+            ),
+        ),
+        (
+            "withheld-second-zero-byte",
+            "zero-byte withheld-record identity set changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value, ("withheld_records", 0, "bytes"), 0
+                ),
+            ),
+        ),
+        (
+            "withheld-zero-byte-nonclaim",
+            "opus-frontier-empty-stderr-20260726: withheld nonclaim drifted",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("withheld_records", 22, "nonclaim"),
+                    (
+                        "The digest records a bounded local observation. It does not "
+                        "authenticate the bytes, make them recoverable, establish model "
+                        "execution or review validity, or import any contained claim."
+                    ),
+                ),
+            ),
+        ),
+        (
             "rederivation-promoted",
             "imin-exact-target-tie-predicate: rederivation status was promoted",
             lambda root: mutate_index(
@@ -513,6 +729,36 @@ def main() -> int:
                     value,
                     ("rederivation_queue", 0, "status"),
                     "accepted",
+                ),
+            ),
+        ),
+        (
+            "rederivation-count",
+            "rederivation queue count changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: value["rederivation_queue"].pop(),
+            ),
+        ),
+        (
+            "rederivation-extra-key",
+            "rederivation record imin-exact-target-tie-predicate keys changed",
+            lambda root: mutate_index(
+                root,
+                lambda value: value["rederivation_queue"][0].update(
+                    {"proved": True}
+                ),
+            ),
+        ),
+        (
+            "rederivation-unknown-prompt",
+            "imin-exact-target-tie-predicate: unknown source prompt id",
+            lambda root: mutate_index(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("rederivation_queue", 0, "source_prompt_ids"),
+                    ["opus-completion-triage-prompt-20260725"],
                 ),
             ),
         ),
@@ -540,10 +786,76 @@ def main() -> int:
         ),
         (
             "schema-digest",
-            "INDEX.schema.json size or digest changed",
+            "schema identity changed",
             lambda root: mutate_schema(
                 root,
                 lambda value: set_nested(value, ("$id",), "hostile/schema"),
+            ),
+        ),
+        (
+            "schema-payload-zero-bytes",
+            "schema payload byte-length boundary changed",
+            lambda root: mutate_schema(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("$defs", "payload", "properties", "bytes", "minimum"),
+                    0,
+                ),
+            ),
+        ),
+        (
+            "schema-withheld-positive-bytes",
+            "schema withheld byte-length boundary changed",
+            lambda root: mutate_schema(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("$defs", "withheld", "properties", "bytes", "minimum"),
+                    1,
+                ),
+            ),
+        ),
+        (
+            "schema-rederivation-cardinality",
+            "schema rederivation_queue cardinality/reference changed",
+            lambda root: mutate_schema(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("properties", "rederivation_queue", "maxItems"),
+                    25,
+                ),
+            ),
+        ),
+        (
+            "schema-withheld-cardinality",
+            "schema withheld_records cardinality/reference changed",
+            lambda root: mutate_schema(
+                root,
+                lambda value: set_nested(
+                    value,
+                    ("properties", "withheld_records", "minItems"),
+                    10,
+                ),
+            ),
+        ),
+        (
+            "schema-withheld-path-pattern",
+            "schema withheld original-path boundary changed",
+            lambda root: mutate_schema(
+                root,
+                lambda value: set_nested(
+                    value,
+                    (
+                        "$defs",
+                        "withheld",
+                        "properties",
+                        "original_path",
+                        "pattern",
+                    ),
+                    r"^audit/evidence/fable5-[A-Za-z0-9._-]+\\.md$",
+                ),
             ),
         ),
         (
@@ -572,14 +884,29 @@ def main() -> int:
             mutate_execution_wire,
         ),
         (
+            "withheld-execution-wire",
+            "archive execution/import wiring is forbidden",
+            mutate_withheld_execution_wire,
+        ),
+        (
             "original-prompt-duplicate",
             "completion-triage-20260725: original evidence-path copy is forbidden; archive only",
             mutate_original_prompt_copy,
         ),
         (
+            "original-prompt-broken-symlink",
+            "completion-triage-20260725: original evidence-path copy is forbidden; archive only",
+            mutate_original_prompt_broken_symlink,
+        ),
+        (
             "raw-withheld-companion",
             "completion-triage-response-20260725: raw withheld companion is present",
             mutate_raw_withheld_copy,
+        ),
+        (
+            "raw-withheld-broken-symlink",
+            "completion-triage-response-20260725: raw withheld companion is present",
+            mutate_raw_withheld_broken_symlink,
         ),
     ]
 

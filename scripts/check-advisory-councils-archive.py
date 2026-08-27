@@ -20,12 +20,12 @@ if sys.version_info < (3, 11):
 ROOT = Path(__file__).resolve().parent.parent
 ARCHIVE_REL = PurePosixPath("audit/archive/advisory-councils-20260725-20260726")
 ARCHIVE_ID = "advisory-councils-20260725-20260726"
-INDEX_SHA256 = "dfdf236cfb1b60ce912e1e039903f3b421d355d32e9d2f25f08bbd481d9063be"
-INDEX_BYTES = 41_874
-SCHEMA_SHA256 = "297888d3fc10fd18be9f4ec12f6a55824ca54de5b0f1a17d24b919669f03bfbe"
-SCHEMA_BYTES = 13_587
-DISPOSITION_SHA256 = "6d8266a8c04db630c9e7eb24d1c938d67bbb7a9743f9ebbb8e362ed1da3de3a4"
-DISPOSITION_BYTES = 7_566
+INDEX_SHA256 = "3a249a28d3638b73400514ce54f8749f4cca4db62d570871029f21e3a342af38"
+INDEX_BYTES = 59_188
+SCHEMA_SHA256 = "9a63cc2fa4dccd3a3424e5bf51ebe70db3388a0dc58abc1304c9dfb7574420c2"
+SCHEMA_BYTES = 13_677
+DISPOSITION_SHA256 = "99996c08a3572bff82ccfd8f512c014be3fe1c14ee771548d9fbd299b413b789"
+DISPOSITION_BYTES = 7_981
 SOURCE_BRANCH = "review/sx-count-event-bridge-r2"
 SOURCE_HEAD = "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56"
 FROZEN_INTAKE_HEAD = "ca2eaf31ce7b719d04a43e0d6e1d2c21c6ff06a7"
@@ -212,7 +212,133 @@ EXPECTED_WITHHELD = {
         17_291,
         "runner source",
     ),
+    "opus-completion-triage-prompt-20260725": (
+        "audit/evidence/opus5-completion-triage-prompt.md",
+        "ea96212aaf7e2faedf93bf86f105666e6916cc1f21450edc2391c2cdebc5f687",
+        5_311,
+        "advisory prompt",
+    ),
+    "opus-completion-triage-response-20260725": (
+        "audit/evidence/opus5-completion-triage-review-2026-07-25.md",
+        "1f2a20a992e3c662f9693d61dcb2b1ae36bb7fec869ae589c18fa1a1191b0269",
+        54_384,
+        "advisory response",
+    ),
+    "opus-imin-tie-swap-response-20260725": (
+        "audit/evidence/opus5-imin-tie-swap-review-2026-07-25.md",
+        "923e502a28328ce7ff630672463a25cf77d85814a1fbe1220157798bd7952f33",
+        10_003,
+        "advisory response",
+    ),
+    "opus-imin-tie-swap-prompt-20260725": (
+        "audit/evidence/opus5-imin-tie-swap-review-prompt.md",
+        "da03fa2e462e63fc1df833f865a1f254030c6c1e2d822cb4091d0168ef22094b",
+        3_489,
+        "advisory prompt",
+    ),
+    "opus-ksg-integer-harmonic-prompt-20260725": (
+        "audit/evidence/opus5-ksg-integer-harmonic-review-prompt.md",
+        "209eed840c40e32e1261020cb8349a8d66c5ab39ae140446af1a644bdde83eb7",
+        5_335,
+        "advisory prompt",
+    ),
+    "opus-pid2-represented-sum-response-20260725": (
+        "audit/evidence/opus5-pid2-represented-sum-review-2026-07-25.md",
+        "f3b8e66a39030ab97eda476e3ae043f80271725bcd111814264d9a03c8dd8ffc",
+        49_214,
+        "advisory response",
+    ),
+    "opus-pid2-represented-sum-prompt-20260725": (
+        "audit/evidence/opus5-pid2-represented-sum-review-prompt.md",
+        "4f1871ca6feba5173f62c92fa270bad44da8a989397cb6294a47558328729f47",
+        5_229,
+        "advisory prompt",
+    ),
+    "opus-frontier-sanity-20260726": (
+        (
+            "audit/evidence/"
+            "opus5-wibral-frontier-hostile-review-independent-sanity-2026-07-26.md"
+        ),
+        "95c6c331138dba52b0a2bdd8632cdd09f6b9ad831b69bf26c19fa238fe789dd5",
+        21_971,
+        "separate sanity note",
+    ),
+    "opus-frontier-metadata-20260726": (
+        "audit/evidence/opus5-wibral-frontier-hostile-review-metadata-2026-07-26.json",
+        "0138e3541341be46d13830605d2762ce40bf48b94d1496d8491676c81902ce39",
+        4_671,
+        "provider metadata",
+    ),
+    "opus-frontier-prompt-20260726": (
+        "audit/evidence/opus5-wibral-frontier-hostile-review-prompt-2026-07-26.md",
+        "58759c2021ea0e591afb42a1a31d9df339ad7642f7aa5b7120a2be7630adc1f0",
+        24_989,
+        "advisory prompt",
+    ),
+    "opus-frontier-receipt-stream-20260726": (
+        (
+            "audit/evidence/"
+            "opus5-wibral-frontier-hostile-review-receipt-2026-07-26.jsonl"
+        ),
+        "308b1ad364023006c2060db20d43bfb157e13be52c5e6535b197624d625ebb16",
+        993_147,
+        "provider receipt stream",
+    ),
+    "opus-frontier-status-snapshot-20260726": (
+        "audit/evidence/opus5-wibral-frontier-hostile-review-status-2026-07-26.txt",
+        "a82c19ab7dadd9fa3969b91dfddf4c33079d71000766c6381aab515e6a86380b",
+        12_210,
+        "worktree status snapshot",
+    ),
+    "opus-frontier-empty-stderr-20260726": (
+        "audit/evidence/opus5-wibral-frontier-hostile-review-stderr-2026-07-26.txt",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        0,
+        "empty stderr stream",
+    ),
+    "opus-frontier-visible-response-20260726": (
+        "audit/evidence/opus5-wibral-frontier-hostile-review-visible-2026-07-26.md",
+        "13abc79721086a2f54823e0357ca0f87fc5d334f585e536ede0808f1fdf82db4",
+        83_620,
+        "visible advisory response",
+    ),
+    "pid2-m1-m2-final-adversarial-prompt-20260726": (
+        "audit/evidence/pid2-m1-m2-final-adversarial-review-prompt-2026-07-26.md",
+        "25af0a7be4ccf33992f9512136ce1202a0c92cff47ef4526ca105bc100eebb9e",
+        4_533,
+        "advisory prompt",
+    ),
 }
+WITHHELD_KEYS = {
+    "artifact_class",
+    "bytes",
+    "disposition",
+    "id",
+    "included",
+    "nonclaim",
+    "observation_kind",
+    "original_path",
+    "payload_path",
+    "provenance",
+    "recovery_locator_published",
+    "sha256",
+    "source_head_context_only",
+}
+WITHHELD_OBSERVATION_KIND = (
+    "hash-only observation of exact bytes in the protected source worktree"
+)
+WITHHELD_NONCLAIM = (
+    "The digest records a bounded local observation. It does not authenticate the bytes, "
+    "make them recoverable, establish model execution or review validity, or import any "
+    "contained claim."
+)
+ZERO_BYTE_WITHHELD_ID = "opus-frontier-empty-stderr-20260726"
+EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ZERO_BYTE_NONCLAIM = (
+    "The digest is the universal SHA-256 of zero bytes. It does not identify or authenticate "
+    "an execution, make another artifact recoverable, establish model execution or review "
+    "validity, or import any contained claim."
+)
 EXPECTED_REDERIVATION_IDS = {
     "dependency-coloring-independence-premise",
     "imin-exact-target-tie-predicate",
@@ -377,8 +503,6 @@ def validate_archive_inventory(root: Path, archive: Path) -> None:
 
 
 def validate_schema(schema: dict[str, Any], raw: bytes) -> None:
-    if len(raw) != SCHEMA_BYTES or sha256(raw) != SCHEMA_SHA256:
-        raise ArchiveError("INDEX.schema.json size or digest changed")
     if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
         raise ArchiveError("schema dialect changed")
     if schema.get("$id") != "pid-rs/advisory-councils-archive-index/v1":
@@ -406,6 +530,49 @@ def validate_schema(schema: dict[str, Any], raw: bytes) -> None:
     )
     if rederive_status != "not_imported_requires_fresh_derivation":
         raise ArchiveError("schema rederivation abstention guard changed")
+
+    definitions = schema.get("$defs")
+    properties = schema.get("properties")
+    if not isinstance(definitions, dict) or not isinstance(properties, dict):
+        raise ArchiveError("schema definitions/properties are not objects")
+    payload_bytes = (
+        definitions.get("payload", {}).get("properties", {}).get("bytes", {})
+    )
+    withheld = definitions.get("withheld", {})
+    withheld_properties = withheld.get("properties", {})
+    withheld_bytes = withheld_properties.get("bytes", {})
+    if payload_bytes != {"minimum": 1, "type": "integer"}:
+        raise ArchiveError("schema payload byte-length boundary changed")
+    if withheld_bytes != {"minimum": 0, "type": "integer"}:
+        raise ArchiveError("schema withheld byte-length boundary changed")
+    expected_original_path_pattern = (
+        r"^audit/evidence/(?:fable5-[A-Za-z0-9._-]+|opus5-[A-Za-z0-9._-]+|"
+        r"pid2-m1-m2-final-adversarial-review-prompt-2026-07-26)\."
+        r"(?:json|jsonl|md|mjs|txt)$"
+    )
+    if withheld_properties.get("original_path") != {
+        "pattern": expected_original_path_pattern,
+        "type": "string",
+    }:
+        raise ArchiveError("schema withheld original-path boundary changed")
+
+    expected_arrays = {
+        "payloads": (5, "#/$defs/payload"),
+        "rederivation_queue": (10, "#/$defs/rederivation"),
+        "withheld_records": (25, "#/$defs/withheld"),
+    }
+    for name, (count, item_ref) in expected_arrays.items():
+        value = properties.get(name)
+        if value != {
+            "items": {"$ref": item_ref},
+            "maxItems": count,
+            "minItems": count,
+            "type": "array",
+        }:
+            raise ArchiveError(f"schema {name} cardinality/reference changed")
+
+    if len(raw) != SCHEMA_BYTES or sha256(raw) != SCHEMA_SHA256:
+        raise ArchiveError("INDEX.schema.json size or digest changed")
 
 
 def validate_top_level(index: dict[str, Any]) -> None:
@@ -622,7 +789,8 @@ def validate_payloads(root: Path, archive: Path, index: dict[str, Any]) -> None:
         if occurrence_count != 1:
             raise ArchiveError(f"{payload_id}: literal absolute-path count changed")
         total_absolute_paths += occurrence_count
-        if (root / expected["original_path"]).exists():
+        original_path = root / expected["original_path"]
+        if original_path.exists() or original_path.is_symlink():
             raise ArchiveError(
                 f"{payload_id}: original evidence-path copy is forbidden; archive only"
             )
@@ -643,6 +811,22 @@ def validate_withheld(root: Path, archive: Path, index: dict[str, Any]) -> None:
         by_id[value["id"]] = value
     if set(by_id) != set(EXPECTED_WITHHELD):
         raise ArchiveError("withheld-record id set changed")
+
+    zero_byte_ids = {
+        value["id"]
+        for value in values
+        if type(value.get("bytes")) is int and value["bytes"] == 0
+    }
+    empty_digest_ids = {
+        value["id"] for value in values if value.get("sha256") == EMPTY_SHA256
+    }
+    if sha256(b"") != EMPTY_SHA256:
+        raise ArchiveError("internal empty-byte SHA-256 constant changed")
+    if zero_byte_ids != {ZERO_BYTE_WITHHELD_ID}:
+        raise ArchiveError("zero-byte withheld-record identity set changed")
+    if empty_digest_ids != {ZERO_BYTE_WITHHELD_ID}:
+        raise ArchiveError("empty-digest withheld-record identity set changed")
+
     for record_id, (
         original,
         digest,
@@ -650,9 +834,14 @@ def validate_withheld(root: Path, archive: Path, index: dict[str, Any]) -> None:
         artifact_class,
     ) in EXPECTED_WITHHELD.items():
         value = by_id[record_id]
+        require_exact_keys(value, WITHHELD_KEYS, f"withheld record {record_id}")
         if value.get("original_path") != original:
             raise ArchiveError(f"{record_id}: withheld original path drifted")
-        if value.get("sha256") != digest or value.get("bytes") != byte_length:
+        if (
+            value.get("sha256") != digest
+            or type(value.get("bytes")) is not int
+            or value["bytes"] != byte_length
+        ):
             raise ArchiveError(f"{record_id}: withheld digest/length drifted")
         if value.get("artifact_class") != artifact_class:
             raise ArchiveError(f"{record_id}: withheld artifact class drifted")
@@ -675,9 +864,17 @@ def validate_withheld(root: Path, archive: Path, index: dict[str, Any]) -> None:
             raise ArchiveError(f"{record_id}: withheld disposition drifted")
         if value.get("provenance") != EXPECTED_PROVENANCE:
             raise ArchiveError(f"{record_id}: withheld provenance drifted")
-        if not isinstance(value.get("nonclaim"), str) or not value["nonclaim"].strip():
-            raise ArchiveError(f"{record_id}: withheld nonclaim missing")
-        if (root / original).exists():
+        if value.get("observation_kind") != WITHHELD_OBSERVATION_KIND:
+            raise ArchiveError(f"{record_id}: withheld observation kind drifted")
+        expected_nonclaim = (
+            ZERO_BYTE_NONCLAIM
+            if record_id == ZERO_BYTE_WITHHELD_ID
+            else WITHHELD_NONCLAIM
+        )
+        if value.get("nonclaim") != expected_nonclaim:
+            raise ArchiveError(f"{record_id}: withheld nonclaim drifted")
+        original_path = root / original
+        if original_path.exists() or original_path.is_symlink():
             raise ArchiveError(f"{record_id}: raw withheld companion is present")
         basename = PurePosixPath(original).name
         if any(path.name == basename for path in archive.rglob("*")):
@@ -694,6 +891,18 @@ def validate_rederivation(index: dict[str, Any]) -> None:
         if not isinstance(value, dict) or not isinstance(value.get("id"), str):
             raise ArchiveError("each rederivation record must have a string id")
         record_id = value["id"]
+        require_exact_keys(
+            value,
+            {
+                "candidate_statement",
+                "id",
+                "required_closure",
+                "source_domain",
+                "source_prompt_ids",
+                "status",
+            },
+            f"rederivation record {record_id}",
+        )
         if record_id in observed_ids:
             raise ArchiveError(f"duplicate rederivation id: {record_id}")
         observed_ids.add(record_id)
@@ -718,6 +927,14 @@ def scan_authority_and_execution_surfaces(root: Path) -> None:
         ARCHIVE_REL.as_posix().encode("utf-8"),
         ARCHIVE_ID.encode("utf-8"),
         *{record["name"].encode("utf-8") for record in EXPECTED_PAYLOADS.values()},
+        *{
+            record[0].encode("utf-8")
+            for record in EXPECTED_WITHHELD.values()
+        },
+        *{
+            PurePosixPath(record[0]).name.encode("utf-8")
+            for record in EXPECTED_WITHHELD.values()
+        },
     }
     for relative in AUTHORITY_SURFACES:
         path = root / relative

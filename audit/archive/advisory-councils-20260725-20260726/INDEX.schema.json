@@ -281,7 +281,7 @@
           "type": "string"
         },
         "bytes": {
-          "minimum": 1,
+          "minimum": 0,
           "type": "integer"
         },
         "disposition": {
@@ -302,7 +302,7 @@
           "const": "hash-only observation of exact bytes in the protected source worktree"
         },
         "original_path": {
-          "pattern": "^audit/evidence/fable5-[A-Za-z0-9._-]+\\.(?:json|md|mjs)$",
+          "pattern": "^audit/evidence/(?:fable5-[A-Za-z0-9._-]+|opus5-[A-Za-z0-9._-]+|pid2-m1-m2-final-adversarial-review-prompt-2026-07-26)\\.(?:json|jsonl|md|mjs|txt)$",
           "type": "string"
         },
         "payload_path": {
@@ -542,8 +542,8 @@
       "items": {
         "$ref": "#/$defs/withheld"
       },
-      "maxItems": 10,
-      "minItems": 10,
+      "maxItems": 25,
+      "minItems": 25,
       "type": "array"
     }
   },

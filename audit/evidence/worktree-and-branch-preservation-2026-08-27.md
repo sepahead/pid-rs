@@ -149,18 +149,18 @@ itself is already preserved. The worktree remains subject to the cleanup precond
 
 ## Bounded advisory-council accounting
 
-The currently integrated inert public archive at
-`audit/archive/advisory-councils-20260725-20260726/` accounts for 15 exact paths from the protected
-dirty-primary snapshot: five exact, non-executable prompt payloads and ten hash-only Fable companion
-records. Its checker reports `payloads=5`, `withheld_hash_only=10`, and
-`rederivation_candidates=10`; its isolated hostile suite kills 36 mutations in ordinary mode.
+The inert public archive at `audit/archive/advisory-councils-20260725-20260726/` accounts for an
+exactly bounded 30-path subset of the protected dirty-primary snapshot: five exact,
+non-executable prompt payloads and 25 hash-only companion records. The hash-only set contains ten
+Fable companions, 14 Opus-family artifacts, and one final-PID2 adversarial prompt. None of those 25
+raw companion payloads is imported into the public archive or active evidence surface.
 
-A separately preserved 30-path private inventory additionally covers 14 Opus-family artifacts and
-one final-PID2 adversarial prompt. All 30 source/copy pairs were previously checked by byte length,
-SHA-256, and exact comparison with zero mismatches. Those additional 15 records are **not yet**
-represented in the public archive at this commit. A later public accounting repair must add only
-hash/length/provenance/nonclaim records, rerun its hostile checks, and must not import raw companion
-bytes. The private quarantine remains pending semantic, privacy, rights, and publication review.
+A fresh direct comparison against the preserved dirty-primary Git objects matched all 30 indexed
+paths, byte lengths, and SHA-256 values, with zero missing objects and zero mismatches. The checker
+reports `payloads=5`, `withheld_hash_only=25`, and `rederivation_candidates=10` identically under
+ordinary and optimized isolated Python. Its hostile suite kills 64 mutations identically under
+both modes. These checks establish bounded byte accounting and named fault sensitivity only. The
+private quarantine remains pending semantic, privacy, rights, and publication review.
 
 The one preserved zero-byte stderr stream has SHA-256
 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`. Because that is the universal

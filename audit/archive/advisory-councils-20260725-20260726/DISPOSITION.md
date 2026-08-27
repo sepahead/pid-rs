@@ -58,7 +58,11 @@ must never be promoted in place of that work.
 
 ## Withheld companions
 
-Ten observed response/context/receipt/runner files are represented by hash and byte length only.
+Twenty-five observed prompt/response/context/receipt/runner/status files are represented by hash
+and byte length only. Ten are the Fable-family companions recorded by the first archive revision;
+fifteen additional records close the hash-only inventory over the privately preserved Opus-family
+and final-PID2 advisory files. The zero-byte stderr record is retained explicitly: its digest is the
+universal empty-file SHA-256 and therefore cannot identify or authenticate an execution.
 Their payload bytes are **not** in this milestone. They remain
 `withheld_pending_semantic_privacy_rights_review` because model-output semantics, embedded
 third-party/context material, private locators, execution custody, and publication rights need
@@ -66,8 +70,8 @@ separate adjudication. A hash-only record is a bounded local observation: withou
 recovery locator it supplies binding information but not recovery, authentication,
 reproducibility, model-execution evidence, or scientific evidence.
 
-No raw context bundle, advisory response, provider receipt, sanity note, preflight note, runner,
-stream, terminal transcript, or unrelated local state was imported.
+No raw Opus prompt, context bundle, advisory response, provider receipt, sanity note, preflight
+note, runner, stream, status capture, terminal transcript, or unrelated local state was imported.
 
 ## Public, privacy, and license boundary
 
