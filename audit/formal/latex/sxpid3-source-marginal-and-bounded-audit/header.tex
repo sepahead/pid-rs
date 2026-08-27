@@ -1,0 +1,91 @@
+\usepackage{xcolor}
+\definecolor{PidNavy}{HTML}{2C3E50}
+\definecolor{PidTeal}{HTML}{1F6968}
+\definecolor{PidBronze}{HTML}{916400}
+\definecolor{PidGold}{HTML}{DCA520}
+\definecolor{PidPaper}{HTML}{F7F3E9}
+\definecolor{PidSlate}{HTML}{647072}
+\definecolor{PidRed}{HTML}{7C2428}
+\definecolor{PidPale}{HTML}{E8F0ED}
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{fvextra}
+\usepackage{etoolbox}
+\usepackage{seqsplit}
+\usepackage{xurl}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{PidNavy}Categorical SxPID3 mathematical audit}
+\fancyhead[R]{\footnotesize\color{PidTeal}18 positions · 108 audit expressions · bounded exact evidence}
+\fancyfoot[L]{\footnotesize\color{PidSlate}pid-rs project analysis · 27 August 2026}
+\fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+\setlength{\headheight}{15pt}
+
+\titleformat{\section}{\Large\bfseries\color{PidNavy}}{\thesection}{0.7em}{}[\vspace{.12em}\color{PidBronze}\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{PidTeal}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{PidTeal}}{\thesubsubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{2.1ex plus .5ex}{1.0ex}
+\titlespacing*{\subsection}{0pt}{1.7ex plus .4ex}{.8ex}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.52em plus .1em minus .08em}
+\setlist{leftmargin=1.65em,itemsep=.22em,topsep=.32em}
+\setlength{\emergencystretch}{8em}
+\setlength{\LTpre}{.45em}
+\setlength{\LTpost}{.65em}
+\renewcommand{\arraystretch}{1.14}
+\AtBeginEnvironment{longtable}{%
+  \footnotesize\RaggedRight
+  \let\pidoldtexttt\texttt
+  \renewcommand{\texttt}[1]{\pidoldtexttt{\seqsplit{#1}}}%
+}
+\captionsetup{font=small,labelfont={bf,color=PidTeal}}
+
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaklines,
+  breakanywhere,
+  commandchars=\\\{\},
+  fontsize=\small,
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{PidTeal}
+}
+
+\AtBeginDocument{%
+  \hypersetup{colorlinks=true,linkcolor=PidTeal,urlcolor=PidBronze,citecolor=PidTeal}%
+}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \pagecolor{PidNavy}\color{white}
+    \vspace*{.8cm}
+    {\Large\bfseries\color{PidGold}PID-RS MATHEMATICAL AUDIT\par}
+    \vspace{.22cm}
+    {\color{PidBronze}\rule{0.24\textwidth}{1.2pt}\par}
+    \vspace{1.8cm}
+    {\fontsize{31}{37}\selectfont\bfseries\@title\par}
+    \vfill
+    \begin{minipage}{0.88\textwidth}
+      \large
+      A self-contained account of source-marginal factorization, the 18/108/166 distinction,
+      exact finite-count products, bounded two-route agreement, negative results, and the remaining
+      proof and refinement obligations.
+    \end{minipage}\par
+    \vspace{1.2cm}
+    {\large\@date\par}
+    \vspace{.55cm}
+    {\small Canonical narrative: \texttt{SXPID3\_SOURCE\_MARGINAL\_AND\_BOUNDED\_AUDIT.md}\par}
+  \end{titlepage}
+  \pagecolor{PidPaper}\color{PidNavy}
+}
+\makeatother

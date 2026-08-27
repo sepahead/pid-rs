@@ -719,6 +719,10 @@ formal-ecosystem-compatibility-audit-pdf:
 formal-foundational-sxpid-audit-pdf:
     scripts/check-foundational-sxpid-audit-pdf.sh
 
+# Rebuild the Markdown-authored SxPID3 factorization/bounded-audit paper and compare its PDF.
+formal-sxpid3-source-marginal-audit-pdf:
+    scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact
+
 # Check the finite adjacent-arrow countermodel and its fail-closed mutations.
 citation-edge-countermodel:
     python3 scripts/check-citation-edge-countermodel.py

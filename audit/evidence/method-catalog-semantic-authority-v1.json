@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "a7b1f4e7c7f89f88410f3b35cbfb009c673c1d33b5f86d919bf343340006c7b4",
+  "catalog_sha256": "648120e90eae4090b0515a7ee485b838395271ce04c5671d729a99d23c43f17e",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -967,6 +967,17 @@
         "estimand_family": "categorical-sxpid-validation",
         "population_support": "finite-categorical-law"
       },
+      "method_id": "validation.sxpid3-source-marginal-bounded-audit",
+      "observed_alias_families": [],
+      "payload_sha256": "df6c0ec55a63b72a4d67399d009adc1ad05baeee14648b6f56c1e25a5f5f34e1"
+    },
+    {
+      "facts": {
+        "conditioning": "unconditioned",
+        "data_domain": "finite-categorical",
+        "estimand_family": "categorical-sxpid-validation",
+        "population_support": "finite-categorical-law"
+      },
       "method_id": "validation.two-source-sxpid-count-atom-bridge",
       "observed_alias_families": [
         "mgw-categorical-shared-exclusions",
@@ -975,7 +986,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "e41fcc76f0778ab568168af46e0aa62f57006a30e4ab3ca58ab60bdb26f6b0f2",
+  "ordered_root_sha256": "76bdf171c73062fbe5c497a521fe70dfdd1fc60bbd28a4a49d114a607fe070ca",
   "reference_registry_sha256": "346e8a046cb7f5c2f9036cc9c3869faf9ee9962944ff640f01b623108981d1b1",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

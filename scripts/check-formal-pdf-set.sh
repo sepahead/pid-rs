@@ -44,6 +44,14 @@ STANDALONE_LATEX_PAPERS=(
   "two-source-sxpid-count-atom-bridge"
 )
 
+STANDALONE_MARKDOWN_PAPERS=(
+  "sxpid3-source-marginal-and-bounded-audit"
+)
+
+STANDALONE_MARKDOWN_SOURCES=(
+  "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
+)
+
 LATEX_RENDER_FRAGMENTS=(
   "pid-discovery-verification-and-durability-blueprint-header"
 )
@@ -74,12 +82,27 @@ while IFS= read -r path; do
   actual_pdf+=("$(basename "$path" .pdf)")
 done < <(find output/pdf -maxdepth 1 -name '*.pdf' -print | LC_ALL=C sort)
 
+expected_pdf=()
+while IFS= read -r stem; do
+  expected_pdf+=("$stem")
+done < <(
+  printf '%s\n' "${STANDALONE_LATEX_PAPERS[@]}" "${STANDALONE_MARKDOWN_PAPERS[@]}" \
+    | LC_ALL=C sort
+)
+
 if [[ "${actual_tex[*]}" != "${expected_tex[*]}" ]]; then
   echo "formal PDF set: typed TeX source inventory differs from the declared standalone/fragment set" >&2
   exit 1
 fi
 
-if [[ "${actual_pdf[*]}" != "${STANDALONE_LATEX_PAPERS[*]}" ]]; then
+for markdown_source in "${STANDALONE_MARKDOWN_SOURCES[@]}"; do
+  if [[ ! -f "$markdown_source" || -L "$markdown_source" ]]; then
+    echo "formal PDF set: Markdown source is not a direct regular file: $markdown_source" >&2
+    exit 1
+  fi
+done
+
+if [[ "${actual_pdf[*]}" != "${expected_pdf[*]}" ]]; then
   echo "formal PDF set: rendered PDF inventory differs from the declared standalone-paper set" >&2
   exit 1
 fi
@@ -162,10 +185,11 @@ rm -f -- "$WORKFLOW_GATE_STDERR"
 WORKFLOW_GATE_STDERR=""
 trap - EXIT INT TERM
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
+scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every standalone formal LaTeX paper has one warning-free same-toolchain-reproducible PDF; renderer-fragment inventory is exact"
+  echo "OK: every standalone formal paper has one warning-free same-toolchain-reproducible PDF; source and renderer-fragment inventories are exact"
 else
-  echo "OK: every standalone formal LaTeX paper passed its warning-free bounded cross-toolchain PDF gate; renderer-fragment inventory is exact"
+  echo "OK: every standalone formal paper passed its warning-free bounded cross-toolchain PDF gate; source and renderer-fragment inventories are exact"
 fi

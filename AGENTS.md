@@ -651,6 +651,7 @@ python3 -O scripts/check-z3-ksg-integer-harmonic.py
 python3 scripts/check-z3-ksg-integer-harmonic-self-test.py   # 12 semantic + 52 separate firewall controls
 python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
 scripts/check-formal-pdf-set.sh                          # all declared formal papers and render contracts
+scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
 python3 scripts/check-ksg-harmonic-exact-enclosure.py    # 6,920 Fraction + directed-Decimal route

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="690" viewBox="0 0 1200 690" role="img" aria-labelledby="title desc">
+  <title id="title">Crosswalk between 18 SxPID3 lattice positions, 108 audit expressions, and 166 SxPID4 positions</title>
+  <desc id="desc">The three-source lattice has 18 positions. The audit records two stages and three components at every position, producing 108 keyed scalar expressions. The four-source lattice separately has 166 positions.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f3e9"/><stop offset="1" stop-color="#edf3f1"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#2c3e50" flood-opacity="0.14"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#1f6968"/>
+    </marker>
+    <style>
+      .title{font:700 30px 'Latin Modern Sans',sans-serif;fill:#2c3e50}.sub{font:500 17px 'Latin Modern Sans',sans-serif;fill:#1f6968}
+      .big{font:700 48px 'Latin Modern Sans',sans-serif;fill:#2c3e50}.label{font:700 20px 'Latin Modern Sans',sans-serif;fill:#2c3e50}
+      .body{font:400 17px 'Latin Modern Sans',sans-serif;fill:#3f505a}.small{font:600 17px 'Latin Modern Sans',sans-serif;fill:#1f6968}
+    </style>
+  </defs>
+  <rect width="1200" height="690" rx="24" fill="url(#bg)"/>
+  <text x="60" y="58" class="title">Three different counts for three different objects</text>
+  <text x="60" y="88" class="sub">Source arity fixes the lattice; the audit retains overlapping diagnostic views at each position.</text>
+
+  <g transform="translate(55 145)" filter="url(#shadow)">
+    <rect width="270" height="270" rx="22" fill="#fff" stroke="#9dc5ce" stroke-width="2"/>
+    <text x="135" y="78" text-anchor="middle" class="big">18</text>
+    <text x="135" y="116" text-anchor="middle" class="label">SxPID3 positions</text>
+    <text x="135" y="157" text-anchor="middle" class="body">nonempty antichains of</text>
+    <text x="135" y="181" text-anchor="middle" class="body">nonempty subsets of {1,2,3}</text>
+    <line x1="35" y1="205" x2="235" y2="205" stroke="#d2e0e4" stroke-width="2"/>
+    <text x="135" y="238" text-anchor="middle" class="small">18 signed-net atoms</text>
+  </g>
+
+  <line x1="345" y1="280" x2="455" y2="280" stroke="#1f6968" stroke-width="5" marker-end="url(#arrow)"/>
+  <text x="400" y="246" text-anchor="middle" class="small">expand each key</text>
+  <text x="400" y="265" text-anchor="middle" class="small">for auditing</text>
+
+  <g transform="translate(475 125)" filter="url(#shadow)">
+    <rect width="420" height="310" rx="22" fill="#fff" stroke="#1f6968" stroke-width="3"/>
+    <text x="210" y="66" text-anchor="middle" class="big" fill="#1f6968">108</text>
+    <text x="210" y="104" text-anchor="middle" class="label">keyed scalar audit expressions</text>
+    <rect x="35" y="135" width="105" height="80" rx="12" fill="#e7f0ed" stroke="#1f6968"/>
+    <text x="88" y="166" text-anchor="middle" class="label">18</text><text x="88" y="191" text-anchor="middle" class="body">positions</text>
+    <text x="157" y="184" class="big" style="font-size:30px">×</text>
+    <rect x="190" y="135" width="85" height="80" rx="12" fill="#e8f1ef" stroke="#1f6968"/>
+    <text x="233" y="166" text-anchor="middle" class="label">2</text><text x="233" y="191" text-anchor="middle" class="body">stages</text>
+    <text x="292" y="184" class="big" style="font-size:30px">×</text>
+    <rect x="305" y="135" width="100" height="80" rx="12" fill="#f5ead5" stroke="#916400"/>
+    <text x="355" y="166" text-anchor="middle" class="label">3</text><text x="355" y="191" text-anchor="middle" class="small">components</text>
+    <text x="210" y="252" text-anchor="middle" class="body">stages: cumulative, Möbius atom</text>
+    <text x="210" y="279" text-anchor="middle" class="body">components: informative, misinformative, signed net</text>
+  </g>
+
+  <g transform="translate(940 145)" filter="url(#shadow)">
+    <rect width="205" height="270" rx="22" fill="#fff" stroke="#916400" stroke-width="2"/>
+    <text x="102" y="78" text-anchor="middle" class="big" fill="#7c2428">166</text>
+    <text x="102" y="116" text-anchor="middle" class="label">SxPID4 positions</text>
+    <text x="102" y="157" text-anchor="middle" class="body">four sources</text>
+    <text x="102" y="183" text-anchor="middle" class="body">a different lattice</text>
+    <line x1="30" y1="205" x2="175" y2="205" stroke="#ead8bd" stroke-width="2"/>
+    <text x="102" y="235" text-anchor="middle" class="small">not a competing</text>
+    <text x="102" y="255" text-anchor="middle" class="small">three-source count</text>
+  </g>
+
+  <g transform="translate(80 500)">
+    <rect width="1040" height="125" rx="18" fill="#2c3e50"/>
+    <text x="520" y="40" text-anchor="middle" class="label" style="fill:#e8f4f5">The 108 views are algebraically dependent</text>
+    <text x="520" y="70" text-anchor="middle" class="body" style="fill:#d4e6e9">net = informative − misinformative; atoms = fixed Möbius transform of cumulatives</text>
+    <text x="520" y="98" text-anchor="middle" class="body" style="fill:#d4e6e9">Retaining all six views localizes defects; it does not create 108 degrees of freedom.</text>
+  </g>
+</svg>

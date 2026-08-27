@@ -4971,6 +4971,136 @@
       "category": "validation",
       "code_availability": "local",
       "constraints": [
+        "This entry records project-defined theorem, counterexample, executable-audit, and document-assurance work for the paper-defined categorical shared-exclusions functional. It adds no PID functional, estimator, public API, or scientific-priority claim.",
+        "The factorization theorem fixes finite source alphabets, a finite target alphabet, one supplied source-only shared-exclusions event family, natural-log units, and any transformed-coordinate matrix. Equality of the complete joint source marginal preserves the averaged informative cumulatives and their one literally fixed linear transform.",
+        "The complete joint source marginal is the law of the full source tuple, not the list of separate one-source marginals. Retained finite counterexamples show that separate marginals do not determine the complete informative vector and that the factorization does not extend in general to misinformative or signed-net components.",
+        "The displayed continuity specialization imports the separately cataloged support-change theorem after identifying every Sx antichain branch as a coordinate-projection equivalence class. It is a deterministic law-stability bound, not a confidence interval or sampling theorem.",
+        "The bounded audit covers exactly three ordered binary sources, one binary target, every labelled 16-cell nonnegative integer count table with total one through five, and 108 keyed scalar expressions per table. The 108 entries expand 18 three-source lattice positions across two representation stages and three components; they are not 108 PID atoms, lattice nodes, or independent degrees of freedom, and the separate four-source lattice has 166 positions.",
+        "The two exact routes are implementation-disjoint under shared semantics and agree on one route-neutral stream digest and the complete six-block sign and zero census. This is bounded fault-detection evidence, not logical independence, a general theorem, paper-to-code correspondence, authenticity, or protection from shared mistranscription and coordinated resealing.",
+        "The generic Lean lane checks supplied finite events, finite sums, source-marginal equality, and one supplied fixed linear transform. It does not formalize the concrete publication event map, 18-node carrier and order, concrete Mobius inverse, count decoder, exact executable routes, or Rust implementation.",
+        "Exact rational products decide zero and strict sign on the bounded empirical-count domain without floating-point tolerances. No route supplies compiled-Rust or binary64 refinement, nonzero logarithm-magnitude enclosures, arbitrary alphabets or totals, estimator calibration, population validity, causal meaning, downstream authorization, external custody, or independent review."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical",
+        "validation.support-change-tolerant-averaged-sxpid-continuity"
+      ],
+      "external_code": null,
+      "id": "validation.sxpid3-source-marginal-bounded-audit",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a source-marginal factorization theorem conditional on the supplied local categorical SxPID3 event transcription, exact prohibited-transfer witnesses, a specialization of the existing support-change continuity result, and a source-bound bounded audit of all 108 keyed cumulative/atom and informative/misinformative/signed-net expressions over 20,348 labelled binary tables. The audit retains exact products, the full sign/zero census, two implementation-disjoint-under-shared-semantics routes, hostile tests, a generic Lean algebra lane, and a deterministic Markdown-to-PDF publication package. This is repository validation and assurance work for an existing paper-defined functional, not a new PID or a scientific-priority claim.",
+      "python_entry_points": [],
+      "reference_links": [
+        {
+          "locator": "categorical shared-exclusions event, component, averaging, and pointwise decomposition definitions",
+          "reference_id": "makkeh-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "part-whole semantics and the redundancy-lattice setting",
+          "reference_id": "gutknecht-2021",
+          "role": "defining-paper"
+        },
+        {
+          "locator": "antichain carrier and redundancy order only; the redundancy value is not transferred",
+          "reference_id": "williams-beer-2010",
+          "role": "methodological-background"
+        },
+        {
+          "locator": "classical finite-poset Mobius inversion only",
+          "reference_id": "rota-1964",
+          "role": "methodological-background"
+        }
+      ],
+      "release_scope_families": [
+        "pid-core.stable.categorical"
+      ],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        ".github/workflows/sxpid3-bounded-keyed-scalar-audit-expressions.yml",
+        ".github/workflows/sxpid3-informative-invariance.yml",
+        "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md",
+        "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+        "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+        "audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/filter.lua",
+        "audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/header.tex",
+        "audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean",
+        "audit/schemas/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.schema.json",
+        "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID3-001/routes.md",
+        "crates/pid-core/src/sxpid.rs",
+        "crates/pid-core/tests/sxpid_informative_invariance.rs",
+        "justfile.sxpid3-informative-invariance",
+        "scripts/build-sxpid3-source-marginal-audit-pdf.sh",
+        "scripts/capture-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py",
+        "scripts/check-lean-sxpid3-informative-invariance-parity.py",
+        "scripts/check-lean-sxpid3-informative-invariance-self-test.py",
+        "scripts/check-lean-sxpid3-informative-invariance.py",
+        "scripts/check-sxpid3-all108-independent-self-test.py",
+        "scripts/check-sxpid3-all108-independent.py",
+        "scripts/check-sxpid3-bounded-full-coordinates-self-test.py",
+        "scripts/check-sxpid3-bounded-full-coordinates.py",
+        "scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py",
+        "scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py",
+        "scripts/check-sxpid3-informative-invariance-self-test.py",
+        "scripts/check-sxpid3-informative-invariance.py",
+        "scripts/check-sxpid3-p5-rust-source-route-self-test.py",
+        "scripts/check-sxpid3-p5-rust-source-route.py",
+        "scripts/check-sxpid3-source-marginal-audit-pdf.sh"
+      ],
+      "source_marker_files": [
+        "scripts/check-sxpid3-source-marginal-audit-pdf.sh"
+      ],
+      "summary": "Source-marginal factorization, prohibited-transfer counterexamples, and bounded exact 108-expression assurance for a declared categorical SxPID3 transcription.",
+      "title": "Categorical SxPID3 source-marginal and bounded exact audit",
+      "validation": {
+        "evidence_paths": [
+          "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md",
+          "audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json",
+          "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+          "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+          "audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/filter.lua",
+          "audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/header.tex",
+          "audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean",
+          "audit/schemas/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.schema.json",
+          "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID3-001/obligations.md",
+          "claims/SX-CERTIFIED-AVERAGED-PID3-001/routes.md",
+          "crates/pid-core/tests/sxpid_informative_invariance.rs",
+          "output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf",
+          "scripts/check-formal-pdf-set.sh",
+          "scripts/check-lean-sxpid3-informative-invariance-parity.py",
+          "scripts/check-lean-sxpid3-informative-invariance-self-test.py",
+          "scripts/check-lean-sxpid3-informative-invariance.py",
+          "scripts/check-sxpid3-all108-independent-self-test.py",
+          "scripts/check-sxpid3-all108-independent.py",
+          "scripts/check-sxpid3-bounded-full-coordinates-self-test.py",
+          "scripts/check-sxpid3-bounded-full-coordinates.py",
+          "scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-self-test.py",
+          "scripts/check-sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1.py",
+          "scripts/check-sxpid3-informative-invariance-self-test.py",
+          "scripts/check-sxpid3-informative-invariance.py",
+          "scripts/check-sxpid3-p5-rust-source-route-self-test.py",
+          "scripts/check-sxpid3-p5-rust-source-route.py",
+          "scripts/check-sxpid3-source-marginal-audit-pdf.sh"
+        ],
+        "level": "formal-and-property",
+        "limitations": "The finite-law factorization is an exact analytic result for supplied source-only events and a literally fixed transform, with retained counterexamples to tempting broader transfers. The Lean layer checks only generic supplied-event and supplied-transform algebra. The two executable routes share the human semantic transcription and runtime/host class, and their exhaustive agreement is restricted to labelled binary tables of total at most five. The lexical Rust lane computes no Rust values. No evidence closes publication-to-local correspondence, the concrete three-source carrier/order in two proof systems, arbitrary alphabets or totals, exact nonzero logarithm magnitude, compiled-Rust/binary64 refinement, estimator calibration, sampling/population inference, causal or downstream meaning, authenticity, scientific priority, or independent review.",
+        "scope": "Finite categorical source-target laws with one supplied source-only event family and one fixed transform for the informative-factorization theorem; one continuity specialization through the complete joint source marginal; two explicit prohibited-transfer counterexamples; and a bounded exact audit of every one of 108 keyed expressions on all 20,348 labelled three-binary-source/one-binary-target count tables with total one through five, including the complete exact sign and zero census and one retained negative signed-net atom witness."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "local",
+      "constraints": [
         "This entry records project-defined formal assurance for paper-defined two-source categorical shared-exclusions cumulatives and Mobius atoms. It adds no functional, estimator, public API, or scientific-origin claim.",
         "The checked surface fixes exactly four cumulative nodes, four Mobius atoms, three components, and 24 cumulative-first and atom-second coordinates for two finite categorical sources.",
         "The Makkeh-Gutknecht-Wibral event, component, and atom formulas are a reviewed repository transcription and stipulated formal input, not a machine-checked publication-to-Lean correspondence theorem.",

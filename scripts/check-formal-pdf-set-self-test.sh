@@ -44,7 +44,7 @@ trap 'cleanup "$?"' EXIT
 trap 'cleanup 130' INT
 trap 'cleanup 143' TERM
 
-STANDALONE=(
+LATEX_STANDALONE=(
   certified-sxpid2-executable-assurance
   dependency-colored-sxpid-concentration
   ecosystem-compatibility-audit
@@ -60,6 +60,24 @@ STANDALONE=(
   support-change-tolerant-averaged-sxpid-continuity
   two-source-sxpid-count-atom-bridge
 )
+MARKDOWN_SOURCE=SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
+STANDALONE=(
+  certified-sxpid2-executable-assurance
+  dependency-colored-sxpid-concentration
+  ecosystem-compatibility-audit
+  exact-log-product-sxpid2-assurance
+  finite-alphabet-plugin-convergence
+  formal-tool-adoption-audit
+  foundational-shared-exclusions-pid-audit
+  ksg-m1a-composite-v4-process
+  ksg-m1a-composite-v5-boundary
+  ksg-m1a-composite-v6-boundary
+  ksg-m1a-composite-v7-boundary
+  mathematical-problem-solving-workflow
+  support-change-tolerant-averaged-sxpid-continuity
+  sxpid3-source-marginal-and-bounded-audit
+  two-source-sxpid-count-atom-bridge
+)
 FRAGMENT=pid-discovery-verification-and-durability-blueprint-header
 
 make_fixture() {
@@ -68,8 +86,11 @@ make_fixture() {
   mkdir -p "$fixture/scripts" "$fixture/audit/formal/latex" "$fixture/output/pdf"
   cp "$PRODUCTION_GATE" "$fixture/scripts/check-formal-pdf-set.sh"
   chmod 0755 "$fixture/scripts/check-formal-pdf-set.sh"
-  for stem in "${STANDALONE[@]}"; do
+  for stem in "${LATEX_STANDALONE[@]}"; do
     cp "$ROOT/audit/formal/latex/$stem.tex" "$fixture/audit/formal/latex/$stem.tex"
+  done
+  cp "$ROOT/$MARKDOWN_SOURCE" "$fixture/$MARKDOWN_SOURCE"
+  for stem in "${STANDALONE[@]}"; do
     cp "$ROOT/output/pdf/$stem.pdf" "$fixture/output/pdf/$stem.pdf"
   done
   cp "$ROOT/audit/formal/latex/$FRAGMENT.tex" \
@@ -543,5 +564,18 @@ make_fixture "$fixture"
 mkdir "$fixture/output/pdf/unexpected-directory.pdf"
 expect_failure "nonregular PDF inventory entry is rejected" "$fixture" \
   "PDF inventory entry is not a direct regular file"
+
+fixture="$TEST_ROOT/missing-markdown-source"
+make_fixture "$fixture"
+mv "$fixture/$MARKDOWN_SOURCE" "$fixture/removed-markdown-source.md"
+expect_failure "missing Markdown paper source is rejected" "$fixture" \
+  "Markdown source is not a direct regular file"
+
+fixture="$TEST_ROOT/symbolic-markdown-source"
+make_fixture "$fixture"
+mv "$fixture/$MARKDOWN_SOURCE" "$fixture/markdown-source-target.md"
+ln -s markdown-source-target.md "$fixture/$MARKDOWN_SOURCE"
+expect_failure "symbolic Markdown paper source is rejected" "$fixture" \
+  "Markdown source is not a direct regular file"
 
 echo "OK: $PASS_COUNT formal-PDF typed-inventory controls passed"

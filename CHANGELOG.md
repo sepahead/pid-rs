@@ -9,6 +9,24 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a self-contained categorical SxPID3 source-marginal and bounded-audit paper in canonical
+  Markdown and a deterministic, visually reviewed A4 PDF. It derives the informative-component
+  factorization through the complete joint source marginal, states the fixed-transform
+  consequence and support-change continuity corollary with their assumptions, distinguishes the
+  18-node SxPID3 lattice from the 108-expression audit registry and the separate 166-node SxPID4
+  lattice, and derives the exact count-product formulation used by the bounded two-route audit.
+  Retained counterexamples show why the factorization does not extend in general to
+  misinformative/signed-net components or to separate one-source marginals. The report exposes the
+  complete sign/zero census, computational and estimator boundaries, use cases, open proof and
+  binary64-refinement obligations, and exact reproduction commands. Its Markdown/Pandoc renderer
+  uses a deterministic warm-paper visual system with `#1F6968` subtitles and mathematical-flow
+  labels. A leaf gate checks repeated-build byte identity, A4 geometry, embedded Unicode fonts,
+  rendered sentinels, visible-TeX leakage, section numbering, exact hyperlinks, and local targets;
+  the aggregate formal-PDF inventory now types and rebuilds both LaTeX- and Markdown-sourced
+  papers. Rendering and bounded executable agreement do not establish paper-to-code
+  correspondence, arbitrary-domain correctness, estimator calibration, population validity,
+  causal interpretation, authenticity, or scientific priority.
+
 - Add a public, non-authoritative recovery receipt for the 2026-08-27 integration restart. It
   distinguishes independently preserved source snapshots from a lost uncommitted temporary
   synthesis, re-verifies 20 complete-history Git bundles by size, SHA-256, advertised object, and

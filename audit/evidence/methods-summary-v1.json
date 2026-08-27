@@ -922,6 +922,33 @@
     {
       "category": "validation",
       "code_availability": "local",
+      "constraint_count": 8,
+      "definition_origin": "project-defined",
+      "depends_on": [
+        "shared-exclusions.categorical",
+        "validation.support-change-tolerant-averaged-sxpid-continuity"
+      ],
+      "feature_gates": [],
+      "id": "validation.sxpid3-source-marginal-bounded-audit",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Source-marginal factorization, prohibited-transfer counterexamples, and bounded exact 108-expression assurance for a declared categorical SxPID3 transcription.",
+      "title": "Categorical SxPID3 source-marginal and bounded exact audit",
+      "validation": {
+        "evidence_path_count": 30,
+        "level": "formal-and-property"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
       "constraint_count": 7,
       "definition_origin": "project-defined",
       "depends_on": [
@@ -2222,6 +2249,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "a7b1f4e7c7f89f88410f3b35cbfb009c673c1d33b5f86d919bf343340006c7b4"
+    "sha256": "648120e90eae4090b0515a7ee485b838395271ce04c5671d729a99d23c43f17e"
   }
 }

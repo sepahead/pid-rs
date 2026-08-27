@@ -1585,6 +1585,19 @@ explicit boundary between exact Lean algebra and unproved publication correspond
 Rust/binary64 refinement, component nonnegativity, higher-source generalization, and population
 claims.
 
+`build-sxpid3-source-marginal-audit-pdf.sh` renders
+`SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md` through an isolated Pandoc/LuaLaTeX pipeline and
+requires two same-toolchain builds to be byte-identical, warning-free A4 documents with embedded
+Unicode fonts. Its reviewed SVGs explain the 18/108/166 distinction and the source-cylinder
+factorization/prohibited-transfer witness. `check-sxpid3-source-marginal-audit-pdf.sh` rebuilds the
+paper, validates the committed and rebuilt files, rejects visible raw TeX and doubled section
+numbers, and requires the exact approved hyperlink set with extant repository-local targets. Its
+default `--exact` mode requires byte identity; `--cross-toolchain` requires equal extracted text
+and geometry. The paper records a finite-law theorem, a fixed-transform consequence, a separately
+proved continuity specialization, and bounded executable evidence. Rendering does not establish
+the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary64 refinement,
+estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
+
 `check-dependency-colored-sxpid-pdf.sh` applies the same deterministic, warning-free build contract
 to `audit/formal/latex/dependency-colored-sxpid-concentration.tex` and its committed PDF. The paper
 states the probability proof, formal boundary, numerical checks, and retained counterexamples. The
@@ -2099,11 +2112,12 @@ they encode the same finite countermodel and therefore are not independent mathe
 Neither formalizes motivic homotopy, validates the cited theorem, establishes the imported-arrow
 correspondence, or proves a PID claim.
 
-`check-formal-pdf-set.sh` fails closed if the declared LaTeX and PDF basename inventories
-differ, if an unexpected paper is present without an explicit inventory update, or if any
-individual PDF gate fails. Its default `--exact` mode requires byte identity and is therefore a
-same-toolchain reproducibility check. Its `--cross-toolchain` mode rebuilds warning-free PDFs and
-applies each artifact's declared bounded portability relation. For the 83-page mathematical
+`check-formal-pdf-set.sh` fails closed if the declared standalone LaTeX sources, declared
+Markdown sources, renderer fragments, and PDF basename inventory differ, if an unexpected paper
+is present without an explicit inventory update, or if any individual PDF gate fails. Its default
+`--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
+`--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
+portability relation. For the 83-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
 tab, and line-feed runs, except for the uniquely identified `Comparison result` and `Checker`
@@ -2116,7 +2130,7 @@ renderer independence, pixel identity, or cross-toolchain PDF byte identity. The
 a mathematical source or rendered paper from being silently omitted. They verify artifact
 completeness and bounded rendering properties, not theorem truth.
 
-Before any PDF build, `check-formal-pdf-style.py` enforces the twelve-paper shared visual-system
+Before the aggregate LaTeX-paper builds, `check-formal-pdf-style.py` enforces the fourteen-paper shared visual-system
 contract: every paper loads the common package and title/section/header helpers exactly once,
 every explicit `booktabs` top rule is followed by an explicit header-row band, Markdown-generated
 workflow tables install the same band hook, and no source introduces vertical or legacy table
