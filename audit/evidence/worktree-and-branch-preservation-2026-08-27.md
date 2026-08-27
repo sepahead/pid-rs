@@ -124,6 +124,29 @@ for dirty snapshots, or the relevant `HEAD`/integration head for complete clean-
 durability, authenticity, semantic completeness, or freedom from coordinated source errors. The
 SHA-256 values bind observed bundle bytes but are not signatures.
 
+### C12 terminal-evidence worktree disposition
+
+The clean worktree labelled `pid-rs-c12-terminal-evidence-20260824` was re-read explicitly rather
+than inferred from the bundle table:
+
+- local branch: `codex/c12-terminal-evidence-20260824`;
+- exact HEAD: `f7811023da638fe7ede921b7b51c32fef8eb2c80`;
+- worktree status: clean;
+- remote reachability: the exact commit is `refs/heads/main`; the local descriptive branch name is
+  not separately published;
+- ancestry: this commit is an ancestor of the recovery branch and is 24 commits behind its first
+  recovery milestone, with no commit unique to the terminal-evidence side;
+- workflow PDF: 83 A4 pages, 824,560 bytes, SHA-256
+  `6abf5af2ab7fb5cf0b40c37977dc38156d4bdf251b6f2948815c472fc77f1288`;
+- integration comparison: those PDF bytes are identical at the terminal-evidence HEAD, the
+  original integration parent, and the recovery milestone;
+- bundle custody: the verified `numerical-r2-clean-repository-2026-08-27.bundle` advertises the
+  exact terminal-evidence commit both as its named branch and as the worktree HEAD.
+
+No cherry-pick is required. The integration line contains later changes to the workflow PDF
+checker, so copying the older checker from this worktree would be a regression even though the PDF
+itself is already preserved. The worktree remains subject to the cleanup preconditions below.
+
 ## Bounded advisory-council accounting
 
 The currently integrated inert public archive at
