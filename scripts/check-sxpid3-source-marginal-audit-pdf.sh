@@ -12,7 +12,7 @@ if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
   echo "usage: $0 [--exact|--cross-toolchain]" >&2
   exit 2
 fi
-for command_name in awk bash cat cmp diff grep mktemp pdffonts pdfinfo pdftotext rm shasum sort; do
+for command_name in awk bash cat cmp diff grep mktemp pdffonts pdfinfo pdftotext python3 rm shasum sort; do
   command -v "$command_name" >/dev/null 2>&1 || {
     echo "$CHECK_NAME: missing command: $command_name" >&2
     exit 2
@@ -73,6 +73,10 @@ validate_pdf() {
     echo "$CHECK_NAME: $label is not A4" >&2
     exit 1
   }
+  grep -Eq '^Tagged:[[:space:]]+yes$' "$info" || {
+    echo "$CHECK_NAME: $label lacks a PDF structure tree" >&2
+    exit 1
+  }
   awk 'NR<=2{next} NF==0{next} {seen=1;if($(NF-4)!="yes"||$(NF-2)!="yes")bad=1} END{exit(!seen||bad)}' "$fonts" || {
     echo "$CHECK_NAME: $label has nonembedded or non-Unicode fonts" >&2
     exit 1
@@ -100,6 +104,52 @@ validate_pdf() {
     echo "$CHECK_NAME: $label contains a doubly numbered section heading" >&2
     exit 1
   fi
+  python3 -I -S -B - "$text" <<'PY'
+import pathlib
+import sys
+
+pages = [" ".join(page.split()) for page in pathlib.Path(sys.argv[1]).read_text(encoding="utf-8").split("\f")]
+
+def require_same_page(label, first, second):
+    if not any(first in page and second in page for page in body_pages):
+        raise SystemExit(f"pagination contract failed for {label}")
+
+abstract_pages = [page for page in pages if "This report documents two related but logically separate" in page]
+if len(abstract_pages) != 1 or "Contents" in abstract_pages[0]:
+    raise SystemExit("pagination contract failed for fresh-page abstract")
+contents_pages = [
+    page for page in pages
+    if "Contents" in page
+    and "Status and claim boundary" in page
+    and "Reproduction entry points" in page
+]
+if len(contents_pages) != 1:
+    raise SystemExit("pagination contract failed for unique contents page")
+body_pages = [page for page in pages if page not in contents_pages]
+require_same_page("paired Dedekind equations", "𝑀 (3) − 2 = 20 − 2 = 18", "𝑀 (4) − 2 = 168 − 2 = 166")
+require_same_page("crosswalk heading and body", "The 18/108/166 crosswalk", "The source arity determines the carrier")
+require_same_page("zeta lead-in and inverse display", "With cumulatives as rows and atoms as columns, define", "Π𝑢𝑖 =")
+require_same_page("fixed-inverse lead-in and display", "and, for one fixed Möbius inverse", "Π𝑢 =")
+require_same_page("averaged-cumulative lead-in and display", "For every component", "𝐼𝛼𝑢 (𝑃 ) =")
+require_same_page("prohibited-transfer result", "Standing assumptions for this counterexample", "under both laws, while")
+require_same_page("prohibited-transfer heading and body", "Retained prohibited-transfer witness", "Standing assumptions for this counterexample")
+require_same_page("separate-marginals witness laws", "Standing assumptions for the separate-marginals counterexample", "𝑄𝑆 =")
+require_same_page("fixed-matrix continuity display", "For one fixed matrix", "The support-change theorem applies because")
+require_same_page("finite-count opening definition", "There are exactly three ordered binary sources", "𝒵+ =")
+require_same_page("three local count forms", "Substitution into the three law-level definitions", "𝑖net")
+require_same_page("three cumulative products", "For each cumulative, the exact positive-rational products are", "𝑄net")
+require_same_page("table-count totals lead-in and display", "The totals contribute respectively", "16, 136, 816, 3,876, 15,504")
+require_same_page("table-count heading and opening", "Why there are 20,348 tables", "Standing assumptions for this count")
+require_same_page("route-limit paragraph", "Source inspection and hostile tests found", "The correct description is therefore")
+require_same_page("receipt lead-in and list", "The authoritative receipt is the source-bound bounded-audit receipt", "the receipt schema and exact source inputs")
+require_same_page("negative-witness conclusion", "Hence", "Πnet 02+04")
+require_same_page("formal-evidence heading and opening", "Formal, executable, and receipt evidence", "Factorization-result evidence")
+require_same_page("estimator-boundary paragraph", "No new estimator is required to evaluate these deterministic identities", "treated as a transparent bridge")
+require_same_page("nonclaim heading and opening", "Explicit nonclaims and negative results", "The factorization does not extend in general")
+require_same_page("nonclaim final pair", "The census gives one vote per labelled count vector", "The receipt provides repository custody")
+require_same_page("reproduction tail and references", "The two-source count/event bridge", "References")
+require_same_page("Ehrlich reference item", "David A. Ehrlich", "Shared Exclusions")
+PY
   LC_ALL=C pdfinfo -url "$pdf" >"$urls"
   if ! awk 'NR==1{next} NF==0{next} NF!=3{bad=1;next} {print $3} END{exit bad}' \
       "$urls" | LC_ALL=C sort -u >"$observed_urls"; then

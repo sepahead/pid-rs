@@ -128,8 +128,9 @@ build_once() {
         --variable=mathfont:'Latin Modern Math' --output="$raw_tex"
   )
 
-  sed 's/^\\captionsetup\[table\]{skip=6pt}$/\\captionsetup*[table]{skip=6pt}/' \
-    "$raw_tex" >"$normalized_tex"
+  sed 's/^\\captionsetup\[table\]{skip=6pt}$/\\captionsetup*[table]{skip=6pt}/' "$raw_tex" \
+    | awk 'BEGIN { print "\\DocumentMetadata{testphase=phase-II,lang=en-US}" } { print }' \
+    >"$normalized_tex"
 
   local pass
   for pass in 1 2 3; do
@@ -179,6 +180,10 @@ if [[ ! "$PAGES" =~ ^[0-9]+$ || "$PAGES" -lt 15 || "$PAGES" -gt 60 ]]; then
 fi
 if ! grep -Eq '^Page size:[[:space:]]+595\.[0-9]+ x 841\.[0-9]+ pts \(A4\)$' "$INFO"; then
   echo "SxPID3 audit PDF build failed: output is not A4" >&2
+  exit 1
+fi
+if ! grep -Eq '^Tagged:[[:space:]]+yes$' "$INFO"; then
+  echo "SxPID3 audit PDF build failed: output must carry a PDF structure tree" >&2
   exit 1
 fi
 if ! awk 'NR<=2{next} NF==0{next} {seen=1;if($(NF-4)!="yes"||$(NF-2)!="yes")bad=1} END{exit(!seen||bad)}' "$FONTS"; then

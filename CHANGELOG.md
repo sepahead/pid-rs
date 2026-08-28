@@ -25,7 +25,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   the aggregate formal-PDF inventory now types and rebuilds both LaTeX- and Markdown-sourced
   papers. Rendering and bounded executable agreement do not establish paper-to-code
   correspondence, arbitrary-domain correctness, estimator calibration, population validity,
-  causal interpretation, authenticity, or scientific priority.
+  causal interpretation, authenticity, or scientific priority. The publication projection keeps
+  paired equations and opening definitions together, starts the abstract on a fresh page, and
+  emits a PDF structure tree through LaTeX's test-phase tagging support. The canonical Markdown
+  remains the accessible source companion; a populated structure tree is not a PDF/UA conformance
+  claim.
 
 - Add a public, non-authoritative recovery receipt for the 2026-08-27 integration restart. It
   distinguishes independently preserved source snapshots from a lost uncommitted temporary

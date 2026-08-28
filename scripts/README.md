@@ -1591,7 +1591,10 @@ requires two same-toolchain builds to be byte-identical, warning-free A4 documen
 Unicode fonts. Its reviewed SVGs explain the 18/108/166 distinction and the source-cylinder
 factorization/prohibited-transfer witness. `check-sxpid3-source-marginal-audit-pdf.sh` rebuilds the
 paper, validates the committed and rebuilt files, rejects visible raw TeX and doubled section
-numbers, and requires the exact approved hyperlink set with extant repository-local targets. Its
+numbers, requires a populated PDF structure tree, enforces the reviewed same-page equation and
+definition groupings, and requires the exact approved hyperlink set with extant repository-local
+targets. The structure tree is emitted with LaTeX test-phase tagging and is not asserted to satisfy
+PDF/UA; canonical Markdown remains the accessible source companion. Its
 default `--exact` mode requires byte identity; `--cross-toolchain` requires equal extracted text
 and geometry. The paper records a finite-law theorem, a fixed-transform consequence, a separately
 proved continuity specialization, and bounded executable evidence. Rendering does not establish
