@@ -9,6 +9,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Re-adjudicate the KSG revision-4 descendant preservation wrapper after accepted method-catalog
+  provenance corrections and the categorical SxPID3 assurance row changed the current catalog
+  authority from 73 methods and 45 references to 74 methods and 46 references. Rebind only the
+  current catalog checker digest, its six-component roster digest, and its exact output; preserve
+  the historical KSG checker, self-test, source commit/tree, scoped routes, mutation counts, and
+  `integration_no_go` status byte-for-byte. This is a fail-closed operational-custody repair, not
+  KSG M1c evidence or a change to any theorem, estimator, PID definition, or numerical result.
+  Rebind the certified-SxPID2 and Lean-freeze current operational projections to the already
+  accepted CI, Just, scripts-guide, and formal-PDF gate bytes while leaving every historical
+  SxPID2, Lean `r14`, theorem, fixture, and scientific digest unchanged.
+
 - Refresh the package-safe software-identity reference and its assurance, ecosystem, mathematical
   audit, and self-excluding current-source projections after the cumulative method-catalog and
   release-scope updates. Rebind the exact current authority bytes, regenerate each derived view in

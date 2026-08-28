@@ -441,8 +441,12 @@ do not repin them or revert later semantic corrections to make that projection g
 versioned descendant wrapper pins the immutable checker and self-test, the current catalog
 checker/self-test and schema helper, and the reviewed four-argument literal-tree materializer. Its
 default mode replays exactly five still-applicable claim/source/exact/binary64/enclosure routes,
-then invokes the complete current 73-row catalog authority and its 85-mutation suite separately,
-all in normal and optimized Python. The historical `--release-only` route is superseded by six
+then invokes the complete current catalog authority and its 85-mutation suite separately, all in
+normal and optimized Python. A reviewed change to the current catalog checker requires an explicit
+re-adjudication of the wrapper's current-only leaf digest, component-roster digest, and exact
+output. Never derive or repin those values automatically, and never alter the pinned historical
+checker, self-test, commit, tree, routes, or outputs to make a descendant pass. The historical
+`--release-only` route is superseded by six
 separately scoped release-family revisions of represented-input PID2 synergy; `--catalog-only` is
 historical-only for the distinct frozen-projection reason. Exact-tree replay retains both without
 weakening or repinning either route.

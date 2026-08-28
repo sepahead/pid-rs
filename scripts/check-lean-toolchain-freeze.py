@@ -656,16 +656,29 @@ PRESERVED_R14_OPERATIONAL_WIRING_HASHES = {
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
-    ".github/workflows/ci.yml": "17b252ff25e881b4f1d01af13f88572c54ed6b221e4b5157fcacc7aae7efafc5",
+    ".github/workflows/ci.yml": "2ca0de261be3bafbdca71cd52371155891ea048b96548b82eaae2a98581c3c07",
     ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
-    "CHANGELOG.md": "a0806a0e7c0eb025b8b780ad277586aba672ecd6288c9dda4f7ddf51f61d0fc4",
-    "justfile": "97372911d19cef1accfa785fd5df74976958fccecb1a82293a4246a69132a76d",
-    "scripts/README.md": "785faa69ba7fc4e8d3c82419b50b7efda5c4a43de9a939add9470cf4e2d14b87",
+    "AGENTS.md": "c887732b3c3498239f102d95cde05349e0c893998a6304a9786da52561b460f1",
+    "CHANGELOG.md": "dc3d7c05a4144d0fa27f6a3de4791f67d91a575a7b6494be1852dc601f0c2cc9",
+    "justfile": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
+    "scripts/README.md": "f7efa9e1ef8becedd470944332c47f7dc766a07e3b05e6a7f22b3160626be93b",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "5c901ea562e7ed9eb118f983ca4a9d97f6efeda40a070558646f515c14683c98"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "158aa4f1f1d464e95baa61e486909a37d4baf8810a4d8dca8f5d79d97d1f8cb0"
+        "6a9590c795df9a7b1226129d04c4bb31afa8e6782d4903c546faf442e1f160ff"
+    ),
+    "scripts/check-formal-pdf-set.sh": (
+        "de69e2106034d954cc9396fa64bb6b39e321e29b608c819e8f0ba23f6fc533c7"
+    ),
+    "scripts/check-formal-pdf-style.py": (
+        "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"
+    ),
+    "scripts/check-mathematical-workflow-pdf-self-test.sh": (
+        "a3c0c1f4d8d1de023ace772e49862918caf2158fa7525a94f336b831b9a8f25e"
+    ),
+    "scripts/check-mathematical-workflow-pdf.sh": (
+        "4eb0a6e19d1a29a2ad6efbf6c24960394a105a4d7ed1a46b0bd0f820451da48a"
     ),
 }
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
