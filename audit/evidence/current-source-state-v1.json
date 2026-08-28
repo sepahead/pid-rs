@@ -160,8 +160,8 @@
       {
         "git_mode": "100644",
         "path": ".gitattributes",
-        "sha256": "32bcf240a2dcf49e5c6020a1c4d8a91eef5d05ce22c96b48002120c749247af1",
-        "size_bytes": 1305
+        "sha256": "9f179af3a6a1dc9d1e0f4c136c6aa9e06d8c63f6415b5ac45b720d4adaf3ee03",
+        "size_bytes": 1517
       },
       {
         "git_mode": "100644",
@@ -5026,7 +5026,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "4851fdfbcfa64f439f739cc388eb9b143f9c644433c19ae98a0c17d6a8f794ee",
+        "sha256": "ddd051d06c7fb6226c88405ac670168f5f232ef96607f7416b59260a5e7a769d",
         "size_bytes": 82193
       },
       {
@@ -5548,7 +5548,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "d4d54a449b1eaf65570799cb0e5504632c7d2ce251ae73cdfe5e18c552678d92",
+        "sha256": "ccbe15307eeb76c36a1b6b17d04eb84e6326167ca3362d5038b39e583401d629",
         "size_bytes": 120874
       },
       {
@@ -6032,7 +6032,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "a9e908f773aa5eaa757eae7df67548b6c5a73bd10d636789d11886a9a81e302d",
+    "entries_sha256": "91b2965b380032a2f48f309fc4257bc0bd7390ca7037815fb0d12d67eb552b41",
     "entry_count": 981
   },
   "subprojections": [

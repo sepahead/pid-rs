@@ -21,3 +21,7 @@ fuzz/corpus/** -text
 # Preserve the submitted external audit Markdown byte-for-byte, including its authored hard-break
 # spaces, without treating those spaces as repository-authored whitespace errors.
 audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md -whitespace
+
+# Preserve the official LPPL 1.3c license copy byte-for-byte. Its upstream trailing spaces are
+# part of the reviewed source bytes, not repository-authored whitespace errors.
+LICENSE-LPPL-1.3c -text -whitespace
