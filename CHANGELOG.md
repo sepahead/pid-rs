@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Install the official Pandoc 3.10.2 Linux archive by an exact SHA-256 in the hosted formal-PDF
+  job, extract only the reviewed direct executable, bind it by its own exact SHA-256 at
+  installation and use, verify its version and path resolution, and place only that reviewed
+  binary directory in the gate's sanitized path. This restores the existing Markdown-paper
+  rebuild instead of skipping or weakening any document, structure, rendering, or mutation check.
+
 - Make fitted equal-width extrema use the finite binary64 total order, which deterministically
   retains `-0.0` as the lower endpoint and `+0.0` as the upper endpoint in either input order on
   supported Rust targets governed by these binary64 semantics. This repairs the documented

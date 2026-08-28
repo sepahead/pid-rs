@@ -528,6 +528,44 @@ jobs:
             --no-deps \
             --require-hashes \
             --requirement audit/formal/requirements-pdf.txt
+      - name: Install hash-pinned Pandoc for Markdown paper rebuilds
+        shell: bash
+        env:
+          PANDOC_ARCHIVE_SHA256: c7edd535941c48be6a362081a748272837de81ae11777202d9c341d3d8261c9a
+          PANDOC_BINARY_SHA256: 867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
+          PANDOC_ARCHIVE_URL: https://github.com/jgm/pandoc/releases/download/3.10.2/pandoc-3.10.2-linux-amd64.tar.gz
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/pandoc-3.10.2-linux-amd64.tar.gz"
+          install_root="$RUNNER_TEMP/pandoc-3.10.2"
+          if [[ -e "$archive" || -L "$archive" || -e "$install_root" || -L "$install_root" ]]; then
+            echo "refusing pre-existing Pandoc archive or install path" >&2
+            exit 1
+          fi
+          curl --fail --location --proto '=https' --retry 5 --show-error \
+            --tlsv1.2 --output "$archive" "$PANDOC_ARCHIVE_URL"
+          printf '%s  %s\n' "$PANDOC_ARCHIVE_SHA256" "$archive" \
+            | sha256sum --check --strict
+          mkdir -m 0700 -- "$install_root"
+          mkdir -m 0700 -- "$install_root/bin"
+          tar -xzf "$archive" -C "$install_root/bin" --strip-components=2 -- \
+            pandoc-3.10.2/bin/pandoc
+          pandoc_bin="$install_root/bin/pandoc"
+          if [[ ! -f "$pandoc_bin" || -L "$pandoc_bin" || ! -x "$pandoc_bin" ]]; then
+            echo "hash-pinned Pandoc archive lacks the expected direct executable" >&2
+            exit 1
+          fi
+          if [[ "$(stat -c '%h' "$pandoc_bin")" != "1" ]]; then
+            echo "hash-pinned Pandoc executable is multiply linked" >&2
+            exit 1
+          fi
+          printf '%s  %s\n' "$PANDOC_BINARY_SHA256" "$pandoc_bin" \
+            | sha256sum --check --strict
+          if [[ "$("$pandoc_bin" --version | sed -n '1p')" != "pandoc 3.10.2" ]]; then
+            echo "hash-pinned Pandoc executable reports an unexpected version" >&2
+            exit 1
+          fi
+          printf 'PID_RS_CI_PANDOC_BIN=%s\n' "$install_root/bin" >> "$GITHUB_ENV"
       - name: Install pinned Elan
         shell: bash
         env:
@@ -587,11 +625,40 @@ jobs:
             texlive-luatex \
             texlive-plain-generic
       - name: Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders
+        env:
+          PANDOC_BINARY_SHA256: 867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
         run: |
           set -euo pipefail
           /usr/bin/test -x /usr/bin/rg
           test "$(command -v rg)" = "/usr/bin/rg"
           /usr/bin/rg --version >/dev/null
+          expected_pandoc_bin="$RUNNER_TEMP/pandoc-3.10.2/bin"
+          if [[ "$PID_RS_CI_PANDOC_BIN" != "$expected_pandoc_bin" ]]; then
+            echo "Pandoc bin directory differs from the hash-pinned install path" >&2
+            exit 1
+          fi
+          pandoc_bin="$PID_RS_CI_PANDOC_BIN/pandoc"
+          verify_pandoc_binary() {
+            if [[ ! -f "$pandoc_bin" || -L "$pandoc_bin" || ! -x "$pandoc_bin" ]]; then
+              echo "hash-pinned Pandoc executable is absent or unsafe" >&2
+              exit 1
+            fi
+            if [[ "$(/usr/bin/stat -c '%h' "$pandoc_bin")" != "1" ]]; then
+              echo "hash-pinned Pandoc executable is multiply linked" >&2
+              exit 1
+            fi
+            if ! printf '%s  %s\n' "$PANDOC_BINARY_SHA256" "$pandoc_bin" \
+              | /usr/bin/sha256sum --check --strict >/dev/null
+            then
+              echo "hash-pinned Pandoc executable digest changed" >&2
+              exit 1
+            fi
+            if [[ "$("$pandoc_bin" --version | /usr/bin/sed -n '1p')" != "pandoc 3.10.2" ]]; then
+              echo "hash-pinned Pandoc executable reports an unexpected version" >&2
+              exit 1
+            fi
+          }
+          verify_pandoc_binary
           gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
           elan_home="$HOME/.elan"
@@ -622,7 +689,12 @@ jobs:
           formal_tool_stage=""
           trap - EXIT
           /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_path"
-          workflow_path="$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+          workflow_path="$PID_RS_CI_PANDOC_BIN:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+          resolved_pandoc="$(/usr/bin/env -i "PATH=$workflow_path" /usr/bin/sh -c 'command -v pandoc')"
+          if [[ "$resolved_pandoc" != "$pandoc_bin" ]]; then
+            echo "sanitized formal-PDF path does not select the hash-pinned Pandoc" >&2
+            exit 1
+          fi
           formal_pdf_path="$elan_home/bin:$workflow_path"
           for clean_path in "$gate_home" "$gate_tmp"; do
             if [[ -e "$clean_path" || -L "$clean_path" ]]; then
@@ -649,6 +721,12 @@ jobs:
             "$elan_home/bin/elan" toolchain install "$gate_lean_toolchain"
           if [[ ! -d "$gate_home/.elan" || -L "$gate_home/.elan" ]]; then
             echo "formal-PDF clean-home Elan state is not a direct directory" >&2
+            exit 1
+          fi
+          verify_pandoc_binary
+          resolved_pandoc="$(/usr/bin/env -i "PATH=$workflow_path" /usr/bin/sh -c 'command -v pandoc')"
+          if [[ "$resolved_pandoc" != "$pandoc_bin" ]]; then
+            echo "sanitized formal-PDF path no longer selects the hash-pinned Pandoc" >&2
             exit 1
           fi
           exec /usr/bin/env -i \

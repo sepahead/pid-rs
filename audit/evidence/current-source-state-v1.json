@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "728e2b07ebfa3556ffb6645d7aaf43100eebd73d0b58b56c2b7b2e4dcbdcf870",
-        "size_bytes": 74487
+        "sha256": "aee5151539e9f661bed4dc77f5a9fe9d2150ec634570db957b6087d10446556a",
+        "size_bytes": 78522
       },
       {
         "git_mode": "100644",
@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "a732d6919cf54f0d22ade88a4b0b784d2126618ea52a2e077e0206ba7c036491",
-        "size_bytes": 241357
+        "sha256": "5c9bd4e3c4abb461e93a353ab99ad76193fe7c48880d3a7d11c080d3a9185f01",
+        "size_bytes": 241824
       },
       {
         "git_mode": "100644",
@@ -5014,7 +5014,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "17ea66927552aab9ad2f62460cbc0e875f6e05bc44986e07407b56922f159b22",
+        "sha256": "4851fdfbcfa64f439f739cc388eb9b143f9c644433c19ae98a0c17d6a8f794ee",
         "size_bytes": 82193
       },
       {
@@ -5536,7 +5536,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "39a8c1f91f4e73d08738f9677f0e7ea4489dc988849668a908f33d8f27be1e40",
+        "sha256": "d4d54a449b1eaf65570799cb0e5504632c7d2ce251ae73cdfe5e18c552678d92",
         "size_bytes": 120874
       },
       {
@@ -6014,7 +6014,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "80a6f36196d34000ee0a408b8f4bee44d4c651037c60977283a3ddad1725c70b",
+    "entries_sha256": "91c24b4d497578c7d5affde0c4913e4274d79dfe10c72b7d70f6a5f1299f2c15",
     "entry_count": 978
   },
   "subprojections": [
@@ -6043,7 +6043,7 @@
       ]
     },
     {
-      "entries_sha256": "b77bfe0c0109d39651a9f131e24abba9f1701869737ad59f21ffb90c4d2c26c8",
+      "entries_sha256": "7c088b6c1af0b6c6aa8778be22115ec32973b8e4a9892daefe3111eacc81e618",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
