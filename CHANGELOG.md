@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Refresh the package-safe software-identity reference and its assurance, ecosystem, mathematical
+  audit, and self-excluding current-source projections after the cumulative method-catalog and
+  release-scope updates. Rebind the exact current authority bytes, regenerate each derived view in
+  dependency order, and restore fail-closed build-time identity validation. These forensic digest
+  equalities do not establish compatibility, authenticity, scientific validity, application
+  validity, source/archive/binary equality, or cross-platform numerical identity.
+
 - Add a revision-preserving second evidence decision for the unchanged prospective categorical
   SxPID3 certificate claim. It gives scoped credit to the finite-law informative source-marginal
   factorization and to the bounded two-Python-route audit while keeping the complete target and

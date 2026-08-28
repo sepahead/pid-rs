@@ -9913,7 +9913,7 @@
     "v0_9_task_qualification_claimed": false,
     "v1_0_qualification_status": "NOT_QUALIFIED"
   },
-  "release_scope_sha256": "5cd220e815307ebd87012d7bb0045bd8a28669cede139389a3fd6c11dfccb06e",
+  "release_scope_sha256": "98473c97b3f49877e6231350c6a798c1a8745fa2c78eff9abf624b9a88f60ecf",
   "schema": "pid-rs/assurance-registry",
   "schema_revision": 2
 }

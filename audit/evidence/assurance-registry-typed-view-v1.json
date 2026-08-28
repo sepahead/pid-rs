@@ -5180,7 +5180,7 @@
     "path": "audit/evidence/assurance-registry.json",
     "schema": "pid-rs/assurance-registry",
     "schema_revision": 2,
-    "sha256": "63e4025a5deef88d6f1f5fe49651b6aa7d835f500db2df67c0bdf766d26a70d5"
+    "sha256": "355fb84902fb344657e04f36767ac3a0865f24539496b28e174f03eaf3789e51"
   },
   "transitive_chain_status": "not_established"
 }

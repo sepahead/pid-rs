@@ -210,6 +210,6 @@ Independence must be recorded separately for `semantic`, `implementation`, `cust
 
 ## Bound authority bytes
 
-- `method-catalog.json` — `pid-rs/method-catalog` revision `1`, SHA-256 `a7b1f4e7c7f89f88410f3b35cbfb009c673c1d33b5f86d919bf343340006c7b4`.
+- `method-catalog.json` — `pid-rs/method-catalog` revision `1`, SHA-256 `ac6a9b4f1e311478d3b5e4b571c082639af7de249864cf6006fda29fc9e98d89`.
 - `audit/source-errata.json` — `pid-rs/source-errata` revision `1`, SHA-256 `ce527b2c4e94ca1315ce47643732d10d326696342a360097a246e5c423ed41f4`.
-- `audit/evidence/assurance-registry-typed-view-v1.json` — `pid-rs/assurance-registry-typed-view` revision `1`, SHA-256 `fbb0876deaf949cadb498872f53db8f7eab50689912a161975aefdb9e18a9644`.
+- `audit/evidence/assurance-registry-typed-view-v1.json` — `pid-rs/assurance-registry-typed-view` revision `1`, SHA-256 `3b7f9dd27479105c506f9f077649ccc982b01aabcaf1852467677e8dbf7f6687`.
