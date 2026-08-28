@@ -939,10 +939,10 @@
         "rust_examples": []
       },
       "scientific_novelty_claim": "none",
-      "summary": "Source-marginal factorization, prohibited-transfer counterexamples, and bounded exact 108-expression assurance for a declared categorical SxPID3 transcription.",
+      "summary": "Source-marginal factorization, prohibited-transfer counterexamples, and bounded exact-product digest/census evidence for 108 keyed expressions under a declared categorical SxPID3 transcription.",
       "title": "Categorical SxPID3 source-marginal and bounded exact audit",
       "validation": {
-        "evidence_path_count": 30,
+        "evidence_path_count": 45,
         "level": "formal-and-property"
       }
     },
@@ -2249,6 +2249,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "648120e90eae4090b0515a7ee485b838395271ce04c5671d729a99d23c43f17e"
+    "sha256": "ac6a9b4f1e311478d3b5e4b571c082639af7de249864cf6006fda29fc9e98d89"
   }
 }

@@ -146,7 +146,7 @@ require_same_page("negative-witness conclusion", "Hence", "Πnet 02+04")
 require_same_page("formal-evidence heading and opening", "Formal, executable, and receipt evidence", "Factorization-result evidence")
 require_same_page("estimator-boundary paragraph", "No new estimator is required to evaluate these deterministic identities", "treated as a transparent bridge")
 require_same_page("nonclaim heading and opening", "Explicit nonclaims and negative results", "The factorization does not extend in general")
-require_same_page("nonclaim final pair", "The census gives one vote per labelled count vector", "The receipt provides repository custody")
+require_same_page("nonclaim final pair", "Within each census block, every labelled-table/antichain-key pair has unit weight", "The receipt provides repository custody")
 require_same_page("reproduction tail and references", "The two-source count/event bridge", "References")
 require_same_page("Ehrlich reference item", "David A. Ehrlich", "Shared Exclusions")
 PY

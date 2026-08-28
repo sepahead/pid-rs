@@ -9,6 +9,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a revision-preserving second evidence decision for the unchanged prospective categorical
+  SxPID3 certificate claim. It gives scoped credit to the finite-law informative source-marginal
+  factorization and to the bounded two-Python-route audit while keeping the complete target and
+  Programs A--E proposed/open. The decision distinguishes 18 three-source lattice positions, 108
+  keyed position/stage/component audit expressions, and the separate 166-position SxPID4 lattice;
+  records that each census block gives unit weight to all 366,264 labelled-table/antichain-key
+  pairs; and inventories every partial and open obligation. Correct the method catalog to state
+  that both routes computed all 2,197,584 exact products; the source-bound receipt retains the
+  matching neutral-stream digest commitment, complete six-block sign/zero census, and exact source
+  bindings, while the repository retains reproducible source. Neither retains a per-record product
+  archive or direct comparison of retained streams. Separate the generic Lean
+  factorization lane from that receipt, which marks the lane as adjacent, unconsumed, and
+  unreplayed. Preserve every frozen revision-1 packet byte and its historically pinned index. The
+  separate evidence-adjudication index exposes both decisions without implying `claim-v2`. Clarify
+  the census unit in the existing committed Markdown/PDF report and rebuild its deterministic
+  publication artifact without changing a formula or numerical result.
+
 - Add a scoped, junior-facing mathematical results guide in canonical Markdown and a deterministic,
   visually reviewed A4 PDF. Eight result cards state the mathematical object, assumptions, central
   formula, evidence type, cost, use, strongest nonclaim, and governing detailed source. A semantic
@@ -117,8 +134,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   expressions are PID atoms, lattice nodes, or independent degrees of freedom.
 
 - Add two implementation-disjoint-under-shared-semantics exact SxPID3 audit lanes over all 20,348
-  labelled binary count tables of total mass one through five. Each independently reproduces an
-  externally pinned, route-neutral v2 stream for all 2,197,584 evaluations of 108 keyed scalar
+  labelled binary count tables of total mass one through five. Each independently computes and
+  hashes a route-neutral v2 record stream for all 2,197,584 evaluations of 108 keyed scalar
   audit expressions: 18 source-antichain positions times cumulative/Möbius representation stages
   times informative, misinformative, and signed-net components. Preserve the exact six-block
   sign/zero census, including negative signed-net witnesses, and add a fail-closed lexical lane

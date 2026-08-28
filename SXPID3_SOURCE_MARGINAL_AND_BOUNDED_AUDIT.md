@@ -724,7 +724,9 @@ semantics,” not “independent proof.”
 
 ## 6. Exact sign/zero census
 
-**Standing assumptions for this table.** Each labelled count vector has one vote; the counts are
+**Standing assumptions for this table.** Within each block, every pair consisting of one labelled
+count vector and one of the 18 antichain keys has unit weight. Thus each table contributes 18
+classifications to each block, for 366,264 classifications per block. These classifications are
 not weighted by prevalence or probability. Every classification is made by exact comparison of a
 strictly positive rational product $Q$ with one.
 
@@ -887,8 +889,9 @@ semantics and remain checked against exact fixtures in the domains for which agr
 - No binary64 correctness, portable logarithm, estimator calibration, confidence coverage,
   population PID, causal interpretation, or application decision is established.
 - Negative signed-net atoms are legitimate and must not be clamped.
-- The census gives one vote per labelled count vector; it is not a probability distribution over
-  datasets.
+- Within each census block, every labelled-table/antichain-key pair has unit weight. Each table
+  therefore contributes 18 classifications; the census is not a probability distribution over
+  empirical laws or datasets.
 - The receipt provides repository custody, not authenticity, authorship, priority, or attestation.
 
 ## 12. Reproduction entry points
