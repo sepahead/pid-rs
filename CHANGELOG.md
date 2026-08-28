@@ -15,6 +15,21 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   binary directory in the gate's sanitized path. This restores the existing Markdown-paper
   rebuild instead of skipping or weakening any document, structure, rendering, or mutation check.
 
+- Preserve the mathematical results guide's structure-aware catalog OpenAction on TeX Live 2023.
+  A feature-gated, LPPL compatibility source adapts the exact update from latex3/tagpdf commit
+  `2846db13f8c4cf2e63fdf4984c66b1f064570708`, introduced after v0.98w release
+  `056b8955e6c693e51cf8768346d188f816b63178` and present by v0.98x release
+  `23e90dcf6bd2e39bebc2cc8cb12ba0c204ee55a6`, when the native function is absent, while current
+  tagpdf keeps sole ownership of its native hook. Both paths retain `/S /GoTo`, the original `/D`,
+  and `/SD` to the document structure. The builder binds the compatibility source by exact digest,
+  loads it exactly once, includes it in all source manifests, and adds hostile removal, duplicate,
+  wrong-page, wrong-structure, and version-path mutations. The strict PDF structure policy is not
+  widened for the older toolchain. A forced-v0.98w compilation control removes the complete native
+  hook chunk and function before restoring the old MarkInfo/StructTreeRoot work, then verifies the
+  resulting page and Document structure targets. Hosted CI additionally binds the Ubuntu 24.04
+  tagpdf source to its exact path, SHA-256, `2024-02-04` v0.98v declaration, and native-function
+  absence both before and immediately before the formal gate.
+
 - Make fitted equal-width extrema use the finite binary64 total order, which deterministically
   retains `-0.0` as the lower endpoint and `+0.0` as the upper endpoint in either input order on
   supported Rust targets governed by these binary64 semantics. This repairs the documented

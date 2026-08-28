@@ -1622,9 +1622,20 @@ These checks do not automate active voice, explicit subjects, stable vocabulary,
 or mathematical correctness. They are an editorial subset, not ASD-STE100 conformance,
 compliance, or certification.
 `check-mathematical-results-guide-builder-self-test.sh` uses an isolated fixture and a fake font
-probe. Its eight cases reject source aliases, symbolic outputs, non-PDF names, and nonregular
-outputs before rendering. It also proves that an ordinary safe output reaches the fake probe
-without publishing bytes. Every case rechecks the fixture source hashes.
+probe. Its 13 cases reject source aliases, symbolic outputs, non-PDF names, nonregular outputs,
+removal or duplicate loading of the tagpdf compatibility source, a wrong page or structure target,
+and version-path drift before rendering. It also proves that an ordinary safe output reaches the
+fake probe without publishing bytes. Every case rechecks the fixture source hashes. The builder
+requires the compatibility input exactly once, binds its exact SHA-256 in the reviewed source
+inventory, and includes it in every before/publish/after source manifest.
+`check-mathematical-results-guide-tagpdf-compat-self-test.sh` compiles the installed native-absent
+path directly. When the installed tagpdf is newer, it first removes the complete native tagpdf
+last-page chunk and function, restores only the v0.98w-era MarkInfo and StructTreeRoot work, and
+forces the exact 2024-02-22 v0.98w declaration. Its object-graph control requires a direct action
+dictionary, `/S /GoTo`, page-one `/D`, and `/SD` to the Document object at
+`StructTreeRoot/K[0]`. The builder hostile suite separately rejects a cutoff mutation that would
+exclude v0.98w, and the TeX control requires an exact 2024-02-23 package declaration with the
+native function removed to fail closed.
 `check-mathematical-results-guide-pdf.sh` rebuilds the guide, checks required page pairings,
 resolves every internal destination, binds the external/file target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, renders every page, and requires
@@ -1634,6 +1645,15 @@ page/name/outline trees, typed destination and action-owner shapes, tagged struc
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
 streams, and typed page-resource dependency closures. It emits 167
 ordered navigation records and binds strict number classes plus represented-binary64 values.
+For tagpdf before upstream commit `2846db13f8c4cf2e63fdf4984c66b1f064570708`, the dedicated
+LPPL-1.3c-or-later compatibility source supplies that upstream OpenAction update at
+`shipout/lastpage`. Its per-file SPDX, copyright, modification, Current Maintainer, derived-Work,
+and exact upstream provenance notice is paired with the repository's LPPL license copy. The change
+is post-v0.98w release `056b8955e6c693e51cf8768346d188f816b63178` and is present by v0.98x
+release `23e90dcf6bd2e39bebc2cc8cb12ba0c204ee55a6`. A feature
+test selects the native implementation when it exists, so current tagpdf does not receive a second
+hook. Both paths must emit the same `/S /GoTo`, `/D`, and structure-aware `/SD` action ownership;
+the structure checker remains the semantic authority and is not widened for older toolchains.
 It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
 same-toolchain comparison separately binds every artifact byte.
 `check-mathematical-results-guide-pdf-structure-self-test.py` rejects 70 object-graph mutations

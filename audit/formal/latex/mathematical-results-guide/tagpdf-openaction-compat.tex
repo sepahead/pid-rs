@@ -1,0 +1,92 @@
+% SPDX-FileCopyrightText: 2019-2024 Ulrike Fischer
+% SPDX-License-Identifier: LPPL-1.3c+
+% Modified 2026-08-28 by the pid-rs maintainers.
+% The Current Maintainer of this derived Work is the pid-rs maintainers.
+% The Work under this per-file license consists only of this file.
+%
+% This renamed, modified compatibility excerpt derives from tagpdf-tree.dtx in
+% latex3/tagpdf commit 2846db13f8c4cf2e63fdf4984c66b1f064570708, "add
+% structure to OpenAction" (2024-02-23), licensed under LPPL 1.3c or later.
+% That commit is after the v0.98w release anchor
+% 056b8955e6c693e51cf8768346d188f816b63178 and is an ancestor of the v0.98x
+% release anchor 23e90dcf6bd2e39bebc2cc8cb12ba0c204ee55a6. See
+% LICENSE-LPPL-1.3c. Modifications namespace all new state, feature-test the
+% native function, fail closed on an unexpected newer package, and bind this
+% guide's default Document structure target directly.
+%
+% The native tagpdf path wins when present. On older tagpdf, appending to its
+% existing shipout/lastpage label places this update after tagpdf writes the
+% StructTreeRoot and before PDF management finalizes the catalog. This guide
+% does not select viewer/startstructure: structure 1 is its Document node and
+% the final checker requires the /SD target to equal StructTreeRoot/K[0].
+\ExplSyntaxOn
+\msg_new:nnn { pid-rs } { tagpdf-openaction-compat }
+  { Mathematical~results~guide~tagpdf~compatibility~failed:~#1. }
+\cs_new_protected:Npn \__pidrs_tagpdf_openaction_fail:n #1
+  { \msg_fatal:nnn { pid-rs } { tagpdf-openaction-compat } {#1} }
+
+\cs_if_exist:NTF \g__pidrs_tagpdf_openaction_compat_loaded_bool
+  { \__pidrs_tagpdf_openaction_fail:n { duplicate~compatibility~application } }
+  { \bool_new:N \g__pidrs_tagpdf_openaction_compat_loaded_bool }
+\bool_gset_true:N \g__pidrs_tagpdf_openaction_compat_loaded_bool
+
+\cs_if_exist:NF \__tag_tree_update_openaction:
+  {
+    \cs_if_exist:cTF { ver@tagpdf.sty }
+      { }
+      { \__pidrs_tagpdf_openaction_fail:n { tagpdf~is~not~loaded } }
+    % LaTeX's "later" test is inclusive, so 2024/02/23 is the first rejected
+    % package date and the 2024/02/22 v0.98w release remains eligible.
+    \use:c { @ifpackagelater } { tagpdf } { 2024/02/23 }
+      {
+        \__pidrs_tagpdf_openaction_fail:n
+          { newer~tagpdf~lacks~the~reviewed~native~OpenAction~update }
+      }
+      { }
+    \cs_if_exist:NF \g__tag_active_tree_bool
+      { \__pidrs_tagpdf_openaction_fail:n { tagpdf~active-tree~state~is~absent } }
+    \cs_if_exist:NF \__kernel_pdfdict_name:n
+      { \__pidrs_tagpdf_openaction_fail:n { PDF~catalog~lookup~API~is~absent } }
+    \cs_if_exist:NF \pdfmanagement_add:nne
+      { \__pidrs_tagpdf_openaction_fail:n { PDF~catalog~update~API~is~absent } }
+    \cs_if_exist:NF \pdf_object_ref:n
+      { \__pidrs_tagpdf_openaction_fail:n { PDF~object-reference~API~is~absent } }
+
+    \tl_new:N \l__pidrs_tagpdf_openaction_tl
+    \seq_new:N \l__pidrs_tagpdf_openaction_seq
+    \cs_new_protected:Npn \__pidrs_tagpdf_update_openaction:
+      {
+        \prop_get:cnNT
+          { \__kernel_pdfdict_name:n { g__pdf_Core/Catalog } }
+          { OpenAction }
+          \l__pidrs_tagpdf_openaction_tl
+          {
+            \tl_if_head_eq_charcode:eNT
+              { \tl_trim_spaces:V \l__pidrs_tagpdf_openaction_tl } [ % ]
+              {
+                \seq_set_split:NnV
+                  \l__pidrs_tagpdf_openaction_seq
+                  { / }
+                  \l__pidrs_tagpdf_openaction_tl
+                \pdfmanagement_add:nne { Catalog } { OpenAction }
+                  {
+                    <<
+                      /S/GoTo \c_space_tl
+                      /D~\l__pidrs_tagpdf_openaction_tl \c_space_tl
+                      /SD~[\pdf_object_ref:n { __tag/struct/1 }
+                        \int_compare:nNnTF
+                          { \seq_count:N \l__pidrs_tagpdf_openaction_seq } > { 1 }
+                          { /\seq_item:Nn \l__pidrs_tagpdf_openaction_seq { 2 } }
+                          { ] }
+                    >>
+                  }
+              }
+          }
+      }
+    \hook_gput_code:nnn { shipout/lastpage } { tagpdf }
+      {
+        \bool_if:NT \g__tag_active_tree_bool
+          { \__pidrs_tagpdf_update_openaction: }
+      }
+  }
+\ExplSyntaxOff

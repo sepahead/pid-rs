@@ -941,4 +941,8 @@ issue.
 
 ## License
 
-Licensed under either [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option.
+Licensed under either [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option, except
+for the renamed tagpdf compatibility excerpt at
+`audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex`. That single-file
+derived Work is licensed under [LPPL 1.3c or later](LICENSE-LPPL-1.3c), as its SPDX and provenance
+header records; it is not part of a published Cargo package.

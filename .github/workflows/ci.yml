@@ -624,9 +624,41 @@ jobs:
             texlive-latex-extra \
             texlive-luatex \
             texlive-plain-generic
+      - name: Bind the Ubuntu tagpdf compatibility toolchain
+        shell: bash
+        env:
+          TAGPDF_STY_SHA256: 298d6440fe967d7dec16da07706608bab17d7a0c7dfca35e4c5580721ecfba80
+        run: |
+          set -euo pipefail
+          tagpdf_sty=/usr/share/texlive/texmf-dist/tex/latex/tagpdf/tagpdf.sty
+          if [[ "$(/usr/bin/kpsewhich tagpdf.sty)" != "$tagpdf_sty" ]]; then
+            echo "Ubuntu tagpdf does not resolve to the reviewed compatibility target" >&2
+            exit 1
+          fi
+          if [[ ! -f "$tagpdf_sty" || -L "$tagpdf_sty" ]]; then
+            echo "reviewed Ubuntu tagpdf source is absent, nonregular, or symbolic" >&2
+            exit 1
+          fi
+          if ! printf '%s  %s\n' "$TAGPDF_STY_SHA256" "$tagpdf_sty" \
+            | /usr/bin/sha256sum --check --strict >/dev/null
+          then
+            echo "reviewed Ubuntu tagpdf source digest changed" >&2
+            exit 1
+          fi
+          if [[ "$(/usr/bin/grep -Fxc '\ProvidesExplPackage {tagpdf} {2024-02-04} {0.98v}' \
+              "$tagpdf_sty")" != "1" ]]; then
+            echo "reviewed Ubuntu tagpdf declaration changed" >&2
+            exit 1
+          fi
+          if /usr/bin/grep -Fq '\__tag_tree_update_openaction:' "$tagpdf_sty"; then
+            echo "reviewed Ubuntu tagpdf unexpectedly has the native OpenAction update" >&2
+            exit 1
+          fi
+          printf 'PID_RS_CI_TAGPDF_STY=%s\n' "$tagpdf_sty" >> "$GITHUB_ENV"
       - name: Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders
         env:
           PANDOC_BINARY_SHA256: 867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
+          TAGPDF_STY_SHA256: 298d6440fe967d7dec16da07706608bab17d7a0c7dfca35e4c5580721ecfba80
         run: |
           set -euo pipefail
           /usr/bin/test -x /usr/bin/rg
@@ -659,6 +691,34 @@ jobs:
             fi
           }
           verify_pandoc_binary
+          tagpdf_sty=/usr/share/texlive/texmf-dist/tex/latex/tagpdf/tagpdf.sty
+          verify_tagpdf_compat_toolchain() {
+            if [[ "$PID_RS_CI_TAGPDF_STY" != "$tagpdf_sty" \
+                || "$(/usr/bin/kpsewhich tagpdf.sty)" != "$tagpdf_sty" ]]; then
+              echo "Ubuntu tagpdf compatibility path changed after preflight" >&2
+              exit 1
+            fi
+            if [[ ! -f "$tagpdf_sty" || -L "$tagpdf_sty" ]]; then
+              echo "reviewed Ubuntu tagpdf source became absent, nonregular, or symbolic" >&2
+              exit 1
+            fi
+            if ! printf '%s  %s\n' "$TAGPDF_STY_SHA256" "$tagpdf_sty" \
+              | /usr/bin/sha256sum --check --strict >/dev/null
+            then
+              echo "reviewed Ubuntu tagpdf source digest changed after preflight" >&2
+              exit 1
+            fi
+            if [[ "$(/usr/bin/grep -Fxc '\ProvidesExplPackage {tagpdf} {2024-02-04} {0.98v}' \
+                "$tagpdf_sty")" != "1" ]]; then
+              echo "reviewed Ubuntu tagpdf declaration changed after preflight" >&2
+              exit 1
+            fi
+            if /usr/bin/grep -Fq '\__tag_tree_update_openaction:' "$tagpdf_sty"; then
+              echo "reviewed Ubuntu tagpdf acquired the native OpenAction update" >&2
+              exit 1
+            fi
+          }
+          verify_tagpdf_compat_toolchain
           gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
           elan_home="$HOME/.elan"
@@ -724,6 +784,7 @@ jobs:
             exit 1
           fi
           verify_pandoc_binary
+          verify_tagpdf_compat_toolchain
           resolved_pandoc="$(/usr/bin/env -i "PATH=$workflow_path" /usr/bin/sh -c 'command -v pandoc')"
           if [[ "$resolved_pandoc" != "$pandoc_bin" ]]; then
             echo "sanitized formal-PDF path no longer selects the hash-pinned Pandoc" >&2

@@ -9,6 +9,7 @@ CHECK_NAME="Mathematical results guide PDF check"
 PROSE_CHECK="$ROOT/scripts/check-mathematical-results-guide-prose.py"
 PROSE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-prose-self-test.py"
 BUILDER_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-builder-self-test.sh"
+TAGPDF_COMPAT_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-tagpdf-compat-self-test.sh"
 STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure.py"
 STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-self-test.py"
 
@@ -21,6 +22,7 @@ command -v python3 >/dev/null 2>&1 || {
   exit 2
 }
 for guide_gate in "$PROSE_CHECK" "$PROSE_SELF_TEST" "$BUILDER_SELF_TEST" \
+    "$TAGPDF_COMPAT_SELF_TEST" \
     "$STRUCTURE_CHECK" "$STRUCTURE_SELF_TEST"; do
   if [[ ! -f "$guide_gate" || -L "$guide_gate" ]]; then
     echo "$CHECK_NAME: guide gate absent, non-regular, or symbolic: $guide_gate" >&2
@@ -43,6 +45,7 @@ for path in \
     "$ROOT/MATHEMATICAL_RESULTS_GUIDE.md" \
     "$ROOT/audit/formal/latex/mathematical-results-guide/header.tex" \
     "$ROOT/audit/formal/latex/mathematical-results-guide/filter.lua" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex" \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg" \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg" \
     "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg" \
@@ -54,6 +57,7 @@ for path in \
 done
 
 bash --noprofile --norc "$BUILDER_SELF_TEST"
+bash --noprofile --norc "$TAGPDF_COMPAT_SELF_TEST"
 python3 -I -B "$PROSE_CHECK"
 python3 -O -I -B "$PROSE_CHECK"
 python3 -I -B "$PROSE_SELF_TEST"

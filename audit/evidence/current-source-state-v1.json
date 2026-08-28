@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "aee5151539e9f661bed4dc77f5a9fe9d2150ec634570db957b6087d10446556a",
-        "size_bytes": 78522
+        "sha256": "9e301691d8ee73e05f542cf73c0e544800fc38c0f38c25e0b7cce47ff7e0ae3c",
+        "size_bytes": 81495
       },
       {
         "git_mode": "100644",
@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "5c9bd4e3c4abb461e93a353ab99ad76193fe7c48880d3a7d11c080d3a9185f01",
-        "size_bytes": 241824
+        "sha256": "7c916aacc7db51a40e84031faa3c0b7b4545c495788c2c16379e9769cd29266f",
+        "size_bytes": 243113
       },
       {
         "git_mode": "100644",
@@ -399,6 +399,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "LICENSE-LPPL-1.3c",
+        "sha256": "3d262cdf34dafa6955f703c634a8c238ec44109bc8dd6ef34fb7aa54809f7e66",
+        "size_bytes": 19102
+      },
+      {
+        "git_mode": "100644",
         "path": "LICENSE-MIT",
         "sha256": "222f4286c7928455f6cf585ca620da17ecc29431d932b3f06b8a350db4d6bba8",
         "size_bytes": 1074
@@ -454,8 +460,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "0a0b62004185108dbc6381210b39a61304b47cdb08641c8cdaa3227479014b7b",
-        "size_bytes": 72991
+        "sha256": "f0988ce74a07745150d459e18244f67ef11824f129f4f1be412b464bf743e89a",
+        "size_bytes": 73301
       },
       {
         "git_mode": "100644",
@@ -2128,8 +2134,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/header.tex",
-        "sha256": "9558fc5ac2283e15ae28befc9a5a691961a1200c3aceb84a4e271c7b5bb3368c",
-        "size_bytes": 5377
+        "sha256": "7b7246623d4e1568fe5e9c62bb5d54147a0b43dad88ce9a247c557b141102ee8",
+        "size_bytes": 5441
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex",
+        "sha256": "6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17",
+        "size_bytes": 4234
       },
       {
         "git_mode": "100644",
@@ -4834,14 +4846,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "f7efa9e1ef8becedd470944332c47f7dc766a07e3b05e6a7f22b3160626be93b",
-        "size_bytes": 186825
+        "sha256": "554bb1674e0d551de98ef8ad0a38c4c2c51abfc3bb8bd290d26c425e76f1fd6f",
+        "size_bytes": 188633
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-mathematical-results-guide-pdf.sh",
-        "sha256": "189afd8e3fe4ff92d2404d826e027bcc2a768490565622f24d3f4487ce82ae7e",
-        "size_bytes": 14120
+        "sha256": "0c7aa378902437337b3bfed97e3c1fcc1fab430dbaccc1582ee3a69c0effe415",
+        "size_bytes": 14949
       },
       {
         "git_mode": "100755",
@@ -5554,8 +5566,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-builder-self-test.sh",
-        "sha256": "67ddbe140c3e7364f58f0b7850f845033785af836d605df1688211c2f2456f96",
-        "size_bytes": 7066
+        "sha256": "06bcf8e73d86257bdc31063667efb9a5de5ae2dbcf7ba8554edf73addb975761",
+        "size_bytes": 10598
       },
       {
         "git_mode": "100644",
@@ -5572,8 +5584,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "159dfb97e22717bf5b2221eefbce7369ff8d742410caaee04bf13d67ee7ffbea",
-        "size_bytes": 16178
+        "sha256": "1c121e53c533d7a6c3b24b69c5bb3b3260f6e2329e7e969689442b8b1bb6c2c1",
+        "size_bytes": 16451
       },
       {
         "git_mode": "100644",
@@ -5586,6 +5598,12 @@
         "path": "scripts/check-mathematical-results-guide-prose.py",
         "sha256": "454788ab9f5dc0e92f1790ebb4b67c39cc5a0cb5676f73df28299c985faa3ba7",
         "size_bytes": 18877
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-mathematical-results-guide-tagpdf-compat-self-test.sh",
+        "sha256": "e0294d1c11a2a7fec7ce1d60f5c4d309cf73257d78472f4ee46ac56f424a36ed",
+        "size_bytes": 7295
       },
       {
         "git_mode": "100755",
@@ -6014,8 +6032,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "91c24b4d497578c7d5affde0c4913e4274d79dfe10c72b7d70f6a5f1299f2c15",
-    "entry_count": 978
+    "entries_sha256": "a9e908f773aa5eaa757eae7df67548b6c5a73bd10d636789d11886a9a81e302d",
+    "entry_count": 981
   },
   "subprojections": [
     {
@@ -6027,8 +6045,8 @@
       ]
     },
     {
-      "entries_sha256": "584bd1bc67cb87da750a9adfdffd0f03db8fb76ed852b2eed3c5a019f1ba9733",
-      "entry_count": 86,
+      "entries_sha256": "c83874173b6fc50af130d4a20da946d0c148397442f59b112de1fef85a0f1ee6",
+      "entry_count": 87,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
@@ -6043,7 +6061,7 @@
       ]
     },
     {
-      "entries_sha256": "7c088b6c1af0b6c6aa8778be22115ec32973b8e4a9892daefe3111eacc81e618",
+      "entries_sha256": "99ca556563f420f4002fbe975d40480452482e80f821d192afc0e67799bf252d",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -5,6 +5,8 @@ ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 SOURCE="$ROOT/MATHEMATICAL_RESULTS_GUIDE.md"
 HEADER="$ROOT/audit/formal/latex/mathematical-results-guide/header.tex"
 FILTER="$ROOT/audit/formal/latex/mathematical-results-guide/filter.lua"
+TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
+TAGPDF_OPENACTION_COMPAT_SHA256=6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17
 GUIDE_FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/mathematical-results-guide"
 CROSSWALK_DIRECTORY="$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit"
 DEFAULT_OUTPUT="$ROOT/output/pdf/mathematical-results-guide.pdf"
@@ -21,6 +23,7 @@ required_sources=(
   "$SOURCE"
   "$HEADER"
   "$FILTER"
+  "$TAGPDF_OPENACTION_COMPAT"
   "$GUIDE_FIGURE_DIRECTORY/semantic-firewall.svg"
   "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg"
   "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg"
@@ -69,6 +72,16 @@ for command_name in awk cmp cp dirname fc-cache grep kpsewhich lualatex mkdir mk
     exit 1
   fi
 done
+if [[ "$(grep -Fxc '\input{mathematical-results-guide-tagpdf-openaction-compat.tex}' \
+    "$HEADER")" != "1" ]]; then
+  echo "Mathematical results guide PDF build failed: tagpdf compatibility input must occur exactly once" >&2
+  exit 1
+fi
+if ! printf '%s  %s\n' "$TAGPDF_OPENACTION_COMPAT_SHA256" "$TAGPDF_OPENACTION_COMPAT" \
+    | shasum -a 256 --check --status; then
+  echo "Mathematical results guide PDF build failed: tagpdf compatibility source digest changed" >&2
+  exit 1
+fi
 
 TMP_BASE="${PID_RS_PDF_TMPDIR:-${TMPDIR:-/tmp}}"
 BUILD_ROOT="$(mktemp -d "$TMP_BASE/pid-rs-mathematical-results-guide-pdf.XXXXXX")"
@@ -127,6 +140,8 @@ build_once() {
   cp "$SOURCE" "$staged_root/MATHEMATICAL_RESULTS_GUIDE.md"
   cp "$HEADER" "$staged_root/mathematical-results-guide-header.tex"
   cp "$FILTER" "$staged_root/mathematical-results-guide-filter.lua"
+  cp "$TAGPDF_OPENACTION_COMPAT" \
+    "$staged_root/mathematical-results-guide-tagpdf-openaction-compat.tex"
   cp "$GUIDE_FIGURE_DIRECTORY/semantic-firewall.svg" "$staged_guide_figures/semantic-firewall.svg"
   cp "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg" "$staged_guide_figures/result-evidence-map.svg"
   cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" "$staged_crosswalk/audit-coordinate-crosswalk.svg"
