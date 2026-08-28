@@ -9,6 +9,26 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Make fitted equal-width extrema use the finite binary64 total order, which deterministically
+  retains `-0.0` as the lower endpoint and `+0.0` as the upper endpoint in either input order on
+  supported Rust targets governed by these binary64 semantics. This repairs the documented
+  exact-edge-payload and reachability-report contract; signed zero remains one numeric transform
+  value, so categorical labels and PID values do not change.
+
+- Refresh the deprecated Python same-sample SxPID resource-rejection witnesses to include the
+  exact averaged-reduction limb visits already charged by the core estimator. The corrected totals
+  are recomputed from event scans, pointwise Möbius work, exact averaging, and histogram work; this
+  changes test metadata only, not the estimator or resource ceiling.
+
+- Correct the full-history secret-scan rule for the exact public SxPID3 coordinate-count sentence.
+  Earlier controls either exercised a shortened sentence that is absent from the claim or isolated
+  the full sentence from the preceding scan context. The replacement binds the actual physical
+  line, its multiline boundary, and its exact path while retaining nearby-path, nearby-key,
+  prefix/suffix, malformed, and secret-prefixed negative controls. Add the same sentence's exact
+  integrated-history commit/path/rule/line fingerprint beside its original-history fingerprint,
+  and make CI bind the exact ordered two-line fingerprint list so broader exemptions fail closed.
+  No credential or secret is allowlisted.
+
 - Re-adjudicate the KSG revision-4 descendant preservation wrapper after accepted method-catalog
   provenance corrections and the categorical SxPID3 assurance row changed the current catalog
   authority from 73 methods and 45 references to 74 methods and 46 references. Rebind only the

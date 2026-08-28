@@ -1263,10 +1263,29 @@ jobs:
           from pathlib import Path
 
           config = Path.cwd() / ".gitleaks.toml"
+          ignore = Path.cwd() / ".gitleaksignore"
+          expected_ignored_fingerprints = (
+              "9dcdf32f18076eefc768194079b4abf437009737:"
+              "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md:generic-api-key:19",
+              "5b4f3758d688dfd06d6072374922b00abad27ecf:"
+              "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md:generic-api-key:19",
+          )
+          actual_ignored_fingerprints = tuple(ignore.read_text(encoding="utf-8").splitlines())
+          if actual_ignored_fingerprints != expected_ignored_fingerprints:
+              raise SystemExit(
+                  "historical public-prose ignore fingerprints changed: "
+                  f"{actual_ignored_fingerprints!r}"
+              )
           # Construct a high-entropy-looking public digest without embedding a 64-hex fixture in CI.
           digest = "0123456789abcdef" * 4
           quote = '"'
-          pid3_public_prose = "18-key serialization order, " + "108-coordinate certificate"
+          pid3_public_prose = (
+              "18-key serialization order, "
+              "108-coordinate certificate, resource policy, independent-verification"
+          )
+          pid3_public_preceding = (
+              "The canonical count-table transport, natural-log specialization,"
+          )
           positive_only = (
               (
                   "audit/evidence/repository-snapshot.json",
@@ -1286,7 +1305,7 @@ jobs:
               ),
               (
                   "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md",
-                  pid3_public_prose,
+                  pid3_public_preceding + "\n" + pid3_public_prose,
               ),
           )
           cases = (
@@ -1426,8 +1445,11 @@ jobs:
           for malformed_prose in (
               "prefix " + pid3_public_prose,
               "19-key serialization order, " + "108-coordinate certificate",
+              pid3_public_prose + " suffix",
           ):
-              code, findings, stderr = scan(((prose_path, malformed_prose),))
+              code, findings, stderr = scan(
+                  ((prose_path, pid3_public_preceding + "\n" + malformed_prose),)
+              )
               if code != 1 or len(findings) != 1 or findings[0].get("RuleID") != "generic-api-key":
                   raise SystemExit(
                       "malformed public-prose control escaped: "
@@ -1444,9 +1466,9 @@ jobs:
                           f"exit={code}, findings={len(findings)}, stderr={stderr}"
                       )
                   detected += 1
-          if detected != 62:
-              raise SystemExit(f"expected 62 rejected controls, observed {detected}")
-          print("Gitleaks narrow-allowlist self-test passed: 10 intended, 62 rejected")
+          if detected != 63:
+              raise SystemExit(f"expected 63 rejected controls, observed {detected}")
+          print("Gitleaks narrow-allowlist self-test passed: 10 intended, 63 rejected")
           PY
       - run: /tmp/gitleaks git --redact --no-banner --log-opts="--all" .
 

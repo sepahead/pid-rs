@@ -503,8 +503,18 @@ impl EqualWidthQuantizer {
             for row in 0..train.nrows() {
                 check_cancellation(cancellation, OPERATION, completed_work, total_work)?;
                 let value = train.row(row)[column];
-                minimum = minimum.min(value);
-                maximum = maximum.max(value);
+                // `f64::min` and `f64::max` can lower to target-dependent instructions whose
+                // equal-operand choice does not retain both signed-zero payloads. `MatRef`
+                // guarantees finite inputs, so the binary64 total order differs from numeric
+                // order here only by placing -0.0 below +0.0. This makes the documented endpoint
+                // payload contract independent of row order and optimization level on supported
+                // Rust targets governed by these binary64 semantics.
+                if value.total_cmp(&minimum).is_lt() {
+                    minimum = value;
+                }
+                if value.total_cmp(&maximum).is_gt() {
+                    maximum = value;
+                }
                 completed_work += 1;
             }
             let mut column_edges =
@@ -1702,6 +1712,22 @@ mod tests {
             .iter()
             .all(|edge| *edge >= minimum && *edge <= maximum));
         assert!(edges.windows(2).all(|pair| pair[0] <= pair[1]));
+    }
+
+    #[test]
+    fn signed_zero_fit_preserves_total_order_endpoints_for_both_row_orders() {
+        for training in [[-0.0, 0.0], [0.0, -0.0]] {
+            let matrix = MatRef::new(&training, 2, 1).unwrap();
+            let quantizer =
+                EqualWidthQuantizer::fit(matrix, 4, QuantizerConfig::default()).unwrap();
+            let edges = &quantizer.edges()[0];
+
+            assert_eq!(edges[0].to_bits(), (-0.0_f64).to_bits());
+            assert_eq!(edges[4].to_bits(), 0.0_f64.to_bits());
+            let transformed = quantizer.transform_with_report(matrix).unwrap();
+            assert_eq!(transformed.matrix.data(), &[0, 0]);
+            assert_eq!(transformed.report.distinct_binary64_edge_value_counts, [2]);
+        }
     }
 
     #[test]

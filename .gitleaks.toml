@@ -80,5 +80,7 @@ id = "generic-api-key"
   description = "Exact public SxPID3 coordinate-count prose, not a credential"
   condition = "AND"
   regexTarget = "line"
-  regexes = ['''^18-key serialization order, 108-coordinate certificate$''']
+  # Gitleaks can retain the preceding physical line in this rule's scan context. Multiline anchors
+  # keep the exception bound to exactly one complete physical line in that larger context.
+  regexes = ['''(?m)^18-key serialization order, 108-coordinate certificate, resource policy, independent-verification$''']
   paths = ['''^claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1\.md$''']

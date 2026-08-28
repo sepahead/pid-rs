@@ -703,9 +703,12 @@ def test_same_sample_pid_families_reject_identical_mi_coordinates_as_method_iden
 @pytest.mark.parametrize(
     ("function_name", "source_count", "row_count", "resource", "requested"),
     [
-        ("compute_quantized_sxpid2", 2, 17_676, "operations_hint", 10_000_780_308),
-        ("compute_quantized_sxpid3", 3, 5_555, "operations_hint", 10_001_821_940),
-        ("compute_quantized_sxpid_n", 4, 1_119, "operations_hint", 10_008_977_187),
+        # These exact requests recompute the core event scans, pointwise Möbius work, exact
+        # averaged-reduction limb visits, and histogram work. Keeping the averaged-reduction term
+        # explicit prevents a resource-accounting hardening from becoming stale test data.
+        ("compute_quantized_sxpid2", 2, 17_676, "operations_hint", 10_010_397_140),
+        ("compute_quantized_sxpid3", 3, 5_555, "operations_hint", 10_015_425_476),
+        ("compute_quantized_sxpid_n", 4, 1_119, "operations_hint", 10_034_284_883),
         pytest.param(
             "compute_discrete_pid2",
             2,

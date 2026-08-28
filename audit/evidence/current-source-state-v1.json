@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "2ca0de261be3bafbdca71cd52371155891ea048b96548b82eaae2a98581c3c07",
-        "size_bytes": 73395
+        "sha256": "728e2b07ebfa3556ffb6645d7aaf43100eebd73d0b58b56c2b7b2e4dcbdcf870",
+        "size_bytes": 74487
       },
       {
         "git_mode": "100644",
@@ -280,14 +280,14 @@
       {
         "git_mode": "100644",
         "path": ".gitleaks.toml",
-        "sha256": "8d5cb8b0d3fb211debd4a52b29dcea327ba8beccc2576cab0c17e4272c743362",
-        "size_bytes": 3761
+        "sha256": "fc603d1ad33b42fa772612bcf769ca00d18c685479ba2a497b9c491cdca25750",
+        "size_bytes": 3998
       },
       {
         "git_mode": "100644",
         "path": ".gitleaksignore",
-        "sha256": "4d2ae403f073429690529c747874decbaa7657910b1a3423ff1c11675109d364",
-        "size_bytes": 110
+        "sha256": "511e3fcac4442c2833651afa498b74678f36a5600dc1ffeebdbfb45c2c795f53",
+        "size_bytes": 220
       },
       {
         "git_mode": "100644",
@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "dc3d7c05a4144d0fa27f6a3de4791f67d91a575a7b6494be1852dc601f0c2cc9",
-        "size_bytes": 239832
+        "sha256": "a732d6919cf54f0d22ade88a4b0b784d2126618ea52a2e077e0206ba7c036491",
+        "size_bytes": 241357
       },
       {
         "git_mode": "100644",
@@ -4012,8 +4012,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/quantizer.rs",
-        "sha256": "04aecf2bdde90035f8fd46a2d06c27e0c49b75b0b4eaea986c6b5e6f77131032",
-        "size_bytes": 92805
+        "sha256": "ba769a6be5c45d23a7f5ab9a83414498516268f66a5e234aa7f9f9657d48bb0e",
+        "size_bytes": 94223
       },
       {
         "git_mode": "100644",
@@ -4480,8 +4480,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-python/tests/test_experimental_migration.py",
-        "sha256": "2d56be7a4fecaf29f09a99b14f64bbf284ba85b84e0f9bf54b2a9f0abe0047de",
-        "size_bytes": 29182
+        "sha256": "623da7a11ab3b58576c9d16e36d24a8fc6aae0e3e5ad95f3e89e3602d6ded529",
+        "size_bytes": 29464
       },
       {
         "git_mode": "100644",
@@ -5014,7 +5014,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "6a9590c795df9a7b1226129d04c4bb31afa8e6782d4903c546faf442e1f160ff",
+        "sha256": "17ea66927552aab9ad2f62460cbc0e875f6e05bc44986e07407b56922f159b22",
         "size_bytes": 82193
       },
       {
@@ -5536,7 +5536,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "2a73ecc6956688c8d09eeee52f2da750fa04a8f7419f1f78a87ec9c1f4caf40e",
+        "sha256": "39a8c1f91f4e73d08738f9677f0e7ea4489dc988849668a908f33d8f27be1e40",
         "size_bytes": 120874
       },
       {
@@ -6014,7 +6014,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "db8281ca95da8dd97854d0a671e0715c18ca635f1caa542d2720e24d0fe5fb54",
+    "entries_sha256": "80a6f36196d34000ee0a408b8f4bee44d4c651037c60977283a3ddad1725c70b",
     "entry_count": 978
   },
   "subprojections": [
@@ -6043,7 +6043,7 @@
       ]
     },
     {
-      "entries_sha256": "3d6428c86cdb6f58f1568c34e7ac18311bad1c278abad877c5eb61b10f4395ab",
+      "entries_sha256": "b77bfe0c0109d39651a9f131e24abba9f1701869737ad59f21ffb90c4d2c26c8",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

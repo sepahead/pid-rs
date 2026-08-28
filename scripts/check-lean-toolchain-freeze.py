@@ -656,17 +656,17 @@ PRESERVED_R14_OPERATIONAL_WIRING_HASHES = {
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
-    ".github/workflows/ci.yml": "2ca0de261be3bafbdca71cd52371155891ea048b96548b82eaae2a98581c3c07",
+    ".github/workflows/ci.yml": "728e2b07ebfa3556ffb6645d7aaf43100eebd73d0b58b56c2b7b2e4dcbdcf870",
     ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
     "AGENTS.md": "c887732b3c3498239f102d95cde05349e0c893998a6304a9786da52561b460f1",
-    "CHANGELOG.md": "dc3d7c05a4144d0fa27f6a3de4791f67d91a575a7b6494be1852dc601f0c2cc9",
+    "CHANGELOG.md": "a732d6919cf54f0d22ade88a4b0b784d2126618ea52a2e077e0206ba7c036491",
     "justfile": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
     "scripts/README.md": "f7efa9e1ef8becedd470944332c47f7dc766a07e3b05e6a7f22b3160626be93b",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "5c901ea562e7ed9eb118f983ca4a9d97f6efeda40a070558646f515c14683c98"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "6a9590c795df9a7b1226129d04c4bb31afa8e6782d4903c546faf442e1f160ff"
+        "17ea66927552aab9ad2f62460cbc0e875f6e05bc44986e07407b56922f159b22"
     ),
     "scripts/check-formal-pdf-set.sh": (
         "de69e2106034d954cc9396fa64bb6b39e321e29b608c819e8f0ba23f6fc533c7"

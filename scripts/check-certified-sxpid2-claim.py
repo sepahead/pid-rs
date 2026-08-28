@@ -56,7 +56,7 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "2ca0de261be3bafbdca71cd52371155891ea048b96548b82eaae2a98581c3c07"
+        "728e2b07ebfa3556ffb6645d7aaf43100eebd73d0b58b56c2b7b2e4dcbdcf870"
     ),
     "justfile": ("1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575"),
 }
