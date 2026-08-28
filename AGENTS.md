@@ -651,6 +651,14 @@ python3 -O scripts/check-z3-ksg-integer-harmonic.py
 python3 scripts/check-z3-ksg-integer-harmonic-self-test.py   # 12 semantic + 52 separate firewall controls
 python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
 scripts/check-formal-pdf-set.sh                          # all declared formal papers and render contracts
+python3 -I -B scripts/check-mathematical-results-guide-prose.py  # selected editorial subset; no ASD-STE100 conformance claim
+python3 -O -I -B scripts/check-mathematical-results-guide-prose.py
+python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 33 hostile/control cases
+python3 -O -I -B scripts/check-mathematical-results-guide-prose-self-test.py
+scripts/check-mathematical-results-guide-builder-self-test.sh  # 8 output-safety cases
+python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py  # 70 object + 1 raw-parser mutations; 4 output controls
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py
+scripts/check-mathematical-results-guide-pdf.sh --exact  # scoped MD/PDF result map and semantic firewall
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py

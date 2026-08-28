@@ -1,0 +1,143 @@
+\usepackage{xcolor}
+\definecolor{PidNavy}{HTML}{2C3E50}
+\definecolor{PidTeal}{HTML}{1F6968}
+\definecolor{PidBronze}{HTML}{916400}
+\definecolor{PidGold}{HTML}{DCA520}
+\definecolor{PidPaper}{HTML}{F7F3E9}
+\definecolor{PidSlate}{HTML}{647072}
+\definecolor{PidPale}{HTML}{E8F0ED}
+\definecolor{PidWarm}{HTML}{F2EBDA}
+
+\pdfvariable minorversion=7
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{fvextra}
+\usepackage{etoolbox}
+\usepackage{needspace}
+\usepackage{seqsplit}
+\usepackage{xurl}
+\usepackage{float}
+
+\pagecolor{PidPaper}
+\color{PidNavy}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus .10em minus .07em}
+\setlength{\emergencystretch}{9em}
+\setlist{leftmargin=1.65em,itemsep=.20em,topsep=.30em,parsep=.05em}
+\setlength{\LTpre}{.48em}
+\setlength{\LTpost}{.70em}
+\renewcommand{\arraystretch}{1.16}
+\floatplacement{figure}{H}
+
+\AtBeginEnvironment{longtable}{%
+  \footnotesize\RaggedRight
+  \let\pidoldtexttt\texttt
+  \renewcommand{\texttt}[1]{\pidoldtexttt{\seqsplit{#1}}}%
+}
+\captionsetup{font=small,labelfont={bf,color=PidTeal},textfont={color=PidNavy},skip=7pt}
+
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaklines,
+  breakanywhere,
+  commandchars=\\\{\},
+  fontsize=\small,
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{PidBronze}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{PidNavy}\bfseries Mathematical results guide}
+\fancyhead[R]{\footnotesize\color{PidTeal}eight families · explicit scope · read-next map}
+\fancyfoot[L]{\footnotesize\color{PidSlate}pid-rs project analysis · 28 August 2026}
+\fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+\setlength{\headheight}{22pt}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{PidBronze}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[L]{\footnotesize\color{PidNavy}\bfseries Mathematical results guide}
+  \fancyhead[R]{\footnotesize\color{PidTeal}eight families · explicit scope · read-next map}
+  \fancyfoot[L]{\footnotesize\color{PidSlate}pid-rs project analysis · 28 August 2026}
+  \fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+  \renewcommand{\headrulewidth}{0.25pt}
+}
+
+\titleformat{\section}
+  {\Large\bfseries\color{PidNavy}}
+  {\thesection}{0.70em}{}
+  [\vspace{.10em}{\color{PidBronze}\titlerule[.65pt]}\vspace{-.10em}{\color{PidGold}\titlerule[.20pt]}]
+\titleformat{\subsection}{\large\bfseries\color{PidTeal}}{\thesubsection}{0.70em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{PidTeal}}{\thesubsubsection}{0.70em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus .5ex}{1.0ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus .4ex}{.8ex}
+\titlespacing*{\subsubsection}{0pt}{1.5ex plus .3ex}{.7ex}
+
+\renewenvironment{quote}
+  {\par\vspace{.35em}\noindent{\color{PidBronze}\rule{\linewidth}{.55pt}}%
+   \begin{list}{}{\leftmargin=3.5mm\rightmargin=3.5mm\topsep=.25em}%
+   \item\relax\small\color{PidNavy}}
+  {\end{list}\noindent{\color{PidGold}\rule{\linewidth}{.20pt}}\par\vspace{.35em}}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \hypersetup{pageanchor=false}%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \pagecolor{PidPaper}\color{PidNavy}
+    \vspace*{7mm}
+    \noindent\colorbox{PidWarm}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+      \centering\color{PidBronze}\rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}%
+      \rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}%
+      \hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}%
+      \rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}%
+      \hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}%
+      \rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}}}\par
+    \vspace{18mm}
+    {\small\bfseries\color{PidBronze}\MakeUppercase{pid-rs mathematical publication map}\par}
+    \vspace{13mm}
+    \begin{minipage}{0.88\textwidth}
+      \RaggedRight
+      {\fontsize{34}{40}\selectfont\bfseries\color{PidNavy}\@title\par}
+      \vspace{7mm}
+      {\Large\bfseries\color{PidTeal}Theorems, evidence, costs, boundaries, and open obligations\par}
+    \end{minipage}\par
+    \vspace{18mm}
+    \begin{minipage}{0.82\textwidth}
+      \large
+      A scoped guide to eight result families. Each result card states its mathematical object,
+      assumptions, central formula, evidence, cost, use, and strongest nonclaim.
+    \end{minipage}\par
+    \vfill
+    \begin{minipage}{0.86\textwidth}
+      \small\color{PidSlate}
+      The Markdown source is canonical. Scope-specific reports, claim packets, and the method
+      catalog remain authoritative for their stated domains.
+    \end{minipage}\par
+    \vspace{13mm}
+    {\large\color{PidNavy}\@date\par}
+    \vspace{3mm}
+    {\small\color{PidSlate}Canonical source: \texttt{MATHEMATICAL\_RESULTS\_GUIDE.md}\par}
+    \vspace{8mm}
+    \noindent{\color{PidBronze}\rule{\textwidth}{.75pt}}\par
+    \vspace{1.4mm}
+    \noindent{\color{PidGold}\rule{\textwidth}{.20pt}}\par
+  \end{titlepage}
+  \hypersetup{pageanchor=true}%
+  \setcounter{page}{1}%
+  \pagecolor{PidPaper}\color{PidNavy}
+}
+\makeatother

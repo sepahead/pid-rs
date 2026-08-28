@@ -60,7 +60,10 @@ LATEX_STANDALONE=(
   support-change-tolerant-averaged-sxpid-continuity
   two-source-sxpid-count-atom-bridge
 )
-MARKDOWN_SOURCE=SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
+MARKDOWN_SOURCES=(
+  MATHEMATICAL_RESULTS_GUIDE.md
+  SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
+)
 STANDALONE=(
   certified-sxpid2-executable-assurance
   dependency-colored-sxpid-concentration
@@ -73,6 +76,7 @@ STANDALONE=(
   ksg-m1a-composite-v5-boundary
   ksg-m1a-composite-v6-boundary
   ksg-m1a-composite-v7-boundary
+  mathematical-results-guide
   mathematical-problem-solving-workflow
   support-change-tolerant-averaged-sxpid-continuity
   sxpid3-source-marginal-and-bounded-audit
@@ -89,7 +93,10 @@ make_fixture() {
   for stem in "${LATEX_STANDALONE[@]}"; do
     cp "$ROOT/audit/formal/latex/$stem.tex" "$fixture/audit/formal/latex/$stem.tex"
   done
-  cp "$ROOT/$MARKDOWN_SOURCE" "$fixture/$MARKDOWN_SOURCE"
+  local markdown_source
+  for markdown_source in "${MARKDOWN_SOURCES[@]}"; do
+    cp "$ROOT/$markdown_source" "$fixture/$markdown_source"
+  done
   for stem in "${STANDALONE[@]}"; do
     cp "$ROOT/output/pdf/$stem.pdf" "$fixture/output/pdf/$stem.pdf"
   done
@@ -565,17 +572,21 @@ mkdir "$fixture/output/pdf/unexpected-directory.pdf"
 expect_failure "nonregular PDF inventory entry is rejected" "$fixture" \
   "PDF inventory entry is not a direct regular file"
 
-fixture="$TEST_ROOT/missing-markdown-source"
-make_fixture "$fixture"
-mv "$fixture/$MARKDOWN_SOURCE" "$fixture/removed-markdown-source.md"
-expect_failure "missing Markdown paper source is rejected" "$fixture" \
-  "Markdown source is not a direct regular file"
+for markdown_source in "${MARKDOWN_SOURCES[@]}"; do
+  source_stem="${markdown_source%.md}"
 
-fixture="$TEST_ROOT/symbolic-markdown-source"
-make_fixture "$fixture"
-mv "$fixture/$MARKDOWN_SOURCE" "$fixture/markdown-source-target.md"
-ln -s markdown-source-target.md "$fixture/$MARKDOWN_SOURCE"
-expect_failure "symbolic Markdown paper source is rejected" "$fixture" \
-  "Markdown source is not a direct regular file"
+  fixture="$TEST_ROOT/missing-markdown-source-$source_stem"
+  make_fixture "$fixture"
+  mv "$fixture/$markdown_source" "$fixture/removed-markdown-source.md"
+  expect_failure "missing Markdown paper source $markdown_source is rejected" "$fixture" \
+    "Markdown source is not a direct regular file"
+
+  fixture="$TEST_ROOT/symbolic-markdown-source-$source_stem"
+  make_fixture "$fixture"
+  mv "$fixture/$markdown_source" "$fixture/markdown-source-target.md"
+  ln -s markdown-source-target.md "$fixture/$markdown_source"
+  expect_failure "symbolic Markdown paper source $markdown_source is rejected" "$fixture" \
+    "Markdown source is not a direct regular file"
+done
 
 echo "OK: $PASS_COUNT formal-PDF typed-inventory controls passed"

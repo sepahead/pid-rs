@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "$ROOT"
 MODE="${1:---exact}"
 
@@ -45,10 +45,12 @@ STANDALONE_LATEX_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_PAPERS=(
+  "mathematical-results-guide"
   "sxpid3-source-marginal-and-bounded-audit"
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
+  "MATHEMATICAL_RESULTS_GUIDE.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
 )
 
@@ -185,6 +187,7 @@ rm -f -- "$WORKFLOW_GATE_STDERR"
 WORKFLOW_GATE_STDERR=""
 trap - EXIT INT TERM
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
+scripts/check-mathematical-results-guide-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 

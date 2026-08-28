@@ -723,6 +723,10 @@ formal-foundational-sxpid-audit-pdf:
 formal-sxpid3-source-marginal-audit-pdf:
     scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact
 
+# Rebuild the Markdown-authored mathematical result map and compare its PDF.
+formal-mathematical-results-guide-pdf:
+    scripts/check-mathematical-results-guide-pdf.sh --exact
+
 # Check the finite adjacent-arrow countermodel and its fail-closed mutations.
 citation-edge-countermodel:
     python3 scripts/check-citation-edge-countermodel.py

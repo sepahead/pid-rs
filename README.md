@@ -63,6 +63,13 @@ from methods to papers, external reference code, Rust/Python entry points, featu
 contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machine-readable source
 is [`method-catalog.json`](method-catalog.json).
 
+The scoped, junior-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
+[human PDF](output/pdf/mathematical-results-guide.pdf) map eight result families to their exact
+objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
+keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
+$I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
+for the method catalog, claim packets, or detailed proofs.
+
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the
 PrimeGaps proof-engineering review, semantic nontransfer firewall, exact categorical SxPID3

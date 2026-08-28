@@ -1601,6 +1601,48 @@ proved continuity specialization, and bounded executable evidence. Rendering doe
 the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary64 refinement,
 estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
 
+`build-mathematical-results-guide-pdf.sh` renders `MATHEMATICAL_RESULTS_GUIDE.md` through an
+isolated Pandoc/LuaLaTeX pipeline. It requires two same-toolchain builds to be byte-identical,
+warning-free A4 documents with a populated structure tree, embedded Unicode fonts, and unchanged
+canonical inputs. The guide uses two reviewed SVGs and the existing SxPID3 coordinate crosswalk.
+Its technical prose applies selected [ASD-STE100 Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)
+controlled-language principles: direct sentences, explicit subjects, stable terms, and bounded
+sentence and paragraph length. `check-mathematical-results-guide-prose.py` enforces the
+machine-checkable subset. It checks at most 25 proxy words per descriptive or list-item sentence,
+at most six sentences per descriptive paragraph, and no visible semicolon. A source-specific
+Markdown census prevents silent parser-scope shrinkage. The 33-case
+`check-mathematical-results-guide-prose-self-test.py` covers limits, punctuation, structural
+evasion, lazy-list and heading-block attacks, input symlinks, inline masking, malformed input, and
+safe exclusions under normal and optimized Python.
+These checks do not automate active voice, explicit subjects, stable vocabulary, technical truth,
+or mathematical correctness. They are an editorial subset, not ASD-STE100 conformance,
+compliance, or certification.
+`check-mathematical-results-guide-builder-self-test.sh` uses an isolated fixture and a fake font
+probe. Its eight cases reject source aliases, symbolic outputs, non-PDF names, and nonregular
+outputs before rendering. It also proves that an ordinary safe output reaches the fake probe
+without publishing bytes. Every case rechecks the fixture source hashes.
+`check-mathematical-results-guide-pdf.sh` rebuilds the guide, checks required page pairings,
+resolves every internal destination, binds the external/file target set and complete navigation
+manifest, rejects visible raw TeX and replacement characters, renders every page, and requires
+exact same-toolchain bytes by default. The graph-aware
+`check-mathematical-results-guide-pdf-structure.py` policy allows only the declared raw catalog,
+page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
+trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
+streams, and typed page-resource dependency closures. It emits 167
+ordered navigation records and binds strict number classes plus represented-binary64 values.
+It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
+same-toolchain comparison separately binds every artifact byte.
+`check-mathematical-results-guide-pdf-structure-self-test.py` rejects 70 object-graph mutations
+and one raw-parser mutation covering active content, aliases, type coercions, malformed numbers,
+destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream masquerading, and changed link
+geometry under normal and optimized Python. Four CLI controls reject input/output aliases,
+hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
+remains unchanged. Cross-toolchain mode compares extracted text, geometry, target sets, and the
+bounded semantic navigation/structure projection. These checks
+establish a source-specific, reproducible publication-artifact policy. They are not a generic
+malware-free, viewer-safety, mathematical-truth, or PDF/UA claim. They do not elevate the guide
+over governing scope-specific sources or transfer semantics between PID families or estimators.
+
 `check-dependency-colored-sxpid-pdf.sh` applies the same deterministic, warning-free build contract
 to `audit/formal/latex/dependency-colored-sxpid-concentration.tex` and its committed PDF. The paper
 states the probability proof, formal boundary, numerical checks, and retained counterexamples. The

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="116mm" viewBox="0 0 1600 1160" role="img" aria-labelledby="semantic-firewall-title semantic-firewall-desc">
+  <title id="semantic-firewall-title">Semantic firewall separating five information-theoretic objects</title>
+  <desc id="semantic-firewall-desc">Five independent horizontal lanes describe categorical MGW shared-exclusions PID, the Ehrlich continuous shared-exclusions functional and estimator, Williams–Beer I-min, BROJA as an external comparison only, and the KSG mutual-information estimator. No arrows connect or merge the lanes. A footer states that equality, atom transfer, and proof transfer are prohibited.</desc>
+  <defs>
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="2.3" fill="#916400" opacity="0.42"/>
+    </pattern>
+    <pattern id="diagonal" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <path d="M0 0 V14" stroke="#2C3E50" stroke-width="3" opacity="0.22"/>
+    </pattern>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 8 H16 M8 0 V16" stroke="#916400" stroke-width="2" opacity="0.28"/>
+    </pattern>
+    <pattern id="crosshatch" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M-4 4 L4 -4 M0 18 L18 0 M14 22 L22 14 M-4 14 L4 22 M0 0 L18 18 M14 -4 L22 4" fill="none" stroke="#2C3E50" stroke-width="1.7" opacity="0.18"/>
+    </pattern>
+    <pattern id="bars" width="18" height="14" patternUnits="userSpaceOnUse">
+      <path d="M0 4 H18 M0 11 H18" stroke="#916400" stroke-width="2.2" opacity="0.30"/>
+    </pattern>
+    <pattern id="status-texture" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 20 L20 0" stroke="#DCA520" stroke-width="1.3" opacity="0.13"/>
+    </pattern>
+    <style>
+      .sans { font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif; }
+      .title { font-size: 42px; font-weight: 700; fill: #2C3E50; letter-spacing: .2px; }
+      .kicker { font-size: 18px; font-weight: 700; fill: #916400; letter-spacing: 2.6px; }
+      .subtitle { font-size: 21px; font-weight: 600; fill: #1F6968; }
+      .lane-title { font-size: 27px; font-weight: 700; fill: #2C3E50; }
+      .lane-label { font-size: 18px; font-weight: 700; fill: #1F6968; letter-spacing: 1.2px; }
+      .body { font-size: 20px; font-weight: 400; fill: #2C3E50; }
+      .status-label { font-size: 17px; font-weight: 700; fill: #1F6968; letter-spacing: 1.1px; }
+      .status { font-size: 20px; font-weight: 700; fill: #2C3E50; }
+      .status-small { font-size: 18px; font-weight: 500; fill: #2C3E50; }
+      .number { font-size: 23px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
+      .footer-label { font-size: 18px; font-weight: 700; fill: #1F6968; letter-spacing: 1.6px; }
+      .footer { font-size: 24px; font-weight: 700; fill: #2C3E50; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1160" fill="#F7F3E9"/>
+
+  <g class="sans">
+    <rect x="80" y="47" width="13" height="43" fill="#DCA520"/>
+    <text x="112" y="63" class="kicker">ESTIMAND AND EVIDENCE BOUNDARY</text>
+    <text x="112" y="109" class="title">Five lanes. No silent transfer.</text>
+    <text x="950" y="105" class="subtitle">Shared vocabulary does not make the objects interchangeable.</text>
+    <path d="M80 143 H1520" fill="none" stroke="#2C3E50" stroke-width="2" opacity="0.22"/>
+    <path d="M80 143 H382" fill="none" stroke="#916400" stroke-width="5"/>
+
+    <!-- Lane 1: categorical MGW SxPID -->
+    <g transform="translate(80 170)">
+      <rect width="1440" height="152" rx="16" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2.4" stroke-opacity="0.28"/>
+      <rect width="9" height="152" rx="4.5" fill="#916400"/>
+      <circle cx="57" cy="76" r="31" fill="url(#dots)" stroke="#916400" stroke-width="2.5"/>
+      <text x="57" y="84" class="number">1</text>
+      <text x="110" y="42" class="lane-title">MGW categorical SxPID</text>
+      <text x="110" y="72" class="lane-label">FINITE EMPIRICAL PMF • EVENT-BASED SHARED EXCLUSIONS</text>
+      <text x="110" y="108" class="body">Paper-defined signed decomposition; pid-rs evaluates categorical data directly.</text>
+      <text x="110" y="135" class="body">The stable implementation covers two to four sources.</text>
+      <rect x="1155" y="17" width="258" height="118" rx="12" fill="url(#status-texture)" stroke="#916400" stroke-width="2"/>
+      <text x="1178" y="45" class="status-label">REPOSITORY ROLE</text>
+      <text x="1178" y="76" class="status">IMPLEMENTED • STABLE</text>
+      <text x="1178" y="105" class="status-small">Categorical theorem lane</text>
+      <text x="1178" y="130" class="status-small">only</text>
+    </g>
+
+    <!-- Lane 2: Ehrlich continuous shared exclusions -->
+    <g transform="translate(80 336)">
+      <rect width="1440" height="152" rx="16" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2.4" stroke-opacity="0.28"/>
+      <rect width="9" height="152" rx="4.5" fill="#DCA520"/>
+      <path d="M57 41 L92 76 L57 111 L22 76 Z" fill="url(#diagonal)" stroke="#2C3E50" stroke-width="2.5"/>
+      <text x="57" y="84" class="number">2</text>
+      <text x="110" y="42" class="lane-title">Ehrlich continuous shared exclusions</text>
+      <text x="110" y="72" class="lane-label">CONTINUOUS FUNCTIONAL + SOURCE-DISJUNCTION kNN ESTIMATOR</text>
+      <text x="110" y="108" class="body">Gauge-dependent redundancy with a two-source PID2 reconstruction.</text>
+      <text x="110" y="135" class="body">pid-rs exposes it behind default-off experimental continuous APIs.</text>
+      <rect x="1155" y="17" width="258" height="118" rx="12" fill="url(#status-texture)" stroke="#916400" stroke-width="2"/>
+      <text x="1178" y="45" class="status-label">REPOSITORY ROLE</text>
+      <text x="1178" y="76" class="status">IMPLEMENTED</text>
+      <text x="1178" y="105" class="status-small">Experimental; no</text>
+      <text x="1178" y="130" class="status-small">categorical proof transfer</text>
+    </g>
+
+    <!-- Lane 3: Williams–Beer I-min -->
+    <g transform="translate(80 502)">
+      <rect width="1440" height="152" rx="16" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2.4" stroke-opacity="0.28"/>
+      <rect width="9" height="152" rx="4.5" fill="#916400"/>
+      <rect x="27" y="46" width="60" height="60" rx="4" fill="url(#grid)" stroke="#916400" stroke-width="2.5"/>
+      <text x="57" y="84" class="number">3</text>
+      <text x="110" y="42" class="lane-title">Williams–Beer I<tspan baseline-shift="sub" font-size="19px">min</tspan></text>
+      <text x="110" y="72" class="lane-label">FINITE-ALPHABET SPECIFIC-INFORMATION MINIMUM</text>
+      <text x="110" y="108" class="body">A different redundancy definition on the Williams–Beer lattice.</text>
+      <text x="110" y="135" class="body">pid-rs provides a stable two- and three-source legacy comparator.</text>
+      <rect x="1155" y="17" width="258" height="118" rx="12" fill="url(#status-texture)" stroke="#916400" stroke-width="2"/>
+      <text x="1178" y="45" class="status-label">REPOSITORY ROLE</text>
+      <text x="1178" y="76" class="status">IMPLEMENTED</text>
+      <text x="1178" y="105" class="status-small">Comparator; atoms are</text>
+      <text x="1178" y="130" class="status-small">never pooled with SxPID</text>
+    </g>
+
+    <!-- Lane 4: BROJA -->
+    <g transform="translate(80 668)">
+      <rect width="1440" height="152" rx="16" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2.4" stroke-opacity="0.28"/>
+      <rect width="9" height="152" rx="4.5" fill="#DCA520"/>
+      <path d="M31 49 H83 L97 76 L83 103 H31 L17 76 Z" fill="url(#crosshatch)" stroke="#2C3E50" stroke-width="2.5"/>
+      <text x="57" y="84" class="number">4</text>
+      <text x="110" y="42" class="lane-title">BROJA</text>
+      <text x="110" y="72" class="lane-label">OPTIMIZATION-DEFINED PID • EXTERNAL COMPARISON</text>
+      <text x="110" y="108" class="body">A distinct PID proposal used to compare conclusions and desiderata.</text>
+      <text x="110" y="135" class="body">The repository does not provide a BROJA estimator.</text>
+      <rect x="1155" y="17" width="258" height="118" rx="12" fill="url(#status-texture)" stroke="#916400" stroke-width="2"/>
+      <text x="1178" y="45" class="status-label">REPOSITORY ROLE</text>
+      <text x="1178" y="76" class="status">COMPARISON ONLY</text>
+      <text x="1178" y="105" class="status-small">No local implementation</text>
+      <text x="1178" y="130" class="status-small">or proof claim</text>
+    </g>
+
+    <!-- Lane 5: KSG mutual information -->
+    <g transform="translate(80 834)">
+      <rect width="1440" height="152" rx="16" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2.4" stroke-opacity="0.28"/>
+      <rect width="9" height="152" rx="4.5" fill="#916400"/>
+      <path d="M57 42 L92 107 H22 Z" fill="url(#bars)" stroke="#916400" stroke-width="2.5" stroke-linejoin="round"/>
+      <text x="57" y="88" class="number">5</text>
+      <text x="110" y="42" class="lane-title">KSG mutual-information estimator</text>
+      <text x="110" y="72" class="lane-label">CONTINUOUS MI • EXPLICIT REGULAR-SUPPORT CONTRACT</text>
+      <text x="110" y="108" class="body">A k-nearest-neighbour estimator used by some continuous reports.</text>
+      <text x="110" y="135" class="body">It estimates mutual information; it is not a PID definition.</text>
+      <rect x="1155" y="17" width="258" height="118" rx="12" fill="url(#status-texture)" stroke="#916400" stroke-width="2"/>
+      <text x="1178" y="45" class="status-label">REPOSITORY ROLE</text>
+      <text x="1178" y="76" class="status">IMPLEMENTED</text>
+      <text x="1178" y="105" class="status-small">Conditional estimator;</text>
+      <text x="1178" y="130" class="status-small">core evidence ≠ full proof</text>
+    </g>
+
+    <g transform="translate(80 1020)">
+      <rect width="1440" height="100" rx="14" fill="url(#crosshatch)" stroke="#916400" stroke-width="2.5"/>
+      <rect width="15" height="100" rx="7.5" fill="#DCA520"/>
+      <text x="45" y="42" class="footer-label">FIREWALL RULE</text>
+      <text x="45" y="75" class="footer">No equality • no atom transfer • no theorem transfer • no estimator-validity transfer</text>
+    </g>
+  </g>
+</svg>

@@ -9,6 +9,38 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a scoped, junior-facing mathematical results guide in canonical Markdown and a deterministic,
+  visually reviewed A4 PDF. Eight result cards state the mathematical object, assumptions, central
+  formula, evidence type, cost, use, strongest nonclaim, and governing detailed source. A semantic
+  firewall keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions,
+  Williams–Beer $I_{\min}$, BROJA, and KSG distinct. Two handcrafted SVGs explain that firewall
+  and the result/evidence map; the existing SxPID3 crosswalk explains 18 lattice positions, 108
+  audit expressions, and the separate 166-position SxPID4 lattice. Technical prose applies a
+  selected, machine-enforced subset of [ASD-STE100 Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)
+  controlled-language principles. A source-specific census and 33-case hostile suite prevent
+  parser-scope shrinkage and exercise sentence, paragraph, list, punctuation, and Markdown
+  boundaries in normal and optimized Python. This is an editorial practice, not a formal
+  conformance, compliance, or certification claim. The guide remains
+  non-authoritative: the method catalog, claim packets, and detailed proofs govern their scopes.
+  An eight-case isolated builder suite rejects canonical-input aliases and unsafe output types
+  before rendering. A graph-aware PDF policy binds the catalog, raw page and name trees, typed
+  destinations, page labels, outlines, exact action owners and multiplicities, link geometry,
+  decoded page content with exact tag/MCID correspondence, the page-resource dependency closure,
+  and the tagged structure/ID/parent trees. Its 70 object-graph mutations and one raw-parser
+  mutation reject active-content routes,
+  aliases, type coercions, malformed numbers, destination and outline drift, structure/MCID/CMap
+  drift, streams masquerading as dictionaries, raw-string encoding collisions, and sub-micro
+  geometry changes under normal and optimized Python. Four additional controls reject input/output aliases, hard-link aliases,
+  shared output paths, and symbolic outputs without changing the input PDF.
+  The exact checker also binds deterministic builds, page flow, fonts, visible formulas, and
+  all-page rendering. The frozen-transform section distinguishes the broader conditional theorem
+  from the stable fitted-wrapper independence contract. These checks establish a source-specific
+  document-integrity policy. They do not establish generic viewer safety, theorem truth,
+  scientific priority, estimator calibration, application validity, or complete formal
+  verification. Numeric navigation records bind strict PDF number types and their represented
+  binary64 values, not distinct decimal lexemes that round to the same binary64 value; the exact
+  same-toolchain rebuild comparison separately binds artifact bytes.
+
 - Add a self-contained categorical SxPID3 source-marginal and bounded-audit paper in canonical
   Markdown and a deterministic, visually reviewed A4 PDF. It derives the informative-component
   factorization through the complete joint source marginal, states the fixed-transform
