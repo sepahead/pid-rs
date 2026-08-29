@@ -1,0 +1,254 @@
+% SPDX-FileCopyrightText: 2018-2024 The LaTeX Project
+% SPDX-License-Identifier: LPPL-1.3c+
+% Modified 2026-08-28 by the pid-rs maintainers.
+% The Current Maintainer of this derived Work is the pid-rs maintainers.
+% The Work under this per-file license consists only of this renamed, modified
+% compatibility file.
+%
+% This Work adapts the two file-specification writers in l3pdffile.dtx from
+% latex3/pdfresources commit f1a1b29c4e355ee0786f67ca364c123ff6aa622e,
+% "l3pdffiles: use utf8/string in F key for better compability with zugferd"
+% (2024-02-24), licensed under LPPL 1.3c or later. Commit
+% 57caeb67fa785a92a05083f4eee1863d504f7a63 subsequently identifies the first
+% release containing this change as v0.96f dated 2024-03-01. See
+% LICENSE-LPPL-1.3c.
+%
+% Ubuntu's reviewed pdfmanagement-testphase.ltx v0.96d dated 2023-12-09 writes
+% both /F and /UF as UTF-16BE PDF text strings. The upstream change instead
+% writes /F through utf8/string and retains the print-string conversion for
+% /UF. For this guide's ASCII relative PDF targets, that yields canonical
+% ASCII /F bytes while preserving the UTF-16BE /UF value, decoded target, and
+% GoToR destination. This compatibility layer does not alter URI or internal
+% GoTo actions, link labels, structure parents, or the guide's PDF/UA boundary.
+%
+% The native path wins. We inspect both writer bodies, reject mixed states,
+% reject native behavior on an unexpectedly older file, and reject a native-
+% absent file at or after the first reviewed release. The fallback accepts only
+% the exact date/version token family 2023-12-09 v0.96d, whose hosted source
+% is separately bound by SHA-256. It requires every upstream API before
+% installing the two source-faithful writer definitions and refreshing the
+% public alias made earlier by the bundle.
+\ExplSyntaxOn
+% A reviewed native bundle must not allocate fallback state or change the
+% file-specification writers. Probe it without allocating a message, sentinel,
+% variable, register, or helper control sequence, then stop reading this Work
+% before fallback state is created. Reading an extra input can change pdfTeX's
+% automatic trailer /ID; the self-test therefore requires exact equality
+% outside the sole typed, duplicated trailer-ID payload and separately checks
+% action semantics. Missing, mixed, unexpectedly old, or unrecognized shapes
+% fall through to the diagnostic and exact-old branch below.
+\cs_if_exist:cT { ver@pdfmanagement-testphase.ltx }
+  {
+    \cs_if_exist:NT \__pdffile_filespec_write:nnn
+      {
+        \cs_if_exist:NT \__pdffile_filespec_write:nnN
+          {
+            \cs_if_exist:NT \pdffile_filespec:nnn
+              {
+                \cs_if_eq:NNT
+                  \pdffile_filespec:nnn
+                  \__pdffile_filespec_write:nnn
+                  {
+                    \exp_args:Ne \tl_if_in:nnT
+                      { \cs_meaning:N \__pdffile_filespec_write:nnn }
+                      { pdf_string_from_unicode:nnN }
+                      {
+                        \exp_args:Ne \tl_if_in:nnT
+                          { \cs_meaning:N \__pdffile_filespec_write:nnn }
+                          { utf8/string }
+                          {
+                            \exp_args:Ne \tl_if_in:nnT
+                              { \cs_meaning:N \__pdffile_filespec_write:nnN }
+                              { pdf_string_from_unicode:nnN }
+                              {
+                                \exp_args:Ne \tl_if_in:nnT
+                                  { \cs_meaning:N \__pdffile_filespec_write:nnN }
+                                  { utf8/string }
+                                  {
+                                    \IfFileAtLeastTF
+                                      { pdfmanagement-testphase.ltx }
+                                      { 2024-03-01 }
+                                      { \ExplSyntaxOff \endinput }
+                                      { }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  }
+\cs_if_exist:NT \g__pidrs_pdffile_filespec_compat_loaded_bool
+  {
+    \PackageError { pid-rs }
+      { l3pdffile~file-specification~duplicate~compatibility~application }
+      { The~compatibility~Work~must~be~loaded~exactly~once. }
+    \tex_end:D
+  }
+\msg_new:nnn { pid-rs } { l3pdffile-filespec-f-compat }
+  { Mathematical~results~guide~file-specification~compatibility~failed:~#1. }
+\cs_new_protected:Npn \__pidrs_pdffile_filespec_fail:n #1
+  { \msg_fatal:nnn { pid-rs } { l3pdffile-filespec-f-compat } {#1} }
+
+\bool_new:N \g__pidrs_pdffile_filespec_compat_loaded_bool
+\bool_gset_true:N \g__pidrs_pdffile_filespec_compat_loaded_bool
+
+\cs_if_exist:cTF { ver@pdfmanagement-testphase.ltx }
+  { }
+  {
+    \__pidrs_pdffile_filespec_fail:n
+      { pdfmanagement-testphase.ltx~is~not~loaded }
+  }
+\cs_if_exist:NTF \__pdffile_filespec_write:nnn
+  { }
+  { \__pidrs_pdffile_filespec_fail:n { named~file-specification~writer~is~absent } }
+\cs_if_exist:NTF \__pdffile_filespec_write:nnN
+  { }
+  { \__pidrs_pdffile_filespec_fail:n { unnamed~file-specification~writer~is~absent } }
+\cs_if_exist:NTF \pdffile_filespec:nnn
+  { }
+  { \__pidrs_pdffile_filespec_fail:n { public~file-specification~writer~is~absent } }
+\cs_if_eq:NNF \pdffile_filespec:nnn \__pdffile_filespec_write:nnn
+  {
+    \__pidrs_pdffile_filespec_fail:n
+      { public~and~internal~file-specification~writers~already~diverge }
+  }
+
+\bool_new:N \l__pidrs_pdffile_named_native_bool
+\bool_new:N \l__pidrs_pdffile_unnamed_native_bool
+\str_new:N \l__pidrs_pdffile_writer_meaning_str
+\cs_new_protected:Npn \__pidrs_pdffile_native_probe:NN #1 #2
+  {
+    \str_set:Nx \l__pidrs_pdffile_writer_meaning_str { \cs_meaning:N #1 }
+    \str_if_in:NnTF \l__pidrs_pdffile_writer_meaning_str
+      { pdf_string_from_unicode:nnN }
+      {
+        \str_if_in:NnTF \l__pidrs_pdffile_writer_meaning_str { utf8/string }
+          { \bool_set_true:N #2 }
+          { \bool_set_false:N #2 }
+      }
+      { \bool_set_false:N #2 }
+  }
+\__pidrs_pdffile_native_probe:NN
+  \__pdffile_filespec_write:nnn
+  \l__pidrs_pdffile_named_native_bool
+\__pidrs_pdffile_native_probe:NN
+  \__pdffile_filespec_write:nnN
+  \l__pidrs_pdffile_unnamed_native_bool
+
+\bool_if:NTF \l__pidrs_pdffile_named_native_bool
+  {
+    \bool_if:NF \l__pidrs_pdffile_unnamed_native_bool
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { mixed~native~file-specification~writer~state }
+      }
+    \IfFileAtLeastTF { pdfmanagement-testphase.ltx } { 2024-03-01 }
+      { }
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { unexpected~older~bundle~has~the~native~file-specification~state }
+      }
+  }
+  {
+    \bool_if:NT \l__pidrs_pdffile_unnamed_native_bool
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { mixed~native~file-specification~writer~state }
+      }
+    \IfFileAtLeastTF { pdfmanagement-testphase.ltx } { 2024-03-01 }
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { newer~bundle~lacks~the~reviewed~native~file-specification~update }
+      }
+      { }
+    \IfFileAtLeastTF { pdfmanagement-testphase.ltx } { 2023-12-09 }
+      { }
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { bundle~is~older~than~the~reviewed~0.96d~fallback }
+      }
+    \IfFileAtLeastTF { pdfmanagement-testphase.ltx } { 2023-12-10 }
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { bundle~is~outside~the~reviewed~0.96d~fallback }
+      }
+      { }
+    \str_new:N \l__pidrs_pdffile_version_str
+    \str_new:N \l__pidrs_pdffile_version_prefix_str
+    \str_set:Nx \l__pidrs_pdffile_version_str
+      { \use:c { ver@pdfmanagement-testphase.ltx } }
+    \str_set:Nx \l__pidrs_pdffile_version_prefix_str
+      { \str_range:Nnn \l__pidrs_pdffile_version_str { 1 } { 18 } }
+    \str_if_eq:VnF \l__pidrs_pdffile_version_prefix_str
+      { 2023-12-09~v0.96d~ }
+      {
+        \__pidrs_pdffile_filespec_fail:n
+          { bundle~version~is~not~the~reviewed~0.96d~fallback }
+      }
+    \cs_if_exist:NF \pdf_string_from_unicode:nnN
+      { \__pidrs_pdffile_filespec_fail:n { PDF~string~conversion~API~is~absent } }
+    \cs_if_exist:NF \__pdffile_filename_convert_to_print:nN
+      { \__pidrs_pdffile_filespec_fail:n { print-string~conversion~API~is~absent } }
+    \cs_if_exist:NF \pdfdict_put:nne
+      { \__pidrs_pdffile_filespec_fail:n { PDF~dictionary~API~is~absent } }
+    \cs_if_exist:NF \pdf_object_write:nne
+      { \__pidrs_pdffile_filespec_fail:n { named~PDF-object~API~is~absent } }
+    \cs_if_exist:NF \pdf_object_unnamed_write:ne
+      { \__pidrs_pdffile_filespec_fail:n { unnamed~PDF-object~API~is~absent } }
+    \cs_if_exist:NF \pdf_object_ref_last:
+      { \__pidrs_pdffile_filespec_fail:n { PDF-object-reference~API~is~absent } }
+
+    \cs_set_protected:Npn \__pdffile_filespec_write:nnn #1 #2 #3
+      {
+        \tl_if_blank:nTF { #2 }
+          { \msg_error:nn { pdffile } { target-name-missing } }
+          {
+            \group_begin:
+              \pdf_string_from_unicode:nnN
+                { utf8/string } { #2 } \l__pdffile_tmpa_str
+              \pdfdict_put:nne
+                { l_pdffile/Filespec } { F } { \l__pdffile_tmpa_str }
+              \__pdffile_filename_convert_to_print:nN
+                { #2 } \l__pdffile_tmpa_str
+              \pdfdict_put:nne
+                { l_pdffile/Filespec } { UF } { \l__pdffile_tmpa_str }
+              \pdf_object_write:nne { #1 } { dict }
+                {
+                  \pdfdict_use:n { l_pdffile/Filespec }
+                  \tl_if_empty:nF { #3 }
+                    { /EF~<</F~#3~/UF~#3>> }
+                }
+            \group_end:
+          }
+      }
+
+    \cs_set_protected:Npn \__pdffile_filespec_write:nnN #1 #2 #3
+      {
+        \tl_if_blank:nTF { #1 }
+          { \msg_error:nn { pdffile } { target-name-missing } }
+          {
+            \group_begin:
+              \pdf_string_from_unicode:nnN
+                { utf8/string } { #1 } \l__pdffile_tmpa_str
+              \pdfdict_put:nne
+                { l_pdffile/Filespec } { F } { \l__pdffile_tmpa_str }
+              \__pdffile_filename_convert_to_print:nN
+                { #1 } \l__pdffile_tmpa_str
+              \pdfdict_put:nne
+                { l_pdffile/Filespec } { UF } { \l__pdffile_tmpa_str }
+              \pdf_object_unnamed_write:ne { dict }
+                {
+                  \pdfdict_use:n { l_pdffile/Filespec }
+                  \tl_if_empty:nF { #2 }
+                    { /EF~<</F~#2~/UF~#2>> }
+                }
+              \tl_gset:Ne \g__pdffile_tmpa_tl { \pdf_object_ref_last: }
+            \group_end:
+            \tl_set_eq:NN #3 \g__pdffile_tmpa_tl
+          }
+      }
+    \cs_set_eq:NN \pdffile_filespec:nnn \__pdffile_filespec_write:nnn
+  }
+\ExplSyntaxOff

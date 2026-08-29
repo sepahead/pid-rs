@@ -10,8 +10,24 @@ PROSE_CHECK="$ROOT/scripts/check-mathematical-results-guide-prose.py"
 PROSE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-prose-self-test.py"
 BUILDER_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-builder-self-test.sh"
 TAGPDF_COMPAT_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-tagpdf-compat-self-test.sh"
+URI_CONTENTS_COMPAT_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-uri-contents-compat-self-test.sh"
+FILESPEC_COMPAT_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-filespec-compat-self-test.sh"
+FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
+FIGURE_ASSET_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-figure-assets-self-test.py"
+OPEN_FONT_REGENERATOR="$ROOT/scripts/regenerate-mathematical-results-guide-open-font-figures.py"
+OPEN_FONT_REGENERATOR_SELF_TEST="$ROOT/scripts/regenerate-mathematical-results-guide-open-font-figures-self-test.py"
+ID_VARIANCE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-id-variance.py"
+ID_VARIANCE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-id-variance-self-test.py"
+FONT_ROSTER_CHECK="$ROOT/scripts/check-mathematical-results-guide-font-roster.py"
+FONT_ROSTER_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-font-roster-self-test.py"
+TRAILER_ID_OBSERVATION_CHECK="$ROOT/scripts/check-mathematical-results-guide-trailer-id-observation.py"
+TRAILER_ID_OBSERVATION_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py"
 STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure.py"
 STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-self-test.py"
+PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
+PANDOC_TEX_NORMALIZER_SELF_TEST="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py"
+PANDOC_PORTABILITY_RECEIPT_CHECK="$ROOT/scripts/check-mathematical-results-guide-pandoc-portability-receipt.py"
+PANDOC_PORTABILITY_RECEIPT_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py"
 
 if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then
   echo "usage: $0 [--exact|--cross-toolchain]" >&2
@@ -22,8 +38,15 @@ command -v python3 >/dev/null 2>&1 || {
   exit 2
 }
 for guide_gate in "$PROSE_CHECK" "$PROSE_SELF_TEST" "$BUILDER_SELF_TEST" \
-    "$TAGPDF_COMPAT_SELF_TEST" \
-    "$STRUCTURE_CHECK" "$STRUCTURE_SELF_TEST"; do
+    "$TAGPDF_COMPAT_SELF_TEST" "$URI_CONTENTS_COMPAT_SELF_TEST" \
+    "$FILESPEC_COMPAT_SELF_TEST" "$FIGURE_ASSET_CHECK" "$FIGURE_ASSET_SELF_TEST" \
+    "$OPEN_FONT_REGENERATOR" "$OPEN_FONT_REGENERATOR_SELF_TEST" \
+    "$ID_VARIANCE_CHECK" "$ID_VARIANCE_SELF_TEST" \
+    "$FONT_ROSTER_CHECK" "$FONT_ROSTER_SELF_TEST" \
+    "$TRAILER_ID_OBSERVATION_CHECK" "$TRAILER_ID_OBSERVATION_SELF_TEST" \
+    "$STRUCTURE_CHECK" "$STRUCTURE_SELF_TEST" \
+    "$PANDOC_TEX_NORMALIZER" "$PANDOC_TEX_NORMALIZER_SELF_TEST" \
+    "$PANDOC_PORTABILITY_RECEIPT_CHECK" "$PANDOC_PORTABILITY_RECEIPT_SELF_TEST"; do
   if [[ ! -f "$guide_gate" || -L "$guide_gate" ]]; then
     echo "$CHECK_NAME: guide gate absent, non-regular, or symbolic: $guide_gate" >&2
     exit 1
@@ -46,9 +69,23 @@ for path in \
     "$ROOT/audit/formal/latex/mathematical-results-guide/header.tex" \
     "$ROOT/audit/formal/latex/mathematical-results-guide/filter.lua" \
     "$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt" \
+    "$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt" \
+    "$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt" \
+    "$ROOT/audit/evidence/mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json" \
+    "$ROOT/THIRD_PARTY_NOTICES.md" \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg" \
+    "$ROOT/audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf" \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg" \
+    "$ROOT/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf" \
     "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg" \
+    "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf" \
     "$COMMITTED"; do
   if [[ ! -f "$path" || -L "$path" ]]; then
     echo "$CHECK_NAME: required input absent, non-regular, or symbolic: $path" >&2
@@ -56,8 +93,30 @@ for path in \
   fi
 done
 
+python3 -I -S -B "$PANDOC_TEX_NORMALIZER_SELF_TEST"
+python3 -O -I -S -B "$PANDOC_TEX_NORMALIZER_SELF_TEST"
+python3 -I -B "$PANDOC_PORTABILITY_RECEIPT_CHECK"
+python3 -O -I -B "$PANDOC_PORTABILITY_RECEIPT_CHECK"
+python3 -I -B "$PANDOC_PORTABILITY_RECEIPT_SELF_TEST"
+python3 -O -I -B "$PANDOC_PORTABILITY_RECEIPT_SELF_TEST"
 bash --noprofile --norc "$BUILDER_SELF_TEST"
 bash --noprofile --norc "$TAGPDF_COMPAT_SELF_TEST"
+bash --noprofile --norc "$URI_CONTENTS_COMPAT_SELF_TEST"
+bash --noprofile --norc "$FILESPEC_COMPAT_SELF_TEST"
+python3 -I -B "$FIGURE_ASSET_CHECK"
+python3 -O -I -B "$FIGURE_ASSET_CHECK"
+python3 -I -B "$FIGURE_ASSET_SELF_TEST"
+python3 -O -I -B "$FIGURE_ASSET_SELF_TEST"
+python3 -I -B "$OPEN_FONT_REGENERATOR_SELF_TEST"
+python3 -O -I -B "$OPEN_FONT_REGENERATOR_SELF_TEST"
+python3 -I -B "$ID_VARIANCE_SELF_TEST"
+python3 -O -I -B "$ID_VARIANCE_SELF_TEST"
+python3 -I -S -B "$FONT_ROSTER_SELF_TEST"
+python3 -O -I -S -B "$FONT_ROSTER_SELF_TEST"
+python3 -I -B "$TRAILER_ID_OBSERVATION_CHECK"
+python3 -O -I -B "$TRAILER_ID_OBSERVATION_CHECK"
+python3 -I -B "$TRAILER_ID_OBSERVATION_SELF_TEST"
+python3 -O -I -B "$TRAILER_ID_OBSERVATION_SELF_TEST"
 python3 -I -B "$PROSE_CHECK"
 python3 -O -I -B "$PROSE_CHECK"
 python3 -I -B "$PROSE_SELF_TEST"
@@ -95,7 +154,7 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 BUILT="$BUILD_ROOT/built.pdf"
-PID_RS_PDF_TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$BUILT" \
+PID_RS_PDF_TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$MODE" "$BUILT" \
   >"$BUILD_ROOT/build.stdout" 2>"$BUILD_ROOT/build.stderr" || {
     cat "$BUILD_ROOT/build.stdout" "$BUILD_ROOT/build.stderr" >&2
     exit 1
@@ -105,10 +164,15 @@ if [[ -s "$BUILD_ROOT/build.stderr" ]]; then
   echo "$CHECK_NAME: builder emitted stderr" >&2
   exit 1
 fi
+if [[ "$MODE" == "--cross-toolchain" ]]; then
+  cat "$BUILD_ROOT/build.stdout"
+fi
 
 validate_pdf() {
   local label="$1" pdf="$2"
   local info="$BUILD_ROOT/$label.info" fonts="$BUILD_ROOT/$label.fonts"
+  local font_roster="$BUILD_ROOT/$label.font-roster"
+  local optimized_font_roster="$BUILD_ROOT/$label.font-roster-optimized"
   local text="$BUILD_ROOT/$label.txt"
   local observed_urls="$BUILD_ROOT/$label.observed-urls"
   local observed_navigation="$BUILD_ROOT/$label.observed-navigation"
@@ -127,6 +191,32 @@ validate_pdf() {
       exit 1
     fi
   done
+  if ! python3 -I -S -B "$FONT_ROSTER_CHECK" "$fonts" >"$font_roster" \
+      2>"$BUILD_ROOT/$label.font-roster.stderr"; then
+    cat "$BUILD_ROOT/$label.font-roster.stderr" >&2
+    echo "$CHECK_NAME: $label violates the final open-font roster contract" >&2
+    exit 1
+  fi
+  if [[ -s "$BUILD_ROOT/$label.font-roster.stderr" ]]; then
+    cat "$BUILD_ROOT/$label.font-roster.stderr" >&2
+    echo "$CHECK_NAME: $label font-roster validator emitted stderr" >&2
+    exit 1
+  fi
+  if ! python3 -O -I -S -B "$FONT_ROSTER_CHECK" "$fonts" >"$optimized_font_roster" \
+      2>"$BUILD_ROOT/$label.font-roster-optimized.stderr"; then
+    cat "$BUILD_ROOT/$label.font-roster-optimized.stderr" >&2
+    echo "$CHECK_NAME: optimized Python rejected the $label final font roster" >&2
+    exit 1
+  fi
+  if [[ -s "$BUILD_ROOT/$label.font-roster-optimized.stderr" ]]; then
+    cat "$BUILD_ROOT/$label.font-roster-optimized.stderr" >&2
+    echo "$CHECK_NAME: optimized $label font-roster validator emitted stderr" >&2
+    exit 1
+  fi
+  if ! cmp -s "$font_roster" "$optimized_font_roster"; then
+    echo "$CHECK_NAME: $label font roster differs under optimized Python" >&2
+    exit 1
+  fi
   local pages
   pages="$(awk '/^Pages:/ {print $2}' "$info")"
   if [[ ! "$pages" =~ ^[0-9]+$ || "$pages" -lt 14 || "$pages" -gt 60 ]]; then
@@ -163,10 +253,6 @@ validate_pdf() {
   }
   grep -Eq '^PDF version:[[:space:]]+1[.]7$' "$info" || {
     echo "$CHECK_NAME: $label is not PDF 1.7" >&2
-    exit 1
-  }
-  awk 'NR<=2{next} NF==0{next} {seen=1;if($(NF-4)!="yes"||$(NF-2)!="yes")bad=1} END{exit(!seen||bad)}' "$fonts" || {
-    echo "$CHECK_NAME: $label has nonembedded or non-Unicode fonts" >&2
     exit 1
   }
   for sentinel in \
@@ -314,6 +400,12 @@ EOF
 
 validate_pdf built "$BUILT"
 validate_pdf committed "$COMMITTED"
+
+if ! cmp -s "$BUILD_ROOT/built.font-roster" "$BUILD_ROOT/committed.font-roster"; then
+  echo "$CHECK_NAME: normalized font roster differs between built and committed PDFs" >&2
+  diff -u "$BUILD_ROOT/committed.font-roster" "$BUILD_ROOT/built.font-roster" >&2 || true
+  exit 1
+fi
 
 if [[ "$MODE" == "--exact" ]]; then
   cmp -s "$BUILT" "$COMMITTED" || {

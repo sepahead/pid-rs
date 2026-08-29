@@ -29,12 +29,12 @@
       <circle cx="10" cy="10" r="2" fill="#916400" opacity="0.32"/>
     </pattern>
     <style>
-      .sans { font-family: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif; }
+      .sans { font-family: "Source Sans Pro"; }
       .title { font-size: 42px; font-weight: 700; fill: #2C3E50; letter-spacing: .2px; }
       .kicker { font-size: 18px; font-weight: 700; fill: #916400; letter-spacing: 2.5px; }
       .subtitle { font-size: 21px; font-weight: 600; fill: #1F6968; }
       .column { font-size: 18px; font-weight: 700; fill: #1F6968; letter-spacing: 1.1px; }
-      .column-small { font-size: 17px; font-weight: 500; fill: #2C3E50; }
+      .column-small { font-size: 17px; font-weight: 400; fill: #2C3E50; }
       .family-number { font-size: 21px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
       .family { font-size: 23px; font-weight: 700; fill: #2C3E50; }
       .evidence { font-size: 19px; font-weight: 600; fill: #2C3E50; }

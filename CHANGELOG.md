@@ -9,6 +9,45 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a source-specific, BSD-3-Clause Pandoc TeX compatibility transform for the mathematical
+  results guide. It accepts only the audited Pandoc 3.1.3 and 3.10.2 compatibility projections.
+  The 3.10.2 route must preserve every raw-TeX byte. The 3.1.3 route removes 17 redundant heading
+  destination wrappers, inserts the four canonical captionless-table wrappers and `none` counter,
+  and replaces the exact table and crosswalk-image projections before LuaLaTeX. Exact mode still
+  requires Pandoc 3.10.2 and byte-identical PDFs. The legacy cross route additionally binds the
+  singly linked `/usr/bin/pandoc` executable by SHA-256. The normalizer uses no-follow and
+  nonblocking input reads, repeated source identities, a pinned output-parent descriptor,
+  exclusive creation, owned cleanup, exact delta diagnostics, and one closed PDF acceptance
+  profile. Its normal/optimized self-test runs four accepted and 214 rejected subprocesses per
+  mode. The builder suite now has 69 cases and includes staged-normalizer mutation, license drift,
+  unauthenticated legacy-writer, and exact-mode legacy-writer controls. The retained Pandoc-template
+  BSD notice and exact upstream heading and longtable anchors document the transferred fragments.
+
+- Record the operator-observed bounded old-toolchain guide run separately from the earlier zero-credit
+  diagnostic-wrapper observation. Before the run, the selected `/usr/bin/pandoc` path matched the
+  recorded Pandoc 3.1.3 executable hash. The run used an x86_64 Ubuntu 24.04 userspace translated
+  by Rosetta on arm64 macOS. Before normalization, its valid name tree
+  had 56 unique destinations, including 17 redundant heading aliases and four `table.N` names, and
+  failed the unchanged source-specific profile. After normalization, two 581,296-byte builds
+  differed only in their duplicated trailer IDs. The final 16-page PDF had the canonical 39-name
+  tree and passed the unchanged structure, navigation, text, geometry, font, and active-content
+  policies. All page PNGs also matched the committed guide under one declared Poppler 24.02.0,
+  72-dpi comparison. A closed receipt binds the tools, inputs, deltas, positive and negative
+  observations, and nine nonclaims. Its checker and 2-control/28-semantic/7-custody mutation suite
+  run in normal and optimized Python. The recorded observation describes translated execution for
+  one source and two reviewed writers. It is not native x86_64 evidence, general Pandoc equivalence, arbitrary-input
+  portability, raw cross-toolchain identity, atomic executable causation, independently replayable
+  old-toolchain execution custody, PDF/UA, supply-chain authentication, or mathematical correctness.
+  The receipt now distinguishes its OCI image-index, linux/amd64 manifest, and config digests instead
+  of conflating those object types. It separately binds a three-path post-observation lint-only
+  correction and builder rebind; the earlier execution observation remains associated with its
+  before-digests and transfers no credit to the corrected sources. A failed QEMU attempt remains
+  recorded at zero credit.
+
+- Split the mathematical-results-guide name-tree diagnostic into non-array, empty, odd-length,
+  and even-but-wrong-pair-count failures. Four exact-message controls verify the diagnostics. The
+  accepted 39-destination profile and its structure and navigation digests do not change.
+
 - Install the official Pandoc 3.10.2 Linux archive by an exact SHA-256 in the hosted formal-PDF
   job, extract only the reviewed direct executable, bind it by its own exact SHA-256 at
   installation and use, verify its version and path resolution, and place only that reviewed
@@ -26,9 +65,98 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   wrong-page, wrong-structure, and version-path mutations. The strict PDF structure policy is not
   widened for the older toolchain. A forced-v0.98w compilation control removes the complete native
   hook chunk and function before restoring the old MarkInfo/StructTreeRoot work, then verifies the
-  resulting page and Document structure targets. Hosted CI additionally binds the Ubuntu 24.04
-  tagpdf source to its exact path, SHA-256, `2024-02-04` v0.98v declaration, and native-function
+  resulting page and Document structure targets. The hosted workflow additionally requires the
+  Ubuntu 24.04 tagpdf source at its exact path and SHA-256, with its `2024-02-04` v0.98v declaration
+  and native-function
   absence both before and immediately before the formal gate.
+
+- Add a compatibility path that targets the mathematical results guide's complete annotation and
+  figure-resource structure on the reviewed Ubuntu TeX Live 2023 toolchain while retaining its
+  graph-aware structure policy. This source change by itself supplies no hosted or exact-head
+  execution credit; such credit requires a separate receipt bound to the final head. The default
+  exact mode is not widened. Two separate, renamed LPPL-1.3c-or-later compatibility Works adapt
+  latex3/pdfresources commits
+  `6fbdf1ae266c5d59704374045a7abe90e59be4a3` and
+  `f1a1b29c4e355ee0786f67ca364c123ff6aa622e`: the first gives each URI Link its target-valued
+  UTF-16BE `/Contents` inside the existing local hgeneric group; the second writes the portable GoToR
+  filespec `/F` as ASCII while preserving its UTF-16BE `/UF`, decoded target, and destination. The
+  old fallbacks accept only the reviewed `2023-12-09` v0.96d declarations and required source
+  shapes. Native implementations remain sole owners. Mixed or unreviewed states fail closed. The
+  hosted workflow requires both old distribution sources at their exact paths and digests, with
+  their declarations and native-feature absence. The URI policy is deliberately limited to this
+  guide's target-valued contract adapted from upstream's 2024 behavior. Upstream changed the
+  default in 2026 without changing the v0.96y declaration. Target-valued `/Contents` is not claimed
+  to be universally best or to prove PDF/UA.
+
+- Replace this guide's runtime rsvg conversion with three exact tracked one-page PDF derivatives so
+  old and current librsvg versions cannot change the structure/resource digest. The SVGs now name
+  only digest-selected Source Sans Pro 3.006 or Latin Modern Sans 2.004 inputs. A bounded
+  regeneration command copies the five exact font programs into isolated Fontconfig roots, renders
+  each figure twice, and emits candidates only when each pair is byte-identical. The raw font
+  programs are not tracked. Their versions, hashes, installed-file provenance, licenses, and
+  embedded-subset notices are recorded without claiming download authentication or upstream byte
+  identity. Exact local copies of the observed Source Sans OFL file, GUST Font License, and Latin
+  Modern v2.004 manifest preserve the distinct license and package-manifest evidence. Their paths,
+  sizes, hashes, and roles are bound without treating the older Source Sans package-license header
+  as a substitute for the accepted OTF program metadata, and without making a legal determination.
+  A manifest binds each SVG/PDF pair, renderer observations, exact page boxes, byte sizes,
+  CFF font-resource shapes, and expected open-font names. Same-host byte reproducibility does not
+  establish cross-host closure, visual or semantic equivalence, accessibility, or supply-chain
+  authenticity. The source-specific checker and hostile mutations reject digest, active-content,
+  geometry, Unicode-map, embedded CFF program, font-name, license/provenance, and boundary drift.
+  The builder validates the exact staged bytes and adds validation-race and staged-substitution
+  controls. The guide's lack of Figure roles and Alt entries remains an explicit non-PDF/UA
+  boundary for separate assistive-technology review.
+  A separate final-guide roster gate prevents stale or substituted figure payloads from passing
+  only because their fonts are embedded. It admits exact `Type 1C`/`WinAnsi` and
+  `CID Type 0C`/`Identity-H` pairs, requires all five declared figure faces, rejects platform
+  fallbacks and non-CFF programs, and emits a normalized subset-prefix-free roster. Normal and
+  optimized Python must agree. The wrapper also requires rebuilt and committed rosters to match.
+  A 2-control/26-hostile suite covers custody, missing faces, malformed rows, and swapped
+  kind/encoding pairs. Builder hostiles cover checker drift, proprietary or missing final faces,
+  and self-mutation during final validation.
+
+- Restore the source-linked PID discovery, verification, and durability blueprint PDF. Its
+  deterministic builder now forces both handcrafted SVGs through the isolated Fontconfig Pango
+  backend, rejects platform fallback, Type3, and TrueType programs, requires the declared Latin
+  Modern body and figure faces, and binds the accepted CFF kind/encoding pairs. This is a document
+  portability and custody correction. It does not add a scientific result or a cross-host
+  reproducibility theorem.
+
+- Add a bounded repeated-build relation that is available only in the mathematical results guide's
+  explicit cross-toolchain mode. A receipt-recorded, locally observed diagnostic pair had variance
+  limited to the final trailer ID. The two 597,430-byte files differed at 52 offsets, all inside the
+  two duplicated 16-byte `/ID` values in each file. Replacing only those four payload spans made
+  every remaining byte identical. That pair used a diagnostic wrapper which copied pre-existing raw
+  TeX. It is a finite measurement identity, not an end-to-end Pandoc build, a portability result,
+  or execution credit. Its machine-readable receipt does not retain the raw PDFs and cannot
+  authenticate its environment, raw-TeX origin, source revision, or chronology. Default
+  `--exact` mode still requires raw repeated-build and rebuilt-versus-committed equality. Explicit
+  cross mode tries raw comparison first, treats operational comparison errors as fatal, and can use
+  the projection only between its two rebuilt outputs. A held-file-descriptor checker requires
+  distinct, singly linked, stable regular inputs of 1 through 16 MiB, one strict hex-array
+  trailer-ID occurrence owned by each PDF's final direct XRef stream, raw/typed agreement on two
+  equal 16-byte entries, genuinely different decoded IDs, and equality everywhere outside the four
+  payload spans. It never rewrites a PDF, and cross mode cannot publish the canonical output. A
+  4-control/28-hostile checker suite and the builder suite cover custody, final-trailer ownership,
+  mode wiring, exact nonrelaxation, outside-ID drift, comparison errors, aliases, size bounds, and
+  staged-checker mutation during both input validation and projection. The guide's 814 separate
+  structure-element IDs remain under the unchanged structure-tree policy. This exception does not
+  prove raw equality, equal hashes, stable document identity, authenticity, general PDF
+  equivalence, PDF/UA, toolchain integrity, renderer causation, an atomic pair snapshot, or complete
+  `SOURCE_DATE_EPOCH` control.
+
+- Place the digest-pinned Pandoc path first and the Elan proxy path second in the hosted formal-PDF
+  command. It resolves Pandoc and the `elan`, `lake`, and `lean` proxies against that exact
+  executed `PATH` both before clean-home toolchain setup and immediately before the aggregate gate.
+  This closes a command-selection gap without authenticating the executables beyond their separate
+  hosted custody boundaries.
+
+- Extend the guide structure mutation suite with independent canonical-encoding/wrong-value attacks.
+  The production obligation remains exact: 61 URI annotations have target-equal BOM UTF-16BE
+  `/Contents`, 17 internal GoTo annotations keep ASCII `ref`, 13 GoToR filespecs have target-equal
+  ASCII `/F` and UTF-16BE `/UF`, and only the 78 URI/GoTo annotations have StructParent/OBJR
+  ownership. Encoding failures can no longer mask value-equality failures in the hostile suite.
 
 - Make fitted equal-width extrema use the finite binary64 total order, which deterministically
   retains `-0.0` as the lower endpoint and `+0.0` as the upper endpoint in either input order on
@@ -57,9 +185,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   the historical KSG checker, self-test, source commit/tree, scoped routes, mutation counts, and
   `integration_no_go` status byte-for-byte. This is a fail-closed operational-custody repair, not
   KSG M1c evidence or a change to any theorem, estimator, PID definition, or numerical result.
-  Rebind the certified-SxPID2 and Lean-freeze current operational projections to the already
-  accepted CI, Just, scripts-guide, and formal-PDF gate bytes while leaving every historical
-  SxPID2, Lean `r14`, theorem, fixture, and scientific digest unchanged.
+  Rebind the certified-SxPID2 and Lean-freeze current operational projections only to the reviewed
+  current-candidate CI, Just, scripts-guide, and formal-PDF gate bytes while leaving every
+  historical SxPID2, Lean `r14`, theorem, fixture, and scientific digest unchanged. This rebinding
+  transfers no execution, hosted-CI, formal, or scientific credit to the candidate bytes.
 
 - Refresh the package-safe software-identity reference and its assurance, ecosystem, mathematical
   audit, and self-excluding current-source projections after the cumulative method-catalog and
@@ -85,8 +214,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   the census unit in the existing committed Markdown/PDF report and rebuild its deterministic
   publication artifact without changing a formula or numerical result.
 
-- Add a scoped, junior-facing mathematical results guide in canonical Markdown and a deterministic,
-  visually reviewed A4 PDF. Eight result cards state the mathematical object, assumptions, central
+- Add a scoped, junior-facing mathematical results guide in canonical Markdown and a reviewed
+  canonical A4 PDF. Eight result cards state the mathematical object, assumptions, central
   formula, evidence type, cost, use, strongest nonclaim, and governing detailed source. A semantic
   firewall keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions,
   Williams–Beer $I_{\min}$, BROJA, and KSG distinct. Two handcrafted SVGs explain that firewall
@@ -98,20 +227,22 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   boundaries in normal and optimized Python. This is an editorial practice, not a formal
   conformance, compliance, or certification claim. The guide remains
   non-authoritative: the method catalog, claim packets, and detailed proofs govern their scopes.
-  An eight-case isolated builder suite rejects canonical-input aliases and unsafe output types
-  before rendering. A graph-aware PDF policy binds the catalog, raw page and name trees, typed
-  destinations, page labels, outlines, exact action owners and multiplicities, link geometry,
+  The isolated builder suite rejects canonical-input aliases, unsafe output types, and mode
+  or repeated-build comparison drift. Source and staging failures occur before rendering;
+  completed fake-render fixture builds exercise the comparison routes. A graph-aware PDF policy
+  binds the destinations, page labels, outlines, exact action owners and multiplicities, link geometry,
   decoded page content with exact tag/MCID correspondence, the page-resource dependency closure,
-  and the tagged structure/ID/parent trees. Its 70 object-graph mutations and one raw-parser
+  and the tagged structure/ID/parent trees. Its 74 object-graph mutations and one raw-parser
   mutation reject active-content routes,
   aliases, type coercions, malformed numbers, destination and outline drift, structure/MCID/CMap
   drift, streams masquerading as dictionaries, raw-string encoding collisions, and sub-micro
-  geometry changes under normal and optimized Python. Four additional controls reject input/output aliases, hard-link aliases,
-  shared output paths, and symbolic outputs without changing the input PDF.
-  The exact checker also binds deterministic builds, page flow, fonts, visible formulas, and
-  all-page rendering. The frozen-transform section distinguishes the broader conditional theorem
-  from the stable fitted-wrapper independence contract. These checks establish a source-specific
-  document-integrity policy. They do not establish generic viewer safety, theorem truth,
+  geometry changes under normal and optimized Python. Four additional controls reject input/output
+  aliases, hard-link aliases, shared output paths, and symbolic outputs without changing the input
+  PDF.
+  Default `--exact` also binds raw repeated-build and rebuilt-versus-committed bytes, page flow,
+  fonts, visible formulas, and all-page rendering. The frozen-transform section distinguishes the
+  broader conditional theorem from the stable fitted-wrapper independence contract. These checks
+  establish a source-specific document-integrity policy. They do not establish generic viewer safety, theorem truth,
   scientific priority, estimator calibration, application validity, or complete formal
   verification. Numeric navigation records bind strict PDF number types and their represented
   binary64 values, not distinct decimal lexemes that round to the same binary64 value; the exact

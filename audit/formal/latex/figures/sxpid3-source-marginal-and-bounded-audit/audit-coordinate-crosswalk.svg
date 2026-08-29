@@ -12,9 +12,9 @@
       <path d="M0,0 L12,6 L0,12 Z" fill="#1f6968"/>
     </marker>
     <style>
-      .title{font:700 30px 'Latin Modern Sans',sans-serif;fill:#2c3e50}.sub{font:500 17px 'Latin Modern Sans',sans-serif;fill:#1f6968}
-      .big{font:700 48px 'Latin Modern Sans',sans-serif;fill:#2c3e50}.label{font:700 20px 'Latin Modern Sans',sans-serif;fill:#2c3e50}
-      .body{font:400 17px 'Latin Modern Sans',sans-serif;fill:#3f505a}.small{font:600 17px 'Latin Modern Sans',sans-serif;fill:#1f6968}
+      .title{font:700 30px 'Latin Modern Sans';fill:#2c3e50}.sub{font:400 17px 'Latin Modern Sans';fill:#1f6968}
+      .big{font:700 48px 'Latin Modern Sans';fill:#2c3e50}.label{font:700 20px 'Latin Modern Sans';fill:#2c3e50}
+      .body{font:400 17px 'Latin Modern Sans';fill:#3f505a}.small{font:700 17px 'Latin Modern Sans';fill:#1f6968}
     </style>
   </defs>
   <rect width="1200" height="690" rx="24" fill="url(#bg)"/>
@@ -31,22 +31,22 @@
     <text x="135" y="238" text-anchor="middle" class="small">18 signed-net atoms</text>
   </g>
 
-  <line x1="345" y1="280" x2="455" y2="280" stroke="#1f6968" stroke-width="5" marker-end="url(#arrow)"/>
-  <text x="400" y="246" text-anchor="middle" class="small">expand each key</text>
-  <text x="400" y="265" text-anchor="middle" class="small">for auditing</text>
+  <line x1="345" y1="300" x2="455" y2="300" stroke="#1f6968" stroke-width="5" marker-end="url(#arrow)"/>
+  <text x="400" y="238" text-anchor="middle" class="small">expand each key</text>
+  <text x="400" y="261" text-anchor="middle" class="small">for auditing</text>
 
   <g transform="translate(475 125)" filter="url(#shadow)">
     <rect width="420" height="310" rx="22" fill="#fff" stroke="#1f6968" stroke-width="3"/>
     <text x="210" y="66" text-anchor="middle" class="big" fill="#1f6968">108</text>
     <text x="210" y="104" text-anchor="middle" class="label">keyed scalar audit expressions</text>
-    <rect x="35" y="135" width="105" height="80" rx="12" fill="#e7f0ed" stroke="#1f6968"/>
-    <text x="88" y="166" text-anchor="middle" class="label">18</text><text x="88" y="191" text-anchor="middle" class="body">positions</text>
-    <text x="157" y="184" class="big" style="font-size:30px">×</text>
-    <rect x="190" y="135" width="85" height="80" rx="12" fill="#e8f1ef" stroke="#1f6968"/>
-    <text x="233" y="166" text-anchor="middle" class="label">2</text><text x="233" y="191" text-anchor="middle" class="body">stages</text>
-    <text x="292" y="184" class="big" style="font-size:30px">×</text>
-    <rect x="305" y="135" width="100" height="80" rx="12" fill="#f5ead5" stroke="#916400"/>
-    <text x="355" y="166" text-anchor="middle" class="label">3</text><text x="355" y="191" text-anchor="middle" class="small">components</text>
+    <rect x="20" y="135" width="105" height="80" rx="12" fill="#e7f0ed" stroke="#1f6968"/>
+    <text x="73" y="166" text-anchor="middle" class="label">18</text><text x="73" y="191" text-anchor="middle" class="body">positions</text>
+    <text x="145" y="184" text-anchor="middle" class="big" style="font-size:30px">×</text>
+    <rect x="165" y="135" width="85" height="80" rx="12" fill="#e8f1ef" stroke="#1f6968"/>
+    <text x="208" y="166" text-anchor="middle" class="label">2</text><text x="208" y="191" text-anchor="middle" class="body">stages</text>
+    <text x="275" y="184" text-anchor="middle" class="big" style="font-size:30px">×</text>
+    <rect x="295" y="135" width="115" height="80" rx="12" fill="#f5ead5" stroke="#916400"/>
+    <text x="353" y="166" text-anchor="middle" class="label">3</text><text x="353" y="191" text-anchor="middle" class="small">components</text>
     <text x="210" y="252" text-anchor="middle" class="body">stages: cumulative, Möbius atom</text>
     <text x="210" y="279" text-anchor="middle" class="body">components: informative, misinformative, signed net</text>
   </g>

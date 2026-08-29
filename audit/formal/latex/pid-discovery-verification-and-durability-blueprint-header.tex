@@ -41,6 +41,13 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.55em plus 0.1em minus 0.08em}
+% Reassert the page-break policy after every package has initialized.  Setting these values only
+% while this header is read is insufficient if a later Pandoc template hook resets them.
+\AtBeginDocument{%
+  \widowpenalty=10000
+  \clubpenalty=10000
+  \displaywidowpenalty=10000
+}
 \setlist{leftmargin=1.65em,itemsep=.25em,topsep=.35em}
 \setlength{\emergencystretch}{3em}
 \setlength{\LTpre}{.5em}

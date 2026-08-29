@@ -1,0 +1,222 @@
+{
+  "schema": "pid-rs.mathematical-results-guide-pandoc-portability-receipt.v1",
+  "captured_at_utc": "2026-08-29T11:21:04Z",
+  "status": "closed_operator_observation_without_retained_raw_execution_artifacts",
+  "evidence_class": "operator observation plus current selected repository-input digest replay; not independently replayable custody of the recorded old-toolchain execution",
+  "subject": "MATHEMATICAL_RESULTS_GUIDE.md",
+  "source_state": {
+    "branch": "sepahead/pdf-annotation-portability-corrected",
+    "parent_commit": "9ed6831d20de43467b1cff8adc8ee421a484f7fd",
+    "parent_tree": "7b3ffda06279caaf03d9f14c96f3e8cf27b2d705",
+    "working_tree_was_uncommitted": true,
+    "historical_ksg_c3_parent": "8b792bc143fff2d84f2d8e7817d1de7850741223",
+    "historical_ksg_c3_child": "8fa6e992d9124229c7a175c4508bf10df336675a",
+    "milestone_relation": "this PDF correction is later work and does not replace or reparent the historical KSG C3 checkpoint"
+  },
+  "current_selected_repository_input_digests": {
+    "MATHEMATICAL_RESULTS_GUIDE.md": "769b8adae80efa379b3502af9f5edfed839e5a6ac59d08d85e343809e5cf285b",
+    "output/pdf/mathematical-results-guide.pdf": "3f8e8196f3dc510eb122926322829f111c1b745fbbf27c920e9606f9a212c200",
+    "scripts/build-mathematical-results-guide-pdf.sh": "b7c49c411782b8a8b7a60d37567543a8b5a463adfa8f321a534b1c94783085a1",
+    "scripts/check-mathematical-results-guide-pdf-id-variance.py": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7",
+    "scripts/check-mathematical-results-guide-pdf-id-variance-self-test.py": "757c85a55a8209fb3587e130daf36ab51aac210e87f5604bea40213c62e51c5a",
+    "scripts/normalize-mathematical-results-guide-pandoc-tex.py": "401271a933917833e7eca8654bd24e23f42fe19dfeab85c28165815bf55554bf",
+    "scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py": "337ffc66888fb8f8f75f8e41429beea7b65fa7370a84695487f81dea4de4d3a0",
+    "scripts/check-mathematical-results-guide-builder-self-test.sh": "c1dc31e97716126c9be137ea8374360968f4138925e93d7e82c756785483b8ab",
+    "scripts/check-mathematical-results-guide-pdf-structure.py": "b513404846cdd02048f2e9133ddae927609049fb202956a7cd072ddaff1edf6c",
+    "THIRD_PARTY_NOTICES.md": "4279f2628c79bfdc9c226d05c55bf7c643e70b14fa3b03033290f5d91d54ff0d",
+    "audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180"
+  },
+  "post_observation_source_delta": {
+    "classification": "lint-only typing/import correction plus the corresponding builder digest rebind",
+    "changed_paths": [
+      {
+        "path": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+        "operator_observed_sha256": "e34d8163c639cb61e5355c59645eb52ca49718260e93eea3ba56a861277377ab",
+        "current_sha256": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7",
+        "change": "import typing.NoReturn and use the resolved annotation"
+      },
+      {
+        "path": "scripts/check-mathematical-results-guide-pdf-id-variance-self-test.py",
+        "operator_observed_sha256": "9a12beaf4de5ceae6aca00910d528a0b87d218f2a78cdf692cf8771a9c169a34",
+        "current_sha256": "757c85a55a8209fb3587e130daf36ab51aac210e87f5604bea40213c62e51c5a",
+        "change": "remove an unused import, import typing.NoReturn, and use the resolved annotation"
+      },
+      {
+        "path": "scripts/build-mathematical-results-guide-pdf.sh",
+        "operator_observed_sha256": "65b60188b086cb3e6aaeb0a3c5fa9ca889ace4d4a02a9aed00e0f585dd3e7218",
+        "current_sha256": "b7c49c411782b8a8b7a60d37567543a8b5a463adfa8f321a534b1c94783085a1",
+        "change": "rebind the exact trailer-ID checker digest; no build behavior changed"
+      }
+    ],
+    "credit_boundary": "the earlier operator observation remains associated with the before-digests and is not transferred to the corrected sources; the current exact and cross-toolchain gates must be rerun separately"
+  },
+  "execution_environment": {
+    "host": {
+      "operating_system": "macOS 26.5.1 build 25F80",
+      "architecture": "arm64",
+      "virtualization": "Colima with macOS Virtualization.framework"
+    },
+    "container": {
+      "image_reference": "ubuntu:24.04",
+      "oci_image_index_digest": "sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea",
+      "linux_amd64_manifest_digest": "sha256:019e8eb29a85e74d64925745884f2ec79aa27e3feab36353d24656f4d6b89467",
+      "linux_amd64_config_digest": "sha256:045183670ef29ce21bc22a8d4f62511ce472679ca8fc9774f04181f7f383ca62",
+      "image_locator_boundary": "the immutable OCI index was resolved after the run to the declared linux/amd64 manifest and config locators; raw registry responses, local rootfs bytes, and download/authentication custody were not retained",
+      "userspace_architecture": "x86_64",
+      "kernel": "Linux 6.8.0-50-generic",
+      "execution_route": "Rosetta binfmt interpreter /mnt/lima-rosetta/rosetta",
+      "native_x86_64_hardware": false
+    },
+    "old_tools": {
+      "pandoc": {
+        "version": "3.1.3",
+        "path": "/usr/bin/pandoc",
+        "sha256": "3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53d701b",
+        "bytes": 199114624,
+        "hard_links": 1
+      },
+      "lualatex_resolved": {
+        "version": "LuaHBTeX 1.17.0, TeX Live 2023/Debian",
+        "path": "/usr/bin/luahbtex",
+        "sha256": "cc74da0d993e503321f9dd65b8cc5ddf103f2620c4bdbc41798841f253c46e02"
+      },
+      "python": "3.12.3",
+      "pypdf": "6.15.0",
+      "poppler": "24.02.0"
+    },
+    "canonical_local_tools": {
+      "pandoc": {
+        "version": "3.10.2",
+        "resolved_path": "/opt/homebrew/Cellar/pandoc/3.10.2/bin/pandoc",
+        "sha256": "1662f49c035168d1e608ad9d923df75e4b00ac014d096349b2027ad38f84dd6e"
+      },
+      "lualatex_resolved": {
+        "version": "LuaHBTeX 1.18.0, TeX Live 2024",
+        "path": "/usr/local/texlive/2024/bin/universal-darwin/luahbtex",
+        "sha256": "8522fe5f3d9e78dc36a1d39236da77757c8584b3b21e9806af4ba7bfc8b54ed3"
+      },
+      "python": "3.14.6",
+      "pypdf": "6.15.0",
+      "poppler": "26.06.0"
+    }
+  },
+  "normalization_observation": {
+    "legacy_raw_tex": {
+      "bytes": 51669,
+      "sha256": "96e003b0061c1cdf8f33d2275a6fd16f2d8dfc608dccc2441063620234bff5ca"
+    },
+    "normalized_tex": {
+      "bytes": 51093,
+      "sha256": "9a9131b66b627613016311f1f9e5f6a2571ee0f89a3c973af44322b7f30adb87"
+    },
+    "mode": "legacy-3.1.3",
+    "heading_wrappers_removed": 17,
+    "table_wrappers_inserted": 4,
+    "none_counter_inserted": 1,
+    "table_preamble_replaced": 1,
+    "image_preamble_replaced": 1,
+    "crosswalk_projection_replaced": 1,
+    "byte_identity": false,
+    "semantic_boundary": "the transform validates the complete audited compatibility projection, not unrelated TeX or mathematical content"
+  },
+  "pre_normalization_observation": {
+    "pdf_bytes": 582454,
+    "pdf_sha256": "7f3c7263f9bc50378531c1f656d8c2910768ce099f62bb2706c92226ab918e1a",
+    "destination_count": 56,
+    "unique_destination_count": 56,
+    "heading_alias_count": 17,
+    "table_destinations": ["table.1", "table.2", "table.3", "table.4"],
+    "none_destinations": [],
+    "checker_result": "failed the unchanged source-specific profile at Names/Dests/Kids[1]: expected 7 canonical pairs, found 24",
+    "interpretation": "the PDF name tree is valid PDF syntax; it is noncanonical for this guide, not empty, malformed, or evidence of a security exploit"
+  },
+  "final_run_observation": {
+    "command": "scripts/build-mathematical-results-guide-pdf.sh --cross-toolchain /tmp/pid-rs-c3-oldtoolchain-final.pdf",
+    "first_pdf": {
+      "bytes": 581296,
+      "sha256": "d935c7f23c7e209493411f79a321702e8b646049c9c33151b95fb4233bf3e82a",
+      "trailer_id": "2674E0183443398AD3C1311EA6E280E9"
+    },
+    "second_pdf": {
+      "bytes": 581296,
+      "sha256": "c04c5e77b2031b7306b3ad53d6db467220455afdeddc46ec6db634843110c7c5",
+      "trailer_id": "6795C3315428F09149C818B028AA654D"
+    },
+    "repeated_build_relation": "byte_equal_outside_the_two_duplicated_16_byte_trailer_ID_payloads",
+    "pages": 16,
+    "page_size": "595.276 x 841.89 pt A4",
+    "tagged": true,
+    "suspects": false,
+    "form": "none",
+    "javascript": false,
+    "destination_count": 39,
+    "unique_destination_count": 39,
+    "heading_alias_count": 0,
+    "table_destinations": [],
+    "none_destinations": ["none.1", "none.2", "none.3", "none.4"],
+    "target_manifest_sha256": "87ca3b3442c232084d5115ac3c259b864b96dfb0fb715f54ea893a977d3c949d",
+    "navigation_records": 167,
+    "navigation_sha256": "95ca1981ffb665ad4f0b9cb72d2ae508f76ae90814669ca910bc41de55aadcf8",
+    "structure_sha256": "e9adba3097ffc38de2f7723e448d2bb54265ee201e010c0857e1a7a40db9d99b",
+    "extracted_text_sha256": "b2be5afef4a7b5afea393aba0e3072128fb456272a964390809c471631e3eb16",
+    "normalized_font_roster_lines": 18,
+    "normalized_font_roster_sha256": "eebdf0383669436f0c01b357fba6c68ba760d09ddd1a8dd56503edc0d474406b"
+  },
+  "operator_reported_complete_gate_run": {
+    "command": "scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain",
+    "status": "operator_reported_passed",
+    "builder_sha256": "65b60188b086cb3e6aaeb0a3c5fa9ca889ace4d4a02a9aed00e0f585dd3e7218",
+    "id_variance_checker_sha256": "e34d8163c639cb61e5355c59645eb52ca49718260e93eea3ba56a861277377ab",
+    "id_variance_self_test_sha256": "9a12beaf4de5ceae6aca00910d528a0b87d218f2a78cdf692cf8771a9c169a34",
+    "receipt_checker_sha256": "6d4cfecc87a271410ad9fde876b63060d0e13000fc2388e02f98ec424609b783",
+    "receipt_self_test_sha256": "4d902e73cca4e637aebe53c7e5739a39662d0a2f7399ead84820c2959dccbfee",
+    "first_pdf_sha256": "c3df50d0ee566902ae035ae2cef92782ec47b87705c4385d41b733fc70031bd7",
+    "second_pdf_sha256": "e37a773bfd055023779c0378272aa73a38b72a593b93b347def65e1304a67cfe",
+    "first_trailer_id": "670ABFBAD1E2057D7AEE1487BA172DBC",
+    "second_trailer_id": "352B47D452257045FE46EC7BB262B7FC",
+    "normalizer_self_test": "4 positive processes and 214 rejected processes in each of normal and optimized Python",
+    "builder_self_test": "69 hostile/control cases",
+    "structure_self_test": "74 object-graph mutations, 1 raw-parser mutation, 4 name-tree diagnostic controls, and 4 output-path controls in each Python mode",
+    "receipt_self_test": "2 controls, 26 semantic mutations, and 7 custody mutations in each Python mode"
+  },
+  "operator_reported_poppler_comparison": {
+    "renderer": "pdftoppm 24.02.0 at 72 dpi",
+    "old_pages": 16,
+    "canonical_pages": 16,
+    "all_page_png_bytes_equal": true,
+    "old_page_manifest_sha256": "c8073413f21928a82a4ca0b8522679f6dcab42c3c196f42ff3de3a69f4541952",
+    "boundary": "one rasterizer version and resolution; not general viewer or cross-renderer visual equivalence"
+  },
+  "negative_execution_evidence": {
+    "qemu_attempt_status": "failed_before_guide_completion",
+    "qemu_signal": "SIGSEGV_139",
+    "qemu_core_sha256": "e5782fe86665e3ca8c2cbe30f8f5a3f4a772b4ebb4d87b814ae359d420e0a907",
+    "credit": "none",
+    "interpretation": "environmental translation failure, not a pid-rs verifier failure and not portability evidence"
+  },
+  "artifact_retention": {
+    "raw_tex_tracked": false,
+    "normalized_tex_tracked": false,
+    "pre_normalization_pdf_tracked": false,
+    "final_old_toolchain_pdf_tracked": false,
+    "reason": "the receipt preserves exact reported measurements and hashes while the reproducible source, transform, and gates remain tracked; the raw execution artifacts were intentionally not retained, and trailer-ID variance prevents treating either observed PDF as canonical"
+  },
+  "recorded_observations": [
+    "the operator recorded that the selected /usr/bin/pandoc path matched the recorded Pandoc 3.1.3 executable hash at the builder custody check in the declared translated Ubuntu environment",
+    "the operator recorded the audited legacy compatibility transform with the declared exact delta counts",
+    "the operator recorded passing results for the unchanged source-specific final PDF structure, navigation, text, geometry, font, and active-content policies",
+    "the current canonical Pandoc 3.10.2 exact route remains independently replayable and byte-identical to the committed PDF",
+    "the operator recorded two old-toolchain builds that differed only in their strict duplicated trailer-ID payloads"
+  ],
+  "does_not_establish": [
+    "native x86_64-hardware execution",
+    "general equivalence between Pandoc 3.1.3 and 3.10.2 or arbitrary Markdown and TeX inputs",
+    "raw TeX or raw PDF byte identity across toolchains",
+    "cross-host, cross-platform, cross-renderer, or future-version reproducibility",
+    "PDF/UA conformance, figure Alt entries, or assistive-technology accessibility",
+    "independently replayable custody of the recorded old-toolchain execution, because its raw TeX, PDFs, and complete execution logs were not retained",
+    "an atomic binding from the executable path-hash observation to the bytes that the operating system ran, or renderer, container-image, package, or upstream supply-chain authenticity beyond the recorded locators and hashes",
+    "mathematical correctness, estimator validity, or scientific novelty",
+    "a cause for trailer-ID variation beyond the measured strict relation"
+  ]
+}

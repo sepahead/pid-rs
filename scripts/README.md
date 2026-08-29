@@ -1443,7 +1443,7 @@ python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 ```
 
-The current append-only receipt path is
+The most recent accepted append-only receipt path is
 `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`.
 The 11 August receipt, unsuffixed 12 August receipt, finalized `r2` receipt, finalized `r3` receipt,
 finalized `r4` receipt, finalized `r5` receipt, finalized `r6` receipt, finalized `r7` receipt,
@@ -1454,8 +1454,9 @@ accepted slot in the sequence beginning 12 August. Counting the separate 11 Augu
 receipt, it is the fifteenth receipt in the accepted/historical lineage. Rejected same-slot
 artifacts are additional zero-credit documents; no total count of every generated receipt is
 claimed. The suffix does not denote a calendar date, schema, theorem, review, assurance tier, or
-independence revision. The
-route receives current execution credit only when that exact receipt exists and validates.
+independence revision. The `r14` route receives execution credit only for its exact bound command
+and source state when that receipt exists and validates. Since C12, current operational-wiring
+validation is separate and does not extend replay credit to changed operational bytes.
 
 The freeze gate binds the exact empty-output `lake --quiet --wfail` clean build,
 `leanchecker --fresh`, the complete
@@ -1606,9 +1607,33 @@ the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary
 estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
 
 `build-mathematical-results-guide-pdf.sh` renders `MATHEMATICAL_RESULTS_GUIDE.md` through an
-isolated Pandoc/LuaLaTeX pipeline. It requires two same-toolchain builds to be byte-identical,
-warning-free A4 documents with a populated structure tree, embedded Unicode fonts, and unchanged
-canonical inputs. The guide uses two reviewed SVGs and the existing SxPID3 coordinate crosswalk.
+isolated Pandoc/LuaLaTeX pipeline. Default `--exact` mode requires two isolated builds to be
+byte-identical. Explicit `--cross-toolchain` mode first attempts raw equality. Only raw comparison
+status 1 can invoke the narrow trailer-ID projection; an operational comparison error is fatal.
+Both modes require warning-free A4 documents with a populated structure tree, embedded Unicode
+fonts, and unchanged canonical inputs. The guide keeps its three handcrafted SVG sources, but it
+imports exact tracked one-page PDF derivatives instead of invoking an rsvg version at build time.
+The manifest binds both members of every source/derivative pair, the observed renderer versions,
+exact page boxes, CFF resource shapes, admitted open-font names, and the limits of the capture.
+`regenerate-mathematical-results-guide-open-font-figures.py` accepts only the five recorded Source
+Sans Pro 3.006 and Latin Modern Sans 2.004 program hashes at their declared TeX roots. It copies
+those bytes into a generated Fontconfig-only directory, rejects SVG fallback families and weight
+drift, performs two independently cached renders, and publishes candidates only to a new directory
+outside the repository when each pair is byte-identical. It cannot overwrite canonical PDFs. Its
+companion JSON records the installed-program provenance, exact local license/manifest evidence,
+and raw-font-not-tracked boundary; [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) records the
+notices for the embedded subsets. The repository retains byte-exact copies of the observed Source
+Sans OFL file, GUST Font License, and Latin Modern v2.004 manifest. Their paths, sizes, and hashes
+are checked before rendering and again before candidate publication. The generated receipt binds
+their distinct roles. These retained bytes do not authenticate the installed package or upstream
+history and do not make a legal determination. The Source Sans release commit is a provenance
+locator, not local-byte or download authentication. No upstream byte identity is asserted for the
+installed Latin Modern programs.
+Same-host equality does not establish cross-host or cross-version closure, renderer supply-chain
+authenticity, visual or semantic equivalence, accessibility, or legal compliance in every
+distribution scenario. The current inclusion route also has no Figure roles or Alt entries. The
+guide is tagged, but neither the derivatives nor their inclusion prove PDF/UA or accessible
+figures. Those semantics need a separate assistive-technology-reviewed canonical change.
 Its technical prose applies selected [ASD-STE100 Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)
 controlled-language principles: direct sentences, explicit subjects, stable terms, and bounded
 sentence and paragraph length. `check-mathematical-results-guide-prose.py` enforces the
@@ -1621,13 +1646,62 @@ safe exclusions under normal and optimized Python.
 These checks do not automate active voice, explicit subjects, stable vocabulary, technical truth,
 or mathematical correctness. They are an editorial subset, not ASD-STE100 conformance,
 compliance, or certification.
+The builder rejects the stale diagnostic wrapper discovered during this audit. A bounded
+`pandoc --version` preflight must report the expected command-line fields. Raw TeX from the selected
+executable must contain all three compatibility inputs, four source sentinels, and one nonempty
+`PidTeal` table-of-contents link color. The wrapper-recorded pair receives zero credit because that
+wrapper copied existing raw TeX. An earlier unretained Pandoc 3.1.3 attempt also receives zero
+credit. It stopped before PDF generation because the table-of-contents color was empty. The
+explicit `toccolor:PidTeal` input and the raw-TeX check close that source-wiring defect.
+
+`normalize-mathematical-results-guide-pandoc-tex.py` is a source-specific compatibility transform.
+It accepts only the audited Pandoc 3.1.3 or 3.10.2 compatibility projection. Pandoc 3.10.2 input
+must remain byte-identical. For Pandoc 3.1.3, the transform removes 17 redundant heading wrappers,
+inserts four captionless-table wrappers and one `none` counter, and replaces one table preamble,
+one image preamble, and one crosswalk-image projection. It checks exact order, adjacency, heading
+labels, document bounds, source and output custody, and deterministic delta counts. It does not
+validate unrelated TeX or mathematical content. It receives semantic credit only inside the full
+PDF gate. The restored TeX `alt` option does not create a PDF `/Alt` entry or prove PDF/UA.
+
+The normalizer retains the byte-identical Pandoc-template BSD notice from tags 3.1.3 and 3.10.2.
+The provenance ledger cites Pandoc heading change `70329ed…`, the initial longtable change
+`e13aa5c…`, and the exact `none`-counter completion `d835461…`. The 85-vector self-test runs four
+accepted and 214 rejected subprocesses in each Python mode. It covers mixed projections, wrong or
+reordered headings, table and image drift, version mismatch, encoding, symbolic ancestry, hard
+links, FIFOs, output aliases, and exclusive publication. These finite cases do not prove a general
+TeX parser or resistance to every hostile same-user race.
+
+The version-shape check alone is not binary authentication. A program can imitate those strings.
+The legacy cross route therefore also requires the exact singly linked `/usr/bin/pandoc` 3.1.3
+binary with SHA-256 `3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53d701b`.
+This endpoint observation does not atomically bind the hash to the executable bytes that the
+operating system ran. The closed receipt preserves that causation boundary.
+Exact mode accepts only Pandoc 3.10.2 and remains byte-strict. The hosted workflow separately
+installs and digest-binds its Pandoc 3.10.2 executable. Its formal-PDF `PATH` puts that pinned
+directory first and the Elan proxy directory second. The workflow resolves Pandoc plus the `elan`,
+`lake`, and `lean` proxies before and after clean-home toolchain setup.
+
 `check-mathematical-results-guide-builder-self-test.sh` uses an isolated fixture and a fake font
-probe. Its 13 cases reject source aliases, symbolic outputs, non-PDF names, nonregular outputs,
-removal or duplicate loading of the tagpdf compatibility source, a wrong page or structure target,
-and version-path drift before rendering. It also proves that an ordinary safe output reaches the
-fake probe without publishing bytes. Every case rechecks the fixture source hashes. The builder
-requires the compatibility input exactly once, binds its exact SHA-256 in the reviewed source
-inventory, and includes it in every before/publish/after source manifest.
+probe. Its 69 cases reject source aliases, symbolic outputs, non-PDF names, nonregular outputs,
+removal, duplication, or digest drift of all three compatibility Works, wrong OpenAction targets,
+normalizer or Pandoc-license drift, asset-manifest/checker drift, trailer-ID-checker drift,
+final-font-checker drift, changed SVG or PDF inputs, and drift in each retained font-license or
+manifest file. Mode cases reject a missing explicit cross output, cross publication to the
+canonical path, an unauthenticated legacy executable, a legacy writer in exact mode, and unknown
+modes.
+One hostile checker changes an SVG during validation and must fail the post-validation manifest
+comparison. A fake copy command
+substitutes a different tracked derivative only in the staged tree and must fail before rendering.
+An ordinary safe output reaches the fake probe without publishing bytes. Every case rechecks the
+fixture source hashes. The builder captures the ordered source hashes before validation, validates
+the exact staged copies, rechecks staged bytes after rendering, and rechecks live inputs before and
+after publication. Completed fake-render controls admit exact raw equality, cross-mode raw equality,
+and the strict trailer-ID relation. Hostiles reject exact-mode relaxation, drift outside the ID
+payloads, comparison status 2, symbolic or aliased outputs, a third-path hard link, oversized
+outputs, a proprietary final font, a missing canonical-figure face, and staged tools that change
+themselves during TeX normalization, ID input validation, ID projection, or final-font validation.
+These cases bind mode wiring and custody behavior; they do not authenticate the renderer or prove
+that rendering caused the bytes.
 `check-mathematical-results-guide-tagpdf-compat-self-test.sh` compiles the installed native-absent
 path directly. When the installed tagpdf is newer, it first removes the complete native tagpdf
 last-page chunk and function, restores only the v0.98w-era MarkInfo and StructTreeRoot work, and
@@ -1636,15 +1710,164 @@ dictionary, `/S /GoTo`, page-one `/D`, and `/SD` to the Document object at
 `StructTreeRoot/K[0]`. The builder hostile suite separately rejects a cutoff mutation that would
 exclude v0.98w, and the TeX control requires an exact 2024-02-23 package declaration with the
 native function removed to fail closed.
+`check-mathematical-results-guide-uri-contents-compat-self-test.sh` covers the separate hgeneric
+URI-link problem. The renamed LPPL-1.3c-or-later Work adapts only the URI part of
+latex3/pdfresources commit `6fbdf1ae266c5d59704374045a7abe90e59be4a3`. On the reviewed v0.96d
+fallback, it inserts the upstream target conversion inside `hyper@linkurl`'s existing group. The
+shared annotation dictionary must have the same bytes before and after the link call. A reviewed
+native route allocates no fallback state and preserves the PDF bytes outside pdfTeX's sole typed,
+duplicated automatic trailer-ID payload; the self-test also compares every relevant action value.
+Ambiguous v0.96y sources dated 2026-01-23 fail closed because the upstream
+2026 policy change retained that declaration while changing target-valued `/Contents` to a no-op by
+default outside PDF/UA-1. This guide preserves its target-valued contract adapted from upstream's
+2024 behavior; it does not claim that this announcement policy is universally best or that the
+guide conforms to PDF/UA.
+`check-mathematical-results-guide-filespec-compat-self-test.sh` independently covers GoToR file
+specifications. Its LPPL Work adapts latex3/pdfresources commit
+`f1a1b29c4e355ee0786f67ca364c123ff6aa622e`. The reviewed v0.96d fallback writes portable `/F` as
+ASCII while preserving `/UF` as UTF-16BE, the decoded relative target, and `/D`. A reviewed native
+route installs no fallback writer and preserves bytes outside the same strictly parsed trailer-ID
+payload; mixed, ancient, unreviewed newer, duplicate, or incomplete API states fail closed.
+The hosted workflow requires the old hgeneric and pdfmanagement sources after installation. It
+requires their exact distribution paths, v0.96d declarations, native-feature absence, and SHA-256
+values. It repeats the checks immediately before the formal gate. These hosted-source requirements
+complement the TeX feature, version, and body probes; they do not replace them.
+`check-mathematical-results-guide-figure-assets.py` validates the exact manifest schema, three
+source/derivative digest pairs, the open-font regeneration and notice bindings, PDF 1.7 headers,
+byte bounds, one-page MediaBoxes, static catalogs, and the absence of annotations and active
+content. Every font must have an embedded CFF program and a Unicode map. The exact source-specific
+BaseFont roster admits only Source Sans Pro or Latin Modern Sans and rejects Type3, TrueType,
+generic, proprietary, and fallback families. The raw 1 MiB derivative cap runs before derivative
+hashing or PDF parsing; it is not a hostile-input resource sandbox or decoded-stream-size bound.
+The 45-mutation suite attacks schemas, source and derivative bytes, notices, all three retained
+license/manifest artifacts, their manifest binding, provenance, size,
+Unicode maps, CFF programs and subtypes, font names, geometry, nested active content, and every
+claim boundary. PDF digest equality and name/resource inspection do not prove that a specific full
+input font program produced the subset; exact regeneration supplies the separate bounded route.
+The open-font regenerator self-test runs two accepted controls and rejects 14 hostile cases in both
+normal and optimized Python. Its accepted path performs the real isolated-font render; its hostiles
+cover output custody, source-font hashes and paths, retained license-evidence hash/path custody,
+font inventory/selection drift, ambient Fontconfig/CoreText state, nondeterministic rendering, and
+accidental Pandoc use.
+`check-mathematical-results-guide-font-roster.py` validates the final guide's complete Poppler
+`pdffonts` report. It strips only canonical six-letter subset prefixes. It permits Latin Modern
+body faces plus the declared Source Sans Pro and Latin Modern Sans figure faces. Every row must use
+one of two exact CFF shapes: `Type 1C` with `WinAnsi`, or `CID Type 0C` with `Identity-H`. Every row
+must also be embedded, subsetted, and Unicode-mapped. The report must contain Source Sans Pro
+Regular, Semibold, and Bold plus Latin Modern Sans Regular and Bold. This rejects stale Type3,
+TrueType, generic, proprietary, or platform-fallback figure payloads even when all fonts are
+embedded. The checker emits a sorted, subset-prefix-free roster. The guide wrapper requires normal
+and optimized Python to agree for each PDF, then requires the rebuilt and committed rosters to be
+equal in both modes. Its self-test accepts two controls and rejects 26 malformed, missing-face,
+kind/encoding, custody, and optimization-sensitive hostile cases. This gate validates one
+`pdffonts` observation. It does not authenticate Poppler, a source font, or a renderer.
+`check-mathematical-results-guide-pdf-id-variance.py` implements the source-specific repeated-build
+exception. Its input route holds no-follow file descriptors and requires two distinct, singly
+linked regular files of 1 through 16 MiB. It checks each path and descriptor before, during, and
+after the sequential bounded pair read. This is not an atomic simultaneous snapshot or resistance
+to a hostile same-user process.
+
+The projection requires exactly one strict hex-array `/ID` occurrence owned by each file's final
+direct `/Type /XRef` stream. Raw tokens and the typed parser must agree on two equal 16-byte entries.
+The decoded IDs must differ between builds. Every byte outside the four captured hex-payload spans
+must be equal, and the checker never rewrites either PDF. The 4-control and 28-hostile self-test
+covers exact input custody, both argument orders, independent differing IDs, aliases, third-path
+links, empty and oversized inputs, malformed or nonduplicated IDs, drift outside the payloads,
+wrong `startxref` ownership, a non-XRef final stream, a strict ID moved outside its final-trailer
+owner, case-only pseudo-variance, and fail-closed CLI forms in normal and optimized Python.
+
+This narrow repeated-build relation is available only for the two rebuilt outputs in one explicit
+cross-toolchain-mode invocation.
+Cross mode requires an explicit noncanonical destination. The projection is never used for the
+rebuilt-versus-committed comparison. It does not prove raw byte identity, equal SHA-256 values,
+stable document identity, authenticity, general PDF equivalence or normalization, PDF/UA, renderer
+causation, toolchain integrity, or that `SOURCE_DATE_EPOCH` controls every LuaHBTeX input. The guide
+has 814 separate structure-element `/ID` names. Those bytes remain governed by the unchanged
+structure/ID-tree policy and are not trailer-ID projection targets.
+
+The receipt-recorded, locally observed diagnostic pair consists of two 597,430-byte files with 52
+differing offsets. Every
+difference is inside the two duplicated 16-byte trailer-ID values in each file; replacing only the
+four payload spans makes the remaining bytes identical. The raw PDFs are not tracked. The closed
+receipt records their hashes, spans, and arithmetic. An optional checker invocation can remeasure
+the pair only while those untracked local files still exist. The recorded capture resolved
+`pandoc` to a 319-byte diagnostic wrapper that copied
+pre-existing raw TeX. The raw-TeX origin, source revision, exact capture command, container image,
+and chronology are not authenticated. Consequently, this is measurement identity for one finite
+pair, not a real Pandoc 3.1.3 build, a portability result, or execution credit. The
+[LuaTeX Reference Manual, stable version 1.24, 12 December 2025, PDF pages 52--53
+(printed pp. 48--49)](https://tug.ctan.org/systems/doc/luatex/luatex.pdf) permits an explicit trailer ID but
+says LuaTeX does not validate the supplied array. That manual documents an available mechanism; it
+does not establish the cause of this observation. A deterministic source-derived ID would change
+document-identity policy and remains a separate review and reseal.
+`check-mathematical-results-guide-trailer-id-observation.py` validates the closed receipt and its
+internal arithmetic without needing the raw PDFs. Supplying the two optional untracked raw-PDF
+paths adds exact remeasurement while those files exist. Its self-test accepts three controls and
+rejects 56 hostile
+mutations in normal and optimized Python, including attempts to relabel the diagnostic wrapper as
+genuine Pandoc or to grant portability or execution credit.
+
+The separate
+`mathematical-results-guide-pandoc-3.1.3-portability-v1.json` receipt records the later
+operator-observed selected-writer run. Before the run, the selected `/usr/bin/pandoc` path matched
+the recorded 3.1.3 executable hash. This endpoint check is not an atomic binding to the bytes that the operating
+system ran. The run used an x86_64 Ubuntu 24.04 userspace translated by Rosetta on an arm64 macOS
+host. This is translated execution, not native x86_64-hardware evidence. Before normalization, the retained observation had
+56 valid and unique destination names. It included 17 redundant heading aliases and `table.1`
+through `table.4`. The tree was valid PDF syntax, but it failed this guide's unchanged canonical
+profile. It was not empty, malformed, or evidence of a security exploit.
+
+After the exact source transform, two 581,296-byte old-toolchain builds differed only in their
+strict duplicated trailer IDs. The final artifact had 39 unique destinations, no heading aliases,
+and `none.1` through `none.4`. It passed the unchanged 43-target, 167-navigation-record, structure,
+text, geometry, font, and active-content policies. All 16 pages were also byte-identical when both
+PDFs were rasterized by Poppler 24.02.0 at 72 dpi. That raster comparison covers one renderer and
+resolution only. The receipt also retains a QEMU SIGSEGV attempt as zero-credit negative evidence.
+The raw TeX, normalized TeX, and observed PDFs are not tracked because they are noncanonical
+execution outputs and the PDF trailer IDs vary. Their hashes, sizes, commands, delta counts, and
+claim boundaries are retained in the receipt.
+
+`check-mathematical-results-guide-pandoc-portability-receipt.py` binds the complete receipt bytes,
+the 11 current selected repository-input digests, the old executable identity, the normalization counts, the negative
+name-tree census, the final policy digests, the translated-execution boundary, and nine explicit
+nonclaims. Its self-test accepts two controls and rejects 28 semantic plus seven custody mutations
+in each interpreter mode. The receipt keeps the historical 26-mutation gate record separate from
+the current 28-mutation suite. It also records a three-path post-observation delta: two import/type-
+annotation lint corrections and the resulting builder digest rebind. The earlier run remains bound
+to its before-digests and transfers no execution credit to those corrected files. This closed
+receipt records one bounded operator observation and replays the current selected repository-input
+digests; it does not independently re-execute or retain custody of the reported run. It does not
+establish general Pandoc equivalence, native x86_64 execution,
+arbitrary-document portability, raw cross-toolchain identity, PDF/UA, supply-chain authenticity,
+or mathematical correctness. Its container record keeps the OCI image-index, linux/amd64 manifest,
+and config digests as distinct locators; raw registry responses and rootfs/download custody are not
+retained.
+
 `check-mathematical-results-guide-pdf.sh` rebuilds the guide, checks required page pairings,
 resolves every internal destination, binds the external/file target set and complete navigation
-manifest, rejects visible raw TeX and replacement characters, renders every page, and requires
-exact same-toolchain bytes by default. The graph-aware
+manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
+font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
+in default `--exact` mode. In cross mode, the trailer-ID relation can apply only to the two rebuilt
+outputs. Rebuilt-versus-committed comparison still uses extracted text, geometry, the normalized
+font roster, target sets, navigation, and the complete per-PDF structure projection. The graph-aware
 `check-mathematical-results-guide-pdf-structure.py` policy allows only the declared raw catalog,
 page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
 streams, and typed page-resource dependency closures. It emits 167
 ordered navigation records and binds strict number classes plus represented-binary64 values.
+The structure self-test has 74 object-graph mutations, one raw-parser mutation, four exact
+name-tree diagnostic controls, and four output-path controls. The diagnostic controls distinguish
+a non-array, an empty array, an odd array, and an even but wrong canonical pair count. They improve
+the failure explanation without accepting a second name-tree profile.
+For the canonical guide, it requires all 61 URI annotations to carry a BOM-prefixed UTF-16BE
+`/Contents` value equal to the URI target, all 17 internal GoTo annotations to retain ASCII `ref`,
+and all 13 GoToR file specifications to have ASCII `/F` and equal decoded UTF-16BE `/UF`.
+Exactly the 78 URI and internal-GoTo annotations have StructParent/OBJR ownership. GoToR links
+intentionally have neither. These source-specific values are reproducibility and semantic-shape
+obligations, not a general accessibility policy. The old ASCII `(url)` `/Contents` is a legal PDF text
+string; it fails this guide because it neither equals the URI nor meets the guide's source-specific
+UTF-16BE contract. The old UTF-16BE `/F` is not categorically malformed; this guide adopts the
+reviewed upstream portable ASCII `/F` plus Unicode `/UF` policy.
 For tagpdf before upstream commit `2846db13f8c4cf2e63fdf4984c66b1f064570708`, the dedicated
 LPPL-1.3c-or-later compatibility source supplies that upstream OpenAction update at
 `shipout/lastpage`. Its per-file SPDX, copyright, modification, Current Maintainer, derived-Work,
@@ -1656,14 +1879,16 @@ hook. Both paths must emit the same `/S /GoTo`, `/D`, and structure-aware `/SD` 
 the structure checker remains the semantic authority and is not widened for older toolchains.
 It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
 same-toolchain comparison separately binds every artifact byte.
-`check-mathematical-results-guide-pdf-structure-self-test.py` rejects 70 object-graph mutations
+`check-mathematical-results-guide-pdf-structure-self-test.py` rejects 74 object-graph mutations
 and one raw-parser mutation covering active content, aliases, type coercions, malformed numbers,
-destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream masquerading, and changed link
-geometry under normal and optimized Python. Four CLI controls reject input/output aliases,
+destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream
+masquerading, changed link geometry, canonical-but-wrong URI/internal `/Contents` values, and
+independently changed `/F` or `/UF` targets under normal and optimized Python. Four CLI controls
+reject input/output aliases,
 hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
 remains unchanged. Cross-toolchain mode compares extracted text, geometry, target sets, and the
 bounded semantic navigation/structure projection. These checks
-establish a source-specific, reproducible publication-artifact policy. They are not a generic
+establish a source-specific, bounded publication-artifact comparison policy. They are not a generic
 malware-free, viewer-safety, mathematical-truth, or PDF/UA claim. They do not elevate the guide
 over governing scope-specific sources or transfer semantics between PID families or estimators.
 
@@ -2227,11 +2452,13 @@ optimized isolated Python.
 
 `build-pid-discovery-verification-blueprint.sh` derives the human PDF only from the canonical
 Markdown, reviewed header/filter, and two handcrafted SVGs. It performs two isolated same-toolchain
-LuaLaTeX builds, requires exact byte equality, A4 geometry, semantic text anchors, embedded Unicode
-fonts, and a warning-free log, and installs the PDF atomically. Same-toolchain equality is not a
-cross-toolchain rendering theorem; rendered-page inspection remains required. The PDF explains one
-general promotion state machine for branches and worktrees rather than generating a new PDF for
-each migration.
+LuaLaTeX builds. The SVG route fixes Pango to the isolated Fontconfig inventory so macOS CoreText
+cannot select a platform fallback. The final roster admits only the declared CFF kind/encoding
+pairs and requires the Latin Modern body and figure faces. The builder also requires exact byte
+equality, A4 geometry, semantic text anchors, embedded Unicode fonts, a warning-free log, and an
+atomic final install. Same-toolchain equality is not a cross-toolchain rendering theorem;
+rendered-page inspection remains required. The PDF explains one general promotion state machine
+for branches and worktrees rather than generating a new PDF for each migration.
 
 ```text
 python3 -I -S -B scripts/check-primegaps-to-pid-transfer-ledger.py
@@ -2333,6 +2560,11 @@ repository-visible source state. The manifest omits itself and any containing co
 so it has no checksum cycle; readers resolve the containing commit through Git. It records the
 historical v0.9.0 ledger as tag-scoped inventory rather than current line or human review. It is not
 authenticity, review, scientific, formal, visual, release, or application evidence.
+The top-level `generated_pdfs` field is a selected 11-file PDF byte roster retained for its declared
+roles; it is not an exhaustive directory listing. The `generated_pdf_set` subprojection covers all
+20 current repository-visible entries selected by `output/pdf/`: 16 PDFs and four TSV rendering
+receipts. Both counts describe the bound candidate state and must be regenerated after the final
+source freeze; neither count implies that a PDF was rebuilt, reviewed, or accepted.
 
 `check-post-commit-source-state-v2.py` performs that resolution without putting a commit identifier
 back into the tracked manifest. From a clean committed checkout it compares the index and exact

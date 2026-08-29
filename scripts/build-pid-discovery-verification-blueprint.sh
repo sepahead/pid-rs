@@ -97,11 +97,14 @@ build_once() {
   local texmfvar_directory="$run_root/texmf-var"
   local texmfconfig_directory="$run_root/texmf-config"
   local fontconfig_file="$run_root/fontconfig.xml"
+  local empty_fontconfig_path="$run_root/empty-fontconfig-path"
   local raw_tex="$staged_root/$JOB_NAME.raw.tex"
   local normalized_tex="$staged_root/$JOB_NAME.tex"
 
   mkdir -p "$staged_figure_directory" "$build_directory" "$home_directory" \
-    "$cache_directory/fontconfig" "$texmfvar_directory" "$texmfconfig_directory"
+    "$cache_directory/fontconfig" "$texmfvar_directory/luatex-cache/generic/names" \
+    "$texmfconfig_directory" \
+    "$empty_fontconfig_path"
   cp "$SOURCE" "$staged_root/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md"
   cp "$HEADER" "$staged_root/pid-discovery-verification-and-durability-blueprint-header.tex"
   cp "$FILTER" "$staged_root/pid-discovery-verification-and-durability-blueprint-filter.lua"
@@ -124,6 +127,7 @@ build_once() {
     "TMPDIR=$run_root" \
     "XDG_CACHE_HOME=$cache_directory" \
     "FONTCONFIG_FILE=$fontconfig_file" \
+    "FONTCONFIG_PATH=$empty_fontconfig_path" \
     LC_ALL=C \
     LANG=C \
     TZ=UTC \
@@ -136,6 +140,8 @@ build_once() {
     "TMPDIR=$run_root" \
     "XDG_CACHE_HOME=$cache_directory" \
     "FONTCONFIG_FILE=$fontconfig_file" \
+    "FONTCONFIG_PATH=$empty_fontconfig_path" \
+    PANGOCAIRO_BACKEND=fontconfig \
     LC_ALL=C \
     LANG=C \
     TZ=UTC \
@@ -149,6 +155,8 @@ build_once() {
     "TMPDIR=$run_root" \
     "XDG_CACHE_HOME=$cache_directory" \
     "FONTCONFIG_FILE=$fontconfig_file" \
+    "FONTCONFIG_PATH=$empty_fontconfig_path" \
+    PANGOCAIRO_BACKEND=fontconfig \
     LC_ALL=C \
     LANG=C \
     TZ=UTC \
@@ -167,6 +175,7 @@ build_once() {
       "FONTCONFIG_FILE=$fontconfig_file" \
       "OSFONTDIR=$LM_DIRECTORY:$LM_MATH_DIRECTORY" \
       "TEXMFVAR=$texmfvar_directory" \
+      "TEXMFCACHE=$texmfvar_directory" \
       "TEXMFCONFIG=$texmfconfig_directory" \
       LC_ALL=C \
       LANG=C \
@@ -210,6 +219,7 @@ build_once() {
         "FONTCONFIG_FILE=$fontconfig_file" \
         "OSFONTDIR=$LM_DIRECTORY:$LM_MATH_DIRECTORY" \
         "TEXMFVAR=$texmfvar_directory" \
+        "TEXMFCACHE=$texmfvar_directory" \
         "TEXMFCONFIG=$texmfconfig_directory" \
         LC_ALL=C \
         LANG=C \
@@ -253,12 +263,24 @@ build_once() {
   if ! awk '
     NR <= 2 { next }
     NF == 0 { next }
-    $(NF - 4) != "yes" || $(NF - 2) != "yes" { bad = 1 }
-    END { exit bad }
+    {
+      seen = 1
+      if ($0 !~ /[[:space:]](Type 1C[[:space:]]+WinAnsi|CID Type 0C[[:space:]]+Identity-H)[[:space:]]+yes[[:space:]]+yes[[:space:]]+yes[[:space:]]+[0-9]+[[:space:]]+[0-9]+$/) {
+        bad = 1
+      }
+    }
+    END { exit (!seen || bad) }
   ' "$build_directory/pdffonts.txt"; then
-    echo "blueprint PDF build failed: every PDF font must be embedded and Unicode-mapped" >&2
+    echo "blueprint PDF build failed: every font must be a subsetted, embedded, Unicode-mapped CFF program with its declared encoding" >&2
     exit 1
   fi
+  for required_face in LMRoman LMMonoLt10-Regular LatinModernMath-Regular \
+      LMSans10-Regular LMSans10-Bold; do
+    if ! grep -Fq "$required_face" "$build_directory/pdffonts.txt"; then
+      echo "blueprint PDF build failed: required Latin Modern face is absent: $required_face" >&2
+      exit 1
+    fi
+  done
 
   LC_ALL=C pdftotext -layout "$built_pdf" "$build_directory/layout.txt"
   required_text=(

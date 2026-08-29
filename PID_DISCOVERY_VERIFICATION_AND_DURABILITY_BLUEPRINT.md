@@ -971,6 +971,12 @@ storage-and-promotion ladder before retiring any branch or worktree.
 The links below are pinned to the reviewed Git commit. They are locators for review, not a claim
 that a line range alone contains every transitive proof dependency.
 
+The repository-wide search found six `sorry` placeholders, all in the two intentional challenge
+roots rather than the default theorem libraries. That fact does not turn challenge holes into
+production proof holes, nor does it establish that the challenge statements perfectly represent
+the paper. The comparator still needs an executed, pinned receipt before it earns verification
+credit.
+
 | Review claim | Primary anchor |
 |---|---|
 | Final public declaration is conditional | [`PrimeGaps/Bounded246.lean`, lines 21--31](https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGaps/Bounded246.lean#L21-L31) |
@@ -987,12 +993,6 @@ that a line range alone contains every transitive proof dependency.
 | Paper-tag URL and duplicate handling need hardening | [`PaperTag.lean`, line 100 and lines 158--168](https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/PrimeGapsTheory/Tactic/PaperTag.lean#L100-L168) |
 | Reviewed public CI is a minimal tagged-action build | [`.github/workflows/lean.yml`, lines 1--17](https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/.github/workflows/lean.yml#L1-L17) |
 | External PNT dependency is requested from mutable `main` | [`lakefile.toml`, lines 20--23](https://github.com/AxiomMath/PrimeGapsLib/blob/1faa7b14e82ddebc2772dfb9153922f01b106477/lakefile.toml#L20-L23) |
-
-The repository-wide search found six `sorry` placeholders, all in the two intentional challenge
-roots rather than the default theorem libraries. That fact does not turn challenge holes into
-production proof holes, nor does it establish that the challenge statements perfectly represent
-the paper. The comparator still needs an executed, pinned receipt before it earns verification
-credit.
 
 ## Primary references
 

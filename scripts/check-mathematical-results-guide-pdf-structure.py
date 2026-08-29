@@ -112,9 +112,15 @@ EXPECTED_OUTLINE = [
 ]
 EXPECTED_ACTION_COUNTS = Counter({"/GoTo": 35, "/URI": 61, "/GoToR": 13})
 EXPECTED_LINK_COUNTS = Counter({"/GoTo": 17, "/URI": 61, "/GoToR": 13})
-EXPECTED_NAVIGATION_SHA256 = "2ec4fe5be96fcde6549850bd81c95123089a603f69fc2c021986910615fc6794"
+# The 167-line navigation reseal changes only the structure record's embedded digest. The catalog,
+# page labels, destinations, outlines, link actions, targets, geometry, and 166 other records stay
+# byte-identical.
+EXPECTED_NAVIGATION_SHA256 = "95ca1981ffb665ad4f0b9cb72d2ae508f76ae90814669ca910bc41de55aadcf8"
 EXPECTED_STRUCTURE_ELEMENTS = 814
-EXPECTED_STRUCTURE_SHA256 = "5d5854daeb618b1117c4825a4f74868c0962e247050ecf55c39a29910e52d416"
+# The open-font figure reseal keeps all 1,699 semantic records and 85,381 payload bytes. Only the
+# page-resource closure hashes for zero-based pages 3, 4, and 6 change; page content, MCIDs,
+# ParentTree ownership, OBJR topology, and the other 1,696 records remain byte-identical.
+EXPECTED_STRUCTURE_SHA256 = "e9adba3097ffc38de2f7723e448d2bb54265ee201e010c0857e1a7a40db9d99b"
 
 FORBIDDEN_KEYS = {
     "/AA",
@@ -622,11 +628,22 @@ def validate_named_destinations(
             if keys != {"/Limits", "/Names"}:
                 fail("name_tree", f"{path}: destination leaf changed shape")
             entries = dereference(dictionary_raw(node, "/Names"))
-            if (
-                not isinstance(entries, ArrayObject)
-                or len(entries) != 2 * expected_leaf_count
-            ):
-                fail("name_tree", f"{path}: leaf Names array is empty or odd")
+            if not isinstance(entries, ArrayObject):
+                fail("name_tree", f"{path}: leaf /Names must be an array")
+            if not entries:
+                fail("name_tree", f"{path}: leaf /Names array is empty")
+            if len(entries) % 2 != 0:
+                fail(
+                    "name_tree",
+                    f"{path}: leaf /Names has an odd item count: {len(entries)}",
+                )
+            observed_leaf_count = len(entries) // 2
+            if observed_leaf_count != expected_leaf_count:
+                fail(
+                    "name_tree",
+                    f"{path}: canonical destination leaf pair count changed: "
+                    f"expected {expected_leaf_count}, found {observed_leaf_count}",
+                )
             result: list[tuple[str, XyzDestination]] = []
             for index in range(0, len(entries), 2):
                 name = require_ascii_text(array_raw(entries, index), f"{path}/Names[{index}]")

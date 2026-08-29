@@ -204,6 +204,31 @@ def expect_fail(
     raise SystemExit(f"PDF structure self-test failed: {name} unexpectedly passed")
 
 
+def expect_fail_message(
+    source: pathlib.Path,
+    directory: pathlib.Path,
+    name: str,
+    mutation: Callable[[PdfWriter], None],
+    expected_message: str,
+) -> None:
+    writer = new_writer(source)
+    mutation(writer)
+    output = directory / f"{name}.pdf"
+    write_writer(writer, output)
+    try:
+        CHECKER.validate_path(output)
+    except CHECKER.PdfStructureError as error:
+        observed_message = str(error)
+        if error.code != "name_tree" or expected_message not in observed_message:
+            raise SystemExit(
+                f"PDF structure self-test failed: {name} produced "
+                f"[{error.code}] {observed_message!r}, expected [name_tree] "
+                f"containing {expected_message!r}"
+            ) from error
+        return
+    raise SystemExit(f"PDF structure self-test failed: {name} unexpectedly passed")
+
+
 def expect_raw_fail(
     source: pathlib.Path,
     directory: pathlib.Path,
@@ -385,6 +410,26 @@ def mutate_direct_name_tree_leaf(writer: PdfWriter) -> None:
         {key: CHECKER.dictionary_raw(child, str(key)) for key in child.keys()}
     )
     tree["/Kids"][0] = direct
+
+
+def mutate_destination_names_nonarray(writer: PdfWriter) -> None:
+    leaf, _, _ = first_named_destination(writer)
+    leaf[NameObject("/Names")] = TextStringObject("not-an-array")
+
+
+def mutate_destination_names_empty(writer: PdfWriter) -> None:
+    leaf, _, _ = first_named_destination(writer)
+    leaf[NameObject("/Names")] = ArrayObject()
+
+
+def mutate_destination_names_odd(writer: PdfWriter) -> None:
+    _, entries, _ = first_named_destination(writer)
+    del entries[-1]
+
+
+def mutate_destination_names_even_wrong_count(writer: PdfWriter) -> None:
+    _, entries, _ = first_named_destination(writer)
+    del entries[-2:]
 
 
 def mutate_internal_structure_coordinate(writer: PdfWriter) -> None:
@@ -666,6 +711,20 @@ def mutate_filespec_uf_encoding(writer: PdfWriter) -> None:
     specification[NameObject("/UF")] = TextStringObject(str(specification["/UF"]))
 
 
+def mutate_filespec_f_value(writer: PdfWriter) -> None:
+    annotation = annotations_with_action(writer, "/GoToR")[0]
+    action = CHECKER.dereference(CHECKER.dictionary_raw(annotation, "/A"))
+    specification = CHECKER.dereference(CHECKER.dictionary_raw(action, "/F"))
+    specification[NameObject("/F")] = TextStringObject("different-guide.pdf")
+
+
+def mutate_filespec_uf_value(writer: PdfWriter) -> None:
+    annotation = annotations_with_action(writer, "/GoToR")[0]
+    action = CHECKER.dereference(CHECKER.dictionary_raw(annotation, "/A"))
+    specification = CHECKER.dereference(CHECKER.dictionary_raw(action, "/F"))
+    specification[NameObject("/UF")] = utf16_text("different-guide.pdf")
+
+
 def mutate_structure_id_encoding(writer: PdfWriter) -> None:
     structure = CHECKER.dereference(writer.root_object.get("/StructTreeRoot"))
     document = CHECKER.dereference(structure.get("/K"))
@@ -680,6 +739,16 @@ def mutate_internal_contents_encoding(writer: PdfWriter) -> None:
 def mutate_uri_contents_encoding(writer: PdfWriter) -> None:
     annotation = annotations_with_action(writer, "/URI")[0]
     annotation[NameObject("/Contents")] = TextStringObject(str(annotation["/Contents"]))
+
+
+def mutate_internal_contents_value(writer: PdfWriter) -> None:
+    annotation = annotations_with_action(writer, "/GoTo")[0]
+    annotation[NameObject("/Contents")] = TextStringObject("not-ref")
+
+
+def mutate_uri_contents_value(writer: PdfWriter) -> None:
+    annotation = annotations_with_action(writer, "/URI")[0]
+    annotation[NameObject("/Contents")] = utf16_text("https://different.invalid/")
 
 
 def mutate_outline_title_encoding(writer: PdfWriter) -> None:
@@ -815,16 +884,44 @@ def main(argv: list[str]) -> int:
         ("uri-encoding", mutate_uri_encoding, "text_encoding"),
         ("filespec-f-encoding", mutate_filespec_f_encoding, "text_encoding"),
         ("filespec-uf-encoding", mutate_filespec_uf_encoding, "text_encoding"),
+        ("filespec-f-value", mutate_filespec_f_value, "file_specification"),
+        ("filespec-uf-value", mutate_filespec_uf_value, "file_specification"),
         ("structure-id-encoding", mutate_structure_id_encoding, "text_encoding"),
         ("internal-contents-encoding", mutate_internal_contents_encoding, "text_encoding"),
         ("uri-contents-encoding", mutate_uri_contents_encoding, "text_encoding"),
+        ("internal-contents-value", mutate_internal_contents_value, "annotation_shape"),
+        ("uri-contents-value", mutate_uri_contents_value, "annotation_shape"),
         ("outline-title-encoding", mutate_outline_title_encoding, "text_encoding"),
         ("language-encoding", mutate_language_encoding, "text_encoding"),
+    ]
+    message_cases = [
+        (
+            "destination-names-nonarray-diagnostic",
+            mutate_destination_names_nonarray,
+            "leaf /Names must be an array",
+        ),
+        (
+            "destination-names-empty-diagnostic",
+            mutate_destination_names_empty,
+            "leaf /Names array is empty",
+        ),
+        (
+            "destination-names-odd-diagnostic",
+            mutate_destination_names_odd,
+            "leaf /Names has an odd item count: 63",
+        ),
+        (
+            "destination-names-count-diagnostic",
+            mutate_destination_names_even_wrong_count,
+            "canonical destination leaf pair count changed: expected 32, found 31",
+        ),
     ]
     with tempfile.TemporaryDirectory(prefix="pid-rs-guide-pdf-structure-self-test-") as temporary:
         directory = pathlib.Path(temporary)
         for name, mutation, expected_code in cases:
             expect_fail(source, directory, name, mutation, expected_code)
+        for name, mutation, expected_message in message_cases:
+            expect_fail_message(source, directory, name, mutation, expected_message)
         expect_raw_fail(
             source,
             directory,
@@ -872,7 +969,7 @@ def main(argv: list[str]) -> int:
     print(
         "Mathematical results guide PDF structure self-test passed: "
         f"baseline plus {len(cases)} object-graph mutations, 1 raw-parser mutation, "
-        "and 4 output-path controls."
+        f"4 name-tree diagnostic controls, and 4 output-path controls."
     )
     print(
         "Boundary: source-specific active-content and navigation policy only; "

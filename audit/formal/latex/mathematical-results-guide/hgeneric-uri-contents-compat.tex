@@ -1,0 +1,163 @@
+% SPDX-FileCopyrightText: 2021-2024 The LaTeX Project
+% SPDX-License-Identifier: LPPL-1.3c+
+% Modified 2026-08-28 by the pid-rs maintainers.
+% The Current Maintainer of this derived Work is the pid-rs maintainers.
+% The Work under this per-file license consists only of this renamed, modified
+% compatibility file.
+%
+% This Work adapts the URI-link part of hyperref-generic.dtx in
+% latex3/pdfresources commit 6fbdf1ae266c5d59704374045a7abe90e59be4a3,
+% "Add Contents entry to URI and GoTo links for better UA support"
+% (2024-03-01), licensed under LPPL 1.3c or later. Commit
+% 57caeb67fa785a92a05083f4eee1863d504f7a63 subsequently identifies the native
+% hgeneric-testphase.def implementation as v0.96f dated 2024-03-01. See
+% LICENSE-LPPL-1.3c.
+%
+% Ubuntu's reviewed hgeneric-testphase.def v0.96d dated 2023-12-09 predates
+% the upstream change and leaves tagpdf's literal (url) placeholder in every
+% URI Link annotation's /Contents. This compatibility layer writes the actual
+% URI target as the same UTF-16BE PDF text string used by the native update.
+% It does not change URI actions, GoTo links, structure parents, or the claim
+% boundary: the guide is tagged, but this file does not assert PDF/UA.
+%
+% This is deliberately bounded to the 2024 target-valued /Contents policy and
+% this guide's existing reproducibility contract. Upstream commit
+% 0057659274b5f525948a81bdf93f769e5b36a6fb (2026-02-17, issue 111) later made
+% link /Contents a no-op by default and enabled target text only for PDF/UA-1:
+% repeated target announcements can be tedious for screen-reader users. That
+% later policy needs separate assistive-technology review; target-valued
+% /Contents is not claimed to be universally optimal or to prove PDF/UA. That
+% change retained the 2026-01-23 v0.96y declaration, so declared dates cannot
+% distinguish pre-change from post-change v0.96y bytes; the complete v0.96y
+% family is conservatively outside this compatibility layer's reviewed range.
+%
+% The reviewed 2024 native path wins. A native state on an unexpectedly older
+% file, a native-absent file dated 2024-03-01 or later, or any file declared
+% 2026-01-23 or later fails closed. The fallback accepts only the exact declared
+% date/version token family 2023-12-09 v0.96d, whose hosted source is separately bound
+% by SHA-256. Required APIs are feature-tested and the exact v0.96d URI command
+% is patched at the upstream insertion point inside its existing local group.
+% That leaves the shared annotation dictionary unchanged after each link.
+\makeatletter
+\ExplSyntaxOn
+% A reviewed native hgeneric must not allocate fallback state or change link
+% writers. Probe it without allocating a message, sentinel, variable, register,
+% or helper control sequence, then stop reading this Work before fallback state
+% is created. Reading an extra input can change pdfTeX's automatic trailer /ID;
+% the self-test therefore requires exact equality outside the sole typed,
+% duplicated trailer-ID payload and separately checks action semantics. The
+% ambiguous v0.96y family deliberately falls through to the fatal boundary.
+\cs_if_exist:cT { ver@hyperref.sty }
+  {
+    \cs_if_exist:cT { ver@hgeneric-testphase.def }
+      {
+        \ifdefined\l__hyp_link_Contents_tl
+          \IfFileAtLeastTF { hgeneric-testphase.def } { 2026-01-23 }
+            { }
+            {
+              \IfFileAtLeastTF { hgeneric-testphase.def } { 2024-03-01 }
+                { \ExplSyntaxOff \makeatother \endinput }
+                { }
+            }
+        \fi
+      }
+  }
+\cs_if_exist:NT \g__pidrs_hgeneric_uri_compat_loaded_bool
+  {
+    \PackageError { pid-rs }
+      { hgeneric~URI-Contents~duplicate~compatibility~application }
+      { The~compatibility~Work~must~be~loaded~exactly~once. }
+    \tex_end:D
+  }
+\msg_new:nnn { pid-rs } { hgeneric-uri-contents-compat }
+  { Mathematical~results~guide~URI-Contents~compatibility~failed:~#1. }
+\cs_new_protected:Npn \__pidrs_hgeneric_uri_fail:n #1
+  { \msg_fatal:nnn { pid-rs } { hgeneric-uri-contents-compat } {#1} }
+
+\bool_new:N \g__pidrs_hgeneric_uri_compat_loaded_bool
+\bool_gset_true:N \g__pidrs_hgeneric_uri_compat_loaded_bool
+
+\cs_if_exist:cF { ver@hyperref.sty }
+  { \__pidrs_hgeneric_uri_fail:n { hyperref~is~not~loaded } }
+\cs_if_exist:cF { ver@hgeneric-testphase.def }
+  { \__pidrs_hgeneric_uri_fail:n { hgeneric-testphase~is~not~loaded } }
+\IfFileAtLeastTF { hgeneric-testphase.def } { 2026-01-23 }
+  {
+    \__pidrs_hgeneric_uri_fail:n
+      { hgeneric~is~in~or~after~the~ambiguous~v0.96y~policy~family }
+  }
+  { }
+\ifdefined\l__hyp_link_Contents_tl
+    \IfFileAtLeastTF { hgeneric-testphase.def } { 2024-03-01 }
+      { }
+      {
+        \__pidrs_hgeneric_uri_fail:n
+          { unexpected~older~hgeneric~has~the~native~URI-Contents~state }
+      }
+\else
+    \IfFileAtLeastTF { hgeneric-testphase.def } { 2024-03-01 }
+      {
+        \__pidrs_hgeneric_uri_fail:n
+          { newer~hgeneric~lacks~the~reviewed~native~URI-Contents~update }
+      }
+      { }
+    \IfFileAtLeastTF { hgeneric-testphase.def } { 2023-12-09 }
+      { }
+      {
+        \__pidrs_hgeneric_uri_fail:n
+          { hgeneric~is~older~than~the~reviewed~v0.96d~fallback }
+      }
+    \IfFileAtLeastTF { hgeneric-testphase.def } { 2023-12-10 }
+      {
+        \__pidrs_hgeneric_uri_fail:n
+          { hgeneric~is~outside~the~reviewed~v0.96d~fallback }
+      }
+      { }
+    \str_new:N \l__pidrs_hgeneric_uri_version_str
+    \str_new:N \l__pidrs_hgeneric_uri_version_prefix_str
+    \str_set:Nx \l__pidrs_hgeneric_uri_version_str
+      { \use:c { ver@hgeneric-testphase.def } }
+    \str_set:Nx \l__pidrs_hgeneric_uri_version_prefix_str
+      { \str_range:Nnn \l__pidrs_hgeneric_uri_version_str { 1 } { 18 } }
+    \str_if_eq:VnF \l__pidrs_hgeneric_uri_version_prefix_str
+      { 2023-12-09~v0.96d~ }
+      {
+        \__pidrs_hgeneric_uri_fail:n
+          { hgeneric~version~is~not~the~reviewed~v0.96d~fallback }
+      }
+    \cs_if_exist:cF { hyper@linkurl }
+      { \__pidrs_hgeneric_uri_fail:n { hyperref~URI-link~command~is~absent } }
+    \cs_if_exist:NF \__hyp_text_pdfstring:eoN
+      { \__pidrs_hgeneric_uri_fail:n { hgeneric~PDF-string~API~is~absent } }
+    \cs_if_exist:NF \l__hyp_text_enc_info_print_tl
+      { \__pidrs_hgeneric_uri_fail:n { hgeneric~text-encoding~state~is~absent } }
+    \cs_if_exist:NF \pdfannot_dict_put:nne
+      { \__pidrs_hgeneric_uri_fail:n { PDF~annotation-dictionary~API~is~absent } }
+    \cs_if_exist:NF \patchcmd
+      { \__pidrs_hgeneric_uri_fail:n { command-patching~API~is~absent } }
+    \tl_new:N \l__pidrs_hgeneric_uri_contents_tl
+    \cs_new_protected:Npn \__pidrs_hgeneric_uri_contents_set:n #1
+      {
+        \__hyp_text_pdfstring:eoN
+          {#1}
+          { \l__hyp_text_enc_info_print_tl }
+          \l__pidrs_hgeneric_uri_contents_tl
+        \pdfannot_dict_put:nne
+          { link/URI }
+          { Contents }
+          { \l__pidrs_hgeneric_uri_contents_tl }
+      }
+    \patchcmd \hyper@linkurl
+      { \cs_set_eq:NN \# \c_hash_str }
+      {
+        \__pidrs_hgeneric_uri_contents_set:n {#2}
+        \cs_set_eq:NN \# \c_hash_str
+      }
+      { }
+      {
+        \__pidrs_hgeneric_uri_fail:n
+          { reviewed~v0.96d~URI-link~insertion~point~is~absent }
+      }
+\fi
+\ExplSyntaxOff
+\makeatother

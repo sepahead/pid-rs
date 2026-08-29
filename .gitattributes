@@ -25,3 +25,10 @@ audit/evidence/external-model-pid-rs-deep-audit-2026-08-12.md -whitespace
 # Preserve the official LPPL 1.3c license copy byte-for-byte. Its upstream trailing spaces are
 # part of the reviewed source bytes, not repository-authored whitespace errors.
 LICENSE-LPPL-1.3c -text -whitespace
+
+# Preserve the three installed font-license/package-manifest observations byte-for-byte. The
+# retained Source Sans and Latin Modern source files include upstream whitespace that is part of
+# their digest-bound evidence, not repository-authored formatting.
+audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt -text -whitespace
+audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt -text -whitespace
+audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt -text -whitespace

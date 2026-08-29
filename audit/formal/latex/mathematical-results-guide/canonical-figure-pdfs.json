@@ -1,0 +1,157 @@
+{
+  "format_version": 3,
+  "purpose": "Digest-bound canonical open-font PDF derivatives used by the mathematical results guide build",
+  "source_date_epoch": 1787875200,
+  "regeneration_status": "reviewed-host isolated-font repeat byte-equality; cross-host closure incomplete",
+  "renderer": {
+    "command": "rsvg-convert --format=pdf --keep-aspect-ratio --output=DERIVATIVE SOURCE",
+    "rsvg_convert": "2.62.3",
+    "cairo": "1.18.4",
+    "pango": "1.57.1",
+    "harfbuzz": "14.2.1",
+    "fontconfig": "2.18.1",
+    "reviewed_platform": "Darwin arm64"
+  },
+  "regeneration_contract": {
+    "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
+    "sha256": "73255547d47a3f64ae690d51a99b3e1c62d5de049f1edb59487ed1b0f75fbd80"
+  },
+  "regenerator": {
+    "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
+    "sha256": "bc28bc80313907ec44d51db212f1a497513131f35134e5e8297fe90d64f0fbd5"
+  },
+  "third_party_notice": {
+    "path": "THIRD_PARTY_NOTICES.md",
+    "sha256": "4279f2628c79bfdc9c226d05c55bf7c643e70b14fa3b03033290f5d91d54ff0d"
+  },
+  "license_artifacts": [
+    {
+      "path": "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+      "bytes": 4529,
+      "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9",
+      "role": "Exact installed TeX Live 2024 Source Sans Pro package license evidence; its generic 2010/2012 header does not replace the accepted OTF programs' 2010-2019 metadata."
+    },
+    {
+      "path": "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+      "bytes": 1377,
+      "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050",
+      "role": "Exact installed TeX Live 2024 GUST Font License 1.0 evidence."
+    },
+    {
+      "path": "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt",
+      "bytes": 52635,
+      "sha256": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae",
+      "role": "Exact installed TeX Live 2024 Latin Modern v2.004 package manifest evidence; this is distinct from the GUST license text."
+    }
+  ],
+  "raw_font_files_tracked_in_repository": false,
+  "font_inputs": [
+    {
+      "filename": "SourceSansPro-Regular.otf",
+      "family": "Source Sans Pro",
+      "style": "Regular",
+      "postscript_name": "SourceSansPro-Regular",
+      "version": "3.006",
+      "sha256": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51",
+      "bytes": 293200,
+      "license": "SIL Open Font License 1.1",
+      "license_identifier": "OFL-1.1"
+    },
+    {
+      "filename": "SourceSansPro-Semibold.otf",
+      "family": "Source Sans Pro",
+      "style": "Semibold",
+      "postscript_name": "SourceSansPro-Semibold",
+      "version": "3.006",
+      "sha256": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2",
+      "bytes": 295952,
+      "license": "SIL Open Font License 1.1",
+      "license_identifier": "OFL-1.1"
+    },
+    {
+      "filename": "SourceSansPro-Bold.otf",
+      "family": "Source Sans Pro",
+      "style": "Bold",
+      "postscript_name": "SourceSansPro-Bold",
+      "version": "3.006",
+      "sha256": "daccddbe3dd60fe10f6e8a785eda187925da6b611141024dffa43626998dfc7c",
+      "bytes": 298076,
+      "license": "SIL Open Font License 1.1",
+      "license_identifier": "OFL-1.1"
+    },
+    {
+      "filename": "lmsans10-regular.otf",
+      "family": "Latin Modern Sans",
+      "style": "10 Regular",
+      "postscript_name": "LMSans10-Regular",
+      "version": "2.004",
+      "sha256": "d431b786b9b603662718e79cfe9b441f47a8b0b3e854dde89d5acb3ed7cfd682",
+      "bytes": 95128,
+      "license": "GUST Font License 1.0",
+      "license_identifier": "LicenseRef-GUST-Font-License-1.0"
+    },
+    {
+      "filename": "lmsans10-bold.otf",
+      "family": "Latin Modern Sans",
+      "style": "10 Bold",
+      "postscript_name": "LMSans10-Bold",
+      "version": "2.004",
+      "sha256": "a597b710326c1a8a2c7238d808e5d38711638a72a32383478db4829d63afd687",
+      "bytes": 107448,
+      "license": "GUST Font License 1.0",
+      "license_identifier": "LicenseRef-GUST-Font-License-1.0"
+    }
+  ],
+  "closure_limitation": "The five accepted source-font programs, their exact byte hashes, and an isolated Fontconfig inventory are captured, and two independent renders regenerated every derivative byte-identically on the reviewed macOS host. This is same-host evidence only: renderer executable and dependency bytes, operating-system services, and authenticated acquisition chains are not captured, so the record is not a hermetic or cross-host reproducibility proof.",
+  "accessibility_boundary": "The canonical guide has structure elements but no Figure structure roles or Alt entries; SVG title and description text do not survive this PDF-figure inclusion route. Neither these derivatives nor their inclusion prove PDF/UA conformance or accessible figures. Adding Figure/Alt semantics requires a separate assistive-technology-reviewed canonical change.",
+  "claim_boundary": "Each tracked PDF is the reviewed static build input for its named SVG. Digest equality and the embedded-font checks do not by themselves prove visual or semantic equivalence to the SVG, cross-host reproducibility, accessibility, legal compliance in every redistribution scenario, source-font authenticity, or supply-chain integrity. The input programs are not tracked; the PDFs contain renderer-produced embedded subsets. License identifiers, observed program notices, and exact local license/manifest evidence are recorded and digest-bound without authenticating a package, download, or upstream history and without making a legal determination. Any source or derivative change requires exact regeneration, structural checks, rendering, and human visual review. The 1 MiB check is an early raw derivative byte cap only; it is not a hostile-input resource sandbox or decoded-stream-size bound.",
+  "figures": [
+    {
+      "source": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg",
+      "source_sha256": "e79ef4f3290f094efc1f786977800f4d4bd8a101760f57ed528c988d6d621042",
+      "derivative": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf",
+      "derivative_sha256": "7d873332c3eb890d35457cd66d3dea9574d164d90826c6911e77019d9490dc61",
+      "pdf_bytes": 82732,
+      "pdf_header": "%PDF-1.7",
+      "media_box_tokens": ["0", "0", "453.543307", "328.818898"],
+      "font_resources": 4,
+      "font_inventory": [
+        {"subtype": "Type1", "postscript_name": "SourceSansPro-Bold"},
+        {"subtype": "Type1", "postscript_name": "SourceSansPro-Regular"},
+        {"subtype": "Type1", "postscript_name": "SourceSansPro-Semibold"},
+        {"subtype": "Type0", "postscript_name": "SourceSansPro-Regular"}
+      ]
+    },
+    {
+      "source": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
+      "source_sha256": "bb315a5282dce90a25988f92ab7b5ecf6a8fe530d33de1ddaef8a81ca2e1a775",
+      "derivative": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
+      "derivative_sha256": "41d591a7e75b4d1fb44dad06671cf6a21256dc1fcf958b304419012fcc30a3c8",
+      "pdf_bytes": 138292,
+      "pdf_header": "%PDF-1.7",
+      "media_box_tokens": ["0", "0", "510.23622", "419.527559"],
+      "font_resources": 4,
+      "font_inventory": [
+        {"subtype": "Type1", "postscript_name": "SourceSansPro-Bold"},
+        {"subtype": "Type1", "postscript_name": "SourceSansPro-Regular"},
+        {"subtype": "Type1", "postscript_name": "SourceSansPro-Semibold"},
+        {"subtype": "Type0", "postscript_name": "SourceSansPro-Semibold"}
+      ]
+    },
+    {
+      "source": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+      "source_sha256": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a",
+      "derivative": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf",
+      "derivative_sha256": "6cfa13f06f20b6240abb3b28e4aca60611b410fa88c9eb7a0074f2985bf1aa02",
+      "pdf_bytes": 77858,
+      "pdf_header": "%PDF-1.7",
+      "media_box_tokens": ["0", "0", "900", "517.5"],
+      "font_resources": 3,
+      "font_inventory": [
+        {"subtype": "Type1", "postscript_name": "LMSans10-Bold"},
+        {"subtype": "Type1", "postscript_name": "LMSans10-Regular"},
+        {"subtype": "Type0", "postscript_name": "LMSans10-Regular"}
+      ]
+    }
+  ]
+}

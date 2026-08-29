@@ -250,7 +250,10 @@ Durable routing and validation:
   PID3 lattice separate. Neither derived view is an assurance authority or review disposition.
 - [`audit/evidence/current-source-state-v1.json`](audit/evidence/current-source-state-v1.json) is a
   deterministic self-excluding worktree-source projection. It does not contain or claim its own
-  digest or final containing commit; resolve the containing commit from Git after committing.
+  digest or final containing commit; resolve the containing commit from Git after committing. Its
+  11-entry `generated_pdfs` field is a selected byte-identity roster. It is not the exhaustive
+  `output/pdf/` inventory. The separate `generated_pdf_set` subprojection covers every repository-
+  visible entry under `output/pdf/`, including PDFs and adjacent TSV rendering receipts.
 - `check-post-commit-source-state-v2.py` resolves that commit only after the manifest is committed.
   From a clean checkout it emits canonical deterministic identity bytes on standard output and
   validates the same bytes in a separate invocation from standard input, binding `HEAD`, its tree,
@@ -514,11 +517,17 @@ python3 -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
 python3 -O -I -S -B scripts/check-post-commit-source-state-v2-self-test.py
 ```
 
-`AGENTS.md` is part of the current Lean replay/freeze projection. Freeze operational text once,
-then create and check a fresh current Lean 4.33 replay/reseal before generating the source-state
-manifest last. Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old
-observed run as 4.33, and never transfer a historical receipt to the current descendant.
-The current 4.33 receipt is
+`AGENTS.md` is part of the exact current operational-wiring projection checked by the Lean freeze
+gate. Since C12, that mutable projection is separate from the immutable historical `r14` receipt.
+After operational text changes, freeze all bytes, rebind only the current operational-wiring
+hashes, and pass the freeze checker and self-test under normal and optimized Python. Generate the
+source-state manifest last. This rebind gives no Lean execution or replay credit. Never edit or
+repin the preserved `r14` maps or receipt. A new replay requires a separate reviewed, versioned
+route and a new receipt; do not reuse the one-shot `r14` generator.
+
+Preserve Lean 4.32 receipts as immutable historical evidence: never rewrite an old observed run as
+4.33, and never transfer a historical receipt to the current descendant. The most recent accepted
+4.33 replay receipt is
 `audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json`;
 the 11 August, unsuffixed 12 August, finalized `r2`, finalized `r3`, finalized `r4`, finalized `r5`,
 finalized `r6`, finalized `r7`, finalized `r8`, finalized `r9`, finalized `r10`, finalized `r11`,
@@ -527,8 +536,9 @@ fourteenth accepted slot in the sequence beginning 12 August. Counting the separ
 historical receipt, it is the fifteenth receipt in the accepted/historical lineage. Rejected
 same-slot artifacts are additional zero-credit documents; no total count of every generated
 receipt is claimed. The suffix does not denote a calendar date, schema, theorem, review, assurance
-tier, or independence revision.
-The route receives current execution credit only when that exact receipt exists and validates.
+tier, or independence revision. The `r14` route receives execution credit only for its exact bound
+command and source state when that receipt exists and validates. Current operational-wiring checks
+do not extend that credit to changed operational bytes.
 
 ## Workspace layout
 
@@ -655,10 +665,33 @@ python3 -I -B scripts/check-mathematical-results-guide-prose.py  # selected edit
 python3 -O -I -B scripts/check-mathematical-results-guide-prose.py
 python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 33 hostile/control cases
 python3 -O -I -B scripts/check-mathematical-results-guide-prose-self-test.py
-scripts/check-mathematical-results-guide-builder-self-test.sh  # 8 output-safety cases
-python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py  # 70 object + 1 raw-parser mutations; 4 output controls
+python3 -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py  # 4 positive + 214 rejected subprocesses
+python3 -O -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt.py  # closed translated 3.1.3 receipt
+python3 -O -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt.py
+python3 -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py  # 2 controls + 28 semantic + 7 custody mutations
+python3 -O -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py
+scripts/check-mathematical-results-guide-builder-self-test.sh  # 69 source/staging/mode/comparison/output cases
+scripts/check-mathematical-results-guide-tagpdf-compat-self-test.sh
+scripts/check-mathematical-results-guide-uri-contents-compat-self-test.sh  # 6 controls + 14 hostiles
+scripts/check-mathematical-results-guide-filespec-compat-self-test.sh  # 3 controls + 14 hostiles
+python3 -I -B scripts/check-mathematical-results-guide-figure-assets.py
+python3 -O -I -B scripts/check-mathematical-results-guide-figure-assets.py
+python3 -I -B scripts/check-mathematical-results-guide-figure-assets-self-test.py  # 45 hostile mutations
+python3 -O -I -B scripts/check-mathematical-results-guide-figure-assets-self-test.py
+python3 -I -B scripts/regenerate-mathematical-results-guide-open-font-figures-self-test.py  # 2 controls + 14 hostiles
+python3 -O -I -B scripts/regenerate-mathematical-results-guide-open-font-figures-self-test.py
+python3 -I -S -B scripts/check-mathematical-results-guide-font-roster-self-test.py  # 2 controls + 26 hostiles
+python3 -O -I -S -B scripts/check-mathematical-results-guide-font-roster-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-pdf-id-variance-self-test.py  # 4 controls + 28 hostiles
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-id-variance-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py  # receipt only; zero portability/execution credit
+python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
+python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py  # 3 controls + 56 hostiles
+python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py  # 74 object + 1 raw + 4 diagnostic + 4 path controls
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py
-scripts/check-mathematical-results-guide-pdf.sh --exact  # scoped MD/PDF result map and semantic firewall
+scripts/check-mathematical-results-guide-pdf.sh --exact  # raw repeated-build and rebuilt/committed guide bytes
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py

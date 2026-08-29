@@ -1,0 +1,120 @@
+{
+  "schema": "pid-rs.mathematical-results-guide.trailer-id-observation.v1",
+  "receipt_id": "mathematical-results-guide-diagnostic-wrapper-repeated-luatex-2026-08-29",
+  "artifact": {
+    "logical_name": "mathematical-results-guide.pdf",
+    "observation_kind": "retained_diagnostic_wrapper_repeated_luatex_pair",
+    "raw_pdf_repository_status": "not_tracked",
+    "receipt_semantics": "measurement_identity_not_proof",
+    "evidence_credit": "finite_byte_observation_only"
+  },
+  "context": {
+    "receipt_date": "2026-08-29",
+    "reported_environment": {
+      "operating_system": "Ubuntu 24.04.4 LTS",
+      "architecture": "x86_64",
+      "execution_context": "x86_64 container under QEMU emulation",
+      "context_source": "operator-observed diagnostic-wrapper capture environment; not encoded completely in the PDFs"
+    },
+    "embedded_pdf_facts": {
+      "embedded_producer": "luahbtex-1.17.0",
+      "embedded_full_banner": "This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)"
+    },
+    "operator_observed_capture_facts": {
+      "resolved_pandoc_path": "/usr/local/bin/pandoc",
+      "resolved_pandoc_file_size_bytes": 319,
+      "resolved_pandoc_kind": "diagnostic_wrapper_not_pandoc",
+      "wrapper_action": "copied_pre_existing_raw_tex",
+      "pre_existing_raw_tex_path": "/tmp/pid-rs-pdf-annotation-portability/raw.tex",
+      "system_pandoc_path": "/usr/bin/pandoc",
+      "system_pandoc_version": "3.1.3",
+      "system_pandoc_install_timing": "installed_after_retained_pair_capture"
+    },
+    "provenance": {
+      "raw_tex_origin": "unknown",
+      "source_revision": "unknown",
+      "exact_capture_provenance": "unknown",
+      "exact_capture_command": "unknown",
+      "container_image_digest": "unknown",
+      "build_chronology": "not_authenticated"
+    }
+  },
+  "projection": {
+    "name": "zero_strict_duplicated_final_trailer_id_hex_payloads",
+    "scope": "comparison_only_no_pdf_rewrite",
+    "replacement_ascii_byte": "0",
+    "payload_span_convention": "zero_based_half_open_byte_offsets",
+    "payload_count_per_file": 2,
+    "payload_bytes_per_span": 32,
+    "projected_sha256": "8dd4737a7715842b5ac9169606cadd1762ce29da8886c1c9e8f5a8a963b290d6"
+  },
+  "measurements": {
+    "pair_byte_length": 597430,
+    "raw_differing_offset_count": 52,
+    "files": [
+      {
+        "role": "first",
+        "retained_name": "first.pdf",
+        "byte_length": 597430,
+        "raw_sha256": "18ecbac549da835469ca0be6ccaecfa9151688cfdc71ac16159490afafdaafe6",
+        "trailer_id_entries_hex": [
+          "CB55874AAA6A6CCDFCAF6EB54A9B2E5D",
+          "CB55874AAA6A6CCDFCAF6EB54A9B2E5D"
+        ],
+        "id_payload_spans": [
+          {
+            "start": 591255,
+            "end_exclusive": 591287
+          },
+          {
+            "start": 591290,
+            "end_exclusive": 591322
+          }
+        ],
+        "projected_sha256": "8dd4737a7715842b5ac9169606cadd1762ce29da8886c1c9e8f5a8a963b290d6"
+      },
+      {
+        "role": "second",
+        "retained_name": "second.pdf",
+        "byte_length": 597430,
+        "raw_sha256": "77e019de9c355ae1e52dfe7d5f27f7833b46078cb74fb256acdf6c7c5fee7e22",
+        "trailer_id_entries_hex": [
+          "C6C58B14C9A345C04C1673679E212473",
+          "C6C58B14C9A345C04C1673679E212473"
+        ],
+        "id_payload_spans": [
+          {
+            "start": 591255,
+            "end_exclusive": 591287
+          },
+          {
+            "start": 591290,
+            "end_exclusive": 591322
+          }
+        ],
+        "projected_sha256": "8dd4737a7715842b5ac9169606cadd1762ce29da8886c1c9e8f5a8a963b290d6"
+      }
+    ]
+  },
+  "claims": {
+    "observed_relation": "raw_bytes_differ_only_within_the_four_recorded_id_payload_spans",
+    "raw_byte_equality": false,
+    "raw_pdfs_are_tracked": false,
+    "receipt_is_proof": false,
+    "genuine_pandoc_render": false,
+    "end_to_end_old_toolchain_build": false,
+    "portability_credit": "none",
+    "execution_credit": "none"
+  },
+  "limitations": [
+    "The two raw PDFs are intentionally not tracked in the repository.",
+    "This receipt identifies a finite byte-level measurement; it is not a proof or theorem.",
+    "The retained pair was rendered after /usr/local/bin/pandoc resolved to a 319-byte diagnostic wrapper that copied a pre-existing /tmp/pid-rs-pdf-annotation-portability/raw.tex file.",
+    "Pandoc 3.1.3 at /usr/bin/pandoc was installed only after this capture and was not used to produce the retained pair.",
+    "The raw-TeX origin, source revision, exact capture provenance and command, container image digest, and build chronology are unknown or unauthenticated.",
+    "The embedded LuaHBTeX producer and banner identify the final PDF engine only; they do not establish a genuine Pandoc render or an end-to-end old-toolchain build.",
+    "The pair receives zero portability and execution credit; it is retained only as a finite byte observation.",
+    "Equality after the declared projection does not establish raw-byte reproducibility, semantic equivalence, authenticity, or general PDF normalization.",
+    "The observation does not establish the cause of the trailer-ID variance and must not weaken exact-mode comparisons."
+  ]
+}

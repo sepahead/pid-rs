@@ -624,13 +624,17 @@ jobs:
             texlive-latex-extra \
             texlive-luatex \
             texlive-plain-generic
-      - name: Bind the Ubuntu tagpdf compatibility toolchain
+      - name: Bind the Ubuntu PDF compatibility toolchain
         shell: bash
         env:
           TAGPDF_STY_SHA256: 298d6440fe967d7dec16da07706608bab17d7a0c7dfca35e4c5580721ecfba80
+          HGENERIC_TESTPHASE_SHA256: 71231fc80fb413725007c5fddfe80b423f3fbcda3deee2088cbe3a3366e6588f
+          PDFMANAGEMENT_TESTPHASE_SHA256: 3434029eb57d5a364358ea153dd4ba0eb8a31408585d5ea0e9d7cf9096c56e5b
         run: |
           set -euo pipefail
           tagpdf_sty=/usr/share/texlive/texmf-dist/tex/latex/tagpdf/tagpdf.sty
+          hgeneric_testphase=/usr/share/texlive/texmf-dist/tex/latex/pdfmanagement-testphase/hgeneric-testphase.def
+          pdfmanagement_testphase=/usr/share/texlive/texmf-dist/tex/latex/pdfmanagement-testphase/pdfmanagement-testphase.ltx
           if [[ "$(/usr/bin/kpsewhich tagpdf.sty)" != "$tagpdf_sty" ]]; then
             echo "Ubuntu tagpdf does not resolve to the reviewed compatibility target" >&2
             exit 1
@@ -654,11 +658,68 @@ jobs:
             echo "reviewed Ubuntu tagpdf unexpectedly has the native OpenAction update" >&2
             exit 1
           fi
+          if [[ "$(/usr/bin/kpsewhich hgeneric-testphase.def)" != "$hgeneric_testphase" ]]; then
+            echo "Ubuntu hgeneric does not resolve to the reviewed compatibility target" >&2
+            exit 1
+          fi
+          if [[ ! -f "$hgeneric_testphase" || -L "$hgeneric_testphase" ]]; then
+            echo "reviewed Ubuntu hgeneric source is absent, nonregular, or symbolic" >&2
+            exit 1
+          fi
+          if ! printf '%s  %s\n' "$HGENERIC_TESTPHASE_SHA256" "$hgeneric_testphase" \
+            | /usr/bin/sha256sum --check --strict >/dev/null
+          then
+            echo "reviewed Ubuntu hgeneric source digest changed" >&2
+            exit 1
+          fi
+          if ! /usr/bin/grep -Fq \
+              '\ProvidesFile{hgeneric-testphase.def}[2023-12-09 v0.96d %' \
+              "$hgeneric_testphase"; then
+            echo "reviewed Ubuntu hgeneric declaration changed" >&2
+            exit 1
+          fi
+          if /usr/bin/grep -Fq 'l__hyp_link_Contents_tl' "$hgeneric_testphase"; then
+            echo "reviewed Ubuntu hgeneric unexpectedly has native URI Contents state" >&2
+            exit 1
+          fi
+          if [[ "$(/usr/bin/kpsewhich pdfmanagement-testphase.ltx)" \
+              != "$pdfmanagement_testphase" ]]; then
+            echo "Ubuntu pdfmanagement does not resolve to the reviewed compatibility target" >&2
+            exit 1
+          fi
+          if [[ ! -f "$pdfmanagement_testphase" || -L "$pdfmanagement_testphase" ]]; then
+            echo "reviewed Ubuntu pdfmanagement source is absent, nonregular, or symbolic" >&2
+            exit 1
+          fi
+          if ! printf '%s  %s\n' "$PDFMANAGEMENT_TESTPHASE_SHA256" \
+              "$pdfmanagement_testphase" \
+            | /usr/bin/sha256sum --check --strict >/dev/null
+          then
+            echo "reviewed Ubuntu pdfmanagement source digest changed" >&2
+            exit 1
+          fi
+          if [[ "$(/usr/bin/grep -Fxc \
+              '\ProvidesExplFile{pdfmanagement-testphase.ltx}{2023-12-09}{0.96d}' \
+              "$pdfmanagement_testphase")" != "1" ]]; then
+            echo "reviewed Ubuntu pdfmanagement declaration changed" >&2
+            exit 1
+          fi
+          if /usr/bin/grep -Fq \
+              '\pdf_string_from_unicode:nnN {utf8/string}{#2}' \
+              "$pdfmanagement_testphase"; then
+            echo "reviewed Ubuntu pdfmanagement unexpectedly has native ASCII filespec F" >&2
+            exit 1
+          fi
           printf 'PID_RS_CI_TAGPDF_STY=%s\n' "$tagpdf_sty" >> "$GITHUB_ENV"
+          printf 'PID_RS_CI_HGENERIC_TESTPHASE=%s\n' "$hgeneric_testphase" >> "$GITHUB_ENV"
+          printf 'PID_RS_CI_PDFMANAGEMENT_TESTPHASE=%s\n' \
+            "$pdfmanagement_testphase" >> "$GITHUB_ENV"
       - name: Rebuild papers and check cross-toolchain text, geometry, fonts, and workflow renders
         env:
           PANDOC_BINARY_SHA256: 867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
           TAGPDF_STY_SHA256: 298d6440fe967d7dec16da07706608bab17d7a0c7dfca35e4c5580721ecfba80
+          HGENERIC_TESTPHASE_SHA256: 71231fc80fb413725007c5fddfe80b423f3fbcda3deee2088cbe3a3366e6588f
+          PDFMANAGEMENT_TESTPHASE_SHA256: 3434029eb57d5a364358ea153dd4ba0eb8a31408585d5ea0e9d7cf9096c56e5b
         run: |
           set -euo pipefail
           /usr/bin/test -x /usr/bin/rg
@@ -692,6 +753,8 @@ jobs:
           }
           verify_pandoc_binary
           tagpdf_sty=/usr/share/texlive/texmf-dist/tex/latex/tagpdf/tagpdf.sty
+          hgeneric_testphase=/usr/share/texlive/texmf-dist/tex/latex/pdfmanagement-testphase/hgeneric-testphase.def
+          pdfmanagement_testphase=/usr/share/texlive/texmf-dist/tex/latex/pdfmanagement-testphase/pdfmanagement-testphase.ltx
           verify_tagpdf_compat_toolchain() {
             if [[ "$PID_RS_CI_TAGPDF_STY" != "$tagpdf_sty" \
                 || "$(/usr/bin/kpsewhich tagpdf.sty)" != "$tagpdf_sty" ]]; then
@@ -718,7 +781,64 @@ jobs:
               exit 1
             fi
           }
+          verify_pdfresources_compat_toolchain() {
+            if [[ "$PID_RS_CI_HGENERIC_TESTPHASE" != "$hgeneric_testphase" \
+                || "$(/usr/bin/kpsewhich hgeneric-testphase.def)" != "$hgeneric_testphase" ]]; then
+              echo "Ubuntu hgeneric compatibility path changed after preflight" >&2
+              exit 1
+            fi
+            if [[ ! -f "$hgeneric_testphase" || -L "$hgeneric_testphase" ]]; then
+              echo "reviewed Ubuntu hgeneric source became absent, nonregular, or symbolic" >&2
+              exit 1
+            fi
+            if ! printf '%s  %s\n' "$HGENERIC_TESTPHASE_SHA256" "$hgeneric_testphase" \
+              | /usr/bin/sha256sum --check --strict >/dev/null
+            then
+              echo "reviewed Ubuntu hgeneric source digest changed after preflight" >&2
+              exit 1
+            fi
+            if ! /usr/bin/grep -Fq \
+                '\ProvidesFile{hgeneric-testphase.def}[2023-12-09 v0.96d %' \
+                "$hgeneric_testphase"; then
+              echo "reviewed Ubuntu hgeneric declaration changed after preflight" >&2
+              exit 1
+            fi
+            if /usr/bin/grep -Fq 'l__hyp_link_Contents_tl' "$hgeneric_testphase"; then
+              echo "reviewed Ubuntu hgeneric acquired native URI Contents state" >&2
+              exit 1
+            fi
+            if [[ "$PID_RS_CI_PDFMANAGEMENT_TESTPHASE" != "$pdfmanagement_testphase" \
+                || "$(/usr/bin/kpsewhich pdfmanagement-testphase.ltx)" \
+                  != "$pdfmanagement_testphase" ]]; then
+              echo "Ubuntu pdfmanagement compatibility path changed after preflight" >&2
+              exit 1
+            fi
+            if [[ ! -f "$pdfmanagement_testphase" || -L "$pdfmanagement_testphase" ]]; then
+              echo "reviewed Ubuntu pdfmanagement source became absent, nonregular, or symbolic" >&2
+              exit 1
+            fi
+            if ! printf '%s  %s\n' "$PDFMANAGEMENT_TESTPHASE_SHA256" \
+                "$pdfmanagement_testphase" \
+              | /usr/bin/sha256sum --check --strict >/dev/null
+            then
+              echo "reviewed Ubuntu pdfmanagement source digest changed after preflight" >&2
+              exit 1
+            fi
+            if [[ "$(/usr/bin/grep -Fxc \
+                '\ProvidesExplFile{pdfmanagement-testphase.ltx}{2023-12-09}{0.96d}' \
+                "$pdfmanagement_testphase")" != "1" ]]; then
+              echo "reviewed Ubuntu pdfmanagement declaration changed after preflight" >&2
+              exit 1
+            fi
+            if /usr/bin/grep -Fq \
+                '\pdf_string_from_unicode:nnN {utf8/string}{#2}' \
+                "$pdfmanagement_testphase"; then
+              echo "reviewed Ubuntu pdfmanagement acquired native ASCII filespec F" >&2
+              exit 1
+            fi
+          }
           verify_tagpdf_compat_toolchain
+          verify_pdfresources_compat_toolchain
           gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
           elan_home="$HOME/.elan"
@@ -750,12 +870,25 @@ jobs:
           trap - EXIT
           /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_path"
           workflow_path="$PID_RS_CI_PANDOC_BIN:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-          resolved_pandoc="$(/usr/bin/env -i "PATH=$workflow_path" /usr/bin/sh -c 'command -v pandoc')"
-          if [[ "$resolved_pandoc" != "$pandoc_bin" ]]; then
-            echo "sanitized formal-PDF path does not select the hash-pinned Pandoc" >&2
-            exit 1
-          fi
-          formal_pdf_path="$elan_home/bin:$workflow_path"
+          formal_pdf_path="$PID_RS_CI_PANDOC_BIN:$elan_home/bin:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
+          verify_formal_command_selection() {
+            local command_name resolved expected
+            resolved="$(/usr/bin/env -i "PATH=$formal_pdf_path" /usr/bin/sh -c 'command -v pandoc')"
+            if [[ "$resolved" != "$pandoc_bin" ]]; then
+              echo "sanitized formal-PDF path does not select the hash-pinned Pandoc" >&2
+              exit 1
+            fi
+            for command_name in elan lake lean; do
+              expected="$elan_home/bin/$command_name"
+              resolved="$(/usr/bin/env -i "PATH=$formal_pdf_path" \
+                /usr/bin/sh -c 'command -v "$1"' sh "$command_name")"
+              if [[ "$resolved" != "$expected" ]]; then
+                echo "sanitized formal-PDF path does not select the Elan $command_name proxy" >&2
+                exit 1
+              fi
+            done
+          }
+          verify_formal_command_selection
           for clean_path in "$gate_home" "$gate_tmp"; do
             if [[ -e "$clean_path" || -L "$clean_path" ]]; then
               echo "refusing a pre-existing formal-PDF clean-state path: $clean_path" >&2
@@ -785,11 +918,8 @@ jobs:
           fi
           verify_pandoc_binary
           verify_tagpdf_compat_toolchain
-          resolved_pandoc="$(/usr/bin/env -i "PATH=$workflow_path" /usr/bin/sh -c 'command -v pandoc')"
-          if [[ "$resolved_pandoc" != "$pandoc_bin" ]]; then
-            echo "sanitized formal-PDF path no longer selects the hash-pinned Pandoc" >&2
-            exit 1
-          fi
+          verify_pdfresources_compat_toolchain
+          verify_formal_command_selection
           exec /usr/bin/env -i \
             "PATH=$formal_pdf_path" \
             "HOME=$gate_home" \

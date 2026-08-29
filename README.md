@@ -68,7 +68,12 @@ The scoped, junior-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUID
 objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
-for the method catalog, claim packets, or detailed proofs.
+for the method catalog, claim packets, or detailed proofs. Its
+[bounded Pandoc 3.1.3 portability receipt](audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json)
+records one operator-observed translated Ubuntu run, the exact source-level compatibility transform, the
+pre-normalization negative result, and the final unchanged PDF-policy result. It is not a general
+Pandoc-equivalence, native-hardware, atomic executable-causation, independently replayable
+old-toolchain execution-custody, PDF/UA, or mathematical-correctness claim.
 
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the
@@ -941,8 +946,23 @@ issue.
 
 ## License
 
-Licensed under either [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option, except
-for the renamed tagpdf compatibility excerpt at
-`audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex`. That single-file
-derived Work is licensed under [LPPL 1.3c or later](LICENSE-LPPL-1.3c), as its SPDX and provenance
-header records; it is not part of a published Cargo package.
+Project-authored material is licensed under either [MIT](LICENSE-MIT) or
+[Apache-2.0](LICENSE-APACHE), at your option. The three renamed compatibility Works in
+`audit/formal/latex/mathematical-results-guide/` are separate: `tagpdf-openaction-compat.tex`,
+`hgeneric-uri-contents-compat.tex`, and `l3pdffile-filespec-f-compat.tex`. Each Work is licensed
+under [LPPL 1.3c or later](LICENSE-LPPL-1.3c), as its SPDX and exact upstream-provenance header
+records. These compatibility Works are not part of a published Cargo package.
+
+Third-party font material retains its applicable terms and notices. The three tracked static
+figure PDFs used by the mathematical results guide contain embedded subsets of Source Sans Pro or
+Latin Modern Sans; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The five complete input
+font files are digest-selected during bounded regeneration and are not stored in this repository.
+Exact local copies of the observed Source Sans OFL file, GUST Font License, and Latin Modern v2.004
+manifest are retained and digest-bound. They are provenance records, not authentication or legal
+determinations.
+
+The source-specific mathematical-results-guide Pandoc TeX normalizer is distributed under the BSD
+3-Clause license. It embeds exact Pandoc 3.1.3 and 3.10.2 template fragments. The retained upstream
+notice, exact tag and commit locators, and transfer boundaries are in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The normalizer is repository tooling and is not
+part of a published Cargo package.
