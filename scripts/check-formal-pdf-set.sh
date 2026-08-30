@@ -46,11 +46,13 @@ STANDALONE_LATEX_PAPERS=(
 
 STANDALONE_MARKDOWN_PAPERS=(
   "mathematical-results-guide"
+  "pid-sensor-placement-and-galadriel-guide"
   "sxpid3-source-marginal-and-bounded-audit"
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
   "MATHEMATICAL_RESULTS_GUIDE.md"
+  "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
 )
 
@@ -188,6 +190,7 @@ WORKFLOW_GATE_STDERR=""
 trap - EXIT INT TERM
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 scripts/check-mathematical-results-guide-pdf.sh "$MODE"
+scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 

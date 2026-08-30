@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030" role="img" aria-labelledby="title desc">
+  <title id="title">From physical measurements to a categorical PID estimand</title>
+  <desc id="desc">Four modality cards show proposed normalized RGB, radar, audio, and thermal windows. Transforms frozen before outer evaluation map each device to one of four example categories: clear negative, clear positive, ambiguous or saturated, and unavailable. Their parameters can use target labels only inside a separate inner training partition. Device labels are either kept as at most four sources or grouped as modality-bank vectors. The stable row API accepts ordered categorical source matrices and a target matrix, then forms an empirical probability mass function from exact row counts. Procedural target separation proves neither target correctness nor statistical independence. The result contains the named atom vector, subset mutual informations, and typed input and empirical-PMF diagnostics. Resource estimation is a separate preflight; software identity and abstention belong to the outer evidence record. Every transform and grouping arrow changes or constrains the estimand.</desc>
+  <defs>
+    <pattern id="rosette" width="90" height="90" patternUnits="userSpaceOnUse">
+      <path d="M45 3 58 31 87 45 58 59 45 87 31 59 3 45 31 31Z" fill="none" stroke="#D2E0E2" stroke-width="1.2" opacity=".19"/>
+      <circle cx="45" cy="45" r="17" fill="none" stroke="#D2E0E2" stroke-width="1" opacity=".14"/>
+    </pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#2C3E50" flood-opacity=".14"/></filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#1F6968"/></marker>
+    <style>
+      .title{font:700 34px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+      .subtitle{font:500 18px 'Avenir Next',Avenir,Arial,sans-serif;fill:#D2E0E2}
+      .step{font:700 16px 'Avenir Next',Avenir,Arial,sans-serif;fill:#1F6968;letter-spacing:1.6px}
+      .node{font:700 20px 'Avenir Next',Avenir,Arial,sans-serif;fill:#2C3E50}
+      .body{font:500 15px 'Avenir Next',Avenir,Arial,sans-serif;fill:#2C3E50}
+      .small{font:500 13px 'Avenir Next',Avenir,Arial,sans-serif;fill:#455A64}
+      .whiteSmall{font:500 13px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+      .mono{font:500 13px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#2C3E50}
+      .white{font:700 18px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+    </style>
+  </defs>
+  <rect width="1600" height="1030" fill="#F7F3E9"/>
+  <rect width="1600" height="145" fill="#1F3F60"/>
+  <rect width="1600" height="145" fill="url(#rosette)"/>
+  <rect y="130" width="1600" height="15" fill="#1F6968"/>
+  <text x="70" y="64" class="title">MEASUREMENT IS NOT YET A PID SOURCE</text>
+  <text x="70" y="105" class="subtitle">Transforms, grouping, target custody, and row law are part of the mathematical object.</text>
+
+  <text x="70" y="195" class="step">1 · PROPOSED NORMALIZED WINDOWS</text>
+  <g filter="url(#shadow)">
+    <rect x="70" y="220" width="330" height="180" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <rect x="430" y="220" width="330" height="180" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <rect x="790" y="220" width="330" height="180" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <rect x="1150" y="220" width="380" height="180" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+  </g>
+  <text x="96" y="260" class="node">RGB camera bank</text>
+  <text x="96" y="300" class="mono">uint8[2,3,224,224]</text>
+  <text x="96" y="336" class="body">Two frozen detector records</text>
+  <text x="96" y="369" class="small">Not a current CREBAIN hardware claim</text>
+  <text x="456" y="260" class="node">Radar</text>
+  <text x="456" y="300" class="mono">complex64[4,128,256]</text>
+  <text x="456" y="336" class="body">Track and quality record</text>
+  <text x="456" y="369" class="small">Antenna / range / Doppler cube</text>
+  <text x="816" y="260" class="node">Microphone bank</text>
+  <text x="816" y="300" class="mono">float32[2,48000]</text>
+  <text x="816" y="336" class="body">One-second acoustic window</text>
+  <text x="816" y="369" class="small">Two frozen detector records</text>
+  <text x="1176" y="260" class="node">Thermal imager</text>
+  <text x="1176" y="300" class="mono">uint16[1,120,160]</text>
+  <text x="1176" y="336" class="body">Calibrated detector record</text>
+  <text x="1176" y="369" class="small">Saturation and availability retained</text>
+
+  <path d="M235 400V420 M595 400V420 M955 400V420 M1340 400V420 M235 420H1340" fill="none" stroke="#1F6968" stroke-width="4"/>
+  <path d="M800 420V465" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <text x="70" y="452" class="step">2 · DEVICE MAP FROZEN BEFORE OUTER EVALUATION</text>
+  <rect x="70" y="478" width="1460" height="115" rx="20" fill="#EDF5F3" stroke="#1F6968" stroke-width="2"/>
+  <text x="95" y="518" class="body">Every device label is in X = {0,1,2,3}</text>
+  <rect x="95" y="540" width="290" height="35" rx="12" fill="#D2E0E2"/><text x="240" y="563" class="small" text-anchor="middle">0 · clear negative</text>
+  <rect x="405" y="540" width="290" height="35" rx="12" fill="#B7D4CF"/><text x="550" y="563" class="small" text-anchor="middle">1 · clear positive</text>
+  <rect x="715" y="540" width="350" height="35" rx="12" fill="#EAD9AD"/><text x="890" y="563" class="small" text-anchor="middle">2 · ambiguous / saturated</text>
+  <rect x="1085" y="540" width="420" height="35" rx="12" fill="#E0CBC7"/><text x="1295" y="563" class="small" text-anchor="middle">3 · unavailable / missing</text>
+
+  <path d="M800 593V650" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <text x="70" y="642" class="step">3 · DECLARE SOURCE GROUPING AND TARGET</text>
+  <g filter="url(#shadow)">
+    <rect x="70" y="665" width="680" height="160" rx="20" fill="#FFFFFF" stroke="#916400" stroke-width="2"/>
+    <rect x="850" y="665" width="680" height="160" rx="20" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+  </g>
+  <text x="96" y="706" class="node">Ordered modality-bank sources</text>
+  <text x="96" y="744" class="mono">V=[v1,v2] · R=[r1] · A=[a1,a2] · Theta=[t1]</text>
+  <text x="96" y="780" class="body">Grouping keeps arity at four but can create a product alphabet.</text>
+  <text x="876" y="706" class="node">Procedurally source-disjoint target</text>
+  <text x="876" y="744" class="mono">T={0:no incursion, 1:incursion}</text>
+  <text x="876" y="780" class="body">Custody does not establish correctness or independence.</text>
+
+  <path d="M410 825V862" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <path d="M1190 825V862" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <rect x="230" y="869" width="1140" height="124" rx="22" fill="#1F6968"/>
+  <text x="800" y="897" class="white" text-anchor="middle">Software input: ordered categorical source rows + target rows + source order</text>
+  <text x="800" y="925" class="white" text-anchor="middle">Internal empirical law: PMF formed from exact row counts</text>
+  <text x="800" y="953" class="white" text-anchor="middle">Result: atom vector + subset MI + typed input / PMF diagnostics</text>
+  <text x="800" y="980" class="whiteSmall" text-anchor="middle">Separate preflight / outer record: resource estimate · software identity · abstention</text>
+  <text x="800" y="1018" class="small" text-anchor="middle">Changing any transform, group, target, source order, missingness rule, or row law changes or constrains the estimand.</text>
+</svg>
