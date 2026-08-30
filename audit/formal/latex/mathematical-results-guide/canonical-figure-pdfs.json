@@ -1,6 +1,6 @@
 {
-  "format_version": 3,
-  "purpose": "Digest-bound canonical open-font PDF derivatives used by the mathematical results guide build",
+  "format_version": 4,
+  "purpose": "Digest-bound canonical open-font PDF derivatives used by the mathematical results guide and the separate SxPID3 source-marginal audit build",
   "source_date_epoch": 1787875200,
   "regeneration_status": "reviewed-host isolated-font repeat byte-equality; cross-host closure incomplete",
   "renderer": {
@@ -14,15 +14,15 @@
   },
   "regeneration_contract": {
     "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
-    "sha256": "73255547d47a3f64ae690d51a99b3e1c62d5de049f1edb59487ed1b0f75fbd80"
+    "sha256": "250929cb33988a5914c1c427f76a24f7827e70fb499cad0ca361101666e7f4d3"
   },
   "regenerator": {
     "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
-    "sha256": "bc28bc80313907ec44d51db212f1a497513131f35134e5e8297fe90d64f0fbd5"
+    "sha256": "73d765c794167d206d6932084bb52e27cb503503407efc927f8ee261c3302b20"
   },
   "third_party_notice": {
     "path": "THIRD_PARTY_NOTICES.md",
-    "sha256": "4279f2628c79bfdc9c226d05c55bf7c643e70b14fa3b03033290f5d91d54ff0d"
+    "sha256": "844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427"
   },
   "license_artifacts": [
     {
@@ -103,7 +103,7 @@
     }
   ],
   "closure_limitation": "The five accepted source-font programs, their exact byte hashes, and an isolated Fontconfig inventory are captured, and two independent renders regenerated every derivative byte-identically on the reviewed macOS host. This is same-host evidence only: renderer executable and dependency bytes, operating-system services, and authenticated acquisition chains are not captured, so the record is not a hermetic or cross-host reproducibility proof.",
-  "accessibility_boundary": "The canonical guide has structure elements but no Figure structure roles or Alt entries; SVG title and description text do not survive this PDF-figure inclusion route. Neither these derivatives nor their inclusion prove PDF/UA conformance or accessible figures. Adding Figure/Alt semantics requires a separate assistive-technology-reviewed canonical change.",
+  "accessibility_boundary": "The canonical guide and SxPID3 audit have structure elements but no Figure structure roles or Alt entries; SVG title and description text do not survive this PDF-figure inclusion route. Neither these derivatives nor their inclusion prove PDF/UA conformance or accessible figures. Adding Figure/Alt semantics requires a separate assistive-technology-reviewed canonical change.",
   "claim_boundary": "Each tracked PDF is the reviewed static build input for its named SVG. Digest equality and the embedded-font checks do not by themselves prove visual or semantic equivalence to the SVG, cross-host reproducibility, accessibility, legal compliance in every redistribution scenario, source-font authenticity, or supply-chain integrity. The input programs are not tracked; the PDFs contain renderer-produced embedded subsets. License identifiers, observed program notices, and exact local license/manifest evidence are recorded and digest-bound without authenticating a package, download, or upstream history and without making a legal determination. Any source or derivative change requires exact regeneration, structural checks, rendering, and human visual review. The 1 MiB check is an early raw derivative byte cap only; it is not a hostile-input resource sandbox or decoded-stream-size bound.",
   "figures": [
     {
@@ -151,6 +151,20 @@
         {"subtype": "Type1", "postscript_name": "LMSans10-Bold"},
         {"subtype": "Type1", "postscript_name": "LMSans10-Regular"},
         {"subtype": "Type0", "postscript_name": "LMSans10-Regular"}
+      ]
+    },
+    {
+      "source": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+      "source_sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
+      "derivative": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf",
+      "derivative_sha256": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d",
+      "pdf_bytes": 29172,
+      "pdf_header": "%PDF-1.7",
+      "media_box_tokens": ["0", "0", "900", "540"],
+      "font_resources": 2,
+      "font_inventory": [
+        {"subtype": "Type1", "postscript_name": "LMSans10-Bold"},
+        {"subtype": "Type1", "postscript_name": "LMSans10-Regular"}
       ]
     }
   ]

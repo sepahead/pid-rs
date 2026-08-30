@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hostile tests for exact-open-font results-guide figure regeneration."""
+"""Hostile tests for exact-open-font publication figure regeneration."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ import tempfile
 from typing import NoReturn
 
 
-CHECK_NAME = "mathematical results guide open-font figure regeneration self-test"
+CHECK_NAME = "publication open-font figure regeneration self-test"
 EXPECTED_FONTS = (
     (
         "fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf",
@@ -46,6 +46,7 @@ EXPECTED_OUTPUTS = {
     "semantic-firewall.pdf",
     "result-evidence-map.pdf",
     "audit-coordinate-crosswalk.pdf",
+    "source-cylinder-factorization.pdf",
     "open-font-regeneration-receipt.json",
 }
 EXPECTED_LICENSE_ARTIFACTS = (

@@ -4,7 +4,9 @@ set -euo pipefail
 
 ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 BUILDER="$ROOT/scripts/build-sxpid3-source-marginal-audit-pdf.sh"
+BUILDER_SELF_TEST="$ROOT/scripts/check-sxpid3-source-marginal-audit-builder-self-test.sh"
 COMMITTED="$ROOT/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf"
+FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
 MODE="${1:---exact}"
 CHECK_NAME="SxPID3 source-marginal/bounded-audit PDF check"
 
@@ -20,19 +22,38 @@ for command_name in awk bash cat cmp diff grep mktemp pdffonts pdfinfo pdftotext
 done
 for path in \
     "$BUILDER" \
+    "$BUILDER_SELF_TEST" \
     "$ROOT/SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md" \
     "$ROOT/audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/header.tex" \
     "$ROOT/audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/filter.lua" \
     "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg" \
+    "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf" \
     "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg" \
+    "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf" \
+    "$FIGURE_ASSET_CHECK" \
     "$COMMITTED"; do
   if [[ ! -f "$path" || -L "$path" ]]; then
     echo "$CHECK_NAME: required input absent, non-regular, or symbolic: $path" >&2
     exit 1
   fi
 done
+python3 -I -B -c 'import pypdf' >/dev/null 2>&1 || {
+  echo "$CHECK_NAME: pypdf is required for canonical figure-asset validation" >&2
+  exit 2
+}
+python3 -I -B "$FIGURE_ASSET_CHECK"
+python3 -O -I -B "$FIGURE_ASSET_CHECK"
+bash --noprofile --norc "$BUILDER_SELF_TEST"
 
-TMP_BASE="${TMPDIR:-/tmp}"
+TMP_BASE_INPUT="${TMPDIR:-/tmp}"
+if ! TMP_BASE="$(CDPATH='' cd -- "$TMP_BASE_INPUT" && pwd -P)"; then
+  echo "$CHECK_NAME: cannot canonicalize temporary root: $TMP_BASE_INPUT" >&2
+  exit 2
+fi
+if [[ "$TMP_BASE" == "/" ]]; then
+  echo "$CHECK_NAME: refusing filesystem root as temporary root" >&2
+  exit 2
+fi
 BUILD_ROOT="$(mktemp -d "$TMP_BASE/pid-rs-sxpid3-audit-check.XXXXXX")"
 cleanup() {
   case "$BUILD_ROOT" in
@@ -43,7 +64,7 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 BUILT="$BUILD_ROOT/built.pdf"
-PID_RS_PDF_TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$BUILT" \
+PID_RS_PDF_TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$MODE" "$BUILT" \
   >"$BUILD_ROOT/build.stdout" 2>"$BUILD_ROOT/build.stderr" || {
     cat "$BUILD_ROOT/build.stdout" "$BUILD_ROOT/build.stderr" >&2
     exit 1
@@ -82,7 +103,8 @@ validate_pdf() {
     exit 1
   }
   for sentinel in '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
-      'complete certificate' 'Explicit nonclaims and negative results'; do
+      'complete certificate' 'Averaged informative component' \
+      'Averaged misinformative component' 'Explicit nonclaims and negative results'; do
     grep -Fiq -- "$sentinel" "$text" || {
       echo "$CHECK_NAME: $label lacks rendered sentinel: $sentinel" >&2
       exit 1
@@ -133,6 +155,7 @@ require_same_page("fixed-inverse lead-in and display", "and, for one fixed Möbi
 require_same_page("averaged-cumulative lead-in and display", "For every component", "𝐼𝛼𝑢 (𝑃 ) =")
 require_same_page("prohibited-transfer result", "Standing assumptions for this counterexample", "under both laws, while")
 require_same_page("prohibited-transfer heading and body", "Retained prohibited-transfer witness", "Standing assumptions for this counterexample")
+require_same_page("source-cylinder component boundary", "the averaged informative component stays at ln 2 nats", "Its averaged misinformative component changes from ln 2 to 0 nats")
 require_same_page("separate-marginals witness laws", "Standing assumptions for the separate-marginals counterexample", "𝑄𝑆 =")
 require_same_page("fixed-matrix continuity display", "For one fixed matrix", "The support-change theorem applies because")
 require_same_page("finite-count opening definition", "There are exactly three ordered binary sources", "𝒵+ =")

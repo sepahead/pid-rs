@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "ac6a9b4f1e311478d3b5e4b571c082639af7de249864cf6006fda29fc9e98d89",
+  "catalog_sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -969,7 +969,7 @@
       },
       "method_id": "validation.sxpid3-source-marginal-bounded-audit",
       "observed_alias_families": [],
-      "payload_sha256": "b86556695b19cf9b24f1a8ea8601240ebbc37e3f91069aa5e4c3c44a05f51390"
+      "payload_sha256": "b2270a56cd53731480c4937cb7be0f10bba0b9c7ad794cde6f7a41b46b6684f3"
     },
     {
       "facts": {
@@ -986,7 +986,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "98250243b1ba81b799d902b4b10da55e8215916c8c8db5db759ff1d0f6b6bd73",
+  "ordered_root_sha256": "c08c7ab303f29358446e698155db29adf412fe3f952caad503cb673f27905b15",
   "reference_registry_sha256": "346e8a046cb7f5c2f9036cc9c3869faf9ee9962944ff640f01b623108981d1b1",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

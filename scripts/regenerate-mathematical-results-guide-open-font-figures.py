@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate the three results-guide figure PDFs with an exact open-font set.
+"""Regenerate four publication figure PDFs with an exact open-font set.
 
 This is a candidate-generation tool, not a canonical refresh command.  It
 requires a new output directory outside the repository, renders every SVG
@@ -29,7 +29,7 @@ from pypdf import PdfReader
 from pypdf.generic import ArrayObject, DictionaryObject, IndirectObject, StreamObject
 
 
-CHECK_NAME = "mathematical results guide open-font figure regeneration"
+CHECK_NAME = "publication open-font figure regeneration"
 SOURCE_DATE_EPOCH = "1787875200"
 MAX_FONT_BYTES = 16 * 1024 * 1024
 MAX_PDF_BYTES = 1024 * 1024
@@ -116,6 +116,14 @@ FIGURE_SPECS = (
         "source": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
         "source_sha256": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a",
         "output": "audit-coordinate-crosswalk.pdf",
+        "font_programs": {"LMSans10-Regular", "LMSans10-Bold"},
+        "css_family": "'Latin Modern Sans'",
+        "css_weights": {400, 700},
+    },
+    {
+        "source": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+        "source_sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
+        "output": "source-cylinder-factorization.pdf",
         "font_programs": {"LMSans10-Regular", "LMSans10-Bold"},
         "css_family": "'Latin Modern Sans'",
         "css_weights": {400, 700},
@@ -702,7 +710,7 @@ def validate_output_request(raw: str, repository_root: Path) -> tuple[Path, tupl
 
 def parse_arguments(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate non-canonical open-font PDF candidates for three results-guide SVGs."
+        description="Generate non-canonical open-font PDF candidates for four publication SVGs."
     )
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--texmf-dist", required=True)
@@ -993,7 +1001,7 @@ def main(argv: list[str]) -> int:
 
     if not published:
         fail("candidate publication did not complete")
-    print(f"OK: wrote three exact-open-font candidate PDFs to {output}")
+    print(f"OK: wrote four exact-open-font candidate PDFs to {output}")
     print("OK: independent render passes are byte-identical; Pandoc was not used")
     return 0
 

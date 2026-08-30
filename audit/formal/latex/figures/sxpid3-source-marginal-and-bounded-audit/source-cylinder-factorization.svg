@@ -3,15 +3,14 @@
   <desc id="desc">Two joint source-target tables have the same complete source marginal but different target allocations. Source-event column totals and the informative average remain fixed, while misinformative and net components may change.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7f3e9"/><stop offset="1" stop-color="#edf3f1"/></linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2c3e50" flood-opacity="0.13"/></filter>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#1f6968"/></marker>
-    <style>.title{font:700 30px 'Latin Modern Sans',sans-serif;fill:#2c3e50}.sub{font:500 17px 'Latin Modern Sans',sans-serif;fill:#1f6968}.label{font:700 19px 'Latin Modern Sans',sans-serif;fill:#2c3e50}.body{font:400 17px 'Latin Modern Sans',sans-serif;fill:#3f505a}.small{font:600 17px 'Latin Modern Sans',sans-serif;fill:#1f6968}</style>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#1f6968"/></marker>
+    <style>.title{font:700 30px 'Latin Modern Sans';fill:#2c3e50}.sub{font:400 17px 'Latin Modern Sans';fill:#1f6968}.label{font:700 19px 'Latin Modern Sans';fill:#2c3e50}.body{font:400 17px 'Latin Modern Sans';fill:#3f505a}.small{font:700 17px 'Latin Modern Sans';fill:#1f6968}</style>
   </defs>
   <rect width="1200" height="720" rx="24" fill="url(#bg)"/>
   <text x="60" y="58" class="title">Fix the complete source marginal; redistribute only target mass</text>
   <text x="60" y="88" class="sub">Lifting a source event gives a target cylinder. Its probability uses source-column totals, not allocation within a column.</text>
 
-  <g transform="translate(65 140)" filter="url(#shadow)">
+  <g transform="translate(65 140)">
     <rect width="420" height="360" rx="20" fill="#fff" stroke="#9dc5ce" stroke-width="2"/>
     <text x="210" y="38" text-anchor="middle" class="label">Law P: constant target</text>
     <text x="80" y="78" text-anchor="middle" class="small">source u(0)</text><text x="290" y="78" text-anchor="middle" class="small">source u(1)</text>
@@ -21,14 +20,14 @@
     <text x="80" y="234" text-anchor="middle" class="body">T=1: 0</text><text x="290" y="234" text-anchor="middle" class="body">T=1: 0</text>
     <line x1="25" y1="280" x2="345" y2="280" stroke="#916400" stroke-width="3"/>
     <text x="80" y="312" text-anchor="middle" class="label">total 1/2</text><text x="290" y="312" text-anchor="middle" class="label">total 1/2</text>
-    <text x="210" y="342" text-anchor="middle" class="small">complete source marginal P_S</text>
+    <text x="210" y="342" text-anchor="middle" class="small">complete source marginal P(S)</text>
   </g>
 
   <line x1="500" y1="320" x2="690" y2="320" stroke="#1f6968" stroke-width="5" marker-end="url(#arrow)"/>
   <text x="595" y="286" text-anchor="middle" class="small">move target mass</text>
   <text x="595" y="307" text-anchor="middle" class="small">within fixed columns</text>
 
-  <g transform="translate(715 140)" filter="url(#shadow)">
+  <g transform="translate(715 140)">
     <rect width="420" height="360" rx="20" fill="#fff" stroke="#9dc5ce" stroke-width="2"/>
     <text x="210" y="38" text-anchor="middle" class="label">Law Q: target copies source label</text>
     <text x="80" y="78" text-anchor="middle" class="small">source u(0)</text><text x="290" y="78" text-anchor="middle" class="small">source u(1)</text>
@@ -38,13 +37,14 @@
     <text x="80" y="234" text-anchor="middle" class="body">T=1: 0</text><text x="290" y="234" text-anchor="middle" class="label">T=1: 1/2</text>
     <line x1="25" y1="280" x2="345" y2="280" stroke="#916400" stroke-width="3"/>
     <text x="80" y="312" text-anchor="middle" class="label">total 1/2</text><text x="290" y="312" text-anchor="middle" class="label">total 1/2</text>
-    <text x="210" y="342" text-anchor="middle" class="small">same complete source marginal Q_S=P_S</text>
+    <text x="210" y="342" text-anchor="middle" class="small">same complete source marginal Q(S)=P(S)</text>
   </g>
 
-  <g transform="translate(65 550)">
-    <rect width="1070" height="112" rx="18" fill="#2c3e50"/>
-    <text x="535" y="34" text-anchor="middle" class="label" style="fill:#e8f4f5">What is invariant—and what is not</text>
-    <text x="535" y="66" text-anchor="middle" class="body" style="fill:#d4e6e9">I⁺ depends only on the complete source marginal: here I⁺ = log 2 for both laws.</text>
-    <text x="535" y="92" text-anchor="middle" class="body" style="fill:#f5d7d9">I⁻ changes log 2 → 0 and signed net changes 0 → log 2. Do not transfer the theorem.</text>
+  <g transform="translate(65 535)">
+    <rect width="1070" height="130" rx="18" fill="#2c3e50"/>
+    <text x="535" y="34" text-anchor="middle" class="label" style="fill:#e8f4f5">What remains fixed and what can change</text>
+    <text x="535" y="64" text-anchor="middle" class="body" style="fill:#d4e6e9">For this full-source cumulative witness, the averaged informative component stays at ln 2 nats.</text>
+    <text x="535" y="91" text-anchor="middle" class="body" style="fill:#f5d7d9">Its averaged misinformative component changes from ln 2 to 0 nats; signed net changes from 0 to ln 2 nats.</text>
+    <text x="535" y="116" text-anchor="middle" class="body" style="fill:#f5d7d9">Do not transfer the informative-component theorem to the other components.</text>
   </g>
 </svg>

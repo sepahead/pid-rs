@@ -9,6 +9,106 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Replace runtime librsvg conversion in the separate SxPID3 source-marginal audit with two exact
+  tracked open-font PDF derivatives. The crosswalk remains shared with the mathematical results
+  guide; the source-cylinder derivative is newly tracked. Its SVG now names only Latin Modern Sans
+  at the admitted regular and bold weights, removes generic fallbacks and filter-induced raster
+  text, and spells out the averaged informative and misinformative component labels. The formal
+  notation and mathematical claims remain in the canonical Markdown. The shared regeneration tool
+  renders four publication figures through isolated digest-selected fonts and still publishes only
+  same-invocation byte-identical candidates. Exact SxPID3 mode still requires two byte-identical
+  builds and raw equality with the committed paper. Cross-toolchain mode tries raw repeated-build
+  equality first. Only comparison status 1 may invoke the digest-pinned checker's exceptional strict
+  trailer-ID projection:
+  it accepts exactly one differing duplicated 16-byte `/ID` pair owned by each final direct XRef
+  stream and requires every other byte to agree. Operational comparison or parser errors are
+  fatal. This is operational reuse of a PDF-syntax checker whose historical filename names the
+  mathematical results guide; no guide content, scientific evidence, or mathematical claim
+  transfers to the SxPID3 paper. The cross-toolchain rebuilt-versus-committed comparison never uses
+  that projection and still requires exact `pdftotext -layout` and page-geometry equality after
+  complete validation of both PDFs. No exact-mode comparator, numerical tolerance, theorem,
+  estimator, or scientific claim is weakened. This closes a hosted TeX Live 2023 failure in which
+  only the two
+  runtime-rendered figure pages changed and one old figure CMap corrupted the visible-text
+  extraction of the plus/minus component labels. The direct SxPID3 builder now also accepts only a
+  canonical absolute PDF destination in an existing non-root canonical directory, rejects
+  symbolic/nonregular destinations and aliases of every required source, rechecks the complete
+  source digest sequence, both repeated-build outputs, the staged parser, and the destination around
+  publication, and compares both the temporary copy and published bytes with the validated first
+  build. Cross mode requires an explicit scratch output distinct from the canonical PDF and rejects
+  exact, hard-link, and symbolic aliases. It resolves its existing temporary root to one physical
+  path, strips a trailing slash before Kpathsea use, and rejects an absent root or filesystem `/`.
+  A focused fake-tool suite accepts seven exact/cross and temporary-root
+  controls and rejects 36 mode, fallback, renderer, path, alias, nonregular-file, and mid-build
+  mutation cases;
+  eight hard-link cases cover every required source, and four static guards keep the
+  rebuilt-versus-committed comparison outside the ID projection and reject any guide-only
+  font-resource alpha comparator in the SxPID3 builder or PDF gate. It also requires terminal
+  `mktemp` placeholders, calls each build directly so Bash `errexit` is not suppressed by command
+  substitution, treats failed Pandoc and every nonzero LuaLaTeX pass as fatal even if usable-looking
+  TeX or stale-looking PDF/log files exist, and leaves no residual temporary publication file. The
+  suite also mutates a staged parser and a previously compared build during later PDF inspection;
+  repeated digest checks reject both before publication. This protection is bounded to
+  required-source aliases and detected concurrent changes while the
+  canonical parent and private temporary directory remain stable. Publication uses a same-directory
+  rename, but validation and replacement are not one atomic filesystem transaction. In one retained
+  operator observation under Pandoc
+  3.1.3 and TeX Live 2023, two 467,454-byte builds had SHA-256 values
+  `28e8a2de93d85213ac41a868af869d6a7615c6d68d600f0dec22fdcf586260d9` and
+  `15195c49dd1140faaeb99142a1d4e7b5a63f9290d663681bb61502bd8754483a`;
+  the strict parser accepted the pair after checking that all 62 differing offsets lay within the
+  two duplicated
+  32-hex-character trailer-ID payload spans in each file. Exact mode rejected the pair, as
+  required. The raw PDFs are not
+  tracked, so the hashes and relation are a bounded observation without independent replay custody,
+  general writer equivalence, portability, authenticity, PDF/UA, or mathematical-correctness credit.
+
+- Correct the mathematical-results-guide old-toolchain adjudication after a retained Pandoc 3.1.3
+  and TeX Live 2023 replay did not reproduce the earlier unretained claim that the final raw
+  structure digest was unchanged. The retained 581,294-byte, 16-page fixture has SHA-256
+  `08b0ae8b8c7094cd2a5165563a4e3bd00b22e1d6fdeb658393268cd06525e443`.
+  Its tagged-structure digest is `f7c9ccce59a51f035a474632c8ab2ef21aa7beea76d809bfe5d542ddb21e7dd3`
+  instead of the canonical
+  `e9adba3097ffc38de2f7723e448d2bb54265ee201e010c0857e1a7a40db9d99b`.
+  Exactly 32 of 1,699 structure records differ: the decoded page-content and page-resource hashes
+  for each of 16 pages. The other 1,667 records and every navigation field outside the embedded
+  raw structure digest agree. A source-profiled pair checker now resolves every page-local font key
+  through its complete typed closure, requires a global bijection, binds 16,362 parsed operations,
+  1,373 `Tf` uses, 122 page-font bindings, 13 font identities, the exact `+8` mapping, and mapping
+  digest `364091c0d0e4a023f1335b58c833383569d0b1968bbec26bd77fa26c4a116488`.
+  Its fail-closed lexer substitutes only dual-parsed `Tf` name tokens. All decoded content bytes and
+  complete resource roots must then be exact. Hashes report and bind the profile but do not decide
+  font equality. The production relation also pins the raw canonical and retained files. A fresh
+  legacy candidate must equal the retained fixture or differ only in its strict duplicated
+  final-trailer ID payloads. The exact ID parser operates on the already captured bytes. Its
+  normal/optimized hostile suite runs 134 checks per mode: 11 controls, 36 semantic hostiles, nine
+  source-profile hostiles, 10 raw-boundary hostiles, 10 structure hostiles, 28 custody hostiles, 10
+  dependency hostiles, and 20 static guards. Exact mode remains unchanged: both PDFs pass the
+  strict checker, and the rebuilt and committed files remain byte-identical. Cross mode alone can
+  use the typed relation with the
+  strict committed PDF as reference. The wrapper runs normal and optimized pair checks, compares
+  their outputs and diagnostics, and rechecks all three checker digests. An 11-control/15-hostile
+  dispatch suite records zero exact-mode artifact calls and two cross-mode Python calls. The
+  receipt preserves the earlier operator statement as historical testimony while marking its
+  strict-structure subclaim contradicted by the retained replay. This correction supplies no PID
+  theorem, estimator, SxPID3 evidence, general PDF or writer equivalence, visual or PDF/UA result,
+  authenticity, toolchain-causation, or mathematical-correctness credit.
+
+- Preserve the false-positive that caused the final raw-boundary correction. The superseded typed-
+  only comparator had SHA-256
+  `49c768083c2e9e1ff0904da54860e172676098a06249d63812b981495fe5179e`.
+  It accepted the retained PDF plus one trailing newline at SHA-256
+  `cf26eceac81872d9564d8655ce0837bec823e551d03235d5595349ac0d4ece93` and the retained PDF plus
+  `\n% adversarial unreachable trailing comment\n` at SHA-256
+  `5e54b2e03dc5427248818474c2d6dbfd2b49c4ab5c23c24cf20d80eed6acde7c`.
+  Both actual CLI calls returned success because the predecessor checked the typed reachable graph
+  but did not bind unreachable raw suffix bytes. Exact mode was never weakened and still rejected
+  raw inequality. The corrected cross route now rejects both witnesses before typed comparison.
+  The predecessor source bytes and complete logs were not retained, so the receipt cannot replay
+  the old acceptance from its hash alone. These reconstructible witnesses are engineering negative
+  evidence. They establish no malformed-PDF exploit, renderer difference, PID defect, estimator
+  defect, or mathematical error.
+
 - Add a source-specific, BSD-3-Clause Pandoc TeX compatibility transform for the mathematical
   results guide. It accepts only the audited Pandoc 3.1.3 and 3.10.2 compatibility projections.
   The 3.10.2 route must preserve every raw-TeX byte. The 3.1.3 route removes 17 redundant heading
@@ -29,20 +129,28 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   by Rosetta on arm64 macOS. Before normalization, its valid name tree
   had 56 unique destinations, including 17 redundant heading aliases and four `table.N` names, and
   failed the unchanged source-specific profile. After normalization, two 581,296-byte builds
-  differed only in their duplicated trailer IDs. The final 16-page PDF had the canonical 39-name
-  tree and passed the unchanged structure, navigation, text, geometry, font, and active-content
-  policies. All page PNGs also matched the committed guide under one declared Poppler 24.02.0,
-  72-dpi comparison. A closed receipt binds the tools, inputs, deltas, positive and negative
-  observations, and nine nonclaims. Its checker and 2-control/28-semantic/7-custody mutation suite
-  run in normal and optimized Python. The recorded observation describes translated execution for
-  one source and two reviewed writers. It is not native x86_64 evidence, general Pandoc equivalence, arbitrary-input
+  differed only in their duplicated trailer IDs. The historical operator report said that the final
+  16-page PDF had the canonical 39-name tree and passed the unchanged structure, navigation, text,
+  geometry, font, and active-content policies. It also said that all page PNGs matched the committed
+  guide under one declared Poppler 24.02.0, 72-dpi comparison. The later retained replay described
+  above did not reproduce the unchanged raw structure-digest subclaim. A closed receipt preserves
+  the historical statement and separately binds the controlling replay, tools, inputs, deltas,
+  positive and negative
+  observations, and 19 nonclaims. Its checker and 2-control/100-semantic/12-custody mutation suite
+  run in normal and optimized Python. The tracked later replay PDF supports only the exact
+  source-profiled typed font-resource comparison. It is not either earlier random-ID output, and
+  it does not transfer execution credit to the historical run. The recorded observation describes
+  translated execution for one source and two reviewed writers. It is not native x86_64 evidence,
+  general Pandoc equivalence, arbitrary-input
   portability, raw cross-toolchain identity, atomic executable causation, independently replayable
   old-toolchain execution custody, PDF/UA, supply-chain authentication, or mathematical correctness.
   The receipt now distinguishes its OCI image-index, linux/amd64 manifest, and config digests instead
-  of conflating those object types. It separately binds a three-path post-observation lint-only
-  correction and builder rebind; the earlier execution observation remains associated with its
-  before-digests and transfers no credit to the corrected sources. A failed QEMU attempt remains
-  recorded at zero credit.
+  of conflating those object types. It separately binds two disjoint post-observation correction
+  classes across five paths: two import/type-annotation lint corrections, then the guide builder's
+  shared four-figure asset staging and exact digest rebind, its matching builder-fixture extension,
+  and the expanded open-font notice. The earlier execution observation remains associated with its
+  before-digests and transfers no credit to the corrected sources or the later asset-custody wiring.
+  A failed QEMU attempt remains recorded at zero credit.
 
 - Split the mathematical-results-guide name-tree diagnostic into non-array, empty, odd-length,
   and even-but-wrong-pair-count failures. Four exact-message controls verify the diagnostics. The
@@ -91,8 +199,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Replace this guide's runtime rsvg conversion with three exact tracked one-page PDF derivatives so
   old and current librsvg versions cannot change the structure/resource digest. The SVGs now name
   only digest-selected Source Sans Pro 3.006 or Latin Modern Sans 2.004 inputs. A bounded
-  regeneration command copies the five exact font programs into isolated Fontconfig roots, renders
-  each figure twice, and emits candidates only when each pair is byte-identical. The raw font
+  shared regeneration command copies the five exact font programs into isolated Fontconfig roots,
+  renders the four publication figures twice, and emits candidates only when each pair is
+  byte-identical. The guide consumes three derivatives. The separate SxPID3 paper consumes two,
+  with the crosswalk shared. The raw font
   programs are not tracked. Their versions, hashes, installed-file provenance, licenses, and
   embedded-subset notices are recorded without claiming download authentication or upstream byte
   identity. Exact local copies of the observed Source Sans OFL file, GUST Font License, and Latin

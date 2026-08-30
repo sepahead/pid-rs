@@ -2,8 +2,9 @@
 
 This repository's project-authored material is licensed as stated in
 [`README.md`](README.md), except where a file carries a more specific notice. The mathematical
-results guide uses the Pandoc template projections and embedded font subsets described below. The
-complete input font files are not stored in this repository.
+results guide uses the Pandoc template projections described below. It and the separate SxPID3
+source-marginal audit use the embedded font subsets described below. The complete input font files
+are not stored in this repository.
 
 ## Pandoc 3.1.3 and 3.10.2 LaTeX projections
 

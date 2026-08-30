@@ -20,15 +20,15 @@ LEGACY_PANDOC_VERSION="pandoc 3.1.3"
 LEGACY_PANDOC_EXECUTABLE="/usr/bin/pandoc"
 LEGACY_PANDOC_EXECUTABLE_SHA256=3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53d701b
 FIGURE_ASSET_MANIFEST="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
-FIGURE_ASSET_MANIFEST_SHA256=5e13be9de7f4acde21abfefe8366be6d4c248637f667dc5ffb616f53319a454c
+FIGURE_ASSET_MANIFEST_SHA256=5bc3a24661b7a76c1a8a29d659f23aa27400d01ab5b6bd48cd3e75b91e88c852
 FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
-FIGURE_ASSET_CHECK_SHA256=3f77965712391a57fe26edcbdb5de5d030ce789f1f908b99b365cbc03e20693d
+FIGURE_ASSET_CHECK_SHA256=075d5159f59eab5e927aef6a66f7380695269dc1aae447ef789bf3d84c4a5557
 OPEN_FONT_REGENERATION="$ROOT/audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json"
-OPEN_FONT_REGENERATION_SHA256=73255547d47a3f64ae690d51a99b3e1c62d5de049f1edb59487ed1b0f75fbd80
+OPEN_FONT_REGENERATION_SHA256=250929cb33988a5914c1c427f76a24f7827e70fb499cad0ca361101666e7f4d3
 OPEN_FONT_REGENERATOR="$ROOT/scripts/regenerate-mathematical-results-guide-open-font-figures.py"
-OPEN_FONT_REGENERATOR_SHA256=bc28bc80313907ec44d51db212f1a497513131f35134e5e8297fe90d64f0fbd5
+OPEN_FONT_REGENERATOR_SHA256=73d765c794167d206d6932084bb52e27cb503503407efc927f8ee261c3302b20
 THIRD_PARTY_NOTICE="$ROOT/THIRD_PARTY_NOTICES.md"
-THIRD_PARTY_NOTICE_SHA256=4279f2628c79bfdc9c226d05c55bf7c643e70b14fa3b03033290f5d91d54ff0d
+THIRD_PARTY_NOTICE_SHA256=844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427
 SOURCE_SANS_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt"
 SOURCE_SANS_LICENSE_SHA256=4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9
 GUST_FONT_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt"
@@ -93,6 +93,8 @@ required_sources=(
   "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf"
   "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg"
   "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf"
+  "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg"
+  "$CROSSWALK_DIRECTORY/source-cylinder-factorization.pdf"
 )
 for required_source in "${required_sources[@]}"; do
   if [[ ! -f "$required_source" || -L "$required_source" ]]; then
@@ -436,6 +438,8 @@ build_once() {
   cp "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf" "$staged_guide_figures/result-evidence-map.pdf"
   cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" "$staged_crosswalk/audit-coordinate-crosswalk.svg"
   cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf" "$staged_crosswalk/audit-coordinate-crosswalk.pdf"
+  cp "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg" "$staged_crosswalk/source-cylinder-factorization.svg"
+  cp "$CROSSWALK_DIRECTORY/source-cylinder-factorization.pdf" "$staged_crosswalk/source-cylinder-factorization.pdf"
 
   local staged_sources=(
     "$staged_root/MATHEMATICAL_RESULTS_GUIDE.md"
@@ -462,6 +466,8 @@ build_once() {
     "$staged_guide_figures/result-evidence-map.pdf"
     "$staged_crosswalk/audit-coordinate-crosswalk.svg"
     "$staged_crosswalk/audit-coordinate-crosswalk.pdf"
+    "$staged_crosswalk/source-cylinder-factorization.svg"
+    "$staged_crosswalk/source-cylinder-factorization.pdf"
   )
   awk '{print $1}' "$SOURCE_MANIFEST_BEFORE" >"$expected_digest_sequence"
   for required_source in "${staged_sources[@]}"; do

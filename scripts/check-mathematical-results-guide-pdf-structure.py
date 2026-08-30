@@ -9,6 +9,7 @@ generic malware detector, a PDF/UA validator, or a proof that an arbitrary PDF v
 from __future__ import annotations
 
 import hashlib
+import io
 import logging
 import math
 import os
@@ -183,6 +184,8 @@ class StructureReport:
     targets: tuple[str, ...]
     navigation: tuple[str, ...]
     navigation_sha256: str
+    structure_manifest: tuple[str, ...]
+    structure_sha256: str
 
 
 @dataclass(frozen=True)
@@ -946,20 +949,35 @@ def validate_page_tree(reader: PdfReader, root: DictionaryObject) -> None:
         fail("page_tree", "page tree does not cover every page exactly once")
 
 
-def resource_closure_sha256(value: Any, path: str) -> str:
-    """Hash one typed resource closure, including decoded stream bytes and reference topology."""
+def resource_closure_payload(
+    value: Any,
+    path: str,
+    *,
+    dictionary_key_aliases: dict[int, dict[str, str]] | None = None,
+) -> bytes:
+    """Encode one typed resource closure, including decoded bytes and reference topology.
 
-    digest = hashlib.sha256()
+    ``dictionary_key_aliases`` is used only by the separate, source-profiled
+    cross-toolchain font-resource comparator.  The strict single-PDF policy
+    never supplies aliases.  Returning the complete typed payload lets that
+    pair comparator decide equality from bytes; SHA-256 remains a compact
+    manifest/report representation, not its equality oracle.
+    """
+
+    closure = bytearray()
     seen_references: dict[tuple[int, int], int] = {}
     active_direct: set[int] = set()
+    aliases_by_identity = dictionary_key_aliases or {}
 
     def token(kind: str, payload: bytes = b"") -> None:
-        digest.update(kind.encode("ascii"))
-        digest.update(b":")
-        digest.update(str(len(payload)).encode("ascii"))
-        digest.update(b":")
-        digest.update(payload)
-        digest.update(b";")
+        encoded_kind = kind.encode("ascii")
+        encoded_length = str(len(payload)).encode("ascii")
+        closure.extend(encoded_kind)
+        closure.extend(b":")
+        closure.extend(encoded_length)
+        closure.extend(b":")
+        closure.extend(payload)
+        closure.extend(b";")
 
     def encode(item: Any, item_path: str, follow_reference: bool = True) -> None:
         if follow_reference and isinstance(item, IndirectObject):
@@ -1015,9 +1033,16 @@ def resource_closure_sha256(value: Any, path: str) -> str:
                 fail("resource_graph", f"{item_path}: direct resource-dictionary cycle")
             active_direct.add(identity)
             token("stream" if isinstance(item, StreamObject) else "dictionary")
-            for key in sorted(item.keys(), key=str):
-                key_name = require_any_name(key, f"{item_path} key")
-                token("key", key_name.encode("utf-8"))
+            key_names = [require_any_name(key, f"{item_path} key") for key in item.keys()]
+            key_aliases = aliases_by_identity.get(identity, {})
+            if set(key_aliases) - set(key_names):
+                fail("resource_graph", f"{item_path}: resource-key alias names are absent")
+            effective_names = [key_aliases.get(name, name) for name in key_names]
+            if len(set(effective_names)) != len(effective_names):
+                fail("resource_graph", f"{item_path}: resource-key aliases are not injective")
+            for key_name in sorted(key_names, key=lambda name: key_aliases.get(name, name)):
+                effective_name = key_aliases.get(key_name, key_name)
+                token("key", effective_name.encode("utf-8"))
                 encode(dictionary_raw(item, key_name), f"{item_path}/{key_name.lstrip('/')}")
             if isinstance(item, StreamObject):
                 try:
@@ -1033,7 +1058,23 @@ def resource_closure_sha256(value: Any, path: str) -> str:
         fail("resource_graph", f"{item_path}: unsupported PDF object {type(item).__name__}")
 
     encode(value, path)
-    return digest.hexdigest()
+    return bytes(closure)
+
+
+def resource_closure_sha256(
+    value: Any,
+    path: str,
+    *,
+    dictionary_key_aliases: dict[int, dict[str, str]] | None = None,
+) -> str:
+    """Hash the exact typed resource-closure payload used by the strict manifest."""
+
+    payload = resource_closure_payload(
+        value,
+        path,
+        dictionary_key_aliases=dictionary_key_aliases,
+    )
+    return hashlib.sha256(payload).hexdigest()
 
 
 def validate_marked_content(
@@ -1326,7 +1367,9 @@ def validate_parent_tree(
     structure_index: StructureIndex,
     page_struct_parents: dict[int, int],
     annotation_locations: dict[tuple[int, int], tuple[int, int, int | None]],
-) -> str:
+    *,
+    enforce_manifest_digest: bool = True,
+) -> tuple[str, str]:
     structure = require_dictionary(dictionary_raw(root, "/StructTreeRoot"), "StructTreeRoot")
     parent_tree_value = dictionary_raw(structure, "/ParentTree")
     if object_reference(parent_tree_value) is None:
@@ -1414,12 +1457,15 @@ def validate_parent_tree(
 
     payload = "".join(f"{line}\n" for line in structure_index.semantic_lines).encode("utf-8")
     digest = hashlib.sha256(payload).hexdigest()
-    if digest != EXPECTED_STRUCTURE_SHA256:
+    if enforce_manifest_digest and digest != EXPECTED_STRUCTURE_SHA256:
         fail("structure_digest", f"tagged-structure manifest changed: {digest}")
     return (
-        f"structure\telements={len(structure_index.path_by_reference)}\t"
-        f"mcr={len(structure_index.mcr_parents)}\tobjr={len(structure_index.objr_records)}\t"
-        f"sha256={digest}"
+        (
+            f"structure\telements={len(structure_index.path_by_reference)}\t"
+            f"mcr={len(structure_index.mcr_parents)}\tobjr={len(structure_index.objr_records)}\t"
+            f"sha256={digest}"
+        ),
+        digest,
     )
 
 
@@ -1575,7 +1621,7 @@ def scan_reachable_graph(
     return actions
 
 
-def validate_reader(reader: PdfReader) -> StructureReport:
+def validate_reader(reader: PdfReader, *, enforce_manifest_digests: bool = True) -> StructureReport:
     if reader.is_encrypted:
         fail("encryption", "encrypted PDFs are not permitted")
     if str(getattr(reader, "pdf_header", "")) != "%PDF-1.7":
@@ -1624,11 +1670,12 @@ def validate_reader(reader: PdfReader) -> StructureReport:
         page_struct_parents,
         annotation_locations,
     ) = validate_pages_and_links(reader, named_destinations, structure_index, action_owners)
-    structure_line = validate_parent_tree(
+    structure_line, structure_digest = validate_parent_tree(
         root,
         structure_index,
         page_struct_parents,
         annotation_locations,
+        enforce_manifest_digest=enforce_manifest_digests,
     )
     allowed_edges = validate_action_owners(action_owners)
     scan_reachable_graph(root, allowed_edges)
@@ -1642,14 +1689,18 @@ def validate_reader(reader: PdfReader) -> StructureReport:
 
     payload = "".join(f"{line}\n" for line in navigation).encode("utf-8")
     digest = hashlib.sha256(payload).hexdigest()
-    if digest != EXPECTED_NAVIGATION_SHA256:
+    if enforce_manifest_digests and digest != EXPECTED_NAVIGATION_SHA256:
         fail("navigation_digest", f"navigation manifest changed: {digest}")
-    return StructureReport(tuple(sorted(targets)), tuple(navigation), digest)
+    return StructureReport(
+        tuple(sorted(targets)),
+        tuple(navigation),
+        digest,
+        tuple(structure_index.semantic_lines),
+        structure_digest,
+    )
 
 
-def validate_path(path: pathlib.Path) -> StructureReport:
-    if not path.is_file() or path.is_symlink():
-        fail("input", f"PDF is absent, non-regular, or symbolic: {path}")
+def validate_pdf_source(source: Any, *, enforce_manifest_digests: bool = True) -> StructureReport:
     records: list[logging.LogRecord] = []
 
     class DiagnosticCollector(logging.Handler):
@@ -1668,8 +1719,8 @@ def validate_path(path: pathlib.Path) -> StructureReport:
     if previous_level == logging.NOTSET or previous_level > logging.WARNING:
         logger.setLevel(logging.WARNING)
     try:
-        reader = PdfReader(path, strict=True)
-        report = validate_reader(reader)
+        reader = PdfReader(source, strict=True)
+        report = validate_reader(reader, enforce_manifest_digests=enforce_manifest_digests)
         if records:
             rendered = "; ".join(record.getMessage() for record in records[:3])
             fail("pdf_parse_diagnostic", f"strict PDF parse emitted a warning: {rendered}")
@@ -1684,6 +1735,22 @@ def validate_path(path: pathlib.Path) -> StructureReport:
         logger.disabled = previous_disabled
         logging.disable(previous_global_disable)
     raise RuntimeError("unreachable")
+
+
+def validate_bytes(data: bytes, *, enforce_manifest_digests: bool = True) -> StructureReport:
+    if not isinstance(data, bytes) or not data:
+        fail("input", "PDF byte input is empty or not bytes")
+    return validate_pdf_source(
+        io.BytesIO(data), enforce_manifest_digests=enforce_manifest_digests
+    )
+
+
+def validate_path(
+    path: pathlib.Path, *, enforce_manifest_digests: bool = True
+) -> StructureReport:
+    if not path.is_file() or path.is_symlink():
+        fail("input", f"PDF is absent, non-regular, or symbolic: {path}")
+    return validate_pdf_source(path, enforce_manifest_digests=enforce_manifest_digests)
 
 
 def validate_output_paths(

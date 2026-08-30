@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the results guide's digest-bound static open-font figures.
+"""Validate digest-bound static open-font publication figures.
 
 This source-specific gate binds the reviewed derivatives, exact SVG font-family
 contracts, regeneration authority, font provenance, and third-party notice. It
@@ -75,6 +75,26 @@ EXPECTED_FIGURES = (
             {"subtype": "Type0", "postscript_name": "LMSans10-Regular"},
         ],
     },
+    {
+        "source": (
+            "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/"
+            "source-cylinder-factorization.svg"
+        ),
+        "source_sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
+        "derivative": (
+            "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/"
+            "source-cylinder-factorization.pdf"
+        ),
+        "derivative_sha256": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d",
+        "pdf_bytes": 29172,
+        "media_box_tokens": ["0", "0", "900", "540"],
+        "css_family": "Latin Modern Sans",
+        "css_weights": {400, 700},
+        "font_inventory": [
+            {"subtype": "Type1", "postscript_name": "LMSans10-Bold"},
+            {"subtype": "Type1", "postscript_name": "LMSans10-Regular"},
+        ],
+    },
 )
 EXPECTED_BINDINGS = {
     "regeneration_contract": {
@@ -82,15 +102,15 @@ EXPECTED_BINDINGS = {
             "audit/formal/latex/mathematical-results-guide/"
             "open-font-figure-regeneration-v1.json"
         ),
-        "sha256": "73255547d47a3f64ae690d51a99b3e1c62d5de049f1edb59487ed1b0f75fbd80",
+        "sha256": "250929cb33988a5914c1c427f76a24f7827e70fb499cad0ca361101666e7f4d3",
     },
     "regenerator": {
         "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
-        "sha256": "bc28bc80313907ec44d51db212f1a497513131f35134e5e8297fe90d64f0fbd5",
+        "sha256": "73d765c794167d206d6932084bb52e27cb503503407efc927f8ee261c3302b20",
     },
     "third_party_notice": {
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "4279f2628c79bfdc9c226d05c55bf7c643e70b14fa3b03033290f5d91d54ff0d",
+        "sha256": "844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427",
     },
 }
 EXPECTED_LICENSE_ARTIFACTS = [
@@ -276,7 +296,7 @@ MAX_PDF_BYTES = 1024 * 1024
 
 
 def fail(message: str) -> NoReturn:
-    raise SystemExit(f"Mathematical results guide figure-asset check failed: {message}")
+    raise SystemExit(f"Publication figure-asset check failed: {message}")
 
 
 def reject_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -593,10 +613,11 @@ def main(argv: list[str]) -> int:
     manifest = load_json_no_duplicates(exact_regular(root, manifest_relative))
     if not isinstance(manifest, dict) or set(manifest) != EXPECTED_MANIFEST_KEYS:
         fail("manifest root schema changed")
-    if manifest.get("format_version") != 3:
-        fail("manifest format_version is not exactly 3")
+    if manifest.get("format_version") != 4:
+        fail("manifest format_version is not exactly 4")
     if manifest.get("purpose") != (
-        "Digest-bound canonical open-font PDF derivatives used by the mathematical results guide build"
+        "Digest-bound canonical open-font PDF derivatives used by the mathematical results "
+        "guide and the separate SxPID3 source-marginal audit build"
     ):
         fail("manifest purpose changed")
     if manifest.get("source_date_epoch") != 1787875200:
@@ -714,8 +735,8 @@ def main(argv: list[str]) -> int:
             fail(f"manifest figure {ordinal} canonical byte contract changed")
 
     print(
-        "Mathematical results guide figure-asset check passed: "
-        "3 digest-bound static one-page open-font CFF derivatives; "
+        "Publication figure-asset check passed: "
+        "4 digest-bound static one-page open-font CFF derivatives; "
         "regeneration closure remains declared cross-host incomplete."
     )
     return 0

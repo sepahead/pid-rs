@@ -41,7 +41,9 @@ for source in "$BUILDER" "$TAGPDF_OPENACTION_COMPAT" "$HGENERIC_URI_CONTENTS_COM
     "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg" \
     "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf" \
     "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" \
-    "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf"; do
+    "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf" \
+    "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg" \
+    "$CROSSWALK_DIRECTORY/source-cylinder-factorization.pdf"; do
   if [[ ! -f "$source" || -L "$source" ]]; then
     echo "Mathematical results guide builder self-test failed: required source is absent, non-regular, or symbolic: $source" >&2
     exit 1
@@ -131,6 +133,10 @@ cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" \
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg"
 cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf" \
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf"
+cp "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg" \
+  "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg"
+cp "$CROSSWALK_DIRECTORY/source-cylinder-factorization.pdf" \
+  "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf"
 
 # shellcheck disable=SC2016 # The generated fake expands these variables at runtime.
 printf '%s\n' \
@@ -180,6 +186,8 @@ required_sources=(
   "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf"
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg"
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf"
+  "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg"
+  "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf"
 )
 source_manifest() {
   local required_source

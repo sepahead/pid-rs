@@ -1592,16 +1592,83 @@ claims.
 
 `build-sxpid3-source-marginal-audit-pdf.sh` renders
 `SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md` through an isolated Pandoc/LuaLaTeX pipeline and
-requires two same-toolchain builds to be byte-identical, warning-free A4 documents with embedded
-Unicode fonts. Its reviewed SVGs explain the 18/108/166 distinction and the source-cylinder
-factorization/prohibited-transfer witness. `check-sxpid3-source-marginal-audit-pdf.sh` rebuilds the
-paper, validates the committed and rebuilt files, rejects visible raw TeX and doubled section
+requires warning-free A4 documents with embedded Unicode fonts. Default `--exact` mode requires
+the two isolated builds to be byte-identical. Explicit `--cross-toolchain` mode first applies the
+same raw comparison. Only status 1 may invoke the exceptional strict trailer-ID projection in the
+exact, digest-pinned `check-mathematical-results-guide-pdf-id-variance.py`; status 2 or any checker
+error is fatal.
+The historical filename identifies the parser's first caller. Its reused contract is only the
+context-independent PDF-syntax relation: each input must have one strict duplicated 16-byte hex
+`/ID` pair owned by its final direct XRef stream, the decoded IDs must differ, and every byte
+outside the four input payload spans must agree. No guide content, rendering evidence, or
+mathematical claim transfers to this SxPID3 build. The builder stages and digest-checks a private
+copy, runs its bounded
+no-follow `--validate-inputs` route for every repeated pair, and hashes and rechecks both outputs
+after the comparison and around publication. Cross mode requires an explicit canonical absolute
+scratch output that is distinct from and does not alias the canonical PDF. It resolves an existing
+temporary root to its physical path, removes a trailing slash before composing Kpathsea paths, and
+rejects an absent root or filesystem `/`. Exact mode never invokes the ID projection. Its reviewed
+SVGs explain the 18/108/166 distinction and the source-cylinder
+factorization/prohibited-transfer witness. The builder imports their two exact tracked open-font
+PDF derivatives and does not invoke librsvg. It validates both source/derivative pairs before and
+after its isolated builds. It accepts only a canonical absolute `.pdf` destination below an
+existing non-root canonical directory. It rejects symbolic and nonregular destinations and every
+exact-path, symbolic-path, or hard-link alias of a required source. The complete required-source
+digest sequence and destination are revalidated around publication, and the temporary publication
+copy and final output must equal the already compared first build. This is bounded same-user race
+detection and required-source alias/overwrite prevention under the assumption that the canonical
+parent and private temporary directory remain stable. Publication uses a same-directory rename, but
+validation and replacement are not one atomic filesystem transaction. This is not protection from
+a privileged hostile process. The source-cylinder diagram uses explicit averaged-component words;
+the canonical Markdown retains the formal plus/minus notation and its assumptions.
+`check-sxpid3-source-marginal-audit-builder-self-test.sh` exercises seven accepted exact/cross and
+temporary-root controls, 36 rejected mode/fallback/renderer/output-custody cases, and three
+source-shape guards with fake render tools plus strict real-PDF trailer fixtures. Its eight
+hard-link cases cover every required source. The remaining cases cover missing or invalid modes,
+canonical-output path and hard-link
+aliases, exact rejection and cross acceptance of ID-only variance, outside-ID drift, parser and
+`cmp` operational failure, parser-digest mutation, relative and noncanonical paths, absent parent,
+wrong suffix, root parent, directory, FIFO, symbolic output and parent, exact-source alias, source
+byte mutation, output-alias appearance, publication-copy mutation, and absent or filesystem-root
+temporary directories. The builder invokes each build function directly rather than inside command
+substitution, so Bash does not suppress `errexit` within the function. One Pandoc hostile writes
+usable-looking TeX and one renderer hostile writes stale-looking PDF and log files; both return
+nonzero and the builder must stop on the exact failing stage. Two later-inspection hostiles mutate
+the staged parser and an already compared build; repeated digest checks must reject both before
+publication. Accepted temporary-root controls cover a trailing slash and a symbolic
+alias after both resolve to the same physical private directory. The static guards require the PDF
+gate to pass its mode into the builder while keeping rebuilt-versus-committed text comparison raw
+and keeping the ID parser absent from that comparison layer. A fourth guard rejects any use of the
+guide-only typed font-resource alpha-equivalence checker in the SxPID3 builder or PDF gate. The
+complete 4-control/28-hostile
+parser suite remains owned by the guide gate; using its canonical guide PDF as a parser fixture
+transfers no guide evidence to SxPID3. A fake `mktemp`
+requires terminal `X` placeholders, and every case rejects temporary publication residue. These
+fixtures validate control flow and fail-closed diagnostics; they do not authenticate tools, model
+every race, or establish PDF or mathematical correctness.
+`check-sxpid3-source-marginal-audit-pdf.sh` first applies the shared digest, PDF-object, and
+open-font asset policy and runs that focused builder self-test. It then rebuilds the paper,
+validates the committed and rebuilt files,
+rejects visible raw TeX and doubled section
 numbers, requires a populated PDF structure tree, enforces the reviewed same-page equation and
 definition groupings, and requires the exact approved hyperlink set with extant repository-local
 targets. The structure tree is emitted with LaTeX test-phase tagging and is not asserted to satisfy
 PDF/UA; canonical Markdown remains the accessible source companion. Its
 default `--exact` mode requires byte identity; `--cross-toolchain` requires equal extracted text
-and geometry. The paper records a finite-law theorem, a fixed-transform consequence, a separately
+and geometry after both PDFs pass the complete validation. That rebuilt-versus-committed comparison
+never invokes the repeated-build trailer-ID parser and performs no normalization or tolerance-based
+comparison. One local old-toolchain observation used Pandoc 3.1.3, TeX Live 2023, and Poppler
+24.02.0. Its two 467,454-byte repeated builds had SHA-256 values
+`28e8a2de93d85213ac41a868af869d6a7615c6d68d600f0dec22fdcf586260d9` and
+`15195c49dd1140faaeb99142a1d4e7b5a63f9290d663681bb61502bd8754483a`.
+Raw comparison found 62 differing offsets; the strict parser accepted the pair after checking that
+every one was inside the
+two duplicated 32-hex-character trailer-ID payload spans in each file and every other byte agreed.
+Exact mode rejected this pair. The raw PDFs are untracked, so this is a bounded operator
+observation,
+not independently replayable execution custody, general writer equivalence, portability,
+authenticity, PDF/UA, or mathematical correctness. The paper records a finite-law theorem,
+a fixed-transform consequence, a separately
 proved continuity specialization, and bounded executable evidence. Rendering does not establish
 the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary64 refinement,
 estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
@@ -1611,16 +1678,100 @@ isolated Pandoc/LuaLaTeX pipeline. Default `--exact` mode requires two isolated 
 byte-identical. Explicit `--cross-toolchain` mode first attempts raw equality. Only raw comparison
 status 1 can invoke the narrow trailer-ID projection; an operational comparison error is fatal.
 Both modes require warning-free A4 documents with a populated structure tree, embedded Unicode
-fonts, and unchanged canonical inputs. The guide keeps its three handcrafted SVG sources, but it
-imports exact tracked one-page PDF derivatives instead of invoking an rsvg version at build time.
+fonts, and unchanged canonical inputs. The guide embeds three handcrafted SVG derivatives. The
+shared publication manifest binds four source/derivative pairs; its fourth, Sx-only pair is staged
+for whole-set validation but is not embedded in the guide. The build imports exact tracked one-page
+PDF derivatives instead of invoking an rsvg version at build time.
 The manifest binds both members of every source/derivative pair, the observed renderer versions,
 exact page boxes, CFF resource shapes, admitted open-font names, and the limits of the capture.
+
+`check-mathematical-results-guide-pdf.sh` keeps the same-toolchain route byte-strict. It applies the
+unchanged strict structure checker to both PDFs and then requires raw equality between the rebuilt
+and committed files. The typed font-resource relation is available only for the rebuilt PDF in
+explicit `--cross-toolchain` mode. The committed PDF remains the strict reference. The wrapper
+runs the pair checker in normal and optimized Python and requires identical output projections and
+diagnostics. It also retains the exact extracted-text, page-geometry, font-roster, hyperlink,
+navigation, and rendering gates. The wrapper binds and rechecks the strict checker and pair checker
+digests around their use.
+
+The retained TeX Live 2023 replay corrected an earlier unretained observation. The earlier operator
+record said that the old build passed the unchanged raw structure digest. The retained replay did
+not reproduce that subclaim. Its 581,294-byte PDF has SHA-256
+`08b0ae8b8c7094cd2a5165563a4e3bd00b22e1d6fdeb658393268cd06525e443`.
+It has 1,699 tagged-structure records. Exactly 32 records differ from the canonical PDF: one decoded
+page-content hash and one page-resource hash on each of 16 pages. The other 1,667 records, the target
+set, and every navigation field outside the embedded raw structure digest are exact. The canonical
+structure digest is `e9adba3097ffc38de2f7723e448d2bb54265ee201e010c0857e1a7a40db9d99b`.
+The retained old digest is `f7c9ccce59a51f035a474632c8ab2ef21aa7beea76d809bfe5d542ddb21e7dd3`.
+
+`check-mathematical-results-guide-pdf-font-alpha-equivalence.py` adjudicates only that retained
+source profile. It first binds the exact raw canonical PDF and retained fixture by size and SHA-256.
+An exceptional fresh legacy candidate must equal the retained fixture byte-for-byte or differ only
+in the strict duplicated final-trailer `/ID` payload relation. The comparator applies the existing
+digest-pinned trailer-ID parser to its captured input bytes. It does not reread candidate paths to
+make that decision. It then resolves each page-local `/Font` key to the complete typed resource closure,
+including the embedded font program, descriptor, encoding, BaseFont, and ToUnicode data. Full
+payload bytes decide equality. Hashes only bind and report the frozen profile. An independent
+content lexer skips comments and strings, rejects inline images, and identifies only real `Tf`
+font-name operands. The pypdf operation sequence must name the same spans. After the checker
+replaces only the proved candidate font names, every decoded page-content byte and the complete
+resource root must equal the canonical value. The accepted profile has 16,362 parsed operations,
+1,373 `Tf` uses, 122 page-font bindings, and 13 global font identities. Every old identifier maps
+to the canonical identifier at offset `+8`; the exact mapping manifest has SHA-256
+`364091c0d0e4a023f1335b58c833383569d0b1968bbec26bd77fa26c4a116488`.
+
+`check-mathematical-results-guide-pdf-font-alpha-equivalence-self-test.py` runs in normal and
+optimized Python. Each mode accepts 11 controls and rejects 36 semantic, nine source-profile, 10
+raw-boundary, 10 structure, 28 custody, and 10 dependency hostiles. It also enforces 20 static
+guards, for 134 checks per mode. The controls include the retained pair, a strict trailer-ID-only
+variant, and a distinct byte-exact canonical copy. Small generated PDFs exercise the typed
+comparison core below the frozen outer profile. The CLI cases reject raw drift in the canonical,
+fixture, and candidate files, including trailing whitespace and comments. The suite also tests
+parser opacity, full font-closure equality, global bijection, content substitution, exact profile
+counts, input and output custody, dependency drift, and failure without output. This is finite
+mutation evidence for the declared source profile. It is not a proof that the parser or comparison
+algorithm has no defect.
+
+A pre-seal adversarial check found why the raw boundary is necessary. The superseded typed-only
+CLI accepted the retained fixture plus one line-feed byte and also accepted a trailing unreachable
+PDF comment. The receipt records the exact suffix bytes, resulting sizes and SHA-256 values, and
+the observed exit-zero dispositions. It assigns them zero credit. The predecessor checker source
+and complete execution logs were not retained, so that old acceptance cannot be independently
+replayed from the receipt alone. The corrected suite reconstructs the suffix cases and requires
+current CLI rejection before typed comparison.
+
+The relation is not generic PDF normalization. Apart from the exact final-trailer `/ID` relation
+against the retained fixture, it does not admit raw whitespace, content, operator, font, non-font
+resource, structure, navigation, target, or unreachable-byte drift. It does not establish raw PDF
+identity, writer or renderer equivalence, visual identity, PDF/UA, accessibility, authenticity,
+toolchain causation, or mathematical correctness. Resource comparison uses pypdf's strict typed
+object representation, not raw serialized PDF-real spelling. Exact mode retains raw file identity.
+A distinct byte-exact canonical copy follows an identity route and does not use the exception.
+Reversing the retained pair fails because the old
+PDF cannot serve as the strict reference. The retained fixture is a later replay artifact. It is
+not claimed to be either of the earlier unretained random-trailer-ID outputs. The guide-only
+relation is not imported by the SxPID3 paper gate and transfers no PID theorem or validation credit.
+
+`check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted dispatch
+blocks and binds their exact source anchors. In normal and optimized Python it runs 11 controls and
+15 hostile mutations. It observes zero exact-mode artifact invocations of the alpha comparator and
+two cross-mode Python invocations in canonical-reference-to-built-candidate order. This is a mode
+wiring test. It is not a renderer replay or a typed-PDF semantic test.
+
 `regenerate-mathematical-results-guide-open-font-figures.py` accepts only the five recorded Source
 Sans Pro 3.006 and Latin Modern Sans 2.004 program hashes at their declared TeX roots. It copies
 those bytes into a generated Fontconfig-only directory, rejects SVG fallback families and weight
-drift, performs two independently cached renders, and publishes candidates only to a new directory
-outside the repository when each pair is byte-identical. It cannot overwrite canonical PDFs. Its
-companion JSON records the installed-program provenance, exact local license/manifest evidence,
+drift, performs two independently cached renders of four publication figures, and publishes
+candidates only to a new directory outside the repository when each pair is byte-identical. The
+guide and SxPID3 paper remain separate scientific documents; sharing this rendering tool and the
+crosswalk asset transfers no theorem or estimator claim between them. It cannot overwrite
+canonical PDFs. The four-asset manifest is a bounded publication-wide custody set: the guide
+builder stages the
+Sx-only source-cylinder pair so it can replay the whole contract, but does not embed that pair.
+If the registry expands beyond this coherent set, move whole-set validation to the formal-PDF gate
+and give each document builder a consumed-asset subset instead of adding unrelated prerequisites.
+The companion JSON records the installed-program provenance, exact local license/manifest
+evidence,
 and raw-font-not-tracked boundary; [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) records the
 notices for the embedded subsets. The repository retains byte-exact copies of the observed Source
 Sans OFL file, GUST Font License, and Latin Modern v2.004 manifest. Their paths, sizes, and hashes
@@ -1732,7 +1883,7 @@ The hosted workflow requires the old hgeneric and pdfmanagement sources after in
 requires their exact distribution paths, v0.96d declarations, native-feature absence, and SHA-256
 values. It repeats the checks immediately before the formal gate. These hosted-source requirements
 complement the TeX feature, version, and body probes; they do not replace them.
-`check-mathematical-results-guide-figure-assets.py` validates the exact manifest schema, three
+`check-mathematical-results-guide-figure-assets.py` validates the exact manifest schema, four
 source/derivative digest pairs, the open-font regeneration and notice bindings, PDF 1.7 headers,
 byte bounds, one-page MediaBoxes, static catalogs, and the absence of annotations and active
 content. Every font must have an embedded CFF program and a Unicode map. The exact source-specific
@@ -1808,11 +1959,12 @@ mutations in normal and optimized Python, including attempts to relabel the diag
 genuine Pandoc or to grant portability or execution credit.
 
 The separate
-`mathematical-results-guide-pandoc-3.1.3-portability-v1.json` receipt records the later
-operator-observed selected-writer run. Before the run, the selected `/usr/bin/pandoc` path matched
+`mathematical-results-guide-pandoc-3.1.3-portability-v1.json` receipt preserves the earlier
+operator-observed selected-writer run and adjudicates it against one later retained replay.
+Before the historical run, the selected `/usr/bin/pandoc` path matched
 the recorded 3.1.3 executable hash. This endpoint check is not an atomic binding to the bytes that the operating
 system ran. The run used an x86_64 Ubuntu 24.04 userspace translated by Rosetta on an arm64 macOS
-host. This is translated execution, not native x86_64-hardware evidence. Before normalization, the retained observation had
+host. This is translated execution, not native x86_64-hardware evidence. Before normalization, the historical observation had
 56 valid and unique destination names. It included 17 redundant heading aliases and `table.1`
 through `table.4`. The tree was valid PDF syntax, but it failed this guide's unchanged canonical
 profile. It was not empty, malformed, or evidence of a security exploit.
@@ -1823,21 +1975,25 @@ and `none.1` through `none.4`. It passed the unchanged 43-target, 167-navigation
 text, geometry, font, and active-content policies. All 16 pages were also byte-identical when both
 PDFs were rasterized by Poppler 24.02.0 at 72 dpi. That raster comparison covers one renderer and
 resolution only. The receipt also retains a QEMU SIGSEGV attempt as zero-credit negative evidence.
-The raw TeX, normalized TeX, and observed PDFs are not tracked because they are noncanonical
-execution outputs and the PDF trailer IDs vary. Their hashes, sizes, commands, delta counts, and
-claim boundaries are retained in the receipt.
+The historical raw TeX, normalized TeX, and observed PDFs are not tracked because they are
+noncanonical execution outputs and the PDF trailer IDs vary. Their hashes, sizes, commands, delta
+counts, and claim boundaries remain in the receipt. The separate later replay PDF is tracked at
+`audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf`. It is not
+claimed to be either historical output. It failed the unchanged raw structure digest, so it does
+not inherit the historical raw-digest pass statement. It instead supports only the narrow typed
+font-resource result described above.
 
 `check-mathematical-results-guide-pandoc-portability-receipt.py` binds the complete receipt bytes,
-the 11 current selected repository-input digests, the old executable identity, the normalization counts, the negative
-name-tree census, the final policy digests, the translated-execution boundary, and nine explicit
-nonclaims. Its self-test accepts two controls and rejects 28 semantic plus seven custody mutations
-in each interpreter mode. The receipt keeps the historical 26-mutation gate record separate from
-the current 28-mutation suite. It also records a three-path post-observation delta: two import/type-
-annotation lint corrections and the resulting builder digest rebind. The earlier run remains bound
-to its before-digests and transfers no execution credit to those corrected files. This closed
-receipt records one bounded operator observation and replays the current selected repository-input
-digests; it does not independently re-execute or retain custody of the reported run. It does not
-establish general Pandoc equivalence, native x86_64 execution,
+the 16 current selected repository-input digests, the old executable identity, the normalization
+counts, the negative name-tree census, the historical policy digests, the translated-execution
+boundary, the retained replay, and 19 explicit nonclaims. Its self-test accepts two controls and
+rejects 100 semantic plus 12 custody mutations in each interpreter mode. The receipt keeps the
+historical 26-mutation gate record separate from this current suite. It also records three disjoint
+post-observation phases: lint-only corrections, shared four-figure asset custody, and the retained
+replay adjudication. The earlier run remains bound to its before-digests and transfers no execution
+credit to later sources. The tracked replay supplies reproducible custody only for its exact PDF
+and the source-profiled typed comparison. It does not independently re-execute or retain custody of
+the historical run. The receipt does not establish general Pandoc equivalence, native x86_64 execution,
 arbitrary-document portability, raw cross-toolchain identity, PDF/UA, supply-chain authenticity,
 or mathematical correctness. Its container record keeps the OCI image-index, linux/amd64 manifest,
 and config digests as distinct locators; raw registry responses and rootfs/download custody are not

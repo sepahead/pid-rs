@@ -659,9 +659,9 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "c34bfb2ed07fd324f045176a4e16e38bca399ee2cf4aed00a25f8484fa20cd3a",
     ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
     "AGENTS.md": "b26ed7b0b67faa2ba328078ebf67a7145dea2a428b1923bd67d78b2a220a5812",
-    "CHANGELOG.md": "8502ae9398705ba234a62bbb305dd93619315f983b30876467e691317efc86bc",
+    "CHANGELOG.md": "ea5fe10865c8f5b1af4a240ab4c72e863fa0f48dacbc9200cae58abeea48754a",
     "justfile": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
-    "scripts/README.md": "57eee04a300d47eb451523ef2b2f0dc3435e5d28c2212745b852dd6c9d9d2242",
+    "scripts/README.md": "78261b827f54c5d5407879291f2bfbe50e12622eaa6cd4a267d789c2ec12360e",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "5c901ea562e7ed9eb118f983ca4a9d97f6efeda40a070558646f515c14683c98"
     ),

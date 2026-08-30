@@ -70,10 +70,16 @@ keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, W
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
 for the method catalog, claim packets, or detailed proofs. Its
 [bounded Pandoc 3.1.3 portability receipt](audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json)
-records one operator-observed translated Ubuntu run, the exact source-level compatibility transform, the
-pre-normalization negative result, and the final unchanged PDF-policy result. It is not a general
-Pandoc-equivalence, native-hardware, atomic executable-causation, independently replayable
-old-toolchain execution-custody, PDF/UA, or mathematical-correctness claim.
+preserves one earlier operator-observed translated Ubuntu run and a later retained replay. The
+replay did not reproduce the earlier claim of an unchanged raw structure digest. Within the checked
+typed object graph, it found only a source-profiled rename of page-local font resource keys. That
+statement is not a raw-byte claim. A typed pair checker accepts the replay only after it binds the
+exact canonical and retained raw files. A fresh legacy candidate must equal the retained file or
+differ only in its strictly owned duplicated trailer ID. After that raw admission, the checker
+resolves every key to the exact embedded-font closure and requires all decoded content bytes to
+match after the admitted `Tf` name substitutions. The retained replay is not a general
+Pandoc-equivalence, native-hardware, atomic executable-causation, PDF/UA, renderer-equivalence, or
+mathematical-correctness claim.
 
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the
@@ -953,10 +959,12 @@ Project-authored material is licensed under either [MIT](LICENSE-MIT) or
 under [LPPL 1.3c or later](LICENSE-LPPL-1.3c), as its SPDX and exact upstream-provenance header
 records. These compatibility Works are not part of a published Cargo package.
 
-Third-party font material retains its applicable terms and notices. The three tracked static
-figure PDFs used by the mathematical results guide contain embedded subsets of Source Sans Pro or
-Latin Modern Sans; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The five complete input
-font files are digest-selected during bounded regeneration and are not stored in this repository.
+Third-party font material retains its applicable terms and notices. Four tracked static figure
+PDFs are used across the mathematical results guide and the separate SxPID3 source-marginal audit:
+the guide uses three, the SxPID3 paper uses two, and the crosswalk is shared. They contain embedded
+subsets of Source Sans Pro or Latin Modern Sans; see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The five complete input font files are
+digest-selected during bounded regeneration and are not stored in this repository.
 Exact local copies of the observed Source Sans OFL file, GUST Font License, and Latin Modern v2.004
 manifest are retained and digest-bound. They are provenance records, not authentication or legal
 determinations.

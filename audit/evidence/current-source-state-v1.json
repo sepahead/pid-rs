@@ -24,8 +24,8 @@
     {
       "path": "method-catalog.json",
       "role": "method_catalog",
-      "sha256": "ac6a9b4f1e311478d3b5e4b571c082639af7de249864cf6006fda29fc9e98d89",
-      "size_bytes": 436583
+      "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
+      "size_bytes": 438158
     },
     {
       "path": "release-scope-1.0.json",
@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "8502ae9398705ba234a62bbb305dd93619315f983b30876467e691317efc86bc",
-        "size_bytes": 254207
+        "sha256": "ea5fe10865c8f5b1af4a240ab4c72e863fa0f48dacbc9200cae58abeea48754a",
+        "size_bytes": 263360
       },
       {
         "git_mode": "100644",
@@ -358,7 +358,7 @@
       {
         "git_mode": "100644",
         "path": "ECOSYSTEM_CAPABILITIES.md",
-        "sha256": "0c367cf146a93d59c9de3b14c36321eae1f254b9c91a264cb57fbd41910a71fc",
+        "sha256": "b6f9512469af4e33c26d2e2f70848b10b7c2146d1db28cf7a05bf2d0142c142f",
         "size_bytes": 65091
       },
       {
@@ -424,14 +424,14 @@
       {
         "git_mode": "100644",
         "path": "METHODS.md",
-        "sha256": "915765944c5262a3bbaf22f4073bb0fe2be2af02324a9d9971e99b233b2e55e0",
-        "size_bytes": 531652
+        "sha256": "342ceec4c7bf17ea2deebf707992aedffdc104fdefe76884041839ab992d9c8a",
+        "size_bytes": 533476
       },
       {
         "git_mode": "100644",
         "path": "METHODS_SUMMARY.md",
-        "sha256": "44fe9fdcadca9cd6b5435c99659c916f56cbfe92940f84fa6577075b417db24f",
-        "size_bytes": 43432
+        "sha256": "ad942a0cc25386eb07db83ad9ffb08d0ec84d4771a1f20f42dec44ff9239fa45",
+        "size_bytes": 43433
       },
       {
         "git_mode": "100644",
@@ -460,14 +460,14 @@
       {
         "git_mode": "100644",
         "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
-        "sha256": "f576916d5820632dfb9e86bb760d106d6ec1d513896724d6a777ceafb092495e",
+        "sha256": "fd108d2eef6422c53902934fb8bd36b393911981229a4361cbe2de88f5abc74f",
         "size_bytes": 27700
       },
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "a29f680dbbaefbc564830905b5fa6ff177981e4c8fda67866e127929f1f51bdf",
-        "size_bytes": 74922
+        "sha256": "69724a5443bbe9e57532cf4af1d6eb3d87db38573ab821adec26df14f2f53fd9",
+        "size_bytes": 75583
       },
       {
         "git_mode": "100644",
@@ -514,8 +514,8 @@
       {
         "git_mode": "100644",
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "4279f2628c79bfdc9c226d05c55bf7c643e70b14fa3b03033290f5d91d54ff0d",
-        "size_bytes": 5299
+        "sha256": "844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427",
+        "size_bytes": 5369
       },
       {
         "git_mode": "100644",
@@ -1708,8 +1708,14 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json",
-        "sha256": "4bdaa6f62f1cd8baa9814b1ff0b8ec8b8cbc4d4607f34ac0e38f658f31840af4",
-        "size_bytes": 13379
+        "sha256": "7ea2acf89c8a33f5666ab9798a594c24febdad609bd1b5e650b87d8a98ca4581",
+        "size_bytes": 32875
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf",
+        "sha256": "08b0ae8b8c7094cd2a5165563a4e3bd00b22e1d6fdeb658393268cd06525e443",
+        "size_bytes": 581294
       },
       {
         "git_mode": "100644",
@@ -1738,14 +1744,14 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
-        "sha256": "fe09891d599b53c739e4940191ef713fa5e0808e3233c7dfb3cd99489036471a",
+        "sha256": "281f45397309d0342b5cc3f826ec5598ec74fbd095da0f981b1696939bf92bbb",
         "size_bytes": 38986
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/methods-summary-v1.json",
-        "sha256": "9eed719c464c9d57d0488701ee176f6a9004ad4d8dacd3fe1b1c81afab13e0c3",
-        "size_bytes": 78068
+        "sha256": "0bf2aa316f14c4d149648ced62ac8f9a8931a4dedea302bbaf3586383259c1cc",
+        "size_bytes": 78069
       },
       {
         "git_mode": "100644",
@@ -1756,7 +1762,7 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
-        "sha256": "05829b6c0bb4d6e2d13dfa3d16cc8b2e4fab2387a4f25de1949d4ef671751013",
+        "sha256": "ffab4449dddb2d09c8392b0ab4d06277e908fb707eecf4078a74980949e96872",
         "size_bytes": 53711
       },
       {
@@ -2121,9 +2127,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf",
+        "sha256": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d",
+        "size_bytes": 29172
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
-        "sha256": "3bb1fa4c9b2c565717e7b3899ca050d1d49a2acc0d0300bd80da452084641e9c",
-        "size_bytes": 5183
+        "sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
+        "size_bytes": 5143
       },
       {
         "git_mode": "100644",
@@ -2176,8 +2188,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
-        "sha256": "5e13be9de7f4acde21abfefe8366be6d4c248637f667dc5ffb616f53319a454c",
-        "size_bytes": 8638
+        "sha256": "5bc3a24661b7a76c1a8a29d659f23aa27400d01ab5b6bd48cd3e75b91e88c852",
+        "size_bytes": 9452
       },
       {
         "git_mode": "100644",
@@ -2224,8 +2236,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
-        "sha256": "73255547d47a3f64ae690d51a99b3e1c62d5de049f1edb59487ed1b0f75fbd80",
-        "size_bytes": 10614
+        "sha256": "250929cb33988a5914c1c427f76a24f7827e70fb499cad0ca361101666e7f4d3",
+        "size_bytes": 10997
       },
       {
         "git_mode": "100644",
@@ -3952,7 +3964,7 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/identity/software-identity-reference-v1.json",
-        "sha256": "ce5051434276c16809c06a9f5e977936a572282278b167171aa94cd6b4fa2c8b",
+        "sha256": "6c0bfff9f5188607351065574a6cd20eba4ebef868206c18cc372ebac2c99388",
         "size_bytes": 1453
       },
       {
@@ -4684,7 +4696,7 @@
       {
         "git_mode": "100644",
         "path": "ecosystem-capabilities.json",
-        "sha256": "5ecedc449d3aaf5916b4aaac4bc2b8a1c30afa90153d7f05c98590c613b3b1ab",
+        "sha256": "1fa48baa1e843ef16e174fce20640c17966af60383629cf2967fc698a492b816",
         "size_bytes": 71752
       },
       {
@@ -4810,8 +4822,8 @@
       {
         "git_mode": "100644",
         "path": "method-catalog.json",
-        "sha256": "ac6a9b4f1e311478d3b5e4b571c082639af7de249864cf6006fda29fc9e98d89",
-        "size_bytes": 436583
+        "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
+        "size_bytes": 438158
       },
       {
         "git_mode": "100644",
@@ -4924,8 +4936,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf",
-        "sha256": "43d688144b449b30f66a32f128a80a142ae1662847f190c54dbc40cec7e70d4d",
-        "size_bytes": 527252
+        "sha256": "81b2d3d1cd73995b2884e7b1f6a9400f09ab2ca65d74cd847f6855a86574553b",
+        "size_bytes": 467068
       },
       {
         "git_mode": "100644",
@@ -4942,14 +4954,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "57eee04a300d47eb451523ef2b2f0dc3435e5d28c2212745b852dd6c9d9d2242",
-        "size_bytes": 208785
+        "sha256": "78261b827f54c5d5407879291f2bfbe50e12622eaa6cd4a267d789c2ec12360e",
+        "size_bytes": 221697
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-mathematical-results-guide-pdf.sh",
-        "sha256": "b7c49c411782b8a8b7a60d37567543a8b5a463adfa8f321a534b1c94783085a1",
-        "size_bytes": 40817
+        "sha256": "798f1113a5cc23c24c81412eb8449d8c02023ff3c80a98c698909bcedce2eec1",
+        "size_bytes": 41283
       },
       {
         "git_mode": "100755",
@@ -4960,8 +4972,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-sxpid3-source-marginal-audit-pdf.sh",
-        "sha256": "7b9f9d199f9515d9dbc78c4320f44d1e90f663e6e5ac5cfca2b8b7da8b29b86e",
-        "size_bytes": 9118
+        "sha256": "198159e36fdd2bff46f28455b96a1a78e68a49941ff2ea724ed02089805fbb0f",
+        "size_bytes": 17856
       },
       {
         "git_mode": "100644",
@@ -5170,7 +5182,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ecosystem-capabilities.py",
-        "sha256": "e2a556f03c201a88c8c19ff26d508c6daa48140887c89ba77770e0f07804be72",
+        "sha256": "92ee7cd7685a979bb4d7d8148100565f3005b75706a2d882f9833417e568ac0b",
         "size_bytes": 72358
       },
       {
@@ -5644,7 +5656,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "9ed43b3a21909a9e2965623217f1b25025245da2d462b3fc20d824de6beb7c8b",
+        "sha256": "13a0fe48e46eab8b623c0681bc98136addc185171795e89de4622c45e4bfb8ca",
         "size_bytes": 120874
       },
       {
@@ -5662,20 +5674,20 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-builder-self-test.sh",
-        "sha256": "c1dc31e97716126c9be137ea8374360968f4138925e93d7e82c756785483b8ab",
-        "size_bytes": 57840
+        "sha256": "d7b00e46d982c9a8fdcf2baaa8db54bf51d37d03798b870edd043c590dd5f414",
+        "size_bytes": 58570
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-figure-assets-self-test.py",
-        "sha256": "10272f1513e8d22ef742d67f874d5938d2403f37b28b454649cdd46560599ad8",
+        "sha256": "f54095a4decfc6ead8d37ce3d374942338bf7f8733be64386154ab0ca70c0bff",
         "size_bytes": 28104
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-figure-assets.py",
-        "sha256": "3f77965712391a57fe26edcbdb5de5d030ce789f1f908b99b365cbc03e20693d",
-        "size_bytes": 29208
+        "sha256": "075d5159f59eab5e927aef6a66f7380695269dc1aae447ef789bf3d84c4a5557",
+        "size_bytes": 30100
       },
       {
         "git_mode": "100755",
@@ -5698,14 +5710,26 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py",
-        "sha256": "6f6845033526165a3b7ebb5b5cd423ff47a91ea1682b1c8a7ea1c88032742eb5",
-        "size_bytes": 12938
+        "sha256": "f37ca6350eb5ba813a6b100e2c6b6cc56df2a10bd92f75d9bd66294e8a49fcde",
+        "size_bytes": 35213
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pandoc-portability-receipt.py",
-        "sha256": "ddb25965be0b733b203707bb778c2fb274682c9d605bd1cc3d4e6cbbdadb2638",
-        "size_bytes": 18536
+        "sha256": "e84194bb17e059f14679e7c70b559a10d130be90262f58520d1447c1d6300399",
+        "size_bytes": 47041
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence-self-test.py",
+        "sha256": "07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be",
+        "size_bytes": 59014
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py",
+        "sha256": "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997",
+        "size_bytes": 49925
       },
       {
         "git_mode": "100644",
@@ -5721,6 +5745,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
+        "sha256": "8c477e48db326c60fcde63bfc61ba5be8a903fc4dea329725d96594bde74029e",
+        "size_bytes": 24014
+      },
+      {
+        "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-structure-self-test.py",
         "sha256": "e46d234b2cf4c7c7b29696ffba28f5f2c4c4b5549a7e711b9a6117bbb227acc1",
         "size_bytes": 39219
@@ -5728,14 +5758,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-structure.py",
-        "sha256": "b513404846cdd02048f2e9133ddae927609049fb202956a7cd072ddaff1edf6c",
-        "size_bytes": 81552
+        "sha256": "50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2",
+        "size_bytes": 84208
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "e732b3193b29b5790c9f7b9b43d98752bcf932f18cf123a3477ad9d8530e7f40",
-        "size_bytes": 22463
+        "sha256": "f7b1cc563e8a8212f6ddcf1c9066f03f83b3705f82779497e22e80e2a5927c23",
+        "size_bytes": 26616
       },
       {
         "git_mode": "100644",
@@ -5794,7 +5824,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-method-catalog.py",
-        "sha256": "6c0fa60625286689107875fcecff52c794ad74d2782449c2dcc84106d4442238",
+        "sha256": "ef2e831c159c16df80e4deb7a472fc6959be3b2226f281f077be78d6448f6c55",
         "size_bytes": 72809
       },
       {
@@ -6003,9 +6033,15 @@
       },
       {
         "git_mode": "100755",
+        "path": "scripts/check-sxpid3-source-marginal-audit-builder-self-test.sh",
+        "sha256": "fa358c7cf2ce2fa9ca5e89209c0e02921f28f2b60cb5c69a659da4cbd9abdfbb",
+        "size_bytes": 24488
+      },
+      {
+        "git_mode": "100755",
         "path": "scripts/check-sxpid3-source-marginal-audit-pdf.sh",
-        "sha256": "b5de36717d13e528f1fc17676f8de4d5615e3cb2c6c56de793bddffdeadaa04c",
-        "size_bytes": 10257
+        "sha256": "e6d37eb83902f610717036d849f3b997115a1e8780528547d8f7b04eb071e23c",
+        "size_bytes": 11529
       },
       {
         "git_mode": "100755",
@@ -6184,14 +6220,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/regenerate-mathematical-results-guide-open-font-figures-self-test.py",
-        "sha256": "af71ce4d0d25b457c0265d3597493a223dbbf1212c5c4aeb5a8d80e6a23d5388",
-        "size_bytes": 21319
+        "sha256": "80f4d4bd567926dff9678561da4243085b2c69c7a8f78e46f4826a87bf94d646",
+        "size_bytes": 21343
       },
       {
         "git_mode": "100644",
         "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
-        "sha256": "bc28bc80313907ec44d51db212f1a497513131f35134e5e8297fe90d64f0fbd5",
-        "size_bytes": 42253
+        "sha256": "73d765c794167d206d6932084bb52e27cb503503407efc927f8ee261c3302b20",
+        "size_bytes": 42655
       },
       {
         "git_mode": "100755",
@@ -6224,8 +6260,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "8296a8a1ddafcebd528ed81045bb69f7e8b9c9f3cd1627f0a686e54f58108f13",
-    "entry_count": 1013
+    "entries_sha256": "2129e4f15711f23e0efb662b41b6635d87e9e84a715b1159b57803bb930a9e4d",
+    "entry_count": 1019
   },
   "subprojections": [
     {
@@ -6237,15 +6273,15 @@
       ]
     },
     {
-      "entries_sha256": "607a077282c261b2e8f1dfb591c93fc6149f05944b416e4f1daf055370f04de5",
-      "entry_count": 98,
+      "entries_sha256": "57efda375e0220cb0b12848dae7aafd3ef14014d3d6b0fd3574a9f5810e35dd7",
+      "entry_count": 99,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "949577215a91b113f0dc764f92301d49c6c3436318ceff398b588dfa334353cf",
+      "entries_sha256": "12eab34bd01978c6f7ca1aa3ea21da28e62340bd78d9d011a5626c4330347da5",
       "entry_count": 20,
       "name": "generated_pdf_set",
       "selectors": [
@@ -6253,7 +6289,7 @@
       ]
     },
     {
-      "entries_sha256": "108eaf46e43f7c3b32e61117a2695b94628e9098e669cb84857edac323db56df",
+      "entries_sha256": "c44b92ed83a16936e72aaa8ad4c43090a50869405adefa2376dd641be3cbe8a8",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

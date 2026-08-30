@@ -176,7 +176,7 @@ def main() -> int:
         duplicate_path = duplicate_key / MANIFEST_RELATIVE
         duplicate_text = duplicate_path.read_text(encoding="utf-8")
         duplicate_path.write_text(
-            duplicate_text.replace("{", '{\n  "format_version": 3,', 1),
+            duplicate_text.replace("{", '{\n  "format_version": 4,', 1),
             encoding="utf-8",
         )
         require_failure(duplicate_key, "duplicate JSON key", "duplicate-key mutation")

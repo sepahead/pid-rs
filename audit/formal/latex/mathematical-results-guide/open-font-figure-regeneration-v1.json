@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "purpose": "Exact open-font inputs and scope for non-canonical mathematical-results-guide SVG-to-PDF regeneration",
+  "purpose": "Exact open-font inputs and scope for non-canonical publication SVG-to-PDF regeneration used by the mathematical results guide and the separate SxPID3 source-marginal audit",
   "source_date_epoch": 1787875200,
   "fonts": [
     {
@@ -141,6 +141,12 @@
     {
       "source": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
       "source_sha256": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a",
+      "exact_css_family": "Latin Modern Sans",
+      "admitted_css_weights": [400, 700]
+    },
+    {
+      "source": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+      "source_sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
       "exact_css_family": "Latin Modern Sans",
       "admitted_css_weights": [400, 700]
     }
