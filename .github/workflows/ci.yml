@@ -931,7 +931,16 @@ jobs:
             "PID_RS_PDF_GATE_PATH=$workflow_path" \
             "PID_RS_PDF_GATE_HOME=$gate_home" \
             "PID_RS_PDF_GATE_TMPDIR=$gate_tmp" \
+            "PID_RS_C3_PDF_CAPTURE=$gate_tmp/c3-hosted-candidate.pdf" \
             bash --noprofile --norc scripts/check-formal-pdf-set.sh --cross-toolchain
+      - name: Upload zero-credit C3 guide-PDF diagnostic
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: c3-guide-pdf-diagnostic-${{ github.sha }}
+          path: ${{ runner.temp }}/pid-rs-formal-pdf-tmp/c3-hosted-candidate.pdf
+          if-no-files-found: error
+          retention-days: 1
 
   certified-sxpid-reference:
     name: Exact-count directed-rounding SxPID2 reference
