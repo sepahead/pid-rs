@@ -1122,8 +1122,14 @@ jobs:
       - run: python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
       - run: python3 scripts/check-ecosystem-capabilities.py
       - run: python3 scripts/check-ecosystem-capabilities-self-test.py
-      - run: python3 scripts/check-z3-pid2-algebra.py
-      - run: python3 scripts/check-z3-pid2-algebra-self-test.py
+      - run: python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+      - run: python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+      - run: python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+      - run: python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+      - run: python3 -I -S -B scripts/check-z3-pid2-algebra.py
+      - run: python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+      - run: python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py
+      - run: python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
       - run: python3 scripts/check-z3-ksg-integer-harmonic.py
       - run: python3 -O scripts/check-z3-ksg-integer-harmonic.py
       - run: python3 scripts/check-z3-ksg-integer-harmonic-self-test.py

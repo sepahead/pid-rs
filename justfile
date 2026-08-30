@@ -160,11 +160,17 @@ api-snapshots:
     scripts/check-public-api-snapshots.sh
     scripts/check-public-api-snapshots-self-test.sh
 
-# Bounded exact-real PID2 and PID3 algebra obligations (requires Z3 4.16.0, 64-bit CLI).
-# The target keeps its original name as a compatibility route.
+# Bounded represented-coordinate PID2 assurance plus exact-real PID2/PID3 algebra obligations
+# (requires Z3 4.16.0, 64-bit CLI). The target keeps its original name as a compatibility route.
 formal-pid2:
-    python3 scripts/check-z3-pid2-algebra.py
-    python3 scripts/check-z3-pid2-algebra-self-test.py
+    python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+    python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+    python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+    python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+    python3 -I -S -B scripts/check-z3-pid2-algebra.py
+    python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+    python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py
+    python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
 
 # Bounded positive-integer KSG/Ehrlich arithmetic and fail-closed candidate custody.
 # The unscoped main checker is intentionally omitted while the active packet is integration_no_go.

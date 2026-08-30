@@ -665,8 +665,14 @@ python3 -I -S -B scripts/check-advisory-councils-archive.py  # bounded inert arc
 python3 -O -I -S -B scripts/check-advisory-councils-archive.py
 python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py  # 64 named mutations
 python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py
-python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
-python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full  # exact grid + debug/release
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py  # copied-root + mutations
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+python3 -I -S -B scripts/check-z3-pid2-algebra.py       # exact PID2/PID3 lattice obligations; Z3 4.16.0
+python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py  # common + sign/coordinate/row SAT controls
+python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py         # 339 declarations / 246 named theorems
 python3 -O scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py
@@ -882,6 +888,13 @@ pytest crates/pid-python/tests -q
 - **Units:** all information quantities are in **nats** (natural log).
 - **PID identities:** MI terms that feed PID atoms must be computed with `NegativeHandling::Allow` —
   clamping a term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`.
+- **PID2 represented coordinates are a separate numerical layer:** `Pid2Result::from_estimate`
+  gives the four already represented inputs one exact-sum synergy meaning, then applies the
+  project-defined inclusive 32-position reconstruction guard. Preserve its input/atom/identity
+  error split, signed-zero rules, and exact reducer. Use
+  [`PID2_REPRESENTED_COORDINATE_ASSURANCE.md`](PID2_REPRESENTED_COORDINATE_ASSURANCE.md) and the
+  revision-4 checker before changing it. This is not an estimator-attainability, calibration,
+  support, paper-defect, or Rust-refinement theorem.
 - **Negative atoms are real:** `I^sx_∩` (and its atoms) can be negative; never silently clamp.
 - **Continuous support is declared, never inferred:** bare default continuous configs are
   intentionally non-runnable. Use the explicit absolute-continuity constructor only when every

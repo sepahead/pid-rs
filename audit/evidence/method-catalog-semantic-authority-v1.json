@@ -45,7 +45,7 @@
   "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
+  "catalog_sha256": "9beff46f04cda0cd19789da6730d4a9038883587064ef4392afa586bc636d63f",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -279,9 +279,10 @@
       "observed_alias_families": [
         "ehrlich-continuous-shared-exclusions",
         "ksg-mutual-information",
-        "mgw-categorical-shared-exclusions"
+        "mgw-categorical-shared-exclusions",
+        "williams-beer-imin"
       ],
-      "payload_sha256": "c464275322d2c9d9d37de9ce98472dce0dbbc60551f5c715d14a8d18f3dde346"
+      "payload_sha256": "802ee66bf24661327a1087fede91ee505c9f2376ed037dc4b20619b7fca64dc4"
     },
     {
       "facts": {
@@ -986,7 +987,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "c08c7ab303f29358446e698155db29adf412fe3f952caad503cb673f27905b15",
+  "ordered_root_sha256": "5572e9ed92bbc50054b27cfbf27618fd245663175777f2b1cbfc66dce67764ae",
   "reference_registry_sha256": "346e8a046cb7f5c2f9036cc9c3869faf9ee9962944ff640f01b623108981d1b1",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

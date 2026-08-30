@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from fractions import Fraction
+
 import numpy as np
 import pytest
 
@@ -59,6 +61,94 @@ def migration():
 
 def f64_bits(value: float) -> int:
     return int(np.float64(value).view(np.uint64))
+
+
+F64_SIGN_MASK = 1 << 63
+F64_FRACTION_MASK = (1 << 52) - 1
+F64_POSITIVE_INFINITY_BITS = 0x7FF0_0000_0000_0000
+F64_MAXIMUM_FINITE_BITS = 0x7FEF_FFFF_FFFF_FFFF
+
+
+def exact_fraction_from_finite_f64_bits(bits: int) -> Fraction:
+    """Decode one finite binary64 payload without using a host float operation."""
+    exponent_field = (bits >> 52) & 0x7FF
+    assert exponent_field != 0x7FF
+    fraction_field = bits & F64_FRACTION_MASK
+    if exponent_field == 0:
+        significand = fraction_field
+        power = -1074
+    else:
+        significand = (1 << 52) | fraction_field
+        power = exponent_field - 1075
+    if bits & F64_SIGN_MASK:
+        significand = -significand
+    if power >= 0:
+        return Fraction(significand << power, 1)
+    return Fraction(significand, 1 << -power)
+
+
+def positive_finite_f64_fraction(bits: int) -> Fraction:
+    assert 0 <= bits <= F64_MAXIMUM_FINITE_BITS
+    return exact_fraction_from_finite_f64_bits(bits)
+
+
+def independently_round_fraction_to_f64_bits(value: Fraction) -> int:
+    """Round by an exact ordered-payload search, independently of the Rust accumulator.
+
+    This test oracle does not share the checker's exponent/significand encoder. It searches for the
+    two adjacent nonnegative binary64 payloads using exact rational comparisons, then applies the
+    ties-to-even rule to the payload significand's low bit.
+    """
+    if value == 0:
+        return 0
+    sign = F64_SIGN_MASK if value < 0 else 0
+    magnitude = abs(value)
+    overflow_midpoint = Fraction(1 << 1024, 1) - Fraction(1 << 970, 1)
+    if magnitude >= overflow_midpoint:
+        return sign | F64_POSITIVE_INFINITY_BITS
+
+    low = 0
+    high = F64_MAXIMUM_FINITE_BITS
+    while low < high:
+        midpoint = (low + high + 1) // 2
+        if positive_finite_f64_fraction(midpoint) <= magnitude:
+            low = midpoint
+        else:
+            high = midpoint - 1
+
+    lower_value = positive_finite_f64_fraction(low)
+    if lower_value == magnitude or low == F64_MAXIMUM_FINITE_BITS:
+        return sign | low
+    upper = low + 1
+    upper_value = positive_finite_f64_fraction(upper)
+    lower_distance = magnitude - lower_value
+    upper_distance = upper_value - magnitude
+    if lower_distance < upper_distance:
+        rounded = low
+    elif upper_distance < lower_distance:
+        rounded = upper
+    else:
+        rounded = low if low & 1 == 0 else upper
+    return sign | rounded
+
+
+def independently_reconstruct_pid2_atom_bits(
+    mi_s1_bits: int,
+    mi_s2_bits: int,
+    joint_bits: int,
+    redundancy_bits: int,
+) -> tuple[int, int, int, int]:
+    """Derive the PID2 atom payloads from represented report coordinates exactly."""
+    mi_s1 = exact_fraction_from_finite_f64_bits(mi_s1_bits)
+    mi_s2 = exact_fraction_from_finite_f64_bits(mi_s2_bits)
+    joint = exact_fraction_from_finite_f64_bits(joint_bits)
+    redundancy = exact_fraction_from_finite_f64_bits(redundancy_bits)
+    unique_s1 = independently_round_fraction_to_f64_bits(mi_s1 - redundancy)
+    unique_s2 = independently_round_fraction_to_f64_bits(mi_s2 - redundancy)
+    synergy = independently_round_fraction_to_f64_bits(
+        joint - mi_s1 - mi_s2 + redundancy
+    )
+    return redundancy_bits, unique_s1, unique_s2, synergy
 
 
 def test_migration_public_surface_matches_exact_allowlist():
@@ -153,10 +243,25 @@ def test_continuous_pid2_scalar_and_report_routes_preserve_atom_bits():
         observation_model_description="seeded full-rank Gaussian fixture",
     )
 
-    keys = ("redundancy", "unique_s1", "unique_s2", "synergy")
-    assert tuple(f64_bits(atoms[key]) for key in keys) == tuple(
-        f64_bits(report["atoms"][key]) for key in keys
+    atom_keys = ("redundancy", "unique_s1", "unique_s2", "synergy")
+    term_keys = ("mi_s1_t", "mi_s2_t", "mi_s1s2_t", "redundancy_isx")
+    report_term_bits = tuple(f64_bits(report["estimate_terms"][key]) for key in term_keys)
+    independently_expected = independently_reconstruct_pid2_atom_bits(*report_term_bits)
+    scalar_bits = tuple(f64_bits(atoms[key]) for key in atom_keys)
+    report_bits = tuple(f64_bits(report["atoms"][key]) for key in atom_keys)
+
+    # These canaries exercise the separate ordered-payload encoder at underflow and overflow ties.
+    minimum_subnormal = Fraction(1, 1 << 1074)
+    assert independently_round_fraction_to_f64_bits(minimum_subnormal / 2) == 0
+    assert independently_round_fraction_to_f64_bits(3 * minimum_subnormal / 2) == 2
+    overflow_midpoint = Fraction(1 << 1024, 1) - Fraction(1 << 970, 1)
+    assert (
+        independently_round_fraction_to_f64_bits(overflow_midpoint)
+        == F64_POSITIVE_INFINITY_BITS
     )
+
+    assert scalar_bits == independently_expected
+    assert report_bits == independently_expected
 
 
 @pytest.mark.parametrize(

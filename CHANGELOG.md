@@ -9,6 +9,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a revision-4 assurance layer for the unchanged continuous PID2 represented-coordinate
+  semantics. A host-float-free integer/`Fraction` checker derives both identity-erasure directions,
+  all 16 signed-zero tuples, ordinary and near-zero 32/33 boundaries, 15/49 and 5/155 route
+  discriminators, exact-versus-Neumaier behavior, overflow and false-bound controls, every
+  conditioning outcome, and all 1,023 accepted scale-family seeds that reach one rejected endpoint.
+  Its copied-root hostile self-test rejects 18 semantic and four custody mutations under normal and
+  optimized Python; focused debug/release Rust execution, independent Python scalar/report atom-bit
+  reconstruction, and three additional Z3 sign/coordinate/row mutations bind distinct evidence
+  layers without claiming estimator attainability, calibration, a paper defect, or universal Rust
+  refinement. A self-contained worked assurance document records assumptions, derivations, costs,
+  negative controls, and nonclaims. The failed-and-later-cancelled M1 hosted run is retained as
+  scoped negative evidence. Only the mutable current Lean operational hashes are rebound;
+  historical r14 maps remain unchanged.
+
 - Expand direct continuous PID2 represented-input behavioral coverage without changing constructor
   arithmetic or the inclusive 32-position compatibility policy. The tests retain exact-versus-
   historical, Neumaier, and left-associated witnesses; exhaust all signed-zero inputs; cover the

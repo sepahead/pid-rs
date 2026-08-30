@@ -2705,13 +2705,32 @@ formula-in-code check to the theory documents. Its mutation suite proves that ea
 fails closed. The checker verifies syntax and rendering conventions only. It does not verify a
 mathematical statement.
 
+`check-pid2-represented-coordinate-v4.py` is an independent integer-and-`Fraction` model for the
+already represented continuous PID2 constructor coordinates. It does not call host floating-point
+arithmetic for expected values. The `model` scope reads no repository source; `model-source` adds
+four regular-file digest and structural bindings; `full` additionally runs focused PID2 and `exp0`
+tests in debug and release. The model covers both finite identity-erasure directions, all 16
+signed-zero tuples, ordinary and near-zero 32/33 boundaries, exact-versus-left/Neumaier controls,
+candidate and reconstruction overflow, the false atom-scale bound, every conditioning outcome,
+and all 1,023 accepted seeds whose exact power-of-two scaling reaches one rejected endpoint.
+
+Its hostile self-test rejects host-float oracle escapes, runs copied-root model/source checks in
+normal and optimized Python, proves model scope does not read a supplied source root, and rejects
+18 semantic plus four source-custody mutations. These are bounded represented-coordinate
+engineering checks. They do not establish estimator attainability, support, calibration, a
+Wibral/Ehrlich defect, or a universal Rust-refinement theorem. The complete assumptions, worked
+derivations, costs, negative results, and nonclaims are in
+`PID2_REPRESENTED_COORDINATE_ASSURANCE.md`.
+
 `check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
 QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source
 exchange, and four-node Möbius inversion followed by reconstruction. Two obligations cover
 Möbius inversion and zeta reconstruction on the complete 18-node PID3 lattice. They also cover
 formula-level equivariance for the `S0`/`S1` and `S1`/`S2` swaps. These two swaps generate all six
-permutations of three sources. The mutation self-test changes each obligation to an exactly
-satisfiable case and verifies rejection. The PID3 proofs cover exact-real lattice formulas only.
+permutations of three sources. The mutation self-test changes each obligation through the shared
+offset and separately attacks the PID2 synergy sign, source-swap coordinate, and Möbius row. All
+eight wrong statements must be exactly satisfiable and rejected. The proofs cover exact-real
+lattice formulas only.
 They do not establish estimator premises, asymptotics, Rust refinement, floating-point behavior,
 distributional claims, a Lean development, or a four-source lattice.
 
@@ -2736,8 +2755,14 @@ python3 -S -B scripts/check-finite-convergence-document-semantics.py
 python3 -O -S -B scripts/check-finite-convergence-document-semantics.py
 python3 -S -B scripts/check-finite-convergence-document-semantics-self-test.py
 python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
-python3 scripts/check-z3-pid2-algebra.py
-python3 scripts/check-z3-pid2-algebra-self-test.py
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+python3 -I -S -B scripts/check-z3-pid2-algebra.py
+python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py
+python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
 python3 -O scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py

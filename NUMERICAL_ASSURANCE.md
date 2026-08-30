@@ -258,6 +258,23 @@ This threshold's 32 ordered-binary64 **positions** is unrelated to the KSG integ
 fixture's separate `32 * f64::EPSILON`-**nat** finite-corpus ceiling. They measure different
 objects, use different units, and provide no evidence for one another.
 
+Revision-4 assurance closes the declared exponent family rather than retaining a single scaling
+example. There are 1,023 distinct finite seed tuples, indexed by `k = 1,...,1023`. Every seed is
+accepted, and exact multiplication of all four represented coordinates by its corresponding
+power of two maps it to the same finite-input endpoint whose atom reconstruction overflows and is
+rejected. The `k = 4` member is the named multiplication-by-16 example. This proves that the
+project compatibility policy is not homogeneous under that synthetic represented-coordinate
+scaling family. It does **not** prove a scale defect in a PID measure, a valid probability-law or
+source-coordinate transformation, an estimator-level gauge result, or a defect in Ehrlich et al.
+
+The complete assumptions, exact bit patterns, symbolic family derivation, representative cases,
+signed-zero census, conditioning branches, Neumaier and left-association negative controls, cost,
+host/API expectations, verification layers, and nonclaims are in
+[`PID2_REPRESENTED_COORDINATE_ASSURANCE.md`](PID2_REPRESENTED_COORDINATE_ASSURANCE.md). The earlier
+bounded search that found no Neumaier discriminator remains useful negative historical evidence;
+the exact counterexamples now supersede only its absence-of-witness conclusion. They do not turn
+that bounded search into a general statement about Neumaier summation.
+
 ## 4. Reproducible counterexamples
 
 Sections 4.1--4.4 use valid empirical count tables rather than synthetic non-PID operand lists; cell
