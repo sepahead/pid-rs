@@ -920,6 +920,19 @@ jobs:
           verify_tagpdf_compat_toolchain
           verify_pdfresources_compat_toolchain
           verify_formal_command_selection
+          /usr/bin/env -i \
+            "PATH=$formal_pdf_path" \
+            "HOME=$gate_home" \
+            "TMPDIR=$gate_tmp" \
+            "ELAN_HOME=$gate_home/.elan" \
+            LC_ALL=C \
+            LANG=C \
+            TZ=UTC \
+            "PID_RS_PDF_TMPDIR=$gate_tmp" \
+            bash --noprofile --norc scripts/build-mathematical-results-guide-pdf.sh \
+              --cross-toolchain "$gate_tmp/c3-hosted-candidate.pdf"
+          /usr/bin/test -f "$gate_tmp/c3-hosted-candidate.pdf"
+          /usr/bin/sha256sum "$gate_tmp/c3-hosted-candidate.pdf"
           exec /usr/bin/env -i \
             "PATH=$formal_pdf_path" \
             "HOME=$gate_home" \
@@ -931,7 +944,6 @@ jobs:
             "PID_RS_PDF_GATE_PATH=$workflow_path" \
             "PID_RS_PDF_GATE_HOME=$gate_home" \
             "PID_RS_PDF_GATE_TMPDIR=$gate_tmp" \
-            "PID_RS_C3_PDF_CAPTURE=$gate_tmp/c3-hosted-candidate.pdf" \
             bash --noprofile --norc scripts/check-formal-pdf-set.sh --cross-toolchain
       - name: Upload zero-credit C3 guide-PDF diagnostic
         if: ${{ always() }}

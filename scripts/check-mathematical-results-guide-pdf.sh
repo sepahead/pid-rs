@@ -200,14 +200,6 @@ fi
 if [[ "$MODE" == "--cross-toolchain" ]]; then
   cat "$BUILD_ROOT/build.stdout"
 fi
-if [[ -n "${PID_RS_C3_PDF_CAPTURE:-}" ]]; then
-  if [[ "$MODE" != "--cross-toolchain" || "$PID_RS_C3_PDF_CAPTURE" != /* ]]; then
-    echo "$CHECK_NAME: diagnostic capture requires cross-toolchain mode and an absolute path" >&2
-    exit 1
-  fi
-  cp -- "$BUILT" "$PID_RS_C3_PDF_CAPTURE"
-  echo "$CHECK_NAME: zero-credit diagnostic PDF captured at $PID_RS_C3_PDF_CAPTURE"
-fi
 
 validate_pdf() {
   local label="$1" pdf="$2" structure_relation="$3"
