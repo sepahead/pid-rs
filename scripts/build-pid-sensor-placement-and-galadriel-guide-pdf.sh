@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 SOURCE="$ROOT/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
 LATEX_DIR="$ROOT/audit/formal/latex/pid-sensor-placement-and-galadriel-guide"
+TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 FIGURE_DIR="$ROOT/audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide"
 FIGURE_MANIFEST="$FIGURE_DIR/figure-assets.json"
 DEFAULT_OUTPUT="$ROOT/output/pdf/pid-sensor-placement-and-galadriel-guide.pdf"
@@ -55,7 +56,8 @@ done
   echo "PID sensor-placement guide PDF build failed: canonical Markdown is absent or symbolic" >&2
   exit 1
 }
-[[ -f "$LATEX_DIR/header.tex" && -f "$LATEX_DIR/filter.lua" ]] || {
+[[ -f "$LATEX_DIR/header.tex" && -f "$LATEX_DIR/filter.lua" \
+    && -f "$TAGPDF_OPENACTION_COMPAT" && ! -L "$TAGPDF_OPENACTION_COMPAT" ]] || {
   echo "PID sensor-placement guide PDF build failed: projection source is incomplete" >&2
   exit 1
 }
@@ -139,6 +141,7 @@ source_digest_record="$work_root/source-digests.txt"
     "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md" \
     "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/header.tex" \
     "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/filter.lua" \
+    "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex" \
     "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/figure-assets.json"
   for stem in "${FIGURE_STEMS[@]}"; do
     shasum -a 256 \
@@ -159,6 +162,7 @@ trailer_id="$(shasum -a 256 "$source_digest_record" | awk '{print toupper(substr
     --from=gfm+tex_math_dollars --to=latex --standalone --table-of-contents --toc-depth=2 \
     --lua-filter="$LATEX_DIR/filter.lua" \
     --include-in-header="$LATEX_DIR/header.tex" \
+    --include-in-header="$TAGPDF_OPENACTION_COMPAT" \
     --metadata=title:'PID in Galadriel and sensor placement' \
     --metadata=author:'pid-rs project analysis' \
     --metadata=date:'30 August 2026' \

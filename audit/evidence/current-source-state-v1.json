@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "1708b9bf6ea359d049a65d9460ad09c9b4aec06e5412c86278f7a5b210349433",
-        "size_bytes": 268584
+        "sha256": "328820babd900e42110f8a232e0838a8133377b2b607e0a59d803889b6ca96fb",
+        "size_bytes": 269137
       },
       {
         "git_mode": "100644",
@@ -1794,6 +1794,12 @@
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
         "sha256": "ffab4449dddb2d09c8392b0ab4d06277e908fb707eecf4078a74980949e96872",
         "size_bytes": 53711
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/pid-sensor-placement-guide-hosted-openaction-correction-2026-08-30.md",
+        "sha256": "ba077fd4b2f46f77481bf9cbe594d2c9b40b92926cde328c0b274d3146ecbf9f",
+        "size_bytes": 2782
       },
       {
         "git_mode": "100644",
@@ -5014,7 +5020,7 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/pid-sensor-placement-and-galadriel-guide.pdf",
-        "sha256": "5afc694e007366723eac3f9b756ef000c6614b62a7be540bc7c9980a9676b3d2",
+        "sha256": "b3a4c18e51258b86ca5b90c61e14037e9428b01d61d8672456f03e894d898f64",
         "size_bytes": 1382954
       },
       {
@@ -5062,8 +5068,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-pid-sensor-placement-and-galadriel-guide-pdf.sh",
-        "sha256": "21ea6e059664dfb40ae6f11ccb075fbbc088bec9e1c4c56fcce86693bd76c1d1",
-        "size_bytes": 9685
+        "sha256": "23b26648933ac7063b945b604b3687668c9c5b9aebab8b26b0b2bcf55d87cd9f",
+        "size_bytes": 10006
       },
       {
         "git_mode": "100755",
@@ -5752,7 +5758,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "1546b7939e898f62f4cc00434b452a9bdb1ffbfde09c64869785faeef68f6161",
+        "sha256": "6e2b2f1929a5f4124c495b727990496f2448036e4f537d6a23683ed53447be5f",
         "size_bytes": 120874
       },
       {
@@ -5962,8 +5968,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh",
-        "sha256": "ba60e1f16c316df64e1c5abfdff93ba2480c05f147aff99024335e9253d2181e",
-        "size_bytes": 29955
+        "sha256": "43ab25441fd3162a90d03a365d4fd5837ef98703c075025f5fb500a3a72b95ca",
+        "size_bytes": 30180
       },
       {
         "git_mode": "100644",
@@ -6374,8 +6380,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "6f0b800567be5f71fae33b0abfb3af8e71cbbf8c907681a2d4dc633b8cf99c16",
-    "entry_count": 1038
+    "entries_sha256": "b58bbe9b7acbc873670682a2f85c9044c10bd6ed21aabffeee8a15916678b0aa",
+    "entry_count": 1039
   },
   "subprojections": [
     {
@@ -6395,7 +6401,7 @@
       ]
     },
     {
-      "entries_sha256": "40ca394d593782e9895803c2e6938d0c8556d7b3713252846c5f9502cc19670c",
+      "entries_sha256": "98ade0db7603c4f35925a3ecc7e8950cb16f9ee9827f054d740ec116ce851af9",
       "entry_count": 21,
       "name": "generated_pdf_set",
       "selectors": [
@@ -6403,7 +6409,7 @@
       ]
     },
     {
-      "entries_sha256": "b5e0ba6def87170858fa3f9b41d5b36427b21927ea84b7dc434a6f605b412165",
+      "entries_sha256": "f4fe285c1042b5e296b3619eb98e669e295f54a5791591fcd1ef73634e06040a",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

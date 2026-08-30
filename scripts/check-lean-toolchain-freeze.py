@@ -659,7 +659,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ci.yml": "c34bfb2ed07fd324f045176a4e16e38bca399ee2cf4aed00a25f8484fa20cd3a",
     ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
     "AGENTS.md": "6605d0811adaa663cbd8c3d9bc69e9ac85b380752c28899045208c8ae7882c28",
-    "CHANGELOG.md": "1708b9bf6ea359d049a65d9460ad09c9b4aec06e5412c86278f7a5b210349433",
+    "CHANGELOG.md": "328820babd900e42110f8a232e0838a8133377b2b607e0a59d803889b6ca96fb",
     "justfile": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
     "scripts/README.md": "2a5daafb9212582423605674ffa5a148bc5e7b4a7ef07898ca323718321b333f",
     "scripts/check-certified-sxpid2-claim-self-test.py": (

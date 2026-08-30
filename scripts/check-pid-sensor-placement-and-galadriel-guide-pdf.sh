@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 SOURCE="$ROOT/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
 PDF="$ROOT/output/pdf/pid-sensor-placement-and-galadriel-guide.pdf"
 BUILDER="$ROOT/scripts/build-pid-sensor-placement-and-galadriel-guide-pdf.sh"
+TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 EVIDENCE_RECEIPT="$ROOT/audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.json"
 EVIDENCE_ARCHIVE="$ROOT/audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.tar.gz"
 CHECK_NAME="PID sensor-placement guide PDF check"
@@ -23,7 +24,8 @@ for command_name in awk cmp find grep mktemp pdffonts pdfinfo pdftoppm pdftotext
   }
 done
 
-for required in "$SOURCE" "$PDF" "$BUILDER" "$EVIDENCE_RECEIPT" "$EVIDENCE_ARCHIVE"; do
+for required in "$SOURCE" "$PDF" "$BUILDER" "$TAGPDF_OPENACTION_COMPAT" \
+    "$EVIDENCE_RECEIPT" "$EVIDENCE_ARCHIVE"; do
   [[ -f "$required" && ! -L "$required" ]] || {
     echo "$CHECK_NAME failed: required input is absent, nonregular, or symbolic: $required" >&2
     exit 1
@@ -45,6 +47,7 @@ source_digest_record="$tmp_root/source-digests.txt"
     "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md" \
     "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/header.tex" \
     "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/filter.lua" \
+    "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex" \
     "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/figure-assets.json"
   for stem in current-versus-proposed measurement-to-estimand placement-evidence-funnel; do
     shasum -a 256 \

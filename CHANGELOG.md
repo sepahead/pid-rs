@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Preserve the sensor-placement guide's structure-aware catalog `OpenAction` on the pinned Ubuntu
+  TeX Live 2023 toolchain. Its builder now includes the already reviewed LPPL tagpdf compatibility
+  source used by the mathematical results guide, and both the deterministic trailer identifier and
+  the PDF checker bind those exact compatibility bytes. This retains the same bounded internal
+  first-page `GoTo` action on old and current tagpdf; it does not relax exact mode, object checks,
+  source custody, mathematical content, or scientific claims.
+
 - Preserve the certified SxPID2 revision-3 `justfile` execution-container binding by removing a
   redundant standalone Just alias for the new sensor-placement guide. The guide remains directly
   checkable through its versioned script and is already mandatory in the complete formal-PDF
