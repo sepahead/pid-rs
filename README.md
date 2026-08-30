@@ -63,7 +63,7 @@ from methods to papers, external reference code, Rust/Python entry points, featu
 contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machine-readable source
 is [`method-catalog.json`](method-catalog.json).
 
-The scoped, junior-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
+The scoped, reader-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
 [human PDF](output/pdf/mathematical-results-guide.pdf) map eight result families to their exact
 objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
@@ -95,6 +95,20 @@ resolves every key to the exact embedded-font closure and requires all decoded c
 match after the admitted `Tf` name substitutions. The retained replay is not a general
 Pandoc-equivalence, native-hardware, atomic executable-causation, PDF/UA, renderer-equivalence, or
 mathematical-correctness claim.
+
+The separate [Galadriel and sensor-placement guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md)
+and its [rendered PDF](output/pdf/pid-sensor-placement-and-galadriel-guide.pdf) distinguish three
+offline synthetic PID studies across two binaries: the frozen CREBAIN categorical conformance
+study, a generated categorical XOR MGW PID2 study, and a separate continuous Ehrlich PID2
+sign-parity study. It keeps all three separate from a proposed, unimplemented placement research
+program. The guide gives a self-contained finite-categorical MGW definition and worked atom, explicit
+physical-to-categorical examples with multiple cameras and microphones and optional thermal input,
+empirical-versus-population obligations, resource and retained latency boundaries, ten application
+designs, direct non-PID comparators, and a 140-lens hostile checklist. It claims no current map
+optimizer, transfer between the categorical and continuous functionals, field validity, causal
+result, real-time qualification, or evidence that PID should replace coverage, task loss, MI/CMI,
+ablation, failure testing, Gaussian-process placement, Fisher design, or Bayesian experimental
+design.
 
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the

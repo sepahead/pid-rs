@@ -62,6 +62,7 @@ LATEX_STANDALONE=(
 )
 MARKDOWN_SOURCES=(
   MATHEMATICAL_RESULTS_GUIDE.md
+  PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
@@ -78,6 +79,7 @@ STANDALONE=(
   ksg-m1a-composite-v7-boundary
   mathematical-results-guide
   mathematical-problem-solving-workflow
+  pid-sensor-placement-and-galadriel-guide
   support-change-tolerant-averaged-sxpid-continuity
   sxpid3-source-marginal-and-bounded-audit
   two-source-sxpid-count-atom-bridge

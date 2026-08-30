@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc">
+  <title id="title">Placement evidence funnel and no-PID decision gate</title>
+  <desc id="desc">A four-stage funnel. Stage one defines candidate locations, costs, sensor physics, and a target kept source-disjoint by custody procedure; this proves neither target correctness nor statistical independence. Stage two compares registered applicable placement methods including coverage, task loss, joint target mutual information with conditional mutual information as its exact chain-rule gain, robust selection, Fisher information, and Bayesian design. Stage three applies a full named signed PID atom vector only to shortlisted portfolios of two to four declared PID sources. Stage four tests held-out task value, dropout robustness, layout stability, runtime, and reference-versus-optimized agreement, with a certified interval where one is available. Three outcomes are legitimate: adopt a registered PID objective or tie-breaker only after all gates pass; retain PID as record-only scientific explanation with no decision edge; or omit PID and use the simpler method.</desc>
+  <defs>
+    <pattern id="topPattern" width="84" height="84" patternUnits="userSpaceOnUse">
+      <circle cx="42" cy="42" r="27" fill="none" stroke="#D2E0E2" stroke-width="1.2" opacity=".17"/>
+      <path d="M42 5 53 31 79 42 53 53 42 79 31 53 5 42 31 31Z" fill="none" stroke="#D2E0E2" stroke-width="1.2" opacity=".22"/>
+    </pattern>
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.8" fill="#1F6968" opacity=".12"/>
+    </pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#2C3E50" flood-opacity=".14"/></filter>
+    <marker id="arr" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0 11 5.5 0 11Z" fill="#1F6968"/></marker>
+    <marker id="arrL" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0 11 5.5 0 11Z" fill="#1F3F60"/></marker>
+    <marker id="arrB" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0 11 5.5 0 11Z" fill="#916400"/></marker>
+    <style>
+      .title{font:700 34px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+      .subtitle{font:500 18px 'Avenir Next',Avenir,Arial,sans-serif;fill:#D2E0E2}
+      .stage{font:700 17px 'Avenir Next',Avenir,Arial,sans-serif;fill:#1F6968;letter-spacing:1.7px}
+      .node{font:700 20px 'Avenir Next',Avenir,Arial,sans-serif;fill:#2C3E50}
+      .body{font:500 15px 'Avenir Next',Avenir,Arial,sans-serif;fill:#2C3E50}
+      .small{font:500 13px 'Avenir Next',Avenir,Arial,sans-serif;fill:#455A64}
+      .gate{font:700 19px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+      .outcome{font:700 16px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9;letter-spacing:.2px}
+      .outcomeSmall{font:500 12.5px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+      .mono{font:500 13px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#2C3E50}
+    </style>
+  </defs>
+  <rect width="1600" height="1050" fill="#F7F3E9"/>
+  <rect width="1600" height="145" fill="#1F3F60"/>
+  <rect width="1600" height="145" fill="url(#topPattern)"/>
+  <rect y="130" width="1600" height="15" fill="#1F6968"/>
+  <text x="70" y="64" class="title">A PLACEMENT METHOD MUST EARN ITS PID LAYER</text>
+  <text x="70" y="105" class="subtitle">Primary task evidence narrows the search; PID audits interaction only after the shortlist exists.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="55" y="200" width="330" height="550" rx="22" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <rect x="55" y="200" width="330" height="550" rx="22" fill="url(#dots)"/>
+    <text x="82" y="244" class="stage">1 · DEFINE THE WORLD</text>
+    <text x="82" y="286" class="node">Candidate map and law</text>
+    <rect x="82" y="318" width="276" height="220" rx="16" fill="#EDF5F3" stroke="#D2E0E2"/>
+    <path d="M102 355H338M102 405H338M102 455H338M140 338V518M205 338V518M270 338V518" stroke="#B7CACC" stroke-width="1"/>
+    <path d="M108 504C155 470 176 398 230 420S298 378 338 350" fill="none" stroke="#1F6968" stroke-width="5" opacity=".55"/>
+    <circle cx="140" cy="455" r="11" fill="#B28218"/><circle cx="205" cy="405" r="11" fill="#1F6968"/><circle cx="270" cy="455" r="11" fill="#743E37"/><circle cx="335" cy="405" r="11" fill="#1F3F60"/>
+    <text x="82" y="578" class="body">Candidate = location + modality</text>
+    <text x="82" y="607" class="body">+ device + configuration</text>
+    <text x="82" y="641" class="body">Source-disjoint target custody</text>
+    <text x="82" y="670" class="body">Custody ≠ correctness / independence</text>
+    <text x="82" y="704" class="body">Cost · power · bandwidth</text>
+    <text x="82" y="733" class="body">Occlusion · clocks · failure</text>
+
+    <rect x="430" y="230" width="330" height="490" rx="22" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <text x="457" y="274" class="stage">2 · OPTIMIZE THE TASK</text>
+    <text x="457" y="316" class="node">Registered applicable baselines</text>
+    <rect x="457" y="350" width="276" height="286" rx="16" fill="#EDF5F3"/>
+    <text x="481" y="390" class="body">Task loss and calibration</text>
+    <text x="481" y="428" class="body">Coverage / set cover</text>
+    <text x="481" y="466" class="body">Joint MI; CMI is its exact gain</text>
+    <text x="481" y="504" class="body">Robust submodular selection</text>
+    <text x="481" y="542" class="body">Fisher / D-optimal design</text>
+    <text x="481" y="580" class="body">Bayesian information gain</text>
+    <text x="457" y="676" class="small">Exact enumeration is authority on small maps.</text>
+
+    <rect x="805" y="265" width="330" height="420" rx="22" fill="#FFFFFF" stroke="#916400" stroke-width="2"/>
+    <text x="832" y="309" class="stage" fill="#916400">3 · AUDIT THE SHORTLIST</text>
+    <text x="832" y="351" class="node">Named PID, low arity</text>
+    <rect x="832" y="383" width="276" height="204" rx="16" fill="#FBF5E8" stroke="#E6D4A7"/>
+    <text x="856" y="423" class="mono">Phi_M(P; S_1,...,S_k -> T)</text>
+    <text x="856" y="461" class="body">k = 2, 3, or 4 declared sources</text>
+    <text x="856" y="499" class="body">k does not count physical devices</text>
+    <text x="856" y="529" class="body">Signed atoms · fixed source order</text>
+    <text x="856" y="557" class="body">Declared source and target alphabets</text>
+    <text x="832" y="626" class="small">No canonical scalar score is assumed.</text>
+
+    <rect x="1180" y="300" width="365" height="350" rx="22" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <text x="1207" y="344" class="stage">4 · CHALLENGE OUTER HOLDOUT</text>
+    <text x="1207" y="386" class="node">Evidence before adoption</text>
+    <text x="1207" y="428" class="body">Task noninferiority or gain</text>
+    <text x="1207" y="462" class="body">Dropout and map stability</text>
+    <text x="1207" y="496" class="body">Functional sensitivity</text>
+    <text x="1207" y="530" class="body">Reference / optimized agreement</text>
+    <text x="1207" y="564" class="body">Latency and missed deadlines</text>
+    <text x="1207" y="608" class="small">New sites · days · missions · hardware</text>
+  </g>
+
+  <path d="M385 475H430" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <path d="M760 475H805" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <path d="M1135 475H1180" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+
+  <text x="970" y="775" class="stage" text-anchor="middle">THREE PRE-DECLARED OUTCOMES ARE LEGITIMATE</text>
+  <path d="M1362 650V788" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <path d="M288 805H1362" stroke="#9CAFB3" stroke-width="3"/>
+  <circle cx="1362" cy="805" r="7" fill="#1F6968"/>
+  <path d="M288 805V842" stroke="#1F6968" stroke-width="4" marker-end="url(#arr)"/>
+  <path d="M800 805V842" stroke="#1F3F60" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arrL)"/>
+  <path d="M1312 805V842" stroke="#916400" stroke-width="4" stroke-dasharray="3 7" stroke-linecap="round" marker-end="url(#arrB)"/>
+
+  <rect x="55" y="850" width="466" height="90" rx="20" fill="#1F6968"/>
+  <text x="288" y="886" class="outcome" text-anchor="middle">A · ACCEPT OBJECTIVE OR TIE-BREAKER</text>
+  <text x="288" y="915" class="outcomeSmall" text-anchor="middle">Only after every registered gate passes</text>
+
+  <rect x="567" y="850" width="466" height="90" rx="20" fill="#1F3F60"/>
+  <text x="800" y="886" class="outcome" text-anchor="middle">B · RECORD-ONLY SCIENTIFIC EXPLANATION</text>
+  <text x="800" y="915" class="outcomeSmall" text-anchor="middle">Useful structure; no selection, control, or authority edge</text>
+
+  <rect x="1079" y="850" width="466" height="90" rx="20" fill="#916400"/>
+  <text x="1312" y="886" class="outcome" text-anchor="middle">C · OMIT PID</text>
+  <text x="1312" y="915" class="outcomeSmall" text-anchor="middle">Use the simpler method and preserve the negative result</text>
+
+  <rect x="55" y="960" width="1490" height="42" rx="14" fill="#2C3E50"/>
+  <text x="800" y="988" class="gate" text-anchor="middle">All three outcomes are valuable when the protocol, assumptions, gates, and negative results are preserved.</text>
+</svg>

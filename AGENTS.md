@@ -102,6 +102,34 @@ A result transfers between rows below only through a premise-explicit typed mapp
 explicitly scoped empirical comparison that names both objects. A comparison is evidence about its
 declared fixture, not an equivalence theorem.
 
+For every important scientific claim, method transfer, application recommendation, or publication
+decision, add a council review with at least 50 explicitly named hostile lenses beyond the ordinary
+author pass. Ask, at minimum: why PID; why this named PID functional; why this source grouping,
+target, alphabet, law, and estimator; and why not MI/CMI, direct task loss, fixed-model and retrained
+ablation, explicit failure utility, coverage, Bayesian or Fisher design, another PID functional, or
+no PID. Deduplicate correlated arguments, preserve dissent and shared failure cuts, and treat the
+lens count as a coverage checklist rather than correctness evidence.
+
+Before an important method, design, proof, estimator, integration, or repair decision, compare at
+least ten materially distinct routes. Include a no-action route and the simplest applicable non-PID
+route. Evaluate the routes through the hostile council, then select the best single route or a
+premise-compatible combination of the best parts. Record the selected rationale, rejected routes,
+failure conditions, and evidence needed to reconsider them. Do not count cosmetic variants as
+distinct routes, and do not treat enumeration or council agreement as mathematical evidence.
+
+Scientific documents must be self-contained for a mathematically trained reader who is new to this
+repository. State each equation's domain and assumptions near the equation; define symbols before
+use; show the physical-to-mathematical input and output; include at least one worked example where
+useful; distinguish pointwise, averaged, empirical, and population quantities; report estimator,
+sampling, numerical, resource, and application bounds; and explain both legitimate uses and reasons
+to prefer a simpler method. Cite primary sources for paper-defined and classical results, and mark
+project-defined derivations and novelty status explicitly. Use ASD-STE100-inspired plain technical
+prose for technical sections, but do not claim ASD-STE100 conformance without a separate audit.
+Preserve counterexamples, false positives, unsuccessful routes, and negative results with their
+scope and rejection reason; do not leave stale claims in an apparently current lane.
+Keep repository prose and commit messages claim-centered and professional: describe the evidence,
+correction, and remaining boundary without naming private review settings or personal evaluations.
+
 | Object | Exact source and construction | pid-rs route and hard boundary |
 |---|---|---|
 | MGW categorical shared exclusions | Makkeh–Gutknecht–Wibral, `arXiv:2002.03356v5`, *Phys. Rev. E* 103, 032149: finite-categorical pointwise informative/misinformative shared exclusions and signed joint-law averages. | Stable direct categorical plug-in routes, reported in nats. Empirical rows define the plug-in PMF; this is not Ehrlich continuous shared exclusions, Schick-Poland general measure theory, or Williams–Beer `I_min`. |
@@ -702,6 +730,7 @@ python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-self-tes
 scripts/check-mathematical-results-guide-pdf.sh --exact  # raw repeated-build and rebuilt/committed guide bytes
 # selected hosted/legacy profile; unsupported producers fail closed
 scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
+scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh --exact  # current/proposed Galadriel placement guide
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py

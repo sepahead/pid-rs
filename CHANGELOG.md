@@ -9,6 +9,34 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a self-contained Galadriel and sensor-placement research guide in Markdown and a deterministic
+  A4 PDF. It separates three offline synthetic PID studies across two binaries: the current
+  record-only CREBAIN categorical MGW conformance path, a generated categorical XOR MGW PID2
+  study, and the distinct continuous Ehrlich PID2 sign-parity study. It keeps all three separate
+  from a proposed placement study;
+  defines the finite-categorical union-of-conjunctions functional,
+  component split, redundancy-lattice inversion, empirical average, and one checked pointwise AND
+  atom; distinguishes 18 atoms from the bounded 108-coordinate audit surface and the 166-node
+  four-source lattice; and states the complete source, target, alphabet, grouping, joint-law,
+  sampling, estimator, numerical, resource, and application boundaries. Ten grounded use-case
+  designs cover multiple cameras and microphones, radar, and optional thermal sensing, while a
+  comparator matrix and no-PID gate templates require direct task, MI/CMI, fixed/retrained ablation,
+  dropout, coverage, Gaussian-process, convex, Fisher, Bayesian-design, Williams-Beer, BROJA, and
+  ordinary Shapley and Shapley–Taylor interaction alternatives where they answer the question more
+  directly. A 140-lens hostile review
+  retains negative results and prohibits transferring guarantees among distinct objects. One
+  source-bound warm Criterion archive and JSON receipt retain four non-comparable categorical call
+  observations with explicit nonclaims. The archive excludes AppleDouble metadata, fixes the gzip
+  header timestamp, and preserves the exact raw-stdout and 16 Criterion-JSON member bytes; its
+  checker rejects unsafe, duplicate, non-file, or undeclared archive members. Three handcrafted SVGs and exact tracked PDF derivatives,
+  a digest manifest, a same-toolchain byte-exact builder/checker, and a bounded cross-toolchain
+  layout-text fallback provide publication custody. The PDF checker pins its audited pypdf object
+  model, requires an exact embedded and Unicode-mapped 58-font roster, and admits the SVG renderer's
+  19 `sub=no` Type 3 entries only after proving that each is a zero-area, nonpainting U+0020 spacing
+  shim. This adds no placement implementation, field or
+  population validation, generic PID preference, real-time qualification, scientific-priority
+  claim, or runtime authority edge in Galadriel or Haldir.
+
 - Replace runtime librsvg conversion in the separate SxPID3 source-marginal audit with two exact
   tracked open-font PDF derivatives. The crosswalk remains shared with the mathematical results
   guide; the source-cylinder derivative is newly tracked. Its SVG now names only Latin Modern Sans
@@ -349,7 +377,7 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   the census unit in the existing committed Markdown/PDF report and rebuild its deterministic
   publication artifact without changing a formula or numerical result.
 
-- Add a scoped, junior-facing mathematical results guide in canonical Markdown and a reviewed
+- Add a scoped, reader-facing mathematical results guide in canonical Markdown and a reviewed
   canonical A4 PDF. Eight result cards state the mathematical object, assumptions, central
   formula, evidence type, cost, use, strongest nonclaim, and governing detailed source. A semantic
   firewall keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions,

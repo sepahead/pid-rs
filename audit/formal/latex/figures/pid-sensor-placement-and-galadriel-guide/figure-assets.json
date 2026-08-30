@@ -1,0 +1,35 @@
+{
+  "schema": "pid-rs.pid-sensor-placement-guide-figure-assets.v1",
+  "renderer_observation": {
+    "command": "rsvg-convert --format=pdf --output=<pdf> <svg>",
+    "rsvg_convert": "2.62.3",
+    "cairo": "1.18.4",
+    "pango": "1.57.1",
+    "harfbuzz": "14.2.1",
+    "fontconfig": "2.18.1"
+  },
+  "assets": [
+    {
+      "stem": "current-versus-proposed",
+      "svg_sha256": "53a2742a62d40e35a9d812fa5962a3fb5e7542eb0f7955bb99741a054d2037a5",
+      "pdf_sha256": "f7d9a1f4df47606803ccb98f3f0e7b328270b2479d15c750e0e03d6d536b11a3",
+      "pdf_pages": 1,
+      "pdf_page_points": [1200.0, 705.0]
+    },
+    {
+      "stem": "measurement-to-estimand",
+      "svg_sha256": "a652914324241c6f00f0953d59b3f0945ee5a3089701d84d121ce7742a6f7e0c",
+      "pdf_sha256": "202a4b55eadaebce97d3453df3d9ad96643cfab61fa0996875f5bef02060cdc8",
+      "pdf_pages": 1,
+      "pdf_page_points": [1200.0, 772.5]
+    },
+    {
+      "stem": "placement-evidence-funnel",
+      "svg_sha256": "1b582e6fcc6f2780a1f039da710be163da5a41dc03a7b8bc0b33d2c6c396921f",
+      "pdf_sha256": "63abdcbdbf710123b4dbe40c5a5123165afb8e50691bc952d6a40a316c43f2ff",
+      "pdf_pages": 1,
+      "pdf_page_points": [1200.0, 787.5]
+    }
+  ],
+  "claim_boundary": "The manifest binds one observed SVG-to-PDF rendering for each figure. The builder imports the bound PDF bytes and does not rerender the SVG. Hash equality is custody evidence, not semantic equivalence, accessibility conformance, renderer correctness, or mathematical validation."
+}

@@ -1,0 +1,159 @@
+{
+  "schema": "pid-rs.categorical-pid-latency-smoke-receipt.v1",
+  "status": "retained_local_smoke_evidence",
+  "created_utc": "2026-08-30T12:48:39Z",
+  "scope": {
+    "repository_commit": "718447aa2acc6600a3bdce1d81cda0dba4f4ab3b",
+    "tracked_benchmark_sources_clean": true,
+    "untracked_publication_artifacts_present": true,
+    "benchmark_family": "categorical_pid_latency",
+    "mode": "warm Criterion microbenchmark",
+    "units": "seconds per call",
+    "statistic": "Criterion bootstrap mean 95% confidence interval"
+  },
+  "command": [
+    "cargo",
+    "bench",
+    "--locked",
+    "-p",
+    "pid-core",
+    "--all-features",
+    "--bench",
+    "estimators",
+    "--",
+    "categorical_pid_latency",
+    "--color",
+    "never",
+    "--noplot",
+    "--verbose",
+    "--sample-size",
+    "100",
+    "--warm-up-time",
+    "3",
+    "--measurement-time",
+    "5",
+    "--nresamples",
+    "100000",
+    "--noise-threshold",
+    "0.01",
+    "--confidence-level",
+    "0.95",
+    "--significance-level",
+    "0.05",
+    "--save-baseline",
+    "placement-audit-explicit-20260830"
+  ],
+  "environment": {
+    "cpu": "Apple M4 Max",
+    "physical_cores": 16,
+    "logical_cores": 16,
+    "memory_bytes": 137438953472,
+    "os": "macOS 26.5.1 (25F80)",
+    "architecture": "aarch64-apple-darwin",
+    "power": "AC power",
+    "rustc": "1.97.1 (8bab26f4f 2026-07-14), LLVM 22.1.8",
+    "cargo": "1.97.1 (c980f4866 2026-06-30)",
+    "cpu_isolation": "not_performed",
+    "background_load_capture": "not_retained"
+  },
+  "source_bindings": {
+    "crates/pid-core/src/sxpid.rs": "ea51e92b5f23bd627f21dd239fb4dba63f9c1067be3ca3294c58d72b00ec0771",
+    "crates/pid-core/benches/estimators.rs": "7d96d13ff180bf21b38e3fd7a020126a5f8b823dce9991fbc66961ba4e5681b1",
+    "target/release/deps/estimators-d64583fa4225c621": "2d3ca5b673edd0587591275874e6b9aefe47fdc4ba9068bc56bac241422062d4",
+    "target/release/deps/libpid_core-be6e5e7462fb7a5b.rlib": "a7de4f4cc05188e2daf034120434eefa8cb079f5926651432a6c356760e6b118"
+  },
+  "retained_evidence": {
+    "archive": "audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.tar.gz",
+    "archive_sha256": "debd6e36e662dfe50e377bfdef588dc85019f389e5712035009666f112e1eb56",
+    "archive_canonicalization": "gzip header mtime 0; AppleDouble metadata excluded; retained regular-file bytes preserved",
+    "regular_files": 17,
+    "raw_stdout_member": "pid-rs-categorical-pid-latency-718447aa-explicit-20260830.txt",
+    "raw_stdout_sha256": "0837688a4c27d475202d5801333934376a751643b41803b047538864af17ba10",
+    "criterion_json_files": 16,
+    "benchmark_start_utc": "2026-08-30T12:47:57Z",
+    "benchmark_end_utc": "2026-08-30T12:48:39Z",
+    "exit_status": 0
+  },
+  "results": [
+    {
+      "id": "imin2_n128_q4",
+      "rows": 128,
+      "source_cardinality_parameter": 4,
+      "sampling_mode": "linear",
+      "total_iterations": 80800,
+      "outliers": 8,
+      "mean_ci95_seconds": [0.000062266, 0.000062650]
+    },
+    {
+      "id": "sx2_averaged_n128_q4",
+      "rows": 128,
+      "observed_joint_states": 31,
+      "source_cardinality_parameter": 4,
+      "sampling_mode": "linear",
+      "total_iterations": 60600,
+      "outliers": 6,
+      "mean_ci95_seconds": [0.000086329, 0.000087060]
+    },
+    {
+      "id": "sx3_averaged_n64_q2",
+      "rows": 64,
+      "observed_joint_states": 15,
+      "source_cardinality_parameter": 2,
+      "sampling_mode": "linear",
+      "total_iterations": 30300,
+      "outliers": 8,
+      "mean_ci95_seconds": [0.000175488, 0.000176789]
+    },
+    {
+      "id": "sx4_averaged_n32_q2",
+      "rows": 32,
+      "observed_joint_states": 17,
+      "source_cardinality_parameter": 2,
+      "sampling_mode": "flat",
+      "total_iterations": 900,
+      "outliers": 3,
+      "mean_ci95_seconds": [0.0055694, 0.0056064]
+    }
+  ],
+  "resource_preflight_for_64_one_column_sources_and_one_column_target": [
+    {
+      "sources": 2,
+      "lattice_positions": 4,
+      "averaged_estimated_bytes": 62656,
+      "pointwise_estimated_bytes": 76992,
+      "operation_hint_units": 171456
+    },
+    {
+      "sources": 3,
+      "lattice_positions": 18,
+      "averaged_estimated_bytes": 141408,
+      "pointwise_estimated_bytes": 172128,
+      "operation_hint_units": 1520160
+    },
+    {
+      "sources": 4,
+      "lattice_positions": 166,
+      "averaged_estimated_bytes": 442400,
+      "pointwise_estimated_bytes": 626720,
+      "operation_hint_units": 35919328
+    }
+  ],
+  "limitations": [
+    "The fixtures are deterministic synthetic benchmark inputs, not Galadriel or field data.",
+    "The run measures warm in-process calls on one machine under uncontrolled background load.",
+    "The run does not measure cold start, p95, p99, maximum latency, concurrency, throughput, peak RSS, allocations, cancellation, result age, deadline misses, power, or thermal throttling.",
+    "The confidence intervals describe Criterion's estimated mean, not a tail-latency interval.",
+    "The operation-hint values are conservative accounting units, not instructions, wall time, or measured memory.",
+    "The binary and rlib hashes bind local files but do not authenticate the compiler, operating system, or hardware.",
+    "This receipt provides no real-time, deployment, consumer-compatibility, estimator-validity, or mathematical-correctness claim."
+  ],
+  "permitted_claim": "On the bound local build and deterministic warm fixtures, all four Criterion benchmarks completed and produced the retained mean confidence intervals.",
+  "prohibited_claims": [
+    "real-time qualification",
+    "Galadriel scheduling or deadline compliance",
+    "field-data latency",
+    "cross-platform performance",
+    "peak-memory qualification",
+    "scientific or estimator validation"
+  ]
+}

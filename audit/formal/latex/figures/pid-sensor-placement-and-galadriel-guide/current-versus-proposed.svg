@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">Current Galadriel PID use and proposed sensor-placement research</title>
+  <desc id="desc">A two-lane diagram. The upper teal lane contains three implemented offline synthetic PID studies across two binaries: a frozen categorical CREBAIN law evaluated with Makkeh-Gutknecht-Wibral PID2 and PID3, a generated categorical XOR law evaluated with MGW PID2, and a generated continuous sign-parity law evaluated with the distinct Ehrlich PID2 estimator. The CREBAIN binary emits JSON or Markdown; the default justification binary emits plain-text study reports. Galadriel validates each declared contract and emits record-only evidence. None performs placement or has an edge to fusion, authorization, or commands. The lower bronze lane is a proposed research program: candidate map locations, devices, and scenarios enter a mission-objective placement baseline; low-arity categorical PID then audits shortlisted portfolios whose devices may be grouped into two to four declared PID sources. Target custody is separated from source processing by procedure; no statistical independence is asserted. The current studies and proposed placement lane are explicitly separate.</desc>
+  <defs>
+    <pattern id="girih" width="96" height="96" patternUnits="userSpaceOnUse">
+      <path d="M48 2 70 26 94 48 70 70 48 94 26 70 2 48 26 26Z" fill="none" stroke="#D2E0E2" stroke-width="1.3" opacity=".20"/>
+      <path d="M48 2 48 94M2 48H94M26 26 70 70M70 26 26 70" fill="none" stroke="#D2E0E2" stroke-width=".8" opacity=".14"/>
+    </pattern>
+    <pattern id="crosshatch" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0V18" stroke="#916400" stroke-width="2" opacity=".12"/>
+    </pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#2C3E50" flood-opacity=".14"/>
+    </filter>
+    <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#1F6968"/>
+    </marker>
+    <marker id="arrowBronze" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0 10 5 0 10Z" fill="#916400"/>
+    </marker>
+    <style>
+      .title{font:700 34px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9;letter-spacing:.4px}
+      .subtitle{font:500 18px 'Avenir Next',Avenir,Arial,sans-serif;fill:#D2E0E2}
+      .lane{font:700 17px 'Avenir Next',Avenir,Arial,sans-serif;letter-spacing:2.2px}
+      .nodeTitle{font:700 20px 'Avenir Next',Avenir,Arial,sans-serif;fill:#2C3E50}
+      .body{font:500 16px 'Avenir Next',Avenir,Arial,sans-serif;fill:#2C3E50}
+      .small{font:500 14px 'Avenir Next',Avenir,Arial,sans-serif;fill:#455A64}
+      .mono{font:500 13px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#2C3E50}
+      .fire{font:700 18px 'Avenir Next',Avenir,Arial,sans-serif;fill:#F7F3E9}
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" fill="#F7F3E9"/>
+  <rect x="0" y="0" width="1600" height="150" fill="#1F3F60"/>
+  <rect x="0" y="0" width="1600" height="150" fill="url(#girih)"/>
+  <rect x="0" y="132" width="1600" height="18" fill="#1F6968"/>
+  <text x="70" y="68" class="title">PID IN GALADRIEL: WHAT EXISTS, WHAT IS PROPOSED</text>
+  <text x="70" y="108" class="subtitle">Two separate claim lanes. Similar vocabulary does not create a shared implementation.</text>
+
+  <text x="70" y="204" class="lane" fill="#1F6968">CURRENT · IMPLEMENTED OFFLINE SYNTHETIC STUDIES</text>
+  <rect x="55" y="225" width="1490" height="292" rx="24" fill="#EDF5F3" stroke="#1F6968" stroke-width="2"/>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="270" width="260" height="170" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <text x="116" y="305" class="nodeTitle">Three synthetic studies</text>
+    <text x="116" y="337" class="body">Frozen CREBAIN categorical</text>
+    <text x="116" y="367" class="body">Generated categorical XOR</text>
+    <text x="116" y="397" class="body">Generated continuous parity</text>
+    <text x="116" y="423" class="small">Different laws and claim scopes</text>
+
+    <rect x="430" y="270" width="290" height="170" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <text x="456" y="310" class="nodeTitle">Two offline binaries</text>
+    <text x="456" y="344" class="body">CREBAIN fixture binary</text>
+    <text x="456" y="374" class="body">Default justification binary</text>
+    <text x="456" y="406" class="small">Validate schema and preflight calls</text>
+
+    <rect x="800" y="270" width="310" height="170" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <text x="826" y="310" class="nodeTitle">Two distinct PID families</text>
+    <text x="826" y="344" class="body">Categorical MGW PID2/PID3</text>
+    <text x="826" y="374" class="body">Continuous Ehrlich PID2</text>
+    <text x="826" y="406" class="small">Never pool or transfer their atoms</text>
+
+    <rect x="1190" y="270" width="310" height="170" rx="18" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+    <text x="1216" y="310" class="nodeTitle">Evidence record</text>
+    <text x="1216" y="344" class="body">JSON · Markdown · plain text</text>
+    <text x="1216" y="374" class="body">Algebra + hostile controls</text>
+    <text x="1216" y="406" class="small">Record-only, no authority edge</text>
+  </g>
+
+  <path d="M350 355H430" stroke="#1F6968" stroke-width="4" marker-end="url(#arrowTeal)"/>
+  <path d="M720 355H800" stroke="#1F6968" stroke-width="4" marker-end="url(#arrowTeal)"/>
+  <path d="M1110 355H1190" stroke="#1F6968" stroke-width="4" marker-end="url(#arrowTeal)"/>
+  <rect x="470" y="465" width="660" height="35" rx="17" fill="#743E37"/>
+  <text x="800" y="489" class="fire" text-anchor="middle">NO EDGE TO FUSION · ALERTS · AUTHORIZATION · COMMANDS</text>
+
+  <text x="70" y="579" class="lane" fill="#916400">PROPOSED · MAP-BASED SENSOR-PORTFOLIO RESEARCH</text>
+  <rect x="55" y="600" width="1490" height="282" rx="24" fill="#FBF5E8" stroke="#916400" stroke-width="2"/>
+  <rect x="55" y="600" width="1490" height="282" rx="24" fill="url(#crosshatch)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="645" width="260" height="165" rx="18" fill="#FFFFFF" stroke="#916400" stroke-width="2"/>
+    <text x="116" y="685" class="nodeTitle">Candidates + scenarios</text>
+    <text x="116" y="719" class="body">Map sites, devices, costs</text>
+    <text x="116" y="749" class="body">Source-disjoint target custody</text>
+    <text x="116" y="779" class="small">No statistical-independence claim</text>
+
+    <rect x="430" y="645" width="290" height="165" rx="18" fill="#FFFFFF" stroke="#916400" stroke-width="2"/>
+    <text x="456" y="685" class="nodeTitle">Primary optimizer</text>
+    <text x="456" y="719" class="body">Task loss · coverage · joint MI</text>
+    <text x="456" y="749" class="body">Robust · Fisher · BOED</text>
+    <text x="456" y="779" class="small">PID is not assumed necessary</text>
+
+    <rect x="800" y="645" width="310" height="165" rx="18" fill="#FFFFFF" stroke="#916400" stroke-width="2"/>
+    <text x="826" y="685" class="nodeTitle">Low-arity PID audit</text>
+    <text x="826" y="719" class="body">2–4 declared PID sources</text>
+    <text x="826" y="749" class="body">Full named atom vector</text>
+    <text x="826" y="779" class="small">PID arity ≠ physical-device count</text>
+
+    <rect x="1190" y="645" width="310" height="165" rx="18" fill="#FFFFFF" stroke="#916400" stroke-width="2"/>
+    <text x="1216" y="685" class="nodeTitle">Outer evidence gate</text>
+    <text x="1216" y="719" class="body">Held-out sites and missions</text>
+    <text x="1216" y="749" class="body">Baselines + dropout + latency</text>
+    <text x="1216" y="779" class="small">Adopt · record-only · or omit PID</text>
+  </g>
+
+  <path d="M350 727H430" stroke="#916400" stroke-width="4" marker-end="url(#arrowBronze)"/>
+  <path d="M720 727H800" stroke="#916400" stroke-width="4" marker-end="url(#arrowBronze)"/>
+  <path d="M1110 727H1190" stroke="#916400" stroke-width="4" marker-end="url(#arrowBronze)"/>
+  <text x="800" y="858" class="small" text-anchor="middle">No current Galadriel ground set, placement objective, search algorithm, or placement theorem exists.</text>
+</svg>

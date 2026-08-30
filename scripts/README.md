@@ -1673,6 +1673,31 @@ proved continuity specialization, and bounded executable evidence. Rendering doe
 the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary64 refinement,
 estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
 
+`build-pid-sensor-placement-and-galadriel-guide-pdf.sh` renders
+`PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md` through Pandoc and LuaLaTeX. The canonical Markdown is
+the claim source. Three handcrafted SVGs and their exact tracked one-page PDF derivatives are bound
+by `figure-assets.json`; the builder validates their hashes and page boxes before and after the
+build and imports the tracked derivatives without invoking a runtime SVG renderer. The manifest
+records one renderer observation. It does not prove SVG/PDF semantic equivalence, accessibility, or
+mathematical correctness. A source-derived duplicated trailer ID binds the Markdown, projection
+sources, manifest, SVGs, and PDF derivatives. Fixed time, timezone, locale, three LuaLaTeX passes,
+warning checks, embedded-font checks, and a private build directory make same-toolchain output
+reproducible. The builder accepts only an absolute PDF destination in an existing nonsymbolic,
+non-root directory. This is bounded publication hygiene, not authenticity or toolchain attestation.
+
+`check-pid-sensor-placement-and-galadriel-guide-pdf.sh` validates the retained categorical-latency
+archive and JSON receipt, including its path-safe 17-file inventory and the absence of AppleDouble
+metadata. It rebuilds the guide and checks the expected source-derived trailer ID, tagged structure,
+A4 page boxes, link actions, primary-source URLs, text sentinels, and every rendered page. Its pinned
+pypdf object gate and exact 58-row font roster require every font to be embedded and Unicode-mapped;
+named CID/TrueType fonts must be subsetted, while the 19 renderer-produced Type 3 rows are admitted
+only as structurally exact, zero-area, nonpainting U+0020 spacing shims on the three figure pages.
+Exact mode requires raw byte equality. Cross-toolchain mode first accepts raw equality and
+otherwise requires exact layout-text equality after both files pass the complete page-geometry and
+object checks. That fallback is a bounded text-and-geometry relation; it is not raw PDF equality,
+PDF/UA, font/render equivalence, mathematical verification, benchmark comparability, estimator
+calibration, sensor-placement validity, or a real-time qualification.
+
 `build-mathematical-results-guide-pdf.sh` renders `MATHEMATICAL_RESULTS_GUIDE.md` through an
 isolated Pandoc/LuaLaTeX pipeline. Default `--exact` mode requires two isolated builds to be
 byte-identical. Explicit `--cross-toolchain` mode first attempts raw equality. Only raw comparison
@@ -2761,7 +2786,7 @@ historical v0.9.0 ledger as tag-scoped inventory rather than current line or hum
 authenticity, review, scientific, formal, visual, release, or application evidence.
 The top-level `generated_pdfs` field is a selected 11-file PDF byte roster retained for its declared
 roles; it is not an exhaustive directory listing. The `generated_pdf_set` subprojection covers all
-20 current repository-visible entries selected by `output/pdf/`: 16 PDFs and four TSV rendering
+21 current repository-visible entries selected by `output/pdf/`: 17 PDFs and four TSV rendering
 receipts. Both counts describe the bound candidate state and must be regenerated after the final
 source freeze; neither count implies that a PDF was rebuilt, reviewed, or accepted.
 
