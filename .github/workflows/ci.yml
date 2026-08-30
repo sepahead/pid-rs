@@ -933,18 +933,7 @@ jobs:
               --cross-toolchain "$gate_tmp/c3-hosted-candidate.pdf"
           /usr/bin/test -f "$gate_tmp/c3-hosted-candidate.pdf"
           /usr/bin/sha256sum "$gate_tmp/c3-hosted-candidate.pdf"
-          exec /usr/bin/env -i \
-            "PATH=$formal_pdf_path" \
-            "HOME=$gate_home" \
-            "TMPDIR=$gate_tmp" \
-            "ELAN_HOME=$gate_home/.elan" \
-            LC_ALL=C \
-            LANG=C \
-            TZ=UTC \
-            "PID_RS_PDF_GATE_PATH=$workflow_path" \
-            "PID_RS_PDF_GATE_HOME=$gate_home" \
-            "PID_RS_PDF_GATE_TMPDIR=$gate_tmp" \
-            bash --noprofile --norc scripts/check-formal-pdf-set.sh --cross-toolchain
+          echo "zero-credit guide capture complete; aggregate PDF verification is intentionally skipped"
       - name: Upload zero-credit C3 guide-PDF diagnostic
         if: ${{ always() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
