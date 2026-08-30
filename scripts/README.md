@@ -4,6 +4,38 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## Bounded Python verifier custody inventory M0
+
+`check-python-verifier-custody-inventory.py` reads exact Git blobs from the reviewed `eb9c21a`
+tree. It recomputes a canonical registry for all 186 tracked `.py` files and 66 declared
+operational roots: workflow YAML, tracked shell scripts, the root `justfile`, and root `AGENTS.md`.
+Python blobs use AST parsing. Operational roots use a declared lexical command grammar. The output
+separates source records from launch edges and types file, heredoc-standard-input, `-c`, `-m`, and
+unresolved dynamic candidates; standard-library-profile, local-candidate, declared-third-party,
+and unresolved imports; and the five selected direct dynamic-call spellings. All runtime
+resolution remains `open_blocking`.
+
+The checker requires the exact review commit and tree, verifies Git blob identities, scrubs common
+ambient Git routing, rejects noncanonical and duplicate-key JSON, validates the strict schema and
+semantic references, and compares the checked registry with a fresh deterministic scan. Its
+hostile suite rejects source/count/digest/edge/bootstrap/projection escalations and exercises
+positive and negative examples for file, local import, dynamic, heredoc, `-c`, `-m`, third-party,
+and Python child-process classes.
+
+```text
+python3 -I -S -B scripts/check-python-verifier-custody-inventory.py
+python3 -O -I -S -B scripts/check-python-verifier-custody-inventory.py
+python3 -I -S -B scripts/check-python-verifier-custody-inventory-self-test.py
+python3 -O -I -S -B scripts/check-python-verifier-custody-inventory-self-test.py
+```
+
+The expected success summary says `closure=0`. This is deliberate. M0 establishes bounded
+inventory coherence only. It does not establish execution custody, complete launch closure,
+interpreter or dependency identity, verifier correctness, mathematical correctness, authenticity,
+or security. The complete data model, assumptions, exact counts, worked examples, limits, and
+maintenance rules are in
+[`audit/python-verifier-custody/README.md`](../audit/python-verifier-custody/README.md).
+
 ## Immutable KSG C3 and hosted-follow-up replay
 
 `check-ksg-c3-checkpoint.sh` pins the published C3 parent, commit, tree, exact 19-path precommit

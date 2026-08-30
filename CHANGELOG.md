@@ -9,6 +9,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add a project-defined, bounded Python verifier custody M0 registry for the exact reviewed
+  `eb9c21a` tree. Its strict schema and selected-tree scanner inventory all 186 tracked Python
+  blobs, 66 workflow/shell/Just/guidance roots, typed file/standard-input/command-string/module-tool
+  and dynamic source candidates, 2,110 import statements, 2,295 imported-name edges, 165 selected
+  dynamic-call spellings, and 1,057 static launch candidates. Normal and optimized replay plus a
+  hostile and worked-fixture suite keep every unknown fail-closed. The two named official-verifier
+  and all-repository-process projections remain `open_blocking`: this is inventory coherence, not
+  execution custody, repository-wide closure, dependency identity, verifier correctness, or a
+  mathematical, statistical, application, authenticity, or security claim.
+
 - Preserve the sensor-placement guide's structure-aware catalog `OpenAction` on the pinned Ubuntu
   TeX Live 2023 toolchain. Its builder now includes the already reviewed LPPL tagpdf compatibility
   source used by the mathematical results guide, and both the deterministic trailer identifier and

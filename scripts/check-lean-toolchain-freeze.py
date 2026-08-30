@@ -658,10 +658,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
     ".github/workflows/ci.yml": "c34bfb2ed07fd324f045176a4e16e38bca399ee2cf4aed00a25f8484fa20cd3a",
     ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
-    "AGENTS.md": "6605d0811adaa663cbd8c3d9bc69e9ac85b380752c28899045208c8ae7882c28",
-    "CHANGELOG.md": "328820babd900e42110f8a232e0838a8133377b2b607e0a59d803889b6ca96fb",
+    "AGENTS.md": "b79201d9aa0e66bfd097998fb99a1bccfac8aeb42ef21fe7419ebbb0bdb30ac0",
+    "CHANGELOG.md": "3e336dafc6fe9f86db3879075365ad0cc23e1164f2c15bce172ec52ab874e796",
     "justfile": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
-    "scripts/README.md": "2a5daafb9212582423605674ffa5a148bc5e7b4a7ef07898ca323718321b333f",
+    "scripts/README.md": "b2f7b7937ac47a360ca3e23f741b00c594df3fcbbe8917ba46e1bb154c9831ce",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "5c901ea562e7ed9eb118f983ca4a9d97f6efeda40a070558646f515c14683c98"
     ),

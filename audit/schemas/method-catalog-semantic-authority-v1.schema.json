@@ -191,6 +191,7 @@
             "project-continuous-shared-exclusions-heuristic",
             "project-target-free-shannon-ratios",
             "python-binding",
+            "python-verifier-custody-inventory",
             "report-contract-infrastructure",
             "resource-contract-infrastructure",
             "row-bootstrap-pipeline",

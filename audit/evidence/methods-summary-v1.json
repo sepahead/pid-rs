@@ -896,6 +896,30 @@
     {
       "category": "validation",
       "code_availability": "local",
+      "constraint_count": 4,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "validation.python-verifier-custody-inventory",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Exact-tree, fail-closed static inventory of repository Python sources, selected imports and dynamic-call spellings, and bounded operational launch candidates.",
+      "title": "Bounded Python verifier custody inventory M0",
+      "validation": {
+        "evidence_path_count": 5,
+        "level": "diagnostic-only"
+      }
+    },
+    {
+      "category": "validation",
+      "code_availability": "local",
       "constraint_count": 7,
       "definition_origin": "project-defined",
       "depends_on": [
@@ -2249,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef"
+    "sha256": "9e1a5e835e06aa543616c44a61d891510f5ff3b32b710ebdfb74d2e12041c71e"
   }
 }

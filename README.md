@@ -691,6 +691,13 @@ Other metrics, small samples, and high-dimensional joints use the brute-force pa
 
 The suite triangulates analytic, external, and standalone reference paths with internal identities:
 
+- A bounded [Python verifier custody M0 inventory](audit/python-verifier-custody/README.md) reads
+  the exact Git blobs of one reviewed tree and records all 186 tracked Python files, 66 declared
+  operational roots, 2,110 import statements, 2,295 imported-name edges, 165 selected dynamic-call
+  spellings, and 1,057 static launch candidates. The registry, schema, normal/optimized replay, and
+  hostile tests establish inventory coherence only. Every source and launch edge remains
+  `open_blocking`; there is no execution custody, repository-wide launch closure, dependency
+  identity, verifier-correctness, mathematical, statistical, or application-validity claim.
 - KSG MI against the closed-form Gaussian-channel value
   $-\tfrac12\ln(1-\rho^2)$.
 - The integer KSG local-count arithmetic against a standard-library-only 80-digit Decimal

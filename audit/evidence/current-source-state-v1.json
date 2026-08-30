@@ -24,8 +24,8 @@
     {
       "path": "method-catalog.json",
       "role": "method_catalog",
-      "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
-      "size_bytes": 438158
+      "sha256": "9e1a5e835e06aa543616c44a61d891510f5ff3b32b710ebdfb74d2e12041c71e",
+      "size_bytes": 441823
     },
     {
       "path": "release-scope-1.0.json",
@@ -304,14 +304,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "6605d0811adaa663cbd8c3d9bc69e9ac85b380752c28899045208c8ae7882c28",
-        "size_bytes": 82673
+        "sha256": "b79201d9aa0e66bfd097998fb99a1bccfac8aeb42ef21fe7419ebbb0bdb30ac0",
+        "size_bytes": 84452
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "328820babd900e42110f8a232e0838a8133377b2b607e0a59d803889b6ca96fb",
-        "size_bytes": 269137
+        "sha256": "3e336dafc6fe9f86db3879075365ad0cc23e1164f2c15bce172ec52ab874e796",
+        "size_bytes": 269987
       },
       {
         "git_mode": "100644",
@@ -358,7 +358,7 @@
       {
         "git_mode": "100644",
         "path": "ECOSYSTEM_CAPABILITIES.md",
-        "sha256": "b6f9512469af4e33c26d2e2f70848b10b7c2146d1db28cf7a05bf2d0142c142f",
+        "sha256": "5885b9b9ef7090f1b4cd3033ecb9a76242834e01c5ca9a21a36b6439630fc1bb",
         "size_bytes": 65091
       },
       {
@@ -424,14 +424,14 @@
       {
         "git_mode": "100644",
         "path": "METHODS.md",
-        "sha256": "342ceec4c7bf17ea2deebf707992aedffdc104fdefe76884041839ab992d9c8a",
-        "size_bytes": 533476
+        "sha256": "1e7c5a7512ece3a258a597d803ebd503a513323fd24586b0f1af26e99f712b73",
+        "size_bytes": 537904
       },
       {
         "git_mode": "100644",
         "path": "METHODS_SUMMARY.md",
-        "sha256": "ad942a0cc25386eb07db83ad9ffb08d0ec84d4771a1f20f42dec44ff9239fa45",
-        "size_bytes": 43433
+        "sha256": "f1caf61be23df933d1257c5b9d0270197ae838c8f87af5f516fc72b4d6875c69",
+        "size_bytes": 43919
       },
       {
         "git_mode": "100644",
@@ -460,7 +460,7 @@
       {
         "git_mode": "100644",
         "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
-        "sha256": "fd108d2eef6422c53902934fb8bd36b393911981229a4361cbe2de88f5abc74f",
+        "sha256": "46cb48603515c670c1f361c8bdef3ba5c8ceded74d68bcce61ce77f7459ef1fe",
         "size_bytes": 27700
       },
       {
@@ -472,8 +472,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "ae05336a8f8d431e6211970c7b81e8a38fd66ca275fd780aa70ed0e404607754",
-        "size_bytes": 77957
+        "sha256": "48236695d8b554ea08c55eb2a049007993461dd489443ed4497dd4ae2e0092a5",
+        "size_bytes": 78625
       },
       {
         "git_mode": "100644",
@@ -1774,14 +1774,14 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
-        "sha256": "281f45397309d0342b5cc3f826ec5598ec74fbd095da0f981b1696939bf92bbb",
-        "size_bytes": 38986
+        "sha256": "a8f25459fe2c0829df1595ea067bd8c5a6d36fd05985c4cc79d867d93355bff0",
+        "size_bytes": 39417
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/methods-summary-v1.json",
-        "sha256": "0bf2aa316f14c4d149648ced62ac8f9a8931a4dedea302bbaf3586383259c1cc",
-        "size_bytes": 78069
+        "sha256": "969919255eb42f69cbadcee05e8024a25e56a09821d894af670fdf80b603c2a2",
+        "size_bytes": 78961
       },
       {
         "git_mode": "100644",
@@ -1792,7 +1792,7 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
-        "sha256": "ffab4449dddb2d09c8392b0ab4d06277e908fb707eecf4078a74980949e96872",
+        "sha256": "8d626e9b3fa27995d812a0895b5744a2ab7d7d4c259ed2ebaa8424c1137edd62",
         "size_bytes": 53711
       },
       {
@@ -2613,6 +2613,24 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/python-verifier-custody/DESIGN_RECORD.md",
+        "sha256": "cb746945bb08a4d81f2589d196c2b25027c9616c6478245be5a774740f8a9e04",
+        "size_bytes": 13521
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/python-verifier-custody/README.md",
+        "sha256": "606979db778f8feb088414324b0c2a20f35ce19540db6e919381137eff7745f7",
+        "size_bytes": 30366
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/python-verifier-custody/registry-v1.json",
+        "sha256": "ce11224f6fb95246a43dd36c24da57501f3854bf2f667c483f99125d751f016a",
+        "size_bytes": 5473991
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/review-packets/2026-07-25/README.md",
         "sha256": "c49949c168b6ebf57e8c8823b0257a6a3163cffa8374c4dfcf9c4d9751f51c95",
         "size_bytes": 1874
@@ -2884,8 +2902,8 @@
       {
         "git_mode": "100644",
         "path": "audit/schemas/method-catalog-semantic-authority-v1.schema.json",
-        "sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
-        "size_bytes": 8731
+        "sha256": "e7535e7f83787b228ab973874a8f650a754917c93f3b623d5688ba261513a1d4",
+        "size_bytes": 8780
       },
       {
         "git_mode": "100644",
@@ -2928,6 +2946,12 @@
         "path": "audit/schemas/public-rust-api-signature-revisions.schema.json",
         "sha256": "76710149d60efd1432817e7ce4311be336e70cf7f3a5359d3704321610d11f1b",
         "size_bytes": 5977
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/schemas/python-verifier-custody-registry-v1.schema.json",
+        "sha256": "b0cfbade21a48512a92fc0e5fa1bf03fee66a040a36380fe244a9b26c25ddd2e",
+        "size_bytes": 27352
       },
       {
         "git_mode": "100644",
@@ -4054,7 +4078,7 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/identity/software-identity-reference-v1.json",
-        "sha256": "6c0bfff9f5188607351065574a6cd20eba4ebef868206c18cc372ebac2c99388",
+        "sha256": "47b8446d9b49b6d42409965163175674e9de6aa72bd5748cfccff5b5d83eb1e7",
         "size_bytes": 1453
       },
       {
@@ -4786,7 +4810,7 @@
       {
         "git_mode": "100644",
         "path": "ecosystem-capabilities.json",
-        "sha256": "1fa48baa1e843ef16e174fce20640c17966af60383629cf2967fc698a492b816",
+        "sha256": "76ad5c8ed2d226ba83c828a3c7ea991ff5627f4582a5a1cff80d9580fcc09be7",
         "size_bytes": 71752
       },
       {
@@ -4912,8 +4936,8 @@
       {
         "git_mode": "100644",
         "path": "method-catalog.json",
-        "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
-        "size_bytes": 438158
+        "sha256": "9e1a5e835e06aa543616c44a61d891510f5ff3b32b710ebdfb74d2e12041c71e",
+        "size_bytes": 441823
       },
       {
         "git_mode": "100644",
@@ -5050,8 +5074,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "2a5daafb9212582423605674ffa5a148bc5e7b4a7ef07898ca323718321b333f",
-        "size_bytes": 227470
+        "sha256": "b2f7b7937ac47a360ca3e23f741b00c594df3fcbbe8917ba46e1bb154c9831ce",
+        "size_bytes": 229539
       },
       {
         "git_mode": "100755",
@@ -5284,7 +5308,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ecosystem-capabilities.py",
-        "sha256": "92ee7cd7685a979bb4d7d8148100565f3005b75706a2d882f9833417e568ac0b",
+        "sha256": "05ce656a4fbbaecc9697c01b7d3faf44e7db2dad2958d5212e8bef29b5e7d16e",
         "size_bytes": 72358
       },
       {
@@ -5758,7 +5782,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "6e2b2f1929a5f4124c495b727990496f2448036e4f537d6a23683ed53447be5f",
+        "sha256": "cd240727acf0afd5ead01139cafacde5835b90afd9388376089e02c108ed793a",
         "size_bytes": 120874
       },
       {
@@ -5938,8 +5962,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-method-catalog.py",
-        "sha256": "ef2e831c159c16df80e4deb7a472fc6959be3b2226f281f077be78d6448f6c55",
-        "size_bytes": 72809
+        "sha256": "6162dad3b4c88f92c7a08841debb2bfa3fc3924d31bf405c06569e785a0fbc50",
+        "size_bytes": 72964
       },
       {
         "git_mode": "100644",
@@ -6018,6 +6042,18 @@
         "path": "scripts/check-public-api-snapshots.sh",
         "sha256": "5e75b60bc1efb79b995e096560dd47943b7eb410a60f76e415b357472dc4d2f7",
         "size_bytes": 10905
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-python-verifier-custody-inventory-self-test.py",
+        "sha256": "866b704f5790f679e2d1454b2803d36906eadd0ecb7cebcc75a9cf65ced43162",
+        "size_bytes": 14132
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-python-verifier-custody-inventory.py",
+        "sha256": "0bfb58d68e594329be191f567f33ab50e2965220a9d6a5324d0d42f4f02da4c4",
+        "size_bytes": 56806
       },
       {
         "git_mode": "100755",
@@ -6380,8 +6416,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "b58bbe9b7acbc873670682a2f85c9044c10bd6ed21aabffeee8a15916678b0aa",
-    "entry_count": 1039
+    "entries_sha256": "7b150e34d16732ca53fb590892a04e2e702cb4c2a64957ba5d1ffc333446f129",
+    "entry_count": 1045
   },
   "subprojections": [
     {
@@ -6409,7 +6445,7 @@
       ]
     },
     {
-      "entries_sha256": "f4fe285c1042b5e296b3619eb98e669e295f54a5791591fcd1ef73634e06040a",
+      "entries_sha256": "6c3d7910dee71695a6244ed1a9dd9d5779f79e1f46d3830738dba166d5aec258",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

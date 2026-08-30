@@ -42,10 +42,10 @@
     "revision": 1
   },
   "authority_boundary": "This authority is a deterministic canonical-JSON change detector over every complete method row, its resolved linked-reference records, and four reviewed typed facts. It forces an explicit checker-root re-adjudication after any catalog-byte, authority-schema, typed-fact, alias-inventory, or semantic-prose change. It is not natural-language understanding, literature interpretation, truth inference, independent review, or evidence that a claim is scientifically valid; a coordinated authority rebase can still encode a wrong claim and therefore requires human review.",
-  "authority_schema_sha256": "1c969125fa6eb6c6260aebba46971688c878c54842e8fcc3fce8a410de349745",
+  "authority_schema_sha256": "e7535e7f83787b228ab973874a8f650a754917c93f3b623d5688ba261513a1d4",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef",
+  "catalog_sha256": "9e1a5e835e06aa543616c44a61d891510f5ff3b32b710ebdfb74d2e12041c71e",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -938,6 +938,17 @@
     },
     {
       "facts": {
+        "conditioning": "not-applicable",
+        "data_domain": "software-artifact",
+        "estimand_family": "python-verifier-custody-inventory",
+        "population_support": "not-applicable"
+      },
+      "method_id": "validation.python-verifier-custody-inventory",
+      "observed_alias_families": [],
+      "payload_sha256": "c3dcd0ed913812a7024ad69503615982d2bae170510a18397f30d387cb317a3a"
+    },
+    {
+      "facts": {
         "conditioning": "unconditioned",
         "data_domain": "finite-categorical",
         "estimand_family": "categorical-sxpid-validation",
@@ -986,7 +997,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "c08c7ab303f29358446e698155db29adf412fe3f952caad503cb673f27905b15",
+  "ordered_root_sha256": "83cebfaa105dbcfe38694392489ea83fbc81421d59f297e2ef748c7d35dee2be",
   "reference_registry_sha256": "346e8a046cb7f5c2f9036cc9c3869faf9ee9962944ff640f01b623108981d1b1",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

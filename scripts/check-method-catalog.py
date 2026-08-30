@@ -44,7 +44,7 @@ SEMANTIC_ALIAS_DIAGNOSTIC_REVISION = 1
 # Updating this reviewed root is the explicit re-adjudication step for any catalog semantic
 # payload, typed fact, linked-reference record, alias diagnostic, or authority-schema change.
 EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256 = (
-    "c08c7ab303f29358446e698155db29adf412fe3f952caad503cb673f27905b15"
+    "83cebfaa105dbcfe38694392489ea83fbc81421d59f297e2ef748c7d35dee2be"
 )
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
 PYTHON_V1_METHOD_ID = "software.python-v1-bindings"
@@ -164,6 +164,7 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
 MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
 EXTRA_SOURCE_MARKER_FILES = (
     "audit/tools/certified-sxpid/src/lib.rs",
+    "scripts/check-python-verifier-custody-inventory.py",
     "scripts/check-foundational-sxpid-audit-pdf.sh",
     "scripts/check-sxpid3-source-marginal-audit-pdf.sh",
     "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh",
@@ -212,6 +213,7 @@ ALLOWED_UNMAPPED = {
     "validation.csxpid-reference-code",
     "validation.exp0",
     "validation.idtxl-reference-code",
+    "validation.python-verifier-custody-inventory",
     "validation.sxpid-reference-code",
     *REQUIRED_UNSUPPORTED,
 }
@@ -352,6 +354,7 @@ SEMANTIC_ESTIMAND_FAMILY_VALUES = frozenset(
         "project-continuous-shared-exclusions-heuristic",
         "project-target-free-shannon-ratios",
         "python-binding",
+        "python-verifier-custody-inventory",
         "report-contract-infrastructure",
         "resource-contract-infrastructure",
         "row-bootstrap-pipeline",

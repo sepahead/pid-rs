@@ -4813,6 +4813,54 @@
       "category": "validation",
       "code_availability": "local",
       "constraints": [
+        "The selected universe is one exact Git tree: all tracked .py blobs plus tracked workflow YAML, tracked shell scripts, root justfile, and root AGENTS.md as operational text roots.",
+        "AST and lexical observations classify static spellings only. They do not resolve Python bindings, imports, shell/workflow semantics, interpreter identity, environment, native launchers, dynamic code, or child-process execution.",
+        "Every source, launch edge, import resolution, dynamic target, runtime profile, bootstrap state, and named closure projection that M0 cannot establish remains open_blocking.",
+        "The registry establishes bounded inventory coherence only. It supplies no execution custody, repository-wide process closure, verifier-correctness, mathematical, statistical, application, authenticity, or security claim."
+      ],
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "external_code": null,
+      "id": "validation.python-verifier-custody-inventory",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "stable",
+      "new_in_pid_rs": "Adds a typed exact-tree registry that separates Python source blobs from static launch candidates and preserves unresolved runtime edges as blocking; it introduces no new scientific method or mathematics.",
+      "python_entry_points": [],
+      "reference_links": [],
+      "release_scope_families": [],
+      "rust_entry_points": [],
+      "scientific_novelty_claim": "none",
+      "source_files": [
+        "audit/python-verifier-custody/DESIGN_RECORD.md",
+        "audit/python-verifier-custody/README.md",
+        "audit/python-verifier-custody/registry-v1.json",
+        "audit/schemas/python-verifier-custody-registry-v1.schema.json",
+        "scripts/check-python-verifier-custody-inventory-self-test.py",
+        "scripts/check-python-verifier-custody-inventory.py"
+      ],
+      "source_marker_files": [
+        "scripts/check-python-verifier-custody-inventory.py"
+      ],
+      "summary": "Exact-tree, fail-closed static inventory of repository Python sources, selected imports and dynamic-call spellings, and bounded operational launch candidates.",
+      "title": "Bounded Python verifier custody inventory M0",
+      "validation": {
+        "evidence_paths": [
+          "audit/python-verifier-custody/DESIGN_RECORD.md",
+          "audit/python-verifier-custody/README.md",
+          "audit/python-verifier-custody/registry-v1.json",
+          "scripts/check-python-verifier-custody-inventory-self-test.py",
+          "scripts/check-python-verifier-custody-inventory.py"
+        ],
+        "level": "diagnostic-only",
+        "limitations": "The bounded seed and selected AST/lexical grammars are not complete runtime semantics. Native launchers, aliases, wrappers, generated code, import hooks, interpreter/dependency identity, final argv/stdin/cwd/environment, process descendants, and external or absent-history sources remain unresolved. Same-repository digests and hostile tests provide correspondence and named fault sensitivity, not independent custody, authenticity, scanner correctness, execution evidence, or scientific truth.",
+        "scope": "One exact reviewed Git tree: 186 tracked Python blobs, 66 operational roots, typed source and launch records, import and selected dynamic-call censuses, canonical schema validation, exact deterministic recomputation, and normal/optimized hostile worked-fixture checks with both named closure projections retained open."
+      }
+    },
+    {
+      "cargo_features": [],
+      "category": "validation",
+      "code_availability": "local",
+      "constraints": [
         "This entry records a project-defined theorem and validation evidence for the paper-defined categorical shared-exclusions functional. It adds no estimator or public API and makes no scientific-priority claim.",
         "The exact-real theorem fixes one complete finite Cartesian-product alphabet, source count, paper-defined keyed event map, full redundancy lattice, and Mobius inverse while the law changes. It permits support creation and deletion inside that fixed alphabet.",
         "The result applies to joint-law-averaged informative, misinformative, and signed net cumulatives and full-lattice atoms. Pointwise values at disappearing realization keys are not continuous.",

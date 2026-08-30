@@ -13,6 +13,7 @@ picture — what PID is, which estimator does what, the references, and the cave
 - [What this project is](#what-this-project-is)
 - [Method provenance and novelty claims](#method-provenance-and-novelty-claims)
 - [Scientific-object and evidence firewall (MANDATORY)](#scientific-object-and-evidence-firewall-mandatory)
+- [Python verifier source and launch inventory (M0 boundary)](#python-verifier-source-and-launch-inventory-m0-boundary)
 - [Workspace layout](#workspace-layout)
 - [Where things live in `pid-core`](#where-things-live-in-pid-core)
 - [Build / test / lint (mirror CI)](#build--test--lint-mirror-ci)
@@ -159,6 +160,27 @@ agreement upgrades it. Treat every claim from another agent, model, or system as
 Independently read the exact primary-source/repository bytes, rerun the applicable checker and
 hostile self-test in normal and optimized Python where provided, and inspect the outputs. Apply the
 same rerun-and-inspect standard to your own claims; never inherit a reported green result.
+
+### Python verifier source and launch inventory (M0 boundary)
+
+The machine authority at `audit/python-verifier-custody/registry-v1.json` covers one exact reviewed
+Git tree. It separates stored Python sources from static launch candidates and keeps interpreter,
+environment, import, dynamic-source, child-process, native-launcher, and bootstrap questions open.
+Read `audit/python-verifier-custody/README.md` before changing a Python verifier or its launch
+documentation. A path, AST match, import class, digest, or green inventory replay is not evidence
+that those bytes ran or that a verifier or mathematical result is correct. Never change
+`open_blocking` to `closed`, advance the selected revision, or regenerate the registry only to make
+a gate pass. First adjudicate the changed sources, imports, dynamic edges, launch candidates,
+assumptions, limits, examples, and nonimplications. M1 execution custody is a separate milestone.
+
+Run all four bounded M0 checks and inspect their exact summaries:
+
+```text
+python3 -I -S -B scripts/check-python-verifier-custody-inventory.py
+python3 -O -I -S -B scripts/check-python-verifier-custody-inventory.py
+python3 -I -S -B scripts/check-python-verifier-custody-inventory-self-test.py
+python3 -O -I -S -B scripts/check-python-verifier-custody-inventory-self-test.py
+```
 
 ### AI-assisted candidate/judge isolation and research-integrity controls (MANDATORY)
 
@@ -665,6 +687,10 @@ python3 -I -S -B scripts/check-advisory-councils-archive.py  # bounded inert arc
 python3 -O -I -S -B scripts/check-advisory-councils-archive.py
 python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py  # 64 named mutations
 python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py
+python3 -I -S -B scripts/check-python-verifier-custody-inventory.py  # exact-tree M0 inventory; no execution custody
+python3 -O -I -S -B scripts/check-python-verifier-custody-inventory.py
+python3 -I -S -B scripts/check-python-verifier-custody-inventory-self-test.py
+python3 -O -I -S -B scripts/check-python-verifier-custody-inventory-self-test.py
 python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
 python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
 python3 scripts/check-lean-finite-convergence.py         # 339 declarations / 246 named theorems
