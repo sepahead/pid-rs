@@ -920,6 +920,23 @@ jobs:
           verify_tagpdf_compat_toolchain
           verify_pdfresources_compat_toolchain
           verify_formal_command_selection
+          c3_lualatex_command="$(command -v lualatex)"
+          c3_renderer_realpath="$(/usr/bin/readlink -f "$c3_lualatex_command")"
+          c3_format_path="$(/usr/bin/kpsewhich --engine=luahbtex --progname=lualatex \
+            --must-exist --format=fmt lualatex.fmt)"
+          echo "C3_PANDOC_PATH=$pandoc_bin"
+          echo "C3_PANDOC_VERSION=$($pandoc_bin --version | /usr/bin/sed -n '1p')"
+          /usr/bin/sha256sum "$pandoc_bin"
+          echo "C3_LUALATEX_COMMAND=$c3_lualatex_command"
+          echo "C3_RENDERER_REALPATH=$c3_renderer_realpath"
+          echo "C3_RENDERER_VERSION=$($c3_lualatex_command --version | /usr/bin/sed -n '1p')"
+          /usr/bin/stat -c 'C3_RENDERER_BYTES=%s C3_RENDERER_LINKS=%h C3_RENDERER_MODE=%a' \
+            "$c3_renderer_realpath"
+          /usr/bin/sha256sum "$c3_renderer_realpath"
+          echo "C3_FORMAT_PATH=$c3_format_path"
+          /usr/bin/stat -c 'C3_FORMAT_BYTES=%s C3_FORMAT_LINKS=%h C3_FORMAT_MODE=%a' \
+            "$c3_format_path"
+          /usr/bin/sha256sum "$c3_format_path"
           /usr/bin/env -i \
             "PATH=$formal_pdf_path" \
             "HOME=$gate_home" \
