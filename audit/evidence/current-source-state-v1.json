@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "f30592e3c0eba93ca981c82ba71f20e834972fa0346776d0313e9ce0ac95cedd",
-        "size_bytes": 268006
+        "sha256": "1708b9bf6ea359d049a65d9460ad09c9b4aec06e5412c86278f7a5b210349433",
+        "size_bytes": 268584
       },
       {
         "git_mode": "100644",
@@ -4894,8 +4894,8 @@
       {
         "git_mode": "100644",
         "path": "justfile",
-        "sha256": "ec717944cce7d39d452bf7624aebc45160ac559b2aa8a3a3695323444db5792b",
-        "size_bytes": 50269
+        "sha256": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
+        "size_bytes": 50074
       },
       {
         "git_mode": "100644",
@@ -5230,7 +5230,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "611d2add29e07c3ce8ce6a898b21a9bdb747c49ea30783954d45efa16a1cc8ce",
+        "sha256": "e893eeb4b6edcb87c9d48fda2c189fc3b5111a3c4bf198187a67f0eef9410b46",
         "size_bytes": 82193
       },
       {
@@ -5752,7 +5752,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "3743d4180e2a0a9e76f2dad1fa03e48368828546566689ec60ecbcd023fcfc4a",
+        "sha256": "1546b7939e898f62f4cc00434b452a9bdb1ffbfde09c64869785faeef68f6161",
         "size_bytes": 120874
       },
       {
@@ -6374,7 +6374,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "62c5513895a797a739530fb98580fc658f7f36a0437e8951bf5e7a34eebcd7fc",
+    "entries_sha256": "6f0b800567be5f71fae33b0abfb3af8e71cbbf8c907681a2d4dc633b8cf99c16",
     "entry_count": 1038
   },
   "subprojections": [
@@ -6403,7 +6403,7 @@
       ]
     },
     {
-      "entries_sha256": "28a4155c48df32651aa3def08495e639f747cf87746f06d1ba4d8b2e52d68300",
+      "entries_sha256": "b5e0ba6def87170858fa3f9b41d5b36427b21927ea84b7dc434a6f605b412165",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

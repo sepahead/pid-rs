@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Preserve the certified SxPID2 revision-3 `justfile` execution-container binding by removing a
+  redundant standalone Just alias for the new sensor-placement guide. The guide remains directly
+  checkable through its versioned script and is already mandatory in the complete formal-PDF
+  aggregate. Rebind only the intended current guide documentation and aggregate support-gate bytes
+  while leaving every historical receipt map unchanged. This repairs the hosted-exposed custody
+  mismatch without weakening the certified claim, exact mode, scientific checks, or PDF checks.
+
 - Add a self-contained Galadriel and sensor-placement research guide in Markdown and a deterministic
   A4 PDF. It separates three offline synthetic PID studies across two binaries: the current
   record-only CREBAIN categorical MGW conformance path, a generated categorical XOR MGW PID2

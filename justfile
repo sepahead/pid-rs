@@ -727,10 +727,6 @@ formal-sxpid3-source-marginal-audit-pdf:
 formal-mathematical-results-guide-pdf:
     scripts/check-mathematical-results-guide-pdf.sh --exact
 
-# Rebuild the Galadriel and sensor-placement research guide and compare its PDF.
-formal-pid-sensor-placement-guide-pdf:
-    scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh --exact
-
 # Check the finite adjacent-arrow countermodel and its fail-closed mutations.
 citation-edge-countermodel:
     python3 scripts/check-citation-edge-countermodel.py
