@@ -675,6 +675,10 @@ python3 -I -S -B scripts/check-lean-toolchain-freeze.py       # frozen 4.33 repl
 python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
 python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+python3 -I -S -B scripts/check-lean-exact-log-product.py  # frozen 7-theorem generic algebra gate
+python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py  # hostile/scope controls
+python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
 just --justfile justfile.sxpid3-informative-invariance verify  # P1 Lean/exact/Rust layers
 python3 scripts/check-lean-ksg-integer-harmonic.py       # 19 conditional exact harmonic theorems
 python3 -O scripts/check-lean-ksg-integer-harmonic.py

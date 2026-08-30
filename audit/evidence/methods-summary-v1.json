@@ -782,7 +782,7 @@
     {
       "category": "validation",
       "code_availability": "local",
-      "constraint_count": 14,
+      "constraint_count": 15,
       "definition_origin": "project-defined",
       "depends_on": [
         "shared-exclusions.categorical"
@@ -801,7 +801,7 @@
       "summary": "Conditional per-input dyadic enclosures and separately bounded exact-product zero/strict-sign decisions for all 24 averaged categorical SxPID2 cumulative and atom coordinates; not a population result or formally verified pid-core backend.",
       "title": "Exact-count two-source categorical SxPID enclosure reference",
       "validation": {
-        "evidence_path_count": 69,
+        "evidence_path_count": 72,
         "level": "analytic-oracle"
       }
     },
@@ -2249,6 +2249,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef"
+    "sha256": "5c826dfe4e6a8ff14128f9dba41d67ea032c776d1f44e347d9ac6e6dfc3d8ab7"
   }
 }

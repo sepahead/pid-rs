@@ -353,35 +353,53 @@ whole public result is exactly source-permutation invariant.
 
 ## Exact-log checker adequacy implementation checkpoint
 
-State: source/self-test/CI wiring implemented; full claim/catalog/paper binding and final-tree replay
-remain open.
+State: the archived masker-based draft was rejected; the production checker remains byte-identical,
+and a replacement isolated hostile suite plus ordinary/optimized CI and Just wiring is the current
+implementation lane.
 
-Implemented controls:
+The historical draft on `archive/exact-log-product-verifier-draft-20260828` at commit `6077443`
+must not be treated as implemented current evidence. Its homemade nested-comment/string masker can
+misclassify a valid Lean character-literal sequence: two quote-character literals around an empty
+string can make a later live, unqueried `axiom` appear to be string content to the masker. After a
+test-only source-digest rebind, the archived checker accepted that file. Its declaration regular
+expression also omitted at least an added `lemma` and an added `private theorem`. These are checker
+scope and lexical-policy failures, not counterexamples to any of the seven kernel-checked theorems.
+The draft source and self-test were never merged into this current lane.
 
-- mask nested Lean comments, line comments, and strings before scanning for live proof escapes;
-- require the exact source theorem declaration inventory and the exact qualified checker audit
-  inventory;
-- reject nine source mutations and one checker-inventory mutation after rebinding each isolated
-  source digest, so failures reach semantic/kernel checks rather than stopping at the outer hash;
-- accept a nested-comment/string proof-escape decoy; and
-- run the self-test normally and under `python -O` in CI and `just certified-sxpid`.
+The replacement deliberately preserves the current production checker's stronger raw-token policy:
+proof-escape words in comments or strings are rejected as well as live escapes. It does not claim to
+parse Lean. The new self-test loads stable, digest-bound checker bytes, restores all modified globals,
+parses output as one canonical JSON object, and separately accounts for nine rejected semantic
+mutations, six rejected raw/digest-policy cases, two accepted digest-rebound declaration-scope
+probes, and one accepted checker-custody limitation. The character-literal/live-axiom witness is a
+required negative control. Extra `lemma` and `private theorem` probes are accepted only after a
+deliberate test-only digest rebind; production remains closed by the immutable source digest.
 
-Targeted replay:
+Required targeted replay:
 
 ```text
-python3 scripts/check-lean-exact-log-product.py                    PASS (7 theorems)
-python3 scripts/check-lean-exact-log-product-self-test.py          PASS (10 mutations, decoy)
-python3 -O scripts/check-lean-exact-log-product-self-test.py       PASS (10 mutations, decoy)
+python3 -I -S -B scripts/check-lean-exact-log-product.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
 ```
 
-Permitted Lean axioms remain `[propext, Classical.choice, Quot.sound]`. The new controls establish
-fault sensitivity for the generic algebra and audit inventory only; concrete SxPID event binding,
-bytes, Rust, binary64, sampling, and application claims remain outside the theorem.
+Permitted Lean axioms remain `[propext, Classical.choice, Quot.sound]`. The replacement establishes
+bounded fault sensitivity for generic algebra, raw policy, digest custody, and the named theorem
+inventory only. It does not prove checker correctness or complete Lean lexical classification.
+Concrete SxPID event binding, canonical evidence bytes, Rust and binary64 refinement, sampling,
+calibration, and application claims remain separate obligations.
+
+The current assurance Markdown and rendered PDF define the checker terms and assumptions, explain
+all 19 cases step by step, separate the three positive acceptances from the six policy controls,
+nine semantic kills, two scope probes, and accepted zero-credit limitation, and state the exact
+proof and nonproof boundaries. The negative-route memo retains 12 alternatives and 35 hostile
+review lenses. Readers do not need to infer these claims from the Python implementation.
 
 ## Next durable checkpoints
 
-- Finish binding the exact-log self-test into the certified-SxPID claim checker, method catalog,
-  assurance paper, and generated views.
+- Preserve the exact-log hostile evidence in current source-state custody and rerun all four modes
+  after every checker, source, workflow, or claim-container change.
 - Freeze the separate `I_min` atom-reconstruction symmetry claim and retain the complete exhaustive
   replay before implementation.
 - Implement and close the KSG and count-event claim obligations without promoting finite or formal

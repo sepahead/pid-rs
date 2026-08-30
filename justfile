@@ -681,7 +681,10 @@ certified-sxpid:
     python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
     python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
     python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
-    python3 scripts/check-lean-exact-log-product.py
+    python3 -I -S -B scripts/check-lean-exact-log-product.py
+    python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+    python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+    python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
     python3 -I -S -B scripts/check-certified-sxpid2-claim.py
     python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
     python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py

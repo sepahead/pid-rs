@@ -295,6 +295,189 @@ count, and axiom boundary. The unversioned
 byte-for-byte as historical Lean 4.32 evidence. It is not regenerated, compared to the current
 checker as if contemporary, or credited as the current execution route.
 
+#### Checker qualification, terms, and provenance
+
+Here, the **production checker** is the fixed Python program
+`scripts/check-lean-exact-log-product.py`, SHA-256
+`52510a18ac5fa8b94113bfeba84f61cb28bdbe56be278fc76fb4d55407cb2dcd`. It first requires the
+exact 5,357-byte Lean source at SHA-256
+`f0727ea3061d561ba89ba49edebece971ce03bdecf03e0c32774a1c080dc07bf`. It rejects the raw word
+tokens `sorry`, `admit`, `axiom`, and `unsafe`. It then invokes the pinned Lean 4.33.0 release,
+compiles the source plus seven `#print axioms` queries, and requires the exact permitted-axiom line
+for every named theorem. A **hostile mutation** is one deliberate change to a temporary copy. A
+**test-only digest rebind** replaces the checker's expected source digest inside the self-test
+process so that a changed file can reach the later policy or kernel check. Production CI never
+rebinds that digest. A **negative control** is a deliberately bad input that must be rejected. A
+**positive control** is a deliberately valid input that must be accepted. A **scope probe** is an
+accepted input used to show what the named audit does not inspect. An accepted **known limitation**
+receives no positive-proof or mutation-kill credit.
+
+#### Exact objects and threat model
+
+The qualification keeps the following objects separate:
+
+1. The **Lean theorem source** states the seven generic results. It is the mathematical object sent
+   to Lean; it does not contain the concrete SxPID event extractor.
+2. The **production checker** is the unchanged Python gate. It binds the theorem-source digest,
+   pinned project files, seven qualified theorem names, and permitted axiom list, then runs Lean.
+3. The **pinned Lean project** consists of `lean-toolchain`, `lakefile.toml`, and
+   `lake-manifest.json`. Together they select Lean 4.33.0 and the reviewed package closure; their
+   hashes do not prove that an executable was built from reviewed source.
+4. The **query file** is a temporary concatenation of the theorem source and seven
+   `#print axioms` commands. Lean compiles it; it is not retained as a new theorem source.
+5. The **production receipt** is the canonical JSON output of one successful checker run. It
+   records exact identities and the proof boundary, but it is evidence of that execution rather
+   than an authenticity certificate.
+6. A **mutant** is one temporary source copy with one declared change. Each mutant has its own
+   digest. A mutant result applies only to that change and does not represent all possible faults.
+7. The **hostile self-test** is a separate Python harness that loads the production checker from
+   captured bytes, performs the mutants and probes, restores changed globals, and emits one
+   canonical case record. It is not a replacement checker.
+8. The **hostile evidence JSON** is the byte-for-byte output of normal and optimized hostile runs.
+   It records status, counts, mutant digests, scope probes, and the limitation; it does not add a
+   theorem.
+9. The **archive adjudication memo** preserves the rejected checker design and counterexample. It
+   is negative engineering evidence and has no production authority.
+
+The threat model addresses accidental drift and bounded ordinary-process interference: stale or
+changed checker/source bytes, symbolic-link or extra-hard-link leaves, parent replacement during a
+captured read, mid-read byte or metadata changes, ambient Python packages and bytecode writes,
+optimization-sensitive controls, ambiguous JSON, merged output streams, leaked test mutations,
+semantic theorem changes, missing theorem names, and added axiom dependencies. The character-literal
+witness specifically challenges the discarded partial lexer. Extra-declaration probes challenge the
+scope of the seven-name query.
+
+The threat model does **not** claim protection against a privileged or same-user adversary that can
+coordinate changes between bounded observations, forge the Python/Lean operating environment,
+subvert the kernel, compiler, dynamic loader, filesystem, SHA-256 implementation, or hardware, or
+replace absent history. SHA-256 supplies exact byte equality to a reviewed value, not origin,
+authorship, trusted time, or authenticity. The self-created mutant files live in a private temporary
+directory and assume no concurrent writer; the stable captured-read protocol applies to the tracked
+checker, tracked theorem source, and the hostile harness itself. These are endpoint checks, not an
+atomic filesystem snapshot or sandbox.
+
+The replacement hostile suite is project-defined engineering evidence. It was added after review
+of the discarded archive commit `6077443`. That draft tried to remove Lean comments and strings
+with a handwritten scanner. The scanner did not model character literals. Two quote-valued `Char`
+literals around an empty string made a later live, unqueried `axiom` invisible to it. The complete
+5,492-byte witness has SHA-256
+`891323ef49a0a9e2bf8f4306de1301301aa961886121329dcf9b11847d823e03`. The draft also failed to
+inventory an added `lemma` and an added `private theorem`. Therefore, the draft checker was rejected
+and the current production checker remains byte-identical. The failure does not change any Lean
+theorem.
+
+The hostile result assumes: Python 3.11 or newer with exactly `-I -S -B` and either no optimization
+or one `-O`; the named checker and Lean source bytes; the pinned Lake manifest and Lean release;
+ordinary stability of the checked filesystem objects during each bounded read; the correctness of
+Python, Lean, Mathlib, SHA-256, the operating system, and the hardware; and the exact seven-name
+query inventory. The loader rejects symbolic-link or multiply linked checker/source leaves,
+double-reads each file through one no-follow descriptor, checks parent and file identities, compiles
+the captured checker bytes, separates standard output from standard error, requires canonical JSON,
+restores every changed checker global in `finally`, and rechecks the tracked bytes after all cases.
+These controls reduce the trusted surface; they do not remove it.
+
+#### Byte and process controls, step by step
+
+| Step | Control | Why it is required and what it does not establish |
+|---:|---|---|
+| 1 | Require Python 3.11 or newer, `-I -S -B`, and optimization level zero or one. | This excludes ambient site packages, ignores Python environment settings, uses a safe import path, prevents bytecode-cache writes, and makes the normal/optimized routes explicit. It does not authenticate the interpreter. |
+| 2 | Resolve the expected checker, theorem-source, and self-test paths from the harness location. | This removes dependence on the caller's working directory. It does not make path resolution atomic. |
+| 3 | `lstat` every lexical parent before a captured read and require directories, not symbolic links. | This detects the tested parent substitution and symlink routes. It cannot prevent a coordinated replacement outside the observation window. |
+| 4 | `lstat` the leaf and require one regular, non-symbolic, single-linked file. | This rejects leaf symlinks, devices, directories, and multiply linked aliases. One link is not an authenticity claim. |
+| 5 | Open the leaf read-only with `O_NOFOLLOW` when the platform supplies it, plus close-on-exec. | This narrows a link-swap route and prevents descriptor inheritance. The operating system remains trusted. |
+| 6 | Compare descriptor and path metadata—device, inode, mode, link count, size, modification time, and change time—before, during, and after the read. | This detects the bounded metadata changes represented by those fields. It is not a transaction and cannot observe every storage-layer event. |
+| 7 | Read the same descriptor to end twice, seek back between reads, and require equal bytes and declared length. | This catches ordinary mid-read byte drift and truncation. Equal repeated reads do not establish provenance. |
+| 8 | Recheck all parent identities after the read. | This closes the bounded parent endpoint comparison. It does not continuously monitor the directory tree. |
+| 9 | Compute SHA-256 over the captured bytes and require the reviewed checker/source digest. | This binds exact bytes. It does not authenticate who reviewed or produced them. |
+| 10 | Compile and execute the captured checker byte string, not a second path read, under a digest-derived private module name. | This keeps the checked and executed checker representation equal. Python compilation and execution remain trusted. |
+| 11 | Run every source mutation in a private temporary directory and rebind only the in-process expected source digest. | This lets a mutant reach the intended later policy, kernel, or axiom check. The rebind is test machinery, is not exposed by production CI, and gives the mutant no production authority. |
+| 12 | Capture standard output and standard error separately; require exact status, empty unexpected stream, and expected rejection fragment. | This prevents a crash or unrelated rejection from being counted as the intended result. A matching fragment is bounded diagnostic evidence, not a proof of all internal execution steps. |
+| 13 | Parse accepted output with duplicate-key and nonfinite-value rejection, require one final LF, no carriage return, exact compact sorted JSON reserialization, the closed ten-key production inventory, and the expected value/type of every field. | This removes ambiguous evidence encodings, rejects silent field addition or omission, and normalizes parity comparison. It does not prove the values true. |
+| 14 | Restore source path, expected digest, and theorem tuple in `finally` after every call, including exceptions. | This prevents one case from contaminating the next. The postcondition checks restoration; it is not concurrency isolation. |
+| 15 | Re-read the tracked checker and theorem source, capture the hostile harness's own digest, require the complete canonical run record to equal the stable tracked evidence bytes, remove the private loaded module, and compare normal with optimized output. | This detects tracked-byte drift during replay, binds the harness version and evidence relation, and challenges optimization dependence. It does not supply an independent checker implementation. |
+
+#### Step-by-step hostile cases
+
+The 19 cases below are disjoint for total accounting. “Kernel rejection” means that the changed
+temporary source reached Lean after its test-only digest rebind and did not compile. “Policy
+rejection” means that the production raw-token rule rejected the source before Lean. “Digest
+rejection” means that the unchanged production digest rejected extra bytes before Lean.
+
+| Class | Case and exact change | Reason for the case | Required and observed result |
+|---|---|---|---|
+| Baseline positive | Run the exact tracked source and seven-name inventory. | Establish that the real gate is runnable before interpreting failures. | Accepted; seven theorem queries and the exact axiom inventory were reported. |
+| Semantic negative 1 | Replace `Real.log_zpow` by `Real.log_pow` in the signed-power normalization. | The exponent is an integer, so the natural-power lemma is not a valid substitute. | Kernel rejection. |
+| Semantic negative 2 | Reverse $1<R$ to $R<1$ in the positive-sign equivalence. | A positive scaled logarithm must correspond to a product above one. | Kernel rejection. |
+| Semantic negative 3 | Reverse $R<1$ to $1<R$ in the negative-sign equivalence. | A negative scaled logarithm must correspond to a product below one. | Kernel rejection. |
+| Semantic negative 4 | Use the impossible $R=-1$ branch where the proof needs $R=1$. | Positivity excludes $-1$; confusing the two destroys the zero proof. | Kernel rejection. |
+| Semantic negative 5 | Change reciprocal cancellation from equality to inequality. | For $x>0$, $\log x+\log(x^{-1})=0$ exactly. | Kernel rejection. |
+| Semantic negative 6 | Change the retained five-factor rational product from $1$ to $2$. | The witness arithmetic must be exact, not approximate. | Kernel rejection. |
+| Semantic negative 7 | Remove the premise $0<R$ from the zero-sign theorem. | The real logarithm zero equivalence needs a positive argument. | Kernel rejection. |
+| Semantic negative 8 | Rename one of the seven queried theorems. | The query must fail if a required qualified name disappears. | Kernel rejection. |
+| Semantic negative 9 | Make the retained theorem depend on `sorryAx`. | A compiling declaration with an extra axiom must not satisfy the permitted basis. | Compiled, then rejected by the exact axiom-inventory comparison. |
+| Raw negative 1 | Replace the retained proof by `sorry`. | A direct proof escape must fail before compilation evidence is credited. | Policy rejection. |
+| Raw negative 2 | Change the retained theorem declaration to `axiom`. | A declaration without proof must not be credited. | Policy rejection. |
+| Raw negative 3 | Insert two quote-valued `Char` definitions, an empty string, and a live unqueried `axiom`. | This is the concrete counterexample to the discarded handwritten masker. | Policy rejection. |
+| Digest negative 1 | Add an unrelated `lemma` without rebinding the source digest. | Extra source must not enter the production gate silently. | Digest rejection. |
+| Digest negative 2 | Add an unrelated `private theorem` without rebinding the source digest. | Declaration modifiers must not bypass immutable source custody. | Digest rejection. |
+| Raw negative 4 | Put proof-escape words only in a nested comment and a string. | This records the conservative raw policy; it does not pretend those words are live Lean commands. | Policy rejection. |
+| Scope positive 1 | Re-run the extra `lemma` after a deliberate test-only digest rebind. | Show that the seven-name axiom query does not enumerate unrelated declarations. | Accepted with seven queried theorems; recorded as scope, not a kill. |
+| Scope positive 2 | Re-run the extra `private theorem` after a deliberate test-only digest rebind. | Show the same boundary for a modified declaration form. | Accepted with seven queried theorems; recorded as scope, not a kill. |
+| Known limitation | Shorten the in-memory theorem tuple from seven names to six while retaining exact source bytes. | Test whether the checker internally authenticates its mutable query tuple. | Accepted with six queries; recorded as a checker-custody limitation and given zero proof credit. |
+
+Thus, the suite reports one baseline, nine rejected semantic mutations, six rejected raw/digest
+controls, two accepted scope probes, and one accepted limitation: 19 cases in total. The three
+positive acceptances are the baseline and the two scope probes. The accepted limitation is counted
+separately. It is not silently converted into positive evidence. Normal and optimized runs emit the
+same canonical 5,278-byte JSON record, SHA-256
+`c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad`.
+
+The production checker proves only this conditional statement about the fixed files and toolchain:
+Lean accepted the seven named declarations, and each queried declaration reported exactly the three
+permitted axioms. The generic mathematics in those declarations can then be read from their stated
+premises. The hostile suite adds bounded sensitivity to the named changes and makes two scope
+boundaries and one custody limitation observable. Neither artifact proves that the Python checker
+is correct, that the raw scan is a complete Lean lexer, that every declaration was queried, or that
+all possible proof faults are rejected. They do not formalize concrete SxPID event extraction, the
+Möbius lattice, canonical certificate bytes, Rust or binary64 refinement, resource correctness,
+sampling, estimation, calibration, population validity, or an application. The exact case record is
+[`sxpid2-exact-log-product-hostile-4.33.0.json`](../evidence/sxpid2-exact-log-product-hostile-4.33.0.json),
+and the rejected route and alternatives are retained in
+[`lean-exact-log-checker-adjudication-v1.md`](../../claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md).
+
+#### Verification procedure and interpretation
+
+The verification sequence is ordered so later evidence is not interpreted when an earlier
+prerequisite fails:
+
+1. Run the production checker with `python3 -I -S -B`. Acceptance means that the exact tracked
+   source and pinned project passed the seven Lean queries. A failure stops the route.
+2. Run the same checker with one `-O` and compare the complete canonical output byte for byte. This
+   challenges optimization-sensitive behavior; equality does not create an independent
+   implementation.
+3. Run the hostile suite with `python3 -I -S -B`. Require exactly the 19 declared cases, their
+   separate category counts, exact statuses, and the tracked post-replay bytes.
+4. Repeat the hostile suite with one `-O` and compare its 5,278-byte canonical output byte for byte.
+   Each run itself requires the stable tracked evidence JSON to equal that output; copying an older
+   or differently formatted record is also rejected by the source-state and claim gates.
+5. Run the certified-SxPID claim checker and its self-test in normal and optimized isolated modes.
+   These gates bind the live command container, exact assurance MD/TeX/PDF bytes, method-catalog
+   projection, and retained claim authorities. They do not upgrade the generic Lean theorem into a
+   concrete end-to-end refinement proof.
+6. Rebuild the PDF with the fixed source-date epoch. The exact route requires identical bytes on the
+   producing toolchain; the cross-toolchain route requires equal extracted text and page geometry,
+   embedded fonts, and no rejected LaTeX diagnostics. Visual inspection of every rendered page is a
+   separate human layout check, not mathematical validation.
+7. Run method-catalog, software-identity, Lean-freeze, release-scope, and current-source-state gates.
+   They check repository consistency and preserve the historical r14 replay without retroactively
+   inserting this post-r14 evidence. They do not authenticate Git history or prove the theorem.
+
+Only the baseline and two declared scope probes are positive acceptances. The nine semantic and six
+raw/digest cases are negative controls: each is useful only because the declared bad change was
+rejected for its intended reason. The shortened theorem inventory is an accepted limitation and has
+zero positive or mutation-kill credit. A passing sequence means the bounded contract above held for
+these exact bytes and cases; it is not a general completeness result.
+
 ### Lens 3: executable refinement
 
 `audit/tools/certified-sxpid/scripts/check-exact-products.py` uses only the Python standard
@@ -461,7 +644,10 @@ python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
 python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
 python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py \
   --output audit/evidence/sxpid2-exact-product-evolutionary-challenge.json
-python3 scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
 scripts/check-exact-log-product-sxpid2-pdf.sh --exact
 scripts/check-exact-log-product-sxpid2-pdf.sh --cross-toolchain
 ```

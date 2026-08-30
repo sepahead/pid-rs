@@ -9,6 +9,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Add an isolated hostile suite for the byte-frozen Lean 4.33 exact-log-product checker without
+  changing the production checker. The suite loads stable digest-bound source bytes, restores every
+  test-mutated checker global, validates canonical output, kills nine semantic mutations, rejects
+  six raw-source or digest controls, records two accepted declaration-scope probes and one accepted
+  checker-custody limitation, and covers the character-literal sequence that defeated a discarded
+  comment/string masker. Each hostile run requires its canonical record to equal the tracked
+  evidence, and the current claim gate pins the harness, evidence, and failure memo. CI and `just
+  certified-sxpid` run the production checker and hostile suite with exact `-I -S -B` isolation in
+  normal and optimized Python modes. A versioned negative-result memo and canonical evidence retain
+  the rejected design and nonclaims. The self-contained
+  assurance Markdown and 14-page PDF now define the objects, threat model, assumptions, and all 15
+  byte/process controls, explain each of the 19 cases and seven verification stages step by step,
+  separate positive acceptances from negative controls and the accepted limitation, and state
+  exactly what the kernel and hostile evidence do and do not prove.
+  This adds bounded fault sensitivity; it does not expand the seven Lean theorems or formalize
+  SxPID event extraction, executable refinement, sampling, calibration, or downstream use.
+
 - Preserve the certified SxPID2 revision-3 `justfile` execution-container binding by removing a
   redundant standalone Just alias for the new sensor-placement guide. The guide remains directly
   checkable through its versioned script and is already mandatory in the complete formal-PDF

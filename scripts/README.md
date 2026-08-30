@@ -2194,7 +2194,10 @@ python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
 python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
 python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
 python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
-python3 scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
 python3 -I -S -B scripts/check-certified-sxpid2-claim.py
 python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
 python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
@@ -2209,6 +2212,30 @@ not a universal nonnegativity theorem. Lean checks the generic log/product/sign 
 retained five-factor product identity, but not the concrete SxPID event extractor, lattice,
 executable refinement, sampling model, or downstream use. The independent exact-rational and Rust
 routes supply the concrete witness binding.
+
+The four exact-log commands form one bounded gate. The first two execute the byte-frozen
+production checker in normal and optimized Python modes; their canonical JSON outputs must
+agree. The second two execute an isolated hostile suite from stable, digest-bound checker bytes.
+That suite kills nine theorem or premise mutations, rejects six raw-source or digest-policy cases,
+accepts two deliberately digest-rebound declaration-scope probes, and records one deliberately
+accepted same-process theorem-inventory limitation. Its raw-source policy remains intentionally
+conservative: live proof escapes, a character-literal sequence that exposes an unqueried live
+`axiom`, and proof-escape words that occur only in comments or strings all fail closed. Comment or
+string rejection is a policy control, not evidence that Lean treats those words as live syntax.
+Likewise, acceptance of an extra `lemma` or `private theorem` after a test-only digest rebind shows
+the seven-name axiom audit's scope; the immutable production source digest prevents those files
+from being accepted in the real gate. The hostile suite does not replace Lean's kernel, extend the
+seven proved theorems, or close any concrete event-extraction, lattice, executable-refinement,
+sampling, calibration, or application edge. The versioned failure memo and canonical evidence are
+`claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md` and
+`audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json`.
+Each hostile run requires its complete canonical record to equal the stable tracked evidence bytes;
+the current claim gate separately pins that evidence, the hostile harness, and the failure memo.
+The independently readable definitions, threat model, assumptions, 15 byte/process controls,
+step-by-step 19-case table, seven-stage verification procedure, provenance, and proof/nonproof
+boundary are in `audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md` and the rendered
+`output/pdf/exact-log-product-sxpid2-assurance.pdf`; code is not used as a substitute for that
+explanation.
 
 The non-syntactic-boundary command is read-only by default. It verifies a fresh certificate,
 compares all bounded findings and stable bindings with the historical receipt, and writes the

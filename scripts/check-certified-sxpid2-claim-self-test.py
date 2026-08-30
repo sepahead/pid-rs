@@ -150,28 +150,63 @@ PRIVATE_BLOCK_BEGIN = b"# BEGIN KSG_M1A_CUSTODY_PRIVATE_TEST_VECTOR_V1"
 PRIVATE_BLOCK_END = b"# END KSG_M1A_CUSTODY_PRIVATE_TEST_VECTOR_V1"
 BOOTSTRAP_BLOCK_BEGIN = b"# BEGIN KSG_M1A_CUSTODY_CHECKER_BOOTSTRAP_V1"
 BOOTSTRAP_BLOCK_END = b"# END KSG_M1A_CUSTODY_CHECKER_BOOTSTRAP_V1"
+HOSTILE_EVIDENCE_BLOCK_BEGIN = b"# BEGIN EXACT_LOG_HOSTILE_EVIDENCE_V1"
+HOSTILE_EVIDENCE_BLOCK_END = b"# END EXACT_LOG_HOSTILE_EVIDENCE_V1"
+EXPECTED_HOSTILE_EVIDENCE_BLOCK_SIZE_BYTES = 6250
+EXPECTED_HOSTILE_EVIDENCE_BLOCK_SHA256 = (
+    "640b5df8346ea5530dafcf05cde141c43283ee23a6ecb6a2b0deef69e1ced3cb"
+)
 EXPECTED_CHECKER_BOOTSTRAP_SIZE_BYTES = 668
 EXPECTED_CHECKER_BOOTSTRAP_SHA256 = (
     "1129a9c3987603fbf16507edc8adebc54a69f7a9acf68494a099247bf41a6106"
 )
 EXECUTION_CONTAINER_ASSIGNMENT = "EXPECTED_EXECUTION_CONTAINER_SHA256"
 REVIEWED_DOCUMENTATION_ASSIGNMENT = "EXPECTED_REVIEWED_DOCUMENTATION_SHA256"
+CATALOG_METHOD_PROJECTION_ASSIGNMENT = "EXPECTED_CATALOG_METHOD_PROJECTION_SHA256"
+REVIEWED_EXECUTABLE_EVIDENCE_ASSIGNMENT = "EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256"
+TEXT_PATHS_ASSIGNMENT = "TEXT_PATHS"
+JSON_PATHS_ASSIGNMENT = "JSON_PATHS"
+REQUIRED_CATALOG_PATHS_ASSIGNMENT = "REQUIRED_CATALOG_PATHS"
 JUST_RELEASE_AUDIT_ASSIGNMENT = "EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256"
 SUPPORT_GATE_ASSIGNMENT = "EXPECTED_SUPPORT_GATE_SHA256"
 GATE_COMMANDS_ASSIGNMENT = "GATE_COMMANDS"
 CI_JOB_DIGEST_ASSIGNMENT = "EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256"
 JUST_RECIPE_DIGEST_ASSIGNMENT = "EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256"
 EXPECTED_CI_JOB_DIGEST = (
-    "6c173cbf90fe27bbd43342f37ebe0378db76a1e4e8e22a92aa4d5416f9789bda"
+    "67dab1b2177419e545a60ec7af21ac0f2c1d45b7cc466006218a5ab8c94e8e62"
 )
 EXPECTED_JUST_RECIPE_DIGEST = (
-    "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7"
+    "4bbc138fd8b7bd07281e593ab0380ca68cceabfd7e33be8dac2591bec37bc0f3"
 )
 EXECUTION_CONTAINER_PATHS = frozenset({".github/workflows/ci.yml", "justfile"})
 REVIEWED_DOCUMENTATION_PATHS = frozenset(
     {"audit/tools/certified-sxpid/README.md", "scripts/README.md"}
 )
 SUPPORT_GATE_PATHS = frozenset({"scripts/check-formal-pdf-set.sh"})
+EXPECTED_EXECUTABLE_EVIDENCE_CHANGED_PATHS = frozenset(
+    {
+        "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+        "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+        "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+    }
+)
+EXPECTED_EXECUTABLE_EVIDENCE_ADDED_PATHS = frozenset(
+    {
+        "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md",
+        "scripts/check-lean-exact-log-product-self-test.py",
+    }
+)
+EXPECTED_TEXT_PATH_ADDITIONS = frozenset(
+    {
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md",
+        "scripts/check-lean-exact-log-product-self-test.py",
+    }
+)
+EXPECTED_JSON_PATH_ADDITIONS = frozenset(
+    {"audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json"}
+)
+EXPECTED_CATALOG_PATH_ADDITIONS = EXPECTED_EXECUTABLE_EVIDENCE_ADDED_PATHS
 AUDIT_TOOL_README = "audit/tools/certified-sxpid/README.md"
 SCRIPTS_README = "scripts/README.md"
 EXPECTED_C8_FAILURE_BINDING_DIFFERENCES = frozenset(
@@ -193,7 +228,11 @@ ANCHOR_GATE_COMMANDS = (
     "python3 scripts/check-certified-sxpid2-claim-self-test.py",
 )
 CANDIDATE_GATE_COMMANDS = (
-    *ANCHOR_GATE_COMMANDS[:5],
+    *ANCHOR_GATE_COMMANDS[:4],
+    "python3 -I -S -B scripts/check-lean-exact-log-product.py",
+    "python3 -O -I -S -B scripts/check-lean-exact-log-product.py",
+    "python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py",
+    "python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py",
     "python3 -I -S -B scripts/check-certified-sxpid2-claim.py",
     "python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py",
     "python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
@@ -372,6 +411,71 @@ def top_level_assignment(
     return segment, value
 
 
+def top_level_string_collection_assignment(
+    source: str, tree: ast.Module, name: str
+) -> tuple[str, tuple[str, ...]]:
+    matches = [
+        node
+        for node in tree.body
+        if isinstance(node, ast.Assign)
+        and len(node.targets) == 1
+        and isinstance(node.targets[0], ast.Name)
+        and node.targets[0].id == name
+    ]
+    require(len(matches) == 1, f"checker assignment is not unique: {name}")
+    segment = ast.get_source_segment(source, matches[0])
+    require(isinstance(segment, str) and segment, f"cannot recover assignment: {name}")
+    value_node = matches[0].value
+    if (
+        isinstance(value_node, ast.Call)
+        and isinstance(value_node.func, ast.Name)
+        and value_node.func.id == "frozenset"
+        and len(value_node.args) == 1
+        and not value_node.keywords
+    ):
+        value_node = value_node.args[0]
+    require(
+        isinstance(value_node, (ast.Tuple, ast.List, ast.Set)),
+        f"checker string collection has an unsupported shape: {name}",
+    )
+
+    def string_value(node: ast.expr) -> str:
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            return node.value
+        if isinstance(node, ast.Name):
+            constants = [
+                candidate
+                for candidate in tree.body
+                if isinstance(candidate, ast.Assign)
+                and len(candidate.targets) == 1
+                and isinstance(candidate.targets[0], ast.Name)
+                and candidate.targets[0].id == node.id
+            ]
+            require(
+                len(constants) == 1,
+                f"checker string constant is not unique: {node.id}",
+            )
+            try:
+                resolved = ast.literal_eval(constants[0].value)
+            except (TypeError, ValueError) as error:
+                raise SelfTestError(
+                    f"checker string constant is not literal: {node.id}"
+                ) from error
+            require(
+                isinstance(resolved, str),
+                f"checker referenced collection value is not a string: {node.id}",
+            )
+            return resolved
+        raise SelfTestError(f"checker string collection item is not static: {name}")
+
+    value = tuple(string_value(item) for item in value_node.elts)
+    require(
+        len(value) == len(set(value)),
+        f"checker assignment is not a unique string collection: {name}",
+    )
+    return segment, value
+
+
 def top_level_function_segment(source: str, tree: ast.Module, name: str) -> str:
     matches = [
         node
@@ -457,6 +561,31 @@ def validate_checker_source_reconstruction(
         "checker private-vector blank-line convention changed",
     )
     reconstructed_raw = without_bootstrap[: begin - 2] + without_bootstrap[end + 1 :]
+    require(
+        reconstructed_raw.count(HOSTILE_EVIDENCE_BLOCK_BEGIN) == 1
+        and reconstructed_raw.count(HOSTILE_EVIDENCE_BLOCK_END) == 1,
+        "checker exact-log hostile-evidence block marker inventory changed",
+    )
+    hostile_begin = reconstructed_raw.index(HOSTILE_EVIDENCE_BLOCK_BEGIN)
+    hostile_end = reconstructed_raw.index(
+        HOSTILE_EVIDENCE_BLOCK_END, hostile_begin
+    ) + len(HOSTILE_EVIDENCE_BLOCK_END)
+    require(
+        hostile_begin >= 4
+        and reconstructed_raw[hostile_begin - 4 : hostile_begin] == b"    "
+        and reconstructed_raw[hostile_end : hostile_end + 2] == b"\n\n",
+        "checker exact-log hostile-evidence block layout changed",
+    )
+    hostile_raw = reconstructed_raw[hostile_begin:hostile_end]
+    require(
+        len(hostile_raw) == EXPECTED_HOSTILE_EVIDENCE_BLOCK_SIZE_BYTES
+        and hashlib.sha256(hostile_raw).hexdigest()
+        == EXPECTED_HOSTILE_EVIDENCE_BLOCK_SHA256,
+        "checker exact-log hostile-evidence block exact bytes changed",
+    )
+    reconstructed_raw = (
+        reconstructed_raw[: hostile_begin - 4] + reconstructed_raw[hostile_end + 2 :]
+    )
     anchor_source, anchor_tree = parse_python_source(
         anchor_raw, "<cb3f-certified-checker>"
     )
@@ -475,6 +604,48 @@ def validate_checker_source_reconstruction(
     )
     candidate_documentation_segment, candidate_documentation = top_level_assignment(
         candidate_source, candidate_tree, REVIEWED_DOCUMENTATION_ASSIGNMENT
+    )
+    anchor_catalog_segment, anchor_catalog_digest = top_level_literal_assignment(
+        anchor_source, anchor_tree, CATALOG_METHOD_PROJECTION_ASSIGNMENT
+    )
+    candidate_catalog_segment, candidate_catalog_digest = top_level_literal_assignment(
+        candidate_source, candidate_tree, CATALOG_METHOD_PROJECTION_ASSIGNMENT
+    )
+    anchor_executable_segment, anchor_executable = top_level_assignment(
+        anchor_source, anchor_tree, REVIEWED_EXECUTABLE_EVIDENCE_ASSIGNMENT
+    )
+    candidate_executable_segment, candidate_executable = top_level_assignment(
+        candidate_source, candidate_tree, REVIEWED_EXECUTABLE_EVIDENCE_ASSIGNMENT
+    )
+    anchor_text_paths_segment, anchor_text_paths = (
+        top_level_string_collection_assignment(
+            anchor_source, anchor_tree, TEXT_PATHS_ASSIGNMENT
+        )
+    )
+    candidate_text_paths_segment, candidate_text_paths = (
+        top_level_string_collection_assignment(
+            candidate_source, candidate_tree, TEXT_PATHS_ASSIGNMENT
+        )
+    )
+    anchor_json_paths_segment, anchor_json_paths = (
+        top_level_string_collection_assignment(
+            anchor_source, anchor_tree, JSON_PATHS_ASSIGNMENT
+        )
+    )
+    candidate_json_paths_segment, candidate_json_paths = (
+        top_level_string_collection_assignment(
+            candidate_source, candidate_tree, JSON_PATHS_ASSIGNMENT
+        )
+    )
+    anchor_catalog_paths_segment, anchor_catalog_paths = (
+        top_level_string_collection_assignment(
+            anchor_source, anchor_tree, REQUIRED_CATALOG_PATHS_ASSIGNMENT
+        )
+    )
+    candidate_catalog_paths_segment, candidate_catalog_paths = (
+        top_level_string_collection_assignment(
+            candidate_source, candidate_tree, REQUIRED_CATALOG_PATHS_ASSIGNMENT
+        )
     )
     anchor_release_segment, anchor_release_digest = top_level_literal_assignment(
         anchor_source, anchor_tree, JUST_RELEASE_AUDIT_ASSIGNMENT
@@ -545,6 +716,55 @@ def validate_checker_source_reconstruction(
         "candidate reviewed-documentation rebind",
     )
     require(
+        isinstance(anchor_catalog_digest, str)
+        and re.fullmatch(r"[0-9a-f]{64}", anchor_catalog_digest) is not None
+        and isinstance(candidate_catalog_digest, str)
+        and re.fullmatch(r"[0-9a-f]{64}", candidate_catalog_digest) is not None,
+        "catalog-method projection rebind is not a SHA-256 value",
+    )
+    require(
+        set(candidate_executable)
+        == set(anchor_executable) | EXPECTED_EXECUTABLE_EVIDENCE_ADDED_PATHS
+        and all(
+            re.fullmatch(r"[0-9a-f]{64}", digest) is not None
+            for digest in (*anchor_executable.values(), *candidate_executable.values())
+        ),
+        "reviewed executable/evidence rebind inventory or digest changed",
+    )
+    require(
+        {
+            path
+            for path in anchor_executable
+            if anchor_executable[path] != candidate_executable[path]
+        }
+        == EXPECTED_EXECUTABLE_EVIDENCE_CHANGED_PATHS,
+        "reviewed executable/evidence rebind path set changed",
+    )
+    for label, anchor_paths, candidate_paths, additions in (
+        (
+            "text-path",
+            anchor_text_paths,
+            candidate_text_paths,
+            EXPECTED_TEXT_PATH_ADDITIONS,
+        ),
+        (
+            "JSON-path",
+            anchor_json_paths,
+            candidate_json_paths,
+            EXPECTED_JSON_PATH_ADDITIONS,
+        ),
+        (
+            "catalog-path",
+            anchor_catalog_paths,
+            candidate_catalog_paths,
+            EXPECTED_CATALOG_PATH_ADDITIONS,
+        ),
+    ):
+        require(
+            set(candidate_paths) == set(anchor_paths) | additions,
+            f"candidate {label} inventory changed outside the exact additions",
+        )
+    require(
         isinstance(anchor_release_digest, str)
         and re.fullmatch(r"[0-9a-f]{64}", anchor_release_digest) is not None
         and isinstance(candidate_release_digest, str)
@@ -603,6 +823,31 @@ def validate_checker_source_reconstruction(
             candidate_documentation_segment,
         ),
         (
+            "catalog-method-projection-rebind",
+            anchor_catalog_segment,
+            candidate_catalog_segment,
+        ),
+        (
+            "reviewed-executable-evidence-rebind",
+            anchor_executable_segment,
+            candidate_executable_segment,
+        ),
+        (
+            "text-path-additions",
+            anchor_text_paths_segment,
+            candidate_text_paths_segment,
+        ),
+        (
+            "JSON-path-addition",
+            anchor_json_paths_segment,
+            candidate_json_paths_segment,
+        ),
+        (
+            "catalog-path-additions",
+            anchor_catalog_paths_segment,
+            candidate_catalog_paths_segment,
+        ),
+        (
             "release-audit-line-rebind",
             anchor_release_segment,
             candidate_release_segment,
@@ -625,8 +870,8 @@ def validate_checker_source_reconstruction(
         )
     require(
         normalized_anchor == normalized_candidate,
-        "checker bytes outside the marked block, four digest-rebind assignments, "
-        "and separately enumerated gate bindings differ from cb3f",
+        "checker bytes outside the marked block, reviewed rebind assignments, exact path "
+        "additions, and separately enumerated gate bindings differ from cb3f",
     )
     private_raw = without_bootstrap[
         begin + len(PRIVATE_BLOCK_BEGIN) : end - len(PRIVATE_BLOCK_END)
@@ -2534,7 +2779,7 @@ def main() -> int:
             mutated_text(
                 baseline,
                 "justfile",
-                "python3 scripts/check-lean-exact-log-product.py",
+                "python3 -I -S -B scripts/check-lean-exact-log-product.py",
                 "true # removed",
             ),
             "revision-3 executable gate must occur once as an active command",
@@ -2564,14 +2809,16 @@ def main() -> int:
                     baseline,
                     "justfile",
                     (
-                        "    python3 scripts/check-lean-exact-log-product.py\n"
+                        "    python3 -O -I -S -B "
+                        "scripts/check-lean-exact-log-product-self-test.py\n"
                         "    python3 -I -S -B scripts/check-certified-sxpid2-claim.py\n"
                         "    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py\n"
                         "    python3 -I -S -B "
                         "scripts/check-certified-sxpid2-claim-self-test.py\n"
                     ),
                     (
-                        "    python3 scripts/check-lean-exact-log-product.py\n"
+                        "    python3 -O -I -S -B "
+                        "scripts/check-lean-exact-log-product-self-test.py\n"
                         "    true # claim gate removed\n"
                         "    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py\n"
                         "    python3 -I -S -B "
