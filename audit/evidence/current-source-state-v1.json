@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "1708b9bf6ea359d049a65d9460ad09c9b4aec06e5412c86278f7a5b210349433",
-        "size_bytes": 268584
+        "sha256": "2a399a33b244cab8cdc3d6a07fa61a81aeaf9a6b812861f5bc31b982cf7d8fdd",
+        "size_bytes": 269147
       },
       {
         "git_mode": "100644",
@@ -4054,8 +4054,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/bin/exp0.rs",
-        "sha256": "ac1f60c4ea24c25e9150dd6b555a65cd7b49f2633f6bcdcd8876c2bfce84b6f3",
-        "size_bytes": 191402
+        "sha256": "b839bf15602b4ffcd68f201f547cf48c7e4648400600afa9721cfb391d09e0ec",
+        "size_bytes": 193183
       },
       {
         "git_mode": "100644",
@@ -4186,8 +4186,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/pid2.rs",
-        "sha256": "e99475804acf3c805e5df7971860817aa7f4bf1497a580038d38bfe960e4753b",
-        "size_bytes": 61738
+        "sha256": "d9fe89db5fcabd1b2666be5581726b18c8bf465b71d7ebc21e3fe3089007e147",
+        "size_bytes": 79304
       },
       {
         "git_mode": "100644",
@@ -4522,8 +4522,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/tests/pid2.rs",
-        "sha256": "3feea0e9e629e7757c6140f488e12d533bd65e54d63837143961d57c2f3f2117",
-        "size_bytes": 16434
+        "sha256": "967a26dac7633841ac14670e5f4d3362e0a4cfcf35beed72ef264d8b9d5b70bf",
+        "size_bytes": 17690
       },
       {
         "git_mode": "100644",
@@ -6374,7 +6374,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "6f0b800567be5f71fae33b0abfb3af8e71cbbf8c907681a2d4dc633b8cf99c16",
+    "entries_sha256": "656224c475e5cc35f45685714a589f795e932647e011012a22cc3b93db8520a1",
     "entry_count": 1038
   },
   "subprojections": [
@@ -6403,7 +6403,7 @@
       ]
     },
     {
-      "entries_sha256": "b5e0ba6def87170858fa3f9b41d5b36427b21927ea84b7dc434a6f605b412165",
+      "entries_sha256": "c7958d9e55be858e186d3cbdeeed99e441d0441764e1e42de40973288611519e",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

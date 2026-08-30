@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Expand direct continuous PID2 represented-input behavioral coverage without changing constructor
+  arithmetic or the inclusive 32-position compatibility policy. The tests retain exact-versus-
+  historical, Neumaier, and left-associated witnesses; exhaust all signed-zero inputs; cover the
+  ordinary and near-zero guard boundaries, overflow controls, the complete 1..=1023 exact-scaling
+  family, and all conditioning outcomes. The `exp0` diagnostic now converts only typed PID2
+  numerical instability to abstention and propagates every unexpected PID error.
+
 - Preserve the certified SxPID2 revision-3 `justfile` execution-container binding by removing a
   redundant standalone Just alias for the new sensor-placement guide. The guide remains directly
   checkable through its versioned script and is already mandatory in the complete formal-PDF
