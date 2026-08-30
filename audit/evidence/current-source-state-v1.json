@@ -304,14 +304,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "b26ed7b0b67faa2ba328078ebf67a7145dea2a428b1923bd67d78b2a220a5812",
-        "size_bytes": 79327
+        "sha256": "0a17eda9ea8907c9d1a58e5cbbacdfcae2961ce2239ec07f3b20c46a8f35e06a",
+        "size_bytes": 81852
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "ea5fe10865c8f5b1af4a240ab4c72e863fa0f48dacbc9200cae58abeea48754a",
-        "size_bytes": 263360
+        "sha256": "b0831b330208843b0b64c6d5063bb5feeb7d75fc095a09f2cc63506c73219818",
+        "size_bytes": 265785
       },
       {
         "git_mode": "100644",
@@ -465,9 +465,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md",
+        "sha256": "deb93194c26699d68ea6a090f95598f719dfd740a6c781bc309bb40870c58e91",
+        "size_bytes": 156835
+      },
+      {
+        "git_mode": "100644",
         "path": "README.md",
-        "sha256": "69724a5443bbe9e57532cf4af1d6eb3d87db38573ab821adec26df14f2f53fd9",
-        "size_bytes": 75583
+        "sha256": "919f756fc89dae9281e18ab4a251e345b1554370a51b06faee1922104d7aca27",
+        "size_bytes": 76752
       },
       {
         "git_mode": "100644",
@@ -876,6 +882,18 @@
         "path": "audit/evidence/c3-post-correction-publication-hosted-receipt-2026-08-07.md",
         "sha256": "85465231690ad083e15cc77cce4c1d3b599b4c7cf407e4f23e2ecbe687191120",
         "size_bytes": 4391
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.json",
+        "sha256": "dad518ad87b6c6290d6bc6b6f5c0b797bcd8a9a7cabe98a8bb75f12434251e48",
+        "size_bytes": 5749
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.tar.gz",
+        "sha256": "debd6e36e662dfe50e377bfdef588dc85019f389e5712035009666f112e1eb56",
+        "size_bytes": 6144
       },
       {
         "git_mode": "100644",
@@ -2115,6 +2133,48 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/current-versus-proposed.pdf",
+        "sha256": "f7d9a1f4df47606803ccb98f3f0e7b328270b2479d15c750e0e03d6d536b11a3",
+        "size_bytes": 117394
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/current-versus-proposed.svg",
+        "sha256": "53a2742a62d40e35a9d812fa5962a3fb5e7542eb0f7955bb99741a054d2037a5",
+        "size_bytes": 8417
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/figure-assets.json",
+        "sha256": "8c6d63f0ff9f077848de3d4a74d2b7379553a1cf5bb84f3d55a814e9f9712a02",
+        "size_bytes": 1497
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/measurement-to-estimand.pdf",
+        "sha256": "202a4b55eadaebce97d3453df3d9ad96643cfab61fa0996875f5bef02060cdc8",
+        "size_bytes": 82998
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/measurement-to-estimand.svg",
+        "sha256": "a652914324241c6f00f0953d59b3f0945ee5a3089701d84d121ce7742a6f7e0c",
+        "size_bytes": 7771
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/placement-evidence-funnel.pdf",
+        "sha256": "63abdcbdbf710123b4dbe40c5a5123165afb8e50691bc952d6a40a316c43f2ff",
+        "size_bytes": 134178
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/placement-evidence-funnel.svg",
+        "sha256": "1b582e6fcc6f2780a1f039da710be163da5a41dc03a7b8bc0b33d2c6c396921f",
+        "size_bytes": 9454
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf",
         "sha256": "6cfa13f06f20b6240abb3b28e4aca60611b410fa88c9eb7a0074f2985bf1aa02",
         "size_bytes": 77858
@@ -2274,6 +2334,18 @@
         "path": "audit/formal/latex/pid-rs-workflow-publication.sty",
         "sha256": "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e",
         "size_bytes": 6212
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/filter.lua",
+        "sha256": "b71bc1e869988ddac49528a45dec06225547f57233ff2b99fa7f403f4a06ff19",
+        "size_bytes": 4274
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/pid-sensor-placement-and-galadriel-guide/header.tex",
+        "sha256": "284cd6238695769f717c0018c3188daba91ddd622cc8e0fbe1f850961c41c6c4",
+        "size_bytes": 6103
       },
       {
         "git_mode": "100644",
@@ -4810,8 +4882,8 @@
       {
         "git_mode": "100644",
         "path": "justfile",
-        "sha256": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
-        "size_bytes": 50074
+        "sha256": "ec717944cce7d39d452bf7624aebc45160ac559b2aa8a3a3695323444db5792b",
+        "size_bytes": 50269
       },
       {
         "git_mode": "100644",
@@ -4929,6 +5001,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/pid-sensor-placement-and-galadriel-guide.pdf",
+        "sha256": "5afc694e007366723eac3f9b756ef000c6614b62a7be540bc7c9980a9676b3d2",
+        "size_bytes": 1382954
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
         "sha256": "d2b3227444a0a610169b609ff5e7f3ecc930d5289ac7ff3a5504bf1a0f185d51",
         "size_bytes": 356007
@@ -4954,8 +5032,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "78261b827f54c5d5407879291f2bfbe50e12622eaa6cd4a267d789c2ec12360e",
-        "size_bytes": 221697
+        "sha256": "da93ed8d490cbbd68e2a6670b0bfb66e8723beb643b459d460801c5d8d6fda3e",
+        "size_bytes": 223895
       },
       {
         "git_mode": "100755",
@@ -4968,6 +5046,12 @@
         "path": "scripts/build-pid-discovery-verification-blueprint.sh",
         "sha256": "6443b50d4c3f0469069854b491c3d5d7c8e983b28253f9ef24bfca5e73eaa0e0",
         "size_bytes": 11763
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/build-pid-sensor-placement-and-galadriel-guide-pdf.sh",
+        "sha256": "21ea6e059664dfb40ae6f11ccb075fbbc088bec9e1c4c56fcce86693bd76c1d1",
+        "size_bytes": 9685
       },
       {
         "git_mode": "100755",
@@ -5230,14 +5314,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "ee8058762c649fca6271cbdf671bd1dd89aa6340533c703690d00d4ee95cf904",
-        "size_bytes": 21017
+        "sha256": "f041724f3e59b734a9bd9257a6b9a850342e6e1f0fb4350e491679b5f03b5351",
+        "size_bytes": 21106
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "de69e2106034d954cc9396fa64bb6b39e321e29b608c819e8f0ba23f6fc533c7",
-        "size_bytes": 7190
+        "sha256": "3fe58627fb35b308ac59ed10f2f6693430bedc1f37168003aff5989c26711e19",
+        "size_bytes": 7353
       },
       {
         "git_mode": "100755",
@@ -5852,6 +5936,12 @@
         "size_bytes": 47328
       },
       {
+        "git_mode": "100755",
+        "path": "scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh",
+        "sha256": "ba60e1f16c316df64e1c5abfdff93ba2480c05f147aff99024335e9253d2181e",
+        "size_bytes": 29955
+      },
+      {
         "git_mode": "100644",
         "path": "scripts/check-post-commit-source-state-v2-self-test.py",
         "sha256": "b1f45814efca5754bdb33c0b41258be9f1874fd404ff7620505878a7c8fa4657",
@@ -6260,8 +6350,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "387fb4993c3802420a5b843331a5c7aaa65f1d35dc3823e5a4947380ce9d118e",
-    "entry_count": 1019
+    "entries_sha256": "1f087a9d65543277a8106c477f4082fb32c589b10765296ae3277943496a2675",
+    "entry_count": 1034
   },
   "subprojections": [
     {
@@ -6273,23 +6363,23 @@
       ]
     },
     {
-      "entries_sha256": "57efda375e0220cb0b12848dae7aafd3ef14014d3d6b0fd3574a9f5810e35dd7",
-      "entry_count": 99,
+      "entries_sha256": "7e69cf7cf5e6fb9083c4120b6895b0b886cb4b06f427603171f30167b9943439",
+      "entry_count": 108,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "12eab34bd01978c6f7ca1aa3ea21da28e62340bd78d9d011a5626c4330347da5",
-      "entry_count": 20,
+      "entries_sha256": "40ca394d593782e9895803c2e6938d0c8556d7b3713252846c5f9502cc19670c",
+      "entry_count": 21,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "c44b92ed83a16936e72aaa8ad4c43090a50869405adefa2376dd641be3cbe8a8",
+      "entries_sha256": "b5ca77c55f65a394f4c5c8115e8b8ae9c2a31796f4fed0ff9fb765708de39205",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
