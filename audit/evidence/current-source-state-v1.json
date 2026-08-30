@@ -5134,7 +5134,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "676290803b5e220a1e1bbbbb0c5c9af671ce3814abf9ec02678d4bec13e2f060",
+        "sha256": "2bb11cabc53117a61907db46a04e7ee0b5c358dc7df8246dfb2c7d28afe21242",
         "size_bytes": 82193
       },
       {
@@ -5326,13 +5326,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py",
-        "sha256": "b69efd359f621deef67efcd75f7285600ef02007790c246d5d94b0f37dac2da9",
+        "sha256": "feae79ab0fa519ced9cc7745b216ac841879e7d05b5d803f74a161a55de6b924",
         "size_bytes": 20714
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation.py",
-        "sha256": "892afa651380ffa2756f719b328de4afbdead2c991e0224bf8b3bf0adb334efa",
+        "sha256": "2d03d670a2f2bb5c94808ff72595ef02a647b5bb5dcc96b53357bcacef928a22",
         "size_bytes": 25063
       },
       {
@@ -5656,7 +5656,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "13a0fe48e46eab8b623c0681bc98136addc185171795e89de4622c45e4bfb8ca",
+        "sha256": "556dc9be2e1e6eae3290c214eb0a650527709496833d0b4b8722fb6e1a03a123",
         "size_bytes": 120874
       },
       {
@@ -6260,7 +6260,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "2129e4f15711f23e0efb662b41b6635d87e9e84a715b1159b57803bb930a9e4d",
+    "entries_sha256": "387fb4993c3802420a5b843331a5c7aaa65f1d35dc3823e5a4947380ce9d118e",
     "entry_count": 1019
   },
   "subprojections": [

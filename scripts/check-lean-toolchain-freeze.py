@@ -666,7 +666,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "5c901ea562e7ed9eb118f983ca4a9d97f6efeda40a070558646f515c14683c98"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "676290803b5e220a1e1bbbbb0c5c9af671ce3814abf9ec02678d4bec13e2f060"
+        "2bb11cabc53117a61907db46a04e7ee0b5c358dc7df8246dfb2c7d28afe21242"
     ),
     "scripts/check-formal-pdf-set.sh": (
         "de69e2106034d954cc9396fa64bb6b39e321e29b608c819e8f0ba23f6fc533c7"
