@@ -667,10 +667,18 @@ python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 33 
 python3 -O -I -B scripts/check-mathematical-results-guide-prose-self-test.py
 python3 -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py  # 4 positive + 214 rejected subprocesses
 python3 -O -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py
+# hosted raw profile: 2 controls + 67 hostiles = 69
+HOSTED_GUIDE_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf"
+python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
 python3 -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt.py  # closed translated 3.1.3 receipt
 python3 -O -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt.py
-python3 -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py  # 2 controls + 28 semantic + 7 custody mutations
+# per mode: 2 controls + 100 semantic + 11 custody; plus 6 separation + 4 source-custody
+python3 -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py
 python3 -O -I -B scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py
+# producer-profile dispatch; runtime reports the current inventory
+python3 -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
 scripts/check-mathematical-results-guide-builder-self-test.sh  # 69 source/staging/mode/comparison/output cases
 scripts/check-mathematical-results-guide-tagpdf-compat-self-test.sh
 scripts/check-mathematical-results-guide-uri-contents-compat-self-test.sh  # 6 controls + 14 hostiles
@@ -692,6 +700,8 @@ python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation
 python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py  # 74 object + 1 raw + 4 diagnostic + 4 path controls
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py
 scripts/check-mathematical-results-guide-pdf.sh --exact  # raw repeated-build and rebuilt/committed guide bytes
+# selected hosted/legacy profile; unsupported producers fail closed
+scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
 python3 -O scripts/generate-ksg-local-arithmetic-oracle.py

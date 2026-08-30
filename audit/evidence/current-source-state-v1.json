@@ -304,14 +304,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "b26ed7b0b67faa2ba328078ebf67a7145dea2a428b1923bd67d78b2a220a5812",
-        "size_bytes": 79327
+        "sha256": "1f703a740c0d2cfad1522da4d8f3e14546b0bae5e5eeced0b990ea419ea41d5e",
+        "size_bytes": 80148
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "ea5fe10865c8f5b1af4a240ab4c72e863fa0f48dacbc9200cae58abeea48754a",
-        "size_bytes": 263360
+        "sha256": "d0c166810ba6d33df4e6cf8e677629a5bc3e72793064cac7589fde23755fc11c",
+        "size_bytes": 265581
       },
       {
         "git_mode": "100644",
@@ -466,8 +466,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "69724a5443bbe9e57532cf4af1d6eb3d87db38573ab821adec26df14f2f53fd9",
-        "size_bytes": 75583
+        "sha256": "ebd7060163a55fe39dc38aa88389973e9938c81633713834e37aea8159a35ba0",
+        "size_bytes": 76788
       },
       {
         "git_mode": "100644",
@@ -1716,6 +1716,18 @@
         "path": "audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf",
         "sha256": "08b0ae8b8c7094cd2a5165563a4e3bd00b22e1d6fdeb658393268cd06525e443",
         "size_bytes": 581294
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json",
+        "sha256": "9ba8e03c5112dacc2da232b8660879d34afa901e9e07862135c40fd6e7d49f8e",
+        "size_bytes": 7789
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf",
+        "sha256": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd",
+        "size_bytes": 581296
       },
       {
         "git_mode": "100644",
@@ -4954,8 +4966,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "78261b827f54c5d5407879291f2bfbe50e12622eaa6cd4a267d789c2ec12360e",
-        "size_bytes": 221697
+        "sha256": "eb678988f4d1c35470b9d600bb3182f3696c32b2a926972b7e4bc2474824cf10",
+        "size_bytes": 225272
       },
       {
         "git_mode": "100755",
@@ -5134,7 +5146,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "2bb11cabc53117a61907db46a04e7ee0b5c358dc7df8246dfb2c7d28afe21242",
+        "sha256": "611d2add29e07c3ce8ce6a898b21a9bdb747c49ea30783954d45efa16a1cc8ce",
         "size_bytes": 82193
       },
       {
@@ -5656,7 +5668,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "556dc9be2e1e6eae3290c214eb0a650527709496833d0b4b8722fb6e1a03a123",
+        "sha256": "3743d4180e2a0a9e76f2dad1fa03e48368828546566689ec60ecbcd023fcfc4a",
         "size_bytes": 120874
       },
       {
@@ -5710,14 +5722,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py",
-        "sha256": "f37ca6350eb5ba813a6b100e2c6b6cc56df2a10bd92f75d9bd66294e8a49fcde",
-        "size_bytes": 35213
+        "sha256": "bdb53c0b8a20e48df73b22aeeabc223855c2ce797444808e6de495baf6ab2473",
+        "size_bytes": 40057
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pandoc-portability-receipt.py",
-        "sha256": "e84194bb17e059f14679e7c70b559a10d130be90262f58520d1447c1d6300399",
-        "size_bytes": 47041
+        "sha256": "5e59e9fb997098656039db1a60c1e8694a451432618ac2ecd192b402e7a8c319",
+        "size_bytes": 48961
       },
       {
         "git_mode": "100644",
@@ -5730,6 +5742,18 @@
         "path": "scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py",
         "sha256": "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997",
         "size_bytes": 49925
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py",
+        "sha256": "b4bf248f599ccd92298323912990476c5f426228ff56a5f26fe51fbc167141df",
+        "size_bytes": 57857
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile.py",
+        "sha256": "e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30",
+        "size_bytes": 37084
       },
       {
         "git_mode": "100644",
@@ -5746,8 +5770,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
-        "sha256": "8c477e48db326c60fcde63bfc61ba5be8a903fc4dea329725d96594bde74029e",
-        "size_bytes": 24014
+        "sha256": "f576d0724344f4241ca36cacd80ca1e5f725846059aac30137c4f6513a48e227",
+        "size_bytes": 132306
       },
       {
         "git_mode": "100644",
@@ -5764,8 +5788,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "f7b1cc563e8a8212f6ddcf1c9066f03f83b3705f82779497e22e80e2a5927c23",
-        "size_bytes": 26616
+        "sha256": "856e7c004a1c13792c4c17f0e4992a0bbb36b95f1c835c4ef191d1d5af2d12e0",
+        "size_bytes": 67907
       },
       {
         "git_mode": "100644",
@@ -6260,8 +6284,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "387fb4993c3802420a5b843331a5c7aaa65f1d35dc3823e5a4947380ce9d118e",
-    "entry_count": 1019
+    "entries_sha256": "07f1819b3c2e97f440a298db41b70c6bc5509a431355b7ae1f7af6fc517d827e",
+    "entry_count": 1023
   },
   "subprojections": [
     {
@@ -6289,7 +6313,7 @@
       ]
     },
     {
-      "entries_sha256": "c44b92ed83a16936e72aaa8ad4c43090a50869405adefa2376dd641be3cbe8a8",
+      "entries_sha256": "14f94a81acf778fdf2b347adb6e8099b1ce41093d53840b38effa465cc6461a3",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

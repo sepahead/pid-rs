@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-"""Validate the historical Pandoc observation and its retained replay adjudication."""
+"""Validate the historical Pandoc observation and its retained replay adjudication.
+
+The receipt records two guide-dispatch sources at the exact bytes used for the
+legacy adjudication.  Those digests are historical facts, not pins on the
+later producer-profile dispatcher.  Reading the current files at those paths
+would make the legacy checker and the current wrapper hash-pin each other.
+
+Later producer profiles are outside this check.  They must validate their own
+artifacts and cannot transfer evidence to this Pandoc 3.1.3 record.
+"""
 
 from __future__ import annotations
 
@@ -41,6 +50,20 @@ EXPECTED_REPOSITORY_INPUTS = {
     "audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf": "08b0ae8b8c7094cd2a5165563a4e3bd00b22e1d6fdeb658393268cd06525e443",
     "THIRD_PARTY_NOTICES.md": "844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427",
     "audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180",
+}
+
+# These two values remain part of the exact capture-time receipt ledger.  They
+# are deliberately not read from their current paths: the current wrapper
+# binds this legacy package, so a reverse live hash edge would be circular.
+HISTORICAL_ROUTING_SNAPSHOT_INPUTS = {
+    "scripts/check-mathematical-results-guide-pdf.sh": "f7b1cc563e8a8212f6ddcf1c9066f03f83b3705f82779497e22e80e2a5927c23",
+    "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py": "8c477e48db326c60fcde63bfc61ba5be8a903fc4dea329725d96594bde74029e",
+}
+
+LIVE_LEGACY_REPLAY_INPUTS = {
+    path: digest
+    for path, digest in EXPECTED_REPOSITORY_INPUTS.items()
+    if path not in HISTORICAL_ROUTING_SNAPSHOT_INPUTS
 }
 
 EXPECTED_TOP_LEVEL_KEYS = {
@@ -707,8 +730,27 @@ def main() -> None:
         fail(f"receipt is not canonical UTF-8 JSON: {error}")
     validate_document(document)
 
+    require(
+        len(EXPECTED_REPOSITORY_INPUTS) == 16
+        and len(HISTORICAL_ROUTING_SNAPSHOT_INPUTS) == 2
+        and len(LIVE_LEGACY_REPLAY_INPUTS) == 14,
+        "legacy snapshot/live input partition changed",
+    )
+    require(
+        all(
+            EXPECTED_REPOSITORY_INPUTS.get(path) == digest
+            for path, digest in HISTORICAL_ROUTING_SNAPSHOT_INPUTS.items()
+        )
+        and set(LIVE_LEGACY_REPLAY_INPUTS).isdisjoint(
+            HISTORICAL_ROUTING_SNAPSHOT_INPUTS
+        )
+        and set(EXPECTED_REPOSITORY_INPUTS)
+        == set(LIVE_LEGACY_REPLAY_INPUTS)
+        | set(HISTORICAL_ROUTING_SNAPSHOT_INPUTS),
+        "legacy routing snapshot was changed, promoted, or dropped",
+    )
     retained_bytes: bytes | None = None
-    for relative, expected in EXPECTED_REPOSITORY_INPUTS.items():
+    for relative, expected in LIVE_LEGACY_REPLAY_INPUTS.items():
         path = ROOT / relative
         data = read_regular(path, MAX_TRACKED_INPUT_BYTES, relative)
         observed = hashlib.sha256(data).hexdigest()
@@ -722,7 +764,8 @@ def main() -> None:
         "OK: historical Pandoc 3.1.3 observation plus raw-bound retained replay adjudication "
         "(translated_x86_64=yes; native_x86_64=no; normalization_deltas=25; "
         "historical_destinations=39; retained_relation=raw-then-typed; "
-        "superseded_false_positives=2; retained_pdf=tracked)"
+        "superseded_false_positives=2; retained_pdf=tracked; "
+        "legacy_routing_snapshot=closed)"
     )
 
 

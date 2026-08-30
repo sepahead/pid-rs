@@ -63,6 +63,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   tracked, so the hashes and relation are a bounded observation without independent replay custody,
   general writer equivalence, portability, authenticity, PDF/UA, or mathematical-correctness credit.
 
+- Add a separate current hosted raw profile for the mathematical results guide. Its receipt binds a
+  retained 581,296-byte Pandoc 3.10.2/Ubuntu 24.04/TeX Live 2023 fixture at SHA-256
+  `408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd`; two independently
+  downloaded hosted artifacts were byte-identical and one PDF is retained. Cross mode selects this
+  profile from exact Pandoc and LuaHBTeX version/digest facts plus direct/canonical command,
+  Kpathsea, format-path, and secure-file-shape facts. Each pre/post producer tuple captures and
+  rechecks `/usr/bin/kpsewhich` and the selected `lualatex.fmt`. The `kpsewhich` digest is per-run
+  evidence rather than a frozen cross-run authentication pin, and format size/SHA-256 do not select
+  the profile. A candidate must equal the fixture or differ only in the strict duplicated final
+  trailer IDs; both complete strict structure reports must then agree. Its self-test has 69 cases:
+  two controls plus 13 raw, six identifier, 10 input, 16 output, six dependency, 13 source, and three
+  stability hostiles. Exact mode remains raw byte-strict and has no live cross-profile dependency.
+  The legacy Pandoc 3.1.3 receipt and typed font-alpha package remain operationally separate. The
+  hosted receipt retains neither artifact ZIP bytes nor the complete runner filesystem, leaves the
+  hash-pinned pypdf wheel as an outer trust boundary, and grants no general producer-equivalence,
+  authenticity, PDF/UA, mathematical, estimator, statistical, scientific, or application credit.
+
 - Correct the mathematical-results-guide old-toolchain adjudication after a retained Pandoc 3.1.3
   and TeX Live 2023 replay did not reproduce the earlier unretained claim that the final raw
   structure digest was unchanged. The retained 581,294-byte, 16-page fixture has SHA-256
@@ -87,8 +104,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   strict checker, and the rebuilt and committed files remain byte-identical. Cross mode alone can
   use the typed relation with the
   strict committed PDF as reference. The wrapper runs normal and optimized pair checks, compares
-  their outputs and diagnostics, and rechecks all three checker digests. An 11-control/15-hostile
-  dispatch suite records zero exact-mode artifact calls and two cross-mode Python calls. The
+  their outputs and diagnostics, and rechecks all three checker digests. The producer-profile
+  dispatch suite requires zero exact-mode cross-profile artifact calls. Its source audit rejects
+  unapproved literal opposite-profile paths and names outside AST-confined negative controls; it is
+  not a data-flow or noninterference proof. Operational separation is additionally a reviewed fact
+  about the exact digest-pinned source set and closed manifests. The suite reports its current
+  control and hostile inventories at runtime. The
   receipt preserves the earlier operator statement as historical testimony while marking its
   strict-structure subclaim contradicted by the retained replay. This correction supplies no PID
   theorem, estimator, SxPID3 evidence, general PDF or writer equivalence, visual or PDF/UA result,
@@ -136,10 +157,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   above did not reproduce the unchanged raw structure-digest subclaim. A closed receipt preserves
   the historical statement and separately binds the controlling replay, tools, inputs, deltas,
   positive and negative
-  observations, and 19 nonclaims. Its checker and 2-control/100-semantic/12-custody mutation suite
-  run in normal and optimized Python. The tracked later replay PDF supports only the exact
-  source-profiled typed font-resource comparison. It is not either earlier random-ID output, and
-  it does not transfer execution credit to the historical run. The recorded observation describes
+  observations, and 19 nonclaims. Its 16 receipt-era repository-input values comprise 14 live
+  legacy replay inputs plus two frozen historical W/M routing snapshots; the latter are not reread
+  from their current paths, and the legacy package has no hosted dependency. In each internal mode,
+  its self-test runs two controls, 100 semantic mutations, and 11 custody mutations, plus six static
+  profile-separation guards and four static source-custody cases. The tracked later replay PDF
+  supports only the exact source-profiled typed font-resource comparison. It is not either of the
+  earlier random-ID outputs and does not transfer execution credit to the historical run. The
+  recorded observation describes
   translated execution for one source and two reviewed writers. It is not native x86_64 evidence,
   general Pandoc equivalence, arbitrary-input
   portability, raw cross-toolchain identity, atomic executable causation, independently replayable

@@ -10,6 +10,7 @@ import os
 import pathlib
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -27,15 +28,31 @@ RETAINED_RELATIVE = pathlib.Path(
     "audit/evidence/"
     "mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
 )
+HISTORICAL_ROUTING_RELATIVES = {
+    pathlib.Path("scripts/check-mathematical-results-guide-pdf.sh"),
+    pathlib.Path("scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py"),
+}
 EXPECTED_SUCCESS = (
     "OK: historical Pandoc 3.1.3 observation plus raw-bound retained replay adjudication "
     "(translated_x86_64=yes; native_x86_64=no; normalization_deltas=25; "
     "historical_destinations=39; retained_relation=raw-then-typed; "
-    "superseded_false_positives=2; retained_pdf=tracked)\n"
+    "superseded_false_positives=2; retained_pdf=tracked; "
+    "legacy_routing_snapshot=closed)\n"
 )
 FAILURE_PREFIX = "Pandoc portability receipt check failed:"
 HASH_LINE = re.compile(r'^RECEIPT_SHA256 = "[0-9a-f]{64}"$', re.MULTILINE)
-EXPECTED_COUNTS = (2, 100, 12)
+EXPECTED_COUNTS = (2, 100, 11)
+FORBIDDEN_CURRENT_PROFILE_TOKENS = (
+    "check-mathematical-results-guide-pdf-hosted-raw-profile.py",
+    "check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py",
+    "mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json",
+    "mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf",
+    "EXPECTED_HOSTED_SUCCESSOR_INPUTS",
+    "validate_hosted_successor",
+)
+EXPECTED_STATIC_GUARDS = 6
+EXPECTED_STATIC_SOURCE_CUSTODY_CASES = 4
+MAX_CHECKER_SOURCE_BYTES = 256 * 1024
 
 
 def fail(message: str) -> NoReturn:
@@ -45,6 +62,119 @@ def fail(message: str) -> NoReturn:
 def require(condition: bool, message: str) -> None:
     if not condition:
         fail(message)
+
+
+def source_identity(status: os.stat_result) -> tuple[int, ...]:
+    return (
+        status.st_dev,
+        status.st_ino,
+        status.st_mode,
+        status.st_nlink,
+        status.st_size,
+        status.st_mtime_ns,
+        status.st_ctime_ns,
+    )
+
+
+def read_checker_source(path: pathlib.Path) -> str:
+    nofollow = getattr(os, "O_NOFOLLOW", None)
+    nonblock = getattr(os, "O_NONBLOCK", None)
+    require(
+        nofollow is not None and nonblock is not None,
+        "platform lacks no-follow, nonblocking checker-source custody",
+    )
+    try:
+        path_before = path.lstat()
+        descriptor = os.open(
+            path,
+            os.O_RDONLY | nofollow | nonblock | getattr(os, "O_CLOEXEC", 0),
+        )
+    except OSError as error:
+        fail(f"checker source cannot be opened without following links: {error}")
+    try:
+        opened = os.fstat(descriptor)
+        require(
+            stat.S_ISREG(opened.st_mode)
+            and opened.st_nlink == 1
+            and 0 < opened.st_size <= MAX_CHECKER_SOURCE_BYTES
+            and source_identity(path_before) == source_identity(opened),
+            "checker source is non-regular, linked, empty, oversized, or changed",
+        )
+        chunks: list[bytes] = []
+        remaining = MAX_CHECKER_SOURCE_BYTES + 1
+        while remaining:
+            chunk = os.read(descriptor, min(65_536, remaining))
+            if not chunk:
+                break
+            chunks.append(chunk)
+            remaining -= len(chunk)
+        data = b"".join(chunks)
+        descriptor_after = os.fstat(descriptor)
+        path_after = path.lstat()
+    except OSError as error:
+        fail(f"checker source cannot be read stably: {error}")
+    finally:
+        os.close(descriptor)
+    require(
+        source_identity(opened) == source_identity(descriptor_after)
+        == source_identity(path_after)
+        and len(data) == opened.st_size,
+        "checker source changed while it was read",
+    )
+    try:
+        return data.decode("utf-8")
+    except UnicodeDecodeError as error:
+        fail(f"checker source is not strict UTF-8: {error}")
+
+
+def audit_profile_separation() -> int:
+    source = read_checker_source(CHECKER)
+    for token in FORBIDDEN_CURRENT_PROFILE_TOKENS:
+        require(
+            token not in source,
+            f"legacy checker contains a current-profile dependency: {token}",
+        )
+    require(
+        len(FORBIDDEN_CURRENT_PROFILE_TOKENS) == EXPECTED_STATIC_GUARDS,
+        "current-profile separation guard inventory changed",
+    )
+    return len(FORBIDDEN_CURRENT_PROFILE_TOKENS)
+
+
+def exercise_static_source_custody() -> int:
+    with tempfile.TemporaryDirectory(
+        prefix="pid-rs-pandoc-portability-static-source-",
+        dir=PHYSICAL_TEMP_ROOT,
+    ) as temporary:
+        root = pathlib.Path(temporary)
+        regular = root / "checker.py"
+        regular.write_text("print('bounded')\n", encoding="utf-8", newline="\n")
+        require(
+            read_checker_source(regular) == "print('bounded')\n",
+            "regular checker-source custody control changed",
+        )
+
+        symbolic = root / "symbolic.py"
+        symbolic.symlink_to(regular)
+        hard_link = root / "hard-link.py"
+        os.link(regular, hard_link)
+        fifo = root / "checker.fifo"
+        os.mkfifo(fifo)
+        for path, label in (
+            (symbolic, "symbolic checker source"),
+            (hard_link, "multiply linked checker source"),
+            (fifo, "FIFO checker source"),
+        ):
+            try:
+                read_checker_source(path)
+            except SystemExit as error:
+                require(
+                    str(error).startswith("Pandoc portability receipt self-test failed:"),
+                    f"{label} failed outside the self-test boundary",
+                )
+            else:
+                fail(f"{label} unexpectedly passed")
+    return 4
 
 
 try:
@@ -61,7 +191,11 @@ try:
 except (UnicodeDecodeError, json.JSONDecodeError) as error:
     fail(f"baseline receipt is invalid: {error}")
 require(isinstance(BASELINE, dict), "baseline receipt root is not an object")
-REPOSITORY_INPUTS = tuple(BASELINE["current_selected_repository_input_digests"])
+REPOSITORY_INPUTS = tuple(
+    pathlib.Path(relative)
+    for relative in BASELINE["current_selected_repository_input_digests"]
+    if pathlib.Path(relative) not in HISTORICAL_ROUTING_RELATIVES
+)
 
 
 def copy_fixture(directory: pathlib.Path) -> tuple[pathlib.Path, pathlib.Path]:
@@ -946,14 +1080,6 @@ def run_mode(optimized: bool) -> tuple[int, int, int]:
 
     custody_case("corrected_comparator_drift", corrected_comparator_drift)
 
-    def corrected_wrapper_drift(
-        _checker: pathlib.Path, receipt: pathlib.Path
-    ) -> None:
-        target = receipt.parents[2] / "scripts/check-mathematical-results-guide-pdf.sh"
-        target.write_bytes(target.read_bytes() + b"\n")
-
-    custody_case("corrected_wrapper_drift", corrected_wrapper_drift)
-
     with tempfile.TemporaryDirectory(
         prefix=f"pid-rs-pandoc-portability-{mode}-usage-",
         dir=PHYSICAL_TEMP_ROOT,
@@ -975,14 +1101,21 @@ def run_mode(optimized: bool) -> tuple[int, int, int]:
 
 def main() -> None:
     require(len(sys.argv) == 1, f"usage: {sys.argv[0]}")
+    static_guards = audit_profile_separation()
+    static_source_custody_cases = exercise_static_source_custody()
+    require(
+        static_source_custody_cases == EXPECTED_STATIC_SOURCE_CUSTODY_CASES,
+        "static checker-source custody inventory changed",
+    )
     totals = [run_mode(False), run_mode(True)]
     require(totals[0] == totals[1], "normal and optimized case counts differ")
     require(totals[0] == EXPECTED_COUNTS, "self-test case cardinality changed")
     controls, semantic_count, custody_count = totals[0]
     print(
         "OK: Pandoc portability receipt self-test "
-        f"(controls={controls}; semantic_mutations={semantic_count}; "
-        f"custody_mutations={custody_count}; modes=2)"
+        f"(controls={controls}; legacy_semantic_mutations={semantic_count}; "
+        f"custody_mutations={custody_count}; static_guards={static_guards}; "
+        f"static_source_custody_cases={static_source_custody_cases}; modes=2)"
     )
 
 

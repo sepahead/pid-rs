@@ -1,0 +1,147 @@
+{
+  "schema": "pid-rs.mathematical-results-guide-hosted-raw-profile-receipt.v1",
+  "captured_at_utc": "2026-08-30T09:50:39Z",
+  "status": "two_independently_downloaded_hosted_artifacts_were_byte_identical_and_one_copy_is_retained_in_the_repository",
+  "scope": {
+    "subject": "MATHEMATICAL_RESULTS_GUIDE.md",
+    "purpose": "bind one exact current Ubuntu hosted PDF observation for the source-specific cross-toolchain dispatcher",
+    "evidence_class": "bounded PDF-engineering replay evidence",
+    "scientific_result_credit": false,
+    "mathematical_result_credit": false,
+    "estimator_validation_credit": false
+  },
+  "retained_fixture": {
+    "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf",
+    "bytes": 581296,
+    "sha256": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd",
+    "pages": 16,
+    "page_size": "A4",
+    "pdf_version": "1.7",
+    "tagged": true,
+    "suspects": false,
+    "encrypted": false,
+    "forms": "none",
+    "javascript": false,
+    "navigation_records": 167,
+    "navigation_sha256": "95ca1981ffb665ad4f0b9cb72d2ae508f76ae90814669ca910bc41de55aadcf8",
+    "structure_sha256": "e9adba3097ffc38de2f7723e448d2bb54265ee201e010c0857e1a7a40db9d99b"
+  },
+  "hosted_capture_observations": [
+    {
+      "workflow_run_id": 33304256445,
+      "workflow_run_url": "https://github.com/sepahead/pid-rs/actions/runs/33304256445",
+      "workflow_run_conclusion": "cancelled_after_the_subject_job_succeeded",
+      "subject_job_id": 99237866205,
+      "subject_job_conclusion": "success",
+      "diagnostic_source_commit": "ce33fad45bbeb41556c493ef5c0152ceeff8e346",
+      "artifact_id": 9729997577,
+      "artifact_name": "c3-guide-pdf-diagnostic-ce33fad45bbeb41556c493ef5c0152ceeff8e346",
+      "artifact_zip_bytes_reported_by_github": 399034,
+      "extracted_pdf_bytes": 581296,
+      "extracted_pdf_sha256": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd"
+    },
+    {
+      "workflow_run_id": 33304812235,
+      "workflow_run_url": "https://github.com/sepahead/pid-rs/actions/runs/33304812235",
+      "subject_job_id": 99239384430,
+      "subject_job_conclusion": "success",
+      "diagnostic_source_commit": "93edb4983129151ce0db8e58b0aad52cae0f47bc",
+      "artifact_id": 9730171410,
+      "artifact_name": "c3-guide-pdf-diagnostic-93edb4983129151ce0db8e58b0aad52cae0f47bc",
+      "artifact_zip_bytes_reported_by_github": 399034,
+      "extracted_pdf_bytes": 581296,
+      "extracted_pdf_sha256": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd"
+    }
+  ],
+  "second_capture_producer_observation": {
+    "pandoc": {
+      "version": "pandoc 3.10.2",
+      "path": "/home/runner/work/_temp/pandoc-3.10.2/bin/pandoc",
+      "sha256": "867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce"
+    },
+    "lualatex_command": "/usr/bin/lualatex",
+    "renderer": {
+      "resolved_path": "/usr/bin/luahbtex",
+      "version": "This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)",
+      "bytes": 7033000,
+      "hard_links": 1,
+      "mode": "0755",
+      "sha256": "cc74da0d993e503321f9dd65b8cc5ddf103f2620c4bdbc41798841f253c46e02"
+    },
+    "format": {
+      "path": "/var/lib/texmf/web2c/luahbtex/lualatex.fmt",
+      "bytes": 12241305,
+      "hard_links": 1,
+      "mode": "0644",
+      "sha256": "476a06676ec92630173512de1024d64a2701b06ad4ef5ad29a0f01cdc0f996c1"
+    }
+  },
+  "format_instability_observations": [
+    {
+      "workflow_run_id": 33268600730,
+      "subject_job_id": 99142941904,
+      "format_bytes": 12241965,
+      "format_sha256": "5ce03faccb075e9e3aaac94c4d5c68f0d52048aeb470f70db4d5c1128b58aabc",
+      "guide_sha256_observed_in_log": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd"
+    },
+    {
+      "workflow_run_id": 33298715559,
+      "subject_job_id": 99222747850,
+      "format_bytes": 12242745,
+      "format_sha256": "0ea50d0c1ca06188ee8900786ec66d09f0fb596defeeb9c378b40ebe08b4114a",
+      "guide_sha256_observed_in_log": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd"
+    },
+    {
+      "workflow_run_id": 33301723070,
+      "subject_job_id": 99231040002,
+      "format_bytes": 12242382,
+      "format_sha256": "6b712cc78caf6e3560923c1359d7071f85804b59c18672cd4d0d5cfaea8dd396",
+      "guide_artifact_retained": false
+    },
+    {
+      "workflow_run_id": 33304812235,
+      "subject_job_id": 99239384430,
+      "format_bytes": 12241305,
+      "format_sha256": "476a06676ec92630173512de1024d64a2701b06ad4ef5ad29a0f01cdc0f996c1",
+      "guide_sha256_observed_in_log": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd"
+    }
+  ],
+  "adjudication": {
+    "selected_profile_facts": [
+      "exact Pandoc version and executable digest",
+      "exact LuaHBTeX version and executable digest",
+      "canonical command and resolved executable paths"
+    ],
+    "per_run_custody_facts": [
+      "canonical format path",
+      "each endpoint capture reads a descriptor-stable regular single-link file",
+      "the pre-build and post-build tuples agree on recorded paths, versions, lengths, digests, ownership, mode, and writability facts"
+    ],
+    "forbidden_selector": "the lualatex.fmt length or SHA-256 must not select a comparison profile",
+    "reason": "four observed hosted format snapshots differ while three logged guide builds and both retained artifacts have the same guide SHA-256",
+    "candidate_relation": "a candidate must equal the retained fixture byte-for-byte or differ only in the strict duplicated final-trailer ID payloads, and both complete strict typed structure reports must agree",
+    "exact_mode_boundary": "same-toolchain exact mode remains a strict raw byte comparison and does not depend on this fixture or exception relation",
+    "legacy_boundary": "the Pandoc 3.1.3 font-resource alpha profile remains separate and cannot be selected for this Pandoc 3.10.2 producer"
+  },
+  "local_visual_and_parser_review": {
+    "poppler_version": "26.06.0",
+    "render_resolution_dpi": 150,
+    "rendered_pages": 16,
+    "rendered_pngs_byte_identical_to_committed_guide": true,
+    "manually_inspected_pages": [1, 2, 8, 16],
+    "observed_layout_defects": 0,
+    "fonts_embedded": true,
+    "parser_diagnostics": 0
+  },
+  "custody_boundaries": [
+    "the two diagnostic commits and their temporary workflow edits are evidence-generation machinery and must not be merged into the publication branch",
+    "the tracked PDF is byte-bound to the two extracted hosted artifacts; the GitHub artifact ZIP bytes and complete runner filesystem were not retained",
+    "the second subject-job log records producer facts, but this receipt is not a transparency log or an authenticity attestation",
+    "the kpsewhich path, bytes, and digest are per-run custody evidence only; no retained expected kpsewhich digest exists, so the selector does not authenticate kpsewhich across runs",
+    "the varying format snapshots are evidence against format-hash profile selection, not evidence that TeX format bytes are irrelevant to arbitrary documents",
+    "pre-build and post-build tuple equality is not inode equality, an atomic filesystem snapshot, or proof that a selected executable could not change and be restored between endpoint captures",
+    "the raw-profile comparator trusts the outer hash-pinned pypdf wheel installation and additionally binds its version, external initializer path and bytes, and runtime stability",
+    "the result is source-specific and does not establish general Pandoc, TeX Live, renderer, operating-system, or future-run equivalence",
+    "the result does not establish PDF/UA conformance, mathematical correctness, estimator validity, statistical validity, scientific novelty, or application suitability"
+  ]
+}

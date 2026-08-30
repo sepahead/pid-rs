@@ -68,7 +68,22 @@ The scoped, junior-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUID
 objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
-for the method catalog, claim packets, or detailed proofs. Its
+for the method catalog, claim packets, or detailed proofs. The current hosted cross-toolchain route
+has a separate
+[Pandoc 3.10.2 raw-profile receipt](audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json)
+and one retained 581,296-byte fixture; two independently downloaded hosted artifacts were
+byte-identical. The dispatcher selects this source-specific profile from exact Pandoc and LuaHBTeX
+version/digest facts plus direct command, canonical renderer, Kpathsea, and format-path/security
+facts. Each run captures and rechecks `/usr/bin/kpsewhich` and the selected `lualatex.fmt` in its
+pre/post producer tuples. The `kpsewhich` digest is not a frozen cross-run authentication pin, and
+the format size and SHA-256 are run evidence rather than profile selectors. A candidate must equal
+the fixture or differ only in its strict duplicated final-trailer ID payloads; both complete strict
+structure reports must then agree. Default exact mode remains a raw rebuilt-versus-committed byte
+comparison and has no live dependency on either cross-profile package. This bounded PDF-engineering
+observation is not general producer equivalence, authenticity, PDF/UA, mathematical correctness,
+estimator validation, or scientific credit.
+
+A separate
 [bounded Pandoc 3.1.3 portability receipt](audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json)
 preserves one earlier operator-observed translated Ubuntu run and a later retained replay. The
 replay did not reproduce the earlier claim of an unchanged raw structure digest. Within the checked

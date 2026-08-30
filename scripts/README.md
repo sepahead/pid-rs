@@ -1687,16 +1687,45 @@ exact page boxes, CFF resource shapes, admitted open-font names, and the limits 
 
 `check-mathematical-results-guide-pdf.sh` keeps the same-toolchain route byte-strict. It applies the
 unchanged strict structure checker to both PDFs and then requires raw equality between the rebuilt
-and committed files. The typed font-resource relation is available only for the rebuilt PDF in
-explicit `--cross-toolchain` mode. The committed PDF remains the strict reference. The wrapper
-runs the pair checker in normal and optimized Python and requires identical output projections and
-diagnostics. It also retains the exact extracted-text, page-geometry, font-roster, hyperlink,
-navigation, and rendering gates. The wrapper binds and rechecks the strict checker and pair checker
-digests around their use.
+and committed files. The exact branch neither requires nor reads a hosted or legacy cross-profile
+checker, receipt, or fixture. Explicit `--cross-toolchain` mode instead captures the producer tuple
+before and after the build, requires the complete tuples to agree, and selects exactly one supported
+source profile. The current hosted profile is selected by the exact Pandoc 3.10.2 and LuaHBTeX
+version/digest facts, direct and canonical command paths, `/usr/bin/kpsewhich`, the canonical
+`TEXMFSYSVAR` format path, and its secure regular-file shape. Each tuple captures and rechecks the
+selected `kpsewhich` executable and `lualatex.fmt`; the `kpsewhich` digest is per-run evidence, not a
+frozen cross-run authentication pin, and the format size and SHA-256 are deliberately not profile
+selectors.
 
-The retained TeX Live 2023 replay corrected an earlier unretained observation. The earlier operator
-record said that the old build passed the unchanged raw structure digest. The retained replay did
-not reproduce that subclaim. Its 581,294-byte PDF has SHA-256
+`check-mathematical-results-guide-pdf-hosted-raw-profile.py` binds the exact 581,296-byte hosted
+fixture at SHA-256 `408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd`.
+A built candidate must equal that fixture or have the same length and differ only in the strict two
+duplicated final-trailer `/ID` payloads. The checker then validates both captured byte strings with
+the digest-pinned strict structure checker, requires their complete typed reports to agree, and
+publishes fresh target and navigation reports. The wrapper runs the selected checker under normal
+and optimized Python, compares its outputs and diagnostics, and rechecks the relevant digests.
+It retains the extracted-text, page-geometry, font-roster, hyperlink, navigation, and rendering
+gates after that source-profile admission.
+
+The hosted self-test has 69 cases: two controls plus 13 raw, six identifier, 10 input, 16 output,
+six dependency, 13 source, and three stability hostiles. The production and focused commands are:
+
+```text
+scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
+HOSTED_GUIDE_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf"
+python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
+```
+
+The matching receipt records two independently downloaded byte-identical hosted artifacts, of which
+one PDF is retained. The artifact ZIP bytes and complete runner filesystem are not retained, and the
+hash-pinned pypdf wheel remains an outer trust boundary. This is one source-specific PDF-engineering
+profile, not general Pandoc, TeX Live, renderer, operating-system, future-run, authenticity, PDF/UA,
+mathematical, estimator, statistical, scientific-novelty, or application evidence.
+
+The separate legacy Pandoc 3.1.3/TeX Live 2023 replay corrected an earlier unretained observation.
+The earlier operator record said that the old build passed the unchanged raw structure digest. The
+retained replay did not reproduce that subclaim. Its 581,294-byte PDF has SHA-256
 `08b0ae8b8c7094cd2a5165563a4e3bd00b22e1d6fdeb658393268cd06525e443`.
 It has 1,699 tagged-structure records. Exactly 32 records differ from the canonical PDF: one decoded
 page-content hash and one page-resource hash on each of 16 pages. The other 1,667 records, the target
@@ -1752,11 +1781,17 @@ PDF cannot serve as the strict reference. The retained fixture is a later replay
 not claimed to be either of the earlier unretained random-trailer-ID outputs. The guide-only
 relation is not imported by the SxPID3 paper gate and transfers no PID theorem or validation credit.
 
-`check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted dispatch
-blocks and binds their exact source anchors. In normal and optimized Python it runs 11 controls and
-15 hostile mutations. It observes zero exact-mode artifact invocations of the alpha comparator and
-two cross-mode Python invocations in canonical-reference-to-built-candidate order. This is a mode
-wiring test. It is not a renderer replay or a typed-PDF semantic test.
+`check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted producer
+capture, selection, and dispatch blocks and binds their exact source anchors. It requires exact mode
+to invoke no cross-profile artifact relation, the hosted route to remain free of the legacy alpha
+package, and the legacy route to remain free of hosted checker, receipt, and fixture state. It also
+exercises fail-closed producer and per-run tuple custody. The suite reports its current control and
+hostile inventories at runtime; this guide deliberately does not freeze those evolving counts. This
+is a mode-wiring test, not a renderer replay or a typed-PDF semantic test. Its selected-source scan
+rejects unapproved literal opposite-profile paths and names outside AST-confined negative controls;
+it is not a data-flow or noninterference proof. The stronger operational-separation statement is a
+reviewed fact about the exact digest-pinned source set and its closed manifests, not a theorem of the
+literal scanner.
 
 `regenerate-mathematical-results-guide-open-font-figures.py` accepts only the five recorded Source
 Sans Pro 3.006 and Latin Modern Sans 2.004 program hashes at their declared TeX roots. It copies
@@ -1827,10 +1862,12 @@ The legacy cross route therefore also requires the exact singly linked `/usr/bin
 binary with SHA-256 `3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53d701b`.
 This endpoint observation does not atomically bind the hash to the executable bytes that the
 operating system ran. The closed receipt preserves that causation boundary.
-Exact mode accepts only Pandoc 3.10.2 and remains byte-strict. The hosted workflow separately
-installs and digest-binds its Pandoc 3.10.2 executable. Its formal-PDF `PATH` puts that pinned
-directory first and the Elan proxy directory second. The workflow resolves Pandoc plus the `elan`,
-`lake`, and `lean` proxies before and after clean-home toolchain setup.
+Exact mode accepts only Pandoc 3.10.2 and remains byte-strict without live cross-profile inputs. The
+hosted workflow separately installs and digest-binds its Pandoc 3.10.2 executable. Its formal-PDF
+`PATH` puts that pinned directory first and the Elan proxy directory second. The workflow resolves
+Pandoc plus the `elan`, `lake`, and `lean` proxies before and after clean-home toolchain setup. The
+hosted guide dispatcher separately performs the bounded per-run `kpsewhich` and format captures
+described above; those observations do not authenticate `kpsewhich` across runs.
 
 `check-mathematical-results-guide-builder-self-test.sh` uses an isolated fixture and a fake font
 probe. Its 69 cases reject source aliases, symbolic outputs, non-PDF names, nonregular outputs,
@@ -1984,11 +2021,15 @@ not inherit the historical raw-digest pass statement. It instead supports only t
 font-resource result described above.
 
 `check-mathematical-results-guide-pandoc-portability-receipt.py` binds the complete receipt bytes,
-the 16 current selected repository-input digests, the old executable identity, the normalization
-counts, the negative name-tree census, the historical policy digests, the translated-execution
-boundary, the retained replay, and 19 explicit nonclaims. Its self-test accepts two controls and
-rejects 100 semantic plus 12 custody mutations in each interpreter mode. The receipt keeps the
-historical 26-mutation gate record separate from this current suite. It also records three disjoint
+16 receipt-era repository-input values, the old executable identity, the normalization counts, the
+negative name-tree census, the historical policy digests, the translated-execution boundary, the
+retained replay, and 19 explicit nonclaims. Fourteen inputs are checked against live legacy replay
+bytes. The wrapper and mode-wiring values are two frozen historical W/M routing snapshots and are
+deliberately not reread from their current paths, which avoids a circular hash edge. The legacy
+checker has no hosted-profile dependency. In each internal interpreter mode its self-test accepts
+two controls and rejects 100 semantic plus 11 custody mutations; it separately enforces six profile-
+separation guards and four static source-custody cases. The receipt keeps the historical 26-mutation
+gate record separate from this current suite. It also records three disjoint
 post-observation phases: lint-only corrections, shared four-figure asset custody, and the retained
 replay adjudication. The earlier run remains bound to its before-digests and transfers no execution
 credit to later sources. The tracked replay supplies reproducible custody only for its exact PDF
@@ -2003,9 +2044,11 @@ retained.
 resolves every internal destination, binds the external/file target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
 font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
-in default `--exact` mode. In cross mode, the trailer-ID relation can apply only to the two rebuilt
-outputs. Rebuilt-versus-committed comparison still uses extracted text, geometry, the normalized
-font roster, target sets, navigation, and the complete per-PDF structure projection. The graph-aware
+in default `--exact` mode. In cross mode, the builder's repeated-build trailer-ID relation applies
+only to its two rebuilt outputs. A selected hosted or legacy profile may separately admit the built
+candidate against its retained fixture under that profile's strict raw boundary. The subsequent
+rebuilt-versus-committed comparison still uses extracted text, geometry, the normalized font roster,
+target sets, navigation, and the complete per-PDF structure projection. The graph-aware
 `check-mathematical-results-guide-pdf-structure.py` policy allows only the declared raw catalog,
 page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
