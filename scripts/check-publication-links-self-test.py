@@ -303,7 +303,20 @@ def symlink(repo: Path) -> None:
 
 def gitlink(repo: Path) -> None:
     tree = git(repo, ["mktree"], input_text="")
-    commit = git(repo, ["commit-tree", tree], input_text="fixture\n")
+    # The isolated fixture has no ambient Git identity.  Bind one only for the
+    # synthetic commit instead of configuring the runner or weakening isolation.
+    commit = git(
+        repo,
+        [
+            "-c",
+            "user.name=pid-rs publication fixture",
+            "-c",
+            "user.email=publication-fixture@example.invalid",
+            "commit-tree",
+            tree,
+        ],
+        input_text="fixture\n",
+    )
     git(repo, ["update-index", "--add", "--cacheinfo", "160000", commit, "nested"])
 
 

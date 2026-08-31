@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "d303fa2e6f492dba15da12e86d5d007d766777cf533d2bf177365b6aeb97ac25",
-    "CHANGELOG.md": "b201772228e7c7daca4b2001547a34e61354679b1e96a330ad022e3af7ecfd3f",
+    "CHANGELOG.md": "84db7173f73039a603a9bd9e0ed5a4ad9ba94d5feb790f7a7b1cabd9db58251b",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567"
     ),
@@ -698,10 +698,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ),
     "scripts/README.md": "272f3bac381f34d064846fe9502cf633337e8144dbb4d76f2499b0cef89f847e",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
-        "d546a2c9910e42b54d1c12b844abf2ec7cf9a2dd0dd2d98549746c1d81a43a6b"
+        "ebe61f04934246475c388296a823c7f97cafe662debf11a6ae7be42035154fe2"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "ccc4e5398a6913acd4ed74975edd7a815048fcb7ec75de30016c5ade80b181ce"
+        "5499b871c4210b43ec8146492eafe5d38c169ca0515351f539e73b8bffac4412"
     ),
     "scripts/check-formal-pdf-set.sh": (
         "ae8d8ccbb873fe79dd9ebe2c849da93ac92404702e032632a428045068a287f2"
@@ -2209,7 +2209,7 @@ def check_c12_terminal_routing() -> None:
             f"obsolete live C9 direction reappeared: {relative}",
         )
 
-    just = stable_read(ROOT / "Justfile", "current C12 Just routing").raw.decode(
+    just = stable_read(ROOT / "justfile", "current C12 Just routing").raw.decode(
         "utf-8", errors="strict"
     )
     require(

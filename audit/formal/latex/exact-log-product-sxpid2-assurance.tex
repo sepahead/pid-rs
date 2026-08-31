@@ -627,9 +627,13 @@ credit. \\
 The suite therefore reports one baseline, nine rejected semantic mutations, six rejected raw or
 digest controls, two accepted scope probes, and one accepted limitation: 19 cases.  The three
 positive acceptances are the baseline and two scope probes.  The accepted limitation is separate
-and is not converted into positive evidence.  Normal and optimized runs emit the same canonical
-5,278-byte JSON record, SHA-256
-\path{c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad}.
+and is not converted into positive evidence.  Two additional controls show that the reviewed
+macOS/Arm64 and Ubuntu/x86-64 version strings map to the same portable Lean identity: version
+4.33.0, the reviewed commit displayed above, and a \texttt{Release} build.  The raw target triple
+remains in each live checker output and log.  It is not proof identity and does not establish
+cross-platform kernel equivalence.  Normal and optimized runs emit the same canonical 5,808-byte
+JSON record, SHA-256
+\path{01e6e00f72a1ae75aa9f31e148b5685d38b2d82b2477aa8bc55ccfa333ebf84c}.
 
 The production checker proves only the following conditional statement about the fixed files and
 toolchain: Lean accepted the seven named declarations and each reported exactly the three permitted
@@ -653,7 +657,7 @@ The sequence is ordered so later evidence is not interpreted after an earlier pr
   optimization dependence; it is not an independent implementation.
   \item Run the hostile suite with \texttt{python3 -I -S -B}.  Require exactly 19 cases, separate
   category counts and statuses, and unchanged tracked post-replay bytes.
-  \item Repeat with one \texttt{-O}; require the same 5,278 bytes.  Each run itself requires the
+  \item Repeat with one \texttt{-O}; require the same 5,808 bytes.  Each run itself requires the
   stable tracked hostile JSON to equal that output; source-state and claim gates also reject an
   older or differently formatted record.
   \item Run the certified-SxPID claim checker and self-test in both isolated modes.  They bind the

@@ -217,6 +217,11 @@ EXPECTED_BOUNDARY = (
     "binding, executable refinement, sampling, and scientific validity remain separate "
     "obligations."
 )
+EXPECTED_LEAN_PORTABLE_IDENTITY = {
+    "build": "Release",
+    "commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "version": "4.33.0",
+}
 
 checker, CHECKER_BYTES = load_exact_module(
     CHECKER_PATH,
@@ -376,14 +381,7 @@ def validate_checker_output(
         value.get("lean_toolchain") == "leanprover/lean4:v4.33.0",
         f"{role} toolchain",
     )
-    lean_version = value.get("lean_version")
-    require(isinstance(lean_version, str), f"{role} Lean version type")
-    require("version 4.33.0" in lean_version, f"{role} Lean version")
-    require(
-        "commit d8b18978322de05a8f3dba51ef03cf5461676c17" in lean_version,
-        f"{role} Lean commit",
-    )
-    require(lean_version.endswith(", Release)"), f"{role} Lean build")
+    lean_portable_identity(value.get("lean_version"), role)
     require(
         value.get("theorems_kernel_checked") == expected_theorem_count,
         f"{role} theorem count",
@@ -396,6 +394,24 @@ def validate_checker_output(
         value.get("boundary") == EXPECTED_BOUNDARY,
         f"{role} boundary",
     )
+
+
+def lean_portable_identity(value: object, role: str) -> dict[str, str]:
+    """Validate a raw Lean version line and return its target-neutral identity."""
+
+    require(isinstance(value, str), f"{role} Lean version type")
+    matched = checker.LEAN_VERSION_LINE.fullmatch(value)
+    require(matched is not None, f"{role} Lean version syntax")
+    identity = {
+        "build": matched.group("build"),
+        "commit": matched.group("commit"),
+        "version": matched.group("version"),
+    }
+    require(
+        identity == EXPECTED_LEAN_PORTABLE_IDENTITY,
+        f"{role} Lean portable identity",
+    )
+    return identity
 
 
 def main() -> int:
@@ -425,6 +441,33 @@ def main() -> int:
             expected_source_sha256=EXPECTED_SOURCE_SHA256,
             expected_theorem_count=7,
         )
+        baseline_portable_identity = lean_portable_identity(
+            baseline_value["lean_version"], "baseline"
+        )
+        portability_controls: list[dict[str, object]] = []
+        for name, line in (
+            (
+                "macos_arm64",
+                "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit "
+                "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+            ),
+            (
+                "ubuntu_x86_64",
+                "Lean (version 4.33.0, x86_64-unknown-linux-gnu, commit "
+                "d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+            ),
+        ):
+            require(
+                lean_portable_identity(line, name) == baseline_portable_identity,
+                f"{name} portable identity differs from the live baseline",
+            )
+            portability_controls.append(
+                {
+                    "accepted": True,
+                    "name": name,
+                    "probe_sha256": sha256_bytes((line + "\n").encode("utf-8")),
+                }
+            )
 
         semantic_mutations: tuple[tuple[str, Callable[[str], str], str], ...] = (
             (
@@ -764,10 +807,13 @@ def exactLogProductProofEscapeDecoy : String :=
             "boundary": (
                 "This isolated suite establishes bounded sensitivity of the frozen checker to "
                 "nine theorem/premise mutations, six separately counted raw-source or digest "
-                "controls, two explicit scope probes, and one retained checker-custody "
-                "limitation. It does not prove checker correctness, complete Lean syntax "
-                "classification, concrete SxPID event extraction, Rust or binary64 refinement, "
-                "sampling validity, calibration, or scientific validity."
+                "controls, two explicit scope probes, one retained checker-custody limitation, "
+                "and two target-string portability controls. The canonical evidence binds the "
+                "validated version/commit/build tuple, while the raw target triple remains "
+                "runtime metadata. It does not prove checker correctness, complete Lean syntax "
+                "classification, cross-platform kernel equivalence, concrete SxPID event "
+                "extraction, Rust or binary64 refinement, sampling validity, calibration, or "
+                "scientific validity."
             ),
             "case_accounting": {
                 "accepted_known_limitations": len(limitations),
@@ -789,14 +835,16 @@ def exactLogProductProofEscapeDecoy : String :=
             "known_limitations_observed": len(limitations),
             "lake_manifest_sha256": baseline_value["lake_manifest_sha256"],
             "lean_toolchain": baseline_value["lean_toolchain"],
-            "lean_version": baseline_value["lean_version"],
+            "lean_version_portability_controls": portability_controls,
+            "lean_version_portability_controls_accepted": len(portability_controls),
+            "lean_version_portable_identity": baseline_portable_identity,
             "positive_cases_accepted": 1 + len(scope_probes),
             "mutations": results,
             "mutations_killed": len(results),
             "python_isolated": True,
             "raw_and_digest_policy_cases": raw_results,
             "raw_and_digest_policy_cases_rejected": len(raw_results),
-            "schema": "pid-rs/lean-exact-log-product-hostile/v1",
+            "schema": "pid-rs/lean-exact-log-product-hostile/v2",
             "scope_probes": scope_probes,
             "scope_probes_accepted": len(scope_probes),
             "self_test_source_sha256": sha256_bytes(self_bytes),

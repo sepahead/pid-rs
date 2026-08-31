@@ -9,6 +9,22 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Make the publication-link gitlink hostile fixture self-contained under an empty Git
+  configuration by binding a synthetic identity only to its synthetic commit. This preserves the
+  checker’s configuration isolation and clean-runner portability without changing any PDF,
+  navigation, mathematical, or scientific acceptance condition.
+
+- Make the exact-log-product hostile evidence portable across the admitted macOS and Ubuntu
+  runners. The evidence now binds Lean's version, commit, and build label, while the runtime
+  log retains the target triple as platform metadata. Two positive controls require the current
+  macOS and Ubuntu version lines to project to the same portable identity. This does not assert
+  cross-platform kernel equivalence and does not change the seven proved theorems, their sources,
+  the pinned Lean/Mathlib toolchain, or any mathematical acceptance condition.
+
+- Make the Lean-freeze gate read the tracked lowercase `justfile` path. This lets case-sensitive
+  runners verify the same C9/C11/C12 refusal recipes that case-insensitive runners already checked;
+  it does not change those recipes, their pinned digest, or any proof or release decision.
+
 - Preserve the useful design and prototype sources from the superseded Python-verifier-custody M0
   branch without activating its stale parent-tree registry. The
   [inert archive](audit/archive/python-verifier-custody-m0-20260830/DISPOSITION.md) binds five exact

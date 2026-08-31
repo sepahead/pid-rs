@@ -430,9 +430,13 @@ rejection” means that the unchanged production digest rejected extra bytes bef
 Thus, the suite reports one baseline, nine rejected semantic mutations, six rejected raw/digest
 controls, two accepted scope probes, and one accepted limitation: 19 cases in total. The three
 positive acceptances are the baseline and the two scope probes. The accepted limitation is counted
-separately. It is not silently converted into positive evidence. Normal and optimized runs emit the
-same canonical 5,278-byte JSON record, SHA-256
-`c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad`.
+separately. It is not silently converted into positive evidence. Two additional controls show that
+the reviewed macOS/Arm64 and Ubuntu/x86-64 version strings map to the same validated portable Lean
+identity: version 4.33.0, commit `d8b18978322de05a8f3dba51ef03cf5461676c17`, and a `Release`
+build. The raw target triple remains in each live checker output and log. It is not stored as proof
+identity and does not establish cross-platform kernel equivalence. Normal and optimized runs emit
+the same canonical 5,808-byte JSON record, SHA-256
+`01e6e00f72a1ae75aa9f31e148b5685d38b2d82b2477aa8bc55ccfa333ebf84c`.
 
 The production checker proves only this conditional statement about the fixed files and toolchain:
 Lean accepted the seven named declarations, and each queried declaration reported exactly the three
@@ -459,7 +463,7 @@ prerequisite fails:
    implementation.
 3. Run the hostile suite with `python3 -I -S -B`. Require exactly the 19 declared cases, their
    separate category counts, exact statuses, and the tracked post-replay bytes.
-4. Repeat the hostile suite with one `-O` and compare its 5,278-byte canonical output byte for byte.
+4. Repeat the hostile suite with one `-O` and compare its 5,808-byte canonical output byte for byte.
    Each run itself requires the stable tracked evidence JSON to equal that output; copying an older
    or differently formatted record is also rejected by the source-state and claim gates.
 5. Run the certified-SxPID claim checker and its self-test in normal and optimized isolated modes.

@@ -209,16 +209,16 @@ EXPECTED_SUPPORT_GATE_SHA256 = {
 }
 EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
     "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json": (
-        "c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad"
+        "01e6e00f72a1ae75aa9f31e148b5685d38b2d82b2477aa8bc55ccfa333ebf84c"
     ),
     "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md": (
-        "2c7ee18a8eb0bc093136a2922627040a70bee32ca257c029621e5d2c872e1561"
+        "03e3dcbe24e1e68e3ad77be970dba03ffb4a2d2f194c8067acee36d9b36430cd"
     ),
     "audit/formal/latex/certified-sxpid2-executable-assurance.tex": (
         "297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61"
     ),
     "audit/formal/latex/exact-log-product-sxpid2-assurance.tex": (
-        "6404cd25d5a42e28c24cfe7b412b0cdcf5723f018b59cce62b6f9c6f475f4dfe"
+        "3e7afc3dd4c0186b30d751585db32d2f727ff46aa5e43f32818e631aeae39690"
     ),
     "audit/tools/certified-sxpid/deny.toml": (
         "8f5451e9ef2ee389a212f3c55b0d58032f5fe119fcff7109b74eff6d8ce04c03"
@@ -233,7 +233,7 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c"
     ),
     "output/pdf/exact-log-product-sxpid2-assurance.pdf": (
-        "0eea7f2ff8c7f2538e5bd1b73ab447205d4b9d368fccf941f4a40dc7f1877474"
+        "ffa12c97a5869b248d11cc5b669f09556810747ae5ef77b497f34e57ca349529"
     ),
     "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md": (
         "646639199233515b72bf81b8f2843a781ae985abfde3cd1e77aa24691840c3e0"
@@ -245,7 +245,7 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "38453a6a9b040a31fb4de65a407efe0a7258e57fc3f2b06ceed8bbb20343f43d"
     ),
     "scripts/check-lean-exact-log-product-self-test.py": (
-        "9aa7ec6ec1636dcfe3fe8e5667747c4a1e762dae07768f34daa19d3db7dc593c"
+        "ac92beb25bcb6b2a1fe642c8b6f2e98cd8cfa68caacb8ab6859762c2872773a8"
     ),
 }
 INCIDENT_PATH = (
@@ -1680,7 +1680,7 @@ def validate(snapshot: Snapshot) -> None:
         "current Lean 4.33 portable release identity drifted",
     )
 
-    # BEGIN EXACT_LOG_HOSTILE_EVIDENCE_V1
+    # BEGIN EXACT_LOG_HOSTILE_EVIDENCE_V2
     hostile = snapshot.json_values[
         "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json"
     ]
@@ -1695,7 +1695,9 @@ def validate(snapshot: Snapshot) -> None:
             "known_limitations_observed",
             "lake_manifest_sha256",
             "lean_toolchain",
-            "lean_version",
+            "lean_version_portability_controls",
+            "lean_version_portability_controls_accepted",
+            "lean_version_portable_identity",
             "mutations",
             "mutations_killed",
             "positive_cases_accepted",
@@ -1712,7 +1714,7 @@ def validate(snapshot: Snapshot) -> None:
         "exact-log hostile evidence key inventory drifted",
     )
     require(
-        hostile.get("schema") == "pid-rs/lean-exact-log-product-hostile/v1"
+        hostile.get("schema") == "pid-rs/lean-exact-log-product-hostile/v2"
         and hostile.get("status") == "passed"
         and hostile.get("baseline_checker_passed") is True
         and hostile.get("python_isolated") is True,
@@ -1732,8 +1734,27 @@ def validate(snapshot: Snapshot) -> None:
     require(
         hostile.get("lake_manifest_sha256") == current_lean.get("lake_manifest_sha256")
         and hostile.get("lean_toolchain") == current_lean.get("lean_toolchain")
-        and hostile.get("lean_version") == current_lean.get("lean_version"),
+        and hostile.get("lean_version_portable_identity")
+        == {
+            "build": matched_version.group("build"),
+            "commit": matched_version.group("commit"),
+            "version": matched_version.group("version"),
+        },
         "exact-log hostile evidence Lean identity drifted",
+    )
+    portability_controls = hostile.get("lean_version_portability_controls")
+    require(
+        hostile.get("lean_version_portability_controls_accepted") == 2
+        and isinstance(portability_controls, list)
+        and tuple(item.get("name") for item in portability_controls)
+        == ("macos_arm64", "ubuntu_x86_64")
+        and all(
+            item.get("accepted") is True
+            and re.fullmatch(r"[0-9a-f]{64}", item.get("probe_sha256", ""))
+            is not None
+            for item in portability_controls
+        ),
+        "exact-log hostile Lean portability controls drifted",
     )
     accounting = hostile.get("case_accounting")
     require(
@@ -1831,6 +1852,7 @@ def validate(snapshot: Snapshot) -> None:
     for token in (
         "bounded sensitivity",
         "does not prove checker correctness",
+        "cross-platform kernel equivalence",
         "concrete SxPID event extraction",
         "sampling validity",
         "scientific validity",
@@ -1839,7 +1861,7 @@ def validate(snapshot: Snapshot) -> None:
             isinstance(hostile_boundary, str) and token in hostile_boundary,
             f"exact-log hostile evidence boundary omits {token!r}",
         )
-    # END EXACT_LOG_HOSTILE_EVIDENCE_V1
+    # END EXACT_LOG_HOSTILE_EVIDENCE_V2
 
     challenge = snapshot.json_values[
         "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json"
