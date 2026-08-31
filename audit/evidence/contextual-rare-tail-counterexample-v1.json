@@ -1,0 +1,50 @@
+{
+  "claim": {
+    "does_not_refute": "The analytical contextual law, categorical MGW SxPID, BROJA, the rounded headline atom values, or support-change continuity.",
+    "logical_effect": "refutes",
+    "refuted_claim": "For the stated finite contextual law at r=c=2, forming the zero-response probability as binary64 1.0 - p preserves the positive analytical support.",
+    "scope": "The rational q=0.889972 source cell and the stated modulatory and combined activation formulas at r=c=2 under IEEE-754 binary64 round-to-nearest, ties-to-even."
+  },
+  "format": "/pid-rs/contextual-rare-tail-counterexample/v1",
+  "inputs": {
+    "c": "2",
+    "combined_activation": "A_b(r,c)=(r/2)(1+exp(rc))+c",
+    "modulatory_activation": "A_m(r,c)=(r/2)(1+exp(rc))",
+    "q": "222493/250000",
+    "r": "2",
+    "source_cell_mass": "222493/500000"
+  },
+  "proof": {
+    "arithmetic": "exact positive rationals",
+    "combined_joint_cell_open_interval": [
+      "4.29e-26",
+      "4.31e-26"
+    ],
+    "e2_taylor_terms": 70,
+    "e4_taylor_terms": 80,
+    "exact_interval_digest": "bc288c26bd1d0d1f0b2ed92dd5d7cb483d2086c69e357a38fcf1eb55bca77262",
+    "modulatory_joint_cell_open_interval": [
+      "3.17e-25",
+      "3.19e-25"
+    ],
+    "nested_exp_taylor_terms": 180,
+    "rounding_boundary": "Both exact conditional zero-response tails are positive and strictly below 2^-54, the halfway distance from 1 to the next binary64 value below 1.",
+    "taylor_tail_bound": "After the retained partial sum, the positive tail is bounded by the next term divided by 1-x/(n+2)."
+  },
+  "runtime_observation": {
+    "binary64_combined_one_minus_p_x1": "0.0",
+    "binary64_combined_p_x1": "1.0",
+    "binary64_modulatory_one_minus_p_x1": "0.0",
+    "binary64_modulatory_p_x1": "1.0",
+    "status": "reproduced"
+  },
+  "source_observations": {
+    "attribution_boundary": "This is an implementation-level counterexample for the observed local generator bytes. It is not a defect claim about a Wibral-coauthored paper, the MGW categorical definition, the Schick-Poland measure-theoretic construction, the Ehrlich continuous construction, or BROJA.",
+    "boundary": "Hash-only observations of dirty external thesis working bytes; the mathematical proof above is conditional on the formulas it states and does not authenticate the authorship, publication status, or provenance of those external bytes.",
+    "contextual_chapter_sha256": "2889d25ef39b5a568b0faf2dd1dfafe2cbc8c8f0fec2233c21d061e98bd1582f",
+    "contextual_replication_generator_sha256": "a342c61f96eff5270107daacc3148d536a409ac7192c91e404767c208434c5db",
+    "target_correct_broja_generator_sha256": "0e28ffed2ca51aa72e35e42a748bdf0934b22aaa40cfff0e6db4cbaaa8975f6d"
+  },
+  "status": "established conditional mathematical counterexample plus reproduced binary64 observation",
+  "units": "probability mass; not bits or nats"
+}

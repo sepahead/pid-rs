@@ -1,0 +1,46 @@
+# Retained continuous PID2 represented-input source-order witness
+
+## Smallest fixed object used by this claim
+
+Construct
+
+```text
+Pid2Estimate {
+    mi_s1_t:       f64::from_bits(0x3fb5bf406b543dad),
+    mi_s2_t:       f64::from_bits(0x3fe1fea645f0ef4e),
+    mi_s1s2_t:     f64::from_bits(0x3fe1fea645f0ef4e),
+    redundancy_isx:f64::from_bits(0x3fb5bf406b543dad),
+}
+```
+
+The exact represented-input synergy is zero because `J=I2` and `R=I1`.
+
+## Historical behavior
+
+The historical expression
+
+```text
+((J - I1) - I2) + R
+```
+
+returns bits `0x3c70000000000000`, or `+2^-56`. Exchanging only `I1,I2` makes the same expression
+return positive-zero bits `0x0000000000000000`. Both atom tuples satisfy the constructor's
+existing 32-ordered-bit identity guard, so its exact-sum fallback is not selected.
+
+## Dependency reach
+
+The defect is in public `Pid2Result::from_estimate` and therefore reaches continuous PID2 scalar
+and report construction, heuristic redundancy configurations that reuse PID2 atom construction,
+hierarchy and PID2-screening compositions, experimental Python migration bindings, and diagnostic
+`exp0` use. It does not reach stable categorical Imin except through the shared private helper,
+does not change continuous PID3 atom construction, and does not establish an upstream KSG or
+shared-exclusions asymmetry.
+
+## Correction and residual boundary
+
+The proposed correction computes `exact_binary64_sum([J,-I1,-I2,R])` unconditionally after the
+finite-input check, while preserving unique-atom arithmetic and the final identity guard. The
+fixed bits make the arithmetic counterexample platform independent. They do not prove that the
+quadruple is attainable from a valid continuous population, correctly estimated, or statistically
+meaningful.
+

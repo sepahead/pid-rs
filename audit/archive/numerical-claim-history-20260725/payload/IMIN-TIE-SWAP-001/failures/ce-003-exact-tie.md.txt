@@ -1,0 +1,60 @@
+# CE-003 — exact empirical tie with unequal binary64 branch values
+
+## Table and exact derivation
+
+The count vector is `[0,0,0,1,1,2,3,0]` in lexicographic `(S1,S2,T)` order, with `N=7` and target
+value `t=1`. Its positive rows are
+
+```text
+(0,1,1) x 1
+(1,0,0) x 1
+(1,0,1) x 2
+(1,1,0) x 3.
+```
+
+For `S1`, the `(source marginal, source-target)` counts at `t=1` are `(1,1)` and `(6,2)`.
+For `S2`, they are `(3,2)` and `(4,1)`. Since `c_t=3`,
+
+```text
+i(S1;1) = (1/3)log(7/3)  + (2/3)log(7/9),
+i(S2;1) = (2/3)log(14/9) + (1/3)log(7/12).
+```
+
+Multiplying by three and combining exact logarithms gives the same rational product `343/243`.
+The cross multiplication is `343*972 = 1372*243 = 333396`.
+
+## Native branch replay
+
+The current operation order yields
+
+```text
+S1  1.14889667941797197e-1  bits 0x3fbd6968c675545e
+S2  1.14889667941797169e-1  bits 0x3fbd6968c675545c
+diff 2.77555756156289135e-17 bits 0x3c80000000000000 = 2^-55.
+```
+
+This is a two-ULP separation at the values' exponent. The comparison numerically selects S2; that
+selection is not the exact minimizer set.
+
+## Public source-swap replay
+
+The public calls with `(S1,S2,T)` and `(S2,S1,T)` returned these mapped bits:
+
+| Field | Original | Swapped/mapped | Equal |
+|---|---:|---:|---:|
+| redundancy | `0x3fb6ba69f371f1a8` | `0x3fb6ba69f371f1a8` | yes |
+| unique S1 | `0x3fa8da92c3cdfd60` | swapped unique S2 `0x3fa8da92c3cdfd60` | yes |
+| unique S2 | `0x0000000000000000` | swapped unique S1 `0x0000000000000000` | yes |
+| synergy | `0x3fd1756bae507664` | `0x3fd1756bae507664` | yes |
+| MI S1 | `0x3fc193d9aaac782c` | swapped MI S2 `0x3fc193d9aaac782c` | yes |
+| MI S2 | `0x3fb6ba69f371f1a8` | swapped MI S1 `0x3fb6ba69f371f1a8` | yes |
+| joint MI | `0x3fda3f5883a6b27a` | `0x3fda3f5883a6b27a` | yes |
+
+Thus CE-003 refutes exact tie/argmin interpretation but does not refute public scalar source-swap
+equivariance on this table.
+
+## Scope
+
+The second canonical minimal residual-tie orbit representative is `[0,0,0,1,3,1,1,1]`, also at
+`t=1`; it has the same target-specific exact and f64 values. Minimality and the two-orbit statement
+are relative to nonempty binary tables with total at most eight.

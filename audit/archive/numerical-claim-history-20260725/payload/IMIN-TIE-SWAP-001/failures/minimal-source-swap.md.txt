@@ -1,0 +1,65 @@
+# Minimal bounded public source-swap witness
+
+## Table
+
+Counts `[0,0,0,1,1,0,0,2]` in lexicographic `(S1,S2,T)` order give the empirical rows
+
+```text
+(0,1,1) x 1
+(1,0,0) x 1
+(1,1,1) x 2.
+```
+
+`S2` is a bijective copy of `T`, hence `I(S2;T)=I(S1,S2;T)=H(T)`. For both target values, `S1`
+has the smaller exact source-specific information, so `Red=I(S1;T)`. Exact-real synergy is zero.
+
+The target-specific exact values that establish the strict minimizer are
+
+```text
+t=0: i(S1;t)=0.2876820724517809..., i(S2;t)=1.3862943611198906...,
+t=1: i(S1;t)=0.0173720003796713..., i(S2;t)=0.2876820724517809....
+```
+
+This is not an exact-tie case.
+
+## Represented public values
+
+Common mapped inputs:
+
+```text
+Red = I(S1;T) = bits 0x3fb5bf406b543dad,
+J   = I(S2;T) = bits 0x3fe1fea645f0ef4e.
+```
+
+Original order returns
+
+```text
+red  0x3fb5bf406b543dad
+u1   0x0000000000000000
+u2   0x3fde8d7c710ccf31
+syn  0x3c70000000000000  (+2^-56)
+```
+
+Swapping sources returns
+
+```text
+red  0x3fb5bf406b543dad
+u1   0x3fde8d7c710ccf31
+u2   0x0000000000000000
+syn  0x0000000000000000  (+0)
+```
+
+Both source orders reconstruct the represented joint MI under the implementation's ordinary
+left-to-right atom addition on this witness. That fact does not rescue source-permutation
+equivariance: `synergy` is a source-symmetric coordinate and its public bits differ.
+
+## Root cause and dependency reach
+
+The redundancy minimum is identical in both source orders. The difference is generated after all
+MI and redundancy values are available, by `(((J-I1)-I2)+R)`. The defect reaches direct,
+budgeted, cancellation, fitted-quantized, exploratory same-sample, and Python outputs because all
+ultimately return the same `imin_pid2_states_with_cancellation` atom construction.
+
+It does not establish nondeterminism for repeated identical calls, an incorrect exact-real
+Williams--Beer definition, a population-estimation failure, or a three-source correction. It is a
+bit-level implementation-equivariance counterexample within documented binary64 roundoff.

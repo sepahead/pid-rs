@@ -1,0 +1,50 @@
+# Retained counterexample: atom-to-joint scale does not guarantee acceptance
+
+## False statement
+
+The proposed sufficient condition
+
+```text
+max(|U1|, |U2|, |Syn|) <= 16 * |J|
+```
+
+does not imply that `Pid2Result::from_estimate` accepts, even when all four inputs and all four
+candidate atoms are finite and both unique-coordinate reconstructions pass. The inequality is an
+exact-real comparison here; it is not evaluated by overflowing binary64 multiplication.
+
+## Exact raw-bit counterexample
+
+```text
+I1 = 0x7fe44dcfb32f7b9b
+I2 = 0x7fbf796113915533
+J  = 0x7fefffffffffffff
+R  = 0x7fd1e3b3adc820e6
+
+U1  = 0x7fd6b7ebb896d650
+U2  = 0xffc40ab6d1c79732
+Syn = 0x7fe0b4de01426a31
+```
+
+The candidate atoms are the correctly rounded values of their individual represented-input
+forms. Every atom magnitude is at most `f64::MAX`, hence strictly below the exact real number
+`16 * |J|`. The two unique-coordinate reconstructions have ordered distances zero and one from
+their supplied inputs. Exact accumulation of `[R,U1,U2,Syn]`, however, rounds to
+
+```text
+0x7ff0000000000000  (+infinity),
+```
+
+so the finite/identity guard rejects.
+
+## Independent checks and dependency reach
+
+The witness was derived on the integer `2^-1074` grid and independently replayed with the
+repository's `Fraction` decoder and integer round-to-nearest-even routine. It falsifies only the
+proposed sufficient condition and any wording that ordinary atom-to-joint scale alone guarantees
+acceptance. It does not falsify the exact candidate-synergy contract, the acceptance-subset proof,
+or the unchanged fail-closed guard.
+
+Any repaired sufficient theorem needs at least an explicit overflow-margin premise and a complete
+ordered-distance proof across binade changes, subnormals, signed zero, and sign crossings. No such
+theorem is claimed by revision 3.
+

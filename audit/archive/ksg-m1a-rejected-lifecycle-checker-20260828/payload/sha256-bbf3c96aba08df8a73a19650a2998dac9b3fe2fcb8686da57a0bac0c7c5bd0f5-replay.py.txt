@@ -1,0 +1,525 @@
+#!/usr/bin/env python3
+"""Replay seven false greens from the inert rejected lifecycle-checker archive."""
+
+from __future__ import annotations
+
+import sys
+
+
+if not (
+    sys.version_info >= (3, 11)
+    and sys.flags.isolated == 1
+    and sys.flags.safe_path
+    and sys.flags.no_site == 1
+    and sys.flags.ignore_environment == 1
+    and sys.dont_write_bytecode
+    and sys.flags.optimize in {0, 1}
+):
+    print(
+        "ERROR: check-ksg-m1a-rejected-lifecycle-checker-archive.py requires "
+        "Python 3.11+ -I -S -B and at most one -O",
+        file=sys.stderr,
+    )
+    raise SystemExit(2)
+
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+import types
+from typing import Any, Callable, NoReturn
+
+
+ROOT = Path(os.path.abspath(os.fspath(Path(__file__)))).parent.parent
+ARCHIVE = "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828"
+INDEX_PATH = f"{ARCHIVE}/INDEX.json"
+INDEX_SIZE = 4_845
+INDEX_SHA256 = "63ea6a23b8c1b2ddecb4693c39d6f73738a10531e17ddac6eb452436978aa52d"
+DISPOSITION_PATH = f"{ARCHIVE}/DISPOSITION.md"
+DISPOSITION_SIZE = 2_301
+DISPOSITION_SHA256 = "7ba1347ec4282e696a3ac7324ac3e12b64e385b278c7865204c8794b1e745354"
+CURRENT_CHECKER_PATH = "scripts/check-ksg-m1a-current-lifecycle.py"
+CASE_IDS = (
+    "FG-JUST-PRESERVATION-COMMAND-COMMENTED",
+    "FG-WORKFLOW-V9-COMMENTED-EXIT",
+    "FG-AUDIENCE-HIDDEN-BANNER",
+    "FG-WORKFLOW-V11-COMMENTED-EXIT",
+    "FG-WORKFLOW-V12-BODY-TRUE",
+    "FG-JUST-PRESERVATION-EARLY-SUCCESS",
+    "FG-JUST-UNKNOWN-V13",
+)
+
+
+class ArchiveReplayError(RuntimeError):
+    """The inert archive or its bounded replay drifted."""
+
+
+def refuse(message: str) -> NoReturn:
+    raise ArchiveReplayError(message)
+
+
+def require(predicate: bool, message: str) -> None:
+    if not predicate:
+        refuse(message)
+
+
+def sha256_bytes(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def stable_read(relative: str, *, maximum: int = 2_000_000) -> bytes:
+    path = ROOT / relative
+    try:
+        before = path.lstat()
+    except OSError as error:
+        refuse(f"cannot inspect {relative}: {error}")
+    require(stat.S_ISREG(before.st_mode), f"archive input is not regular: {relative}")
+    require(before.st_nlink == 1, f"archive input is not single-link: {relative}")
+    require(before.st_size <= maximum, f"archive input exceeds size bound: {relative}")
+    flags = os.O_RDONLY
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    try:
+        descriptor = os.open(path, flags)
+        try:
+            opened = os.fstat(descriptor)
+            chunks: list[bytes] = []
+            total = 0
+            while True:
+                chunk = os.read(descriptor, min(65_536, maximum + 1 - total))
+                if not chunk:
+                    break
+                chunks.append(chunk)
+                total += len(chunk)
+                require(total <= maximum, f"archive input exceeds size bound: {relative}")
+            after = path.lstat()
+        finally:
+            os.close(descriptor)
+    except OSError as error:
+        refuse(f"cannot read {relative}: {error}")
+
+    def identity(item: os.stat_result) -> tuple[int, ...]:
+        return (
+            item.st_dev,
+            item.st_ino,
+            item.st_mode,
+            item.st_nlink,
+            item.st_size,
+            item.st_mtime_ns,
+            item.st_ctime_ns,
+        )
+
+    require(
+        identity(before) == identity(opened) == identity(after),
+        f"archive input changed during read: {relative}",
+    )
+    return b"".join(chunks)
+
+
+def reject_constant(value: str) -> NoReturn:
+    refuse(f"non-finite JSON constant is forbidden: {value}")
+
+
+def reject_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        require(key not in result, f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def canonical_json(value: Any) -> bytes:
+    return (
+        json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("utf-8")
+
+
+def parse_json(raw: bytes, role: str) -> Any:
+    try:
+        return json.loads(
+            raw.decode("utf-8", errors="strict"),
+            parse_constant=reject_constant,
+            object_pairs_hook=reject_duplicate_pairs,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        refuse(f"cannot parse {role}: {error}")
+
+
+def exact_replace(text: str, old: str, new: str, role: str) -> str:
+    require(text.count(old) == 1, f"{role}: expected one mutation anchor")
+    return text.replace(old, new, 1)
+
+
+def replace_recipe_command(
+    text: str, name: str, index: int, replacement: str
+) -> str:
+    lines = text.splitlines()
+    header = f"{name}:"
+    require(lines.count(header) == 1, f"cannot locate current recipe: {name}")
+    cursor = lines.index(header) + 1
+    positions: list[int] = []
+    while cursor < len(lines) and lines[cursor].startswith("    "):
+        positions.append(cursor)
+        cursor += 1
+    require(0 <= index < len(positions), f"recipe index outside body: {name}:{index}")
+    lines[positions[index]] = "    " + replacement
+    return "\n".join(lines) + ("\n" if text.endswith("\n") else "")
+
+
+def insert_recipe_command_after(
+    text: str, name: str, index: int, command: str
+) -> str:
+    lines = text.splitlines()
+    header = f"{name}:"
+    require(lines.count(header) == 1, f"cannot locate recipe for insertion: {name}")
+    cursor = lines.index(header) + 1
+    positions: list[int] = []
+    while cursor < len(lines) and lines[cursor].startswith("    "):
+        positions.append(cursor)
+        cursor += 1
+    require(0 <= index < len(positions), f"recipe insertion index outside body: {name}:{index}")
+    lines.insert(positions[index] + 1, "    " + command)
+    return "\n".join(lines) + ("\n" if text.endswith("\n") else "")
+
+
+def replace_run_body(
+    text: str, commands: tuple[str, ...], replacements: tuple[str, ...]
+) -> str:
+    old = "\n".join("          " + command for command in commands)
+    new = "\n".join("          " + command for command in replacements)
+    return exact_replace(text, old, new, "workflow run body")
+
+
+def load_owned_module(raw: bytes, name: str, virtual_path: Path) -> Any:
+    code = compile(
+        raw,
+        os.fspath(virtual_path),
+        "exec",
+        dont_inherit=True,
+        optimize=sys.flags.optimize,
+    )
+    module = types.ModuleType(name)
+    module.__file__ = os.fspath(virtual_path)
+    module.__package__ = ""
+    sys.modules[name] = module
+    try:
+        exec(code, module.__dict__)
+    except BaseException:
+        sys.modules.pop(name, None)
+        raise
+    return module
+
+
+def read_archive() -> tuple[dict[str, Any], dict[str, bytes]]:
+    index_raw = stable_read(INDEX_PATH, maximum=INDEX_SIZE)
+    require(len(index_raw) == INDEX_SIZE, "archive index size changed")
+    require(sha256_bytes(index_raw) == INDEX_SHA256, "archive index digest changed")
+    index = parse_json(index_raw, "archive index")
+    require(index_raw == canonical_json(index), "archive index is not canonical JSON")
+    require(isinstance(index, dict), "archive index root is not an object")
+    require(index.get("archive_id") == ARCHIVE.rsplit("/", 1)[-1], "archive id changed")
+    require(index.get("cases") == list(CASE_IDS), "archive case inventory/order changed")
+    require(
+        index.get("authority_role")
+        == "inert_rejected_negative_diagnostic_never_current_authority",
+        "archive authority role changed",
+    )
+    require(
+        index.get("replay", {}).get("archived_recipes_or_workflows_executed") is False,
+        "archive execution nonclaim changed",
+    )
+    disposition = stable_read(DISPOSITION_PATH, maximum=DISPOSITION_SIZE)
+    require(len(disposition) == DISPOSITION_SIZE, "archive disposition size changed")
+    require(
+        sha256_bytes(disposition) == DISPOSITION_SHA256,
+        "archive disposition digest changed",
+    )
+    require(
+        index.get("disposition")
+        == {
+            "bytes": DISPOSITION_SIZE,
+            "path": DISPOSITION_PATH,
+            "sha256": DISPOSITION_SHA256,
+        },
+        "archive disposition binding changed",
+    )
+    payload_entries = index.get("payloads")
+    require(isinstance(payload_entries, list) and len(payload_entries) == 7, "payload inventory changed")
+    payloads: dict[str, bytes] = {}
+    expected_paths = {INDEX_PATH, DISPOSITION_PATH}
+    for entry in payload_entries:
+        require(isinstance(entry, dict), "payload entry is not an object")
+        require(
+            set(entry) == {"bytes", "id", "original_path", "path", "role", "sha256"},
+            "payload entry keys changed",
+        )
+        identifier = entry["id"]
+        relative = entry["path"]
+        size = entry["bytes"]
+        digest = entry["sha256"]
+        require(isinstance(identifier, str) and identifier not in payloads, "payload id changed")
+        require(isinstance(relative, str) and relative.startswith(f"{ARCHIVE}/payload/"), "payload path changed")
+        require(type(size) is int and 0 < size <= 2_000_000, "payload size changed")
+        require(isinstance(digest, str) and len(digest) == 64, "payload digest changed")
+        raw = stable_read(relative, maximum=size)
+        require(len(raw) == size, f"payload size mismatch: {identifier}")
+        require(sha256_bytes(raw) == digest, f"payload digest mismatch: {identifier}")
+        payloads[identifier] = raw
+        expected_paths.add(relative)
+    require(
+        set(payloads)
+        == {
+            "agents",
+            "justfile",
+            "rejected-checker",
+            "scripts-readme",
+            "workflow-v9",
+            "workflow-v11",
+            "workflow-v12",
+        },
+        "payload identifiers changed",
+    )
+    archive_root = ROOT / ARCHIVE
+    require(
+        stat.S_ISDIR(archive_root.lstat().st_mode),
+        "archive root is not a directory",
+    )
+    observed_entries = {
+        os.fspath(path.relative_to(ROOT))
+        for path in archive_root.rglob("*")
+    }
+    require(
+        observed_entries == expected_paths | {f"{ARCHIVE}/payload"},
+        "archive filesystem inventory changed",
+    )
+    require(not (archive_root / "README.md").exists(), "stray archive README is forbidden")
+    return index, payloads
+
+
+def require_archived_acceptance(
+    archived: Any, operation: Callable[[], None], case_id: str
+) -> None:
+    try:
+        operation()
+    except archived.LifecycleError as error:
+        refuse(f"rejected checker no longer accepts {case_id}: {error}")
+
+
+def require_current_rejection(
+    current: Any, operation: Callable[[], Any], case_id: str
+) -> None:
+    try:
+        operation()
+    except current.LifecycleError:
+        return
+    refuse(f"corrected checker accepted archived false-green analogue: {case_id}")
+
+
+def replay() -> dict[str, Any]:
+    _index, payloads = read_archive()
+    archived = load_owned_module(
+        payloads["rejected-checker"],
+        "pid_rs_inert_rejected_lifecycle_checker",
+        ROOT / "scripts/check-ksg-m1a-current-lifecycle.py",
+    )
+    current_raw = stable_read(CURRENT_CHECKER_PATH)
+    current = load_owned_module(
+        current_raw,
+        "pid_rs_current_lifecycle_checker_for_negative_replay",
+        ROOT / CURRENT_CHECKER_PATH,
+    )
+
+    archived_just = payloads["justfile"].decode("utf-8", errors="strict")
+    archived_workflows = {
+        archived.WORKFLOWS[0]: payloads["workflow-v9"].decode("utf-8", errors="strict"),
+        archived.WORKFLOWS[1]: payloads["workflow-v11"].decode("utf-8", errors="strict"),
+        archived.WORKFLOWS[2]: payloads["workflow-v12"].decode("utf-8", errors="strict"),
+    }
+    archived_agents = payloads["agents"].decode("utf-8", errors="strict")
+    archived_scripts = payloads["scripts-readme"].decode("utf-8", errors="strict")
+    archived.validate_just(archived_just)
+    archived.validate_workflows(archived_workflows)
+    archived.validate_audience(archived_agents, archived_scripts)
+
+    current_just = stable_read(current.JUSTFILE_PATH).decode("utf-8", errors="strict")
+    current_workflows = {
+        relative: stable_read(relative).decode("utf-8", errors="strict")
+        for relative in (*current.WORKFLOW_PATHS, current.CI_PATH)
+    }
+    current_audiences = {
+        relative: stable_read(relative).decode("utf-8", errors="strict")
+        for relative in current.AUDIENCE_PATHS
+    }
+    current.validate_just_text(current_just)
+    current.validate_workflow_sources(current_workflows)
+    current.validate_audience_sources(current_audiences)
+
+    results: list[dict[str, Any]] = []
+
+    def observe(
+        case_id: str,
+        archived_operation: Callable[[], None],
+        current_operation: Callable[[], Any],
+    ) -> None:
+        require_archived_acceptance(archived, archived_operation, case_id)
+        require_current_rejection(current, current_operation, case_id)
+        results.append(
+            {
+                "archived_rejected_validator": "accepted_mutation_false_green",
+                "case_id": case_id,
+                "corrected_validator": "rejected_mutation",
+            }
+        )
+
+    archived_commented_just = exact_replace(
+        archived_just,
+        "    python3 -I -S -B scripts/check-ksg-m1a-current-lifecycle.py > \"$result_root/current.json\"",
+        "    # python3 -I -S -B scripts/check-ksg-m1a-current-lifecycle.py > \"$result_root/current.json\"",
+        "archived preservation command",
+    )
+    current_commented_just = replace_recipe_command(
+        current_just,
+        "ksg-composite-v12-preservation",
+        11,
+        "# " + current.PRESERVATION_COMMANDS[11],
+    )
+    observe(
+        CASE_IDS[0],
+        lambda: archived.validate_just(archived_commented_just),
+        lambda: current.validate_just_text(current_commented_just),
+    )
+
+    archived_v9 = exact_replace(
+        archived_workflows[archived.WORKFLOWS[0]],
+        "          exit 1",
+        "          # exit 1\n          true",
+        "archived v9 exit",
+    )
+    current_v9 = replace_run_body(
+        current_workflows[current.WORKFLOW_PATHS[5]],
+        current.V9_WORKFLOW_COMMANDS,
+        (*current.V9_WORKFLOW_COMMANDS[:-1], "# exit 1", "true"),
+    )
+    observe(
+        CASE_IDS[1],
+        lambda: archived.validate_workflows(
+            {**archived_workflows, archived.WORKFLOWS[0]: archived_v9}
+        ),
+        lambda: current.validate_workflow_sources(
+            {**current_workflows, current.WORKFLOW_PATHS[5]: current_v9}
+        ),
+    )
+
+    archived_hidden_agents = exact_replace(
+        archived_agents,
+        archived.CURRENT_BANNER,
+        f"<!--\n{archived.CURRENT_BANNER}\n-->",
+        "archived audience banner",
+    )
+    current_hidden_agents = exact_replace(
+        current_audiences["AGENTS.md"],
+        current.VISIBLE_POINTER_PARAGRAPH,
+        f"<!--\n{current.VISIBLE_POINTER_PARAGRAPH}\n-->",
+        "current audience pointer",
+    )
+    observe(
+        CASE_IDS[2],
+        lambda: archived.validate_audience(archived_hidden_agents, archived_scripts),
+        lambda: current.validate_audience_sources(
+            {**current_audiences, "AGENTS.md": current_hidden_agents}
+        ),
+    )
+
+    archived_v11 = exact_replace(
+        archived_workflows[archived.WORKFLOWS[1]],
+        "          exit 1",
+        "          # exit 1\n          true",
+        "archived v11 exit",
+    )
+    current_v11 = replace_run_body(
+        current_workflows[current.WORKFLOW_PATHS[6]],
+        current.V11_WORKFLOW_COMMANDS,
+        (*current.V11_WORKFLOW_COMMANDS[:-1], "# exit 1", "true"),
+    )
+    observe(
+        CASE_IDS[3],
+        lambda: archived.validate_workflows(
+            {**archived_workflows, archived.WORKFLOWS[1]: archived_v11}
+        ),
+        lambda: current.validate_workflow_sources(
+            {**current_workflows, current.WORKFLOW_PATHS[6]: current_v11}
+        ),
+    )
+
+    archived_v12 = replace_run_body(
+        archived_workflows[archived.WORKFLOWS[2]],
+        current.V12_WORKFLOW_COMMANDS,
+        ("true",),
+    )
+    current_v12 = replace_run_body(
+        current_workflows[current.WORKFLOW_PATHS[7]],
+        current.V12_WORKFLOW_COMMANDS,
+        ("true",),
+    )
+    observe(
+        CASE_IDS[4],
+        lambda: archived.validate_workflows(
+            {**archived_workflows, archived.WORKFLOWS[2]: archived_v12}
+        ),
+        lambda: current.validate_workflow_sources(
+            {**current_workflows, current.WORKFLOW_PATHS[7]: current_v12}
+        ),
+    )
+
+    archived_early_success = insert_recipe_command_after(
+        archived_just,
+        "ksg-composite-v12-preservation",
+        2,
+        "exit 0",
+    )
+    current_early_success = insert_recipe_command_after(
+        current_just,
+        "ksg-composite-v12-preservation",
+        2,
+        "exit 0",
+    )
+    observe(
+        CASE_IDS[5],
+        lambda: archived.validate_just(archived_early_success),
+        lambda: current.validate_just_text(current_early_success),
+    )
+
+    archived_unknown = archived_just + "\nksg-composite-v13:\n    true\n"
+    current_unknown = current_just + "\nksg-composite-v13:\n    true\n"
+    observe(
+        CASE_IDS[6],
+        lambda: archived.validate_just(archived_unknown),
+        lambda: current.validate_just_text(current_unknown),
+    )
+
+    require(tuple(item["case_id"] for item in results) == CASE_IDS, "replay result order changed")
+    return {
+        "archive_authority_role": "inert_rejected_negative_diagnostic_never_current_authority",
+        "archived_recipes_or_workflows_executed": False,
+        "cases": results,
+        "current_checker_binding": "owned_stable_read_bytes_without_recursive_self_digest",
+        "mathematical_or_scientific_status_changed": False,
+        "result": "pass",
+        "schema": "pid-rs/ksg-m1a-rejected-lifecycle-checker-archive-replay/v1",
+    }
+
+
+def main() -> int:
+    try:
+        result = replay()
+    except (ArchiveReplayError, OSError, UnicodeError, ValueError) as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 1
+    print(json.dumps(result, sort_keys=True, separators=(",", ":")))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

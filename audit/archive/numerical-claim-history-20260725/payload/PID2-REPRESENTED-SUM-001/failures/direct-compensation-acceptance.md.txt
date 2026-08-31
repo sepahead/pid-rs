@@ -1,0 +1,60 @@
+# Retained counterexample: direct residual compensation changes acceptance
+
+## False compatibility statement
+
+Revision 1's obligation wording could be read as requiring exact synergy to preserve every
+historically accepted arbitrary `Pid2Estimate`. That is false while the unique atoms remain
+separately rounded and the existing 32-ordered-bit reconstruction guard is preserved.
+
+## Smallest retained raw object
+
+```text
+I1 = 0x46d2fa52b582f1f7
+I2 = 0xc6df8d0396df4fce
+J  = 0x4688aebf760d4051
+R  = 0x46df89c68c947ee9
+```
+
+Binary64 subtraction gives
+
+```text
+U1 = fl(I1-R) = 0xc6c91ee7ae2319e4
+U2 = fl(I2-R) = 0xc6ef8b6511b9e75c.
+```
+
+The historical and exact synergy candidates are
+
+```text
+historical ((J-I1)-I2)+R = 0x46e670f6b4d0a362
+RN-even exact(J-I1-I2+R) = 0x46e670f6b4d0a361.
+```
+
+Exactly accumulating the represented returned atoms gives
+
+```text
+with historical synergy: 0x4688aebf760d4060, 15 ordered bits from J
+with exact synergy:       0x4688aebf760d4020, 49 ordered bits from J.
+```
+
+The frozen threshold is 32, so the old constructor accepts and the revised constructor must
+reject. The values were independently replayed with Python `Fraction` decoding and integer
+round-to-nearest-even logic; the Rust regression must rederive them with the production helper.
+
+## Adjudication and dependency reach
+
+The historical one-ULP change to synergy has no mathematical privilege: it happens to compensate
+for rounding in the separately computed uniques. Preserving that acceptance would require either
+abandoning exact represented-input synergy or loosening the guard. Both are rejected. Revision 2
+therefore narrows the arbitrary-input acceptance set and returns the existing typed numerical-
+instability error on this witness.
+
+This reaches the checked public constructor and every composition that propagates its error. It
+does not demonstrate that an upstream KSG/shared-exclusions run can produce the quadruple, quantify
+how often rejection occurs, or establish an estimator-calibration defect.
+
+## Regression and residual boundary
+
+The permanent regression must show that the historical candidate is within 15 ordered bits, the
+exact candidate is 49 bits away, and the revised constructor rejects without changing the
+threshold. Passing that regression does not prove acceptance compatibility, upstream
+attainability, or correctness of separately estimated terms.

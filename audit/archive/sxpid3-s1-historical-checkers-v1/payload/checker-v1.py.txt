@@ -1,0 +1,612 @@
+#!/usr/bin/env python3
+"""Validate the pending MGW-v5 to local categorical SxPID3 S1 correspondence.
+
+This checker validates exact source-byte metadata, the frozen local inputs, the candidate map,
+typed pending-review slots, and small exact connective/count witnesses. It does not read meaning
+from a digest, complete either review slot, establish human review, prove executable refinement,
+or close S1 or Programs A--E.
+"""
+
+from __future__ import annotations
+
+import argparse
+from fractions import Fraction
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import stat
+import sys
+import types
+from typing import Any
+
+
+if sys.version_info < (3, 11):
+    raise SystemExit("check-sxpid3-mgw-v5-source-correspondence-s1.py requires Python 3.11+")
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_DOCUMENT = (
+    ROOT / "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v1.md"
+)
+DEFAULT_RECORD = (
+    ROOT / "audit/evidence/sxpid3-mgw-v5-source-correspondence-s1-v1.json"
+)
+DEFAULT_SCHEMA = (
+    ROOT / "audit/schemas/sxpid3-mgw-v5-source-correspondence-s1-v1.schema.json"
+)
+
+EXPECTED_DOCUMENT_SHA256 = (
+    "208ffa9455452c56b0689de4f85f31da0325f6e52704c1f7abf7cdf995864cb0"
+)
+EXPECTED_RECORD_SHA256 = (
+    "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+)
+EXPECTED_SCHEMA_SHA256 = (
+    "7d37769f59c90b8a256e946bb86ab11b4cbc7792e37b7ca04302a0475468c256"
+)
+EXPECTED_PAPER_SHA256 = (
+    "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6"
+)
+EXPECTED_PAPER_BYTES = 1_002_114
+EXPECTED_BASE_COMMIT = "008ee7fa615aa8370623566c21eb99862680c7b1"
+EXPECTED_BASE_TREE = "8480193a36f0b9b382d017a7eda2fa8974d753df"
+EXPECTED_JSON_SCHEMA_SUBSET_SHA256 = (
+    "067e6d6b10d33f5b9c1bab6bc621735267a06f2461d6c0da3c8342ac8bd391a6"
+)
+
+EXPECTED_REPOSITORY_INPUTS = {
+    "audit/source-errata.json": (
+        21_094,
+        "ce527b2c4e94ca1315ce47643732d10d326696342a360097a246e5c423ed41f4",
+    ),
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md": (
+        10_608,
+        "3c0ce09a17d1925a01f54d35733c6f01effbdd6ae3d081d194a7fadf6e04b31b",
+    ),
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md": (
+        11_831,
+        "2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7",
+    ),
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v1.md": (
+        19_112,
+        EXPECTED_DOCUMENT_SHA256,
+    ),
+    "crates/pid-core/src/sxpid.rs": (
+        134_094,
+        "ea51e92b5f23bd627f21dd239fb4dba63f9c1067be3ca3294c58d72b00ec0771",
+    ),
+}
+
+EXPECTED_ANCHORS = (
+    ("MGW-EQ4", "Equation (4)", 2, "firewall_only"),
+    ("MGW-EQ5", "Equation (5)", 3, "direct_specialization"),
+    ("MGW-EQ6", "Equation (6)", 3, "direct_specialization"),
+    ("MGW-EQ7-8", "Equations (7)-(8)", 3, "direct_specialization"),
+    ("MGW-EQ12", "Equation (12)", 4, "source_boundary"),
+    ("MGW-EQ13", "Equation (13)", 5, "linear_derived_transport"),
+    (
+        "MGW-EQ14-15",
+        "Equations (14a), (15a), and (15b)",
+        5,
+        "direct_specialization",
+    ),
+    ("MGW-IV2-IV3", "Theorems IV.2-IV.3", 6, "source_boundary"),
+    (
+        "MGW-EQ17",
+        "Equation (17) and following paragraph",
+        8,
+        "direct_specialization",
+    ),
+    (
+        "MGW-A1",
+        "Appendix Equation (A1) and Theorem A.1",
+        14,
+        "linear_derived_transport",
+    ),
+)
+
+EXPECTED_CLAIMS = (
+    ("S1-C1-EQ4-EQ6-FIREWALL", "scope_firewall"),
+    ("S1-C2-POINTWISE-EVENT", "direct_paper_specialization"),
+    ("S1-C3-COMPONENT-SPLIT", "direct_paper_specialization"),
+    ("S1-C4-AVERAGING-REANCHOR", "direct_paper_specialization"),
+    ("S1-C5-EMPIRICAL-COUNTS", "local_exact_derivation"),
+    ("S1-C6-EXACT-PRODUCTS", "local_exact_derivation"),
+    ("S1-C7-MOBIUS-STAGES", "local_exact_derivation"),
+    ("S1-C8-UNITS", "local_exact_derivation"),
+    ("S1-C9-COORDINATE-BOUNDARY", "scope_firewall"),
+)
+
+REQUIRED_DOCUMENT_TEXT = (
+    "**Disposition: NO-GO/open.**",
+    "does not close S1",
+    "Programs closed: **0 of 5**.",
+    "**AND inside one coalition; OR across the antichain's coalition branches.**",
+    "Paper Eq. (4) uses one index set",
+    "It is not $A_a(z)$.",
+    "E_\\alpha(z)\n=\\bigcup_{j=1}^m A_{a_j}(z)",
+    "p_{TE}=P(\\mathcal T_z\\cap E_\\alpha(z))",
+    "i^-_\\alpha(z)=\\ln\\frac{p_T}{p_{TE}}",
+    "The weight is the complete joint-state mass $P(z)$.",
+    "every equality predicate, the target event, and all three\nmasses must be recomputed",
+    "\\widehat P(z)=\\frac{c_z}{N}",
+    "Q^{\\mathrm{sx}}_\\alpha=\\frac{Q^+_\\alpha}{Q^-_\\alpha}",
+    "\\Pi^u_i=\\frac1N\\ln R^u_i",
+    "$18\\times2\\times3=108$ keyed scalar expressions",
+    "The separate number 166 belongs to the four-source lattice.",
+    "\\ln x=(\\ln2)\\log_2x",
+    "A model-assisted review is model review, not human review.",
+    "H1 stays open",
+    "No mismatch that justifies changing Rust, an API, or an\nestimator was established",
+)
+
+FORBIDDEN_DOCUMENT_TEXT = (
+    "Disposition: GO/closed",
+    "S1 is closed",
+    "Programs closed: **1 of 5**",
+    "Programs closed: **5 of 5**",
+    "formally verified pid-rs",
+    "certified binary64 estimator",
+    "certified population PID",
+)
+
+
+class CorrespondenceError(RuntimeError):
+    """The candidate source-correspondence packet is invalid."""
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise CorrespondenceError(message)
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--document", type=Path, default=DEFAULT_DOCUMENT)
+    parser.add_argument("--record", type=Path, default=DEFAULT_RECORD)
+    parser.add_argument("--schema", type=Path, default=DEFAULT_SCHEMA)
+    parser.add_argument(
+        "--source-pdf",
+        type=Path,
+        help="optional exact MGW-v5 PDF bytes; the PDF is not stored in the repository",
+    )
+    return parser.parse_args()
+
+
+def file_identity(value: os.stat_result) -> tuple[int, ...]:
+    return (
+        value.st_dev,
+        value.st_ino,
+        value.st_mode,
+        value.st_nlink,
+        value.st_size,
+        value.st_mtime_ns,
+        value.st_ctime_ns,
+    )
+
+
+def read_regular(path: Path, label: str) -> bytes:
+    try:
+        before = os.lstat(path)
+        require(stat.S_ISREG(before.st_mode), f"{label} is not a regular file: {path}")
+        require(before.st_nlink == 1, f"{label} must have one hard link: {path}")
+        flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+        descriptor = os.open(path, flags)
+        try:
+            opened = os.fstat(descriptor)
+            chunks = bytearray()
+            while chunk := os.read(descriptor, 1024 * 1024):
+                chunks.extend(chunk)
+            closed = os.fstat(descriptor)
+        finally:
+            os.close(descriptor)
+        after = os.lstat(path)
+    except (OSError, CorrespondenceError) as error:
+        if isinstance(error, CorrespondenceError):
+            raise
+        raise CorrespondenceError(f"cannot read {label} {path}: {error}") from error
+    require(
+        file_identity(before)
+        == file_identity(opened)
+        == file_identity(closed)
+        == file_identity(after),
+        f"{label} changed during exact read: {path}",
+    )
+    require(len(chunks) == before.st_size, f"{label} byte count changed during read: {path}")
+    return bytes(chunks)
+
+
+def sha256(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def load_schema_validator() -> tuple[type[ValueError], Any]:
+    path = ROOT / "scripts/json_schema_subset.py"
+    raw = read_regular(path, "JSON-schema subset validator")
+    require(
+        sha256(raw) == EXPECTED_JSON_SCHEMA_SUBSET_SHA256,
+        "JSON-schema subset validator digest drifted",
+    )
+    module = types.ModuleType("sxpid3_s1_json_schema_subset")
+    module.__file__ = str(path)
+    code = compile(raw, str(path), "exec", dont_inherit=True, optimize=sys.flags.optimize)
+    exec(code, module.__dict__)
+    return module.SchemaValidationError, module.validate
+
+
+def canonical_json_bytes(value: Any) -> bytes:
+    try:
+        return (
+            json.dumps(
+                value,
+                indent=2,
+                sort_keys=True,
+                ensure_ascii=True,
+                allow_nan=False,
+            )
+            + "\n"
+        ).encode("utf-8")
+    except (TypeError, ValueError) as error:
+        raise CorrespondenceError(f"cannot canonicalize JSON: {error}") from error
+
+
+def reject_constant(value: str) -> Any:
+    raise CorrespondenceError(f"non-finite JSON constant is forbidden: {value}")
+
+
+def reject_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        require(key not in result, f"duplicate JSON member: {key!r}")
+        result[key] = value
+    return result
+
+
+def load_canonical_json(path: Path, label: str) -> tuple[Any, bytes]:
+    raw = read_regular(path, label)
+    try:
+        value = json.loads(
+            raw.decode("utf-8"),
+            object_pairs_hook=reject_duplicates,
+            parse_constant=reject_constant,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError, CorrespondenceError) as error:
+        raise CorrespondenceError(f"cannot parse {label} {path}: {error}") from error
+    require(raw == canonical_json_bytes(value), f"{label} is not canonical sorted JSON")
+    return value, raw
+
+
+def safe_repository_file(root: Path, relative: str) -> Path:
+    candidate_relative = PurePosixPath(relative)
+    require(not candidate_relative.is_absolute(), f"absolute repository input: {relative}")
+    require(".." not in candidate_relative.parts, f"escaping repository input: {relative}")
+    candidate = root.joinpath(*candidate_relative.parts)
+    resolved_root = root.resolve(strict=True)
+    try:
+        resolved = candidate.resolve(strict=True)
+        resolved.relative_to(resolved_root)
+    except (OSError, ValueError) as error:
+        raise CorrespondenceError(f"repository input escapes or is absent: {relative}") from error
+    current = root
+    for component in candidate_relative.parts:
+        current /= component
+        require(not current.is_symlink(), f"repository input uses a symlink: {relative}")
+    return resolved
+
+
+def validate_document(raw: bytes) -> None:
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise CorrespondenceError(f"candidate map is not UTF-8: {error}") from error
+    require(text.endswith("\n"), "candidate map lacks one final line feed")
+    require("\r" not in text, "candidate map contains carriage returns")
+    for sentinel in REQUIRED_DOCUMENT_TEXT:
+        require(sentinel in text, f"candidate map omits semantic sentinel: {sentinel!r}")
+    for forbidden in FORBIDDEN_DOCUMENT_TEXT:
+        require(forbidden not in text, f"candidate map contains prohibited overclaim: {forbidden!r}")
+    require(text.count("## The Eq. (4)/Eq. (6) connective firewall") == 1, "connective firewall heading drifted")
+    require(text.count("## Two-review gate") == 1, "two-review gate heading drifted")
+    require(text.count("Programs closed: **0 of 5**.") == 1, "program count is ambiguous")
+
+
+def validate_record(
+    record: dict[str, Any],
+    *,
+    root: Path,
+    document_path: Path,
+    document_raw: bytes,
+) -> None:
+    require(record["base_commit"] == EXPECTED_BASE_COMMIT, "base commit drifted")
+    require(record["base_tree"] == EXPECTED_BASE_TREE, "base tree drifted")
+    require(
+        record["status"]
+        == {
+            "h1": "open",
+            "programs_closed": 0,
+            "programs_total": 5,
+            "s1_disposition": "no_go_open_pending_two_blind_reviews",
+            "source_map": "candidate_exact_map",
+        },
+        "open S1/program/H1 status drifted",
+    )
+    source = record["source"]
+    require(source["sha256"] == EXPECTED_PAPER_SHA256, "paper digest drifted")
+    require(source["byte_length"] == EXPECTED_PAPER_BYTES, "paper byte length drifted")
+    require(source["pdf_pages"] == 19, "paper page count drifted")
+    require(source["retained_in_repository"] is False, "source PDF retention status drifted")
+    require(
+        source["authors"]
+        == ["Abdullah Makkeh", "Aaron J. Gutknecht", "Michael Wibral"],
+        "paper author list drifted",
+    )
+
+    anchors = tuple(
+        (
+            anchor["anchor_id"],
+            anchor["equation_label"],
+            anchor["pdf_page"],
+            anchor["mapping_kind"],
+        )
+        for anchor in record["anchors"]
+    )
+    require(anchors == EXPECTED_ANCHORS, "paper anchor identity, page, or mapping kind drifted")
+    for anchor in record["anchors"]:
+        require(anchor["printed_page"] == anchor["pdf_page"], f"printed/PDF page drifted for {anchor['anchor_id']}")
+        require(anchor["prohibited_inference"], f"empty prohibited inference for {anchor['anchor_id']}")
+
+    claims = tuple(
+        (claim["claim_id"], claim["derivation_kind"])
+        for claim in record["correspondence_claims"]
+    )
+    require(claims == EXPECTED_CLAIMS, "correspondence claim inventory or derivation class drifted")
+    anchor_ids = {anchor[0] for anchor in EXPECTED_ANCHORS}
+    for claim in record["correspondence_claims"]:
+        require(
+            claim["status"] == "candidate_pending_two_blind_reviews",
+            f"claim was promoted before review: {claim['claim_id']}",
+        )
+        require(
+            set(claim["source_anchors"]) <= anchor_ids,
+            f"unknown source anchor in {claim['claim_id']}",
+        )
+
+    inputs = {item["path"]: item for item in record["repository_inputs"]}
+    require(set(inputs) == set(EXPECTED_REPOSITORY_INPUTS), "repository input inventory drifted")
+    for relative, (expected_size, expected_digest) in EXPECTED_REPOSITORY_INPUTS.items():
+        item = inputs[relative]
+        require(item["byte_length"] == expected_size, f"recorded byte length drifted: {relative}")
+        require(item["sha256"] == expected_digest, f"recorded digest drifted: {relative}")
+        if relative.endswith("source-correspondence-v1.md"):
+            raw = document_raw
+            require(document_path.name == "source-correspondence-v1.md", "candidate map basename drifted")
+        else:
+            raw = read_regular(safe_repository_file(root, relative), f"repository input {relative}")
+        require(len(raw) == expected_size, f"repository input byte length mismatch: {relative}")
+        require(sha256(raw) == expected_digest, f"repository input digest mismatch: {relative}")
+
+    protocol = record["review_protocol"]
+    require(protocol["required_reviews"] == 2, "review count drifted")
+    require(protocol["external_human_custody"] == "open_not_satisfied", "H1 was promoted")
+    slots = protocol["review_slots"]
+    require(len(slots) == 2, "exactly two review slots are required")
+    require(
+        [slot["slot_id"] for slot in slots] == ["S1-PAPER-FIRST", "S1-LOCAL-FIRST"],
+        "review slot order or identity drifted",
+    )
+    expected_routes = {
+        "S1-PAPER-FIRST": (
+            "paper_first_no_local_map",
+            [
+                ("mgw-arxiv-2002.03356v5", 1),
+                ("claim-v1", 2),
+                ("conventions-v1", 2),
+                ("source-correspondence-v1", 3),
+            ],
+        ),
+        "S1-LOCAL-FIRST": (
+            "local_first_no_prepared_paper_map",
+            [
+                ("claim-v1", 1),
+                ("conventions-v1", 1),
+                ("sxpid-rust-source-observation", 1),
+                ("mgw-arxiv-2002.03356v5", 2),
+                ("source-correspondence-v1", 3),
+            ],
+        ),
+    }
+    object_bindings = {
+        "claim-v1": EXPECTED_REPOSITORY_INPUTS[
+            "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md"
+        ],
+        "conventions-v1": EXPECTED_REPOSITORY_INPUTS[
+            "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md"
+        ],
+        "mgw-arxiv-2002.03356v5": (EXPECTED_PAPER_BYTES, EXPECTED_PAPER_SHA256),
+        "source-correspondence-v1": EXPECTED_REPOSITORY_INPUTS[
+            "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v1.md"
+        ],
+        "sxpid-rust-source-observation": EXPECTED_REPOSITORY_INPUTS[
+            "crates/pid-core/src/sxpid.rs"
+        ],
+    }
+    for slot in slots:
+        slot_id = slot["slot_id"]
+        expected_route, expected_inputs = expected_routes[slot_id]
+        require(slot["route"] == expected_route, f"blind route drifted: {slot_id}")
+        require(slot["reviewer_kind"] == "pending_unassigned", f"reviewer kind invented: {slot_id}")
+        require(slot["reviewer_id"] is None, f"reviewer identity invented: {slot_id}")
+        require(slot["disposition"] == "pending", f"pending review was pre-adjudicated: {slot_id}")
+        require(slot["output"] is None, f"pending review has invented output: {slot_id}")
+        require(slot["objections"] == [], f"pending review has invented objections: {slot_id}")
+        require(
+            set(slot["independence_dimensions"].values()) == {"pending"},
+            f"pending independence dimension was claimed: {slot_id}",
+        )
+        actual_inputs = [
+            (item["object_id"], item["exposure_phase"])
+            for item in slot["exact_input_bytes"]
+        ]
+        require(actual_inputs == expected_inputs, f"input exposure order drifted: {slot_id}")
+        for item in slot["exact_input_bytes"]:
+            expected_size, expected_digest = object_bindings[item["object_id"]]
+            require(item["byte_length"] == expected_size, f"review input length drifted: {slot_id}")
+            require(item["sha256"] == expected_digest, f"review input digest drifted: {slot_id}")
+        require(len(slot["shared_cuts"]) >= 5, f"shared cuts were hidden: {slot_id}")
+
+    require(len(record["nonimplications"]) >= 10, "nonimplication inventory shrank")
+    require(len(record["stop_clauses"]) >= 14, "stop-clause inventory shrank")
+    joined_nonimplications = "\n".join(record["nonimplications"])
+    for phrase in (
+        "another PID family",
+        "binary64 accuracy",
+        "population parameter",
+        "not equations quoted from the paper",
+        "would not satisfy external-human-custody obligation H1",
+        "do not close S1",
+    ):
+        require(phrase in joined_nonimplications, f"nonimplication boundary omitted: {phrase}")
+
+
+def coalition_match(candidate: tuple[int, int, int, int], anchor: tuple[int, int, int, int], mask: int) -> bool:
+    return all(
+        candidate[index] == anchor[index]
+        for index in range(3)
+        if mask & (1 << index)
+    )
+
+
+def event_match(
+    candidate: tuple[int, int, int, int],
+    anchor: tuple[int, int, int, int],
+    antichain: tuple[int, ...],
+) -> bool:
+    return any(coalition_match(candidate, anchor, mask) for mask in antichain)
+
+
+def exact_mass(
+    rows: tuple[tuple[tuple[int, int, int, int], int], ...],
+    anchor: tuple[int, int, int, int],
+    antichain: tuple[int, ...],
+    *,
+    with_target: bool,
+) -> int:
+    return sum(
+        count
+        for candidate, count in rows
+        if event_match(candidate, anchor, antichain)
+        and (not with_target or candidate[3] == anchor[3])
+    )
+
+
+def validate_exact_witnesses() -> None:
+    rows = (
+        ((0, 0, 0, 0), 1),
+        ((0, 1, 1, 1), 1),
+        ((1, 0, 1, 1), 1),
+        ((1, 1, 0, 0), 1),
+    )
+    anchor = rows[0][0]
+    coalition_and = exact_mass(rows, anchor, (0b011,), with_target=False)
+    wrong_within_or = sum(
+        count
+        for candidate, count in rows
+        if candidate[0] == anchor[0] or candidate[1] == anchor[1]
+    )
+    branch_or = exact_mass(rows, anchor, (0b001, 0b010), with_target=False)
+    wrong_across_and = sum(
+        count
+        for candidate, count in rows
+        if coalition_match(candidate, anchor, 0b001)
+        and coalition_match(candidate, anchor, 0b010)
+    )
+    target_intersection = exact_mass(rows, anchor, (0b001, 0b010), with_target=True)
+    target_mass = sum(count for candidate, count in rows if candidate[3] == anchor[3])
+    require(coalition_and == 1 and wrong_within_or == 3, "within-coalition connective witness failed")
+    require(branch_or == 3 and wrong_across_and == 1, "across-branch connective witness failed")
+    require(target_intersection == 1 and target_mass == 2, "target-intersection witness failed")
+    require(branch_or > target_mass, "missing-target-intersection falsifier was lost")
+
+    weighted_rows = (((0, 0, 0, 0), 1), ((1, 1, 1, 0), 3))
+    total = 4
+    plus_product = Fraction(1, 1)
+    uniform_support_product = Fraction(1, 1)
+    anchored_masses: list[int] = []
+    for weighted_anchor, count in weighted_rows:
+        event_count = exact_mass(weighted_rows, weighted_anchor, (0b111,), with_target=False)
+        anchored_masses.append(event_count)
+        ratio = Fraction(total, event_count)
+        plus_product *= ratio**count
+        uniform_support_product *= ratio
+    require(anchored_masses == [1, 3], "per-realization re-anchoring witness failed")
+    require(plus_product == Fraction(256, 27), "empirical count-product witness failed")
+    require(uniform_support_product == Fraction(16, 3), "uniform-support mutation witness drifted")
+    require(plus_product != uniform_support_product, "count weighting mutation was not falsified")
+
+
+def is_default(path: Path, default: Path) -> bool:
+    try:
+        return path.resolve(strict=True) == default.resolve(strict=True)
+    except OSError:
+        return False
+
+
+def main() -> int:
+    arguments = parse_args()
+    root = arguments.root.resolve(strict=True)
+    schema_validation_error, validate_json_schema = load_schema_validator()
+    schema, schema_raw = load_canonical_json(arguments.schema, "S1 schema")
+    record, record_raw = load_canonical_json(arguments.record, "S1 evidence record")
+    document_raw = read_regular(arguments.document, "S1 candidate map")
+
+    require(sha256(schema_raw) == EXPECTED_SCHEMA_SHA256, "canonical S1 schema digest drifted")
+    if is_default(arguments.record, DEFAULT_RECORD):
+        require(sha256(record_raw) == EXPECTED_RECORD_SHA256, "canonical S1 record digest drifted")
+    if is_default(arguments.document, DEFAULT_DOCUMENT):
+        require(sha256(document_raw) == EXPECTED_DOCUMENT_SHA256, "canonical S1 map digest drifted")
+
+    try:
+        validate_json_schema(record, schema, name="sxpid3-mgw-v5-source-correspondence-s1")
+    except schema_validation_error as error:
+        raise CorrespondenceError(str(error)) from error
+
+    validate_document(document_raw)
+    validate_record(
+        record,
+        root=root,
+        document_path=arguments.document,
+        document_raw=document_raw,
+    )
+    validate_exact_witnesses()
+
+    source_pdf_verified = False
+    if arguments.source_pdf is not None:
+        paper_raw = read_regular(arguments.source_pdf, "MGW-v5 source PDF")
+        require(len(paper_raw) == EXPECTED_PAPER_BYTES, "MGW-v5 PDF byte length mismatch")
+        require(sha256(paper_raw) == EXPECTED_PAPER_SHA256, "MGW-v5 PDF SHA-256 mismatch")
+        source_pdf_verified = True
+
+    result = {
+        "anchors": len(record["anchors"]),
+        "claim_id": record["claim_id"],
+        "exact_witnesses": 5,
+        "h1": "open",
+        "paper_sha256": EXPECTED_PAPER_SHA256,
+        "programs_closed": 0,
+        "programs_total": 5,
+        "review_slots_pending": 2,
+        "s1_disposition": "NO_GO_OPEN",
+        "source_pdf_verified": source_pdf_verified,
+    }
+    sys.stdout.buffer.write(canonical_json_bytes(result))
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (CorrespondenceError, OSError, ValueError) as error:
+        print(f"SxPID3 MGW-v5 S1 correspondence: {error}", file=sys.stderr)
+        raise SystemExit(1)

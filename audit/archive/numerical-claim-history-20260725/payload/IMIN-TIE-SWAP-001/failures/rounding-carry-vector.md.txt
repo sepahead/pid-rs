@@ -1,0 +1,44 @@
+# Retained correction: wrong binade-carry boundary vector
+
+## Error
+
+During construction of the independent binary64-sum oracle, an initial named case asserted
+
+```text
+nextDown(2) + 2^-54 -> 2
+```
+
+under round-to-nearest, ties-to-even. This is false. In the binade immediately below two, one ULP
+is `2^-52`; adding `2^-54` moves only one quarter of that spacing from `nextDown(2)`, so the
+correctly rounded value remains `nextDown(2)`.
+
+## Detector and smallest witness
+
+The generator's exact `Fraction` route produced bits `0x3fffffffffffffff` while the proposed
+hard-coded expectation was `0x4000000000000000`. Its baseline self-test rejected the corpus before
+any fixture bytes were written.
+
+## Correction
+
+The actual halfway carry vector is
+
+```text
+nextDown(2) + 2^-53 -> 2.
+```
+
+The lower candidate has an odd retained significand and the upper candidate has an even one, so
+ties-to-even carries into the next binade. A separate exact-addition case uses `2^-52`.
+
+## Dependency reach and load-bearing status
+
+The false vector was part of a proposed test, not production arithmetic, a committed fixture, or a
+scientific result. It therefore had no downstream numerical reach. It was nevertheless
+load-bearing for checker adequacy: retaining it would have made a correct implementation fail or
+encouraged an incorrect oracle mutation.
+
+## Regression and residual boundary
+
+The generated corpus now fixes both the `2^-53` halfway carry and `2^-52` exact carry, binds their
+expected bits through the independent rational rounder, and replays them through Rust under all 24
+four-term permutations. This correction does not make the finite corpus a universal refinement
+proof.

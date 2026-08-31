@@ -1,0 +1,47 @@
+name: KSG M1a composite v12 terminal preservation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ksg-m1a-composite-v12-terminal-preservation-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  preserve-terminal-boundary:
+    # This is a nonqualifying descendant-preservation lane. It cannot become an
+    # exact-C12 attempt-1 term, produce L12, revive Q12, or issue R12.
+    name: Validate terminal C12 preservation (nonqualifying)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: "${{ github.sha }}"
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.14.6"
+      - name: Validate terminal record, refusal, and descendant preservation
+        run: |
+          set -euo pipefail
+          python3 -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py > "${RUNNER_TEMP}/terminal.json"
+          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py > "${RUNNER_TEMP}/terminal.opt.json"
+          cmp --silent "${RUNNER_TEMP}/terminal.json" "${RUNNER_TEMP}/terminal.opt.json"
+          python3 -I -S -B scripts/check-ksg-m1a-composite-v12-terminal-self-test.py > "${RUNNER_TEMP}/self.json"
+          python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-terminal-self-test.py > "${RUNNER_TEMP}/self.opt.json"
+          cmp --silent "${RUNNER_TEMP}/self.json" "${RUNNER_TEMP}/self.opt.json"
+      - name: Upload nonqualifying terminal-preservation result
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          compression-level: 0
+          if-no-files-found: error
+          name: ksg-m1a-composite-v12-terminal-preservation-${{ github.sha }}
+          path: ${{ runner.temp }}/terminal.json
+          retention-days: 90

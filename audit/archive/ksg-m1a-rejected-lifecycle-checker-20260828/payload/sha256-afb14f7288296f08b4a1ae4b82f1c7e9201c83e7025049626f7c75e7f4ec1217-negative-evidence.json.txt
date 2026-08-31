@@ -1,0 +1,88 @@
+{
+  "authority_role": "negative_diagnostic_only_not_current_state_authority",
+  "candidate": {
+    "commit": "2b0093537439ee1f4ca7073ee4800835a06fb9a0",
+    "integration_status": "rejected_unintegrated",
+    "may_supply_current_authority": false
+  },
+  "cases": [
+    {
+      "corrected_guard": "exact_ordered_preservation_executable_body",
+      "id": "FG-JUST-PRESERVATION-COMMAND-COMMENTED",
+      "mutation": "comment_one_required_preservation_command_while_retaining_its_text",
+      "rejected_checker_function": "validate_just",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    },
+    {
+      "corrected_guard": "exact_v9_workflow_step_and_executable_command_sequence",
+      "id": "FG-WORKFLOW-V9-COMMENTED-EXIT",
+      "mutation": "replace_executable_exit_1_with_a_comment_and_true",
+      "rejected_checker_function": "validate_workflows",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    },
+    {
+      "corrected_guard": "visible_markdown_parser_excludes_html_comments_and_fences",
+      "id": "FG-AUDIENCE-HIDDEN-BANNER",
+      "mutation": "wrap_the_terminal_banner_in_an_html_comment",
+      "rejected_checker_function": "validate_audience",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    },
+    {
+      "corrected_guard": "exact_v11_workflow_step_and_executable_command_sequence",
+      "id": "FG-WORKFLOW-V11-COMMENTED-EXIT",
+      "mutation": "replace_executable_exit_1_with_a_comment_and_true",
+      "rejected_checker_function": "validate_workflows",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    },
+    {
+      "corrected_guard": "exact_v12_preservation_workflow_executable_command_sequence",
+      "id": "FG-WORKFLOW-V12-BODY-TRUE",
+      "mutation": "replace_the_complete_preservation_run_body_with_true",
+      "rejected_checker_function": "validate_workflows",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    },
+    {
+      "corrected_guard": "exact_ordered_preservation_executable_body",
+      "id": "FG-JUST-PRESERVATION-EARLY-SUCCESS",
+      "mutation": "insert_exit_0_before_required_preservation_commands",
+      "rejected_checker_function": "validate_just",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    },
+    {
+      "corrected_guard": "exact_complete_ksg_composite_target_inventory",
+      "id": "FG-JUST-UNKNOWN-V13",
+      "mutation": "add_ksg_composite_v13_with_body_true",
+      "rejected_checker_function": "validate_just",
+      "rejected_validator_outcome": "accepted_mutation_false_green"
+    }
+  ],
+  "durable_replay": {
+    "archive_index_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/INDEX.json",
+    "archive_index_sha256": "63ea6a23b8c1b2ddecb4693c39d6f73738a10531e17ddac6eb452436978aa52d",
+    "archive_replay_path": "scripts/check-ksg-m1a-rejected-lifecycle-checker-archive.py",
+    "archived_checker_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-05151c36754508eb46a02e2cda5a6067787fb35fdd1f3e61fa1426cc502c790f-checker.py",
+    "archived_checker_sha256": "05151c36754508eb46a02e2cda5a6067787fb35fdd1f3e61fa1426cc502c790f",
+    "archived_checker_size_bytes": 12633,
+    "local_custody_locator": "../pid-rs-custody/recovery-r4-20260828.git",
+    "local_custody_ref": "refs/custody/rejected/ksg-lifecycle-2b009353",
+    "source_commit_parent": "008ee7fa615aa8370623566c21eb99862680c7b1",
+    "source_commit_tree": "48b71a0302b0ebd46bc318e51220e8809ab8d240"
+  },
+  "nonclaims": [
+    "These direct validator reproductions do not execute the historical recipes or workflows.",
+    "The inert archive retains exact rejected-checker and fixture bytes; it does not independently authenticate the local custody mirror or the original execution transcript.",
+    "The repaired finite hostile suite is regression evidence, not a proof against arbitrary future bypasses.",
+    "This record changes no mathematical, scientific, estimator, qualification, release, or application status."
+  ],
+  "observation_scope": "local_direct_function_calls_on_mutated_in_memory_sources_against_exact_rejected_checker_bytes_without_executing_recipes_or_workflows",
+  "reproduction_observation": {
+    "all_seven_mutations_accepted": true,
+    "checker_sha256": "05151c36754508eb46a02e2cda5a6067787fb35fdd1f3e61fa1426cc502c790f",
+    "checker_size_bytes": 12633,
+    "isolated_python_flags": "-I -S -B",
+    "result_projection_compact_json_sha256": "90539f610114f37265f47f23a8ed31ea7bf0552cf3f10e69d84409aa6dd6a3a1",
+    "result_projection_compact_json_size_bytes": 446,
+    "source_disposition": "rejected_unintegrated_not_copied_into_current_authority"
+  },
+  "schema": "pid-rs/ksg-rev4-m1a-current-lifecycle-rejected-checker-negative-evidence/v1"
+}

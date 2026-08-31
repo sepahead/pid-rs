@@ -1,0 +1,28 @@
+# Retained correction: implementation-v1 overstated Python regression coverage
+
+## Error
+
+`implementation-v1.md` stated that every named Rust/Python entry path had a regression. At that
+checkpoint the stable Python binding test existed, but the feature-gated experimental same-sample
+migration wrapper had no corresponding Python regression. The historical checkpoint remains
+unchanged; this note corrects its A4 coverage statement for revision 2.
+
+## Detector and dependency reach
+
+An independent path inventory compared the revision-2 propagation claim against
+`crates/pid-python/tests/test_v1.py` and
+`crates/pid-python/tests/test_experimental_migration.py`. The omission reached wrapper-propagation
+obligation W1/A4 only. It did not change the core numerical implementation or the stable Python
+result.
+
+## Correction and regression
+
+`test_experimental_migration.py` now exercises the mapped N=4 source-swap witness through the
+feature-gated same-sample quantized `I_min` wrapper and requires positive-zero synergy in both
+source orders. Stable Python retains its separate regression.
+
+## Residual boundary
+
+Source presence is not wheel execution. Both stable and experimental wheels must still be built
+and their complete Python suites run on final settled bytes before W1 closes. A binding test is not
+an independent estimator or a population-validation result.

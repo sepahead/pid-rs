@@ -1,0 +1,116 @@
+{
+  "archive_id": "sxpid3-s1-historical-checkers-v1",
+  "authority_role": "inert_historical_checker_negative_evidence_never_source_review",
+  "current_authority": false,
+  "disposition": {
+    "archive_path": "audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md",
+    "byte_length": 2919,
+    "sha256": "79a920053461217328687bd8a64ae9bfe06194d81308db1c113e403e95b06172"
+  },
+  "excluded_open_packet": {
+    "bindings": [
+      {
+        "byte_length": 10078,
+        "custody": "not_copied_not_accepted",
+        "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/review-protocol-v3.md",
+        "sha256": "6b530662d73bffc8432782460e12467959266c59cd9bf271e3f037a87550e10b",
+        "source_blob_oid": "e868f7700c83067ba4f0d979c22ead373c929f5b"
+      },
+      {
+        "byte_length": 27885,
+        "custody": "copied_as_inert_false_green_record_only",
+        "path": "audit/evidence/sxpid3-mgw-v5-source-correspondence-s1-v3.json",
+        "sha256": "137c36c5a86415bbce8f0f93ffe22554332f96d58b6ca8fd561dc19fa8e039bc",
+        "source_blob_oid": "77e1764e32065fb21268493b91134f097d38a04b"
+      },
+      {
+        "byte_length": 37632,
+        "custody": "not_copied_not_accepted",
+        "path": "audit/schemas/sxpid3-mgw-v5-source-correspondence-s1-v3.schema.json",
+        "sha256": "c005bb6a6aca108e0dfcba6c746e23ded4705451469ce639a27a807e51aa5ce7",
+        "source_blob_oid": "b60746ef26363957e9750090c39d6acabcf8dacc"
+      },
+      {
+        "byte_length": 52965,
+        "custody": "not_copied_not_accepted",
+        "path": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+        "sha256": "d22df99eeee25ab44adcd14a73a434d9e227375ab6c87e29d95e26047e78db27",
+        "source_blob_oid": "1f285fa964ad2c36938d77e656b28a862cb5b987"
+      },
+      {
+        "byte_length": 40343,
+        "custody": "not_copied_not_accepted",
+        "path": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1-self-test.py",
+        "sha256": "4fc1aae4cd88ffb5d52ef1be9a19f9fec9af1bf00d18c6330abfbb6f5f247e34",
+        "source_blob_oid": "f51323eed25970138579cac6ea822f0cab51a326"
+      }
+    ],
+    "h1": "open",
+    "programs_closed": 0,
+    "programs_total": 5,
+    "reason": "false_green_record_preserved_as_inert_engineering_evidence_but_pending_protocol_depends_on_unaccepted_candidate_source_map_and_fills_no_review_slot",
+    "s1": "NO_GO_OPEN",
+    "status": "false_green_record_copied_inert_remaining_packet_not_copied_not_accepted"
+  },
+  "format": "pid-rs/inert-negative-evidence-archive/v1",
+  "integration_source": {
+    "commit": "dfdfd0b5c46b765338cc66a27973524d531b3388",
+    "parent": "9ed6831d20de43467b1cff8adc8ee421a484f7fd",
+    "tree": "8636722bce447e972817b5349849049b7e16961e"
+  },
+  "payloads": [
+    {
+      "archive_path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/checker-v1.py.txt",
+      "byte_length": 23919,
+      "executable": false,
+      "historical_commit": "92f6c2e633eed756b3e11c84ac19e51248e8cc90",
+      "historical_tree": "8ad92e6eb5f736eb01c886405cf702384d89ce1d",
+      "id": "checker-v1",
+      "observed_false_green_shapes": 5,
+      "original_path": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+      "role": "v1_vulnerable_checker_source_never_current_authority",
+      "sha256": "cf228e4cb947207b30661637a487ddd47e192e2206950596ca05256219994d01",
+      "source_blob_oid": "991060f97746d40d5f972f7c1b5122aeda71592e",
+      "source_path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/checker-v1.py",
+      "syntax_language": "python"
+    },
+    {
+      "archive_path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/checker-v2.py.txt",
+      "byte_length": 38238,
+      "executable": false,
+      "historical_commit": "94c9983ad6f0fa0bd1bf8e6c054165001db4adda",
+      "historical_tree": "a0b3c35bf080ca3d16c07b9b5c08761e861d552a",
+      "id": "checker-v2",
+      "observed_false_green_shapes": 2,
+      "original_path": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+      "role": "v2_incomplete_repair_source_never_current_authority",
+      "sha256": "8a0f2f4fa241d33515bfd573e9019bb64e82704e48fb9b50055b0c9237146feb",
+      "source_blob_oid": "bc4f1b017cabc601114f45eccca6d317694cfb2b",
+      "source_path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/checker-v2.py",
+      "syntax_language": "python"
+    },
+    {
+      "archive_path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/sha256-137c36c5a86415bbce8f0f93ffe22554332f96d58b6ca8fd561dc19fa8e039bc-false-green-record-v3.json.txt",
+      "byte_length": 27885,
+      "executable": false,
+      "id": "false-green-record-v3",
+      "original_path": "audit/evidence/sxpid3-mgw-v5-source-correspondence-s1-v3.json",
+      "role": "v3_false_green_record_inert_engineering_evidence_never_review_or_source_authority",
+      "sha256": "137c36c5a86415bbce8f0f93ffe22554332f96d58b6ca8fd561dc19fa8e039bc",
+      "source_blob_oid": "77e1764e32065fb21268493b91134f097d38a04b",
+      "source_path": "audit/evidence/sxpid3-mgw-v5-source-correspondence-s1-v3.json"
+    }
+  ],
+  "replay": {
+    "archived_checkers_executed": false,
+    "historical_record_parsed_as_authority": false,
+    "validation": "integrity_and_python_syntax_only"
+  },
+  "scope": {
+    "fills_h1": false,
+    "fills_review_slot": false,
+    "mathematical_counterexample": false,
+    "programs_closed": 0,
+    "s1_closed": false
+  }
+}

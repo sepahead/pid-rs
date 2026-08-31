@@ -1,0 +1,148 @@
+{
+  "archive_id": "ksg-m1a-rejected-lifecycle-checker-20260828",
+  "authority_role": "inert_historical_negative_evidence_never_current_authority",
+  "cases": [
+    "FG-JUST-PRESERVATION-COMMAND-COMMENTED",
+    "FG-WORKFLOW-V9-COMMENTED-EXIT",
+    "FG-AUDIENCE-HIDDEN-BANNER",
+    "FG-WORKFLOW-V11-COMMENTED-EXIT",
+    "FG-WORKFLOW-V12-BODY-TRUE",
+    "FG-JUST-PRESERVATION-EARLY-SUCCESS",
+    "FG-JUST-UNKNOWN-V13"
+  ],
+  "current_authority": false,
+  "disposition": {
+    "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/DISPOSITION.md",
+    "byte_length": 2627,
+    "sha256": "27eccec6de5b18b994d0b11803c315cc0db53aaa48305926972f2ef175209fa9"
+  },
+  "format": "pid-rs/inert-negative-evidence-archive/v1",
+  "integration_source": {
+    "commit": "f8bed18dbbcc77e621ddb6a628d5e9a006ade99b",
+    "parent": "9eb5ad48b9d15081ffd0e7056a0332e89765cac4",
+    "tree": "294bb43e51c37826783ae1eda52ca858a832db7c"
+  },
+  "payloads": [
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-05151c36754508eb46a02e2cda5a6067787fb35fdd1f3e61fa1426cc502c790f-checker.py.txt",
+      "byte_length": 12633,
+      "executable": false,
+      "id": "rejected-checker",
+      "original_path": "scripts/check-ksg-m1a-current-lifecycle.py",
+      "role": "rejected_validator_source_never_current_authority",
+      "sha256": "05151c36754508eb46a02e2cda5a6067787fb35fdd1f3e61fa1426cc502c790f",
+      "source_blob_oid": "b04d8984d76022262f807373694d85c4fcbe543f",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-05151c36754508eb46a02e2cda5a6067787fb35fdd1f3e61fa1426cc502c790f-checker.py",
+      "syntax_language": "python"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-afb14f7288296f08b4a1ae4b82f1c7e9201c83e7025049626f7c75e7f4ec1217-negative-evidence.json.txt",
+      "byte_length": 4774,
+      "executable": false,
+      "id": "historical-negative-receipt",
+      "original_path": "audit/evidence/ksg-rev4-m1a-current-lifecycle-rejected-checker-v1-negative-evidence.json",
+      "role": "historical_false_green_receipt_never_current_qualification_authority",
+      "sha256": "afb14f7288296f08b4a1ae4b82f1c7e9201c83e7025049626f7c75e7f4ec1217",
+      "source_blob_oid": "ffce4a4fe15abb4d394427345190165ca5520f6e",
+      "source_path": "audit/evidence/ksg-rev4-m1a-current-lifecycle-rejected-checker-v1-negative-evidence.json"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-bbf3c96aba08df8a73a19650a2998dac9b3fe2fcb8686da57a0bac0c7c5bd0f5-replay.py.txt",
+      "byte_length": 18230,
+      "executable": false,
+      "id": "historical-replay-source",
+      "original_path": "scripts/check-ksg-m1a-rejected-lifecycle-checker-archive.py",
+      "role": "historical_replay_source_never_executed_or_current_authority",
+      "sha256": "bbf3c96aba08df8a73a19650a2998dac9b3fe2fcb8686da57a0bac0c7c5bd0f5",
+      "source_blob_oid": "841cea39a35a931c4f78e848df3bc926194d0050",
+      "source_path": "scripts/check-ksg-m1a-rejected-lifecycle-checker-archive.py",
+      "syntax_language": "python"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-7f05c8d5cabfe120163e8f2822aaa5bbe5ec043ce0aa90ad057774ab2081038b-justfile.txt",
+      "byte_length": 50747,
+      "executable": false,
+      "id": "justfile",
+      "original_path": "justfile",
+      "role": "archived_fixture_never_executed",
+      "sha256": "7f05c8d5cabfe120163e8f2822aaa5bbe5ec043ce0aa90ad057774ab2081038b",
+      "source_blob_oid": "978b19052b21b2d94552cf0c6c3bea73ee2991f8",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-7f05c8d5cabfe120163e8f2822aaa5bbe5ec043ce0aa90ad057774ab2081038b-justfile.txt"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-77c39e60cb965ee97abdc8e755b6e9c8f3c65c4db8e9568f0bc9e692d10195da-workflow-v9.yml.txt",
+      "byte_length": 467,
+      "executable": false,
+      "id": "workflow-v9",
+      "original_path": ".github/workflows/ksg-m1a-composite-v9.yml",
+      "role": "archived_fixture_never_executed",
+      "sha256": "77c39e60cb965ee97abdc8e755b6e9c8f3c65c4db8e9568f0bc9e692d10195da",
+      "source_blob_oid": "1b920fb4a12a3788f2ad1ab3cce666119f1aadd6",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-77c39e60cb965ee97abdc8e755b6e9c8f3c65c4db8e9568f0bc9e692d10195da-workflow-v9.yml"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-dd2a03a8c3b2744db2a31e26344b551930e88096b91222493eb52d3d799e40d2-workflow-v11.yml.txt",
+      "byte_length": 433,
+      "executable": false,
+      "id": "workflow-v11",
+      "original_path": ".github/workflows/ksg-m1a-composite-v11.yml",
+      "role": "archived_fixture_never_executed",
+      "sha256": "dd2a03a8c3b2744db2a31e26344b551930e88096b91222493eb52d3d799e40d2",
+      "source_blob_oid": "62f1b45d9f4c244d5f64224a33047a1bea6fb8f9",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-dd2a03a8c3b2744db2a31e26344b551930e88096b91222493eb52d3d799e40d2-workflow-v11.yml"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318-workflow-v12.yml.txt",
+      "byte_length": 2013,
+      "executable": false,
+      "id": "workflow-v12",
+      "original_path": ".github/workflows/ksg-m1a-composite-v12.yml",
+      "role": "archived_fixture_never_executed",
+      "sha256": "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318",
+      "source_blob_oid": "2c772e69f60f45f0700dabea548a058a7fc4b4ab",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318-workflow-v12.yml"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b-AGENTS.md.txt",
+      "byte_length": 76923,
+      "executable": false,
+      "id": "agents",
+      "original_path": "AGENTS.md",
+      "role": "archived_fixture_never_current_policy",
+      "sha256": "eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b",
+      "source_blob_oid": "5fd53347e05db7761c3d65e68fef7fd572305a4b",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-eff7f5a9a1907a8b5e90c19e51872ed82a1d3e5ebaa17a689a563009dcde825b-AGENTS.md"
+    },
+    {
+      "archive_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-5c2fbab27f1c9f6c4d5095f2aa01908d27ad3a1e81fb613a0196a353515f074a-scripts-README.md.txt",
+      "byte_length": 187515,
+      "executable": false,
+      "id": "scripts-readme",
+      "original_path": "scripts/README.md",
+      "role": "archived_fixture_never_current_documentation",
+      "sha256": "5c2fbab27f1c9f6c4d5095f2aa01908d27ad3a1e81fb613a0196a353515f074a",
+      "source_blob_oid": "2c8ae754dc2ef9ac7794f219ce1063bd3b204386",
+      "source_path": "audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/sha256-5c2fbab27f1c9f6c4d5095f2aa01908d27ad3a1e81fb613a0196a353515f074a-scripts-README.md"
+    }
+  ],
+  "recovered_source": {
+    "commit": "2b0093537439ee1f4ca7073ee4800835a06fb9a0",
+    "local_ref": "refs/custody/rejected/ksg-lifecycle-2b009353",
+    "parent": "008ee7fa615aa8370623566c21eb99862680c7b1",
+    "remote_ref_observed": false,
+    "tree": "48b71a0302b0ebd46bc318e51220e8809ab8d240"
+  },
+  "replay": {
+    "archived_files_executed": false,
+    "archived_replay_source_executed": false,
+    "current_lifecycle_checker_restored": false,
+    "negative_receipt_promoted": false,
+    "validation": "integrity_and_python_syntax_only"
+  },
+  "scope": {
+    "application_authority": false,
+    "estimator_authority": false,
+    "mathematical_authority": false,
+    "release_authority": false
+  }
+}

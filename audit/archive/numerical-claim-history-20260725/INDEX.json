@@ -1,0 +1,161 @@
+{
+  "archive_id": "numerical-claim-history-20260725",
+  "authority_role": "inert_historical_mathematical_and_numerical_witnesses",
+  "current_authority": false,
+  "disposition": {
+    "archive_path": "audit/archive/numerical-claim-history-20260725/DISPOSITION.md",
+    "byte_length": 3222,
+    "sha256": "feffe86edce7944a06d87ae411ed065ca22f6fc19775ce53e41c702115d27f1d"
+  },
+  "format": "pid-rs/inert-negative-evidence-archive/v1",
+  "integration_source": {
+    "commit": "86faa9a0850ca416f54a467230106b01d4162687",
+    "parent": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+    "tree": "4f6fddb80754645cf6fa0fa48cdb82db457bb478"
+  },
+  "payloads": [
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/IMIN-TIE-SWAP-001/failures/ce-003-exact-tie.md.txt",
+      "byte_length": 2167,
+      "executable": false,
+      "id": "ce-003-exact-tie",
+      "original_path": "claims/IMIN-TIE-SWAP-001/failures/ce-003-exact-tie.md",
+      "role": "historical_exact_tie_and_public_equivariance_boundary",
+      "sha256": "e38099a042c0f6428ca9fd3455f56b3790a26669e2ae2816116b0e4f82ba29a4",
+      "source_blob_oid": "50d77a537e33be627e3223e87cb35028dfce8ca7",
+      "source_path": "claims/IMIN-TIE-SWAP-001/failures/ce-003-exact-tie.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/IMIN-TIE-SWAP-001/failures/implementation-v1-python-coverage.md.txt",
+      "byte_length": 1368,
+      "executable": false,
+      "id": "implementation-v1-python-coverage",
+      "original_path": "claims/IMIN-TIE-SWAP-001/failures/implementation-v1-python-coverage.md",
+      "role": "historical_test_coverage_correction",
+      "sha256": "52bbf6af5bee21731f9aca7e7dbfee9d3fe4d358d49a6093c5f31acca387e83b",
+      "source_blob_oid": "05d903420e75f2345dcf6e3e64423f98b14f06e1",
+      "source_path": "claims/IMIN-TIE-SWAP-001/failures/implementation-v1-python-coverage.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/IMIN-TIE-SWAP-001/failures/minimal-source-swap.md.txt",
+      "byte_length": 2022,
+      "executable": false,
+      "id": "minimal-source-swap",
+      "original_path": "claims/IMIN-TIE-SWAP-001/failures/minimal-source-swap.md",
+      "role": "historical_minimal_source_swap_counterexample",
+      "sha256": "0f624521348545f3557fc50e1732e6426e6a3eae2eba6d80e594581bfae50fb5",
+      "source_blob_oid": "97e172a6c958d3402d33a8581a776b1f7a791d25",
+      "source_path": "claims/IMIN-TIE-SWAP-001/failures/minimal-source-swap.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/IMIN-TIE-SWAP-001/failures/rounding-carry-vector.md.txt",
+      "byte_length": 1679,
+      "executable": false,
+      "id": "rounding-carry-vector",
+      "original_path": "claims/IMIN-TIE-SWAP-001/failures/rounding-carry-vector.md",
+      "role": "historical_oracle_vector_correction",
+      "sha256": "7b518079d46e36495a200f497929aa75d30015996cb68aeab4d6e347a634877f",
+      "source_blob_oid": "4379cc069486d65822c50da41f900980f0de9f46",
+      "source_path": "claims/IMIN-TIE-SWAP-001/failures/rounding-carry-vector.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/coordinate-scaling-acceptance-nonmonotonicity.md.txt",
+      "byte_length": 5610,
+      "executable": false,
+      "id": "coordinate-scaling-acceptance-nonmonotonicity",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/coordinate-scaling-acceptance-nonmonotonicity.md",
+      "role": "historical_scaling_counterexample_currently_generalized",
+      "sha256": "50d76f0c2163a768bf56715a084441e8ac3dc663e9977a2bed447399ea966dff",
+      "source_blob_oid": "b543d0a8f09a9fe65e09300c976aab0e2f9e1ea2",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/coordinate-scaling-acceptance-nonmonotonicity.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/direct-compensation-acceptance.md.txt",
+      "byte_length": 2379,
+      "executable": false,
+      "id": "direct-compensation-acceptance",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/direct-compensation-acceptance.md",
+      "role": "historical_15_49_guard_counterexample",
+      "sha256": "e8740042ebcefb97bbf75713b5f8f5a77a039ccfd8d5b074db3ee7fe8dde27d3",
+      "source_blob_oid": "254d45cc34507df79898240bc5c7ab906e81343b",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/direct-compensation-acceptance.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/exp0-direct-formula-bypass.md.txt",
+      "byte_length": 1331,
+      "executable": false,
+      "id": "exp0-direct-formula-bypass",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/exp0-direct-formula-bypass.md",
+      "role": "historical_dependency_bypass_currently_repaired",
+      "sha256": "debacd06e1c819ab6b11faf9056ab7d963f8f684cf3408b85940a91a08bad92f",
+      "source_blob_oid": "344e510b98b7705f80c2f8d7c69f79ed43abfe75",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/exp0-direct-formula-bypass.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/false-sixteen-times-acceptance-bound.md.txt",
+      "byte_length": 1824,
+      "executable": false,
+      "id": "false-sixteen-times-acceptance-bound",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/false-sixteen-times-acceptance-bound.md",
+      "role": "historical_false_sufficient_bound_counterexample",
+      "sha256": "5d667d97f639a0a490c10053f16639b08383951958a258c1e0065feada10bac9",
+      "source_blob_oid": "c9055cf7dc0043a23113250da476a7678db3f4e9",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/false-sixteen-times-acceptance-bound.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/neumaier-guard-discriminator-open.md.txt",
+      "byte_length": 1690,
+      "executable": false,
+      "id": "neumaier-guard-discriminator-open",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/neumaier-guard-discriminator-open.md",
+      "role": "historically_open_narrowly_superseded_by_explicit_overflow_discriminator",
+      "sha256": "9c35f7d69b6d2ef8868155276a76bc32e5477e489ee42616575e5f5658bd0eb0",
+      "source_blob_oid": "e10cb1147c8d7e3212bc168d0f150a283605cf73",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/neumaier-guard-discriminator-open.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/source-order-witness.md.txt",
+      "byte_length": 1765,
+      "executable": false,
+      "id": "source-order-witness",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/source-order-witness.md",
+      "role": "historical_source_order_counterexample_currently_repaired",
+      "sha256": "c7b80aba96a5ae0569e8f79d612580dff54fee5ef9a367a7cebf5cbfa505f6c3",
+      "source_blob_oid": "53a57f1b9957089709f395e532f4fe2a8e3e33af",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/source-order-witness.md"
+    },
+    {
+      "archive_path": "audit/archive/numerical-claim-history-20260725/payload/PID2-REPRESENTED-SUM-001/failures/tiny-extreme-cancellation-stale-test.md.txt",
+      "byte_length": 1801,
+      "executable": false,
+      "id": "tiny-extreme-cancellation-stale-test",
+      "original_path": "claims/PID2-REPRESENTED-SUM-001/failures/tiny-extreme-cancellation-stale-test.md",
+      "role": "historical_test_contract_correction",
+      "sha256": "a6a68f485e248b94e43d80a69fd12808a3ce93907a6c6fdecb31114c9b234f4e",
+      "source_blob_oid": "dbeee8ebe30395c6b8fb555a7e1f18c1669850b3",
+      "source_path": "claims/PID2-REPRESENTED-SUM-001/failures/tiny-extreme-cancellation-stale-test.md"
+    }
+  ],
+  "scope": {
+    "estimator_attainability_claimed": false,
+    "pid_theorem_defect_claimed": false,
+    "population_claimed": false,
+    "universal_binary64_refinement_claimed": false
+  },
+  "successor_groups": {
+    "categorical_imin": [
+      "NUMERICAL_ASSURANCE.md",
+      "crates/pid-core/tests/imin.rs",
+      "crates/pid-core/tests/imin_numerical_boundary.rs",
+      "scripts/generate-exact-binary64-sum-oracle.py"
+    ],
+    "continuous_pid2": [
+      "PID2_REPRESENTED_COORDINATE_ASSURANCE.md",
+      "NUMERICAL_ASSURANCE.md",
+      "crates/pid-core/src/pid2.rs",
+      "crates/pid-core/tests/pid2.rs",
+      "scripts/check-pid2-represented-coordinate-v4.py",
+      "scripts/check-pid2-represented-coordinate-v4-self-test.py"
+    ]
+  }
+}

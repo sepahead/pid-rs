@@ -32,3 +32,9 @@ LICENSE-LPPL-1.3c -text -whitespace
 audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt -text -whitespace
 audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt -text -whitespace
 audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt -text -whitespace
+
+# Rejected-route archive payloads are content-addressed historical bytes. Do not normalize their
+# line endings or treat retained source whitespace as current repository-authored formatting.
+audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/** -text -whitespace
+audit/archive/numerical-claim-history-20260725/payload/** -text -whitespace
+audit/archive/sxpid3-s1-historical-checkers-v1/payload/** -text -whitespace

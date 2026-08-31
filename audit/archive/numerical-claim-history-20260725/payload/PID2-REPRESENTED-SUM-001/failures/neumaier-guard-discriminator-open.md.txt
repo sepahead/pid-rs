@@ -1,0 +1,42 @@
+# Open failure: no compiled exact-versus-Neumaier guard discriminator
+
+## What the retained witness proves
+
+For
+
+```text
+I1 = 0x4072352e28889826
+I2 = 0x404488b4ebc88f45
+J  = 0x3ff843725bb2f39b
+R  = 0x404281666d288d41
+Syn = 0xc0725dd48600e573
+```
+
+the exact represented-atom reconstruction is five ordered binary64 positions from `J`, whereas
+ordinary left-to-right addition is 155 positions away. The constructor accepts under the exact
+guard, so a compiled regression can kill a sequential-reconstruction mutation.
+
+## What it does not prove
+
+Neumaier compensated reconstruction also lands five ordered positions from `J`. The witness does
+not distinguish the production exact accumulator from `compensated_sum`. Targeted and random
+searches have not found a quadruple whose exact and Neumaier reconstructions straddle the fixed
+threshold 32.
+
+Failure to find such a witness is not an equivalence theorem. Revision 3 therefore keeps the
+compiled Neumaier-guard mutation obligation open. A textual checker can require the production
+helper name and reject a source mutation, but that is source correspondence evidence, not a
+compiled behavioral kill.
+
+## Reopen and closure condition
+
+Close this gap only with either:
+
+1. a retained finite input whose public constructor outcome differs under exact and Neumaier guard
+   accumulation; or
+2. a proof, with checked binary64 boundary cases, that Neumaier and exact reconstruction induce the
+   same threshold predicate on the complete constructor domain.
+
+The second route must include non-finite intermediates, overflow, subnormals, signed zero, sign
+crossings, and every ordered-distance boundary; a search result cannot substitute for it.
+

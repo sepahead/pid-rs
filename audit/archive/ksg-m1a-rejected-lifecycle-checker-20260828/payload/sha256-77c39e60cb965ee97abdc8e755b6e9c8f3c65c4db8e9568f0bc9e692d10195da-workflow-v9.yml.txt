@@ -1,0 +1,19 @@
+name: KSG M1a composite v9 (retired)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  retired-refusal:
+    name: Refuse retired composite-v9 lifecycle execution
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Preserve terminal C9 facts without rerun or descendant credit
+        shell: bash
+        run: |
+          echo "composite-v9 is retired under terminal C12; no composite successor is operative" >&2
+          exit 1

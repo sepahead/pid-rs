@@ -1,0 +1,19 @@
+name: KSG M1a composite v11 (retired)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refuse-replay:
+    name: Refuse consumed C11 qualification replay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    steps:
+      - name: C11 is permanently consumed
+        shell: bash
+        run: |
+          echo "C11 is permanently consumed; L11 failed, Q11 is false, and R11 is permanently unissued." >&2
+          exit 1

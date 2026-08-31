@@ -1,0 +1,45 @@
+# Retained correction: extreme-cancellation regression encoded the historical contract
+
+## Error
+
+Before revision 2, the integration test
+`pid2_checked_constructor_preserves_tiny_identity_across_extreme_atom_cancellation` required
+acceptance of
+
+```text
+I1 = f64::MAX
+I2 = -f64::MAX
+J  = 2 * f64::from_bits(50)
+R  = f64::from_bits(50).
+```
+
+That expectation encoded the historical hybrid residual, not the revision-2 exact represented-
+input contract. Retaining it after changing the constructor would make the source and test suite
+contradict one another.
+
+## Exact detector
+
+Writing `tiny = f64::from_bits(50)`, the exact represented-input linear form is
+
+```text
+J - I1 - I2 + R = 3 * tiny,
+```
+
+so its correctly rounded synergy has raw bits `150`. The separately rounded unique atoms remain
+`f64::MAX` and `-f64::MAX`. Exact accumulation of the four returned atoms produces raw bits `200`,
+which is 100 ordered binary64 positions from the supplied joint-MI bits `100`. The frozen identity
+threshold is 32, so revision 2 must return the existing `NumericalInstability` error.
+
+## Correction and dependency reach
+
+The regression is renamed and now requires fail-closed rejection. This is a load-bearing test-
+contract correction, not a production-formula change beyond revision 2. It reaches the public
+checked constructor and any composition that supplies an equally inconsistent represented tuple.
+It does not show that a valid upstream estimator produces this tuple or quantify rejection
+frequency.
+
+## Residual boundary
+
+The corrected regression establishes one exact boundary witness. It is not a universal compiler
+refinement, an estimator-calibration result, or permission to loosen the guard. The separately
+retained acceptance-monotonicity proof remains the general control-flow statement.

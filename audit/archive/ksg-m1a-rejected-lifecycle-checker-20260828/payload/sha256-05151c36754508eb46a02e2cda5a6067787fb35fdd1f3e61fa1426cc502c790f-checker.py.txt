@@ -1,0 +1,360 @@
+#!/usr/bin/env python3
+"""Validate the mutable KSG M1a projection against terminal C12 authority."""
+
+from __future__ import annotations
+
+import sys
+
+
+if not (
+    sys.version_info >= (3, 11)
+    and sys.flags.isolated == 1
+    and sys.flags.safe_path
+    and sys.flags.no_site == 1
+    and sys.flags.ignore_environment == 1
+    and sys.dont_write_bytecode
+    and sys.flags.optimize in {0, 1}
+):
+    print(
+        "ERROR: check-ksg-m1a-current-lifecycle.py requires "
+        "Python 3.11+ -I -S -B and at most one -O",
+        file=sys.stderr,
+    )
+    raise SystemExit(2)
+
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import re
+import stat
+from typing import Any, NoReturn
+
+
+ROOT = Path(os.path.abspath(os.fspath(Path(__file__)))).parent.parent
+PROJECTION = "audit/evidence/ksg-rev4-m1a-current-lifecycle-v1.json"
+TERMINAL_CHECKER = ROOT / "scripts/check-ksg-m1a-composite-v12-terminal.py"
+AGENTS = "AGENTS.md"
+SCRIPTS_README = "scripts/README.md"
+JUSTFILE = "justfile"
+WORKFLOWS = (
+    ".github/workflows/ksg-m1a-composite-v9.yml",
+    ".github/workflows/ksg-m1a-composite-v11.yml",
+    ".github/workflows/ksg-m1a-composite-v12.yml",
+)
+CURRENT_BANNER = """CURRENT KSG M1a LIFECYCLE - TERMINAL C12 AUTHORITY
+
+Q12 is false; R12 is permanently unissued; L12 is not adjudicated. No composite
+successor is operative. The only runnable lifecycle command is
+`just ksg-composite-v12-preservation`. Any future route requires a new claim and a new
+lifecycle; it cannot revive R12 or reuse C12 attempt credit."""
+EXPECTED_PROJECTION = {
+    "current_route": {
+        "future_route": {
+            "may_reuse_c12_attempt_credit": False,
+            "may_revive_r12": False,
+            "requires_new_claim": True,
+            "requires_new_lifecycle": True,
+        },
+        "operative_composite_successor": None,
+        "preservation_command": "just ksg-composite-v12-preservation",
+        "qualification_commands": [],
+    },
+    "historical_evidence_policy": {
+        "authority": "exact_c12_terminal_record_and_git_objects",
+        "rewrite_permitted": False,
+    },
+    "qualification": {
+        "l12": "not_adjudicated",
+        "q12": False,
+        "r12": "permanently_unissued",
+    },
+    "repository": "sepahead/pid-rs",
+    "schema": "pid-rs/ksg-rev4-m1a-current-lifecycle/v1",
+    "terminal_authority": {
+        "c12_commit": "01466e88b0550333c2718f1716289e9642e30dc6",
+        "record": (
+            "audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json"
+        ),
+        "record_sha256": (
+            "375bf287c73dea35c70d21c74be58e54fe17ae27b4c38ebd9cdf543c8beab47c"
+        ),
+        "r12_evidence_paths": [
+            "audit/evidence/ksg-rev4-m1a-composite-local-closure-v12-2026-08-23.json",
+            "audit/evidence/ksg-rev4-m1a-composite-receipt-v12-2026-08-23.json",
+            (
+                "audit/evidence/ksg-rev4-m1a-composite-successor-qualification-"
+                "hosted-capture-v12-2026-08-23.json"
+            ),
+        ],
+        "schema": (
+            "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json"
+        ),
+        "schema_sha256": (
+            "2152411c804df3a75f6b106ae97761f4812adf2ae8ca963a98a296df812c0e5e"
+        ),
+    },
+}
+
+
+class LifecycleError(RuntimeError):
+    """The mutable lifecycle projection contradicts terminal C12 authority."""
+
+
+def refuse(message: str) -> NoReturn:
+    raise LifecycleError(message)
+
+
+def require(predicate: bool, message: str) -> None:
+    if not predicate:
+        refuse(message)
+
+
+def stable_read(relative: str, maximum: int = 2 * 1024 * 1024) -> bytes:
+    path = ROOT / relative
+    before = path.lstat()
+    require(stat.S_ISREG(before.st_mode), f"not a regular file: {relative}")
+    require(before.st_nlink == 1, f"not a single-link file: {relative}")
+    require(0 < before.st_size <= maximum, f"file size outside bound: {relative}")
+    raw = path.read_bytes()
+    after = path.lstat()
+
+    def identity(value: os.stat_result) -> tuple[int, ...]:
+        return (
+            value.st_dev,
+            value.st_ino,
+            value.st_mode,
+            value.st_nlink,
+            value.st_size,
+            value.st_mtime_ns,
+            value.st_ctime_ns,
+        )
+
+    require(identity(before) == identity(after), f"file changed while read: {relative}")
+    require(len(raw) == before.st_size, f"short read: {relative}")
+    return raw
+
+
+def canonical_json(value: Any) -> bytes:
+    return (
+        json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False)
+        + "\n"
+    ).encode("ascii")
+
+
+def parse_projection(raw: bytes) -> dict[str, Any]:
+    def reject_constant(value: str) -> NoReturn:
+        refuse(f"non-finite JSON constant is forbidden: {value}")
+
+    try:
+        value = json.loads(raw, parse_constant=reject_constant)
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise LifecycleError(
+            f"cannot parse current lifecycle projection: {error}"
+        ) from error
+    require(type(value) is dict, "current lifecycle projection root is not an object")
+    require(
+        raw == canonical_json(value),
+        "current lifecycle projection is not canonical JSON",
+    )
+    return value
+
+
+def validate_projection(value: dict[str, Any]) -> None:
+    require(value == EXPECTED_PROJECTION, "current lifecycle projection is stale")
+
+
+def validate_audience(agents: str, scripts_readme: str) -> None:
+    for label, source in ((AGENTS, agents), (SCRIPTS_README, scripts_readme)):
+        require(source.count(CURRENT_BANNER) == 1, f"missing terminal banner: {label}")
+        require(
+            "Historical composite-v9" in source,
+            f"current/history terminology missing: {label}",
+        )
+        require(
+            "The operative append-only successor is composite-v9" not in source
+            and "Composite-v9 is the bounded selected append-only successor"
+            not in source,
+            f"operative-v9 wording survives: {label}",
+        )
+
+
+def recipe(source: str, name: str) -> str:
+    marker = f"{name}:"
+    start = source.find(marker)
+    require(
+        start >= 0 and (start == 0 or source[start - 1] == "\n"),
+        f"missing Just target {name}",
+    )
+    lines = source[start:].splitlines()
+    selected = [lines[0]]
+    for line in lines[1:]:
+        if line and not line[0].isspace():
+            break
+        selected.append(line)
+    return "\n".join(selected).rstrip()
+
+
+def validate_just(source: str) -> None:
+    expected_refusals = {
+        "ksg-composite-v9": (
+            "C9 qualification is permanently closed under terminal C12; "
+            "no successor is operative; refusing replay"
+        ),
+        "ksg-composite-v11": (
+            "C11 qualification is permanently closed under terminal C12; "
+            "no successor is operative; refusing replay"
+        ),
+        "ksg-composite-v12": (
+            "C12 qualification is permanently closed; no successor is operative; "
+            "refusing replay"
+        ),
+    }
+    for name, message in expected_refusals.items():
+        expected = "\n".join(
+            (
+                f"{name}:",
+                "    #!/usr/bin/env bash",
+                "    set -euo pipefail",
+                f'    echo "{message}" >&2',
+                "    exit 1",
+            )
+        )
+        refusal = recipe(source, name)
+        if name == "ksg-composite-v9":
+            # Retain the historical recipe body as source evidence, but require an
+            # unconditional refusal before its first historical command.
+            require(
+                refusal.startswith(expected + "\n"),
+                f"runnable qualification route: {name}",
+            )
+        else:
+            require(refusal == expected, f"runnable qualification route: {name}")
+
+    preservation = recipe(source, "ksg-composite-v12-preservation")
+    for command in (
+        "python3 -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py",
+        "python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py",
+        "python3 -I -S -B scripts/check-ksg-m1a-current-lifecycle.py",
+        "python3 -O -I -S -B scripts/check-ksg-m1a-current-lifecycle.py",
+        "python3 -I -S -B scripts/check-ksg-m1a-current-lifecycle-self-test.py",
+        "python3 -O -I -S -B scripts/check-ksg-m1a-current-lifecycle-self-test.py",
+    ):
+        require(command in preservation, f"preservation route omits {command}")
+
+    target_names = set(
+        re.findall(r"(?m)^(ksg-composite-v(?:9|10|11|12)(?:-[a-z0-9-]+)?):$", source)
+    )
+    require(
+        target_names
+        == {
+            "ksg-composite-v9",
+            "ksg-composite-v11",
+            "ksg-composite-v12",
+            "ksg-composite-v12-preservation",
+        },
+        "v9-v12 Just target inventory changed",
+    )
+    require(
+        "capture-ksg-m1a-composite-v11" not in recipe(source, "ksg-composite-v11")
+        and "check-ksg-m1a-composite-v11.py" not in recipe(source, "ksg-composite-v11")
+        and "capture-ksg-m1a-composite-v12" not in preservation
+        and "check-ksg-m1a-composite-v12.py" not in preservation,
+        "qualification command survives in a v9-v12 Just route",
+    )
+
+
+def validate_workflows(workflows: dict[str, str]) -> None:
+    v9 = workflows[WORKFLOWS[0]]
+    v11 = workflows[WORKFLOWS[1]]
+    v12 = workflows[WORKFLOWS[2]]
+    require(
+        "composite v9 (retired)" in v9
+        and "terminal C12" in v9
+        and "no composite successor is operative" in v9
+        and "exit 1" in v9
+        and "use the fresh direct-C9 composite-v11 lifecycle" not in v9,
+        "retired v9 workflow advertises a qualification route",
+    )
+    require(
+        "composite v11 (retired)" in v11
+        and "Refuse consumed C11 qualification replay" in v11
+        and "exit 1" in v11,
+        "retired v11 workflow is not a hard refusal",
+    )
+    require(
+        "composite v12 terminal preservation" in v12
+        and "nonqualifying" in v12.lower()
+        and "capture-ksg-m1a-composite-v12" not in v12
+        and "check-ksg-m1a-composite-v12.py --" not in v12,
+        "v12 workflow is not preservation-only",
+    )
+
+
+def load_terminal_checker():
+    name = "pid_rs_ksg_m1a_current_lifecycle_terminal_authority"
+    specification = importlib.util.spec_from_file_location(name, TERMINAL_CHECKER)
+    require(
+        specification is not None and specification.loader is not None,
+        "cannot load terminal C12 checker",
+    )
+    module = importlib.util.module_from_spec(specification)
+    sys.modules[name] = module
+    specification.loader.exec_module(module)
+    return module
+
+
+def validate_terminal_result(result: dict[str, Any]) -> None:
+    require(
+        result.get("c12_commit")
+        == EXPECTED_PROJECTION["terminal_authority"]["c12_commit"]
+        and result.get("q12") is False
+        and result.get("r12") == "permanently_unissued"
+        and result.get("l12") == "not_adjudicated"
+        and result.get("result") == "pass",
+        "terminal C12 checker result contradicts current projection",
+    )
+
+
+def check() -> dict[str, Any]:
+    projection = parse_projection(stable_read(PROJECTION))
+    validate_projection(projection)
+    agents = stable_read(AGENTS).decode("utf-8", errors="strict")
+    scripts_readme = stable_read(SCRIPTS_README).decode("utf-8", errors="strict")
+    just = stable_read(JUSTFILE).decode("utf-8", errors="strict")
+    workflows = {
+        relative: stable_read(relative).decode("utf-8", errors="strict")
+        for relative in WORKFLOWS
+    }
+    validate_audience(agents, scripts_readme)
+    validate_just(just)
+    validate_workflows(workflows)
+    terminal = load_terminal_checker()
+    terminal_result = terminal.check()
+    validate_terminal_result(terminal_result)
+    return {
+        "c12_commit": projection["terminal_authority"]["c12_commit"],
+        "l12": "not_adjudicated",
+        "operative_composite_successor": None,
+        "preservation_command": "just ksg-composite-v12-preservation",
+        "projection_sha256": hashlib.sha256(stable_read(PROJECTION)).hexdigest(),
+        "q12": False,
+        "r12": "permanently_unissued",
+        "result": "pass",
+        "schema": "pid-rs/ksg-rev4-m1a-current-lifecycle-check/v1",
+    }
+
+
+def main() -> int:
+    try:
+        result = check()
+    except (LifecycleError, OSError, UnicodeError, ValueError) as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 1
+    print(json.dumps(result, sort_keys=True, separators=(",", ":")))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,30 @@
+# Retained dependency failure: `exp0` repeated the historical direct formula
+
+## Finding
+
+The pre-correction `exp0` diagnostic computed optional synergy independently as
+
+```text
+mi_s1s2_t - mi_s1_t - mi_s2_t + redundancy
+```
+
+instead of calling `Pid2Result::from_estimate`. Consequently, changing the checked constructor
+alone would leave the diagnostic on a different represented-input arithmetic and rejection
+contract.
+
+## Dependency reach and correction
+
+The bypass reaches the catalog method `validation.exp0` and any summary/run-log field populated by
+that optional outcome. It does not change KSG neighbor counts or the redundancy estimate.
+
+The correction must construct `Pid2Estimate`, call `Pid2Result::from_estimate`, return the checked
+`synergy` on success, and map `NumericalInstability` to the diagnostic's existing explicit
+abstention state. Other typed errors are impossible for finite four-scalar construction and must
+not be silently converted into a value.
+
+## Regression and residual boundary
+
+A source mutation must reject restoration of the direct formula, while existing `exp0` smoke,
+strict-band, summary, and run-log tests must pass. Routing through the constructor supplies
+arithmetic and typed-error consistency; it does not turn `exp0` into estimator validation or a
+generic pass/fail scientific gate.

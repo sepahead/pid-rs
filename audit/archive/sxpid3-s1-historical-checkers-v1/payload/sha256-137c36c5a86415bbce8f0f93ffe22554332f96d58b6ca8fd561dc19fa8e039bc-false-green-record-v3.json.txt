@@ -1,0 +1,641 @@
+{
+  "base_candidate": {
+    "document": {
+      "byte_length": 19112,
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v1.md",
+      "sha256": "208ffa9455452c56b0689de4f85f31da0325f6e52704c1f7abf7cdf995864cb0"
+    },
+    "reconstruction_base_git": {
+      "commit": "b45a7eb2e15364d37ecffc3061bf4f9ac5812b7f",
+      "tree": "44acc89e335049d44102f61bb7cb9c2f9080edcb"
+    },
+    "source_record": {
+      "byte_length": 23810,
+      "path": "audit/evidence/sxpid3-mgw-v5-source-correspondence-s1-v1.json",
+      "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+    },
+    "source_schema": {
+      "byte_length": 12884,
+      "path": "audit/schemas/sxpid3-mgw-v5-source-correspondence-s1-v1.schema.json",
+      "sha256": "7d37769f59c90b8a256e946bb86ab11b4cbc7792e37b7ca04302a0475468c256"
+    }
+  },
+  "claim_id": "SX-CERTIFIED-AVERAGED-PID3-001",
+  "claim_revision": 1,
+  "created_date": "2026-08-28",
+  "file_root_semantics": {
+    "cli_option": "--file-root",
+    "git_binding": "not_claimed",
+    "meaning": "A file mirror used only to read exact repository-input and historical-archive bytes. The supplied root and traversed descendants must be symlink-free; ancestor components above the supplied root are out of scope. Every file has an exact size preflight. No Git root, commit, tree, clean checkout, authenticity, parent-path custody, or artifact custody is asserted."
+  },
+  "historical_artifacts": {
+    "archive": {
+      "disposition": {
+        "byte_length": 1961,
+        "path": "audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md",
+        "sha256": "8649376f245b4425b3351bb4ddf2b48e434be0f83506a1fae482897d8e7143df"
+      },
+      "index": {
+        "byte_length": 3961,
+        "path": "audit/archive/sxpid3-s1-historical-checkers-v1/INDEX.json",
+        "sha256": "81222910c729ee5f7f8d1bcd76fb7d7071b061d1f151c3a6959aba92fe224b03"
+      },
+      "replay_status": "executed_by_current_self_test_in_normal_and_optimized_modes",
+      "v1_checker_payload": {
+        "byte_length": 23919,
+        "path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/checker-v1.py",
+        "sha256": "cf228e4cb947207b30661637a487ddd47e192e2206950596ca05256219994d01"
+      },
+      "v2_checker_payload": {
+        "byte_length": 38238,
+        "path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/checker-v2.py",
+        "sha256": "8a0f2f4fa241d33515bfd573e9019bb64e82704e48fb9b50055b0c9237146feb"
+      }
+    },
+    "v1": {
+      "disposition": "historical_negative_checker_evidence_not_current_authority",
+      "record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "schema": {
+        "byte_length": 12884,
+        "sha256": "7d37769f59c90b8a256e946bb86ab11b4cbc7792e37b7ca04302a0475468c256"
+      },
+      "vulnerable_checker": {
+        "commit": "92f6c2e633eed756b3e11c84ac19e51248e8cc90",
+        "path": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+        "sha256": "cf228e4cb947207b30661637a487ddd47e192e2206950596ca05256219994d01",
+        "tree": "8ad92e6eb5f736eb01c886405cf702384d89ce1d"
+      }
+    },
+    "v2": {
+      "disposition": "historical_incomplete_repair_not_current_authority",
+      "incomplete_checker": {
+        "commit": "94c9983ad6f0fa0bd1bf8e6c054165001db4adda",
+        "path": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+        "sha256": "8a0f2f4fa241d33515bfd573e9019bb64e82704e48fb9b50055b0c9237146feb",
+        "tree": "a0b3c35bf080ca3d16c07b9b5c08761e861d552a"
+      },
+      "protocol_document": {
+        "byte_length": 7060,
+        "sha256": "dd306a7abb1fc487e251901188a5956288ad80f2ce229ab309402a50211e53f4"
+      },
+      "record": {
+        "byte_length": 11062,
+        "sha256": "8120fa48e525298c7cc31417a9d34362b8dc59ceeb22bfe00c95beb32101a0b2"
+      },
+      "schema": {
+        "byte_length": 14462,
+        "sha256": "4f15f83becf9db649934ff4c2affda040c7e06b05f10fb70db582b2fb6f00c02"
+      }
+    }
+  },
+  "historical_false_greens": [
+    {
+      "affected_checker": "v1_vulnerable",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "Checker counterexample only; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--record",
+      "mutant": {
+        "byte_length": 23793,
+        "sha256": "fff789486ba74fa250167285dd01af4811bcdfc1f7f43386e5a7545b20ccb8a6"
+      },
+      "mutation_id": "V1-FG-INPUT-ROUTE",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/review_protocol/review_slots/0/exact_input_bytes/0/kind",
+          "replacement": "repository_file"
+        },
+        {
+          "json_pointer": "/review_protocol/review_slots/0/exact_input_bytes/0/locator",
+          "replacement": "claims/not-the-paper.pdf"
+        }
+      ]
+    },
+    {
+      "affected_checker": "v1_vulnerable",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "Checker counterexample only; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--record",
+      "mutant": {
+        "byte_length": 23503,
+        "sha256": "c1d64ef876e90afec8d9b10584beb1adbde30a174ef3726ef661d1cd843bf91b"
+      },
+      "mutation_id": "V1-FG-SCOPE-CUTS",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/review_protocol/review_slots/0/scope",
+          "replacement": "wrong"
+        },
+        {
+          "json_pointer": "/review_protocol/review_slots/0/shared_cuts",
+          "replacement": [
+            "wrong-cut-a",
+            "wrong-cut-b",
+            "wrong-cut-c",
+            "wrong-cut-d",
+            "wrong-cut-e"
+          ]
+        }
+      ]
+    },
+    {
+      "affected_checker": "v1_vulnerable",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "Checker counterexample only; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--record",
+      "mutant": {
+        "byte_length": 23529,
+        "sha256": "bed163a5335103660ac09d5f86c849e4957bb4324d1d42cf00c9b9bed0cc75ba"
+      },
+      "mutation_id": "V1-FG-ANCHOR-SEMANTICS",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/anchors/0/local_object",
+          "replacement": "wrong"
+        },
+        {
+          "json_pointer": "/anchors/0/prohibited_inference",
+          "replacement": "wrong"
+        },
+        {
+          "json_pointer": "/anchors/0/source_object",
+          "replacement": "wrong"
+        },
+        {
+          "json_pointer": "/anchors/0/source_role",
+          "replacement": "wrong"
+        }
+      ]
+    },
+    {
+      "affected_checker": "v1_vulnerable",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "Checker counterexample only; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--record",
+      "mutant": {
+        "byte_length": 23416,
+        "sha256": "d83a9e10b48c3fdc8afaac2a6fcc1db3c495095ad88cb7a2a6475df888f2856c"
+      },
+      "mutation_id": "V1-FG-CLAIM-SEMANTICS",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/correspondence_claims/0/assumptions",
+          "replacement": [
+            "wrong"
+          ]
+        },
+        {
+          "json_pointer": "/correspondence_claims/0/local_sections",
+          "replacement": [
+            "wrong"
+          ]
+        },
+        {
+          "json_pointer": "/correspondence_claims/0/statement",
+          "replacement": "wrong"
+        }
+      ]
+    },
+    {
+      "affected_checker": "v1_vulnerable",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "Checker counterexample only; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--record",
+      "mutant": {
+        "byte_length": 23685,
+        "sha256": "71d42a2128eba1df1738c8aba6155b13c5745b897c6f6bbd62ee75eeddcea076"
+      },
+      "mutation_id": "V1-FG-ROLE-TITLE",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 336,
+          "stdout_sha256": "e0de38fd71b928c142a90eebf51559c0b7821f644d19c1e5295d3cf714b76617"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/repository_inputs/1/role",
+          "replacement": "wrong"
+        },
+        {
+          "json_pointer": "/source/title",
+          "replacement": "wrong"
+        }
+      ]
+    },
+    {
+      "affected_checker": "v2_incomplete_repair",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "The v2 checker accepted this source-record override despite its separately exact v2 protocol record; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--source-record",
+      "mutant": {
+        "byte_length": 23793,
+        "sha256": "fff789486ba74fa250167285dd01af4811bcdfc1f7f43386e5a7545b20ccb8a6"
+      },
+      "mutation_id": "V2-FG-INPUT-ROUTE-VIA-SOURCE-RECORD",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --source-record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 435,
+          "stdout_sha256": "1b8e3e94b75b71d42bf5b1449eefb9e8a473beb8ecb12c86cedf9c5813ed7126"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --source-record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 435,
+          "stdout_sha256": "1b8e3e94b75b71d42bf5b1449eefb9e8a473beb8ecb12c86cedf9c5813ed7126"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/review_protocol/review_slots/0/exact_input_bytes/0/kind",
+          "replacement": "repository_file"
+        },
+        {
+          "json_pointer": "/review_protocol/review_slots/0/exact_input_bytes/0/locator",
+          "replacement": "claims/not-the-paper.pdf"
+        }
+      ]
+    },
+    {
+      "affected_checker": "v2_incomplete_repair",
+      "base_record": {
+        "byte_length": 23810,
+        "sha256": "3491674635ef4296919c6afbb27180e216dc9ab1bbefc8f7440127897e40b704"
+      },
+      "boundary": "The v2 checker accepted this source-record override despite its separately exact v2 protocol record; no mathematical source bytes changed and no review slot was filled.",
+      "canonicalization": "UTF-8 JSON; reject duplicate members and non-finite constants; json.dumps(indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) plus one LF",
+      "cli_option": "--source-record",
+      "mutant": {
+        "byte_length": 23503,
+        "sha256": "c1d64ef876e90afec8d9b10584beb1adbde30a174ef3726ef661d1cd843bf91b"
+      },
+      "mutation_id": "V2-FG-SCOPE-CUTS-VIA-SOURCE-RECORD",
+      "observations": [
+        {
+          "command_template": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --source-record MUTANT.json",
+          "exit_code": 0,
+          "mode": "normal",
+          "stdout_byte_length": 435,
+          "stdout_sha256": "1b8e3e94b75b71d42bf5b1449eefb9e8a473beb8ecb12c86cedf9c5813ed7126"
+        },
+        {
+          "command_template": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --source-record MUTANT.json",
+          "exit_code": 0,
+          "mode": "optimized",
+          "stdout_byte_length": 435,
+          "stdout_sha256": "1b8e3e94b75b71d42bf5b1449eefb9e8a473beb8ecb12c86cedf9c5813ed7126"
+        }
+      ],
+      "operations": [
+        {
+          "json_pointer": "/review_protocol/review_slots/0/scope",
+          "replacement": "wrong"
+        },
+        {
+          "json_pointer": "/review_protocol/review_slots/0/shared_cuts",
+          "replacement": [
+            "wrong-cut-a",
+            "wrong-cut-b",
+            "wrong-cut-c",
+            "wrong-cut-d",
+            "wrong-cut-e"
+          ]
+        }
+      ]
+    }
+  ],
+  "protocol_document": {
+    "byte_length": 10078,
+    "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/review-protocol-v3.md",
+    "sha256": "6b530662d73bffc8432782460e12467959266c59cd9bf271e3f037a87550e10b"
+  },
+  "record_id": "SX-CERTIFIED-AVERAGED-PID3-001-S1-REVIEW-PROTOCOL-003",
+  "review_protocol": {
+    "acceptance_rule": "The pending-only v3 record cannot close S1. A future append-only completed-state schema, record, evidence matrix, and decision must validate both route results, preserve objections, resolve every correspondence claim, disclose shared cuts and reviewer relations, couple top status to all slots, require distinct pre/post locators and SHA-256 digests within each slot, and retain H1 open unless separately satisfied.",
+    "completion_schema_status": "absent_reserved_for_future_version",
+    "external_human_custody": "open_not_satisfied",
+    "future_receipt_assertion_boundary": "Typed receipt fields alone assert metadata. Until a checker reads the asserted bytes and validates execution or custody evidence, they do not establish artifact existence, chronology, identity, authorship, authenticity, custody, non-observation, or independence.",
+    "future_receipt_distinctness": "Within each completed slot, pre-exposure and post-map receipts must have different locators and different SHA-256 digests; a different phase tag alone is insufficient.",
+    "legacy_acceptance_rule": "A later append-only adjudication may close S1 only after both slots bind exact inputs and outputs, honestly classify reviewer kind, disclose all independence dimensions and shared cuts, resolve every objection, agree on every correspondence claim, and retain H1 as open unless separately satisfied.",
+    "required_route_reviews": 2,
+    "review_slots": [
+      {
+        "exact_input_bytes": [
+          {
+            "byte_length": 1002114,
+            "exposure_phase": 1,
+            "kind": "versioned_external_pdf",
+            "locator": "https://arxiv.org/pdf/2002.03356v5",
+            "object_id": "mgw-arxiv-2002.03356v5",
+            "sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6"
+          },
+          {
+            "byte_length": 10608,
+            "exposure_phase": 2,
+            "kind": "repository_file",
+            "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md",
+            "object_id": "claim-v1",
+            "sha256": "3c0ce09a17d1925a01f54d35733c6f01effbdd6ae3d081d194a7fadf6e04b31b"
+          },
+          {
+            "byte_length": 11831,
+            "exposure_phase": 2,
+            "kind": "repository_file",
+            "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+            "object_id": "conventions-v1",
+            "sha256": "2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7"
+          },
+          {
+            "byte_length": 19112,
+            "exposure_phase": 3,
+            "kind": "repository_file",
+            "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v1.md",
+            "object_id": "source-correspondence-v1",
+            "sha256": "208ffa9455452c56b0689de4f85f31da0325f6e52704c1f7abf7cdf995864cb0"
+          }
+        ],
+        "review_state": {
+          "disposition": "pending",
+          "independence_dimensions": {
+            "acquisition": "pending",
+            "custody": "pending",
+            "human_person": "pending",
+            "implementation": "pending",
+            "institutional": "pending",
+            "semantic": "pending"
+          },
+          "objections": [],
+          "post_map_comparison_output": null,
+          "pre_exposure_derivation_output": null,
+          "reviewer_id": null,
+          "reviewer_kind": "pending_unassigned"
+        },
+        "route": "paper_first_no_local_map",
+        "scope": "Derive and seal the finite categorical event, component, averaging, unit, and Mobius meanings from the exact MGW-v5 PDF before local exposure; then compare with the frozen local specification and, only in phase 3, the prepared candidate map.",
+        "shared_cuts": [
+          "the exact MGW-v5 PDF bytes",
+          "the frozen claim-v1 and conventions bytes",
+          "the candidate map at adjudication phase",
+          "the repository checker and schema",
+          "the final adjudicator"
+        ],
+        "slot_id": "S1-PAPER-FIRST"
+      },
+      {
+        "exact_input_bytes": [
+          {
+            "byte_length": 10608,
+            "exposure_phase": 1,
+            "kind": "repository_file",
+            "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1.md",
+            "object_id": "claim-v1",
+            "sha256": "3c0ce09a17d1925a01f54d35733c6f01effbdd6ae3d081d194a7fadf6e04b31b"
+          },
+          {
+            "byte_length": 11831,
+            "exposure_phase": 1,
+            "kind": "repository_file",
+            "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+            "object_id": "conventions-v1",
+            "sha256": "2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7"
+          },
+          {
+            "byte_length": 134094,
+            "exposure_phase": 1,
+            "kind": "repository_file",
+            "locator": "crates/pid-core/src/sxpid.rs",
+            "object_id": "sxpid-rust-source-observation",
+            "sha256": "ea51e92b5f23bd627f21dd239fb4dba63f9c1067be3ca3294c58d72b00ec0771"
+          },
+          {
+            "byte_length": 1002114,
+            "exposure_phase": 2,
+            "kind": "versioned_external_pdf",
+            "locator": "https://arxiv.org/pdf/2002.03356v5",
+            "object_id": "mgw-arxiv-2002.03356v5",
+            "sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6"
+          },
+          {
+            "byte_length": 19112,
+            "exposure_phase": 3,
+            "kind": "repository_file",
+            "locator": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v1.md",
+            "object_id": "source-correspondence-v1",
+            "sha256": "208ffa9455452c56b0689de4f85f31da0325f6e52704c1f7abf7cdf995864cb0"
+          }
+        ],
+        "review_state": {
+          "disposition": "pending",
+          "independence_dimensions": {
+            "acquisition": "pending",
+            "custody": "pending",
+            "human_person": "pending",
+            "implementation": "pending",
+            "institutional": "pending",
+            "semantic": "pending"
+          },
+          "objections": [],
+          "post_map_comparison_output": null,
+          "pre_exposure_derivation_output": null,
+          "reviewer_id": null,
+          "reviewer_kind": "pending_unassigned"
+        },
+        "route": "local_first_no_prepared_paper_map",
+        "scope": "Derive and seal the finite categorical local object from the exact claim, conventions, and inspected Rust-source bytes before paper exposure; then compare with the exact MGW-v5 PDF and, only in phase 3, the prepared candidate map without claiming executable refinement.",
+        "shared_cuts": [
+          "the exact MGW-v5 PDF bytes",
+          "the frozen claim-v1 and conventions bytes",
+          "the candidate map at adjudication phase",
+          "the repository checker and schema",
+          "the final adjudicator"
+        ],
+        "slot_id": "S1-LOCAL-FIRST"
+      }
+    ],
+    "reviewer_distinctness": "not_required_or_enforced; no distinct-human, institutional, model, implementation, acquisition, or custody claim",
+    "shared_cut_meanings": [
+      {
+        "meaning": "Both routes depend on the same exact external source bytes.",
+        "order": 1,
+        "statement": "the exact MGW-v5 PDF bytes"
+      },
+      {
+        "meaning": "Both routes depend on the same local specification bytes.",
+        "order": 2,
+        "statement": "the frozen claim-v1 and conventions bytes"
+      },
+      {
+        "meaning": "Both routes receive the same prepared map only at phase 3.",
+        "order": 3,
+        "statement": "the candidate map at adjudication phase"
+      },
+      {
+        "meaning": "Both routes share checking implementation and schema machinery.",
+        "order": 4,
+        "statement": "the repository checker and schema"
+      },
+      {
+        "meaning": "Both routes share one adjudication sink and may be correlated by it.",
+        "order": 5,
+        "statement": "the final adjudicator"
+      }
+    ],
+    "source_record_override_policy": "exact_byte_mirror_only"
+  },
+  "schema": "pid-rs/sxpid3-mgw-v5-source-correspondence-s1-review-protocol",
+  "schema_revision": 3,
+  "status": {
+    "h1": "open",
+    "programs_closed": 0,
+    "programs_total": 5,
+    "review_slots_pending": 2,
+    "s1_disposition": "no_go_open_pending_two_route_reviews",
+    "source_map": "candidate_exact_map_v1_with_corrected_pending_protocol_v3"
+  },
+  "v2_incomplete_repair_findings": [
+    {
+      "evidence_ref": "V2-FG-INPUT-ROUTE-VIA-SOURCE-RECORD",
+      "finding_id": "V2-SOURCE-OVERRIDE-INPUT-ROUTE-FALSE-GREEN",
+      "result": "normal_and_optimized_exit_0"
+    },
+    {
+      "evidence_ref": "V2-FG-SCOPE-CUTS-VIA-SOURCE-RECORD",
+      "finding_id": "V2-SOURCE-OVERRIDE-SCOPE-CUTS-FALSE-GREEN",
+      "result": "normal_and_optimized_exit_0"
+    },
+    {
+      "finding_id": "V2-SCHEMA-COMPLETED-UNDER-PENDING",
+      "mutation": {
+        "base_record_sha256": "8120fa48e525298c7cc31417a9d34362b8dc59ceeb22bfe00c95beb32101a0b2",
+        "byte_length": 12274,
+        "sha256": "c415c561420cd91c9c2a5b173a7ebe40641094c8d026fb1ed50b401de825ee1a"
+      },
+      "result": "v2_schema_accepts_while_top_status_remains_pending"
+    },
+    {
+      "finding_id": "V2-SCHEMA-DUPLICATE-RECEIPTS-AND-REVIEWER",
+      "mutation": {
+        "base_record_sha256": "8120fa48e525298c7cc31417a9d34362b8dc59ceeb22bfe00c95beb32101a0b2",
+        "byte_length": 12252,
+        "sha256": "917168b3a022b77b0f401467c18435245de10e6eda3d178f158766f2ce25204d"
+      },
+      "result": "v2_schema_accepts_same_pre_post_locator_digest_and_same_reviewer"
+    },
+    {
+      "finding_id": "V2-NONEXECUTED-POSITIVE-CONTROL-CLAIM",
+      "result": "decision_v4_claimed_a_synthetic_completed_state_positive_control_but_the_50_case_self_test_contains_no_acceptance_control"
+    }
+  ],
+  "validation": {
+    "checker": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+    "historical_replay": "Each normal or optimized self-test run reconstructs seven canonical mutants and executes all fourteen archived v1/v2 normal/optimized acceptance observations.",
+    "normal_command": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+    "optimized_command": "python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py",
+    "self_test": "scripts/check-sxpid3-mgw-v5-source-correspondence-s1-self-test.py",
+    "source_pdf_replay_command": "python3 -I -S -B scripts/check-sxpid3-mgw-v5-source-correspondence-s1.py --source-pdf PATH_TO_EXACT_V5_PDF"
+  }
+}

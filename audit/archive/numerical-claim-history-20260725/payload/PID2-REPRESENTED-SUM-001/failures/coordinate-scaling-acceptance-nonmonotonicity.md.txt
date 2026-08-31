@@ -1,0 +1,158 @@
+# Retained counterexample: PID2 constructor acceptance is not coordinate-scale monotone
+
+## Status and proposition
+
+This is a post-freeze negative result. Its evidence label is **counterexample**, and the following
+binary64 proposition is **falsified**:
+
+> If `Pid2Result::from_estimate(x)` accepts, then multiplying all four estimate coordinates by
+> exactly two also accepts whenever the scaled inputs and all four scaled candidate atoms are
+> finite.
+
+The four estimate coordinates are `(I1,I2,J,R)`. The four represented atoms are
+`(Red,U1,U2,Syn)`, with
+
+```text
+Red = R
+U1  = RN(I1 - R)
+U2  = RN(I2 - R)
+Syn = RN-even(exact real J - I1 - I2 + R).
+```
+
+This proposition is different from both earlier statements in this packet:
+
+- `acceptance-monotonicity-v2.md` compares the exact-only and historical hybrid constructors on
+  the **same input**. It proves `accepted(exact-only) ⊆ accepted(historical hybrid)` and makes no
+  claim about rescaling an input.
+- `failures/false-sixteen-times-acceptance-bound.md` rejects the static sufficient condition
+  `max(|U1|,|U2|,|Syn|) <= 16|J|`. It does not require an accepted unscaled predecessor.
+
+The scaled endpoint below also satisfies that static atom-to-joint bound, but the additional
+accepted-predecessor and exact-scaling facts make this a distinct, stronger-path counterexample.
+It does not replace either retained result and does not alter any frozen revision-2 or revision-3
+artifact.
+
+## Exact raw-bit witness
+
+The accepted seed is
+
+```text
+I1 = 0x0000000000000000
+I2 = 0x7fbffffffffffffe
+J  = 0x7fdfffffffffffff
+R  = 0x0000000000000000
+```
+
+Its candidate atoms are
+
+```text
+Red = 0x0000000000000000
+U1  = 0x0000000000000000
+U2  = 0x7fbffffffffffffe
+Syn = 0x7fd8000000000000
+```
+
+All are finite. Their exact once-rounded reconstruction is
+`0x7fe0000000000000`, exactly one ordered binary64 position above `J`. The two unique-coordinate
+reconstructions are exact, so all three identity checks pass the inclusive 32-position guard and
+the seed constructor accepts.
+
+Multiplication of every seed coordinate by binary64 `2.0` is exact and produces
+
+```text
+I1 = 0x0000000000000000
+I2 = 0x7fcffffffffffffe
+J  = 0x7fefffffffffffff  (f64::MAX)
+R  = 0x0000000000000000
+```
+
+The scaled candidate atoms are
+
+```text
+Red = 0x0000000000000000
+U1  = 0x0000000000000000
+U2  = 0x7fcffffffffffffe
+Syn = 0x7fe8000000000000
+```
+
+Every scaled input and candidate atom is finite, and both scaled unique-coordinate identities
+still reconstruct exactly. The exact represented joint-atom sum rounds to
+`0x7ff0000000000000` (`+infinity`), however. The joint identity check therefore fails closed and
+the constructor returns exactly
+
+```text
+PidError::NumericalInstability {
+    context: "Pid2Result::from_estimate atoms cannot represent PID identities"
+}
+```
+
+## Integer-grid derivation
+
+Let `h = 2^969`, and suppress this common positive factor. The nonzero seed inputs are
+
+```text
+A = I2 = (2^52 - 1) h
+B = J  = (2^54 - 2) h.
+```
+
+The exact seed synergy is
+
+```text
+B - A = (3*2^52 - 1) h.
+```
+
+At this magnitude adjacent binary64 values are `2h` apart. The exact value is the midpoint between
+`(3*2^52 - 2)h` and `(3*2^52)h`; ties-to-even selects the latter. Consequently the represented
+joint reconstruction is
+
+```text
+A + RN(B-A) = (2^54 - 1)h = B + h.
+```
+
+That is the midpoint between `B` and `2^54 h`. Ties-to-even selects the upper value, whose raw bits
+are `0x7fe0000000000000`, one ordered position above `B`.
+
+After exact multiplication by two,
+
+```text
+2A = (2^53 - 2)h
+2B = (2^55 - 4)h = f64::MAX.
+```
+
+The exact scaled synergy is `(3*2^53 - 2)h`. Adjacent values at its magnitude are `4h` apart, so
+ties-to-even rounds it upward to `(3*2^53)h`. The represented reconstruction becomes
+
+```text
+2A + RN(2B-2A) = (2^55 - 2)h.
+```
+
+This is exactly halfway between `f64::MAX = (2^55 - 4)h` and the overflow endpoint `2^55 h`.
+Round-to-nearest, ties-to-even therefore returns `+infinity`.
+
+## Independent replay and dependency reach
+
+Three retained, replayable checks agree on the concrete witness:
+
+1. the power-of-two integer-grid derivation above;
+2. the retained Python checker’s finite-bit-to-`Fraction` decoder plus integer
+   quotient/remainder round-to-nearest-even routine;
+3. the compiled Rust constructor and exact superaccumulator regression in debug and release
+   modes.
+
+A separate exploratory Z3 4.16.0 QF_FP session returned `unsat` for the disjunction negating the
+six concrete raw-bit equalities for the two multiplications, two synergy subtractions, seed
+reconstruction, and overflow reconstruction. Its exact query and output were not retained as a
+repository artifact, so the workflow does **not** count that session as accepted evidence. Even a
+retained concrete solver replay would not be a proof-assistant refinement of the Rust
+superaccumulator or make the constructor formally verified.
+
+The counterexample reaches only the binary64 constructor acceptance contract and any documentation
+that claims coordinate-scale acceptance monotonicity. It does **not** show that a KSG or
+shared-exclusions estimator can attain the tuple, does not estimate rejection frequency, and does
+not establish practical risk in an ordinary numerical range.
+
+Most importantly, it has no adverse implication for the paper-defined
+Makkeh--Gutknecht--Wibral shared-exclusions functional. In exact real arithmetic, the exact atoms
+still reconstruct `J` before their independent binary64 rounding. The failure is the distinction
+between exact algebra and the represented computation `RN(C(RN(Tx)))` at the overflow boundary,
+not a defect in the PID definition.
