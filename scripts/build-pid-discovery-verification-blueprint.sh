@@ -8,7 +8,7 @@ FILTER="$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-bluep
 FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint"
 DEFAULT_OUTPUT="$ROOT/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf"
 OUTPUT="${1:-$DEFAULT_OUTPUT}"
-SOURCE_DATE_EPOCH_VALUE=1787097600
+SOURCE_DATE_EPOCH_VALUE=1788134400
 JOB_NAME="pid-discovery-verification-and-durability-blueprint"
 
 if [[ "$#" -gt 1 || -z "$OUTPUT" ]]; then
@@ -49,8 +49,10 @@ required_sources=(
   "$SOURCE"
   "$HEADER"
   "$FILTER"
-  "$FIGURE_DIRECTORY/semantic-transfer-firewall.svg"
-  "$FIGURE_DIRECTORY/durable-promotion-state-machine.svg"
+  "$FIGURE_DIRECTORY/semantic-transfer-firewall-source-card.svg"
+  "$FIGURE_DIRECTORY/semantic-transfer-firewall-pid-card.svg"
+  "$FIGURE_DIRECTORY/durable-promotion-state-machine-stages.svg"
+  "$FIGURE_DIRECTORY/durable-promotion-state-machine-storage.svg"
 )
 for required_source in "${required_sources[@]}"; do
   if [[ ! -f "$required_source" || -L "$required_source" ]]; then
@@ -59,7 +61,15 @@ for required_source in "${required_sources[@]}"; do
   fi
 done
 
-TMP_BASE="${TMPDIR:-/tmp}"
+TMP_BASE_INPUT="${TMPDIR:-/tmp}"
+if ! TMP_BASE="$(CDPATH='' cd -- "$TMP_BASE_INPUT" && pwd -P)"; then
+  echo "blueprint PDF build failed: cannot canonicalize temporary root: $TMP_BASE_INPUT" >&2
+  exit 2
+fi
+if [[ "$TMP_BASE" == "/" ]]; then
+  echo "blueprint PDF build failed: refusing filesystem root as temporary root" >&2
+  exit 2
+fi
 BUILD_ROOT="$(mktemp -d "$TMP_BASE/pid-rs-blueprint-pdf.XXXXXX")"
 OUTPUT_TEMP=""
 cleanup() {
@@ -108,8 +118,10 @@ build_once() {
   cp "$SOURCE" "$staged_root/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md"
   cp "$HEADER" "$staged_root/pid-discovery-verification-and-durability-blueprint-header.tex"
   cp "$FILTER" "$staged_root/pid-discovery-verification-and-durability-blueprint-filter.lua"
-  cp "$FIGURE_DIRECTORY/semantic-transfer-firewall.svg" "$staged_figure_directory/semantic-transfer-firewall.svg"
-  cp "$FIGURE_DIRECTORY/durable-promotion-state-machine.svg" "$staged_figure_directory/durable-promotion-state-machine.svg"
+  cp "$FIGURE_DIRECTORY/semantic-transfer-firewall-source-card.svg" "$staged_figure_directory/semantic-transfer-firewall-source-card.svg"
+  cp "$FIGURE_DIRECTORY/semantic-transfer-firewall-pid-card.svg" "$staged_figure_directory/semantic-transfer-firewall-pid-card.svg"
+  cp "$FIGURE_DIRECTORY/durable-promotion-state-machine-stages.svg" "$staged_figure_directory/durable-promotion-state-machine-stages.svg"
+  cp "$FIGURE_DIRECTORY/durable-promotion-state-machine-storage.svg" "$staged_figure_directory/durable-promotion-state-machine-storage.svg"
 
   printf '%s\n' \
     '<?xml version="1.0"?>' \
@@ -147,8 +159,8 @@ build_once() {
     TZ=UTC \
     SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" \
     rsvg-convert --format=pdf --keep-aspect-ratio \
-      --output="$staged_figure_directory/semantic-transfer-firewall.pdf" \
-      "$staged_figure_directory/semantic-transfer-firewall.svg"
+      --output="$staged_figure_directory/semantic-transfer-firewall-source-card.pdf" \
+      "$staged_figure_directory/semantic-transfer-firewall-source-card.svg"
   env -i \
     "PATH=$PATH" \
     "HOME=$home_directory" \
@@ -162,8 +174,38 @@ build_once() {
     TZ=UTC \
     SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" \
     rsvg-convert --format=pdf --keep-aspect-ratio \
-      --output="$staged_figure_directory/durable-promotion-state-machine.pdf" \
-      "$staged_figure_directory/durable-promotion-state-machine.svg"
+      --output="$staged_figure_directory/semantic-transfer-firewall-pid-card.pdf" \
+      "$staged_figure_directory/semantic-transfer-firewall-pid-card.svg"
+  env -i \
+    "PATH=$PATH" \
+    "HOME=$home_directory" \
+    "TMPDIR=$run_root" \
+    "XDG_CACHE_HOME=$cache_directory" \
+    "FONTCONFIG_FILE=$fontconfig_file" \
+    "FONTCONFIG_PATH=$empty_fontconfig_path" \
+    PANGOCAIRO_BACKEND=fontconfig \
+    LC_ALL=C \
+    LANG=C \
+    TZ=UTC \
+    SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" \
+    rsvg-convert --format=pdf --keep-aspect-ratio \
+      --output="$staged_figure_directory/durable-promotion-state-machine-stages.pdf" \
+      "$staged_figure_directory/durable-promotion-state-machine-stages.svg"
+  env -i \
+    "PATH=$PATH" \
+    "HOME=$home_directory" \
+    "TMPDIR=$run_root" \
+    "XDG_CACHE_HOME=$cache_directory" \
+    "FONTCONFIG_FILE=$fontconfig_file" \
+    "FONTCONFIG_PATH=$empty_fontconfig_path" \
+    PANGOCAIRO_BACKEND=fontconfig \
+    LC_ALL=C \
+    LANG=C \
+    TZ=UTC \
+    SOURCE_DATE_EPOCH="$SOURCE_DATE_EPOCH_VALUE" \
+    rsvg-convert --format=pdf --keep-aspect-ratio \
+      --output="$staged_figure_directory/durable-promotion-state-machine-storage.pdf" \
+      "$staged_figure_directory/durable-promotion-state-machine-storage.svg"
 
   (
     cd "$staged_root"
@@ -284,10 +326,16 @@ build_once() {
 
   LC_ALL=C pdftotext -layout "$built_pdf" "$build_directory/layout.txt"
   required_text=(
-    "Transfer the proof role"
+    "Begin with source meaning"
+    "Semantic transfer firewall, part 1"
     "averaged empirical categorical SxPID3"
+    "108 keyed scalar audit expressions"
+    "Current 31 August 2026 adversarial publication closure"
+    "Fifty named hostile lenses"
+    "Ten materially distinct routes"
     "Autoresearch without evidence laundering"
     "Repository durability and promotion"
+    "Durable promotion state machine, part 1"
     "Current safety disposition"
     "Source-anchored claim register"
   )

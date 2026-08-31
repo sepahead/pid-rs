@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="760" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic transfer firewall: source meaning and transfer card</title>
+  <desc id="desc">The left panel records what the PrimeGaps route means in its own domain. The right panel requires seven named transfer-card fields before a PID analogue can be considered. Labels, numbers, and patterns distinguish the panels as well as color.</desc>
+  <defs>
+    <pattern id="grain" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M2 5H8M12 14H18M5 18H9" stroke="#D2E0E2" stroke-width="1" opacity=".62"/></pattern>
+    <pattern id="originHatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0V14" stroke="#1F6968" stroke-width="3" opacity=".18"/></pattern>
+    <pattern id="cardDots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.6" fill="#1F6968" opacity=".18"/></pattern>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#1F6968"/></marker>
+    <style>
+      .sans { font-family: "Latin Modern Sans", sans-serif; }
+      .title { font-size: 34px; font-weight: 750; fill: #1F3F60; }
+      .subtitle { font-size: 18px; fill: #1F6968; }
+      .kicker { font-size: 17px; font-weight: 780; letter-spacing: 2px; fill: #1F6968; }
+      .panelTitle { font-size: 27px; font-weight: 760; fill: #1F3F60; }
+      .body { font-size: 19px; fill: #2C3E50; }
+      .small { font-size: 16px; fill: #596A73; }
+      .number { font-size: 18px; font-weight: 800; fill: #F7F3E9; }
+      .pill { font-size: 15px; font-weight: 760; fill: #1F3F60; letter-spacing: 1.2px; }
+      .fire { font-size: 17px; font-weight: 700; fill: #743E37; }
+    </style>
+  </defs>
+  <rect width="1100" height="760" fill="#F7F3E9"/>
+  <rect width="1100" height="760" fill="url(#grain)"/>
+  <g class="sans">
+    <text x="65" y="66" class="kicker">FIGURE 1A - TRANSFER FIREWALL</text>
+    <text x="65" y="112" class="title">Begin with source meaning, not shared vocabulary</text>
+    <text x="65" y="143" class="subtitle">The first two panels record the source object and the required mapping discipline.</text>
+
+    <rect x="65" y="190" width="430" height="420" rx="22" fill="#E8F0ED" stroke="#1F6968" stroke-width="3"/>
+    <rect x="65" y="190" width="430" height="420" rx="22" fill="url(#originHatch)"/>
+    <circle cx="105" cy="235" r="22" fill="#1F3F60"/><text x="105" y="242" text-anchor="middle" class="number">1</text>
+    <rect x="143" y="215" width="160" height="38" rx="19" fill="#D2E0E2"/><text x="223" y="240" text-anchor="middle" class="pill">ORIGIN</text>
+    <text x="102" y="306" class="panelTitle">PrimeGaps meaning</text>
+    <text x="102" y="350" class="body"><tspan x="102" dy="0">Untrusted search proposes</tspan><tspan x="102" dy="29">one existential polynomial.</tspan><tspan x="102" dy="42">Exact finite kernels check</tspan><tspan x="102" dy="29">a stored rational inequality.</tspan><tspan x="102" dy="42">A named analytic bridge plus</tspan><tspan x="102" dy="29">Bombieri-Vinogradov yields</tspan><tspan x="102" dy="29">a conditional prime-gap result.</tspan></text>
+
+    <path d="M507 401H574" stroke="#1F6968" stroke-width="5" marker-end="url(#arrow)"/>
+
+    <rect x="605" y="190" width="430" height="420" rx="22" fill="#FFFFFF" stroke="#1F6968" stroke-width="3"/>
+    <rect x="605" y="190" width="430" height="420" rx="22" fill="url(#cardDots)"/>
+    <circle cx="645" cy="235" r="22" fill="#1F6968"/><text x="645" y="242" text-anchor="middle" class="number">2</text>
+    <rect x="683" y="215" width="202" height="38" rx="19" fill="#D2E0E2"/><text x="784" y="240" text-anchor="middle" class="pill">TRANSFER CARD</text>
+    <text x="642" y="306" class="panelTitle">Seven required fields</text>
+    <text x="642" y="351" class="body"><tspan x="642" dy="0">1. Source meaning</tspan><tspan x="642" dy="31">2. PID analogue</tspan><tspan x="642" dy="31">3. Preserved assumptions</tspan><tspan x="642" dy="31">4. Changed assumptions</tspan><tspan x="642" dy="31">5. Prohibited inference</tspan><tspan x="642" dy="31">6. Required evidence</tspan><tspan x="642" dy="31">7. Disposition</tspan></text>
+
+    <rect x="65" y="650" width="970" height="58" rx="18" fill="#F2DED9" stroke="#743E37" stroke-width="2"/>
+    <text x="550" y="685" text-anchor="middle" class="fire">Firewall: shared words, citations, and code do not create a mapping theorem.</text>
+    <text x="65" y="738" class="small">Panel labels and hatch/dot patterns supplement the publication palette; they do not assert PDF accessibility conformance.</text>
+  </g>
+</svg>

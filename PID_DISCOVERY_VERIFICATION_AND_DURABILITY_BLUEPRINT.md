@@ -1,20 +1,27 @@
 ---
 title: "PID discovery, verification, and durability blueprint"
 subtitle: "PrimeGaps lessons, semantic-transfer firewalls, exact SxPID3 assurance, autoresearch, and durable promotion"
-date: "19 August 2026"
+date: "31 August 2026"
 lang: en
 ---
 
 # PID discovery, verification, and durability blueprint
 
-## Lessons from PrimeGapsLib, transferred without semantic conflation
-
 ## Status and scope
 
 This document is a source-pinned research and engineering review, not a theorem and not an
-acceptance receipt. It studies Axiom Math's `PrimeGapsLib` at exact Git commit
+acceptance receipt. Its PrimeGapsLib observations are dated **19 August 2026**: it studies Axiom
+Math's `PrimeGapsLib` at exact Git commit
 `1faa7b14e82ddebc2772dfb9153922f01b106477`, the interactive paper and its 132-page blueprint,
 then asks which proof-engineering patterns can improve `pid-rs` discovery and verification.
+
+The current status of the proposed SxPID3 packet is governed separately by
+[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md) and the
+[evidence-adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md),
+not by the dated PrimeGaps review. Decision record 2 keeps the complete target **proposed/open**;
+it credits two scoped results and leaves every load-bearing end-to-end cut open. The frozen
+[revision-1 index](claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md) remains historical
+intake evidence and is not silently rewritten as a current decision pointer.
 
 The answer is deliberately asymmetric:
 
@@ -32,27 +39,39 @@ content-addressed sharded replay. This is a project-defined assurance architectu
 paper-defined functional. It is not a new PID measure or a currently accepted certificate.
 
 The process is part of the result. This document therefore records the source inventory, formulas,
-theorem chain, 20-lens council, dissent and limitations, autoresearch boundary, implementation
-roadmap, evidence hierarchy, and repository durability state machine. Exact path inventories,
-hashes, run rosters, and mutation records belong in machine-readable JSON or TSV companions rather
-than being copied repeatedly into human-facing migration PDFs.
+theorem chain, the dated 20-lens transfer council, a separate current 50-lens and 10-route
+adversarial closure, dissent and limitations, the autoresearch boundary, the implementation
+roadmap, the evidence hierarchy, and the repository durability state machine. Exact path
+inventories, hashes, run rosters, and mutation records belong in machine-readable JSON or TSV
+companions rather than being copied repeatedly into human-facing migration PDFs.
 
 ### Publication contract
 
 This Markdown file is the canonical human narrative. The paired PDF is a derived publication, not
-a second editable source. Run
-`scripts/build-pid-discovery-verification-blueprint.sh` to regenerate it. The builder stages only
-this Markdown, its formatting filter/header, and the two handcrafted SVGs; fixes locale, time zone,
-creation epoch, document fonts, and temporary state; performs two isolated three-pass LuaLaTeX
-builds; rejects compiler/layout warnings, non-A4 output, missing semantic text anchors, and
-unembedded or non-Unicode-mapped fonts; and requires the two PDF byte strings to match.
+a second editable source. Run `scripts/check-pid-discovery-verification-blueprint-pdf.sh` for the
+default committed-byte check, or `scripts/build-pid-discovery-verification-blueprint.sh` to
+regenerate it. The builder stages only this Markdown, its formatting filter/header, and four
+handcrafted SVG panels; canonicalizes the temporary root; fixes locale, time zone, creation epoch,
+document fonts, and temporary state; performs two isolated three-pass LuaLaTeX builds; rejects
+compiler/layout warnings, non-A4 output, missing semantic text anchors, and unembedded or
+non-Unicode-mapped fonts; and requires the two PDF byte strings to match.
 
 That equality is a **same-toolchain observation**, not a universal cross-platform theorem. A new
 Pandoc, LuaLaTeX, SVG renderer, font stack, or operating-system backend must rerun the gate and may
-legitimately produce different bytes. Cross-toolchain acceptance requires a separately specified
-structural comparison and visual inspection. The transfer ledger remains the machine-readable
-authority for exact source hashes, anchors, semantic cards, and the 20-lens registry; neither the
-PDF nor its polish upgrades the scientific status of the proposed SxPID3 packet.
+legitimately produce different bytes. There is no accepted cross-toolchain equivalence relation or
+producer profile for this PDF: `--cross-toolchain` intentionally refuses rather than compare a
+convenient substitute. The four source SVG panels include titles, descriptions, numbered captions,
+and labels/patterns that do not rely on color alone. The PDF remains untagged; these source-level
+descriptions do not establish PDF `/Alt`, reading order, assistive-technology behavior, or PDF/UA
+conformance. The transfer ledger remains the machine-readable authority for the dated source
+hashes, anchors, semantic cards, and historical 20-lens registry. The current 31 August closure
+below is a separate publication review and does not rewrite that ledger. Neither review, the PDF,
+nor its polish upgrades the scientific status of the proposed SxPID3 packet.
+
+Repository links remain relative in this canonical Markdown so forks and local checkouts stay
+portable. The PDF renderer rewrites only its declared repository-document links to canonical
+GitHub main-branch navigation URLs for this repository. Those mutable navigation URLs are not
+provenance; exact PrimeGaps source claims continue to use commit-pinned links.
 
 ## Executive decision
 
@@ -330,13 +349,15 @@ the downstream checker only needs the reconstructed object to be *some* valid wi
 report, by contrast, is a deterministic function of the exact experimental count table. Its
 decoder must reject such coercions, require canonical bytes, and bind the accepted data identity.
 
-## Twenty-lens council
+## Historical twenty-lens transfer council
 
-The council is a structured attack, not a vote. Each lens asks a different question of the same
-proposed transfer. Agreement among lenses does not create evidence, and a single load-bearing
-objection can veto promotion. The detailed evidence and nonimplications are preserved in the
-machine-readable transfer ledger. The table below uses the same canonical names, numbering, and
-order as the repository-wide 20-lens registry; it is the human synthesis of those exact rows.
+This dated council belongs to the 19 August PrimeGaps review. It is a structured attack, not a
+vote. Each lens asks a different question of the same proposed transfer. Agreement among lenses
+does not create evidence, and a single load-bearing objection can veto promotion. The detailed
+evidence and nonimplications are preserved in the machine-readable transfer ledger. The table below
+uses the same canonical names, numbering, and order as that historical 20-lens registry; it is the
+human synthesis of those exact rows. The separate current closure in the next section does not
+retroactively change these rows.
 
 | # | Lens | PrimeGaps observation | PID decision |
 |---:|---|---|---|
@@ -354,7 +375,7 @@ order as the repository-wide 20-lens registry; it is the human synthesis of thos
 | 12 | Kernel/axioms/toolchain | The project pins Lean and resolved dependencies, while reviewed CI skips comparator, leanchecker, and nanoda. | Inventory kernel/runtime/import closure/axioms and require fresh fail-closed replay; `sorry`, theorem premises, conventional axioms, and `noncomputable` are different categories. |
 | 13 | Route dependency diversity | Theory, certificate, packed kernels, and optional comparator diversify some cuts but share source mathematics and data. | Record shared semantic, parser, arithmetic, custody, and model cuts; route or agent count is not independence. |
 | 14 | Numerical/binary64 | Approximate search is replaced by an exact rational acceptance inequality. | Use exact products for finite sign and separately verified directed intervals for log magnitude; neither validates binary64 estimators or platform `libm`. |
-| 15 | Compiled/wrapper parity | The reviewed certificate route does not exercise pid-rs Rust/Python surfaces. | Compare all 108 stable keys across specialized/general, serial/parallel, feature, build, platform, serialization, and Python routes. |
+| 15 | Compiled/wrapper parity | The reviewed certificate route does not exercise pid-rs Rust/Python surfaces. | Compare all 108 keyed scalar audit expressions across specialized/general, serial/parallel, feature, build, platform, serialization, and Python routes. |
 | 16 | Counterexample/mutation | Small exact kernels are valuable only if load-bearing premises actually affect acceptance. | Mutate decoding, event connectives, target restriction, count weighting, lattice order, products, intervals, resources, claims, and coordinated reseals. |
 | 17 | Custody/threat/refusal | Public source and a warm-cache build do not provide an external-custody comparator or certificate receipt. | Freeze candidate scope and judge authority, refuse unavailable verification, and retain exact acquisition/execution records plus same-actor limits. |
 | 18 | Citations/novelty | PrimeGaps cites its mathematical sources and presents a formalization. | Pin primary statements and application hypotheses; classify the PID assurance design as project-defined engineering, not a new measure or theorem. |
@@ -376,13 +397,107 @@ order as the repository-wide 20-lens registry; it is the human synthesis of thos
 - **Dissent retained:** the semantic DAG may be unnecessary. A simpler direct reconstruction is
   the baseline and remains preferred unless profiling and proof size show a measured benefit.
 
+## Current 31 August 2026 adversarial publication closure
+
+This is a new review of the present publication and decision boundary, not an amendment to the
+historical 20-lens ledger. Fifty explicitly named hostile lenses were applied beyond the ordinary
+author pass. Ten materially distinct routes were then compared, including no action and the
+simplest applicable non-PID route. The counts are coverage checklists, not mathematical evidence.
+The closure verdict is narrow: publish this document as a proposed/open research blueprint, preserve
+the two scoped decision-record-2 results, and grant no complete-certificate, estimator, population,
+application, novelty, or cross-toolchain-PDF credit.
+
+### Fifty named hostile lenses
+
+| # | Hostile lens | Adjudication at the current boundary |
+|---:|---|---|
+| 1 | Scientific-object identity | The object is the averaged empirical categorical SxPID3 functional on one finite count table, not a population parameter or estimator output. |
+| 2 | PID-functional identity | Makkeh--Gutknecht--Wibral shared exclusions remains distinct from Williams--Beer, BROJA, continuous Ehrlich shared exclusions, and every target-free analogue. |
+| 3 | Variable-role identity | Three ordered sources and one target have different semantic roles; no relabeling may silently exchange a source with the target. |
+| 4 | Alphabet and support | Every displayed exact formula requires declared finite alphabets and a nonempty finite empirical support; the bounded audit further fixes all four alphabets as binary. |
+| 5 | Empirical versus population | Exact count-table evaluation supplies no sampling, consistency, bias, variance, confidence, or causal statement. |
+| 6 | Sampling and dependence | No independent-row, exchangeability, stationarity, or block-length premise is needed for the deterministic functional; any inferential wrapper must add its own. |
+| 7 | Source-event connective | The event is a union across antichain branches and an intersection within each branch; reversing either connective changes the functional. |
+| 8 | Target restriction | The misinformative mass intersects the source event with the realized target event; omitting or moving that restriction is a different formula. |
+| 9 | Antichain semantics | Every node is a nonempty family of nonempty source subsets with no two distinct members comparable by inclusion. |
+| 10 | Carrier completeness | A hard-coded list of 18 keys is not a completeness proof; generation, uniqueness, and exclusion of the zero mask remain explicit obligations. |
+| 11 | Source-count boundary | Eighteen is the three-source carrier size; 166 is the separate four-source carrier and cannot be imported into this audit. |
+| 12 | Redundancy-order direction | The quantified subset direction in the order is load-bearing; a reversed order can produce a coherent but wrong lattice. |
+| 13 | Zeta orientation | Cumulatives are rows and atoms are columns in the frozen matrix; transposition is not a serialization-only change. |
+| 14 | Möbius direction | The inverse maps cumulative vectors to atom vectors; algebraic invertibility alone does not prove that either matrix has the intended semantics. |
+| 15 | Component orientation | Informative, misinformative, and signed-net components remain separate, with signed net equal to informative minus misinformative. |
+| 16 | Count weighting | Averaging uses each supported cell with weight equal to its count divided by the total, not one vote per distinct supported cell. |
+| 17 | Units and logarithm base | Natural logarithms and the factor one over the total produce nats; bit labels or an omitted normalization are rejected. |
+| 18 | Exact-zero meaning | A nonempty rational product can equal one, so zero is an exact product equality, never an empty-plan test or floating tolerance. |
+| 19 | Negative-value preservation | Signed-net cumulatives and atoms may be negative; clamping, absolute values, and positive-only summaries change the object. |
+| 20 | Coordinate ontology | The 108 audit entries are keyed scalar expressions, not 108 atoms, lattice nodes, or independent parameters. |
+| 21 | Algebraic dependence | Net blocks derive from component blocks and atom blocks derive from cumulative blocks; expanded audit coverage is not dimension counting. |
+| 22 | Source permutation | A source permutation must transport alphabets, cells, events, keys, and output identities together; positional array equality is insufficient. |
+| 23 | Integer replication | Multiplying every count by a common positive integer preserves the empirical law but remains a useful executable regression, not a new law. |
+| 24 | Domain extrapolation | Totals one through five and binary alphabets do not imply arbitrary totals, alphabets, full-support tables, or pointwise certification. |
+| 25 | Canonical parsing | Accepted bytes need one strict decoding, member order policy, integer grammar, and rejection of noncanonical alternatives. |
+| 26 | Integer coercion | Negative-to-natural coercion that can be harmless for an existential witness is forbidden for a deterministic PID count table. |
+| 27 | Duplicate and unknown fields | Duplicate members, missing keys, unknown acceptance-bearing fields, and reordered identities must fail rather than be normalized silently. |
+| 28 | Data and software identity | Hashes bind bytes only; input identity, source revision, executable identity, build context, and result identity remain distinct fields. |
+| 29 | Resource preflight | Aggregate and per-coordinate bounds must be checked before expensive powers or allocations; refusal cannot emit a partial verified result. |
+| 30 | Cancellation and atomicity | Cancellation, timeout, precision exhaustion, or storage failure is terminal and must not install a partial certificate or shard root. |
+| 31 | Rational normalization | Exact sign authority compares normalized positive rationals with one; raw factor syntax or prime-exponent shape alone is insufficient. |
+| 32 | Semantic-factor aliasing | Equal numeric masses with different event roles remain different semantic nodes until a proved evaluation map reaches the arithmetic plan. |
+| 33 | Directed-log enclosure | Nonzero magnitudes need outward enclosures of the declared exact logarithm under a recorded precision and backend contract. |
+| 34 | Interval decision rule | Verifier containment is stronger than overlap; an interval touching zero does not decide exact sign. |
+| 35 | Binary64 boundary | Exact rational sign and real-log enclosure do not validate floating-point KSG, libm behavior, or the current Rust implementation. |
+| 36 | Compiled-route refinement | Specialized and general Rust paths need keyed value traces from bound binaries; lexical source routing computes no values. |
+| 37 | Build and parallel parity | Serial/parallel, debug/release, feature, platform, and toolchain comparisons are separate finite observations, not portable identity theorems. |
+| 38 | Binding and serialization | Python exposure, report encoding, field order, and stable keys require their own refinement checks; a binding is not a method-origin claim. |
+| 39 | Source-to-formula correspondence | A primary paper map must bind event, averaging, order, units, and conclusion before formal or executable evidence earns semantic credit. |
+| 40 | Lean trust boundary | Kernel checking is scoped by the exact proposition, imports, axioms, generated code, and absence or location of intentional holes. |
+| 41 | SMT trust boundary | Unsatisfiability concerns only the encoded finite theory; unknown is no evidence and a shared wrong transcription can survive two solvers. |
+| 42 | Mutation causality | Every hostile mutation must fail for the intended predicate; a named mutation suite does not prove fault-model completeness. |
+| 43 | Route independence | Language, algorithm, parser, data, semantics, toolchain, host, model lineage, reviewer, and custody are separate independence dimensions. |
+| 44 | Current-decision freshness | The PDF must fail closed if the evidence-adjudication index or decision-record-2 disposition and Program A--E statuses drift. |
+| 45 | Selection and autoresearch | Candidate grammar, objective, budget, exposure, stopping, withdrawals, and judge authority must be frozen before promotion evidence is seen. |
+| 46 | External custody | Same-repository hashes and same-host reruns provide no independent acquisition, authenticity, or institutional-review receipt. |
+| 47 | Link and PDF portability | Markdown links remain repository-relative; PDF repository links use declared canonical navigation URLs, while exact rendering remains same-toolchain only. |
+| 48 | Durability and recovery | Local refs, remote main, named releases, and scholarly or restricted archives are different states; retirement requires a tested successor. |
+| 49 | Application and non-PID alternative | If MI, CMI, direct task loss, ablation, coverage, or explicit failure utility answers the application question, PID must not be forced. |
+| 50 | Provenance, novelty, and citation | Published definitions and classical finite-poset Möbius inversion are cited; the proposed assurance composition is project-defined and claims no scientific priority. |
+
+### Ten materially distinct routes
+
+| # | Route | Decision, reason, and reconsideration evidence |
+|---:|---|---|
+| 1 | No action; preserve the dated packet only | Retained as the safe fallback if source correspondence stays ambiguous. Rejected as the active publication route because it leaves current status and useful bounded evidence difficult to find. |
+| 2 | Withdraw the PID claim and use the simplest non-PID analysis | Selected whenever the scientific question is answered by MI, CMI, direct task loss, ablation, coverage, or failure utility. It cannot certify a PID functional, but it prevents method forcing. |
+| 3 | Prose review plus a few hand fixtures | Useful for discovery and teaching, but rejected as acceptance evidence because it cannot establish the complete carrier, registry, parser, or bounded corpus. |
+| 4 | Treat the two existing Python routes and matching digest as final | Rejected as complete certification because both routes share the publication transcription, registry, runtime class, host, framing, and local custody. Their bounded result remains credited. |
+| 5 | Simple source-blind direct exact checker | Selected as the baseline. It must reconstruct canonical counts, events, order, matrices, products, and keyed signs without importing generated answer tables. |
+| 6 | Semantic mass DAG plus separate reduced-rational plan | Selected conditionally as an internal refinement only if a proof of evaluation, forward and backward completeness, mutations, and benchmarks beat the direct baseline without changing the claim. |
+| 7 | Lean-only concrete formalization | Selected as one supporting route, never as the whole argument. It can close concrete finite semantics but not source correspondence, runtime bytes, intervals, Rust refinement, or custody. |
+| 8 | SMT-only finite encoding | Selected as a differently encoded supporting route under at least two solvers. It remains subordinate to a raw constraint derivation, satisfiable hostile models, and explicit unknown handling. |
+| 9 | Immediate custom packing and content-addressed sharding | Deferred. Shard coverage and simple streaming are useful, but custom kernels earn adoption only after the direct route is correct and profiling shows a real resource bottleneck. |
+| 10 | Layered composite with direct baseline, conditional IR, dual formal routes, intervals, compiled refinement, shards, and external replay | Selected overall because each layer owns a different cut and no downstream layer repairs an upstream semantic error. Promotion still requires every Program A--E obligation and fresh external custody. |
+
+The selected design takes the baseline from route 5, the provenance separation from route 6, the
+bounded formal diversity from routes 7 and 8, the measured-only optimization rule from route 9, and
+the end-to-end discipline from route 10. Route 2 remains an application-level veto: even a perfect
+PID certifier is irrelevant when PID adds no justified information to the real decision.
+
+Shared failure cuts remain the paper transcription, the exact registry, parser semantics, one host
+and toolchain family, common data, same-actor custody, and correlated model or reviewer blind spots.
+Dissent is preserved: the semantic DAG may add more proof surface than value; exact sharding may be
+premature; and the correct application decision can be to use no PID at all. New evidence can change
+those dispositions only through a premise-explicit source map, source-blind direct replay, measured
+resource results, causal hostile tests, and fresh independently held execution.
+
 ## The transfer ledger: adopt structure, not conclusions
 
 Every row in the companion ledger has source semantics, a PID analogue, preserved assumptions,
 changed assumptions, prohibited inferences, required evidence, and a disposition. The decisions
 compress to the following map.
 
-![Semantic transfer firewall from PrimeGaps proof roles to PID-specific assurance](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/semantic-transfer-firewall.svg)
+![Source meaning and transfer-card fields are separated before any PID analogue is considered.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/semantic-transfer-firewall-source-card.svg)
+
+![The PID pilot and promotion evidence remain separate from prohibited transfers of prime-gap conclusions.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/semantic-transfer-firewall-pid-card.svg)
 
 ### Accepted architectural transfers
 
@@ -422,18 +537,36 @@ compress to the following map.
 
 The chosen pilot is narrow because it has exact finite semantics and a real open assurance packet.
 It is **not** the full mixed-dimensional continuous PID3, not KSG, not fitted quantization, and not
-pointwise certification. The existing packet remains proposed and all five closure programs are
-open.
+pointwise certification. The complete packet remains proposed/open. Current decision-v2 evidence
+is partial and bounded; it does not close any end-to-end implication.
 
-Let a supported joint realization be
+The assumptions for every equation in this section are: three ordered finite source alphabets
+$\mathcal S_1,\mathcal S_2,\mathcal S_3$; one finite target alphabet $\mathcal T$; one finite,
+nonempty empirical count table with nonnegative integer cell counts; natural logarithms and nats;
+and the deterministic empirical-PMF estimand. Zero-count cells are omitted from the positive
+support. No equation in this section asserts a population, sampling, continuous-support,
+estimator, calibration, or application result. The bounded audit later adds the stricter
+assumptions that every alphabet is binary and $1\le N\le5$.
+
+Let
 
 $$
-z=(s_1,s_2,s_3,t),\qquad c_z\in\mathbb N_{>0},
-\qquad N=\sum_z c_z>0.
+\mathcal Z=\mathcal S_1\times\mathcal S_2\times\mathcal S_3\times\mathcal T,
+\qquad c_z\in\mathbb N_0,
+\qquad
+\mathcal Z_+=\{z\in\mathcal Z:c_z>0\},
+\qquad
+N=\sum_{z\in\mathcal Z}c_z>0.
 $$
 
-An antichain $\alpha$ contains nonempty source-index sets. For the keyed row $z$, define the
-source event
+A supported joint realization is
+
+$$
+z=(s_1,s_2,s_3,t)\in\mathcal Z_+.
+$$
+
+An antichain $\alpha$ is a nonempty family of nonempty subsets of $\{1,2,3\}$ in which no two
+distinct members are comparable by inclusion. For the keyed row $z$, define the source event
 
 $$
 E_\alpha(z)=\bigcup_{a\in\alpha}
@@ -467,8 +600,8 @@ logarithmic sums into exact positive-rational products gives
 
 $$
 \begin{aligned}
-Q^+_\alpha &= \prod_z\left(\frac{N}{U_{\alpha,z}}\right)^{c_z},\\
-Q^-_\alpha &= \prod_z\left(\frac{T_z}{V_{\alpha,z}}\right)^{c_z},\\
+Q^+_\alpha &= \prod_{z\in\mathcal Z_+}\left(\frac{N}{U_{\alpha,z}}\right)^{c_z},\\
+Q^-_\alpha &= \prod_{z\in\mathcal Z_+}\left(\frac{T_z}{V_{\alpha,z}}\right)^{c_z},\\
 Q^{\mathrm{sx}}_\alpha &= Q^+_\alpha/Q^-_\alpha,\\
 C^u_\alpha &= \frac1N\ln Q^u_\alpha,
 \qquad u\in\{+,-,\mathrm{sx}\}.
@@ -476,7 +609,9 @@ C^u_\alpha &= \frac1N\ln Q^u_\alpha,
 $$
 
 There are exactly 18 nonempty antichains of the seven nonempty subsets of three sources in the
-frozen registry. The redundancy order is
+frozen registry. The
+[complete carrier, stable keys, zeta rows, sparse inverse, and six-block coordinate order](claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier)
+are listed in the frozen conventions. The redundancy order is
 
 $$
 \alpha\preceq\beta
@@ -492,10 +627,12 @@ C^u_i=\sum_j Z_{ij}\Pi^u_j.
 $$
 
 The frozen $Z$ has 129 ones. Its exact inverse $M=Z^{-1}$ has 65 nonzero entries in
-$\{-1,0,1\}$. The frozen acceptance contract checks both $MZ=I$ and $ZM=I$ as
-defense-in-depth; over the exact square rational matrices, either one-sided inverse identity already
-implies the other. Neither direction establishes event semantics: a consistently transposed or
-wrongly ordered pair can remain algebraically invertible.
+$\{-1,0,1\}$. This passage from cumulative values to atom values uses classical finite-poset
+Möbius inversion, not a technique introduced in this repository; see
+[Rota (1964)](https://doi.org/10.1007/BF00531932). The frozen acceptance contract checks both
+$MZ=I$ and $ZM=I$ as defense-in-depth; over the exact square rational matrices, either one-sided
+inverse identity already implies the other. Neither direction establishes event semantics: a
+consistently transposed or wrongly ordered pair can remain algebraically invertible.
 
 Atom products and values are
 
@@ -520,8 +657,14 @@ A nonempty product may equal one. Exact zero is therefore not syntactic emptines
 floating tolerance. Magnitudes require a separate outward interval for $(1/N)\ln R$; interval
 overlap is not enough, and an interval touching zero does not decide exact sign.
 
-The registry contains 108 coordinates: 18 cumulatives and 18 atoms for each of informative,
-misinformative, and net. The bounded binary qualification corpus has
+The audit registry is indexed by **18 three-source lattice positions** and contains **108 keyed
+scalar audit expressions**: 54 cumulative component expressions ($18\times3$ for informative,
+misinformative, and signed net) plus 54 atom component expressions ($18\times3$ for the same
+components). They are not 108 PID atoms, 108 lattice nodes, or 108 independent degrees of freedom.
+The number 166 belongs to the separate four-source SxPID4 carrier and is outside this three-source
+audit. The signed-net block is derived from the informative and misinformative blocks, while each
+atom block is a fixed linear transform of its cumulative block. The bounded binary qualification
+corpus has
 
 $$
 \sum_{n=1}^{5}\binom{n+15}{15}
@@ -639,8 +782,11 @@ No downstream green box repairs an upstream semantic error. The five closure pro
 | D: compiled refinement | Do the shipped Rust paths implement the keyed specification? | stable-key traces, serial/parallel/features/platform matrix | float agreement is not exact-product proof |
 | E: adversarial replay | Are bytes, dependencies, mutations, first results, and custody complete? | content manifests, fresh replay, hostile fixtures, independent adjudication | hashes and reruns are not scientific truth |
 
-All five remain open for `SX-CERTIFIED-AVERAGED-PID3-001`. This report changes the design proposal;
-it does not close the claim.
+The complete target remains proposed/open for `SX-CERTIFIED-AVERAGED-PID3-001`. As recorded in
+[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md), Programs A and B have
+scoped partial results; Program C has a bounded exact sign/zero result; Program D has only a
+lexical routing observation; and Program E has source-bound local receipt and partial mutation
+evidence. None closes an end-to-end implication, and this report does not close the claim.
 
 ## Formal methods as bounded instruments
 
@@ -715,7 +861,7 @@ The acceptance predicates must fail for the intended reason under at least the f
 | Factor roles | equal-valued target/event masses merged, or $c_z$ treated as a base | semantic graph completeness/soundness fails |
 | Product | nonempty product one, factor/exponent mutation, huge projected power | exact comparison or preflight rejects |
 | Interval | overlap substituted for containment, endpoint sign, mutated $\ln2$, same-backend “independent” route | verifier rejects or abstains |
-| Registry | partial 54-coordinate report, reordered identity, self-consistently resealed wrong registry | complete 108-key binding rejects |
+| Registry | partial 54-expression report, reordered identity, self-consistently resealed wrong registry | complete 108-key expression binding rejects |
 | Corpus | replicated tables called distinct laws; missing or duplicate shard range | ordinal/coverage checker rejects |
 | Refinement | specialized/general paths compared positionally or a feature path omitted | keyed execution matrix rejects |
 | Interpretation | exact empirical sign called significance, calibration, or population truth | wording/schema gate rejects |
@@ -775,7 +921,9 @@ decision, and independence limitations. There is no majority vote and no “assu
 Simple migrations should follow one reusable state machine rather than produce a bespoke PDF.
 The human overview lives here; exact per-path facts belong in a JSON/TSV cleanup ledger.
 
-![Durable promotion state machine for PID research branches, worktrees, and evidence](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine.svg)
+![Numbered stages show that retirement follows verification rather than replacing it.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-stages.svg)
+
+![Availability, acceptance, and recoverability are distinct; every retirement condition must hold.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-storage.svg)
 
 ```text
 Discover -> Freeze -> Classify -> Preserve -> Integrate -> Verify -> Retire
@@ -863,22 +1011,28 @@ No cleanup or repository-wide integration claim is made here.
 
 ## Implementation roadmap for SxPID3
 
-The order below optimizes for semantic risk reduction, not visual progress.
+The order below optimizes for semantic risk reduction, not visual progress. It is a prospective
+roadmap from the current decision-v2 boundary: it preserves partial bounded evidence without
+calling it an accepted certifier or silently re-opening the frozen revision-1 claim.
 
 ### Phase 0: preserve and adjudicate the packet
 
-- Manifest and secret-screen the complete `SX-CERTIFIED-AVERAGED-PID3-001` packet.
-- Port it by explicit path onto a reviewed main descendant without changing its proposed status.
+- Preserve the frozen revision-1 packet, current decision-v2 record, and bounded negative results
+  as distinct evidence objects.
+- Keep the complete target proposed/open while the evidence-adjudication index remains the current
+  pointer; do not edit the historical revision index to make later evidence appear contemporaneous.
 - Pin the exact Makkeh--Gutknecht--Wibral source and construct a paper-equation-to-local-formula map.
-- Decide whether the semantic DAG is internal revision-1 machinery or a claim-v2 acceptance object.
+- Decide whether the semantic DAG is internal revision-1 machinery or a claim-v2 acceptance object
+  before changing an acceptance rule, schema, registry, or resource policy.
 
 **Stop condition:** any unresolved source/event/unit/order ambiguity.
 
 ### Phase 1: simple direct specification
 
 - Implement the strict canonical decoder and direct event-count route.
-- Reconstruct all 18 antichains, order entries, $Z$, $M$, 54 cumulative products, 54 atom
-  products, and 108 stable keys without generated acceptance tables.
+- Reconstruct all 18 antichains, order entries, $Z$, $M$, 54 cumulative component expressions,
+  54 atom component expressions, and the 108 keyed scalar audit expressions without generated
+  acceptance tables. Do not label those expressions as atoms or independent degrees of freedom.
 - Add minimal exact witnesses for every semantic mutation and the noncanonical-factor example.
 
 **Promotion condition:** source-blind review and exact keyed results on hand-checkable fixtures.
@@ -912,8 +1066,8 @@ The order below optimizes for semantic risk reduction, not visual progress.
 
 - Freeze a canonical ordinal for all 20,348 count vectors.
 - Partition half-open ranges into content-addressed shards with no overlap or gap.
-- Replay all 2,197,584 coordinate verdicts plus permutations, relabelings, replication, canonical
-  gates, retained failures, cancellation, and resource refusals.
+- Replay all 2,197,584 keyed-expression verdicts plus permutations, relabelings, replication,
+  canonical gates, retained failures, cancellation, and resource refusals.
 - Prove the shard root corresponds to the exact ordinal domain; do not call it arbitrary-alphabet
   exhaustiveness.
 
@@ -1000,5 +1154,6 @@ credit.
 - Axiom Math, [interactive bounded-prime-gaps paper](https://primegaps.axiommath.ai/paper/).
 - Axiom Math, [formalization blueprint PDF](https://primegaps.axiommath.ai/blueprint.pdf).
 - Makkeh, Gutknecht, and Wibral, *Introducing a differentiable measure of pointwise shared information*, Physical Review E 103, 032149 (2021), arXiv:2002.03356.
+- Gian-Carlo Rota, [*On the Foundations of Combinatorial Theory I. Theory of Möbius Functions*](https://doi.org/10.1007/BF00531932), *Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete* 2, 340--368 (1964).
 - `pid-rs`, `MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md`, the existing repository-wide scientific and autoresearch process record.
 - `pid-rs`, `claims/SX-CERTIFIED-AVERAGED-PID3-001/`, proposed revision-1 specification and open Programs A--E.

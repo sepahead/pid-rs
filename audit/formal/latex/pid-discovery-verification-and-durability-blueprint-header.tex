@@ -1,10 +1,13 @@
 \usepackage{xcolor}
-\definecolor{PidNavy}{HTML}{12313F}
-\definecolor{PidBlue}{HTML}{1F607A}
-\definecolor{PidGreen}{HTML}{277053}
-\definecolor{PidRed}{HTML}{7C2428}
-\definecolor{PidPale}{HTML}{EAF3F1}
-\definecolor{PidCode}{HTML}{F2F6F7}
+\definecolor{PidNavy}{HTML}{1F3F60}
+\definecolor{PidBlue}{HTML}{1F6968}
+\definecolor{PidGreen}{HTML}{1F6968}
+\definecolor{PidRed}{HTML}{743E37}
+\definecolor{PidPale}{HTML}{F7F3E9}
+\definecolor{PidCode}{HTML}{EDF3F1}
+\definecolor{PidInk}{HTML}{2C3E50}
+\definecolor{PidMineral}{HTML}{D2E0E2}
+\definecolor{PidBronze}{HTML}{B28218}
 
 \usepackage{microtype}
 \usepackage{fancyhdr}
@@ -18,12 +21,46 @@
 \usepackage{fvextra}
 \usepackage{etoolbox}
 \usepackage{seqsplit}
+\usepackage{needspace}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{eso-pic}
+\usetikzlibrary{patterns}
+
+% This report deliberately adopts the repository's quiet, patterned publication system.  The
+% paper-grain is decorative only; headings, captions, labels, and prose carry the meaning.
+\pgfdeclarepatternformonly{pidblueprintpapergrain}
+  {\pgfpoint{0pt}{0pt}}
+  {\pgfpoint{18pt}{18pt}}
+  {\pgfpoint{18pt}{18pt}}
+  {%
+    \pgfsetlinewidth{0.12pt}%
+    \pgfpathmoveto{\pgfpoint{1.5pt}{4.0pt}}%
+    \pgfpathlineto{\pgfpoint{6.5pt}{4.3pt}}%
+    \pgfpathmoveto{\pgfpoint{11.0pt}{12.0pt}}%
+    \pgfpathlineto{\pgfpoint{16.0pt}{11.7pt}}%
+    \pgfpathmoveto{\pgfpoint{4.0pt}{16.0pt}}%
+    \pgfpathlineto{\pgfpoint{8.0pt}{15.8pt}}%
+    \pgfusepath{stroke}%
+  }
+\newcommand{\PidBlueprintPageGround}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[PidPale] (current page.south west) rectangle (current page.north east);
+    \path[pattern=pidblueprintpapergrain,pattern color=PidMineral,opacity=0.24]
+      (current page.south west) rectangle (current page.north east);
+    \fill[PidNavy,opacity=0.08]
+      (current page.north west) rectangle ([yshift=-2.1mm]current page.north east);
+    \fill[PidBlue,opacity=0.07]
+      ([yshift=2.1mm]current page.south west) rectangle (current page.south east);
+  \end{tikzpicture}%
+}
+\AddToShipoutPictureBG{\PidBlueprintPageGround}
 
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\footnotesize\color{PidNavy}PID discovery, verification, and durability}
 \fancyhead[R]{\footnotesize\color{PidBlue}PrimeGaps lessons without semantic transfer}
-\fancyfoot[L]{\footnotesize\color{gray}pid-rs research blueprint · 19 August 2026}
+\fancyfoot[L]{\footnotesize\color{PidInk}pid-rs research blueprint · 31 August 2026}
 \fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
 \setlength{\headheight}{15pt}
 
@@ -41,6 +78,7 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.55em plus 0.1em minus 0.08em}
+\raggedbottom
 % Reassert the page-break policy after every package has initialized.  Setting these values only
 % while this header is read is insufficient if a later Pandoc template hook resets them.
 \AtBeginDocument{%
@@ -60,7 +98,21 @@
   \let\pidoldtexttt\texttt
   \renewcommand{\texttt}[1]{\pidoldtexttt{\seqsplit{#1}}}%
 }
-\captionsetup{font=small,labelfont={bf,color=PidNavy}}
+% Keep an assurance-table heading and first row together rather than leaving the header alone at
+% a page foot.  The reservation applies uniformly because the renderer does not expose a safe
+% block-level insertion point for one Markdown table.
+\BeforeBeginEnvironment{longtable}{\Needspace{11\baselineskip}}
+\captionsetup{font=small,labelfont={bf,color=PidBlue},textfont={color=PidInk},justification=raggedright,singlelinecheck=false,skip=7pt}
+
+% The second argument remains descriptive source text.  This untagged LuaLaTeX projection does
+% not claim that graphicx maps it to a PDF /Alt entry or that the output conforms to PDF/UA.
+\newcommand{\PidBlueprintFigure}[3]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth,alt={#2}]{#1}%
+    \caption{#3}%
+  \end{figure}%
+}
 
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{
   breaklines,
@@ -75,21 +127,21 @@
 \makeatletter
 \renewcommand{\maketitle}{%
   \begin{titlepage}
-    \pagecolor{PidNavy}\color{white}
+    \pagecolor{PidPale}\color{PidInk}
     \vspace*{1.0cm}
-    {\Large\bfseries\color{cyan!45}PID-RS RESEARCH PROGRAM\par}
+    {\Large\bfseries\color{PidBlue}PID-RS RESEARCH PROGRAM\par}
     \vspace{2.0cm}
-    {\fontsize{34}{40}\selectfont\bfseries\@title\par}
+    {\fontsize{34}{40}\selectfont\bfseries\color{PidNavy}\@title\par}
     \vfill
     \begin{minipage}{0.86\textwidth}
-      \large
-      A source-pinned, 20-lens review of proof engineering, exact categorical SxPID3,
-      autoresearch promotion, formal-method limits, and durable repository practice.
+      \large\color{PidInk}
+      A source-pinned historical 20-lens review plus a current 50-lens, 10-route closure
+      for exact categorical SxPID3, formal-method limits, and durable repository practice.
     \end{minipage}\par
     \vspace{1.4cm}
     {\large\@date\par}
     \vspace{.6cm}
-    {\small Canonical narrative: \texttt{PID\_DISCOVERY\_VERIFICATION\_AND\_DURABILITY\_BLUEPRINT.md}\par}
+    {\small\color{PidInk}Canonical narrative: \texttt{PID\_DISCOVERY\_VERIFICATION\_AND\_DURABILITY\_BLUEPRINT.md}\par}
   \end{titlepage}
   \nopagecolor\color{black}
 }
