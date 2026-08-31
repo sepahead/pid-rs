@@ -1,274 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="180mm" height="148mm" viewBox="0 0 1800 1480" role="img" aria-labelledby="result-evidence-title result-evidence-desc">
-  <title id="result-evidence-title">Evidence and publication status map for eight pid-rs mathematical result families</title>
-  <desc id="result-evidence-desc">A matrix lists eight mathematical result families in order. Separate columns identify analytic results, scoped formal subclaims, bounded executable evidence, and report or integration status. Rows one through four have detailed scoped reports and PDFs. Row five has three distinct evidence layers and multiple PDFs, while its certifier is conditional and integration remains open. Row six has an integrated scoped Markdown report and PDF, while the full certificate remains open. Row seven has a canonical Markdown report while its dedicated PDF remains open. Row eight has a scoped arithmetic core marked GO while repository and publication integration remain NO-GO and its dedicated result PDF remains open.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="180mm" height="106mm" viewBox="0 0 1800 1060" role="img" aria-labelledby="result-evidence-title result-evidence-desc">
+  <title id="result-evidence-title">Evidence and publication status map for nine pid-rs result families</title>
+  <desc id="result-evidence-desc">Two columns contain nine result cards. Every card separately states analytic, formal, bounded-executable, and report or integration evidence. Evidence in one category does not automatically transfer to another.</desc>
   <defs>
-    <pattern id="analytic-pattern" width="15" height="15" patternUnits="userSpaceOnUse">
-      <path d="M0 4 H15 M0 11 H15" stroke="#916400" stroke-width="2" opacity="0.34"/>
-    </pattern>
-    <pattern id="formal-pattern" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(36)">
-      <path d="M0 0 V14" stroke="#2C3E50" stroke-width="3" opacity="0.23"/>
-    </pattern>
-    <pattern id="bounded-pattern" width="15" height="15" patternUnits="userSpaceOnUse">
-      <circle cx="4" cy="4" r="2.2" fill="#916400" opacity="0.40"/>
-    </pattern>
-    <pattern id="report-pattern" width="18" height="18" patternUnits="userSpaceOnUse">
-      <path d="M0 18 L18 0" stroke="#DCA520" stroke-width="2" opacity="0.18"/>
-    </pattern>
-    <pattern id="layer-pattern" width="18" height="18" patternUnits="userSpaceOnUse">
-      <path d="M0 3 H18 M0 9 H18 M0 15 H18" stroke="#916400" stroke-width="1.8" opacity="0.24"/>
-    </pattern>
-    <pattern id="integrated-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M0 10 H20 M10 0 V20" stroke="#2C3E50" stroke-width="1.6" opacity="0.15"/>
-    </pattern>
-    <pattern id="open-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M-5 5 L5 -5 M0 20 L20 0 M15 25 L25 15" stroke="#916400" stroke-width="1.8" opacity="0.18"/>
-    </pattern>
-    <pattern id="split-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M0 0 L20 20 M20 0 L0 20" stroke="#2C3E50" stroke-width="1.6" opacity="0.13"/>
-      <circle cx="10" cy="10" r="2" fill="#916400" opacity="0.32"/>
-    </pattern>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#1F6968" stroke-width="1.2" opacity=".09"/></pattern>
+    <pattern id="analytic" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M0 4H15M0 11H15" stroke="#916400" stroke-width="2" opacity=".34"/></pattern>
+    <pattern id="formal" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(36)"><path d="M0 0V14" stroke="#2C3E50" stroke-width="3" opacity=".23"/></pattern>
+    <pattern id="bounded" width="15" height="15" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.2" fill="#916400" opacity=".4"/></pattern>
+    <pattern id="report" width="18" height="18" patternUnits="userSpaceOnUse"><path d="M0 18L18 0" stroke="#DCA520" stroke-width="2" opacity=".2"/></pattern>
+    <pattern id="open" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M-5 5L5-5M0 20L20 0M15 25L25 15" stroke="#916400" stroke-width="2" opacity=".2"/></pattern>
     <style>
       .sans { font-family: "Source Sans Pro"; }
-      .title { font-size: 42px; font-weight: 700; fill: #2C3E50; letter-spacing: .2px; }
-      .kicker { font-size: 18px; font-weight: 700; fill: #916400; letter-spacing: 2.5px; }
-      .subtitle { font-size: 21px; font-weight: 600; fill: #1F6968; }
-      .column { font-size: 18px; font-weight: 700; fill: #1F6968; letter-spacing: 1.1px; }
-      .column-small { font-size: 17px; font-weight: 400; fill: #2C3E50; }
-      .family-number { font-size: 21px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
-      .family { font-size: 23px; font-weight: 700; fill: #2C3E50; }
-      .evidence { font-size: 19px; font-weight: 600; fill: #2C3E50; }
-      .evidence-small { font-size: 18px; font-weight: 400; fill: #2C3E50; }
-      .status { font-size: 18px; font-weight: 700; fill: #916400; letter-spacing: .55px; }
-      .status-body { font-size: 18px; font-weight: 600; fill: #2C3E50; }
-      .legend { font-size: 18px; font-weight: 600; fill: #2C3E50; }
-      .footer-label { font-size: 18px; font-weight: 700; fill: #1F6968; letter-spacing: 1.4px; }
-      .footer { font-size: 20px; font-weight: 600; fill: #2C3E50; }
-      .dash { font-size: 29px; font-weight: 400; fill: #2C3E50; opacity: .48; text-anchor: middle; }
+      .title { font-size: 49px; font-weight: 700; fill: #2C3E50; }
+      .kicker { font-size: 24px; font-weight: 700; fill: #916400; letter-spacing: 3px; }
+      .subtitle { font-size: 27px; font-weight: 600; fill: #1F6968; }
+      .legend { font-size: 24px; font-weight: 600; fill: #2C3E50; }
+      .column { font-size: 26px; font-weight: 700; fill: #1F6968; letter-spacing: 1.2px; }
+      .number { font-size: 28px; font-weight: 700; fill: #2C3E50; text-anchor: middle; }
+      .family { font-size: 31px; font-weight: 700; fill: #2C3E50; }
+      .tag { font-size: 22px; font-weight: 700; fill: #916400; letter-spacing: .8px; }
+      .evidence { font-size: 23px; font-weight: 600; fill: #2C3E50; }
+      .status { font-size: 23px; font-weight: 700; fill: #1F6968; }
+      .boundary-title { font-size: 24px; font-weight: 700; fill: #916400; letter-spacing: 1.4px; }
+      .boundary { font-size: 25px; font-weight: 600; fill: #2C3E50; }
     </style>
   </defs>
-
-  <rect width="1800" height="1480" fill="#F7F3E9"/>
-
+  <rect width="1800" height="1060" fill="#F7F3E9"/>
   <g class="sans">
-    <rect x="60" y="45" width="13" height="44" fill="#DCA520"/>
-    <text x="92" y="61" class="kicker">MATHEMATICAL RESULT LEDGER</text>
-    <text x="92" y="108" class="title">Eight families, four evidence questions</text>
-    <text x="1030" y="104" class="subtitle">Completion is stated per row; proximity is not proof transfer.</text>
-    <path d="M60 142 H1740" fill="none" stroke="#2C3E50" stroke-width="2" opacity="0.22"/>
-    <path d="M60 142 H370" fill="none" stroke="#916400" stroke-width="5"/>
-
-    <!-- Direct legend: color is redundant with shape and wording. -->
-    <g transform="translate(60 166)">
-      <circle cx="22" cy="22" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2.2"/>
-      <text x="50" y="29" class="legend">analytic theorem / exact analysis</text>
-      <rect x="388" y="5" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2.2"/>
-      <text x="438" y="29" class="legend">kernel- or solver-checked subclaim</text>
-      <path d="M846 5 H878 L895 22 L878 39 H846 L829 22 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2.2"/>
-      <text x="910" y="29" class="legend">bounded corpus / replay / fixture</text>
-      <rect x="1318" y="5" width="38" height="34" rx="4" fill="url(#report-pattern)" stroke="#916400" stroke-width="2.2"/>
-      <text x="1372" y="29" class="legend">document or integration state</text>
+    <rect x="50" y="38" width="1700" height="112" rx="18" fill="url(#grid)" stroke="#2C3E50" stroke-width="2" stroke-opacity=".22"/>
+    <rect x="50" y="38" width="14" height="112" rx="7" fill="#DCA520"/>
+    <text x="88" y="73" class="kicker">MATHEMATICAL RESULT LEDGER</text>
+    <text x="88" y="123" class="title">Nine result families</text>
+    <text x="650" y="120" class="subtitle">Four evidence questions · read every card literally.</text>
+    <g transform="translate(58 172)">
+      <circle cx="18" cy="18" r="16" fill="url(#analytic)" stroke="#916400" stroke-width="2"/><text x="45" y="26" class="legend">A · analytic</text>
+      <rect x="258" y="2" width="32" height="32" rx="3" fill="url(#formal)" stroke="#2C3E50" stroke-width="2"/><text x="305" y="26" class="legend">F · formal subclaim</text>
+      <path d="M670 2H700L716 18L700 34H670L654 18Z" fill="url(#bounded)" stroke="#916400" stroke-width="2"/><text x="730" y="26" class="legend">B · bounded executable</text>
+      <rect x="1167" y="2" width="36" height="32" rx="4" fill="url(#report)" stroke="#916400" stroke-width="2"/><text x="1218" y="26" class="legend">S · report / integration state</text>
     </g>
+    <text x="54" y="248" class="column">FOUNDATIONAL AND FINITE-LAW RESULTS</text>
+    <text x="925" y="248" class="column">HIGHER-SOURCE, NUMERICAL, AND CONTINUOUS RESULTS</text>
 
-    <!-- Column headings -->
-    <g transform="translate(60 226)">
-      <rect width="1680" height="72" rx="10" fill="#2C3E50" fill-opacity="0.055" stroke="#2C3E50" stroke-width="2" stroke-opacity="0.34"/>
-      <path d="M520 0 V72 M785 0 V72 M1050 0 V72 M1340 0 V72" stroke="#2C3E50" stroke-width="1.6" opacity="0.25"/>
-      <text x="30" y="31" class="column">RESULT FAMILY</text>
-      <text x="30" y="55" class="column-small">exact scope named in every row</text>
-      <text x="550" y="31" class="column">ANALYTIC</text>
-      <text x="550" y="55" class="column-small">what is proved on paper?</text>
-      <text x="815" y="31" class="column">FORMAL</text>
-      <text x="815" y="55" class="column-small">which subclaims are checked?</text>
-      <text x="1080" y="31" class="column">BOUNDED EXECUTABLE</text>
-      <text x="1080" y="55" class="column-small">what finite evidence ran?</text>
-      <text x="1370" y="31" class="column">REPORT / INTEGRATION</text>
-      <text x="1370" y="55" class="column-small">not a mathematical proof level</text>
-    </g>
+    <g transform="translate(50 270)"><rect width="825" height="130" rx="18" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">1</text><text x="84" y="43" class="family">Foundational categorical Sx audit</text><text x="84" y="82" class="tag">A</text><text x="112" y="82" class="evidence">exact semantics + counterexamples</text><text x="530" y="82" class="tag">F</text><text x="558" y="82" class="evidence">Lean factorization slice</text><rect y="101" width="825" height="29" fill="url(#report)"/><text x="20" y="123" class="status">B · witnesses + bounded checks</text><text x="805" y="123" class="status" text-anchor="end">S · SCOPED REPORT</text></g>
+    <g transform="translate(50 410)"><rect width="825" height="130" rx="18" fill="#DCA520" fill-opacity=".035" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">2</text><text x="84" y="43" class="family">Finite-alphabet plug-in convergence</text><text x="84" y="82" class="tag">A</text><text x="112" y="82" class="evidence">exact-real convergence</text><text x="530" y="82" class="tag">F</text><text x="558" y="82" class="evidence">Lean continuity core</text><rect y="101" width="825" height="29" fill="url(#report)"/><text x="20" y="123" class="status">B · fixtures + Rust comparison</text><text x="805" y="123" class="status" text-anchor="end">S · SCOPED REPORT</text></g>
+    <g transform="translate(50 550)"><rect width="825" height="130" rx="18" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">3</text><text x="84" y="37" class="family">Support-change-tolerant averaged</text><text x="84" y="65" class="family">Sx continuity</text><text x="84" y="91" class="tag">A</text><text x="112" y="91" class="evidence">exact continuity moduli</text><text x="530" y="91" class="tag">F</text><text x="558" y="91" class="evidence">Lean algebraic subclaims</text><rect y="101" width="825" height="29" fill="url(#report)"/><text x="20" y="123" class="status">B · 18 law pairs + replay</text><text x="805" y="123" class="status" text-anchor="end">S · SCOPED REPORT</text></g>
+    <g transform="translate(50 690)"><rect width="825" height="130" rx="18" fill="#DCA520" fill-opacity=".035" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">4</text><text x="84" y="37" class="family">Dependency-color concentration</text><text x="84" y="65" class="family">and local bounds</text><text x="84" y="91" class="tag">A</text><text x="112" y="91" class="evidence">probability theorem</text><text x="530" y="91" class="tag">F</text><text x="558" y="91" class="evidence">deterministic subclaims</text><rect y="101" width="825" height="29" fill="url(#report)"/><text x="20" y="123" class="status">B · oracle + Rust checks</text><text x="805" y="123" class="status" text-anchor="end">S · SCOPED REPORT</text></g>
+    <g transform="translate(50 830)"><rect width="825" height="130" rx="18" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">5</text><text x="84" y="43" class="family">Exact two-source Sx assurance</text><text x="84" y="82" class="tag">A</text><text x="112" y="82" class="evidence">count-to-atom + product theorem</text><text x="530" y="82" class="tag">F</text><text x="558" y="82" class="evidence">Lean bridge + algebra</text><rect y="101" width="825" height="29" fill="url(#open)"/><text x="20" y="123" class="status">B · certifier + bounded routes</text><text x="805" y="123" class="status" text-anchor="end">S · INTEGRATION OPEN</text></g>
 
-    <!-- Row 1 -->
-    <g transform="translate(60 298)">
-      <rect width="1680" height="126" fill="#F7F3E9" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">1</text>
-      <text x="72" y="70" class="family">Foundational categorical Sx audit</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Exact semantics</text>
-      <text x="578" y="80" class="evidence-small">+ counterexamples</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean semantic</text>
-      <text x="862" y="80" class="evidence-small">factorization slice</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">Exact witnesses</text>
-      <text x="1142" y="80" class="evidence-small">+ bounded checks</text>
-      <rect x="1340" width="340" height="126" fill="url(#report-pattern)" opacity="0.78"/>
-      <text x="1370" y="50" class="status">SCOPED DETAILED REPORT</text>
-      <text x="1370" y="80" class="status-body">Markdown + PDF</text>
-    </g>
-
-    <!-- Row 2 -->
-    <g transform="translate(60 424)">
-      <rect width="1680" height="126" fill="#DCA520" fill-opacity="0.025" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">2</text>
-      <text x="72" y="70" class="family">Finite-alphabet plug-in convergence</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Exact-real</text>
-      <text x="578" y="80" class="evidence-small">convergence theorem</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean deterministic</text>
-      <text x="862" y="80" class="evidence-small">continuity core</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">Finite fixtures</text>
-      <text x="1142" y="80" class="evidence-small">+ Rust comparison</text>
-      <rect x="1340" width="340" height="126" fill="url(#report-pattern)" opacity="0.78"/>
-      <text x="1370" y="50" class="status">SCOPED DETAILED REPORT</text>
-      <text x="1370" y="80" class="status-body">Markdown + PDF</text>
-    </g>
-
-    <!-- Row 3 -->
-    <g transform="translate(60 550)">
-      <rect width="1680" height="126" fill="#F7F3E9" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">3</text>
-      <text x="72" y="52" class="family">Support-change-tolerant averaged</text>
-      <text x="72" y="81" class="family">Sx continuity</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Exact-real</text>
-      <text x="578" y="80" class="evidence-small">continuity moduli</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean algebraic</text>
-      <text x="862" y="80" class="evidence-small">subclaims</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">18 law pairs</text>
-      <text x="1142" y="80" class="evidence-small">+ bounded replay</text>
-      <rect x="1340" width="340" height="126" fill="url(#report-pattern)" opacity="0.78"/>
-      <text x="1370" y="50" class="status">SCOPED DETAILED REPORT</text>
-      <text x="1370" y="80" class="status-body">Markdown + PDF</text>
-    </g>
-
-    <!-- Row 4 -->
-    <g transform="translate(60 676)">
-      <rect width="1680" height="126" fill="#DCA520" fill-opacity="0.025" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">4</text>
-      <text x="72" y="52" class="family">Dependency-color concentration</text>
-      <text x="72" y="81" class="family">and local bounds</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Probability theorem</text>
-      <text x="578" y="80" class="evidence-small">+ local Sx bounds</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean deterministic</text>
-      <text x="862" y="80" class="evidence-small">subclaims only</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">Oracle + Rust</text>
-      <text x="1142" y="80" class="evidence-small">bounded checks</text>
-      <rect x="1340" width="340" height="126" fill="url(#report-pattern)" opacity="0.78"/>
-      <text x="1370" y="50" class="status">SCOPED DETAILED REPORT</text>
-      <text x="1370" y="80" class="status-body">Markdown + PDF</text>
-    </g>
-
-    <!-- Row 5 -->
-    <g transform="translate(60 802)">
-      <rect width="1680" height="126" fill="#F7F3E9" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">5</text>
-      <text x="72" y="70" class="family">Exact two-source Sx assurance</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Count → atoms</text>
-      <text x="578" y="80" class="evidence-small">+ product theorem</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean bridge</text>
-      <text x="862" y="80" class="evidence-small">+ product algebra</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">Exact certifier</text>
-      <text x="1142" y="80" class="evidence-small">+ bounded routes</text>
-      <rect x="1340" width="340" height="126" fill="url(#layer-pattern)" opacity="0.84"/>
-      <text x="1370" y="28" class="status">THREE DISTINCT LAYERS</text>
-      <text x="1370" y="53" class="status-body">Multiple scoped PDFs</text>
-      <text x="1370" y="79" class="status-body">Certifier conditional</text>
-      <text x="1370" y="105" class="status-body">Integration open</text>
-    </g>
-
-    <!-- Row 6 -->
-    <g transform="translate(60 928)">
-      <rect width="1680" height="126" fill="#DCA520" fill-opacity="0.025" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">6</text>
-      <text x="72" y="44" class="family">SxPID3 source-marginal factorization</text>
-      <text x="72" y="73" class="family">and bounded audit</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Source-marginal</text>
-      <text x="578" y="80" class="evidence-small">factorization</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean generic</text>
-      <text x="862" y="80" class="evidence-small">finite-event theorem</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">20,348 tables</text>
-      <text x="1142" y="80" class="evidence-small">two exact routes</text>
-      <rect x="1340" width="340" height="126" fill="url(#integrated-pattern)" opacity="0.82"/>
-      <text x="1370" y="36" class="status">INTEGRATED • SCOPED</text>
-      <text x="1370" y="65" class="status-body">Markdown + PDF</text>
-      <text x="1370" y="94" class="status-body">Full certificate remains open</text>
-    </g>
-
-    <!-- Row 7 -->
-    <g transform="translate(60 1054)">
-      <rect width="1680" height="126" fill="#F7F3E9" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">7</text>
-      <text x="72" y="52" class="family">Represented-binary64 and</text>
-      <text x="72" y="81" class="family">quantizer assurance</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Exact represented</text>
-      <text x="578" y="80" class="evidence-small">operand reduction</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" stroke-dasharray="6 4"/>
-      <text x="862" y="54" class="evidence">No end-to-end</text>
-      <text x="862" y="80" class="evidence-small">formal proof claimed</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">Exact oracles</text>
-      <text x="1142" y="80" class="evidence-small">+ bounded tests</text>
-      <rect x="1340" width="340" height="126" fill="url(#open-pattern)" opacity="0.90"/>
-      <text x="1370" y="50" class="status">CANONICAL MARKDOWN</text>
-      <text x="1370" y="80" class="status-body">Dedicated PDF open</text>
-    </g>
-
-    <!-- Row 8 -->
-    <g transform="translate(60 1180)">
-      <rect width="1680" height="126" fill="#DCA520" fill-opacity="0.025" stroke="#2C3E50" stroke-width="1.6" stroke-opacity="0.25"/>
-      <path d="M520 0 V126 M785 0 V126 M1050 0 V126 M1340 0 V126" stroke="#2C3E50" stroke-width="1.4" opacity="0.20"/>
-      <circle cx="34" cy="63" r="22" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="34" y="70" class="family-number">8</text>
-      <text x="72" y="52" class="family">KSG integer-harmonic</text>
-      <text x="72" y="81" class="family">local arithmetic</text>
-      <circle cx="550" cy="63" r="17" fill="url(#analytic-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="578" y="54" class="evidence">Harmonic identity</text>
-      <text x="578" y="80" class="evidence-small">+ sharp box bound</text>
-      <rect x="814" y="46" width="34" height="34" rx="3" fill="url(#formal-pattern)" stroke="#2C3E50" stroke-width="2"/>
-      <text x="862" y="54" class="evidence">Lean + Z3</text>
-      <text x="862" y="80" class="evidence-small">scoped arithmetic</text>
-      <path d="M1080 46 H1112 L1129 63 L1112 80 H1080 L1063 63 Z" fill="url(#bounded-pattern)" stroke="#916400" stroke-width="2"/>
-      <text x="1142" y="54" class="evidence">8,198-row</text>
-      <text x="1142" y="80" class="evidence-small">bounded corpus</text>
-      <rect x="1340" width="340" height="126" fill="url(#split-pattern)" opacity="0.90"/>
-      <text x="1370" y="28" class="status">SCOPED CORE: GO</text>
-      <text x="1370" y="53" class="status-body">Exact • formal • bounded</text>
-      <text x="1370" y="79" class="status-body">Integration: NO-GO</text>
-      <text x="1370" y="105" class="status-body">Dedicated result PDF open</text>
-    </g>
-
-    <g transform="translate(60 1338)">
-      <rect width="1680" height="88" rx="12" fill="url(#open-pattern)" stroke="#916400" stroke-width="2.3"/>
-      <rect width="14" height="88" rx="7" fill="#DCA520"/>
-      <text x="42" y="34" class="footer-label">READ THE CELLS LITERALLY</text>
-      <text x="42" y="65" class="footer">Formal subclaims, exact arithmetic, bounded corpora, report PDFs, and integration gates remain separate evidence objects.</text>
-    </g>
+    <g transform="translate(925 270)"><rect width="825" height="130" rx="18" fill="#DCA520" fill-opacity=".035" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">6</text><text x="84" y="37" class="family">SxPID3 source-marginal factorization</text><text x="84" y="65" class="family">and bounded exact audit</text><text x="84" y="91" class="tag">A</text><text x="112" y="91" class="evidence">source-only factor</text><text x="500" y="91" class="tag">F</text><text x="528" y="91" class="evidence">Lean generic theorem</text><rect y="101" width="825" height="29" fill="url(#report)"/><text x="20" y="123" class="status">B · 20,348 tables · two routes</text><text x="805" y="123" class="status" text-anchor="end">S · INTEGRATED / SCOPED</text></g>
+    <g transform="translate(925 410)"><rect width="825" height="130" rx="18" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">7</text><text x="84" y="37" class="family">Represented-binary64 and</text><text x="84" y="65" class="family">quantizer assurance</text><text x="84" y="91" class="tag">A</text><text x="112" y="91" class="evidence">exact represented sum</text><text x="500" y="91" class="tag">F</text><text x="528" y="91" class="evidence">no end-to-end proof</text><rect y="101" width="825" height="29" fill="url(#report)"/><text x="20" y="123" class="status">B · oracles + bounded tests</text><text x="805" y="123" class="status" text-anchor="end">S · ASSURANCE REPORT</text></g>
+    <g transform="translate(925 550)"><rect width="825" height="130" rx="18" fill="#DCA520" fill-opacity=".035" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">8</text><text x="84" y="37" class="family">KSG integer-harmonic</text><text x="84" y="65" class="family">local arithmetic</text><text x="84" y="91" class="tag">A</text><text x="112" y="91" class="evidence">harmonic identity + sharp bound</text><text x="500" y="91" class="tag">F</text><text x="528" y="91" class="evidence">Lean + Z3 subclaims</text><rect y="101" width="825" height="29" fill="url(#open)"/><text x="20" y="123" class="status">B · 8,198-row corpus</text><text x="805" y="123" class="status" text-anchor="end">S · CORE GO / INTEGRATION NO-GO</text></g>
+    <g transform="translate(925 690)"><rect width="825" height="130" rx="18" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" stroke-opacity=".35"/><circle cx="43" cy="39" r="26" fill="url(#analytic)" stroke="#916400" stroke-width="2.5"/><text x="43" y="48" class="number">9</text><text x="84" y="37" class="family">Common-radius manifold</text><text x="84" y="65" class="family">small-ball bridge</text><text x="84" y="91" class="tag">A</text><text x="112" y="91" class="evidence">conditional limit + boundary test</text><text x="500" y="91" class="tag">F</text><text x="528" y="91" class="evidence">no machine proof</text><rect y="101" width="825" height="29" fill="url(#open)"/><text x="20" y="123" class="status">B · no finite-sample evidence</text><text x="805" y="123" class="status" text-anchor="end">S · ESTIMATOR OPEN</text></g>
+    <g transform="translate(925 840)"><rect width="825" height="120" rx="18" fill="url(#grid)" stroke="#916400" stroke-width="2.5"/><rect width="14" height="120" rx="7" fill="#DCA520"/><text x="38" y="40" class="boundary-title">NO PROOF TRANSFER BY PROXIMITY</text><text x="38" y="76" class="boundary">A theorem, formal subclaim, bounded corpus,</text><text x="38" y="107" class="boundary">and publication state answer different questions.</text></g>
+    <path d="M50 997H1750" stroke="#2C3E50" stroke-width="2" opacity=".22"/><path d="M50 997H430" stroke="#916400" stroke-width="5"/>
+    <text x="50" y="1033" class="boundary">Completion is per card. Follow the linked report for assumptions, costs, counterexamples, and strongest nonclaim.</text>
   </g>
 </svg>

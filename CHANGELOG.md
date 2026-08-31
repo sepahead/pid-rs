@@ -9,6 +9,152 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Preserve the useful design and prototype sources from the superseded Python-verifier-custody M0
+  branch without activating its stale parent-tree registry. The
+  [inert archive](audit/archive/python-verifier-custody-m0-20260830/DISPOSITION.md) binds five exact
+  source artifacts, the omitted 5,473,991-byte derived registry's digest and Git blob, the
+  historical census, a non-authoritative current drift probe, six process-separation lessons, and
+  explicit open execution-custody boundaries. The generic archive gate now covers four packets,
+  28 payloads, six syntax-checked Python sources, and 45 hostile mutations in normal and optimized
+  isolated Python. Archived sources remain non-executable and supply no current inventory,
+  mathematical, statistical, scientific, security, formal, or release authority.
+
+- Record the exact-C12 local observation through a
+  [hash-bound, externally retained, unadmitted disposition](audit/evidence/ksg-rev4-m1a-composite-v12-unadmitted-local-observation-disposition-2026-08-31.md)
+  rather than introducing its raw L12-schema bytes under a near-name. The disposition binds
+  SHA-256, byte length, schema label, exact C12 commit/tree, the bounded
+  historical validation result, privacy/disclosure limits, and all nonimplications. It leaves
+  `L12 = not_adjudicated`, `Q12 = false`, and `R12 = permanently_unissued`; the reserved R12
+  message and evidence path remain absent. Two access-restricted same-device mirrors are
+  byte-identical, but the original source remains retained until a separately verified off-device
+  copy exists.
+
+- Add a live current-reader successor for the revised KSG revision-4 index without modifying its
+  immutable historical packet or checker. The gate exact-binds the index, linked C12 boundary,
+  terminal record and schema, terminal checker, and the JSON-schema helper loaded by that checker;
+  checks required absent decision/evidence files; independently derives `Q12 = false` for both
+  Boolean values left open by `L12 = not_adjudicated`; requires
+  `R12 = permanently_unissued`; and grants zero qualification credit. Normal and optimized
+  isolated Python must reproduce the terminal check exactly. A 54-control hostile suite covers 52
+  semantic, process, and filesystem mutations plus two hostile interpreter launches. This is
+  bounded current-index custody and fail-closed evidence, not authentication, trusted time,
+  mathematical or estimator validation, an inference about `L12`, exhaustive bypass resistance,
+  or revival of the historical active packet, claim-only route, or qualification lifecycle.
+
+- Add a revision-4 assurance layer for the unchanged continuous PID2 represented-coordinate
+  semantics. A host-float-free integer/`Fraction` checker derives both identity-erasure directions,
+  all 16 signed-zero tuples, ordinary and near-zero 32/33 boundaries, exact-versus-left and
+  exact-versus-Neumaier discriminators, overflow and false-bound controls, every conditioning
+  outcome, and all 1,023 accepted scale-family seeds that reach one rejected endpoint. Its
+  copied-root hostile self-test rejects 18 semantic and four custody mutations under normal and
+  optimized Python; focused debug/release Rust execution, separately implemented Python scalar/report atom-bit
+  reconstruction, and three additional Z3 sign/coordinate/row mutations bind distinct evidence
+  layers without claiming estimator attainability, calibration, a paper defect, or universal Rust
+  refinement. A self-contained assurance Markdown and checked 19-page PDF record the assumptions,
+  derivations, costs, negative controls, and nonclaims. The PDF uses a vector evidence firewall to
+  separate exact-real algebra, represented-binary64 arithmetic, and estimator/application validity;
+  its exact and bounded cross-toolchain profiles validate source-derived identity, tagged structure,
+  embedded fonts, safe navigation, semantic sentinels, complete page rendering, and the declared
+  byte or layout relation without enlarging the mathematical claim. The failed-and-later-cancelled
+  hosted M1 run is retained only as bounded negative workflow evidence: its successful prefix did
+  not adjudicate the arithmetic or formal obligations.
+
+- Expand direct continuous PID2 represented-input behavioral coverage without changing constructor
+  arithmetic or the inclusive 32-position compatibility policy. The tests retain exact-versus-
+  historical, Neumaier, and left-associated witnesses; exhaust all signed-zero inputs; cover the
+  ordinary and near-zero guard boundaries, overflow controls, the complete `1..=1023`
+  exact-scaling family, and all conditioning outcomes. The `exp0` diagnostic now converts only
+  typed PID2 numerical instability to abstention and propagates every unexpected PID error.
+
+- Add an isolated hostile suite for the byte-frozen Lean 4.33 exact-log-product checker without
+  changing the production checker. The suite loads stable digest-bound source bytes, restores every
+  test-mutated checker global, validates canonical output, kills nine semantic mutations, rejects
+  six raw-source or digest controls, records two accepted declaration-scope probes and one accepted
+  checker-custody limitation, and covers the character-literal sequence that defeated a discarded
+  comment/string masker. Each hostile run requires its canonical record to equal the tracked
+  evidence, and the current claim gate pins the harness, evidence, and failure memo. CI and `just
+  certified-sxpid` run the production checker and hostile suite with exact `-I -S -B` isolation in
+  normal and optimized Python modes. A versioned negative-result memo and canonical evidence retain
+  the rejected design and nonclaims. The self-contained assurance Markdown and PDF now define the
+  objects, threat model, assumptions, and all 15 byte/process controls; explain each of the 19 cases
+  and seven verification stages step by step; separate positive acceptances from negative controls
+  and the accepted limitation; and state exactly what the kernel and hostile evidence do and do not
+  prove. This adds bounded fault sensitivity; it does not expand the seven Lean theorems or
+  formalize SxPID event extraction, executable refinement, sampling, calibration, or downstream
+  use.
+
+- Add a conditional common-geodesic-radius small-ball bridge to an expression with the algebraic
+  form of the bivariate Ehrlich analytic shared-exclusions formula, evaluated using the declared
+  Riemannian-volume densities. The manifold domain and small-ball proof are repository work. The
+  proof requires both sources in the same measured hyperbolic space with the same numeric geodesic
+  radius, a product-volume absolutely continuous joint law with the target, continuous versions of
+  the displayed marginal densities, locally essentially bounded versions of the source-pair and
+  full densities, and positive logarithm arguments. A fully absolutely continuous Clayton-copula
+  mixture shows that the other displayed smoothness and full-density premises do not imply the
+  required lower-order source overlap; source-pair local boundedness is sufficient, not necessary.
+  Weighted limits also expose unequal-radius and qualified unequal-dimension boundaries. This is a
+  repository-derived population lemma catalogued as project-defined, not a hyperbolic estimator,
+  PID implementation, consistency theorem, finite-sample guarantee, or scientific-priority claim.
+
+- Expand the mathematical results guide and its deterministic PDF from the historical 16-page v1
+  profile to a 23-page v2 profile. The guide now integrates the conditional small-ball bridge,
+  its absolutely-continuous and singular negative controls, unequal-gauge and unequal-dimension
+  limits, and explicit estimator and software nonclaims. The new graph-aware checker binds 56
+  external HTTPS targets, 217 navigation records, 65 named destinations, 18 outlines, 107 link
+  annotations, 1,050 structure elements, 658 MCR entries, 97 OBJR entries, 120 ParentTree mappings,
+  2,248 structure records, and exact navigation and structure digests. Its normal and optimized
+  self-tests each retain 70 object-graph mutations, one raw-parser
+  mutation, four name-tree diagnostics, and four output-path controls. The historical 16-page
+  profile, fixtures, and receipts remain immutable evidence for their original artifact and do not
+  certify the expanded guide.
+
+- Add a staged-snapshot publication-link gate for every indexed Markdown document and every
+  indexed PDF below `output/pdf`. It parses exact stage-0 Markdown blobs with digest-pinned Pandoc
+  GFM, parses exact PDF blobs with pinned pypdf, validates all local and canonical repository-`main`
+  targets against the same index, validates raw PDF destination name trees before resolving names,
+  resolves every active PDF GoTo and structure destination, and rejects local or relative PDF URIs,
+  GoToR, active JavaScript or embedded-file name trees, malformed or cyclic actions, ambiguous name
+  trees, ambiguous Link/outline owners, same-main route aliases, unusable image/resource targets,
+  case and percent aliases, nonregular or hidden index state, intent-to-add, index/worktree
+  divergence, and extra PDFs. Four semantic controls and 111 hostile mutations run in both normal
+  and optimized Python. External network reachability remains a separate, time-varying concern;
+  `main` URLs are navigation and do not replace commit or digest provenance. The checker validates
+  an exact root-name-tree `/Limits` pair emitted by the current TeX producer but makes no ISO 32000
+  conformance claim; removing that known producer gap requires rebuilding and resealing all affected
+  PDFs.
+
+- Preserve three rejected-route packets as 23 inert, byte-exact payloads with explicit non-adoption
+  boundaries. A closed-world checker recomputes payload digests and Git blob-format identifiers,
+  checks modes and semantic seals without executing archived code, and rejects 39 hostile
+  mutations in ordinary and optimized Python. A separate exact rare-tail counterexample and
+  25-mutation suite preserve one bounded binary64 complement failure without promoting it to a
+  general theorem or replacement estimator. Both families are mandatory zero-credit CI and local
+  release gates. A section-disposition ledger accounts for every historical blueprint section and
+  routes current, superseded, rejected, and archive-only material without reviving stale claims.
+
+- Promote the represented-binary64 assurance note to a self-contained, reproducible 23-page PDF.
+  The canonical Markdown now derives the 2,098-bit maximum finite-operand representation and the
+  fixed 34-limb supported-target bound, specifies every ties-to-even rounding branch, and explains
+  why the separate exact-rational oracle cannot obtain proof credit merely by agreeing with the
+  Rust reducer. It records the repaired final reductions, untouched pointwise and PID3 routes,
+  empirical count-table witnesses, overflow-safe quantizer interpolation, nominal/reachable/observed
+  label semantics, operation and storage bounds, twelve materially distinct design routes, a
+  fifty-lens hostile review, and ten grounded application examples with physical inputs, explicit
+  alphabets, outputs, assumptions, comparator methods, and rejection conditions. Two handcrafted
+  SVGs and exact tracked PDF derivatives use the publication visual system. A source-derived
+  trailer identifier, deterministic builder, pinned object inspection, embedded-font checks,
+  Link-only action policy, full-page raster-presence gate, exact same-toolchain comparison, and
+  bounded cross-toolchain text/geometry relation protect the projection. A dedicated 36-control
+  hostile suite checks that default exact mode rejects serialization drift while only the explicit,
+  fully validated cross-toolchain relation may accept its bounded fixture. This is implementation,
+  API, diagnostic, and assurance work; it is not a new PID measure, summation theorem, estimator
+  guarantee, application validation, PDF/UA claim, or scientific-priority claim.
+
+- Correct the dependency-color limitation wording so it does not hide the separate fixed
+  two-source 24-coordinate count-to-atom Lean bridge. The local-continuity proof still has no
+  correspondence theorem to that bridge, and the complete higher-source lattice, Möbius inversion,
+  estimator, and Rust/binary64 refinement obligations remain open.
+
 - Preserve the sensor-placement guide's structure-aware catalog `OpenAction` on the pinned Ubuntu
   TeX Live 2023 toolchain. Its builder now includes the already reviewed LPPL tagpdf compatibility
   source used by the mathematical results guide, and both the deterministic trailer identifier and
@@ -45,8 +191,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   checker rejects unsafe, duplicate, non-file, or undeclared archive members. Three handcrafted SVGs and exact tracked PDF derivatives,
   a digest manifest, a same-toolchain byte-exact builder/checker, and a bounded cross-toolchain
   layout-text fallback provide publication custody. The PDF checker pins its audited pypdf object
-  model, requires an exact embedded and Unicode-mapped 58-font roster, and admits the SVG renderer's
-  19 `sub=no` Type 3 entries only after proving that each is a zero-area, nonpainting U+0020 spacing
+  model, requires an exact embedded and Unicode-mapped 56-font roster, and admits the SVG renderer's
+  18 `sub=no` Type 3 entries only after proving that each is a zero-area, nonpainting U+0020 spacing
   shim. This adds no placement implementation, field or
   population validation, generic PID preference, real-time qualification, scientific-priority
   claim, or runtime authority edge in Galadriel or Haldir.
@@ -105,18 +251,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   tracked, so the hashes and relation are a bounded observation without independent replay custody,
   general writer equivalence, portability, authenticity, PDF/UA, or mathematical-correctness credit.
 
-- Add a separate current hosted raw profile for the mathematical results guide. Its receipt binds a
-  retained 581,296-byte Pandoc 3.10.2/Ubuntu 24.04/TeX Live 2023 fixture at SHA-256
+- Add a separate hosted raw profile for the historical 16-page v1 mathematical results guide. Its
+  receipt binds a retained 581,296-byte Pandoc 3.10.2/Ubuntu 24.04/TeX Live 2023 fixture at SHA-256
   `408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd`; two independently
-  downloaded hosted artifacts were byte-identical and one PDF is retained. Cross mode selects this
-  profile from exact Pandoc and LuaHBTeX version/digest facts plus direct/canonical command,
-  Kpathsea, format-path, and secure-file-shape facts. Each pre/post producer tuple captures and
-  rechecks `/usr/bin/kpsewhich` and the selected `lualatex.fmt`. The `kpsewhich` digest is per-run
+  downloaded hosted artifacts were byte-identical and one PDF is retained. The v1 cross route
+  selected this profile from exact Pandoc and LuaHBTeX version/digest facts plus direct/canonical
+  command, Kpathsea, format-path, and secure-file-shape facts. Each pre/post producer tuple captures
+  and rechecks `/usr/bin/kpsewhich` and the selected `lualatex.fmt`. The `kpsewhich` digest is per-run
   evidence rather than a frozen cross-run authentication pin, and format size/SHA-256 do not select
   the profile. A candidate must equal the fixture or differ only in the strict duplicated final
   trailer IDs; both complete strict structure reports must then agree. Its self-test has 69 cases:
   two controls plus 13 raw, six identifier, 10 input, 16 output, six dependency, 13 source, and three
-  stability hostiles. Exact mode remains raw byte-strict and has no live cross-profile dependency.
+  stability hostiles. This historical profile does not admit the expanded 23-page v2 guide. Exact
+  mode remains raw byte-strict and has no live cross-profile dependency.
   The legacy Pandoc 3.1.3 receipt and typed font-alpha package remain operationally separate. The
   hosted receipt retains neither artifact ZIP bytes nor the complete runner filesystem, leaves the
   hash-pinned pypdf wheel as an outer trust boundary, and grants no general producer-equivalence,
@@ -244,6 +391,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   Ubuntu 24.04 tagpdf source at its exact path and SHA-256, with its `2024-02-04` v0.98v declaration
   and native-function
   absence both before and immediately before the formal gate.
+  The direct self-test normalizes trailing separators from `TMPDIR` before it constructs its
+  isolated TeX path; this avoids a TeX Live 2024 path-resolution spin on macOS without changing
+  either the fatal negative control or the accepted object-graph contract.
 
 - Add a compatibility path that targets the mathematical results guide's complete annotation and
   figure-resource structure on the reviewed Ubuntu TeX Live 2023 toolchain while retaining its
@@ -329,11 +479,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   This closes a command-selection gap without authenticating the executables beyond their separate
   hosted custody boundaries.
 
-- Extend the guide structure mutation suite with independent canonical-encoding/wrong-value attacks.
-  The production obligation remains exact: 61 URI annotations have target-equal BOM UTF-16BE
+- Extend the historical v1 guide structure mutation suite with independent
+  canonical-encoding/wrong-value attacks. The v1 production obligation at that revision was exact:
+  61 URI annotations have target-equal BOM UTF-16BE
   `/Contents`, 17 internal GoTo annotations keep ASCII `ref`, 13 GoToR filespecs have target-equal
   ASCII `/F` and UTF-16BE `/UF`, and only the 78 URI/GoTo annotations have StructParent/OBJR
-  ownership. Encoding failures can no longer mask value-equality failures in the hostile suite.
+  ownership. Encoding failures could no longer mask value-equality failures in that hostile suite.
 
 - Make fitted equal-width extrema use the finite binary64 total order, which deterministically
   retains `-0.0` as the lower endpoint and `+0.0` as the upper endpoint in either input order on
@@ -1919,10 +2070,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   continuous shared exclusions, PID semantics, calibration, or application validity.
   A post-observation `x+y <= n+k` set derivation and its stronger balanced lower bound remain
   conditional and unpromoted pending complete source/formal/compiled/mutation/provenance routes.
-  Repository and publication integration remain a 13-gate **NO-GO**: canonical unsigned M1a must
-  be pushed and verified before a separate descendant M1c can bind immutable final evidence and
-  decision artifacts. The Decimal, modular, and SMT-LIB failure memos preserve the corrected
-  claims, negative paths, checker repairs, and non-transfer boundaries.
+  At the pre-C12 snapshot, repository and publication integration was a 13-gate **NO-GO** whose
+  proposed route required a canonical unsigned M1a before a separate descendant M1c. That route is
+  now terminal at exact C12 with `Q12 = false`, `R12 = permanently_unissued`, and
+  `L12 = not_adjudicated`; the preserved M1a/M1c imperative is historical and nonoperative. The
+  Decimal, modular, and SMT-LIB failure memos preserve the corrected claims, negative paths,
+  checker repairs, and non-transfer boundaries.
 - Added a standalone, source-only exact-count reference certifier for all 24 averaged categorical
   SxPID2 cumulative and Möbius-atom coordinates. It reconstructs exact rational log-linear
   expressions from a strict canonical count-table schema and adaptively encloses them with

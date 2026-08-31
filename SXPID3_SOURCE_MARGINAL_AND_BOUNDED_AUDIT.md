@@ -46,6 +46,15 @@ hostile tests, receipt lifecycle, and this report are project-defined assurance.
 The historical labels “P1” and “P5” are avoided because the claim packet used similar labels for
 other obligations. This report uses **factorization result** and **bounded audit**.
 
+The current claim-status pointer is the
+[evidence-adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md),
+which identifies
+[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md) as current. That decision
+accepts the two scoped results above without changing claim revision 1: the prospective complete
+certificate remains proposed/open, and Programs A--E remain open. The packet's older
+`revision-index.md` is retained as byte-pinned historical intake, not used as the current decision
+pointer.
+
 ## Provenance firewall
 
 | Ingredient | Provenance | Exact role here | Not transferred |
@@ -442,7 +451,8 @@ mechanized generic algebraic layer, and a retained falsifier for a tempting fals
 
 **Standing assumptions for this subsection.** Let $P$ and $Q$ be probability laws on finite
 source-target products with one declared common finite source alphabet, the same supplied
-source-only event family, and natural logarithms. Their target alphabets may differ. Let $P_S$ and
+source-only event family, and natural logarithms. For every $s\in\mathcal S$, the corresponding
+supplied event is anchored: $s\in E_\alpha(s)$. Their target alphabets may differ. Let $P_S$ and
 $Q_S$ be their complete joint source marginals, and let
 
 $$
@@ -502,6 +512,38 @@ $$
 the supplied Sx event is exactly $E_\alpha(s)=\bigcup_{a\in\alpha}B_a(s)$, and therefore the number of
 branches in that theorem is $J_\alpha=|\alpha|$. No different event geometry is being smuggled
 into the continuity bound.
+
+There is a further, precisely scoped **total-variation radius sharpening** when a joint-law radius
+is also available. For this comparison only, require $P$ and $Q$ to be laws on the *same* finite
+source-target alphabet $\mathcal S\times\mathcal T$, with the same labeling of both coordinates
+and the same supplied anchored event family. Define
+
+$$
+\eta_{ST}=d_{\mathrm{TV}}(P,Q)
+=\frac12\sum_{s,t}|P(s,t)-Q(s,t)|.
+$$
+
+Marginalization is a contraction in total variation:
+
+$$
+\begin{aligned}
+2\eta_S
+&=\sum_s\left|\sum_t\bigl(P(s,t)-Q(s,t)\bigr)\right|\\
+&\le \sum_{s,t}|P(s,t)-Q(s,t)|
+=2\eta_{ST}.
+\end{aligned}
+$$
+
+Thus the factorization permits the informative-coordinate analysis to use the complete-source
+radius $\eta_S$ instead of the joint source-target radius $\eta_{ST}$. This is a sharpening of the
+input radius in the non-strict sense $\eta_S\le\eta_{ST}$; equality can occur, for example when the
+target alphabet is a singleton, so no strict improvement is guaranteed. It is not a theorem that
+the complete displayed right-hand side is always numerically smaller than every joint-law bound:
+the residual-entropy term changes under marginalization, and $g_J$ is not globally monotone.
+Finally, this factorization-based sharpening applies only to the informative cumulatives and one
+literally fixed linear transform of them. It does not transfer to the misinformative or signed-net
+components, which retain target-conditioned dependence as the counterexample in Section 2.4
+shows.
 
 The function $g_J$ is not globally monotone, so a radius bound must not be substituted blindly.
 This is a deterministic stability statement, not a confidence bound. A separate statistical
@@ -800,6 +842,9 @@ custody, replay, trusted timestamp, authenticity, general theorem, or semantic-t
 
 ## 8. Current certificate-obligation status
 
+The current adjudication is
+[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md), selected by the
+[evidence-adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md).
 The complete certificate program remains open. In particular:
 
 | Obligation | Current status |

@@ -26,10 +26,14 @@ if [[ -z "$TAGPDF_STY" || ! -f "$TAGPDF_STY" || -L "$TAGPDF_STY" ]]; then
   exit 1
 fi
 
-TEST_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-tagpdf-openaction-compat-self-test.XXXXXX")"
+TMP_BASE="${TMPDIR:-/tmp}"
+while [[ "$TMP_BASE" != "/" && "$TMP_BASE" == */ ]]; do
+  TMP_BASE="${TMP_BASE%/}"
+done
+TEST_ROOT="$(mktemp -d "${TMP_BASE%/}/pid-rs-tagpdf-openaction-compat-self-test.XXXXXX")"
 cleanup() {
   case "$TEST_ROOT" in
-    "${TMPDIR:-/tmp}"/pid-rs-tagpdf-openaction-compat-self-test.*)
+    "${TMP_BASE%/}"/pid-rs-tagpdf-openaction-compat-self-test.*)
       rm -rf -- "$TEST_ROOT"
       ;;
     *)

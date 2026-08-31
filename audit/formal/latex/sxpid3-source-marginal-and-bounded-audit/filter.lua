@@ -4,6 +4,7 @@
 
 local dropped_title = false
 local references_started = false
+local repository_blob_root = "https://github.com/sepahead/pid-rs/blob/main/"
 
 function Header(element)
   local title = pandoc.utils.stringify(element.content)
@@ -125,12 +126,16 @@ end
 function Link(element)
   if FORMAT:match("latex")
       and not element.target:match("^[A-Za-z][A-Za-z0-9+.-]*:")
-      and not element.target:match("^#")
-      and not element.target:match("^%.%./%.%./") then
-    -- The canonical Markdown lives at the repository root, while the committed PDF lives under
-    -- output/pdf. Keep root-relative Markdown links usable on Git hosts and project them into the
-    -- PDF's two-level-relative link domain only during rendering.
-    element.target = "../../" .. element.target
+      and not element.target:match("^#") then
+    -- The canonical Markdown stays repository-relative. The PDF uses live GitHub navigation so
+    -- readers do not need the original checkout layout. Exact evidence identity remains bound by
+    -- the document's cited digests and immutable receipts, not by this mutable main URL.
+    if element.target:match("^/")
+        or element.target:match("^%./")
+        or element.target:match("^%.%./") then
+      error("noncanonical repository-relative link in SxPID3 audit source: " .. element.target)
+    end
+    element.target = repository_blob_root .. element.target
   end
   return element
 end

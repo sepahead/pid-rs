@@ -1,0 +1,123 @@
+{
+  "archive_id": "python-verifier-custody-m0-20260830",
+  "authority_role": "inert_historical_process_custody_prototype_never_current_authority",
+  "current_authority": false,
+  "current_drift_probe": {
+    "import_statements": 2286,
+    "imported_name_edges": 2530,
+    "operational_roots": 73,
+    "python_files": 201,
+    "selected_dynamic_calls": 176,
+    "static_launch_candidates": 1138,
+    "status": "diagnostic_non_authoritative",
+    "worktree_date": "2026-08-31"
+  },
+  "disposition": {
+    "archive_path": "audit/archive/python-verifier-custody-m0-20260830/DISPOSITION.md",
+    "byte_length": 5204,
+    "sha256": "6a50320f7914e5a0300e580ef777bbbe27931175bf6fd51741de0fdc13266db3"
+  },
+  "format": "pid-rs/inert-negative-evidence-archive/v1",
+  "historical_census": {
+    "import_statements": 2110,
+    "imported_name_edges": 2295,
+    "operational_roots": 66,
+    "python_files": 186,
+    "selected_dynamic_calls": 165,
+    "static_launch_candidates": 1057,
+    "tracked_tree_entries": 1040
+  },
+  "integration_source": {
+    "commit": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d",
+    "parent": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+    "tree": "74030de0ec545e29fd35429dfc2c889f676dfc8d"
+  },
+  "omitted_derived_registry": {
+    "byte_length": 5473991,
+    "custody": "not_copied_derived_from_reachable_historical_tree",
+    "original_path": "audit/python-verifier-custody/registry-v1.json",
+    "reason": "stale_large_derived_inventory_adds_no_unique_reasoning_and_must_not_appear_current",
+    "sha256": "ce11224f6fb95246a43dd36c24da57501f3854bf2f667c483f99125d751f016a",
+    "source_blob_oid": "a7a101bff380e64f18fcba2b9cc0bd5b61ee6af9"
+  },
+  "payloads": [
+    {
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/design-record.md.txt",
+      "byte_length": 13521,
+      "executable": false,
+      "id": "design-record",
+      "original_path": "audit/python-verifier-custody/DESIGN_RECORD.md",
+      "role": "historical_process_design_never_current_policy_or_authority",
+      "sha256": "cb746945bb08a4d81f2589d196c2b25027c9616c6478245be5a774740f8a9e04",
+      "source_blob_oid": "195957e348da8693be42af195d2937395fe0eb92",
+      "source_path": "audit/python-verifier-custody/DESIGN_RECORD.md"
+    },
+    {
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/documentation.md.txt",
+      "byte_length": 30366,
+      "executable": false,
+      "id": "documentation",
+      "original_path": "audit/python-verifier-custody/README.md",
+      "role": "historical_explanation_never_current_documentation_or_readme",
+      "sha256": "606979db778f8feb088414324b0c2a20f35ce19540db6e919381137eff7745f7",
+      "source_blob_oid": "2b04ea9d375851c8d9db27612b18d0c4741e2738",
+      "source_path": "audit/python-verifier-custody/README.md"
+    },
+    {
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/registry-schema.json.txt",
+      "byte_length": 27352,
+      "executable": false,
+      "id": "registry-schema",
+      "original_path": "audit/schemas/python-verifier-custody-registry-v1.schema.json",
+      "role": "historical_data_model_never_current_schema_authority",
+      "sha256": "b0cfbade21a48512a92fc0e5fa1bf03fee66a040a36380fe244a9b26c25ddd2e",
+      "source_blob_oid": "9b7879e39cc0fcc0da0365c6d607869b084fe79a",
+      "source_path": "audit/schemas/python-verifier-custody-registry-v1.schema.json"
+    },
+    {
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/inventory-checker.py.txt",
+      "byte_length": 56806,
+      "executable": false,
+      "id": "inventory-checker",
+      "original_path": "scripts/check-python-verifier-custody-inventory.py",
+      "role": "historical_static_inventory_prototype_never_execute_or_treat_as_current",
+      "sha256": "0bfb58d68e594329be191f567f33ab50e2965220a9d6a5324d0d42f4f02da4c4",
+      "source_blob_oid": "272b9f451a98c6e4ef89321bf570f625a0d8dc63",
+      "source_path": "scripts/check-python-verifier-custody-inventory.py",
+      "syntax_language": "python"
+    },
+    {
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/inventory-checker-self-test.py.txt",
+      "byte_length": 14132,
+      "executable": false,
+      "id": "inventory-checker-self-test",
+      "original_path": "scripts/check-python-verifier-custody-inventory-self-test.py",
+      "role": "historical_hostile_suite_never_execute_or_infer_completeness",
+      "sha256": "866b704f5790f679e2d1454b2803d36906eadd0ecb7cebcc75a9cf65ced43162",
+      "source_blob_oid": "2b3cf3f2992a55c65d75290743b23244f7fa6f15",
+      "source_path": "scripts/check-python-verifier-custody-inventory-self-test.py",
+      "syntax_language": "python"
+    }
+  ],
+  "process_lessons": [
+    "stored_source_is_not_loaded_source",
+    "loaded_source_is_not_executed_source",
+    "execution_is_not_result_correctness",
+    "result_correctness_is_not_mathematical_or_scientific_validity",
+    "unknown_import_launch_and_process_edges_remain_open",
+    "hostile_tests_show_named_fault_sensitivity_not_completeness"
+  ],
+  "replay": {
+    "archived_checker_executed": false,
+    "archived_self_test_executed": false,
+    "current_registry_generated": false,
+    "validation": "integrity_and_python_syntax_only"
+  },
+  "scope": {
+    "current_inventory_authority": false,
+    "execution_custody_closed": false,
+    "implementation_activated": false,
+    "mathematical_authority": false,
+    "scientific_novelty_claimed": false
+  }
+}

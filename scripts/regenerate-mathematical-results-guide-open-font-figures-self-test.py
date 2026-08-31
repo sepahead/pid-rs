@@ -45,8 +45,11 @@ EXPECTED_FONTS = (
 EXPECTED_OUTPUTS = {
     "semantic-firewall.pdf",
     "result-evidence-map.pdf",
+    "common-radius-small-ball-bridge.pdf",
     "audit-coordinate-crosswalk.pdf",
     "source-cylinder-factorization.pdf",
+    "quantizer-cardinality.pdf",
+    "represented-sum-boundary.pdf",
     "open-font-regeneration-receipt.json",
 }
 EXPECTED_LICENSE_ARTIFACTS = (

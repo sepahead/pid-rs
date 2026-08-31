@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate four publication figure PDFs with an exact open-font set.
+"""Regenerate seven publication figure PDFs with an exact open-font set.
 
 This is a candidate-generation tool, not a canonical refresh command.  It
 requires a new output directory outside the repository, renders every SVG
@@ -102,8 +102,19 @@ FIGURE_SPECS = (
     },
     {
         "source": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
-        "source_sha256": "bb315a5282dce90a25988f92ab7b5ecf6a8fe530d33de1ddaef8a81ca2e1a775",
+        "source_sha256": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7",
         "output": "result-evidence-map.pdf",
+        "font_programs": {
+            "SourceSansPro-Semibold",
+            "SourceSansPro-Bold",
+        },
+        "css_family": 'font-family: "Source Sans Pro";',
+        "css_weights": {600, 700},
+    },
+    {
+        "source": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
+        "source_sha256": "db7c44960fdbad22586e9fbb793deb1944991ff155ceeb13efb9e86774e7a388",
+        "output": "common-radius-small-ball-bridge.pdf",
         "font_programs": {
             "SourceSansPro-Regular",
             "SourceSansPro-Semibold",
@@ -127,6 +138,32 @@ FIGURE_SPECS = (
         "font_programs": {"LMSans10-Regular", "LMSans10-Bold"},
         "css_family": "'Latin Modern Sans'",
         "css_weights": {400, 700},
+    },
+    {
+        "source": "audit/formal/latex/figures/numerical-assurance/quantizer-cardinality.svg",
+        "source_sha256": "4226063f230341e0f3287ba8217fde62ddb5e9838cd84072d3578cf99531bd36",
+        "output": "quantizer-cardinality.pdf",
+        "font_programs": {
+            "SourceSansPro-Regular",
+            "SourceSansPro-Semibold",
+            "SourceSansPro-Bold",
+            "LMSans10-Regular",
+        },
+        "css_family": 'font-family: "Source Sans Pro";',
+        "css_weights": {400, 600, 700},
+    },
+    {
+        "source": "audit/formal/latex/figures/numerical-assurance/represented-sum-boundary.svg",
+        "source_sha256": "142ff6540f13be02d88a5db09d0f909aac3fa43e653f0d956a093802d0e1d217",
+        "output": "represented-sum-boundary.pdf",
+        "font_programs": {
+            "SourceSansPro-Regular",
+            "SourceSansPro-Semibold",
+            "SourceSansPro-Bold",
+            "LMSans10-Regular",
+        },
+        "css_family": 'font-family: "Source Sans Pro";',
+        "css_weights": {400, 600, 700},
     },
 )
 
@@ -710,7 +747,7 @@ def validate_output_request(raw: str, repository_root: Path) -> tuple[Path, tupl
 
 def parse_arguments(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate non-canonical open-font PDF candidates for four publication SVGs."
+        description="Generate non-canonical open-font PDF candidates for seven publication SVGs."
     )
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--texmf-dist", required=True)
@@ -1001,7 +1038,7 @@ def main(argv: list[str]) -> int:
 
     if not published:
         fail("candidate publication did not complete")
-    print(f"OK: wrote four exact-open-font candidate PDFs to {output}")
+    print(f"OK: wrote seven exact-open-font candidate PDFs to {output}")
     print("OK: independent render passes are byte-identical; Pandoc was not used")
     return 0
 

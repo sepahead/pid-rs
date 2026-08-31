@@ -121,8 +121,8 @@ validate_pdf() {
   local text="$tmp_root/$label.txt"
 
   LC_ALL=C pdfinfo "$candidate" >"$info"
-  grep -Eq '^Pages:[[:space:]]+47$' "$info" || {
-    echo "$CHECK_NAME failed: $label page count is not the reviewed 47 pages" >&2
+  grep -Eq '^Pages:[[:space:]]+46$' "$info" || {
+    echo "$CHECK_NAME failed: $label page count is not the reviewed 46 pages" >&2
     exit 1
   }
   for required_info in \
@@ -204,7 +204,7 @@ validate_pdf() {
       }
     }
     END {
-      expected["AvenirNext-Bold"] = 11
+      expected["AvenirNext-Bold"] = 10
       expected["AvenirNext-Medium"] = 7
       expected["LMMonoLt10-Regular"] = 1
       expected["LMRoman10-Bold"] = 2
@@ -226,7 +226,7 @@ validate_pdf() {
         if (family_count[family] != expected[family]) bad = 1
       for (family in family_count)
         if (!(family in expected)) bad = 1
-      if (rows != 58 || cid_type0c != 20 || truetype != 19 || type3 != 19) bad = 1
+      if (rows != 56 || cid_type0c != 20 || truetype != 18 || type3 != 18) bad = 1
       exit bad ? 1 : 0
     }
   ' "$fonts" || {
@@ -301,7 +301,7 @@ def pdf_boolean_is_true(value):
 if not pdf_boolean_is_true(BooleanObject(True)) or pdf_boolean_is_true(BooleanObject(False)):
     fail("pypdf BooleanObject semantics changed")
 
-if len(reader.pages) != 47:
+if len(reader.pages) != 46:
     fail("page count changed")
 trailer_ids = reader.trailer.get("/ID")
 if not isinstance(trailer_ids, ArrayObject) or len(trailer_ids) != 2:
@@ -522,10 +522,10 @@ def walk(value, where):
 
 walk(root, "catalog")
 
-if len(type3_identities) != 19 or len(type3_shapes) != 19:
-    fail("Type 3 spacing-shim inventory is not exactly 19 fonts")
+if len(type3_identities) != 18 or len(type3_shapes) != 18:
+    fail("Type 3 spacing-shim inventory is not exactly 18 fonts")
 width_profile = Counter(round(shape["widths"][0], 6) for shape in type3_shapes)
-if width_profile != Counter({0.25: 18, 0.602051: 1}):
+if width_profile != Counter({0.25: 17, 0.602051: 1}):
     fail(f"Type 3 spacing-width profile changed: {dict(width_profile)}")
 
 # Local hostile canaries ensure that the narrow Type 3 exception cannot drift
@@ -560,7 +560,7 @@ def collect_reachable_type3(value, seen, found):
         for child in value:
             collect_reachable_type3(child, seen, found)
 
-expected_type3_pages = {4: 5, 17: 6, 22: 8}
+expected_type3_pages = {4: 4, 17: 6, 22: 8}
 observed_type3_pages = {}
 for page_number, page in enumerate(reader.pages, start=1):
     found = set()
@@ -692,8 +692,8 @@ LC_ALL=C pdftoppm -r 110 -png "$PDF" "$render_dir/page" >/dev/null 2>"$tmp_root/
   exit 1
 }
 render_count="$(find "$render_dir" -type f -name 'page-*.png' | awk 'END {print NR + 0}')"
-[[ "$render_count" -eq 47 ]] || {
-  echo "$CHECK_NAME failed: rendered page count is $render_count, expected 47" >&2
+[[ "$render_count" -eq 46 ]] || {
+  echo "$CHECK_NAME failed: rendered page count is $render_count, expected 46" >&2
   exit 1
 }
 find "$render_dir" -type f -name 'page-*.png' -size 0 -print -quit | grep -q . && {
@@ -701,5 +701,5 @@ find "$render_dir" -type f -name 'page-*.png' -size 0 -print -quit | grep -q . &
   exit 1
 }
 
-printf 'OK: %s mode=%s relation=%s sha256=%s pages=47 rendered=47\n' \
+printf 'OK: %s mode=%s relation=%s sha256=%s pages=46 rendered=46\n' \
   "$PDF" "$MODE" "$relation" "$(shasum -a 256 "$PDF" | awk '{print $1}')"

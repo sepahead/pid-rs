@@ -61,6 +61,19 @@ PROFILES: Final[dict[str, dict[str, Any]]] = {
             "tree": "4f6fddb80754645cf6fa0fa48cdb82db457bb478",
         },
     },
+    "python-verifier-custody-m0-20260830": {
+        "index": "audit/archive/python-verifier-custody-m0-20260830/INDEX.json",
+        "index_bytes": 5486,
+        "index_sha256": "36274ec0ae8433b1e6a064dcb4277434fc76a2f2ac7f8d4abeb47f07c9483909",
+        "semantic_sha256": "eff8b60bd5651d3448b3a6e7ee8b724677efc0766569b9d268c8fc7f939c9322",
+        "payloads": 5,
+        "authority_role": "inert_historical_process_custody_prototype_never_current_authority",
+        "integration_source": {
+            "commit": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d",
+            "parent": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+            "tree": "74030de0ec545e29fd35429dfc2c889f676dfc8d",
+        },
+    },
 }
 
 
@@ -539,6 +552,105 @@ def validate_archive(root: Path, archive_id: str, profile: dict[str, Any]) -> tu
                     stat.S_ISREG(metadata.st_mode),
                     f"{group} successor {ordinal} is not a regular current-tree file",
                 )
+    elif archive_id == "python-verifier-custody-m0-20260830":
+        require(
+            index.get("historical_census")
+            == {
+                "import_statements": 2110,
+                "imported_name_edges": 2295,
+                "operational_roots": 66,
+                "python_files": 186,
+                "selected_dynamic_calls": 165,
+                "static_launch_candidates": 1057,
+                "tracked_tree_entries": 1040,
+            },
+            "Python custody historical census drift",
+        )
+        require(
+            index.get("current_drift_probe")
+            == {
+                "import_statements": 2286,
+                "imported_name_edges": 2530,
+                "operational_roots": 73,
+                "python_files": 201,
+                "selected_dynamic_calls": 176,
+                "static_launch_candidates": 1138,
+                "status": "diagnostic_non_authoritative",
+                "worktree_date": "2026-08-31",
+            },
+            "Python custody current diagnostic probe was promoted or changed",
+        )
+        require(
+            index.get("omitted_derived_registry")
+            == {
+                "byte_length": 5473991,
+                "custody": "not_copied_derived_from_reachable_historical_tree",
+                "original_path": "audit/python-verifier-custody/registry-v1.json",
+                "reason": (
+                    "stale_large_derived_inventory_adds_no_unique_reasoning_and_"
+                    "must_not_appear_current"
+                ),
+                "sha256": (
+                    "ce11224f6fb95246a43dd36c24da57501f3854bf2f667c483f99125d751f016a"
+                ),
+                "source_blob_oid": "a7a101bff380e64f18fcba2b9cc0bd5b61ee6af9",
+            },
+            "Python custody omitted derived-registry binding drift",
+        )
+        require(
+            index.get("process_lessons")
+            == [
+                "stored_source_is_not_loaded_source",
+                "loaded_source_is_not_executed_source",
+                "execution_is_not_result_correctness",
+                "result_correctness_is_not_mathematical_or_scientific_validity",
+                "unknown_import_launch_and_process_edges_remain_open",
+                "hostile_tests_show_named_fault_sensitivity_not_completeness",
+            ],
+            "Python custody process-lesson boundary drift",
+        )
+        require(
+            index.get("replay")
+            == {
+                "archived_checker_executed": False,
+                "archived_self_test_executed": False,
+                "current_registry_generated": False,
+                "validation": "integrity_and_python_syntax_only",
+            },
+            "Python custody inert replay boundary drift",
+        )
+        require(
+            index.get("scope")
+            == {
+                "current_inventory_authority": False,
+                "execution_custody_closed": False,
+                "implementation_activated": False,
+                "mathematical_authority": False,
+                "scientific_novelty_claimed": False,
+            },
+            "Python custody non-authority scope drift",
+        )
+        require(
+            {payload["id"]: payload["role"] for payload in payloads}
+            == {
+                "design-record": (
+                    "historical_process_design_never_current_policy_or_authority"
+                ),
+                "documentation": (
+                    "historical_explanation_never_current_documentation_or_readme"
+                ),
+                "inventory-checker": (
+                    "historical_static_inventory_prototype_never_execute_or_treat_as_current"
+                ),
+                "inventory-checker-self-test": (
+                    "historical_hostile_suite_never_execute_or_infer_completeness"
+                ),
+                "registry-schema": (
+                    "historical_data_model_never_current_schema_authority"
+                ),
+            },
+            "Python custody payload roles drift",
+        )
 
     return len(payloads), python_payloads
 

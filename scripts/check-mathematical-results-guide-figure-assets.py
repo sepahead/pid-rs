@@ -40,11 +40,31 @@ EXPECTED_FIGURES = (
     },
     {
         "source": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
-        "source_sha256": "bb315a5282dce90a25988f92ab7b5ecf6a8fe530d33de1ddaef8a81ca2e1a775",
+        "source_sha256": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7",
         "derivative": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
-        "derivative_sha256": "41d591a7e75b4d1fb44dad06671cf6a21256dc1fcf958b304419012fcc30a3c8",
-        "pdf_bytes": 138292,
-        "media_box_tokens": ["0", "0", "510.23622", "419.527559"],
+        "derivative_sha256": "154ffaa4342fb85096e7d585a59fc81c565d7205a128902d7ede141541617acc",
+        "pdf_bytes": 90737,
+        "media_box_tokens": ["0", "0", "510.23622", "300.472441"],
+        "css_family": "Source Sans Pro",
+        "css_weights": {600, 700},
+        "font_inventory": [
+            {"subtype": "Type1", "postscript_name": "SourceSansPro-Bold"},
+            {"subtype": "Type1", "postscript_name": "SourceSansPro-Semibold"},
+        ],
+    },
+    {
+        "source": (
+            "audit/formal/latex/figures/mathematical-results-guide/"
+            "common-radius-small-ball-bridge.svg"
+        ),
+        "source_sha256": "db7c44960fdbad22586e9fbb793deb1944991ff155ceeb13efb9e86774e7a388",
+        "derivative": (
+            "audit/formal/latex/figures/mathematical-results-guide/"
+            "common-radius-small-ball-bridge.pdf"
+        ),
+        "derivative_sha256": "ab21e0a6d8a2bcdd373a4a527156add8790ab1656dfe09ddff8c3e68d1dcfd82",
+        "pdf_bytes": 92685,
+        "media_box_tokens": ["0", "0", "510.23622", "297.637795"],
         "css_family": "Source Sans Pro",
         "css_weights": {400, 600, 700},
         "font_inventory": [
@@ -102,15 +122,15 @@ EXPECTED_BINDINGS = {
             "audit/formal/latex/mathematical-results-guide/"
             "open-font-figure-regeneration-v1.json"
         ),
-        "sha256": "250929cb33988a5914c1c427f76a24f7827e70fb499cad0ca361101666e7f4d3",
+        "sha256": "43ef71196bc98d080afe87e35d4a912c6eb6ef1c27b96c1181502d26d165a235",
     },
     "regenerator": {
         "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
-        "sha256": "73d765c794167d206d6932084bb52e27cb503503407efc927f8ee261c3302b20",
+        "sha256": "a4200212964e49aafd6a33fd90e2afbb9ffb9337a84f73b09f33729bbd7da0e5",
     },
     "third_party_notice": {
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427",
+        "sha256": "6e4c22671de954d579c33b86e39f1bcc9e4c347942a9310508ba36c7cfcd8baa",
     },
 }
 EXPECTED_LICENSE_ARTIFACTS = [
@@ -736,7 +756,7 @@ def main(argv: list[str]) -> int:
 
     print(
         "Publication figure-asset check passed: "
-        "4 digest-bound static one-page open-font CFF derivatives; "
+        "5 digest-bound static one-page open-font CFF derivatives; "
         "regeneration closure remains declared cross-host incomplete."
     )
     return 0

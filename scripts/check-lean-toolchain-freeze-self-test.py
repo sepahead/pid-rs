@@ -422,7 +422,7 @@ def synthesize_pre_receipt_fixture(checker: ModuleType, destination: Path) -> No
                 "sha256": hashlib.sha256(expected_stdout).hexdigest(),
             }
     environment["repo_root_observed"] = current_root
-    receipt["active_claim_authority_sha256"] = checker.EXPECTED_ACTIVE_CLAIM_HASHES
+    receipt["active_claim_authority_sha256"] = checker.PRESERVED_R14_ACTIVE_CLAIM_HASHES
     receipt["active_configuration"] = checker.EXPECTED_CONFIG_HASHES
     receipt["active_resume_sha256"] = checker.EXPECTED_ACTIVE_RESUME_HASHES
     receipt["checker_sha256"] = checker.EXPECTED_CHECKER_HASHES
@@ -783,6 +783,30 @@ def mutate_collapse_historical_current_wiring_split(
     checker.PRESERVED_R14_OPERATIONAL_WIRING_HASHES = (
         checker.EXPECTED_OPERATIONAL_WIRING_HASHES
     )
+
+
+def mutate_receipt_repin_to_current_active_claims(
+    checker: ModuleType, root: Path
+) -> None:
+    canonical_json(
+        root / CURRENT_RECEIPT_RELATIVE,
+        lambda value: value.__setitem__(
+            "active_claim_authority_sha256",
+            dict(checker.EXPECTED_ACTIVE_CLAIM_HASHES),
+        ),
+    )
+
+
+def mutate_preserved_r14_active_claim_digest(checker: ModuleType, _root: Path) -> None:
+    checker.PRESERVED_R14_ACTIVE_CLAIM_HASHES[
+        "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md"
+    ] = "0" * 64
+
+
+def mutate_collapse_historical_current_active_claim_split(
+    checker: ModuleType, _root: Path
+) -> None:
+    checker.PRESERVED_R14_ACTIVE_CLAIM_HASHES = checker.EXPECTED_ACTIVE_CLAIM_HASHES
 
 
 def mutate_self_test_with_coordinated_receipt_hash(
@@ -1146,12 +1170,14 @@ def refresh_active_claim_binding(
 ) -> None:
     digest = hashlib.sha256((root / relative).read_bytes()).hexdigest()
     checker.EXPECTED_ACTIVE_CLAIM_HASHES[relative] = digest
-    canonical_json(
-        root / CURRENT_RECEIPT_RELATIVE,
-        lambda value: value["active_claim_authority_sha256"].__setitem__(
-            relative, digest
-        ),
-    )
+    if relative in checker.PRESERVED_R14_ACTIVE_CLAIM_HASHES:
+        checker.PRESERVED_R14_ACTIVE_CLAIM_HASHES[relative] = digest
+        canonical_json(
+            root / CURRENT_RECEIPT_RELATIVE,
+            lambda value: value["active_claim_authority_sha256"].__setitem__(
+                relative, digest
+            ),
+        )
 
 
 def mutate_ci_wiring(_checker: ModuleType, root: Path) -> None:
@@ -1304,6 +1330,20 @@ def mutate_m1a_hosted_recovery_self_test_wiring(
     )
 
 
+def mutate_ksg_revision4_terminal_index_checker_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(root, "scripts/check-ksg-revision4-terminal-index.py")
+
+
+def mutate_ksg_revision4_terminal_index_self_test_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root, "scripts/check-ksg-revision4-terminal-index-self-test.py"
+    )
+
+
 def mutate_post_v2_schema_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(
         root, "audit/schemas/post-commit-source-state-v2.schema.json"
@@ -1361,6 +1401,18 @@ def mutate_retired_v1_checker_recreated(_checker: ModuleType, root: Path) -> Non
 def mutate_retired_v1_self_test_recreated(_checker: ModuleType, root: Path) -> None:
     (root / "scripts/check-post-commit-source-state-v1-self-test.py").write_text(
         "# retired path unexpectedly recreated\n", encoding="utf-8"
+    )
+
+
+def mutate_current_ksg_revision_index(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(root, "claims/KSG-INTEGER-HARMONIC-001/revision-index.md")
+
+
+def mutate_current_sx_count_event_revision_index(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(
+        root, "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md"
     )
 
 
@@ -3115,6 +3167,21 @@ MUTATIONS: tuple[Mutation, ...] = (
         "preserved-r14/current-C12 operational path split drifted",
     ),
     (
+        "historical-receipt-repin-to-current-active-claims",
+        mutate_receipt_repin_to_current_active_claims,
+        "historical r14 active claim authority drifted",
+    ),
+    (
+        "preserved-r14-active-claim-digest",
+        mutate_preserved_r14_active_claim_digest,
+        "historical r14 active claim authority drifted",
+    ),
+    (
+        "collapsed-historical-current-active-claim-split",
+        mutate_collapse_historical_current_active_claim_split,
+        "preserved-r14/current active-claim authority split drifted",
+    ),
+    (
         "final-custody-missing-path",
         mutate_final_custody_missing,
         "replay custody-gate exact path set drifted",
@@ -3310,6 +3377,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         "operational wiring digest mismatch: scripts/check-ksg-m1a-hosted-recovery-self-test.py",
     ),
     (
+        "ksg-revision4-terminal-index-checker-operational-wiring-drift",
+        mutate_ksg_revision4_terminal_index_checker_wiring,
+        "operational wiring digest mismatch: scripts/check-ksg-revision4-terminal-index.py",
+    ),
+    (
+        "ksg-revision4-terminal-index-self-test-operational-wiring-drift",
+        mutate_ksg_revision4_terminal_index_self_test_wiring,
+        "operational wiring digest mismatch: scripts/check-ksg-revision4-terminal-index-self-test.py",
+    ),
+    (
         "post-v2-schema-operational-wiring-drift",
         mutate_post_v2_schema_wiring,
         "operational wiring digest mismatch: audit/schemas/post-commit-source-state-v2.schema.json",
@@ -3368,6 +3445,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         "retired-v1-self-test-recreated",
         mutate_retired_v1_self_test_recreated,
         "retired operational path unexpectedly exists: scripts/check-post-commit-source-state-v1-self-test.py",
+    ),
+    (
+        "current-ksg-revision-index-drift",
+        mutate_current_ksg_revision_index,
+        "active claim authority digest mismatch: claims/KSG-INTEGER-HARMONIC-001/revision-index.md",
+    ),
+    (
+        "current-sx-count-event-revision-index-drift",
+        mutate_current_sx_count_event_revision_index,
+        "active claim authority digest mismatch: claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md",
     ),
     (
         "coordinated-agents-current-pointer-rewind",

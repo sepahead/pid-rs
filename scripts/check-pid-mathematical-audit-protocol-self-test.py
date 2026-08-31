@@ -116,31 +116,31 @@ mutation["objects"][0]["source_observation_ids"] = mutation["objects"][3][
 rejected("Ehrlich errata transferred to MGW", mutation)
 
 mutation = copy.deepcopy(view)
-mutation["objects"][5]["source_observation_ids"] = mutation["objects"][3][
+mutation["objects"][6]["source_observation_ids"] = mutation["objects"][3][
     "source_observation_ids"
 ]
 rejected("component observations directly credited to PID2", mutation)
 
 mutation = copy.deepcopy(view)
-mutation["objects"][5]["component_source_review_routes"][0][
+mutation["objects"][6]["component_source_review_routes"][0][
     "construction_id"
 ] = "mgw-categorical-shared-exclusions"
 rejected("PID2 component route construction changed", mutation)
 
 mutation = copy.deepcopy(view)
-mutation["objects"][6]["component_source_review_routes"][0][
+mutation["objects"][7]["component_source_review_routes"][0][
     "via_object_id"
 ] = "mgw-categorical-shared-exclusions"
 rejected("PID3 component route via-object changed", mutation)
 
 mutation = copy.deepcopy(view)
-mutation["objects"][7]["component_source_review_routes"][0][
+mutation["objects"][8]["component_source_review_routes"][0][
     "source_observation_ids"
 ].pop()
 rejected("PID3 component route observation dropped", mutation)
 
 mutation = copy.deepcopy(view)
-mutation["objects"][7]["component_source_review_routes"][0][
+mutation["objects"][8]["component_source_review_routes"][0][
     "transfer_status"
 ] = "review_credit_transferred"
 rejected("PID3 component route credit invented", mutation)
@@ -160,7 +160,19 @@ mutation["objects"][2]["boundaries"] = ["Construction proved false."]
 rejected("open Schick-Poland obligation escalated", mutation)
 
 mutation = copy.deepcopy(view)
-mutation["objects"][4]["assurance_families"][0]["edges"][0]["status"] = "established"
+mutation["objects"][4]["catalog_method_ids"].append(
+    "shared-exclusions.continuous-report"
+)
+rejected("estimator row transferred to analytic population bridge", mutation)
+
+mutation = copy.deepcopy(view)
+mutation["objects"][4]["assurance_families"] = copy.deepcopy(
+    mutation["objects"][3]["assurance_families"]
+)
+rejected("estimator assurance transferred to analytic population bridge", mutation)
+
+mutation = copy.deepcopy(view)
+mutation["objects"][5]["assurance_families"][0]["edges"][0]["status"] = "established"
 rejected("assurance edge promoted", mutation)
 
 mutation = copy.deepcopy(view)
@@ -317,4 +329,4 @@ with tempfile.TemporaryDirectory(prefix="pid-rs-pid-protocol-") as temporary:
     else:
         raise SystemExit("symlink method catalog was accepted")
 
-print(f"PID protocol self-test: PASS ({rejections}/28 hostile cases rejected)")
+print(f"PID protocol self-test: PASS ({rejections}/30 hostile cases rejected)")

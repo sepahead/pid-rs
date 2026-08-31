@@ -33,10 +33,14 @@ else
   MODE=native-absent
 fi
 
-TEST_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-hgeneric-uri-contents-self-test.XXXXXX")"
+TMP_BASE="${TMPDIR:-/tmp}"
+while [[ "$TMP_BASE" != "/" && "$TMP_BASE" == */ ]]; do
+  TMP_BASE="${TMP_BASE%/}"
+done
+TEST_ROOT="$(mktemp -d "${TMP_BASE%/}/pid-rs-hgeneric-uri-contents-self-test.XXXXXX")"
 cleanup() {
   case "$TEST_ROOT" in
-    "${TMPDIR:-/tmp}"/pid-rs-hgeneric-uri-contents-self-test.*)
+    "${TMP_BASE%/}"/pid-rs-hgeneric-uri-contents-self-test.*)
       rm -rf -- "$TEST_ROOT"
       ;;
     *)

@@ -64,24 +64,32 @@ contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machi
 is [`method-catalog.json`](method-catalog.json).
 
 The scoped, reader-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
-[human PDF](output/pdf/mathematical-results-guide.pdf) map eight result families to their exact
+[human PDF](output/pdf/mathematical-results-guide.pdf) map nine result families to their exact
 objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
-for the method catalog, claim packets, or detailed proofs. The current hosted cross-toolchain route
-has a separate
+for the method catalog, claim packets, or detailed proofs. The current 23-page v2 guide has an
+exact same-toolchain gate and a reviewed, source-specific Ubuntu 24.04/x86 cross-toolchain profile.
+Cross mode accepts that profile only under its closed producer tuple and retained raw-fixture
+relation; exact mode remains same-toolchain byte identity. The retained v2 fixture was captured in
+translated local x86 execution, so a native GitHub-hosted Ubuntu 24.04 replay remains pending and
+receives no hosted-execution credit. The current retained fixture is 744,745 bytes with SHA-256
+`b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6`. Its exact object profile
+binds 56 external targets, 217 navigation records, 65 named destinations, 18 outlines, 107 link
+annotations, 1,050 structure elements, 658 marked-content references, 97 object references, 120
+ParentTree mappings, and 2,248 structure records. The
+[v2 raw-profile receipt](audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json)
+binds that narrow claim. The separate historical
 [Pandoc 3.10.2 raw-profile receipt](audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json)
-and one retained 581,296-byte fixture; two independently downloaded hosted artifacts were
-byte-identical. The dispatcher selects this source-specific profile from exact Pandoc and LuaHBTeX
-version/digest facts plus direct command, canonical renderer, Kpathsea, and format-path/security
-facts. Each run captures and rechecks `/usr/bin/kpsewhich` and the selected `lualatex.fmt` in its
-pre/post producer tuples. The `kpsewhich` digest is not a frozen cross-run authentication pin, and
-the format size and SHA-256 are run evidence rather than profile selectors. A candidate must equal
-the fixture or differ only in its strict duplicated final-trailer ID payloads; both complete strict
-structure reports must then agree. Default exact mode remains a raw rebuilt-versus-committed byte
-comparison and has no live dependency on either cross-profile package. This bounded PDF-engineering
-observation is not general producer equivalence, authenticity, PDF/UA, mathematical correctness,
-estimator validation, or scientific credit.
+and its retained 581,296-byte fixture preserve a 16-page v1 observation. Two independently
+downloaded hosted artifacts were byte-identical. The frozen v1 dispatcher logic records exact
+Pandoc and LuaHBTeX version/digest facts plus direct command, canonical renderer, Kpathsea, and
+format-path/security facts. It also records the distinction between per-run `kpsewhich`/format
+evidence and frozen selectors. Those bytes remain available for historical replay, but they cannot
+admit or certify the expanded v2 document. Exact v2 mode rebuilds from current sources, applies the
+current object and rendering policy, and requires raw equality with the committed PDF. This bounded
+PDF-engineering evidence is not general producer equivalence, authenticity, PDF/UA, mathematical
+correctness, estimator validation, or scientific credit.
 
 A separate
 [bounded Pandoc 3.1.3 portability receipt](audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json)
@@ -115,9 +123,11 @@ its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf)
 PrimeGaps proof-engineering review, semantic nontransfer firewall, exact categorical SxPID3
 proposal, autoresearch protocol, formal-tool limits, and durable branch/worktree promotion process.
 Its [machine-readable transfer ledger](audit/evidence/primegaps-to-pid-transfer-ledger-v1.json)
-binds the 20-lens review and exact anchors. The SxPID3 Programs A--E remain open; these artifacts are
-a research design and audit record, not an accepted higher-source certificate or evidence for KSG,
-continuous PID, population inference, or scientific novelty.
+binds the dated historical 20-lens review and exact anchors. A separately identified 31 August 2026
+closure applies 50 current adversarial lenses and compares ten materially distinct routes without
+rewriting that ledger. The SxPID3 Programs A--E remain open; these artifacts are a research design
+and audit record, not an accepted higher-source certificate or evidence for KSG, continuous PID,
+population inference, or scientific novelty.
 
 The [ecosystem capability and gap matrix](ECOSYSTEM_CAPABILITIES.md) projects this catalog and the
 assurance registry onto four exact historical consumer snapshots. Its
@@ -149,7 +159,7 @@ Selected boundaries that are easy to confuse:
 | Finite-alphabet plug-in convergence | New project-defined theoretical-validation note for existing paper-defined PID functionals and selected Shannon quantities. It defines no new estimator and makes no scientific-novelty claim. See the [proof and evidence boundary](FINITE_ALPHABET_PLUGIN_CONVERGENCE.md). |
 | Support-change-tolerant averaged categorical SxPID continuity | Project-defined exact-real validation of the paper-defined categorical functional. On one fixed complete finite Cartesian-product alphabet and fixed full redundancy lattice, joint-law-averaged informative, misinformative, and signed net cumulatives and atoms admit explicit total-variation moduli across support creation and deletion without a positive population cell-mass floor. Pointwise disappearing-key values, changing alphabets or quantizers, binary64 refinement, estimator calibration, scientific priority, and consumer validity remain outside the claim. |
 | SxPID concentration under a dependency coloring | New project-defined validation for the paper-defined categorical SxPID functional. “Coloring” qualifies the sampling theorem, not PID: there is no measure called “colored PID,” and the label is not attributed to Makkeh, Gutknecht, or Wibral. It adds no estimator or public API. It includes one-$\Lambda$ cumulative bounds, general-source Möbius-row bounds, and complete two-source bounds. Exact diamond analysis sharpens only the synergy modulus to $\Lambda-\eta$. The [derivation](DEPENDENCY_COLORED_SXPID_CONCENTRATION.md), [LaTeX source](audit/formal/latex/dependency-colored-sxpid-concentration.tex), [PDF](output/pdf/dependency-colored-sxpid-concentration.pdf), [Lean local-continuity core](audit/formal/lean/PidFiniteConvergence/LocalContinuity.lean), [fraction-exact and high-precision generator](scripts/generate-dependency-colored-sxpid-oracle.py), and [bounded Rust implementation comparison](crates/pid-core/tests/dependency_colored_sxpid_oracle.rs) state separate evidence boundaries. |
-| Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, and cross-fit contracts. |
+| Continuous shared exclusions / PID2 | Ehrlich et al. define the redundancy estimator and two-source atom reconstruction. pid-rs implements that paper-defined core experimentally and adds project-defined report, split-sample, cross-fit, exact-reduction, and represented-coordinate compatibility contracts. The [revision-4 arithmetic assurance](PID2_REPRESENTED_COORDINATE_ASSURANCE.md) and its [checked PDF](output/pdf/pid2-represented-coordinate-assurance.pdf) derive the represented-coordinate policy, exact witnesses, counterexamples, checker boundary, costs, and nonclaims. They check bounded binary64 fixtures, hostile mutations, and binding parity; they do not validate estimator consistency, population support, calibration, external replication, or all possible input tuples. |
 | Incomplete / full continuous PID3 | The incomplete result is a project-defined availability diagnostic, not a complete PID. The full lattice is research-only reference reproduction whose mixed-dimensional branches lack a general consistency result. |
 | General mixed-variable shared exclusions | Schick-Poland et al.'s arXiv v2 proposes an auxiliary-indicator/RCP/Radon–Nikodým construction for a finite source family under stated Radon/Borel premises, intended to cover discrete, continuous, and mixed variables. pid-rs neither implements it nor adjudicates pointwise existence or version-independence at null conditioning events or for target-local Radon–Nikodým representatives. Barà et al.'s narrower discrete-target/continuous-source estimator is not implemented here. |
 | Heuristics / Lorentz KSG | Heuristics are project-defined research baselines; Lorentz KSG is a paper-derived research adaptation. Neither has a pid-rs consistency result for the claimed target setting. |
@@ -398,7 +408,7 @@ research families; opt-in features do not change their scientific status.
 | Partial continuous PID3 | Experimental incomplete diagnostic | Dynamically available coordinates are not a complete PID. |
 | Full continuous PID3 | Research-only | Mixed-dimensional branches lack a general consistency result. |
 | Hyperbolic pairwise KSG | Research-only | Correct geodesic distance code does not establish estimator consistency. |
-| Hyperbolic shared exclusions/PID | Unsupported | No product/disjunction estimator is provided. |
+| Hyperbolic shared exclusions/PID | Unsupported | No product/disjunction estimator is provided. A conditional population small-ball bridge does not change implementation status. |
 | Generic kNN bootstrap confidence intervals | Unsupported | Subsample percentiles are diagnostics, not calibrated confidence intervals. |
 | Train-split supervised PLS→held-out PID | Exploratory | Fit/select on training data and estimate on held-out evaluation data. |
 | Added Gaussian-noise provenance | Experimental project-defined software | Local Rust code exists. Python and run-log schema 2 do not expose it. It has no defining method paper. |
@@ -492,9 +502,10 @@ Categorical SxPID final empirical-PMF component averaging and selected two-sourc
 formulas now sum their already represented binary64 operands exactly and round once, ties-to-even;
 pointwise SxPID Möbius inversion remains compensated. This removes incidental operand-order
 effects only for those named final multisets, not estimator, logarithm, probability, or sampling
-error. The scoped counterexamples, rejected pointwise/$I_{\min}$ PID3 transfers, cost model,
-oracle boundary, and migration guidance are documented in
-[the numerical-assurance note](NUMERICAL_ASSURANCE.md).
+error. The complete bit-width and rounding derivations, scoped counterexamples, rejected
+pointwise/$I_{\min}$ PID3 transfers, cost model, oracle boundary, practical examples, and migration
+guidance are documented in the [numerical-assurance note](NUMERICAL_ASSURANCE.md) and its checked
+[PDF projection](output/pdf/numerical-assurance.pdf).
 
 Those SHA-256 preimages are reproducible outside Rust. Their NUL-terminated domains are
 `pid-rs/quantizer/training-input/f64-bits-le/v1\0`,
@@ -638,7 +649,9 @@ These estimators are not interchangeable with ground truth.
   not constitute a manifold-KSG consistency theorem; scalar/local APIs, concatenated invariants, and
   shared exclusions reject it. Lorentz KSG and geometry diagnostics use typed entry points under
   `experimental::hyperbolic`; enabling that feature does not add variants or fields to stable
-  types.
+  types. The [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md#a-proved-population-level-transfer-and-why-it-stops-there)
+  proves only a conditional common-radius population representation of Ehrlich's local formula.
+  It does not provide the missing estimator, product-manifold kernel, or PID implementation.
 - `sampled_four_point_delta_summary` reports a distribution over sampled quadruples. Its mean and
   quantiles are descriptive, and even its sampled maximum is only a lower bound on the
   sup-over-all-quadruples Gromov constant.
@@ -716,7 +729,12 @@ The suite triangulates analytic, external, and standalone reference paths with i
   [SMT-LIB](claims/KSG-INTEGER-HARMONIC-001/failures/smtlib-shape-and-snapshot-v4.md) failures
   separate scientific mutations from representation/checker controls and record the remaining
   human and implementation cuts. The bounded arithmetic core is scoped green; repository and
-  publication integration remain a 13-gate **NO-GO**.
+  publication integration remain a 13-gate **NO-GO**. The
+  [current revision index](claims/KSG-INTEGER-HARMONIC-001/revision-index.md) records that exact
+  composite-v12 qualification is terminal at C12 `01466e88b0550333c2718f1716289e9642e30dc6`,
+  with `Q12 = false`, `R12 = permanently_unissued`, and `L12 = not_adjudicated`. That operational
+  outcome neither refutes the scoped arithmetic result nor supplies integration credit; any future
+  lifecycle needs a separately specified evidence contract.
 - Two-source continuous $I_\cap^{\mathrm{sx}}$, plus the explicitly research-gated three-source
   reproduction, against the authors' public
   [`csxpid`](https://gitlab.gwdg.de/wibral/continuouspidestimator) implementation at pinned commit
@@ -988,10 +1006,11 @@ Project-authored material is licensed under either [MIT](LICENSE-MIT) or
 under [LPPL 1.3c or later](LICENSE-LPPL-1.3c), as its SPDX and exact upstream-provenance header
 records. These compatibility Works are not part of a published Cargo package.
 
-Third-party font material retains its applicable terms and notices. Four tracked static figure
-PDFs are used across the mathematical results guide and the separate SxPID3 source-marginal audit:
-the guide uses three, the SxPID3 paper uses two, and the crosswalk is shared. They contain embedded
-subsets of Source Sans Pro or Latin Modern Sans; see
+Third-party font material retains its applicable terms and notices. Seven tracked static figure
+PDFs are used across the mathematical results guide, the separate SxPID3 source-marginal audit,
+and the numerical-assurance note. The guide uses four, the SxPID3 paper uses two, the numerical
+note uses two, and the crosswalk is shared by the first two documents. They contain embedded
+subsets of Source Sans Pro, Latin Modern Sans, or both; see
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The five complete input font files are
 digest-selected during bounded regeneration and are not stored in this repository.
 Exact local copies of the observed Source Sans OFL file, GUST Font License, and Latin Modern v2.004

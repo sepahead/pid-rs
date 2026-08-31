@@ -145,7 +145,7 @@ Every material result is classified as follows.
 Label & Meaning \\
 \midrule
 \evidence{P} & Published theorem or definition in a primary source. \\
-\evidence{R} & Independent exact rederivation in this audit. \\
+\evidence{R} & Separate exact repository rederivation in this audit. \\
 \evidence{X} & Exact finite counterexample or exact finite witness. \\
 \evidence{B} & Bounded exhaustive or seeded computation; evidence, not a
 universal proof. \\
@@ -158,7 +158,7 @@ universal proof. \\
 The protocol was to freeze the native primitive; derive the lattice and
 reconstruction from events; separate semantics from numerical theorems; seek
 minimal exact counterexamples; enumerate bounded empirical laws with rational
-arithmetic; run independent executable witnesses; and apply the compatibility
+arithmetic; run the same witnesses through an implementation-distinct executable route; and apply the compatibility
 firewall in Section~\ref{sec:firewall}.  Each conclusion was reviewed through
 five lenses: definitional compatibility, theorem scope, executable refinement,
 numerical/statistical implications, and adversarial counterexamples.
@@ -785,9 +785,9 @@ The witness is a genuine warning against access-label/marginal-entropy
 descriptors as a complete representation.  It is not a contradiction of
 shared-exclusions PID\@.
 
-\subsection{Three independent executable and formal routes}
+\subsection{Three complementary, implementation-distinct but correlated lanes}
 
-The standard-library checker
+The standard-library Python lane
 \path{audit/tools/foundational_sxpid/check_lcr_relation_}\newline
 \mbox{\path{witness.py}}
 does not import \texttt{pid-rs}.  It:
@@ -802,7 +802,7 @@ does not import \texttt{pid-rs}.  It:
         descriptor vectors from the rows, proving those vectors equal;
   \item generates all eighteen nonempty antichains of the seven nonempty
         three-source subsets;
-  \item independently implements Equation~\eqref{eq:order};
+  \item separately implements Equation~\eqref{eq:order};
   \item counts all keyed equality-event unions and target intersections;
   \item performs exact M\"obius inversion in formal prime-exponent logarithms;
   \item verifies all local component atoms are constant across these two
@@ -815,20 +815,24 @@ does not import \texttt{pid-rs}.  It:
 Its full output is
 \path{audit/evidence/foundational-sxpid-lcr-exact-audit.json}, bound to the
 checker, generated rows, Rust regression, and Rust kernel by SHA-256 digests.
-The independent Rust route is
+The Rust lane is
 \path{crates/pid-core/tests/sxpid_relation_witness.rs}; it calls the public
 categorical kernel, checks every displayed atom and component, enforces the
 integer product identities, and rejects descriptor substitution.
 
-The third route is the generic Lean factorization firewall above.  Its proof
+The formal lane is the generic Lean factorization firewall above.  Its proof
 has no axioms in the kernel inventory.  The self-test kills removal of the
 factorization premise, replacement of the unequal-quantity premise by
 equality, and replacement of the unequal-atom premise by equality.  Three
 finite Bool/Unit countermodels show why the altered premises cannot support the
 original conclusions: equal descriptors alone need not equalize atoms, equal
 quantities can admit reconstruction, and equal atoms can admit factorization.
-This route proves the transfer logic, not the concrete Sx event calculation;
-the exact-rational and Rust routes supply that separate binding.
+This lane proves only the conditional transfer logic, not the concrete Sx
+event calculation; the Python exact-rational and Rust lanes compute that
+concrete witness.  All three lanes still depend on reviewed semantic cuts that
+connect the published constructions, descriptor map, Sx definitions, and
+tested conclusion.  They are implementation-distinct corroboration, not
+independent proofs of one end-to-end statement.
 
 At generation, the bound SHA-256 values were:
 \begin{itemize}
@@ -1000,7 +1004,9 @@ Descriptor-collision impossibility transfers to every antichain PID & False
 without a factorization theorem & \evidence{P,R,X,E},
 Equations~\eqref{eq:descriptor-factor}--\eqref{eq:factorization-refuted} \\
 Lyu refutes all lattice PID including Sx & Not established for Sx &
-Descriptor factorization fails and three routes agree \\
+Descriptor factorization fails; Python and Rust compute the witness, while
+Lean checks only the conditional firewall; all three lanes share reviewed
+semantic cuts \\
 SxPID is causal/authority-grade by itself & False/unsupported & Observational
 identification boundary \\
 Categorical SxPID is a defensible signed event-logical estimand & Yes under the
@@ -1026,14 +1032,17 @@ python3 -I -S scripts/check-lean-descriptor-factorization.py
 python3 -I -S scripts/check-lean-descriptor-factorization-self-test.py
 \end{verbatim}
 \smallskip
-\noindent At creation both Rust tests, the independent exact checker, and the Lean
+\noindent At creation both Rust tests, the Python exact checker, and the Lean
 factorization checks passed.  The
 rational/formal-log route derives event counts, order, atoms, and mutations
-without invoking the Rust implementation.  The Rust route independently
+without invoking the Rust implementation.  The Rust route separately
 exercises the public event/lattice kernel.  The Lean route proves the abstract
 transfer firewall while explicitly leaving the concrete descriptor/Sx binding
-to the two executable routes.
+to the two executable routes.  These implementation-distinct lanes share the
+reviewed semantic cuts stated in Section~7.5, so this record does not claim
+three logically independent end-to-end proofs.
 
+\clearpage
 \phantomsection
 \section*{Primary sources}
 \addcontentsline{toc}{section}{Primary sources}

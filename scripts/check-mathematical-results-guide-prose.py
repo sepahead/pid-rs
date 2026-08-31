@@ -26,19 +26,182 @@ BOUNDARY = (
 MAX_SENTENCE_WORDS = 25
 MAX_PARAGRAPH_SENTENCES = 6
 
+# Method catalog: validation.analytic-common-radius-manifold-sx-bridge
+# These exact source sentinels bind the narrow theorem and its stopping boundary.
+# They do not prove the theorem. They prevent an editorial rewrite from silently
+# dropping a premise, counterexample, gauge qualification, or explicit nonclaim.
+COMMON_RADIUS_BRIDGE_SENTINELS = (
+    (
+        "project-defined catalog status",
+        "repository-derived conditional lemma, catalogued as project-defined **[R]**",
+    ),
+    (
+        "project-defined contribution status",
+        "repository-derived contribution, catalogued as project-defined",
+    ),
+    (
+        "Ehrlich algebraic-form boundary",
+        "expression with the algebraic form of Ehrlich et al.'s bivariate analytic formula",
+    ),
+    (
+        "no Ehrlich manifold-lemma attribution",
+        "Ehrlich et al. define the analytic formula and relative precision, but they do not prove this manifold small-ball lemma.",
+    ),
+    (
+        "manifold-only implementation gap",
+        "Manifold estimator and manifold PID implementation remain open **[O]**",
+    ),
+    (
+        "boundary-counterexample status",
+        "Conditional population lemma **[R]** and boundary counterexamples **[X]**.",
+    ),
+    (
+        "pointwise joint-law premise",
+        r"Assume the joint law of $(T,S_1,S_2)$ is absolutely continuous with respect to $\nu\otimes\mu\otimes\mu$.",
+    ),
+    (
+        "pointwise source-marginal continuity",
+        r"Each $f_{S_i}$ is continuous at $s_i$.",
+    ),
+    (
+        "pointwise target-marginal continuity",
+        r"$f_T$ is continuous at $t$.",
+    ),
+    (
+        "pointwise source-target continuity",
+        r"Each $f_{T,S_i}$ is continuous at $(t,s_i)$.",
+    ),
+    (
+        "pointwise pair-overlap control",
+        r"A version of $f_{S_1,S_2}$ is essentially bounded on a neighbourhood of $(s_1,s_2)$.",
+    ),
+    (
+        "pointwise triple-overlap control",
+        r"A version of $f_{T,S_1,S_2}$ is essentially bounded on a neighbourhood of $(t,s_1,s_2)$.",
+    ),
+    (
+        "pointwise logarithm positivity",
+        r"$f_T(t)$ and both density sums in the following ratio are strictly positive.",
+    ),
+    (
+        "no-estimator boundary",
+        "It is not a new PID functional, an estimator, or a scientific-priority claim.",
+    ),
+    (
+        "overlap-only proof premise",
+        "The proof needs only the two displayed little-$o$ overlap conditions.",
+    ),
+    (
+        "boundedness is sufficient not necessary",
+        "Local essential boundedness is a convenient sufficient condition, not a necessary one.",
+    ),
+    (
+        "discarded overlap orders",
+        r"The discarded overlap terms are $O(r^{2d})$ and $O(r^{q+2d})$.",
+    ),
+    (
+        "retained union scales",
+        r"Positivity makes the retained union scales $\Theta(r^d)$ and $\Theta(r^{q+d})$.",
+    ),
+    (
+        "modern Clayton parameterization",
+        r"modern positive-parameter Clayton form at a fixed parameter $\theta>0$.",
+    ),
+    (
+        "Clayton provenance boundary",
+        "This form is equivalent to a reparameterization of Clayton's 1978 survival-association model:",
+    ),
+    (
+        "ordinary-copula semantic boundary",
+        "It is used here as an ordinary copula, with no survival-time semantics.",
+    ),
+    (
+        "Clayton density",
+        r"c_\theta(u,v)&=(1+\theta)(uv)^{-1-\theta} (u^{-\theta}+v^{-\theta}-1)^{-2-1/\theta}",
+    ),
+    (
+        "Clayton density normalization",
+        r"=1-2\varepsilon+C_\theta(\varepsilon,\varepsilon)\longrightarrow1.",
+    ),
+    (
+        "signed-mixture density",
+        r"f_{T,S_1,S_2}(t,x,y)= \frac{\alpha}{4}g_0(t)\mathbf 1_{\{|x|,|y|<1\}} +\frac{1-\alpha}{4}g_1(t)c_\theta(|x|,|y|)",
+    ),
+    (
+        "source-pair support indicators",
+        r"f_{S_1,S_2}(x,y) &=\tfrac{\alpha}{4}\mathbf 1_{\{|x|,|y|<1\}} +\tfrac{1-\alpha}{4}c_\theta(|x|,|y|) \mathbf 1_{\{0<|x|,|y|<1\}}",
+    ),
+    (
+        "essential-unboundedness inference",
+        "Its diagonal blow-up therefore persists on positive-measure open sets in every neighbourhood.",
+    ),
+    (
+        "source-pair singularity",
+        r"c_\theta(r,r)\sim(1+\theta)2^{-2-1/\theta}r^{-1}",
+    ),
+    (
+        "Clayton first-order overlap",
+        r"C_\theta(r,r)\sim\lambda r,\quad \lambda=2^{-1/\theta}>0.",
+    ),
+    (
+        "Clayton counterexample conclusion",
+        "The example does not prove that pair local boundedness is necessary.",
+    ),
+    (
+        "replacement overlap conclusion",
+        "It proves that some replacement condition must control the overlap.",
+    ),
+    (
+        "smooth-marginal insufficiency boundary",
+        "Why the displayed smooth marginals do not suffice.",
+    ),
+    (
+        "fixed-dimension gauge weights",
+        r"Radii $a_1r,a_2r$ in dimension $d$ produce weights $a_1^d,a_2^d$.",
+    ),
+    (
+        "gauge asymptotic weights",
+        r"$v_i(r)/a(r)\to\lambda_i\in(0,\infty)$.",
+    ),
+    (
+        "gauge overlap conditions",
+        r"$\Pr(E_{1,r}\cap E_{2,r})=o(a(r))$ and $\Pr(C_r\cap E_{1,r}\cap E_{2,r})=o(w_r a(r))$.",
+    ),
+    (
+        "unequal-dimension boundary",
+        "If $d_1<d_2$ and both branch-one coefficients are positive, branch one dominates.",
+    ),
+    (
+        "vanishing-coefficient boundary",
+        "If either coefficient vanishes, continuity alone does not determine which branch dominates or its replacement rate.",
+    ),
+    (
+        "equal-radius gauge boundary",
+        "Equal numeric source radii are therefore a gauge choice.",
+    ),
+    (
+        "global and PID nontransfer",
+        "global expectation interchange, PID-atom property, mixed-support result, or software refinement.",
+    ),
+    (
+        "generic metric-theorem nontransfer",
+        r"The source-union operation $\min(d_1,d_2)$ is not itself a metric, so a generic metric-kNN theorem does not transfer.",
+    ),
+)
+
 # This source-specific census prevents a parser change from silently shrinking the
 # checked surface. It supplements the limits above; it never replaces them.
 EXPECTED_CENSUS = {
-    "direct_paragraphs": 108,
-    "direct_sentences": 311,
-    "list_items": 93,
-    "list_sentences": 94,
-    "headings": 18,
+    "direct_paragraphs": 152,
+    "direct_sentences": 472,
+    "list_items": 129,
+    "list_sentences": 182,
+    "headings": 23,
     "tables": 4,
-    "table_cells": 87,
-    "display_math": 14,
+    "table_cells": 90,
+    "display_math": 28,
     "fenced_code": 0,
-    "media": 1,
+    "media": 2,
 }
 
 EVIDENCE_RE = re.compile(
@@ -77,6 +240,19 @@ class Sentence(NamedTuple):
 
 def fail(code: str, message: str) -> None:
     raise ProseCheckError(code, message)
+
+
+def require_common_radius_bridge_semantics(text: str) -> None:
+    """Require the exact bounded theorem ledger in the canonical guide source."""
+
+    normalized = " ".join(text.split())
+    for label, fragment in COMMON_RADIUS_BRIDGE_SENTINELS:
+        normalized_fragment = " ".join(fragment.split())
+        if normalized_fragment not in normalized:
+            fail(
+                "semantic_contract",
+                f"common-radius bridge lost its {label} sentinel",
+            )
 
 
 def decode_source(raw: bytes) -> str:
@@ -384,6 +560,8 @@ def audit_text(
         fail("encoding", "text has a noncanonical marker or newline")
     if not text.endswith("\n"):
         fail("encoding", "text must end with one LF newline")
+
+    require_common_radius_bridge_semantics(text)
 
     numbered = [Line(number, line) for number, line in enumerate(text.splitlines(), 1)]
     expanded = strip_one_quote_layer(numbered)

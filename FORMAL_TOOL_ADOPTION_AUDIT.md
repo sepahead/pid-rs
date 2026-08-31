@@ -123,7 +123,7 @@ The repository currently declares:
 | Rug for the standalone certifier | 1.30.0; requested features `float`, `rational`, and `std` | [`audit/tools/certified-sxpid/Cargo.toml`](audit/tools/certified-sxpid/Cargo.toml) |
 | Transitive native-sys crate | `gmp-mpfr-sys` 1.7.1 | [`audit/tools/certified-sxpid/Cargo.lock`](audit/tools/certified-sxpid/Cargo.lock) |
 | Certificate schemas | Count table v1, exact-log-linear v1, report v2, independent verification v3, resource policy v2, and build context v1 | [`verify_certificate.py`](audit/tools/certified-sxpid/scripts/verify_certificate.py), [`resource.rs`](audit/tools/certified-sxpid/src/resource.rs), and [`report.rs`](audit/tools/certified-sxpid/src/report.rs) |
-| Qualification routes | Stable Rust CI, Rust 1.89 CI, 41 Rust tests, Clippy, rustdoc, static policy, 34 static-policy mutations, independent-verifier challenges, exact-product challenges, Lean, and `cargo-deny` | [CI](.github/workflows/ci.yml) and [`justfile`](justfile) |
+| Qualification routes | Stable Rust CI, Rust 1.89 CI, 43 Rust tests, Clippy, rustdoc, static policy, 34 static-policy mutations, independent-verifier challenges, exact-product challenges, Lean, and `cargo-deny` | [CI](.github/workflows/ci.yml) and [`justfile`](justfile) |
 
 The finite-convergence gate includes supplied exact natural counts with positive total through all
 24 fixed two-source informative, misinformative, and signed-net cumulative and concrete

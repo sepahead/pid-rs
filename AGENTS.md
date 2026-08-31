@@ -127,6 +127,9 @@ project-defined derivations and novelty status explicitly. Use ASD-STE100-inspir
 prose for technical sections, but do not claim ASD-STE100 conformance without a separate audit.
 Preserve counterexamples, false positives, unsuccessful routes, and negative results with their
 scope and rejection reason; do not leave stale claims in an apparently current lane.
+The inert negative-archive and contextual rare-tail gates preserve exact rejected evidence and its
+non-adoption boundary. Passing either gate grants no scientific, formal, implementation, or release
+credit; do not route those payloads into executable or authority surfaces.
 Keep repository prose and commit messages claim-centered and professional: describe the evidence,
 correction, and remaining boundary without naming private review settings or personal evaluations.
 
@@ -257,8 +260,12 @@ Research durability is part of the method, not housekeeping:
 Durable routing and validation:
 
 - [`audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md`](audit/evidence/external-model-pid-rs-deep-audit-adjudication-2026-08-12.md)
-  preserves the advisory finding-by-finding adjudication; the mutable, unchecked work queue is
-  [`audit/evidence/wibral-pid-program-active-plan-2026-08-12.md`](audit/evidence/wibral-pid-program-active-plan-2026-08-12.md).
+  preserves the advisory finding-by-finding adjudication.
+  [`audit/evidence/wibral-pid-program-active-plan-2026-08-12.md`](audit/evidence/wibral-pid-program-active-plan-2026-08-12.md)
+  is an immutable historical planning snapshot, despite `active-plan` in its filename. It is not a
+  current work queue and its commands are not current instructions. Resolve present scientific
+  status from the catalog, current claim decision/evidence indexes, and `KNOWN_LIMITATIONS.md`; use
+  the exact C12 terminal boundary below for the composite lifecycle.
 - [`audit/source-errata.json`](audit/source-errata.json) is the versioned source-observation and
   construction-transfer firewall. Its reviewer-derived records are not author-confirmed errata.
 - [`audit/evidence/assurance-registry.json`](audit/evidence/assurance-registry.json) remains the
@@ -315,218 +322,54 @@ python3 scripts/check-methods-summary.py
 python3 -O scripts/check-methods-summary.py
 python3 scripts/check-methods-summary-self-test.py
 python3 -O scripts/check-methods-summary-self-test.py
-python3 scripts/check-pid-mathematical-audit-protocol.py
-python3 -O scripts/check-pid-mathematical-audit-protocol.py
-python3 scripts/check-pid-mathematical-audit-protocol-self-test.py
-python3 -O scripts/check-pid-mathematical-audit-protocol-self-test.py
-# Only after every intended source and operational byte is frozen:
-python3 -I -S -B scripts/check-current-source-state-v1.py --emit > audit/evidence/current-source-state-v1.json
+python3 -I -S -B scripts/check-pid-mathematical-audit-protocol.py
+python3 -O -I -S -B scripts/check-pid-mathematical-audit-protocol.py
+python3 -I -S -B scripts/check-pid-mathematical-audit-protocol-self-test.py
+python3 -O -I -S -B scripts/check-pid-mathematical-audit-protocol-self-test.py
+# Only after every intended source and operational byte is frozen, follow the private two-output
+# regeneration-and-install procedure in scripts/README.md. Never redirect an emitter directly over
+# the tracked manifest: a failed command would truncate the only retained copy.
 python3 -I -S -B scripts/check-current-source-state-v1.py
 python3 -O -I -S -B scripts/check-current-source-state-v1.py
 python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
 python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
 ```
 
-The composite-v3 hosted receipt is permanently unissued: its fixed semantic language order and
-increasing opaque-ID predicate conflict on the exact recovery run, and its exact-three-additions
-topology cannot also refresh the self-excluding source manifest. Preserve those historical bytes
-and the append-only composite-v4 process documented in
-[`ksg-rev4-m1a-composite-v4-process-2026-08-15.md`](audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md).
-Published C4 commit `da253576a5f76e99633fff4de5cf1118f967b90d` failed its first hosted
-qualification, so R4 is permanently unissued and the v4 capture/receipt paths remain absent.
-Preserve that failure; do not rewrite C4, rerun it for attempt-1 credit, or revive R4.
+### Current exact-C12 terminal boundary
 
-Published C5 commit `be862b155d710573ec95356fc1cbe9a96a2b83b9` retained the C4 failure,
-applied its five bounded operational repairs, and published fresh Lean `r10`. Its attempt-1 hosted
-qualification failed in the PDF portability lane, so R5 is permanently unissued. Preserve C5,
-that failed attempt, the exact r10 receipt, and the immutable v5 gate bytes; do not rerun them for
-attempt-1 credit, rewrite their cross-toolchain predicate in place, or revive R5.
+The current composite-lifecycle authority is
+[`ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json`](audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json),
+SHA-256 `375bf287c73dea35c70d21c74be58e54fe17ae27b4c38ebd9cdf543c8beab47c`,
+for exact C12 commit `01466e88b0550333c2718f1716289e9642e30dc6`. Its bounded operational
+conclusion is `Q12 = false`; `R12 = permanently_unissued`; and
+`L12 = not_adjudicated`. The last value is neither success nor failure. The failed attempt-1
+repository-CI and dedicated-v12 terms make Q12 false for either Boolean value of L12. These are
+operational lifecycle conclusions, not a judgment about the KSG theorem, estimator, or scientific
+claim.
 
-Published C6 commit `0c3afa0ab5b264370072a18d24655df35b90574c` retained the C5 failure,
-applied its bounded report/figure association repair, and published fresh Lean `r11`. Its
-attempt-1 CodeQL run passed, while repository CI and the dedicated-v6 route failed because `rg`
-was absent from the hosted dependency closure. R6 is permanently unissued. Preserve C6, the exact
-failed observations, and finalized `r11`; do not rerun them for attempt-1 credit or revive R6.
+`just ksg-composite-v12` refuses replay. The only current repeatable route is
+`just ksg-composite-v12-preservation`; it rechecks the immutable terminal record and hostile
+controls in normal and optimized Python and grants zero new execution, qualification, hosted,
+scientific, or publication credit. `just ksg-composite-v9` and `just ksg-composite-v11` also refuse
+replay. A later repair cannot become an exact-C12 attempt-1 term, revive Q12, or issue R12. Any
+future lifecycle must have a separately specified version, task boundary, and evidence contract.
 
-Published C7 commit `23b69abafb4bfdaab4b2321eb6cee7be7e1cd32e` retained C6 and fresh Lean
-`r12`. Its attempt-1 CodeQL run passed, while the dedicated-v7 route failed during job setup on a
-39-hex upload-action ref and repository CI separately failed at the final mathematical-workflow
-cross-toolchain layout comparator. R7 is permanently unissued. Preserve C7, the two distinct
-hosted failure records, and finalized `r12`; do not rerun them for attempt-1 credit or revive R7.
+### Historical composite lifecycle (not current operational guidance)
 
-Published C8 commit `7c80d48db415279fc4d744eadb1515797606912b` retained C7 and fresh Lean
-`r13`. Its attempt-1 CodeQL run passed. Repository CI and the dedicated-v8 route both reached the
-retained certified-SxPID2 checker and failed on the exact marker `certified SxPID2 claim check
-failed: release-audit just dependency line exact digest changed`. The first reached marker identifies one stale binding. Read-only
-sequential digest-repin analysis identified the exact five changed operational bindings, and
-source reconstruction guards that difference set without establishing unique counterfactual
-necessity or order. No L8 record is installed; no operator-invocation history is claimed. R8 is
-permanently unissued. Preserve C8, finalized `r13`, and the exact failed hosted observations; do
-not rerun them for attempt-1 credit or revive R8.
-
-The operative append-only successor is composite-v9, documented in
-[`ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md`](audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md).
-From a clean committed checkout run:
-
-```text
-just ksg-composite-v9
-```
-
-C9 and R9 are separate unsigned, human-attributed milestones. C9 must be the exact direct child of
-C8. It retains the exact C8 publication family and failed hosted observations, and repins exactly
-the five stale operational bindings without changing certified theorem statements,
-mathematical-claim semantics, estimator results, or PDF bytes. The claim packet changes only its replay-custody
-pointer prose. C9 retires the v8 workflow, publishes no new PDF, and publishes a fresh Lean `r14`
-replay. R9 is permitted only after one fresh exact-C9 local closure and fresh attempt-1 CI, CodeQL,
-and dedicated-v9 success for that same commit. The local observation has no attempt-number
-authority: a separately typed recorder must run the fixed `just ksg-composite-v9` command from an
-exact clean C9 checkout, retain bounded
-output and clean endpoint observations in a
-mode-0600 staging file outside the repository, and install those exact bytes only after validation.
-Those endpoints use ordinary Git status plus selected metadata checks. Rejecting
-`core.excludesFile` removes one ignore-routing overlay, but repository-ignored products and
-uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
-hermetic closure.
-
-Candidate `0a6ece9c525ad7aad061f55b3edea83554891b42`, tree
-`1d5446f19d34b742feeb51429bf58a0706750757`, was not observed accepted or published on `main` as C9 in the bounded provider/history checks and
-receives zero credit. The required composite run under inherited `umask 077` had
-`ok 273 - refresh writer reports an injected second-replacement failure` as its last confirmed
-output line; the next observed
-stable diagnostic had prefix `refresh destination mode drifted: ` and path suffix
-`/root/output/pdf/workflow.pdf`. No complete raw transcript or whole-run digest of that required run
-was retained. A separate direct workflow-PDF self-test under `umask 022` passed 366/366 controls but
-is documentary only, was not checker-replayed as a C9 qualification run, and receives zero
-qualification credit. Its
-145,611-byte `r14` (SHA-256
-`2a882358e158ebeae06dbdf8d1cd35637d698f59ce217c1e2fbecf1d8787dfb7`) is archive-only and outside
-every accepted `prior_replay_*` lineage. The mutable provider ref
-`refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821` was observed at the candidate
-commit; it is a recovery locator, not authentication, durability, or accepted-on-main C9
-publication status or credit. The deterministic checker binds the recorded identifiers but does not
-query provider archive, main, or workflow-run endpoints or require the sibling commit object. The
-candidate had no L9, and GitHub exposed no workflow run for it on 21 August while `main` remained
-exact C8. Do not
-merge or cherry-pick the rejected commit or reuse/copy its `r14` or evidence. Reapplying reviewed
-non-evidentiary source/contract bytes onto a fresh C8 child is permitted; byte reuse transfers no
-execution, replay, qualification, or acceptance credit.
-A second precommit candidate is likewise rejected with zero credit. Unsigned archive commit
-`113cbad2e58a9cfa40cf43b1c0ffc260b566aa92`, tree
-`ae3204d72c012dddaa5b634d9f5c4c745d5823d2`, was observed on 22 August through mutable provider
-recovery ref `refs/heads/archive/composite-v9-rejected-r14-fixed-point-20260822`; the ref then pointed
-to the commit, `main` remained exact C8, and GitHub exposed zero workflow runs for it. Its final
-145,356-byte same-slot `r14` has SHA-256
-`9ae3b4915f3cf4fd062723c8b80d80e0319ddc9db250662c50584b3f764d373c` (provisional SHA-256
-`41fafe5dfdfbaf23c206ae366913082ff255e6e5f92217f02cfc95b83a5fc048`); all 39 receipt records
-carry `exit_code: 0`, but the artifact and candidate receive zero credit. The mandatory precommit
-certified-SxPID2 baseline failed in normal and optimized modes with exact stderr SHA-256
-`5994ccdfb8dcfe35fac7646050c15ef4f19eee8524233b1cd57f651d19d78611` over 255 bytes: expected
-justfile digest `74fb7bfd4500d8b121666a738a412fbdb409e7acf673b156645d215453ab310f`, observed
-`93399171cfbb743dba93c7be1ec85e446a33193e41ada3977d198b0e4ecc6437`. Its 124-mutation self-test was
-operator-observed passing in both modes with identical 58-byte stdout SHA-256
-`2f163d400569a0897533ef5f5bdae357bd97962d0888ac2bbf68cfa5fe753351`, but therefore did not
-establish the baseline. Independent review also found that three documents conflated named
-self-test output with `r14` command custody. The archived `r14` exact argv roster contains zero
-records for the certified baseline, certified self-test, Lean-freeze self-test, or C9 self-test;
-ten other named self-test command records are present. Canonical receipt bytes contain zero literal
-`live-pre-replay-ready` occurrences, but stream payloads retain only byte-count/SHA-256 descriptors,
-so that is not a raw-stdout absence claim. Separate normal/optimized Lean-freeze self-test outputs
-were operator-observed identical at 268 bytes with SHA-256
-`a77c6d4634ad134975d9a42520a4dc16cd696d51879614a1a4f711eab8ce9f93` and report 132 mutations,
-including `live-pre-replay-ready`; this is outer observation, not `r14` invocation/stdout custody.
-At a separate generator call site, the same validator implementation evaluates the equivalent
-live-cut predicate once before the replay command sequence. Full static checks and custody snapshots
-precede the sequence; full static checks and custody/executable comparisons follow it before
-publication. These correlated, common-mode endpoint checks are not per-command or atomic custody,
-and source custody is not invocation/stdout custody. The observed mutable ref was a recovery
-locator, not authentication or durability. No L9 was issued for the candidate, and the bounded
-provider/history check observed no accepted-on-main C9 publication; there is no permission to reuse
-its `r14`. A fresh current `r14` must exclude all three rejected same-slot final `r14` artifacts from current and
-`prior_replay_*` lineage. During fresh recovery review, the first `justfile` repin exposed a second
-fail-fast baseline edge at `scripts/README.md`: expected
-`daedd86d0307984df8885849528ddfdd2d096a7b9d2799e308358ad4af59b33a`, observed
-`c7fd28e0180bc19ebb09644840266e47f5a93c9b5af7e9062c7f0bbd2012e857`; its exact 273-byte stderr
-has SHA-256 `e94271b9e1c1b7e885fb78d1839b2d8dacebf79aa6a72e6233db5773ded93ade`. This was an
-operator-observed recovery-worktree diagnostic, not archived-candidate qualification or `r14`
-custody. The repair now binds all five mutable certified surfaces plus the exact CI job and just
-recipe sub-blocks.
-A third unsigned direct-child C9 candidate is also rejected with zero credit. Archive commit
-`769547a6d6ed70a074707d90bc2f55393fd34fa4`, tree
-`fb89c31922454dfc6d3da3d8ffa26dbe491b353e`, was observed on 22 August through mutable provider
-recovery ref `refs/heads/archive/composite-v9-rejected-local-authority-oversize-20260822`; the ref
-then pointed to that commit, `main` remained exact C8, and GitHub exposed zero workflow runs for it.
-Its 145,356-byte same-slot `r14` has SHA-256
-`66fdc640aad886c6de25a3a544a24ba016f4f2e73989abe5319f562da1c08919`; all 39 receipt records
-carry `exit_code: 0`, but the artifact and candidate receive zero credit. Deterministically
-substituting final Lean custody
-`281b7504b96cabe88e4faa4db46c04d32832b4d42a3540f462951ffd68aea07c` with replay custody
-`15d5fa25c532380db6d7f0a938dac84300ecfacf6c559332eda99bf7bc09fd96` in the canonical final `r14`
-bytes reconstructs the provisional `r14` byte identity as SHA-256
-`eece30e6d8477cb7aa3464df31d3fae590393a8b0dc47e21ea759ae5f3d6ab17`. This is a deterministic
-reconstruction only, not an observed or retained provisional artifact, and receives no replay,
-custody, or credit. Its 202,419-byte
-self-excluding current-source manifest has SHA-256
-`23d37f444b52d2bb8854e6cc7df53d0207074eceee6a080c89ace6729a850243`; that is archived byte
-identity only, not acceptance, attestation, or semantic-correctness evidence. The production local
-recorder failed closed and issued no L9. Its generic 51-byte stderr has SHA-256
-`11da5230cf3da2dc9a8e4a1378e4707e90ba5b612f8cab4830e392d268cc5b40` and contains only
-`ERROR: bounded local closure capture failed closed`; alone, that fixed public error discloses
-neither the failure stage nor the production command streams. In the exact rejected source route,
-`run_bounded` returns before `validate_record_value`, whose post-command record validation calls
-`validate_authority_roster`. That source ordering does not retain or authenticate the production
-stdout or stderr. Separate direct and sanitized operator invocations of `just ksg-composite-v9`
-both exited zero and produced identical 32,248-byte stdout with SHA-256
-`acf47c3a89810bd9cd47a5f3454d4cd5b519766dc3544cafd8565f94816bd41c` and identical 434-byte
-stderr with SHA-256 `c73f68757307c6c5d44f354043b10b0a4e62b579d3500b7cf152449a5e863009`.
-Those correlated command diagnostics are not local-recorder invocation or stream custody and do
-not issue or replace L9. A separate substituted postcondition diagnostic produced the exact
-104-byte, SHA-256 `4c9309bb307c001cd7231caff0dc92a9e6d6d2900116fece68ebe13a5b61dd81`
-two-line log `FAIL CaptureError: local closure named-oversize authority inventory changed` and
-`substituted_command_calls=1`. It isolates a stale named size-class roster: exact C9 self-test
-`scripts/check-ksg-m1a-composite-v9-self-test.py`, SHA-256
-`a704698097be3ffb0702a66f5fd0f9c794ca0a4ffbe137e6c3b94bd1825544db`, is 129,911 bytes and
-therefore exceeded the 65,536-byte classification threshold but was absent from the expected
-named-oversize set. It remained below the separate 2 MiB authority-stream maximum; this was a
-named-roster classification defect, not authority-size exhaustion. The substituted diagnostic made
-one substituted call and then failed at that postcondition, diagnosing the defect within the
-substituted route. It is not production execution or custody, does not prove or retain the
-production command streams, and its call must not be relabelled as the recorder-owned production
-`just` invocation.
-The mutable ref is a recovery locator, not authentication or durability. No L9, hosted, C9/R9,
-scientific, accepted-current-replay, or independence credit transfers. Do not merge or cherry-pick
-the candidate or reuse its evidence. A fresh current `r14` must exclude all three rejected
-same-slot artifacts from current and `prior_replay_*` lineage.
-The corrected same-version C9 is a fresh direct child of C8. Its changed-path set contains 32
-paths; the rejected candidate's changed-path set contained 31. The sole path-set membership
-difference is the fresh C9 addition of `scripts/check-mathematical-workflow-pdf-self-test.sh`;
-this is a set-membership statement, not a claim that shared paths have identical bytes. The added
-path carries one four-line test-fixture correction: set mode `0644` on six synthetic pre-existing workflow-PDF destinations
-under the inherited restrictive umask. The PDF, LaTeX source, production portability gate, and
-writer remain exact C8 bytes. This is not a sixth stale C8 binding or a theorem, estimator, PDF,
-scientific, or production-writer change. A third, disjoint latent compatibility correction selects
-exact GIL-enabled CPython 3.14.6 for local-recipe and hosted-post-setup C9 qualification because
-immutable V7 contains a minor-sensitive
-`ast.dump` projection that does not match C8's inherited 3.11 route; C8 failed before reaching that
-route. New v9 complete-function guards use raw source-slice hashes whose selected slices were equal
-in a documentary review on exact CPython 3.11.13, 3.12.11, 3.13.7, and 3.14.6, but immutable V7
-remains runtime-bound; that comparison receives no qualification or portability credit. One hosted
-pre-setup checkout-normalizer call plus four normal/optimized action-pin checker/self-test calls
-remain runner-Python surfaces outside the exact-3.14.6 lane. Runtime preflights observe a bounded
-command point; they do not
-authenticate the interpreter, bind its executable bytes, prove atomicity or absence of later path
-mutation, or enumerate every transitive process. The AST/source-route checks and hostile mutations
-are finite regression evidence for a fixed lexical roster, not proofs of semantic soundness, causal
-execution, or non-bypass. Dynamic namespace mutation and arbitrary execution custody remain
-outside those analyses. Exact whole-file, tree, replay, and human-review custody remain authoritative
-within their stated bounds. This is not a sixth stale binding, cross-minor portability
-result, interpreter authentication, or scientific evidence. A completely fresh one-shot `r14` is
-mandatory.
-
-R9 has exactly four paths: it adds that durable local-closure record, the successor hosted capture,
-and the deterministically derived receipt, then regenerates current-source last. The receipt binds
-and validates the predecessor capture, local record, and successor capture. Neither milestone may
-change scientific code, issue a v3/v4/v5 receipt, recreate a missing historical index, promote KSG
-M1a beyond `integration_no_go`, or transfer evidence among the scientific-object rows above.
+The detailed C3--C12 chronology, rejected candidates, exact failure observations, and zero-credit
+boundaries live in dated evidence rather than in this operational guide. Start with the
+[v3 impossibility record](audit/evidence/ksg-rev4-m1a-composite-v3-impossibility-2026-08-15.json),
+[v4 process](audit/evidence/ksg-rev4-m1a-composite-v4-process-2026-08-15.md),
+[v5](audit/evidence/ksg-rev4-m1a-composite-v5-boundary-2026-08-18.md),
+[v6](audit/evidence/ksg-rev4-m1a-composite-v6-boundary-2026-08-18.md),
+[v7](audit/evidence/ksg-rev4-m1a-composite-v7-boundary-2026-08-18.md),
+[v8](audit/evidence/ksg-rev4-m1a-composite-v8-boundary-2026-08-19.md),
+[v9](audit/evidence/ksg-rev4-m1a-composite-v9-boundary-2026-08-19.md),
+[v11](audit/evidence/ksg-rev4-m1a-composite-v11-boundary-2026-08-23.md), and
+[v12](audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md) records.
+Imperative wording inside those historical contracts describes the rule that applied then; it is
+not permission to execute, replay, merge, promote, or reuse their artifacts now. Use only the
+exact-C12 refusal/preservation boundary above unless a separately reviewed lifecycle is added.
 
 Only after committing the final self-excluding manifest, run the post-commit route from an exact
 clean checkout. The shell owns these temporary files; v2 makes no path, durability, or upload
@@ -665,8 +508,24 @@ python3 -I -S -B scripts/check-advisory-councils-archive.py  # bounded inert arc
 python3 -O -I -S -B scripts/check-advisory-councils-archive.py
 python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py  # 64 named mutations
 python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py
-python3 scripts/check-z3-pid2-algebra.py                 # exact PID2/PID3 lattice obligations; Z3 4.16.0
-python3 scripts/check-z3-pid2-algebra-self-test.py       # satisfiable proof mutations must fail closed
+python3 -I -S -B scripts/check-inert-negative-archives.py  # 4 inert packets; 28 payloads
+python3 -O -I -S -B scripts/check-inert-negative-archives.py
+python3 -I -S -B scripts/check-inert-negative-archives-self-test.py  # 45 hostile mutations
+python3 -O -I -S -B scripts/check-inert-negative-archives-self-test.py
+python3 -I -S -B scripts/check-contextual-rare-tail-counterexample.py  # bounded binary64 witness
+python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+python3 -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py  # 25 mutations
+python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full  # exact grid + debug/release
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py  # copied-root + mutations
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+scripts/check-pid2-represented-coordinate-assurance-pdf.sh --exact
+scripts/check-pid2-represented-coordinate-assurance-pdf.sh --cross-toolchain
+python3 -I -S -B scripts/check-z3-pid2-algebra.py       # exact PID2/PID3 lattice obligations; Z3 4.16.0
+python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py  # common + sign/coordinate/row SAT controls
+python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py         # 339 declarations / 246 named theorems
 python3 -O scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py
@@ -675,6 +534,10 @@ python3 -I -S -B scripts/check-lean-toolchain-freeze.py       # frozen 4.33 repl
 python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
 python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
 python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
+python3 -I -S -B scripts/check-lean-exact-log-product.py  # frozen 7-theorem generic algebra gate
+python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py  # hostile/scope controls
+python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
 just --justfile justfile.sxpid3-informative-invariance verify  # P1 Lean/exact/Rust layers
 python3 scripts/check-lean-ksg-integer-harmonic.py       # 19 conditional exact harmonic theorems
 python3 -O scripts/check-lean-ksg-integer-harmonic.py
@@ -688,14 +551,18 @@ python3 scripts/check-z3-ksg-integer-harmonic.py         # 4 premise-explicit QF
 python3 -O scripts/check-z3-ksg-integer-harmonic.py
 python3 scripts/check-z3-ksg-integer-harmonic-self-test.py   # 12 semantic + 52 separate firewall controls
 python3 -O scripts/check-z3-ksg-integer-harmonic-self-test.py
+python3 -I -B scripts/check-publication-links.py          # staged Markdown/PDF target and action graph
+python3 -O -I -B scripts/check-publication-links.py
+python3 -I -B scripts/check-publication-links-self-test.py  # 4 controls + 111 hostile staged/link/PDF mutations
+python3 -O -I -B scripts/check-publication-links-self-test.py
 scripts/check-formal-pdf-set.sh                          # all declared formal papers and render contracts
 python3 -I -B scripts/check-mathematical-results-guide-prose.py  # selected editorial subset; no ASD-STE100 conformance claim
 python3 -O -I -B scripts/check-mathematical-results-guide-prose.py
-python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 33 hostile/control cases
+python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 59 hostile/control cases
 python3 -O -I -B scripts/check-mathematical-results-guide-prose-self-test.py
 python3 -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py  # 4 positive + 214 rejected subprocesses
 python3 -O -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py
-# hosted raw profile: 2 controls + 67 hostiles = 69
+# historical 16-page v1 hosted raw profile: 2 controls + 67 hostiles = 69
 HOSTED_GUIDE_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf"
 python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
@@ -725,11 +592,17 @@ python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py  # 3 controls + 56 hostiles
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py
-python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py  # 74 object + 1 raw + 4 diagnostic + 4 path controls
-python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v2-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v2-self-test.py
 scripts/check-mathematical-results-guide-pdf.sh --exact  # raw repeated-build and rebuilt/committed guide bytes
-# selected hosted/legacy profile; unsupported producers fail closed
+# The current reviewed 23-page v2 profile accepts only its closed Ubuntu 24.04/x86 producer tuple
+# and retained raw-fixture relation. Exact mode remains same-toolchain byte identity. The retained
+# v2 fixture came from translated local x86 execution; native hosted replay remains pending and has
+# no hosted-execution credit. Retained 16-page v1 packages are historical replay evidence only.
 scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
+scripts/check-numerical-assurance-pdf.sh --exact  # represented-binary64 assurance, 23 pages
+scripts/check-numerical-assurance-pdf.sh --cross-toolchain
+scripts/check-numerical-assurance-pdf-self-test.sh  # 1 contract + 3 accepted + 32 hostile controls
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh --exact  # current/proposed Galadriel placement guide
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows
@@ -745,14 +618,23 @@ python3 -O scripts/check-ksg-harmonic-modular-certificate.py
 python3 scripts/check-ksg-harmonic-modular-certificate-self-test.py  # 28 scientific/custody + 2 JSON controls
 python3 -O scripts/check-ksg-harmonic-modular-certificate-self-test.py
 # The unscoped historical checker remains nonzero with 13 open gates. The descendant wrapper
-# replays five live-applicable routes, invokes the current catalog gate, and retains release-only
-# plus the frozen catalog route only through exact-tree replay. Its self-test has 35 controls.
+# replays four live-applicable routes, invokes the current catalog gate, and retains superseded
+# claim-only/release-only plus the frozen catalog route only through exact-tree replay. Its
+# self-test has 36 controls.
 python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
 python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
 python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
 python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
 python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
 python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+# Binds the current public revision index to the exact terminal C12 boundary. This successor
+# independently derives Q12=false for both possible Boolean L12 values while retaining
+# L12=not_adjudicated, R12=permanently_unissued, and zero qualification credit. It does not read
+# or reactivate the historical active packet or claim-only route. Its hostile suite has 54 controls.
+python3 -I -S -B scripts/check-ksg-revision4-terminal-index.py
+python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index.py
+python3 -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
+python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
 # Replays the immutable C3 checkpoint as both a clean commit and its exact parent-plus-overlay
 # candidate, then replays the settled hosted-follow-up gate at its own immutable direct-child
 # commit. The historical lifecycle is required by the hostile suite that creates test commits;
@@ -760,22 +642,22 @@ python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-tes
 # The wrapper normalizes its child-checkout umask to 022 before cloning; its mktemp root stays 0700.
 scripts/check-ksg-c3-checkpoint.sh
 # The follow-up runner freezes source size+SHA-256 and the self-test binds the actual child mode.
-# Diagnostic checker output is explicitly no-credit. The direct-child route remains valid only at
-# the exact implementation child and is invoked there by the immutable wrapper above; do not relax
-# it to accept later descendants. A later descendant needs its own acyclic receipt and hosted run.
+# Diagnostic checker output is explicitly no-credit. The historical f6 contract accepted only its
+# exact implementation child through the immutable wrapper above; it required any then-later
+# descendant to have a separate acyclic receipt and hosted run. That successor instruction is now
+# closed history. It does not open a route after the exact-C12 terminal boundary stated above.
 # The reviewed overlay is exactly 13 paths (eight modified and five added), leaving 552 immutable
 # anchor paths protected. Its SxPID2 claim-checker edit is exactly three mutable-container digest
 # rebindings. The source inventory has 109 hostile cases in 18 bookkeeping families and declares
 # 88 mutation-target verifier launches (86 checker and two self-test), plus 22 local receipt cases
 # and 38 separately named, non-mutation harness controls. The verifier runtime is restricted to
 # GIL-enabled CPython 3.11 through 3.14 with one enumerated Python thread; see scripts/README.md for
-# the explicit signal, preexec, waiter, native-thread, and hard-deadline nonclaims. Do not invoke
-# that direct-child gate from a descendant; the immutable wrapper supplies its exact f6 lifecycle.
-# Current direct-child M1a lifecycle, separate from the historical C3/f6 wrapper above. Before the
-# commit, provide the independently constructed alternate-index tree, redirect its sealed mode-0400
-# regular file to standard input, and provide the detached checkpoint in `--mode precommit`; after
-# committing, use `--mode postcommit` with the same exact identities. No path is passed to Python.
-# Policy-only/self-test modes are local diagnostics and grant no M1a credit.
+# the explicit signal, preexec, waiter, native-thread, and hard-deadline nonclaims. The immutable
+# wrapper supplies the exact historical f6 lifecycle; descendants receive no credit from it.
+# Historical M1a phase-checker replay, separate from the historical C3/f6 wrapper above. These
+# commands test the archived policy parser and its hostile controls only. They do not open an M1a
+# lifecycle, accept a descendant, or grant execution, qualification, hosted, scientific, or
+# publication credit. The exact-C12 terminal refusal/preservation boundary above is current.
 python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
 python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
 python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
@@ -820,12 +702,15 @@ unique-shell, exact-count, common-row-set, and inventoried-map premises. Neither
 balanced lower bound is a promoted revision-4 theorem. Implementation-local purity of a row helper
 does not imply statistically independent observations.
 
-The 13-gate repository/publication disposition remains **NO-GO** throughout M1a. Commit, push, and
-remotely verify the canonical unsigned M1a implementation first. Only a separate descendant M1c
-may bind immutable `evidence-matrix-v4.md` and `decision-v4.md`; never use preclosure evidence to
-grant final authority early. Preserve the negative paths and checker repairs in the revision-4
-correction ledger and failure memos. Advisory external-model material is process evidence, never
-claim evidence.
+The historical 13-gate repository/publication disposition remained **NO-GO** throughout M1a. Its
+then-applicable commit/push/M1c sequence is closed history, not current operational guidance. Do
+not create, replay, or promote an M1a/M1c descendant to bypass or reinterpret the exact-C12
+terminal record. For the current authority and chronological evidence map, use
+`claims/KSG-INTEGER-HARMONIC-001/revision-index.md` and
+`audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md`; the only repeatable exact-C12 route is the
+preservation command stated above. Preserve the negative paths and checker repairs in the
+revision-4 correction ledger and failure memos. Advisory external-model material is process
+evidence, never claim evidence.
 
 W1b is a finite Rust binary64/call-site witness only. It binds the immediate predecessor of the
 raw radius, pair ordered counts, and pair/xblocks selected bits on one `n=4,k=1` fixture in both
@@ -882,6 +767,13 @@ pytest crates/pid-python/tests -q
 - **Units:** all information quantities are in **nats** (natural log).
 - **PID identities:** MI terms that feed PID atoms must be computed with `NegativeHandling::Allow` —
   clamping a term before a subtraction breaks `Red + Unq1 + Unq2 + Syn = I(S1,S2;T)`.
+- **PID2 represented coordinates are a separate numerical layer:** `Pid2Result::from_estimate`
+  gives the four already represented inputs one exact-sum synergy meaning, then applies the
+  project-defined inclusive 32-position reconstruction guard. Preserve its input/atom/identity
+  error split, signed-zero rules, and exact reducer. Use
+  [`PID2_REPRESENTED_COORDINATE_ASSURANCE.md`](PID2_REPRESENTED_COORDINATE_ASSURANCE.md) and the
+  revision-4 checker before changing it. This is not an estimator-attainability, calibration,
+  support, paper-defect, or Rust-refinement theorem.
 - **Negative atoms are real:** `I^sx_∩` (and its atoms) can be negative; never silently clamp.
 - **Continuous support is declared, never inferred:** bare default continuous configs are
   intentionally non-runnable. Use the explicit absolute-continuity constructor only when every

@@ -11,10 +11,10 @@
   "assets": [
     {
       "stem": "current-versus-proposed",
-      "svg_sha256": "53a2742a62d40e35a9d812fa5962a3fb5e7542eb0f7955bb99741a054d2037a5",
-      "pdf_sha256": "f7d9a1f4df47606803ccb98f3f0e7b328270b2479d15c750e0e03d6d536b11a3",
+      "svg_sha256": "1ab41ecd0c2510ceaf6858ce14f956379bcb1509dabc77fd3c35a2fa8772d73c",
+      "pdf_sha256": "3365514406d941fe1cbd9b2602291442d5fafc51a315934b7c9d62ef5d5bde1e",
       "pdf_pages": 1,
-      "pdf_page_points": [1200.0, 705.0]
+      "pdf_page_points": [900.0, 952.5]
     },
     {
       "stem": "measurement-to-estimand",

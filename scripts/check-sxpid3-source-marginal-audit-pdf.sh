@@ -158,6 +158,12 @@ require_same_page("prohibited-transfer heading and body", "Retained prohibited-t
 require_same_page("source-cylinder component boundary", "the averaged informative component stays at ln 2 nats", "Its averaged misinformative component changes from ln 2 to 0 nats")
 require_same_page("separate-marginals witness laws", "Standing assumptions for the separate-marginals counterexample", "𝑄𝑆 =")
 require_same_page("fixed-matrix continuity display", "For one fixed matrix", "The support-change theorem applies because")
+require_same_page("total-variation radius sharpening", "total-variation radius sharpening", "Marginalization is a contraction in total variation")
+require_same_page("total-variation non-strictness", "total-variation radius sharpening", "no strict improvement is guaranteed")
+require_same_page("total-variation residual caveat", "total-variation radius sharpening", "residual-entropy term changes")
+require_same_page("total-variation component boundary", "total-variation radius sharpening", "transfer to the misinformative or signed-net components")
+require_same_page("total-variation statistical nonclaim", "total-variation radius sharpening", "deterministic stability statement, not a confidence bound")
+require_same_page("total-variation random-radius nonclaim", "total-variation radius sharpening", "A separate statistical theorem is required")
 require_same_page("finite-count opening definition", "There are exactly three ordered binary sources", "𝒵+ =")
 require_same_page("three local count forms", "Substitution into the three law-level definitions", "𝑖net")
 require_same_page("three cumulative products", "For each cumulative, the exact positive-rational products are", "𝑄net")
@@ -180,10 +186,6 @@ PY
     exit 1
   fi
   cat >"$expected_urls" <<'EOF'
-../../SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
-../../audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json
-../../audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
-../../audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean
 https://arxiv.org/abs/1004.2515
 https://arxiv.org/abs/2002.03356v5
 https://doi.org/10.1007/BF00531932
@@ -191,6 +193,12 @@ https://doi.org/10.1098/rspa.2021.0110
 https://doi.org/10.1103/PhysRevE.103.032149
 https://doi.org/10.1103/PhysRevE.110.014115
 https://doi.org/10.3390/e16042161
+https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
+https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md
 https://oeis.org/A000372
 EOF
   if ! cmp -s "$expected_urls" "$observed_urls"; then
@@ -201,10 +209,10 @@ EOF
   local target
   while IFS= read -r target; do
     case "$target" in
-      ../../*)
-        target="${target#../../}"
+      https://github.com/sepahead/pid-rs/blob/main/*)
+        target="${target#https://github.com/sepahead/pid-rs/blob/main/}"
         if [[ ! -f "$ROOT/$target" || -L "$ROOT/$target" ]]; then
-          echo "$CHECK_NAME: $label local hyperlink target is absent or symbolic: $target" >&2
+          echo "$CHECK_NAME: $label repository hyperlink target is absent or symbolic: $target" >&2
           exit 1
         fi
         ;;

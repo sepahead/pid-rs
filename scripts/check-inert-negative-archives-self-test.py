@@ -20,6 +20,7 @@ ARCHIVES: Final[tuple[str, ...]] = (
     "ksg-m1a-rejected-lifecycle-checker-20260828",
     "sxpid3-s1-historical-checkers-v1",
     "numerical-claim-history-20260725",
+    "python-verifier-custody-m0-20260830",
 )
 FAILURE_MARKER: Final[bytes] = b"ERROR: inert negative archive rejected:"
 
@@ -205,6 +206,7 @@ def main() -> int:
     ksg = ARCHIVES[0]
     s1 = ARCHIVES[1]
     numerical = ARCHIVES[2]
+    python_custody = ARCHIVES[3]
 
     cases: list[tuple[str, Callable[[Path], None]]] = [
         (
@@ -583,6 +585,74 @@ def main() -> int:
                 lambda value: value["integration_source"].__setitem__(
                     "tree", "0" * 40
                 ),
+            ),
+        ),
+        (
+            "reseal-python-omitted-registry-promotion",
+            python_custody,
+            lambda root: mutate_index(
+                root,
+                python_custody,
+                lambda value: value["omitted_derived_registry"].__setitem__(
+                    "custody", "copied_current_authority"
+                ),
+            ),
+        ),
+        (
+            "reseal-python-drift-probe-promotion",
+            python_custody,
+            lambda root: mutate_index(
+                root,
+                python_custody,
+                lambda value: value["current_drift_probe"].__setitem__(
+                    "status", "current_inventory_authority"
+                ),
+            ),
+        ),
+        (
+            "reseal-python-execution-custody",
+            python_custody,
+            lambda root: mutate_index(
+                root,
+                python_custody,
+                lambda value: value["scope"].__setitem__(
+                    "execution_custody_closed", True
+                ),
+            ),
+        ),
+        (
+            "reseal-python-replay-activation",
+            python_custody,
+            lambda root: mutate_index(
+                root,
+                python_custody,
+                lambda value: value["replay"].__setitem__(
+                    "archived_checker_executed", True
+                ),
+            ),
+        ),
+        (
+            "reseal-python-process-lesson",
+            python_custody,
+            lambda root: mutate_index(
+                root,
+                python_custody,
+                lambda value: value["process_lessons"].__setitem__(
+                    0, "stored_source_proves_execution"
+                ),
+            ),
+        ),
+        (
+            "reseal-python-checker-role",
+            python_custody,
+            lambda root: mutate_index(
+                root,
+                python_custody,
+                lambda value: next(
+                    item
+                    for item in value["payloads"]
+                    if item["id"] == "inventory-checker"
+                ).__setitem__("role", "current_execution_custody_authority"),
             ),
         ),
     ]

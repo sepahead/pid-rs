@@ -5607,7 +5607,7 @@ grayscale_pages_reviewed: `1-{pages}`
 original_resolution_spot_checks: `1,5,6,10,12,19-23,28,30,31,37-47,55-63,79-83`
 figure_pages_reviewed: `5,6,10,12`
 status: `passed`
-review_date_utc: `2026-08-16`
+review_date_utc: `2026-08-31`
 reviewer_kind: `agent-visual-inspection`
 
 All {pages} color pages and all {pages} grayscale pages were viewed in page order.

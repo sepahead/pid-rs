@@ -25,20 +25,21 @@ TRAILER_ID_OBSERVATION_CHECK="$ROOT/scripts/check-mathematical-results-guide-tra
 TRAILER_ID_OBSERVATION_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py"
 TRAILER_ID_OBSERVATION_CHECK_SHA256=e531d58620ff41275b741666a119a1245d5ec2a08fa943fc12a297d56317106f
 TRAILER_ID_OBSERVATION_SELF_TEST_SHA256=9b1d0da3dffc87e9d46a4986b9c54c457c036ff0cd0a0966f08155aad7b5b65b
-STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure.py"
-STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-self-test.py"
-HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile.py"
-HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py"
+STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v2.py"
+STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v2-self-test.py"
+HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py"
+HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-self-test.py"
 FONT_ALPHA_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"
 FONT_ALPHA_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence-self-test.py"
 MODE_WIRING_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py"
-RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf"
-HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json"
+RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
+HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json"
 RETAINED_FONT_ALPHA_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
-STRUCTURE_CHECK_SHA256=50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2
-HOSTED_RAW_CHECK_SHA256=e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30
-HOSTED_RAW_SELF_TEST_SHA256=b4bf248f599ccd92298323912990476c5f426228ff56a5f26fe51fbc167141df
-HOSTED_RAW_PROFILE_RECEIPT_SHA256=9ba8e03c5112dacc2da232b8660879d34afa901e9e07862135c40fd6e7d49f8e
+STRUCTURE_CHECK_SHA256=a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d
+STRUCTURE_SELF_TEST_SHA256=aa8fd64c627884d64b18c2e8cb2565c06678f2c5f55be182723541d026c56229
+HOSTED_RAW_CHECK_SHA256=29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc
+HOSTED_RAW_SELF_TEST_SHA256=f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9
+HOSTED_RAW_PROFILE_RECEIPT_SHA256=56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8
 FONT_ALPHA_CHECK_SHA256=5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997
 FONT_ALPHA_SELF_TEST_SHA256=07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be
 PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
@@ -52,7 +53,7 @@ LEGACY_PANDOC_PORTABILITY_RECEIPT_SHA256=7ea2acf89c8a33f5666ab9798a594c24febdad6
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT_SHA256=cd5602bb28dce0780c4bac5f70097e496d2afe9141a8210f249332b5e6d93596
 
-HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-bound
+HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v2-bound
 HOSTED_PANDOC_VERSION='pandoc 3.10.2'
 HOSTED_PANDOC_SHA256=867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
 HOSTED_RENDERER_VERSION='This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)'
@@ -128,6 +129,8 @@ for path in \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf" \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg" \
     "$ROOT/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf" \
+    "$ROOT/audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg" \
+    "$ROOT/audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf" \
     "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg" \
     "$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf" \
     "$COMMITTED"; do
@@ -241,6 +244,8 @@ require_profile_input() {
   fi
 }
 require_gate_digest "$STRUCTURE_CHECK" "$STRUCTURE_CHECK_SHA256" "strict structure checker"
+require_gate_digest "$STRUCTURE_SELF_TEST" "$STRUCTURE_SELF_TEST_SHA256" \
+  "strict structure checker self-test"
 require_gate_digest "$ID_VARIANCE_CHECK" "$ID_VARIANCE_CHECK_SHA256" \
   "strict trailer-ID variance checker"
 
@@ -266,6 +271,8 @@ python3 -I -B "$PROSE_SELF_TEST"
 python3 -O -I -B "$PROSE_SELF_TEST"
 python3 -I -B "$STRUCTURE_SELF_TEST" "$COMMITTED"
 python3 -O -I -B "$STRUCTURE_SELF_TEST" "$COMMITTED"
+require_gate_digest "$STRUCTURE_SELF_TEST" "$STRUCTURE_SELF_TEST_SHA256" \
+  "strict structure checker self-test after execution"
 python3 -I -B "$MODE_WIRING_SELF_TEST"
 python3 -O -I -B "$MODE_WIRING_SELF_TEST"
 
@@ -1291,7 +1298,8 @@ validate_pdf() {
       'Five distinct lanes' \
       'Five lanes. No silent transfer.' \
       'Three different counts for three different objects' \
-      'Eight families, four evidence questions' \
+      'Nine result families' \
+      'Four evidence questions' \
       'Fixed finite-alphabet plug-in convergence' \
       'Support-change-tolerant averaged-Sx continuity' \
       'Dependency-color concentration' \
@@ -1300,12 +1308,56 @@ validate_pdf() {
       '2,197,584' \
       'Represented-binary64 and quantizer assurance' \
       'repository/publication integration remains NO-GO' \
+      'A proved population-level transfer' \
+      'repository-derived conditional lemma, catalogued as project-defined' \
+      'common-geodesic-radius event ratio converges to an expression with the algebraic form of' \
+      "Ehrlich et al.'s bivariate analytic formula." \
+      'manifold small-ball lemma. It is not a new PID functional' \
+      'population lemma [R] and boundary' \
+      'Require the laws to admit the following density' \
+      'essentially bounded on a neighbourhood' \
+      'both density sums in the following ratio are strictly positive.' \
+      'The proof needs only the two displayed' \
+      'overlap conditions. Local essential boundedness is a' \
+      'convenient sufficient condition, not a necessary one.' \
+      'discarded overlap terms are' \
+      'retained union scales' \
+      'Why the displayed smooth marginals do not suffice' \
+      'Riemannian arclength is Lebesgue measure' \
+      'parameter Clayton form at a fixed parameter' \
+      'used here as an ordinary copula, with no' \
+      'survival-time semantics. This form is equivalent' \
+      'Clayton (1978) for the original survival-association model' \
+      "normalization despite the density's corner singularity" \
+      'the full density is' \
+      'one-source, target, and target-source density versions continuous' \
+      'positive-measure open sets in every neighbourhood.' \
+      'pair density is essentially unbounded' \
+      'near the origin because' \
+      'FIRST-ORDER OVERLAP TEST' \
+      'conditional limit + boundary test' \
+      'does not prove that pair local boundedness is necessary.' \
+      'some replacement condition must control the overlap.' \
+      'Gauge and dimension boundary' \
+      'both branch-one coefficients are' \
+      'positive, branch one dominates.' \
+      'If either coefficient vanishes, continuity alone does not determine which' \
+      'branch dominates or its replacement rate.' \
+      'Equal numeric source radii are therefore a gauge choice.' \
+      'They do not supply this manifold-domain theorem.' \
+      'The lemma proves no adaptive-kNN consistency' \
+      'expectation interchange, PID-atom property' \
+      'a generic metric-kNN theorem does not transfer.' \
       'These workflows preserve evidence'; do
     grep -Fiq -- "$sentinel" "$text" || {
       echo "$CHECK_NAME: $label lacks rendered sentinel: $sentinel" >&2
       exit 1
     }
   done
+  if grep -Fiq -- 'project-derived' "$text"; then
+    echo "$CHECK_NAME: $label uses the nonexistent project-derived provenance class" >&2
+    exit 1
+  fi
   if grep -Fq $'\357\277\275' "$text"; then
     echo "$CHECK_NAME: $label contains a Unicode replacement character" >&2
     exit 1
@@ -1344,8 +1396,14 @@ contracts = [
     ("SxPID3 opening", "SxPID3 source-marginal factorization", "The factorization assumes"),
     ("binary64 opening", "Represented-binary64 and quantizer assurance", "Every finite binary64 number"),
     ("KSG opening", "KSG positive-integer harmonic arithmetic", "Revision 4 is active"),
+    ("Wibral roadmap opening", "Wibral-line roadmap for high dimension", "This roadmap uses"),
+    ("small-ball theorem opening", "A proved population-level transfer", "repository-derived conditional lemma, catalogued as project-defined"),
+    ("small-ball pointwise assumptions", "Require the laws to admit the following density", "both density sums in the following ratio are strictly positive."),
+    ("Clayton provenance boundary", "parameter Clayton form at a fixed parameter", "reparameterization of Clayton's 1978"),
+    ("Clayton density construction", "ordinary copula, with no survival-time semantics.", "normalization despite the density's corner singularity"),
+    ("gauge and PID boundary", "Gauge and dimension boundary", "expectation interchange, PID-atom property"),
     ("semantic figure", "Five lanes. No silent transfer.", "No equality"),
-    ("evidence figure", "Eight families, four evidence questions", "Dedicated result PDF open"),
+    ("evidence figure", "Nine result families", "NO PROOF TRANSFER BY PROXIMITY"),
     ("crosswalk figure", "Three different counts for three different objects", "Retaining all six views"),
 ]
 for contract in contracts:
@@ -1434,48 +1492,61 @@ PY
       "typed font-alpha comparator"
   fi
   cat >"$expected_urls" <<'EOF'
-../../DEPENDENCY_COLORED_SXPID_CONCENTRATION.md
-../../FINITE_ALPHABET_PLUGIN_CONVERGENCE.md
-../../FORMAL_TOOL_ADOPTION_AUDIT.md
-../../FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md
-../../KNOWN_LIMITATIONS.md
-../../MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md
-../../METHODS.md
-../../METHODS_SUMMARY.md
-../../NUMERICAL_ASSURANCE.md
-../../PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md
-../../PID_MATHEMATICAL_AUDIT_PROTOCOL.md
-../../SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
-../../SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
-../../audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md
-../../audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
-../../claims/KSG-INTEGER-HARMONIC-001/claim-v4.md
-../../claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md
-../../claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md
-../../claims/KSG-INTEGER-HARMONIC-001/revision-index.md
-../../claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md
-../../claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md
-../../claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md
-../../claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md
-../../method-catalog.json
-../../output/pdf/dependency-colored-sxpid-concentration.pdf
-../../output/pdf/exact-log-product-sxpid2-assurance.pdf
-../../output/pdf/finite-alphabet-plugin-convergence.pdf
-../../output/pdf/foundational-shared-exclusions-pid-audit.pdf
-../../output/pdf/mathematical-problem-solving-workflow.pdf
-../../output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf
-../../output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf
-../../output/pdf/two-source-sxpid-count-atom-bridge.pdf
 https://arxiv.org/abs/1004.2515
+https://arxiv.org/abs/2106.12393v2
+https://arxiv.org/html/2311.06373v3
 https://dlmf.nist.gov/5.4.E14
 https://doi.org/10.1002/rsa.20008
+https://doi.org/10.1007/978-0-387-47322-2
 https://doi.org/10.1007/BF00531932
 https://doi.org/10.1080/01621459.1963.10500830
+https://doi.org/10.1093/biomet/65.1.141
 https://doi.org/10.1098/rspa.2021.0110
+https://doi.org/10.1103/58bg-5n9s
 https://doi.org/10.1103/PhysRevE.103.032149
 https://doi.org/10.1103/PhysRevE.110.014115
 https://doi.org/10.1103/PhysRevE.69.066138
 https://doi.org/10.3390/e16042161
+https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md
+https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md
+https://github.com/sepahead/pid-rs/blob/main/FORMAL_TOOL_ADOPTION_AUDIT.md
+https://github.com/sepahead/pid-rs/blob/main/FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md
+https://github.com/sepahead/pid-rs/blob/main/KNOWN_LIMITATIONS.md
+https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md
+https://github.com/sepahead/pid-rs/blob/main/METHODS.md
+https://github.com/sepahead/pid-rs/blob/main/METHODS_SUMMARY.md
+https://github.com/sepahead/pid-rs/blob/main/NUMERICAL_ASSURANCE.md
+https://github.com/sepahead/pid-rs/blob/main/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md
+https://github.com/sepahead/pid-rs/blob/main/PID_MATHEMATICAL_AUDIT_PROTOCOL.md
+https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
+https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
+https://github.com/sepahead/pid-rs/blob/main/SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
+https://github.com/sepahead/pid-rs/blob/main/audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
+https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/claim-v4.md
+https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md
+https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md
+https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/revision-index.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md
+https://github.com/sepahead/pid-rs/blob/main/method-catalog.json
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/exact-log-product-sxpid2-assurance.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-alphabet-plugin-convergence.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/foundational-shared-exclusions-pid-audit.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/mathematical-problem-solving-workflow.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/numerical-assurance.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/two-source-sxpid-count-atom-bridge.pdf
+https://papers.nips.cc/paper_files/paper/2004/hash/74934548253bcab8490ebd74afed7031-Abstract.html
+https://proceedings.mlr.press/v38/gao15.html
+https://proceedings.mlr.press/v80/nickel18a.html
 https://shiftleft.com/mirrors/www.hpl.hp.com/techreports/2003/HPL-2003-97R1.pdf
 EOF
   if ! cmp -s "$expected_urls" "$observed_urls"; then
@@ -1540,20 +1611,20 @@ if ! cmp -s "$BUILD_ROOT/built.observed-navigation" \
     "$BUILD_ROOT/committed.observed-navigation" >&2 || true
   exit 1
 fi
-if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-urls" | tr -d ' ')" != "43" ]]; then
+if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-urls" | tr -d ' ')" != "56" ]]; then
   echo "$CHECK_NAME: hyperlink target count changed" >&2
   exit 1
 fi
-if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d ' ')" != "167" ]]; then
+if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d ' ')" != "217" ]]; then
   echo "$CHECK_NAME: navigation-record count changed" >&2
   exit 1
 fi
 while IFS= read -r target; do
   case "$target" in
-    ../../*)
-      local_target="${target#../../}"
+    https://github.com/sepahead/pid-rs/blob/main/*)
+      local_target="${target#https://github.com/sepahead/pid-rs/blob/main/}"
       if [[ ! -f "$ROOT/$local_target" || -L "$ROOT/$local_target" ]]; then
-        echo "$CHECK_NAME: local hyperlink target is absent or symbolic: $local_target" >&2
+        echo "$CHECK_NAME: repository hyperlink target is absent or symbolic: $local_target" >&2
         exit 1
       fi
       ;;

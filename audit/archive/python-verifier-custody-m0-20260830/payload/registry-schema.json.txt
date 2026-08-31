@@ -1,0 +1,1120 @@
+{
+  "$defs": {
+    "anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "end_column": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "end_line": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "line": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_segment_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "column",
+        "end_column",
+        "end_line",
+        "line",
+        "source_segment_sha256"
+      ],
+      "type": "object"
+    },
+    "blockingProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "scope": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "const": "open_blocking"
+        }
+      },
+      "required": [
+        "id",
+        "scope",
+        "status"
+      ],
+      "type": "object"
+    },
+    "content": {
+      "additionalProperties": false,
+      "properties": {
+        "availability": {
+          "enum": [
+            "exact_git_blob",
+            "exact_static_fragment",
+            "unresolved_open_blocking"
+          ]
+        },
+        "bytes": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "git_blob_oid": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/gitOid"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "git_mode": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "availability",
+        "bytes",
+        "git_blob_oid",
+        "git_mode",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "dynamicEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "argument_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "first_argument_shape": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "keyword_names": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "primitive_class": {
+          "enum": [
+            "direct_builtin_name",
+            "selected_attribute_name"
+          ]
+        },
+        "primitive_name": {
+          "enum": [
+            "__import__",
+            "compile",
+            "exec",
+            "module_from_spec",
+            "spec_from_file_location"
+          ]
+        },
+        "resolution_status": {
+          "const": "open_blocking"
+        },
+        "target_source_id": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "anchor",
+        "argument_count",
+        "first_argument_shape",
+        "id",
+        "keyword_names",
+        "primitive_class",
+        "primitive_name",
+        "resolution_status",
+        "target_source_id"
+      ],
+      "type": "object"
+    },
+    "gitOid": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "importEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "anchor": {
+          "$ref": "#/$defs/anchor"
+        },
+        "class": {
+          "enum": [
+            "local_candidate",
+            "stdlib_profile",
+            "third_party_declared",
+            "unresolved_open_blocking"
+          ]
+        },
+        "execution_resolution_status": {
+          "const": "open_blocking"
+        },
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "imported_name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "level": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "root_name": {
+          "type": "string"
+        },
+        "statement_kind": {
+          "enum": [
+            "from_import",
+            "import"
+          ]
+        },
+        "statement_member_index": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "alias",
+        "anchor",
+        "class",
+        "execution_resolution_status",
+        "id",
+        "imported_name",
+        "level",
+        "root_name",
+        "statement_kind",
+        "statement_member_index"
+      ],
+      "type": "object"
+    },
+    "importRootCounts": {
+      "additionalProperties": {
+        "additionalProperties": false,
+        "properties": {
+          "binding_edges": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "files": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "statements": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "binding_edges",
+          "files",
+          "statements"
+        ],
+        "type": "object"
+      },
+      "type": "object"
+    },
+    "nonEmptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nullableString": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "openValue": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "const": "open_blocking"
+        },
+        "value": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "status",
+        "value"
+      ],
+      "type": "object"
+    },
+    "origin": {
+      "additionalProperties": false,
+      "properties": {
+        "column": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "line": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "type": {
+          "enum": [
+            "operational_root_fragment",
+            "python_child_launch_expression",
+            "review_tree_blob"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "type"
+      ],
+      "type": "object"
+    },
+    "rootRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "git_blob_oid": {
+          "$ref": "#/$defs/gitOid"
+        },
+        "git_mode": {
+          "pattern": "^[0-9]{6}$",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "agents_document",
+            "just_recipe_file",
+            "shell_script",
+            "workflow_yaml"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status": {
+          "const": "open_blocking"
+        }
+      },
+      "required": [
+        "bytes",
+        "git_blob_oid",
+        "git_mode",
+        "kind",
+        "path",
+        "sha256",
+        "status"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "source": {
+      "additionalProperties": false,
+      "properties": {
+        "ast": {
+          "additionalProperties": false,
+          "properties": {
+            "diagnostic_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "encoding": {
+              "$ref": "#/$defs/nullableString"
+            },
+            "node_count": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "other_call_count": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "other_call_resolution_status": {
+              "const": "open_blocking"
+            },
+            "status": {
+              "enum": [
+                "not_available_open_blocking",
+                "parsed",
+                "syntax_error_open_blocking"
+              ]
+            }
+          },
+          "required": [
+            "encoding",
+            "node_count",
+            "other_call_count",
+            "other_call_resolution_status",
+            "status"
+          ],
+          "type": "object"
+        },
+        "blockers": {
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "content": {
+          "$ref": "#/$defs/content"
+        },
+        "dynamic_edges": {
+          "items": {
+            "$ref": "#/$defs/dynamicEdge"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "import_edges": {
+          "items": {
+            "$ref": "#/$defs/importEdge"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "kind": {
+          "enum": [
+            "dynamic_fixture",
+            "file",
+            "inline_argv",
+            "inline_stdin",
+            "module_tool"
+          ]
+        },
+        "nonimplications": {
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "origin": {
+          "$ref": "#/$defs/origin"
+        },
+        "status": {
+          "enum": [
+            "historical_nonoperational",
+            "library_helper",
+            "open_blocking",
+            "unsupported_blocking"
+          ]
+        }
+      },
+      "required": [
+        "ast",
+        "blockers",
+        "content",
+        "dynamic_edges",
+        "id",
+        "import_edges",
+        "kind",
+        "nonimplications",
+        "origin",
+        "status"
+      ],
+      "type": "object"
+    },
+    "stringArray": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bootstrap": {
+      "additionalProperties": false,
+      "properties": {
+        "checker_source_binding": {
+          "const": "placeholder_open"
+        },
+        "independent_custody": {
+          "const": "none"
+        },
+        "schema_validator_binding": {
+          "const": "placeholder_open"
+        },
+        "status": {
+          "const": "open_blocking"
+        },
+        "why": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "checker_source_binding",
+        "independent_custody",
+        "schema_validator_binding",
+        "status",
+        "why"
+      ],
+      "type": "object"
+    },
+    "closure_claims": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "blockers": {
+            "items": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "edge_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "edge_ids_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "id": {
+            "enum": [
+              "all-repository-python-processes/v1",
+              "repo-owned-official-verifier-source-entry/v1"
+            ]
+          },
+          "meaning": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "status": {
+            "const": "open_blocking"
+          }
+        },
+        "required": [
+          "blockers",
+          "edge_count",
+          "edge_ids_sha256",
+          "id",
+          "meaning",
+          "status"
+        ],
+        "type": "object"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "environment_profiles": {
+      "items": {
+        "$ref": "#/$defs/blockingProfile"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "external_tool_profiles": {
+      "items": {
+        "$ref": "#/$defs/blockingProfile"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "format": {
+      "const": "pid-rs/python-verifier-custody-registry/v1"
+    },
+    "interpreter_profiles": {
+      "items": {
+        "$ref": "#/$defs/blockingProfile"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "inventory": {
+      "additionalProperties": false,
+      "properties": {
+        "ast_status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "dynamic_edge_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "dynamic_primitive_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "import_class_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "import_edge_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "launch_edge_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "launch_source_kind_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "local_module_record_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "operational_root_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "operational_roots": {
+          "items": {
+            "$ref": "#/$defs/rootRecord"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "python_source_path_list_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "python_source_paths": {
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "scanner_policy": {
+          "additionalProperties": false,
+          "properties": {
+            "ast_mode": {
+              "const": "exec-with-type-comments"
+            },
+            "child_process_call_names": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "dynamic_attribute_names": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "dynamic_direct_names": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "heredoc_regex": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "import_classes": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "invocation_regex": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "other_call_resolution": {
+              "const": "open_blocking"
+            },
+            "unknown_import_resolution": {
+              "const": "open_blocking"
+            }
+          },
+          "required": [
+            "ast_mode",
+            "child_process_call_names",
+            "dynamic_attribute_names",
+            "dynamic_direct_names",
+            "heredoc_regex",
+            "import_classes",
+            "invocation_regex",
+            "other_call_resolution",
+            "unknown_import_resolution"
+          ],
+          "type": "object"
+        },
+        "seed_policy": {
+          "additionalProperties": false,
+          "properties": {
+            "operational_roots": {
+              "$ref": "#/$defs/stringArray"
+            },
+            "python_sources": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "unscanned_examples": {
+              "$ref": "#/$defs/stringArray"
+            }
+          },
+          "required": [
+            "operational_roots",
+            "python_sources",
+            "unscanned_examples"
+          ],
+          "type": "object"
+        },
+        "source_kind_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "source_status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "total_python_source_records": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "tracked_file_dynamic_edge_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_dynamic_primitive_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "tracked_file_dynamic_source_file_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_import_class_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "tracked_file_import_edge_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_import_statement_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_local_candidate_root_counts": {
+          "$ref": "#/$defs/importRootCounts"
+        },
+        "tracked_file_third_party_import_edge_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_third_party_import_file_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_third_party_import_statement_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_file_third_party_root_counts": {
+          "$ref": "#/$defs/importRootCounts"
+        },
+        "tracked_python_ast_status_counts": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "object"
+        },
+        "tracked_python_file_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "tracked_tree_entry_count": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "ast_status_counts",
+        "dynamic_edge_count",
+        "dynamic_primitive_counts",
+        "import_class_counts",
+        "import_edge_count",
+        "launch_edge_count",
+        "launch_source_kind_counts",
+        "local_module_record_count",
+        "operational_root_count",
+        "operational_roots",
+        "python_source_path_list_sha256",
+        "python_source_paths",
+        "scanner_policy",
+        "seed_policy",
+        "source_kind_counts",
+        "source_status_counts",
+        "total_python_source_records",
+        "tracked_file_dynamic_edge_count",
+        "tracked_file_dynamic_source_file_count",
+        "tracked_file_dynamic_primitive_counts",
+        "tracked_file_import_edge_count",
+        "tracked_file_import_class_counts",
+        "tracked_file_import_statement_count",
+        "tracked_file_local_candidate_root_counts",
+        "tracked_file_third_party_import_edge_count",
+        "tracked_file_third_party_import_file_count",
+        "tracked_file_third_party_import_statement_count",
+        "tracked_file_third_party_root_counts",
+        "tracked_python_ast_status_counts",
+        "tracked_python_file_count",
+        "tracked_tree_entry_count"
+      ],
+      "type": "object"
+    },
+    "launch_edges": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "argv": {
+            "additionalProperties": false,
+            "properties": {
+              "observed_flags": {
+                "$ref": "#/$defs/stringArray"
+              },
+              "status": {
+                "const": "open_blocking"
+              }
+            },
+            "required": [
+              "observed_flags",
+              "status"
+            ],
+            "type": "object"
+          },
+          "blockers": {
+            "items": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "caller": {
+            "additionalProperties": false,
+            "properties": {
+              "anchor": {
+                "additionalProperties": false,
+                "properties": {
+                  "column": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "line": {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "source_segment_sha256": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                },
+                "required": [
+                  "column",
+                  "line",
+                  "source_segment_sha256"
+                ],
+                "type": "object"
+              },
+              "blob_oid": {
+                "$ref": "#/$defs/gitOid"
+              },
+              "kind": {
+                "enum": [
+                  "agents_document",
+                  "just_recipe_file",
+                  "python_subprocess_api",
+                  "shell_script",
+                  "workflow_yaml"
+                ]
+              },
+              "path": {
+                "$ref": "#/$defs/nonEmptyString"
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              }
+            },
+            "required": [
+              "anchor",
+              "blob_oid",
+              "kind",
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "claim_membership": {
+            "items": {
+              "enum": [
+                "all-repository-python-processes/v1",
+                "repo-owned-official-verifier-source-entry/v1"
+              ]
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "cwd": {
+            "$ref": "#/$defs/openValue"
+          },
+          "dynamic_edge_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "environment_profile_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "execution_custody_status": {
+            "const": "open_blocking"
+          },
+          "external_tool_profile_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "id": {
+            "pattern": "^launch-[0-9]{5}$",
+            "type": "string"
+          },
+          "import_edge_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "interpreter_profile_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "interpreter_token": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "modes": {
+            "items": {
+              "enum": [
+                "normal",
+                "optimized"
+              ]
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "nonimplications": {
+            "items": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "platforms": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "source_id": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "source_kind": {
+            "enum": [
+              "dynamic_fixture",
+              "file",
+              "inline_argv",
+              "inline_stdin",
+              "module_tool"
+            ]
+          },
+          "stdin": {
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "const": "open_blocking"
+              },
+              "value_sha256": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "status",
+              "value_sha256"
+            ],
+            "type": "object"
+          },
+          "third_party_import_edge_ids": {
+            "$ref": "#/$defs/stringArray"
+          }
+        },
+        "required": [
+          "argv",
+          "blockers",
+          "caller",
+          "claim_membership",
+          "cwd",
+          "dynamic_edge_ids",
+          "environment_profile_ids",
+          "execution_custody_status",
+          "external_tool_profile_ids",
+          "id",
+          "import_edge_ids",
+          "interpreter_profile_ids",
+          "interpreter_token",
+          "modes",
+          "nonimplications",
+          "platforms",
+          "source_id",
+          "source_kind",
+          "stdin",
+          "third_party_import_edge_ids"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "local_modules": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_source_ids": {
+            "$ref": "#/$defs/stringArray"
+          },
+          "module_name": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "resolution_status": {
+            "const": "open_blocking"
+          },
+          "why_open": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "required": [
+          "candidate_source_ids",
+          "module_name",
+          "resolution_status",
+          "why_open"
+        ],
+        "type": "object"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nonimplications": {
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "python_sources": {
+      "items": {
+        "$ref": "#/$defs/source"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "repository": {
+      "const": "https://github.com/sepahead/pid-rs"
+    },
+    "review_revision": {
+      "additionalProperties": false,
+      "properties": {
+        "commit": {
+          "const": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9"
+        },
+        "object_format": {
+          "const": "sha1"
+        },
+        "tree": {
+          "const": "d3d247270822fe477862c80ba8b6a9041ac8f6bc"
+        }
+      },
+      "required": [
+        "commit",
+        "object_format",
+        "tree"
+      ],
+      "type": "object"
+    },
+    "schema_revision": {
+      "const": 1
+    }
+  },
+  "required": [
+    "bootstrap",
+    "closure_claims",
+    "environment_profiles",
+    "external_tool_profiles",
+    "format",
+    "interpreter_profiles",
+    "inventory",
+    "launch_edges",
+    "local_modules",
+    "nonimplications",
+    "python_sources",
+    "repository",
+    "review_revision",
+    "schema_revision"
+  ],
+  "title": "pid-rs bounded Python verifier custody registry revision 1",
+  "type": "object"
+}

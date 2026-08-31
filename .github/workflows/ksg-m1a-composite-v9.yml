@@ -15,5 +15,5 @@ jobs:
       - name: Preserve terminal C9 facts without rerun or descendant credit
         shell: bash
         run: |
-          echo "composite-v9 is retired; use the fresh direct-C9 composite-v11 lifecycle" >&2
+          echo "composite-v9 is retired under terminal C12; no composite successor is operative" >&2
           exit 1

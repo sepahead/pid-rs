@@ -40,6 +40,8 @@ for source in "$BUILDER" "$TAGPDF_OPENACTION_COMPAT" "$HGENERIC_URI_CONTENTS_COM
     "$GUIDE_FIGURE_DIRECTORY/semantic-firewall.pdf" \
     "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg" \
     "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf" \
+    "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.svg" \
+    "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.pdf" \
     "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" \
     "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf" \
     "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg" \
@@ -86,7 +88,7 @@ printf '%s\n' \
   'Five distinct lanes' \
   'Thus, SxPID3 has 18 net atoms.' \
   'The audit evaluates 2,197,584 products per route.' \
-  'repository/publication integration remains' \
+  'integration remains' \
   >"$FIXTURE_REPO/MATHEMATICAL_RESULTS_GUIDE.md"
 printf '%s\n' '% fixture header' \
   '\input{mathematical-results-guide-tagpdf-openaction-compat.tex}' \
@@ -129,6 +131,10 @@ cp "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg" \
   "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg"
 cp "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf" \
   "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf"
+cp "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.svg" \
+  "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg"
+cp "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.pdf" \
+  "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf"
 cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" \
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg"
 cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf" \
@@ -184,6 +190,8 @@ required_sources=(
   "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf"
   "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg"
   "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf"
+  "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg"
+  "$FIXTURE_REPO/audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf"
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg"
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf"
   "$FIXTURE_REPO/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg"

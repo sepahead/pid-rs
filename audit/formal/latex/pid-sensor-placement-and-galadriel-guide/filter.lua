@@ -32,7 +32,9 @@ function Header(element)
   end
   last_heading = title
   if element.level == 1 then
-    if title == "14. Positive results, negative results, and open work"
+    if title == "10. Formal verification and oracle design"
+      or title == "11. Benchmark against established methods"
+      or title == "14. Positive results, negative results, and open work"
       or title == "15. Conclusion" then
       return {pandoc.RawBlock("latex", "\\Needspace{15\\baselineskip}"), element}
     end

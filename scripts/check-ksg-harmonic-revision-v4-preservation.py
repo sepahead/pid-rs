@@ -7,9 +7,11 @@ therefore not a live descendant gate.  This versioned preservation checker pins 
 replays every still-applicable scoped route in normal and optimized Python, and separately invokes
 the current complete method-catalog authority and its hostile suite in both modes.
 
-The historical ``--release-only`` route is superseded on the live descendant, whereas
-``--catalog-only`` is historical-only because the current catalog checker replaces its frozen
-projection.  The exact-tree full self-test retains both.  Returned tuples are bounded in-process
+The historical ``--claim-only`` and ``--release-only`` routes are superseded on the live
+descendant: exact C12's terminal revision index is now the claim authority, and the release family
+has separately scoped successors.  ``--catalog-only`` is historical-only because the current
+catalog checker replaces its frozen projection.  Exact-tree replay retains all three historical
+routes.  Returned tuples are bounded in-process
 execution receipts: they detect the registered call-erasure mutations, but are not authenticity,
 atomic-filesystem, anti-transient-substitution, or coordinated checker/self-test rewrite proofs.
 
@@ -57,7 +59,7 @@ EXPECTED_HISTORICAL_SOURCE_ROSTER_SHA256 = (
 
 EXPECTED_COMPONENT_SHA256 = {
     CURRENT_CATALOG_CHECKER_RELATIVE: (
-        "ef2e831c159c16df80e4deb7a472fc6959be3b2226f281f077be78d6448f6c55"
+        "ada2f616f5b29e5907e6fb3242deb875a4af95b6609910d0f3774d1450878918"
     ),
     CURRENT_CATALOG_SELF_TEST_RELATIVE: (
         "6614f0424747d959a4ec1326f4bcacccd88569543a47e7b2ed06969ca4798aac"
@@ -76,7 +78,7 @@ EXPECTED_COMPONENT_SHA256 = {
     ),
 }
 EXPECTED_COMPONENT_ROSTER_SHA256 = (
-    "53cc99005dfc725a9b05fe4ec8223b104f8259e8aef89430dcae6337c6a04ff3"
+    "306537be043abf6c8b3d58e312cc402610e5292666e16233e625631ccb679147"
 )
 
 PYTHON_CHILD_FLAGS = ("-S", "-B")
@@ -92,16 +94,20 @@ EXPECTED_GIT_ENVIRONMENT_SHA256 = (
 )
 
 ROUTES = (
-    "--claim-only",
     "--source-only",
     "--exact-only",
     "--binary64-only",
     "--enclosure-only",
 )
 EXPECTED_ROUTE_ROSTER_SHA256 = (
-    "07318eda33eeb92a2595be740224b321675933e249bdcb3639904ef3c90b7410"
+    "42bdb9579a6cb38e82ed6c9b81d76d433adfb274690b264df35a677bd5bde6d3"
 )
 SUPERSEDED_LIVE_ROUTES = {
+    "--claim-only": (
+        "Superseded on the live descendant because the exact-C12 terminal revision "
+        "index is now the current claim authority; the pinned historical-tree replay "
+        "retains the original claim-only gate."
+    ),
     "--release-only": (
         "Superseded on the live descendant by six separately scoped and reviewed "
         "release-family revisions of represented-input PID2 synergy; the pinned "
@@ -109,14 +115,9 @@ SUPERSEDED_LIVE_ROUTES = {
     )
 }
 EXPECTED_SUPERSEDED_LIVE_ROUTE_ROSTER_SHA256 = (
-    "1b5a7e15d0acfc691a3245b30a6ed03d44a90db62ee81f9f3c7f96169c268244"
+    "4a46e452b51828f161b5d41e44f756b0336a86e82f5da63f59d40d0b902ee137"
 )
 EXPECTED_ROUTE_STDOUT = {
-    "--claim-only": (
-        "KSG harmonic-revision claim check passed: active revision 4 "
-        "integration_no_go; 72 mapped files; 36 historical hashes; "
-        "stage=preclosure_core_manifest_must_be_regenerated_at_m1c\n"
-    ).encode(),
     "--source-only": b"KSG harmonic-revision source check passed\n",
     "--exact-only": (b"KSG harmonic-revision exact check passed: 6,920 tuples\n"),
     "--binary64-only": (
@@ -132,7 +133,7 @@ EXPECTED_ROUTE_STDOUT = {
 }
 EXPECTED_CATALOG_STDOUT = {
     CURRENT_CATALOG_CHECKER_RELATIVE: (
-        b"OK: 74 method entries and 46 references are coherent\n"
+        b"OK: 75 method entries and 48 references are coherent\n"
     ),
     CURRENT_CATALOG_SELF_TEST_RELATIVE: (
         b"OK: 85 method-catalog mutations were rejected\n"
@@ -147,7 +148,7 @@ EXPECTED_CURRENT_CATALOG_COMMAND_ROSTER_SHA256 = (
 )
 DEFAULT_SUCCESS_LINE = (
     "KSG revision-4 preservation check passed: 6 pinned components; "
-    "5 live-applicable historical scoped routes x normal/-O; 1 superseded live route "
+    "4 live-applicable historical scoped routes x normal/-O; 2 superseded live routes "
     "retained by exact-tree replay; 2 current catalog authorities x "
     "normal/-O; exact status/stdout/stderr parity"
 )
@@ -225,7 +226,7 @@ def check_static_contract() -> None:
         != EXPECTED_SUPERSEDED_LIVE_ROUTE_ROSTER_SHA256
     ):
         fail("superseded live-route roster or rationale drifted")
-    if set(SUPERSEDED_LIVE_ROUTES) != {"--release-only"}:
+    if set(SUPERSEDED_LIVE_ROUTES) != {"--claim-only", "--release-only"}:
         fail("superseded live-route partition drifted")
     if set(ROUTES).intersection(SUPERSEDED_LIVE_ROUTES):
         fail("live and superseded historical route partitions overlap")

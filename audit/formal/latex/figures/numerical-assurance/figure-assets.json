@@ -1,0 +1,56 @@
+{
+  "schema": "pid-rs.numerical-assurance-figure-assets.v1",
+  "regeneration_contract": {
+    "manifest": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
+    "script": "scripts/regenerate-mathematical-results-guide-open-font-figures.py"
+  },
+  "renderer_observation": {
+    "command": "rsvg-convert --format=pdf --keep-aspect-ratio --output=DERIVATIVE SOURCE",
+    "rsvg_convert": "2.62.3",
+    "cairo": "1.18.4",
+    "pango": "1.57.1",
+    "harfbuzz": "14.2.1",
+    "fontconfig": "2.18.1",
+    "pango_cairo_backend": "fontconfig",
+    "independent_fontconfig_states": 2,
+    "raw_byte_equality": true,
+    "pandoc_used": false
+  },
+  "assets": [
+    {
+      "pdf_page_points": [
+        476.22,
+        266.457
+      ],
+      "pdf_pages": 1,
+      "pdf_sha256": "5d184a10244bc1dfb6a932ca23ee04ff560ddf45e88499057159654e692d136d",
+      "pdf_bytes": 72618,
+      "stem": "quantizer-cardinality",
+      "svg_sha256": "4226063f230341e0f3287ba8217fde62ddb5e9838cd84072d3578cf99531bd36",
+      "embedded_font_programs": [
+        "LMSans10-Regular",
+        "SourceSansPro-Bold",
+        "SourceSansPro-Regular",
+        "SourceSansPro-Semibold"
+      ]
+    },
+    {
+      "pdf_page_points": [
+        476.22,
+        249.449
+      ],
+      "pdf_pages": 1,
+      "pdf_sha256": "1d13ac9eb2ee2d8058ea1aedb19140590ec329b9a9d75b28b7db5a32a1cd5b97",
+      "pdf_bytes": 91217,
+      "stem": "represented-sum-boundary",
+      "svg_sha256": "142ff6540f13be02d88a5db09d0f909aac3fa43e653f0d956a093802d0e1d217",
+      "embedded_font_programs": [
+        "LMSans10-Regular",
+        "SourceSansPro-Bold",
+        "SourceSansPro-Regular",
+        "SourceSansPro-Semibold"
+      ]
+    }
+  ],
+  "claim_boundary": "The manifest binds the accepted SVG and PDF bytes, page boxes, embedded program names, and one two-pass isolated-font renderer observation. It does not prove cross-host reproducibility, SVG/PDF semantic equivalence, accessibility or PDF/UA conformance, renderer correctness, authenticity, or mathematical validity."
+}

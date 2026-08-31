@@ -40,6 +40,13 @@ PROJECT = ROOT / "audit/formal/lean"
 POLICY = PROJECT / "toolchain-freeze-policy.json"
 RECEIPT_RELATIVE = "audit/evidence/lean-4.33.0-darwin-aarch64-current-project-replay-2026-08-19-r14.json"
 RECEIPT = ROOT / RECEIPT_RELATIVE
+C12 = "01466e88b0550333c2718f1716289e9642e30dc6"
+C12_TERMINAL_RECORD_RELATIVE = (
+    "audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json"
+)
+C12_TERMINAL_RECORD_SHA256 = (
+    "375bf287c73dea35c70d21c74be58e54fe17ae27b4c38ebd9cdf543c8beab47c"
+)
 MAX_FILE_BYTES = 8 * 1024 * 1024
 EMPTY_SHA256 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 EXPECTED_CLEAN_BUILD_STDOUT = ""
@@ -656,31 +663,89 @@ PRESERVED_R14_OPERATIONAL_WIRING_HASHES = {
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
-    ".github/workflows/ci.yml": "c34bfb2ed07fd324f045176a4e16e38bca399ee2cf4aed00a25f8484fa20cd3a",
-    ".github/workflows/ksg-m1a-composite-v9.yml": "714b01deb1a0671332bca638311095dc775ac75b1894c35a5555f951b9cc6aa0",
-    "AGENTS.md": "6605d0811adaa663cbd8c3d9bc69e9ac85b380752c28899045208c8ae7882c28",
-    "CHANGELOG.md": "328820babd900e42110f8a232e0838a8133377b2b607e0a59d803889b6ca96fb",
-    "justfile": "1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575",
-    "scripts/README.md": "2a5daafb9212582423605674ffa5a148bc5e7b4a7ef07898ca323718321b333f",
+    ".github/workflows/ci.yml": "92b305b749cb0f201b8deb8840ab0298b770a70c26c26c696daaaa655692d062",
+    ".github/workflows/ksg-m1a-composite-v9.yml": "77c39e60cb965ee97abdc8e755b6e9c8f3c65c4db8e9568f0bc9e692d10195da",
+    ".github/workflows/ksg-m1a-composite-v12.yml": (
+        "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
+    ),
+    "AGENTS.md": "d303fa2e6f492dba15da12e86d5d007d766777cf533d2bf177365b6aeb97ac25",
+    "CHANGELOG.md": "b201772228e7c7daca4b2001547a34e61354679b1e96a330ad022e3af7ecfd3f",
+    "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
+        "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567"
+    ),
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md": (
+        "f3fe81e736940f6431796031235f7ffaf204fd6c4b8ace974f54807144a038c7"
+    ),
+    "audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md": (
+        "4930810e053fda866f4f1b356e07902b9cc8c8797a012fbe4bf40562899b835c"
+    ),
+    C12_TERMINAL_RECORD_RELATIVE: C12_TERMINAL_RECORD_SHA256,
+    "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": (
+        "244127cb65744ff5929241192b0e4285ae393cc098722107eac96db37de11e87"
+    ),
+    "audit/formal/latex/mathematical-problem-solving-workflow.tex": (
+        "9702c43d45bc266ba7b973f90f9f8b9a6124a478c08a011eb5b373a210643206"
+    ),
+    "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json": (
+        "2152411c804df3a75f6b106ae97761f4812adf2ae8ca963a98a296df812c0e5e"
+    ),
+    "justfile": "658d6385e81e7177e82a984c199f65c928e9addc79bc20b8c837e3ee5eedd3e1",
+    "output/pdf/mathematical-problem-solving-workflow.pdf": (
+        "dca7e94aed3597af8aad8ae1cd74f8777ae97554e5f8372bf63b89ea6a53bd19"
+    ),
+    "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
+        "b7217536cbec2b3758b1b175b138fbc5eaf95dc0b8387bedfdf30229e66e2763"
+    ),
+    "scripts/README.md": "272f3bac381f34d064846fe9502cf633337e8144dbb4d76f2499b0cef89f847e",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
-        "5c901ea562e7ed9eb118f983ca4a9d97f6efeda40a070558646f515c14683c98"
+        "d546a2c9910e42b54d1c12b844abf2ec7cf9a2dd0dd2d98549746c1d81a43a6b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "e893eeb4b6edcb87c9d48fda2c189fc3b5111a3c4bf198187a67f0eef9410b46"
+        "ccc4e5398a6913acd4ed74975edd7a815048fcb7ec75de30016c5ade80b181ce"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "3fe58627fb35b308ac59ed10f2f6693430bedc1f37168003aff5989c26711e19"
+        "ae8d8ccbb873fe79dd9ebe2c849da93ac92404702e032632a428045068a287f2"
     ),
     "scripts/check-formal-pdf-style.py": (
         "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"
     ),
+    "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py": (
+        "fe64ef94c1776220dbd168b873e56c004c9b47c01f13ce4c135af900b11a2ee5"
+    ),
+    "scripts/check-ksg-m1a-composite-v12-terminal.py": (
+        "df32b05c01015a3d224988463776e45983314f93b999a2f60e02e619434ce4ce"
+    ),
+    "scripts/check-ksg-m1a-hosted-recovery-self-test.py": (
+        "2410fcf1aad41046f1e697fdae8b42582237fb716f1f85549e191f25ddb7b296"
+    ),
+    "scripts/check-ksg-m1a-hosted-recovery.py": (
+        "5d515e8070942a40b3e4eec608bfca6f1b5a236f23f1e3aaa461cd297202b838"
+    ),
+    "scripts/check-ksg-revision4-terminal-index-self-test.py": (
+        "65c08747d2bdf3c82e09fccd52ad1acde03170d147c9cb4070931bd2fd69c906"
+    ),
+    "scripts/check-ksg-revision4-terminal-index.py": (
+        "c9a54df51b2d3f28ed07bc2c47c606b0016f7f82158fccf2db1b2839fb592d7b"
+    ),
     "scripts/check-mathematical-workflow-pdf-self-test.sh": (
-        "a3c0c1f4d8d1de023ace772e49862918caf2158fa7525a94f336b831b9a8f25e"
+        "adff95ad908edd6ccbdddabb2d8119a859589c68ebfcd996c14529896b296769"
     ),
     "scripts/check-mathematical-workflow-pdf.sh": (
-        "4eb0a6e19d1a29a2ad6efbf6c24960394a105a4d7ed1a46b0bd0f820451da48a"
+        "4e1617141a33d7e5e201c2a9fc060d805a9de2d1a079f1655ae9ed4cfb948c35"
     ),
 }
+EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS = frozenset(
+    {
+        ".github/workflows/ksg-m1a-composite-v12.yml",
+        "audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md",
+        C12_TERMINAL_RECORD_RELATIVE,
+        "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json",
+        "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py",
+        "scripts/check-ksg-m1a-composite-v12-terminal.py",
+        "scripts/check-ksg-revision4-terminal-index-self-test.py",
+        "scripts/check-ksg-revision4-terminal-index.py",
+    }
+)
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
     relative
     for relative, digest in EXPECTED_OPERATIONAL_WIRING_HASHES.items()
@@ -690,7 +755,7 @@ EXPECTED_ABSENT_OPERATIONAL_PATHS = (
     "scripts/check-post-commit-source-state-v1-self-test.py",
     "scripts/check-post-commit-source-state-v1.py",
 )
-EXPECTED_ACTIVE_CLAIM_HASHES = {
+PRESERVED_R14_ACTIVE_CLAIM_HASHES = {
     "claims/KSG-INTEGER-HARMONIC-001/active-packet-v4.json": "360e070d2f92e141e0f1ab672e6f6dd8a8d41bc1f193b735cae93d44ed8ab32e",
     "claims/KSG-INTEGER-HARMONIC-001/formal-replay-lean-4.33.0-2026-08-11.md": "b5a974d3bc0cd66e37a963e33d87100c80c038d106f9bf19f27682062f848eae",
     "claims/SX-COUNT-ATOM-BRIDGE-001/claim-v2.md": "b893fa9c0d48b6092211af114ca24eb45c0ada87b93305efa8a5d30646857bed",
@@ -710,6 +775,21 @@ EXPECTED_ACTIVE_CLAIM_HASHES = {
     "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md": "8127e06261aec8953dcbf21d6880b6143bece27b7c9957d8ff026ab71e51d498",
     "claims/SX-COUNT-EVENT-BRIDGE-001/routes-v2.md": "8a41fb691e76104ad6e28a8b439ca2de836ad2a2dd42fd39cace7d8a0e2a2c11",
 }
+EXPECTED_ACTIVE_CLAIM_HASHES = {
+    **PRESERVED_R14_ACTIVE_CLAIM_HASHES,
+    "claims/KSG-INTEGER-HARMONIC-001/revision-index.md": (
+        "a48f35d6d4ece09595d793ee4af0dd7d2c0dbbb8e6aff0d5d05a96f26409c1bc"
+    ),
+    "claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md": (
+        "d80a0b14c62410eec360efe0670909affb8b62758ea661ff203f8456e274a141"
+    ),
+}
+EXPECTED_CURRENT_ACTIVE_CLAIM_ADDED_PATHS = frozenset(
+    {"claims/KSG-INTEGER-HARMONIC-001/revision-index.md"}
+)
+EXPECTED_CURRENT_ACTIVE_CLAIM_REBOUND_PATHS = frozenset(
+    {"claims/SX-COUNT-EVENT-BRIDGE-001/revision-index.md"}
+)
 EXPECTED_PENDING_ACTIVE_CLAIM_PATHS = tuple(
     relative
     for relative, digest in EXPECTED_ACTIVE_CLAIM_HASHES.items()
@@ -2005,6 +2085,210 @@ def check_current_replay_pointers() -> None:
         )
 
 
+def just_recipe_commands(text: str, name: str) -> tuple[str, ...]:
+    """Return the nonempty command lines of one uniquely named Just recipe."""
+
+    lines = text.splitlines()
+    header = f"{name}:"
+    indices = [index for index, line in enumerate(lines) if line == header]
+    require(len(indices) == 1, f"Just recipe identity drifted: {name}")
+    commands: list[str] = []
+    for line in lines[indices[0] + 1 :]:
+        if line and not line[0].isspace() and not line.startswith("#"):
+            break
+        if line and line[0].isspace() and line.strip():
+            commands.append(line.strip())
+    require(commands, f"Just recipe is empty: {name}")
+    return tuple(commands)
+
+
+def check_c12_terminal_routing() -> None:
+    """Keep the mutable operational guide on the immutable terminal C12 route."""
+
+    record, record_snapshot = load_json(
+        ROOT / C12_TERMINAL_RECORD_RELATIVE,
+        "exact C12 terminal record",
+        pretty=True,
+    )
+    require(
+        record_snapshot.sha256 == C12_TERMINAL_RECORD_SHA256,
+        "exact C12 terminal record digest drifted",
+    )
+    require(isinstance(record, dict), "exact C12 terminal record is not an object")
+    require(
+        record.get("schema") == "pid-rs/ksg-rev4-m1a-composite-v12-terminal-failure/v1",
+        "exact C12 terminal record schema drifted",
+    )
+    subject = record.get("subject")
+    require(
+        isinstance(subject, dict)
+        and subject.get("c12_commit") == C12
+        and subject.get("c12_unsigned") is True,
+        "exact C12 terminal subject drifted",
+    )
+    require(
+        record.get("qualification")
+        == {
+            "ci12_attempt_1": "terminal_failure",
+            "codeql12_attempt_1": "terminal_success",
+            "dedicated12_attempt_1": "terminal_failure",
+            "formula": (
+                "Q12 = L12 AND CI12_attempt1 AND CodeQL12_attempt1 AND "
+                "Dedicated12_attempt1"
+            ),
+            "hosted_qualification_credit": "zero",
+            "l12": "not_adjudicated",
+            "q12": False,
+            "q12_evaluation": (
+                "false_for_either_boolean_value_of_L12_because_CI12_attempt1_and_"
+                "Dedicated12_attempt1_are_false"
+            ),
+            "r12": "permanently_unissued",
+        },
+        "exact C12 Q12/R12/L12 disposition drifted",
+    )
+    custody = record.get("custody")
+    require(
+        isinstance(custody, dict)
+        and custody.get("record_path") == C12_TERMINAL_RECORD_RELATIVE
+        and custody.get("successor_workflow_role")
+        == "nonqualifying_terminal_preservation_only",
+        "exact C12 terminal custody role drifted",
+    )
+    forbidden_r12_paths = custody.get("forbidden_r12_evidence_paths")
+    require(
+        isinstance(forbidden_r12_paths, list)
+        and len(forbidden_r12_paths) == 3
+        and len(set(forbidden_r12_paths)) == 3
+        and all(
+            isinstance(relative, str) and not os.path.lexists(ROOT / relative)
+            for relative in forbidden_r12_paths
+        ),
+        "forbidden R12 evidence path appeared or drifted",
+    )
+
+    record_name = C12_TERMINAL_RECORD_RELATIVE.rsplit("/", 1)[-1]
+    required_document_semantics = (
+        record_name,
+        C12_TERMINAL_RECORD_SHA256,
+        C12,
+        "Q12 = false",
+        "R12 = permanently_unissued",
+        "L12 = not_adjudicated",
+        "just ksg-composite-v12",
+        "refuses replay",
+        "just ksg-composite-v12-preservation",
+        "zero new",
+    )
+    for relative in (
+        "AGENTS.md",
+        "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+    ):
+        text = stable_read(
+            ROOT / relative, f"current C12 terminal pointer: {relative}"
+        ).raw.decode("utf-8", errors="strict")
+        normalized = " ".join(text.replace("`", "").split())
+        require(
+            all(item in normalized for item in required_document_semantics),
+            f"current C12 terminal semantics drifted: {relative}",
+        )
+        require(
+            "not current operational guidance" in normalized.lower(),
+            f"historical composite lifecycle was not labelled: {relative}",
+        )
+        forbidden_live_directions = (
+            "The operative append-only successor is composite-v9",
+            "From a clean committed checkout run:",
+            "a separately typed recorder must run the fixed `just ksg-composite-v9`",
+            "A corrected fresh direct child of C8 must",
+            "A fresh current `r14` must",
+            "A completely fresh one-shot `r14` is mandatory",
+        )
+        require(
+            all(fragment not in text for fragment in forbidden_live_directions),
+            f"obsolete live C9 direction reappeared: {relative}",
+        )
+
+    just = stable_read(ROOT / "Justfile", "current C12 Just routing").raw.decode(
+        "utf-8", errors="strict"
+    )
+    require(
+        just_recipe_commands(just, "ksg-composite-v9")
+        == (
+            "#!/usr/bin/env bash",
+            "set -euo pipefail",
+            'echo "C9 qualification is historical and closed; refusing replay" >&2',
+            "exit 1",
+        ),
+        "historical C9 recipe no longer fails closed",
+    )
+    require(
+        just_recipe_commands(just, "ksg-composite-v11")
+        == (
+            "#!/usr/bin/env bash",
+            "set -euo pipefail",
+            'echo "C11 L11 attempt is permanently consumed; refusing replay" >&2',
+            "exit 1",
+        ),
+        "historical C11 recipe no longer fails closed",
+    )
+    require(
+        just_recipe_commands(just, "ksg-composite-v12")
+        == (
+            "#!/usr/bin/env bash",
+            "set -euo pipefail",
+            'echo "C12 qualification is permanently closed; refusing replay" >&2',
+            "exit 1",
+        ),
+        "terminal C12 replay refusal drifted",
+    )
+    require(
+        just_recipe_commands(just, "ksg-composite-v12-preservation")
+        == (
+            "#!/usr/bin/env bash",
+            "set -euo pipefail",
+            "umask 077",
+            (
+                'result_root="$(mktemp -d "${TMPDIR:-/tmp}/'
+                'pid-rs-composite-v12-preservation.XXXXXX")"'
+            ),
+            "trap 'rm -rf -- \"$result_root\"' EXIT",
+            (
+                "python3 -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py "
+                '> "$result_root/check.json"'
+            ),
+            (
+                "python3 -O -I -S -B scripts/check-ksg-m1a-composite-v12-terminal.py "
+                '> "$result_root/check.opt.json"'
+            ),
+            'cmp "$result_root/check.json" "$result_root/check.opt.json"',
+            (
+                "python3 -I -S -B "
+                "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py "
+                '> "$result_root/self-test.json"'
+            ),
+            (
+                "python3 -O -I -S -B "
+                "scripts/check-ksg-m1a-composite-v12-terminal-self-test.py "
+                '> "$result_root/self-test.opt.json"'
+            ),
+            'cmp "$result_root/self-test.json" "$result_root/self-test.opt.json"',
+        ),
+        "terminal C12 preservation route drifted",
+    )
+    release_lines = [
+        line for line in just.splitlines() if line.startswith("release-audit:")
+    ]
+    require(len(release_lines) == 1, "release-audit dependency line drifted")
+    release_dependencies = set(release_lines[0].split(":", 1)[1].split())
+    require(
+        "ksg-composite-v12-preservation" in release_dependencies
+        and "ksg-composite-v12" not in release_dependencies
+        and "ksg-composite-v9" not in release_dependencies,
+        "release-audit does not preserve the terminal C12 route",
+    )
+
+
 def check_absent_operational_paths() -> None:
     require(
         len(EXPECTED_ABSENT_OPERATIONAL_PATHS)
@@ -2132,7 +2416,8 @@ def check_prior_replay_preservation() -> None:
 
 def check_no_self_digest_cycle() -> None:
     digest_inventories = {
-        "active claim authority": EXPECTED_ACTIVE_CLAIM_HASHES,
+        "current active claim authority": EXPECTED_ACTIVE_CLAIM_HASHES,
+        "preserved r14 active claim authority": PRESERVED_R14_ACTIVE_CLAIM_HASHES,
         "active configuration": EXPECTED_CONFIG_HASHES,
         "active/historical completion split": EXPECTED_ACTIVE_RESUME_HASHES,
         "active Lean checker": EXPECTED_CHECKER_HASHES,
@@ -2172,12 +2457,30 @@ def check_no_self_digest_cycle() -> None:
         ),
         "preserved r14 operational wiring overlaps preserved prior replay evidence",
     )
+    preserved_paths = set(PRESERVED_R14_OPERATIONAL_WIRING_HASHES)
+    current_paths = set(EXPECTED_OPERATIONAL_WIRING_HASHES)
     require(
         EXPECTED_OPERATIONAL_WIRING_HASHES
         is not PRESERVED_R14_OPERATIONAL_WIRING_HASHES
-        and tuple(EXPECTED_OPERATIONAL_WIRING_HASHES)
-        == tuple(PRESERVED_R14_OPERATIONAL_WIRING_HASHES),
+        and preserved_paths < current_paths
+        and current_paths - preserved_paths == EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS,
         "preserved-r14/current-C12 operational path split drifted",
+    )
+    preserved_claim_paths = set(PRESERVED_R14_ACTIVE_CLAIM_HASHES)
+    current_claim_paths = set(EXPECTED_ACTIVE_CLAIM_HASHES)
+    rebound_claim_paths = {
+        relative
+        for relative in preserved_claim_paths
+        if PRESERVED_R14_ACTIVE_CLAIM_HASHES[relative]
+        != EXPECTED_ACTIVE_CLAIM_HASHES.get(relative)
+    }
+    require(
+        EXPECTED_ACTIVE_CLAIM_HASHES is not PRESERVED_R14_ACTIVE_CLAIM_HASHES
+        and preserved_claim_paths < current_claim_paths
+        and current_claim_paths - preserved_claim_paths
+        == EXPECTED_CURRENT_ACTIVE_CLAIM_ADDED_PATHS
+        and rebound_claim_paths == EXPECTED_CURRENT_ACTIVE_CLAIM_REBOUND_PATHS,
+        "preserved-r14/current active-claim authority split drifted",
     )
 
 
@@ -2359,8 +2662,9 @@ def check_replay_receipt() -> None:
         "replay active/historical completion split drifted",
     )
     require(
-        receipt.get("active_claim_authority_sha256") == EXPECTED_ACTIVE_CLAIM_HASHES,
-        "replay active claim authority drifted",
+        receipt.get("active_claim_authority_sha256")
+        == PRESERVED_R14_ACTIVE_CLAIM_HASHES,
+        "historical r14 active claim authority drifted",
     )
     require(
         receipt.get("operational_wiring_sha256")
@@ -2572,6 +2876,7 @@ def check_static_without_receipt() -> None:
     check_derived_instance_evidence()
     check_hashes(EXPECTED_ACTIVE_CLAIM_HASHES, "active claim authority")
     check_hashes(EXPECTED_OPERATIONAL_WIRING_HASHES, "current C12 operational wiring")
+    check_c12_terminal_routing()
     check_absent_operational_paths()
     check_hashes(PRESERVED_HISTORICAL_HASHES, "preserved historical 4.32 evidence")
     check_prior_replay_preservation()
@@ -2594,8 +2899,8 @@ def main() -> int:
     print(
         "OK: Lean 4.33.0 remains frozen to the exact release/commit, nine-package "
         "closure, 11 source files, 3 Fintype-derivation command scopes plus 4 proof-term "
-        "scopes, current replay evidence, current C12 operational wiring kept separate "
-        "from the historical r14 receipt, six derived-instance printed-skeleton "
+        "scopes, current replay evidence, exact-C12 terminal refusal/preservation routing "
+        "kept separate from the historical r14 receipt, six derived-instance printed-skeleton "
         "comparisons, and "
         f"{len(PRESERVED_HISTORICAL_HASHES)} byte-preserved historical 4.32 artifacts, "
         f"plus {len(PRESERVED_PRIOR_REPLAY_HASHES)} byte-preserved prior 4.33 replay"

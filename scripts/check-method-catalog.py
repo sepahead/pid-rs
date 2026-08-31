@@ -44,7 +44,7 @@ SEMANTIC_ALIAS_DIAGNOSTIC_REVISION = 1
 # Updating this reviewed root is the explicit re-adjudication step for any catalog semantic
 # payload, typed fact, linked-reference record, alias diagnostic, or authority-schema change.
 EXPECTED_SEMANTIC_AUTHORITY_ROOT_SHA256 = (
-    "c08c7ab303f29358446e698155db29adf412fe3f952caad503cb673f27905b15"
+    "ff25eba435390dcef6b664a2fe607fb65d16217d4d3d66c4463fc6029316123e"
 )
 MIGRATION_METHOD_ID = "software.python-experimental-migration-bindings"
 PYTHON_V1_METHOD_ID = "software.python-v1-bindings"
@@ -164,6 +164,7 @@ UNMAPPED_EXACT_ENTRYPOINTS = {
 MARKER_RE = re.compile(r"Method catalog:\s*([a-z0-9]+(?:[.-][a-z0-9]+)*)")
 EXTRA_SOURCE_MARKER_FILES = (
     "audit/tools/certified-sxpid/src/lib.rs",
+    "scripts/check-mathematical-results-guide-prose.py",
     "scripts/check-foundational-sxpid-audit-pdf.sh",
     "scripts/check-sxpid3-source-marginal-audit-pdf.sh",
     "scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh",
@@ -210,6 +211,7 @@ ALLOWED_UNMAPPED = {
     "software.runlog-schema-replay",
     "software.scientific-outcome-contract-foundation",
     "validation.csxpid-reference-code",
+    "validation.analytic-common-radius-manifold-sx-bridge",
     "validation.exp0",
     "validation.idtxl-reference-code",
     "validation.sxpid-reference-code",
@@ -270,6 +272,7 @@ SEMANTIC_CONDITIONING_VALUES = frozenset(
         "caller-supplied-summary-terms",
         "declared-dependence-design",
         "declared-embedding-geometry",
+        "declared-geodesic-geometry-and-common-radius-gauge",
         "declared-hypothesis-family",
         "declared-observation-model",
         "declared-preprocessing-gauge",
@@ -289,6 +292,7 @@ SEMANTIC_DATA_DOMAIN_VALUES = frozenset(
         "continuous-to-finite-categorical",
         "euclidean-continuous",
         "finite-categorical",
+        "hyperbolic-source-riemannian-target-continuous",
         "lorentz-continuous",
         "method-results",
         "mixed-variable",
@@ -299,6 +303,7 @@ SEMANTIC_DATA_DOMAIN_VALUES = frozenset(
 )
 SEMANTIC_POPULATION_SUPPORT_VALUES = frozenset(
     {
+        "declared-hyperbolic-source-riemannian-target-research",
         "declared-lorentz-manifold-research",
         "declared-observation-model",
         "empirical-finite-pmf",
@@ -345,6 +350,7 @@ SEMANTIC_ESTIMAND_FAMILY_VALUES = frozenset(
         "ksg-sensitivity-diagnostic",
         "logistic-regression",
         "lorentz-ksg-mutual-information",
+        "manifold-shared-exclusions-population-bridge",
         "mgw-categorical-shared-exclusions",
         "moving-block-bootstrap",
         "o-information",

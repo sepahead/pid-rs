@@ -81,6 +81,18 @@ advisory-archive:
     python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py > "$task_tmp/self-test.optimized.json"
     cmp --silent "$task_tmp/self-test.json" "$task_tmp/self-test.optimized.json"
 
+# Inert rejected-route packets and one bounded floating-point counterexample. These gates preserve
+# negative evidence and its non-adoption boundary; they grant no theorem, estimator, or release credit.
+negative-evidence:
+    python3 -I -S -B scripts/check-inert-negative-archives.py
+    python3 -O -I -S -B scripts/check-inert-negative-archives.py
+    python3 -I -S -B scripts/check-inert-negative-archives-self-test.py
+    python3 -O -I -S -B scripts/check-inert-negative-archives-self-test.py
+    python3 -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+    python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+    python3 -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
+    python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
+
 # Version coherence (Cargo workspace version == CITATION.cff; CI also runs a tag mode on tag pushes)
 version-check:
     scripts/check-current-release-state.sh
@@ -160,16 +172,23 @@ api-snapshots:
     scripts/check-public-api-snapshots.sh
     scripts/check-public-api-snapshots-self-test.sh
 
-# Bounded exact-real PID2 and PID3 algebra obligations (requires Z3 4.16.0, 64-bit CLI).
-# The target keeps its original name as a compatibility route.
+# Bounded represented-coordinate PID2 assurance plus exact-real PID2/PID3 algebra obligations
+# (requires Z3 4.16.0, 64-bit CLI). The target keeps its original name as a compatibility route.
 formal-pid2:
-    python3 scripts/check-z3-pid2-algebra.py
-    python3 scripts/check-z3-pid2-algebra-self-test.py
+    python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+    python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+    python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+    python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+    python3 -I -S -B scripts/check-z3-pid2-algebra.py
+    python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+    python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py
+    python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
 
 # Bounded positive-integer KSG/Ehrlich arithmetic and fail-closed candidate custody.
 # The unscoped main checker is intentionally omitted while the active packet is integration_no_go.
-# The descendant preservation wrapper keeps five live routes separate from the current catalog;
-# exact-tree replay alone retains release-only and the frozen historical catalog projection.
+# The descendant preservation wrapper keeps four live routes separate from the current catalog;
+# exact-tree replay alone retains superseded claim-only/release-only routes and the frozen
+# historical catalog projection.
 ksg-revision:
     python3 scripts/generate-ksg-local-arithmetic-oracle.py
     python3 -O scripts/generate-ksg-local-arithmetic-oracle.py
@@ -189,10 +208,15 @@ ksg-revision:
     python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
     python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
     python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+    python3 -I -S -B scripts/check-ksg-revision4-terminal-index.py
+    python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index.py
+    python3 -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
+    python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
     python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
     python3 -O -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
     python3 -I -S -B scripts/check-ksg-m1a-phase-self-test.py
     python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
+    # Historical zero-credit preservation checks; no recovery mode is authorized at current HEAD.
     # BEGIN KSG_M1A_HOSTED_RECOVERY_JUST_V1
     python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py --validate-policy-only --allow-provisional-diagnostic
     python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery.py --validate-policy-only --allow-provisional-diagnostic
@@ -564,75 +588,13 @@ ksg-composite-v8:
     python3 -O -I -S -B scripts/check-ksg-m1a-composite-v8-self-test.py > "$result_root/self-test.optimized.json"
     cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
 
-# Composite-v9 repairs the five stale certified-SxPID2 operational bindings exposed in C8,
-# leaves theorem sources/statements, estimator code, numerical fixtures, and PDF artifacts unchanged,
-# separately corrects six synthetic fixture modes, and requires fresh L9 and hosted evidence.
+# Historical C9 qualification is closed. The former long-running recipe is preserved in the dated
+# v9 boundary and exact Git history; this live entry point must only refuse replay.
 ksg-composite-v9:
     #!/usr/bin/env bash
     set -euo pipefail
-    umask 077
-    python3 -I -S -B -c 'import sys; raise SystemExit(0 if sys.implementation.name == "cpython" and sys.version_info == (3, 14, 6, "final", 0) and sys._is_gil_enabled() else 1)'
-    result_root="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-composite-v9.XXXXXX")"
-    trap 'rm -rf -- "$result_root"' EXIT
-    command -v rg >/dev/null
-    rg --version >/dev/null
-    python3 -I -S -B scripts/check-github-action-pins.py > "$result_root/action-pins.json"
-    python3 -O -I -S -B scripts/check-github-action-pins.py > "$result_root/action-pins.optimized.json"
-    cmp "$result_root/action-pins.json" "$result_root/action-pins.optimized.json"
-    python3 -I -S -B scripts/check-github-action-pins-self-test.py > "$result_root/action-pins-self.json"
-    python3 -O -I -S -B scripts/check-github-action-pins-self-test.py > "$result_root/action-pins-self.optimized.json"
-    cmp "$result_root/action-pins-self.json" "$result_root/action-pins-self.optimized.json"
-    python3 -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-    python3 -O -I -S -B scripts/normalize-actions-checkout-worktree-config-self-test.py
-    scripts/check-release-state-self-test.sh
-    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.json"
-    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall.py > "$result_root/zeta.optimized.json"
-    cmp "$result_root/zeta.json" "$result_root/zeta.optimized.json"
-    python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-    python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
-    python3 -I -S -B scripts/check-certified-sxpid2-claim.py
-    python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
-    python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-    python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-    python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-    python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v9-local-closure.py --self-test > "$result_root/local.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v9-local-closure.py --self-test > "$result_root/local.optimized.json"
-    test -s "$result_root/local.json"
-    test -s "$result_root/local.optimized.json"
-    cmp "$result_root/local.json" "$result_root/local.optimized.json"
-    scripts/check-ksg-m1a-composite-v6-pdf-portability.sh --exact
-    scripts/check-ksg-m1a-composite-v6-pdf-portability-self-test.sh --exact
-    scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
-    scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
-    scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh --exact
-    scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh --exact
-    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC python3 -I -S -B -c 'import sys; raise SystemExit(0 if sys.implementation.name == "cpython" and sys.version_info == (3, 14, 6, "final", 0) and sys._is_gil_enabled() else 1)'
-    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf-self-test.sh
-    /usr/bin/env -i PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh --exact
-    python3 -I -S -B scripts/check-lean-toolchain-freeze.py
-    python3 -O -I -S -B scripts/check-lean-toolchain-freeze.py
-    python3 -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-    python3 -O -I -S -B scripts/check-lean-toolchain-freeze-self-test.py
-    python3 -I -S -B scripts/check-current-source-state-v1.py
-    python3 -O -I -S -B scripts/check-current-source-state-v1.py
-    python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
-    python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
-    python3 -I -S -B scripts/capture-ksg-m1a-composite-v9.py --self-test > "$result_root/capture.json"
-    python3 -O -I -S -B scripts/capture-ksg-m1a-composite-v9.py --self-test > "$result_root/capture.optimized.json"
-    test -s "$result_root/capture.json"
-    test -s "$result_root/capture.optimized.json"
-    cmp "$result_root/capture.json" "$result_root/capture.optimized.json"
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-static > "$result_root/static.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-static > "$result_root/static.optimized.json"
-    test -s "$result_root/static.json"
-    test -s "$result_root/static.optimized.json"
-    cmp "$result_root/static.json" "$result_root/static.optimized.json"
-    python3 -I -S -B scripts/check-ksg-m1a-composite-v9-self-test.py > "$result_root/self-test.json"
-    python3 -O -I -S -B scripts/check-ksg-m1a-composite-v9-self-test.py > "$result_root/self-test.optimized.json"
-    test -s "$result_root/self-test.json"
-    test -s "$result_root/self-test.optimized.json"
-    cmp "$result_root/self-test.json" "$result_root/self-test.optimized.json"
+    echo "C9 qualification is historical and closed; refusing replay" >&2
+    exit 1
 
 # C11's only L11 attempt failed and cannot be replayed or converted into evidence.
 ksg-composite-v11:
@@ -681,7 +643,10 @@ certified-sxpid:
     python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
     python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
     python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
-    python3 scripts/check-lean-exact-log-product.py
+    python3 -I -S -B scripts/check-lean-exact-log-product.py
+    python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+    python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+    python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
     python3 -I -S -B scripts/check-certified-sxpid2-claim.py
     python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
     python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
@@ -761,6 +726,10 @@ formal-mathematical-workflow-pdf:
 formal-pdfs:
     scripts/check-formal-pdf-set.sh
 
+# Check the exact-only root blueprint; no cross-toolchain profile is currently certified.
+pid-discovery-verification-blueprint-pdf:
+    scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
+
 # Minimum supported Rust version
 msrv:
     cargo +1.89 check --locked --workspace
@@ -782,10 +751,10 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check advisory-archive formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check advisory-archive negative-evidence formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 
 # Core local gates. CI additionally runs OS/Python matrices, coverage, fuzz, SBOM, semver/package,
 # a full-history secret scan, and the pinned MSRV matrix.
-ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check advisory-archive lean-toolchain-freeze
+ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check advisory-archive negative-evidence lean-toolchain-freeze

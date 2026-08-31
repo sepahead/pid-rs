@@ -2405,6 +2405,24 @@ def main() -> int:
             "```text\n<!-- BEGIN KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",
         ),
         (
+            "wiring README live-heading revival",
+            "readme",
+            "## Historical KSG M1a hosted-recovery verifier (nonoperative)",
+            "## KSG M1a hosted-recovery verifier",
+        ),
+        (
+            "wiring README C12 terminal reversal",
+            "readme",
+            "Exact C12 `01466e88b0550333c2718f1716289e9642e30dc6` is terminal with zero qualification\ncredit.",
+            "Exact C12 `01466e88b0550333c2718f1716289e9642e30dc6` is open for qualification\ncredit.",
+        ),
+        (
+            "wiring README successor revival",
+            "readme",
+            "Descendants run only the repeatable refusal/preservation surface:",
+            "Descendants may resume the hosted-recovery lifecycle:",
+        ),
+        (
             "wiring README contradiction",
             "readme",
             "<!-- END KSG_M1A_HOSTED_RECOVERY_README_V1 -->\n",

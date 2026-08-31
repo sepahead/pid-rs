@@ -776,7 +776,7 @@ approximation guarantee follows merely from writing a linear score in PID coordi
 The bivariate case gives an exact recognition shortcut. Assume finite mutual informations and the
 usual four-node PID consistency/self-redundancy equations. Write atom weights as
 $(w_r,w_1,w_2,w_s)$ and let $I_1=I(S_1;T)$, $I_2=I(S_2;T)$, and
-$I_{12}=I(S_1,S_2;T)$. Substitution gives the project-derived elementary identity
+$I_{12}=I(S_1,S_2;T)$. Substitution gives the elementary identity derived in this repository
 
 $$
 \begin{aligned}
@@ -1506,7 +1506,8 @@ The following would be new work in this project if completed; none is claimed co
   gate;
 - exact small-map enumeration plus retained nonmonotonicity/submodularity countermodels;
 - a valid uniform categorical-MGW estimator bound or calibrated finite-family guarantee that
-  supplies a usable $\varepsilon$ to the complete project-derived $2\varepsilon+\delta$ selection
+  supplies a usable $\varepsilon$ to the complete repository-derived, project-defined
+  $2\varepsilon+\delta$ selection
   reduction in Section 10.3;
 - a Galadriel consumer packet that keeps every PID result record-only while preserving source,
   target, transform, row-law, and software identity;
@@ -1596,7 +1597,8 @@ Before calling a construction a placement method, close these obligations:
    \max_{D\in\mathcal F}\widehat f(D)-\delta,
    $$
 
-   with finite $\varepsilon,\delta\ge0$. Then the project-derived elementary selection bound is
+   with finite $\varepsilon,\delta\ge0$. Then the elementary selection bound derived in this
+   repository is
 
    $$
    f(D^\star)-f(\widehat D)\le2\varepsilon+\delta.

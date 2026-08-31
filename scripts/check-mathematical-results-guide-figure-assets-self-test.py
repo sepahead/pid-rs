@@ -317,14 +317,14 @@ def main() -> int:
         source_family = case("source-family")
         source_family_manifest = load_manifest(source_family)
         source_family_path = (
-            source_family / source_family_manifest["figures"][2]["source"]
+            source_family / source_family_manifest["figures"][3]["source"]
         )
         source_family_text = source_family_path.read_text(encoding="utf-8")
         source_family_path.write_text(
             source_family_text.replace("'Latin Modern Sans'", "'Source Sans Pro'", 1),
             encoding="utf-8",
         )
-        update_source_digest(source_family, 2)
+        update_source_digest(source_family, 3)
         require_failure(
             source_family,
             "does not use only the exact 'Latin Modern Sans' CSS family",

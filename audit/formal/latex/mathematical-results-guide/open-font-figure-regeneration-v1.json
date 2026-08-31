@@ -1,6 +1,6 @@
 {
   "format_version": 1,
-  "purpose": "Exact open-font inputs and scope for non-canonical publication SVG-to-PDF regeneration used by the mathematical results guide and the separate SxPID3 source-marginal audit",
+  "purpose": "Exact open-font inputs and scope for non-canonical publication SVG-to-PDF regeneration used by the mathematical results guide, the separate SxPID3 source-marginal audit, and the numerical-assurance note",
   "source_date_epoch": 1787875200,
   "fonts": [
     {
@@ -134,7 +134,13 @@
     },
     {
       "source": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
-      "source_sha256": "bb315a5282dce90a25988f92ab7b5ecf6a8fe530d33de1ddaef8a81ca2e1a775",
+      "source_sha256": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7",
+      "exact_css_family": "Source Sans Pro",
+      "admitted_css_weights": [600, 700]
+    },
+    {
+      "source": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
+      "source_sha256": "db7c44960fdbad22586e9fbb793deb1944991ff155ceeb13efb9e86774e7a388",
       "exact_css_family": "Source Sans Pro",
       "admitted_css_weights": [400, 600, 700]
     },
@@ -149,6 +155,20 @@
       "source_sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
       "exact_css_family": "Latin Modern Sans",
       "admitted_css_weights": [400, 700]
+    },
+    {
+      "source": "audit/formal/latex/figures/numerical-assurance/quantizer-cardinality.svg",
+      "source_sha256": "4226063f230341e0f3287ba8217fde62ddb5e9838cd84072d3578cf99531bd36",
+      "exact_css_family": "Source Sans Pro",
+      "additional_exact_css_families": ["Latin Modern Sans"],
+      "admitted_css_weights": [400, 600, 700]
+    },
+    {
+      "source": "audit/formal/latex/figures/numerical-assurance/represented-sum-boundary.svg",
+      "source_sha256": "142ff6540f13be02d88a5db09d0f909aac3fa43e653f0d956a093802d0e1d217",
+      "exact_css_family": "Source Sans Pro",
+      "additional_exact_css_families": ["Latin Modern Sans"],
+      "admitted_css_weights": [400, 600, 700]
     }
   ],
   "execution_contract": {

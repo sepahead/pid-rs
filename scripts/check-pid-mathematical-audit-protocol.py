@@ -176,6 +176,33 @@ OBJECT_SPECS: tuple[dict[str, Any], ...] = (
         ),
     },
     {
+        "id": "analytic-common-radius-manifold-sx-bridge",
+        "label": "Analytic common-radius manifold shared-exclusions bridge",
+        "construction_kind": "repository-derived conditional fixed-point population lemma, catalogued project-defined, for a paper-defined local analytic functional",
+        "reference_ids": (
+            "ehrlich-2024",
+            "ratcliffe-2006",
+            "clayton-1978",
+        ),
+        "construction_id": None,
+        "method_ids": (
+            "validation.analytic-common-radius-manifold-sx-bridge",
+        ),
+        "scientific_object": "A conditional common-geodesic-radius population limit that represents the bivariate Ehrlich local analytic shared-exclusions formula at one fixed point, plus source-overlap and gauge/dimension boundary counterexamples.",
+        "domain_support": "Integer dimensions d,q >= 1; two sources in the same measured hyperbolic space H^d_{-1}; one q-dimensional Riemannian target; product-volume absolute continuity; fixed density representatives; the stated pointwise continuity and local-boundedness premises; and strict positivity of f_T(t), the source-density sum, and the source-target-density sum in the logged ratio.",
+        "units": "The repository limit uses natural logarithms and reports nats; the cited Ehrlich definition uses base-two logarithms and reports bits.",
+        "sample_role": "None. This is a population event-probability limit as a deterministic common radius tends to zero, not a finite-sample estimator, adaptive-neighbour rule, or calibration result.",
+        "acceptance_obligations": (
+            "Bind the evaluated point, source and target dimensions, measured manifolds and reference volumes, common-radius gauge, density representatives, continuity, local boundedness, positivity, and logarithm base before using the limit.",
+            "Check the inclusion-exclusion orders, the absolutely continuous first-order-overlap counterexample, and the unequal-scale and unequal-dimension boundaries while leaving estimator, kernel, software-refinement, and application correspondence open.",
+        ),
+        "boundaries": (
+            "This population representation supplies no adaptive-kNN consistency, bias, variance, calibration, product-manifold kernel, hyperbolic shared-exclusions estimator, PID implementation, public API, or software-refinement evidence.",
+            "No estimator, public-API, or implementation claim transfers from the Ehrlich estimator objects or from the existing pid-rs Lorentz-KSG objects to this population lemma.",
+            "The Clayton-copula construction shows that displayed smooth one-source and source-target marginals do not replace source-pair regularity; it does not refute the paper-defined Ehrlich formula or authorize a downstream application.",
+        ),
+    },
+    {
         "id": "ksg-mutual-information",
         "label": "KSG1 mutual information",
         "construction_kind": "paper-defined continuous mutual-information estimator",

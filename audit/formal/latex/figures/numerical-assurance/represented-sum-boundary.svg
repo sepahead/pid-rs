@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="88mm" viewBox="0 0 1680 880" role="img" aria-labelledby="title desc">
+  <title id="title">Represented binary64 exact-sum boundary</title>
+  <desc id="desc">A left-to-right pipeline separates mathematical or estimated quantities, already rounded binary64 input bit patterns, a 34-limb exact fixed-point accumulator, exact positive-minus-negative subtraction, and one round-to-nearest ties-to-even binary64 result. A lower band states the permitted arithmetic claim and prohibits inference to exact PID estimation.</desc>
+  <defs>
+    <pattern id="cv-grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M0 11 H22 M11 0 V22" stroke="#F7F3E9" stroke-width="1.4" opacity="0.15"/>
+      <circle cx="11" cy="11" r="2.1" fill="#DCA520" opacity="0.32"/>
+    </pattern>
+    <pattern id="limbs" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M0 0 H18 V18 H0 Z M9 0 V18 M0 9 H18" fill="none" stroke="#1F6968" stroke-width="1.4" opacity="0.22"/>
+    </pattern>
+    <linearGradient id="fade-teal" x1="0" x2="1">
+      <stop offset="0" stop-color="#1F6968" stop-opacity="0.08"/>
+      <stop offset="0.55" stop-color="#1F6968" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#1F6968" stop-opacity="0.04"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 L12 6 L0 12 Z" fill="#916400"/>
+    </marker>
+    <style>
+      .sans { font-family: "Source Sans Pro"; }
+      .kicker { font-size: 22px; font-weight: 700; fill: #916400; letter-spacing: 2.5px; }
+      .title { font-size: 42px; font-weight: 700; fill: #2C3E50; }
+      .subtitle { font-size: 24px; font-weight: 600; fill: #1F6968; }
+      .box-title { font-size: 27px; font-weight: 700; fill: #2C3E50; }
+      .body { font-size: 22px; font-weight: 400; fill: #2C3E50; }
+      .small { font-size: 22px; font-weight: 600; fill: #647072; }
+      .formula { font-family: "Latin Modern Sans"; font-size: 24px; font-weight: 400; fill: #2C3E50; }
+      .band-label { font-size: 22px; font-weight: 700; fill: #1F6968; letter-spacing: 1.5px; }
+      .band-text { font-size: 24px; font-weight: 600; fill: #2C3E50; }
+    </style>
+  </defs>
+
+  <rect width="1680" height="880" fill="#F7F3E9"/>
+  <rect x="0" y="0" width="1680" height="72" fill="#2C3E50"/>
+  <rect x="0" y="0" width="1680" height="72" fill="url(#cv-grid)"/>
+
+  <g class="sans">
+    <rect x="78" y="112" width="13" height="42" fill="#DCA520"/>
+    <text x="112" y="130" class="kicker">NUMERICAL CLAIM BOUNDARY</text>
+    <text x="112" y="179" class="title">Exact after representation - not exact before it</text>
+    <text x="112" y="219" class="subtitle">Only the fixed multiset of finite binary64 operands enters the exact-sum contract.</text>
+    <path d="M78 242 H1602" stroke="#2C3E50" stroke-width="2" opacity="0.20"/>
+    <path d="M78 242 H405" stroke="#916400" stroke-width="5"/>
+
+    <g transform="translate(78 274)">
+      <rect width="285" height="320" rx="18" fill="#F2EBDA" stroke="#916400" stroke-width="2.4"/>
+      <text x="24" y="46" class="box-title">1. Earlier quantity</text>
+      <text x="24" y="85" class="body">Probability, logarithm,</text>
+      <text x="24" y="116" class="body">MI estimate, redundancy,</text>
+      <text x="24" y="147" class="body">or weighted PID term</text>
+      <path d="M24 170 H261" stroke="#916400" stroke-width="1.6" opacity="0.45"/>
+      <text x="24" y="205" class="small">May already contain:</text>
+      <text x="24" y="239" class="body">sampling, model, log,</text>
+      <text x="24" y="270" class="body">product, or</text>
+      <text x="24" y="301" class="body">estimator error</text>
+    </g>
+
+    <path d="M378 434 H420" stroke="#916400" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g transform="translate(440 274)">
+      <rect width="300" height="320" rx="18" fill="url(#fade-teal)" stroke="#1F6968" stroke-width="3"/>
+      <text x="24" y="43" class="box-title">2. Represented</text>
+      <text x="24" y="73" class="box-title">inputs</text>
+      <text x="24" y="110" class="body">Finite 64-bit payloads</text>
+      <text x="24" y="146" class="formula">x_i = X_i 2^-1074</text>
+      <text x="24" y="184" class="body">Sign, exponent, and</text>
+      <text x="24" y="214" class="body">53-bit significand decoded</text>
+      <rect x="24" y="238" width="252" height="62" rx="8" fill="#1F6968" opacity="0.10"/>
+      <text x="39" y="264" class="small">EXACT CLAIM</text>
+      <text x="39" y="290" class="small">STARTS HERE</text>
+    </g>
+
+    <path d="M755 434 H797" stroke="#916400" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g transform="translate(817 274)">
+      <rect width="300" height="320" rx="18" fill="url(#limbs)" stroke="#1F6968" stroke-width="2.4"/>
+      <text x="24" y="43" class="box-title">3. Exact</text>
+      <text x="24" y="73" class="box-title">accumulation</text>
+      <text x="24" y="110" class="body">34 unsigned 64-bit limbs</text>
+      <text x="24" y="140" class="body">for each sign magnitude</text>
+      <text x="24" y="180" class="formula">P = sum X_i^+</text>
+      <text x="24" y="216" class="formula">N = sum X_i^-</text>
+      <text x="24" y="249" class="body">No intermediate rounding</text>
+      <text x="24" y="279" class="small">Fixed storage</text>
+      <text x="24" y="306" class="small">under term bound</text>
+    </g>
+
+    <path d="M1132 434 H1174" stroke="#916400" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g transform="translate(1194 274)">
+      <rect width="408" height="320" rx="18" fill="#E8F0ED" stroke="#2C3E50" stroke-width="2.4"/>
+      <text x="24" y="46" class="box-title">4. Subtract once; round once</text>
+      <text x="24" y="88" class="formula">D = |P - N|</text>
+      <text x="24" y="127" class="formula">y = RN_even(sign(P-N)</text>
+      <text x="51" y="158" class="formula">D 2^-1074)</text>
+      <path d="M24 178 H384" stroke="#1F6968" stroke-width="1.6" opacity="0.45"/>
+      <text x="24" y="215" class="body">Guard + sticky + retained parity</text>
+      <text x="24" y="247" class="body">choose the binary64 payload.</text>
+      <text x="24" y="283" class="small">Exact cancellation gives</text>
+      <text x="24" y="310" class="small">positive zero.</text>
+    </g>
+
+    <g transform="translate(78 628)">
+      <rect width="742" height="188" rx="16" fill="#E8F0ED" stroke="#1F6968" stroke-width="2.5"/>
+      <rect width="13" height="188" rx="6" fill="#1F6968"/>
+      <text x="38" y="43" class="band-label">PERMITTED CLAIM</text>
+      <text x="38" y="83" class="band-text">The same finite operand multiset gives one</text>
+      <text x="38" y="116" class="band-text">correctly rounded result in every order.</text>
+      <text x="38" y="151" class="small">Bounded fixtures support Rust conformance;</text>
+      <text x="38" y="175" class="small">they are not a universal proof.</text>
+    </g>
+
+    <g transform="translate(860 628)">
+      <rect width="742" height="188" rx="16" fill="#F2EBDA" stroke="#916400" stroke-width="2.5"/>
+      <rect width="13" height="188" rx="6" fill="#DCA520"/>
+      <text x="38" y="43" class="band-label">PROHIBITED INFERENCE</text>
+      <text x="38" y="83" class="band-text">The PID, probability, logarithm, or estimator</text>
+      <text x="38" y="116" class="band-text">is therefore exact, unbiased, or calibrated.</text>
+      <text x="38" y="151" class="small">Upstream error and application assumptions</text>
+      <text x="38" y="175" class="small">remain separate obligations.</text>
+    </g>
+  </g>
+</svg>

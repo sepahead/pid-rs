@@ -46,19 +46,19 @@ VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
 RESOURCE_POLICY = "sxpid2-certification-default-v2"
 LOADED_EXECUTION_DOMAIN = "pid-certified-sxpid-independent-loaded-execution-v3"
 EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256 = (
-    "6c173cbf90fe27bbd43342f37ebe0378db76a1e4e8e22a92aa4d5416f9789bda"
+    "67dab1b2177419e545a60ec7af21ac0f2c1d45b7cc466006218a5ab8c94e8e62"
 )
 EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
-    "fbd80548b0c62cb46f646e77e5f1df37d439299e71faec9bd05656839f660ae7"
+    "4bbc138fd8b7bd07281e593ab0380ca68cceabfd7e33be8dac2591bec37bc0f3"
 )
 EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
-    "8bcf097b6852da0916044a48f4fb285d86a0db6124b4222346492235ab9da6db"
+    "29158e22e72fb8c2c1ae807f873ab53002c7f95ccefc16189607df2bb17443bf"
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "c34bfb2ed07fd324f045176a4e16e38bca399ee2cf4aed00a25f8484fa20cd3a"
+        "92b305b749cb0f201b8deb8840ab0298b770a70c26c26c696daaaa655692d062"
     ),
-    "justfile": ("1ea6f58c32861134a9f9cbb7f2c0804a997d782e7e78bd88bf492b6f2dc3b575"),
+    "justfile": ("658d6385e81e7177e82a984c199f65c928e9addc79bc20b8c837e3ee5eedd3e1"),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -165,11 +165,11 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "2a5daafb9212582423605674ffa5a148bc5e7b4a7ef07898ca323718321b333f"
+        "272f3bac381f34d064846fe9502cf633337e8144dbb4d76f2499b0cef89f847e"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
-    "a8318a5901b35d7187c6a031f66a3327ab53601ed3260249de2b25bcd2880b6a"
+    "1b09d3aad5b11f3999e64487bf5f132fa7e32e5fba60d67801c7c5dbe98cd9cf"
 )
 EXPECTED_EVIDENCE_PROJECTION_SHA256 = {
     "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json": (
@@ -204,18 +204,21 @@ EXPECTED_LEAN_EVIDENCE_RAW_SHA256 = {
 }
 EXPECTED_SUPPORT_GATE_SHA256 = {
     "scripts/check-formal-pdf-set.sh": (
-        "3fe58627fb35b308ac59ed10f2f6693430bedc1f37168003aff5989c26711e19"
+        "ae8d8ccbb873fe79dd9ebe2c849da93ac92404702e032632a428045068a287f2"
     ),
 }
 EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
+    "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json": (
+        "c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad"
+    ),
     "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md": (
-        "538572da427e36142926bc6341fe32c4ab68a99b0d80cbfd3cf4c573b027e1e7"
+        "2c7ee18a8eb0bc093136a2922627040a70bee32ca257c029621e5d2c872e1561"
     ),
     "audit/formal/latex/certified-sxpid2-executable-assurance.tex": (
         "297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61"
     ),
     "audit/formal/latex/exact-log-product-sxpid2-assurance.tex": (
-        "9b8434e3062898f948bca72ba6ca5fdf9b23764390fe5552265ded2b8bdae81e"
+        "6404cd25d5a42e28c24cfe7b412b0cdcf5723f018b59cce62b6f9c6f475f4dfe"
     ),
     "audit/tools/certified-sxpid/deny.toml": (
         "8f5451e9ef2ee389a212f3c55b0d58032f5fe119fcff7109b74eff6d8ce04c03"
@@ -230,13 +233,19 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c"
     ),
     "output/pdf/exact-log-product-sxpid2-assurance.pdf": (
-        "1936f5bbddef4feeef6ce3418543142f2cb4aff815ae92a1144f30d5162f3c57"
+        "0eea7f2ff8c7f2538e5bd1b73ab447205d4b9d368fccf941f4a40dc7f1877474"
+    ),
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md": (
+        "646639199233515b72bf81b8f2843a781ae985abfde3cd1e77aa24691840c3e0"
     ),
     "scripts/check-certified-sxpid2-assurance-pdf.sh": (
         "b04db844f2e52baaba7250d209af69cb7eb2d26474f95b2bf896250061cf1392"
     ),
     "scripts/check-exact-log-product-sxpid2-pdf.sh": (
         "38453a6a9b040a31fb4de65a407efe0a7258e57fc3f2b06ceed8bbb20343f43d"
+    ),
+    "scripts/check-lean-exact-log-product-self-test.py": (
+        "9aa7ec6ec1636dcfe3fe8e5667747c4a1e762dae07768f34daa19d3db7dc593c"
     ),
 }
 INCIDENT_PATH = (
@@ -267,6 +276,8 @@ TEXT_PATHS = (
     "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
     "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
     "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+    "scripts/check-lean-exact-log-product-self-test.py",
+    "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md",
     INCIDENT_PATH,
     "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v1.md",
     "claims/SX-CERTIFIED-AVERAGED-PID2-001/claim-v2.md",
@@ -309,6 +320,7 @@ TEXT_PATHS = (
 
 JSON_PATHS = (
     "method-catalog.json",
+    "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json",
     "audit/evidence/certified-sxpid2-boundary-replay-portability-20260728.json",
     "audit/evidence/sxpid2-exact-product-qualification.json",
     "audit/evidence/sxpid2-exact-product-mutation-suite.json",
@@ -338,6 +350,7 @@ HASH_PATHS = (
 
 REQUIRED_CATALOG_PATHS = frozenset(
     {
+        "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json",
         "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
         "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
         "audit/formal/lean-exact-log-product/PidExactLogProduct.lean",
@@ -369,8 +382,10 @@ REQUIRED_CATALOG_PATHS = frozenset(
         "claims/SX-CERTIFIED-AVERAGED-PID2-001/formal/theorem-evidence-map-v3.md",
         "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v2.md",
         "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/retained-negative-controls-v3.md",
+        "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md",
         "output/pdf/exact-log-product-sxpid2-assurance.pdf",
         "scripts/check-lean-exact-log-product.py",
+        "scripts/check-lean-exact-log-product-self-test.py",
         "scripts/check-exact-log-product-sxpid2-pdf.sh",
         "scripts/check-certified-sxpid2-claim.py",
         "scripts/check-certified-sxpid2-claim-self-test.py",
@@ -383,7 +398,10 @@ GATE_COMMANDS = (
     "python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py",
     "python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py",
     "python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py",
-    "python3 scripts/check-lean-exact-log-product.py",
+    "python3 -I -S -B scripts/check-lean-exact-log-product.py",
+    "python3 -O -I -S -B scripts/check-lean-exact-log-product.py",
+    "python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py",
+    "python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py",
     "python3 -I -S -B scripts/check-certified-sxpid2-claim.py",
     "python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py",
     "python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
@@ -1661,6 +1679,167 @@ def validate(snapshot: Snapshot) -> None:
         ),
         "current Lean 4.33 portable release identity drifted",
     )
+
+    # BEGIN EXACT_LOG_HOSTILE_EVIDENCE_V1
+    hostile = snapshot.json_values[
+        "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json"
+    ]
+    require(
+        set(hostile)
+        == {
+            "baseline_checker_passed",
+            "boundary",
+            "case_accounting",
+            "checker_source_sha256",
+            "known_limitations",
+            "known_limitations_observed",
+            "lake_manifest_sha256",
+            "lean_toolchain",
+            "lean_version",
+            "mutations",
+            "mutations_killed",
+            "positive_cases_accepted",
+            "python_isolated",
+            "raw_and_digest_policy_cases",
+            "raw_and_digest_policy_cases_rejected",
+            "schema",
+            "scope_probes",
+            "scope_probes_accepted",
+            "self_test_source_sha256",
+            "source_sha256",
+            "status",
+        },
+        "exact-log hostile evidence key inventory drifted",
+    )
+    require(
+        hostile.get("schema") == "pid-rs/lean-exact-log-product-hostile/v1"
+        and hostile.get("status") == "passed"
+        and hostile.get("baseline_checker_passed") is True
+        and hostile.get("python_isolated") is True,
+        "exact-log hostile evidence status or isolation drifted",
+    )
+    require(
+        hostile.get("checker_source_sha256")
+        == snapshot.sha256["scripts/check-lean-exact-log-product.py"]
+        and hostile.get("source_sha256")
+        == snapshot.sha256[
+            "audit/formal/lean-exact-log-product/PidExactLogProduct.lean"
+        ]
+        and hostile.get("self_test_source_sha256")
+        == snapshot.sha256["scripts/check-lean-exact-log-product-self-test.py"],
+        "exact-log hostile evidence source binding drifted",
+    )
+    require(
+        hostile.get("lake_manifest_sha256") == current_lean.get("lake_manifest_sha256")
+        and hostile.get("lean_toolchain") == current_lean.get("lean_toolchain")
+        and hostile.get("lean_version") == current_lean.get("lean_version"),
+        "exact-log hostile evidence Lean identity drifted",
+    )
+    accounting = hostile.get("case_accounting")
+    require(
+        accounting
+        == {
+            "accepted_known_limitations": 1,
+            "accepted_positive_cases": 3,
+            "accepted_scope_probes": 2,
+            "baseline_cases": 1,
+            "rejected_raw_or_digest_policy_cases": 6,
+            "rejected_semantic_mutations": 9,
+            "total_cases": 19,
+        }
+        and hostile.get("mutations_killed") == 9
+        and hostile.get("raw_and_digest_policy_cases_rejected") == 6
+        and hostile.get("scope_probes_accepted") == 2
+        and hostile.get("known_limitations_observed") == 1
+        and hostile.get("positive_cases_accepted") == 3,
+        "exact-log hostile case accounting drifted",
+    )
+    expected_mutations = (
+        "replace_log_zpow_with_log_pow",
+        "reverse_positive_product_order",
+        "reverse_negative_product_order",
+        "remove_negative_one_exclusion",
+        "negate_nonsyntactic_cancellation",
+        "falsify_retained_product",
+        "remove_zero_product_positivity_premise",
+        "rename_checked_theorem",
+        "unpermitted_axiom_dependency",
+    )
+    expected_raw_cases = (
+        "inject_sorry",
+        "inject_axiom",
+        "character_literal_masker_live_axiom_regression",
+        "extra_lemma_without_digest_rebind",
+        "private_theorem_without_digest_rebind",
+        "comment_string_decoy_raw_fail_closed_policy",
+    )
+    expected_scope_probes = (
+        "extra_lemma_with_digest_rebind",
+        "private_theorem_with_digest_rebind",
+    )
+    mutations = hostile.get("mutations")
+    raw_cases = hostile.get("raw_and_digest_policy_cases")
+    scope_probes = hostile.get("scope_probes")
+    limitations = hostile.get("known_limitations")
+    require(
+        isinstance(mutations, list)
+        and tuple(item.get("name") for item in mutations) == expected_mutations
+        and all(
+            item.get("rejected") is True
+            and re.fullmatch(r"[0-9a-f]{64}", item.get("mutant_sha256", "")) is not None
+            and isinstance(item.get("rejection_fragment"), str)
+            and bool(item["rejection_fragment"])
+            for item in mutations
+        ),
+        "exact-log hostile semantic mutation inventory drifted",
+    )
+    require(
+        isinstance(raw_cases, list)
+        and tuple(item.get("name") for item in raw_cases) == expected_raw_cases
+        and all(
+            item.get("rejected") is True
+            and re.fullmatch(r"[0-9a-f]{64}", item.get("mutant_sha256", "")) is not None
+            and isinstance(item.get("rejection_fragment"), str)
+            and bool(item["rejection_fragment"])
+            for item in raw_cases
+        ),
+        "exact-log hostile raw/digest inventory drifted",
+    )
+    require(
+        isinstance(scope_probes, list)
+        and tuple(item.get("name") for item in scope_probes) == expected_scope_probes
+        and all(
+            item.get("accepted") is True
+            and re.fullmatch(r"[0-9a-f]{64}", item.get("mutant_sha256", "")) is not None
+            and isinstance(item.get("meaning"), str)
+            and bool(item["meaning"])
+            for item in scope_probes
+        ),
+        "exact-log hostile scope-probe inventory drifted",
+    )
+    require(
+        isinstance(limitations, list)
+        and len(limitations) == 1
+        and limitations[0].get("name") == "same_process_theorem_inventory_removal"
+        and limitations[0].get("accepted") is True
+        and limitations[0].get("theorem_count_observed") == 6
+        and isinstance(limitations[0].get("meaning"), str)
+        and bool(limitations[0]["meaning"]),
+        "exact-log hostile known limitation drifted",
+    )
+    hostile_boundary = hostile.get("boundary")
+    for token in (
+        "bounded sensitivity",
+        "does not prove checker correctness",
+        "concrete SxPID event extraction",
+        "sampling validity",
+        "scientific validity",
+    ):
+        require(
+            isinstance(hostile_boundary, str) and token in hostile_boundary,
+            f"exact-log hostile evidence boundary omits {token!r}",
+        )
+    # END EXACT_LOG_HOSTILE_EVIDENCE_V1
 
     challenge = snapshot.json_values[
         "audit/evidence/sxpid2-exact-product-evolutionary-challenge.json"

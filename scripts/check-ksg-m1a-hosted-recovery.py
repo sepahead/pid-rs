@@ -158,9 +158,9 @@ EXPECTED_FROZEN_BOUNDARY_SHA256 = (
 )
 EXPECTED_FROZEN_BOUNDARY_SIZE_BYTES = 9_601
 EXPECTED_FROZEN_SELF_TEST_SHA256 = (
-    "0ebd801ce758203ce12111ccec8802bc9a6c68ad80033105abc59f6e60d05787"
+    "2410fcf1aad41046f1e697fdae8b42582237fb716f1f85549e191f25ddb7b296"
 )
-EXPECTED_FROZEN_SELF_TEST_SIZE_BYTES = 142_954
+EXPECTED_FROZEN_SELF_TEST_SIZE_BYTES = 143_725
 EXPECTED_FROZEN_SCHEMA_SHA256 = (
     "345296eca6d944fbc40d1133b862a7ff047a6083123b023e1533a2f22cf4a2c5"
 )
@@ -2269,7 +2269,8 @@ def validate_recovery_wiring(workflow: bytes, just: bytes, readme: bytes) -> Non
         "hosted-recovery README marker is inside an outer fence",
     )
     for token in (
-        "## KSG M1a hosted-recovery verifier",
+        "## Historical KSG M1a hosted-recovery verifier (nonoperative)",
+        "### Current exact-C12 terminal boundary",
         "fetch-depth: 0",
         "--allow-provisional-diagnostic",
         "--mode precommit",
@@ -2305,6 +2306,13 @@ def validate_recovery_wiring(workflow: bytes, just: bytes, readme: bytes) -> Non
         b"Composite-v5 uses separately versioned predecessor/successor captures and a "
         b"separately typed R5 receipt; those artifacts preserve the failed observation "
         b"without reviving or renaming R4.",
+        b"Exact C12 `01466e88b0550333c2718f1716289e9642e30dc6` is terminal with zero "
+        b"qualification credit.",
+        b"Descendants run only the repeatable refusal/preservation surface:",
+        b"M1a stays `integration_no_go`; this route provides no KSG M1c, estimator, "
+        b"support, calibration, categorical MGW, Schick--Poland, Ehrlich continuous, "
+        b"`I_min`, PID2/PID3, quantized/mixed-support, package, release, objective, or "
+        b"application evidence.",
     ):
         require(
             truth in normalized_readme,
@@ -2325,6 +2333,10 @@ def validate_recovery_wiring(workflow: bytes, just: bytes, readme: bytes) -> Non
         b"rename r5 as r4",
         b"reuse the v4 capture for composite-v5",
         b"one shared v5 capture is sufficient",
+        b"\n## ksg m1a hosted-recovery verifier\n",
+        b"exact c12 `01466e88b0550333c2718f1716289e9642e30dc6` is open for "
+        b"qualification credit",
+        b"descendants may resume the hosted-recovery lifecycle",
     ):
         require(
             contradiction not in lowered, "hosted-recovery README contradicts authority"

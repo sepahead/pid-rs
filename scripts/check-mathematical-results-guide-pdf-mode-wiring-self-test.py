@@ -29,15 +29,15 @@ WRAPPER = ROOT / "scripts/check-mathematical-results-guide-pdf.sh"
 GUIDE_BUILDER = ROOT / "scripts/build-mathematical-results-guide-pdf.sh"
 SXPID3_WRAPPER = ROOT / "scripts/check-sxpid3-source-marginal-audit-pdf.sh"
 SXPID3_BUILDER = ROOT / "scripts/build-sxpid3-source-marginal-audit-pdf.sh"
-HOSTED_BASENAME = "check-mathematical-results-guide-pdf-hosted-raw-profile.py"
+HOSTED_BASENAME = "check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py"
 HOSTED_SELF_TEST_BASENAME = (
-    "check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py"
+    "check-mathematical-results-guide-pdf-hosted-raw-profile-v2-self-test.py"
 )
 HOSTED_FIXTURE_BASENAME = (
-    "mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf"
+    "mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
 )
 HOSTED_RECEIPT_BASENAME = (
-    "mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json"
+    "mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json"
 )
 ALPHA_BASENAME = "check-mathematical-results-guide-pdf-font-alpha-equivalence.py"
 ALPHA_SELF_TEST_BASENAME = (
@@ -65,7 +65,7 @@ LEGACY_TRAILER_RECEIPT_BASENAME = (
     "mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 )
 EXPECTED_WRAPPER_SHA256 = (
-    "856e7c004a1c13792c4c17f0e4992a0bbb36b95f1c835c4ef191d1d5af2d12e0"
+    "0ac49e36111c7a1d8f24a4acd0f7b1b0755fd6273d804873563b1343c7edb145"
 )
 EXPECTED_CAPTURE_FUNCTION_SHA256 = (
     "a9a7d694fd43cd9888605fc48db5e5dc67bccb59d1a1b9c328de25aff751a088"
@@ -88,8 +88,8 @@ LEGACY_SELF_TEST = ROOT / "scripts" / LEGACY_PORTABILITY_SELF_TEST_BASENAME
 LEGACY_TRAILER_CHECKER = ROOT / "scripts" / LEGACY_TRAILER_CHECK_BASENAME
 LEGACY_TRAILER_SELF_TEST = ROOT / "scripts" / LEGACY_TRAILER_SELF_TEST_BASENAME
 SELECTED_SOURCE_SHA256 = {
-    HOSTED_CHECKER: "e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30",
-    HOSTED_SELF_TEST: "b4bf248f599ccd92298323912990476c5f426228ff56a5f26fe51fbc167141df",
+    HOSTED_CHECKER: "29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc",
+    HOSTED_SELF_TEST: "f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9",
     LEGACY_ALPHA_CHECKER: "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997",
     LEGACY_ALPHA_SELF_TEST: "07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be",
     LEGACY_CHECKER: "5e59e9fb997098656039db1a60c1e8694a451432618ac2ecd192b402e7a8c319",
@@ -657,10 +657,10 @@ def audit_wrapper(
         require_region_digest(source, EXPECTED_WRAPPER_SHA256, "complete wrapper")
     exact_assignments = {
         "HOSTED_RAW_CHECK": (
-            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile.py"'
+            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py"'
         ),
         "HOSTED_RAW_SELF_TEST": (
-            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py"'
+            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-self-test.py"'
         ),
         "FONT_ALPHA_CHECK": (
             '"$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"'
@@ -689,7 +689,7 @@ def audit_wrapper(
         "LEGACY_TRAILER_ID_OBSERVATION_RECEIPT": (
             '"$ROOT/audit/evidence/' + LEGACY_TRAILER_RECEIPT_BASENAME + '"'
         ),
-        "HOSTED_PROFILE_ID": "hosted-pandoc-3.10.2-ubuntu-24.04-raw-bound",
+        "HOSTED_PROFILE_ID": "hosted-pandoc-3.10.2-ubuntu-24.04-raw-v2-bound",
         "HOSTED_PANDOC_VERSION": "'pandoc 3.10.2'",
         "HOSTED_PANDOC_SHA256": (
             "867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce"
@@ -721,19 +721,22 @@ def audit_wrapper(
         "LEGACY_FORMAT_BYTES": "''",
         "LEGACY_FORMAT_SHA256": "''",
         "STRUCTURE_CHECK_SHA256": (
-            "50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2"
+            "a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d"
+        ),
+        "STRUCTURE_SELF_TEST_SHA256": (
+            "aa8fd64c627884d64b18c2e8cb2565c06678f2c5f55be182723541d026c56229"
         ),
         "ID_VARIANCE_CHECK_SHA256": (
             "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
         ),
         "HOSTED_RAW_CHECK_SHA256": (
-            "e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30"
+            "29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc"
         ),
         "HOSTED_RAW_SELF_TEST_SHA256": (
-            "b4bf248f599ccd92298323912990476c5f426228ff56a5f26fe51fbc167141df"
+            "f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9"
         ),
         "HOSTED_RAW_PROFILE_RECEIPT_SHA256": (
-            "9ba8e03c5112dacc2da232b8660879d34afa901e9e07862135c40fd6e7d49f8e"
+            "56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8"
         ),
         "FONT_ALPHA_CHECK_SHA256": (
             "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997"
@@ -1486,15 +1489,22 @@ def run_bash(script: pathlib.Path, *arguments: str) -> subprocess.CompletedProce
 def exercise_mode_guard(root: pathlib.Path, fragment: str) -> int:
     harness = root / "mode-guard.sh"
     harness.write_text(
-        "#!/usr/bin/env bash\nset -euo pipefail\n" + fragment + "\n",
+        "#!/usr/bin/env bash\nset -euo pipefail\n"
+        "CHECK_NAME='Mathematical results guide PDF check'\n"
+        + fragment
+        + "\n",
         encoding="utf-8",
     )
     controls = 0
-    for arguments in ((), ("--exact",), ("--cross-toolchain",)):
+    for arguments in ((), ("--exact",)):
         require_clean_success(
             run_bash(harness, *arguments), f"mode guard {arguments!r}"
         )
         controls += 1
+    require_clean_success(
+        run_bash(harness, "--cross-toolchain"), "mode guard cross-toolchain"
+    )
+    controls += 1
     for arguments in (
         ("unknown",),
         ("--exact", "junk"),
@@ -2733,9 +2743,14 @@ def run_mutation_suite(source: str) -> int:
             "hosted renderer digest zeroed",
         ),
         (
-            "STRUCTURE_CHECK_SHA256=50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2",
+            "STRUCTURE_CHECK_SHA256=a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d",
             "STRUCTURE_CHECK_SHA256=" + "0" * 64,
             "structure checker digest zeroed",
+        ),
+        (
+            "STRUCTURE_SELF_TEST_SHA256=aa8fd64c627884d64b18c2e8cb2565c06678f2c5f55be182723541d026c56229",
+            "STRUCTURE_SELF_TEST_SHA256=" + "0" * 64,
+            "structure checker self-test digest zeroed",
         ),
         (
             "ID_VARIANCE_CHECK_SHA256=d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7",
@@ -2743,17 +2758,17 @@ def run_mutation_suite(source: str) -> int:
             "trailer-ID checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_CHECK_SHA256=e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30",
+            "HOSTED_RAW_CHECK_SHA256=29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc",
             "HOSTED_RAW_CHECK_SHA256=" + "0" * 64,
             "hosted checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_SELF_TEST_SHA256=b4bf248f599ccd92298323912990476c5f426228ff56a5f26fe51fbc167141df",
+            "HOSTED_RAW_SELF_TEST_SHA256=f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9",
             "HOSTED_RAW_SELF_TEST_SHA256=" + "0" * 64,
             "hosted self-test digest zeroed",
         ),
         (
-            "HOSTED_RAW_PROFILE_RECEIPT_SHA256=9ba8e03c5112dacc2da232b8660879d34afa901e9e07862135c40fd6e7d49f8e",
+            "HOSTED_RAW_PROFILE_RECEIPT_SHA256=56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8",
             "HOSTED_RAW_PROFILE_RECEIPT_SHA256=" + "0" * 64,
             "hosted provenance receipt digest zeroed",
         ),
@@ -3091,7 +3106,8 @@ def main() -> int:
     )
     print(
         "Boundary: source-extracted producer capture, selection, and dispatch; "
-        "the complete renderer and both raw/typed PDF relations have separate gates."
+        "current v2 hosted admission is raw-fixture bound, while frozen v1 routes remain "
+        "historical and exact mode invokes no cross-profile relation."
     )
     return 0
 

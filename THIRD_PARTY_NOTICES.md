@@ -2,9 +2,9 @@
 
 This repository's project-authored material is licensed as stated in
 [`README.md`](README.md), except where a file carries a more specific notice. The mathematical
-results guide uses the Pandoc template projections described below. It and the separate SxPID3
-source-marginal audit use the embedded font subsets described below. The complete input font files
-are not stored in this repository.
+results guide uses the Pandoc template projections described below. It, the separate SxPID3
+source-marginal audit, and the numerical-assurance note use the embedded font subsets described
+below. The complete input font files are not stored in this repository.
 
 ## Pandoc 3.1.3 and 3.10.2 LaTeX projections
 
@@ -84,3 +84,9 @@ authenticate a download, distribution package, maintainer, upstream history, or 
 and this notice is not legal advice. See
 `audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json` for the
 bounded regeneration and provenance record.
+
+That record currently covers seven unique tracked SVG-to-PDF derivatives. The mathematical results
+guide uses four, the SxPID3 source-marginal audit uses two, and the numerical-assurance note uses
+two; one crosswalk derivative is shared by the first two documents. The count describes the
+bounded renderer inventory. It does not establish SVG/PDF semantic equivalence, accessibility,
+authenticity, or mathematical correctness.

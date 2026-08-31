@@ -782,7 +782,7 @@
     {
       "category": "validation",
       "code_availability": "local",
-      "constraint_count": 14,
+      "constraint_count": 15,
       "definition_origin": "project-defined",
       "depends_on": [
         "shared-exclusions.categorical"
@@ -801,7 +801,7 @@
       "summary": "Conditional per-input dyadic enclosures and separately bounded exact-product zero/strict-sign decisions for all 24 averaged categorical SxPID2 cumulative and atom coordinates; not a population result or formally verified pid-core backend.",
       "title": "Exact-count two-source categorical SxPID enclosure reference",
       "validation": {
-        "evidence_path_count": 69,
+        "evidence_path_count": 72,
         "level": "analytic-oracle"
       }
     },
@@ -1093,7 +1093,7 @@
       "summary": "Paper-defined two-source PID atom reconstruction from KSG mutual information and continuous shared exclusions.",
       "title": "Continuous two-source shared-exclusions PID",
       "validation": {
-        "evidence_path_count": 21,
+        "evidence_path_count": 34,
         "level": "formal-and-property"
       }
     },
@@ -2064,6 +2064,30 @@
       }
     },
     {
+      "category": "validation",
+      "code_availability": "local",
+      "constraint_count": 7,
+      "definition_origin": "project-defined",
+      "depends_on": [],
+      "feature_gates": [],
+      "id": "validation.analytic-common-radius-manifold-sx-bridge",
+      "implementation_origin": "local-implementation",
+      "implementation_status": "research-only",
+      "public_surface": {
+        "python_count": 0,
+        "python_examples": [],
+        "rust_count": 0,
+        "rust_examples": []
+      },
+      "scientific_novelty_claim": "none",
+      "summary": "Conditional common-radius small-ball representation of the Ehrlich local bivariate shared-exclusions formula for two sources in the same measured hyperbolic space with a common numeric geodesic radius, with explicit sufficient-assumption and gauge boundaries; no estimator or PID implementation.",
+      "title": "Common-radius manifold shared-exclusions population bridge",
+      "validation": {
+        "evidence_path_count": 5,
+        "level": "analytic-oracle"
+      }
+    },
+    {
       "category": "diagnostic",
       "code_availability": "local",
       "constraint_count": 2,
@@ -2249,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "98ca5bd5efda0aaa541845ad86dbfd618dfd901f38a8e6076ffe9e9c32eef6ef"
+    "sha256": "d50a3c2ef2c712d7e76946deae9dbaf88e16244fd4742d9b816c5fbf8f4152d3"
   }
 }

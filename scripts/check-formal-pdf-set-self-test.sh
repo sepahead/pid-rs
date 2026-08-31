@@ -62,6 +62,8 @@ LATEX_STANDALONE=(
 )
 MARKDOWN_SOURCES=(
   MATHEMATICAL_RESULTS_GUIDE.md
+  NUMERICAL_ASSURANCE.md
+  PID2_REPRESENTED_COORDINATE_ASSURANCE.md
   PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
@@ -79,6 +81,8 @@ STANDALONE=(
   ksg-m1a-composite-v7-boundary
   mathematical-results-guide
   mathematical-problem-solving-workflow
+  numerical-assurance
+  pid2-represented-coordinate-assurance
   pid-sensor-placement-and-galadriel-guide
   support-change-tolerant-averaged-sxpid-continuity
   sxpid3-source-marginal-and-bounded-audit
@@ -226,6 +230,101 @@ for literal in required:
 positions = [text.index(literal) for literal in required]
 if positions != sorted(positions):
     raise SystemExit("workflow diagnostic-custody operations are out of order")
+PY
+}
+
+validate_publication_link_gate_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+inventory_exit = '''if [[ "$MODE" == "--inventory-only" ]]; then
+  echo "OK: standalone-paper, renderer-fragment, and PDF inventories are exact and direct-regular"
+  exit 0
+fi
+'''
+required = (
+    "python3 -I -B scripts/check-publication-links.py",
+    "python3 -O -I -B scripts/check-publication-links.py",
+    "python3 -I -B scripts/check-publication-links-self-test.py",
+    "python3 -O -I -B scripts/check-publication-links-self-test.py",
+    "scripts/check-formal-pdf-set-self-test.sh",
+)
+if text.count(inventory_exit) != 1:
+    raise SystemExit("publication-link inventory boundary drifted")
+lines = text.splitlines()
+for literal in required:
+    if lines.count(literal) != 1:
+        raise SystemExit(f"publication-link gate invocation drifted: {literal!r}")
+required_block = inventory_exit + "\n" + "\n".join(required) + "\n"
+if text.count(required_block) != 1:
+    raise SystemExit(
+        "publication-link gates are not one exact contiguous post-inventory block"
+    )
+PY
+}
+
+validate_numerical_self_test_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected_block = '''scripts/check-numerical-assurance-pdf.sh "$MODE"
+scripts/check-numerical-assurance-pdf-self-test.sh
+scripts/check-pid2-represented-coordinate-assurance-pdf.sh "$MODE"
+'''
+if text.count(expected_block) != 1:
+    raise SystemExit(
+        "numerical-assurance gate and hostile self-test are not one exact contiguous block"
+    )
+PY
+}
+
+validate_blueprint_gate_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+required_lines = (
+    "scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh",
+    "  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact",
+    "  if scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain; then",
+    '  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 2 ]]; then',
+)
+lines = text.splitlines()
+for literal in required_lines:
+    if lines.count(literal) != 1:
+        raise SystemExit(f"blueprint gate invocation drifted: {literal!r}")
+expected_block = '''scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh
+
+# The root blueprint has an exact committed-byte relation only.  Cross-toolchain acceptance would
+# require a separately reviewed profile, so CI proves that the requested cross mode refuses rather
+# than treating text or geometry as a substitute equivalence relation.
+if [[ "$MODE" == "--exact" ]]; then
+  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
+else
+  if scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain; then
+    echo "formal PDF set: blueprint cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    BLUEPRINT_CROSS_STATUS=$?
+  fi
+  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: blueprint cross-toolchain refusal returned $BLUEPRINT_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+'''
+if text.count(expected_block) != 1:
+    raise SystemExit(
+        "blueprint exact-only gate is not one unweakened contiguous block"
+    )
 PY
 }
 
@@ -438,6 +537,211 @@ if ! validate_temporary_root_custody "$PRODUCTION_GATE"; then
   exit 1
 fi
 pass "temporary-root resolution is CDPATH-isolated and shared"
+
+if ! validate_publication_link_gate_wiring "$PRODUCTION_GATE"; then
+  echo "$CHECK_NAME: production publication-link wiring was rejected" >&2
+  exit 1
+fi
+pass "staged publication links and hostile fixtures run in normal and optimized Python"
+
+if ! validate_numerical_self_test_wiring "$PRODUCTION_GATE"; then
+  echo "$CHECK_NAME: production numerical-assurance hostile-suite wiring was rejected" >&2
+  exit 1
+fi
+pass "numerical-assurance gate and hostile self-test are contiguous"
+
+while IFS=$'\t' read -r label before after; do
+  case_file="$TEST_ROOT/numerical-self-test-wiring-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$before" "$after" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+before = sys.argv[2]
+after = sys.argv[3]
+text = path.read_text(encoding="utf-8")
+if text.count(before) != 1:
+    raise SystemExit(f"numerical self-test mutation anchor drifted: {before!r}")
+path.write_text(text.replace(before, after, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_numerical_self_test_wiring "$case_file" \
+      >"$TEST_ROOT/numerical-self-test-wiring-$PASS_COUNT.stdout" \
+      2>"$TEST_ROOT/numerical-self-test-wiring-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: numerical hostile-suite bypass was accepted: $label" >&2
+    exit 1
+  fi
+  if ! grep -Fq "numerical-assurance gate and hostile self-test" \
+      "$TEST_ROOT/numerical-self-test-wiring-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/numerical-self-test-wiring-$PASS_COUNT.stdout" \
+      "$TEST_ROOT/numerical-self-test-wiring-$PASS_COUNT.stderr" >&2
+    echo "$CHECK_NAME: numerical hostile-suite bypass failed for a noncausal reason" >&2
+    exit 1
+  fi
+  pass "$label"
+done <<'EOF'
+removing the numerical-assurance hostile self-test is rejected	scripts/check-numerical-assurance-pdf-self-test.sh	# numerical hostile suite omitted
+weakening the numerical-assurance hostile self-test with or-true is rejected	scripts/check-numerical-assurance-pdf-self-test.sh	scripts/check-numerical-assurance-pdf-self-test.sh || true
+EOF
+
+for removed_invocation in \
+    "python3 -I -B scripts/check-publication-links.py" \
+    "python3 -O -I -B scripts/check-publication-links.py" \
+    "python3 -I -B scripts/check-publication-links-self-test.py" \
+    "python3 -O -I -B scripts/check-publication-links-self-test.py"; do
+  case_file="$TEST_ROOT/publication-link-wiring-bypass-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$removed_invocation" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+literal = sys.argv[2]
+text = path.read_text(encoding="utf-8")
+line = literal + "\n"
+if text.count(line) != 1:
+    raise SystemExit(f"publication-link mutation anchor drifted: {literal!r}")
+path.write_text(text.replace(line, "", 1), encoding="utf-8", newline="\n")
+PY
+  if validate_publication_link_gate_wiring "$case_file" \
+      >"$TEST_ROOT/publication-link-wiring-bypass-$PASS_COUNT.stdout" \
+      2>"$TEST_ROOT/publication-link-wiring-bypass-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: missing publication-link invocation was accepted: $removed_invocation" >&2
+    exit 1
+  fi
+  if ! grep -Fq "publication-link gate invocation drifted" \
+      "$TEST_ROOT/publication-link-wiring-bypass-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/publication-link-wiring-bypass-$PASS_COUNT.stdout" \
+      "$TEST_ROOT/publication-link-wiring-bypass-$PASS_COUNT.stderr" >&2
+    echo "$CHECK_NAME: publication-link bypass failed for a noncausal reason" >&2
+    exit 1
+  fi
+  pass "removing $removed_invocation is rejected"
+done
+
+for bypass_kind in suffix-or-true prefix-false-and; do
+  case_file="$TEST_ROOT/publication-link-wiring-$bypass_kind.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$bypass_kind" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+bypass_kind = sys.argv[2]
+text = path.read_text(encoding="utf-8")
+invocation = "python3 -I -B scripts/check-publication-links.py"
+line = invocation + "\n"
+if text.count(line) != 1:
+    raise SystemExit("publication-link bypass mutation anchor drifted")
+if bypass_kind == "suffix-or-true":
+    replacement = invocation + " || true\n"
+elif bypass_kind == "prefix-false-and":
+    replacement = "false && " + invocation + "\n"
+else:
+    raise SystemExit(f"unknown bypass mutation: {bypass_kind}")
+path.write_text(text.replace(line, replacement, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_publication_link_gate_wiring "$case_file" \
+      >"$TEST_ROOT/publication-link-wiring-$bypass_kind.stdout" \
+      2>"$TEST_ROOT/publication-link-wiring-$bypass_kind.stderr"; then
+    echo "$CHECK_NAME: publication-link $bypass_kind bypass was accepted" >&2
+    exit 1
+  fi
+  if ! grep -Fq "publication-link gate invocation drifted" \
+      "$TEST_ROOT/publication-link-wiring-$bypass_kind.stderr"; then
+    cat "$TEST_ROOT/publication-link-wiring-$bypass_kind.stdout" \
+      "$TEST_ROOT/publication-link-wiring-$bypass_kind.stderr" >&2
+    echo "$CHECK_NAME: publication-link $bypass_kind failed for a noncausal reason" >&2
+    exit 1
+  fi
+  pass "publication-link $bypass_kind bypass is rejected"
+done
+
+case_file="$TEST_ROOT/publication-link-wiring-conditional.sh"
+cp "$PRODUCTION_GATE" "$case_file"
+python3 -I -S - "$case_file" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+first = "python3 -I -B scripts/check-publication-links.py\n"
+last = "python3 -O -I -B scripts/check-publication-links-self-test.py\n"
+if text.count(first) != 1 or text.count(last) != 1:
+    raise SystemExit("publication-link conditional mutation anchors drifted")
+text = text.replace(
+    first,
+    'if [[ "$MODE" == "--exact" ]]; then\n' + first,
+    1,
+)
+text = text.replace(last, last + "fi\n", 1)
+path.write_text(text, encoding="utf-8", newline="\n")
+PY
+if validate_publication_link_gate_wiring "$case_file" \
+    >"$TEST_ROOT/publication-link-wiring-conditional.stdout" \
+    2>"$TEST_ROOT/publication-link-wiring-conditional.stderr"; then
+  echo "$CHECK_NAME: conditional publication-link bypass was accepted" >&2
+  exit 1
+fi
+if ! grep -Fq "publication-link gates are not one exact contiguous post-inventory block" \
+    "$TEST_ROOT/publication-link-wiring-conditional.stderr"; then
+  cat "$TEST_ROOT/publication-link-wiring-conditional.stdout" \
+    "$TEST_ROOT/publication-link-wiring-conditional.stderr" >&2
+  echo "$CHECK_NAME: conditional publication-link bypass failed for a noncausal reason" >&2
+  exit 1
+fi
+pass "conditional exact-only publication-link bypass is rejected"
+
+if ! validate_blueprint_gate_wiring "$PRODUCTION_GATE"; then
+  echo "$CHECK_NAME: production blueprint exact-only wiring was rejected" >&2
+  exit 1
+fi
+pass "blueprint self-test, exact relation, and status-2 cross refusal are contiguous"
+
+while IFS=$'\t' read -r label before after; do
+  case_file="$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$before" "$after" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+before = sys.argv[2].replace(r"\n", "\n")
+after = sys.argv[3].replace(r"\n", "\n")
+text = path.read_text(encoding="utf-8")
+if text.count(before) != 1:
+    raise SystemExit(f"blueprint mutation anchor drifted: {before!r}")
+path.write_text(text.replace(before, after, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_blueprint_gate_wiring "$case_file" \
+      >"$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.stdout" \
+      2>"$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: blueprint gate bypass was accepted: $label" >&2
+    exit 1
+  fi
+  if ! grep -Eq \
+      'blueprint (gate invocation drifted|exact-only gate is not one unweakened contiguous block)' \
+      "$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.stdout" \
+      "$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.stderr" >&2
+    echo "$CHECK_NAME: blueprint gate bypass failed for a noncausal reason" >&2
+    exit 1
+  fi
+  pass "$label"
+done <<'EOF'
+removing the blueprint hostile self-test is rejected	scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh	# blueprint self-test omitted
+changing the blueprint exact invocation to cross mode is rejected	  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact	  scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain
+changing the blueprint cross probe to exact mode is rejected	  if scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain; then	  if scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact; then
+weakening the blueprint exact invocation with or-true is rejected	  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact	  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact || true
+inverting the blueprint cross refusal probe is rejected	  if scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain; then	  if ! scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain; then
+changing the blueprint cross refusal contract from status 2 is rejected	  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 2 ]]; then	  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 1 ]]; then
+conditionally skipping the blueprint exact branch is rejected	if [[ "$MODE" == "--exact" ]]; then\n  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact	if [[ "$MODE" == "--cross-toolchain" ]]; then\n  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
+EOF
 
 case_file="$TEST_ROOT/temporary-root-cdpath-bypass.sh"
 cp "$PRODUCTION_GATE" "$case_file"

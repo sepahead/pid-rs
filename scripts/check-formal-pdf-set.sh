@@ -46,12 +46,16 @@ STANDALONE_LATEX_PAPERS=(
 
 STANDALONE_MARKDOWN_PAPERS=(
   "mathematical-results-guide"
+  "numerical-assurance"
+  "pid2-represented-coordinate-assurance"
   "pid-sensor-placement-and-galadriel-guide"
   "sxpid3-source-marginal-and-bounded-audit"
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
   "MATHEMATICAL_RESULTS_GUIDE.md"
+  "NUMERICAL_ASSURANCE.md"
+  "PID2_REPRESENTED_COORDINATE_ASSURANCE.md"
   "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
 )
@@ -116,6 +120,10 @@ if [[ "$MODE" == "--inventory-only" ]]; then
   exit 0
 fi
 
+python3 -I -B scripts/check-publication-links.py
+python3 -O -I -B scripts/check-publication-links.py
+python3 -I -B scripts/check-publication-links-self-test.py
+python3 -O -I -B scripts/check-publication-links-self-test.py
 scripts/check-formal-pdf-set-self-test.sh
 python3 scripts/check-formal-pdf-style.py
 python3 scripts/check-formal-pdf-style-self-test.py
@@ -126,6 +134,25 @@ scripts/check-formal-pdf-log-self-test.sh
 python3 -I -S scripts/compare-formal-pdf-renders-self-test.py
 python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py
 scripts/check-mathematical-workflow-pdf-self-test.sh
+scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh
+
+# The root blueprint has an exact committed-byte relation only.  Cross-toolchain acceptance would
+# require a separately reviewed profile, so CI proves that the requested cross mode refuses rather
+# than treating text or geometry as a substitute equivalence relation.
+if [[ "$MODE" == "--exact" ]]; then
+  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
+else
+  if scripts/check-pid-discovery-verification-blueprint-pdf.sh --cross-toolchain; then
+    echo "formal PDF set: blueprint cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    BLUEPRINT_CROSS_STATUS=$?
+  fi
+  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: blueprint cross-toolchain refusal returned $BLUEPRINT_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
 
 scripts/check-certified-sxpid2-assurance-pdf.sh "$MODE"
 scripts/check-dependency-colored-sxpid-pdf.sh "$MODE"
@@ -190,12 +217,15 @@ WORKFLOW_GATE_STDERR=""
 trap - EXIT INT TERM
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 scripts/check-mathematical-results-guide-pdf.sh "$MODE"
+scripts/check-numerical-assurance-pdf.sh "$MODE"
+scripts/check-numerical-assurance-pdf-self-test.sh
+scripts/check-pid2-represented-coordinate-assurance-pdf.sh "$MODE"
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every standalone formal paper has one warning-free same-toolchain-reproducible PDF; source and renderer-fragment inventories are exact"
+  echo "OK: every standalone formal paper has one warning-free same-toolchain-reproducible PDF; the root blueprint committed-byte relation, source, and renderer-fragment inventories are exact"
 else
-  echo "OK: every standalone formal paper passed its warning-free bounded cross-toolchain PDF gate; source and renderer-fragment inventories are exact"
+  echo "OK: every standalone formal paper passed its warning-free bounded cross-toolchain PDF gate; the root blueprint intentionally has no accepted cross-toolchain relation, and its refusal, source, and renderer-fragment inventories are exact"
 fi

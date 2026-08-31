@@ -21,6 +21,22 @@ that integrity record is not independent scientific review. Earlier release comm
 reachable through immutable changelog links after obsolete tag refs were retired. The later
 registry and signed-review qualification process is outside the 0.9 release boundary.
 
+## Publication-artifact portability boundary
+
+The staged publication-link gate validates repository-relative Markdown targets and the bounded
+PDF navigation/action graph against one exact Git index snapshot. It does not test time-varying
+external reachability, browser policy, PDF/UA, or full ISO 32000 conformance. In particular, the
+current TeX producer emits an exact `/Limits` pair on the root of each PDF destination name tree.
+The gate verifies that pair against the subtree extrema because it is the shape of all 20 audited
+PDFs: 19 under `output/pdf` plus the root blueprint. ISO 32000-1, Table 36 reserves `/Limits` for
+non-root name-tree nodes, so this is a known
+producer-conformance gap even though the inspected parsers tolerate it and no broken destination
+was observed. Removing it requires a producer change, rebuild of all affected PDFs, and resealing
+of source-specific artifact profiles; deterministic link validation must not be described as
+standards conformance in the meantime. See the
+[Adobe-hosted ISO 32000-1 text](https://opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000_2008.pdf)
+and the [PDF Association ISO 32000-2 resource](https://pdfa.org/resource/iso-32000-2/).
+
 ## Ecosystem integration boundary
 
 [`ecosystem-capabilities.json`](ecosystem-capabilities.json) maps pid-rs capabilities, retained
@@ -272,10 +288,12 @@ bounds, unit-scale telescoping allocation, and exponent cancellation.
 
 Lean does not formalize the probability space, independence premise, differentiation, or path
 integration. It does formalize the finite heterogeneous keyed Sx event layer and generic
-fractional-cover event corollaries. It does not formalize the complete redundancy lattice and
-Möbius inversion, published pointwise component nonnegativity, complete SxPID components,
-cumulatives, atoms and averaging, identification of the algebraic lemmas with those atoms, the
-drift theorem, deductive Rust refinement, or binary64 arithmetic. The fraction-exact and
+fractional-cover event corollaries. The local-continuity and dependency-color proof is not connected
+to the separate fixed two-source 24-coordinate count-to-atom bridge. The complete higher-source
+redundancy lattice and Möbius inversion remain unformalized. Lean also does not formalize published
+pointwise component nonnegativity, the complete higher-source SxPID components, cumulatives, atoms
+and averaging, identification of the algebraic lemmas with those atoms, the drift theorem,
+deductive Rust refinement, or binary64 arithmetic. The fraction-exact and
 400-digit Decimal
 generator and the Rust fixture cover seven conditioned-diamond algebra cases, nine exact extremal
 regimes, and six committed law pairs. The same rational inputs check the ordinary-diamond and
@@ -342,10 +360,17 @@ The modular fields add bounded classification evidence, not independent theorems
 odd prime shares the reflection identity $H_{p-1-t}=H_t\pmod p$. For rejected
 $p=1000003$, the four collisions are signed/order copies of one $H_{999999}=H_3$ event. Strict JSON
 shape/type/value equality rejects two Boolean/integer confusions separately from the 28 modular
-scientific/custody mutations. Repository/publication integration still has 13 conjunctive open
-gates and is **NO-GO**: the canonical M1a implementation must be committed, pushed, and verified
-while that disposition remains red before a separate descendant M1c may bind immutable final
-evidence and decision artifacts.
+scientific/custody mutations. The scoped revision-4 core GO conclusions remain unchanged, while
+repository/publication integration remains **NO-GO**. The older direction to create a canonical
+M1a and then a separate M1c is not a live execution route: the concrete v12 qualification attempt
+is terminal at exact C12
+[`01466e88b0550333c2718f1716289e9642e30dc6`](audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md),
+with recorded fields `Q12` (`false`), `R12` (`permanently_unissued`), and `L12`
+(`not_adjudicated`). This operational
+failure does not invalidate the scoped arithmetic, formal, or finite-corpus results. It also does
+not, by itself, authorize or foreclose every differently specified future lifecycle; a new route
+would require its own subject, evidence contract, review, and explicit prohibition on transferring
+v12 qualification credit.
 
 The detailed scope and negative paths are retained in the
 [revision-4 claim](claims/KSG-INTEGER-HARMONIC-001/claim-v4.md), the
@@ -547,8 +572,10 @@ adjudicates pointwise existence or version-independence at null conditioning eve
 target-local Radon–Nikodým representatives. The proposal does not make the full-dimensional KSG or
 research PID3 code applicable to mixed support.
 [Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a narrower nearest-neighbour PID
-method for a discrete target with continuous sources. That orientation is not implemented here and
-does not close the broader arbitrary-support, arbitrary-orientation estimator gap.
+method for a discrete target with continuous sources. Their redundancy uses the Williams--Beer
+minimum over specific information, not MGW/Ehrlich shared exclusions. That orientation is not
+implemented here and does not close the broader arbitrary-support, arbitrary-orientation estimator
+gap.
 
 For three and four sources, enumerating and inverting a chosen categorical redundancy lattice is a
 computability statement. [Lyu, Clark & Raviv (2026)](https://doi.org/10.1103/8rzp-w5z1) establish
@@ -602,6 +629,23 @@ interpretations.
 Lorentz-hyperbolic distance conversion is numerically guarded, but pairwise hyperbolic KSG remains
 research-only because correct distance computation does not prove an entropy/MI estimator on that
 manifold. Hyperbolic shared exclusions and PID are unsupported.
+
+A conditional population lemma now derives an Ehrlich-form bivariate local analytic ratio from
+common-radius geodesic balls; the manifold interpretation and small-ball proof are repository work.
+It assumes both sources lie in the same measured hyperbolic space, use the same numeric geodesic
+radius, and have a product-volume absolutely continuous joint law with the target. The relevant
+marginal laws must admit density versions continuous at the displayed points; the source-pair and
+full laws must admit versions essentially bounded on neighborhoods; and the ratio terms must be
+positive. The proof itself needs two lower-order overlap conditions, for which local boundedness is
+one sufficient condition rather than a necessary one. An absolutely continuous counterexample
+satisfies the other displayed continuity and full-density premises but has first-order source
+overlap. Thus, those premises do not imply the lower-order overlap needed by the proof. Unequal
+source gauges produce a weighted formula. With unequal dimensions, a smaller-exponent branch
+dominates only when its leading source and target-source coefficients are positive; a vanishing
+leading coefficient requires additional rate information. The
+[mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md#a-proved-population-level-transfer-and-why-it-stops-there)
+gives the proof and counterexample. This lemma proves no manifold-kNN consistency, product-space
+kernel, global expectation result, PID atoms, mixed-support result, or PID/estimator implementation.
 
 ## Preprocessing, uncertainty, and testing
 

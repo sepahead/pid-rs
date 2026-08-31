@@ -12,10 +12,14 @@ computations, executable observations, and open questions.
 **Units:** nats unless a result is explicitly stated in bits.
 **Primary object audited:** Makkeh--Gutknecht--Wibral shared exclusions, not PID in general.
 
-The audit uses three independent routes for its most sensitive compatibility conclusion: a
-standard-library exact-rational reconstruction, a Rust regression through the public categorical
-kernel, and a kernel-checked Lean theorem that isolates the descriptor-factorization premise needed
-to transfer a descriptor-collision impossibility result to a candidate PID.
+The audit uses three complementary, implementation-distinct but correlated lanes for its most
+sensitive compatibility conclusion. The standard-library Python checker and the Rust regression
+each compute the concrete witness. Lean proves only the conditional transfer firewall: it isolates
+the descriptor-factorization premise needed to transfer a descriptor-collision impossibility
+result to a candidate PID, but it does not compute or certify the concrete Sx event calculation.
+All three lanes share reviewed semantic cuts, including the encoding of the stipulated systems,
+the descriptor map, and the conclusion being tested. Their agreement is therefore corroboration
+across implementations, not logical independence.
 
 ---
 
@@ -71,7 +75,7 @@ Every result below carries one of these evidence labels.
 | Label | Meaning |
 |---|---|
 | **[P]** | Published theorem or definition in a primary source. |
-| **[R]** | Independent exact rederivation in this audit. |
+| **[R]** | Separate exact repository rederivation in this audit. |
 | **[X]** | Exact finite counterexample or exact finite witness. |
 | **[B]** | Bounded exhaustive or seeded computation; evidence, not a universal proof. |
 | **[E]** | Observation from the current `pid-rs` executable path. |
@@ -84,7 +88,7 @@ The audit used the following process.
 3. Separate constitutive semantics from numerical theorems.
 4. Search for the smallest exact counterexample to every stronger interpretation.
 5. Enumerate bounded empirical laws with exact rational arithmetic.
-6. Run independent witnesses through the Rust implementation.
+6. Run the same witnesses through an implementation-distinct Rust route.
 7. Apply a compatibility firewall before importing any result from another PID framework.
 8. Review each major result through at least five lenses:
    definitional compatibility, theorem validity, executable refinement, numerical/statistical
@@ -807,7 +811,7 @@ component entropies and access labels do not encode the witness's cross-coordina
 
 ### 7.3 Exact SxPID result
 
-Shared exclusions does not assign the stipulated vector. An independent exact event scan and the
+Shared exclusions does not assign the stipulated vector. A separate exact event scan and the
 current Rust kernel both give the following eight nonzero net atoms.
 
 | Antichain family | Hat SxPID atom | Tilde SxPID atom |
@@ -947,7 +951,7 @@ named target components. A future relation-aware representation may be useful as
 second analytical layer. It must not replace Sx atoms with nonadditive coordinate entropies and
 still call the result a decomposition of mutual information.
 
-### 7.5 Three independent executable and formal routes
+### 7.5 Three complementary, implementation-distinct but correlated lanes
 
 The tracked negative regression is
 [`crates/pid-core/tests/sxpid_relation_witness.rs`](crates/pid-core/tests/sxpid_relation_witness.rs).
@@ -955,10 +959,11 @@ It contains both the exact rational-product oracle and a mutation that substitut
 three-one-bit descriptor vector. The mutation is rejected because it is not SxPID and fails tilde
 reconstruction.
 
-The independent standard-library checker is
+The standard-library Python lane is
 [`audit/tools/foundational_sxpid/check_lcr_relation_witness.py`](audit/tools/foundational_sxpid/check_lcr_relation_witness.py).
 It does not import or invoke `pid-rs`. It generates all 18 antichains from the seven nonempty
-formal prime-exponent logarithms. Before that Sx calculation, it binds the generated rows to the
+three-source subsets and performs the later exact Möbius inversion in formal prime-exponent
+logarithms. Before that Sx calculation, it binds the generated rows to the
 paper's fair-bit/XOR constructions and verifies the Definition 6 finite-law premises: exactly the
 indices $1,5,9$ are determined by the target; each source's three latent components are mutually,
 not merely pairwise, independent; and every one of the 24 target-component/source-group cases per
@@ -986,14 +991,17 @@ regenerated after later same-sample custody work and binds kernel digest
 `00d3eaecd5517fe0f36b54d576b77a79beb1424f795847a7ed8a1155aabb3ef6`. Every other record byte is
 unchanged. This source-binding refresh does not widen or re-adjudicate the audit claim.
 
-The third route is the generic Lean factorization firewall above. Its proof has no axioms in the
+The formal lane is the generic Lean factorization firewall above. Its proof has no axioms in the
 Lean kernel inventory. The self-test kills removal of the factorization premise, replacement of the
 unequal-quantity premise by equality, and replacement of the unequal-atom premise by equality.
 Separate finite Bool/Unit countermodels show why each altered premise cannot support the original
 conclusion: equal descriptors alone need not equalize atoms, equal quantities can admit a universal
 reconstruction, and equal atoms can admit descriptor factorization.
-This route proves the transfer logic, not the concrete Sx event calculation; the exact-rational and
-Rust routes supply that separate binding.
+This lane proves only the conditional transfer logic, not the concrete Sx event calculation; the
+Python exact-rational and Rust lanes compute that concrete witness. All three lanes still depend on
+reviewed semantic cuts that connect the published constructions, descriptor map, Sx definitions,
+and tested conclusion. They are implementation-distinct corroboration, not independent proofs of
+one end-to-end statement.
 
 **Finding F11 [P,R,X,E].** The 2026 witness is a genuine warning against treating access labels plus
 marginal component entropies as a complete representation. It is not a contradiction of
@@ -1258,7 +1266,7 @@ One scalar “confidence score” should not collapse these logically different 
 |---|---|---|
 | The Sx keyed cumulative is a valid local likelihood ratio | **Established** | [P,R] Equations (1)--(4) |
 | The antichain atoms reconstruct mutual information | **Established** | [P,R,E] Equations (7)--(10), exact witnesses |
-| Informative and misinformative component atoms are nonnegative | **Established; independently bounded-tested** | [P,B] |
+| Informative and misinformative component atoms are nonnegative | **Established; separately bounded-tested** | [P,B] |
 | Net Sx atoms are nonnegative | **False** | [X,E] Equations (16), (17), and (19) |
 | SxPID satisfies coordinatewise REI and target chain rule | **Established** | [P,R] Equation (14) and equality-event invariance |
 | SxPID satisfies identity | **False** | [X,E] Equation (15) |
@@ -1271,7 +1279,7 @@ One scalar “confidence score” should not collapse these logically different 
 | Lyu's two systems have identical SxPID atoms | **False** | [X,E] Equations (28), (29) |
 | Lyu's descriptor theorem exposes lost cross-coordinate relations | **Established within its stipulated model** | [P,R] |
 | Descriptor-collision impossibility transfers to every antichain-indexed PID | **False without a descriptor-factorization theorem** | [P,R,X,E], Equations (30)--(32), Lean firewall |
-| Lyu's theorem refutes all antichain-lattice PID, including SxPID | **Not established for SxPID** | Descriptor factorization fails and three independent routes agree |
+| Lyu's theorem refutes all antichain-lattice PID, including SxPID | **Not established for SxPID** | Descriptor factorization fails; Python and Rust compute the witness, while Lean checks only the conditional firewall; all three lanes share reviewed semantic cuts |
 | SxPID is causal or authority-grade by itself | **False/unsupported** | Observational identifiability boundary |
 | Categorical SxPID is a defensible signed event-logical estimand | **Yes, under the regime contract** | Entire audit |
 
@@ -1287,7 +1295,7 @@ The environment was:
 
 - `rustc 1.96.0 (ac68faa20 2026-05-25)`;
 - `cargo 1.96.0 (30a34c682 2026-05-25)`;
-- Python 3.14.6 for independent exact-rational enumeration.
+- Python 3.14.6 for implementation-distinct exact-rational enumeration.
 
 The permanent witness command is:
 
@@ -1299,10 +1307,13 @@ python3 -I -S scripts/check-lean-descriptor-factorization.py
 python3 -I -S scripts/check-lean-descriptor-factorization-self-test.py
 ```
 
-At creation, the independent checker and both Rust tests passed. The exact checker derives the
+At creation, the Python checker and both Rust tests passed. The exact checker derives the
 event counts, order, atom ratios, and mutations without the Rust implementation or floating point.
-The Rust route evaluates the complete public event and lattice implementation. Its integer-product
+The Rust lane separately evaluates the complete public event and lattice implementation. Its integer-product
 assertions run before any log or binary64 reconstruction comparison.
+The Lean lane proves only the conditional transfer firewall and does not compute the concrete
+witness. These implementation-distinct lanes share the reviewed semantic cuts stated in Section
+7.5, so this record does not claim three logically independent end-to-end proofs.
 
 ---
 

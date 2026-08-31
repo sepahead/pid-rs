@@ -94,11 +94,13 @@ scripts/check-c3-hosted-followup.sh normal self-test
 scripts/check-c3-hosted-followup.sh optimized self-test
 ```
 
-The direct-child gate remains frozen and valid only for the exact implementation child. CI now
-replays it at that immutable commit through `check-ksg-c3-checkpoint.sh`; it does not apply the
-direct-child predicate to a later descendant. Pull-request checkout still selects the exact PR
-head rather than GitHub's synthetic merge. The current descendant requires its own acyclic receipt
-and hosted result; immutable replay of its parent cannot authorize it.
+The direct-child gate remains frozen and valid only for the exact implementation child. CI replays
+it at that immutable commit through `check-ksg-c3-checkpoint.sh`; it does not apply the direct-child
+predicate to a later descendant. Pull-request checkout still selects the exact PR head rather than
+GitHub's synthetic merge. The historical lifecycle expected any later descendant to carry its own
+acyclic receipt and hosted result; that is not a live successor instruction. Exact C12 is terminal,
+as recorded by the [current revision index](../claims/KSG-INTEGER-HARMONIC-001/revision-index.md)
+and the [Lean 4.33 freeze/replay record](../audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md).
 
 ## Release-scope checks
 
@@ -338,6 +340,44 @@ python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py
 python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py
 ```
 
+`check-inert-negative-archives.py` validates four isolated rejected or superseded-route packets
+containing 28 plain-text payloads and six syntax-checked Python sources. It seals each payload's recorded
+historical commit/path/blob identifiers and recomputes the Git blob-format identifier from the
+archived bytes; it does not query or preserve the named Git objects, resolve those paths in current
+history, or authenticate their origin. It also checks exact bytes, mode, scope, rejection status,
+successor route, and closed-world inventory. Payloads stay inert: the checker does not execute or
+import them, and a pass grants no scientific, formal, implementation, publication, or release
+credit. Its self-test rejects 45 byte, metadata, authority, source, inventory, filesystem, and
+coherent-reseal mutations in ordinary and optimized Python.
+
+The fourth packet preserves five exact sources from the superseded Python-verifier-custody M0
+prototype: its design record, explanatory document, registry schema, static checker, and hostile
+self-test. It retains the useful separation
+`stored source != loaded source != executed source != correct result`, while refusing to activate
+the old checker or call its static launch candidates execution custody. The 5,473,991-byte generated
+registry is not copied because it describes a reachable historical parent tree and adds no unique
+reasoning; its exact size, SHA-256, Git blob identifier, and historical census remain sealed in the
+archive index. A current-worktree drift probe is diagnostic only. Neither census is a process
+count, current registry, mathematical result, or release authority.
+
+`check-contextual-rare-tail-counterexample.py` validates one exact bounded counterexample: for its
+declared binary64 inputs, computing a complement as `1.0 - p` erases analytically positive
+rare-tail cells. This is evidence against that computation route in the stated context, not a
+general impossibility theorem and not positive evidence for a replacement estimator. Its self-test
+rejects 25 evidence, custody, semantic, and proof mutations. These two families are mandatory
+zero-credit preservation gates:
+
+```text
+python3 -I -S -B scripts/check-inert-negative-archives.py
+python3 -O -I -S -B scripts/check-inert-negative-archives.py
+python3 -I -S -B scripts/check-inert-negative-archives-self-test.py
+python3 -O -I -S -B scripts/check-inert-negative-archives-self-test.py
+python3 -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+python3 -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
+python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
+```
+
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical
 `assurance-registry.json` covers exactly the 37 release-scope families across definition, exact
 algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;
@@ -420,7 +460,21 @@ the full output as `+0/-0/nonzero = 354/0/7844`. This is association-specific fi
 evidence, not a ULP, universal, or portable result and not validation of neighbor search or
 counts, an estimator, population support, or PID.
 
-### KSG integer-harmonic revision-4 replay
+### Historical KSG integer-harmonic revision-4 and M1a/M1c lifecycle (nonoperative)
+
+Everything from this heading through the historical composite-v9 material immediately before
+**Current exact-C12 terminal boundary** is a preserved chronology, not current operational
+guidance. Do not execute its precommit, candidate, postcommit, capture, receipt, qualification,
+M1c, or composite-v4--v9 lifecycle modes. The explicitly named policy-only parsers and hostile
+self-tests remain live only as zero-credit preservation regressions; running them cannot resume or
+qualify the lifecycle. Imperative wording and words such as
+*current*, *later*, *once*, or *after* describe the contract as it existed at that historical
+revision only. The current authorities are the
+[KSG integer-harmonic revision index](../claims/KSG-INTEGER-HARMONIC-001/revision-index.md) and the
+[Lean 4.33 freeze/replay record](../audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md). Exact C12 is
+terminal. Its only current lifecycle surface is the zero-credit v12 preservation route documented
+below, while the qualification entry point refuses replay. Auxiliary historical policy parsers and
+hostile controls confer no lifecycle status.
 
 The revision-4 lanes are deliberately separate. `check-ksg-harmonic-revision.py --claim-only`
 checks internal correspondence among the canonical active packet, its mapped artifacts, complete
@@ -429,46 +483,46 @@ companion mutation suite checks unresealed and bounded resealed custody/fact fai
 artifact authenticity or general natural-language verification, nor a complete integration
 checker, an immutable final evidence matrix, or a release decision. The default route of this
 same checker is a deliberate fail-closed preclosure guard, not a future final mode.
-The packet has 13 conjunctive open integration gates and therefore remains **NO-GO**. The canonical
-unsigned M1a implementation commit must first be committed, pushed, and remotely verified while
-that disposition remains red. Only a separate descendant/re-anchored M1c milestone may then bind
-the immutable final evidence matrix and decision; preclosure evidence cannot grant that authority
-early.
+At the revision-4 review point, the packet had 13 conjunctive open integration gates and was
+**NO-GO**. Its superseded plan would first have committed, pushed, and remotely verified an unsigned
+M1a implementation while the disposition remained red, then used a separate descendant M1c
+milestone for the final matrix and decision. That plan is historical and must not be resumed;
+preclosure evidence never gained that authority.
 
 The revision-4 `--catalog-only` route and monolithic self-test freeze their execution-anchor
 catalog projection. They are historical replay objects, not live gates over an evolving catalog;
 do not repin them or revert later semantic corrections to make that projection green. The
 versioned descendant wrapper pins the immutable checker and self-test, the current catalog
 checker/self-test and schema helper, and the reviewed four-argument literal-tree materializer. Its
-default mode replays exactly five still-applicable claim/source/exact/binary64/enclosure routes,
-then invokes the complete current catalog authority and its 85-mutation suite separately, all in
+default mode replays exactly four still-applicable source/exact/binary64/enclosure routes, then
+invokes the complete current catalog authority and its 85-mutation suite separately, all in
 normal and optimized Python. A reviewed change to the current catalog checker requires an explicit
 re-adjudication of the wrapper's current-only leaf digest, component-roster digest, and exact
 output. Never derive or repin those values automatically, and never alter the pinned historical
 checker, self-test, commit, tree, routes, or outputs to make a descendant pass. The historical
-`--release-only` route is superseded by six
-separately scoped release-family revisions of represented-input PID2 synergy; `--catalog-only` is
-historical-only for the distinct frozen-projection reason. Exact-tree replay retains both without
-weakening or repinning either route.
+`--claim-only` route is superseded by the exact-C12 terminal revision index. The historical
+`--release-only` route is superseded by six separately scoped release-family revisions of
+represented-input PID2 synergy. `--catalog-only` is historical-only for the distinct
+frozen-projection reason. Exact-tree replay retains all three without weakening or repinning them.
 
 The opt-in historical mode requires the pinned revision-4 SHA-1 commit/tree to be an ancestor of
 the checked `HEAD`, materializes that exact tree, and replays its 241-mutation full suite and
-147-mutation claim suite in normal and optimized Python. The companion rejects 35 hostile
-controls, including erasure of the five-route call, current-catalog call, exact-tree call, full
+147-mutation claim suite in normal and optimized Python. The companion rejects 36 hostile
+controls, including erasure of the four-route call, current-catalog call, exact-tree call, full
 suite, or claim suite. Returned tuples are bounded in-process execution receipts under this
 pinned checker/mutation model. Stable-byte observations are not an atomic filesystem snapshot and
 do not prove authenticity, prevent coordinated transient substitution or checker/self-test
 rewrite, make the historical catalog current, promote the lifecycle, or establish theorem,
 estimator, support, PID, or application validity.
 
-`check-ksg-m1a-phase.py` is the current-descendant lifecycle gate; it does not replace or reinterpret
-the immutable historical C3 wrapper. Run it under isolated Python. Policy-only and hostile modes
-are non-credit diagnostics. Creditable precommit mode requires an independently constructed exact
-alternate-index tree, a sealed mode-`0400` single-link regular file supplied on standard input,
-and a detached checkpoint; postcommit mode requires that same checkpoint as a clean direct-child
-HEAD. No caller-controlled pathname enters the checker, and its output explicitly makes no
-path-residency claim. The checker emits custody facts, not scientific evidence, authenticity, or
-M1c authority:
+`check-ksg-m1a-phase.py` was the then-current descendant lifecycle gate; it did not replace or
+reinterpret the immutable historical C3 wrapper. Only the policy-only parser and hostile self-test
+shown below remain live, as zero-credit regression checks of that frozen design. They are not
+current lifecycle instructions. Its prospective precommit mode required an independently constructed
+exact alternate-index tree, a sealed mode-`0400` single-link regular file supplied on standard
+input, and a detached checkpoint; postcommit required that checkpoint as a clean direct-child HEAD.
+No caller-controlled pathname entered the checker, and its output made no path-residency claim. It
+emitted custody facts, not scientific evidence, authenticity, or M1c authority:
 
 ```text
 python3 -I -S -B scripts/check-ksg-m1a-phase.py --validate-policy-only
@@ -478,12 +532,12 @@ python3 -O -I -S -B scripts/check-ksg-m1a-phase-self-test.py
 ```
 
 <!-- BEGIN KSG_M1A_CUSTODY_CORRECTION_README_V1 -->
-The append-only M1a custody-correction route preserves the pushed `cb3f58f0...` scientific/runtime
+The historical append-only M1a custody-correction route preserved the pushed `cb3f58f0...` scientific/runtime
 tree and its fixed 83-path projection. Hosted CI run `31686107959` remains negative evidence: its
 deterministic certified-SxPID2 full-container custody failure is not erased by exact-head CodeQL
 run `31686106737` succeeding, and that combination is not an all-green hosted result. While the
-correction policy inventory is provisional, only the following explicitly non-credit diagnostic
-and hostile routes are valid:
+correction policy inventory was provisional, only the following explicitly non-credit diagnostic
+and hostile routes were admitted. They are preserved commands, not live routes:
 
 ```text
 python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
@@ -494,17 +548,16 @@ python3 -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
 python3 -O -I -S -B scripts/check-ksg-m1a-custody-correction-self-test.py
 ```
 
-After the exact correction inventory is human-frozen, precommit mode reads the sealed alternate
-index only from descriptor 0; no index path is accepted on the checker CLI. Candidate-commit mode
-checks a clean detached exact direct child (including a pull-request head) without fd0 or credit,
-so the complete candidate is exercised before a main push. Postcommit mode requires that same
-direct child as clean attached `main` HEAD and forbids alternate-index arguments. The lifecycle
-forms are:
+The superseded contract said that, after the exact correction inventory was human-frozen,
+precommit mode would read the sealed alternate index only from descriptor 0; no index path would be
+accepted on the checker CLI. Candidate-commit mode would check a clean detached exact direct child
+without fd0 or credit, and postcommit would require that direct child as clean attached `main` HEAD.
+The following forms record that historical contract:
 
-Freeze every authored correction-tree byte before constructing the checkpoint. Build the full
-candidate index from those frozen bytes, seal that regular single-link index mode `0400`, and
-record its SHA-256 and canonical decimal byte size. Create the unsigned direct-child checkpoint
-with exactly this message, substituting those two observed values:
+That contract required every authored correction-tree byte to be frozen before checkpoint
+construction, the full candidate index to be sealed as a regular single-link mode-`0400` file, and
+its SHA-256 and canonical decimal byte size to be recorded. Its unsigned direct-child checkpoint
+would have used this exact message with those two observed values:
 
 ```text
 Correct KSG M1a hosted custody wiring
@@ -513,9 +566,9 @@ Sealed-index-SHA256: <lowercase-sha256>
 Sealed-index-Size: <canonical-decimal-bytes>
 ```
 
-Run precommit validation with that same index on descriptor 0. This order is acyclic: neither the
-checker nor the authored tree embeds the final index digest. A later strict descendant must retain
-the identical raw index at
+The historical precommit validation would then have read that same index on descriptor 0. This
+order was acyclic: neither the checker nor the authored tree embedded the final index digest. The
+planned strict descendant would have retained the identical raw index at
 `audit/evidence/ksg-rev4-m1a-custody-correction-sealed-index.bin`; the composite receipt binds its
 Git blob OID, SHA-256, size, reconstructed correction tree, and full entry count to the checkpoint
 trailers and the historical precommit observation.
@@ -560,8 +613,8 @@ in a later committed descendant may observe exact-SHA hosted CI and CodeQL runs;
 custody success nor the r6 Lean replay may backfill hosted success or integration credit into
 `cb3f58f0...`.
 
-Once that later descendant receipt exists, pass its bounded canonical JSON bytes to the fixed
-parser on standard input:
+The planned later-descendant route would have passed a bounded canonical receipt to the fixed
+parser on standard input. No such instruction is live now:
 
 ```text
 python3 -I -S -B scripts/check-ksg-m1a-custody-correction.py \
@@ -587,7 +640,7 @@ packet, and none changes the certified mathematical result.
 <!-- END KSG_M1A_CUSTODY_CORRECTION_README_V1 -->
 
 <!-- BEGIN KSG_M1A_HOSTED_RECOVERY_README_V1 -->
-## KSG M1a hosted-recovery verifier
+## Historical KSG M1a hosted-recovery verifier (nonoperative)
 
 Commit `7473e62acef6077c2c1147e09d5d1297f2a2874b` is the exact, frozen direct-child
 custody correction of `cb3f58f0...`. Its local normal/optimized precommit and postcommit receipts
@@ -600,12 +653,13 @@ projection over unchanged bootstrap bytes. Same-head CodeQL run `31724449083` su
 new alert number. The CI and CodeQL observations remain separate and no composite-v2 receipt is
 issued.
 
-The bounded recovery is one unsigned fast-forward sole child of `7473e62a...`. It changes the
+The historical bounded recovery was one unsigned fast-forward sole child of `7473e62a...`. It changed the
 certified job's pinned checkout to `fetch-depth: 0`, preserving `persist-credentials: false`, the
 fixed `cb3f58f0...` authority, the certified mathematical packet, and every non-container semantic
 definition. It also validates marked certified bootstrap bytes and same-interpreter structural
-relations instead of treating a stored cross-minor `ast.dump` digest as portable. Full history is
-intentional: a later receipt descendant moves the fixed authority past any chosen finite depth.
+relations instead of treating a stored cross-minor `ast.dump` digest as portable. Full history was
+intentional because a planned receipt descendant would move the fixed authority past any chosen
+finite depth.
 The recovery checker independently reads and rehashes both historical subject commits, preserves
 the implementation's exact 83-path projection, binds both terminal failed diagnostics and the
 complete failed-run record, and validates only the reviewed 27-path recovery inventory: 19
@@ -624,7 +678,9 @@ identity-stability failures. A full candidate scan requires every tracked regula
 declared mode; seven pre-existing mode-0600 filesystem leaves were normalized to 0644 without
 changing content, and finalized r7 remains byte-identical.
 
-While the recovery policy is provisional, run:
+The following policy-only parser and hostile self-test commands remain live as zero-credit
+preservation regressions. They do not authorize the historical precommit, candidate, postcommit,
+receipt, or qualification modes:
 
 ```text
 python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
@@ -635,10 +691,10 @@ python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
 python3 -O -I -S -B scripts/check-ksg-m1a-hosted-recovery-self-test.py
 ```
 
-After every authored byte is independently reviewed and the recovery authority is frozen, preserve
-finalized r7 and generate append-only Lean r8, then regenerate current-source state last. Construct a fresh full
-alternate index, seal it as a regular single-link mode-`0400` file, and create the unsigned
-sole-child checkpoint with exactly:
+The superseded plan required independent review of every authored byte, preservation of finalized
+r7, generation of append-only Lean r8, and regeneration of current-source state last. It would then
+have constructed and sealed a fresh full alternate index and created an unsigned sole-child
+checkpoint with exactly:
 
 ```text
 Repair KSG M1a hosted recovery wiring
@@ -647,9 +703,10 @@ Sealed-index-SHA256: <lowercase-sha256>
 Sealed-index-Size: <canonical-decimal-bytes>
 ```
 
-The lifecycle commands mirror the historical correction but bind `7473e62a...` as the immediate
-parent. Precommit accepts the index only on descriptor 0; candidate mode requires detached HEAD;
-postcommit requires clean attached `main`. Every result is still hosted-pending and no-credit:
+These historical lifecycle commands mirrored the correction and bound `7473e62a...` as the
+immediate parent. Precommit accepted the index only on descriptor 0; candidate mode required
+detached HEAD; postcommit required clean attached `main`. Every result was hosted-pending and
+no-credit:
 
 ```text
 python3 -I -S -B scripts/check-ksg-m1a-hosted-recovery.py \
@@ -721,10 +778,11 @@ The append-only correction is documented in
 C5 is the unsigned direct child of published C4 and uses a fresh `r10` replay. It narrowly
 normalizes one exact checkout-residue byte image, isolates extracted release fixtures from ambient
 Git ancestry, rebinds the reviewed zeta spelling, and rebinds the final certified-SxPID execution
-containers. It also replaces the stale live README-token expectations for the never-issued
-composite-v3 recovery route with the current C4/C5 nonissuance and capture-separation boundary,
+containers. It also replaced the stale live README-token expectations for the never-issued
+composite-v3 recovery route with the then-current C4/C5 nonissuance and capture-separation boundary,
 while retaining the legacy checker's historical Git, custody, workflow, Just, and anti-revival
-checks. It does not assert a unique cause for the release-state runner failure. Run:
+checks. It did not assert a unique cause for the release-state runner failure. The historical
+commands were:
 
 ```text
 just ksg-composite-v5
@@ -761,13 +819,13 @@ committed standalone figure even though the TeX reports name the committed figur
 permanently unissued. Preserve C5, r10, and both old gate scripts exactly; their failed hosted
 observations receive no R5, scientific, authentication, or independence credit.
 
-Composite-v6 adds a separately versioned keyed portability adjudicator and boundary publication.
+Composite-v6 added a separately versioned keyed portability adjudicator and boundary publication.
 Each rebuilt or committed report must match the exact committed figure its TeX source names. The
 fresh standalone figure is checked separately against the committed standalone figure through
 closed object-safety, text, page geometry, subset-neutral font-family, and bounded color/grayscale
 same-renderer predicates. A decoded-content-different no-op positive proves the cross-toolchain
 figure relation does not collapse back to byte identity, while the same fixture must be rejected
-as a report's associated figure. Run the local exact lane from frozen bytes with:
+as a report's associated figure. The historical local exact lane was:
 
 ```text
 just ksg-composite-v6
@@ -777,11 +835,11 @@ scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh --exact
 scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh --exact
 ```
 
-The dedicated Ubuntu v6 workflow runs the same two gate pairs with `--cross-toolchain`; it does
-not claim that Linux can reproduce the committed macOS PDF bytes. C6 must be C5's exact unsigned
-direct child and publishes fresh replay r11. From an exact clean committed C6 checkout, the typed
-local recorder runs only the fixed `just ksg-composite-v6` command under its constructed
-environment and writes a new mode-0600 staging file outside the repository:
+The dedicated Ubuntu v6 workflow ran the same two gate pairs with `--cross-toolchain`; it did not
+claim that Linux could reproduce the committed macOS PDF bytes. The C6 contract required C5's
+exact unsigned direct child and published fresh replay r11. From an exact clean committed C6
+checkout, its typed local recorder would run only the fixed `just ksg-composite-v6` command and
+write a new mode-0600 staging file outside the repository:
 
 ```text
 local_closure_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c6-local-closure.XXXXXX")"
@@ -792,7 +850,8 @@ python3 -I -S -B scripts/capture-ksg-m1a-composite-v6-local-closure.py \
 The staged record binds exact C6 topology, the fixed command, clean pre/post observations, bounded
 stdout/stderr, and a reviewed executable subset. It is an unsigned correlated local observation,
 not a first-attempt authority, complete transitive executable inventory, atomic snapshot,
-authentication, trusted time, or independent reproduction. Install its exact bytes at
+authentication, trusted time, or independent reproduction. The historical route would have
+installed its exact bytes at
 `audit/evidence/ksg-rev4-m1a-composite-local-closure-v6-2026-08-18.json` only after its schema and
 semantic checks pass.
 
@@ -801,9 +860,9 @@ The clean endpoints use ordinary Git status plus selected metadata checks. Rejec
 uninspected Git metadata remain outside the observation and may remain side inputs; this is not a
 hermetic closure.
 
-After the successor hosted capture also validates, derive the candidate receipt from two distinct
-new mode-0600 staging files. The derivation route accepts no evidentiary stdin route and requires
-both inputs at offset zero through stable, single-link regular-file descriptors:
+The prospective route would have derived the candidate receipt after successor-hosted validation,
+using two distinct new mode-0600 staging files. Its derivation accepted no evidentiary stdin route
+and required both inputs at offset zero through stable, single-link regular-file descriptors:
 
 ```text
 set -o noclobber
@@ -816,15 +875,15 @@ python3 -I -S -B scripts/check-ksg-m1a-composite-v6.py \
   3<"$local_record" 4<"$successor_capture" >"$receipt_staging"
 ```
 
-Do not install the derived bytes until the checker validates the staged receipt and both input
-records against the exact C6/R6 contract. The two private staging paths are transport locations,
-not evidence locators or durable authorities.
+The historical contract forbade installing derived bytes before the checker validated the staged
+receipt and both input records against the exact C6/R6 contract. The two private staging paths were
+transport locations, not evidence locators or durable authorities.
 
-R6 remains an exact conditional four-path child: that local record, the fresh successor hosted
-capture, the deterministically derived receipt, and current-source regenerated last. It is
-permitted only after the fresh exact-C6 local closure and fresh attempt-1 repository CI, all four
-CodeQL language jobs, and dedicated-v6 success for the same exact C6 SHA. The receipt validates and
-binds the predecessor capture, local record, and successor capture before recording all four terms.
+R6 was specified as an exact conditional four-path child: that local record, the fresh successor
+hosted capture, the deterministically derived receipt, and current-source regenerated last. It
+would have been permitted only after fresh exact-C6 local closure and fresh attempt-1 repository CI,
+all four CodeQL language jobs, and dedicated-v6 success for the same exact C6 SHA. The planned
+receipt would have bound all four terms.
 Any false, absent, nonterminal, wrong-attempt, or wrong-SHA hosted term—or an absent or invalid local
 record—leaves R6 unissued and requires another append-only contract version.
 
@@ -917,7 +976,16 @@ all-five repin passes. Source reconstruction guards that exact changed set; neit
 establishes a unique counterfactual necessity set or ordering. No L8 record is installed; no
 operator-invocation history is claimed. R8 is permanently unissued and has zero successor credit.
 
-Composite-v9 is the bounded selected append-only successor. It preserves the exact C8 theorem sources and
+### Historical composite-v9 contract (closed; commands below are nonoperative)
+
+The composite-v9 material through the exact-C12 paragraph below is a preserved account of the
+contract and rejected candidates that existed at that time. It is not current operational
+guidance. Do not execute its capture, qualification, receipt, or fresh-`r14` commands. The live
+`just ksg-composite-v9` entry point now refuses replay. Current descendants use only
+`just ksg-composite-v12-preservation`, which grants zero new qualification or scientific credit;
+the exact C12 status is stated after this historical block.
+
+Composite-v9 was the bounded selected append-only successor. It preserved the exact C8 theorem sources and
 statements, mathematical-claim semantics, estimator results, numerical results, workflow PDF,
 workflow-PDF source/production gate, and publication bytes. Claim-packet edits are limited to
 replay-custody pointer prose. It repins only the five stale retained operational bindings and their
@@ -1072,7 +1140,7 @@ stated bounds. This correction
 is not a sixth stale binding,
 fixture repair, cross-minor portability result, or scientific finding.
 
-Draft-safe controls are:
+The historical draft-safe controls were:
 
 ```text
 python3 -I -S -B scripts/capture-ksg-m1a-composite-v9.py --self-test
@@ -1083,7 +1151,8 @@ python3 -I -S -B scripts/check-ksg-m1a-composite-v9-self-test.py
 python3 -O -I -S -B scripts/check-ksg-m1a-composite-v9-self-test.py
 ```
 
-Before C9 is committed, preserve the already-terminal C8 predecessor observation in a private
+The historical contract required the already-terminal C8 predecessor observation to be preserved
+before C9 in a private
 mode-0600 staging file. The token is supplied only through descriptor 3; do not place it in an
 argument or environment variable:
 
@@ -1115,7 +1184,8 @@ response bytes. Freshness is a controlled operator process, not authenticated co
 format cannot distinguish a live collection from manual reconstruction of identical public response
 bytes plus a changed descriptor. Never hand-edit or reseal the capture.
 
-Run `just ksg-composite-v9` only from the exact clean committed C9 checkout. If it succeeds, the
+The historical contract allowed `just ksg-composite-v9` only from the exact clean committed C9
+checkout. If it succeeded, the
 typed recorder runs exactly that fixed command and writes L9 to a fresh mode-0600 path outside the
 repository:
 
@@ -1136,8 +1206,8 @@ attempt-number authority, a hermetic transitive-executable inventory, an atomic 
 snapshot, authentication, or trusted time.
 
 Only after fresh attempt-1 repository CI, all four CodeQL language jobs, and the dedicated-v9
-workflow succeed for that same C9 SHA may the successor observation be captured. Supply the exact
-C9 commit, tree, and three distinct provider run IDs explicitly:
+workflow succeeded for that same C9 SHA could the historical successor observation be captured.
+The historical command required the exact C9 commit, tree, and three distinct provider run IDs:
 
 ```text
 successor_capture="/absolute/private/path/successor-qualification.json"
@@ -1150,9 +1220,9 @@ successor_capture="/absolute/private/path/successor-qualification.json"
    3<"$token_file" >"$successor_capture")
 ```
 
-Validate the staged L9 and successor capture together, and derive the candidate receipt in the same
-fail-closed operation, only through two distinct, stable, single-link regular-file descriptors at
-offset zero:
+The historical route would validate the staged L9 and successor capture together and derive the
+candidate receipt in the same fail-closed operation, only through two distinct, stable,
+single-link regular-file descriptors at offset zero:
 
 ```text
 receipt_staging="/absolute/private/path/composite-v9-receipt.json"
@@ -1162,10 +1232,10 @@ receipt_staging="/absolute/private/path/composite-v9-receipt.json"
    3<"$local_record" 4<"$successor_capture" >"$receipt_staging")
 ```
 
-R9 remains an exact four-path unsigned direct child: the durable L9 record, fresh successor
-capture, deterministically derived receipt, and current-source regenerated last. Freeze the first
-three installed bytes before regenerating the self-excluding manifest in both Python modes and
-requiring exact equality:
+The prospective R9 contract required an exact four-path unsigned direct child: the durable L9
+record, fresh successor capture, deterministically derived receipt, and current-source regenerated
+last. It required the first three installed bytes to be frozen before regenerating the
+self-excluding manifest in both Python modes and requiring exact equality:
 
 ```text
 state_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c9-current-source.XXXXXX")"
@@ -1177,9 +1247,9 @@ state_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-c9-current-source.XXXXXX")"
 cmp "$state_dir/current-source.json" "$state_dir/current-source.optimized.json"
 ```
 
-Install only the equal reviewed manifest bytes. From the exact R9 commit, validate that the staged
-receipt bytes equal the committed receipt and satisfy their derivation, then validate the complete
-static contract in both Python modes:
+The historical route would install only equal reviewed manifest bytes. From the hypothetical exact
+R9 commit, it would validate that the staged receipt bytes equaled the committed receipt and
+satisfied their derivation, then validate the complete static contract in both Python modes:
 
 ```text
 python3 -I -S -B scripts/check-ksg-m1a-composite-v9.py --validate-receipt \
@@ -1192,7 +1262,7 @@ just ksg-composite-v9
 just release-audit
 ```
 
-The final command reruns the complete release route. Any false,
+In that historical contract, the final command would rerun the complete release route. Any false,
 missing, nonterminal, wrong-attempt, wrong-SHA, or later-generation term leaves R9 unissued and
 requires another append-only contract version. All four artifacts are project-defined operational
 observations, not mathematical, scientific, authentication, or independent-replication evidence.
@@ -1204,10 +1274,14 @@ derive an R4 receipt, reinterpret a rerun as attempt 1, or seed evidence from it
 Composite-v5 uses separately versioned predecessor/successor captures and a separately typed R5
 receipt; those artifacts preserve the failed observation without reviving or renaming R4.
 
+### Current exact-C12 terminal boundary
+
 Exact C12 `01466e88b0550333c2718f1716289e9642e30dc6` is terminal with zero qualification
 credit. Attempt-1 CodeQL succeeded; attempt-1 repository CI and dedicated-v12 failed. Thus Q12 is
 false for either possible L12 value and R12 is permanently unissued, while L12 itself remains
-`not_adjudicated`. The canonical terminal record and schema are:
+`not_adjudicated`. The [current revision index](../claims/KSG-INTEGER-HARMONIC-001/revision-index.md)
+and [Lean 4.33 freeze/replay record](../audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md) are the current
+human authorities. The canonical terminal record and schema are:
 
 ```text
 audit/evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json
@@ -1334,13 +1408,35 @@ python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --histor
 python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
 python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
 python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+python3 -I -S -B scripts/check-ksg-revision4-terminal-index.py
+python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index.py
+python3 -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
+python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
 ```
 
-The five live-applicable historical switches are scoped diagnostic routes. The superseded
-`--release-only` switch and separately historical-only `--catalog-only` switch are retained only
-through exact-tree replay. The revision-4 checker remains permanently preclosure-only: its default
-route intentionally exits nonzero with the exact lifecycle status and has no positive final
-parser. The descendant wrapper is likewise not an M1c authority.
+The four live-applicable historical switches are scoped diagnostic routes. The superseded
+`--claim-only` and `--release-only` switches and the separately historical-only `--catalog-only`
+switch are retained only through exact-tree replay. The revision-4 checker remains permanently
+preclosure-only: its default route intentionally exits nonzero with the exact lifecycle status and
+has no positive final parser. The descendant wrapper is likewise not an M1c authority.
+
+`check-ksg-revision4-terminal-index.py` is the live current-reader successor for the revised
+revision-4 index. It exact-binds that index, its relative C12 boundary link, the terminal record and
+schema, the existing terminal checker, and the JSON-schema helper loaded by that checker. It
+requires the indexed final decisions and evidence matrices to remain absent, independently derives
+`Q12 = false` for both Boolean values left open by `L12 = not_adjudicated`, requires
+`R12 = permanently_unissued`, and grants zero qualification credit. It executes the terminal
+checker in normal and optimized isolated Python and requires exact status and output parity. It
+never reads or activates the historical active packet, `--claim-only`, or any archive route.
+
+The companion self-test has 54 controls: 52 semantic, process, and filesystem mutations plus two
+hostile interpreter launches. Its clean baseline runs the full real-root production checker in
+both modes. Individual mutations call the same digest-pinned production validators in memory or
+against private temporary filesystem objects; the suite does not create 52 copied repositories or
+replay the complete historical C12 Git traversal for each mutation. The gate is bounded fail-closed
+custody evidence. It does not establish exhaustive bypass resistance, Git or provider
+authentication, trusted time, mathematical or estimator correctness, an inference about the value
+of `L12`, or qualification.
 
 `generate-finite-alphabet-plugin-oracle.py` independently rebuilds a 100-digit Decimal corpus for
 the listed two-, three-, and four-source SxPID tables and the listed two- and three-source `I_min`
@@ -1673,6 +1769,45 @@ proved continuity specialization, and bounded executable evidence. Rendering doe
 the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary64 refinement,
 estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
 
+`build-numerical-assurance-pdf.sh` renders `NUMERICAL_ASSURANCE.md` through a bounded
+Pandoc/LuaLaTeX projection. The Markdown is canonical. The projection imports two exact tracked
+PDF derivatives of the handcrafted SVG explanations; `figure-assets.json` binds both source and
+derivative bytes, their page boxes, and the observed renderer. The source-derived duplicated
+trailer identifier also binds the header, Lua filter, tagpdf compatibility source, and figure
+manifest. Fixed locale, timezone, creation date, three LuaLaTeX passes, warning checks, embedded
+fonts, tagged structure, and atomic publication give same-toolchain reproducibility. These controls
+do not prove the numerical theorems, SVG/PDF semantic equivalence, PDF/UA, authenticity, or
+cross-toolchain byte identity.
+
+`check-numerical-assurance-pdf.sh` validates the canonical Markdown math, regenerates the PDF, and
+checks all 23 A4 pages. Its object gate pins the audited pypdf version; requires the source-derived
+trailer identifier, `en-US` language, marked structure tree, bounded first-page `GoTo`, HTTPS-only
+external links, and Link-only annotations; and rejects JavaScript, attachments, forms, collection
+state, permissions actions, and unknown action types. The gate also requires the two imported
+figure forms, reviewed text sentinels, embedded fonts, and a nonempty raster for every page. Exact
+mode requires byte identity. Cross-toolchain mode still applies every source, object, text, font,
+geometry, and raster-presence check, then requires identical layout text and A4 page geometry. That
+fallback is only a bounded publication relation. It is not layout, font, raster, accessibility,
+mathematical, statistical, estimator, or application equivalence.
+
+`check-numerical-assurance-pdf-self-test.sh` runs one independent checker-contract audit, three
+accepted-mode controls, and 32 hostile controls. It covers source and trailer-identifier drift,
+symbolic inputs, fixed page count, bounded OpenAction, forbidden actions, sentinels, source roster,
+builder wiring, raster checks, both candidate validations, exact byte comparison, and the bounded
+cross-toolchain text/geometry comparison. A serialization-only fixture must fail exact mode and may
+pass only explicit cross-toolchain mode. The suite uses a fake builder to isolate checker logic; it
+does not test builder failure modes or prove mathematics, visual equivalence, accessibility, or
+general cross-toolchain equivalence.
+
+The paper derives the 2,098-bit single-operand bound and the 34-limb supported-target bound; gives
+the exact ties-to-even branches; and distinguishes exact reduction of represented operands from
+exact estimation. It explains all repaired call sites, retained witnesses, rejected transfers,
+resource charges, quantizer-cardinality semantics, oracle nonindependence, and open refinement
+edges. Twelve implementation routes and a fifty-lens hostile review document the selected design
+and alternatives. Ten application cards state physical inputs, alphabets, outputs, assumptions,
+and reasons to prefer a simpler method. These review counts are process coverage, not theorem
+evidence.
+
 `build-pid-sensor-placement-and-galadriel-guide-pdf.sh` renders
 `PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md` through Pandoc and LuaLaTeX. The canonical Markdown is
 the claim source. Three handcrafted SVGs and their exact tracked one-page PDF derivatives are bound
@@ -1688,10 +1823,11 @@ non-root directory. This is bounded publication hygiene, not authenticity or too
 `check-pid-sensor-placement-and-galadriel-guide-pdf.sh` validates the retained categorical-latency
 archive and JSON receipt, including its path-safe 17-file inventory and the absence of AppleDouble
 metadata. It rebuilds the guide and checks the expected source-derived trailer ID, tagged structure,
-A4 page boxes, link actions, primary-source URLs, text sentinels, and every rendered page. Its pinned
-pypdf object gate and exact 58-row font roster require every font to be embedded and Unicode-mapped;
-named CID/TrueType fonts must be subsetted, while the 19 renderer-produced Type 3 rows are admitted
-only as structurally exact, zero-area, nonpainting U+0020 spacing shims on the three figure pages.
+all 46 A4 page boxes, link actions, primary-source URLs, text sentinels, and every rendered page. Its
+pinned pypdf object gate and exact 56-row font roster require every font to be embedded and
+Unicode-mapped; named CID/TrueType fonts must be subsetted, while the 18 renderer-produced Type 3
+rows are admitted only as structurally exact, zero-area, nonpainting U+0020 spacing shims on the
+three figure pages.
 Exact mode requires raw byte equality. Cross-toolchain mode first accepts raw equality and
 otherwise requires exact layout-text equality after both files pass the complete page-geometry and
 object checks. That fallback is a bounded text-and-geometry relation; it is not raw PDF equality,
@@ -1703,40 +1839,38 @@ isolated Pandoc/LuaLaTeX pipeline. Default `--exact` mode requires two isolated 
 byte-identical. Explicit `--cross-toolchain` mode first attempts raw equality. Only raw comparison
 status 1 can invoke the narrow trailer-ID projection; an operational comparison error is fatal.
 Both modes require warning-free A4 documents with a populated structure tree, embedded Unicode
-fonts, and unchanged canonical inputs. The guide embeds three handcrafted SVG derivatives. The
-shared publication manifest binds four source/derivative pairs; its fourth, Sx-only pair is staged
-for whole-set validation but is not embedded in the guide. The build imports exact tracked one-page
+fonts, and unchanged canonical inputs. The guide embeds four handcrafted SVG derivatives. Its
+shared guide/SxPID3 publication manifest binds five source/derivative pairs; the Sx-only
+source-cylinder pair is staged for subset validation but is not embedded in the guide. The build
+imports exact tracked one-page
 PDF derivatives instead of invoking an rsvg version at build time.
 The manifest binds both members of every source/derivative pair, the observed renderer versions,
 exact page boxes, CFF resource shapes, admitted open-font names, and the limits of the capture.
+The builder's cross mode is a low-level candidate-generation relation. Publication admission comes
+only from the outer guide gate's selected, digest-pinned profile and its independent artifact checks.
 
 `check-mathematical-results-guide-pdf.sh` keeps the same-toolchain route byte-strict. It applies the
-unchanged strict structure checker to both PDFs and then requires raw equality between the rebuilt
+current v2 strict structure checker to both PDFs and then requires raw equality between the rebuilt
 and committed files. The exact branch neither requires nor reads a hosted or legacy cross-profile
-checker, receipt, or fixture. Explicit `--cross-toolchain` mode instead captures the producer tuple
-before and after the build, requires the complete tuples to agree, and selects exactly one supported
-source profile. The current hosted profile is selected by the exact Pandoc 3.10.2 and LuaHBTeX
-version/digest facts, direct and canonical command paths, `/usr/bin/kpsewhich`, the canonical
-`TEXMFSYSVAR` format path, and its secure regular-file shape. Each tuple captures and rechecks the
-selected `kpsewhich` executable and `lualatex.fmt`; the `kpsewhich` digest is per-run evidence, not a
-frozen cross-run authentication pin, and the format size and SHA-256 are deliberately not profile
-selectors.
+checker, receipt, or fixture. Explicit `--cross-toolchain` mode first captures and selects a closed
+producer tuple. The Pandoc 3.10.2/Ubuntu 24.04 route selects only the current v2 raw profile. It
+requires the rebuilt PDF to equal the retained v2 fixture byte-for-byte or differ only in the
+strict duplicated final-trailer `/ID` payloads. The separately retained 16-page v1 and legacy
+profiles remain historical evidence and cannot certify the expanded guide.
 
-`check-mathematical-results-guide-pdf-hosted-raw-profile.py` binds the exact 581,296-byte hosted
+The historical `check-mathematical-results-guide-pdf-hosted-raw-profile.py` still binds the exact
+581,296-byte, 16-page hosted
 fixture at SHA-256 `408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd`.
-A built candidate must equal that fixture or have the same length and differ only in the strict two
+A v1 candidate must equal that fixture or have the same length and differ only in the strict two
 duplicated final-trailer `/ID` payloads. The checker then validates both captured byte strings with
-the digest-pinned strict structure checker, requires their complete typed reports to agree, and
-publishes fresh target and navigation reports. The wrapper runs the selected checker under normal
-and optimized Python, compares its outputs and diagnostics, and rechecks the relevant digests.
-It retains the extracted-text, page-geometry, font-roster, hyperlink, navigation, and rendering
-gates after that source-profile admission.
+the frozen v1 structure checker, requires their complete typed reports to agree, and publishes
+fresh target and navigation reports. This direct replay does not participate in the current v2
+wrapper.
 
-The hosted self-test has 69 cases: two controls plus 13 raw, six identifier, 10 input, 16 output,
-six dependency, 13 source, and three stability hostiles. The production and focused commands are:
+The historical hosted self-test has 69 cases: two controls plus 13 raw, six identifier, 10 input, 16 output,
+six dependency, 13 source, and three stability hostiles. The focused historical replay commands are:
 
 ```text
-scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
 HOSTED_GUIDE_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf"
 python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py "$HOSTED_GUIDE_FIXTURE"
@@ -1747,6 +1881,20 @@ one PDF is retained. The artifact ZIP bytes and complete runner filesystem are n
 hash-pinned pypdf wheel remains an outer trust boundary. This is one source-specific PDF-engineering
 profile, not general Pandoc, TeX Live, renderer, operating-system, future-run, authenticity, PDF/UA,
 mathematical, estimator, statistical, scientific-novelty, or application evidence.
+
+`check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py` is the distinct current-profile
+comparator. It binds the 23-page retained v2 fixture and the v2 strict structure checker by exact
+length and SHA-256. Both fixture and candidate must pass the complete 56-target, 217-navigation-
+record and 2,248-structure-record profile. The raw candidate must equal the fixture or differ only
+in the duplicated final-trailer `/ID` payloads accepted by the separately digest-pinned strict ID
+checker. The retained 744,745-byte v2 fixture has SHA-256
+`b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6` and is a CI-matched
+Ubuntu 24.04/x86 candidate produced under translated local container execution, not a hosted
+capture. A successful hosted cross gate is the
+separate replay observation. Until that run succeeds, the receipt does not claim hosted replay.
+The v2 self-test retains the same 69-case mutation inventory against the new exact fixture and
+structure dependency. This profile does not transfer any mathematical, estimator, statistical,
+scientific-novelty, application, authenticity, PDF/UA, or general toolchain claim.
 
 The separate legacy Pandoc 3.1.3/TeX Live 2023 replay corrected an earlier unretained observation.
 The earlier operator record said that the old build passed the unchanged raw structure digest. The
@@ -1807,10 +1955,12 @@ not claimed to be either of the earlier unretained random-trailer-ID outputs. Th
 relation is not imported by the SxPID3 paper gate and transfers no PID theorem or validation credit.
 
 `check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted producer
-capture, selection, and dispatch blocks and binds their exact source anchors. It requires exact mode
-to invoke no cross-profile artifact relation, the hosted route to remain free of the legacy alpha
-package, and the legacy route to remain free of hosted checker, receipt, and fixture state. It also
-exercises fail-closed producer and per-run tuple custody. The suite reports its current control and
+capture, selection, and dispatch blocks and binds their exact source anchors. It admits exact and
+cross mode at the public arity guard, then proves that only the producer tuple selects the current
+v2 hosted or frozen legacy route. Exact mode must invoke no cross-profile artifact relation; the
+hosted v2 route must remain free of the legacy alpha package; and the legacy v1 route
+must remain free of hosted checker, receipt, and fixture state. The suite also exercises fail-closed
+producer and per-run tuple custody. The suite reports its current control and
 hostile inventories at runtime; this guide deliberately does not freeze those evolving counts. This
 is a mode-wiring test, not a renderer replay or a typed-PDF semantic test. Its selected-source scan
 rejects unapproved literal opposite-profile paths and names outside AST-confined negative controls;
@@ -1821,15 +1971,15 @@ literal scanner.
 `regenerate-mathematical-results-guide-open-font-figures.py` accepts only the five recorded Source
 Sans Pro 3.006 and Latin Modern Sans 2.004 program hashes at their declared TeX roots. It copies
 those bytes into a generated Fontconfig-only directory, rejects SVG fallback families and weight
-drift, performs two independently cached renders of four publication figures, and publishes
+drift, performs two independently cached renders of seven publication figures, and publishes
 candidates only to a new directory outside the repository when each pair is byte-identical. The
 guide and SxPID3 paper remain separate scientific documents; sharing this rendering tool and the
 crosswalk asset transfers no theorem or estimator claim between them. It cannot overwrite
-canonical PDFs. The four-asset manifest is a bounded publication-wide custody set: the guide
-builder stages the
-Sx-only source-cylinder pair so it can replay the whole contract, but does not embed that pair.
-If the registry expands beyond this coherent set, move whole-set validation to the formal-PDF gate
-and give each document builder a consumed-asset subset instead of adding unrelated prerequisites.
+canonical PDFs. The seven-asset regeneration registry is publication-wide. Document builders use
+bounded consumed-asset manifests instead of importing unrelated prerequisites: the guide/SxPID3
+manifest contains five pairs and the numerical-assurance manifest contains two. The guide builder
+stages the Sx-only source-cylinder pair so it can replay its five-asset contract, but does not embed
+that pair. Sharing the renderer registry transfers no scientific claim between the documents.
 The companion JSON records the installed-program provenance, exact local license/manifest
 evidence,
 and raw-font-not-tracked boundary; [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) records the
@@ -1923,6 +2073,11 @@ dictionary, `/S /GoTo`, page-one `/D`, and `/SD` to the Document object at
 `StructTreeRoot/K[0]`. The builder hostile suite separately rejects a cutoff mutation that would
 exclude v0.98w, and the TeX control requires an exact 2024-02-23 package declaration with the
 native function removed to fail closed.
+The self-test removes trailing separators from the ambient `TMPDIR` before it creates its isolated
+root. This keeps the path canonical on macOS, where `TMPDIR` normally ends in `/`, and avoids a TeX
+Live 2024 path-resolution spin on an interior `//`. The normalization does not turn a timeout into
+success: the newer-native-absent fixture must still terminate with the exact fatal diagnostic and
+must not publish a PDF.
 `check-mathematical-results-guide-uri-contents-compat-self-test.sh` covers the separate hgeneric
 URI-link problem. The renamed LPPL-1.3c-or-later Work adapts only the URI part of
 latex3/pdfresources commit `6fbdf1ae266c5d59704374045a7abe90e59be4a3`. On the reviewed v0.96d
@@ -1935,17 +2090,20 @@ Ambiguous v0.96y sources dated 2026-01-23 fail closed because the upstream
 default outside PDF/UA-1. This guide preserves its target-valued contract adapted from upstream's
 2024 behavior; it does not claim that this announcement policy is universally best or that the
 guide conforms to PDF/UA.
-`check-mathematical-results-guide-filespec-compat-self-test.sh` independently covers GoToR file
-specifications. Its LPPL Work adapts latex3/pdfresources commit
+`check-mathematical-results-guide-filespec-compat-self-test.sh` independently retains the historical
+GoToR file-specification route. Its LPPL Work adapts latex3/pdfresources commit
 `f1a1b29c4e355ee0786f67ca364c123ff6aa622e`. The reviewed v0.96d fallback writes portable `/F` as
 ASCII while preserving `/UF` as UTF-16BE, the decoded relative target, and `/D`. A reviewed native
 route installs no fallback writer and preserves bytes outside the same strictly parsed trailer-ID
-payload; mixed, ancient, unreviewed newer, duplicate, or incomplete API states fail closed.
+payload; mixed, ancient, unreviewed newer, duplicate, or incomplete API states fail closed. The
+current 23-page guide emits no GoToR action: repository navigation is an HTTPS URI so it works
+without a matching checkout layout. This compatibility test preserves bounded historical replay
+coverage; it is not evidence that the current PDF contains or needs a file-specification action.
 The hosted workflow requires the old hgeneric and pdfmanagement sources after installation. It
 requires their exact distribution paths, v0.96d declarations, native-feature absence, and SHA-256
 values. It repeats the checks immediately before the formal gate. These hosted-source requirements
 complement the TeX feature, version, and body probes; they do not replace them.
-`check-mathematical-results-guide-figure-assets.py` validates the exact manifest schema, four
+`check-mathematical-results-guide-figure-assets.py` validates the exact guide/SxPID3 manifest schema, five
 source/derivative digest pairs, the open-font regeneration and notice bindings, PDF 1.7 headers,
 byte bounds, one-page MediaBoxes, static catalogs, and the absence of annotations and active
 content. Every font must have an embedded CFF program and a Unicode map. The exact source-specific
@@ -2009,7 +2167,7 @@ pre-existing raw TeX. The raw-TeX origin, source revision, exact capture command
 and chronology are not authenticated. Consequently, this is measurement identity for one finite
 pair, not a real Pandoc 3.1.3 build, a portability result, or execution credit. The
 [LuaTeX Reference Manual, stable version 1.24, 12 December 2025, PDF pages 52--53
-(printed pp. 48--49)](https://tug.ctan.org/systems/doc/luatex/luatex.pdf) permits an explicit trailer ID but
+(printed pp. 48--49)](https://mirrors.ctan.org/systems/doc/luatex/luatex.pdf) permits an explicit trailer ID but
 says LuaTeX does not validate the supplied array. That manual documents an available mechanism; it
 does not establish the cause of this observation. A deterministic source-derived ID would change
 document-identity policy and remains a separate review and reseal.
@@ -2065,33 +2223,66 @@ or mathematical correctness. Its container record keeps the OCI image-index, lin
 and config digests as distinct locators; raw registry responses and rootfs/download custody are not
 retained.
 
+`check-publication-links.py` audits the exact stage-0 Git snapshot for every indexed Markdown file,
+every indexed PDF below `output/pdf`, and the declared root blueprint PDF. It requires each audited
+worktree file to be a stable, byte-identical regular file and rejects unmerged, intent-to-add,
+assume-unchanged, skip-worktree, or nonregular index states. The Markdown route uses the
+digest-pinned Pandoc 3.10.2 GFM parser;
+local targets, rendered heading anchors, and canonical `sepahead/pid-rs` `blob/main`, `tree/main`,
+and raw-main URLs resolve against that same staged inventory with exact case. In PDFs, strict
+pypdf 6.15.0 parsing validates the raw, ordered, unique destination name tree before it admits a
+name; explicit page destinations, structure destinations reachable below `StructTreeRoot /K`, URI
+actions, and acyclic `/Next` action graphs are typed. Relative/local PDF URIs, GoToR, active
+JavaScript and embedded-file name trees, malformed destination parameters, ambiguous Link/outline
+owners, same-main route aliases, unusable image/resource targets, and hidden URI bases are rejected.
+Four controls and 111 hostile mutations exercise the gate in normal and optimized Python. The
+root-PDF cases reject both omission from the index and relative/local URI actions; its generated
+repository navigation must use canonical GitHub `blob/main` URLs while the Markdown source keeps
+portable repository-relative links.
+The result proves deterministic repository-path resolution for the staged snapshot. It does not
+probe time-varying external reachability, and a `main` URL remains mutable navigation rather than
+commit- or digest-bound provenance. The current TeX producer puts an exact `/Limits` pair on each
+root destination name tree. The checker verifies that pair against the subtree extrema for current
+artifact compatibility; ISO 32000-1 Table 36 reserves `/Limits` for non-root nodes, so this bounded
+admission is not a full ISO-conformance claim and is recorded in `KNOWN_LIMITATIONS.md`.
+
 `check-mathematical-results-guide-pdf.sh` rebuilds the guide, checks required page pairings,
-resolves every internal destination, binds the external/file target set and complete navigation
+resolves every internal destination, binds the external HTTPS target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
 font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
-in default `--exact` mode. In cross mode, the builder's repeated-build trailer-ID relation applies
-only to its two rebuilt outputs. A selected hosted or legacy profile may separately admit the built
-candidate against its retained fixture under that profile's strict raw boundary. The subsequent
-rebuilt-versus-committed comparison still uses extracted text, geometry, the normalized font roster,
-target sets, navigation, and the complete per-PDF structure projection. The graph-aware
-`check-mathematical-results-guide-pdf-structure.py` policy allows only the declared raw catalog,
+in default `--exact` mode. Cross mode uses a separate current v2 raw profile after a closed producer-
+tuple selection; the retained 16-page hosted and legacy packages remain historical only. The current
+graph-aware
+`check-mathematical-results-guide-pdf-structure-v2.py` profile binds the expanded 23-page guide. It
+requires 56 external HTTPS targets, 217 ordered navigation records, 65 named destinations, 18
+outline entries, and 107 link annotations: 89 URI and 18 internal GoTo links, with no GoToR. Its
+1,050 structure elements contain 658 marked-content references and 97 object references; all 107
+URI or internal-GoTo annotations carry `StructParent`, with repeated links permitted to share one
+of the 97 declared structure owners. Its 120 ParentTree mappings, 2,248 semantic structure records, and
+source-specific navigation and structure digests are exact profile obligations. These counts bind
+this artifact version; they are not general PDF requirements.
+
+The v2 policy allows only the declared raw catalog,
 page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
-streams, and typed page-resource dependency closures. It emits 167
-ordered navigation records and binds strict number classes plus represented-binary64 values.
-The structure self-test has 74 object-graph mutations, one raw-parser mutation, four exact
+streams, and typed page-resource dependency closures. It binds strict number classes plus
+represented-binary64 values. The v2 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
 name-tree diagnostic controls, and four output-path controls. The diagnostic controls distinguish
 a non-array, an empty array, an odd array, and an even but wrong canonical pair count. They improve
 the failure explanation without accepting a second name-tree profile.
-For the canonical guide, it requires all 61 URI annotations to carry a BOM-prefixed UTF-16BE
-`/Contents` value equal to the URI target, all 17 internal GoTo annotations to retain ASCII `ref`,
-and all 13 GoToR file specifications to have ASCII `/F` and equal decoded UTF-16BE `/UF`.
-Exactly the 78 URI and internal-GoTo annotations have StructParent/OBJR ownership. GoToR links
-intentionally have neither. These source-specific values are reproducibility and semantic-shape
-obligations, not a general accessibility policy. The old ASCII `(url)` `/Contents` is a legal PDF text
+For the canonical guide, it requires all 89 URI annotations to carry a BOM-prefixed UTF-16BE
+`/Contents` value equal to the URI target and all 18 internal GoTo annotations to retain ASCII
+`ref`. All repository targets in the PDF projection are explicit
+`https://github.com/sepahead/pid-rs/blob/main/…` navigation URLs; the Markdown source retains
+repository-relative links for branch and fork portability. URI and internal-GoTo links have
+structure ownership, and the current profile rejects GoToR. These
+source-specific values are reproducibility and semantic-shape obligations, not a general
+accessibility policy. The old ASCII `(url)` `/Contents` is a legal PDF text
 string; it fails this guide because it neither equals the URI nor meets the guide's source-specific
-UTF-16BE contract. The old UTF-16BE `/F` is not categorically malformed; this guide adopts the
-reviewed upstream portable ASCII `/F` plus Unicode `/UF` policy.
+UTF-16BE contract. The old UTF-16BE `/F` is not categorically malformed. The historical v1 guide
+adopted the reviewed upstream portable ASCII `/F` plus Unicode `/UF` policy for its GoToR actions.
+The current v2 guide has no GoToR action and therefore has no current `/F` or `/UF`
+file-specification claim.
 For tagpdf before upstream commit `2846db13f8c4cf2e63fdf4984c66b1f064570708`, the dedicated
 LPPL-1.3c-or-later compatibility source supplies that upstream OpenAction update at
 `shipout/lastpage`. Its per-file SPDX, copyright, modification, Current Maintainer, derived-Work,
@@ -2103,15 +2294,17 @@ hook. Both paths must emit the same `/S /GoTo`, `/D`, and structure-aware `/SD` 
 the structure checker remains the semantic authority and is not widened for older toolchains.
 It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
 same-toolchain comparison separately binds every artifact byte.
-`check-mathematical-results-guide-pdf-structure-self-test.py` rejects 74 object-graph mutations
+`check-mathematical-results-guide-pdf-structure-v2-self-test.py` rejects 70 object-graph mutations
 and one raw-parser mutation covering active content, aliases, type coercions, malformed numbers,
 destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream
-masquerading, changed link geometry, canonical-but-wrong URI/internal `/Contents` values, and
-independently changed `/F` or `/UF` targets under normal and optimized Python. Four CLI controls
-reject input/output aliases,
+masquerading, changed link geometry, and canonical-but-wrong URI/internal `/Contents` values under
+normal and optimized Python. Historical v1 tests separately retain the `/F` and `/UF` mutation
+controls for that artifact's GoToR actions. Four v2 CLI controls reject input/output aliases,
 hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
-remains unchanged. Cross-toolchain mode compares extracted text, geometry, target sets, and the
-bounded semantic navigation/structure projection. These checks
+remains unchanged. The frozen v1 cross-toolchain profiles compare extracted text, geometry, target
+sets, and the bounded semantic navigation/structure projection for their 16-page artifact only.
+The current 23-page v2 profile has independent fixture, receipt, checker, and self-test bindings.
+These checks
 establish a source-specific, bounded publication-artifact comparison policy. They are not a generic
 malware-free, viewer-safety, mathematical-truth, or PDF/UA claim. They do not elevate the guide
 over governing scope-specific sources or transfer semantics between PID families or estimators.
@@ -2194,7 +2387,10 @@ python3 audit/tools/certified-sxpid/scripts/check-exact-products.py
 python3 audit/tools/certified-sxpid/scripts/check-exact-products-self-test.py
 python3 audit/tools/certified-sxpid/scripts/check-nonsyntactic-zero-boundary.py
 python3 audit/tools/certified-sxpid/scripts/challenge-exact-products.py
-python3 scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
 python3 -I -S -B scripts/check-certified-sxpid2-claim.py
 python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
 python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
@@ -2209,6 +2405,30 @@ not a universal nonnegativity theorem. Lean checks the generic log/product/sign 
 retained five-factor product identity, but not the concrete SxPID event extractor, lattice,
 executable refinement, sampling model, or downstream use. The independent exact-rational and Rust
 routes supply the concrete witness binding.
+
+The four exact-log commands form one bounded gate. The first two execute the byte-frozen
+production checker in normal and optimized Python modes; their canonical JSON outputs must
+agree. The second two execute an isolated hostile suite from stable, digest-bound checker bytes.
+That suite kills nine theorem or premise mutations, rejects six raw-source or digest-policy cases,
+accepts two deliberately digest-rebound declaration-scope probes, and records one deliberately
+accepted same-process theorem-inventory limitation. Its raw-source policy remains intentionally
+conservative: live proof escapes, a character-literal sequence that exposes an unqueried live
+`axiom`, and proof-escape words that occur only in comments or strings all fail closed. Comment or
+string rejection is a policy control, not evidence that Lean treats those words as live syntax.
+Likewise, acceptance of an extra `lemma` or `private theorem` after a test-only digest rebind shows
+the seven-name axiom audit's scope; the immutable production source digest prevents those files
+from being accepted in the real gate. The hostile suite does not replace Lean's kernel, extend the
+seven proved theorems, or close any concrete event-extraction, lattice, executable-refinement,
+sampling, calibration, or application edge. The versioned failure memo and canonical evidence are
+`claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md` and
+`audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json`.
+Each hostile run requires its complete canonical record to equal the stable tracked evidence bytes;
+the current claim gate separately pins that evidence, the hostile harness, and the failure memo.
+The independently readable definitions, threat model, assumptions, 15 byte/process controls,
+step-by-step 19-case table, seven-stage verification procedure, provenance, and proof/nonproof
+boundary are in `audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md` and the rendered
+`output/pdf/exact-log-product-sxpid2-assurance.pdf`; code is not used as a substitute for that
+explanation.
 
 The non-syntactic-boundary command is read-only by default. It verifies a fresh certificate,
 compares all bounded findings and stable bindings with the historical receipt, and writes the
@@ -2635,7 +2855,12 @@ Markdown sources, renderer fragments, and PDF basename inventory differ, if an u
 is present without an explicit inventory update, or if any individual PDF gate fails. Its default
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
-portability relation. For the 83-page mathematical
+portability relation, except that the root blueprint deliberately has no reviewed cross-toolchain
+profile. The aggregate requires its checker to refuse that request with status 2 and assigns zero
+source-to-PDF cross-toolchain credit; status 0 or any other refusal status fails the aggregate.
+The aggregate self-test protects the blueprint self-test call, exact-mode call, cross-mode probe,
+and exact status-2 branch against removal, inversion, conditional skipping, or `|| true`
+weakening. For the 83-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
 tab, and line-feed runs, except for the uniquely identified `Comparison result` and `Checker`
@@ -2667,15 +2892,18 @@ result, not one end-to-end theorem connecting arbitrary Rust executions to popul
 
 `check-primegaps-to-pid-transfer-ledger.py` validates the source-pinned transfer ledger behind the
 canonical PID discovery, verification, and durability blueprint. It binds the exact reviewed
-PrimeGapsLib commit and repository anchors, the canonical 20-lens registry, transfer cards,
+PrimeGapsLib commit and repository anchors, the dated historical 20-lens registry, transfer cards,
 decision and council rosters, the proposed 13-file averaged categorical SxPID3 packet, and explicit
-nonclaims. External web, paper, CI, and certificate observations are hash-only references: the
-checker does not turn them into recovered bytes, publisher authentication, theorem truth, or
-independent review. Its hostile self-test reseals and rejects 36 causal mutations in normal and
-optimized isolated Python.
+nonclaims. A separately identified 31 August 2026 closure applies 50 current adversarial lenses and
+compares ten materially distinct routes without rewriting that historical ledger. External web,
+paper, CI, and certificate observations are hash-only references: the checker does not turn them
+into recovered bytes, publisher authentication, theorem truth, or independent review. Its hostile
+self-test reseals and rejects 36 causal mutations in normal and optimized isolated Python.
 
 `build-pid-discovery-verification-blueprint.sh` derives the human PDF only from the canonical
-Markdown, reviewed header/filter, and two handcrafted SVGs. It performs two isolated same-toolchain
+Markdown, reviewed header/filter, and four handcrafted SVGs. The filter preserves portable
+relative evidence links in Markdown but maps the four declared repository destinations to
+canonical GitHub `blob/main` navigation URLs in the PDF. It performs two isolated same-toolchain
 LuaLaTeX builds. The SVG route fixes Pango to the isolated Fontconfig inventory so macOS CoreText
 cannot select a platform fallback. The final roster admits only the declared CFF kind/encoding
 pairs and requires the Latin Modern body and figure faces. The builder also requires exact byte
@@ -2684,12 +2912,23 @@ atomic final install. Same-toolchain equality is not a cross-toolchain rendering
 rendered-page inspection remains required. The PDF explains one general promotion state machine
 for branches and worktrees rather than generating a new PDF for each migration.
 
+`check-pid-discovery-verification-blueprint-pdf.sh` is exact-only. Before rebuilding, it binds the
+current decision, evidence-adjudication index, and complete 18-node conventions registry by SHA-256
+and by unique proposed/open status and taxonomy sentinels. It then validates both rebuilt and
+committed PDFs, renders every page, and requires committed-byte equality. A digest reseal alone
+cannot promote Programs A--E because the 34-control hostile suite also mutates the complete-target
+label, scoped-result boundary, every Program A--E status, and the 108/166 taxonomy. Its
+`--cross-toolchain` route always refuses with status 2: no text, geometry, or visual similarity is
+accepted as an unreviewed equivalence relation.
+
 ```text
 python3 -I -S -B scripts/check-primegaps-to-pid-transfer-ledger.py
 python3 -O -I -S -B scripts/check-primegaps-to-pid-transfer-ledger.py
 python3 -I -S -B scripts/check-primegaps-to-pid-transfer-ledger-self-test.py
 python3 -O -I -S -B scripts/check-primegaps-to-pid-transfer-ledger-self-test.py
 bash scripts/build-pid-discovery-verification-blueprint.sh
+bash scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh
+bash scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
 ```
 
 These artifacts adopt proof roles and assurance structure only. They do not transfer sieve
@@ -2705,13 +2944,53 @@ formula-in-code check to the theory documents. Its mutation suite proves that ea
 fails closed. The checker verifies syntax and rendering conventions only. It does not verify a
 mathematical statement.
 
+`check-pid2-represented-coordinate-v4.py` is a separately implemented integer-and-`Fraction` model for the
+already represented continuous PID2 constructor coordinates. It does not call host floating-point
+arithmetic for expected values. The `model` scope reads no repository source; `model-source` adds
+four regular-file digest and structural bindings; `full` additionally runs focused PID2 and `exp0`
+tests in debug and release. The model covers both finite identity-erasure directions, all 16
+signed-zero tuples, ordinary and near-zero 32/33 boundaries, exact-versus-left/Neumaier controls,
+candidate and reconstruction overflow, the false atom-scale bound, every conditioning outcome,
+and all 1,023 accepted seeds whose exact power-of-two scaling reaches one rejected endpoint.
+
+Its hostile self-test rejects host-float oracle escapes, runs copied-root model/source checks in
+normal and optimized Python, proves model scope does not read a supplied source root, and rejects
+18 semantic plus four source-custody mutations. These are bounded represented-coordinate
+engineering checks. They do not establish estimator attainability, support, calibration, a
+Wibral/Ehrlich defect, or a universal Rust-refinement theorem. The complete assumptions, worked
+derivations, costs, negative results, and nonclaims are in
+`PID2_REPRESENTED_COORDINATE_ASSURANCE.md`.
+The model differs from production in language, numeric representation, and algorithm, and it does
+not call the Rust reducer. It still shares the human IEEE 754 specification, represented inputs,
+repository custody, and institutional context; it is not independent estimation, external
+replication, or independent review.
+
+`build-pid2-represented-coordinate-assurance-pdf.sh` renders the canonical
+`PID2_REPRESENTED_COORDINATE_ASSURANCE.md` into the tagged, 19-page A4 artifact at
+`output/pdf/pid2-represented-coordinate-assurance.pdf`. Its native vector evidence firewall keeps
+exact-real algebra, the selected represented-binary64 contract, and estimator/application validity
+in separate lanes. A fixed build date, source-derived duplicated trailer identifier, three-pass
+LuaLaTeX build, embedded-font checks, and atomic output replacement provide same-toolchain
+reproducibility. These controls do not prove the arithmetic, statistical validity, estimator
+attainability, external replication, PDF/UA conformance, authenticity, or scientific priority.
+
+`check-pid2-represented-coordinate-assurance-pdf.sh` checks the Markdown math under normal and
+optimized Python, rebuilds the PDF, requires tagged `en-US` structure and embedded fonts, validates
+the bounded first-page action and HTTPS-only link inventory, rejects active or unknown PDF actions,
+renders every page, and checks mathematical and nonclaim sentinels. `--exact` requires byte identity
+with the current toolchain. `--cross-toolchain` permits serialization differences only when the
+extracted layout text and page geometry agree; invoking that profile on one machine is not evidence
+that a second toolchain was run. Neither profile enlarges the represented-coordinate claim.
+
 `check-z3-pid2-algebra.py` requires the exact 64-bit Z3 4.16.0 CLI. It checks five digest-pinned
 QF_LRA obligations. Three obligations cover PID2 four-atom reconstruction, formula-level source
 exchange, and four-node Möbius inversion followed by reconstruction. Two obligations cover
 Möbius inversion and zeta reconstruction on the complete 18-node PID3 lattice. They also cover
 formula-level equivariance for the `S0`/`S1` and `S1`/`S2` swaps. These two swaps generate all six
-permutations of three sources. The mutation self-test changes each obligation to an exactly
-satisfiable case and verifies rejection. The PID3 proofs cover exact-real lattice formulas only.
+permutations of three sources. The mutation self-test changes each obligation through the shared
+offset and separately attacks the PID2 synergy sign, source-swap coordinate, and Möbius row. All
+eight wrong statements must be exactly satisfiable and rejected. The proofs cover exact-real
+lattice formulas only.
 They do not establish estimator premises, asymptotics, Rust refinement, floating-point behavior,
 distributional claims, a Lean development, or a four-source lattice.
 
@@ -2736,8 +3015,14 @@ python3 -S -B scripts/check-finite-convergence-document-semantics.py
 python3 -O -S -B scripts/check-finite-convergence-document-semantics.py
 python3 -S -B scripts/check-finite-convergence-document-semantics-self-test.py
 python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
-python3 scripts/check-z3-pid2-algebra.py
-python3 scripts/check-z3-pid2-algebra-self-test.py
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+python3 -I -S -B scripts/check-z3-pid2-algebra.py
+python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py
+python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
 python3 scripts/check-lean-finite-convergence.py
 python3 -O scripts/check-lean-finite-convergence.py
 python3 scripts/check-lean-finite-convergence-self-test.py
@@ -2775,9 +3060,11 @@ explicit rather than being inferred from adjacent evidence.
 `METHODS_SUMMARY.md` navigation view from the method catalog. Empty feature-gate inventories are
 reported literally as no gates, not as default-surface availability, and experimental migration
 bindings do not inherit a stable method row's status. `check-pid-mathematical-audit-protocol.py`
-generates and validates ten construction-separated object cards, including distinct cards for
-two-source PID, incomplete PID3 availability, and the full research PID3 lattice. Both schemas
-retain controlled provenance/evidence/edge/independence vocabularies and confer no review credit.
+generates and validates eleven construction-separated object cards, including distinct cards for
+two-source PID, incomplete PID3 availability, the full research PID3 lattice, and the separate
+common-radius population bridge. That bridge card transfers no estimator, API, or implementation
+status. Both schemas retain controlled provenance/evidence/edge/independence vocabularies and confer
+no review credit.
 
 `check-current-source-state-v1.py` validates a deterministic self-excluding manifest of the current
 repository-visible source state. The manifest omits itself and any containing commit identifier,
@@ -2786,7 +3073,7 @@ historical v0.9.0 ledger as tag-scoped inventory rather than current line or hum
 authenticity, review, scientific, formal, visual, release, or application evidence.
 The top-level `generated_pdfs` field is a selected 11-file PDF byte roster retained for its declared
 roles; it is not an exhaustive directory listing. The `generated_pdf_set` subprojection covers all
-21 current repository-visible entries selected by `output/pdf/`: 17 PDFs and four TSV rendering
+23 current repository-visible entries selected by `output/pdf/`: 19 PDFs and four TSV rendering
 receipts. Both counts describe the bound candidate state and must be regenerated after the final
 source freeze; neither count implies that a PDF was rebuilt, reviewed, or accepted.
 
@@ -2827,9 +3114,33 @@ python3 -O -I -S -B scripts/check-current-source-state-v1.py
 python3 -I -S -B scripts/check-current-source-state-v1-self-test.py
 python3 -O -I -S -B scripts/check-current-source-state-v1-self-test.py
 
-# Maintainer-only final regeneration after every other source byte and file mode is frozen:
-python3 -I -S -B scripts/check-current-source-state-v1.py --emit \
-  > audit/evidence/current-source-state-v1.json
+# Maintainer-only final regeneration after every other source byte and file mode is frozen.
+# Generate both interpreter modes into private files first: neither command can truncate the
+# tracked manifest if collection fails.
+state_dir="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-current-source-state.XXXXXX")"
+state_candidate="$state_dir/current-source-state-v1.json"
+state_optimized="$state_dir/current-source-state-v1.optimized.json"
+state_install=""
+cleanup_state() {
+  rm -f -- "$state_candidate" "$state_optimized"
+  if [[ -n "$state_install" ]]; then
+    rm -f -- "$state_install"
+  fi
+  rmdir -- "$state_dir"
+}
+trap cleanup_state EXIT
+(umask 077; set -o noclobber
+ python3 -I -S -B scripts/check-current-source-state-v1.py --emit > "$state_candidate"
+ python3 -O -I -S -B scripts/check-current-source-state-v1.py --emit > "$state_optimized")
+cmp "$state_candidate" "$state_optimized"
+state_install="$(mktemp audit/evidence/.current-source-state-v1.json.XXXXXX)"
+install -m 0644 "$state_candidate" "$state_install"
+cmp "$state_candidate" "$state_install"
+mv -f -- "$state_install" audit/evidence/current-source-state-v1.json
+state_install=""
+git add audit/evidence/current-source-state-v1.json
+python3 -I -S -B scripts/check-current-source-state-v1.py
+python3 -O -I -S -B scripts/check-current-source-state-v1.py
 ```
 
 After committing that final manifest, use an exact clean checkout. The shell creates private

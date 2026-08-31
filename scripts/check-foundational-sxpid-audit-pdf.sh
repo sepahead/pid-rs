@@ -171,12 +171,12 @@ if "\r" in toc or "\r" in out:
     fail("LaTeX navigation auxiliary contains a carriage return")
 
 toc_matches = re.findall(
-    r"^\\contentsline \{section\}\{Primary sources\}\{15\}\{([^{}]+)\}%$",
+    r"^\\contentsline \{section\}\{Primary sources\}\{16\}\{([^{}]+)\}%$",
     toc,
     flags=re.MULTILINE,
 )
 if len(toc_matches) != 1:
-    fail("Primary sources must have exactly one page-15 TOC destination")
+    fail("Primary sources must have exactly one page-16 TOC destination")
 destination = toc_matches[0]
 if not destination.startswith("section*.") or destination == "section.15":
     fail("Primary sources TOC destination is not a fresh unnumbered-section anchor")
@@ -277,15 +277,12 @@ def validate_pdf_destinations(
             f"{label} must contain unique Primary sources and "
             "Reproducibility destinations"
         )
-    primary_page, primary_vertical = primary_rows[0]
-    reproducibility_page, reproducibility_vertical = reproducibility_rows[0]
-    if primary_page != 15 or reproducibility_page != 15:
-        fail(f"{label} navigation destinations moved off their declared page 15")
-    minimum_separation = Decimal("72")
-    if reproducibility_vertical - primary_vertical < minimum_separation:
+    primary_page, _primary_vertical = primary_rows[0]
+    reproducibility_page, _reproducibility_vertical = reproducibility_rows[0]
+    if primary_page != 16 or reproducibility_page != 15:
         fail(
-            f"{label} Primary sources destination is not at least "
-            f"{minimum_separation} points below Reproducibility record"
+            f"{label} navigation destinations moved off their declared "
+            "Reproducibility-page-15/Primary-sources-page-16 structure"
         )
 
 
@@ -308,7 +305,10 @@ for sentinel in \
   'Descriptor-factorization firewall' \
   'Valid theorem on the stated Definition 6 domain' \
   'What arXiv:2604.03869v2 does and does not imply' \
-  'Three independent executable and formal routes' \
+  'Three complementary, implementation-distinct but correlated lanes' \
+  'generates all eighteen nonempty antichains of the seven nonempty three-source subsets' \
+  'performs exact Möbius inversion in formal prime-exponent logarithms' \
+  'implementation-distinct corroboration, not independent proofs' \
   '0.58147874590342'; do
   if ! grep -F -- "$sentinel" "$BUILD_DIR/built.txt" >/dev/null; then
     echo "$CHECK_NAME: rendered-text sentinel is absent: $sentinel" >&2

@@ -1959,9 +1959,10 @@ paper-to-definition correspondence, estimator consistency or calibration, numeri
 kernel soundness, or application validity. Those remain separate proof, certificate, experiment,
 and review obligations.
 
-#### Current pid-rs/Wibral-program inventory boundary
+#### Historical pid-rs/Wibral-program inventory snapshot (15 August 2026)
 
-The following is a non-additive status snapshot, not a novelty score. It is bound to base commit
+The following is a **historical**, non-additive status snapshot, not a current status report and
+not a novelty score. It is bound to base commit
 `bc3aa80fb6025e709c2906a08bce25a4fac40578`, `method-catalog.json` (401,485 bytes; SHA-256
 `6e8fb1143019b3f2bffe982636586705d5e99cca5decfe17a810d694b50ed8aa`), and its generated
 `METHODS.md` (488,874 bytes; SHA-256
@@ -1970,7 +1971,8 @@ The landed inventory rows below derive from those base-commit objects. The mutab
 and `0/108` coordination rows are separately derived on 15 August 2026 from the same base commit's
 `audit/evidence/wibral-pid-program-active-plan-2026-08-12.md` (17,112 bytes; SHA-256
 `4940532a46dcb345f5992bb3aa148f3262d1fef11f0b8e3114c8f78c52525417`) and the absence of completed
-claim packets; they are coordination observations, not base-tree scientific results.
+claim packets; they are historical coordination observations, not base-tree scientific results
+and not instructions for the present tree.
 
 | Object class | Landed or claimed count | Exact boundary |
 |---|---:|---|
@@ -1982,8 +1984,8 @@ claim packets; they are coordination observations, not base-tree scientific resu
 | Cataloged PID-facing validation/assurance extensions | 6 | Formal, exact, convergence, continuity, concentration, or audit packages; not six PIDs. |
 | PID/KSG-relevant source-written Lean theorems | 275 | Scope-specific formal statements; theorem count is not scientific completeness. |
 | Exact solver obligations | 9 | Five PID-algebra and four conditional KSG obligations; solver results are not kernel proof objects. |
-| Named current core-science units closed | 0/7 | KSG M1c (1), PID2 revision 4 (1), and categorical MGW SxPID3 Programs A--E (5) remain open. |
-| Categorical MGW SxPID3 assurance | 0/5 programs; 0/108 coordinates | Stable code computes the 18-antichain lattice, but the stronger assurance program is not landed. |
+| Named core-science units closed at this snapshot | 0/7 | KSG M1c (1), PID2 revision 4 (1), and categorical MGW SxPID3 Programs A--E (5) were open at the stated snapshot. |
+| Categorical MGW SxPID3 assurance at this snapshot | 0/5 programs; 0/108 coordination entries | Stable code computed the 18-antichain lattice, but the stronger assurance program had not landed at the stated snapshot. |
 
 The three-lineage count groups objects by their published defining theory/functional identity. The
 four-route count instead records distinct implemented decomposition methods: Ehrlich PID2 and the
@@ -1994,6 +1996,24 @@ KSG MI, co-/O-information, target-free analogues, support diagnostics, resamplin
 infrastructure remain outside both counts. Publishing this inventory adds no scientific
 credit; every future commit must be counted from its actual tree/diff. Two explicit estimator gaps
 remain: hyperbolic shared-exclusions PID and general mixed-support continuous shared exclusions.
+
+**Later bounded SxPID3 evidence (26 August 2026).** The current
+[evidence-adjudication index](https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md)
+selects
+[decision record 2](https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md). On exactly three ordered
+binary sources, one binary target, and every labelled 16-cell nonnegative-integer count vector
+with $1\le N\le5$, two implementation-disjoint-under-shared-semantics Python routes recomputed all
+108 keyed scalar audit expressions per table and matched in the retained neutral-v2 digest and the
+complete six-block exact sign/zero census. Here 108 means
+$18$ antichain positions $\times$ two representation stages $\times$ three components; it does not
+mean 108 PID atoms, lattice positions, independent degrees of freedom, or certified coordinates.
+This later result therefore supersedes the historical “nothing landed for the 108-entry audit”
+observation, but it does **not** convert the row to “108/108 certified”: the complete claim remains
+proposed/open, all Programs A--E remain open, and paper correspondence, concrete dual-formal
+semantics, directed logarithm enclosure, compiled keyed Rust refinement, and complete replay and
+custody remain unresolved. The same decision separately accepts the finite-law informative
+source-marginal factorization under its stated assumptions; that theorem is not evidence for the
+remaining certificate cuts.
 
 Add a semantic pin for every ambiguity that changes the mathematical object. Quote or transcribe
 the controlling primary-source statement, record the competing readings, choose one reading with

@@ -107,15 +107,21 @@ jobs:
       - name: Replay every scoped revision route and its mutations
         run: |
           set -euo pipefail
-          # The descendant gate replays five live-applicable revision-4 routes and the complete
-          # current catalog authority. Exact-tree replay alone retains the superseded release-only
-          # route and the separately historical-only frozen catalog route.
+          # The descendant gate replays four live-applicable revision-4 routes and the complete
+          # current catalog authority. Exact-tree replay alone retains the superseded claim-only
+          # and release-only routes plus the separately historical-only frozen catalog route.
           python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
           python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py
           python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
           python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation.py --historical-tree-replay
           python3 -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
           python3 -O -I -S -B scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py
+          # The current-reader successor binds the revised public index to the exact C12 terminal
+          # boundary without reviving the historical claim-only route or granting qualification.
+          python3 -I -S -B scripts/check-ksg-revision4-terminal-index.py
+          python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index.py
+          python3 -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
+          python3 -O -I -S -B scripts/check-ksg-revision4-terminal-index-self-test.py
       - name: Verify the exact KSG-only Git phase envelope
         run: |
           set -euo pipefail
@@ -194,6 +200,7 @@ jobs:
           else
             printf 'current checkout is not the exact direct-child push on main; M1a credit replay not applicable\n'
           fi
+      # Historical zero-credit preservation checks; this block cannot qualify current descendants.
       # BEGIN KSG_M1A_HOSTED_RECOVERY_WORKFLOW_V1
       - name: Verify the KSG M1a hosted-recovery lifecycle
         run: |
@@ -1003,7 +1010,10 @@ jobs:
           test ! -e .lake/config && test ! -L .lake/config
           lake exe cache get
           lake build PidFiniteConvergence
-      - run: python3 scripts/check-lean-exact-log-product.py
+      - run: python3 -I -S -B scripts/check-lean-exact-log-product.py
+      - run: python3 -O -I -S -B scripts/check-lean-exact-log-product.py
+      - run: python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py
+      - run: python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
       - run: python3 -I -S -B scripts/check-certified-sxpid2-claim.py
       - run: python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
       - run: python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
@@ -1122,8 +1132,14 @@ jobs:
       - run: python3 -O -S -B scripts/check-finite-convergence-document-semantics-self-test.py
       - run: python3 scripts/check-ecosystem-capabilities.py
       - run: python3 scripts/check-ecosystem-capabilities-self-test.py
-      - run: python3 scripts/check-z3-pid2-algebra.py
-      - run: python3 scripts/check-z3-pid2-algebra-self-test.py
+      - run: python3 -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+      - run: python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4.py --scope full
+      - run: python3 -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+      - run: python3 -O -I -S -B scripts/check-pid2-represented-coordinate-v4-self-test.py
+      - run: python3 -I -S -B scripts/check-z3-pid2-algebra.py
+      - run: python3 -O -I -S -B scripts/check-z3-pid2-algebra.py
+      - run: python3 -I -S -B scripts/check-z3-pid2-algebra-self-test.py
+      - run: python3 -O -I -S -B scripts/check-z3-pid2-algebra-self-test.py
       - run: python3 scripts/check-z3-ksg-integer-harmonic.py
       - run: python3 -O scripts/check-z3-ksg-integer-harmonic.py
       - run: python3 scripts/check-z3-ksg-integer-harmonic-self-test.py
@@ -1145,6 +1161,16 @@ jobs:
       - run: python3 -O -I -S -B scripts/check-source-errata.py
       - run: python3 -I -S -B scripts/check-source-errata-self-test.py
       - run: python3 -O -I -S -B scripts/check-source-errata-self-test.py
+      # These are zero-credit preservation gates. They keep rejected routes and one bounded
+      # counterexample exact without importing either into a scientific or release authority.
+      - run: python3 -I -S -B scripts/check-inert-negative-archives.py
+      - run: python3 -O -I -S -B scripts/check-inert-negative-archives.py
+      - run: python3 -I -S -B scripts/check-inert-negative-archives-self-test.py
+      - run: python3 -O -I -S -B scripts/check-inert-negative-archives-self-test.py
+      - run: python3 -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+      - run: python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample.py
+      - run: python3 -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
+      - run: python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
       - run: python3 -I -S -B scripts/check-assurance-registry-typed-view-v1.py
       - run: python3 -O -I -S -B scripts/check-assurance-registry-typed-view-v1.py
       - run: python3 -I -S -B scripts/check-assurance-registry-typed-view-v1-self-test.py

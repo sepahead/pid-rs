@@ -20,15 +20,15 @@ LEGACY_PANDOC_VERSION="pandoc 3.1.3"
 LEGACY_PANDOC_EXECUTABLE="/usr/bin/pandoc"
 LEGACY_PANDOC_EXECUTABLE_SHA256=3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53d701b
 FIGURE_ASSET_MANIFEST="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
-FIGURE_ASSET_MANIFEST_SHA256=5bc3a24661b7a76c1a8a29d659f23aa27400d01ab5b6bd48cd3e75b91e88c852
+FIGURE_ASSET_MANIFEST_SHA256=60b1e87ed078195206ff79652fa1f07daf2022aa1d25be73058a9dd48a475d37
 FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
-FIGURE_ASSET_CHECK_SHA256=075d5159f59eab5e927aef6a66f7380695269dc1aae447ef789bf3d84c4a5557
+FIGURE_ASSET_CHECK_SHA256=9b60c8501ef02c63cd4a6cd5fb808bf0fb0bb04d88e6c8101940cee1cc035a29
 OPEN_FONT_REGENERATION="$ROOT/audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json"
-OPEN_FONT_REGENERATION_SHA256=250929cb33988a5914c1c427f76a24f7827e70fb499cad0ca361101666e7f4d3
+OPEN_FONT_REGENERATION_SHA256=43ef71196bc98d080afe87e35d4a912c6eb6ef1c27b96c1181502d26d165a235
 OPEN_FONT_REGENERATOR="$ROOT/scripts/regenerate-mathematical-results-guide-open-font-figures.py"
-OPEN_FONT_REGENERATOR_SHA256=73d765c794167d206d6932084bb52e27cb503503407efc927f8ee261c3302b20
+OPEN_FONT_REGENERATOR_SHA256=a4200212964e49aafd6a33fd90e2afbb9ffb9337a84f73b09f33729bbd7da0e5
 THIRD_PARTY_NOTICE="$ROOT/THIRD_PARTY_NOTICES.md"
-THIRD_PARTY_NOTICE_SHA256=844a0c542d0ed3ce6af7eb0b0d4560e302963ced6d62da778203c1b953224427
+THIRD_PARTY_NOTICE_SHA256=6e4c22671de954d579c33b86e39f1bcc9e4c347942a9310508ba36c7cfcd8baa
 SOURCE_SANS_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt"
 SOURCE_SANS_LICENSE_SHA256=4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9
 GUST_FONT_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt"
@@ -42,7 +42,7 @@ FONT_ROSTER_CHECK_SHA256=39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8
 GUIDE_FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/mathematical-results-guide"
 CROSSWALK_DIRECTORY="$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit"
 DEFAULT_OUTPUT="$ROOT/output/pdf/mathematical-results-guide.pdf"
-SOURCE_DATE_EPOCH_VALUE=1787875200
+SOURCE_DATE_EPOCH_VALUE=1788048000
 JOB_NAME="mathematical-results-guide"
 MODE="--exact"
 
@@ -91,6 +91,8 @@ required_sources=(
   "$GUIDE_FIGURE_DIRECTORY/semantic-firewall.pdf"
   "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg"
   "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf"
+  "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.svg"
+  "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.pdf"
   "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg"
   "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf"
   "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg"
@@ -231,7 +233,7 @@ GUIDE_SOURCE_SENTINELS=(
   'Five distinct lanes'
   'Thus, SxPID3 has 18 net atoms.'
   'The audit evaluates 2,197,584 products per route.'
-  'repository/publication integration remains'
+  'integration remains'
 )
 for source_sentinel in "${GUIDE_SOURCE_SENTINELS[@]}"; do
   if [[ "$(count_literal_occurrences "$source_sentinel" "$SOURCE")" != "1" ]]; then
@@ -436,6 +438,10 @@ build_once() {
   cp "$GUIDE_FIGURE_DIRECTORY/semantic-firewall.pdf" "$staged_guide_figures/semantic-firewall.pdf"
   cp "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.svg" "$staged_guide_figures/result-evidence-map.svg"
   cp "$GUIDE_FIGURE_DIRECTORY/result-evidence-map.pdf" "$staged_guide_figures/result-evidence-map.pdf"
+  cp "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.svg" \
+    "$staged_guide_figures/common-radius-small-ball-bridge.svg"
+  cp "$GUIDE_FIGURE_DIRECTORY/common-radius-small-ball-bridge.pdf" \
+    "$staged_guide_figures/common-radius-small-ball-bridge.pdf"
   cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.svg" "$staged_crosswalk/audit-coordinate-crosswalk.svg"
   cp "$CROSSWALK_DIRECTORY/audit-coordinate-crosswalk.pdf" "$staged_crosswalk/audit-coordinate-crosswalk.pdf"
   cp "$CROSSWALK_DIRECTORY/source-cylinder-factorization.svg" "$staged_crosswalk/source-cylinder-factorization.svg"
@@ -464,6 +470,8 @@ build_once() {
     "$staged_guide_figures/semantic-firewall.pdf"
     "$staged_guide_figures/result-evidence-map.svg"
     "$staged_guide_figures/result-evidence-map.pdf"
+    "$staged_guide_figures/common-radius-small-ball-bridge.svg"
+    "$staged_guide_figures/common-radius-small-ball-bridge.pdf"
     "$staged_crosswalk/audit-coordinate-crosswalk.svg"
     "$staged_crosswalk/audit-coordinate-crosswalk.pdf"
     "$staged_crosswalk/source-cylinder-factorization.svg"
@@ -510,7 +518,7 @@ build_once() {
         --include-in-header=mathematical-results-guide-header.tex \
         --metadata=title:'Mathematical results in pid-rs' \
         --metadata=author:'pid-rs project analysis' \
-        --metadata=date:'28 August 2026' \
+        --metadata=date:'31 August 2026' \
         --variable=colorlinks=true --variable=linkcolor:PidTeal \
         --variable=toccolor:PidTeal \
         --variable=urlcolor:PidBronze --variable=citecolor:PidTeal \

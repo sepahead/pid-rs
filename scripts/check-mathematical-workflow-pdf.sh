@@ -1296,7 +1296,7 @@ semantic_literals = (
     "derived display tags",
     "fitted quantized SxPID for a quantized estimand",
     "| Globally novel PID theories/functionals claimed | 0 |",
-    "0/108 coordinates",
+    "0/108 coordination entries",
     "Publishing this inventory adds no scientific credit",
     "A digest without a retrievable preimage is only a commitment or omission record",
 )
@@ -1363,7 +1363,7 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "538690ae27c6e52bb5bbb6844acb3cd8f32d46f8f08ef770e09dae8d33ae9bb6":
+if markdown_digest != "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
 if primer_digest != "684783a855acb21e04f4bb7c3901249bfa082edcf4bb4584ca859ce7dda50828":
@@ -1472,7 +1472,7 @@ expected_fields = {
     "original_resolution_spot_checks": "1,5,6,10,12,19-23,28,30,31,37-47,55-63,79-83",
     "figure_pages_reviewed": "5,6,10,12",
     "status": "passed",
-    "review_date_utc": "2026-08-16",
+    "review_date_utc": "2026-08-31",
     "reviewer_kind": "agent-visual-inspection",
 }
 for name, expected in expected_fields.items():
@@ -3930,7 +3930,7 @@ required_text=(
   'Why scientific results must be typed'
   'Globally novel PID'
   'theories/functionals claimed'
-  '0/108 coordinates'
+  '0/108'
 )
 for sentinel in "${required_text[@]}"; do
   if ! grep -F -- "$sentinel" "$BUILD_ROOT/built.txt" >/dev/null; then
@@ -3962,11 +3962,20 @@ for expected in (
     "Python with optimization enabled (the -O option)",
     "the three-component vector (functional/mechanism, epistemic/dependency, institutional/custody)",
     "the displayed Z/2 exact-sequence witness above as the minimal human-readable regression",
+    "0/108 coordination rows are separately derived on 15 August 2026",
+    "108 keyed scalar audit expressions per table",
+    "it does not mean 108 PID atoms, lattice positions, independent degrees of freedom, or certified coordinates",
 ):
     if expected not in normalized:
+        marker = expected.split()[0]
+        start = normalized.find(marker)
+        context = ""
+        if start >= 0:
+            context = "; nearby rendered text=" + repr(normalized[start : start + 180])
         raise SystemExit(
             "mathematical workflow PDF check: rendered text loses required interword semantics: "
             + expected
+            + context
         )
 PY
 
@@ -4141,7 +4150,7 @@ outline_manifest = "".join(
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "d4ecfca05ebb657bcbe1e0e87726f0cb32a8a1f9389fe841c39c795c1af9ce9e":
+if outline_manifest_digest != "19922bc305c111ca3236a43175abf881ff46ddc4455a2a8f41a2e748efa3bcc2":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
 if len(reader.named_destinations) != 220:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
@@ -4298,13 +4307,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "3bdebe074c266f4786fdc601aa0a0896e17b92e8a4c5afc1987a810d9eb64546":
+if named_destination_route_digest != "71b98814d4b0b8932693731599fec35642a4ae910498bf50ad96fc8fa01b570f":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "327b304629068f09d6eaeac50e4842a22a2272b97bc3ba7f87bc4f2220be28ec":
+    if named_destination_digest != "ef35dfd0ddd7444136f3b1a3328b445b7b42dfe17d4b4ef4e477880cc4353c88":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index

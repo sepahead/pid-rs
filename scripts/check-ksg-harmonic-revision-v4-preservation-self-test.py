@@ -27,7 +27,7 @@ CURRENT_CATALOG_SCHEMA_HELPER_RELATIVE = "scripts/json_schema_subset.py"
 SOURCE_MATERIALIZER_RELATIVE = "scripts/materialize-public-api-source.sh"
 COMPONENT_SHA256 = {
     "scripts/check-method-catalog.py": (
-        "ef2e831c159c16df80e4deb7a472fc6959be3b2226f281f077be78d6448f6c55"
+        "ada2f616f5b29e5907e6fb3242deb875a4af95b6609910d0f3774d1450878918"
     ),
     "scripts/check-method-catalog-self-test.py": (
         "6614f0424747d959a4ec1326f4bcacccd88569543a47e7b2ed06969ca4798aac"
@@ -46,11 +46,11 @@ COMPONENT_SHA256 = {
     ),
 }
 COMPONENT_ROSTER_SHA256 = (
-    "53cc99005dfc725a9b05fe4ec8223b104f8259e8aef89430dcae6337c6a04ff3"
+    "306537be043abf6c8b3d58e312cc402610e5292666e16233e625631ccb679147"
 )
 SUCCESS_LINE = (
     "KSG revision-4 preservation check passed: 6 pinned components; "
-    "5 live-applicable historical scoped routes x normal/-O; 1 superseded live route "
+    "4 live-applicable historical scoped routes x normal/-O; 2 superseded live routes "
     "retained by exact-tree replay; 2 current catalog authorities x "
     "normal/-O; exact status/stdout/stderr parity\n"
 )
@@ -60,7 +60,7 @@ HISTORICAL_REPLAY_SUCCESS_LINE = (
     "status/stdout/stderr parity\n"
 )
 FAILURE_PREFIX = "KSG revision-4 preservation check failed: "
-EXPECTED_MUTATIONS = 35
+EXPECTED_MUTATIONS = 36
 
 
 class SelfTestError(RuntimeError):
@@ -354,8 +354,8 @@ def main() -> int:
             ),
             (
                 "route-roster-duplicate",
-                '    "--claim-only",\n',
-                '    "--claim-only",\n    "--claim-only",\n',
+                '    "--source-only",\n',
+                '    "--source-only",\n    "--source-only",\n',
             ),
             (
                 "route-roster-add-historical-catalog",
@@ -376,8 +376,8 @@ def main() -> int:
         source_mutation(
             source,
             "route-roster-hash",
-            "07318eda33eeb92a2595be740224b321675933e249bdcb3639904ef3c90b7410",
-            "17318eda33eeb92a2595be740224b321675933e249bdcb3639904ef3c90b7410",
+            "42bdb9579a6cb38e82ed6c9b81d76d433adfb274690b264df35a677bd5bde6d3",
+            "52bdb9579a6cb38e82ed6c9b81d76d433adfb274690b264df35a677bd5bde6d3",
             "historical scoped-route roster drifted",
         )
         killed.append("route-roster-hash")
@@ -385,8 +385,8 @@ def main() -> int:
         source_mutation(
             source,
             "superseded-route-roster-hash",
-            "1b5a7e15d0acfc691a3245b30a6ed03d44a90db62ee81f9f3c7f96169c268244",
-            "0b5a7e15d0acfc691a3245b30a6ed03d44a90db62ee81f9f3c7f96169c268244",
+            "4a46e452b51828f161b5d41e44f756b0336a86e82f5da63f59d40d0b902ee137",
+            "5a46e452b51828f161b5d41e44f756b0336a86e82f5da63f59d40d0b902ee137",
             "superseded live-route roster or rationale drifted",
         )
         killed.append("superseded-route-roster-hash")
@@ -399,6 +399,15 @@ def main() -> int:
             "superseded live-route roster or rationale drifted",
         )
         killed.append("superseded-route-rationale")
+
+        source_mutation(
+            source,
+            "superseded-claim-route-rationale",
+            "Superseded on the live descendant because the exact-C12 terminal revision ",
+            "Superseded without the exact-C12 terminal authority because the revision ",
+            "superseded live-route roster or rationale drifted",
+        )
+        killed.append("superseded-claim-route-rationale")
 
         source_mutation(
             source,
@@ -492,12 +501,12 @@ def main() -> int:
 
         source_mutation(
             source,
-            "claim-output-authority",
-            "integration_no_go; 72 mapped files; 36 historical hashes; ",
-            "integration_go; 72 mapped files; 36 historical hashes; ",
+            "source-output-authority",
+            '    "--source-only": b"KSG harmonic-revision source check passed\\n",\n',
+            '    "--source-only": b"KSG harmonic-revision source check promoted\\n",\n',
             "exact stdout drifted",
         )
-        killed.append("claim-output-authority")
+        killed.append("source-output-authority")
 
         source_mutation(
             source,

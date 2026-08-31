@@ -3,6 +3,7 @@
 
 local dropped_title = false
 local last_heading = ""
+local repository_blob_root = "https://github.com/sepahead/pid-rs/blob/main/"
 
 local function figure_block(path, caption, label, width, height)
   local latex = string.format(
@@ -12,6 +13,20 @@ local function figure_block(path, caption, label, width, height)
     height,
     width,
     height,
+    path,
+    caption,
+    label
+  )
+  return pandoc.RawBlock("latex", latex)
+end
+
+local function landscape_figure_block(path, caption, label)
+  local latex = string.format(
+    "\\clearpage\\begin{landscape}\\thispagestyle{fancy}" ..
+      "\\begin{figure}[H]\\centering" ..
+      "\\includegraphics[width=0.97\\linewidth,height=0.82\\textheight,keepaspectratio]{%s}" ..
+      "\\caption{%s}\\label{%s}\\end{figure}" ..
+      "\\end{landscape}\\clearpage",
     path,
     caption,
     label
@@ -53,9 +68,6 @@ function Para(element)
       pandoc.RawBlock("latex", "\\vspace*{\\fill}\\clearpage"),
     }
   end
-  if text:match("^stable is a catalog family status") then
-    return {element, pandoc.RawBlock("latex", "\\vspace*{\\fill}\\clearpage")}
-  end
   if text:match("^Three statuses%.") then
     return {pandoc.RawBlock("latex", "\\Needspace{20\\baselineskip}"), element}
   end
@@ -84,11 +96,42 @@ function Image(element)
   return element
 end
 
+function Figure(element)
+  if not FORMAT:match("latex") then
+    return element
+  end
+  local block = element.content and element.content[1]
+  local image = block and block.content and block.content[1]
+  local common_radius_svg =
+    "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg"
+  local common_radius_pdf =
+    "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf"
+  if image and image.t == "Image"
+      and (image.src == common_radius_svg or image.src == common_radius_pdf) then
+    return landscape_figure_block(
+      "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
+      "Common-radius small-ball cancellation and its first-order-overlap failure boundary. The result is a conditional population lemma, not a finite-sample estimator theorem.",
+      "fig:common-radius-small-ball-bridge"
+    )
+  end
+  return element
+end
+
 function Link(element)
   if FORMAT:match("latex")
       and not element.target:match("^[A-Za-z][A-Za-z0-9+.-]*:")
       and not element.target:match("^#") then
-    element.target = "../../" .. element.target
+    -- A relative URI or GoToR action depends on the PDF viewer and on a preserved checkout
+    -- layout. The Markdown source keeps repository-relative links so forks and branches remain
+    -- navigable. Its committed PDF projection instead uses a live GitHub main URL so the link
+    -- works after the PDF is downloaded or opened through GitHub's viewer. These navigation URLs
+    -- are not provenance identities; exact evidence continues to use immutable digests/commits.
+    if element.target:match("^/")
+        or element.target:match("^%./")
+        or element.target:match("^%.%./") then
+      error("noncanonical repository-relative link in guide source: " .. element.target)
+    end
+    element.target = repository_blob_root .. element.target
   end
   return element
 end
@@ -135,13 +178,10 @@ function Table(element)
   if last_heading == "2. Result map" then
     return {
       element,
-      pandoc.RawBlock("latex", "\\clearpage\\vspace*{\\fill}"),
-      figure_block(
+      landscape_figure_block(
         "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
-        "Evidence and publication status map for the eight result families.",
-        "fig:result-evidence-map",
-        "0.98\\linewidth",
-        "178mm"
+        "Evidence and publication status map for the nine result families.",
+        "fig:result-evidence-map"
       ),
     }
   end

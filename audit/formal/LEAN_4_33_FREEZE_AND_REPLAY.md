@@ -1,4 +1,4 @@
-# Lean 4.33.0 active baseline, replay, and freeze boundary
+# Lean 4.33.0 frozen baseline, replay, and current C12 boundary
 
 The active formal project is pinned exactly to `leanprover/lean4:v4.33.0`, Lean source commit
 `d8b18978322de05a8f3dba51ef03cf5461676c17`, Mathlib tag `v4.33.0`, and Mathlib commit
@@ -29,6 +29,39 @@ zero-credit documents; no total count of every generated receipt is claimed. The
 denote a calendar date, replay schema, theorem, review, assurance tier, or independence revision;
 the current receipt remains schema v2 and receives execution credit only when it exists and
 validates.
+
+## Current exact-C12 operational boundary
+
+The Lean baseline and its accepted `r14` receipt remain frozen, but the surrounding composite
+qualification lifecycle has advanced to a terminal boundary. The current authority is
+[`ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json`](../evidence/ksg-rev4-m1a-composite-v12-terminal-failure-2026-08-23.json),
+SHA-256 `375bf287c73dea35c70d21c74be58e54fe17ae27b4c38ebd9cdf543c8beab47c`,
+for exact C12 commit `01466e88b0550333c2718f1716289e9642e30dc6`. Its bounded lifecycle
+conclusion is `Q12 = false`; `R12 = permanently_unissued`; and
+`L12 = not_adjudicated`. The terminal record does not say that L12 succeeded or failed. Q12 is
+false for either Boolean value of L12 because the exact-C12 attempt-1 repository-CI and
+dedicated-v12 terms failed.
+
+`just ksg-composite-v12` refuses replay. The only repeatable current route is
+`just ksg-composite-v12-preservation`; it checks the immutable terminal record and its hostile
+controls in normal and optimized Python and grants zero new execution, qualification, hosted,
+scientific, or publication credit. The historical `just ksg-composite-v9` and
+`just ksg-composite-v11` entry points also refuse replay. A descendant repair cannot become an
+exact-C12 attempt-1 term, revive Q12, issue R12, or change L12 from `not_adjudicated`. A future
+qualification lifecycle requires a separately specified version and evidence contract.
+
+The accepted `r14` receipt also retains its exact historical `active_claim_authority_sha256`
+inventory. Current static checking does not rewrite that receipt: a separate current overlay adds
+the terminally qualified KSG revision-index pointer and rebinds the clarified SX count-event
+revision index. The checker constrains the added and rebound path sets exactly, while receipt
+validation continues to compare against the preserved historical inventory. Thus current reader
+guidance can advance without transferring new execution or qualification credit into `r14`.
+
+## Historical C4--C9 lifecycle record (not current operational guidance)
+
+The following account preserves the exact reasons earlier candidates received or lost scoped
+credit. Its prospective and imperative wording records the contract that applied at that time; it
+is not a current command sequence. Use the exact-C12 refusal and preservation routes above.
 
 One additional schema-v2 document is retained as a failed-publication attempt rather than as an
 accepted current member of that sequence. Its [bounded execution and receipt-finalization
@@ -72,8 +105,9 @@ C9 publication. The deterministic checker binds the recorded identifiers but doe
 provider archive, main, or workflow-run endpoints or require the sibling commit object. The rejected
 receipt receives zero C9/R9,
 accepted-current-replay, scientific, hosted, qualification, or independence credit; it must not
-enter `prior_replay_*`, be copied, or be relabelled. A corrected fresh direct child of C8 must
-generate a completely fresh one-shot `r14` after every operational byte settles. Reusing the same
+enter `prior_replay_*`, be copied, or be relabelled. At that historical stage, a corrected fresh
+direct child of C8 had to generate a completely fresh one-shot `r14` after every operational byte
+settled. Reusing the same
 relative pathname and sequence slot does not identify the bytes or transfer credit.
 
 A second precommit candidate is likewise rejected with zero credit. Unsigned archive commit
@@ -107,8 +141,9 @@ publication. These correlated, common-mode endpoint checks are not per-command o
 and source custody is not invocation/stdout custody. The observed mutable ref was a recovery
 locator, not authentication or durability. No L9 was issued for the candidate, and the bounded
 provider/history check observed no accepted-on-main C9 publication; there is no permission to reuse
-its `r14`. A fresh current `r14` must exclude all three rejected same-slot final `r14` artifacts from current and
-`prior_replay_*` lineage. During fresh recovery review, the first `justfile` repin exposed a second
+its `r14`. At that stage, any accepted fresh `r14` had to exclude all three rejected same-slot final
+`r14` artifacts from current and `prior_replay_*` lineage. During fresh recovery review, the first
+`justfile` repin exposed a second
 fail-fast baseline edge at `scripts/README.md`: expected
 `daedd86d0307984df8885849528ddfdd2d096a7b9d2799e308358ad4af59b33a`, observed
 `c7fd28e0180bc19ebb09644840266e47f5a93c9b5af7e9062c7f0bbd2012e857`; its exact 273-byte stderr
@@ -161,8 +196,8 @@ production command streams, and its call must not be relabelled as the recorder-
 `just` invocation.
 The mutable ref is a recovery locator, not authentication or durability. No L9, hosted, C9/R9,
 scientific, accepted-current-replay, or independence credit transfers. Do not merge or cherry-pick
-the candidate or reuse its evidence. A fresh current `r14` must exclude all three rejected
-same-slot artifacts from current and `prior_replay_*` lineage.
+the candidate or reuse its evidence. At that stage, any accepted fresh `r14` had to exclude all
+three rejected same-slot artifacts from current and `prior_replay_*` lineage.
 
 The fresh C9
 changed-path set contains 32 paths; the rejected candidate's changed-path set contained 31. The
@@ -272,10 +307,14 @@ path or executable authority:
 /private/tmp/pid-rs-c9-oversize-rebuild.9AW1lT/repo/scripts/generate-lean-4.33-replay.py
 ```
 
-Finalized r6--r13 receipts retain their exact historical observed routes and bytes. Before r14
-exists, the hostile suite uses r13 only as a non-evidentiary shape seed inside a disposable
-fixture: it rehomes the synthetic execution root, command working directories, dependency
-working directories, and the nine root-check output streams to the reviewed C9 route. It also
+### Historical r14/C9 finalization mechanics (not current operational guidance)
+
+This subsection records how the accepted `r14` bytes were constructed. It is not permission to
+rerun the one-shot generator or reopen C9. Finalized r6--r13 receipts retain their exact historical
+observed routes and bytes. Before r14 existed, the hostile suite used r13 only as a
+non-evidentiary shape seed inside a disposable fixture: it rehomes the synthetic execution root,
+command working directories, dependency working directories, and the nine root-check output
+streams to the reviewed C9 route. It also
 refreshes all checker-bound active/current and preservation inventory fields in the disposable
 fixture and recomputes its synthetic projection/custody values. Every one of those changes is
 confined to the non-evidentiary fixture: it never rewrites a retained receipt or assigns fresh
@@ -316,7 +355,8 @@ immutable composite-v4/v5/v6/v7/v8 checkers and r9/r10/r11/r12/r13 receipts rema
 none is rewritten, and the ordinary retained v4/v5/v6/v7/v8 operational rows are outside this
 normalization.
 
-The cut is finalized in one direction. Freeze the v9 self-test and every non-cut Lean input first;
+The historical cut was finalized in one direction. Its construction rule was: freeze the v9
+self-test and every non-cut Lean input first;
 compute `H_L` from the three-placeholder Lean normalization and place only `H_L` in the v9
 checker; hash those final v9 checker bytes as `H_V`; place the same `H_V` in only the Lean v9 scalar
 and v9 operational row; and keep the replay projection as the zero expression until the one-shot

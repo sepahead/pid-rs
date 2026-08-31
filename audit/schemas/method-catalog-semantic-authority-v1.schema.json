@@ -124,6 +124,7 @@
             "caller-supplied-summary-terms",
             "declared-dependence-design",
             "declared-embedding-geometry",
+            "declared-geodesic-geometry-and-common-radius-gauge",
             "declared-hypothesis-family",
             "declared-observation-model",
             "declared-preprocessing-gauge",
@@ -143,6 +144,7 @@
             "continuous-to-finite-categorical",
             "euclidean-continuous",
             "finite-categorical",
+            "hyperbolic-source-riemannian-target-continuous",
             "lorentz-continuous",
             "method-results",
             "mixed-variable",
@@ -184,6 +186,7 @@
             "ksg-sensitivity-diagnostic",
             "logistic-regression",
             "lorentz-ksg-mutual-information",
+            "manifold-shared-exclusions-population-bridge",
             "mgw-categorical-shared-exclusions",
             "moving-block-bootstrap",
             "o-information",
@@ -214,6 +217,7 @@
         },
         "population_support": {
           "enum": [
+            "declared-hyperbolic-source-riemannian-target-research",
             "declared-lorentz-manifold-research",
             "declared-observation-model",
             "empirical-finite-pmf",
