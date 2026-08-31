@@ -1609,7 +1609,27 @@ fn ordered_float_bits(value: f64) -> u64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{pid2_exact_reconstruction_work, Pid2Estimate, Pid2Result};
+    use super::{
+        identity_matches, ordered_float_bits, pid2_atom_conditioning,
+        pid2_exact_reconstruction_work, Pid2ConditioningStatus, Pid2Estimate, Pid2Result,
+    };
+    use crate::error::PidError;
+    use crate::exact_binary64::exact_binary64_sum;
+    use crate::stats::compensated_sum;
+
+    const IDENTITY_ERROR_CONTEXT: &str =
+        "Pid2Result::from_estimate reconstructed coordinates exceed compatibility guard";
+
+    fn scale_family_member(k_scale: u64) -> Pid2Estimate {
+        assert!((1..=1023).contains(&k_scale));
+        let fraction_mask = (1_u64 << 52) - 1;
+        Pid2Estimate::new(
+            0.0,
+            f64::from_bits(((0x7fc - k_scale) << 52) | (fraction_mask - 1)),
+            f64::from_bits(((0x7fe - k_scale) << 52) | fraction_mask),
+            0.0,
+        )
+    }
 
     #[test]
     fn exact_reconstruction_limb_visits_are_fully_charged() {
@@ -1619,14 +1639,447 @@ mod tests {
     }
 
     #[test]
-    fn checked_constructor_rejects_finite_atoms_that_erase_an_mi_identity() {
-        let estimate = Pid2Estimate {
-            mi_s1_t: 1.0,
-            mi_s2_t: 0.0,
-            mi_s1s2_t: 0.0,
-            redundancy_isx: 1.0e300,
-        };
+    fn checked_constructor_rejects_both_finite_identity_erasure_directions() {
+        for (estimate, s1_matches, s2_matches) in [
+            (Pid2Estimate::new(1.0, 0.0, 0.0, 1.0e300), false, true),
+            (Pid2Estimate::new(0.0, 1.0, 0.0, 1.0e300), true, false),
+        ] {
+            let redundancy = estimate.redundancy_isx;
+            let unique_s1 = estimate.mi_s1_t - redundancy;
+            let unique_s2 = estimate.mi_s2_t - redundancy;
+            let synergy = exact_binary64_sum([
+                estimate.mi_s1s2_t,
+                -estimate.mi_s1_t,
+                -estimate.mi_s2_t,
+                redundancy,
+            ]);
 
-        assert!(Pid2Result::from_estimate(estimate).is_err());
+            assert_eq!(
+                identity_matches(estimate.mi_s1_t, [redundancy, unique_s1]),
+                s1_matches
+            );
+            assert_eq!(
+                identity_matches(estimate.mi_s2_t, [redundancy, unique_s2]),
+                s2_matches
+            );
+            assert!(identity_matches(
+                estimate.mi_s1s2_t,
+                [redundancy, unique_s1, unique_s2, synergy]
+            ));
+            assert!(matches!(
+                Pid2Result::from_estimate(estimate),
+                Err(PidError::NumericalInstability {
+                    context: IDENTITY_ERROR_CONTEXT
+                })
+            ));
+        }
+    }
+
+    #[test]
+    fn exact_candidate_rejects_the_historical_direct_compensation_witness() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0x46d2_fa52_b582_f1f7),
+            f64::from_bits(0xc6df_8d03_96df_4fce),
+            f64::from_bits(0x4688_aebf_760d_4051),
+            f64::from_bits(0x46df_89c6_8c94_7ee9),
+        );
+        let redundancy = estimate.redundancy_isx;
+        let unique_s1 = estimate.mi_s1_t - redundancy;
+        let unique_s2 = estimate.mi_s2_t - redundancy;
+        let historical = ((estimate.mi_s1s2_t - estimate.mi_s1_t) - estimate.mi_s2_t) + redundancy;
+        let exact = exact_binary64_sum([
+            estimate.mi_s1s2_t,
+            -estimate.mi_s1_t,
+            -estimate.mi_s2_t,
+            redundancy,
+        ]);
+        let historical_reconstruction =
+            exact_binary64_sum([redundancy, unique_s1, unique_s2, historical]);
+        let exact_reconstruction = exact_binary64_sum([redundancy, unique_s1, unique_s2, exact]);
+
+        assert_eq!(historical.to_bits(), 0x46e6_70f6_b4d0_a362);
+        assert_eq!(exact.to_bits(), 0x46e6_70f6_b4d0_a361);
+        assert_eq!(
+            ordered_float_bits(historical_reconstruction)
+                .abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            15
+        );
+        assert_eq!(
+            ordered_float_bits(exact_reconstruction)
+                .abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            49
+        );
+        assert!(matches!(
+            Pid2Result::from_estimate(estimate),
+            Err(PidError::NumericalInstability {
+                context: IDENTITY_ERROR_CONTEXT
+            })
+        ));
+    }
+
+    #[test]
+    fn candidate_synergy_distinguishes_exact_reduction_from_neumaier_reduction() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0x4395_0f65_78a6_93c8),
+            f64::from_bits(0xc373_5876_98e1_0b0b),
+            f64::from_bits(0x4399_6dc6_03da_8752),
+            f64::from_bits(0xbc46_9a3c_16c4_c8c1),
+        );
+        let terms = [
+            estimate.mi_s1s2_t,
+            -estimate.mi_s1_t,
+            -estimate.mi_s2_t,
+            estimate.redundancy_isx,
+        ];
+        let exact = exact_binary64_sum(terms);
+        let neumaier = compensated_sum(terms);
+        let result = Pid2Result::from_estimate(estimate)
+            .expect("the exact represented-input candidate must be accepted");
+
+        assert_eq!(exact.to_bits(), 0x4382_68fc_62d8_6c99);
+        assert_eq!(neumaier.to_bits(), 0x4382_68fc_62d8_6c9a);
+        assert_eq!(result.synergy.to_bits(), exact.to_bits());
+    }
+
+    #[test]
+    fn exact_guard_accepts_a_witness_rejected_by_left_association() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0x4072_352e_2888_9826),
+            f64::from_bits(0x4044_88b4_ebc8_8f45),
+            f64::from_bits(0x3ff8_4372_5bb2_f39b),
+            f64::from_bits(0x4042_8166_6d28_8d41),
+        );
+        let result = Pid2Result::from_estimate(estimate)
+            .expect("the exact reconstruction lies inside the compatibility guard");
+        let exact = exact_binary64_sum([
+            result.redundancy,
+            result.unique_s1,
+            result.unique_s2,
+            result.synergy,
+        ]);
+        let left_associated =
+            ((result.redundancy + result.unique_s1) + result.unique_s2) + result.synergy;
+
+        assert_eq!(exact.to_bits(), 0x3ff8_4372_5bb2_f3a0);
+        assert_eq!(left_associated.to_bits(), 0x3ff8_4372_5bb2_f300);
+        assert_eq!(
+            ordered_float_bits(exact).abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            5
+        );
+        assert_eq!(
+            ordered_float_bits(left_associated).abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            155
+        );
+    }
+
+    #[test]
+    fn exact_guard_accepts_a_witness_rejected_by_neumaier_overflow() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0x7fd8_0000_0000_0000),
+            f64::from_bits(0x7fd8_0000_0000_0000),
+            f64::from_bits(0x7fe8_0000_0000_0000),
+            f64::from_bits(0xffe0_0000_0000_0000),
+        );
+        let candidate_terms = [
+            estimate.mi_s1s2_t,
+            -estimate.mi_s1_t,
+            -estimate.mi_s2_t,
+            estimate.redundancy_isx,
+        ];
+        let result = Pid2Result::from_estimate(estimate)
+            .expect("the exact candidate and exact guard reconstructions are representable");
+        let atom_terms = [
+            result.redundancy,
+            result.unique_s1,
+            result.unique_s2,
+            result.synergy,
+        ];
+        let exact_candidate = exact_binary64_sum(candidate_terms);
+        let neumaier_candidate = compensated_sum(candidate_terms);
+        let exact_reconstruction = exact_binary64_sum(atom_terms);
+        let neumaier_reconstruction = compensated_sum(atom_terms);
+
+        assert_eq!(
+            [
+                result.redundancy.to_bits(),
+                result.unique_s1.to_bits(),
+                result.unique_s2.to_bits(),
+                result.synergy.to_bits(),
+            ],
+            [
+                0xffe0_0000_0000_0000,
+                0x7fec_0000_0000_0000,
+                0x7fec_0000_0000_0000,
+                0xffe0_0000_0000_0000,
+            ]
+        );
+        assert_eq!(exact_candidate.to_bits(), 0xffe0_0000_0000_0000);
+        assert_eq!(neumaier_candidate.to_bits(), exact_candidate.to_bits());
+        assert_eq!(exact_reconstruction.to_bits(), estimate.mi_s1s2_t.to_bits());
+        assert_eq!(
+            ordered_float_bits(exact_reconstruction)
+                .abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            0
+        );
+        assert!(neumaier_reconstruction.is_nan());
+    }
+
+    #[test]
+    fn ordinary_scale_guard_accepts_exact_distance_32() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0xc0bf_8d66_2b97_a649),
+            f64::from_bits(0x4109_3d1a_13e4_c232),
+            f64::from_bits(0xc073_5eb8_36c1_2cc0),
+            f64::from_bits(0x40cc_e37d_3383_9b57),
+        );
+        let result = Pid2Result::from_estimate(estimate)
+            .expect("the inclusive ordinary-scale distance-32 boundary must be accepted");
+        let reconstructed = exact_binary64_sum([
+            result.redundancy,
+            result.unique_s1,
+            result.unique_s2,
+            result.synergy,
+        ]);
+
+        assert_eq!(result.synergy.to_bits(), 0xc106_7c26_6b6b_2be1);
+        assert_eq!(reconstructed.to_bits(), 0xc073_5eb8_36c1_2ca0);
+        assert_eq!(
+            ordered_float_bits(reconstructed).abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            32
+        );
+    }
+
+    #[test]
+    fn ordinary_scale_guard_rejects_exact_distance_33() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0xbfe4_ec19_92f1_b794),
+            f64::from_bits(0xbfc4_614c_6039_e98b),
+            f64::from_bits(0x3f76_b2af_711e_5a91),
+            f64::from_bits(0xbfe7_2423_a04e_5292),
+        );
+        let redundancy = estimate.redundancy_isx;
+        let unique_s1 = estimate.mi_s1_t - redundancy;
+        let unique_s2 = estimate.mi_s2_t - redundancy;
+        let synergy = exact_binary64_sum([
+            estimate.mi_s1s2_t,
+            -estimate.mi_s1_t,
+            -estimate.mi_s2_t,
+            redundancy,
+        ]);
+        let reconstructed = exact_binary64_sum([redundancy, unique_s1, unique_s2, synergy]);
+
+        assert_eq!(synergy.to_bits(), 0x3fb8_6d73_4ca0_e0cf);
+        assert_eq!(reconstructed.to_bits(), 0x3f76_b2af_711e_5a70);
+        assert_eq!(
+            ordered_float_bits(reconstructed).abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+            33
+        );
+        assert!(matches!(
+            Pid2Result::from_estimate(estimate),
+            Err(PidError::NumericalInstability {
+                context: IDENTITY_ERROR_CONTEXT
+            })
+        ));
+    }
+
+    #[test]
+    fn identity_guard_rejects_false_sixteen_times_joint_scale_bound_witness() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0x7fe4_4dcf_b32f_7b9b),
+            f64::from_bits(0x7fbf_7961_1391_5533),
+            f64::MAX,
+            f64::from_bits(0x7fd1_e3b3_adc8_20e6),
+        );
+        let redundancy = estimate.redundancy_isx;
+        let unique_s1 = estimate.mi_s1_t - redundancy;
+        let unique_s2 = estimate.mi_s2_t - redundancy;
+        let synergy = exact_binary64_sum([
+            estimate.mi_s1s2_t,
+            -estimate.mi_s1_t,
+            -estimate.mi_s2_t,
+            redundancy,
+        ]);
+        let atoms = [redundancy, unique_s1, unique_s2, synergy];
+
+        assert_eq!(unique_s1.to_bits(), 0x7fd6_b7eb_b896_d650);
+        assert_eq!(unique_s2.to_bits(), 0xffc4_0ab6_d1c7_9732);
+        assert_eq!(synergy.to_bits(), 0x7fe0_b4de_0142_6a31);
+        // This stronger binary64 comparison implies the rejected exact-real premise
+        // max(|U1|, |U2|, |Syn|) <= 16|J| without evaluating the overflowing product 16*J.
+        assert!(atoms
+            .into_iter()
+            .all(|atom| atom.is_finite() && atom.abs() <= estimate.mi_s1s2_t));
+        assert!(identity_matches(estimate.mi_s1_t, [redundancy, unique_s1]));
+        assert!(identity_matches(estimate.mi_s2_t, [redundancy, unique_s2]));
+        assert_eq!(exact_binary64_sum(atoms), f64::INFINITY);
+        assert!(matches!(
+            Pid2Result::from_estimate(estimate),
+            Err(PidError::NumericalInstability {
+                context: IDENTITY_ERROR_CONTEXT
+            })
+        ));
+    }
+
+    #[test]
+    fn every_scale_family_member_accepts_then_exact_scaling_reaches_one_rejected_endpoint() {
+        const ENDPOINT_I2_BITS: u64 = 0x7fcf_ffff_ffff_fffe;
+        const ENDPOINT_J_BITS: u64 = 0x7fef_ffff_ffff_ffff;
+        const ENDPOINT_SYNERGY_BITS: u64 = 0x7fe8_0000_0000_0000;
+
+        for k_scale in 1_u64..=1023 {
+            let estimate = scale_family_member(k_scale);
+            let expected_synergy_bits = ((0x7fe - k_scale) << 52) | (1_u64 << 51);
+            let expected_reconstruction_bits = (0x7ff - k_scale) << 52;
+            let result = Pid2Result::from_estimate(estimate)
+                .expect("every declared unscaled family member must pass the guard");
+            let reconstruction = exact_binary64_sum([
+                result.redundancy,
+                result.unique_s1,
+                result.unique_s2,
+                result.synergy,
+            ]);
+
+            assert_eq!(result.synergy.to_bits(), expected_synergy_bits);
+            assert_eq!(reconstruction.to_bits(), expected_reconstruction_bits);
+            assert_eq!(
+                ordered_float_bits(reconstruction).abs_diff(ordered_float_bits(estimate.mi_s1s2_t)),
+                1
+            );
+
+            let factor = f64::from_bits((0x3ff + k_scale) << 52);
+            let scaled = Pid2Estimate::new(
+                estimate.mi_s1_t * factor,
+                estimate.mi_s2_t * factor,
+                estimate.mi_s1s2_t * factor,
+                estimate.redundancy_isx * factor,
+            );
+            assert_eq!(
+                [
+                    scaled.mi_s1_t.to_bits(),
+                    scaled.mi_s2_t.to_bits(),
+                    scaled.mi_s1s2_t.to_bits(),
+                    scaled.redundancy_isx.to_bits(),
+                ],
+                [0, ENDPOINT_I2_BITS, ENDPOINT_J_BITS, 0]
+            );
+
+            let endpoint_synergy = exact_binary64_sum([
+                scaled.mi_s1s2_t,
+                -scaled.mi_s1_t,
+                -scaled.mi_s2_t,
+                scaled.redundancy_isx,
+            ]);
+            assert_eq!(endpoint_synergy.to_bits(), ENDPOINT_SYNERGY_BITS);
+            assert!(endpoint_synergy.is_finite());
+            assert_eq!(
+                exact_binary64_sum([
+                    scaled.redundancy_isx,
+                    scaled.mi_s1_t - scaled.redundancy_isx,
+                    scaled.mi_s2_t - scaled.redundancy_isx,
+                    endpoint_synergy,
+                ]),
+                f64::INFINITY
+            );
+            assert!(matches!(
+                Pid2Result::from_estimate(scaled),
+                Err(PidError::NumericalInstability {
+                    context: IDENTITY_ERROR_CONTEXT
+                })
+            ));
+        }
+    }
+
+    #[test]
+    fn k_scale_four_is_the_named_exact_times_sixteen_case() {
+        let estimate = scale_family_member(4);
+        let factor = f64::from_bits((0x3ff + 4) << 52);
+        let result = Pid2Result::from_estimate(estimate)
+            .expect("the times-sixteen family seed must be accepted");
+
+        assert_eq!(factor.to_bits(), 0x4030_0000_0000_0000);
+        assert_eq!(factor, 16.0);
+        assert_eq!(estimate.mi_s2_t.to_bits(), 0x7f8f_ffff_ffff_fffe);
+        assert_eq!(estimate.mi_s1s2_t.to_bits(), 0x7faf_ffff_ffff_ffff);
+        assert_eq!(result.synergy.to_bits(), 0x7fa8_0000_0000_0000);
+        assert_eq!(
+            exact_binary64_sum([
+                result.redundancy,
+                result.unique_s1,
+                result.unique_s2,
+                result.synergy,
+            ])
+            .to_bits(),
+            0x7fb0_0000_0000_0000
+        );
+    }
+
+    #[test]
+    fn checked_constructor_rejects_exact_candidate_synergy_overflow() {
+        let estimate = Pid2Estimate::new(
+            f64::from_bits(0xfc80_0000_0000_0000),
+            f64::from_bits(0xfc80_0000_0000_0000),
+            f64::MAX,
+            f64::from_bits(0x7c80_0000_0000_0000),
+        );
+
+        assert!(matches!(
+            Pid2Result::from_estimate(estimate),
+            Err(PidError::NumericalInstability {
+                context: "Pid2Result::from_estimate atoms"
+            })
+        ));
+    }
+
+    #[test]
+    fn conditioning_reports_all_terms_zero() {
+        let diagnostic = pid2_atom_conditioning("test", 0.0, &[0.0, -0.0]).unwrap();
+
+        assert_eq!(diagnostic.absolute_constituent_sum_nats.to_bits(), 0);
+        assert_eq!(diagnostic.retained_fraction, None);
+        assert_eq!(diagnostic.amplification_factor, None);
+        assert_eq!(diagnostic.status, Pid2ConditioningStatus::AllTermsZero);
+    }
+
+    #[test]
+    fn conditioning_reports_exact_cancellation() {
+        let diagnostic = pid2_atom_conditioning("test", 0.0, &[1.0, -1.0]).unwrap();
+
+        assert_eq!(diagnostic.absolute_constituent_sum_nats, 2.0);
+        assert_eq!(diagnostic.retained_fraction, Some(0.0));
+        assert_eq!(diagnostic.amplification_factor, None);
+        assert_eq!(diagnostic.status, Pid2ConditioningStatus::ExactCancellation);
+    }
+
+    #[test]
+    fn conditioning_reports_finite_amplification() {
+        let diagnostic = pid2_atom_conditioning("test", 0.5, &[1.0, -0.5]).unwrap();
+
+        assert_eq!(diagnostic.absolute_constituent_sum_nats, 1.5);
+        assert_eq!(diagnostic.retained_fraction, Some(1.0 / 3.0));
+        assert_eq!(diagnostic.amplification_factor, Some(3.0));
+        assert_eq!(diagnostic.status, Pid2ConditioningStatus::Finite);
+    }
+
+    #[test]
+    fn conditioning_reports_amplification_beyond_binary64_range() {
+        let minimum_subnormal = f64::from_bits(1);
+        let diagnostic = pid2_atom_conditioning("test", minimum_subnormal, &[1.0]).unwrap();
+
+        assert_eq!(diagnostic.retained_fraction, Some(minimum_subnormal));
+        assert_eq!(diagnostic.amplification_factor, None);
+        assert_eq!(
+            diagnostic.status,
+            Pid2ConditioningStatus::AmplificationExceedsF64Range
+        );
+    }
+
+    #[test]
+    fn conditioning_rejects_nonfinite_absolute_constituent_sum() {
+        assert!(matches!(
+            pid2_atom_conditioning("test", 1.0, &[f64::MAX, f64::MAX]),
+            Err(PidError::NumericalInstability {
+                context: "PID2 atom conditioning"
+            })
+        ));
     }
 }

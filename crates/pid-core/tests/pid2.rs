@@ -406,14 +406,46 @@ fn pid2_checked_constructor_rejects_negative_32_position_near_zero_boundary() {
 }
 
 #[test]
-fn pid2_checked_constructor_accepts_signed_zero_and_canonicalizes_exact_reductions() {
-    let result = Pid2Result::from_estimate(Pid2Estimate::new(-0.0, 0.0, -0.0, 0.0))
-        .expect("signed-zero inputs are within the ordered-binary64 guard");
+fn pid2_checked_constructor_obeys_all_field_local_signed_zero_rules() {
+    const NEGATIVE_ZERO_BITS: u64 = 1_u64 << 63;
 
-    assert_eq!(result.redundancy.to_bits(), 0.0_f64.to_bits());
-    assert_eq!(result.unique_s1.to_bits(), (-0.0_f64).to_bits());
-    assert_eq!(result.unique_s2.to_bits(), 0.0_f64.to_bits());
-    assert_eq!(result.synergy.to_bits(), 0.0_f64.to_bits());
+    for mi_s1_bits in [0, NEGATIVE_ZERO_BITS] {
+        for mi_s2_bits in [0, NEGATIVE_ZERO_BITS] {
+            for mi_joint_bits in [0, NEGATIVE_ZERO_BITS] {
+                for redundancy_bits in [0, NEGATIVE_ZERO_BITS] {
+                    let result = Pid2Result::from_estimate(Pid2Estimate::new(
+                        f64::from_bits(mi_s1_bits),
+                        f64::from_bits(mi_s2_bits),
+                        f64::from_bits(mi_joint_bits),
+                        f64::from_bits(redundancy_bits),
+                    ))
+                    .expect("all 16 signed-zero input tuples must pass the inclusive guard");
+                    let expected_unique_s1 =
+                        if mi_s1_bits == NEGATIVE_ZERO_BITS && redundancy_bits == 0 {
+                            NEGATIVE_ZERO_BITS
+                        } else {
+                            0
+                        };
+                    let expected_unique_s2 =
+                        if mi_s2_bits == NEGATIVE_ZERO_BITS && redundancy_bits == 0 {
+                            NEGATIVE_ZERO_BITS
+                        } else {
+                            0
+                        };
+
+                    assert_eq!(
+                        [
+                            result.redundancy.to_bits(),
+                            result.unique_s1.to_bits(),
+                            result.unique_s2.to_bits(),
+                            result.synergy.to_bits(),
+                        ],
+                        [redundancy_bits, expected_unique_s1, expected_unique_s2, 0,]
+                    );
+                }
+            }
+        }
+    }
 }
 
 #[test]

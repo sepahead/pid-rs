@@ -3391,17 +3391,25 @@ fn optional_synergy_outcome(
     mi_s2_t: f64,
     mi_s1s2_t: f64,
     redundancy: ScientificOutcome<f64>,
-) -> ScientificOutcome<f64> {
+) -> pid_core::PidResult<ScientificOutcome<f64>> {
     match redundancy {
-        ScientificOutcome::Produced(redundancy) => {
-            Pid2Result::from_estimate(Pid2Estimate::new(mi_s1_t, mi_s2_t, mi_s1s2_t, redundancy))
-                .map(|pid| ScientificOutcome::Produced(pid.synergy))
-                .unwrap_or(ScientificOutcome::Abstained {
-                    reason: AbstentionReason::NumericalInstability,
-                })
-        }
-        ScientificOutcome::Abstained { reason } => ScientificOutcome::Abstained { reason },
-        ScientificOutcome::NotRequested => ScientificOutcome::NotRequested,
+        ScientificOutcome::Produced(redundancy) => classify_pid2_synergy_result(
+            Pid2Result::from_estimate(Pid2Estimate::new(mi_s1_t, mi_s2_t, mi_s1s2_t, redundancy)),
+        ),
+        ScientificOutcome::Abstained { reason } => Ok(ScientificOutcome::Abstained { reason }),
+        ScientificOutcome::NotRequested => Ok(ScientificOutcome::NotRequested),
+    }
+}
+
+fn classify_pid2_synergy_result(
+    result: pid_core::PidResult<Pid2Result>,
+) -> pid_core::PidResult<ScientificOutcome<f64>> {
+    match result {
+        Ok(pid) => Ok(ScientificOutcome::Produced(pid.synergy)),
+        Err(PidError::NumericalInstability { .. }) => Ok(ScientificOutcome::Abstained {
+            reason: AbstentionReason::NumericalInstability,
+        }),
+        Err(error) => Err(error),
     }
 }
 
@@ -3463,7 +3471,7 @@ fn compute_metrics(
         mi_s1s2_t,
         &[mi_s2_t, mi_s1_t],
     ))?;
-    let syn_ehrlich = optional_synergy_outcome(mi_s1_t, mi_s2_t, mi_s1s2_t, red_ehrlich);
+    let syn_ehrlich = optional_synergy_outcome(mi_s1_t, mi_s2_t, mi_s1s2_t, red_ehrlich)?;
     for (context, value) in [
         ("exp0 I(S1;T)", mi_s1_t),
         ("exp0 I(S2;T)", mi_s2_t),
@@ -4711,7 +4719,7 @@ mod tests {
                 reason: AbstentionReason::NumericalInstability,
             }
         );
-        assert_eq!(optional_synergy_outcome(0.2, 0.1, 0.8, atom), atom);
+        assert_eq!(optional_synergy_outcome(0.2, 0.1, 0.8, atom).unwrap(), atom);
 
         let mut metrics = metrics_with_invariants(0.8, Some(1.0), Some(1.0));
         metrics.red_ehrlich = atom;
@@ -4748,6 +4756,53 @@ mod tests {
         assert_eq!(fields[index("red_ehrlich_status")], "abstained");
         assert_eq!(fields[index("red_ehrlich_reason")], "numerical_instability");
         assert_eq!(fields[index("syn_ehrlich_status")], "abstained");
+    }
+
+    #[test]
+    fn optional_synergy_uses_checked_exact_pid2_arithmetic() {
+        let small = f64::from_bits(0x3c90_0000_0000_0000);
+        for (mi_s1_t, mi_s2_t) in [(1.0, small), (small, 1.0)] {
+            assert_eq!(
+                optional_synergy_outcome(
+                    mi_s1_t,
+                    mi_s2_t,
+                    1.0,
+                    ScientificOutcome::Produced(small),
+                )
+                .unwrap(),
+                ScientificOutcome::Produced(0.0)
+            );
+        }
+
+        let rejected = optional_synergy_outcome(
+            f64::from_bits(0x46d2_fa52_b582_f1f7),
+            f64::from_bits(0xc6df_8d03_96df_4fce),
+            f64::from_bits(0x4688_aebf_760d_4051),
+            ScientificOutcome::Produced(f64::from_bits(0x46df_89c6_8c94_7ee9)),
+        )
+        .unwrap();
+        assert_eq!(
+            rejected,
+            ScientificOutcome::Abstained {
+                reason: AbstentionReason::NumericalInstability,
+            }
+        );
+    }
+
+    #[test]
+    fn pid2_synergy_classification_propagates_unexpected_errors() {
+        let result = classify_pid2_synergy_result(Err(PidError::InvalidConfig {
+            context: "synthetic unexpected PID2 error",
+            message: "must propagate",
+        }));
+
+        assert!(matches!(
+            result,
+            Err(PidError::InvalidConfig {
+                context: "synthetic unexpected PID2 error",
+                message: "must propagate",
+            })
+        ));
     }
 
     #[test]
