@@ -663,13 +663,13 @@ PRESERVED_R14_OPERATIONAL_WIRING_HASHES = {
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
-    ".github/workflows/ci.yml": "92b305b749cb0f201b8deb8840ab0298b770a70c26c26c696daaaa655692d062",
+    ".github/workflows/ci.yml": "1f929504d29b46e0141286fac164496d3a5d004c4eb2e682232bedfe29b91f96",
     ".github/workflows/ksg-m1a-composite-v9.yml": "77c39e60cb965ee97abdc8e755b6e9c8f3c65c4db8e9568f0bc9e692d10195da",
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "d303fa2e6f492dba15da12e86d5d007d766777cf533d2bf177365b6aeb97ac25",
-    "CHANGELOG.md": "84db7173f73039a603a9bd9e0ed5a4ad9ba94d5feb790f7a7b1cabd9db58251b",
+    "CHANGELOG.md": "6bcb3d649f3d6b9dada3eddc6ff1655b563bb75850d8731de969f5836496814b",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567"
     ),
@@ -701,7 +701,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "ebe61f04934246475c388296a823c7f97cafe662debf11a6ae7be42035154fe2"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "5499b871c4210b43ec8146492eafe5d38c169ca0515351f539e73b8bffac4412"
+        "29a1d327380da6fb0af2181e0094e11c12fa4f86ad72ed03428087a5c6e00368"
     ),
     "scripts/check-formal-pdf-set.sh": (
         "ae8d8ccbb873fe79dd9ebe2c849da93ac92404702e032632a428045068a287f2"

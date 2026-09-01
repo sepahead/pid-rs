@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Give the ordered formal-PDF cross-toolchain CI aggregate a 90-minute finite envelope. A hosted
+  run reached the prior 60-minute job limit after successive checks had passed but before the
+  sensor, SxPID3, and count-bridge tail completed. The new limit supplies measured slow-run
+  headroom without skipping, splitting, or weakening any document, proof, or scientific gate.
+
 - Make the publication-link gitlink hostile fixture self-contained under an empty Git
   configuration by binding a synthetic identity only to its synthetic commit. This preserves the
   checker’s configuration isolation and clean-runner portability without changing any PDF,
