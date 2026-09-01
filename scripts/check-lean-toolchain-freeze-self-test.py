@@ -1358,6 +1358,16 @@ def mutate_certified_self_test_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(root, "scripts/check-certified-sxpid2-claim-self-test.py")
 
 
+def mutate_cargo_deny_toolchain_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(root, "scripts/check-cargo-deny-toolchain.sh")
+
+
+def mutate_cargo_deny_toolchain_self_test_wiring(
+    _checker: ModuleType, root: Path
+) -> None:
+    mutate_operational_wiring(root, "scripts/check-cargo-deny-toolchain-self-test.sh")
+
+
 def mutate_post_v2_checker_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(root, "scripts/check-post-commit-source-state-v2.py")
 
@@ -1385,6 +1395,13 @@ def mutate_workflow_pdf_gate_wiring(_checker: ModuleType, root: Path) -> None:
 def mutate_workflow_pdf_self_test_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(
         root, "scripts/check-mathematical-workflow-pdf-self-test.sh"
+    )
+
+
+def mutate_workflow_visual_receipt_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(
+        root,
+        "audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md",
     )
 
 
@@ -3402,6 +3419,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         "operational wiring digest mismatch: scripts/check-certified-sxpid2-claim-self-test.py",
     ),
     (
+        "cargo-deny-toolchain-operational-wiring-drift",
+        mutate_cargo_deny_toolchain_wiring,
+        "operational wiring digest mismatch: scripts/check-cargo-deny-toolchain.sh",
+    ),
+    (
+        "cargo-deny-toolchain-self-test-operational-wiring-drift",
+        mutate_cargo_deny_toolchain_self_test_wiring,
+        "operational wiring digest mismatch: scripts/check-cargo-deny-toolchain-self-test.sh",
+    ),
+    (
         "post-v2-checker-operational-wiring-drift",
         mutate_post_v2_checker_wiring,
         "operational wiring digest mismatch: scripts/check-post-commit-source-state-v2.py",
@@ -3430,6 +3457,11 @@ MUTATIONS: tuple[Mutation, ...] = (
         "workflow-pdf-self-test-operational-wiring-drift",
         mutate_workflow_pdf_self_test_wiring,
         "operational wiring digest mismatch: scripts/check-mathematical-workflow-pdf-self-test.sh",
+    ),
+    (
+        "workflow-visual-receipt-operational-wiring-drift",
+        mutate_workflow_visual_receipt_wiring,
+        "operational wiring digest mismatch: audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md",
     ),
     (
         "formal-pdf-set-operational-wiring-drift",

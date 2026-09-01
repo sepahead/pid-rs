@@ -123,9 +123,10 @@ its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf)
 PrimeGaps proof-engineering review, semantic nontransfer firewall, exact categorical SxPID3
 proposal, autoresearch protocol, formal-tool limits, and durable branch/worktree promotion process.
 Its [machine-readable transfer ledger](audit/evidence/primegaps-to-pid-transfer-ledger-v1.json)
-binds the dated historical 20-lens review and exact anchors. A separately identified 31 August 2026
-closure applies 50 current adversarial lenses and compares ten materially distinct routes without
-rewriting that ledger. The SxPID3 Programs A--E remain open; these artifacts are a research design
+binds the dated historical 20-lens review and exact anchors. A separately identified 1 September
+2026 closure applies 20 mandatory core lenses plus 50 additional artifact-specific lenses and
+compares ten materially distinct routes without rewriting that ledger. The SxPID3 Programs A--E
+remain open; these artifacts are a research design
 and audit record, not an accepted higher-source certificate or evidence for KSG, continuous PID,
 population inference, or scientific novelty.
 

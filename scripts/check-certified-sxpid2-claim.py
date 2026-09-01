@@ -46,19 +46,25 @@ VERIFICATION_SCHEMA = "pid-rs/certified-sxpid-independent-verification/v3"
 RESOURCE_POLICY = "sxpid2-certification-default-v2"
 LOADED_EXECUTION_DOMAIN = "pid-certified-sxpid-independent-loaded-execution-v3"
 EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256 = (
-    "67dab1b2177419e545a60ec7af21ac0f2c1d45b7cc466006218a5ab8c94e8e62"
+    "57d9da0e34d99723719040fb8e39490841c48db123074785afe71cb8eab0d028"
 )
 EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256 = (
-    "4bbc138fd8b7bd07281e593ab0380ca68cceabfd7e33be8dac2591bec37bc0f3"
+    "f4fdee50f24816782433c0054e81d781301a4c1db12b7790f317ba1fe0657da9"
 )
 EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
-    "29158e22e72fb8c2c1ae807f873ab53002c7f95ccefc16189607df2bb17443bf"
+    "55aadc86cc9bc1bfca51f5c10750abebfdd98aed3e5ea8785e9f40eb0d83e9b5"
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "1f929504d29b46e0141286fac164496d3a5d004c4eb2e682232bedfe29b91f96"
+        "049ed96393454c64905789c1b2b2613878d9084829cde802cb78d93dd338c896"
     ),
-    "justfile": ("658d6385e81e7177e82a984c199f65c928e9addc79bc20b8c837e3ee5eedd3e1"),
+    "justfile": ("e14e9ba9bdcbe79c16c8047f9d0b978943bde72fd4fe67303c5c0857461abdcc"),
+    "scripts/check-cargo-deny-toolchain-self-test.sh": (
+        "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
+    ),
+    "scripts/check-cargo-deny-toolchain.sh": (
+        "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
+    ),
 }
 EXPECTED_REVISION3_AUTHORITY_SHA256 = {
     "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md": (
@@ -165,7 +171,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "272f3bac381f34d064846fe9502cf633337e8144dbb4d76f2499b0cef89f847e"
+        "644d7ef7420cbfb5eafaf7416b791ede20643abdb24d279e1f4d9df5124f9fff"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
@@ -314,6 +320,8 @@ TEXT_PATHS = (
     ".github/workflows/ci.yml",
     "scripts/README.md",
     "scripts/check-certified-sxpid2-assurance-pdf.sh",
+    "scripts/check-cargo-deny-toolchain-self-test.sh",
+    "scripts/check-cargo-deny-toolchain.sh",
     "scripts/check-exact-log-product-sxpid2-pdf.sh",
     "scripts/check-formal-pdf-set.sh",
 )

@@ -51,6 +51,8 @@ bench:
 # --all-features so the `parallel` (rayon) dependency subtree is scanned, matching CI;
 # top-level cargo-deny flags go BEFORE the `check` subcommand.
 deny:
+    scripts/check-cargo-deny-toolchain.sh
+    scripts/check-cargo-deny-toolchain-self-test.sh
     cargo deny --all-features --locked check
 
 # The worked examples
@@ -80,6 +82,27 @@ advisory-archive:
     python3 -I -S -B scripts/check-advisory-councils-archive-self-test.py > "$task_tmp/self-test.json"
     python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py > "$task_tmp/self-test.optimized.json"
     cmp --silent "$task_tmp/self-test.json" "$task_tmp/self-test.optimized.json"
+
+# Validate the two bounded, non-authorizing repository-retirement snapshots and prove that normal
+# and optimized Python produce identical reports. These gates audit retained evidence; they grant
+# no cleanup, promotion, remote-mutation, or deletion authority.
+durability-ledgers:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    task_tmp="$(mktemp -d)"
+    trap 'rm -rf -- "$task_tmp"' EXIT
+    python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py > "$task_tmp/primary.json"
+    python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py > "$task_tmp/primary.optimized.json"
+    cmp --silent "$task_tmp/primary.json" "$task_tmp/primary.optimized.json"
+    python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py > "$task_tmp/primary-self.json"
+    python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py > "$task_tmp/primary-self.optimized.json"
+    cmp --silent "$task_tmp/primary-self.json" "$task_tmp/primary-self.optimized.json"
+    python3 -I -S -B scripts/check-sibling-registry-retirement-ledger.py > "$task_tmp/sibling.json"
+    python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger.py > "$task_tmp/sibling.optimized.json"
+    cmp --silent "$task_tmp/sibling.json" "$task_tmp/sibling.optimized.json"
+    python3 -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py > "$task_tmp/sibling-self.json"
+    python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py > "$task_tmp/sibling-self.optimized.json"
+    cmp --silent "$task_tmp/sibling-self.json" "$task_tmp/sibling-self.optimized.json"
 
 # Inert rejected-route packets and one bounded floating-point counterexample. These gates preserve
 # negative evidence and its non-adoption boundary; they grant no theorem, estimator, or release credit.
@@ -627,6 +650,8 @@ ksg-composite-v12-preservation:
 
 # Standalone exact-count, directed-rounding SxPID2 certifier (Rug/MPFR; source-only).
 certified-sxpid:
+    scripts/check-cargo-deny-toolchain.sh
+    scripts/check-cargo-deny-toolchain-self-test.sh
     cargo fetch --locked --manifest-path audit/tools/certified-sxpid/Cargo.toml
     # Fail dependency-policy/tool-CLI incompatibilities before any evidence-producing command.
     cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml --config audit/tools/certified-sxpid/deny.toml check
@@ -751,10 +776,10 @@ fuzz-smoke:
     done
 
 # Release-candidate checks that are useful locally (CI also runs cross-platform/Python/coverage).
-release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check advisory-archive negative-evidence formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
+release-audit: lint test test-stable test-parallel test-all-features test-release doc msrv deny smoke version-check advisory-archive durability-ledgers negative-evidence formal-pid2 ksg-revision formal-ksg-harmonic ksg-witnesses ksg-parity formal-finite-convergence lean-toolchain-freeze ksg-composite-v12-preservation certified-sxpid citation-edge-countermodel formal-pdfs
     cargo publish --locked -p pid-runlog --dry-run
     scripts/verify-package-archives.sh
 
 # Core local gates. CI additionally runs OS/Python matrices, coverage, fuzz, SBOM, semver/package,
 # a full-history secret scan, and the pinned MSRV matrix.
-ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check advisory-archive negative-evidence lean-toolchain-freeze
+ci: lint test test-stable test-parallel test-all-features doc deny smoke version-check advisory-archive durability-ledgers negative-evidence lean-toolchain-freeze

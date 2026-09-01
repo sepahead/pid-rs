@@ -9,13 +9,14 @@
 \RequirePackage{caption}
 \RequirePackage{needspace}
 
-% Exact project-local adaptation of the reviewed report-neutral visual reference.
+% Repository-local adaptation of the reviewed report-neutral visual reference.
 \definecolor{PidCvLapis}{HTML}{1F3F60}
 \definecolor{PidCvInk}{HTML}{2C3E50}
 \definecolor{PidCvTurquoise}{HTML}{1F6968}
 \definecolor{PidCvMineral}{HTML}{D2E0E2}
 \definecolor{PidCvIvory}{HTML}{F7F3E9}
-\definecolor{PidCvBronze}{HTML}{B28218}
+\definecolor{PidCvBronze}{HTML}{916400}
+\definecolor{PidCvSaffron}{HTML}{B28218}
 \definecolor{PidCvMuted}{HTML}{596A73}
 
 \colorlet{PidPrimary}{PidCvLapis}
@@ -72,16 +73,39 @@
     \pgfusepath{stroke}%
   }
 
+% Compact title-band rosette. The five clipped fields below vary only decorative opacity; the
+% visible title remains real text and the motif carries no status or quantitative meaning.
+\pgfdeclarepatternformonly{pidworkflowtitlerosette}
+  {\pgfpoint{0pt}{0pt}}
+  {\pgfpoint{12pt}{12pt}}
+  {\pgfpoint{12pt}{12pt}}
+  {%
+    \pgfsetlinewidth{0.28pt}%
+    \pgfsetroundcap%
+    \pgfsetroundjoin%
+    \pgfpathmoveto{\pgfpoint{6pt}{0.7pt}}%
+    \pgfpathlineto{\pgfpoint{7.5pt}{4.5pt}}%
+    \pgfpathlineto{\pgfpoint{11.3pt}{6pt}}%
+    \pgfpathlineto{\pgfpoint{7.5pt}{7.5pt}}%
+    \pgfpathlineto{\pgfpoint{6pt}{11.3pt}}%
+    \pgfpathlineto{\pgfpoint{4.5pt}{7.5pt}}%
+    \pgfpathlineto{\pgfpoint{0.7pt}{6pt}}%
+    \pgfpathlineto{\pgfpoint{4.5pt}{4.5pt}}%
+    \pgfpathclose%
+    \pgfpathcircle{\pgfpoint{6pt}{6pt}}{0.42pt}%
+    \pgfusepath{stroke}%
+  }
+
 \newcommand{\PidWorkflowRosette}{%
   \begin{scope}[opacity=0.17]
     \foreach \angle in {0,45,...,315}{%
-      \draw[PidCvBronze,line width=0.28pt]
+      \draw[PidCvSaffron,line width=0.28pt]
         (0,0) -- (\angle:7.2mm);
       \draw[PidCvTurquoise,line width=0.24pt]
         (\angle:2.4mm) -- ({\angle+22.5}:5.2mm);
     }
     \draw[PidCvLapis,line width=0.28pt] (0,0) circle (4.8mm);
-    \draw[PidCvBronze,line width=0.24pt,rotate=22.5] (0,0) rectangle (6.5mm,6.5mm);
+    \draw[PidCvSaffron,line width=0.24pt,rotate=22.5] (0,0) rectangle (6.5mm,6.5mm);
   \end{scope}%
 }
 
@@ -113,6 +137,38 @@
 \AddToShipoutPictureBG{\PidWorkflowPageGround}
 
 \makeatletter
+\renewcommand{\PidMakeTitle}{%
+  \begingroup
+  \thispagestyle{pidfirst}%
+  \noindent\begin{tikzpicture}[baseline=(current bounding box.south)]
+    \path[use as bounding box] (0,0) rectangle (\linewidth,7mm);
+    \shade[left color=PidCvLapis,right color=PidCvLapis!88!PidCvTurquoise]
+      (0,0) rectangle (\linewidth,7mm);
+    \path[pattern=pidworkflowtitlerosette,pattern color=white,opacity=0.045]
+      (0,0) rectangle (0.2\linewidth,7mm);
+    \path[pattern=pidworkflowtitlerosette,pattern color=white,opacity=0.080]
+      (0.2\linewidth,0) rectangle (0.4\linewidth,7mm);
+    \path[pattern=pidworkflowtitlerosette,pattern color=white,opacity=0.130]
+      (0.4\linewidth,0) rectangle (0.6\linewidth,7mm);
+    \path[pattern=pidworkflowtitlerosette,pattern color=white,opacity=0.080]
+      (0.6\linewidth,0) rectangle (0.8\linewidth,7mm);
+    \path[pattern=pidworkflowtitlerosette,pattern color=white,opacity=0.045]
+      (0.8\linewidth,0) rectangle (\linewidth,7mm);
+    \draw[PidCvSaffron,opacity=0.72,line width=0.65pt] (0,0) -- (\linewidth,0);
+    \node[anchor=west,inner sep=0,text=white,font=\sffamily\small\bfseries]
+      at (2.4mm,3.5mm) {PID-RS TECHNICAL REPORT SERIES};
+  \end{tikzpicture}%
+  \par\vspace{1.15em}%
+  {\raggedright\@title\par}%
+  \vspace{0.9em}%
+  {\raggedright\small\color{PidMuted}\@author\hfill\@date\par}%
+  \vspace{0.58em}%
+  \noindent{\color{PidAccent}\rule{5.2em}{1.35pt}}%
+  {\color{PidRule}\rule{\dimexpr\linewidth-5.2em\relax}{0.45pt}}%
+  \par\vspace{0.75em}%
+  \endgroup
+}
+
 \renewcommand{\PidReportTitle}[2]{%
   {\sffamily\bfseries\fontsize{25}{29}\selectfont\color{PidCvLapis}#1\par}%
   \vspace{0.45em}%
@@ -121,7 +177,7 @@
 
 \newcommand{\PidWorkflowSectionRail}{%
   \par\noindent
-  \textcolor{PidCvBronze}{\rule{3.8em}{1.15pt}}%
+  \textcolor{PidCvSaffron}{\rule{3.8em}{1.15pt}}%
   \textcolor{PidCvMineral}{\rule{\dimexpr\linewidth-3.8em\relax}{0.45pt}}%
 }
 

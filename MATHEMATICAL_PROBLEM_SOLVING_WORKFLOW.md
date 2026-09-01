@@ -18,6 +18,14 @@ or formal implementation; trust surface; numerical representation; hostile contr
 and selection; reproducibility and independence dimensions; and scope, nonimplications, and transfer
 boundaries. A council supplies adversarial hypotheses, not votes that substitute for this review.
 
+The 20 rows used in the older source-review tables are the stable scientific-object baseline, not
+the current ceiling. For a consequential repository, method, or publication decision, apply those
+20 rows and at least 30 explicitly named, object-specific sub-lenses: 50 lenses in total. The extra
+lenses must expose genuinely separate questions such as estimator validity, binary64 behavior,
+consumer authority, custody, or a plausible non-PID alternative; splitting one question into
+cosmetic variants earns no coverage credit. Dated 20-lens tables remain historical records and are
+not retroactively relabelled as 50-lens reviews.
+
 This note is project-defined process guidance. It has no software implementation or defining
 method paper. It adds no PID method, estimator, theorem, benchmark result, or validation.
 
@@ -1216,12 +1224,13 @@ validated-status statement, release gate, or downstream readiness decision. A
 safety monitoring, mission or authorization policy, or a silent false numerical result. Treat an
 uncertain classification as the higher class until the claim packet justifies a downgrade.
 
-Major claims require recorded role overlap, a claim packet, a counterexample route, the 20-lens
-adversarial audit below, and an explicit independence vector for every route pair. Do not compress
-functional/mechanism, epistemic/dependency, and institutional/custody independence into the word
-“independent.” High-consequence claims additionally require a dependency-disjoint epistemic route
-at every load-bearing shared bridge, specialist human review, and an explicit consumer no-go
-condition while any applicable gate is open.
+Major claims require recorded role overlap, a claim packet, a counterexample route, the 20-row
+scientific baseline below, at least 30 explicitly named object-specific sub-lenses, and an explicit
+independence vector for every route pair. Do not compress functional/mechanism,
+epistemic/dependency, and institutional/custody independence into the word “independent.”
+High-consequence claims additionally require a dependency-disjoint epistemic route at every
+load-bearing shared bridge, specialist human review, and an explicit consumer no-go condition
+while any applicable gate is open.
 
 ### Candidate/judge isolation and research-integrity controls
 
@@ -1330,23 +1339,191 @@ The research loop is therefore:
    reviewable milestones; and
 7. reopen the science only under a new revision with an explicit reason.
 
+### Why branches and worktrees exist, and why they create a closure obligation
+
+Git supports multiple linked worktrees so that more than one branch or detached commit can be
+checked out at the same time. Git presents this as a way to perform experimental or urgent work
+without disturbing an existing checkout ([Git worktree documentation](https://git-scm.com/docs/git-worktree)).
+In this project, that isolation has five legitimate uses:
+
+| Reason for a separate lane | What the lane protects | What the lane does not prove |
+|---|---|---|
+| Explore a theorem, estimator, counterexample, or document without changing stable code. | `main` remains reviewable while the result is uncertain. | The experiment is correct, useful, or ready to merge. |
+| Freeze one claim revision and its exact inputs while other work continues. | A proof, checker, and evidence packet can refer to one stable source tree. | The formal statement matches the paper or the intended PID object. |
+| Give parallel actors separate write scopes. | Two tasks do not overwrite the same working files by accident. | The actors are scientifically independent. They can still share prompts, models, sources, code, and mistakes. |
+| Reproduce a result from a clean checkout. | Hidden tracked edits and many ambient-state errors become visible. | The run is hermetic, portable, statistically valid, or independent of caches and external tools. |
+| Preserve a rejected or restricted route outside the accepted surface. | Negative evidence can remain recoverable without entering executable APIs. | A side branch is accepted, public, permanent, or reachable from remote `main`. |
+
+A branch is a mutable reference to a commit. Each linked worktree has its own checkout, index, and
+`HEAD`. Linked worktrees share the common object database and most refs; pseudorefs and some
+per-worktree refs remain separate. A separate build root and bounded write
+scope exist only when project convention or configuration supplies them. Worktrees are therefore
+isolation tools, not independent repositories and not durable storage by themselves. A clean
+committed tree does not include uncommitted tracked edits, untracked or ignored files, the index,
+stashes, hooks, or repository configuration. Git's bundle documentation states the same boundary:
+a bundle transfers selected refs and reachable objects, but not this other local state
+([Git bundle documentation](https://git-scm.com/docs/git-bundle)).
+
+#### Failure-to-repair map
+
+| Failure mode | Detection | Required correction |
+|---|---|---|
+| **Split truth:** useful work is distributed across several branches, worktrees, or dirty paths. | Inventory every common Git directory, worktree, ref, stash, alternate index, dirty path, untracked path, relevant ignored path, and active writer. Compare paths and blobs, not only branch tips. | Classify each useful fragment. Integrate the current form into one coherent claim packet, or retain it as labelled negative/recovery evidence. Never merge the whole stale branch merely because one file is useful. |
+| **Revision drift:** a checker names one theorem or artifact revision while the checked files belong to another. | Bind the checker source, artifact paths, theorem roster, toolchain, and digests. Mutate each revision pin and require failure. | Commit the mutually consistent checker and artifacts together. Re-run baseline and hostile self-tests. Do not weaken the pin or treat a passing theorem from another revision as equivalent evidence. |
+| **Uncommitted-state loss:** a bundle or branch omits dirty, untracked, or ignored research bytes. | Compare the worktree and index with `HEAD`; enumerate untracked and relevant ignored paths; verify every manifest entry by mode, size, and digest. | Commit permitted bytes to an explicit archive or successor ref, or place protected bytes in an approved restricted store. A digest without a retrievable preimage is not recovery. |
+| **Stale integration:** a bulk merge or directory copy restores an older formula, test, explanation, or generated artifact over a corrected version. | Compare each candidate path with the current mainline object and its semantic role. Re-run source-state, method-catalog, math, and document checks after reconciliation. | Port only the accepted path or coherent packet. Regenerate self-referential manifests and derived PDFs last. Preserve the older route only when it has historical or negative-result value. |
+| **Concurrent writers:** two actors edit a shared source or generated output. | Record an owner for each mutable path and inspect live processes before freezing. Treat unexpected changes as a new source revision. | Stop writers, discard no bytes, reconcile both variants, and restart review from the new frozen tree. A council does not grant shared write authority. |
+| **Cache or toolchain inheritance:** a clean worktree succeeds only because it sees an undeclared cache, binary, import, or object store. | Pin the interpreter, compiler, proof assistant, solver, dependencies, and relevant environment. Rebuild in a fresh route and use hostile absence/drift controls. | Declare the dependency or remove it. Repeat the exact gate in a clean local checkout and hosted CI. Never call a warm-cache run an independent reconstruction. |
+| **Local/remote divergence:** a result is committed locally or pushed to a side branch but not accepted on remote `main`. | Query the remote ref directly. Record the observed old and candidate object IDs and prove the update is a fast-forward. | Push the exact candidate with an explicit expected-old lease, then query the remote again. The explicit lease fails if another writer advanced the ref ([Git push documentation](https://git-scm.com/docs/git-push)). |
+| **Premature cleanup:** a worktree is deleted because it appears old, clean, or mostly superseded. | Require a process-ownership check, dirty/untracked/ignored disposition, path-level semantic comparison, verified bundle or successor, remote reachability, and a post-removal object inventory. | Retain on ambiguity. Remove a linked worktree with Git's worktree-removal command; remove its branch only after all retirement predicates pass. Delete reproducible caches last. |
+| **Formal-scope inflation:** a checked algebraic theorem is described as probability, estimator, or application assurance. | Read the exact theorem statement, imports, axiom roster, source map, and nonclaims. Ask which random variables, laws, quantifiers, limits, and executable representations actually occur in the formal object. | Narrow the wording. Open separate obligations for paper correspondence, probability, estimator calibration, executable refinement, numerical stability, and consumer qualification. |
+
+The revision-pin failure has a bounded repository instance. Archived primary-worktree commit
+`86faa9a0850ca416f54a467230106b01d4162687` preserves two untracked
+`KSG-INTEGER-HARMONIC-001` checkers that select a missing Lean `v3` path and the absent
+`ksg-local-bound-v3.smt2`, while the same snapshot contains the revision-4 Lean source and
+`ksg-local-bound-v4.smt2`. The exact hashes and custody boundary are recorded in
+`audit/evidence/worktree-and-branch-preservation-2026-08-27.md`. That mixed packet must fail. Pin
+drift alone does not show that the theorem is false or true; it shows that the named replay cannot
+establish the claim from that checkout. First adjudicate which revision is intended. The valid
+routes are to restore one complete revision-3 packet, migrate the complete packet to revision 4, or
+retire the lane as obsolete while preserving its evidence. The accepted source tree uses the
+coherent revision-4 route: `scripts/check-lean-ksg-integer-harmonic.py` selects
+`audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean`, and
+`scripts/check-z3-ksg-integer-harmonic.py` selects `ksg-local-bound-v4.smt2`. Checker pins,
+artifacts, theorem roster, and hostile controls move together and are replayed in ordinary and
+optimized modes. It is not correct to remove the revision check, accept whichever file exists, or
+edit the expected digest until the test passes. This is a certification defect, not automatically
+a mathematical defect.
+
+#### Exact closure sequence
+
+Apply the following sequence to each lane. Do not skip directly from a green test to deletion.
+
+1. **Name the lane.** Record its repository, common Git directory, worktree path, branch or detached
+   `HEAD`, base commit, current commit and tree, owner, purpose, and allowed writers.
+2. **Freeze it.** Stop writers and record tracked, staged, untracked, relevant ignored, conflicted,
+   assume-unchanged, skip-worktree, sparse-checkout, alternate-index, submodule, and symbolic-link
+   state. Record active processes that hold the path.
+3. **Enumerate history and bytes.** List local and remote refs, stashes, branch-only commits,
+   changed paths, modes, sizes, and digests. Inspect every partially useful branch at path and
+   semantic level. An old branch can contain one current counterexample or proof witness.
+4. **Classify every variant.** Use accepted science, open candidate, negative result,
+   superseded-but-needed recovery state, restricted/local-only material, reproducible cache, or
+   discardable temporary output. State why the classification is correct.
+5. **Preserve before integration.** Give every unique or uncertain permitted payload a reachable
+   commit/ref and a second durable copy. For a Git bundle, record its size and SHA-256, run
+   Git's bundle-verification command, list its advertised heads, and perform a recovery drill in a clean
+   repository. Preserve non-Git state separately because a bundle cannot contain it.
+6. **Integrate from fresh `main`.** Port explicit paths or one coherent claim packet. Never use a
+   wholesale stale-tree overlay. Reconcile formulas, assumptions, tests, docs, citations, and
+   generated artifacts together.
+7. **Regenerate derived state.** Synchronize canonical Markdown and TeX, rebuild PDFs, inspect
+   rendered pages, regenerate source-state manifests and receipts, and re-run portability checks.
+   Derived bytes must not become a competing editable source.
+8. **Run the evidence layers.** Run mathematical, formal, exact-arithmetic, numerical, estimator,
+   implementation, mutation, build, lint, documentation, PDF, and consumer gates that apply. Mark
+   an inapplicable layer and state the reason. A skipped layer is not a pass.
+9. **Commit and publish one coherent milestone.** Keep source, checker, schema, hostile controls,
+   human narrative, PDF, and binding receipts together when splitting them would create a false
+   intermediate state. Use unsigned, human-authored commits with no agent attribution.
+10. **Advance `main` with concurrency protection.** Re-read the remote old object ID, prove the
+    candidate is its descendant, and use an explicit expected-old lease. Fetch the result, update
+    local `main` only from the observed remote object, and require local and remote IDs to agree.
+11. **Verify the mainline event.** Run or observe the required hosted workflows on the exact
+    `main` commit. A prior side-branch run is useful preflight evidence but is not the mainline
+    publication event.
+12. **Retire conservatively.** Delete a ref or worktree only after every accepted byte in that lane
+    is reachable from remote `main`, every remaining adjudicating or selection/load-bearing byte
+    (including a rejected route) remains retrievable under a typed negative/archive disposition,
+    and every byte selected for destruction is separately established as non-load-bearing and
+    outside the required retention scope with its rejection reason recorded. A rejection label or
+    digest without a retrievable preimage never satisfies a load-bearing retention obligation.
+    Re-run reachability, bundle, branch, worktree, process, disk, and cleanliness inventories after
+    removal.
+
+#### Formal verification inside an isolated lane
+
+An isolated checkout supports formal verification only when the evidence chain remains explicit.
+First, freeze the mathematical proposition with all variables, domains, distributions, support
+conditions, units, quantifiers, and boundary cases. Second, map each paper definition or
+repository-defined construction to the formal symbol that represents it. Third, pin the proof
+assistant or solver, dependency commits, imports, declarations, axioms, options, and checker bytes.
+Fourth, run the kernel or solver and inventory the theorem and axiom output. Fifth, preregister a
+suite of well-formed fault mutations. Name the obligation that each mutation violates and the
+causal rejection that is expected; require those fault mutations to fail for the named reason.
+Equivalent or stronger statements and irrelevant import changes are not fault mutations and need
+not fail. Sixth, compare with a separately developed route when feasible, and record the shared
+cuts between the routes. Seventh, test executable refinement, binary64 behavior, estimator
+calibration, and application behavior as separate obligations. Finally, bind the exact source tree
+and result to a hosted run and a durable mainline commit.
+
+No step permits a tool to choose the theorem after seeing what it can prove. No successful kernel
+run proves an unstated probability law. No finite exhaustive census proves a population limit
+outside its declared finite domain. No Z3 real-arithmetic proof establishes binary64 execution.
+No Rust test establishes paper correspondence unless the correspondence itself is an explicit,
+checked bridge. Formal tools support judgment; they do not replace it.
+
+The deterministic workflow-PDF builder fixes `SOURCE_DATE_EPOCH` at
+`2026-08-15T00:00:00Z`. That value is a reproducibility epoch for stable metadata bytes, not the
+date of every narrative revision, visual inspection, or scientific observation. Those events keep
+their own explicit dates and object identities.
+
+The dated
+[worktree and branch preservation receipt](https://github.com/sepahead/pid-rs/blob/main/audit/evidence/worktree-and-branch-preservation-2026-08-27.md)
+is a bounded case record for this repository. It documents an actual temporary-state loss,
+reconstruction boundary, dirty-state capture, divergent-tip comparison, verified bundle roster,
+and cleanup preconditions. The
+[machine-readable retirement ledger](https://github.com/sepahead/pid-rs/blob/main/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json)
+binds the dated 1 September 2026 primary-common-Git-directory snapshot to a strict schema and
+fail-closed checker.
+It explicitly excludes sibling repositories and authorizes no deletion. Neither record replaces
+this general protocol, promotes an archived draft, or proves a retained mathematical claim.
+
+The separate
+[sibling-registry retirement ledger](https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json)
+records a bounded read-only observation of 10 common Git directories and 12 worktrees, including
+all four C12-family worktrees. It distinguishes the documentation candidate from the then-live
+remote `main` in every target-specific C12 comparison; records one configured `blob:none` promisor
+registry without turning a zero-missing observed-head traversal into global object completeness;
+and binds three live-ref-unreachable C12 commits to their exact public-receipt bundle custody. Its
+checker validates the recorded snapshot. Its companion self-test demonstrates rejection of 75
+hostile mutations and three path-custody attacks. Neither script revisits those registries,
+bundles, remotes, or processes. The ledger authorizes no ref, worktree, registry, cache, or
+garbage-collection deletion. It excludes the primary common Git directory and unregistered non-Git
+copies, so the two ledgers together still do not constitute a live global inventory.
+
+#### Agent and council ownership
+
+Each agent owns a bounded task and a declared write set. The coordinator owns integration and the
+final disposition. Council members first produce independent critiques, then expose shared
+dependencies and attack the strongest surviving design. The ledger retains concrete dissent,
+counterexamples, failed routes, and conditions that would reverse the decision. A model vote,
+confidence score, or repeated wording never closes an obligation. After a terminal reset or
+context compaction, the next agent treats the continuity record as an index and verifies the live
+repository, processes, exact source bytes, and remote refs before it acts.
+
 Durability has layers. A scratch file, temporary worktree, local commit, remote side branch,
 remote-`main` commit, release artifact, and scholarly archive are not interchangeable. Scratch and
 local-only state can disappear and carry no durable-evidence credit. Under the recorded repository
 retention and no-history-rewrite assumptions, a verified remote-`main` commit is the minimum
 operational recovery anchor for accepted work, not immutable or scholarly preservation. Record the
 remote URL, ref, observed OID, observation time, and whether the milestone is the tip or an ancestor
-of a later remote tip. A versioned release or recognized content-addressed scholarly archive/DOI is
-required when the publication packet claims longer-term preservation.
+of a later remote tip. A versioned release or an identified scholarly archive under a declared
+retention policy is required when the publication packet claims longer-term preservation. Record
+the archive's versioned locator or DOI when one is supplied; a DOI is an identifier and resolution
+route, not byte custody by itself.
 
 Each ledger-declared load-bearing artifact needs an exact path or object name, SHA-256, byte size and
 format, claim/campaign/attempt provenance, a retrievable versioned locator with access, license, and
 retention limits, and a clean retrieval or rebuild check. A digest without a retrievable preimage is
 only a commitment or omission record. If protected or oversized material cannot enter Git, use an
 approved restricted durable store and publish only a safe commitment/manifest until blindness or
-embargo ends. Before abandoning a worktree or branch, verify that every accepted, adjudicating, or
-selection/load-bearing artifact identified by the ledger or manifest is reachable from remote
-`main`, intentionally rejected with a ledger record, or covered by a checked durable locator.
+embargo ends. Before abandoning a worktree or branch, verify that every accepted artifact is
+reachable from remote `main`; that every adjudicating or selection/load-bearing artifact, including
+a rejected route, remains retrievable from remote `main` or a checked durable locator under its
+typed disposition; and that every artifact selected for destruction has been established as
+non-load-bearing and outside the required retention scope with its rejection reason recorded.
 
 This is deliberately problem-specific. The project does not build a generic self-improving harness
 or reward submission volume. It uses automation to widen and test the hypothesis space while
@@ -1797,6 +1974,18 @@ declared toolchains; and page-by-page rendered visual review. A PDF that is newe
 in bytes, or byte-current but visually defective, fails the publication gate. Machine and human
 artifacts must expose the same claim revision, evidence state, limitations, and open obligations.
 
+This workflow publication uses a repository-local adaptation of the reviewed publication design
+language: ivory paper; lapis title structure; turquoise subordinate headings; restrained bronze
+body accents and saffron structural accents; real searchable text; and low-contrast vector grain and
+girih/rosette fields. The title pattern fades in and out through five opacity zones. It is
+decorative: it does not encode evidence status, theorem strength, probability, or graph magnitude.
+The visual gate reviews hierarchy, typography, grid, spacing, narrative order, motif provenance and
+coherence, restraint, palette identity, data semantics, color-redundant labels, grayscale, text
+extraction, print, A4/PDF profile, fonts, link/action safety, deterministic reproduction,
+source/derived separation, portable dependencies, and normal-size plus high-resolution renders.
+Passing that visual gate does not establish mathematical correctness, accessibility conformance,
+or the availability of an external link.
+
 Compact harness transition rule:
 
 ```text
@@ -2209,7 +2398,7 @@ Rational probabilities do not imply rational logarithmic information values. Use
 identity or a certified interval for a proof claim. Label an uncertified high-precision value as a
 reference. Do not call a decimal reference an exact entropy oracle.
 
-### 6. Run the required 20-lens adversarial audit
+### 6. Run the required 20-core/50-lens adversarial audit
 
 Complete one applicability matrix for every major claim and every live artifact that states or
 transfers it. Every row receives exactly one disposition: `PASS` with evidence, `CORRECT` with the
@@ -2217,7 +2406,11 @@ old and corrected statement, `NARROW` with the retained scope, `OPEN` with an ob
 or `NEGATIVE` with a retained counterexample. `N/A` is allowed only with a typed reason. If one lens
 exposes separable sub-obligations with different dispositions, split that lens into typed subrows;
 never collapse them to the most favorable disposition. A paragraph saying that an audit occurred
-is not a completed matrix.
+is not a completed matrix. The first 20 rows below are mandatory. Add at least 30 named
+artifact-specific rows for a consequential decision; choose them from the actual failure surface,
+not from a fixed vocabulary solely to reach a count. The durability blueprint gives one complete
+70-row worked example: 20 mandatory core lenses plus 50 additional artifact-specific lenses. Its
+answers do not transfer to a different artifact.
 
 #### Lenses 1--10: scientific object and inference contract
 
@@ -2686,7 +2879,7 @@ For each new theorem, use at least five genuinely failure-diverse applicable aud
 shared oracle, imported lemma, generated table, implementation, or formalization seam counts once
 at its common cut even when several suite names exercise it. If a listed family is inapplicable,
 record a typed reason; inapplicability is not replacement evidence and does not reduce the required
-20-lens applicability matrix for a major claim.
+20-row baseline plus at least 30 named object-specific lenses for a major claim.
 
 - **Combinatorial:** antichain order, Möbius inversion, atom reconstruction, and source symmetry.
 - **Analytic:** continuity, support boundaries, limiting arguments, and perturbation bounds.
@@ -2741,11 +2934,11 @@ a separate correspondence theorem and, where applicable, local-finiteness/conver
 For finite domains, use exact enumeration or certified intervals when possible. Then replay the
 same cases through the Rust API and any claimed Python wrapper.
 
-Use mutation tests for proof and evidence scripts. Require malformed fixtures, wrong theorem
-bindings, weakened premises, altered source counts/orders, missing branches, and false conclusions
-to fail closed. Run checkers under normal Python and Python with optimization enabled (the `-O`
-option); assertions must not be the
-acceptance mechanism. Where two solvers or implementations are claimed, state their
+Run checkers under normal Python and Python with optimization enabled (the `-O` option);
+assertions must not be the acceptance mechanism. Require mutation tests for proof and evidence
+scripts. Malformed fixtures, wrong theorem bindings, weakened premises, altered source
+counts/orders, missing branches, and false conclusions must fail closed. Where two solvers or
+implementations are claimed, state their
 functional/epistemic/institutional independence vector and ensure a mechanistically separate
 checker recomputes the obligation rather than merely parsing the producer's claimed answer. A
 different model lineage may improve epistemic diversity but is not institutional independence;

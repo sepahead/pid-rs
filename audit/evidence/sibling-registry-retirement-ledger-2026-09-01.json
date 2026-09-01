@@ -1,0 +1,924 @@
+{
+  "authorization": {
+    "c12_custody_bound_pairs_require_registry_retention": false,
+    "cache_deletion_authorized": false,
+    "decision": "retain_and_adjudicate",
+    "garbage_collection_authorized": false,
+    "promotion_authorized": false,
+    "ref_deletion_authorized": false,
+    "registry_deletion_authorized": false,
+    "remote_mutation_authorized": false,
+    "retention_basis": "genuinely_unadjudicated_scope_only",
+    "worktree_removal_authorized": false
+  },
+  "cache_candidates": {
+    "allocated_bytes": 52718612480,
+    "candidate_count": null,
+    "candidate_count_status": "not_established",
+    "classification": "preliminary_non_authorizing_candidates",
+    "deletion_authorized": false,
+    "example_values_are_aggregate_inputs": false,
+    "examples": [
+      {
+        "approximate_decimal_gb": 10.54,
+        "cache_role": "rust_target",
+        "registry_id": "c12-family",
+        "worktree_id": "c12-orca-integration"
+      },
+      {
+        "approximate_decimal_gb": 8.38,
+        "cache_role": "lake_dependency_cache",
+        "registry_id": "c12-family",
+        "worktree_id": "c12-orca-integration"
+      },
+      {
+        "approximate_decimal_gb": 1.93,
+        "cache_role": "rust_target",
+        "registry_id": "publication-synthesis",
+        "worktree_id": "publication-synthesis"
+      },
+      {
+        "approximate_decimal_gb": 7.5,
+        "cache_role": "lake_dependency_cache",
+        "registry_id": "publication-synthesis",
+        "worktree_id": "publication-synthesis"
+      },
+      {
+        "approximate_decimal_gb": 0.69,
+        "cache_role": "rust_target",
+        "registry_id": "science-synthesis",
+        "worktree_id": "science-synthesis"
+      },
+      {
+        "approximate_decimal_gb": 7.5,
+        "cache_role": "lake_dependency_cache",
+        "registry_id": "science-synthesis",
+        "worktree_id": "science-synthesis"
+      },
+      {
+        "approximate_decimal_gb": 6.93,
+        "cache_role": "rust_target",
+        "registry_id": "c12-family",
+        "worktree_id": "c12-numerical"
+      },
+      {
+        "approximate_decimal_gb": 3.37,
+        "cache_role": "rust_target",
+        "registry_id": "c12-family",
+        "worktree_id": "c12-terminal"
+      },
+      {
+        "approximate_decimal_gb": 3.83,
+        "cache_role": "rust_target",
+        "registry_id": "legacy-copy",
+        "worktree_id": "legacy-copy"
+      },
+      {
+        "approximate_decimal_gb": 1.92,
+        "cache_role": "rust_target",
+        "registry_id": "c12-family",
+        "worktree_id": "c12-repair"
+      },
+      {
+        "approximate_decimal_gb": 0.13,
+        "cache_role": "rust_target",
+        "registry_id": "c11-fresh",
+        "worktree_id": "c11-fresh"
+      }
+    ],
+    "measurement": "allocated_filesystem_bytes",
+    "scope_note": "The exact byte total is the completed audit's aggregate. Example decimal-gigabyte values are display approximations and are not operands for that total. No authoritative candidate-directory count was established."
+  },
+  "checker_contract": {
+    "classification": "snapshot_integrity_validator",
+    "does": "Validates canonical bytes, closed-schema shape, exact recorded identities, derived summaries, cross-record relations, and hostile mutation sensitivity.",
+    "does_not": "Does not access sibling registries, restricted bundles, storage, hosted refs, or the network; it therefore does not freshly replay the underlying observations.",
+    "external_replay_required_for_cleanup": true
+  },
+  "comparison_definitions": {
+    "absent": "No audit-selected corresponding path or successor was identified in the declared target comparison.",
+    "evolved": "An audit-selected corresponding path or successor was identified, but its bytes differ. This does not by itself prove semantic equivalence or superiority.",
+    "exact": "The selected compared blob bytes are identical. This does not establish whole-tree equality or scientific validity.",
+    "scope": "Counts apply only to each declared selected-path corpus, never to a complete repository unless explicitly stated."
+  },
+  "comparisons": [
+    {
+      "absent": 12,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-c10-forensic",
+      "evolved": 23,
+      "exact": 0,
+      "registry_id": "c10-forensic",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 35,
+      "worktree_id": "c10-forensic"
+    },
+    {
+      "absent": 11,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-c10-recovered",
+      "evolved": 20,
+      "exact": 0,
+      "registry_id": "c10-recovered",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 31,
+      "worktree_id": "c10-recovered"
+    },
+    {
+      "absent": 0,
+      "basis": "selected_workflow_blob_corpus",
+      "comparison_id": "cmp-c12-terminal-workflow",
+      "evolved": 0,
+      "exact": 5,
+      "registry_id": "c12-family",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 5,
+      "worktree_id": "c12-terminal"
+    },
+    {
+      "absent": 0,
+      "basis": "committed_path_corpus",
+      "comparison_id": "cmp-c12-numerical-to-integration-candidate",
+      "evolved": 28,
+      "exact": 22,
+      "registry_id": "c12-family",
+      "supporting_commit_sha1": "32622986f8f0a4b6b62275c61429bd56d439cbde",
+      "target_id": "integration-candidate",
+      "total": 50,
+      "worktree_id": "c12-numerical"
+    },
+    {
+      "absent": 0,
+      "basis": "committed_path_corpus",
+      "comparison_id": "cmp-c12-numerical-to-live-remote-main",
+      "evolved": 27,
+      "exact": 23,
+      "registry_id": "c12-family",
+      "supporting_commit_sha1": "32622986f8f0a4b6b62275c61429bd56d439cbde",
+      "target_id": "live-remote-main",
+      "total": 50,
+      "worktree_id": "c12-numerical"
+    },
+    {
+      "absent": 30,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-c12-orca-integration-to-integration-candidate",
+      "evolved": 79,
+      "exact": 9,
+      "registry_id": "c12-family",
+      "supporting_commit_sha1": null,
+      "target_id": "integration-candidate",
+      "total": 118,
+      "worktree_id": "c12-orca-integration"
+    },
+    {
+      "absent": 35,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-c12-orca-integration-to-live-remote-main",
+      "evolved": 77,
+      "exact": 6,
+      "registry_id": "c12-family",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 118,
+      "worktree_id": "c12-orca-integration"
+    },
+    {
+      "absent": 2,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-publication-synthesis",
+      "evolved": 0,
+      "exact": 0,
+      "registry_id": "publication-synthesis",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 2,
+      "worktree_id": "publication-synthesis"
+    },
+    {
+      "absent": 9,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-science-synthesis",
+      "evolved": 14,
+      "exact": 0,
+      "registry_id": "science-synthesis",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 23,
+      "worktree_id": "science-synthesis"
+    },
+    {
+      "absent": 2,
+      "basis": "observed_dirty_path_corpus",
+      "comparison_id": "cmp-sxpid3-independent",
+      "evolved": 2,
+      "exact": 0,
+      "registry_id": "sxpid3-independent",
+      "supporting_commit_sha1": null,
+      "target_id": "live-remote-main",
+      "total": 4,
+      "worktree_id": "sxpid3-independent"
+    }
+  ],
+  "custody_artifacts": [
+    {
+      "artifact_id": "custody-primary-restricted-bundle-rcr-20260901-01",
+      "artifact_kind": "git_bundle",
+      "byte_size": 32474415,
+      "content_count": 71,
+      "content_count_unit": "heads",
+      "custody_class": "restricted",
+      "scope": "primary_registry_selected_heads",
+      "sha256": "89a751a60cb221e0aa336b348b5873f458417b0947a9d5d7920f9332ec82b7f7"
+    },
+    {
+      "artifact_id": "custody-older-multi-registry-bundle",
+      "artifact_kind": "git_bundle",
+      "byte_size": 34020827,
+      "content_count": 11,
+      "content_count_unit": "heads",
+      "custody_class": "restricted",
+      "scope": "selected_multi_registry_refs",
+      "sha256": "4607390570aa740890fcdbb2fc95737e1b293cf77b4b0b7770dc80e5f88aca51"
+    },
+    {
+      "artifact_id": "custody-c12-complete-ref-bundle",
+      "artifact_kind": "git_bundle",
+      "byte_size": 31506135,
+      "content_count": 29,
+      "content_count_unit": "refs",
+      "custody_class": "restricted",
+      "scope": "c12_registry_complete_ref_set_at_capture",
+      "sha256": "e2709089e762ea52f6527effc54db59b5beded6726af1c3a0676fdfc9d88cb12"
+    },
+    {
+      "artifact_id": "custody-degraded-whole-directory-capture",
+      "artifact_kind": "compressed_directory_archive",
+      "byte_size": 512107685,
+      "content_count": 22264,
+      "content_count_unit": "archive_entries",
+      "custody_class": "restricted",
+      "scope": "degraded_historical_capture",
+      "sha256": "111cf10b6e6c46500ee7ffe296dafa16600cd4d71d1f48d37899fd2f64bc1d76"
+    },
+    {
+      "artifact_id": "custody-c12-restricted-ignored-package",
+      "artifact_kind": "compressed_file_package",
+      "byte_size": 2052233,
+      "content_count": 23,
+      "content_count_unit": "regular_files",
+      "custody_class": "restricted_nonpublic",
+      "scope": "ignored_material_excluded_from_public_repository",
+      "sha256": "5d52191657bbb4e613a0768f7f8739e3d8b157644ff1c7e7bc1307868196cb35"
+    },
+    {
+      "artifact_id": "custody-c10-forensic-public-receipt-bundle",
+      "artifact_kind": "git_bundle",
+      "byte_size": 23650436,
+      "content_count": 1,
+      "content_count_unit": "refs",
+      "custody_class": "restricted",
+      "scope": "c10_forensic_exact_archive_ref_public_receipt_bundle",
+      "sha256": "d07c43bea4a920f37de5650db4168de95a95cb8635a6c9f8693d7c3d83735b6c"
+    },
+    {
+      "artifact_id": "custody-c12-milestone2-public-receipt-bundle",
+      "artifact_kind": "git_bundle",
+      "byte_size": 30319870,
+      "content_count": 1,
+      "content_count_unit": "refs",
+      "custody_class": "restricted",
+      "scope": "c12_live_unreachable_commit_01_public_receipt_bundle",
+      "sha256": "29d8a06df72ac2aa5d1994c1a5457b88579f141e8fbddd93fe20533a434d7f47"
+    },
+    {
+      "artifact_id": "custody-c12-milestone-archive-public-receipt-bundle",
+      "artifact_kind": "git_bundle",
+      "byte_size": 30382519,
+      "content_count": 1,
+      "content_count_unit": "refs",
+      "custody_class": "restricted",
+      "scope": "c12_live_unreachable_commit_02_public_receipt_bundle",
+      "sha256": "0635ed934e7dc4cc1530ac3c4088a9e6b505236f11857a5373dc14ed6fa12f4e"
+    },
+    {
+      "artifact_id": "custody-c12-milestone1-public-receipt-bundle",
+      "artifact_kind": "git_bundle",
+      "byte_size": 29880437,
+      "content_count": 1,
+      "content_count_unit": "refs",
+      "custody_class": "restricted",
+      "scope": "c12_live_unreachable_commit_03_public_receipt_bundle",
+      "sha256": "40a06fd0815c600e6df0eccf7cd8dd24dd877b69113a449fc0e4898983290058"
+    }
+  ],
+  "custody_boundaries": [
+    {
+      "boundary_id": "live-registry",
+      "covers": "Observed refs, object availability, worktree heads, and status metadata in a mutable local registry.",
+      "does_not_cover": "Durability after ref deletion, garbage collection, registry removal, later mutation, or scientific correctness."
+    },
+    {
+      "boundary_id": "git-bundle",
+      "covers": "The SHA-256-bound bundle bytes and Git objects reachable from the bundle's advertised heads or refs.",
+      "does_not_cover": "Unreachable objects, uncommitted worktree bytes, ignored caches, merge acceptance, semantic equivalence, or correctness."
+    },
+    {
+      "boundary_id": "archive-checkpoint",
+      "covers": "The exact commit identity when a full object identifier is recorded, plus an exact tree or parent only where those fields are present.",
+      "does_not_cover": "A claim that archived content is current, useful, publishable, correct, or already integrated."
+    },
+    {
+      "boundary_id": "restricted-file-package",
+      "covers": "The exact byte-bound package and its declared file count within restricted custody.",
+      "does_not_cover": "Public distribution authority, repository integration, scientific validity, or an implication that ignored material belongs in Git."
+    },
+    {
+      "boundary_id": "cache-candidate",
+      "covers": "A preliminary allocated-byte observation and approximate examples.",
+      "does_not_cover": "A complete inventory, ownership determination, recoverability, redundancy, safety to delete, or deletion authority."
+    }
+  ],
+  "limitations": [
+    "The observation is a bounded read-only snapshot. It is not a live monitor and does not prove that no process started after the observation window.",
+    "The audit established Git 2.55.0 exactly. It did not retain exact versions for every auxiliary shell, hash, or process-inspection utility, and this ledger does not invent them.",
+    "Registry, common-Git-directory, worktree, branch, reference, and custody identifiers are public logical labels. They do not disclose filesystem paths or private storage locators.",
+    "Status SHA-256 values bind observer-produced status captures. This public ledger does not disclose path rosters, so those leaf digests cannot be recomputed from this file alone.",
+    "The publication-synthesis archive checkpoint is bound to its full commit, tree, and single parent. That exact identity does not establish that the archived content is current, correct, or accepted.",
+    "Exact, evolved, and absent counts are established only for the eight declared selected-path corpora. No such classification was established for the remaining registries or paths.",
+    "The comparison summary aggregates ten target-specific rows over eight selected-path corpora. The C12 numerical and C12 Orca corpora each appear once against the integration candidate and once against live remote main, so the summary total is not a count of distinct paths.",
+    "Stable patch-ID equality ignores commit metadata and some diff distinctions. It is not exact commit identity, tree identity, semantic equivalence, proof of integration, or exact custody.",
+    "Custody is recoverability evidence within each declared boundary. It is not correctness, authenticity, publication readiness, merge approval, or permission to remove a source registry.",
+    "The c10-forensic registry had one promisor remote, a blob:none partial-clone filter, and six promisor pack markers. The zero-missing observed-head check is bounded to objects reachable from that head with lazy fetching disabled; it is not a global object-completeness claim.",
+    "The isolated c10-forensic bundle replay is custody evidence for the exact advertised archive commit. It is separate from the live-registry observed-head check and does not establish completeness of every live ref, unreachable object, worktree byte, or ignored path.",
+    "The three C12 commits described as unreachable are unreachable only from the observed live-ref scope and are each exact advertised objects in a public-receipt-bound complete-history bundle. Those pairs no longer create a registry-retention requirement; other unadjudicated refs, worktree bytes, ignored material, and semantic dispositions still do.",
+    "The primary repository's common Git directory is excluded from this sibling ledger and has its own retirement ledger. Non-Git copies and directories without an independently identified common Git directory are also outside this record.",
+    "The checker is a snapshot-integrity validator. A pass does not freshly inspect registries, replay bundles, contact hosted refs, or authorize cleanup; those actions require a new external observation.",
+    "No active owner was observed during the bounded process inspection. That negative observation is not proof of abandonment and grants no deletion authority."
+  ],
+  "negative_controls": [
+    {
+      "control_id": "staged-paths",
+      "observed_count": 0,
+      "scope": "all_observed_worktrees"
+    },
+    {
+      "control_id": "stash-refs",
+      "observed_count": 0,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "lock-files",
+      "observed_count": 0,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "alternates",
+      "observed_count": 0,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "grafts",
+      "observed_count": 0,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "replace-refs",
+      "observed_count": 0,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "shallow-registries",
+      "observed_count": 0,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "partial-clone-registries",
+      "observed_count": 1,
+      "scope": "all_common_git_directories"
+    },
+    {
+      "control_id": "tracked-gitlinks",
+      "observed_count": 0,
+      "scope": "all_observed_heads"
+    },
+    {
+      "control_id": "tracked-symbolic-links",
+      "observed_count": 0,
+      "scope": "all_observed_heads"
+    },
+    {
+      "control_id": "active-owner-processes",
+      "observed_count": 0,
+      "scope": "bounded_process_observation"
+    }
+  ],
+  "object_availability": {
+    "custody_replays": [
+      {
+        "archive_commit_sha1": "9cef1844d9994e72eab0c7069f3c02b03124b7f0",
+        "bundle_byte_size": 23650436,
+        "bundle_label": "c10-forensic-dirty-worktree-2026-08-27.bundle",
+        "bundle_sha256": "d07c43bea4a920f37de5650db4168de95a95cb8635a6c9f8693d7c3d83735b6c",
+        "bundle_verify_complete_history": true,
+        "custody_artifact_id": "custody-c10-forensic-public-receipt-bundle",
+        "fresh_isolated_bare_repository": true,
+        "fsck_full_strict_no_reflogs_passed": true,
+        "global_registry_completeness_established": false,
+        "lazy_fetch_disabled": true,
+        "public_receipt_path": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md",
+        "receipt_section": "independently_verified_bundle_inventory",
+        "registry_id": "c10-forensic",
+        "replay_id": "c10-forensic-archive-bundle-replay",
+        "scope": "exact_archive_ref_from_restricted_bundle"
+      }
+    ],
+    "definitions": {
+      "custody_replay": "A fresh isolated bare repository accepted the exact archive ref from the identified restricted bundle and passed the recorded no-lazy-fetch fsck command.",
+      "observed_head_check": "With lazy fetching disabled, the missing-object traversal reported zero missing objects reachable from the exact observed registry head.",
+      "separation": "Observed-head availability describes one live reachability closure. Isolated bundle replay describes recoverability of one advertised archive ref. Neither establishes global registry completeness or scientific correctness."
+    },
+    "partial_clone_observations": [
+      {
+        "global_registry_completeness_established": false,
+        "lazy_fetch_disabled": true,
+        "missing_object_count": 0,
+        "observed_head_sha1": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+        "partial_clone_filter": "blob:none",
+        "partial_clone_filter_config_count": 1,
+        "promisor_pack_marker_count": 6,
+        "promisor_remote_config_count": 1,
+        "promisor_remote_value": "true",
+        "registry_id": "c10-forensic",
+        "remote_label": "origin",
+        "scope": "objects_reachable_from_observed_head",
+        "verification": "git_rev_list_objects_missing_print"
+      }
+    ]
+  },
+  "observation": {
+    "architecture": "arm64",
+    "ended_at_utc": "2026-09-01T07:38:43Z",
+    "git_object_format": "sha1",
+    "git_version": "2.55.0",
+    "host_build": "25F80",
+    "host_operating_system": "macOS",
+    "host_operating_system_version": "26.5.1",
+    "mode": "read_only",
+    "observation_id": "sibling-audit-20260901-073207z",
+    "started_at_utc": "2026-09-01T07:32:07Z"
+  },
+  "record_id": "SRRL-20260901-01",
+  "reference_commits": [
+    {
+      "commit_sha1": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+      "reference_id": "live-remote-main",
+      "role": "live_github_main_at_observation"
+    },
+    {
+      "commit_sha1": "30e6d19bf020b18ef1cc1f9478c2d4acba62ccf1",
+      "reference_id": "integration-candidate",
+      "role": "documentation_closure_candidate_at_observation"
+    }
+  ],
+  "registries": [
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "e7a841f2263d827d38d721ca8af1ccf51966838f",
+        "parent_sha1": null,
+        "status": "established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-legacy-copy",
+      "registry_head_sha1": "e982266abb35734823d28c82af7c7edf3e73f7d7",
+      "registry_id": "legacy-copy",
+      "registry_tree_sha1": "78a62a3267b54adddb6c99ac6dfbef0967143e4f",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "main",
+          "head_mode": "named_branch",
+          "head_sha1": "e982266abb35734823d28c82af7c7edf3e73f7d7",
+          "status": {
+            "capture_sha256": "9d608763273b2b7ffd1518b928dba3f09c3d39bdefdfaff549eb95ea63192487",
+            "staged": 0,
+            "unstaged": 18,
+            "untracked": 1
+          },
+          "tree_sha1": "78a62a3267b54adddb6c99ac6dfbef0967143e4f",
+          "worktree_id": "legacy-copy"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "9cef1844d9994e72eab0c7069f3c02b03124b7f0",
+        "parent_sha1": null,
+        "status": "established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-c10-forensic",
+      "registry_head_sha1": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+      "registry_id": "c10-forensic",
+      "registry_tree_sha1": "325f9fb463e2ec8ed36f0c7b1d61c119e6861d9c",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "forensic-recovery",
+          "head_mode": "named_branch",
+          "head_sha1": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+          "status": {
+            "capture_sha256": "b0c65c1553483c5ac3ee76d694e6c2924a34bfca42fa98b77613dfd2ece3cf80",
+            "staged": 0,
+            "unstaged": 21,
+            "untracked": 14
+          },
+          "tree_sha1": "325f9fb463e2ec8ed36f0c7b1d61c119e6861d9c",
+          "worktree_id": "c10-forensic"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "690c7a4c748173bed4d522b841c4c453da73280b",
+        "parent_sha1": null,
+        "status": "established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-c10-recovered",
+      "registry_head_sha1": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+      "registry_id": "c10-recovered",
+      "registry_tree_sha1": "325f9fb463e2ec8ed36f0c7b1d61c119e6861d9c",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "exact-recovery",
+          "head_mode": "named_branch",
+          "head_sha1": "337fe9b7f7cf30a8f00138310ce0398d9e95b9c5",
+          "status": {
+            "capture_sha256": "9875cca39379b55e0d7be20b47cea7609a9a31d97351a3734612dba288f8c6b8",
+            "staged": 0,
+            "unstaged": 20,
+            "untracked": 11
+          },
+          "tree_sha1": "325f9fb463e2ec8ed36f0c7b1d61c119e6861d9c",
+          "worktree_id": "c10-recovered"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "none",
+        "object_identifier": "",
+        "parent_sha1": null,
+        "status": "not_established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-c11-fresh",
+      "registry_head_sha1": "91d954160a7e717ae46b6088175ae52e92570127",
+      "registry_id": "c11-fresh",
+      "registry_tree_sha1": "97841c6eda10573ddc3537c9e3b2ca41a93a3fa1",
+      "relation_to_live_remote_main": "ancestor",
+      "worktrees": [
+        {
+          "branch_label": "fresh-candidate",
+          "head_mode": "named_branch",
+          "head_sha1": "91d954160a7e717ae46b6088175ae52e92570127",
+          "status": {
+            "capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 0
+          },
+          "tree_sha1": "97841c6eda10573ddc3537c9e3b2ca41a93a3fa1",
+          "worktree_id": "c11-fresh"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "9da582d95d0edae44e0a40570525923e63fd0c72",
+        "parent_sha1": null,
+        "status": "established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-c12-family",
+      "registry_head_sha1": "01466e88b0550333c2718f1716289e9642e30dc6",
+      "registry_id": "c12-family",
+      "registry_tree_sha1": "c445a647963ac12fbe1c352cc042956a82c7d69e",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "c12-repair",
+          "head_mode": "named_branch",
+          "head_sha1": "01466e88b0550333c2718f1716289e9642e30dc6",
+          "status": {
+            "capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 0
+          },
+          "tree_sha1": "c445a647963ac12fbe1c352cc042956a82c7d69e",
+          "worktree_id": "c12-repair"
+        },
+        {
+          "branch_label": "c12-terminal",
+          "head_mode": "named_branch",
+          "head_sha1": "f7811023da638fe7ede921b7b51c32fef8eb2c80",
+          "status": {
+            "capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 0
+          },
+          "tree_sha1": "0f374e1b84885901e1212c1bdb98ed66d753ae0e",
+          "worktree_id": "c12-terminal"
+        },
+        {
+          "branch_label": "c12-numerical",
+          "head_mode": "named_branch",
+          "head_sha1": "896c61569a74626fb0746f65ffa5c510373ae8a1",
+          "status": {
+            "capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 0
+          },
+          "tree_sha1": "efe8ba590fcc96186f82cf73b0fcb5f2997a6ae5",
+          "worktree_id": "c12-numerical"
+        },
+        {
+          "branch_label": "c12-orca-integration",
+          "head_mode": "named_branch",
+          "head_sha1": "b9fd77ce43ef7379eb9792dd2f4814649f35b316",
+          "status": {
+            "capture_sha256": "2f6a2eb7d57704e9bda8c25ee2305aec773830aaaad7648683ebf6bea38fab4c",
+            "staged": 0,
+            "unstaged": 63,
+            "untracked": 55
+          },
+          "tree_sha1": "bbd03cba2754ceb06be2ba01bbe649ea87f16b88",
+          "worktree_id": "c12-orca-integration"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "none",
+        "object_identifier": "",
+        "parent_sha1": null,
+        "status": "not_established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-program-dossier",
+      "registry_head_sha1": "6b1f789bba99e76cd2fbedd5251ef1ec89698066",
+      "registry_id": "program-dossier",
+      "registry_tree_sha1": "36381002f2b4ccf3da5dacf2880833ae4f38d878",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "main",
+          "head_mode": "named_branch",
+          "head_sha1": "6b1f789bba99e76cd2fbedd5251ef1ec89698066",
+          "status": {
+            "capture_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 0
+          },
+          "tree_sha1": "36381002f2b4ccf3da5dacf2880833ae4f38d878",
+          "worktree_id": "program-dossier"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "none",
+        "object_identifier": "",
+        "parent_sha1": null,
+        "status": "not_established",
+        "tree_sha1": null
+      },
+      "bare": true,
+      "common_git_directory_id": "common-git-program-dossier-backup",
+      "registry_head_sha1": "6b1f789bba99e76cd2fbedd5251ef1ec89698066",
+      "registry_id": "program-dossier-backup",
+      "registry_tree_sha1": "36381002f2b4ccf3da5dacf2880833ae4f38d878",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": []
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "df22846a66bf439b5ee8642166b0599de03a7835",
+        "parent_sha1": "662505cd1bba27a34fdd720d5867b6ed791aefc9",
+        "status": "established",
+        "tree_sha1": "77cf10062d9dce6fcf123187c10ac288694185e0"
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-publication-synthesis",
+      "registry_head_sha1": "662505cd1bba27a34fdd720d5867b6ed791aefc9",
+      "registry_id": "publication-synthesis",
+      "registry_tree_sha1": "e6d584f39fd1a0c6be1443886c310256827a30a4",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "publication-synthesis",
+          "head_mode": "named_branch",
+          "head_sha1": "662505cd1bba27a34fdd720d5867b6ed791aefc9",
+          "status": {
+            "capture_sha256": "73a45673b0ab67a7e8a15b92cae69e3c501b4aed916d0dde10ee3c89fdedbcad",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 2
+          },
+          "tree_sha1": "e6d584f39fd1a0c6be1443886c310256827a30a4",
+          "worktree_id": "publication-synthesis"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "9565b0eda6e9671bea2b9bed6c4a7641dcbfb9fc",
+        "parent_sha1": null,
+        "status": "established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-science-synthesis",
+      "registry_head_sha1": "9dcdf32f18076eefc768194079b4abf437009737",
+      "registry_id": "science-synthesis",
+      "registry_tree_sha1": "baeda48a394230fddbbcba871f1e2e3afdad5911",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "science-synthesis",
+          "head_mode": "named_branch",
+          "head_sha1": "9dcdf32f18076eefc768194079b4abf437009737",
+          "status": {
+            "capture_sha256": "6d991de31c820429f897f8c0f0d4aba62f314f468f067ac1103e3510efac899d",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 23
+          },
+          "tree_sha1": "baeda48a394230fddbbcba871f1e2e3afdad5911",
+          "worktree_id": "science-synthesis"
+        }
+      ]
+    },
+    {
+      "archive_checkpoint": {
+        "identifier_kind": "sha1_full",
+        "object_identifier": "30095a7c6cad0f6e7bc2e13bc7ac43e838d30357",
+        "parent_sha1": null,
+        "status": "established",
+        "tree_sha1": null
+      },
+      "bare": false,
+      "common_git_directory_id": "common-git-sxpid3-independent",
+      "registry_head_sha1": "9dcdf32f18076eefc768194079b4abf437009737",
+      "registry_id": "sxpid3-independent",
+      "registry_tree_sha1": "baeda48a394230fddbbcba871f1e2e3afdad5911",
+      "relation_to_live_remote_main": "not_established",
+      "worktrees": [
+        {
+          "branch_label": "none",
+          "head_mode": "detached",
+          "head_sha1": "9dcdf32f18076eefc768194079b4abf437009737",
+          "status": {
+            "capture_sha256": "6895a3f0ec27e5e278c9af4d297249ba98e1753fcf0e9729705451af5e85f8ed",
+            "staged": 0,
+            "unstaged": 0,
+            "untracked": 4
+          },
+          "tree_sha1": "baeda48a394230fddbbcba871f1e2e3afdad5911",
+          "worktree_id": "sxpid3-independent"
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "ahead": 0,
+      "behind": 52,
+      "relation": "ancestor",
+      "relation_id": "c12-terminal-to-integration-candidate",
+      "source_sha1": "f7811023da638fe7ede921b7b51c32fef8eb2c80",
+      "target_reference_id": "integration-candidate"
+    }
+  ],
+  "schema_id": "pid-rs/sibling-registry-retirement-ledger",
+  "schema_revision": 1,
+  "summary": {
+    "archive_checkpoint_count": 7,
+    "bare_registry_count": 1,
+    "cache_example_inventory_sha256": "18b2faf75ac0220cb098c920bcfb1f35393478fe32bcbbc4fdb08af34abe99ad",
+    "clean_worktree_count": 5,
+    "common_git_directory_count": 10,
+    "comparison_absent": 101,
+    "comparison_evolved": 270,
+    "comparison_exact": 65,
+    "comparison_inventory_sha256": "a0221c0c1f6eeedc2177fa3c3a358c00b329424e66fae8340be3eb49fb7b2041",
+    "comparison_record_count": 10,
+    "comparison_total": 436,
+    "custody_artifact_count": 9,
+    "custody_inventory_sha256": "d770614b04752be6f135dc5d6eb9c90aaed70d5e6a81a478519e6ef1935b6f5a",
+    "dirty_worktree_count": 7,
+    "negative_control_inventory_sha256": "f10224565d2db3bfb211aef4cf4401fc565b5a59704d61aaaa2c55f3a5906ccd",
+    "object_availability_inventory_sha256": "8411c6647883f01aaa1b08392f5cbd2de1956647f88c160fd23e76da9de1b5cd",
+    "registry_count": 10,
+    "registry_inventory_sha256": "1ca189e39f7fe21a846ceacb16d9e9bb99415dd56d7a0e7f27870c384c2f7fd5",
+    "status_inventory_sha256": "2d16d12841eff639e7cfd136beff8c1e58b2a082d339523ccda66d5721b3509b",
+    "total_staged": 0,
+    "total_unstaged": 122,
+    "total_untracked": 110,
+    "unreachable_pair_count": 3,
+    "unreachable_pair_inventory_sha256": "248272fece0dfeca4b4df96acc20f0639f5317e69bf0119060daae9f54ff8826",
+    "worktree_count": 12
+  },
+  "unreachable_commit_pairs": [
+    {
+      "custody_binding": {
+        "advertised_object_sha1": "544c4ceba92228c249de656c01ac5b5214d65d37",
+        "bundle_byte_size": 30319870,
+        "bundle_label": "milestone2-clean-repository-2026-08-27.bundle",
+        "bundle_sha256": "29d8a06df72ac2aa5d1994c1a5457b88579f141e8fbddd93fe20533a434d7f47",
+        "bundle_verify_complete_history": true,
+        "custody_artifact_id": "custody-c12-milestone2-public-receipt-bundle",
+        "public_receipt_path": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md",
+        "receipt_section": "independently_verified_bundle_inventory"
+      },
+      "custody_bound": true,
+      "disposition": "same_patch_and_tree_evidence_exact_commit_custody_bound_no_pair_specific_registry_retention",
+      "exact_commit_identity_equal": false,
+      "live_ref_reachable": false,
+      "pair_id": "c12-custody-bound-pair-01",
+      "reachable_commit_sha1": "796103f0576596b3dbecb639f77e20c955308012",
+      "registry_retention_required_for_pair": false,
+      "stable_patch_id": "5e455240dbd1838f8f383b2641a2378eb593f5e4",
+      "tree_identity_equal": true,
+      "tree_sha1": "4c2dd6a0a84058abc07182942ad2c37d5260096a",
+      "unreachable_commit_sha1": "544c4ceba92228c249de656c01ac5b5214d65d37"
+    },
+    {
+      "custody_binding": {
+        "advertised_object_sha1": "c94202db75472380d53a7177c2dfedd04ee5c1c0",
+        "bundle_byte_size": 30382519,
+        "bundle_label": "milestone-archive-clean-repository-2026-08-27.bundle",
+        "bundle_sha256": "0635ed934e7dc4cc1530ac3c4088a9e6b505236f11857a5373dc14ed6fa12f4e",
+        "bundle_verify_complete_history": true,
+        "custody_artifact_id": "custody-c12-milestone-archive-public-receipt-bundle",
+        "public_receipt_path": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md",
+        "receipt_section": "independently_verified_bundle_inventory"
+      },
+      "custody_bound": true,
+      "disposition": "same_patch_and_tree_evidence_exact_commit_custody_bound_no_pair_specific_registry_retention",
+      "exact_commit_identity_equal": false,
+      "live_ref_reachable": false,
+      "pair_id": "c12-custody-bound-pair-02",
+      "reachable_commit_sha1": "327a5d175c7b99104cd828f295246bf8185d0d74",
+      "registry_retention_required_for_pair": false,
+      "stable_patch_id": "157c9caadd29c6fb6912b9f0b18b6a0342017d2d",
+      "tree_identity_equal": true,
+      "tree_sha1": "2a90ff80ac2dc46252709ae067375d75ee3f4922",
+      "unreachable_commit_sha1": "c94202db75472380d53a7177c2dfedd04ee5c1c0"
+    },
+    {
+      "custody_binding": {
+        "advertised_object_sha1": "fd718f20198ab61b669a1d3cf20155d21aa36368",
+        "bundle_byte_size": 29880437,
+        "bundle_label": "milestone1-clean-repository-2026-08-27.bundle",
+        "bundle_sha256": "40a06fd0815c600e6df0eccf7cd8dd24dd877b69113a449fc0e4898983290058",
+        "bundle_verify_complete_history": true,
+        "custody_artifact_id": "custody-c12-milestone1-public-receipt-bundle",
+        "public_receipt_path": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md",
+        "receipt_section": "independently_verified_bundle_inventory"
+      },
+      "custody_bound": true,
+      "disposition": "same_patch_and_tree_evidence_exact_commit_custody_bound_no_pair_specific_registry_retention",
+      "exact_commit_identity_equal": false,
+      "live_ref_reachable": false,
+      "pair_id": "c12-custody-bound-pair-03",
+      "reachable_commit_sha1": "3c057e8733fa9463ffd5809e2a746d4bb278db0e",
+      "registry_retention_required_for_pair": false,
+      "stable_patch_id": "673bef771dbd34cf1a650e138ea028d1ea2421db",
+      "tree_identity_equal": true,
+      "tree_sha1": "2f933628bdc44574dbc0025622a0f2ce77ef4ebd",
+      "unreachable_commit_sha1": "fd718f20198ab61b669a1d3cf20155d21aa36368"
+    }
+  ]
+}

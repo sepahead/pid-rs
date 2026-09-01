@@ -27,7 +27,7 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -35,7 +35,8 @@ REPORT_STEM="mathematical-problem-solving-workflow"
 ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"
 SOURCE_DATE_EPOCH_VALUE="1786752000"
 RENDER_DPI=120
-EXPECTED_PAGES=83
+HIGH_RESOLUTION_DPI=300
+EXPECTED_PAGES=87
 EXPECTED_PYPDF_VERSION="6.15.0"
 MODE="${1:---exact}"
 CHECK_NAME="mathematical workflow PDF check"
@@ -1147,8 +1148,10 @@ required_style_markers = (
     r"\definecolor{PidCvTurquoise}{HTML}{1F6968}",
     r"\definecolor{PidCvMineral}{HTML}{D2E0E2}",
     r"\definecolor{PidCvIvory}{HTML}{F7F3E9}",
-    r"\definecolor{PidCvBronze}{HTML}{B28218}",
+    r"\definecolor{PidCvBronze}{HTML}{916400}",
+    r"\definecolor{PidCvSaffron}{HTML}{B28218}",
     r"\definecolor{PidCvMuted}{HTML}{596A73}",
+    r"\colorlet{PidAccent}{PidCvBronze}",
     r"\setmainfont[",
     r"\setsansfont[",
     r"\pagecolor{PidCvIvory}",
@@ -1363,13 +1366,13 @@ for forbidden in (
 # byte bindings close the residual framing/style parser boundary. Updating either digest is an
 # explicit custody transition, not a claim that the bytes are semantically correct by hashing.
 markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
-if markdown_digest != "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567":
+if markdown_digest != "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "684783a855acb21e04f4bb7c3901249bfa082edcf4bb4584ca859ce7dda50828":
+if primer_digest != "11e3c67bc678f3a3d1790d4ba25d6447318266b35914e9df5447d1f3d39c557a":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
-if style_digest != "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e":
+if style_digest != "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9":
     fail(f"workflow publication style exact-byte custody drifted: {style_digest}")
 PY
 
@@ -1379,9 +1382,11 @@ if [[ "$MODE" != "--refresh" ]]; then
     "$SNAPSHOT_ROOT/$COMMITTED" \
     "$SNAPSHOT_ROOT/$RENDERING_RECEIPT" \
     "$EXPECTED_PAGES" \
-    "$RENDER_DPI" <<'PY'
+    "$RENDER_DPI" \
+    "$HIGH_RESOLUTION_DPI" <<'PY'
 from __future__ import annotations
 
+from collections import Counter
 import hashlib
 from pathlib import Path
 import re
@@ -1397,7 +1402,17 @@ receipt_path = Path(sys.argv[1])
 pdf_path = Path(sys.argv[2])
 rendering_receipt_path = Path(sys.argv[3])
 expected_pages = int(sys.argv[4])
-expected_dpi = int(sys.argv[5])
+expected_normal_dpi = int(sys.argv[5])
+expected_high_resolution_dpi = int(sys.argv[6])
+if expected_pages != 87:
+    fail(f"expected-page argument differs from the reviewed value 87: {expected_pages}")
+if expected_normal_dpi != 120:
+    fail(f"normal-DPI argument differs from the reviewed value 120: {expected_normal_dpi}")
+if expected_high_resolution_dpi != 300:
+    fail(
+        "high-resolution-DPI argument differs from the reviewed value 300: "
+        f"{expected_high_resolution_dpi}"
+    )
 raw = receipt_path.read_bytes()
 if not raw.endswith(b"\n") or b"\r" in raw:
     fail("does not have canonical LF termination")
@@ -1410,7 +1425,7 @@ if any(forbidden in text for forbidden in ("/private/", "/Users/", "file://")):
 lines = text.splitlines()
 if any(
     token in text
-    for token in ("<!--", "-->", "```", "~~~")
+    for token in ("<!--", "-->", "```", "~~~", "<details", "</details>", "[//]:")
 ) or any(
     line.startswith((">", "\t", "    "))
     for line in lines
@@ -1430,11 +1445,13 @@ field_order = (
     "rendering_receipt",
     "rendering_receipt_sha256",
     "pages",
-    "dpi",
+    "normal_dpi",
+    "high_resolution_dpi",
     "color_pages_reviewed",
     "grayscale_pages_reviewed",
-    "original_resolution_spot_checks",
+    "high_resolution_spot_checks",
     "figure_pages_reviewed",
+    "lens_count",
     "status",
     "review_date_utc",
     "reviewer_kind",
@@ -1460,19 +1477,21 @@ def field(name: str) -> str:
 
 
 expected_fields = {
-    "schema": "pid-rs/mathematical-workflow-visual-review/v1",
+    "schema": "pid-rs/mathematical-workflow-visual-review/v2",
     "subject": "output/pdf/mathematical-problem-solving-workflow.pdf",
-    "pdf_sha256": hashlib.sha256(pdf_path.read_bytes()).hexdigest(),
+    "pdf_sha256": "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798",
     "rendering_receipt": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-    "rendering_receipt_sha256": hashlib.sha256(rendering_receipt_path.read_bytes()).hexdigest(),
+    "rendering_receipt_sha256": "1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab",
     "pages": str(expected_pages),
-    "dpi": str(expected_dpi),
+    "normal_dpi": str(expected_normal_dpi),
+    "high_resolution_dpi": str(expected_high_resolution_dpi),
     "color_pages_reviewed": f"1-{expected_pages}",
     "grayscale_pages_reviewed": f"1-{expected_pages}",
-    "original_resolution_spot_checks": "1,5,6,10,12,19-23,28,30,31,37-47,55-63,79-83",
+    "high_resolution_spot_checks": "1-3,5,6,10,12,46-51,58,60,62,65,66,82-87",
     "figure_pages_reviewed": "5,6,10,12",
+    "lens_count": "20",
     "status": "passed",
-    "review_date_utc": "2026-08-31",
+    "review_date_utc": "2026-09-01",
     "reviewer_kind": "agent-visual-inspection",
 }
 for name, expected in expected_fields.items():
@@ -1480,27 +1499,187 @@ for name, expected in expected_fields.items():
     if observed != expected:
         fail(f"field {name} differs: {observed!r}")
 
+actual_pdf_sha256 = hashlib.sha256(pdf_path.read_bytes()).hexdigest()
+if actual_pdf_sha256 != field_values["pdf_sha256"]:
+    fail(f"subject bytes differ from reviewed pdf_sha256: {actual_pdf_sha256}")
+actual_rendering_receipt_sha256 = hashlib.sha256(rendering_receipt_path.read_bytes()).hexdigest()
+if actual_rendering_receipt_sha256 != field_values["rendering_receipt_sha256"]:
+    fail(
+        "rendering-receipt bytes differ from reviewed rendering_receipt_sha256: "
+        f"{actual_rendering_receipt_sha256}"
+    )
+
+field_line_indices = set(range(2, field_block_end))
+for index, line in enumerate(lines):
+    match = re.fullmatch(r"([a-z][a-z0-9_]*): `([^`]*)`", line)
+    if match is not None and index not in field_line_indices:
+        fail(f"contains an unexpected field outside the canonical field block: {match.group(1)}")
+
+expected_lens_rows = (
+    (
+        "hierarchy",
+        "Section headings, subordinate headings, callouts, captions, and running matter preserve a clear visual hierarchy.",
+    ),
+    (
+        "typography",
+        "Body, heading, monospaced, and mathematical text remain legible with no missing or visibly damaged glyphs.",
+    ),
+    (
+        "grid",
+        "Text blocks, tables, figures, headers, and footers remain aligned to a consistent page grid.",
+    ),
+    (
+        "spacing/rhythm",
+        "Margins, paragraph spacing, list spacing, and section transitions maintain a consistent reading rhythm.",
+    ),
+    (
+        "narrative order",
+        "The title, contents, sections, figures, and closing material progress in the intended page order.",
+    ),
+    (
+        "motif provenance",
+        "Geometric motifs are visibly consistent with the reviewed repository-local TeX and SVG publication assets.",
+    ),
+    (
+        "motif coherence",
+        "Geometric motifs remain stylistically coherent across the title, figures, callouts, and page furniture.",
+    ),
+    (
+        "ornamental restraint",
+        "Paper grain and geometric ornament remain low contrast and do not compete with text, tables, or figures.",
+    ),
+    (
+        "palette identity",
+        "Lapis, turquoise, ink, mineral, ivory, bronze, and saffron follow their declared roles; pomegranate is not used on this publication surface.",
+    ),
+    (
+        "pattern/data-semantic separation",
+        "Decorative patterns do not encode mathematical status, table values, or graph magnitude.",
+    ),
+    (
+        "color-redundant labels",
+        "Labels, numbering, shapes, rules, and text preserve every essential distinction without color alone.",
+    ),
+    (
+        "grayscale legibility",
+        "All 87 grayscale pages remain legible, including the four workflow figures and color-coded callouts.",
+    ),
+    (
+        "real-text searchability and logical extraction order",
+        "Rendered text remains searchable, and extracted title, section, table, caption, and reference text follows logical order.",
+    ),
+    (
+        "print fidelity",
+        "Digital A4/render checks passed for the reviewed PDF; no physical-printer claim is made.",
+    ),
+    (
+        "A4/PDF profile and embedded fonts",
+        "The PDF reports A4 pages, the required PDF profile metadata, and embedded fonts; rendered glyphs remain intact.",
+    ),
+    (
+        "link/action safety",
+        "Visible link text remains legible; the exact checker separately rejects unauthorized PDF actions and link targets.",
+    ),
+    (
+        "deterministic reproduction",
+        "Two isolated builds and the committed rendering receipt reproduce the exact reviewed PDF and render digests.",
+    ),
+    (
+        "source/derived-asset separation",
+        "Repository-local TeX and SVG sources remain distinct from the committed PDF and derived figure PDFs.",
+    ),
+    (
+        "portable repository-local dependencies",
+        "No private host path is recorded; the reviewed document depends only on captured repository-local sources and admitted toolchain inputs.",
+    ),
+    (
+        "normal-size plus high-resolution rendered inspection",
+        "All 87 color and grayscale pages were viewed at 120 dpi; every declared spot page was viewed in 300 dpi color and every figure page in 300 dpi grayscale.",
+    ),
+)
+if len(expected_lens_rows) != 20 or field_values["lens_count"] != str(len(expected_lens_rows)):
+    fail("lens_count does not bind the exact expected lens inventory")
+
+table_start = field_block_end + 1
+if table_start + 1 >= len(lines):
+    fail("is truncated before the canonical lens table")
+if lines[table_start] != "| Lens | Outcome | Evidence |":
+    fail("does not begin the canonical lens table immediately after the field block")
+if lines[table_start + 1] != "|---|---|---|":
+    fail("canonical lens table separator drifted")
+
+observed_lens_rows: list[tuple[str, str, str]] = []
+table_cursor = table_start + 2
+while table_cursor < len(lines) and lines[table_cursor] != "":
+    row_match = re.fullmatch(r"\| ([^|]*?) \| ([^|]*?) \| ([^|]*?) \|", lines[table_cursor])
+    if row_match is None:
+        fail(f"canonical lens table row syntax drifted at row {len(observed_lens_rows) + 1}")
+    observed_lens_rows.append(tuple(row_match.groups()))
+    table_cursor += 1
+if table_cursor >= len(lines) or lines[table_cursor] != "":
+    fail("does not terminate the canonical lens table with one blank line")
+
+expected_lens_names = [name for name, _evidence in expected_lens_rows]
+observed_lens_names = [name for name, _outcome, _evidence in observed_lens_rows]
+observed_lens_counts = Counter(observed_lens_names)
+missing_lenses = [name for name in expected_lens_names if observed_lens_counts[name] == 0]
+if missing_lenses:
+    fail(f"canonical lens is missing: {missing_lenses[0]}")
+duplicate_lenses = [name for name in expected_lens_names if observed_lens_counts[name] > 1]
+if duplicate_lenses:
+    fail(f"canonical lens is duplicated: {duplicate_lenses[0]}")
+undeclared_lenses = [name for name in observed_lens_names if name not in expected_lens_names]
+if undeclared_lenses:
+    fail(f"contains an undeclared lens row: {undeclared_lenses[0]}")
+if len(observed_lens_rows) != len(expected_lens_rows):
+    fail(
+        f"lens row inventory differs: {len(observed_lens_rows)}, "
+        f"expected {len(expected_lens_rows)}"
+    )
+if observed_lens_names != expected_lens_names:
+    mismatch_index = next(
+        index
+        for index, (observed, expected) in enumerate(
+            zip(observed_lens_names, expected_lens_names), start=1
+        )
+        if observed != expected
+    )
+    fail(
+        f"lens order drifted at row {mismatch_index}: "
+        f"expected {expected_lens_names[mismatch_index - 1]!r}, "
+        f"observed {observed_lens_names[mismatch_index - 1]!r}"
+    )
+
+for (expected_name, expected_evidence), (name, outcome, evidence) in zip(
+    expected_lens_rows, observed_lens_rows
+):
+    if name != expected_name:
+        fail(f"internal lens-order adjudication drifted at {expected_name}")
+    if outcome != "passed":
+        fail(f"lens outcome differs for {name}: {outcome!r}")
+    if not evidence:
+        fail(f"lens evidence is empty for {name}")
+    if evidence != expected_evidence:
+        fail(f"lens evidence differs for {name}: {evidence!r}")
+
 required_statements = (
     f"All {expected_pages} color pages and all {expected_pages} grayscale pages were viewed in page order.",
     "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
-    "Every workflow figure was reviewed at original resolution in both color and grayscale.",
-    "The root agent completed the page-by-page visual inspection; no dependency-disjoint second-review credit is claimed.",
+    "Every workflow figure was reviewed at high resolution in both color and grayscale.",
+    "The root agent completed the page-by-page visual inspection; no independent second-review credit is claimed.",
     "This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.",
 )
+tail_lines = lines[table_cursor + 1 :]
+tail_text = "\n".join(tail_lines)
 paragraphs = [
     " ".join(line.strip() for line in paragraph.splitlines())
-    for paragraph in text.split("\n\n")
+    for paragraph in tail_text.split("\n\n")
     if paragraph.strip()
 ]
 for statement in required_statements:
     if paragraphs.count(statement) != 1:
         fail(f"required top-level review paragraph is absent or duplicated: {statement}")
-expected_paragraphs = [
-    "# Mathematical workflow PDF visual-review receipt",
-    " ".join(lines[2:field_block_end]),
-    *required_statements,
-]
-if paragraphs != expected_paragraphs:
+if paragraphs != list(required_statements):
     fail("paragraph inventory differs from the closed schema")
 PY
 fi
@@ -1541,6 +1720,7 @@ allowed_palette = {
     "#1F6968",
     "#D2E0E2",
     "#F7F3E9",
+    "#916400",
     "#B28218",
     "#596A73",
 }
@@ -4143,16 +4323,16 @@ def walk_outline(items, depth: int = 0) -> None:
 
 
 walk_outline(reader.outline)
-if len(outline_rows) != 85:
+if len(outline_rows) != 90:
     fail(f"outline item inventory drifted: {len(outline_rows)}")
 outline_manifest = "".join(
     f"{depth}\t{title}\t{page_index + 1}\n"
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "19922bc305c111ca3236a43175abf881ff46ddc4455a2a8f41a2e748efa3bcc2":
+if outline_manifest_digest != "03859a7aa1d3320c025c104ce5bd04454b55db1e6bff5b41bb9b67cbf5ee0418":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
-if len(reader.named_destinations) != 220:
+if len(reader.named_destinations) != 231:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
 
 raw_destination_root = names.get("/Dests")
@@ -4249,7 +4429,7 @@ _raw_first, _raw_last, raw_destination_entries = walk_destination_name_tree(
 )
 raw_destination_names = [name for name, _destination in raw_destination_entries]
 logical_destination_names = sorted(map(str, reader.named_destinations))
-if len(raw_destination_names) != 220 or raw_destination_names != logical_destination_names:
+if len(raw_destination_names) != 231 or raw_destination_names != logical_destination_names:
     fail("raw destination name-tree inventory differs from the logical destination inventory")
 
 
@@ -4307,13 +4487,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "71b98814d4b0b8932693731599fec35642a4ae910498bf50ad96fc8fa01b570f":
+if named_destination_route_digest != "73945c7667ab7435811585e8da9e739914e4770b56ed6ad17c09557cfe2fe403":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "ef35dfd0ddd7444136f3b1a3328b445b7b42dfe17d4b4ef4e477880cc4353c88":
+    if named_destination_digest != "6b9956fad4935ee3c9cf4b5b4a6ba898ed181a87396e6f36b7f6147933b3eb7d":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index
@@ -5096,8 +5276,8 @@ try:
     expected_pages = int(expected_pages_raw)
 except (IndexError, ValueError):
     fail("expected-page argument is not a decimal integer")
-if expected_pages_raw != str(expected_pages) or expected_pages != 83:
-    fail("expected-page argument is not the exact reviewed value 83")
+if expected_pages_raw != str(expected_pages) or expected_pages != 87:
+    fail("expected-page argument is not the exact reviewed value 87")
 
 built_default_raw, built_default_pages = validate_projection(
     Path(sys.argv[1]), "built default", expected_pages

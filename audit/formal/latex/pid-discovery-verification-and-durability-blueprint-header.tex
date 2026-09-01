@@ -7,7 +7,12 @@
 \definecolor{PidCode}{HTML}{EDF3F1}
 \definecolor{PidInk}{HTML}{2C3E50}
 \definecolor{PidMineral}{HTML}{D2E0E2}
-\definecolor{PidBronze}{HTML}{B28218}
+\definecolor{PidBronze}{HTML}{916400}
+\definecolor{PidSaffron}{HTML}{B28218}
+
+% The reviewed publication profile is PDF 1.7.  This declaration affects the container version;
+% it does not claim PDF/A, PDF/UA, tagged-PDF, accessibility, or archival conformance.
+\pdfvariable minorversion=7
 
 \usepackage{microtype}
 \usepackage{fancyhdr}
@@ -27,6 +32,19 @@
 \usepackage{eso-pic}
 \usetikzlibrary{patterns}
 
+% Source Sans Pro carries navigation, metadata, headings, and labels; Latin Modern Roman carries
+% the narrative and large report title. This is the reviewed repository-local report adaptation.
+\setsansfont[
+  ItalicFont=SourceSansPro-RegularIt.otf,
+  BoldFont=SourceSansPro-Semibold.otf,
+  BoldItalicFont=SourceSansPro-SemiboldIt.otf
+]{SourceSansPro-Regular.otf}
+\AtBeginDocument{\hypersetup{
+  pdfauthor={pid-rs contributors},
+  pdfsubject={Proposed PID discovery, verification, and durable-promotion architecture},
+  pdfkeywords={partial information decomposition, SxPID3, formal verification, durable research workflow}
+}}
+
 % This report deliberately adopts the repository's quiet, patterned publication system.  The
 % paper-grain is decorative only; headings, captions, labels, and prose carry the meaning.
 \pgfdeclarepatternformonly{pidblueprintpapergrain}
@@ -41,6 +59,33 @@
     \pgfpathlineto{\pgfpoint{16.0pt}{11.7pt}}%
     \pgfpathmoveto{\pgfpoint{4.0pt}{16.0pt}}%
     \pgfpathlineto{\pgfpoint{8.0pt}{15.8pt}}%
+    \pgfusepath{stroke}%
+  }
+% A restrained eight-point girih-rosette field adapts the reviewed title-banner grammar.  It is
+% decorative only: real text remains the sole carrier of title and status information.
+\pgfdeclarepatternformonly{pidblueprinttitlerosette}
+  {\pgfpoint{0pt}{0pt}}
+  {\pgfpoint{20pt}{20pt}}
+  {\pgfpoint{20pt}{20pt}}
+  {%
+    \pgfsetlinewidth{0.34pt}%
+    \pgfsetroundcap%
+    \pgfsetroundjoin%
+    \pgfpathmoveto{\pgfpoint{10pt}{1pt}}%
+    \pgfpathlineto{\pgfpoint{12.5pt}{7.5pt}}%
+    \pgfpathlineto{\pgfpoint{19pt}{10pt}}%
+    \pgfpathlineto{\pgfpoint{12.5pt}{12.5pt}}%
+    \pgfpathlineto{\pgfpoint{10pt}{19pt}}%
+    \pgfpathlineto{\pgfpoint{7.5pt}{12.5pt}}%
+    \pgfpathlineto{\pgfpoint{1pt}{10pt}}%
+    \pgfpathlineto{\pgfpoint{7.5pt}{7.5pt}}%
+    \pgfpathclose%
+    \pgfpathmoveto{\pgfpoint{10pt}{5.8pt}}%
+    \pgfpathlineto{\pgfpoint{14.2pt}{10pt}}%
+    \pgfpathlineto{\pgfpoint{10pt}{14.2pt}}%
+    \pgfpathlineto{\pgfpoint{5.8pt}{10pt}}%
+    \pgfpathclose%
+    \pgfpathcircle{\pgfpoint{10pt}{10pt}}{0.65pt}%
     \pgfusepath{stroke}%
   }
 \newcommand{\PidBlueprintPageGround}{%
@@ -58,20 +103,20 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\footnotesize\color{PidNavy}PID discovery, verification, and durability}
-\fancyhead[R]{\footnotesize\color{PidBlue}PrimeGaps lessons without semantic transfer}
-\fancyfoot[L]{\footnotesize\color{PidInk}pid-rs research blueprint · 31 August 2026}
-\fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+\fancyhead[L]{\sffamily\footnotesize\color{PidNavy}PID discovery, verification, and durability}
+\fancyhead[R]{\sffamily\footnotesize\color{PidBlue}PrimeGaps lessons without semantic transfer}
+\fancyfoot[L]{\sffamily\footnotesize\color{PidInk}pid-rs research blueprint · 1 September 2026}
+\fancyfoot[R]{\sffamily\footnotesize\color{PidNavy}\thepage}
 \setlength{\headheight}{15pt}
 
 \titleformat{\section}
-  {\Large\bfseries\color{PidNavy}}
+  {\sffamily\Large\bfseries\color{PidNavy}}
   {\thesection}{0.7em}{}
 \titleformat{\subsection}
-  {\large\bfseries\color{PidBlue}}
+  {\sffamily\large\bfseries\color{PidBlue}}
   {\thesubsection}{0.7em}{}
 \titleformat{\subsubsection}
-  {\normalsize\bfseries\color{PidGreen}}
+  {\sffamily\normalsize\bfseries\color{PidGreen}}
   {\thesubsubsection}{0.7em}{}
 \titlespacing*{\section}{0pt}{2.2ex plus .5ex}{1.0ex}
 \titlespacing*{\subsection}{0pt}{1.8ex plus .4ex}{.8ex}
@@ -128,20 +173,42 @@
 \renewcommand{\maketitle}{%
   \begin{titlepage}
     \pagecolor{PidPale}\color{PidInk}
-    \vspace*{1.0cm}
-    {\Large\bfseries\color{PidBlue}PID-RS RESEARCH PROGRAM\par}
-    \vspace{2.0cm}
-    {\fontsize{34}{40}\selectfont\bfseries\color{PidNavy}\@title\par}
+    \begin{tikzpicture}[remember picture,overlay]
+      \shade[top color=PidNavy,bottom color=PidNavy!88!PidBlue]
+        (current page.north west) rectangle ([yshift=-158mm]current page.north east);
+      % Five equal pattern fields create a restrained opacity fade in and out.  The repeated
+      % geometry never carries a status, quantity, or mathematical distinction.
+      \path[pattern=pidblueprinttitlerosette,pattern color=white,opacity=0.045]
+        (current page.north west) rectangle ([xshift=42mm,yshift=-158mm]current page.north west);
+      \path[pattern=pidblueprinttitlerosette,pattern color=white,opacity=0.080]
+        ([xshift=42mm]current page.north west) rectangle ([xshift=84mm,yshift=-158mm]current page.north west);
+      \path[pattern=pidblueprinttitlerosette,pattern color=white,opacity=0.135]
+        ([xshift=84mm]current page.north west) rectangle ([xshift=126mm,yshift=-158mm]current page.north west);
+      \path[pattern=pidblueprinttitlerosette,pattern color=white,opacity=0.080]
+        ([xshift=126mm]current page.north west) rectangle ([xshift=168mm,yshift=-158mm]current page.north west);
+      \path[pattern=pidblueprinttitlerosette,pattern color=white,opacity=0.045]
+        ([xshift=168mm]current page.north west) rectangle ([yshift=-158mm]current page.north east);
+      \draw[PidSaffron,opacity=0.72,line width=0.8pt]
+        ([xshift=18mm,yshift=-151mm]current page.north west) --
+        ([xshift=-18mm,yshift=-151mm]current page.north east);
+    \end{tikzpicture}%
+    \vspace*{0.8cm}
+    {\sffamily\Large\bfseries\color{PidSaffron}PID-RS RESEARCH PROGRAM\par}
+    \vspace{1.8cm}
+    {\fontsize{34}{40}\selectfont\bfseries\color{white}\@title\par}
+    \vspace{5.2cm}
     \vfill
     \begin{minipage}{0.86\textwidth}
       \large\color{PidInk}
-      A source-pinned historical 20-lens review plus a current 50-lens, 10-route closure
-      for exact categorical SxPID3, formal-method limits, and durable repository practice.
+      A source-pinned historical 20-lens review plus a 1 September 2026 70-lens publication-scope
+      review (20 mandatory core and 50 additional artifact-specific lenses) and a separate 10-route
+      comparison of a proposed exact categorical SxPID3 assurance architecture, formal-method
+      limits, and durable repository practice.
     \end{minipage}\par
     \vspace{1.4cm}
-    {\large\@date\par}
+    {\sffamily\large\bfseries\color{PidBlue}\@date\par}
     \vspace{.6cm}
-    {\small\color{PidInk}Canonical narrative: \texttt{PID\_DISCOVERY\_VERIFICATION\_AND\_DURABILITY\_BLUEPRINT.md}\par}
+    {\sffamily\small\color{PidInk}Canonical narrative: \texttt{PID\_DISCOVERY\_VERIFICATION\_AND\_DURABILITY\_BLUEPRINT.md}\par}
   \end{titlepage}
   \nopagecolor\color{black}
 }

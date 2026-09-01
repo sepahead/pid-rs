@@ -1,0 +1,1110 @@
+{
+  "$defs": {
+    "archiveCheckpoint": {
+      "additionalProperties": false,
+      "properties": {
+        "identifier_kind": {
+          "enum": [
+            "none",
+            "sha1_full"
+          ]
+        },
+        "object_identifier": {
+          "pattern": "^[0-9a-f]{0,40}$",
+          "type": "string"
+        },
+        "parent_sha1": {
+          "$ref": "#/$defs/nullableSha1"
+        },
+        "status": {
+          "enum": [
+            "not_established",
+            "established"
+          ]
+        },
+        "tree_sha1": {
+          "$ref": "#/$defs/nullableSha1"
+        }
+      },
+      "required": [
+        "identifier_kind",
+        "object_identifier",
+        "parent_sha1",
+        "status",
+        "tree_sha1"
+      ],
+      "type": "object"
+    },
+    "cacheExample": {
+      "additionalProperties": false,
+      "properties": {
+        "approximate_decimal_gb": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "cache_role": {
+          "enum": [
+            "rust_target",
+            "lake_dependency_cache"
+          ]
+        },
+        "registry_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "worktree_id": {
+          "$ref": "#/$defs/logicalId"
+        }
+      },
+      "required": [
+        "approximate_decimal_gb",
+        "cache_role",
+        "registry_id",
+        "worktree_id"
+      ],
+      "type": "object"
+    },
+    "checkerContract": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "const": "snapshot_integrity_validator"
+        },
+        "does": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "does_not": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "external_replay_required_for_cleanup": {
+          "const": true
+        }
+      },
+      "required": [
+        "classification",
+        "does",
+        "does_not",
+        "external_replay_required_for_cleanup"
+      ],
+      "type": "object"
+    },
+    "comparison": {
+      "additionalProperties": false,
+      "properties": {
+        "absent": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "basis": {
+          "enum": [
+            "observed_dirty_path_corpus",
+            "selected_workflow_blob_corpus",
+            "committed_path_corpus"
+          ]
+        },
+        "comparison_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "evolved": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "exact": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "registry_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "supporting_commit_sha1": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "target_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "total": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "worktree_id": {
+          "$ref": "#/$defs/logicalId"
+        }
+      },
+      "required": [
+        "absent",
+        "basis",
+        "comparison_id",
+        "evolved",
+        "exact",
+        "registry_id",
+        "supporting_commit_sha1",
+        "target_id",
+        "total",
+        "worktree_id"
+      ],
+      "type": "object"
+    },
+    "custodyArtifact": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "artifact_kind": {
+          "enum": [
+            "git_bundle",
+            "compressed_directory_archive",
+            "compressed_file_package"
+          ]
+        },
+        "byte_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "content_count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "content_count_unit": {
+          "enum": [
+            "heads",
+            "refs",
+            "archive_entries",
+            "regular_files"
+          ]
+        },
+        "custody_class": {
+          "enum": [
+            "restricted",
+            "restricted_nonpublic"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/snakeText"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "artifact_kind",
+        "byte_size",
+        "content_count",
+        "content_count_unit",
+        "custody_class",
+        "scope",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "custodyBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "advertised_object_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "bundle_byte_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "bundle_label": {
+          "pattern": "^[a-z0-9][a-z0-9.-]*\\.bundle$",
+          "type": "string"
+        },
+        "bundle_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bundle_verify_complete_history": {
+          "const": true
+        },
+        "custody_artifact_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "public_receipt_path": {
+          "const": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md"
+        },
+        "receipt_section": {
+          "const": "independently_verified_bundle_inventory"
+        }
+      },
+      "required": [
+        "advertised_object_sha1",
+        "bundle_byte_size",
+        "bundle_label",
+        "bundle_sha256",
+        "bundle_verify_complete_history",
+        "custody_artifact_id",
+        "public_receipt_path",
+        "receipt_section"
+      ],
+      "type": "object"
+    },
+    "custodyBoundary": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "covers": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "does_not_cover": {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      },
+      "required": [
+        "boundary_id",
+        "covers",
+        "does_not_cover"
+      ],
+      "type": "object"
+    },
+    "logicalId": {
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "type": "string"
+    },
+    "negativeControl": {
+      "additionalProperties": false,
+      "properties": {
+        "control_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "observed_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "scope": {
+          "$ref": "#/$defs/snakeText"
+        }
+      },
+      "required": [
+        "control_id",
+        "observed_count",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "nonemptyString": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nullableSha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "objectAvailability": {
+      "additionalProperties": false,
+      "properties": {
+        "custody_replays": {
+          "items": {
+            "$ref": "#/$defs/objectCustodyReplay"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "definitions": {
+          "$ref": "#/$defs/objectAvailabilityDefinitions"
+        },
+        "partial_clone_observations": {
+          "items": {
+            "$ref": "#/$defs/partialCloneObservation"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "custody_replays",
+        "definitions",
+        "partial_clone_observations"
+      ],
+      "type": "object"
+    },
+    "objectAvailabilityDefinitions": {
+      "additionalProperties": false,
+      "properties": {
+        "custody_replay": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "observed_head_check": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "separation": {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      },
+      "required": [
+        "custody_replay",
+        "observed_head_check",
+        "separation"
+      ],
+      "type": "object"
+    },
+    "objectCustodyReplay": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_commit_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "bundle_byte_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "bundle_label": {
+          "pattern": "^[a-z0-9][a-z0-9.-]*\\.bundle$",
+          "type": "string"
+        },
+        "bundle_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bundle_verify_complete_history": {
+          "const": true
+        },
+        "custody_artifact_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "fresh_isolated_bare_repository": {
+          "const": true
+        },
+        "fsck_full_strict_no_reflogs_passed": {
+          "const": true
+        },
+        "global_registry_completeness_established": {
+          "const": false
+        },
+        "lazy_fetch_disabled": {
+          "const": true
+        },
+        "public_receipt_path": {
+          "const": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md"
+        },
+        "receipt_section": {
+          "const": "independently_verified_bundle_inventory"
+        },
+        "registry_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "replay_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "scope": {
+          "const": "exact_archive_ref_from_restricted_bundle"
+        }
+      },
+      "required": [
+        "archive_commit_sha1",
+        "bundle_byte_size",
+        "bundle_label",
+        "bundle_sha256",
+        "bundle_verify_complete_history",
+        "custody_artifact_id",
+        "fresh_isolated_bare_repository",
+        "fsck_full_strict_no_reflogs_passed",
+        "global_registry_completeness_established",
+        "lazy_fetch_disabled",
+        "public_receipt_path",
+        "receipt_section",
+        "registry_id",
+        "replay_id",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "partialCloneObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "global_registry_completeness_established": {
+          "const": false
+        },
+        "lazy_fetch_disabled": {
+          "const": true
+        },
+        "missing_object_count": {
+          "const": 0
+        },
+        "observed_head_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "partial_clone_filter": {
+          "const": "blob:none"
+        },
+        "partial_clone_filter_config_count": {
+          "const": 1
+        },
+        "promisor_pack_marker_count": {
+          "const": 6
+        },
+        "promisor_remote_config_count": {
+          "const": 1
+        },
+        "promisor_remote_value": {
+          "const": "true"
+        },
+        "registry_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "remote_label": {
+          "const": "origin"
+        },
+        "scope": {
+          "const": "objects_reachable_from_observed_head"
+        },
+        "verification": {
+          "const": "git_rev_list_objects_missing_print"
+        }
+      },
+      "required": [
+        "global_registry_completeness_established",
+        "lazy_fetch_disabled",
+        "missing_object_count",
+        "observed_head_sha1",
+        "partial_clone_filter",
+        "partial_clone_filter_config_count",
+        "promisor_pack_marker_count",
+        "promisor_remote_config_count",
+        "promisor_remote_value",
+        "registry_id",
+        "remote_label",
+        "scope",
+        "verification"
+      ],
+      "type": "object"
+    },
+    "referenceCommit": {
+      "additionalProperties": false,
+      "properties": {
+        "commit_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "reference_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "role": {
+          "$ref": "#/$defs/snakeText"
+        }
+      },
+      "required": [
+        "commit_sha1",
+        "reference_id",
+        "role"
+      ],
+      "type": "object"
+    },
+    "registry": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_checkpoint": {
+          "$ref": "#/$defs/archiveCheckpoint"
+        },
+        "bare": {
+          "type": "boolean"
+        },
+        "common_git_directory_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "registry_head_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "registry_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "registry_tree_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "relation_to_live_remote_main": {
+          "enum": [
+            "ancestor",
+            "not_established"
+          ]
+        },
+        "worktrees": {
+          "items": {
+            "$ref": "#/$defs/worktree"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "archive_checkpoint",
+        "bare",
+        "common_git_directory_id",
+        "registry_head_sha1",
+        "registry_id",
+        "registry_tree_sha1",
+        "relation_to_live_remote_main",
+        "worktrees"
+      ],
+      "type": "object"
+    },
+    "relation": {
+      "additionalProperties": false,
+      "properties": {
+        "ahead": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "behind": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "relation": {
+          "enum": [
+            "ancestor"
+          ]
+        },
+        "relation_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "source_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "target_reference_id": {
+          "$ref": "#/$defs/logicalId"
+        }
+      },
+      "required": [
+        "ahead",
+        "behind",
+        "relation",
+        "relation_id",
+        "source_sha1",
+        "target_reference_id"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "snakeText": {
+      "pattern": "^[a-z0-9][a-z0-9_]*$",
+      "type": "string"
+    },
+    "status": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "staged": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "unstaged": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "untracked": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "capture_sha256",
+        "staged",
+        "unstaged",
+        "untracked"
+      ],
+      "type": "object"
+    },
+    "summary": {
+      "additionalProperties": false,
+      "properties": {
+        "archive_checkpoint_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "bare_registry_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "cache_example_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "clean_worktree_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "common_git_directory_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "comparison_absent": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "comparison_evolved": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "comparison_exact": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "comparison_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "comparison_record_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "comparison_total": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "custody_artifact_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "custody_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "dirty_worktree_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "negative_control_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "object_availability_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "registry_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "registry_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "status_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "total_staged": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "total_unstaged": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "total_untracked": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "unreachable_pair_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "unreachable_pair_inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "worktree_count": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "archive_checkpoint_count",
+        "bare_registry_count",
+        "cache_example_inventory_sha256",
+        "clean_worktree_count",
+        "common_git_directory_count",
+        "comparison_absent",
+        "comparison_evolved",
+        "comparison_exact",
+        "comparison_inventory_sha256",
+        "comparison_record_count",
+        "comparison_total",
+        "custody_artifact_count",
+        "custody_inventory_sha256",
+        "dirty_worktree_count",
+        "negative_control_inventory_sha256",
+        "object_availability_inventory_sha256",
+        "registry_count",
+        "registry_inventory_sha256",
+        "status_inventory_sha256",
+        "total_staged",
+        "total_unstaged",
+        "total_untracked",
+        "unreachable_pair_count",
+        "unreachable_pair_inventory_sha256",
+        "worktree_count"
+      ],
+      "type": "object"
+    },
+    "unreachablePair": {
+      "additionalProperties": false,
+      "properties": {
+        "custody_binding": {
+          "$ref": "#/$defs/custodyBinding"
+        },
+        "custody_bound": {
+          "const": true
+        },
+        "disposition": {
+          "const": "same_patch_and_tree_evidence_exact_commit_custody_bound_no_pair_specific_registry_retention"
+        },
+        "exact_commit_identity_equal": {
+          "const": false
+        },
+        "live_ref_reachable": {
+          "const": false
+        },
+        "pair_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "reachable_commit_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "registry_retention_required_for_pair": {
+          "const": false
+        },
+        "stable_patch_id": {
+          "$ref": "#/$defs/sha1"
+        },
+        "tree_identity_equal": {
+          "const": true
+        },
+        "tree_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "unreachable_commit_sha1": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "custody_binding",
+        "custody_bound",
+        "disposition",
+        "exact_commit_identity_equal",
+        "live_ref_reachable",
+        "pair_id",
+        "reachable_commit_sha1",
+        "registry_retention_required_for_pair",
+        "stable_patch_id",
+        "tree_identity_equal",
+        "tree_sha1",
+        "unreachable_commit_sha1"
+      ],
+      "type": "object"
+    },
+    "worktree": {
+      "additionalProperties": false,
+      "properties": {
+        "branch_label": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "head_mode": {
+          "enum": [
+            "named_branch",
+            "detached"
+          ]
+        },
+        "head_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "tree_sha1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "worktree_id": {
+          "$ref": "#/$defs/logicalId"
+        }
+      },
+      "required": [
+        "branch_label",
+        "head_mode",
+        "head_sha1",
+        "status",
+        "tree_sha1",
+        "worktree_id"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sibling-registry-retirement-ledger-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorization": {
+      "additionalProperties": false,
+      "properties": {
+        "c12_custody_bound_pairs_require_registry_retention": {
+          "const": false
+        },
+        "cache_deletion_authorized": {
+          "const": false
+        },
+        "decision": {
+          "const": "retain_and_adjudicate"
+        },
+        "garbage_collection_authorized": {
+          "const": false
+        },
+        "promotion_authorized": {
+          "const": false
+        },
+        "ref_deletion_authorized": {
+          "const": false
+        },
+        "registry_deletion_authorized": {
+          "const": false
+        },
+        "remote_mutation_authorized": {
+          "const": false
+        },
+        "retention_basis": {
+          "const": "genuinely_unadjudicated_scope_only"
+        },
+        "worktree_removal_authorized": {
+          "const": false
+        }
+      },
+      "required": [
+        "cache_deletion_authorized",
+        "c12_custody_bound_pairs_require_registry_retention",
+        "decision",
+        "garbage_collection_authorized",
+        "promotion_authorized",
+        "ref_deletion_authorized",
+        "registry_deletion_authorized",
+        "remote_mutation_authorized",
+        "retention_basis",
+        "worktree_removal_authorized"
+      ],
+      "type": "object"
+    },
+    "cache_candidates": {
+      "additionalProperties": false,
+      "properties": {
+        "allocated_bytes": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "candidate_count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "candidate_count_status": {
+          "const": "not_established"
+        },
+        "classification": {
+          "const": "preliminary_non_authorizing_candidates"
+        },
+        "deletion_authorized": {
+          "const": false
+        },
+        "example_values_are_aggregate_inputs": {
+          "const": false
+        },
+        "examples": {
+          "items": {
+            "$ref": "#/$defs/cacheExample"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "measurement": {
+          "const": "allocated_filesystem_bytes"
+        },
+        "scope_note": {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      },
+      "required": [
+        "allocated_bytes",
+        "candidate_count",
+        "candidate_count_status",
+        "classification",
+        "deletion_authorized",
+        "example_values_are_aggregate_inputs",
+        "examples",
+        "measurement",
+        "scope_note"
+      ],
+      "type": "object"
+    },
+    "checker_contract": {
+      "$ref": "#/$defs/checkerContract"
+    },
+    "comparison_definitions": {
+      "additionalProperties": false,
+      "properties": {
+        "absent": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "evolved": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "exact": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "scope": {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      },
+      "required": [
+        "absent",
+        "evolved",
+        "exact",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "comparisons": {
+      "items": {
+        "$ref": "#/$defs/comparison"
+      },
+      "type": "array"
+    },
+    "custody_artifacts": {
+      "items": {
+        "$ref": "#/$defs/custodyArtifact"
+      },
+      "type": "array"
+    },
+    "custody_boundaries": {
+      "items": {
+        "$ref": "#/$defs/custodyBoundary"
+      },
+      "type": "array"
+    },
+    "limitations": {
+      "items": {
+        "$ref": "#/$defs/nonemptyString"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "negative_controls": {
+      "items": {
+        "$ref": "#/$defs/negativeControl"
+      },
+      "type": "array"
+    },
+    "object_availability": {
+      "$ref": "#/$defs/objectAvailability"
+    },
+    "observation": {
+      "additionalProperties": false,
+      "properties": {
+        "architecture": {
+          "const": "arm64"
+        },
+        "ended_at_utc": {
+          "const": "2026-09-01T07:38:43Z"
+        },
+        "git_object_format": {
+          "const": "sha1"
+        },
+        "git_version": {
+          "const": "2.55.0"
+        },
+        "host_build": {
+          "const": "25F80"
+        },
+        "host_operating_system": {
+          "const": "macOS"
+        },
+        "host_operating_system_version": {
+          "const": "26.5.1"
+        },
+        "mode": {
+          "const": "read_only"
+        },
+        "observation_id": {
+          "$ref": "#/$defs/logicalId"
+        },
+        "started_at_utc": {
+          "const": "2026-09-01T07:32:07Z"
+        }
+      },
+      "required": [
+        "architecture",
+        "ended_at_utc",
+        "git_object_format",
+        "git_version",
+        "host_build",
+        "host_operating_system",
+        "host_operating_system_version",
+        "mode",
+        "observation_id",
+        "started_at_utc"
+      ],
+      "type": "object"
+    },
+    "record_id": {
+      "const": "SRRL-20260901-01"
+    },
+    "reference_commits": {
+      "items": {
+        "$ref": "#/$defs/referenceCommit"
+      },
+      "type": "array"
+    },
+    "registries": {
+      "items": {
+        "$ref": "#/$defs/registry"
+      },
+      "type": "array"
+    },
+    "relations": {
+      "items": {
+        "$ref": "#/$defs/relation"
+      },
+      "type": "array"
+    },
+    "schema_id": {
+      "const": "pid-rs/sibling-registry-retirement-ledger"
+    },
+    "schema_revision": {
+      "const": 1
+    },
+    "summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "unreachable_commit_pairs": {
+      "items": {
+        "$ref": "#/$defs/unreachablePair"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "authorization",
+    "cache_candidates",
+    "checker_contract",
+    "comparison_definitions",
+    "comparisons",
+    "custody_artifacts",
+    "custody_boundaries",
+    "limitations",
+    "negative_controls",
+    "object_availability",
+    "observation",
+    "record_id",
+    "reference_commits",
+    "registries",
+    "relations",
+    "schema_id",
+    "schema_revision",
+    "summary",
+    "unreachable_commit_pairs"
+  ],
+  "title": "pid-rs sibling registry retirement ledger v1",
+  "type": "object"
+}

@@ -9,6 +9,37 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Rebuild and visually adjudicate the two canonical workflow publications without changing any
+  accepted PID theorem, estimator, or numerical result. The mathematical-workflow artifact is now
+  87 A4 pages with a complete color/grayscale review, a 24-page high-resolution spot set, 20 named
+  review lenses, and 381 hostile controls including 24 receipt mutations. The discovery and
+  durability blueprint is now 28 A4 pages with a complete color/grayscale review, a 14-page
+  high-resolution spot set, 20 named review lenses, a 70-row worked council
+  (20 mandatory core plus 50 artifact-specific lenses), ten separately compared routes, and 72
+  hostile controls. Both receipts bind exact PDF bytes and state that visual inspection does not
+  prove mathematics, accessibility, toolchain authenticity, or independent scientific review.
+
+- Add complementary, closed-schema retirement ledgers for the primary common Git directory and ten
+  sibling registries. Their isolated normal/optimized checkers validate the recorded snapshots;
+  companion self-tests reject 28 and 75 hostile mutations, respectively, and each additionally
+  rejects three path-custody attacks. The suites bind
+  the dated worktree/ref/status, target-specific comparison, partial-clone, bundle-custody, and
+  no-deletion boundaries; CI now replays both projections. The preservation receipt and the two
+  canonical workflow publications explain why branches/worktrees exist, how revision drift and
+  stale integration are repaired, and why live reachability, custody, remote placement, releases,
+  identifiers, and archival storage are not interchangeable. The records authorize no promotion,
+  cleanup, remote mutation, garbage collection, or cache deletion.
+
+- Fail closed before cargo-deny policy execution unless `cargo deny --version` reports exactly
+  `cargo-deny 0.20.2`. The shared preflight now runs first in both `just deny` and
+  `just certified-sxpid`; `just release-audit` reaches it through its existing `deny` dependency
+  before the long formal lanes. A 12-case self-test accepts two exact effective-dispatch controls
+  and rejects ten wrong-version, malformed-output, failed-probe, missing-Cargo, and
+  shadowed-dispatch cases. It demonstrates that `PATH` precedence alone does not determine literal
+  `cargo deny` resolution. The accepted
+  cargo-deny commands, dependency policies, scientific results, and evidence authority are
+  unchanged; the version string is not binary-authenticity evidence.
+
 - Give the ordered formal-PDF cross-toolchain CI aggregate a 90-minute finite envelope. A hosted
   run reached the prior 60-minute job limit after successive checks had passed but before the
   sensor, SxPID3, and count-bridge tail completed. The new limit supplies measured slow-run

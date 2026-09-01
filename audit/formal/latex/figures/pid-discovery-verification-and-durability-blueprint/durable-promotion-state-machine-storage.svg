@@ -7,7 +7,7 @@
     <pattern id="gate" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.6" fill="#743E37" opacity=".18"/></pattern>
     <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0L11 5.5L0 11Z" fill="#1F6968"/></marker>
     <style>
-      .sans { font-family: "Latin Modern Sans", sans-serif; }
+      .sans { font-family: SourceSansPro, sans-serif; }
       .title { font-size: 34px; font-weight: 750; fill: #1F3F60; }
       .subtitle { font-size: 18px; fill: #1F6968; }
       .kicker { font-size: 17px; font-weight: 780; letter-spacing: 2px; fill: #1F6968; }
@@ -21,7 +21,7 @@
   </defs>
   <rect width="1100" height="760" fill="#F7F3E9"/><rect width="1100" height="760" fill="url(#grain)"/>
   <g class="sans">
-    <text x="65" y="66" class="kicker">FIGURE 2B - DURABLE PROMOTION</text>
+    <text x="65" y="66" class="kicker">FIGURE 4 - DURABLE PROMOTION</text>
     <text x="65" y="112" class="title">Availability, acceptance, and recovery are different claims</text>
     <text x="65" y="143" class="subtitle">Archive-only material may be durable without becoming a mainline or scientific acceptance claim.</text>
     <rect x="65" y="190" width="570" height="470" rx="22" fill="#FFFFFF" stroke="#1F6968" stroke-width="3"/><rect x="65" y="190" width="570" height="470" rx="22" fill="url(#availability)"/>
@@ -40,7 +40,7 @@
     <text x="100" y="580" class="body"><tspan x="100" dy="0">Archive-only storage can preserve rejected or restricted work.</tspan><tspan x="100" dy="22">Remote main and a named release are separate states.</tspan><tspan x="100" dy="22">Hashes bind bytes; no layer alone proves availability,</tspan><tspan x="100" dy="22">authenticity, mathematical truth, or scientific acceptance.</tspan></text>
     <rect x="675" y="190" width="360" height="470" rx="22" fill="#FFF9F5" stroke="#743E37" stroke-width="3"/><rect x="675" y="190" width="360" height="470" rx="22" fill="url(#gate)"/>
     <text x="710" y="238" class="gateTitle">Retirement gate</text>
-    <text x="710" y="282" class="gate"><tspan x="710" dy="0">1. No active process owns the lane.</tspan><tspan x="710" dy="46">2. Dirty and ignored bytes are classified.</tspan><tspan x="710" dy="46">3. Unique science has a</tspan><tspan x="730" dy="22">durable successor.</tspan><tspan x="710" dy="42">4. Remote head and relevant</tspan><tspan x="730" dy="22">gates are exact.</tspan><tspan x="710" dy="42">5. Archive-only material has</tspan><tspan x="730" dy="22">locator and recovery.</tspan><tspan x="710" dy="42">6. Post-removal inventory passes.</tspan></text>
+    <text x="710" y="282" class="gate"><tspan x="710" dy="0">1. No active process owns the lane.</tspan><tspan x="710" dy="46">2. Dirty and ignored bytes are classified.</tspan><tspan x="710" dy="46">3. Unique science has a</tspan><tspan x="730" dy="22">durable successor.</tspan><tspan x="710" dy="42">4. Receipts and gates bind</tspan><tspan x="730" dy="22">the exact remote commit.</tspan><tspan x="710" dy="42">5. Archive-only material has</tspan><tspan x="730" dy="22">locator and recovery.</tspan><tspan x="710" dy="42">6. Post-removal inventory passes.</tspan></text>
     <text x="710" y="620" class="gateTitle">Every row must be true.</text>
     <text x="65" y="715" class="small">The storage and retirement diagrams are project-defined process guidance, not a release, custody, authenticity, or accessibility certificate.</text>
   </g>

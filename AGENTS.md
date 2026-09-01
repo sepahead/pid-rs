@@ -13,6 +13,7 @@ picture — what PID is, which estimator does what, the references, and the cave
 - [What this project is](#what-this-project-is)
 - [Method provenance and novelty claims](#method-provenance-and-novelty-claims)
 - [Scientific-object and evidence firewall (MANDATORY)](#scientific-object-and-evidence-firewall-mandatory)
+- [Branch/worktree durability and closure (MANDATORY)](#branchworktree-durability-and-closure-mandatory)
 - [Workspace layout](#workspace-layout)
 - [Where things live in `pid-core`](#where-things-live-in-pid-core)
 - [Build / test / lint (mirror CI)](#build--test--lint-mirror-ci)
@@ -127,6 +128,32 @@ project-defined derivations and novelty status explicitly. Use ASD-STE100-inspir
 prose for technical sections, but do not claim ASD-STE100 conformance without a separate audit.
 Preserve counterexamples, false positives, unsuccessful routes, and negative results with their
 scope and rejection reason; do not leave stale claims in an apparently current lane.
+
+New or materially redesigned human-facing PDFs, and changed pages in the mathematical-workflow and
+durability-blueprint PDFs, use the reviewed repository-local publication design language. Existing
+publications keep their established design
+unless their own scope explicitly requires migration. Reuse reviewed repository-local publication
+packages, headers, and figure grammar instead of importing an external runtime dependency. Preserve
+the source palette identities: lapis `#1F3F60`, turquoise `#1F6968`, ink `#2C3E50`, mineral blue
+`#D2E0E2`, ivory `#F7F3E9`, bronze body accent `#916400`, saffron structure `#B28218`, and
+pomegranate `#743E37`. Use turquoise for subordinate headings, not for the primary title. Keep
+vector paper grain, girih/rosette or related restrained geometric patterns low contrast and
+decorative only. A pattern must never encode mathematical status, table value, or graph magnitude
+without a text/shape label. Keep real searchable text above decoration, preserve generous spacing
+and grayscale legibility. Render-inspect every changed page at normal size and inspect a declared
+high-risk subset at high resolution.
+Do not publish absolute paths or links to the private design source; the reviewed repository-local
+TeX/SVG assets are the portable authority.
+
+For each changed publication surface, record one visual council pass through 20 named lenses:
+hierarchy; typography; grid; spacing/rhythm; narrative order; motif provenance; motif coherence;
+ornamental restraint; palette identity; pattern/data-semantic separation; color-redundant labels;
+grayscale legibility; real-text searchability and logical extraction order; print fidelity; A4/PDF
+profile and embedded fonts; link/action safety; deterministic reproduction; source/derived-asset
+separation; portable repository-local dependencies; and normal-size plus high-resolution rendered
+inspection. An applicability reason may replace a pass. A source-code palette check, page count,
+render digest, or council judgment does not substitute for the other lenses.
+
 The inert negative-archive and contextual rare-tail gates preserve exact rejected evidence and its
 non-adoption boundary. Passing either gate grants no scientific, formal, implementation, or release
 credit; do not route those payloads into executable or authority surfaces.
@@ -218,7 +245,77 @@ promotion needs candidate-inaccessible confirmation or a declared selection-awar
   unchanged; every child still gets a durable attempt ID, and any frozen-field change starts a new
   packet revision.
 
-Research durability is part of the method, not housekeeping:
+## Branch/worktree durability and closure (MANDATORY)
+
+These rules apply to every repository lane, regardless of whether an agent, a human, a proof tool,
+or an ordinary build task created it. Research durability is part of the method, not housekeeping:
+
+The dated human case record is
+[`audit/evidence/worktree-and-branch-preservation-2026-08-27.md`](audit/evidence/worktree-and-branch-preservation-2026-08-27.md).
+Its dated 1 September 2026 primary-common-Git-directory facts are projected into the strict
+[`audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json`](audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json).
+Ten separately rooted sibling common Git directories and their 12 observed worktrees are projected
+into the separate strict
+[`audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json`](audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json).
+Both ledgers are bounded snapshots, not live monitors or cleanup authority. The sibling checker is
+snapshot-integrity-only: it does not revisit the registries, bundles, remote, or network. The two
+records exclude different scopes and together are not a global filesystem or non-Git custody
+inventory; re-observe every applicable fact before retirement.
+
+Treat storage classes as typed, non-interchangeable objects:
+
+| Storage class | Credit and required boundary |
+|---|---|
+| Model context, terminal output, `/tmp`, or scratch file | Exploration only. It provides no recovery or evidence credit. |
+| Dirty worktree/index/stash | Mutable local working state. Inventory tracked, staged, untracked, relevant ignored, mode, and process ownership; Git history does not preserve these bytes automatically. |
+| Local commit/ref | Local Git-object recovery only. It supplies neither off-host durability nor accepted-mainline status. |
+| Verified Git bundle | Recovery for exactly the advertised reachable Git objects. Bind bytes and SHA-256, compare advertised refs with the intended frozen inventory, run `git bundle verify`, and perform an isolated recovery drill. Preserve non-Git state separately. |
+| Remote side/archive ref | Recovery through the declared remote for its reachable history. Call it off-host only when the separate host or custodian and a retrieval drill establish that fact. It is not accepted `main`, a release, or permanent scholarly storage. |
+| Remote `main` commit | Minimum operational anchor for accepted work under the stated remote-retention and no-history-rewrite assumptions. Re-query the ref and bind the exact OID; a side-branch run does not substitute for a mainline event. |
+| Release or scholarly/content-addressed archive | Named longer-term publication/recovery object under that service's policy. Record exact bytes, digest, locator, access, license, retention, and retrieval drill; none of these proves mathematical truth. |
+| Approved restricted durable store | Home for protected, private, blinded, or embargoed preimages. Publish only a safe commitment/manifest, keep the retrievable locator access-controlled, and record omissions and retention limits. |
+| Hosted CI artifact or cache | Ephemeral execution aid with expected expiry. It is not archival storage and must not be the only home of load-bearing evidence. |
+
+- Use a separate branch/worktree when a task needs an isolated write scope, a frozen claim
+  revision, a clean reproduction checkout, or an inert home for rejected/restricted evidence.
+  Record the base commit, current commit/tree, branch or detached `HEAD`, common Git directory,
+  owner, purpose, allowed writers, expected outputs, and configured build root. A linked worktree
+  supplies a separate checkout, index, and `HEAD`; a separate build directory and bounded write
+  scope require project convention or configuration. Linked worktrees share the object database
+  and most refs, while `HEAD`, pseudorefs, and some per-worktree refs remain separate. A worktree is
+  not an independent repository, scientific reviewer, durable store, or acceptance state.
+- Isolation creates a closure obligation. Before integration, stop writers and inventory every
+  worktree, ref, stash, alternate index, branch-only commit, dirty tracked path, staged path,
+  untracked path, relevant ignored path, symbolic link, gitlink/submodule, sparse/skip-worktree or
+  assume-unchanged state, and live process that owns the lane. Compare paths, blobs, and semantic
+  roles. A mostly stale branch can contain one current theorem witness, counterexample, SVG,
+  receipt, or process finding; preserve that fragment without merging the stale tree wholesale.
+- A Git bundle preserves selected refs and reachable Git objects only. It does not preserve the
+  working tree, index, stash, hooks, configuration, or uncommitted/ignored bytes. Before relying on
+  a bundle, commit the permitted payload to an explicit ref or preserve non-Git state separately.
+  Record bundle size and SHA-256, run `git bundle verify`, list advertised heads, and perform a
+  clean recovery drill. A digest without a retrievable preimage supplies no recovery.
+- Integrate from a fresh remote-`main` descendant. Port explicit paths or one coherent claim
+  packet. Reconcile formulas, assumptions, source markers, tests, schemas, hostile controls,
+  Markdown, TeX, PDFs, and receipts together. Regenerate self-referential manifests and derived
+  publication bytes last. Never bulk-overlay an old worktree on a corrected tree.
+- A formal lane must bind the exact proposition, definitions, distributions/support assumptions,
+  units, quantifiers, boundary cases, source-to-symbol map, theorem roster, imports, axioms,
+  toolchain/dependency revisions, checker source, and artifacts. Run kernel/solver checks, normal
+  and optimized checker modes where supplied, hostile semantic/revision/artifact mutations, and a
+  fresh hosted replay. Keep paper correspondence, formal validity, exact arithmetic, executable
+  refinement, binary64 behavior, estimator calibration, and consumer qualification as separate
+  obligations. A green algebra theorem does not formalize probability unless the stated random
+  objects and probability claims occur in the checked theorem.
+- Before advancing `main`, query the remote old object ID, prove the candidate is its descendant,
+  and use an explicit expected-old lease. Query the remote after push, align local `main` with that
+  observed object, and require the relevant hosted workflows on the exact mainline SHA. A
+  side-branch run is preflight evidence, not the mainline publication event.
+- Retire only after no process owns the lane, every byte has a disposition, accepted work is
+  reachable from remote `main`, archive-only material has a verified durable successor, relevant
+  gates pass, and a post-removal reachability inventory succeeds. Use `git worktree remove` for a
+  linked worktree. Retain ambiguous refs. Delete reproducible caches and temporary build trees
+  last, after exact targets and ownership are checked.
 
 - No unique accepted or load-bearing research object may exist only in `/tmp`, a disposable
   worktree, an unpushed branch, a terminal transcript, or an agent conversation. Scratch state has
@@ -242,10 +339,13 @@ Research durability is part of the method, not housekeeping:
   commitment/manifest until the boundary closes. A commitment without a retrievable permitted
   preimage provides binding, not recovery or reproducibility.
 - Before deleting or abandoning any worktree, branch, cache, or local artifact, prove that every
-  accepted, adjudicating, or selection/load-bearing artifact identified by the attempt ledger or
-  manifest is either reachable from remote `main`, intentionally rejected with a ledger record, or
-  bound by a verified durable external locator. A remote side branch is a backup, not completion;
-  move accepted work to `main`.
+  accepted artifact identified by the attempt ledger or manifest is reachable from remote `main`.
+  Keep the exact preimage of every adjudicating or selection/load-bearing artifact—including a
+  rejected route—reachable from remote `main` or a verified durable locator under its typed
+  negative/archive disposition. Only an artifact separately established as non-load-bearing and
+  outside the required retention scope may be discarded with a ledgered reason. A rejection label
+  or digest without a retrievable preimage never satisfies a load-bearing retention obligation. A
+  remote side branch is a backup, not completion; move accepted work to `main`.
 - Verify publication with a read-only remote query. Record the remote URL, ref, observed OID, and
   observation time. If `main` advanced after the milestone, prove the milestone is an ancestor of
   the observed tip; never force-push merely to restore a previously expected tip.
@@ -483,6 +583,12 @@ on canonical logic gates, with deterministic reference-matching output).
 
 ## Build / test / lint (mirror CI)
 
+Local `just deny` and `just certified-sxpid` require exactly cargo-deny 0.20.2 and run the shared
+version preflight plus its hostile self-test before their policy command. A raw `cargo deny`
+invocation bypasses that repository preflight. The exact version-output check detects the known
+0.19/0.20 command-grammar split; it does not authenticate the binary or atomically bind the later
+process.
+
 ```bash
 cargo test --locked --workspace --exclude pid-python        # stable workspace tests
 cargo test --locked -p pid-core --no-default-features       # approved stable default surface
@@ -491,6 +597,9 @@ cargo test --locked -p pid-core --all-features              # every default-off 
 cargo test --locked --release -p pid-core --all-features    # release-mode numerical fixtures
 cargo fmt --all --check                                     # formatting
 cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+scripts/check-cargo-deny-toolchain.sh                       # requires cargo-deny 0.20.2 exactly
+scripts/check-cargo-deny-toolchain-self-test.sh             # 2 accepted + 10 rejected probes
+cargo deny --all-features --locked check                    # top-level options precede `check`
 RUSTDOCFLAGS="-D warnings" cargo doc --locked -p pid-core --no-default-features --no-deps
 RUSTDOCFLAGS="-D warnings" cargo doc --locked --workspace --all-features --no-deps
 # the docs.rs gate is cargo *rustdoc*, not cargo doc — --lib is required because --all-features
@@ -678,6 +787,14 @@ python3 -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
 python3 -O -I -S -B scripts/check-zeta-pid-transfer-firewall-self-test.py
 python3 scripts/check-release-scope.py                   # scope/signature-registry coherence
 scripts/check-release-scope-self-test.sh                 # fail-closed scope/history mutations
+python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py
+python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py
+python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py
+python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py
+python3 -I -S -B scripts/check-sibling-registry-retirement-ledger.py
+python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger.py
+python3 -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py
+python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py
 scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence
 scripts/check-release-state.sh candidate                  # pre-tag public-metadata truth
 ```

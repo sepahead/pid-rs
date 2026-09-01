@@ -7,7 +7,7 @@
     <pattern id="cardDots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.6" fill="#1F6968" opacity=".18"/></pattern>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#1F6968"/></marker>
     <style>
-      .sans { font-family: "Latin Modern Sans", sans-serif; }
+      .sans { font-family: SourceSansPro, sans-serif; }
       .title { font-size: 34px; font-weight: 750; fill: #1F3F60; }
       .subtitle { font-size: 18px; fill: #1F6968; }
       .kicker { font-size: 17px; font-weight: 780; letter-spacing: 2px; fill: #1F6968; }
@@ -22,7 +22,7 @@
   <rect width="1100" height="760" fill="#F7F3E9"/>
   <rect width="1100" height="760" fill="url(#grain)"/>
   <g class="sans">
-    <text x="65" y="66" class="kicker">FIGURE 1A - TRANSFER FIREWALL</text>
+    <text x="65" y="66" class="kicker">FIGURE 1 - TRANSFER FIREWALL</text>
     <text x="65" y="112" class="title">Begin with source meaning, not shared vocabulary</text>
     <text x="65" y="143" class="subtitle">The first two panels record the source object and the required mapping discipline.</text>
 

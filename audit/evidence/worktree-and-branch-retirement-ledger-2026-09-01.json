@@ -1,0 +1,572 @@
+{
+  "global_decision": {
+    "cleanup_authorized": false,
+    "deletion_eligible_count": 0,
+    "final_main_candidate_established": false,
+    "reason": "The documentation candidate is still changing, exact local and hosted gates are not yet bound to its final commit, and retained worktree, ref, and branch dispositions remain open.",
+    "sibling_and_global_registries": "out_of_scope_and_pending_fresh_audit",
+    "status": "retain_everything_in_scope"
+  },
+  "hosted_branches": [
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "062025c3fc283db9bdb105219dbcc82719771175",
+      "reason": "Rejected composite evidence remains branch-only negative evidence.",
+      "ref": "refs/heads/archive/composite-v5-rejected-umask-20260818"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "f7c6122d25ea098a36fa1fc6d672d78f25b783bb",
+      "reason": "Unqualified composite draft remains branch-only historical evidence.",
+      "ref": "refs/heads/archive/composite-v5-unqualified-draft-20260818"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "1ef37646e168b645853e1857d0205233a87b68dc",
+      "reason": "Pre-revision composite draft remains branch-only historical evidence.",
+      "ref": "refs/heads/archive/composite-v6-pre-r11-draft-20260818"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "769547a6d6ed70a074707d90bc2f55393fd34fa4",
+      "reason": "Rejected local-authority result remains branch-only negative evidence.",
+      "ref": "refs/heads/archive/composite-v9-rejected-local-authority-oversize-20260822"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "113cbad2e58a9cfa40cf43b1c0ffc260b566aa92",
+      "reason": "Rejected fixed-point result remains branch-only negative evidence.",
+      "ref": "refs/heads/archive/composite-v9-rejected-r14-fixed-point-20260822"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "0a6ece9c525ad7aad061f55b3edea83554891b42",
+      "reason": "Rejected workflow-PDF umask result remains branch-only negative evidence.",
+      "ref": "refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "60774437488b376d30702146301e76b3186b5dd3",
+      "reason": "The exact-log verifier draft has branch-only history.",
+      "ref": "refs/heads/archive/exact-log-product-verifier-draft-20260828"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "81d37370a21a4b5c9551e2cde7904e5e1ee28e67",
+      "reason": "The Real-R constructor disposition has branch-only history.",
+      "ref": "refs/heads/archive/real-r-constructor-v8-public-disposition"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "9dcdf32f18076eefc768194079b4abf437009737",
+      "reason": "The PrimeGaps transfer blueprint has branch-only history.",
+      "ref": "refs/heads/codex/primegaps-pid-blueprint-20260819"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_branch_only_history",
+      "object_id": "93edb4983129151ce0db8e58b0aad52cae0f47bc",
+      "reason": "The C3 PDF diagnostic capture has branch-only evidence.",
+      "ref": "refs/heads/diagnostic/c3-pdf-capture-20260830"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "active_main",
+      "object_id": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+      "reason": "This was the hosted main tip at the snapshot boundary.",
+      "ref": "refs/heads/main"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "b45a7eb2e15364d37ecffc3061bf4f9ac5812b7f",
+      "reason": "Retire only after exact final-main publication, hosted gates, and a lease-matched reread.",
+      "ref": "refs/heads/sepahead/ci-pandoc-toolchain-fix"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "30e6d19bf020b18ef1cc1f9478c2d4acba62ccf1",
+      "reason": "This is the pre-documentation candidate; retire only after its successor is exact final main and all gates pass.",
+      "ref": "refs/heads/sepahead/documentation-closure-v1"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_pending_adjudication",
+      "object_id": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "reason": "An earlier hostile receipt remains distinct and requires scientific and archival adjudication.",
+      "ref": "refs/heads/sepahead/exact-log-hostile-v1"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_pending_adjudication",
+      "object_id": "75a7acaa3f9432dc323be7e49f5eee1f9af781fd",
+      "reason": "Earlier guide, PDF, and figure variants remain distinct and require adjudication.",
+      "ref": "refs/heads/sepahead/galadriel-placement-guide-v1"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+      "reason": "Retire only after exact final-main publication, hosted gates, and a lease-matched reread.",
+      "ref": "refs/heads/sepahead/galadriel-placement-main-v1"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "9ed6831d20de43467b1cff8adc8ee421a484f7fd",
+      "reason": "Retire only after exact final-main publication, hosted gates, and a lease-matched reread.",
+      "ref": "refs/heads/sepahead/openaction-compat-candidate"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "0af14fc97b7c5fe8c4df0361e37cd9cefaa9c6ba",
+      "reason": "Retire only after exact final-main publication, hosted gates, and a lease-matched reread.",
+      "ref": "refs/heads/sepahead/pdf-annotation-portability-corrected"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "535d7a44e2f8108f806af48cc27b86009239ec4e",
+      "reason": "Retire only after exact final-main publication, hosted gates, and a lease-matched reread.",
+      "ref": "refs/heads/sepahead/pid-rs-release-integration-r4"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate",
+      "object_id": "008ee7fa615aa8370623566c21eb99862680c7b1",
+      "reason": "Retire only after exact final-main publication, hosted gates, and a lease-matched reread.",
+      "ref": "refs/heads/sepahead/pid-rs-release-integration-r4-recovered"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_pending_adjudication",
+      "object_id": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "reason": "A distinct earlier assurance document and source-state receipt require adjudication.",
+      "ref": "refs/heads/sepahead/pid2-rev4-assurance-v1"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_pending_adjudication",
+      "object_id": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "reason": "A distinct historical behavior source-state receipt requires adjudication.",
+      "ref": "refs/heads/sepahead/pid2-rev4-behavior-v1"
+    },
+    {
+      "deletion_eligible": false,
+      "disposition": "retain_pending_adjudication",
+      "object_id": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d",
+      "reason": "A distinct registry preimage requires explicit retained-preimage adjudication.",
+      "ref": "refs/heads/sepahead/python-custody-m0-v1"
+    }
+  ],
+  "hosted_branches_manifest_sha256": "99cbf8e390aa0e8847aca13fa76f08e4db3293a99aaddb5df8b44f3a0621a735",
+  "local_ref_namespaces": [
+    {
+      "count": 3,
+      "deletion_eligible": false,
+      "disposition": "retain_recovery_refs",
+      "entries": [
+        {
+          "object_id": "86faa9a0850ca416f54a467230106b01d4162687",
+          "ref": "refs/archive/dirty-primary-pre-integration-20260827"
+        },
+        {
+          "object_id": "4c199f75b80b1d0a5660c629d905dab41a0d2d96",
+          "ref": "refs/archive/dirty-worktree-20260827/primary-ksg-rev4"
+        },
+        {
+          "object_id": "6e46fe99edeac6621417c6e046ab77650f827583",
+          "ref": "refs/archive/dirty-worktree-20260827/primary-m1a"
+        }
+      ],
+      "manifest_sha256": "7ffdcc2da869f0790049b09b10b691bae3b33d00ebe09cc4b7b4f29d0aa99953",
+      "prefix": "refs/archive"
+    },
+    {
+      "count": 5,
+      "deletion_eligible": false,
+      "disposition": "retain_pending_redundancy_reread",
+      "entries": [
+        {
+          "object_id": "c0877436d163bad54ced10b5987e88974b67f86a",
+          "ref": "refs/codex/checkpoints/ksg-rev4-m1a-110path-20260727T201759Z"
+        },
+        {
+          "object_id": "dc7b8de0a87443ef2bcde71b19938642f1af2197",
+          "ref": "refs/codex/checkpoints/ksg-rev4-m1a-110path-v2-20260727T205617Z"
+        },
+        {
+          "object_id": "f93f301345ecf8f4a33bc89fa563a4e425624cef",
+          "ref": "refs/codex/checkpoints/ksg-rev4-m1a-precommit-20260727"
+        },
+        {
+          "object_id": "7eb959e3e3fd4bc2893cef83e6728b1594f8691b",
+          "ref": "refs/codex/checkpoints/ksg-rev4-recovery-complete-2"
+        },
+        {
+          "object_id": "94813b96990ae9ec2b9f2db368fe06e2de797dd6",
+          "ref": "refs/codex/checkpoints/ksg-rev4-recovery-source-1"
+        }
+      ],
+      "manifest_sha256": "fba248c8e5680846990eb7221b15415c9fd1a6dab15d6fc98117ddbdb8d72c52",
+      "prefix": "refs/codex/checkpoints"
+    },
+    {
+      "count": 7,
+      "deletion_eligible": false,
+      "disposition": "retain_until_final_main_and_per_branch_closure",
+      "entries": [
+        {
+          "object_id": "bd5ea639e303e2f9d57d13b502dd68d3da6ada73",
+          "ref": "refs/heads/codex/integration-20260804"
+        },
+        {
+          "object_id": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c",
+          "ref": "refs/heads/codex/ksg-rev4-candidate-20260726"
+        },
+        {
+          "object_id": "dc7b8de0a87443ef2bcde71b19938642f1af2197",
+          "ref": "refs/heads/codex/m1a-ci-fix-20260727"
+        },
+        {
+          "object_id": "af50935be9ecf9a81aeb30c56b45059652468746",
+          "ref": "refs/heads/codex/pdf-ci-fix-20260728"
+        },
+        {
+          "object_id": "1bec7a4fdcf80b4b0b7d5f03d4491bb5f8319709",
+          "ref": "refs/heads/codex/workflow-publication-20260804"
+        },
+        {
+          "object_id": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+          "ref": "refs/heads/main"
+        },
+        {
+          "object_id": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+          "ref": "refs/heads/review/sx-count-event-bridge-r2"
+        }
+      ],
+      "manifest_sha256": "9e475349caddce278e512bc5bcfc948559c21c658ba848003a4baab75a8b11f0",
+      "prefix": "refs/heads"
+    },
+    {
+      "count": 48,
+      "deletion_eligible": false,
+      "disposition": "retain_pending_semantic_privacy_rights_and_publication_review",
+      "entries": [
+        {"object_id": "0133c1445227da3e88397db91742868f3439d09e", "ref": "refs/pid-rs/quarantine/20260825/0133c1445227da3e88397db91742868f3439d09e"},
+        {"object_id": "0a2d7c6519ab3d16f8a5dee335409611b53ec574", "ref": "refs/pid-rs/quarantine/20260825/0a2d7c6519ab3d16f8a5dee335409611b53ec574"},
+        {"object_id": "0cd0dc52e93a8b875121e16511771c8c1d60bc6c", "ref": "refs/pid-rs/quarantine/20260825/0cd0dc52e93a8b875121e16511771c8c1d60bc6c"},
+        {"object_id": "181fb7b96a7091ab839c5acde453a0b9d26b19d6", "ref": "refs/pid-rs/quarantine/20260825/181fb7b96a7091ab839c5acde453a0b9d26b19d6"},
+        {"object_id": "1b91d9bd6888b11d746717bf0b22c50a564a0847", "ref": "refs/pid-rs/quarantine/20260825/1b91d9bd6888b11d746717bf0b22c50a564a0847"},
+        {"object_id": "2331d906dc5c4656cb60c605db4ef6a96e8597a2", "ref": "refs/pid-rs/quarantine/20260825/2331d906dc5c4656cb60c605db4ef6a96e8597a2"},
+        {"object_id": "23339d709474b681c735951fde8305c30beb749c", "ref": "refs/pid-rs/quarantine/20260825/23339d709474b681c735951fde8305c30beb749c"},
+        {"object_id": "25578d082f17426036d2ac7ec068239192860187", "ref": "refs/pid-rs/quarantine/20260825/25578d082f17426036d2ac7ec068239192860187"},
+        {"object_id": "266760007b59642a6b9e12ad47ce0dffda54be26", "ref": "refs/pid-rs/quarantine/20260825/266760007b59642a6b9e12ad47ce0dffda54be26"},
+        {"object_id": "29f6d2840ba7d69cba6a50724e1e2bfd95196cc8", "ref": "refs/pid-rs/quarantine/20260825/29f6d2840ba7d69cba6a50724e1e2bfd95196cc8"},
+        {"object_id": "325947c0887037aabe2cbefee3a3309834c8b8af", "ref": "refs/pid-rs/quarantine/20260825/325947c0887037aabe2cbefee3a3309834c8b8af"},
+        {"object_id": "3edd2bca47856411333f753bdb2288d7f41a90aa", "ref": "refs/pid-rs/quarantine/20260825/3edd2bca47856411333f753bdb2288d7f41a90aa"},
+        {"object_id": "43ab60517b5387c61ae339f664d0d7afae3b8988", "ref": "refs/pid-rs/quarantine/20260825/43ab60517b5387c61ae339f664d0d7afae3b8988"},
+        {"object_id": "44f4e5be14440ec1d2fcd629ad43c8a55d5ad388", "ref": "refs/pid-rs/quarantine/20260825/44f4e5be14440ec1d2fcd629ad43c8a55d5ad388"},
+        {"object_id": "48d9e645de1b83590b453fe81e8260e40deae327", "ref": "refs/pid-rs/quarantine/20260825/48d9e645de1b83590b453fe81e8260e40deae327"},
+        {"object_id": "4c660f30d81263576ce5b0b2011c2599ae7c71f7", "ref": "refs/pid-rs/quarantine/20260825/4c660f30d81263576ce5b0b2011c2599ae7c71f7"},
+        {"object_id": "524a1c6af46698f872dce1a04aa0a281ec025a5e", "ref": "refs/pid-rs/quarantine/20260825/524a1c6af46698f872dce1a04aa0a281ec025a5e"},
+        {"object_id": "5af10e00d76f8b82bc6e9370f793290c232ed24b", "ref": "refs/pid-rs/quarantine/20260825/5af10e00d76f8b82bc6e9370f793290c232ed24b"},
+        {"object_id": "5b041fa71bd10068771b5d13babdea4d1ccff0d4", "ref": "refs/pid-rs/quarantine/20260825/5b041fa71bd10068771b5d13babdea4d1ccff0d4"},
+        {"object_id": "5e9da8a8f029008cd6f04705085eb01547a591eb", "ref": "refs/pid-rs/quarantine/20260825/5e9da8a8f029008cd6f04705085eb01547a591eb"},
+        {"object_id": "62fa3e6a599b1130afa2adf0d12293ae9af3e442", "ref": "refs/pid-rs/quarantine/20260825/62fa3e6a599b1130afa2adf0d12293ae9af3e442"},
+        {"object_id": "65139549930a0cbb7ddcad01394c897b4a3b10a4", "ref": "refs/pid-rs/quarantine/20260825/65139549930a0cbb7ddcad01394c897b4a3b10a4"},
+        {"object_id": "6798c8fb31b5c42d06708fbbbdd275d876dc78c3", "ref": "refs/pid-rs/quarantine/20260825/6798c8fb31b5c42d06708fbbbdd275d876dc78c3"},
+        {"object_id": "681ad3d511a80ce1ee8edcc2e4f3217262bf6486", "ref": "refs/pid-rs/quarantine/20260825/681ad3d511a80ce1ee8edcc2e4f3217262bf6486"},
+        {"object_id": "6bc0a15d3eaf15d593918e3f78934b08030d6b4f", "ref": "refs/pid-rs/quarantine/20260825/6bc0a15d3eaf15d593918e3f78934b08030d6b4f"},
+        {"object_id": "6f83a47d5300960a501ca2f0d8bba36891f73984", "ref": "refs/pid-rs/quarantine/20260825/6f83a47d5300960a501ca2f0d8bba36891f73984"},
+        {"object_id": "711c123084b2e2b41884eab8af9dba14fc003fa1", "ref": "refs/pid-rs/quarantine/20260825/711c123084b2e2b41884eab8af9dba14fc003fa1"},
+        {"object_id": "72669a2fc297036efb1dceaf694df8fa7bc09e3b", "ref": "refs/pid-rs/quarantine/20260825/72669a2fc297036efb1dceaf694df8fa7bc09e3b"},
+        {"object_id": "755144cd3baeee26cb7ab8dd4baf04e37175e984", "ref": "refs/pid-rs/quarantine/20260825/755144cd3baeee26cb7ab8dd4baf04e37175e984"},
+        {"object_id": "764587d025ee62c6023c1dde4281279e6eea412b", "ref": "refs/pid-rs/quarantine/20260825/764587d025ee62c6023c1dde4281279e6eea412b"},
+        {"object_id": "7e2812bd6d0b14234325b3ecd065017bec487d2a", "ref": "refs/pid-rs/quarantine/20260825/7e2812bd6d0b14234325b3ecd065017bec487d2a"},
+        {"object_id": "86dac0596e940e4c40f1348ce3b7872a8045c1e8", "ref": "refs/pid-rs/quarantine/20260825/86dac0596e940e4c40f1348ce3b7872a8045c1e8"},
+        {"object_id": "8c74305c2560e1fa5f5cdf13adf280e7c19786fc", "ref": "refs/pid-rs/quarantine/20260825/8c74305c2560e1fa5f5cdf13adf280e7c19786fc"},
+        {"object_id": "96c6b49eafba83c75d8dac35208f262b390bb3f8", "ref": "refs/pid-rs/quarantine/20260825/96c6b49eafba83c75d8dac35208f262b390bb3f8"},
+        {"object_id": "b399185dd1074427beed25607fa93494e0ae4319", "ref": "refs/pid-rs/quarantine/20260825/b399185dd1074427beed25607fa93494e0ae4319"},
+        {"object_id": "b7d346148c08e78a34d67ec8868ccc5faf1f3583", "ref": "refs/pid-rs/quarantine/20260825/b7d346148c08e78a34d67ec8868ccc5faf1f3583"},
+        {"object_id": "b901ef2136b7b58458a9186ea676dcea3d5cd2d5", "ref": "refs/pid-rs/quarantine/20260825/b901ef2136b7b58458a9186ea676dcea3d5cd2d5"},
+        {"object_id": "c474b7cb2d73a5d22f8c0f8b93edc9d67a8cfe7e", "ref": "refs/pid-rs/quarantine/20260825/c474b7cb2d73a5d22f8c0f8b93edc9d67a8cfe7e"},
+        {"object_id": "c896731c74534417e2de8636d6faa58ab2a54f70", "ref": "refs/pid-rs/quarantine/20260825/c896731c74534417e2de8636d6faa58ab2a54f70"},
+        {"object_id": "d64a54acaa12b4e4a2c619d25d72f909aa7475b1", "ref": "refs/pid-rs/quarantine/20260825/d64a54acaa12b4e4a2c619d25d72f909aa7475b1"},
+        {"object_id": "e478ef3092cd8b74dd944193a37607ef498e4508", "ref": "refs/pid-rs/quarantine/20260825/e478ef3092cd8b74dd944193a37607ef498e4508"},
+        {"object_id": "e59db02fb5fc982200d390b029a2f553a0f86cff", "ref": "refs/pid-rs/quarantine/20260825/e59db02fb5fc982200d390b029a2f553a0f86cff"},
+        {"object_id": "ee5441ac1e71b9bdcda5b30cae89d229f2615aa6", "ref": "refs/pid-rs/quarantine/20260825/ee5441ac1e71b9bdcda5b30cae89d229f2615aa6"},
+        {"object_id": "eecea3dcc6a83240f0d5419fb574e45e5521cd3f", "ref": "refs/pid-rs/quarantine/20260825/eecea3dcc6a83240f0d5419fb574e45e5521cd3f"},
+        {"object_id": "f0515e455d969eafe9a4f260f50341b0a120dc73", "ref": "refs/pid-rs/quarantine/20260825/f0515e455d969eafe9a4f260f50341b0a120dc73"},
+        {"object_id": "f62e7e8eafb6f5e2c86b64ac23a754ebf1afbd21", "ref": "refs/pid-rs/quarantine/20260825/f62e7e8eafb6f5e2c86b64ac23a754ebf1afbd21"},
+        {"object_id": "f6dda51e9ceb8e0fae638e5135e2ec11aaf522e7", "ref": "refs/pid-rs/quarantine/20260825/f6dda51e9ceb8e0fae638e5135e2ec11aaf522e7"},
+        {"object_id": "ffbd24e668a57e8c8c20714998aa27c27085b3c2", "ref": "refs/pid-rs/quarantine/20260825/ffbd24e668a57e8c8c20714998aa27c27085b3c2"}
+      ],
+      "manifest_sha256": "2eaf684c95ebfa7ae3d8f67df184ccd198a11373e9967687b650e14a80c934a9",
+      "prefix": "refs/pid-rs/quarantine/20260825"
+    },
+    {
+      "count": 3,
+      "deletion_eligible": false,
+      "disposition": "retain_as_observed_remote_tracking_snapshot",
+      "entries": [
+        {
+          "object_id": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+          "ref": "refs/remotes/origin/HEAD"
+        },
+        {
+          "object_id": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+          "ref": "refs/remotes/origin/main"
+        },
+        {
+          "object_id": "535d7a44e2f8108f806af48cc27b86009239ec4e",
+          "ref": "refs/remotes/origin/sepahead/pid-rs-release-integration-r4"
+        }
+      ],
+      "manifest_sha256": "b913f1fef8780a07d5d854f120adedf5535a720fba6f70f4ccf3031b97276e13",
+      "prefix": "refs/remotes"
+    },
+    {
+      "count": 1,
+      "deletion_eligible": false,
+      "disposition": "retain_release_tag",
+      "entries": [
+        {
+          "object_id": "dafa6cc9655eee70b4524ac92993c0dd820477e0",
+          "ref": "refs/tags/v0.9.0"
+        }
+      ],
+      "manifest_sha256": "cb99f04e5d0030c0866fa4e76f73436f3938c1777f13c15b0014b368973a71f9",
+      "prefix": "refs/tags"
+    }
+  ],
+  "nonclaims": [
+    "The ledger is not permission to delete any ref, branch, or worktree.",
+    "The ledger does not cover sibling repositories or their Git registries.",
+    "The restricted bundle does not preserve dirty, staged, untracked, or ignored bytes.",
+    "A bundle verification result is not an authenticity or independent-custody proof.",
+    "Reachability and byte custody do not establish mathematical correctness.",
+    "A retained branch is not part of the active release surface merely because it is recorded.",
+    "A digest binds observed bytes but is not a signature and does not replace a retrievable preimage.",
+    "This snapshot cannot certify changes made after its completion time."
+  ],
+  "record_id": "primary-retirement-ledger-20260901-v1",
+  "repository": "sepahead/pid-rs",
+  "repository_state": {
+    "alternate_index_environment_present": false,
+    "alternate_object_directory_environment_present": false,
+    "alternates_file_present": false,
+    "git_state_markers": [],
+    "hosted_main": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+    "local_main": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+    "lock_file_markers": [],
+    "object_format": "sha1",
+    "primary_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+    "remote": "https://github.com/sepahead/pid-rs.git",
+    "stash_ref_count": 0
+  },
+  "restricted_custody": {
+    "access_boundary": "restricted; storage locator intentionally excluded from the public ledger",
+    "advertised_head_manifest": {
+      "bytes": 7354,
+      "format": "object-id SPACE advertised-name LF",
+      "sha256": "f2700d0f1a79a64d7798f8bddda7ad4abae4cd0e64ac2cdb524e31f18052b467"
+    },
+    "bundle": {
+      "advertised_heads": 71,
+      "bytes": 32474415,
+      "complete_history_reported": true,
+      "copy_byte_comparison_passed": true,
+      "hash_algorithm": "sha1",
+      "sha256": "89a751a60cb221e0aa336b348b5873f458417b0947a9d5d7920f9332ec82b7f7",
+      "verification_passed": true
+    },
+    "created_at_utc": "2026-09-01T06:42:30Z",
+    "deletion_authority": false,
+    "exclusions": [
+      "dirty tracked bytes",
+      "staged index state",
+      "untracked and ignored files",
+      "stashes",
+      "hooks and configuration",
+      "reflogs and alternates",
+      "live process state and credentials",
+      "scientific and publication dispositions"
+    ],
+    "locator_in_public_ledger": false,
+    "pseudo_heads": [
+      {
+        "name": "HEAD",
+        "object_id": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56"
+      },
+      {
+        "name": "worktrees/pid-rs-m1a-ci-fix/HEAD",
+        "object_id": "dc7b8de0a87443ef2bcde71b19938642f1af2197"
+      },
+      {
+        "name": "worktrees/pid-rs-c4-recovery/HEAD",
+        "object_id": "bc3aa80fb6025e709c2906a08bce25a4fac40578"
+      },
+      {
+        "name": "worktrees/pid-rs-ksg-rev4-candidate/HEAD",
+        "object_id": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c"
+      }
+    ],
+    "record_id": "RCR-20260901-01",
+    "recovery_drill": {
+      "advertised_object_ids_checked": 71,
+      "advertised_object_ids_missing": 0,
+      "proper_refs_restored": 67,
+      "temporary_copy_retained": false
+    },
+    "reverified_at_utc": "2026-09-01T07:08:48Z",
+    "retention_boundary": "Retain through exact final-main publication and all scoped disposition closures; reverify before any retirement action."
+  },
+  "schema": "pid-rs/worktree-and-branch-retirement-ledger",
+  "schema_revision": 1,
+  "scope": {
+    "common_git_directory": "primary",
+    "included": [
+      "the four worktrees registered in the primary common Git directory",
+      "the 67 proper refs advertised by that common Git directory",
+      "the 23 hosted branch tips returned by the canonical GitHub remote",
+      "the restricted complete-bundle byte identity and bounded recovery drill"
+    ],
+    "registered_worktree_count": 4,
+    "scope_kind": "single_common_git_directory",
+    "sibling_and_global_registries": "explicitly_excluded_and_not_cleared",
+    "unobserved_or_excluded": [
+      "sibling pid-rs repositories and independent common Git directories",
+      "semantic acceptance of quarantined or archived work",
+      "current dirty-byte completeness beyond the stated bounded comparisons",
+      "ignored files outside the M1a tmp/pdfs observation",
+      "credentials, process memory, hooks, configuration, reflogs, and media durability"
+    ]
+  },
+  "snapshot": {
+    "completed_at_utc": "2026-09-01T07:08:48Z",
+    "observation_commands": [
+      "git worktree list --porcelain",
+      "git status --porcelain=v1 --untracked-files=no -z",
+      "git ls-files --others --exclude-standard -z",
+      "git for-each-ref with refname and objectname",
+      "git ls-remote --heads https://github.com/sepahead/pid-rs.git",
+      "git bundle verify <restricted-record>",
+      "git clone --mirror <restricted-record> <temporary-bare-repository>"
+    ],
+    "started_at_utc": "2026-09-01T07:06:55Z",
+    "timezone": "UTC",
+    "tool_versions": {
+      "git": "2.55.0",
+      "jq": "1.7.1",
+      "operating_system": "Darwin 25.5.0 arm64",
+      "python": "3.14.6",
+      "shasum": "6.02"
+    }
+  },
+  "worktrees": [
+    {
+      "branch": "refs/heads/review/sx-count-event-bridge-r2",
+      "custody_status": "not_complete_for_current_dirty_bytes",
+      "deletion_eligible": false,
+      "disposition": "retain_pending_dirty_state_adjudication",
+      "head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+      "head_mode": "branch",
+      "id": "primary-review",
+      "ignored_outputs": {
+        "bytes": null,
+        "file_count": null,
+        "observed": false,
+        "other_files": null,
+        "pdf_files": null,
+        "png_files": null,
+        "scope": "not_inventoried"
+      },
+      "reason": "The current methods narrative and one worktree-local identifier require separate adjudication; the current dirty bytes are not wholly represented by one durable snapshot.",
+      "tracked_change_entries": 69,
+      "tracked_status_stream_sha256": "a84df45226c665c9330d42de3ec94138a9e1510af2ff7d6f430cd9f27f416415",
+      "untracked_leaf_paths": 160,
+      "untracked_path_stream_sha256": "a62cc7bf0cf3c5b5066846a7b123906c423a90c1df6c9e02421a55712e5bd962"
+    },
+    {
+      "branch": "detached",
+      "custody_status": "clean_head_advertised_in_complete_bundle",
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate_after_final_main_gates",
+      "head": "bc3aa80fb6025e709c2906a08bce25a4fac40578",
+      "head_mode": "detached",
+      "id": "recovery-c4",
+      "ignored_outputs": {
+        "bytes": 0,
+        "file_count": 0,
+        "observed": true,
+        "other_files": 0,
+        "pdf_files": 0,
+        "png_files": 0,
+        "scope": "entire_worktree"
+      },
+      "reason": "The lane is clean and its head is preserved, but the final candidate and exact final-main gates do not yet exist.",
+      "tracked_change_entries": 0,
+      "tracked_status_stream_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "untracked_leaf_paths": 0,
+      "untracked_path_stream_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "branch": "refs/heads/codex/ksg-rev4-candidate-20260726",
+      "custody_status": "dirty_paths_previously_byte_compared_to_archive_head",
+      "deletion_eligible": false,
+      "disposition": "conditional_retirement_candidate_after_fresh_110_path_comparison_and_final_main_gates",
+      "head": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c",
+      "head_mode": "branch",
+      "id": "ksg-revision-4",
+      "ignored_outputs": {
+        "bytes": null,
+        "file_count": null,
+        "observed": false,
+        "other_files": null,
+        "pdf_files": null,
+        "png_files": null,
+        "scope": "not_inventoried"
+      },
+      "reason": "The 38 tracked and 72 untracked paths require a fresh byte comparison to the preserved archive head immediately before retirement.",
+      "tracked_change_entries": 38,
+      "tracked_status_stream_sha256": "005e99c75d8e3ba5731b6d662a62e5cd078e7b643d0a9a33d1f08c4e81958f60",
+      "untracked_leaf_paths": 72,
+      "untracked_path_stream_sha256": "7a01a06bd98a5e652da8db15c4ed48209941ef35019ef0ce53b0aba161d652e3"
+    },
+    {
+      "branch": "refs/heads/codex/m1a-ci-fix-20260727",
+      "custody_status": "dirty_paths_previously_byte_compared_to_archive_head_but_ignored_outputs_excluded",
+      "deletion_eligible": false,
+      "disposition": "retain_pending_ignored_output_adjudication",
+      "head": "dc7b8de0a87443ef2bcde71b19938642f1af2197",
+      "head_mode": "branch",
+      "id": "m1a-correction",
+      "ignored_outputs": {
+        "bytes": 45141911,
+        "file_count": 143,
+        "observed": true,
+        "other_files": 24,
+        "pdf_files": 4,
+        "png_files": 115,
+        "scope": "tmp/pdfs"
+      },
+      "reason": "The 34 tracked and 11 untracked paths have prior archive coverage, but 143 ignored presentation files remain outside that coverage and require adjudication.",
+      "tracked_change_entries": 34,
+      "tracked_status_stream_sha256": "dc1aabdf5ffee7b2cdf3d6e7144cb5e9bf68814716d67c98daecc95575e68598",
+      "untracked_leaf_paths": 11,
+      "untracked_path_stream_sha256": "97270180998665706fe36e3bd589772403c59e2d1a87a9b96eeaf50b0ba5920f"
+    }
+  ]
+}

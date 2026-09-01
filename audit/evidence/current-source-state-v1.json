@@ -99,8 +99,8 @@
     {
       "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "dca7e94aed3597af8aad8ae1cd74f8777ae97554e5f8372bf63b89ea6a53bd19",
-      "size_bytes": 826802
+      "sha256": "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798",
+      "size_bytes": 859461
     },
     {
       "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "1f929504d29b46e0141286fac164496d3a5d004c4eb2e682232bedfe29b91f96",
-        "size_bytes": 90901
+        "sha256": "049ed96393454c64905789c1b2b2613878d9084829cde802cb78d93dd338c896",
+        "size_bytes": 93067
       },
       {
         "git_mode": "100644",
@@ -304,14 +304,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "d303fa2e6f492dba15da12e86d5d007d766777cf533d2bf177365b6aeb97ac25",
-        "size_bytes": 73600
+        "sha256": "8f7d36eb833d1efa8e73855c98904f186726c608e90eaebe7d51b0093c997f40",
+        "size_bytes": 84310
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "6bcb3d649f3d6b9dada3eddc6ff1655b563bb75850d8731de969f5836496814b",
-        "size_bytes": 283671
+        "sha256": "98f92f8dd6042d60d5e7b1ac058be676a9b0465d5252c896ec613f668229e291",
+        "size_bytes": 286161
       },
       {
         "git_mode": "100644",
@@ -412,8 +412,8 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md",
-        "sha256": "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567",
-        "size_bytes": 231077
+        "sha256": "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9",
+        "size_bytes": 250111
       },
       {
         "git_mode": "100644",
@@ -454,14 +454,14 @@
       {
         "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
-        "sha256": "1984cc1d84b8962e63e5d809988bb83a743d862921fc6b768c6c24ce3e42d2aa",
-        "size_bytes": 80566
+        "sha256": "6a36fbe29e3f8c7d7df78c681cbcd2eecd4bc135e8fda43b022e42846048d977",
+        "size_bytes": 104201
       },
       {
         "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf",
-        "sha256": "b43404df6cd85ac3c25ec2cbdbf5681e520c1b6124c1c3043ed33b0572c51736",
-        "size_bytes": 304695
+        "sha256": "51a5d399cdcddbdf0ae4aea13a0d5726b79c8e81b417f845e0968b7e310e3d27",
+        "size_bytes": 481407
       },
       {
         "git_mode": "100644",
@@ -478,8 +478,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "9a24e1ee4a2a9326d9bb02a8ced12c7a89b16c3484a6d7faa4dce413bb6e4154",
-        "size_bytes": 80510
+        "sha256": "c41b052860745d35be9c8171a359ef1598b8ffa59d73963ed41c913e2a597031",
+        "size_bytes": 80551
       },
       {
         "git_mode": "100644",
@@ -2031,6 +2031,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md",
+        "sha256": "a8fa1ce908ac411142e4cdd1721442c8b6ebbff3ab9ea8d8c958b5c687246ab4",
+        "size_bytes": 4312
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
         "sha256": "d34435a1134e05d41eb969ff87c1fb186742bb165ba79a7d218fa90593640fd3",
         "size_bytes": 39594
@@ -2046,6 +2052,12 @@
         "path": "audit/evidence/opus5-mathematical-workflow-assurance-prompt.md",
         "sha256": "15a2d97697c645da522ec8c6bc389efb03f203f9cca82d8b3e9528e5536c46f4",
         "size_bytes": 3415
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md",
+        "sha256": "335263a235fc3faf6edbcea2c0683563e54646454c7720959db31e16dca7acdf",
+        "size_bytes": 9045
       },
       {
         "git_mode": "100644",
@@ -2106,6 +2118,18 @@
         "path": "audit/evidence/repository-snapshot.md",
         "sha256": "8af40bf7787486934a2b686245035921bf3f3e1c4705db3b938dac50ba6bae55",
         "size_bytes": 1955
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json",
+        "sha256": "25b226abce58071ffa383753528300b7b2ef7203c47b07bb5f9a1b3b02e08420",
+        "size_bytes": 38143
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/sibling-registry-retirement-ledger-v1.schema.json",
+        "sha256": "1f3e35488bd30a0e91f48601de8862d7639f2db82b41a86f9eb5e2b0afedbec0",
+        "size_bytes": 26619
       },
       {
         "git_mode": "100644",
@@ -2218,8 +2242,20 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/worktree-and-branch-preservation-2026-08-27.md",
-        "sha256": "a3c15dfd908ad4d062fcdf9af18dbeefcd267bb1b2960f396ce9df85a9bba652",
-        "size_bytes": 13713
+        "sha256": "9413d483bbbfb3f287402c43674d005d2d48a0f9ca23712dae4a6f0a593ee169",
+        "size_bytes": 27781
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json",
+        "sha256": "29c6d6e0b2fe4b51b154e88be950db32ad214f64a67041c1ad215e756c8270bf",
+        "size_bytes": 29175
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/worktree-and-branch-retirement-ledger-v1.schema.json",
+        "sha256": "3e53bdc07785af6cf9394f2b5b3d62e3640b15be79a88c82ff2b56648be61e75",
+        "size_bytes": 17203
       },
       {
         "git_mode": "100644",
@@ -2452,26 +2488,26 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-stages.svg",
-        "sha256": "c7c44075c6cff4a4032db748828dcc10c0708dd2700f05471e4d87db3c50df64",
-        "size_bytes": 5679
+        "sha256": "c6a3cb2deef1d282475c0d35f92687ddd2dabd5560b2d68ce1cac86d7764a2c2",
+        "size_bytes": 5680
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-storage.svg",
-        "sha256": "7b077b86bba5818503ee6d12ea20304db5e622fe1a3eb970cde7d34dfc974cf8",
+        "sha256": "ad85686c3c19342830108ea8870527de8eceaf4189df22d6157ad0a088c06bf4",
         "size_bytes": 6187
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/semantic-transfer-firewall-pid-card.svg",
-        "sha256": "50adbae2050dae43d3e1e31667c87c0ee6ef1e726420682b3ed5db9ac44e38bb",
-        "size_bytes": 5230
+        "sha256": "c304cdb98378eedc011212ef1740c534d114527249385e26876bbb65868a466d",
+        "size_bytes": 5218
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/semantic-transfer-firewall-source-card.svg",
-        "sha256": "577979f9fddaa8fbf842bb0b4f8ed455e9a86ea7c33a6a5889c5c0a1ed25661a",
-        "size_bytes": 4721
+        "sha256": "62abe719ffaa8bda1dfed5e1445420dc87ea5466aa2d7e2a6ebe468cbec02190",
+        "size_bytes": 4714
       },
       {
         "git_mode": "100644",
@@ -2584,8 +2620,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-problem-solving-workflow.tex",
-        "sha256": "9702c43d45bc266ba7b973f90f9f8b9a6124a478c08a011eb5b373a210643206",
-        "size_bytes": 264065
+        "sha256": "e23de4e1ea7b2010e695f08aa57f237f2241dbfa51b3af8f66762ea9b6352709",
+        "size_bytes": 283145
       },
       {
         "git_mode": "100644",
@@ -2668,14 +2704,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-filter.lua",
-        "sha256": "e18df61090e10574dba8e1033214225695e723206da99f32113fe9e081e2f593",
-        "size_bytes": 4822
+        "sha256": "86e72ff2f5bb530a56e9d1ea01017b095fb97af32ca21b4f0d8d0fa063d8a841",
+        "size_bytes": 5396
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex",
-        "sha256": "59312528cfc237e6654805c6de425ee42f0f1262ee7d42fd71a7502030031537",
-        "size_bytes": 5405
+        "sha256": "a5323b4fb43f27bed1966c23182e099c620f863601bdd16a058a865b29ec0519",
+        "size_bytes": 9130
       },
       {
         "git_mode": "100644",
@@ -2686,8 +2722,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-rs-workflow-publication.sty",
-        "sha256": "73eac73ac0cd028ced43020c0935ac59dd65ecd0b26cf7b67155de2fe2a8343e",
-        "size_bytes": 6212
+        "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+        "size_bytes": 8607
       },
       {
         "git_mode": "100644",
@@ -5254,8 +5290,8 @@
       {
         "git_mode": "100644",
         "path": "justfile",
-        "sha256": "658d6385e81e7177e82a984c199f65c928e9addc79bc20b8c837e3ee5eedd3e1",
-        "size_bytes": 46821
+        "sha256": "e14e9ba9bdcbe79c16c8047f9d0b978943bde72fd4fe67303c5c0857461abdcc",
+        "size_bytes": 48693
       },
       {
         "git_mode": "100644",
@@ -5356,14 +5392,14 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
-        "sha256": "dca7e94aed3597af8aad8ae1cd74f8777ae97554e5f8372bf63b89ea6a53bd19",
-        "size_bytes": 826802
+        "sha256": "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798",
+        "size_bytes": 859461
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-        "sha256": "b7217536cbec2b3758b1b175b138fbc5eaf95dc0b8387bedfdf30229e66e2763",
-        "size_bytes": 18183
+        "sha256": "1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab",
+        "size_bytes": 19053
       },
       {
         "git_mode": "100644",
@@ -5416,8 +5452,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "272f3bac381f34d064846fe9502cf633337e8144dbb4d76f2499b0cef89f847e",
-        "size_bytes": 251678
+        "sha256": "644d7ef7420cbfb5eafaf7416b791ede20643abdb24d279e1f4d9df5124f9fff",
+        "size_bytes": 258071
       },
       {
         "git_mode": "100755",
@@ -5434,8 +5470,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-pid-discovery-verification-blueprint.sh",
-        "sha256": "82501104216e35913cf0e184cef44a66b78bbf5707e266ddd15771d201cdb176",
-        "size_bytes": 13935
+        "sha256": "d6ee73b5dfd6f772e18fc65a0b4aa2e516fd373cde5603b24b25598fb14140d6",
+        "size_bytes": 15379
       },
       {
         "git_mode": "100755",
@@ -5601,6 +5637,18 @@
       },
       {
         "git_mode": "100755",
+        "path": "scripts/check-cargo-deny-toolchain-self-test.sh",
+        "sha256": "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf",
+        "size_bytes": 5763
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-cargo-deny-toolchain.sh",
+        "sha256": "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e",
+        "size_bytes": 2756
+      },
+      {
+        "git_mode": "100755",
         "path": "scripts/check-certified-sxpid2-assurance-pdf.sh",
         "sha256": "b04db844f2e52baaba7250d209af69cb7eb2d26474f95b2bf896250061cf1392",
         "size_bytes": 3332
@@ -5608,14 +5656,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim-self-test.py",
-        "sha256": "ebe61f04934246475c388296a823c7f97cafe662debf11a6ae7be42035154fe2",
-        "size_bytes": 129662
+        "sha256": "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1",
+        "size_bytes": 131686
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "29a1d327380da6fb0af2181e0094e11c12fa4f86ad72ed03428087a5c6e00368",
-        "size_bytes": 90547
+        "sha256": "dbd76020268ead8a4a926072940e5a9596d2449a5b49c578910cabf18b6487d0",
+        "size_bytes": 90915
       },
       {
         "git_mode": "100755",
@@ -6172,14 +6220,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze-self-test.py",
-        "sha256": "224959c4dfc835c66afae0b9cb654435fe4df3ff22c7f9ff0e8219b0ba9f573f",
-        "size_bytes": 136572
+        "sha256": "857271dff27857e287664ad21b7ae088ab7c5ac8b25de40594a44175306eca3a",
+        "size_bytes": 137796
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "9a25a9bae967582170b91238d45f39fa637e48130c25e998a9a6094a51f1fc7c",
-        "size_bytes": 133324
+        "sha256": "b5aa11e8caae794a8ff6e33836be99aadf9d0663714e05cd4e96977f0f49a698",
+        "size_bytes": 134275
       },
       {
         "git_mode": "100644",
@@ -6364,14 +6412,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "adff95ad908edd6ccbdddabb2d8119a859589c68ebfcd996c14529896b296769",
-        "size_bytes": 277887
+        "sha256": "5b297bef923331687a0c4cf84ebd92dfd206d9eadc03032c531ba7ff091cd6bc",
+        "size_bytes": 281804
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "4e1617141a33d7e5e201c2a9fc060d805a9de2d1a079f1655ae9ed4cfb948c35",
-        "size_bytes": 246709
+        "sha256": "793559bd5d5805418904cc0e71215c5acbe623cb76ca5aff4e3c5426d0cbf8d7",
+        "size_bytes": 254711
       },
       {
         "git_mode": "100644",
@@ -6412,14 +6460,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh",
-        "sha256": "2e4a8f435d4744edcb197dce6aecb937b76786b747296e81e3d26f5c8a4c9b34",
-        "size_bytes": 18668
+        "sha256": "1bee0654234cdfc2d694b63769f42f0236d4e69044a78fee99887e1989acb79d",
+        "size_bytes": 38561
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf.sh",
-        "sha256": "3adbdd9e4250f96c5bd2b06dd8cace780273603a231b182c74289753abefb9f8",
-        "size_bytes": 10584
+        "sha256": "23b8c39430f4ca4380b8533773239b6b0fd78f8cb40126daa191737ab02f1a1e",
+        "size_bytes": 31259
       },
       {
         "git_mode": "100644",
@@ -6561,6 +6609,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "scripts/check-sibling-registry-retirement-ledger-self-test.py",
+        "sha256": "77dd4ad2cbcf190d27aedc950feb94b6fe9dba451c12b4663343ba8d53a355e2",
+        "size_bytes": 33423
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-sibling-registry-retirement-ledger.py",
+        "sha256": "116aca9b7c3d01610ff17c5ea02f4dc8da9642b2940bdbccc198046d93945352",
+        "size_bytes": 49082
+      },
+      {
+        "git_mode": "100644",
         "path": "scripts/check-software-identity-self-test.py",
         "sha256": "77f6f436ba0b1b3e1dd8dff29140c5f3a9cba95b2aad0aeca752dfe851a1ab3c",
         "size_bytes": 29735
@@ -6672,6 +6732,18 @@
         "path": "scripts/check-version-coherence.sh",
         "sha256": "9492ce3338c2a43e426f304f3113a462cbdcf7e4340cd6644a238f78f6f8f2a8",
         "size_bytes": 36915
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-worktree-and-branch-retirement-ledger-self-test.py",
+        "sha256": "784b69b558ef8e7d07b77f55c8c14b6161141255d1349bcf404ed53e130e2d03",
+        "size_bytes": 11053
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-worktree-and-branch-retirement-ledger.py",
+        "sha256": "71c0025dc7a8b940aa3305168cc73a4de0c83b4baa82a14b08f67cbbd57d2adb",
+        "size_bytes": 29458
       },
       {
         "git_mode": "100755",
@@ -6878,8 +6950,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "6eb2be01cf2c84c44ca405b3b7e26c5df19ae79bed4fe72feb10681f293a41ab",
-    "entry_count": 1122
+    "entries_sha256": "063b605f063150acec262708a771ef1c4647312312dc25decf3d1899a18d33f5",
+    "entry_count": 1134
   },
   "subprojections": [
     {
@@ -6891,7 +6963,7 @@
       ]
     },
     {
-      "entries_sha256": "2b03a4f0ea1504fa1de895230e3ae82e1861b1bbf460d45ae9fd10bc8b537600",
+      "entries_sha256": "def882198e0bb283c1ccd504184b470cc5683293847a20513dcdc43a06104945",
       "entry_count": 121,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -6899,7 +6971,7 @@
       ]
     },
     {
-      "entries_sha256": "918441d678a8f9c43635178ed39c1f9754d78b441393aa06ac6522b6e95556dc",
+      "entries_sha256": "1d9df0ceb0b23b0b320cb9b45141a7566c999b54cfb7753962b26159594ee93f",
       "entry_count": 23,
       "name": "generated_pdf_set",
       "selectors": [
@@ -6907,7 +6979,7 @@
       ]
     },
     {
-      "entries_sha256": "682e9690fa40bba9681fbb35d8c00a167c2688cf54e55c5e4ae9c51c19cc55ee",
+      "entries_sha256": "377b46b904553d4837fd5431eafc50f1a9fc36a41beaf751ff7b633e3d9c8492",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

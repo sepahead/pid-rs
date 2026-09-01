@@ -1,0 +1,723 @@
+{
+  "$defs": {
+    "hostedBranch": {
+      "additionalProperties": false,
+      "properties": {
+        "deletion_eligible": {
+          "const": false,
+          "type": "boolean"
+        },
+        "disposition": {
+          "enum": [
+            "active_main",
+            "conditional_retirement_candidate",
+            "retain_branch_only_history",
+            "retain_pending_adjudication"
+          ],
+          "type": "string"
+        },
+        "object_id": {
+          "$ref": "#/$defs/sha1"
+        },
+        "reason": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ref": {
+          "pattern": "^refs/heads/[A-Za-z0-9._/-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "deletion_eligible",
+        "disposition",
+        "object_id",
+        "reason",
+        "ref"
+      ],
+      "type": "object"
+    },
+    "ignoredOutputs": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "file_count": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "observed": {
+          "type": "boolean"
+        },
+        "other_files": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "pdf_files": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "png_files": {
+          "minimum": 0,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "entire_worktree",
+            "not_inventoried",
+            "tmp/pdfs"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "bytes",
+        "file_count",
+        "observed",
+        "other_files",
+        "pdf_files",
+        "png_files",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "namespace": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "deletion_eligible": {
+          "const": false,
+          "type": "boolean"
+        },
+        "disposition": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/refEntry"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "prefix": {
+          "enum": [
+            "refs/archive",
+            "refs/codex/checkpoints",
+            "refs/heads",
+            "refs/pid-rs/quarantine/20260825",
+            "refs/remotes",
+            "refs/tags"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "count",
+        "deletion_eligible",
+        "disposition",
+        "entries",
+        "manifest_sha256",
+        "prefix"
+      ],
+      "type": "object"
+    },
+    "pseudoHead": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "object_id": {
+          "$ref": "#/$defs/sha1"
+        }
+      },
+      "required": [
+        "name",
+        "object_id"
+      ],
+      "type": "object"
+    },
+    "refEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "object_id": {
+          "$ref": "#/$defs/sha1"
+        },
+        "ref": {
+          "pattern": "^refs/[A-Za-z0-9._/-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "object_id",
+        "ref"
+      ],
+      "type": "object"
+    },
+    "sha1": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "timestamp": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "type": "string"
+    },
+    "worktree": {
+      "additionalProperties": false,
+      "properties": {
+        "branch": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "custody_status": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "deletion_eligible": {
+          "const": false,
+          "type": "boolean"
+        },
+        "disposition": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "head": {
+          "$ref": "#/$defs/sha1"
+        },
+        "head_mode": {
+          "enum": [
+            "branch",
+            "detached"
+          ],
+          "type": "string"
+        },
+        "id": {
+          "enum": [
+            "ksg-revision-4",
+            "m1a-correction",
+            "primary-review",
+            "recovery-c4"
+          ],
+          "type": "string"
+        },
+        "ignored_outputs": {
+          "$ref": "#/$defs/ignoredOutputs"
+        },
+        "reason": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "tracked_change_entries": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "tracked_status_stream_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "untracked_leaf_paths": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "untracked_path_stream_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "branch",
+        "custody_status",
+        "deletion_eligible",
+        "disposition",
+        "head",
+        "head_mode",
+        "id",
+        "ignored_outputs",
+        "reason",
+        "tracked_change_entries",
+        "tracked_status_stream_sha256",
+        "untracked_leaf_paths",
+        "untracked_path_stream_sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/worktree-and-branch-retirement-ledger-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "global_decision": {
+      "additionalProperties": false,
+      "properties": {
+        "cleanup_authorized": {
+          "const": false,
+          "type": "boolean"
+        },
+        "deletion_eligible_count": {
+          "const": 0,
+          "type": "integer"
+        },
+        "final_main_candidate_established": {
+          "const": false,
+          "type": "boolean"
+        },
+        "reason": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "sibling_and_global_registries": {
+          "const": "out_of_scope_and_pending_fresh_audit",
+          "type": "string"
+        },
+        "status": {
+          "const": "retain_everything_in_scope",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cleanup_authorized",
+        "deletion_eligible_count",
+        "final_main_candidate_established",
+        "reason",
+        "sibling_and_global_registries",
+        "status"
+      ],
+      "type": "object"
+    },
+    "hosted_branches": {
+      "items": {
+        "$ref": "#/$defs/hostedBranch"
+      },
+      "maxItems": 23,
+      "minItems": 23,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "hosted_branches_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "local_ref_namespaces": {
+      "items": {
+        "$ref": "#/$defs/namespace"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "nonclaims": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "record_id": {
+      "const": "primary-retirement-ledger-20260901-v1",
+      "type": "string"
+    },
+    "repository": {
+      "const": "sepahead/pid-rs",
+      "type": "string"
+    },
+    "repository_state": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_index_environment_present": {
+          "const": false,
+          "type": "boolean"
+        },
+        "alternate_object_directory_environment_present": {
+          "const": false,
+          "type": "boolean"
+        },
+        "alternates_file_present": {
+          "const": false,
+          "type": "boolean"
+        },
+        "git_state_markers": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "hosted_main": {
+          "$ref": "#/$defs/sha1"
+        },
+        "local_main": {
+          "$ref": "#/$defs/sha1"
+        },
+        "lock_file_markers": {
+          "maxItems": 0,
+          "type": "array"
+        },
+        "object_format": {
+          "const": "sha1",
+          "type": "string"
+        },
+        "primary_head": {
+          "$ref": "#/$defs/sha1"
+        },
+        "remote": {
+          "const": "https://github.com/sepahead/pid-rs.git",
+          "type": "string"
+        },
+        "stash_ref_count": {
+          "const": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "alternate_index_environment_present",
+        "alternate_object_directory_environment_present",
+        "alternates_file_present",
+        "git_state_markers",
+        "hosted_main",
+        "local_main",
+        "lock_file_markers",
+        "object_format",
+        "primary_head",
+        "remote",
+        "stash_ref_count"
+      ],
+      "type": "object"
+    },
+    "restricted_custody": {
+      "additionalProperties": false,
+      "properties": {
+        "access_boundary": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "advertised_head_manifest": {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 7354,
+              "type": "integer"
+            },
+            "format": {
+              "const": "object-id SPACE advertised-name LF",
+              "type": "string"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            "bytes",
+            "format",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "bundle": {
+          "additionalProperties": false,
+          "properties": {
+            "advertised_heads": {
+              "const": 71,
+              "type": "integer"
+            },
+            "bytes": {
+              "const": 32474415,
+              "type": "integer"
+            },
+            "complete_history_reported": {
+              "const": true,
+              "type": "boolean"
+            },
+            "copy_byte_comparison_passed": {
+              "const": true,
+              "type": "boolean"
+            },
+            "hash_algorithm": {
+              "const": "sha1",
+              "type": "string"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "verification_passed": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "advertised_heads",
+            "bytes",
+            "complete_history_reported",
+            "copy_byte_comparison_passed",
+            "hash_algorithm",
+            "sha256",
+            "verification_passed"
+          ],
+          "type": "object"
+        },
+        "created_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "deletion_authority": {
+          "const": false,
+          "type": "boolean"
+        },
+        "exclusions": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 8,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "locator_in_public_ledger": {
+          "const": false,
+          "type": "boolean"
+        },
+        "pseudo_heads": {
+          "items": {
+            "$ref": "#/$defs/pseudoHead"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "record_id": {
+          "const": "RCR-20260901-01",
+          "type": "string"
+        },
+        "recovery_drill": {
+          "additionalProperties": false,
+          "properties": {
+            "advertised_object_ids_checked": {
+              "const": 71,
+              "type": "integer"
+            },
+            "advertised_object_ids_missing": {
+              "const": 0,
+              "type": "integer"
+            },
+            "proper_refs_restored": {
+              "const": 67,
+              "type": "integer"
+            },
+            "temporary_copy_retained": {
+              "const": false,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "advertised_object_ids_checked",
+            "advertised_object_ids_missing",
+            "proper_refs_restored",
+            "temporary_copy_retained"
+          ],
+          "type": "object"
+        },
+        "reverified_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "retention_boundary": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "access_boundary",
+        "advertised_head_manifest",
+        "bundle",
+        "created_at_utc",
+        "deletion_authority",
+        "exclusions",
+        "locator_in_public_ledger",
+        "pseudo_heads",
+        "record_id",
+        "recovery_drill",
+        "reverified_at_utc",
+        "retention_boundary"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "pid-rs/worktree-and-branch-retirement-ledger",
+      "type": "string"
+    },
+    "schema_revision": {
+      "const": 1,
+      "type": "integer"
+    },
+    "scope": {
+      "additionalProperties": false,
+      "properties": {
+        "common_git_directory": {
+          "const": "primary",
+          "type": "string"
+        },
+        "included": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "registered_worktree_count": {
+          "const": 4,
+          "type": "integer"
+        },
+        "scope_kind": {
+          "const": "single_common_git_directory",
+          "type": "string"
+        },
+        "sibling_and_global_registries": {
+          "const": "explicitly_excluded_and_not_cleared",
+          "type": "string"
+        },
+        "unobserved_or_excluded": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 5,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "common_git_directory",
+        "included",
+        "registered_worktree_count",
+        "scope_kind",
+        "sibling_and_global_registries",
+        "unobserved_or_excluded"
+      ],
+      "type": "object"
+    },
+    "snapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "completed_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "observation_commands": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 7,
+          "minItems": 7,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "started_at_utc": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "timezone": {
+          "const": "UTC",
+          "type": "string"
+        },
+        "tool_versions": {
+          "additionalProperties": false,
+          "properties": {
+            "git": {
+              "const": "2.55.0",
+              "type": "string"
+            },
+            "jq": {
+              "const": "1.7.1",
+              "type": "string"
+            },
+            "operating_system": {
+              "const": "Darwin 25.5.0 arm64",
+              "type": "string"
+            },
+            "python": {
+              "const": "3.14.6",
+              "type": "string"
+            },
+            "shasum": {
+              "const": "6.02",
+              "type": "string"
+            }
+          },
+          "required": [
+            "git",
+            "jq",
+            "operating_system",
+            "python",
+            "shasum"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "completed_at_utc",
+        "observation_commands",
+        "started_at_utc",
+        "timezone",
+        "tool_versions"
+      ],
+      "type": "object"
+    },
+    "worktrees": {
+      "items": {
+        "$ref": "#/$defs/worktree"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "global_decision",
+    "hosted_branches",
+    "hosted_branches_manifest_sha256",
+    "local_ref_namespaces",
+    "nonclaims",
+    "record_id",
+    "repository",
+    "repository_state",
+    "restricted_custody",
+    "schema",
+    "schema_revision",
+    "scope",
+    "snapshot",
+    "worktrees"
+  ],
+  "title": "pid-rs primary common-Git-directory retirement and custody ledger",
+  "type": "object"
+}

@@ -4,6 +4,30 @@
 
 Operational helper scripts for maintaining **pid-rs** and its downstream consumers.
 
+## Cargo-deny toolchain preflight
+
+`check-cargo-deny-toolchain.sh` is the local execution-environment guard for the two Just recipes
+that run cargo-deny. It requires `cargo deny --version` to emit exactly one
+`cargo-deny 0.20.2` line on standard output, nothing on standard error, and status 0. This exact
+check matters because cargo-deny 0.19 and 0.20 place shared command-line options differently: the
+repository and CI use the 0.20.2 grammar, so an older local binary can pass earlier work and then
+fail deterministically at a late policy command. `just deny` and `just certified-sxpid` run the
+preflight and its 12-case suite before their cargo-deny command. `just release-audit`
+reaches the same guard through its existing `deny` prerequisite after its base lint, test, docs,
+and MSRV prerequisites and before the expensive formal lanes.
+
+The self-test accepts two exact effective-dispatch controls and rejects ten wrong, malformed,
+missing, or shadowed-dispatch cases. It demonstrates that `PATH` precedence alone does not
+determine literal `cargo deny` resolution. A raw `cargo deny` command bypasses this repository
+preflight. The version string is not binary authenticity, and the probe does not atomically bind
+the executable later launched by another command; CI separately pins its installation route.
+
+```text
+scripts/check-cargo-deny-toolchain.sh
+scripts/check-cargo-deny-toolchain-self-test.sh
+just deny
+```
+
 ## Immutable KSG C3 and hosted-follow-up replay
 
 `check-ksg-c3-checkpoint.sh` pins the published C3 parent, commit, tree, exact 19-path precommit
@@ -2749,7 +2773,7 @@ transition—not multi-name atomicity, a validation shortcut, or a publication c
 
 The PDF includes the canonical repository protocol plus a novice-oriented primer, worked negative
 examples, bounded evolutionary-search rules, and a typed evidence-aggregation model. The checker
-binds the exact 74-entry outline depth/title/page manifest and, in exact/refresh mode, the 185-entry
+binds the exact 90-entry outline depth/title/page manifest and, in exact/refresh mode, the 231-entry
 named-destination page/type/coordinate manifest. The Markdown table renderer requires eight
 baseline skips of remaining page space before entering each `longtable`, forcing an earlier page
 break otherwise; this resolves the page boundary before its automatic named destination is
@@ -2772,6 +2796,13 @@ adjacent-arrow countermodel is absent from either the canonical Markdown or rend
 artifact-retention and rendering gate: it does not instantiate the citation-edge record for future
 proofs, prove any PID claim, establish semantic correctness from visual structure, authenticate the
 toolchain, or turn correlated checks of the same bytes into independent evidence.
+
+The public mathematical-workflow visual-review receipt binds the exact current 87-page PDF and its
+rendering-receipt digest. It records review of all pages at 120 dpi in color and grayscale plus a
+24-page, 300 dpi high-risk spot set through 20 named visual, design, navigation, and semantic
+lenses. The 381-case hostile suite includes 24 causal mutations of that receipt. This is bounded
+human-visible artifact evidence: it is not a mathematical proof, accessibility certification,
+toolchain-authenticity result, or independent scientific review.
 
 The retained `.fls` files and closure manifests bind every raw and resolved input observed after
 each compiler pass, and the two isolated builds must be byte-identical. Raw and resolved map-shaped
@@ -2860,7 +2891,7 @@ profile. The aggregate requires its checker to refuse that request with status 2
 source-to-PDF cross-toolchain credit; status 0 or any other refusal status fails the aggregate.
 The aggregate self-test protects the blueprint self-test call, exact-mode call, cross-mode probe,
 and exact status-2 branch against removal, inversion, conditional skipping, or `|| true`
-weakening. For the 83-page mathematical
+weakening. For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
 tab, and line-feed runs, except for the uniquely identified `Comparison result` and `Checker`
@@ -2894,30 +2925,44 @@ result, not one end-to-end theorem connecting arbitrary Rust executions to popul
 canonical PID discovery, verification, and durability blueprint. It binds the exact reviewed
 PrimeGapsLib commit and repository anchors, the dated historical 20-lens registry, transfer cards,
 decision and council rosters, the proposed 13-file averaged categorical SxPID3 packet, and explicit
-nonclaims. A separately identified 31 August 2026 closure applies 50 current adversarial lenses and
-compares ten materially distinct routes without rewriting that historical ledger. External web,
+nonclaims. A separately identified 1 September 2026 closure applies 20 mandatory core lenses plus
+50 additional artifact-specific lenses and compares ten materially distinct routes without
+rewriting that historical ledger. External web,
 paper, CI, and certificate observations are hash-only references: the checker does not turn them
 into recovered bytes, publisher authentication, theorem truth, or independent review. Its hostile
 self-test reseals and rejects 36 causal mutations in normal and optimized isolated Python.
 
 `build-pid-discovery-verification-blueprint.sh` derives the human PDF only from the canonical
 Markdown, reviewed header/filter, and four handcrafted SVGs. The filter preserves portable
-relative evidence links in Markdown but maps the four declared repository destinations to
+relative evidence links in Markdown but maps the seven declared repository destinations to
 canonical GitHub `blob/main` navigation URLs in the PDF. It performs two isolated same-toolchain
 LuaLaTeX builds. The SVG route fixes Pango to the isolated Fontconfig inventory so macOS CoreText
 cannot select a platform fallback. The final roster admits only the declared CFF kind/encoding
-pairs and requires the Latin Modern body and figure faces. The builder also requires exact byte
-equality, A4 geometry, semantic text anchors, embedded Unicode fonts, a warning-free log, and an
-atomic final install. Same-toolchain equality is not a cross-toolchain rendering theorem;
-rendered-page inspection remains required. The PDF explains one general promotion state machine
-for branches and worktrees rather than generating a new PDF for each migration.
+pairs and requires Latin Modern for body/math plus Source Sans Pro for navigation, headings, and
+figure labels. The builder also requires exact byte
+equality, A4 geometry, PDF 1.7, semantic text anchors, embedded Unicode fonts, a warning-free log,
+and an atomic final install. Its title field uses the repository-local lapis, turquoise, ivory,
+saffron, and low-contrast girih-rosette grammar; the pattern is decorative and carries no claim.
+Same-toolchain equality is not a cross-toolchain rendering theorem; rendered-page inspection
+remains required. The PDF explains one general promotion state machine for branches and worktrees
+rather than generating a new PDF for each migration.
 
 `check-pid-discovery-verification-blueprint-pdf.sh` is exact-only. Before rebuilding, it binds the
 current decision, evidence-adjudication index, and complete 18-node conventions registry by SHA-256
 and by unique proposed/open status and taxonomy sentinels. It then validates both rebuilt and
-committed PDFs, renders every page, and requires committed-byte equality. A digest reseal alone
-cannot promote Programs A--E because the 34-control hostile suite also mutates the complete-target
-label, scoped-result boundary, every Program A--E status, and the 108/166 taxonomy. Its
+committed 28-page PDFs, renders every page at 120 dpi in color and grayscale, and requires
+committed-byte equality. The public visual-review receipt binds that exact PDF SHA-256, the complete
+28-page color and grayscale review scope, a 14-page 300 dpi spot set, 20 named visual/design/semantic
+lenses, and the passed disposition. It claims neither mathematical or accessibility proof nor an
+independent second review. A strict pypdf pass inventories every annotation and action. Its
+owner-aware whitelist admits only the exact catalog first-page `/Fit` `GoTo`, registered-outline
+named `GoTo` actions, and declared annotation-owned HTTPS `URI` or named internal `GoTo` links. It
+rejects relative/file URIs, undeclared web targets, additional or active actions, embedded/external
+file specifications, noncanonical annotation flags, and any action under an undeclared owner. A
+digest reseal alone cannot promote Programs A--E because the 72-control hostile suite also
+mutates the complete-target label, scoped-result boundary, every Program A--E status, the 108/166
+taxonomy, visual-receipt identity/scope/status, PDF profile, page count, links, actions, file
+specifications, and checker predicates. Its
 `--cross-toolchain` route always refuses with status 2: no text, geometry, or visual similarity is
 accepted as an unreviewed equivalence relation.
 
@@ -2931,9 +2976,54 @@ bash scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh
 bash scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
 ```
 
-These artifacts adopt proof roles and assurance structure only. They do not transfer sieve
-formulas, bounds, constants, or conclusions to PID, and they grant no KSG, continuous-support,
-population-inference, calibration, scientific-novelty, or higher-source-certificate claim.
+These blueprint artifacts adopt proof roles and assurance structure only. They do not transfer
+sieve formulas, bounds, constants, or conclusions to PID, and they grant no KSG,
+continuous-support, population-inference, calibration, scientific-novelty, or
+higher-source-certificate claim.
+
+## Repository-retirement ledger snapshots
+
+`check-worktree-and-branch-retirement-ledger.py` validates the strict, machine-readable snapshot in
+`audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json` against its closed schema. The
+record is intentionally limited to the primary common Git directory: four registered worktrees,
+67 proper refs, 23 hosted branch tips, and one opaque restricted-custody record for a 71-head bundle
+and recovery drill. It exposes no private locator, marks zero objects deletion-eligible, and
+excludes sibling and global registries. The checker binds exact bytes, recomputes ordered ref
+manifests and disposition censuses, enforces bundle/head/recovery arithmetic, and rejects scope,
+custody, or cleanup escalation. Its self-test rejects 28 semantic/serialization mutations and
+three path-custody attacks in both normal and optimized Python. This is a dated custody observation,
+not a live monitor, cleanup authority,
+mathematical proof, authenticity result, or claim that sibling repositories are closed.
+
+`check-sibling-registry-retirement-ledger.py` validates the complementary snapshot in
+`audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json` against its closed schema. It
+binds ten Git registries, twelve worktrees, five clean and seven dirty status records, nine custody
+artifacts, ten target-specific comparisons, a bounded partial-clone observation, and three
+live-ref-unreachable but bundle-custody-bound commit pairs. The recorded totals are zero staged,
+122 unstaged, and 110 untracked status entries; the comparison rows sum to 65 exact, 270 evolved,
+and 101 absent. The latter is not a distinct-path census because two selected C12 corpora are each
+compared with two targets. The 52,718,612,480 allocated bytes are preliminary cache candidates,
+not a complete candidate-directory inventory or deletion authority. The checker recomputes every
+derived inventory and rejects 75 hostile mutations plus three path-custody attacks in both normal
+and optimized isolated Python.
+It validates only the dated public projection. It does not access the registries, open restricted
+storage, replay bundles, query remotes, prove global object completeness, or authorize promotion or
+cleanup. The primary common Git directory and non-Git copies remain outside this sibling record.
+
+```text
+python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py
+python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py
+python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py
+python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py
+python3 -I -S -B scripts/check-sibling-registry-retirement-ledger.py
+python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger.py
+python3 -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py
+python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py
+```
+
+These ledger artifacts record bounded repository-custody observations. They do not inherit the
+PrimeGaps source review, transfer any mathematical method, or grant scientific, formal,
+implementation, promotion, cleanup, remote-mutation, or release authority.
 
 `check-markdown-math.py` checks every tracked or untracked Markdown file in the repository. It
 rejects nonportable TeX delimiters, malformed display blocks, unbalanced inline math, bare TeX

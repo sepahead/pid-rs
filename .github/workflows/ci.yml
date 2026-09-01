@@ -58,6 +58,33 @@ jobs:
           python3 -O -I -S -B scripts/check-advisory-councils-archive-self-test.py > "${RUNNER_TEMP}/advisory-self.optimized.json"
           cmp --silent "${RUNNER_TEMP}/advisory-self.json" "${RUNNER_TEMP}/advisory-self.optimized.json"
 
+  repository-durability-accounting:
+    name: Bounded repository-durability ledgers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11"
+      - name: Validate both bounded snapshots and hostile mutations in isolated Python modes
+        run: |
+          set -euo pipefail
+          python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py > "${RUNNER_TEMP}/primary-ledger.json"
+          python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger.py > "${RUNNER_TEMP}/primary-ledger.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/primary-ledger.json" "${RUNNER_TEMP}/primary-ledger.optimized.json"
+          python3 -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py > "${RUNNER_TEMP}/primary-ledger-self.json"
+          python3 -O -I -S -B scripts/check-worktree-and-branch-retirement-ledger-self-test.py > "${RUNNER_TEMP}/primary-ledger-self.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/primary-ledger-self.json" "${RUNNER_TEMP}/primary-ledger-self.optimized.json"
+          python3 -I -S -B scripts/check-sibling-registry-retirement-ledger.py > "${RUNNER_TEMP}/sibling-ledger.json"
+          python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger.py > "${RUNNER_TEMP}/sibling-ledger.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/sibling-ledger.json" "${RUNNER_TEMP}/sibling-ledger.optimized.json"
+          python3 -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py > "${RUNNER_TEMP}/sibling-ledger-self.json"
+          python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py > "${RUNNER_TEMP}/sibling-ledger-self.optimized.json"
+          cmp --silent "${RUNNER_TEMP}/sibling-ledger-self.json" "${RUNNER_TEMP}/sibling-ledger-self.optimized.json"
+
   ksg-harmonic-assurance:
     name: KSG integer-harmonic arithmetic and phase isolation
     runs-on: ubuntu-24.04
@@ -985,6 +1012,12 @@ jobs:
       - run: >-
           cargo fetch --locked
           --manifest-path audit/tools/certified-sxpid/Cargo.toml
+      - run: cargo install cargo-deny --locked --version 0.20.2
+      - run: scripts/check-cargo-deny-toolchain.sh
+      - run: scripts/check-cargo-deny-toolchain-self-test.sh
+      - run: >-
+          cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml
+          --config audit/tools/certified-sxpid/deny.toml check
       - run: cargo fmt --manifest-path audit/tools/certified-sxpid/Cargo.toml --all --check
       - run: >-
           cargo test --locked
@@ -1020,10 +1053,6 @@ jobs:
       - run: python3 -O -I -S -B scripts/check-certified-sxpid2-claim.py
       - run: python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
       - run: python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py
-      - run: cargo install cargo-deny --locked --version 0.20.2
-      - run: >-
-          cargo deny --manifest-path audit/tools/certified-sxpid/Cargo.toml
-          --config audit/tools/certified-sxpid/deny.toml check
 
   certified-sxpid-msrv:
     name: Exact-count SxPID2 reference / MSRV 1.89

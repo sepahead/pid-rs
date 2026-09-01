@@ -8,7 +8,7 @@ FILTER="$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-bluep
 FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint"
 DEFAULT_OUTPUT="$ROOT/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf"
 OUTPUT="${1:-$DEFAULT_OUTPUT}"
-SOURCE_DATE_EPOCH_VALUE=1788134400
+SOURCE_DATE_EPOCH_VALUE=1788220800
 JOB_NAME="pid-discovery-verification-and-durability-blueprint"
 
 if [[ "$#" -gt 1 || -z "$OUTPUT" ]]; then
@@ -84,17 +84,27 @@ cleanup() {
 trap cleanup EXIT INT TERM
 
 LM_ROMAN="$(kpsewhich lmroman10-regular.otf)"
-LM_SANS="$(kpsewhich lmsans10-regular.otf)"
 LM_MONO="$(kpsewhich lmmonolt10-regular.otf)"
 LM_MATH="$(kpsewhich latinmodern-math.otf)"
-for font_path in "$LM_ROMAN" "$LM_SANS" "$LM_MONO" "$LM_MATH"; do
+SOURCE_SANS_REGULAR="$(kpsewhich SourceSansPro-Regular.otf)"
+SOURCE_SANS_REGULAR_ITALIC="$(kpsewhich SourceSansPro-RegularIt.otf)"
+SOURCE_SANS_SEMIBOLD="$(kpsewhich SourceSansPro-Semibold.otf)"
+SOURCE_SANS_SEMIBOLD_ITALIC="$(kpsewhich SourceSansPro-SemiboldIt.otf)"
+SOURCE_SANS_BOLD="$(kpsewhich SourceSansPro-Bold.otf)"
+SOURCE_SANS_BOLD_ITALIC="$(kpsewhich SourceSansPro-BoldIt.otf)"
+SOURCE_SANS_BLACK="$(kpsewhich SourceSansPro-Black.otf)"
+for font_path in "$LM_ROMAN" "$LM_MONO" "$LM_MATH" \
+    "$SOURCE_SANS_REGULAR" "$SOURCE_SANS_REGULAR_ITALIC" \
+    "$SOURCE_SANS_SEMIBOLD" "$SOURCE_SANS_SEMIBOLD_ITALIC" \
+    "$SOURCE_SANS_BOLD" "$SOURCE_SANS_BOLD_ITALIC" "$SOURCE_SANS_BLACK"; do
   if [[ ! -f "$font_path" || -L "$font_path" ]]; then
-    echo "blueprint PDF build failed: Latin Modern font is missing or symbolic: $font_path" >&2
+    echo "blueprint PDF build failed: required publication font is missing or symbolic: $font_path" >&2
     exit 1
   fi
 done
 LM_DIRECTORY="$(cd "$(dirname "$LM_ROMAN")" && pwd -P)"
 LM_MATH_DIRECTORY="$(cd "$(dirname "$LM_MATH")" && pwd -P)"
+SOURCE_SANS_DIRECTORY="$(cd "$(dirname "$SOURCE_SANS_REGULAR")" && pwd -P)"
 
 build_once() {
   local label="$1"
@@ -129,6 +139,7 @@ build_once() {
     '<fontconfig>' \
     "  <dir>$LM_DIRECTORY</dir>" \
     "  <dir>$LM_MATH_DIRECTORY</dir>" \
+    "  <dir>$SOURCE_SANS_DIRECTORY</dir>" \
     "  <cachedir>$cache_directory/fontconfig</cachedir>" \
     '  <config></config>' \
     '</fontconfig>' >"$fontconfig_file"
@@ -215,7 +226,7 @@ build_once() {
       "TMPDIR=$run_root" \
       "XDG_CACHE_HOME=$cache_directory" \
       "FONTCONFIG_FILE=$fontconfig_file" \
-      "OSFONTDIR=$LM_DIRECTORY:$LM_MATH_DIRECTORY" \
+      "OSFONTDIR=$LM_DIRECTORY:$LM_MATH_DIRECTORY:$SOURCE_SANS_DIRECTORY" \
       "TEXMFVAR=$texmfvar_directory" \
       "TEXMFCACHE=$texmfvar_directory" \
       "TEXMFCONFIG=$texmfconfig_directory" \
@@ -238,7 +249,7 @@ build_once() {
         --variable=geometry:margin=18mm \
         --variable=linestretch:1.04 \
         --variable=mainfont:'Latin Modern Roman' \
-        --variable=sansfont:'Latin Modern Sans' \
+        --variable=sansfont:'Source Sans Pro' \
         --variable=monofont:'Latin Modern Mono Light' \
         --variable=mathfont:'Latin Modern Math' \
         --output="$raw_tex"
@@ -251,7 +262,7 @@ build_once() {
 
   local pass
   for pass in 1 2 3; do
-    (
+    if ! (
       cd "$staged_root"
       env -i \
         "PATH=$PATH" \
@@ -259,7 +270,7 @@ build_once() {
         "TMPDIR=$run_root" \
         "XDG_CACHE_HOME=$cache_directory" \
         "FONTCONFIG_FILE=$fontconfig_file" \
-        "OSFONTDIR=$LM_DIRECTORY:$LM_MATH_DIRECTORY" \
+        "OSFONTDIR=$LM_DIRECTORY:$LM_MATH_DIRECTORY:$SOURCE_SANS_DIRECTORY" \
         "TEXMFVAR=$texmfvar_directory" \
         "TEXMFCACHE=$texmfvar_directory" \
         "TEXMFCONFIG=$texmfconfig_directory" \
@@ -275,7 +286,11 @@ build_once() {
           --jobname="$JOB_NAME" \
           --output-directory="$build_directory" \
           "$normalized_tex" >"$build_directory/pass-$pass.stdout" 2>&1
-    )
+    ); then
+      cat "$build_directory/pass-$pass.stdout" >&2
+      echo "blueprint PDF build failed: LuaLaTeX pass $pass failed" >&2
+      exit 1
+    fi
   done
 
   local built_pdf="$build_directory/$JOB_NAME.pdf"
@@ -300,6 +315,10 @@ build_once() {
     echo "blueprint PDF build failed: output is not A4" >&2
     exit 1
   fi
+  if ! grep -Eq '^PDF version:[[:space:]]+1\.7$' "$build_directory/pdfinfo.txt"; then
+    echo "blueprint PDF build failed: output is not PDF 1.7" >&2
+    exit 1
+  fi
 
   LC_ALL=C pdffonts "$built_pdf" >"$build_directory/pdffonts.txt"
   if ! awk '
@@ -317,9 +336,10 @@ build_once() {
     exit 1
   fi
   for required_face in LMRoman LMMonoLt10-Regular LatinModernMath-Regular \
-      LMSans10-Regular LMSans10-Bold; do
+      SourceSansPro-Regular SourceSansPro-Semibold SourceSansPro-Bold SourceSansPro-Black; do
     if ! grep -Fq "$required_face" "$build_directory/pdffonts.txt"; then
-      echo "blueprint PDF build failed: required Latin Modern face is absent: $required_face" >&2
+      cat "$build_directory/pdffonts.txt" >&2
+      echo "blueprint PDF build failed: required publication face is absent: $required_face" >&2
       exit 1
     fi
   done
@@ -330,11 +350,17 @@ build_once() {
     "Semantic transfer firewall, part 1"
     "averaged empirical categorical SxPID3"
     "108 keyed scalar audit expressions"
-    "Current 31 August 2026 adversarial publication closure"
-    "Fifty named hostile lenses"
+    "Current 1 September 2026 adversarial publication closure"
+    "PASS identifies current-byte evidence"
+    "seventy typed rows in total"
+    "Twenty mandatory core lenses"
+    "Fifty additional artifact-specific hostile lenses"
     "Ten materially distinct routes"
+    "D1 remains open"
+    "bounded corpus and optional shards"
     "Autoresearch without evidence laundering"
     "Repository durability and promotion"
+    "remote-ref, ancestry, hosted-run, and recovery-drill checks pass"
     "Durable promotion state machine, part 1"
     "Current safety disposition"
     "Source-anchored claim register"

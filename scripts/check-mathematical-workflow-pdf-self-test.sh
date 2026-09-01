@@ -7,8 +7,9 @@ if [[ "$SCRIPT_DIRECTORY" == "${BASH_SOURCE[0]}" ]]; then
 fi
 ROOT="$(cd "$SCRIPT_DIRECTORY/.." && pwd -P)"
 CHECK_NAME="mathematical workflow PDF checker self-test"
-EXPECTED_PAGES=83
+EXPECTED_PAGES=87
 EXPECTED_DPI=120
+EXPECTED_HIGH_RESOLUTION_DPI=300
 
 TMP_PARENT_RAW="${TMPDIR:-/tmp}"
 if [[ ! -d "$TMP_PARENT_RAW" ]]; then
@@ -63,7 +64,8 @@ C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
 C8_TEXT_PORTABILITY_COUNT=0
-EXPECTED_PREDECESSOR_CONTROL_COUNT=203
+VISUAL_RECEIPT_HOSTILE_COUNT=0
+EXPECTED_PREDECESSOR_CONTROL_COUNT=218
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
@@ -71,8 +73,9 @@ EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
 EXPECTED_C8_TEXT_PORTABILITY_COUNT=44
-EXPECTED_TOTAL_CONTROL_COUNT=366
-# This suite never compiles the 83-page report.  Its locally observed slowest focused PDF-parser
+EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
+EXPECTED_TOTAL_CONTROL_COUNT=381
+# This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
 # absence polling, and reaping are separately bounded stages under the declared progress premise.
@@ -1940,6 +1943,7 @@ copy_manifest_fixture() {
     "scripts/compare-formal-pdf-renders-self-test.py"
     "audit/evidence/x-thread-citation-edge-application.json"
     "audit/evidence/x-thread-citation-source-manifest.json"
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"
     "audit/formal/latex/mathematical-problem-solving-workflow.tex"
     "audit/formal/latex/pid-rs-report-tables.sty"
     "audit/formal/latex/pid-rs-workflow-publication.sty"
@@ -1979,6 +1983,7 @@ copy_manifest_fixture "$BASE_REPOSITORY"
 CHECKER="$BASE_REPOSITORY/scripts/check-mathematical-workflow-pdf.sh"
 BASE_PDF="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.pdf"
 BASE_RENDERING_RECEIPT="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
+BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"
 BASE_MARKDOWN="$BASE_REPOSITORY/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 BASE_FIGURE_DIR="$BASE_REPOSITORY/audit/formal/latex/figures/mathematical-workflow"
 
@@ -2167,7 +2172,7 @@ import sys
 
 root = Path(sys.argv[1])
 variant = sys.argv[2]
-expected_pages = 83
+expected_pages = 87
 
 
 def find_once(tokens: list[str], needle: list[str]) -> int:
@@ -2373,11 +2378,11 @@ expect_reject \
   run_text_portability_validator "$(text_portability_case invalid-utf8)"
 expect_reject \
   "text portability rejects a missing form feed" \
-  "committed default extraction form-feed inventory is 82, expected 83" \
+  "committed default extraction form-feed inventory is 86, expected 87" \
   run_text_portability_validator "$(text_portability_case missing-ff)"
 expect_reject \
   "text portability rejects an extra form feed" \
-  "committed default extraction form-feed inventory is 84, expected 83" \
+  "committed default extraction form-feed inventory is 88, expected 87" \
   run_text_portability_validator "$(text_portability_case extra-ff)"
 expect_reject \
   "text portability rejects bytes after the terminal form feed" \
@@ -5578,95 +5583,177 @@ cmp \
   || fail "refresh rollback did not preserve the unexpected concurrent figure entry"
 pass "refresh final-inventory failure preserves the extra node and restores all six outputs"
 
-# Visual-review receipt parser.  Build a valid fixture from exact copied artifact bytes first.
+# Visual-review receipt parser.  The accepted control is the exact repository receipt, copied from
+# the same source snapshot as its bound PDF and rendering receipt.  Every hostile control changes
+# one named contract dimension and must reach that dimension's exact production diagnostic.
 VISUAL_CONTROL="$TEST_ROOT/visual-control.md"
-python3 -I -S - \
-  "$VISUAL_CONTROL" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
-  "$EXPECTED_PAGES" "$EXPECTED_DPI" <<'PY'
-from pathlib import Path
-import hashlib
-import sys
+cp "$BASE_VISUAL_RECEIPT" "$VISUAL_CONTROL"
+chmod u+w "$VISUAL_CONTROL"
 
+run_visual_validator() {
+  python3 -I -S "$VISUAL_VALIDATOR" \
+    "$1" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
+    "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI"
+}
 
-destination = Path(sys.argv[1])
-pdf = Path(sys.argv[2])
-rendering_receipt = Path(sys.argv[3])
-pages = int(sys.argv[4])
-dpi = int(sys.argv[5])
-text = f"""# Mathematical workflow PDF visual-review receipt
-
-schema: `pid-rs/mathematical-workflow-visual-review/v1`
-subject: `output/pdf/mathematical-problem-solving-workflow.pdf`
-pdf_sha256: `{hashlib.sha256(pdf.read_bytes()).hexdigest()}`
-rendering_receipt: `output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv`
-rendering_receipt_sha256: `{hashlib.sha256(rendering_receipt.read_bytes()).hexdigest()}`
-pages: `{pages}`
-dpi: `{dpi}`
-color_pages_reviewed: `1-{pages}`
-grayscale_pages_reviewed: `1-{pages}`
-original_resolution_spot_checks: `1,5,6,10,12,19-23,28,30,31,37-47,55-63,79-83`
-figure_pages_reviewed: `5,6,10,12`
-status: `passed`
-review_date_utc: `2026-08-31`
-reviewer_kind: `agent-visual-inspection`
-
-All {pages} color pages and all {pages} grayscale pages were viewed in page order.
-
-No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.
-
-Every workflow figure was reviewed at original resolution in both color and grayscale.
-
-The root agent completed the page-by-page visual inspection; no dependency-disjoint second-review credit is claimed.
-
-This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.
-"""
-destination.write_text(text, encoding="utf-8", newline="\n")
-PY
+expect_visual_reject() {
+  expect_reject "$@"
+  VISUAL_RECEIPT_HOSTILE_COUNT=$((VISUAL_RECEIPT_HOSTILE_COUNT + 1))
+}
 
 expect_accept \
-  "visual receipt accepts exact artifact bindings and bounded-review language" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$VISUAL_CONTROL" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
-  "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  "visual receipt v2 accepts exact artifact bindings, lens evidence, and bounded-review language" \
+  run_visual_validator "$VISUAL_CONTROL"
 
 case_file="$TEST_ROOT/visual-private-path.md"
 cp "$VISUAL_CONTROL" "$case_file"
 printf "host: \`/private/host-specific\`\n" >>"$case_file"
-expect_reject \
+expect_visual_reject \
   "visual receipt rejects private host paths" \
   "visual receipt contains a private or host-local path" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  run_visual_validator "$case_file"
 
 case_file="$TEST_ROOT/visual-duplicate-field.md"
 cp "$VISUAL_CONTROL" "$case_file"
-printf "schema: \`pid-rs/mathematical-workflow-visual-review/v1\`\n" >>"$case_file"
-expect_reject \
+printf "schema: \`pid-rs/mathematical-workflow-visual-review/v2\`\n" >>"$case_file"
+expect_visual_reject \
   "visual receipt rejects duplicate canonical fields" \
   "visual receipt must contain exactly one canonical schema field" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  run_visual_validator "$case_file"
 
-case_file="$TEST_ROOT/visual-digest.md"
+case_file="$TEST_ROOT/visual-extra-field.md"
 cp "$VISUAL_CONTROL" "$case_file"
-python3 -I -S - "$case_file" <<'PY'
-from pathlib import Path
-import re
-import sys
+printf "notes: \`undeclared\`\n" >>"$case_file"
+expect_visual_reject \
+  "visual receipt rejects an extra undeclared field" \
+  "visual receipt contains an unexpected field outside the canonical field block: notes" \
+  run_visual_validator "$case_file"
 
-
-path = Path(sys.argv[1])
-text = path.read_text(encoding="utf-8")
-text, count = re.subn(r"(?m)^pdf_sha256: `[0-9a-f]{64}`$", f"pdf_sha256: `{'0' * 64}`", text)
-if count != 1:
-    raise SystemExit("visual PDF digest mutation target drifted")
-path.write_text(text, encoding="utf-8", newline="\n")
-PY
-expect_reject \
+case_file="$TEST_ROOT/visual-pdf-digest.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once \
+  "$case_file" \
+  'pdf_sha256: `ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798`' \
+  'pdf_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
+expect_visual_reject \
   "visual receipt rejects a stale PDF digest binding" \
   "visual receipt field pdf_sha256 differs" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-rendering-receipt-digest.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once \
+  "$case_file" \
+  'rendering_receipt_sha256: `1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab`' \
+  'rendering_receipt_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
+expect_visual_reject \
+  "visual receipt rejects a stale rendering-receipt digest binding" \
+  "visual receipt field rendering_receipt_sha256 differs" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-lens-count.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" 'lens_count: `20`' 'lens_count: `19`'
+expect_visual_reject \
+  "visual receipt rejects lens-count drift" \
+  "visual receipt field lens_count differs" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-normal-dpi.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" 'normal_dpi: `120`' 'normal_dpi: `121`'
+expect_visual_reject \
+  "visual receipt rejects normal-DPI drift" \
+  "visual receipt field normal_dpi differs" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-high-resolution-dpi.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" 'high_resolution_dpi: `300`' 'high_resolution_dpi: `301`'
+expect_visual_reject \
+  "visual receipt rejects high-resolution-DPI drift" \
+  "visual receipt field high_resolution_dpi differs" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-high-resolution-spots.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once \
+  "$case_file" \
+  'high_resolution_spot_checks: `1-3,5,6,10,12,46-51,58,60,62,65,66,82-87`' \
+  'high_resolution_spot_checks: `1-3,5,6,10,12,46-51,58,60,62,65,67,82-87`'
+expect_visual_reject \
+  "visual receipt rejects high-resolution spot-list drift" \
+  "visual receipt field high_resolution_spot_checks differs" \
+  run_visual_validator "$case_file"
+
+grid_row='| grid | passed | Text blocks, tables, figures, headers, and footers remain aligned to a consistent page grid. |'
+hierarchy_row='| hierarchy | passed | Section headings, subordinate headings, callouts, captions, and running matter preserve a clear visual hierarchy. |'
+typography_row='| typography | passed | Body, heading, monospaced, and mathematical text remain legible with no missing or visibly damaged glyphs. |'
+
+case_file="$TEST_ROOT/visual-missing-lens.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" "$grid_row" ""
+expect_visual_reject \
+  "visual receipt rejects a missing canonical lens" \
+  "visual receipt canonical lens is missing: grid" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-duplicate-lens.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" "$grid_row" "$grid_row"$'\n'"$grid_row"
+expect_visual_reject \
+  "visual receipt rejects a duplicated canonical lens" \
+  "visual receipt canonical lens is duplicated: grid" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-reordered-lenses.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once \
+  "$case_file" \
+  "$hierarchy_row"$'\n'"$typography_row" \
+  "$typography_row"$'\n'"$hierarchy_row"
+expect_visual_reject \
+  "visual receipt rejects reordered canonical lenses" \
+  "visual receipt lens order drifted at row 1: expected 'hierarchy', observed 'typography'" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-extra-lens-row.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once \
+  "$case_file" \
+  "$grid_row" \
+  "$grid_row"$'\n''| unreviewed extra lens | passed | This row is outside the closed lens inventory. |'
+expect_visual_reject \
+  "visual receipt rejects an extra undeclared lens row" \
+  "visual receipt contains an undeclared lens row: unreviewed extra lens" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-invalid-lens-outcome.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" "$grid_row" "${grid_row/| passed |/| failed |}"
+expect_visual_reject \
+  "visual receipt rejects an invalid lens outcome" \
+  "visual receipt lens outcome differs for grid: 'failed'" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-empty-lens-evidence.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" "$grid_row" '| grid | passed |  |'
+expect_visual_reject \
+  "visual receipt rejects empty lens evidence" \
+  "visual receipt lens evidence is empty for grid" \
+  run_visual_validator "$case_file"
+
+case_file="$TEST_ROOT/visual-lens-evidence-drift.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once \
+  "$case_file" \
+  "$grid_row" \
+  '| grid | passed | The page grid looked acceptable. |'
+expect_visual_reject \
+  "visual receipt rejects frozen lens-evidence drift" \
+  "visual receipt lens evidence differs for grid: 'The page grid looked acceptable.'" \
+  run_visual_validator "$case_file"
 
 case_file="$TEST_ROOT/visual-statement.md"
 cp "$VISUAL_CONTROL" "$case_file"
@@ -5674,20 +5761,18 @@ replace_once \
   "$case_file" \
   "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed." \
   "No obvious layout defect was observed."
-expect_reject \
+expect_visual_reject \
   "visual receipt rejects weakened required review language" \
   "visual receipt required top-level review paragraph is absent or duplicated" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  run_visual_validator "$case_file"
 
 case_file="$TEST_ROOT/visual-contradictory-extra-paragraph.md"
 cp "$VISUAL_CONTROL" "$case_file"
 printf '\nContradiction: no page was actually viewed.\n' >>"$case_file"
-expect_reject \
+expect_visual_reject \
   "visual receipt rejects an undeclared contradictory top-level paragraph" \
   "visual receipt paragraph inventory differs from the closed schema" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  run_visual_validator "$case_file"
 
 case_file="$TEST_ROOT/visual-crlf.md"
 python3 -I -S - "$VISUAL_CONTROL" "$case_file" <<'PY'
@@ -5698,11 +5783,10 @@ import sys
 source = Path(sys.argv[1]).read_bytes()
 Path(sys.argv[2]).write_bytes(source.replace(b"\n", b"\r\n", 1))
 PY
-expect_reject \
+expect_visual_reject \
   "visual receipt rejects noncanonical CRLF bytes" \
   "visual receipt does not have canonical LF termination" \
-  python3 -I -S "$VISUAL_VALIDATOR" \
-  "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+  run_visual_validator "$case_file"
 
 mutate_visual_context() {
   local destination="$1"
@@ -5721,20 +5805,23 @@ elif mode == "fence":
     mutated = f"```text\n{source}```\n"
 elif mode == "quote":
     mutated = "\n".join(f"> {line}" for line in source.splitlines()) + "\n"
+elif mode == "details":
+    mutated = f"<details>\n{source}</details>\n"
+elif mode == "reference-comment":
+    mutated = source + "[//]: # (concealed contradiction)\n"
 else:
     raise SystemExit(f"unknown visual-context mutation: {mode}")
 destination.write_text(mutated, encoding="utf-8", newline="\n")
 PY
 }
 
-for context_mode in comment fence quote; do
+for context_mode in comment fence quote details reference-comment; do
   case_file="$TEST_ROOT/visual-$context_mode.md"
   mutate_visual_context "$case_file" "$context_mode"
-  expect_reject \
+  expect_visual_reject \
     "visual receipt rejects fields and claims concealed in $context_mode context" \
     "visual receipt contains forbidden Markdown concealment or non-top-level content" \
-    python3 -I -S "$VISUAL_VALIDATOR" \
-    "$case_file" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" "$EXPECTED_PAGES" "$EXPECTED_DPI"
+    run_visual_validator "$case_file"
 done
 
 # SVG validator.  All hostile cases start from a control that the same extracted production block
@@ -6675,12 +6762,13 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_EXECUTABLE_CUSTODY_COUNT" -ne "$EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT" \
     || "$C3_FORMAT_CUSTODY_COUNT" -ne "$EXPECTED_C3_FORMAT_CUSTODY_COUNT" \
     || "$C8_TEXT_PORTABILITY_COUNT" -ne "$EXPECTED_C8_TEXT_PORTABILITY_COUNT" \
+    || "$VISUAL_RECEIPT_HOSTILE_COUNT" -ne "$EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; visual-receipt-hostile=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
@@ -6689,4 +6777,5 @@ printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen fa
   "$C3_FLS_MAP_PATH_COUNT" \
   "$C3_EXECUTABLE_CUSTODY_COUNT" \
   "$C3_FORMAT_CUSTODY_COUNT" \
-  "$C8_TEXT_PORTABILITY_COUNT"
+  "$C8_TEXT_PORTABILITY_COUNT" \
+  "$VISUAL_RECEIPT_HOSTILE_COUNT"

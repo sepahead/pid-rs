@@ -173,12 +173,29 @@ GATE_COMMANDS_ASSIGNMENT = "GATE_COMMANDS"
 CI_JOB_DIGEST_ASSIGNMENT = "EXPECTED_CI_CERTIFIED_SXPID_JOB_SHA256"
 JUST_RECIPE_DIGEST_ASSIGNMENT = "EXPECTED_JUST_CERTIFIED_SXPID_RECIPE_SHA256"
 EXPECTED_CI_JOB_DIGEST = (
-    "67dab1b2177419e545a60ec7af21ac0f2c1d45b7cc466006218a5ab8c94e8e62"
+    "57d9da0e34d99723719040fb8e39490841c48db123074785afe71cb8eab0d028"
 )
 EXPECTED_JUST_RECIPE_DIGEST = (
-    "4bbc138fd8b7bd07281e593ab0380ca68cceabfd7e33be8dac2591bec37bc0f3"
+    "f4fdee50f24816782433c0054e81d781301a4c1db12b7790f317ba1fe0657da9"
 )
-EXECUTION_CONTAINER_PATHS = frozenset({".github/workflows/ci.yml", "justfile"})
+ANCHOR_EXECUTION_CONTAINER_PATHS = frozenset({".github/workflows/ci.yml", "justfile"})
+EXPECTED_EXECUTION_CONTAINER_PATH_ADDITIONS = frozenset(
+    {
+        "scripts/check-cargo-deny-toolchain-self-test.sh",
+        "scripts/check-cargo-deny-toolchain.sh",
+    }
+)
+EXECUTION_CONTAINER_PATHS = (
+    ANCHOR_EXECUTION_CONTAINER_PATHS | EXPECTED_EXECUTION_CONTAINER_PATH_ADDITIONS
+)
+EXPECTED_CARGO_DENY_EXECUTION_CONTAINER_SHA256 = {
+    "scripts/check-cargo-deny-toolchain-self-test.sh": (
+        "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
+    ),
+    "scripts/check-cargo-deny-toolchain.sh": (
+        "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
+    ),
+}
 REVIEWED_DOCUMENTATION_PATHS = frozenset(
     {"audit/tools/certified-sxpid/README.md", "scripts/README.md"}
 )
@@ -200,6 +217,8 @@ EXPECTED_EXECUTABLE_EVIDENCE_ADDED_PATHS = frozenset(
 EXPECTED_TEXT_PATH_ADDITIONS = frozenset(
     {
         "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md",
+        "scripts/check-cargo-deny-toolchain-self-test.sh",
+        "scripts/check-cargo-deny-toolchain.sh",
         "scripts/check-lean-exact-log-product-self-test.py",
     }
 )
@@ -209,10 +228,12 @@ EXPECTED_JSON_PATH_ADDITIONS = frozenset(
 EXPECTED_CATALOG_PATH_ADDITIONS = EXPECTED_EXECUTABLE_EVIDENCE_ADDED_PATHS
 AUDIT_TOOL_README = "audit/tools/certified-sxpid/README.md"
 SCRIPTS_README = "scripts/README.md"
-EXPECTED_C8_FAILURE_BINDING_DIFFERENCES = frozenset(
+EXPECTED_CURRENT_CLOSURE_BINDING_DIFFERENCES = frozenset(
     {
         "execution-container:.github/workflows/ci.yml",
         "execution-container:justfile",
+        "execution-container-added:scripts/check-cargo-deny-toolchain-self-test.sh",
+        "execution-container-added:scripts/check-cargo-deny-toolchain.sh",
         "release-audit-line:justfile",
         "reviewed-documentation:scripts/README.md",
         "support-gate:scripts/check-formal-pdf-set.sh",
@@ -238,7 +259,7 @@ CANDIDATE_GATE_COMMANDS = (
     "python3 -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
     "python3 -O -I -S -B scripts/check-certified-sxpid2-claim-self-test.py",
 )
-EXPECTED_SNAPSHOT_MUTATIONS = 117
+EXPECTED_SNAPSHOT_MUTATIONS = 119
 EXPECTED_NEW_SOURCE_MUTATIONS = 6
 EXPECTED_NEW_HUGE_INTEGER_MUTATIONS = 1
 PYC_MAGIC_BY_MINOR = {
@@ -698,12 +719,22 @@ def validate_checker_source_reconstruction(
         "candidate certified Just-recipe digest changed",
     )
     validate_digest_mapping(
-        anchor_execution, EXECUTION_CONTAINER_PATHS, "anchor execution-container rebind"
+        anchor_execution,
+        ANCHOR_EXECUTION_CONTAINER_PATHS,
+        "anchor execution-container rebind",
     )
     validate_digest_mapping(
         candidate_execution,
         EXECUTION_CONTAINER_PATHS,
         "candidate execution-container rebind",
+    )
+    require(
+        {
+            path: candidate_execution[path]
+            for path in EXPECTED_EXECUTION_CONTAINER_PATH_ADDITIONS
+        }
+        == EXPECTED_CARGO_DENY_EXECUTION_CONTAINER_SHA256,
+        "candidate cargo-deny execution-source digest additions changed",
     )
     validate_digest_mapping(
         anchor_documentation,
@@ -785,8 +816,12 @@ def validate_checker_source_reconstruction(
     binding_differences = {
         *(
             f"execution-container:{path}"
-            for path in EXECUTION_CONTAINER_PATHS
+            for path in ANCHOR_EXECUTION_CONTAINER_PATHS
             if candidate_execution[path] != anchor_execution[path]
+        ),
+        *(
+            f"execution-container-added:{path}"
+            for path in EXPECTED_EXECUTION_CONTAINER_PATH_ADDITIONS
         ),
         *(
             f"reviewed-documentation:{path}"
@@ -805,8 +840,8 @@ def validate_checker_source_reconstruction(
         ),
     }
     require(
-        binding_differences == EXPECTED_C8_FAILURE_BINDING_DIFFERENCES,
-        "C8 failure five-binding difference set changed",
+        binding_differences == EXPECTED_CURRENT_CLOSURE_BINDING_DIFFERENCES,
+        "current closure binding difference set changed",
     )
 
     normalized_anchor = anchor_source
@@ -937,12 +972,12 @@ def validate_checker_source_mutations(anchor_raw: bytes, candidate_raw: bytes) -
         "checker bootstrap exact bytes changed",
     )
 
-    fourth = dict(execution)
-    fourth["unreviewed/fourth-container"] = "0" * 64
+    expanded = dict(execution)
+    expanded["unreviewed/additional-container"] = "0" * 64
     expect_checker_source_rejection(
-        "fourth-container-rebind",
+        "execution-container-inventory-expanded",
         anchor_raw,
-        replace_checker_mapping(candidate_raw, EXECUTION_CONTAINER_ASSIGNMENT, fourth),
+        replace_checker_mapping(candidate_raw, EXECUTION_CONTAINER_ASSIGNMENT, expanded),
         "candidate execution-container rebind path inventory changed",
     )
 
@@ -3359,6 +3394,24 @@ def main() -> int:
                 ),
             ),
             "immutable reviewed executable/evidence artifact digest changed",
+        ),
+        (
+            "cargo-deny-toolchain-preflight-drift",
+            transformed_text(
+                baseline,
+                "scripts/check-cargo-deny-toolchain.sh",
+                lambda text: text + "\n",
+            ),
+            "reviewed revision-3 execution container digest changed",
+        ),
+        (
+            "cargo-deny-toolchain-preflight-self-test-drift",
+            transformed_text(
+                baseline,
+                "scripts/check-cargo-deny-toolchain-self-test.sh",
+                lambda text: text + "\n",
+            ),
+            "reviewed revision-3 execution container digest changed",
         ),
         (
             "formal-paper-inventory-removed",

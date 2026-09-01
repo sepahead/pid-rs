@@ -663,18 +663,21 @@ PRESERVED_R14_OPERATIONAL_WIRING_HASHES = {
 }
 EXPECTED_OPERATIONAL_WIRING_HASHES = {
     **PRESERVED_R14_OPERATIONAL_WIRING_HASHES,
-    ".github/workflows/ci.yml": "1f929504d29b46e0141286fac164496d3a5d004c4eb2e682232bedfe29b91f96",
+    ".github/workflows/ci.yml": "049ed96393454c64905789c1b2b2613878d9084829cde802cb78d93dd338c896",
     ".github/workflows/ksg-m1a-composite-v9.yml": "77c39e60cb965ee97abdc8e755b6e9c8f3c65c4db8e9568f0bc9e692d10195da",
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "d303fa2e6f492dba15da12e86d5d007d766777cf533d2bf177365b6aeb97ac25",
-    "CHANGELOG.md": "6bcb3d649f3d6b9dada3eddc6ff1655b563bb75850d8731de969f5836496814b",
+    "AGENTS.md": "8f7d36eb833d1efa8e73855c98904f186726c608e90eaebe7d51b0093c997f40",
+    "CHANGELOG.md": "98f92f8dd6042d60d5e7b1ac058be676a9b0465d5252c896ec613f668229e291",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
-        "d344d0d663edd13b59b30bffc44aa248f4186920cec3358fea46dcda60b64567"
+        "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
     "audit/evidence/mathematical-workflow-visual-receipt-2026-08-16.md": (
         "f3fe81e736940f6431796031235f7ffaf204fd6c4b8ace974f54807144a038c7"
+    ),
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md": (
+        "a8fa1ce908ac411142e4cdd1721442c8b6ebbff3ab9ea8d8c958b5c687246ab4"
     ),
     "audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md": (
         "4930810e053fda866f4f1b356e07902b9cc8c8797a012fbe4bf40562899b835c"
@@ -684,24 +687,30 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "244127cb65744ff5929241192b0e4285ae393cc098722107eac96db37de11e87"
     ),
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": (
-        "9702c43d45bc266ba7b973f90f9f8b9a6124a478c08a011eb5b373a210643206"
+        "e23de4e1ea7b2010e695f08aa57f237f2241dbfa51b3af8f66762ea9b6352709"
     ),
     "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json": (
         "2152411c804df3a75f6b106ae97761f4812adf2ae8ca963a98a296df812c0e5e"
     ),
-    "justfile": "658d6385e81e7177e82a984c199f65c928e9addc79bc20b8c837e3ee5eedd3e1",
+    "justfile": "e14e9ba9bdcbe79c16c8047f9d0b978943bde72fd4fe67303c5c0857461abdcc",
     "output/pdf/mathematical-problem-solving-workflow.pdf": (
-        "dca7e94aed3597af8aad8ae1cd74f8777ae97554e5f8372bf63b89ea6a53bd19"
+        "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798"
     ),
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
-        "b7217536cbec2b3758b1b175b138fbc5eaf95dc0b8387bedfdf30229e66e2763"
+        "1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab"
     ),
-    "scripts/README.md": "272f3bac381f34d064846fe9502cf633337e8144dbb4d76f2499b0cef89f847e",
+    "scripts/README.md": "644d7ef7420cbfb5eafaf7416b791ede20643abdb24d279e1f4d9df5124f9fff",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
-        "ebe61f04934246475c388296a823c7f97cafe662debf11a6ae7be42035154fe2"
+        "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "29a1d327380da6fb0af2181e0094e11c12fa4f86ad72ed03428087a5c6e00368"
+        "dbd76020268ead8a4a926072940e5a9596d2449a5b49c578910cabf18b6487d0"
+    ),
+    "scripts/check-cargo-deny-toolchain-self-test.sh": (
+        "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
+    ),
+    "scripts/check-cargo-deny-toolchain.sh": (
+        "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
         "ae8d8ccbb873fe79dd9ebe2c849da93ac92404702e032632a428045068a287f2"
@@ -728,10 +737,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c9a54df51b2d3f28ed07bc2c47c606b0016f7f82158fccf2db1b2839fb592d7b"
     ),
     "scripts/check-mathematical-workflow-pdf-self-test.sh": (
-        "adff95ad908edd6ccbdddabb2d8119a859589c68ebfcd996c14529896b296769"
+        "5b297bef923331687a0c4cf84ebd92dfd206d9eadc03032c531ba7ff091cd6bc"
     ),
     "scripts/check-mathematical-workflow-pdf.sh": (
-        "4e1617141a33d7e5e201c2a9fc060d805a9de2d1a079f1655ae9ed4cfb948c35"
+        "793559bd5d5805418904cc0e71215c5acbe623cb76ca5aff4e3c5426d0cbf8d7"
     ),
 }
 EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS = frozenset(
@@ -745,6 +754,20 @@ EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS = frozenset(
         "scripts/check-ksg-revision4-terminal-index-self-test.py",
         "scripts/check-ksg-revision4-terminal-index.py",
     }
+)
+EXPECTED_CARGO_DENY_PREFLIGHT_OPERATIONAL_PATHS = frozenset(
+    {
+        "scripts/check-cargo-deny-toolchain-self-test.sh",
+        "scripts/check-cargo-deny-toolchain.sh",
+    }
+)
+EXPECTED_WORKFLOW_VISUAL_RECEIPT_OPERATIONAL_PATHS = frozenset(
+    {"audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"}
+)
+EXPECTED_CURRENT_OPERATIONAL_ADDED_PATHS = (
+    EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS
+    | EXPECTED_CARGO_DENY_PREFLIGHT_OPERATIONAL_PATHS
+    | EXPECTED_WORKFLOW_VISUAL_RECEIPT_OPERATIONAL_PATHS
 )
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
     relative
@@ -2463,7 +2486,7 @@ def check_no_self_digest_cycle() -> None:
         EXPECTED_OPERATIONAL_WIRING_HASHES
         is not PRESERVED_R14_OPERATIONAL_WIRING_HASHES
         and preserved_paths < current_paths
-        and current_paths - preserved_paths == EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS,
+        and current_paths - preserved_paths == EXPECTED_CURRENT_OPERATIONAL_ADDED_PATHS,
         "preserved-r14/current-C12 operational path split drifted",
     )
     preserved_claim_paths = set(PRESERVED_R14_ACTIVE_CLAIM_HASHES)

@@ -15,6 +15,12 @@ local github_navigation_links = {
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md",
   ["claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier"] =
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier",
+  ["audit/evidence/worktree-and-branch-preservation-2026-08-27.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/worktree-and-branch-preservation-2026-08-27.md",
+  ["audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json",
+  ["audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json",
 }
 local figure_panels = {
   ["semantic-transfer-firewall-source-card.pdf"] = {
