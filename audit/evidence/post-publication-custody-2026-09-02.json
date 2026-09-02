@@ -1,0 +1,246 @@
+{
+  "schema": "pid-rs/post-publication-custody/v2",
+  "record_id": "PPC-20260902-02",
+  "observation_started_at_utc": "2026-09-02T00:06:18Z",
+  "actions_completed_at_utc": "2026-09-02T00:07:35Z",
+  "final_observed_at_utc": "2026-09-02T04:43:02Z",
+  "phase_timestamp_basis": {
+    "observation_started_at_utc": "Recorded start of the original dated observation.",
+    "actions_completed_at_utc": "Recorded completion of the named cleanup and packed-ref reconciliation actions; this time is not inferred from a filesystem mtime.",
+    "final_observed_at_utc": "UTC time captured immediately before the final direct remote-head query and bounded local read-only observations; it is not an atomic snapshot or an attestation.",
+    "ordering": "observation_started_at_utc <= actions_completed_at_utc <= final_observed_at_utc"
+  },
+  "repository": "sepahead/pid-rs",
+  "observation_kind": "dated_snapshot_not_live_manifest",
+  "scope": "Post-publication observation and exact cleanup actions for the c499653e4ac89733cb35330bf1a13c93a40ee385 mainline. This record does not rewrite dated snapshots or authorize future deletion.",
+  "publication": {
+    "anchor_kind": "mainline_published_commit_observation",
+    "commit": "c499653e4ac89733cb35330bf1a13c93a40ee385",
+    "parent": "30e6d19bf020b18ef1cc1f9478c2d4acba62ccf1",
+    "tree": "1a1f8dc9782d2f5d6cc9c3342b5395bc7240b975",
+    "remote_main": "c499653e4ac89733cb35330bf1a13c93a40ee385",
+    "local_main": "c499653e4ac89733cb35330bf1a13c93a40ee385",
+    "primary_worktree_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+    "primary_worktree_status": "dirty_review_lane_retained_and_not_overwritten",
+    "local_main_source": {
+      "repository_role": "primary common Git directory",
+      "command": "git -C <primary-repository> rev-parse refs/heads/main",
+      "meaning": "The local primary ref value observed during the dated cleanup; the detached receipt checkout is not evidence for this field."
+    },
+    "receipt_source_checkout": {
+      "state": "detached_at_publication_anchor",
+      "meaning": "The checkout used to prepare this record was separate from the dirty primary lane."
+    }
+  },
+  "live_remote_heads": {
+    "observed_command": "git ls-remote --heads git@github.com:sepahead/pid-rs.git",
+    "query_observed_at_utc": "2026-09-02T04:43:02Z",
+    "head_count": 14,
+    "manifest_path": "audit/evidence/post-publication-remote-heads-2026-09-02.tsv",
+    "manifest_encoding": "UTF-8 bytes, LF line endings, final LF, one OID TAB refname record per line",
+    "raw_output_sha256": "b8fee7265e8a6ea38adbd03324cbc22e07785689e5b55e4a51d2101fce018b82",
+    "refname_sorted_output_sha256": "b8fee7265e8a6ea38adbd03324cbc22e07785689e5b55e4a51d2101fce018b82",
+    "whole_line_sorted_output_sha256": "1806619eb44aad84806eb63085da1859fa146492611cb72aafefbdac2d3b23c3",
+    "sort_contract": "LC_ALL=C sort -t <TAB> -k2,2 on the tab-separated OID/refname lines; retain the final newline",
+    "retired_refs_absent_from_observed_manifest": true,
+    "absence_scope": "The nine named retired ref names are absent from this observed 14-line direct-query manifest only; this does not prove non-recreation, object deletion, or future absence.",
+    "entries": [
+      {"oid": "062025c3fc283db9bdb105219dbcc82719771175", "ref": "refs/heads/archive/composite-v5-rejected-umask-20260818"},
+      {"oid": "1ef37646e168b645853e1857d0205233a87b68dc", "ref": "refs/heads/archive/composite-v6-pre-r11-draft-20260818"},
+      {"oid": "769547a6d6ed70a074707d90bc2f55393fd34fa4", "ref": "refs/heads/archive/composite-v9-rejected-local-authority-oversize-20260822"},
+      {"oid": "113cbad2e58a9cfa40cf43b1c0ffc260b566aa92", "ref": "refs/heads/archive/composite-v9-rejected-r14-fixed-point-20260822"},
+      {"oid": "0a6ece9c525ad7aad061f55b3edea83554891b42", "ref": "refs/heads/archive/composite-v9-rejected-workflow-pdf-umask-20260821"},
+      {"oid": "60774437488b376d30702146301e76b3186b5dd3", "ref": "refs/heads/archive/exact-log-product-verifier-draft-20260828"},
+      {"oid": "81d37370a21a4b5c9551e2cde7904e5e1ee28e67", "ref": "refs/heads/archive/real-r-constructor-v8-public-disposition"},
+      {"oid": "9dcdf32f18076eefc768194079b4abf437009737", "ref": "refs/heads/codex/primegaps-pid-blueprint-20260819"},
+      {"oid": "93edb4983129151ce0db8e58b0aad52cae0f47bc", "ref": "refs/heads/diagnostic/c3-pdf-capture-20260830"},
+      {"oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "ref": "refs/heads/main"},
+      {"oid": "80443f9f2fa66452237013c9881cfaeeb984e5c1", "ref": "refs/heads/sepahead/exact-log-hostile-v1"},
+      {"oid": "75a7acaa3f9432dc323be7e49f5eee1f9af781fd", "ref": "refs/heads/sepahead/galadriel-placement-guide-v1"},
+      {"oid": "caf8c7be3e2249df8e959c8940632fd22ed09923", "ref": "refs/heads/sepahead/pid2-rev4-assurance-v1"},
+      {"oid": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d", "ref": "refs/heads/sepahead/python-custody-m0-v1"}
+    ],
+    "note": "The local checkout may retain stale remote-tracking names; this field binds the direct hosted query instead. The refname-sorted hash is explicit; the whole-line hash is recorded to prevent a different sort interpretation. This is a dated snapshot, not a live branch inventory."
+  },
+  "local_tracking_cleanup": [
+    {"ref": "refs/remotes/origin/sepahead/pid-rs-release-integration-r4", "old_oid": "535d7a44e2f8108f806af48cc27b86009239ec4e", "action": "pruned_after_direct_remote_absence_check", "object_custody": "retained by archive/bundle routes", "evidence_class": "operator_action_record", "action_scope": "local remote-tracking metadata only; no hosted-ref deletion claim"}
+  ],
+  "local_ref_reconciliation": {
+    "operation": "git pack-refs --all --prune",
+    "purpose": "remove stale duplicate packed values while preserving the current loose-ref values",
+    "pre_packed_refs_sha256": "c7cc9b77613ef1942f05c2db98efcda8ddff5bff546e9ca78c6b2699406f6327",
+    "pre_packed_refs_preserved_at": "external-local-preservation/pid-rs-local-preservation-20260830/ref-metadata-20260902/packed-refs.before",
+    "pre_packed_refs_locator_class": "same-device external preservation; not a repository-relative link and not claimed as off-host storage",
+    "post_packed_refs_sha256": "813fe81e1ec218749f3b593cabc1dd74acfff87192b0b4bb1d0e8be3e722d31c",
+    "post_expected_values": {
+      "refs/heads/main": "c499653e4ac89733cb35330bf1a13c93a40ee385",
+      "refs/heads/review/sx-count-event-bridge-r2": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+      "refs/remotes/origin/main": "c499653e4ac89733cb35330bf1a13c93a40ee385"
+    },
+    "status_projection_command": "git status --porcelain=v1 --untracked-files=normal | shasum -a 256",
+    "status_projection_sha256_before_after": "580884a0f59dd3aa47eaf973836bde8256264d5be906dac9a7c7dba7f23b4cb7",
+    "status_projection_line_count_before_after": 126,
+    "head_before_after": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+    "result": "stale packed values were reconciled; the dirty worktree and checked-out commit were unchanged; garbage collection was not run",
+    "evidence_class": "operator_action_record",
+    "action_authenticity_note": "This reports the operator's bounded command and before/after projections; it is not an independently witnessed execution transcript."
+  },
+  "hosted_runs": [
+    {"run_id": 33547094635, "workflow_name": "CI", "name": "CI", "display_title": "audit: close PID workflow and repository custody", "event": "push", "head_branch": "main", "head_sha": "c499653e4ac89733cb35330bf1a13c93a40ee385", "attempt": 1, "created_at_utc": "2026-09-01T19:01:41Z", "updated_at_utc": "2026-09-01T23:05:44Z", "status": "completed", "conclusion": "success", "jobs": 47, "url": "https://github.com/sepahead/pid-rs/actions/runs/33547094635", "required": true},
+    {"run_id": 33547094668, "workflow_name": "SxPID3 informative-invariance verification", "name": "SxPID3 informative-invariance verification", "display_title": "audit: close PID workflow and repository custody", "event": "push", "head_branch": "main", "head_sha": "c499653e4ac89733cb35330bf1a13c93a40ee385", "attempt": 1, "created_at_utc": "2026-09-01T19:01:41Z", "updated_at_utc": "2026-09-01T19:39:05Z", "status": "completed", "conclusion": "success", "jobs": 3, "url": "https://github.com/sepahead/pid-rs/actions/runs/33547094668", "required": true},
+    {"run_id": 33547093983, "workflow_name": "CodeQL", "name": "Push on main", "display_title": "Push on main", "event": "dynamic", "head_branch": "main", "head_sha": "c499653e4ac89733cb35330bf1a13c93a40ee385", "attempt": 1, "created_at_utc": "2026-09-01T19:01:40Z", "updated_at_utc": "2026-09-01T19:11:34Z", "status": "completed", "conclusion": "success", "jobs": 4, "url": "https://github.com/sepahead/pid-rs/actions/runs/33547093983", "required": true},
+    {"run_id": 33547094598, "workflow_name": "Bounded SxPID3 keyed-scalar audit expressions", "name": "Bounded SxPID3 keyed-scalar audit expressions", "display_title": "audit: close PID workflow and repository custody", "event": "push", "head_branch": "main", "head_sha": "c499653e4ac89733cb35330bf1a13c93a40ee385", "attempt": 1, "created_at_utc": "2026-09-01T19:01:41Z", "updated_at_utc": "2026-09-01T19:11:19Z", "status": "completed", "conclusion": "success", "jobs": 1, "url": "https://github.com/sepahead/pid-rs/actions/runs/33547094598", "required": true},
+    {"run_id": 33547094741, "workflow_name": "KSG M1a composite v12 terminal preservation", "name": "KSG M1a composite v12 terminal preservation", "display_title": "audit: close PID workflow and repository custody", "event": "push", "head_branch": "main", "head_sha": "c499653e4ac89733cb35330bf1a13c93a40ee385", "attempt": 1, "created_at_utc": "2026-09-01T19:01:41Z", "updated_at_utc": "2026-09-01T19:02:01Z", "status": "completed", "conclusion": "success", "jobs": 1, "url": "https://github.com/sepahead/pid-rs/actions/runs/33547094741", "required": true}
+  ],
+  "hosted_census": {
+    "required_runs": 5,
+    "successful_runs": 5,
+    "jobs": 56,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "timed_out": 0,
+    "action_required": 0,
+    "neutral": 0,
+    "stale": 0,
+    "stale_definition": "Project-derived, not a native GitHub field: the number of declared required workflow attempts that were non-completed or superseded at the final observation; zero means no such attempt was observed among these five attempt-1 runs.",
+    "required_set_basis": "The five named push-triggered verification classes were the preregistered closure obligations for the c499 anchor; the scheduled CodeQL run is supplementary and is not substituted into this set.",
+    "supplementary_runs": [
+      {"run_id": 33558833307, "workflow_name": "CodeQL", "name": "Scheduled", "display_title": "Scheduled", "event": "schedule", "head_branch": "main", "head_sha": "c499653e4ac89733cb35330bf1a13c93a40ee385", "attempt": 1, "status": "completed", "conclusion": "success", "jobs": 4, "url": "https://github.com/sepahead/pid-rs/actions/runs/33558833307"}
+    ]
+  },
+  "local_validation": {
+    "clean_checkout_ci": "passed",
+    "focused_formal_and_hostile_suites": "passed",
+    "publication_link_math_catalog_and_source_state_checks": "passed",
+    "note": "A separate throwaway clean validation checkout was used; it was not the retained dirty primary review lane or the source checkout used to prepare this receipt."
+  },
+  "retired_remote_branches": [
+    {"ref": "refs/heads/sepahead/ci-pandoc-toolchain-fix", "old_oid": "b45a7eb2e15364d37ecffc3061bf4f9ac5812b7f", "reason": "superseded by the mainline-published anchor"},
+    {"ref": "refs/heads/sepahead/documentation-closure-v1", "old_oid": "30e6d19bf020b18ef1cc1f9478c2d4acba62ccf1", "reason": "predecessor of the mainline-published anchor"},
+    {"ref": "refs/heads/sepahead/galadriel-placement-main-v1", "old_oid": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9", "reason": "old main snapshot; the published anchor is newer"},
+    {"ref": "refs/heads/sepahead/openaction-compat-candidate", "old_oid": "9ed6831d20de43467b1cff8adc8ee421a484f7fd", "reason": "superseded compatibility candidate"},
+    {"ref": "refs/heads/sepahead/pdf-annotation-portability-corrected", "old_oid": "0af14fc97b7c5fe8c4df0361e37cd9cefaa9c6ba", "reason": "superseded portability candidate"},
+    {"ref": "refs/heads/sepahead/pid-rs-release-integration-r4", "old_oid": "535d7a44e2f8108f806af48cc27b86009239ec4e", "reason": "integrated release line"},
+    {"ref": "refs/heads/sepahead/pid-rs-release-integration-r4-recovered", "old_oid": "008ee7fa615aa8370623566c21eb99862680c7b1", "reason": "recovered predecessor; custody retained separately"},
+    {"ref": "refs/heads/archive/composite-v5-unqualified-draft-20260818", "old_oid": "f7c6122d25ea098a36fa1fc6d672d78f25b783bb", "reason": "contained by the retained rejected-umask archive ref"},
+    {"ref": "refs/heads/sepahead/pid2-rev4-behavior-v1", "old_oid": "03c0980f256c2a66b3d64bff1686a8d116d76138", "reason": "contained by the retained pid2-rev4-assurance ref"}
+  ],
+  "containment_checks": [
+    {"retired_oid": "f7c6122d25ea098a36fa1fc6d672d78f25b783bb", "retained_ref": "refs/heads/archive/composite-v5-rejected-umask-20260818", "retained_oid": "062025c3fc283db9bdb105219dbcc82719771175", "predicate": "retired commit is an ancestor of retained ref"},
+    {"retired_oid": "03c0980f256c2a66b3d64bff1686a8d116d76138", "retained_ref": "refs/heads/sepahead/pid2-rev4-assurance-v1", "retained_oid": "caf8c7be3e2249df8e959c8940632fd22ed09923", "predicate": "retired commit is an ancestor of retained ref"}
+  ],
+  "retired_ref_routes": [
+    {"retired_ref": "refs/heads/sepahead/ci-pandoc-toolchain-fix", "retired_oid": "b45a7eb2e15364d37ecffc3061bf4f9ac5812b7f", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/documentation-closure-v1", "retired_oid": "30e6d19bf020b18ef1cc1f9478c2d4acba62ccf1", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/galadriel-placement-main-v1", "retired_oid": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/openaction-compat-candidate", "retired_oid": "9ed6831d20de43467b1cff8adc8ee421a484f7fd", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/pdf-annotation-portability-corrected", "retired_oid": "0af14fc97b7c5fe8c4df0361e37cd9cefaa9c6ba", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/pid-rs-release-integration-r4", "retired_oid": "535d7a44e2f8108f806af48cc27b86009239ec4e", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/pid-rs-release-integration-r4-recovered", "retired_oid": "008ee7fa615aa8370623566c21eb99862680c7b1", "route": "ancestor_of_published_main", "custody_ref": "refs/heads/main", "custody_oid": "c499653e4ac89733cb35330bf1a13c93a40ee385", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/archive/composite-v5-unqualified-draft-20260818", "retired_oid": "f7c6122d25ea098a36fa1fc6d672d78f25b783bb", "route": "ancestor_of_retained_ref", "custody_ref": "refs/heads/archive/composite-v5-rejected-umask-20260818", "custody_oid": "062025c3fc283db9bdb105219dbcc82719771175", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"},
+    {"retired_ref": "refs/heads/sepahead/pid2-rev4-behavior-v1", "retired_oid": "03c0980f256c2a66b3d64bff1686a8d116d76138", "route": "ancestor_of_retained_ref", "custody_ref": "refs/heads/sepahead/pid2-rev4-assurance-v1", "custody_oid": "caf8c7be3e2249df8e959c8940632fd22ed09923", "predicate": "git merge-base --is-ancestor retired_oid custody_oid exited 0 in the cleanup observation"}
+  ],
+  "retired_ref_route_boundary": "These are recorded ancestry predicates and recovery routes. Ancestry does not imply byte identity, semantic equivalence, scientific acceptance, or continued future reachability.",
+  "retired_primary_worktrees": [
+    {"id": "recovery-c4", "head": "bc3aa80fb6025e709c2906a08bce25a4fac40578", "custody": "candidate ancestry and complete bundle", "bundle_bytes": 30416592, "bundle_sha256": "503fa4917ab80c801b203c4cb3ee0d0683bb444ba39857eec481cf9a8917ff59", "bundle_verification": "git bundle verify reported a complete bundle in the cleanup observation", "evidence_class": "historical_operator_observation"},
+    {"id": "ksg-revision-4", "head": "a9aa60c962261a6e0e6698b05551fbcdbf7bf41c", "custody": "archive head, exact 110-path comparison, and verified historical bundle observation", "bundle_bytes": 11361236, "bundle_sha256": "532ebec0a2a5f2757ccc872925888e1257a082031312d9c7fd4042f6c40cad40", "bundle_verification": "git bundle verify succeeded in the cleanup observation; raw preimage is not present in the current bounded filesystem inventory", "evidence_class": "historical_operator_observation"},
+    {"id": "m1a-correction", "head": "dc7b8de0a87443ef2bcde71b19938642f1af2197", "custody": "archive head, exact tracked/untracked comparison, ignored-output adjudication, and verified historical bundle observation", "bundle_bytes": 11761811, "bundle_sha256": "df4fa378a5a9faf97aa3410ed14a26a0fa870699945b1d91e6b73d2fa72ff2b3", "bundle_verification": "git bundle verify succeeded in the cleanup observation; raw preimage is not present in the current bounded filesystem inventory", "evidence_class": "historical_operator_observation"}
+  ],
+  "retired_temporary_state": [
+    {"kind": "clean_validation_checkout", "custody": "exact c499 tree and clean status", "predicate": "separate throwaway checkout had head and tree matching c499 and no status entries; it was not this receipt source checkout"},
+    {"kind": "clean_release_audit_checkout", "custody": "exact predecessor tree and release-audit log", "predicate": "clean status and documented predecessor identity"},
+    {"kind": "render_and_source_state_scratch", "custody": "hash-equal copies remain in durable preservation or current main", "predicate": "fresh SHA-256 comparison before removal"},
+    {"kind": "available_audit_clone", "custody": "clean dc7b8de0 ancestor; all refs, reflog objects, and its unreachable tag are in the candidate", "predicate": "clean status, ancestry, object presence, and no active writer"},
+    {"kind": "build_targets_and_reproducible_render_caches", "custody": "selected named throwaway target/cache directories only; rebuildable and excluded from scientific evidence", "predicate": "each named target/cache path was inventoried and checked before removal; primary target/tmp and unrelated sibling caches were not globally removed", "scope": ["throwaway c499 validation target", "duplicate PDF-render scratch targets", "duplicate source-state scratch targets"]}
+  ],
+  "cleanup_controls": {
+    "action_evidence_class": "bounded_operator_action_record",
+    "action_evidence_boundary": "The receipt records commands, expected identities, and post-action observations supplied by the operator. It is not an independently witnessed transcript and does not prove that an unrecorded action occurred.",
+    "remote_deletion_method": "git push --force-with-lease with explicit expected old object for each named ref",
+    "remote_post_absence": "fresh git ls-remote --heads query; 14 heads; SHA-256 b8fee7265e8a6ea38adbd03324cbc22e07785689e5b55e4a51d2101fce018b82",
+    "local_ref_deletion_method": "git update-ref -d with exact old object guard",
+    "worktree_deletion_method": "git worktree remove --force only for a named linked worktree after process-free, cleanliness, ancestry, path, and recovery checks proved that no required bytes remained; the force flag was never the proof",
+    "post_removal_check": "fresh worktree/ref/status/object-reachability observations; no required object was found missing",
+    "garbage_collection": "not run",
+    "scope_boundary": "Only the nine named remote refs, one named local tracking ref, three named linked worktrees, and selected named throwaway paths were in scope; no global branch, registry, cache, filesystem, or object-store deletion is claimed."
+  },
+  "observed_local_inventory": {
+    "primary_registered_worktrees": 1,
+    "primary_local_heads": 4,
+    "primary_archive_refs": 3,
+    "primary_checkpoint_refs": 5,
+    "primary_quarantine_refs": 48,
+    "primary_remote_tracking_refs": 2,
+    "inventory_note": "Counts are for the primary common Git directory only at observation time; the two refs are origin/HEAD and origin/main. Sibling registries, non-Git copies, and stale names in other clones are separate."
+  },
+  "final_local_observation": {
+    "observed_at_utc": "2026-09-02T04:43:02Z",
+    "head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+    "status_projection_command": "git status --porcelain=v1 --untracked-files=normal | shasum -a 256",
+    "status_projection_sha256": "580884a0f59dd3aa47eaf973836bde8256264d5be906dac9a7c7dba7f23b4cb7",
+    "status_projection_line_count": 126,
+    "registered_worktrees": 1,
+    "local_main": "c499653e4ac89733cb35330bf1a13c93a40ee385",
+    "origin_main": "c499653e4ac89733cb35330bf1a13c93a40ee385",
+    "boundary": "A bounded read-only projection of the primary common Git directory; the dirty review lane remains unadjudicated and was not overwritten. It is not an atomic filesystem inventory."
+  },
+  "retained_state": {
+    "primary_dirty_review_lane": {"head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56", "reason": "unpublished and not proved redundant; never overwritten"},
+    "latest_private_primary_package": {
+      "captured_at_utc": "2026-09-02T04:36:04Z",
+      "source_head": "9bbcf5ef04d26b0fd5ec552fe6a065f9a474fd56",
+      "source_branch": "refs/heads/review/sx-count-event-bridge-r2",
+      "status_projection_command": "git status --porcelain=v2 --branch --untracked-files=all -z",
+      "status_projection_sha256": "991b4d72b2388d05ababf526af40a4eafdf836a3b6a9a2dc0daee269a2407e3a",
+      "tracked_patch_bytes": 1549131,
+      "tracked_patch_sha256": "d5b089ef4a5a93d8b96c7ef95d2da6b23c8c08bc75603ced11bdd2216f3537f1",
+      "staged_patch_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "untracked_leaf_count": 160,
+      "captured_untracked_leaf_count": 159,
+      "excluded_untracked_path": ".local/state/gh/device-id",
+      "untracked_tar_bytes": 1008981,
+      "untracked_tar_sha256": "ae94bffad48b7eabae3d6a794fbb7676dbeb6230ea0c63755264e8f5d759ac40",
+      "all_refs_bundle_bytes": 36426597,
+      "all_refs_bundle_sha256": "07562762e2a68cffd41f3a44ae76f18fba118802927217f91cf47da5f94259ed",
+      "bundle_verify_exit": 0,
+      "bundle_verify_output_sha256": "80aaef8688091f51c56ed399697238506f0e7921f99308da390a1bc475716265",
+      "manifest_sha256": "a14d4822846bf90c626c0266f283cfaa857abe37705d625647565d0ab395e9c9",
+      "locator_class": "private local preservation; no public or absolute locator is recorded",
+      "boundary": "This supplements rather than overwrites earlier dirty-primary packages. It preserves bytes for later adjudication; it does not publish or scientifically accept them."
+    },
+    "local_divergent_workflow_branches": ["refs/heads/codex/integration-20260804", "refs/heads/codex/workflow-publication-20260804"],
+    "primary_archive_and_quarantine_refs": "retained; they preserve recovery, negative, restricted, and branch-only evidence",
+    "remote_archive_and_diagnostic_refs": "retained; exact current list is obtained from the live remote and includes rejected composite, exact-log, PrimeGaps, Galadriel, PID2, Python-custody, and C3 diagnostic refs",
+    "c12_registry_and_r4_worktree": "retained; dirty or nonancestor numerical/custody evidence remains",
+    "c11_fresh_clone": "retained because C12 has a configured c11-source URL pointing to it; removing the clone would leave that URL dangling and break recovery commands until it is rebound",
+    "c3_guide_reproduction_clones": "retained because the divergent capture and old monolithic SVG blobs need explicit custody"
+  },
+  "historical_records": {
+    "primary_ledger": "audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json",
+    "sibling_ledger": "audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json",
+    "interpretation": "Both are immutable, bounded pre-cleanup observations. Their no-authority fields remain correct for those observations and are not current cleanup state."
+  },
+  "presentation_artifacts": {
+    "builder": {"path": "scripts/build-post-publication-custody-pdf.sh", "sha256": "5c9e29477fef0d45fcf086a694c3baf72cfc687d87ed1735d244271e236d2cfa"},
+    "markdown": {"path": "audit/evidence/post-publication-custody-2026-09-02.md", "sha256": "2530f5bbc3c362246faba904418a5b82cea302f495ab7d7450aa8ed3b4983112"},
+    "header": {"path": "audit/evidence/post-publication-custody/header.tex", "sha256": "4b9b6993f1ff6f6d32cfa4a8fac66d9d92553d0605ca319623dbddfc405c4450"},
+    "filter": {"path": "audit/evidence/post-publication-custody/filter.lua", "sha256": "d609c4107e89fbfdd423b0e79e70800f2ad82903b31e283c9a3fdc52f8da0be5"},
+    "figure_svg": {"path": "audit/formal/figures/post-publication-custody/state-machine.svg", "sha256": "f0ce7e81ea1f9792481444cd5df8e4daad0f2f13d51624b99809119ab0b3984c"},
+    "figure_pdf": {"path": "audit/formal/figures/post-publication-custody/state.pdf", "sha256": "2849dcb6734222e5fe5485d5b848c7f89ec6ed6e1b371ef305948a7de12e9f02", "presentation_derivative": true},
+    "receipt_pdf": {"path": "output/pdf/post-publication-custody-2026-09-02.pdf", "sha256": "d122cec2e2f77cf613a00d28601161cc75a28a93f777700e7919afb4f5fb8550", "presentation_derivative": true, "pdf_version": "1.7", "pages": 6},
+    "tool_versions": {"pandoc": "pandoc 3.10.2", "lualatex": "LuaHBTeX 1.18.0 (TeX Live 2024)", "rsvg_convert": "rsvg-convert 2.62.3", "pypdf": "6.15.0"},
+    "annotation_contract": "Only HTTPS URI navigation links are admitted; relative, file, and /GoToR actions must be absent."
+  },
+  "review": {"mandatory_lenses": 20, "additional_lenses": 50, "total_lenses": 70, "visual_pdf_lenses": 20, "council_kind": "agent_self_review_not_independent_human_or_scientific_review", "lens_count_boundary": "Process coverage count, not an assurance probability or proof.", "council_disposition": "green_with_explicit_retention_caveats_for_custody_operation"},
+  "nonclaims": [
+    "This receipt does not prove any PID theorem, probability law, estimator consistency, calibration, or application benefit.",
+    "A green hosted run proves only the checked source and workflow predicates at the exact commit; it is not a mathematical or statistical certificate.",
+    "Remote-main equality does not make the dirty primary worktree clean and does not authorize overwriting it.",
+    "Git object reachability, a bundle digest, and a filesystem copy are different custody claims.",
+    "The receipt is not a global filesystem inventory and does not authorize future deletion or garbage collection.",
+    "The operator action record is not an independently witnessed transcript of every command or process.",
+    "The receipt PDF and figure PDF are presentation derivatives; no PDF/UA, external-link reachability, or cross-toolchain equivalence claim is made.",
+    "The cleanup operations did not alter estimator code, formal theorem source, fixtures, or numerical result bytes; process changes are not scientific validation."
+  ]
+}

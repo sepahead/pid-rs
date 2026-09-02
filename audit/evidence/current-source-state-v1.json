@@ -304,14 +304,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "8f7d36eb833d1efa8e73855c98904f186726c608e90eaebe7d51b0093c997f40",
-        "size_bytes": 84310
+        "sha256": "d234e179bb1e6340bb906126f197b47e20b4bdb3b686d7abe397a202787d8527",
+        "size_bytes": 85443
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "98f92f8dd6042d60d5e7b1ac058be676a9b0465d5252c896ec613f668229e291",
-        "size_bytes": 286161
+        "sha256": "8a27896d9d19b55c11727b92c4bd6e04ba5a9336398e8b9005a893e03090e61f",
+        "size_bytes": 287735
       },
       {
         "git_mode": "100644",
@@ -454,14 +454,14 @@
       {
         "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
-        "sha256": "6a36fbe29e3f8c7d7df78c681cbcd2eecd4bc135e8fda43b022e42846048d977",
-        "size_bytes": 104201
+        "sha256": "b327e2b8d0d922ed9238f846b57aef4dbad1ee061c18d455b06a5c2d57e2c98f",
+        "size_bytes": 105413
       },
       {
         "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf",
-        "sha256": "51a5d399cdcddbdf0ae4aea13a0d5726b79c8e81b417f845e0968b7e310e3d27",
-        "size_bytes": 481407
+        "sha256": "18d034deb7f131e8e93170f4dd064980ab9f40cbdda208b512dbf68a58af3a0a",
+        "size_bytes": 483739
       },
       {
         "git_mode": "100644",
@@ -1134,6 +1134,12 @@
         "path": "audit/evidence/certified-sxpid2-cpython311-loaded-execution-incident-20260728.md",
         "sha256": "aee278366f2bf990a5333dbaace7f190cb3191dfd2c2d972d8cf8ce33abe5004",
         "size_bytes": 10783
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/certified-sxpid2-post-publication-container-rebind-2026-09-02.md",
+        "sha256": "94f9d01728b60b987b8792c25bc313e1ea61de88fcb377a6f587017677ab2d93",
+        "size_bytes": 8747
       },
       {
         "git_mode": "100644",
@@ -2061,6 +2067,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md",
+        "sha256": "01e2e8b39aa27fd69f733ad1ee6c01f2de8f6e4e7b2e4e1c7e568ea47957d120",
+        "size_bytes": 8706
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
         "sha256": "5b7c0ee42e7fe5b19baaacf71ee063289fbf107f17c2949db21086bf869cc679",
         "size_bytes": 58046
@@ -2076,6 +2088,42 @@
         "path": "audit/evidence/pid2-rev4-m1-hosted-run-33328609493-negative.md",
         "sha256": "337b0ee0bcf3a88f789c76a13844ab19a29ec037c1c6e9758cc23f23dfbd532b",
         "size_bytes": 2844
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody-2026-09-02.json",
+        "sha256": "e9eda59361a69f3a59b34cbc8f26b12955227ac32e541f904f08bf9d40ec79a2",
+        "size_bytes": 28522
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody-2026-09-02.md",
+        "sha256": "2530f5bbc3c362246faba904418a5b82cea302f495ab7d7450aa8ed3b4983112",
+        "size_bytes": 23123
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody-visual-receipt-2026-09-02.md",
+        "sha256": "f176cf45a9dd703e490328fdbe8f992e592ec6ddff0fbcef2073aa162bd2fbd4",
+        "size_bytes": 4121
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody/filter.lua",
+        "sha256": "d609c4107e89fbfdd423b0e79e70800f2ad82903b31e283c9a3fdc52f8da0be5",
+        "size_bytes": 1895
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody/header.tex",
+        "sha256": "4b9b6993f1ff6f6d32cfa4a8fac66d9d92553d0605ca319623dbddfc405c4450",
+        "size_bytes": 3579
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-remote-heads-2026-09-02.tsv",
+        "sha256": "b8fee7265e8a6ea38adbd03324cbc22e07785689e5b55e4a51d2101fce018b82",
+        "size_bytes": 1302
       },
       {
         "git_mode": "100644",
@@ -2286,6 +2334,18 @@
         "path": "audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md",
         "sha256": "1eb6173125cd4af33b9af015643361292d944ef3ffc6e450e7098ebfbfaaa6da",
         "size_bytes": 16917
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/figures/post-publication-custody/state-machine.svg",
+        "sha256": "f0ce7e81ea1f9792481444cd5df8e4daad0f2f13d51624b99809119ab0b3984c",
+        "size_bytes": 6145
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/figures/post-publication-custody/state.pdf",
+        "sha256": "2849dcb6734222e5fe5485d5b848c7f89ec6ed6e1b371ef305948a7de12e9f02",
+        "size_bytes": 120565
       },
       {
         "git_mode": "100644",
@@ -2704,13 +2764,13 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-filter.lua",
-        "sha256": "86e72ff2f5bb530a56e9d1ea01017b095fb97af32ca21b4f0d8d0fa063d8a841",
-        "size_bytes": 5396
+        "sha256": "5fca20e9b2be9c6eb4364b0602c419ecc3f16435dcb45eaba5dd7fda0bb3226d",
+        "size_bytes": 5736
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex",
-        "sha256": "a5323b4fb43f27bed1966c23182e099c620f863601bdd16a058a865b29ec0519",
+        "sha256": "e623e24097f8737ff49202f8be42a36e8dd3a4ba15144ebbfc553bab7c712df6",
         "size_bytes": 9130
       },
       {
@@ -5427,6 +5487,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/post-publication-custody-2026-09-02.pdf",
+        "sha256": "d122cec2e2f77cf613a00d28601161cc75a28a93f777700e7919afb4f5fb8550",
+        "size_bytes": 182442
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
         "sha256": "d2b3227444a0a610169b609ff5e7f3ecc930d5289ac7ff3a5504bf1a0f185d51",
         "size_bytes": 356007
@@ -5452,8 +5518,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "644d7ef7420cbfb5eafaf7416b791ede20643abdb24d279e1f4d9df5124f9fff",
-        "size_bytes": 258071
+        "sha256": "cc771d89cbd94a536b0d37fa72016054695523a1ee444a6968b193c387323c3b",
+        "size_bytes": 261491
       },
       {
         "git_mode": "100755",
@@ -5470,8 +5536,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-pid-discovery-verification-blueprint.sh",
-        "sha256": "d6ee73b5dfd6f772e18fc65a0b4aa2e516fd373cde5603b24b25598fb14140d6",
-        "size_bytes": 15379
+        "sha256": "69ff996e97160fef064ff82fb9570ac65caf0572622e5fb4c3eab799efeb5716",
+        "size_bytes": 15385
       },
       {
         "git_mode": "100755",
@@ -5484,6 +5550,12 @@
         "path": "scripts/build-pid2-represented-coordinate-assurance-pdf.sh",
         "sha256": "101ece04e290dae5331e0fb365f633b8c2439492ba791dfd4439e30d374231ce",
         "size_bytes": 6621
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/build-post-publication-custody-pdf.sh",
+        "sha256": "5c9e29477fef0d45fcf086a694c3baf72cfc687d87ed1735d244271e236d2cfa",
+        "size_bytes": 10964
       },
       {
         "git_mode": "100755",
@@ -5662,7 +5734,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "dbd76020268ead8a4a926072940e5a9596d2449a5b49c578910cabf18b6487d0",
+        "sha256": "afbc803d8436101e1524fb3bb775f47cd9ee51c88fea18f6a3e62650eaa2ae8d",
         "size_bytes": 90915
       },
       {
@@ -5770,14 +5842,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "f42717b1a35fefad6aee576df94ef31da70822ce83bd152a8d854b7f4e1875a6",
-        "size_bytes": 34171
+        "sha256": "0646b54e2af226bb21e9df0225cd9b43baf69daf2269cd4998ee5e4414815eb7",
+        "size_bytes": 39605
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "ae8d8ccbb873fe79dd9ebe2c849da93ac92404702e032632a428045068a287f2",
-        "size_bytes": 8866
+        "sha256": "089725d8c8c547d1bcc67f194602b33991a8d6faf28c0dac1aa5357b20a3ddc7",
+        "size_bytes": 9896
       },
       {
         "git_mode": "100755",
@@ -6226,7 +6298,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "b5aa11e8caae794a8ff6e33836be99aadf9d0663714e05cd4e96977f0f49a698",
+        "sha256": "d390379e8016929566ba3183427238f285a8c3778a78c494bb3b9d3f0f17ffc1",
         "size_bytes": 134275
       },
       {
@@ -6460,14 +6532,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh",
-        "sha256": "1bee0654234cdfc2d694b63769f42f0236d4e69044a78fee99887e1989acb79d",
-        "size_bytes": 38561
+        "sha256": "42426e85a2a76bb797b13343f44a41e5346ed50ed97fee95b166720bdbe107b1",
+        "size_bytes": 38819
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf.sh",
-        "sha256": "23b8c39430f4ca4380b8533773239b6b0fd78f8cb40126daa191737ab02f1a1e",
-        "size_bytes": 31259
+        "sha256": "fc4684ea1373669d68c49d1fc100f6e413676943afc58138677c33171b394ef1",
+        "size_bytes": 32603
       },
       {
         "git_mode": "100644",
@@ -6516,6 +6588,30 @@
         "path": "scripts/check-post-commit-source-state-v2.py",
         "sha256": "06fa6721d366fd33b9bd8997d108c31578bc32da4bcdcda8ccf5aeb22fad94d3",
         "size_bytes": 33188
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-post-publication-custody-pdf-self-test.sh",
+        "sha256": "482c22c9054583997f06249ce80ac000437a304bb74e1f36cd9cb29a889be2f4",
+        "size_bytes": 23022
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-post-publication-custody-pdf.sh",
+        "sha256": "bb65d3c4109649dc8e60301f7ef7a58dd75792edcac0525cc963126638655478",
+        "size_bytes": 5669
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-post-publication-custody-self-test.py",
+        "sha256": "5b267dfe913061e9adb6cfd0727271956a3d1ebfc0de393d1f6d8266e3e3e8be",
+        "size_bytes": 17213
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-post-publication-custody.py",
+        "sha256": "9d615111da9097a07eb5a0c6c0d5861c6ca51f591341c5868208e5dd45fb13fa",
+        "size_bytes": 41120
       },
       {
         "git_mode": "100644",
@@ -6950,8 +7046,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "063b605f063150acec262708a771ef1c4647312312dc25decf3d1899a18d33f5",
-    "entry_count": 1134
+    "entries_sha256": "04439def32a3b91e68ec5f287bb0e29eba02ce9ed9bc4093809fef8fccb2b78f",
+    "entry_count": 1150
   },
   "subprojections": [
     {
@@ -6963,23 +7059,23 @@
       ]
     },
     {
-      "entries_sha256": "def882198e0bb283c1ccd504184b470cc5683293847a20513dcdc43a06104945",
-      "entry_count": 121,
+      "entries_sha256": "c0f7eb15d074f6ad61eadbefab1d58e6d5dfde6581dbdc2d5e647fc0d73d09a0",
+      "entry_count": 123,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "1d9df0ceb0b23b0b320cb9b45141a7566c999b54cfb7753962b26159594ee93f",
-      "entry_count": 23,
+      "entries_sha256": "b394ab54fcda9eea8e6fe6f323cded9cb42efb18441f6b9833c065f9b5609920",
+      "entry_count": 24,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "377b46b904553d4837fd5431eafc50f1a9fc36a41beaf751ff7b633e3d9c8492",
+      "entries_sha256": "acffa08edaf0e30d6689b2652eb6b3421e10ddb5ee862529a582a6c864e2d42d",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

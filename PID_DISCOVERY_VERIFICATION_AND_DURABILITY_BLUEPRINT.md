@@ -1,7 +1,7 @@
 ---
 title: "PID discovery, verification, and durability blueprint"
 subtitle: "PrimeGaps lessons, semantic-transfer firewalls, a proposed exact-SxPID3 assurance architecture, autoresearch, and durable promotion"
-date: "1 September 2026"
+date: "2 September 2026"
 lang: en
 ---
 
@@ -412,7 +412,7 @@ retroactively change these rows.
 - **Dissent retained:** the semantic DAG may be unnecessary. A simpler direct reconstruction is
   the baseline and remains preferred unless profiling and proof size show a measured benefit.
 
-## Current 1 September 2026 adversarial publication closure
+## Dated 1 September 2026 adversarial publication closure
 
 This is a new review of the present publication and decision boundary, not an amendment to the
 historical 20-lens ledger. Twenty mandatory core lenses and fifty additional artifact-specific
@@ -990,7 +990,13 @@ decision, and independence limitations. There is no majority vote and no “assu
 
 Simple migrations should follow one reusable state machine rather than produce a bespoke PDF.
 The human overview lives here; exact per-path facts belong in a strict JSON/TSV cleanup ledger. The
-current bounded authorities are the
+1 September ledgers linked below are dated pre-publication/pre-cleanup snapshots. The later
+[post-publication custody receipt](audit/evidence/post-publication-custody-2026-09-02.md) and its
+[machine record](audit/evidence/post-publication-custody-2026-09-02.json) record a separate,
+bounded observation of the subsequent publication and named cleanup actions. These records are
+chronological, not competing authorities: the first two freeze preconditions and grant no cleanup
+authority; the later pair records named outcomes and grants no future authority. None turns a
+dated snapshot into a live inventory. The historical bounded authorities are the
 [primary-common-Git-directory retirement ledger](audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json)
 and the
 [sibling-registry retirement ledger](audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json).
@@ -1059,12 +1065,14 @@ The dated
 [worktree and branch preservation receipt](audit/evidence/worktree-and-branch-preservation-2026-08-27.md)
 provides the bounded repository case evidence: it records a lost temporary integration state,
 reconstruction limits, divergent-tip comparison, dirty-byte capture, bundle verification, and
-retirement preconditions. Its current primary-repository facts are also bound by the
+retirement preconditions. Its primary-repository facts at that dated review boundary are also bound by the
 [machine-readable retirement ledger](audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json).
 The later multi-registry snapshot is bound by the
 [machine-readable sibling-registry ledger](audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json).
 These records preserve target-specific comparisons, partial-clone limits, and exact custody
-boundaries. None promotes archived content, freshly replays an external registry, or replaces this
+boundaries. The [later post-publication receipt](audit/evidence/post-publication-custody-2026-09-02.md)
+adds the dated mainline/remote observation and explicitly names the state it does and does not
+cover. None promotes archived content, freshly replays an external registry, or replaces this
 reusable rule.
 
 ### Formal verification and durable closure in one lane
@@ -1167,7 +1175,7 @@ Cache deletion and Git garbage collection come last, after a retention window an
 inventory. Remote archive branches remain until exact preimages have a main-reachable or verified
 external successor.
 
-### Current safety disposition
+### Review-boundary safety disposition (dated 2026-09-01)
 
 At the review boundary, the dirty primary worktree contained substantial unpublished PID claim
 packets, scripts, reviews, and ignored material not proved redundant with remote main. It was
@@ -1179,7 +1187,11 @@ blockquoted implication was reflowed as ordinary prose plus display math. The le
 preimage and current bytes.
 These mechanical edits were not intended to change mathematical or prose content, but the hashes
 alone do not prove semantic equivalence, and the preservation step does not adjudicate the packet.
-No cleanup or repository-wide integration claim is made here.
+This section makes no cleanup or repository-wide integration claim for its review boundary. That
+conclusion remains true for the dated boundary. The later
+[post-publication custody receipt](audit/evidence/post-publication-custody-2026-09-02.md) records
+separately observed publication and named retirement actions; it neither rewrites this historical
+section nor becomes a live, global branch or filesystem authority.
 
 ## Implementation roadmap for SxPID3
 

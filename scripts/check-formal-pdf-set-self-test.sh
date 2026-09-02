@@ -65,6 +65,7 @@ MARKDOWN_SOURCES=(
   NUMERICAL_ASSURANCE.md
   PID2_REPRESENTED_COORDINATE_ASSURANCE.md
   PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
+  audit/evidence/post-publication-custody-2026-09-02.md
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
@@ -84,6 +85,7 @@ STANDALONE=(
   numerical-assurance
   pid2-represented-coordinate-assurance
   pid-sensor-placement-and-galadriel-guide
+  post-publication-custody-2026-09-02
   support-change-tolerant-averaged-sxpid-continuity
   sxpid3-source-marginal-and-bounded-audit
   two-source-sxpid-count-atom-bridge
@@ -93,7 +95,8 @@ FRAGMENT=pid-discovery-verification-and-durability-blueprint-header
 make_fixture() {
   local fixture="$1"
   local stem
-  mkdir -p "$fixture/scripts" "$fixture/audit/formal/latex" "$fixture/output/pdf"
+  mkdir -p "$fixture/scripts" "$fixture/audit/evidence" \
+    "$fixture/audit/formal/latex" "$fixture/output/pdf"
   cp "$PRODUCTION_GATE" "$fixture/scripts/check-formal-pdf-set.sh"
   chmod 0755 "$fixture/scripts/check-formal-pdf-set.sh"
   for stem in "${LATEX_STANDALONE[@]}"; do
@@ -325,6 +328,51 @@ if text.count(expected_block) != 1:
     raise SystemExit(
         "blueprint exact-only gate is not one unweakened contiguous block"
     )
+PY
+}
+
+validate_custody_gate_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected_record_block = '''scripts/check-post-publication-custody-pdf-self-test.sh
+python3 -I -S -B scripts/check-post-publication-custody.py
+python3 -O -I -S -B scripts/check-post-publication-custody.py
+python3 -I -S -B scripts/check-post-publication-custody-self-test.py
+python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py
+'''
+if text.count(expected_record_block) != 1:
+    raise SystemExit(
+        "custody record gates and hostile suites are not one exact contiguous block"
+    )
+for literal in (
+    '  scripts/check-post-publication-custody-pdf.sh --exact',
+    '  if scripts/check-post-publication-custody-pdf.sh --cross-toolchain; then',
+    '  if [[ "$CUSTODY_CROSS_STATUS" -ne 2 ]]; then',
+):
+    if text.splitlines().count(literal) != 1:
+        raise SystemExit(f"custody PDF gate invocation drifted: {literal!r}")
+PY
+}
+
+validate_terminal_success_contract() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected = '''if [[ "$MODE" == "--exact" ]]; then
+  echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+else
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint and post-publication custody receipt intentionally have no accepted cross-toolchain relation, and both status-2 refusals plus the source and renderer-fragment inventories are exact"
+fi
+'''
+if text.count(expected) != 1:
+    raise SystemExit("terminal exact/cross success contract drifted")
 PY
 }
 
@@ -701,6 +749,89 @@ if ! validate_blueprint_gate_wiring "$PRODUCTION_GATE"; then
   exit 1
 fi
 pass "blueprint self-test, exact relation, and status-2 cross refusal are contiguous"
+
+if ! validate_custody_gate_wiring "$PRODUCTION_GATE"; then
+  echo "$CHECK_NAME: production custody wiring was rejected" >&2
+  exit 1
+fi
+pass "custody record/PDF gates and hostile suites are contiguous"
+
+if ! validate_terminal_success_contract "$PRODUCTION_GATE"; then
+  echo "$CHECK_NAME: production terminal success contract was rejected" >&2
+  exit 1
+fi
+pass "terminal success messages distinguish profiled and exact-only papers"
+
+while IFS=$'\t' read -r label before after; do
+  case_file="$TEST_ROOT/terminal-success-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$before" "$after" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+before = sys.argv[2]
+after = sys.argv[3]
+text = path.read_text(encoding="utf-8")
+if text.count(before) != 1:
+    raise SystemExit(f"terminal-success mutation anchor drifted: {before!r}")
+path.write_text(text.replace(before, after, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_terminal_success_contract "$case_file" \
+      >"$TEST_ROOT/terminal-success-$PASS_COUNT.stdout" \
+      2>"$TEST_ROOT/terminal-success-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: terminal-success drift was accepted: $label" >&2
+    exit 1
+  fi
+  if ! grep -Fq "terminal exact/cross success contract drifted" \
+      "$TEST_ROOT/terminal-success-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/terminal-success-$PASS_COUNT.stdout" \
+      "$TEST_ROOT/terminal-success-$PASS_COUNT.stderr" >&2
+    echo "$CHECK_NAME: terminal-success mutation failed for a noncausal reason" >&2
+    exit 1
+  fi
+  pass "$label"
+done <<'CASES'
+exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
+cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
+CASES
+
+for removed_invocation in \
+    "scripts/check-post-publication-custody-pdf-self-test.sh" \
+    "python3 -I -S -B scripts/check-post-publication-custody.py" \
+    "python3 -O -I -S -B scripts/check-post-publication-custody.py" \
+    "python3 -I -S -B scripts/check-post-publication-custody-self-test.py" \
+    "python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py"; do
+  case_file="$TEST_ROOT/custody-gate-wiring-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$removed_invocation" <<'PY'
+from pathlib import Path
+import sys
+
+
+path = Path(sys.argv[1])
+line = sys.argv[2] + "\n"
+text = path.read_text(encoding="utf-8")
+if text.count(line) != 1:
+    raise SystemExit(f"custody mutation anchor drifted: {line!r}")
+path.write_text(text.replace(line, "", 1), encoding="utf-8", newline="\n")
+PY
+  if validate_custody_gate_wiring "$case_file" \
+      >"$TEST_ROOT/custody-gate-wiring-$PASS_COUNT.stdout" \
+      2>"$TEST_ROOT/custody-gate-wiring-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: missing custody invocation was accepted: $removed_invocation" >&2
+    exit 1
+  fi
+  if ! grep -Fq "custody record gates and hostile suites" \
+      "$TEST_ROOT/custody-gate-wiring-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/custody-gate-wiring-$PASS_COUNT.stdout" \
+      "$TEST_ROOT/custody-gate-wiring-$PASS_COUNT.stderr" >&2
+    echo "$CHECK_NAME: custody bypass failed for a noncausal reason" >&2
+    exit 1
+  fi
+  pass "removing $removed_invocation is rejected"
+done
 
 while IFS=$'\t' read -r label before after; do
   case_file="$TEST_ROOT/blueprint-gate-wiring-$PASS_COUNT.sh"

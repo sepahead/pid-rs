@@ -262,6 +262,14 @@ snapshot-integrity-only: it does not revisit the registries, bundles, remote, or
 records exclude different scopes and together are not a global filesystem or non-Git custody
 inventory; re-observe every applicable fact before retirement.
 
+The separate dated
+[`post-publication-custody-2026-09-02.json`](audit/evidence/post-publication-custody-2026-09-02.json)
+records the later accepted-mainline observation and named cleanup actions. Its checker binds the
+exact 14-line remote-head preimage and closed JSON bytes; the companion six-page PDF and visual
+receipt are human presentation layers. This is a past-tense, bounded receipt: it neither authorizes
+another deletion nor proves authenticity, theorem truth, estimator validity, application value, or
+future repository state. Re-query every mutable ref and custody route before any later cleanup.
+
 Treat storage classes as typed, non-interchangeable objects:
 
 | Storage class | Credit and required boundary |
@@ -665,6 +673,12 @@ python3 -O -I -B scripts/check-publication-links.py
 python3 -I -B scripts/check-publication-links-self-test.py  # 4 controls + 111 hostile staged/link/PDF mutations
 python3 -O -I -B scripts/check-publication-links-self-test.py
 scripts/check-formal-pdf-set.sh                          # all declared formal papers and render contracts
+python3 -I -S -B scripts/check-post-publication-custody.py  # dated mainline/cleanup record
+python3 -O -I -S -B scripts/check-post-publication-custody.py
+python3 -I -S -B scripts/check-post-publication-custody-self-test.py  # 56 hostile mutations + isolation controls
+python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py
+scripts/check-post-publication-custody-pdf-self-test.sh  # 2 controls + 31 hostile cases
+scripts/check-post-publication-custody-pdf.sh --exact    # exact-only two-build/PDF-byte gate
 python3 -I -B scripts/check-mathematical-results-guide-prose.py  # selected editorial subset; no ASD-STE100 conformance claim
 python3 -O -I -B scripts/check-mathematical-results-guide-prose.py
 python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 59 hostile/control cases

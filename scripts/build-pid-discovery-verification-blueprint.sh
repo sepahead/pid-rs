@@ -8,7 +8,7 @@ FILTER="$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-bluep
 FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint"
 DEFAULT_OUTPUT="$ROOT/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf"
 OUTPUT="${1:-$DEFAULT_OUTPUT}"
-SOURCE_DATE_EPOCH_VALUE=1788220800
+SOURCE_DATE_EPOCH_VALUE=1788307200
 JOB_NAME="pid-discovery-verification-and-durability-blueprint"
 
 if [[ "$#" -gt 1 || -z "$OUTPUT" ]]; then
@@ -350,7 +350,7 @@ build_once() {
     "Semantic transfer firewall, part 1"
     "averaged empirical categorical SxPID3"
     "108 keyed scalar audit expressions"
-    "Current 1 September 2026 adversarial publication closure"
+    "Dated 1 September 2026 adversarial publication closure"
     "PASS identifies current-byte evidence"
     "seventy typed rows in total"
     "Twenty mandatory core lenses"
@@ -362,7 +362,7 @@ build_once() {
     "Repository durability and promotion"
     "remote-ref, ancestry, hosted-run, and recovery-drill checks pass"
     "Durable promotion state machine, part 1"
-    "Current safety disposition"
+    "Review-boundary safety disposition"
     "Source-anchored claim register"
   )
   for needle in "${required_text[@]}"; do

@@ -49,6 +49,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "numerical-assurance"
   "pid2-represented-coordinate-assurance"
   "pid-sensor-placement-and-galadriel-guide"
+  "post-publication-custody-2026-09-02"
   "sxpid3-source-marginal-and-bounded-audit"
 )
 
@@ -57,6 +58,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "NUMERICAL_ASSURANCE.md"
   "PID2_REPRESENTED_COORDINATE_ASSURANCE.md"
   "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
+  "audit/evidence/post-publication-custody-2026-09-02.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
 )
 
@@ -154,6 +156,27 @@ else
   fi
 fi
 
+scripts/check-post-publication-custody-pdf-self-test.sh
+python3 -I -S -B scripts/check-post-publication-custody.py
+python3 -O -I -S -B scripts/check-post-publication-custody.py
+python3 -I -S -B scripts/check-post-publication-custody-self-test.py
+python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py
+
+if [[ "$MODE" == "--exact" ]]; then
+  scripts/check-post-publication-custody-pdf.sh --exact
+else
+  if scripts/check-post-publication-custody-pdf.sh --cross-toolchain; then
+    echo "formal PDF set: custody-receipt cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    CUSTODY_CROSS_STATUS=$?
+  fi
+  if [[ "$CUSTODY_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: custody-receipt cross-toolchain refusal returned $CUSTODY_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+
 scripts/check-certified-sxpid2-assurance-pdf.sh "$MODE"
 scripts/check-dependency-colored-sxpid-pdf.sh "$MODE"
 scripts/check-ecosystem-compatibility-audit-pdf.sh "$MODE"
@@ -225,7 +248,7 @@ scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every standalone formal paper has one warning-free same-toolchain-reproducible PDF; the root blueprint committed-byte relation, source, and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every standalone formal paper passed its warning-free bounded cross-toolchain PDF gate; the root blueprint intentionally has no accepted cross-toolchain relation, and its refusal, source, and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint and post-publication custody receipt intentionally have no accepted cross-toolchain relation, and both status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

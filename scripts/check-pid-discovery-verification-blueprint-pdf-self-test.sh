@@ -19,7 +19,7 @@ for path in \
     "$CHECKER" \
     "$BUILDER" \
     "$ROOT/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf" \
-    "$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"; do
+    "$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"; do
   [[ -f "$path" && ! -L "$path" ]] || {
     echo "$CHECK_NAME: required production input is absent, non-regular, or symbolic: $path" >&2
     exit 2
@@ -99,7 +99,7 @@ make_fixture() {
   cp "$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md" "$fixture/claims/SX-CERTIFIED-AVERAGED-PID3-001/"
   cp "$ROOT/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json" "$fixture/audit/evidence/"
   cp "$ROOT/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json" "$fixture/audit/evidence/"
-  cp "$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md" "$fixture/audit/evidence/"
+  cp "$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md" "$fixture/audit/evidence/"
   cp "$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-blueprint-header.tex" "$fixture/audit/formal/latex/"
   cp "$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-blueprint-filter.lua" "$fixture/audit/formal/latex/"
   cp "$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/"*.svg "$fixture/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/"
@@ -306,7 +306,7 @@ PY
 reseal_fixture_visual_receipt_pdf() {
   local fixture="$1"
   local checker="$fixture/scripts/check-pid-discovery-verification-blueprint-pdf.sh"
-  local receipt="$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"
+  local receipt="$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
   local old_digest new_digest
   old_digest="$(awk -F'"' '/^VISUAL_RECEIPT_PDF_SHA256=/ {print $2}' "$checker")"
   new_digest="$(shasum -a 256 "$fixture/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf" | awk '{print $1}')"
@@ -321,7 +321,7 @@ reseal_fixture_visual_receipt_pdf() {
     "pdf_sha256: \`$old_digest\`" \
     "pdf_sha256: \`$new_digest\`"
   reseal_fixture_input "$fixture" VISUAL_RECEIPT_SHA256 \
-    "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"
+    "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
 }
 
 run_resealed_decision_mutation() {
@@ -376,9 +376,9 @@ required_lines = (
     'require_sha256 "$VISUAL_RECEIPT" "$VISUAL_RECEIPT_SHA256" \\',
     'require_sha256 "$COMMITTED" "$VISUAL_RECEIPT_PDF_SHA256" \\',
     '  "pdf_sha256: \\`$VISUAL_RECEIPT_PDF_SHA256\\`" \\',
-    'require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_reviewed: \\`1-28\\`" \\',
-    'require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_reviewed: \\`1-28\\`" \\',
-    '  "spot_300_dpi_pages_reviewed: \\`1,4,10-13,15-17,19,24,26-28\\`" \\',
+    'require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_reviewed: \\`1-29\\`" \\',
+    'require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_reviewed: \\`1-29\\`" \\',
+    '  "spot_300_dpi_pages_reviewed: \\`1,3,13-16,21-29\\`" \\',
     'require_unique_line "$VISUAL_RECEIPT" "lens_count: \\`20\\`" \\',
     'require_unique_line "$VISUAL_RECEIPT" "status: \\`passed\\`" \\',
     'validate_catalog_open_action(catalog_open_action, "catalog /OpenAction")',
@@ -394,13 +394,15 @@ required_lines = (
     'require_unique_line "$DECISION_V2" \'**Disposition: proposed/open.**\' \\',
     '    \'claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier\' \\',
     '    \'audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json\' \\',
-    '    \'audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json\'; do',
+    '    \'audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json\' \\',
+    '    \'audit/evidence/post-publication-custody-2026-09-02.md\' \\',
+    '    \'audit/evidence/post-publication-custody-2026-09-02.json\'; do',
     '  if [[ "$pages" != "$EXPECTED_PAGES" ]]; then',
     '  if ! grep -Eq \'^Page size:[[:space:]]+595\\.[0-9]+ x 841\\.[0-9]+ pts \\(A4\\)$\' "$info"; then',
     '  if ! grep -Eq \'^PDF version:[[:space:]]+1\\.7$\' "$info"; then',
     '      \'^Tagged:[[:space:]]+no$\' \\',
     "      'Author:          pid-rs contributors' \\",
-    '      \'Current 1 September 2026 adversarial publication closure\' \\',
+    '      \'Dated 1 September 2026 adversarial publication closure\' \\',
     '      \'PASS identifies current-byte evidence\' \\',
     '      \'seventy typed rows in total\' \\',
     '      \'Twenty mandatory core lenses\' \\',
@@ -409,6 +411,8 @@ required_lines = (
     '      \'bounded corpus and optional shards\' \\',
     '      \'remote-ref, ancestry, hosted-run, and recovery-drill checks pass\' \\',
     '  if ! python3 -I - "$pdf" "$SOURCE" "$EXPECTED_PYPDF_VERSION" "$label" <<\'PY\'',
+    'expected_pdf_date = "D:20260902000000Z"',
+    '    fail("deterministic creation/modification chronology metadata drifted")',
     '  pdftoppm -f 1 -l "$pages" -r 120 -png "$pdf" "$render_prefix" >/dev/null 2>&1',
     '  pdftoppm -f 1 -l "$pages" -r 120 -gray -png "$pdf" "$gray_render_prefix" >/dev/null 2>&1',
     'validate_pdf rebuilt "$BUILT"',
@@ -494,7 +498,7 @@ run_contract_mutation "metadata predicate drift is rejected" \
 run_contract_mutation "embedded-font predicate drift is rejected" \
   '$(NF - 4) != "yes"' '$(NF - 4) != "no"'
 run_contract_mutation "current-closure sentinel removal is rejected" \
-  "'Current 1 September 2026 adversarial publication closure'" \
+  "'Dated 1 September 2026 adversarial publication closure'" \
   "'Current publication closure omitted'"
 run_contract_mutation "all-page raster command drift is rejected" \
   'pdftoppm -f 1 -l "$pages" -r 120 -png' 'pdftoppm -f 1 -l 1 -r 120 -png'
@@ -525,7 +529,7 @@ run_contract_mutation "visual-receipt subject-PDF binding removal is rejected" \
   "require_sha256 \"\$COMMITTED\" \"\$VISUAL_RECEIPT_PDF_SHA256\" \\" \
   "# visual-receipt subject-PDF binding omitted \\"
 run_contract_mutation "visual-receipt review-scope weakening is rejected" \
-  'color_120_dpi_pages_reviewed: \`1-28\`' \
+  'color_120_dpi_pages_reviewed: \`1-29\`' \
   'color_120_dpi_pages_reviewed: \`1-1\`'
 run_contract_mutation "visual-receipt disposition weakening is rejected" \
   'status: \`passed\`' \
@@ -552,8 +556,8 @@ run_contract_mutation "retirement-ledger link binding removal is rejected" \
   "    'audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json' \\" \
   "    'audit/evidence/worktree-and-branch-retirement-ledger-omitted.json' \\"
 run_contract_mutation "sibling-ledger link binding removal is rejected" \
-  "    'audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json'; do" \
-  "    'audit/evidence/sibling-registry-retirement-ledger-omitted.json'; do"
+  "    'audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json' \\" \
+  "    'audit/evidence/sibling-registry-retirement-ledger-omitted.json' \\"
 run_contract_mutation "cross refusal status weakening is rejected" \
   $'no cross-toolchain acceptance is issued" >&2\n  exit 2' \
   $'no cross-toolchain acceptance is issued" >&2\n  exit 1'
@@ -682,29 +686,29 @@ pass "missing complete-registry link rejects"
 fixture="$TEST_ROOT/visual-receipt-identity"
 make_fixture "$fixture"
 printf '\nidentity mutation\n' \
-  >>"$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"
+  >>"$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
 expect_failure "$fixture" "blueprint visual-review receipt identity drifted"
 pass "unresealed blueprint visual-review receipt byte drift rejects"
 
 fixture="$TEST_ROOT/visual-receipt-scope-resealed"
 make_fixture "$fixture"
 replace_once \
-  "$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md" \
-  'color_120_dpi_pages_reviewed: `1-28`' \
+  "$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md" \
+  'color_120_dpi_pages_reviewed: `1-29`' \
   'color_120_dpi_pages_reviewed: `1-1`'
 reseal_fixture_input "$fixture" VISUAL_RECEIPT_SHA256 \
-  "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"
+  "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
 expect_failure "$fixture" "visual-review receipt color review scope drifted"
 pass "coordinated visual-receipt digest reseal cannot weaken the reviewed page scope"
 
 fixture="$TEST_ROOT/visual-receipt-status-resealed"
 make_fixture "$fixture"
 replace_once \
-  "$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md" \
+  "$fixture/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md" \
   'status: `passed`' \
   'status: `not-reviewed`'
 reseal_fixture_input "$fixture" VISUAL_RECEIPT_SHA256 \
-  "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"
+  "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
 expect_failure "$fixture" "visual-review receipt disposition drifted"
 pass "coordinated visual-receipt digest reseal cannot substitute an unreviewed disposition"
 
@@ -743,7 +747,7 @@ pass "coordinated PDF-version drift rejects"
 fixture="$TEST_ROOT/page-count"
 make_fixture "$fixture"
 make_pdf_pair_mutant "$fixture" page-count
-expect_failure "$fixture" "rebuilt page count differs: 27; expected 28"
+expect_failure "$fixture" "rebuilt page count differs: 28; expected 29"
 pass "coordinated page-count drift rejects"
 
 fixture="$TEST_ROOT/relative-uri"

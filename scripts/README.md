@@ -2886,12 +2886,13 @@ Markdown sources, renderer fragments, and PDF basename inventory differ, if an u
 is present without an explicit inventory update, or if any individual PDF gate fails. Its default
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
-portability relation, except that the root blueprint deliberately has no reviewed cross-toolchain
-profile. The aggregate requires its checker to refuse that request with status 2 and assigns zero
-source-to-PDF cross-toolchain credit; status 0 or any other refusal status fails the aggregate.
-The aggregate self-test protects the blueprint self-test call, exact-mode call, cross-mode probe,
-and exact status-2 branch against removal, inversion, conditional skipping, or `|| true`
-weakening. For the 87-page mathematical
+portability relation, except that the root blueprint and dated post-publication custody receipt
+deliberately have no reviewed cross-toolchain profiles. The aggregate requires each checker to
+refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain credit; status 0
+or any other refusal status fails the aggregate. The aggregate self-test protects both exact-only
+checker blocks, their hostile suites, their exact-mode calls, their cross-mode probes, and their
+status-2 branches against removal or weakening. It also binds the custody record checker in normal
+and optimized Python and its hostile suite. For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
 tab, and line-feed runs, except for the uniquely identified `Comparison result` and `Checker`
@@ -2934,8 +2935,10 @@ self-test reseals and rejects 36 causal mutations in normal and optimized isolat
 
 `build-pid-discovery-verification-blueprint.sh` derives the human PDF only from the canonical
 Markdown, reviewed header/filter, and four handcrafted SVGs. The filter preserves portable
-relative evidence links in Markdown but maps the seven declared repository destinations to
-canonical GitHub `blob/main` navigation URLs in the PDF. It performs two isolated same-toolchain
+relative evidence links in Markdown but maps only declared repository destinations to
+canonical GitHub `blob/main` navigation URLs in the PDF. The current edition maps nine declared
+destinations after adding the post-publication Markdown and machine-record links. It performs two
+isolated same-toolchain
 LuaLaTeX builds. The SVG route fixes Pango to the isolated Fontconfig inventory so macOS CoreText
 cannot select a platform fallback. The final roster admits only the declared CFF kind/encoding
 pairs and requires Latin Modern for body/math plus Source Sans Pro for navigation, headings, and
@@ -2950,11 +2953,14 @@ rather than generating a new PDF for each migration.
 `check-pid-discovery-verification-blueprint-pdf.sh` is exact-only. Before rebuilding, it binds the
 current decision, evidence-adjudication index, and complete 18-node conventions registry by SHA-256
 and by unique proposed/open status and taxonomy sentinels. It then validates both rebuilt and
-committed 28-page PDFs, renders every page at 120 dpi in color and grayscale, and requires
+committed 29-page PDFs, renders every page at 120 dpi in color and grayscale, and requires
 committed-byte equality. The public visual-review receipt binds that exact PDF SHA-256, the complete
-28-page color and grayscale review scope, a 14-page 300 dpi spot set, 20 named visual/design/semantic
+29-page color and grayscale review scope, a 15-page 300 dpi spot set, 20 named visual/design/semantic
 lenses, and the passed disposition. It claims neither mathematical or accessibility proof nor an
-independent second review. A strict pypdf pass inventories every annotation and action. Its
+independent second review. The visible 2 September edition and the deterministic PDF creation and
+modification dates now agree. The metadata-only correction is recorded against the immediately
+preceding 29-page PDF; every declared same-renderer raster was byte-identical. A strict pypdf pass
+inventories every annotation and action. Its
 owner-aware whitelist admits only the exact catalog first-page `/Fit` `GoTo`, registered-outline
 named `GoTo` actions, and declared annotation-owned HTTPS `URI` or named internal `GoTo` links. It
 rejects relative/file URIs, undeclared web targets, additional or active actions, embedded/external
@@ -2980,6 +2986,47 @@ These blueprint artifacts adopt proof roles and assurance structure only. They d
 sieve formulas, bounds, constants, or conclusions to PID, and they grant no KSG,
 continuous-support, population-inference, calibration, scientific-novelty, or
 higher-source-certificate claim.
+
+## Post-publication custody receipt
+
+`check-post-publication-custody.py` validates the closed-world machine record
+`audit/evidence/post-publication-custody-2026-09-02.json` and the exact 14-line remote-head preimage
+in `audit/evidence/post-publication-remote-heads-2026-09-02.tsv`. The dated record binds the c499
+publication commit/tree/parent, direct hosted-main observation, five required successful workflow
+runs and 56 jobs, nine exact old-object branch retirements, three retired worktrees and their stated
+custody routes, local packed-ref reconciliation, retained dirty/private state, and explicit
+nonclaims. The checker neither contacts the host nor turns ancestry, a digest, an operator action
+record, or a green workflow into byte identity, authenticity, theorem truth, estimator validity, or
+future cleanup authority. Exact raw and canonical JSON digests make the record closed-world after
+the field-level diagnostics. Its hostile self-test runs normal and optimized isolated Python and
+rejects 56 parser, identity, scope, custody, artifact, and semantic-escalation mutations, including
+unknown certificate fields and contradictory suffixes.
+
+`build-post-publication-custody-pdf.sh` derives the six-page human receipt from the canonical
+Markdown, header, Lua filter, and handcrafted state-machine SVG. It stages all inputs, performs two
+isolated same-toolchain builds, validates A4/PDF-1.7/font/text/geometry/action properties before an
+atomic final install, and does not mutate the repository figure during custom-output checks. The
+visual receipt binds all six color and grayscale pages and 20 named lenses. The PDF remains
+untagged, so neither source descriptions nor visual inspection establish PDF/UA conformance.
+The addendum points to the blueprint's named 70-row council record and intentionally presents only
+ten grouped custody questions; the grouped prompts are not a replacement lens roster.
+
+`check-post-publication-custody-pdf.sh --exact` binds that visual receipt and subject hash, replays
+the machine checker in normal and optimized modes, performs two fresh builds, and requires both
+builds and committed bytes to agree. Its `--cross-toolchain` mode refuses with status 2 because no
+reviewed producer-equivalence profile exists. These are repository-custody and presentation
+controls only; they add no mathematical, statistical, estimator, application, release, or
+independent-review credit.
+
+```text
+python3 -I -S -B scripts/check-post-publication-custody.py
+python3 -O -I -S -B scripts/check-post-publication-custody.py
+python3 -I -S -B scripts/check-post-publication-custody-self-test.py
+python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py
+bash scripts/build-post-publication-custody-pdf.sh
+bash scripts/check-post-publication-custody-pdf-self-test.sh
+bash scripts/check-post-publication-custody-pdf.sh --exact
+```
 
 ## Repository-retirement ledger snapshots
 
@@ -3163,8 +3210,9 @@ historical v0.9.0 ledger as tag-scoped inventory rather than current line or hum
 authenticity, review, scientific, formal, visual, release, or application evidence.
 The top-level `generated_pdfs` field is a selected 11-file PDF byte roster retained for its declared
 roles; it is not an exhaustive directory listing. The `generated_pdf_set` subprojection covers all
-23 current repository-visible entries selected by `output/pdf/`: 19 PDFs and four TSV rendering
-receipts. Both counts describe the bound candidate state and must be regenerated after the final
+repository-visible entries selected by `output/pdf/`, including the current 20 PDFs and four TSV
+rendering receipts. The directory count is descriptive of this candidate and must be regenerated,
+not hand-maintained as an invariant, after the final
 source freeze; neither count implies that a PDF was rebuilt, reviewed, or accepted.
 
 `check-post-commit-source-state-v2.py` performs that resolution without putting a commit identifier

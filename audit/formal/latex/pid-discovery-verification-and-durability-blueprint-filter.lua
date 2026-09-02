@@ -21,6 +21,10 @@ local github_navigation_links = {
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json",
   ["audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json"] =
     "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json",
+  ["audit/evidence/post-publication-custody-2026-09-02.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/post-publication-custody-2026-09-02.md",
+  ["audit/evidence/post-publication-custody-2026-09-02.json"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/post-publication-custody-2026-09-02.json",
 }
 local figure_panels = {
   ["semantic-transfer-firewall-source-card.pdf"] = {

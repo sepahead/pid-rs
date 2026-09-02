@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">Post-publication custody state machine</title>
+  <desc id="desc">A three-stage flow from a dated snapshot, through exact verification, to a split between predicate-checked route retirement with recovery and deliberate retention.</desc>
+  <defs>
+    <pattern id="girih" width="56" height="56" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+      <rect width="56" height="56" fill="#1F3F60"/>
+      <path d="M28 3 L53 28 L28 53 L3 28 Z M28 14 L42 28 L28 42 L14 28 Z" fill="none" stroke="#D2E0E2" stroke-opacity="0.28" stroke-width="2"/>
+      <circle cx="28" cy="28" r="3" fill="#B28218" fill-opacity="0.65"/>
+    </pattern>
+    <pattern id="weave" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="#F7F3E9"/>
+      <path d="M0 4H18M0 14H18M4 0V18M14 0V18" stroke="#1F6968" stroke-opacity="0.18" stroke-width="1"/>
+    </pattern>
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#F7F3E9"/>
+      <circle cx="4" cy="4" r="1.6" fill="#743E37" fill-opacity="0.38"/>
+      <circle cx="12" cy="12" r="1.6" fill="#743E37" fill-opacity="0.38"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2C3E50" flood-opacity="0.16"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#916400"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="650" fill="#F7F3E9"/>
+  <rect x="28" y="24" width="1144" height="102" rx="18" fill="url(#girih)"/>
+  <path d="M28 104H1172" stroke="#B28218" stroke-width="4" stroke-opacity="0.85"/>
+  <text x="70" y="68" fill="#F7F3E9" font-family="Arial, sans-serif" font-size="30" font-weight="700">POST-PUBLICATION CUSTODY</text>
+  <text x="70" y="101" fill="#D2E0E2" font-family="Arial, sans-serif" font-size="18">One dated observation; two explicit outcomes</text>
+
+  <line x1="380" y1="300" x2="430" y2="300" stroke="#916400" stroke-width="5" marker-end="url(#arrow)"/>
+  <line x1="770" y1="300" x2="820" y2="300" stroke="#916400" stroke-width="5" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="170" width="320" height="270" rx="18" fill="url(#weave)" stroke="#1F3F60" stroke-width="3"/>
+    <rect x="60" y="170" width="320" height="62" rx="18" fill="#1F3F60"/>
+    <rect x="60" y="214" width="320" height="18" fill="#1F3F60"/>
+    <text x="86" y="209" fill="#F7F3E9" font-family="Arial, sans-serif" font-size="22" font-weight="700">1  SNAPSHOT</text>
+    <text x="86" y="272" fill="#2C3E50" font-family="Arial, sans-serif" font-size="18" font-weight="700">Dated evidence</text>
+    <text x="86" y="304" fill="#2C3E50" font-family="Arial, sans-serif" font-size="16">Old ledgers stay immutable.</text>
+    <text x="86" y="332" fill="#2C3E50" font-family="Arial, sans-serif" font-size="16">They describe their own boundary.</text>
+    <text x="86" y="379" fill="#743E37" font-family="Arial, sans-serif" font-size="16" font-weight="700">Not a live monitor</text>
+    <text x="86" y="407" fill="#2C3E50" font-family="Arial, sans-serif" font-size="15">No cleanup authority is inferred.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="430" y="170" width="340" height="270" rx="18" fill="#D2E0E2" fill-opacity="0.72" stroke="#1F6968" stroke-width="3"/>
+    <rect x="430" y="170" width="340" height="62" rx="18" fill="#1F6968"/>
+    <rect x="430" y="214" width="340" height="18" fill="#1F6968"/>
+    <text x="456" y="209" fill="#F7F3E9" font-family="Arial, sans-serif" font-size="22" font-weight="700">2  VERIFY</text>
+    <text x="456" y="272" fill="#2C3E50" font-family="Arial, sans-serif" font-size="18" font-weight="700">Exact predicates</text>
+    <text x="456" y="304" fill="#2C3E50" font-family="Arial, sans-serif" font-size="16">Remote and local main agree.</text>
+    <text x="456" y="332" fill="#2C3E50" font-family="Arial, sans-serif" font-size="16">Hosted jobs are all green.</text>
+    <text x="456" y="379" fill="#743E37" font-family="Arial, sans-serif" font-size="16" font-weight="700">Compare bytes and meaning</text>
+    <text x="456" y="407" fill="#2C3E50" font-family="Arial, sans-serif" font-size="15">Ancestry is not semantic identity.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="820" y="170" width="320" height="270" rx="18" fill="url(#dots)" stroke="#916400" stroke-width="3"/>
+    <rect x="820" y="170" width="320" height="62" rx="18" fill="#916400"/>
+    <rect x="820" y="214" width="320" height="18" fill="#916400"/>
+    <text x="846" y="209" fill="#F7F3E9" font-family="Arial, sans-serif" font-size="22" font-weight="700">3  DECIDE</text>
+    <text x="846" y="272" fill="#2C3E50" font-family="Arial, sans-serif" font-size="18" font-weight="700">Split the state</text>
+    <text x="846" y="304" fill="#2C3E50" font-family="Arial, sans-serif" font-size="16">Retire only checked routes.</text>
+    <text x="846" y="332" fill="#2C3E50" font-family="Arial, sans-serif" font-size="16">Require recovery; retain ambiguity.</text>
+    <text x="846" y="379" fill="#743E37" font-family="Arial, sans-serif" font-size="16" font-weight="700">No bulk deletion</text>
+    <text x="846" y="407" fill="#2C3E50" font-family="Arial, sans-serif" font-size="15">Re-observe before the next action.</text>
+  </g>
+
+  <path d="M980 470 C980 520 760 530 610 530 C440 530 250 520 250 470" fill="none" stroke="#1F6968" stroke-width="3" stroke-dasharray="9 9" marker-end="url(#arrow)"/>
+  <text x="600" y="570" text-anchor="middle" fill="#2C3E50" font-family="Arial, sans-serif" font-size="18" font-weight="700">A later mutation starts a new observation</text>
+  <text x="600" y="600" text-anchor="middle" fill="#2C3E50" font-family="Arial, sans-serif" font-size="15">Custody, mathematical validity, statistical validity, and application value remain separate claims.</text>
+</svg>

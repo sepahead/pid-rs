@@ -15,17 +15,17 @@ EVIDENCE_ADJUDICATION_INDEX="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidenc
 CONVENTIONS="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md"
 PRIMARY_RETIREMENT_LEDGER="$ROOT/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json"
 SIBLING_RETIREMENT_LEDGER="$ROOT/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json"
-VISUAL_RECEIPT="$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md"
+VISUAL_RECEIPT="$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
 DECISION_V2_SHA256="f5bfef2afa6237661e031d416497e17f2aad01b17de61f15e9aba1a6e9ff6c59"
 EVIDENCE_ADJUDICATION_INDEX_SHA256="0410df9f4163d2ccd2e4bb993fed9fd3d1598fae13bd3bc58cf30784966bbab4"
 CONVENTIONS_SHA256="2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7"
 PRIMARY_RETIREMENT_LEDGER_SHA256="29c6d6e0b2fe4b51b154e88be950db32ad214f64a67041c1ad215e756c8270bf"
 SIBLING_RETIREMENT_LEDGER_SHA256="25b226abce58071ffa383753528300b7b2ef7203c47b07bb5f9a1b3b02e08420"
-VISUAL_RECEIPT_SHA256="335263a235fc3faf6edbcea2c0683563e54646454c7720959db31e16dca7acdf"
-VISUAL_RECEIPT_PDF_SHA256="51a5d399cdcddbdf0ae4aea13a0d5726b79c8e81b417f845e0968b7e310e3d27"
+VISUAL_RECEIPT_SHA256="01e2e8b39aa27fd69f733ad1ee6c01f2de8f6e4e7b2e4e1c7e568ea47957d120"
+VISUAL_RECEIPT_PDF_SHA256="18d034deb7f131e8e93170f4dd064980ab9f40cbdda208b512dbf68a58af3a0a"
 CHECK_NAME="PID discovery/verification/durability blueprint PDF check"
 MODE="${1:---exact}"
-EXPECTED_PAGES=28
+EXPECTED_PAGES=29
 EXPECTED_PYPDF_VERSION="6.15.0"
 
 if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -122,19 +122,29 @@ require_unique_line "$VISUAL_RECEIPT" \
 require_unique_line "$VISUAL_RECEIPT" \
   "pdf_sha256: \`$VISUAL_RECEIPT_PDF_SHA256\`" \
   "visual-review receipt PDF binding"
-require_unique_line "$VISUAL_RECEIPT" "pages: \`28\`" \
+require_unique_line "$VISUAL_RECEIPT" "pages: \`29\`" \
   "visual-review receipt page scope"
-require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_rendered: \`1-28\`" \
+require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_rendered: \`1-29\`" \
   "visual-review receipt color render scope"
-require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_reviewed: \`1-28\`" \
+require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_reviewed: \`1-29\`" \
   "visual-review receipt color review scope"
-require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_rendered: \`1-28\`" \
+require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_rendered: \`1-29\`" \
   "visual-review receipt grayscale render scope"
-require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_reviewed: \`1-28\`" \
+require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_reviewed: \`1-29\`" \
   "visual-review receipt grayscale review scope"
 require_unique_line "$VISUAL_RECEIPT" \
-  "spot_300_dpi_pages_reviewed: \`1,4,10-13,15-17,19,24,26-28\`" \
+  "spot_300_dpi_pages_reviewed: \`1,3,13-16,21-29\`" \
   "visual-review receipt high-resolution spot scope"
+require_unique_line "$VISUAL_RECEIPT" \
+  "delta_reference_pdf_sha256: \`51a5d399cdcddbdf0ae4aea13a0d5726b79c8e81b417f845e0968b7e310e3d27\`" \
+  "visual-review receipt predecessor binding"
+require_unique_line "$VISUAL_RECEIPT" "delta_reference_pages: \`28\`" \
+  "visual-review receipt predecessor page scope"
+require_unique_line "$VISUAL_RECEIPT" "delta_120_dpi_raster_identical_pages: \`none\`" \
+  "visual-review receipt unchanged-page boundary"
+require_unique_line "$VISUAL_RECEIPT" \
+  "delta_120_dpi_changed_or_added_pages_reviewed: \`1-29\`" \
+  "visual-review receipt delta-review scope"
 require_unique_line "$VISUAL_RECEIPT" "lens_count: \`20\`" \
   "visual-review receipt lens count"
 require_unique_line "$VISUAL_RECEIPT" "status: \`passed\`" \
@@ -185,7 +195,9 @@ for required_link in \
     'claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier' \
     'audit/evidence/worktree-and-branch-preservation-2026-08-27.md' \
     'audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json' \
-    'audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json'; do
+    'audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json' \
+    'audit/evidence/post-publication-custody-2026-09-02.md' \
+    'audit/evidence/post-publication-custody-2026-09-02.json'; do
   if ! grep -Fq "]($required_link)" "$SOURCE"; then
     echo "$CHECK_NAME: source lacks required current-evidence link: $required_link" >&2
     exit 1
@@ -288,7 +300,7 @@ validate_pdf() {
       'PrimeGapsLib observations are dated 19 August 2026' \
       'Decision record 2 keeps the complete target' \
       '108 keyed scalar audit expressions' \
-      'Current 1 September 2026 adversarial publication closure' \
+      'Dated 1 September 2026 adversarial publication closure' \
       'PASS identifies current-byte evidence' \
       'seventy typed rows in total' \
       'Twenty mandatory core lenses' \
@@ -368,6 +380,12 @@ github_navigation_links = {
     "audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json":
         "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/"
         "sibling-registry-retirement-ledger-2026-09-01.json",
+    "audit/evidence/post-publication-custody-2026-09-02.md":
+        "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/"
+        "post-publication-custody-2026-09-02.md",
+    "audit/evidence/post-publication-custody-2026-09-02.json":
+        "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/"
+        "post-publication-custody-2026-09-02.json",
 }
 expected_uris: Counter[str] = Counter()
 for target in re.findall(r"\]\(([^)]+)\)", markdown):
@@ -382,6 +400,11 @@ try:
     reader = PdfReader(pdf_path, strict=True)
 except Exception as error:
     fail(f"cannot parse strictly: {error}")
+
+metadata = reader.metadata
+expected_pdf_date = "D:20260902000000Z"
+if metadata is None or metadata.get("/CreationDate") != expected_pdf_date or metadata.get("/ModDate") != expected_pdf_date:
+    fail("deterministic creation/modification chronology metadata drifted")
 
 
 def resolve(value):

@@ -13,11 +13,28 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   accepted PID theorem, estimator, or numerical result. The mathematical-workflow artifact is now
   87 A4 pages with a complete color/grayscale review, a 24-page high-resolution spot set, 20 named
   review lenses, and 381 hostile controls including 24 receipt mutations. The discovery and
-  durability blueprint is now 28 A4 pages with a complete color/grayscale review, a 14-page
+  durability blueprint is now 29 A4 pages with a complete color/grayscale review, a 15-page
   high-resolution spot set, 20 named review lenses, a 70-row worked council
   (20 mandatory core plus 50 artifact-specific lenses), ten separately compared routes, and 72
   hostile controls. Both receipts bind exact PDF bytes and state that visual inspection does not
-  prove mathematics, accessibility, toolchain authenticity, or independent scientific review.
+  prove mathematics, accessibility, toolchain authenticity, or independent scientific review. The
+  2 September blueprint edition now uses matching deterministic creation/modification dates; its
+  declared same-renderer rasters are byte-identical to the immediately preceding reviewed 29-page
+  subject, so this is a metadata chronology correction rather than a visual or mathematical change.
+
+- Add a dated, closed-schema post-publication custody receipt for the accepted mainline closure.
+  The machine record binds the exact publication commit, tree, and parent; the observed remote-head
+  preimage; five successful required workflows with 56 jobs; nine guarded branch retirements;
+  three retired worktrees and their separate preservation routes; retained dirty/private state;
+  and explicit nonclaims. Normal and optimized isolated checkers reject 56 hostile record
+  mutations. A separate six-page human PDF, complete color/grayscale visual receipt, exact-only
+  two-build checker, and 33-control PDF hostile suite make the presentation reproducible without
+  turning repository custody into authenticity, theorem truth, estimator validity, application
+  evidence, future cleanup authority, or independent review. The human addendum points to the
+  blueprint's named 70-row council record and labels its own ten questions as grouped prompts. A
+  [bounded current-container rebind receipt](audit/evidence/certified-sxpid2-post-publication-container-rebind-2026-09-02.md)
+  records why the additive scripts-guide and formal-PDF dispatcher bytes can be rebound without
+  changing any certified-SxPID2 authority, executable, theorem, estimator, or numerical result.
 
 - Add complementary, closed-schema retirement ledgers for the primary common Git directory and ten
   sibling registries. Their isolated normal/optimized checkers validate the recorded snapshots;
