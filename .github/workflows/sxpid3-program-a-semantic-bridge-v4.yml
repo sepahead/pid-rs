@@ -1,0 +1,91 @@
+name: SxPID3 Program-A semantic bridge v4
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sxpid3-program-a-semantic-bridge-v4-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Finite semantic reconstruction and hostile controls
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out the exact event head with complete history
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Install CPython
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Require the exact non-synthetic event head
+        shell: bash
+        env:
+          EXPECTED_HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          test "$(git rev-parse --is-shallow-repository)" = false
+
+      - name: Reconstruct the bounded MGW-v5 Program-A semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          run_pair() {
+            local script_path="$1"
+            local label="$2"
+            local normal_status optimized_status
+
+            set +e
+            python3 -I -S -B "$script_path" \
+              > "$RUNNER_TEMP/$label.normal.txt" \
+              2> "$RUNNER_TEMP/$label.normal.stderr"
+            normal_status=$?
+            python3 -O -I -S -B "$script_path" \
+              > "$RUNNER_TEMP/$label.optimized.txt" \
+              2> "$RUNNER_TEMP/$label.optimized.stderr"
+            optimized_status=$?
+            set -e
+
+            if (( normal_status != 0 || optimized_status != 0 )); then
+              cat "$RUNNER_TEMP/$label.normal.stderr" >&2
+              cat "$RUNNER_TEMP/$label.optimized.stderr" >&2
+              return 1
+            fi
+            test ! -s "$RUNNER_TEMP/$label.normal.stderr"
+            test ! -s "$RUNNER_TEMP/$label.optimized.stderr"
+            cmp \
+              "$RUNNER_TEMP/$label.normal.txt" \
+              "$RUNNER_TEMP/$label.optimized.txt"
+            cmp \
+              "$RUNNER_TEMP/$label.normal.stderr" \
+              "$RUNNER_TEMP/$label.optimized.stderr"
+            cat "$RUNNER_TEMP/$label.normal.txt"
+          }
+
+          run_pair \
+            scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py \
+            program-a
+          run_pair \
+            scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py \
+            program-a-self-test
+
+      - name: Check the method catalog projection
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/check-method-catalog.py
+          python3 -O scripts/check-method-catalog.py
