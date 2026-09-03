@@ -87,5 +87,5 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -I -B scripts/check-method-catalog.py
-          python3 -O -I -B scripts/check-method-catalog.py
+          python3 scripts/check-method-catalog.py
+          python3 -O scripts/check-method-catalog.py
