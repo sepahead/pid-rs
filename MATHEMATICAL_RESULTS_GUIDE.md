@@ -497,11 +497,27 @@ Therefore, the routes are not independent proofs. Both routes retain the human t
 host/runtime premises.
 **[B,E,O]**
 
+**Revision-5 semantic bridge.** A fresh owner-controlled acquisition replay reproduced the exact
+MGW v5 PDF, source archive, and unique `apstemplate.tex` member identities. Ten source anchors now
+state the paper meaning, local analogue, preserved assumptions, changed conventions, prohibited
+inference, and evidence still required. From three source bits, the executable bridge regenerates
+all 18 antichains. It also regenerates all 324 order/zeta entries, of which 129 are true. It
+computes the exact two-sided integer Möbius inverse, which has 65 nonzero coefficients.
+
+The bridge covers 144 event cases, 288 event/target cases, and all six source-label automorphisms.
+
+A separate hash-bound compatibility edge checks the regenerated carrier, zeta, and Möbius objects
+against the frozen conventions and prior route registries. The edge does not import either route's
+computation. This is owner-controlled semantic and registry-drift
+evidence, not independent source review, machine interpretation of prose, a formal proof, parser or
+Rust refinement, or logical independence. **[P,B,E,O]**
+
 **Status/cost/use.** The catalog marks the narrow entry
 `validation.sxpid3-source-marginal-bounded-audit` as integrated and stable. Paper-to-local
-correspondence remains open. These additional obligations also remain open:
+correspondence now has a recorded owner-controlled partial result. Independent acquisition/review
+and concrete formal correspondence remain open. These additional obligations also remain open:
 
-- Concrete carrier/order proofs.
+- Concrete carrier/order proofs in the required formal systems.
 - Nonzero-log enclosure.
 - Compiled-Rust/binary64 refinement.
 - Larger domains.
@@ -515,8 +531,13 @@ Big-integer size depends on the input.
 **Read next.** [`SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md`](SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md)
 and [PDF](output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf). The separate full-certificate
 [`evidence-adjudication index`](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md)
-and current [`decision record 2`](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md) accept the
-two scoped sub-results but keep the complete target proposed/open. The historical
+and current [`decision record 3`](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md) accept three
+scoped sub-results. They keep the complete target proposed/open, with Programs A--E at zero of five
+closed.
+
+The detailed
+[`source-correspondence map`](claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md)
+retains the per-anchor transfer ledger. The historical
 [`revision index`](claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md) and first
 [`proposed decision`](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md) remain preserved evidence.
 The complete-target status neither downgrades nor strengthens the integrated narrow result.

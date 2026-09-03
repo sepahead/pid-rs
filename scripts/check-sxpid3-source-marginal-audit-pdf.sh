@@ -102,7 +102,8 @@ validate_pdf() {
     echo "$CHECK_NAME: $label has nonembedded or non-Unicode fonts" >&2
     exit 1
   }
-  for sentinel in '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
+  for sentinel in 'fresh owner-controlled HTTPS' 'separate exact compatibility edge' \
+      '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
       'complete certificate' 'Averaged informative component' \
       'Averaged misinformative component' 'Explicit nonclaims and negative results'; do
     grep -Fiq -- "$sentinel" "$text" || {
@@ -136,7 +137,7 @@ def require_same_page(label, first, second):
     if not any(first in page and second in page for page in body_pages):
         raise SystemExit(f"pagination contract failed for {label}")
 
-abstract_pages = [page for page in pages if "This report documents two related but logically separate" in page]
+abstract_pages = [page for page in pages if "This report documents three related but logically separate" in page]
 if len(abstract_pages) != 1 or "Contents" in abstract_pages[0]:
     raise SystemExit("pagination contract failed for fresh-page abstract")
 contents_pages = [
@@ -149,6 +150,7 @@ if len(contents_pages) != 1:
     raise SystemExit("pagination contract failed for unique contents page")
 body_pages = [page for page in pages if page not in contents_pages]
 require_same_page("paired Dedekind equations", "𝑀 (3) − 2 = 20 − 2 = 18", "𝑀 (4) − 2 = 168 − 2 = 166")
+require_same_page("paper event distinction", "Paper event semantics: Equation (4) is not Equation (6)", "MGW Equation (4) and Equations (5)")
 require_same_page("crosswalk heading and body", "The 18/108/166 crosswalk", "The source arity determines the carrier")
 require_same_page("zeta lead-in and inverse display", "With cumulatives as rows and atoms as columns, define", "Π𝑢𝑖 =")
 require_same_page("fixed-inverse lead-in and display", "and, for one fixed Möbius inverse", "Π𝑢 =")
@@ -176,7 +178,12 @@ require_same_page("formal-evidence heading and opening", "Formal, executable, an
 require_same_page("estimator-boundary paragraph", "No new estimator is required to evaluate these deterministic identities", "treated as a transparent bridge")
 require_same_page("nonclaim heading and opening", "Explicit nonclaims and negative results", "The factorization does not extend in general")
 require_same_page("nonclaim final pair", "Within each census block, every labelled-table/antichain-key pair has unit weight", "The receipt provides repository custody")
-require_same_page("reproduction tail and references", "The two-source count/event bridge", "References")
+require_same_page("reproduction tail", "The underlying exact lanes and their hostile tests are", "The two-source count/event bridge")
+reference_pages = [
+    page for page in body_pages if "References" in page and "Abdullah Makkeh" in page
+]
+if len(reference_pages) != 1 or "The two-source count/event bridge" in reference_pages[0]:
+    raise SystemExit("pagination contract failed for fresh-page references")
 require_same_page("Ehrlich reference item", "David A. Ehrlich", "Shared Exclusions")
 PY
   LC_ALL=C pdfinfo -url "$pdf" >"$urls"
@@ -195,10 +202,12 @@ https://doi.org/10.1103/PhysRevE.110.014115
 https://doi.org/10.3390/e16042161
 https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
 https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json
+https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json
 https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
 https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean
-https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md
 https://oeis.org/A000372
 EOF
   if ! cmp -s "$expected_urls" "$observed_urls"; then

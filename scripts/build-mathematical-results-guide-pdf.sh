@@ -42,7 +42,7 @@ FONT_ROSTER_CHECK_SHA256=39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8
 GUIDE_FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/mathematical-results-guide"
 CROSSWALK_DIRECTORY="$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit"
 DEFAULT_OUTPUT="$ROOT/output/pdf/mathematical-results-guide.pdf"
-SOURCE_DATE_EPOCH_VALUE=1788048000
+SOURCE_DATE_EPOCH_VALUE=1788393600
 JOB_NAME="mathematical-results-guide"
 MODE="--exact"
 
@@ -518,7 +518,7 @@ build_once() {
         --include-in-header=mathematical-results-guide-header.tex \
         --metadata=title:'Mathematical results in pid-rs' \
         --metadata=author:'pid-rs project analysis' \
-        --metadata=date:'31 August 2026' \
+        --metadata=date:'3 September 2026' \
         --variable=colorlinks=true --variable=linkcolor:PidTeal \
         --variable=toccolor:PidTeal \
         --variable=urlcolor:PidBronze --variable=citecolor:PidTeal \

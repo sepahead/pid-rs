@@ -248,6 +248,9 @@ cat >"$FAKE_BIN/pdftotext" <<'EOF'
 set -euo pipefail
 output="${!#}"
 printf '%s\n' \
+  'Paper event semantics' \
+  'fresh owner-controlled HTTPS' \
+  'separate exact compatibility edge' \
   '18/108/166 crosswalk' \
   '20,348 tables' \
   '2,197,584' \

@@ -9,7 +9,7 @@ FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bo
 DEFAULT_OUTPUT="$ROOT/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf"
 ID_VARIANCE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-id-variance.py"
 ID_VARIANCE_CHECK_SHA256=d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7
-SOURCE_DATE_EPOCH_VALUE=1787788800
+SOURCE_DATE_EPOCH_VALUE=1788393600
 JOB_NAME="sxpid3-source-marginal-and-bounded-audit"
 MODE="--exact"
 OUTPUT="$DEFAULT_OUTPUT"
@@ -275,7 +275,7 @@ build_once() {
         --include-in-header=sxpid3-source-marginal-and-bounded-audit-header.tex \
         --metadata=title:'Source-marginal factorization and a bounded exact audit of a declared categorical SxPID3 transcription' \
         --metadata=author:'pid-rs project analysis' \
-        --metadata=date:'27 August 2026' \
+        --metadata=date:'3 September 2026' \
         --variable=papersize:a4 --variable=fontsize:11pt --variable=geometry:margin=20mm \
         --variable=linestretch:1.06 --variable=mainfont:'Latin Modern Roman' \
         --variable=sansfont:'Latin Modern Sans' --variable=monofont:'Latin Modern Mono Light' \
@@ -399,7 +399,8 @@ if ! awk 'NR<=2{next} NF==0{next} {seen=1;if($(NF-4)!="yes"||$(NF-2)!="yes")bad=
   echo "SxPID3 audit PDF build failed: fonts must be embedded and Unicode-mapped" >&2
   exit 1
 fi
-for sentinel in '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
+for sentinel in 'Paper event semantics' 'fresh owner-controlled HTTPS' \
+    'separate exact compatibility edge' '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
     'complete certificate' 'Explicit nonclaims and negative results'; do
   if ! grep -Fiq -- "$sentinel" "$TEXT"; then
     echo "SxPID3 audit PDF build failed: missing rendered sentinel: $sentinel" >&2

@@ -65,7 +65,7 @@ LEGACY_TRAILER_RECEIPT_BASENAME = (
     "mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 )
 EXPECTED_WRAPPER_SHA256 = (
-    "0ac49e36111c7a1d8f24a4acd0f7b1b0755fd6273d804873563b1343c7edb145"
+    "43327805cdf2c442d3e62a71481b50ec13baf49164c8083d8b8a87b7e425c226"
 )
 EXPECTED_CAPTURE_FUNCTION_SHA256 = (
     "a9a7d694fd43cd9888605fc48db5e5dc67bccb59d1a1b9c328de25aff751a088"
@@ -721,10 +721,10 @@ def audit_wrapper(
         "LEGACY_FORMAT_BYTES": "''",
         "LEGACY_FORMAT_SHA256": "''",
         "STRUCTURE_CHECK_SHA256": (
-            "a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d"
+            "86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77"
         ),
         "STRUCTURE_SELF_TEST_SHA256": (
-            "aa8fd64c627884d64b18c2e8cb2565c06678f2c5f55be182723541d026c56229"
+            "1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4"
         ),
         "ID_VARIANCE_CHECK_SHA256": (
             "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
@@ -2743,12 +2743,12 @@ def run_mutation_suite(source: str) -> int:
             "hosted renderer digest zeroed",
         ),
         (
-            "STRUCTURE_CHECK_SHA256=a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d",
+            "STRUCTURE_CHECK_SHA256=86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77",
             "STRUCTURE_CHECK_SHA256=" + "0" * 64,
             "structure checker digest zeroed",
         ),
         (
-            "STRUCTURE_SELF_TEST_SHA256=aa8fd64c627884d64b18c2e8cb2565c06678f2c5f55be182723541d026c56229",
+            "STRUCTURE_SELF_TEST_SHA256=1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4",
             "STRUCTURE_SELF_TEST_SHA256=" + "0" * 64,
             "structure checker self-test digest zeroed",
         ),

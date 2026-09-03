@@ -107,7 +107,7 @@ EXPECTED_NAMED_DESTINATIONS = {
     "subsection*.14": 11,
     "subsection*.16": 12,
     "subsection*.17": 13,
-    "subsection*.18": 14,
+    "subsection*.18": 15,
     "subsection*.2": 2,
     "subsection*.20": 16,
     "subsection*.3": 2,
@@ -134,20 +134,20 @@ EXPECTED_OUTLINE = [
     (0, 12, "5. Higher-source, numerical, and continuous-estimator assurance", "section*.15"),
     (1, 12, "5.1 SxPID3 source-marginal factorization and bounded audit", "subsection*.16"),
     (1, 13, "5.2 Represented-binary64 and quantizer assurance", "subsection*.17"),
-    (1, 14, "5.3 KSG positive-integer harmonic arithmetic", "subsection*.18"),
+    (1, 15, "5.3 KSG positive-integer harmonic arithmetic", "subsection*.18"),
     (0, 16, "6. Estimator choice, global nonclaims, and further reading", "section*.19"),
     (1, 16, "6.1 Wibral-line roadmap for high dimension and non-Euclidean geometry", "subsection*.20"),
 ]
 EXPECTED_ACTION_COUNTS = Counter({"/GoTo": 37, "/URI": 89})
 EXPECTED_LINK_COUNTS = Counter({"/GoTo": 18, "/URI": 89})
-# This v2 profile binds all 217 navigation records and 53,358 payload bytes of the expanded
+# This v2 profile binds all 217 navigation records and 53,391 payload bytes of the expanded
 # 23-page guide. The digest is a source-specific artifact census, not a mathematical or
 # accessibility claim.
-EXPECTED_NAVIGATION_SHA256 = "9e5291bb57c89aab1b6ad4c9f1aab7037cec2a07fa525bf200a334275f35cb66"
-EXPECTED_STRUCTURE_ELEMENTS = 1050
-# This v2 profile binds 2,248 semantic structure records and 115,106 payload bytes. It covers the
+EXPECTED_NAVIGATION_SHA256 = "b0d32c762b6d7366037ef5cf3bc2cf39095d785470d51bee7af097eeca67ce7d"
+EXPECTED_STRUCTURE_ELEMENTS = 1059
+# This v2 profile binds 2,266 semantic structure records and 116,012 payload bytes. It covers the
 # tagged hierarchy, page resources, content, MCIDs, ParentTree ownership, and OBJR topology.
-EXPECTED_STRUCTURE_SHA256 = "265b2c156c72379a62e2ca3f3e90bb1e31fe1063e211658a6c9039076bf44b44"
+EXPECTED_STRUCTURE_SHA256 = "7718c629f2d795c865ce0170c59916d692a47ae7218a7ede85f58044ab889755"
 
 FORBIDDEN_KEYS = {
     "/AA",
@@ -544,8 +544,8 @@ def validate_structure_tree(reader: PdfReader, root: DictionaryObject) -> Struct
     if key_set(id_tree) != {"/Kids"}:
         fail("structure_tree", "IDTree root changed shape")
     kids = dereference(dictionary_raw(id_tree, "/Kids"))
-    if not isinstance(kids, ArrayObject) or len(kids) != 21:
-        fail("structure_tree", "IDTree root does not have the declared 21 leaves")
+    if not isinstance(kids, ArrayObject) or len(kids) != 22:
+        fail("structure_tree", "IDTree root does not have the declared 22 leaves")
     id_entries: list[tuple[str, tuple[int, int]]] = []
     seen_id_nodes: set[tuple[int, int] | tuple[str, int]] = set()
     for leaf_index in range(len(kids)):
@@ -1367,8 +1367,8 @@ def validate_pages_and_links(
 
     if total_links != 107 or counts != EXPECTED_LINK_COUNTS:
         fail("link_count", f"link action counts changed: {dict(counts)}")
-    if len(targets) != 56:
-        fail("link_count", f"expected 56 distinct external HTTPS targets, observed {len(targets)}")
+    if len(targets) != 57:
+        fail("link_count", f"expected 57 distinct external HTTPS targets, observed {len(targets)}")
     return targets, navigation, counts, page_struct_parents, annotation_locations
 
 
@@ -1428,7 +1428,7 @@ def validate_parent_tree(
         if struct_parent is not None:
             annotations_by_parent.setdefault(struct_parent, []).append((reference, page, ordinal))
     expected_keys = set(page_struct_parents) | set(annotations_by_parent)
-    if set(mappings) != expected_keys or len(mappings) != 120:
+    if set(mappings) != expected_keys or len(mappings) != 121:
         fail("structure_tree", "ParentTree keys differ from page and annotation ownership")
 
     consumed_mcr: set[tuple[int, int]] = set()
