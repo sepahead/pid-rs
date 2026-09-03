@@ -9,9 +9,10 @@ record.
 | Claim revision | Decision record | Claim | Decision | Evidence matrix | Complete-target status |
 |---:|---:|---|---|---|---|
 | 1 | 1 | [claim-v1.md](claim-v1.md) | [decision.md](decision.md) | [evidence-matrix.md](evidence-matrix.md) | Historical proposed specification; no accepted complete-target evidence |
-| 1 | 2 | [claim-v1.md](claim-v1.md) | [decision-v2.md](decision-v2.md) | [evidence-matrix-v2.md](evidence-matrix-v2.md) | Current proposed/open decision; two scoped sub-results receive credit, but Programs A--E remain open |
+| 1 | 2 | [claim-v1.md](claim-v1.md) | [decision-v2.md](decision-v2.md) | [evidence-matrix-v2.md](evidence-matrix-v2.md) | Historical proposed/open decision; two scoped sub-results receive credit, but Programs A--E remain open |
+| 1 | 3 | [claim-v1.md](claim-v1.md) | [decision-v3.md](decision-v3.md) | [evidence-matrix-v3.md](evidence-matrix-v3.md) | Current proposed/open decision; owner-controlled revision-5 source correspondence and exact Fin-3 semantic reconstruction receive scoped credit, but Programs A--E remain open |
 
-Decision record 2 does not create claim revision 2. A change to the frozen mathematical object,
+Decision records 2 and 3 do not create claim revision 2. A change to the frozen mathematical object,
 coordinate registry, schema, resource policy, acceptance implication, or permitted complete-target
 wording still requires `claim-v2.md` and a new claim revision. Later evidence that instantiates the
 unchanged target can receive another numbered decision record without retroactively changing the

@@ -655,6 +655,10 @@ python3 -I -S -B scripts/check-lean-exact-log-product.py  # frozen 7-theorem gen
 python3 -O -I -S -B scripts/check-lean-exact-log-product.py
 python3 -I -S -B scripts/check-lean-exact-log-product-self-test.py  # hostile/scope controls
 python3 -O -I -S -B scripts/check-lean-exact-log-product-self-test.py
+python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py  # bounded Program-A semantics; still partial/open
+python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py
+python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py  # historical false-green + reseal controls
+python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py
 just --justfile justfile.sxpid3-informative-invariance verify  # P1 Lean/exact/Rust layers
 python3 scripts/check-lean-ksg-integer-harmonic.py       # 19 conditional exact harmonic theorems
 python3 -O scripts/check-lean-ksg-integer-harmonic.py
@@ -906,6 +910,12 @@ pytest crates/pid-python/tests -q
   revision-4 checker before changing it. This is not an estimator-attainability, calibration,
   support, paper-defect, or Rust-refinement theorem.
 - **Negative atoms are real:** `I^sx_∩` (and its atoms) can be negative; never silently clamp.
+- **SxPID3 event syntax is semantic:** in the MGW construction, the event is an OR across source
+  collections and an AND within each collection. Equation (4)'s OR is the singleton-collection
+  special case; it does not replace the within-collection conjunction in Equation (6). Source-label
+  permutations are also distinct from reordering the branches of one antichain. The Program-A v4
+  checker reconstructs this finite three-source model and binds its local record; it does not
+  independently interpret the paper, prove Rust refinement, or close any Program A--E.
 - **Continuous support is declared, never inferred:** bare default continuous configs are
   intentionally non-runnable. Use the explicit absolute-continuity constructor only when every
   marginal and joint law required by that call has the stated full-dimensional population model.
