@@ -777,7 +777,7 @@ def main(argv: list[str]) -> int:
         raise SystemExit("PDF structure self-test failed: source is absent, non-regular, or symbolic")
     source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
     baseline = CHECKER.validate_path(source)
-    if len(baseline.targets) != 56 or len(baseline.navigation) != 217:
+    if len(baseline.targets) != 57 or len(baseline.navigation) != 217:
         raise SystemExit("PDF structure self-test failed: baseline report changed")
 
     cases = [

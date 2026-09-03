@@ -35,8 +35,8 @@ MODE_WIRING_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-mode-w
 RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
 HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json"
 RETAINED_FONT_ALPHA_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
-STRUCTURE_CHECK_SHA256=a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d
-STRUCTURE_SELF_TEST_SHA256=aa8fd64c627884d64b18c2e8cb2565c06678f2c5f55be182723541d026c56229
+STRUCTURE_CHECK_SHA256=86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77
+STRUCTURE_SELF_TEST_SHA256=1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4
 HOSTED_RAW_CHECK_SHA256=29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc
 HOSTED_RAW_SELF_TEST_SHA256=f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9
 HOSTED_RAW_PROFILE_RECEIPT_SHA256=56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8
@@ -1529,10 +1529,11 @@ https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/for
 https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md
 https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/revision-index.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md
-https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md
 https://github.com/sepahead/pid-rs/blob/main/method-catalog.json
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf
@@ -1611,7 +1612,7 @@ if ! cmp -s "$BUILD_ROOT/built.observed-navigation" \
     "$BUILD_ROOT/committed.observed-navigation" >&2 || true
   exit 1
 fi
-if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-urls" | tr -d ' ')" != "56" ]]; then
+if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-urls" | tr -d ' ')" != "57" ]]; then
   echo "$CHECK_NAME: hyperlink target count changed" >&2
   exit 1
 fi

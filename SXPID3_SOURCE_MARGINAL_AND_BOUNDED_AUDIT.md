@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This report documents two related but logically separate project results for a supplied local
+This report documents three related but logically separate project results for a supplied local
 transcription intended to represent the finite categorical shared-exclusions PID of Makkeh,
 Gutknecht, and Wibral (MGW). First, a generic
 finite-alphabet theorem shows that every averaged informative cumulative factors exactly through
@@ -19,15 +19,27 @@ components. The number 166 instead belongs to the four-source redundancy lattice
 implementation-disjoint-under-shared-semantics exact routes produced the same route-neutral digest
 and the same exact six-block sign/zero census under a source-bound execution receipt.
 
+Third, an owner-controlled revision-5 source review now binds the relevant MGW equations to exact
+PDF, source-archive, and TeX-member identities; a fresh acquisition replay reproduces those
+identities, and ten anchor records make every semantic transfer boundary explicit. An executable
+semantic bridge reconstructs the
+three-source OR-of-AND event kernel, all 18 antichains, all 324 order/zeta entries, the exact
+two-sided Möbius inverse, and all six source-label permutations from small definitions, then
+compares the carrier and lattice exactly with the frozen conventions and prior route registries. Minimal
+counterexamples distinguish the central connective, target-intersection, order, weighting, and
+relabeling errors. This bridge reduces the shared-semantics risk beneath the two arithmetic routes;
+it does not eliminate the need for independent source review or concrete formal and Rust
+refinement.
+
 Neither result defines a new PID. Williams--Beer $I_{\min}$, BROJA, the Ehrlich continuous
 shared-exclusions estimator, and KSG are not imported or identified with the categorical quantity
 studied here. The bounded audit is exhaustive only on its declared sparse binary count domain. It
-does not establish paper-to-code correspondence, compiled Rust numerical refinement, population
-validity, estimator calibration, causality, or scientific priority.
+does not establish independently reviewed paper-to-code correspondence, compiled Rust numerical
+refinement, population validity, estimator calibration, causality, or scientific priority.
 
 ## Status and claim boundary
 
-This report explains two separate project-defined assurance results around a supplied transcription
+This report explains three separate project-defined assurance results around a supplied transcription
 of the paper-defined categorical shared-exclusions PID:
 
 1. **Informative source-marginal factorization.** Under the finite-alphabet assumptions stated in
@@ -37,11 +49,16 @@ of the paper-defined categorical shared-exclusions PID:
 2. **Bounded SxPID3 keyed-scalar agreement.** Under the exact binary-count domain in Section 4,
    two exact routes agree on a declared stream digest and complete sign/zero census for 108 keyed
    scalar audit expressions.
+3. **Owner-controlled MGW semantic bridge.** Exact source identities and equation anchors are
+   recorded, then the finite three-source carrier, event truth table, order, zeta matrix, Möbius
+   inverse, and source-label automorphisms are regenerated from definitions. The bridge is a strong
+   partial Program A result; it is not an independent source review or an end-to-end certificate.
 
-These results do **not** correct the MGW/Wibral definition, prove that the local transcription
-follows from the paper, certify compiled Rust numerics, or supply a statistical or application
-theorem. The method remains paper-defined; the factorization proof, formalization, exact routes,
-hostile tests, receipt lifecycle, and this report are project-defined assurance.
+These results do **not** correct the MGW/Wibral definition, machine-interpret the publication,
+complete independent source correspondence, certify compiled Rust numerics, or supply a
+statistical or application theorem. The method remains paper-defined; the source map,
+factorization proof, formalization, exact routes, hostile tests, receipt lifecycle, and this report
+are project-defined assurance.
 
 The historical labels “P1” and “P5” are avoided because the claim packet used similar labels for
 other obligations. This report uses **factorization result** and **bounded audit**.
@@ -49,9 +66,9 @@ other obligations. This report uses **factorization result** and **bounded audit
 The current claim-status pointer is the
 [evidence-adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md),
 which identifies
-[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md) as current. That decision
-accepts the two scoped results above without changing claim revision 1: the prospective complete
-certificate remains proposed/open, and Programs A--E remain open. The packet's older
+[decision record 3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md) as current. That decision
+accepts the three scoped results above without changing claim revision 1: the prospective complete
+certificate remains proposed/open, and Programs A--E closed remains zero of five. The packet's older
 `revision-index.md` is retained as byte-pinned historical intake, not used as the current decision
 pointer.
 
@@ -62,6 +79,7 @@ pointer.
 | Informative, misinformative, and signed-net categorical shared exclusions | MGW (2021) | Functional the audit is intended to transcribe | No automatic paper-to-checker correspondence |
 | Antichain carrier and redundancy order | Williams and Beer (2010) | Lattice carrier and order | The $I_{\min}$ redundancy value is not used |
 | Finite-poset Möbius inversion | Rota (1964) | Passage from cumulatives to atoms | No PID-specific conclusion follows from inversion alone |
+| Revision-5 source identities and semantic anchors | MGW (2021), owner-controlled repository review | Binds the intended event, split, averaging, order, and Möbius statements to exact source locations | No authenticity, independent-review, parser, formal, or Rust credit |
 | Source-marginal factorization | Project analysis of the paper-defined informative component | Exact theorem, fixed-transform corollary, and prohibited-transfer boundary | No new-PID or priority claim |
 | Registry, finite corpus, census, neutral stream, and receipt | Project-defined validation | Bounded software assurance for a declared transcription | No general theorem, estimator, or population claim |
 
@@ -107,9 +125,10 @@ E_\alpha(s)
 $$
 
 This is OR across antichain branches and AND within one branch. It is the local event supplied by
-the repository transcription, with MGW (2021), Equation (6), as its intended paper anchor. Proving
-that this supplied event, carrier, and order are exactly the publication objects remains a separate
-correspondence obligation. In the complete source-target space the supplied event is the cylinder
+the repository transcription, with MGW (2021), Equation (6), as its paper anchor. The
+owner-controlled source map and finite reconstruction in Sections 1.1 and 7.3 support that mapping;
+independent source review and concrete formal correspondence remain separate obligations. In the
+complete source-target space the supplied event is the cylinder
 
 $$
 E_\alpha(s)\times\mathcal T.
@@ -118,7 +137,97 @@ $$
 The target coordinate is absent from event membership. That typing fact is more informative than
 saying that a target term happens to cancel numerically.
 
-### 1.1 The 18/108/166 crosswalk
+### 1.1 Paper event semantics: Equation (4) is not Equation (6)
+
+The source correspondence uses MGW revision 5, arXiv `2002.03356v5`. The exact SHA-256 values are
+shown in four blocks; concatenating each row without the displayed separators gives the 64-digit
+digest:
+
+- PDF: `5939ce0f4c727f19` · `98040421c07a1689` · `af1b8d9a35a0ee3c` ·
+  `83fe25cd85263dc6`;
+- source archive: `6420b90ccd5c1e97` · `1e19b41c24676b0e` · `d3276aa47f1b3cea` ·
+  `dc49bac219bf9584`;
+- extracted `apstemplate.tex`: `60ac061c9874149d` · `65d6fab21e627ca6` ·
+  `6f96d9e4d4990d1e` · `e243632776faaf61`.
+
+Their respective byte counts are 1,002,114, 489,040, and 142,869. A fresh owner-controlled HTTPS
+replay ran on 2026-09-03 UTC. It reacquired both external artifacts and verified that the archive contained exactly one
+top-level `apstemplate.tex`, and reproduced every size and digest. The exact replay commands,
+results, source-line intervals, semantic roles, and prohibited inferences are retained in the
+[source-correspondence record](claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md).
+These hashes identify the reviewed bytes. They do not authenticate the publisher or interpret the
+mathematics automatically; this replay is not independent custody or trusted time.
+
+MGW Equation (4) and Equations (5)--(8) use related notation for different objects:
+
+- Equation (4) begins with a subset of *individual source realizations*. The event is an OR among
+  the selected individual equality statements. In this report's mask notation, choosing sources 1
+  and 2 separately gives antichain key `01+02`.
+- Equation (6) permits a collection of source collections. Inside one collection, all named source
+  equalities are joined by AND; different collections are joined by OR. The joint collection of
+  sources 1 and 2 is key `03`.
+
+Thus, for a keyed value $(s_1,s_2,s_3)$,
+
+$$
+E_{\mathtt{01+02}}
+=\{S_1=s_1\}\cup\{S_2=s_2\},
+$$
+
+whereas
+
+$$
+E_{\mathtt{03}}
+=\{S_1=s_1\}\cap\{S_2=s_2\}.
+$$
+
+On the equality pattern `010` - source 2 matches, while sources 1 and 3 do not - `01+02` is true
+and `03` is false. This one-row witness rejects both AND across antichain branches and OR inside a
+joint-source collection. It prevents a notation-based substitution of Equation (4) for Equation
+(6).
+
+The other load-bearing source anchors are:
+
+| MGW location | Local role | Boundary that remains |
+|---|---|---|
+| Equation (12) | Equivalent exclusion-probability form | Population equivalence is not Rust refinement |
+| Equation (13) | Cumulative is the zeta sum of lower-or-equal atoms | The matrix orientation must still be stated |
+| Equations (14a), (15a), (15b) | Net equals informative minus misinformative | Component signs do not transfer to net atoms |
+| Equation (17) | Average local values with the complete joint source-target law | The weight is not event probability or uniform key weight |
+| Appendix A order display | Quantified antichain order | Reversing the order is a different convention |
+| Appendix Equation (A1), Theorem A.1 | Componentwise Möbius inversion | Matrix inversion alone does not verify event semantics |
+| Theorem IV.2 | Informative and misinformative cumulatives increase on the redundancy lattice | No inference of atom nonnegativity or signed-net monotonicity |
+| Theorem IV.3 | Full-lattice pointwise component-atom nonnegativity | No transfer to net atoms, truncations, or other PIDs |
+
+This is an owner-controlled source review. The detailed map records exact locations and explicitly
+separates the paper meaning, repository analogue, preserved assumptions, changed conventions, and
+prohibited inference. It also records the evidence required before each anchor can support a
+stronger formal or implementation claim. In compact form:
+
+- **Equations (4) and (5)--(8).** Finite categorical equality-event semantics at one realized
+  source tuple is preserved. Source collections become sorted masks and stable keys. Independent
+  source review, formal event semantics, and parser-to-Rust refinement remain required.
+- **Equation (12).** The source event, target event, and positive log-ratio probabilities are
+  preserved. The exclusion form is used only as a cross-check. Algebraic correspondence and a
+  numerical or compiled comparison are required before that form is used operationally.
+- **Equation (13), the Appendix order, and Equation (A1).** The complete carrier, published order,
+  and componentwise finite-poset inversion are preserved. The repository declares row/column
+  orientation, stable key order, and exact rational elimination. Concrete carrier/order
+  formalization and implementation correspondence remain required.
+- **Equations (14a), (15a), and (15b).** The paper-defined pointwise informative/misinformative
+  split is preserved. Bits become nats by multiplication with positive $\ln2$. Componentwise
+  correspondence remains required, and signed net needs a separate subtraction analysis.
+- **Equation (17).** The complete joint source-target expectation over positive-mass keys is
+  preserved. Probabilities become $c_z/N$ weights for the declared plug-in law. Producer/parser
+  refinement must establish the same weighting.
+- **Theorems IV.2 and IV.3.** The full lattice and separate informative/misinformative components
+  are preserved. Only notation and the positive unit scale change. Source-to-formal correspondence
+  remains required; neither theorem transfers to signed net, a truncated carrier, or another PID.
+
+The fresh acquisition remains owner-controlled. Independent acquisition, review, and external
+custody remain open.
+
+### 1.2 The 18/108/166 crosswalk
 
 The source arity determines the carrier. Let $\mathcal L_n$ be the nonempty antichains of nonempty
 subsets of $\{1,\ldots,n\}$. The Dedekind number $M(n)$ counts all antichains of the full Boolean
@@ -176,7 +285,7 @@ Once $C^+$ and $C^-$ are known, the other four blocks are determined. Retaining 
 still valuable: it localizes event, component, lattice-orientation, inversion, and subtraction
 defects that a final signed value could hide through cancellation.
 
-### 1.2 Redundancy order, zeta transform, and the fixed 18-position registry
+### 1.3 Redundancy order, zeta transform, and the fixed 18-position registry
 
 **Standing assumptions for this subsection.** Use the three-source antichain carrier just defined,
 represent nonempty source subsets by masks `01` through `07`, and sort a multi-mask key first by
@@ -253,7 +362,7 @@ The matrix has 129 ones; its inverse has 65 nonzero entries in $\{-1,1\}$; and b
 and $ZM=I_{18}$ are required. Those identities alone do not prove that the entries implement the
 paper-defined event semantics.
 
-### 1.3 A two-source inversion example
+### 1.4 A two-source inversion example
 
 **Standing assumptions for this example.** Use the conventional two-source four-position carrier,
 the same down-set orientation as above, and one component $u$. The label $1.2$ denotes the
@@ -437,9 +546,9 @@ those separate marginals do not determine the complete informative vector.
 
 The short algebra does not close the following obligations:
 
-- correspondence between local source events and the paper-defined events;
-- completeness and order of the intended 18-position carrier;
-- the intended zeta orientation and Möbius inverse;
+- independent correspondence between local source events and the paper-defined events;
+- concrete proof-assistant completeness and order of the intended 18-position carrier;
+- a second non-importing formal construction of the intended zeta orientation and Möbius inverse;
 - bytes-to-counts and counts-to-law decoding;
 - compiled Rust or binary64 refinement;
 - sampling assumptions, estimator calibration, causality, and application validity.
@@ -593,6 +702,21 @@ $$
 V_{\alpha,z}\le T_z\le N.
 $$
 
+The inequalities are not inferred from the bounded enumeration. At the keyed row, every equality
+inside every selected branch is true and the target equals itself, so that row contributes the
+positive amount $c_z$ to $V$, $U$, $T_z$, and $N$. For every comparison row,
+
+$$
+\mathbf1\{E_\alpha\cap T(z)\}\le\mathbf1\{E_\alpha\},
+\qquad
+\mathbf1\{E_\alpha\cap T(z)\}\le\mathbf1\{T(z)\}.
+$$
+
+Multiplying by the nonnegative row count and summing proves the remaining inequalities. This
+indicator argument works for arbitrary finite categorical alphabets because each comparison row
+is reduced to three source-equality bits and one target-equality bit. It assumes a valid finite
+count table; it is not a unique bytes-to-table decoder proof.
+
 Direct summation under $\widehat P_c$ gives the promised count-to-law bridge:
 
 $$
@@ -652,7 +776,7 @@ C^u_\alpha
 $$
 
 **Standing assumptions for the transformed products.** Use the fixed integer Möbius inverse
-$M$ from Section 1.2 and the positive cumulative products above. For atom key $\gamma$, define
+$M$ from Section 1.3 and the positive cumulative products above. For atom key $\gamma$, define
 
 $$
 Q^u_{\gamma,\mathrm{atom}}
@@ -840,19 +964,65 @@ It binds:
 The receipt supplies bounded local execution provenance. It explicitly supplies no external
 custody, replay, trusted timestamp, authenticity, general theorem, or semantic-transfer authority.
 
+### 7.3 Revision-5 semantic-bridge evidence
+
+The full [source correspondence](claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md)
+and its [machine record](audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json) bind the
+owner-controlled paper reading and executable reconstruction. Starting from three source bits, the
+checker derives:
+
+| Reconstruction | Result |
+|---|---:|
+| Nonempty antichains | 18 |
+| Ordered carrier pairs | 324 |
+| True order/zeta entries | 129 |
+| Nonzero integer Möbius entries | 65 |
+| Source-label automorphisms | 6 |
+| Source-event cases | 144 |
+| Source-event/target cases | 288 |
+
+Both exact inverse products are required. Every source permutation must preserve the carrier,
+order, and event truth after the equality coordinates are relabeled with the sources. The event
+truth cases distinguish OR across collections, AND within a collection, and target intersection.
+
+The executable checks all Boolean premises used by the generic count proof. The written proof,
+not a finite enumeration of every possible count vector, supplies the step that multiplies those
+indicator inequalities by arbitrary nonnegative row weights and sums. The checker therefore must
+not be described as exhaustively running all finite alphabets or all count vectors.
+
+A separate exact compatibility edge binds the frozen conventions and both older bounded-route
+files by SHA-256 and byte count. Without importing either route's computation, the new
+reconstruction must equal the conventions and primary-route registries at all 18 carrier keys,
+all 324 zeta entries, and all 65 nonzero Möbius coefficients; it must also equal the second route's
+key registry and 129/65 lattice censuses. This detects silent registry drift. It is not logical
+independence, event-implementation comparison, bounded-audit execution, or Rust refinement.
+
+The hostile self-test explicitly covers all seven failure identifiers preserved in the inert
+historical v1/v2 checker archive. Under normal and optimized Python it executes two baselines, four
+alternate-input rejections, 24 coherently resealed record rejections, 12 semantic-source
+rejections, six frozen-compatibility-file drift rejections, and two document-drift rejections.
+
+It also requires two *accepted* coordinated-reseal negative controls. In an isolated copy, the
+test changes correct prose, updates its machine binding, and reseals both checker digest literals.
+The checker passes. This is an important limitation, not a hidden false green: byte-binding and
+local reconstruction cannot interpret natural-language mathematics or stop their owner from
+rewriting all owner-controlled evidence together. The accepted mutation receives no correctness,
+source, review, authenticity, or custody credit.
+
 ## 8. Current certificate-obligation status
 
 The current adjudication is
-[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md), selected by the
+[decision record 3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md), selected by the
 [evidence-adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md).
 The complete certificate program remains open. In particular:
 
 | Obligation | Current status |
 |---|---|
-| Paper-to-local event correspondence | External premise; open |
+| Paper-to-local event correspondence | Owner-controlled revision-5 source map and fresh acquisition replay recorded; independent acquisition/review open |
 | Exact source-marginal algebra | Analytically and generically formally supported |
 | Bounded two-route exact agreement | Supported on the declared $N\le5$ corpus |
-| Concrete three-source carrier/order proof in two formal systems | Open |
+| Concrete three-source carrier/order/event executable reconstruction | Supported in one owner-controlled Python route |
+| Concrete three-source carrier/order proof in two formal systems | Open; the executable bridge is not a substitute |
 | Exact logarithm magnitude enclosure | Open for this 108-expression package |
 | Keyed compiled-Rust numerical refinement | Open |
 | Two-route executable product audit beyond binary alphabets or $N\le5$ | Open |
@@ -898,6 +1068,10 @@ semantics and remain checked against exact fixtures in the domains for which agr
   source marginal.
 - The target-allocation counterexample prevents a false extension to misinformative and net terms.
 - The 18/108/166 crosswalk prevents a bookkeeping vector from being mistaken for a lattice.
+- The Equation (4)/Equation (6) witness prevents individual-source OR from replacing conjunction
+  inside one joint-source collection.
+- The definition-generated carrier, order, and two-sided inverse reduce reliance on one frozen
+  handwritten matrix.
 - Exact products make zero and sign questions algebraic rather than tolerance-dependent.
 - The census demonstrates that negative signed-net atoms occur inside the declared finite domain.
 
@@ -906,6 +1080,8 @@ semantics and remain checked against exact fixtures in the domains for which agr
 - Cache informative coordinates across target permutations that preserve source rows.
 - Test event extraction, component signs, Möbius orientation, and net subtraction separately.
 - Compare implementations by stable antichain key, not positional array index.
+- Require semantic connective and target-intersection mutants before trusting two arithmetic
+  implementations that share a transcription.
 - Use the finite corpus as a strong regression gate for a declared transcription.
 - Preserve negative and exact-zero cases as mandatory mutation targets.
 
@@ -928,7 +1104,12 @@ semantics and remain checked against exact fixtures in the domains for which agr
 - The factorization does not extend in general to misinformative or signed-net components.
 - Three individual source marginals do not determine the complete informative vector.
 - The bounded audit is not an arbitrary-alphabet or arbitrary-total theorem.
-- Agreement is not paper-to-code correspondence and not logical independence.
+- Bounded arithmetic-route agreement alone is not paper-to-code correspondence and not logical
+  independence.
+- Owner-controlled source correspondence is not independent review, authenticity, or a machine
+  interpretation of the paper.
+- The accepted coordinated-reseal negative control shows that local byte bindings cannot certify
+  natural-language meaning.
 - The lexical Rust lane is not compiled numerical refinement.
 - Exact products classify sign and zero but do not enclose nonzero logarithm magnitude.
 - No binary64 correctness, portable logarithm, estimator calibration, confidence coverage,
@@ -969,6 +1150,20 @@ python3 -I -S -B scripts/check-lean-sxpid3-informative-invariance-parity.py
 The parity checker binds exact source and dependency bytes and compares the declared theorem
 inventory with kernel-checked output. It does not close the publication-object correspondence or
 the concrete Rust/count refinement.
+
+The revision-5 source map and concrete finite semantic reconstruction use:
+
+```text
+python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py
+python3 -I -S -B -O scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py
+python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py
+python3 -I -S -B -O scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py
+```
+
+The production checker has no alternate-input option. The self-test copies canonical files into
+isolated temporary repository shapes, mutates those copies, and preserves the coordinated-reseal
+pass as a declared boundary. Passing these commands does not close independent source review,
+formal semantics, parsing, logarithm enclosure, or Rust refinement.
 
 The underlying exact lanes and their hostile tests are:
 
