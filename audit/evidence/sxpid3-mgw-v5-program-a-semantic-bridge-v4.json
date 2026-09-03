@@ -1,0 +1,376 @@
+{
+  "anchors": [
+    {
+      "changed_conventions": "paper subset notation is represented by an antichain of singleton bit masks; numerical units change only at the later bits-to-nats step",
+      "id": "MGW-SUBSET-OR",
+      "local_role": "singleton-branch antichain special case, not one joint-source mask",
+      "paper_locator": "PDF page 2, Equation (4)",
+      "preserved_assumptions": "finite categorical sources and equality statements for individual realized source values",
+      "prohibited_inference": "Equation (4) does not replace conjunction inside a collection in Equation (6)",
+      "required_evidence": "independent source review plus formal event and parser-to-Rust refinement before implementation correspondence is closed",
+      "source_lines": [
+        67,
+        71
+      ]
+    },
+    {
+      "changed_conventions": "source-index collections become sorted nonzero masks and their antichain becomes a stable hexadecimal key",
+      "id": "MGW-DNF-EVENT",
+      "local_role": "OR across source collections and AND within each collection",
+      "paper_locator": "PDF page 3, Equations (5)--(8)",
+      "preserved_assumptions": "a nonempty finite family of nonempty source collections evaluated at one realized source tuple",
+      "prohibited_inference": "branch order symmetry is not source-label permutation invariance",
+      "required_evidence": "formal event semantics and compiled implementation refinement; the finite truth table alone checks only the three-source equality kernel",
+      "source_lines": [
+        73,
+        87
+      ]
+    },
+    {
+      "changed_conventions": "the exclusion form is retained as a mathematical cross-check and is not the executable event implementation used here",
+      "id": "MGW-EXCLUSION-FORM",
+      "local_role": "equivalent local shared-exclusion probability expression",
+      "paper_locator": "PDF page 4, Equation (12)",
+      "preserved_assumptions": "the same source event, realized target event, and positive probabilities needed by the logarithmic ratio",
+      "prohibited_inference": "an equivalent population expression is not a Rust refinement proof",
+      "required_evidence": "an algebraic correspondence proof and numerical or compiled-code comparison if this alternative form is used operationally",
+      "source_lines": [
+        121,
+        138
+      ]
+    },
+    {
+      "changed_conventions": "the repository fixes cumulative nodes as matrix rows, atom nodes as columns, and a declared stable key order",
+      "id": "MGW-ZETA-RELATION",
+      "local_role": "pointwise cumulative equals the sum of atoms at lower-or-equal antichains",
+      "paper_locator": "PDF page 5, Equation (13)",
+      "preserved_assumptions": "the complete finite antichain carrier and the published redundancy order",
+      "prohibited_inference": "the equation alone does not choose a matrix row/column convention",
+      "required_evidence": "concrete carrier completeness and order-orientation checks before a matrix can be identified as the intended zeta transform",
+      "source_lines": [
+        143,
+        154
+      ]
+    },
+    {
+      "changed_conventions": "paper bits are converted to repository nats by multiplication with the positive constant ln(2)",
+      "id": "MGW-COMPONENT-SPLIT",
+      "local_role": "net equals informative minus misinformative; each local component is nonnegative",
+      "paper_locator": "PDF page 5, Equations (14a), (15a), and (15b)",
+      "preserved_assumptions": "the paper-defined pointwise component split on supported finite categorical events",
+      "prohibited_inference": "component nonnegativity does not imply signed-net nonnegativity",
+      "required_evidence": "componentwise formula correspondence and sign-preserving unit conversion; net claims require their own subtraction analysis",
+      "source_lines": [
+        158,
+        174
+      ]
+    },
+    {
+      "changed_conventions": "population probabilities are replaced by empirical count weights c_z/N for the declared plug-in law",
+      "id": "MGW-AVERAGING",
+      "local_role": "average every local value with the complete joint source-target law",
+      "paper_locator": "PDF page 8, Equation (17)",
+      "preserved_assumptions": "expectation over the complete joint source-target distribution and evaluation only where the joint mass is positive",
+      "prohibited_inference": "the weight is not the event probability and not uniform over supported keys",
+      "required_evidence": "producer and parser refinement showing that decoded counts implement the same complete-joint-law weighting",
+      "source_lines": [
+        248,
+        266
+      ]
+    },
+    {
+      "changed_conventions": "finite source subsets are encoded as bit masks and nodes are serialized in a project-defined stable key order",
+      "id": "MGW-ANTICHAIN-ORDER",
+      "local_role": "alpha <= beta iff every collection in beta contains one collection in alpha",
+      "paper_locator": "PDF page 13, Appendix A order display",
+      "preserved_assumptions": "the full antichain carrier and the published subset quantifiers defining the redundancy order",
+      "prohibited_inference": "reversing the order and transposing zeta is not the declared convention",
+      "required_evidence": "carrier-completeness and independently encoded order checks tied to the source statement",
+      "source_lines": [
+        562,
+        570
+      ]
+    },
+    {
+      "changed_conventions": "the inverse is constructed by exact rational elimination in the repository's explicit matrix orientation",
+      "id": "MGW-MOBIUS",
+      "local_role": "invert the finite down-set zeta relation separately for plus and minus",
+      "paper_locator": "PDF page 14, Appendix Equation (A1) and Theorem A.1",
+      "preserved_assumptions": "finite-poset Mobius inversion on the complete published antichain order, applied componentwise",
+      "prohibited_inference": "an inverse matrix does not establish event or implementation correspondence",
+      "required_evidence": "two-sided inverse checks plus a separately established link to the frozen carrier, order, and implementation semantics",
+      "source_lines": [
+        597,
+        607
+      ]
+    },
+    {
+      "changed_conventions": "only notation and the positive bits-to-nats scale change; no theorem strengthening is claimed",
+      "id": "MGW-COMPONENT-LATTICE-MONOTONICITY",
+      "local_role": "informative and misinformative cumulative functions increase monotonically on the redundancy lattice",
+      "paper_locator": "PDF page 6, Theorem IV.2; proof in Appendix A",
+      "preserved_assumptions": "the paper's full redundancy lattice, finite categorical probability model, and separate informative and misinformative cumulatives",
+      "prohibited_inference": "do not infer atom nonnegativity or signed-net monotonicity from this theorem",
+      "required_evidence": "a source-to-formal theorem correspondence before monotonicity is used as mechanized evidence in this repository",
+      "source_lines": [
+        208,
+        211,
+        638,
+        652
+      ]
+    },
+    {
+      "changed_conventions": "only notation and the positive bits-to-nats scale change; the signed-net difference remains outside the theorem",
+      "id": "MGW-COMPONENT-ATOM-NONNEGATIVITY",
+      "local_role": "paper theorem for full-lattice pointwise informative and misinformative atoms",
+      "paper_locator": "PDF page 6, Theorem IV.3; proof in Appendix A",
+      "preserved_assumptions": "the complete published lattice and the pointwise informative or misinformative component atoms",
+      "prohibited_inference": "do not transfer the theorem to net atoms, truncated lattices, or another PID",
+      "required_evidence": "publication-to-formal correspondence on the complete carrier before the theorem receives formal-proof credit",
+      "source_lines": [
+        212,
+        215,
+        797,
+        806
+      ]
+    }
+  ],
+  "boundaries": [
+    "paper_semantics_are_human_read_not_machine_interpreted",
+    "external_source_bytes_are_hash_only_not_repository_custody",
+    "no_canonical_input_parser_or_unique_reserialization_proof",
+    "no_concrete_lean_or_second_solver_closure",
+    "no_exact_logarithm_interval_or_magnitude_certificate",
+    "no_compiled_rust_or_binary64_refinement",
+    "no_population_sampling_estimator_or_application_claim",
+    "no_independent_human_review_authentication_or_priority_claim"
+  ],
+  "compatibility_edge": {
+    "files": {
+      "conventions": {
+        "bytes": 11831,
+        "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md",
+        "sha256": "2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7"
+      },
+      "independent_route": {
+        "bytes": 62762,
+        "path": "scripts/check-sxpid3-all108-independent.py",
+        "sha256": "8670614f168408110109207b2da746664ea0f3a54196362c1e76be97ad418ad7"
+      },
+      "primary_route": {
+        "bytes": 63836,
+        "path": "scripts/check-sxpid3-bounded-full-coordinates.py",
+        "sha256": "d9d1c540930855b31f8190fdb2095d215c736f6f6c3d19c60e2a353923be06d2"
+      }
+    },
+    "result": "derived_carrier_zeta_and_mobius_equal_frozen_conventions_and_route_registries",
+    "scope": "exact_registry_compatibility_not_logical_independence_event_implementation_or_rust_refinement"
+  },
+  "derivation": {
+    "counts": {
+      "antichains": 18,
+      "event_truth_cases": 144,
+      "mobius_nonzero_entries": 65,
+      "nonzero_source_masks": 7,
+      "order_pairs": 129,
+      "source_label_permutations": 6,
+      "target_intersection_truth_cases": 288,
+      "zeta_entries": 324
+    },
+    "digests": {
+      "carrier_keys_sha256": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+      "event_truth_sha256": "20c8ce30c38c7b6ac57415cfb7f8aa19144b56177bb2d8dc3dc717d193393b19",
+      "mobius_sha256": "c1eb37aec49ae76dec3399f0800ac2d0fb41f1779ddb27d13a5fc44664edb460",
+      "source_permutations_sha256": "e494891dbedb2bbfbbd0e8afa77e55210de693b9bceb62ee179481efe73a6ef6",
+      "zeta_sha256": "07c5e2d47550b6903a4fac886be68f43e9f518153bf735c6f1f2d643d1249d3e"
+    },
+    "generic_count_argument": {
+      "coefficient_facts": [
+        "indicator(E and T) <= indicator(E)",
+        "indicator(E and T) <= indicator(T)",
+        "the keyed positive row has all three indicators equal to one"
+      ],
+      "conclusion": "for arbitrary nonnegative row counts with a positive keyed row: 0<c_z<=V<=U<=N and V<=T_z<=N",
+      "scope": "all finite categorical row sets because event membership depends only on the three equality bits and target equality bit"
+    },
+    "keys": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "01+02",
+      "01+04",
+      "01+06",
+      "02+04",
+      "02+05",
+      "03+04",
+      "03+05",
+      "03+06",
+      "05+06",
+      "01+02+04",
+      "03+05+06"
+    ],
+    "witnesses": {
+      "across_branches_and_instead_of_or": {
+        "antichain": "01+02",
+        "correct": true,
+        "match": "010",
+        "mutant": false
+      },
+      "equal_supported_key_weighting_instead_of_count_weighting": {
+        "correct_weighted_average": "1/3",
+        "counts": [
+          2,
+          1
+        ],
+        "equal_key_average_mutant": "1/2",
+        "local_values": [
+          0,
+          1
+        ]
+      },
+      "equation_4_subset_or_substituted_for_equation_6_collection_and": {
+        "antichain": "03",
+        "correct": false,
+        "match": "010",
+        "mutant": true
+      },
+      "omitted_target_intersection": {
+        "correct_intersection": false,
+        "event": true,
+        "key": "01",
+        "match": "100",
+        "mutant_uses_event_without_target": true,
+        "target_match": false
+      },
+      "reversed_order": {
+        "left": "01",
+        "left_le_right": true,
+        "right": "03",
+        "right_le_left": false
+      },
+      "within_collection_or_instead_of_and": {
+        "antichain": "03",
+        "correct": false,
+        "match": "010",
+        "mutant": true
+      }
+    }
+  },
+  "document": {
+    "bytes": 33942,
+    "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
+    "sha256": "b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb"
+  },
+  "format": "pid-rs/sxpid3-mgw-v5-program-a-semantic-bridge/v4",
+  "primary_source": {
+    "acquisition_replay": {
+      "commands": [
+        "curl --proto '=https' --tlsv1.2 -fL --retry 2 --connect-timeout 15 --max-time 120 -o 2002.03356v5.pdf https://arxiv.org/pdf/2002.03356v5",
+        "curl --proto '=https' --tlsv1.2 -fL --retry 2 --connect-timeout 15 --max-time 120 -o 2002.03356v5-source.tar https://export.arxiv.org/e-print/2002.03356v5",
+        "shasum -a 256 2002.03356v5.pdf 2002.03356v5-source.tar",
+        "wc -c 2002.03356v5.pdf 2002.03356v5-source.tar",
+        "test \"$(tar -tf 2002.03356v5-source.tar | grep -Fxc 'apstemplate.tex')\" -eq 1",
+        "tar -xOf 2002.03356v5-source.tar apstemplate.tex | shasum -a 256",
+        "tar -xOf 2002.03356v5-source.tar apstemplate.tex | wc -c"
+      ],
+      "completed_on_utc_date": "2026-09-03",
+      "result": "freshly_retrieved_pdf_archive_and_unique_member_match_recorded_sha256_and_byte_counts",
+      "scope": "owner_controlled_network_replay_not_independent_custody_authentication_or_trusted_time"
+    },
+    "arxiv": "2002.03356v5",
+    "authors": [
+      "Abdullah Makkeh",
+      "Aaron J. Gutknecht",
+      "Michael Wibral"
+    ],
+    "doi": "10.1103/PhysRevE.103.032149",
+    "pdf": {
+      "bytes": 1002114,
+      "sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6",
+      "url": "https://arxiv.org/pdf/2002.03356v5"
+    },
+    "source_archive": {
+      "bytes": 489040,
+      "sha256": "6420b90ccd5c1e971e19b41c24676b0ed3276aa47f1b3ceadc49bac219bf9584",
+      "url": "https://export.arxiv.org/e-print/2002.03356v5"
+    },
+    "source_member": {
+      "bytes": 142869,
+      "path": "apstemplate.tex",
+      "sha256": "60ac061c9874149d65d6fab21e627ca66f96d9e4d4990d1ee243632776faaf61"
+    },
+    "title": "Introducing a differentiable measure of pointwise shared information"
+  },
+  "scope": {
+    "pid": "categorical Makkeh--Gutknecht--Wibral shared exclusions only",
+    "source_alphabet_cardinalities": "arbitrary positive finite for the generic equality-kernel/count argument",
+    "source_count": 3,
+    "target_cardinality": "arbitrary positive finite for the generic equality-kernel/count argument",
+    "units": "paper bits mapped to repository nats by multiplication with ln(2)"
+  },
+  "status": {
+    "complete_target": "proposed_open",
+    "d2_event_count_bridge": "exact_generic_indicator_argument_with_bounded_executable_reconstruction",
+    "h1_independent_human_custody": "open",
+    "l1_carrier": "exact_fin3_executable_reconstruction_formal_completeness_open",
+    "l2_order_zeta_mobius": "exact_fin3_executable_reconstruction_dual_formal_routes_open",
+    "program_a": "partial_open",
+    "programs_closed": 0,
+    "programs_total": 5,
+    "s1_source_correspondence": "owner_controlled_source_review_recorded_independent_external_review_open"
+  },
+  "validation": {
+    "canonical_record_policy": "utf8_lf_canonical_pretty_json_duplicate_keys_rejected_exact_bytes_bound",
+    "coordinated_reseal_boundary": "deliberately_accepted_in_isolated_negative_control_no_semantic_or_review_credit",
+    "historical_false_green_coverage": [
+      {
+        "current_control": "alternate_record_argument_rejected_normal_and_optimized",
+        "id": "V1-FG-INPUT-ROUTE"
+      },
+      {
+        "current_control": "canonical_boundary_deletion_resealed_then_semantically_rejected_normal_and_optimized",
+        "id": "V1-FG-SCOPE-CUTS"
+      },
+      {
+        "current_control": "canonical_anchor_mutation_resealed_then_semantically_rejected_normal_and_optimized",
+        "id": "V1-FG-ANCHOR-SEMANTICS"
+      },
+      {
+        "current_control": "canonical_claim_escalation_resealed_then_semantically_rejected_normal_and_optimized",
+        "id": "V1-FG-CLAIM-SEMANTICS"
+      },
+      {
+        "current_control": "canonical_source_title_mutation_resealed_then_semantically_rejected_normal_and_optimized",
+        "id": "V1-FG-ROLE-TITLE"
+      },
+      {
+        "current_control": "alternate_source_record_argument_rejected_normal_and_optimized",
+        "id": "V2-FG-INPUT-ROUTE-VIA-SOURCE-RECORD"
+      },
+      {
+        "current_control": "canonical_boundary_deletion_resealed_then_semantically_rejected_normal_and_optimized",
+        "id": "V2-FG-SCOPE-CUTS-VIA-SOURCE-RECORD"
+      }
+    ],
+    "required_replay_commands": [
+      "python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "python3 -I -S -B -O scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py",
+      "python3 -I -S -B -O scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py"
+    ],
+    "schema_policy": "no_reusable_untrusted_certificate_schema_claimed_program_c_parser_and_schema_remain_open",
+    "self_test_expected_observations": {
+      "accepted_coordinated_reseal_boundary_diagnostics": 2,
+      "alternate_input_rejections": 4,
+      "baseline_executions": 2,
+      "compatibility_drift_rejections": 6,
+      "document_drift_rejections": 2,
+      "record_reseal_rejections": 24,
+      "semantic_source_rejections": 12
+    }
+  }
+}

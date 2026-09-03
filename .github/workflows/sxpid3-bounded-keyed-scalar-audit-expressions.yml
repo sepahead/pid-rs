@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Source, execution, and receipt custody
+    name: Source semantics, execution, and receipt custody
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
@@ -39,6 +39,43 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
           test "$(git rev-parse --is-shallow-repository)" = false
+
+      - name: Reconstruct the bounded MGW-v5 Program-A semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I -S -B \
+            scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py \
+            > "$RUNNER_TEMP/program-a.normal.txt" \
+            2> "$RUNNER_TEMP/program-a.normal.stderr"
+          python3 -O -I -S -B \
+            scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py \
+            > "$RUNNER_TEMP/program-a.optimized.txt" \
+            2> "$RUNNER_TEMP/program-a.optimized.stderr"
+          test ! -s "$RUNNER_TEMP/program-a.normal.stderr"
+          test ! -s "$RUNNER_TEMP/program-a.optimized.stderr"
+          cmp \
+            "$RUNNER_TEMP/program-a.normal.txt" \
+            "$RUNNER_TEMP/program-a.optimized.txt"
+          cmp \
+            "$RUNNER_TEMP/program-a.normal.stderr" \
+            "$RUNNER_TEMP/program-a.optimized.stderr"
+          python3 -I -S -B \
+            scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py \
+            > "$RUNNER_TEMP/program-a-self-test.normal.txt" \
+            2> "$RUNNER_TEMP/program-a-self-test.normal.stderr"
+          python3 -O -I -S -B \
+            scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py \
+            > "$RUNNER_TEMP/program-a-self-test.optimized.txt" \
+            2> "$RUNNER_TEMP/program-a-self-test.optimized.stderr"
+          test ! -s "$RUNNER_TEMP/program-a-self-test.normal.stderr"
+          test ! -s "$RUNNER_TEMP/program-a-self-test.optimized.stderr"
+          cmp \
+            "$RUNNER_TEMP/program-a-self-test.normal.txt" \
+            "$RUNNER_TEMP/program-a-self-test.optimized.txt"
+          cmp \
+            "$RUNNER_TEMP/program-a-self-test.normal.stderr" \
+            "$RUNNER_TEMP/program-a-self-test.optimized.stderr"
 
       - name: Replay both hostile suites with normal/optimized byte parity
         shell: bash

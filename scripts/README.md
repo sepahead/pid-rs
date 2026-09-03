@@ -1793,6 +1793,41 @@ proved continuity specialization, and bounded executable evidence. Rendering doe
 the paper-to-code correspondence, arbitrary-alphabet/total coverage, Rust binary64 refinement,
 estimator calibration, population validity, causal meaning, authenticity, or scientific priority.
 
+`check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py` is the bounded Program-A semantic bridge
+between the recorded Makkeh--Gutknecht--Wibral v5 source reading and the repository's three-source
+categorical model. It exact-binds the human correspondence document and canonical machine record,
+then reconstructs the result from small definitions: all 18 nonempty antichains of the seven
+nonempty source masks; all 324 order/zeta entries with 129 true order pairs; the integer Mobius
+inverse with 65 nonzero entries and both inverse products; 144 source-event truth cases; 288
+source-and-target intersection cases; and all six source-label permutations as carrier, order, and
+event automorphisms. A separate compatibility edge exact-binds the frozen conventions and both
+bounded-route files, then requires the new carrier, full zeta matrix, and full Mobius inverse to
+match their literal registries without importing either route's computation. The executable checks
+the Boolean indicator premises of the generic count proof; the written proof supplies multiplication
+by arbitrary nonnegative row weights and summation. The paper semantics stay explicit: Equation (4)'s OR is the
+special case made from singleton collections, whereas Equations (5)--(8) use OR across collections
+and AND within each collection. Reordering antichain branches is not the same operation as
+permuting source labels.
+
+The checker does not fetch or parse the external paper bytes. The bound source digests, fresh
+owner-controlled acquisition replay, ten per-anchor transfer records, and exact page/source-line
+anchors record one owner-controlled reading; independent external source acquisition and review
+remains open. It also does not execute Rust, enclose logarithms, prove formal carrier completeness,
+supply two formal Mobius routes, validate a parser, establish population or estimator claims, or
+close Program A or Programs B--E. The companion self-test runs two baselines and, in both Python
+modes, rejects four alternate-input routes, 24 canonical-record reseals, 12 semantic-source
+mutations, six frozen-compatibility-file drifts, and two plain-document drifts. Those controls cover all seven preserved v1/v2
+false-green classes. Two deliberately coordinated prose/record/checker reseals remain accepted as
+boundary diagnostics: executable self-consistency cannot replace source interpretation or
+independent review, so those cases receive zero semantic or review credit.
+
+```text
+python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py
+python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py
+python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py
+python3 -O -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py
+```
+
 `build-numerical-assurance-pdf.sh` renders `NUMERICAL_ASSURANCE.md` through a bounded
 Pandoc/LuaLaTeX projection. The Markdown is canonical. The projection imports two exact tracked
 PDF derivatives of the handcrafted SVG explanations; `figure-assets.json` binds both source and

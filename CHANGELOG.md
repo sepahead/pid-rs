@@ -2043,6 +2043,26 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add a bounded MGW-v5 Program-A semantic bridge for categorical SxPID3. The owner-controlled
+  correspondence records exact external PDF, source-archive, and TeX-member digests plus equation
+  and source-line anchors. A fresh owner-controlled acquisition replay reproduces every identity,
+  and all ten anchors record preserved assumptions, changed conventions, prohibited inferences,
+  and required follow-up evidence. The isolated checker exact-binds that document and its canonical record,
+  then reconstructs the 18-node carrier, all 324 order/zeta entries and 129 true order pairs, the
+  integer Mobius inverse with 65 nonzero entries, 144 source-event cases, 288 target-intersection
+  cases, and all six source-label automorphisms. It distinguishes Equation (4)'s OR over singleton
+  collections from Equation (6)'s AND-within/OR-across event and distinguishes source relabelling
+  from antichain-branch order. The normal/optimized hostile suite covers all seven preserved v1/v2
+  false-green classes and rejects alternate inputs, semantic mutations, record reseals, drift in
+  each of three exact-bound frozen registry files, and plain document drift. The reconstruction
+  must match the frozen conventions and both bounded-route registries without importing either
+  route's computation. Two deliberately accepted coordinated reseals expose the remaining human-review
+  boundary rather than hiding it. The dedicated bounded-SxPID3 workflow replays both scripts in
+  normal and optimized Python with byte-parity checks. This is an exact finite reconstruction and
+  custody advance, not independent source review, paper authentication, formal completeness,
+  Rust/parser refinement, estimator or population validation, a correction to the published
+  functional, scientific-priority evidence, or closure of Program A or Programs B--E.
+
 - Added a separate Lean 4.33 lane for the exact finite categorical informative
   source-marginal factorization.  For a fixed finite source alphabet and supplied source-only
   event family, it proves that each averaged informative cumulative factors through the complete
