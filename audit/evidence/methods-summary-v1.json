@@ -922,7 +922,7 @@
     {
       "category": "validation",
       "code_availability": "local",
-      "constraint_count": 10,
+      "constraint_count": 14,
       "definition_origin": "project-defined",
       "depends_on": [
         "shared-exclusions.categorical",
@@ -939,10 +939,10 @@
         "rust_examples": []
       },
       "scientific_novelty_claim": "none",
-      "summary": "Source-marginal factorization, prohibited-transfer counterexamples, and bounded exact-product digest/census evidence for 108 keyed expressions under a declared categorical SxPID3 transcription.",
+      "summary": "Source-marginal factorization, owner-controlled revision-5 source correspondence and exact finite semantic reconstruction, prohibited-transfer counterexamples, and bounded exact-product digest/census evidence for 108 keyed expressions under a declared categorical SxPID3 transcription; the prospective certificate remains open.",
       "title": "Categorical SxPID3 source-marginal and bounded exact audit",
       "validation": {
-        "evidence_path_count": 49,
+        "evidence_path_count": 59,
         "level": "formal-and-property"
       }
     },
@@ -2273,6 +2273,6 @@
     "path": "method-catalog.json",
     "schema": "pid-rs/method-catalog",
     "schema_revision": 1,
-    "sha256": "d50a3c2ef2c712d7e76946deae9dbaf88e16244fd4742d9b816c5fbf8f4152d3"
+    "sha256": "9bb61e401c68c4872ed7ec644b9d09cabdd6a4f58ef4d04057f2f001b037d360"
   }
 }

@@ -55,6 +55,39 @@ multiple-testing correction, preprocessing, and structured run-logs. Generic res
 are descriptive unless a statistic-specific calibration theorem is supplied. The estimator core is
 safe Rust (`#![forbid(unsafe_code)]`) and reports all information quantities in nats.
 
+## Read, use, or continue the project
+
+Choose the entry point for your task. Read the input assumptions and scientific cautions before
+you interpret an estimate.
+
+| Task | Start here | What you will find |
+|---|---|---|
+| Run a categorical example | [Categorical quickstart](#categorical-data-is-not-numeric-data), [pid-core guide](crates/pid-core/README.md) | Empirical-PMF inputs, typed atoms, and explicit fitted quantization |
+| Assess continuous data | [Continuous quickstart](#continuous-quickstart), [scientific cautions](#scientific-cautions) | Support declarations, reports, geometry limits, and experimental PID boundaries |
+| Choose a method or API | [Methods summary](METHODS_SUMMARY.md), [full catalog](METHODS.md) | Defining sources, repository compositions, input domains, feature gates, and limitations |
+| Study the mathematics | [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) | Nine result families with motivation, formulas, assumptions, evidence, cost, and complete proof links |
+| Check a claim | [Assurance registry](audit/evidence/assurance-registry.json), [known limitations](KNOWN_LIMITATIONS.md) | Scoped evidence and open obligations; follow each claim's current decision |
+| Assess an application | [Ecosystem capabilities](ECOSYSTEM_CAPABILITIES.md), [sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) | Physical inputs, alphabets, targets, simpler comparators, resource limits, and qualification gaps |
+| Develop or review a result | [Mathematical workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md), [discovery and durability blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) | Proof routes, counterexamples, failed attempts, formal checks, councils, and evidence preservation |
+| Resume unfinished work | [Session handoff](SESSION_HANDOFF.md), [agent instructions](AGENTS.md) | Current integration checkout, reading order, unfinished milestones, checks, and branch/worktree procedure |
+
+For project work, compare at least ten materially distinct routes before an important decision.
+Include no action and the simplest applicable non-PID route. Obtain independent-first written
+council critiques, inspect the exact evidence, and retain dissent and shared dependencies. The
+agent instructions define the required review lenses and claim-packet rules.
+
+Finish small coherent milestones with applicable checks and unsigned commits. Verify pushed
+objects and required hosted evidence, then integrate accepted work into main under the documented
+procedure. Assess each useful fragment of an older branch or worktree. Preserve proofs,
+counterexamples, corrections, and failed routes with their evidence and disposition before
+retirement. Update the handoff so the next session can recover both the work and its limits.
+
+The [PDF directory](output/pdf/) contains the publication companions. The blueprint's PDF is
+[alongside its source](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf). Use the current
+claim decision and its exact evidence, including negative results, to assess a mathematical claim.
+A PDF's appearance, successful build, or file hash does not establish that claim. A handoff is a
+dated navigation aid. Check current source, Git state, and decision records again when you resume.
+
 ## Method provenance and claim boundary
 
 **“New in pid-rs” means an implementation, API, composition, diagnostic, or engineering contribution

@@ -10,7 +10,7 @@ record.
 |---:|---:|---|---|---|---|
 | 1 | 1 | [claim-v1.md](claim-v1.md) | [decision.md](decision.md) | [evidence-matrix.md](evidence-matrix.md) | Historical proposed specification; no accepted complete-target evidence |
 | 1 | 2 | [claim-v1.md](claim-v1.md) | [decision-v2.md](decision-v2.md) | [evidence-matrix-v2.md](evidence-matrix-v2.md) | Historical proposed/open decision; two scoped sub-results receive credit, but Programs A--E remain open |
-| 1 | 3 | [claim-v1.md](claim-v1.md) | [decision-v3.md](decision-v3.md) | [evidence-matrix-v3.md](evidence-matrix-v3.md) | Current proposed/open decision; owner-controlled revision-5 source correspondence and exact Fin-3 semantic reconstruction receive scoped credit, but Programs A--E remain open |
+| 1 | 3 | [claim-v1.md](claim-v1.md) | [decision-v3.md](decision-v3.md) | [evidence-matrix-v3.md](evidence-matrix-v3.md) | Current proposed/open decision; owner-controlled revision-5 source correspondence and exact Fin-3 semantic reconstruction receive scoped credit, two v4 typed-equality false greens are corrected and retained, and Programs A--E remain open |
 
 Decision records 2 and 3 do not create claim revision 2. A change to the frozen mathematical object,
 coordinate registry, schema, resource policy, acceptance implication, or permitted complete-target

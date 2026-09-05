@@ -1,14 +1,19 @@
 # CLAUDE.md
 
-Critical preface for Claude Code in **pid-rs**:
+Entry point for Claude Code in **pid-rs**.
 
-- Read and follow [AGENTS.md](AGENTS.md) in full before acting; it is the authoritative operational
-  guide and scientific-object/evidence firewall.
-- Keep commits and tags unsigned and human-authored only. Never add AI/agent attribution, and do
-  not change the empty attribution settings in [`.claude/settings.json`](.claude/settings.json).
-- Never conflate PID constructions, estimands, support/sample roles, correspondence edges, or
-  evidence/reviewer classes. Independently rerun and inspect every agent/model/system claim.
+Read [SESSION_HANDOFF.md](SESSION_HANDOFF.md), then follow [AGENTS.md](AGENTS.md) in full in the
+designated integration checkout. Read the ignored local handoff when present. Verify the current
+Git state and preserve existing bytes before changing files.
 
-The complete guide is imported below; do not duplicate or weaken it here.
+Use AGENTS.md for the reading order, ten-route comparison, independent-first councils, formal and
+scientific checks, publication rules, and branch/worktree procedure. Work in small verified
+milestones. Keep each PID definition, estimand, support, sample role, and evidence class explicit.
+Inspect the evidence behind agent or model reports before relying on them.
+
+Keep commits and tags unsigned and human-authored only. Add no AI/agent attribution. Preserve the
+empty attribution settings in [`.claude/settings.json`](.claude/settings.json).
+
+The import below is the complete operational authority. This entry point does not replace it.
 
 @AGENTS.md

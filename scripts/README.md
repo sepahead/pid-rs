@@ -1741,9 +1741,11 @@ parent and private temporary directory remain stable. Publication uses a same-di
 validation and replacement are not one atomic filesystem transaction. This is not protection from
 a privileged hostile process. The source-cylinder diagram uses explicit averaged-component words;
 the canonical Markdown retains the formal plus/minus notation and its assumptions.
-`check-sxpid3-source-marginal-audit-builder-self-test.sh` exercises seven accepted exact/cross and
-temporary-root controls, 36 rejected mode/fallback/renderer/output-custody cases, and three
-source-shape guards with fake render tools plus strict real-PDF trailer fixtures. Its eight
+`check-sxpid3-source-marginal-audit-builder-self-test.sh` exercises nine accepted exact/cross,
+environment-isolation, and temporary-root controls, 38 rejected
+mode/fallback/renderer/output-custody cases, eight required-source alias cases, and five static
+source-shape guards with fake render tools plus strict
+real-PDF trailer fixtures. Its eight
 hard-link cases cover every required source. The remaining cases cover missing or invalid modes,
 canonical-output path and hard-link
 aliases, exact rejection and cross acceptance of ID-only variance, outside-ID drift, parser and
@@ -1762,10 +1764,21 @@ and keeping the ID parser absent from that comparison layer. A fourth guard reje
 guide-only typed font-resource alpha-equivalence checker in the SxPID3 builder or PDF gate. The
 complete 4-control/28-hostile
 parser suite remains owned by the guide gate; using its canonical guide PDF as a parser fixture
-transfers no guide evidence to SxPID3. A fake `mktemp`
-requires terminal `X` placeholders, and every case rejects temporary publication residue. These
-fixtures validate control flow and fail-closed diagnostics; they do not authenticate tools, model
-every race, or establish PDF or mathematical correctness.
+transfers no guide evidence to SxPID3. A fake `mktemp` requires terminal `X` placeholders, and an
+escaped-directory mutant must be refused without cleanup outside the bound parent. A hostile
+`BASH_ENV` payload and an exported `mktemp` function must not execute in nested Bash; the launchers
+cross an external `env -i` boundary instead of relying on a post-startup `unset`. A second fake
+`mktemp` returns a hard link with a valid parent, name, and regular-file shape. The builder must
+reject it before copying, retain the refused link for adjudication, and leave its victim unchanged.
+Every ordinary case rejects temporary publication and build-root residue. The builder, gate, and
+focused self-test canonicalize fresh temporary roots and bind exact cleanup parents plus
+device/inode identities. Top-level signal traps request statuses 130 and 143, but the suite does not
+claim an integrated signal theorem: cleanup refusal or a child failure wrapper can change the
+observed result. These fixtures validate control flow and fail-closed diagnostics; they do not
+authenticate tools, model every race, or establish PDF or mathematical correctness. The
+[checkout-integrity incident record](../audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md)
+documents why these defenses were added, the bounded recovery, the clean disposable-canary result,
+and the still-unresolved cause without attributing the event to the scripts.
 `check-sxpid3-source-marginal-audit-pdf.sh` first applies the shared digest, PDF-object, and
 open-font asset policy and runs that focused builder self-test. It then rebuilds the paper,
 validates the committed and rebuilt files,
@@ -1815,9 +1828,20 @@ anchors record one owner-controlled reading; independent external source acquisi
 remains open. It also does not execute Rust, enclose logarithms, prove formal carrier completeness,
 supply two formal Mobius routes, validate a parser, establish population or estimator claims, or
 close Program A or Programs B--E. The companion self-test runs two baselines and, in both Python
-modes, rejects four alternate-input routes, 24 canonical-record reseals, 12 semantic-source
-mutations, six frozen-compatibility-file drifts, and two plain-document drifts. Those controls cover all seven preserved v1/v2
-false-green classes. Two deliberately coordinated prose/record/checker reseals remain accepted as
+modes, rejects four alternate-input routes, 28 canonical-record reseals, 12 semantic-source
+mutations, six frozen-compatibility-file drifts, four coherently resealed compatibility-literal
+mutations, and two plain-document drifts. Four of the 28 record-reseal executions cover JSON
+Boolean `false` in place of integer `0` and floating `5.0` in place of integer `5`, each under
+normal and optimized Python. The four separately counted compatibility-reseal executions cover
+Boolean `False` in place of an integer Möbius-tuple entry and floating `129.0` in place of integer
+census `129`. The production checker applies recursive exact type, shape, and value comparison to
+all verdict-bearing record objects and all six parsed compatibility registries. The pre-correction
+committed v4 checker used loose Python equality at both boundaries and is retained as documented
+negative evidence rather than hidden. Those controls map the seven mutation recipes and fourteen
+mode-specific observations in the
+[inert historical-checker archive](../audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md)
+to current controls; the archive is not executed and earns zero closure credit. Two deliberately
+coordinated prose/record/checker reseals remain accepted as
 boundary diagnostics: executable self-consistency cannot replace source interpretation or
 independent review, so those cases receive zero semantic or review credit.
 
@@ -2961,20 +2985,24 @@ result, not one end-to-end theorem connecting arbitrary Rust executions to popul
 canonical PID discovery, verification, and durability blueprint. It binds the exact reviewed
 PrimeGapsLib commit and repository anchors, the dated historical 20-lens registry, transfer cards,
 decision and council rosters, the proposed 13-file averaged categorical SxPID3 packet, and explicit
-nonclaims. A separately identified 1 September 2026 closure applies 20 mandatory core lenses plus
-50 additional artifact-specific lenses and compares ten materially distinct routes without
-rewriting that historical ledger. External web,
+nonclaims. A separately identified 1 September 2026 publication review applies 20 mandatory core
+lenses plus 50 additional artifact-specific lenses and compares ten materially distinct routes
+without rewriting that historical ledger; a separately dated 3 September evidence delta reports
+later Program-A-v4 work without retroactively changing either review. External web,
 paper, CI, and certificate observations are hash-only references: the checker does not turn them
 into recovered bytes, publisher authentication, theorem truth, or independent review. Its hostile
-self-test reseals and rejects 36 causal mutations in normal and optimized isolated Python.
+self-test reseals and rejects 36 causal mutations in normal and optimized isolated Python. The
+workflow parser follows the current 20-core/50-lens section title but binds exactly the first 20
+canonical core rows; the additional rows are artifact-specific review evidence, not a fixed global
+registry.
 
 `build-pid-discovery-verification-blueprint.sh` derives the human PDF only from the canonical
 Markdown, reviewed header/filter, and four handcrafted SVGs. The filter preserves portable
 relative evidence links in Markdown but maps only declared repository destinations to
-canonical GitHub `blob/main` navigation URLs in the PDF. The current edition maps nine declared
-destinations after adding the post-publication Markdown and machine-record links. It performs two
-isolated same-toolchain
-LuaLaTeX builds. The SVG route fixes Pango to the isolated Fontconfig inventory so macOS CoreText
+canonical GitHub `blob/main` navigation URLs in the PDF. The current edition maps 16 declared
+destinations, including the current and historical decisions, Program-A-v4 evidence, conventions,
+and custody records. It performs two isolated same-toolchain LuaLaTeX builds. The SVG route fixes
+Pango to the isolated Fontconfig inventory so macOS CoreText
 cannot select a platform fallback. The final roster admits only the declared CFF kind/encoding
 pairs and requires Latin Modern for body/math plus Source Sans Pro for navigation, headings, and
 figure labels. The builder also requires exact byte
@@ -2986,24 +3014,30 @@ remains required. The PDF explains one general promotion state machine for branc
 rather than generating a new PDF for each migration.
 
 `check-pid-discovery-verification-blueprint-pdf.sh` is exact-only. Before rebuilding, it binds the
-current decision, evidence-adjudication index, and complete 18-node conventions registry by SHA-256
-and by unique proposed/open status and taxonomy sentinels. It then validates both rebuilt and
-committed 29-page PDFs, renders every page at 120 dpi in color and grayscale, and requires
-committed-byte equality. The public visual-review receipt binds that exact PDF SHA-256, the complete
-29-page color and grayscale review scope, a 15-page 300 dpi spot set, 20 named visual/design/semantic
-lenses, and the passed disposition. It claims neither mathematical or accessibility proof nor an
-independent second review. The visible 2 September edition and the deterministic PDF creation and
-modification dates now agree. The metadata-only correction is recorded against the immediately
-preceding 29-page PDF; every declared same-renderer raster was byte-identical. A strict pypdf pass
+historical decision-v2, current decision-v3, evidence matrix v3, source correspondence v4,
+Program-A-v4 machine record, evidence-adjudication index, complete 18-node conventions registry,
+two retirement ledgers, and visual-review receipt by SHA-256 and by exact proposed/open status and
+taxonomy sentinels. The machine record rejects duplicate keys and requires exact JSON value types;
+in particular, Boolean `false` cannot substitute for integer `0`, and floating-point `5.0` cannot
+substitute for integer `5`. The checker then validates both rebuilt and committed 31-page PDFs,
+renders every page at 120 dpi in color and grayscale, and requires committed-byte equality. The
+public visual-review receipt binds that exact PDF SHA-256, the complete 31-page color and grayscale
+contact-sheet review scope, a 19-page 300 dpi spot set, 20 named visual/design/semantic lenses, and the passed
+disposition. It claims neither mathematical or accessibility proof nor an independent second
+review. The visible 3 September edition and deterministic PDF dates agree. Its delta receipt binds
+the accepted 29-page PDF from main; no complete page raster was identical, so every current page
+received fresh color and grayscale contact-sheet inspection. A strict pypdf pass
 inventories every annotation and action. Its
 owner-aware whitelist admits only the exact catalog first-page `/Fit` `GoTo`, registered-outline
 named `GoTo` actions, and declared annotation-owned HTTPS `URI` or named internal `GoTo` links. It
 rejects relative/file URIs, undeclared web targets, additional or active actions, embedded/external
 file specifications, noncanonical annotation flags, and any action under an undeclared owner. A
-digest reseal alone cannot promote Programs A--E because the 72-control hostile suite also
+digest reseal alone cannot promote Programs A--E because the 81-control hostile suite also
 mutates the complete-target label, scoped-result boundary, every Program A--E status, the 108/166
-taxonomy, visual-receipt identity/scope/status, PDF profile, page count, links, actions, file
-specifications, and checker predicates. Its
+taxonomy, strict machine-status value types, visual-receipt identity/scope/status, PDF profile,
+page count, links, actions, file specifications, and checker predicates. Deliberate source-link
+mutants reseal the source and receipt identities before testing the link predicate, so a stale
+byte binding cannot supply false causal credit. Its
 `--cross-toolchain` route always refuses with status 2: no text, geometry, or visual similarity is
 accepted as an unreviewed equivalence relation.
 

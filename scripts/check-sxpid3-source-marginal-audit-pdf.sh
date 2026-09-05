@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Method catalog: validation.sxpid3-source-marginal-bounded-audit
 set -euo pipefail
+unset BASH_ENV ENV
 
 ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 BUILDER="$ROOT/scripts/build-sxpid3-source-marginal-audit-pdf.sh"
@@ -20,6 +21,32 @@ for command_name in awk bash cat cmp diff grep mktemp pdffonts pdfinfo pdftotext
     exit 2
   }
 done
+if [[ "${BASH:-}" != /* || ! -f "$BASH" || -L "$BASH" || ! -x "$BASH" ]]; then
+  echo "$CHECK_NAME: current Bash executable is not a direct executable file" >&2
+  exit 2
+fi
+
+capture_directory_identity() {
+  python3 -I -S -B - "$1" <<'PY'
+import os
+import stat
+import sys
+
+try:
+    metadata = os.lstat(sys.argv[1])
+except OSError:
+    raise SystemExit(1)
+if metadata.st_uid != os.geteuid() or not stat.S_ISDIR(metadata.st_mode):
+    raise SystemExit(1)
+print(f"{metadata.st_dev}:{metadata.st_ino}")
+PY
+}
+
+directory_has_identity() {
+  local observed
+  observed="$(capture_directory_identity "$1")" || return 1
+  [[ "$observed" == "$2" ]]
+}
 for path in \
     "$BUILDER" \
     "$BUILDER_SELF_TEST" \
@@ -43,7 +70,8 @@ python3 -I -B -c 'import pypdf' >/dev/null 2>&1 || {
 }
 python3 -I -B "$FIGURE_ASSET_CHECK"
 python3 -O -I -B "$FIGURE_ASSET_CHECK"
-bash --noprofile --norc "$BUILDER_SELF_TEST"
+/usr/bin/env -i PATH="$PATH" HOME="${HOME:-/tmp}" TMPDIR="${TMPDIR:-/tmp}" \
+  LC_ALL=C LANG=C TZ=UTC "$BASH" --noprofile --norc "$BUILDER_SELF_TEST"
 
 TMP_BASE_INPUT="${TMPDIR:-/tmp}"
 if ! TMP_BASE="$(CDPATH='' cd -- "$TMP_BASE_INPUT" && pwd -P)"; then
@@ -54,17 +82,44 @@ if [[ "$TMP_BASE" == "/" ]]; then
   echo "$CHECK_NAME: refusing filesystem root as temporary root" >&2
   exit 2
 fi
-BUILD_ROOT="$(mktemp -d "$TMP_BASE/pid-rs-sxpid3-audit-check.XXXXXX")"
+BUILD_ROOT_LEXICAL="$(mktemp -d "$TMP_BASE/pid-rs-sxpid3-audit-check.XXXXXX")"
+if [[ ! -d "$BUILD_ROOT_LEXICAL" || -L "$BUILD_ROOT_LEXICAL" ]] \
+    || ! BUILD_ROOT="$(CDPATH='' cd -- "$BUILD_ROOT_LEXICAL" && pwd -P)"; then
+  echo "$CHECK_NAME: mktemp did not create a direct directory" >&2
+  exit 2
+fi
+BUILD_ROOT_NAME="${BUILD_ROOT##*/}"
+if [[ "$BUILD_ROOT_LEXICAL" != "$BUILD_ROOT" \
+    || "$BUILD_ROOT" != "$TMP_BASE/$BUILD_ROOT_NAME" \
+    || ! "$BUILD_ROOT_NAME" =~ ^pid-rs-sxpid3-audit-check\.[[:alnum:]]+$ ]]; then
+  echo "$CHECK_NAME: mktemp returned an unexpected build directory" >&2
+  exit 2
+fi
+if ! BUILD_ROOT_ID="$(capture_directory_identity "$BUILD_ROOT")"; then
+  echo "$CHECK_NAME: mktemp build directory lacks fresh-object custody" >&2
+  exit 2
+fi
 cleanup() {
-  case "$BUILD_ROOT" in
-    "$TMP_BASE"/pid-rs-sxpid3-audit-check.*) rm -rf -- "$BUILD_ROOT" ;;
-    *) echo "$CHECK_NAME: refusing unexpected cleanup path: $BUILD_ROOT" >&2 ;;
-  esac
+  local status=$?
+  if [[ "$BUILD_ROOT" == "$TMP_BASE/$BUILD_ROOT_NAME" \
+      && "$BUILD_ROOT_NAME" =~ ^pid-rs-sxpid3-audit-check\.[[:alnum:]]+$ \
+      && -d "$BUILD_ROOT" && ! -L "$BUILD_ROOT" ]] \
+      && directory_has_identity "$BUILD_ROOT" "$BUILD_ROOT_ID"; then
+    rm -rf -- "$BUILD_ROOT"
+  elif [[ -e "$BUILD_ROOT" || -L "$BUILD_ROOT" ]]; then
+    echo "$CHECK_NAME: refusing unexpected cleanup path: $BUILD_ROOT" >&2
+    status=1
+  fi
+  return "$status"
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 BUILT="$BUILD_ROOT/built.pdf"
-PID_RS_PDF_TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$MODE" "$BUILT" \
+/usr/bin/env -i PATH="$PATH" HOME="${HOME:-$BUILD_ROOT}" TMPDIR="${TMPDIR:-/tmp}" \
+  PID_RS_PDF_TMPDIR="$BUILD_ROOT" LC_ALL=C LANG=C TZ=UTC \
+  "$BASH" --noprofile --norc "$BUILDER" "$MODE" "$BUILT" \
   >"$BUILD_ROOT/build.stdout" 2>"$BUILD_ROOT/build.stderr" || {
     cat "$BUILD_ROOT/build.stdout" "$BUILD_ROOT/build.stderr" >&2
     exit 1
@@ -105,7 +160,9 @@ validate_pdf() {
   for sentinel in 'fresh owner-controlled HTTPS' 'separate exact compatibility edge' \
       '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
       'complete certificate' 'Averaged informative component' \
-      'Averaged misinformative component' 'Explicit nonclaims and negative results'; do
+      'Averaged misinformative component' 'compatibility-literal rejections' \
+      'exact type, shape, and value' 'disposable-checkout integrity failure' \
+      'Explicit nonclaims and negative results'; do
     grep -Fiq -- "$sentinel" "$text" || {
       echo "$CHECK_NAME: $label lacks rendered sentinel: $sentinel" >&2
       exit 1
@@ -201,12 +258,15 @@ https://doi.org/10.1103/PhysRevE.103.032149
 https://doi.org/10.1103/PhysRevE.110.014115
 https://doi.org/10.3390/e16042161
 https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
+https://github.com/sepahead/pid-rs/blob/main/audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md
 https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-bounded-keyed-scalar-audit-expressions-receipt-v1-2026-08-26.json
 https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json
+https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md
 https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
 https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-sxpid3-informative-invariance/PidSxPid3InformativeInvariance.lean
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md
+https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md
 https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md
 https://oeis.org/A000372
 EOF

@@ -261,9 +261,9 @@
     }
   },
   "document": {
-    "bytes": 33942,
+    "bytes": 35510,
     "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
-    "sha256": "b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb"
+    "sha256": "cc2f228fec62603da61e5fd3f75550a727978aeda20225abe80b5d9be2fdce0d"
   },
   "format": "pid-rs/sxpid3-mgw-v5-program-a-semantic-bridge/v4",
   "primary_source": {
@@ -324,8 +324,22 @@
     "s1_source_correspondence": "owner_controlled_source_review_recorded_independent_external_review_open"
   },
   "validation": {
-    "canonical_record_policy": "utf8_lf_canonical_pretty_json_duplicate_keys_rejected_exact_bytes_bound",
+    "canonical_record_policy": "utf8_lf_canonical_pretty_json_duplicate_keys_rejected_exact_bytes_and_json_value_types_bound",
     "coordinated_reseal_boundary": "deliberately_accepted_in_isolated_negative_control_no_semantic_or_review_credit",
+    "current_false_green_corrections": [
+      {
+        "current_control": "recursive_exact_json_type_and_value_comparison_with_boolean_zero_and_float_integer_hostile_tests",
+        "id": "V4-FG-STATUS-TYPE-COERCION",
+        "prior_behavior": "python_value_equality_admitted_false_for_integer_zero_and_5.0_for_integer_five_after_record_digest_reseal",
+        "scope": "verification_chain_defect_not_a_change_to_the_reconstructed_mathematics_or_open_program_status"
+      },
+      {
+        "current_control": "recursive_exact_python_literal_type_and_value_comparison_with_boolean_integer_and_float_integer_hostile_tests",
+        "id": "V4-FG-PYTHON-LITERAL-TYPE-COERCION",
+        "prior_behavior": "python_value_equality_admitted_false_for_tuple_integer_zero_and_129.0_for_integer_129_after_compatibility_file_and_digest_reseal",
+        "scope": "verification_chain_defect_not_a_change_to_the_mathematical_registry_values_or_open_program_status"
+      }
+    ],
     "historical_false_green_coverage": [
       {
         "current_control": "alternate_record_argument_rejected_normal_and_optimized",
@@ -368,8 +382,9 @@
       "alternate_input_rejections": 4,
       "baseline_executions": 2,
       "compatibility_drift_rejections": 6,
+      "compatibility_reseal_rejections": 4,
       "document_drift_rejections": 2,
-      "record_reseal_rejections": 24,
+      "record_reseal_rejections": 28,
       "semantic_source_rejections": 12
     }
   }

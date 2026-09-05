@@ -195,10 +195,33 @@ rejects symbolic or nonregular bound files, duplicate JSON keys, noncanonical JS
 source/document/status registries, derived census drift, and both one-sided inverse errors.
 
 The self-test runs under normal and optimized Python. It executes two baseline controls, four
-alternate-input rejections, 24 coherently resealed record rejections, 12 semantic-source
-rejections, six frozen-compatibility-file drift rejections, and two plain document-drift
-rejections. It explicitly maps all seven identifiers in the inert v1/v2 false-green archive to
-current controls.
+alternate-input rejections, 28 coherently resealed record rejections, 12 semantic-source
+rejections, six frozen-compatibility-file drift rejections, four coherently resealed
+compatibility-literal rejections, and two plain document-drift rejections. It explicitly maps all
+seven identifiers in the
+[inert historical-checker archive](../../audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md)
+to current controls. That archive retains seven mutation recipes and fourteen mode-specific
+observations from two superseded checkers, is not executed by this gate, and earns zero closure
+credit. Four of the 28 record-rejection executions exercise two JSON type substitutions in both
+modes: Boolean `false` for integer `0`, and floating `5.0` for integer `5`. The four separately
+counted compatibility-reseal executions exercise Boolean `False` for an integer Möbius-tuple entry
+and floating `129.0` for integer census `129`, again in both modes.
+
+### Corrected v4 typed-equality false greens
+
+The pre-correction committed v4 checker at `ee93b97fc779191306e34efc02c5ff2c78bc4162`
+used ordinary Python equality both for decoded record objects and for parsed literals from frozen
+compatibility files. After coherent owner-controlled reseals, it accepted the two JSON status
+substitutions above and the two compatibility-literal substitutions because Python compares those
+type-distinct values as equal. The [retained failure record](failures/python-status-type-coercion.md)
+gives the exact old identities, reproductions, impact, and correction. The current checker requires
+recursive equality of type, shape, and value for all verdict-bearing record objects and all six
+parsed registry comparisons, not only the four discovered leaves. All four substitutions now fail
+causally in normal and optimized Python.
+
+This was a verification-chain defect. It did not change any source equation, finite reconstruction,
+scientific result, or open Program status. The pre-correction bytes remain Git-reachable negative
+evidence and must not be cited as proving exact typed record or registry equality.
 
 The self-test also requires two deliberately accepted coordinated-reseal diagnostics. In an
 isolated copy it changes correct mathematical prose, updates the prose binding in the record, and
@@ -231,7 +254,8 @@ refinement, retained streaming comparison, and independent final adjudication re
 > owner-controlled source map binds the relevant revision-5 equations and reconstructs the
 > OR-of-AND event kernel, complete 18-node antichain carrier, all 324 order entries, the exact
 > two-sided Möbius inverse, and all six source-label automorphisms from small definitions. Hostile
-> tests retain semantic counterexamples and all seven historical false-green checker classes. This
+> tests retain semantic counterexamples, all seven historical false-green checker classes, and two
+> corrected typed-equality controls. This
 > strengthens the shared-semantics basis of the separately reported bounded two-route audit; it is
 > not independent source review, a complete formal certificate, Rust refinement, or validation of
 > another PID. The prospective certificate remains proposed/open.
@@ -258,10 +282,10 @@ This decision does not establish:
 
 | Artifact | Bytes | SHA-256 |
 |---|---:|---|
-| `source-correspondence-v4.md` | 33,942 | `b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb` |
-| Semantic-bridge record v4 | 17,458 | `dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24` |
-| Production semantic checker v4 | 41,953 | `394361524372710179aea41f95f4ddf9559700082a80e02ac0d0a34fbe08ce4a` |
-| Hostile self-test v4 | 20,348 | `fadd73671fca24f7300c690d430db2f0caff893aa5b837698ba739f578749be8` |
+| `source-correspondence-v4.md` | 35,510 | `cc2f228fec62603da61e5fd3f75550a727978aeda20225abe80b5d9be2fdce0d` |
+| Semantic-bridge record v4 | 18,491 | `447094be207f4e5798ea602b7ee737baac8df8ec835ccc4d4f90c41514e5b7c1` |
+| Production semantic checker v4 | 45,107 | `e2fd33074973eb6f48881761690c258796dcb09cf4677bd6c39cd9bbd7f65a57` |
+| Hostile self-test v4 | 24,986 | `d51ba55d3d0c6434c096a199a2258bd270b49190f21b81f8d9eee6aeedddd1ba` |
 
 The self-test binds the production checker bytes. Later documentation or integration edits must not
 silently reinterpret these evidence identities. Repository hashes provide local custody only.

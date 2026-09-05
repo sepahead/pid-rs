@@ -997,10 +997,25 @@ all 324 zeta entries, and all 65 nonzero Möbius coefficients; it must also equa
 key registry and 129/65 lattice censuses. This detects silent registry drift. It is not logical
 independence, event-implementation comparison, bounded-audit execution, or Rust refinement.
 
-The hostile self-test explicitly covers all seven failure identifiers preserved in the inert
-historical v1/v2 checker archive. Under normal and optimized Python it executes two baselines, four
-alternate-input rejections, 24 coherently resealed record rejections, 12 semantic-source
-rejections, six frozen-compatibility-file drift rejections, and two document-drift rejections.
+The hostile self-test explicitly covers all seven failure identifiers preserved in the
+[inert historical-checker archive](audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md).
+That archive retains seven mutation recipes and fourteen mode-specific observations from two
+superseded checkers; it is not executed by the current gate and earns zero closure credit. Under
+normal and optimized Python, the current self-test executes two baselines, four alternate-input
+rejections, 28 coherently resealed record rejections, 12 semantic-source rejections, six frozen
+compatibility-file drift rejections, four coherently resealed compatibility-literal rejections,
+and two document-drift rejections. Four of the 28 record executions cover two exact JSON type
+substitutions in both modes: Boolean `false` for integer `0`, and floating `5.0` for integer `5`.
+The four separately counted compatibility-reseal executions cover Boolean `False` for an integer
+Möbius-tuple entry and floating `129.0` for integer census `129`, each in both modes. The
+pre-correction committed v4 checker accepted all four substitutions after coherent
+owner-controlled reseals because ordinary Python equality compares those type-distinct values as
+equal. The current checker compares all verdict-bearing record fields and all six parsed
+compatibility registries recursively by exact type, shape, and value. The exact pre-correction
+bytes, minimal reproductions, repair, and residual limits remain in the retained
+[type-coercion failure record](claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md).
+This was a verification-chain defect, not a change to the event semantics, finite reconstruction,
+or open Program status.
 
 It also requires two *accepted* coordinated-reseal negative controls. In an isolated copy, the
 test changes correct prose, updates its machine binding, and reseals both checker digest literals.
@@ -1110,6 +1125,11 @@ semantics and remain checked against exact fixtures in the domains for which agr
   interpretation of the paper.
 - The accepted coordinated-reseal negative control shows that local byte bindings cannot certify
   natural-language meaning.
+- A disposable-checkout integrity failure occurred during an exact PDF-check attempt. The
+  [incident record](audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md) preserves
+  the observations, bounded recovery, unresolved causal status, defensive hardening, and a clean
+  canary result; it neither changes the mathematics nor proves that an in-scope script caused the
+  damage.
 - The lexical Rust lane is not compiled numerical refinement.
 - Exact products classify sign and zero but do not enclose nonzero logarithm magnitude.
 - No binary64 correctness, portable logarithm, estimator calibration, confidence coverage,

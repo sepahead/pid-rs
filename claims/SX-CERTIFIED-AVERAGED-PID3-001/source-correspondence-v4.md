@@ -528,11 +528,22 @@ restriction closes the exact input-redirection weakness preserved in the histori
 false-green archive. The self-test operates on isolated copies with explicitly mutated canonical
 files; no production option is added merely to make mutation testing convenient.
 
+The checker compares every decoded record field and each of its six parsed compatibility-registry
+objects by exact type, shape, and value, recursively. This is necessary because ordinary Python
+equality makes `False == 0`, `5.0 == 5`, and the corresponding tuple and census substitutions
+compare equal. The pre-correction committed v4 checker accepted two coherently resealed JSON status
+substitutions and two coherently resealed Python-literal substitutions. The retained
+[typed-equality failure record](failures/python-status-type-coercion.md) gives the exact old
+identities, four minimal reproductions, impact, and repair. These were real verification-chain
+defects, not changes to the reconstructed mathematics or the open Program disposition.
+
 ### Historical false-green coverage and the remaining reseal boundary
 
-The archived negative-evidence packet names seven checker failures. The current self-test maps
-each historical identifier to a current control rather than treating a generic passing mutation
-suite as sufficient evidence:
+The [inert historical-checker disposition](../../audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md)
+retains seven mutation recipes and fourteen mode-specific observations from two superseded
+checkers. It is non-authoritative negative evidence, is not executed by the current gate, and earns
+zero closure credit. The current self-test maps each historical identifier to a current control
+rather than treating a generic passing mutation suite as sufficient evidence:
 
 | Historical identifier | Current control |
 |---|---|
@@ -545,9 +556,15 @@ suite as sufficient evidence:
 | `V2-FG-SCOPE-CUTS-VIA-SOURCE-RECORD` | Use the same canonical-record boundary mutation after the alternate route has been removed; semantic validation rejects it |
 
 The production checker uses a closed, duplicate-key-rejecting, canonical-JSON validator and an
-exact byte binding for this record. It does not claim a reusable schema for arbitrary untrusted
-certificate input. That parser and schema belong to the still-open Program C boundary; adding a
-decorative schema that no production gate consumes would not close it.
+exact byte binding for this record. It requires recursive equality of type, shape, and value for
+every expected record field and for the parsed carrier, zeta, and Möbius registries. The hostile
+suite rejects Boolean `false` substituted for JSON integer `0`, floating `5.0` substituted for JSON
+integer `5`, Boolean `False` substituted for integer `0` inside a Möbius tuple, and floating `129.0`
+substituted for integer census `129`. Each substitution is exercised in normal and optimized
+Python after the corresponding owner-controlled bindings are coherently resealed. It does not
+claim a reusable schema for arbitrary untrusted certificate input or arbitrary Python source. That
+parser and schema belong to the still-open Program C boundary; adding a decorative schema that no
+production gate consumes would not close it.
 
 One hostile test is intentionally a **passing negative control**. It changes `AND within a mask`
 to `OR within a mask` in the prose, updates the prose binding in the record, and updates both

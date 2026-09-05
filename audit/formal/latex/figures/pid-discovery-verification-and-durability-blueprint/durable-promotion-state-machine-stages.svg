@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="760" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc">
-  <title id="title">Durable promotion: seven ordered stages</title>
-  <desc id="desc">Seven numbered nodes direct work from discovery to freeze, classification, preservation, integration, verification, and retirement. A completion row states that retirement is permitted only after every durable-successor and recovery condition has passed.</desc>
+  <title id="title">Durable promotion: seven ordered stages and a post-removal completion check</title>
+  <desc id="desc">Seven numbered nodes direct work from discovery to freeze, classification, preservation, integration, verification, and bounded removal. Retirement becomes complete only after a post-removal inventory and successor-retrieval check pass.</desc>
   <defs>
     <pattern id="grain" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M2 5H8M12 14H18M5 18H9" stroke="#D2E0E2" stroke-width="1" opacity=".62"/></pattern>
     <pattern id="archive" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><path d="M0 0V16" stroke="#1F6968" stroke-width="3" opacity=".17"/></pattern>
@@ -22,8 +22,8 @@
   <rect width="1100" height="760" fill="#F7F3E9"/><rect width="1100" height="760" fill="url(#grain)"/>
   <g class="sans">
     <text x="65" y="66" class="kicker">FIGURE 3 - DURABLE PROMOTION</text>
-    <text x="65" y="112" class="title">Retirement is the final closure gate</text>
-    <text x="65" y="143" class="subtitle">Seven ordered stages protect unique research bytes before a branch or worktree is retired.</text>
+    <text x="65" y="112" class="title">Retirement ends after the post-removal check</text>
+    <text x="65" y="143" class="subtitle">Six stages establish removal eligibility; the seventh removes one lane and audits the result.</text>
     <path d="M176 292H922" stroke="#1F6968" stroke-width="5" marker-end="url(#arrow)"/>
     <g>
       <circle cx="150" cy="292" r="70" fill="#1F3F60"/><circle cx="150" cy="248" r="16" fill="#D2E0E2"/><text x="150" y="255" text-anchor="middle" class="number">1</text><text x="150" y="299" text-anchor="middle" class="step">Discover</text><text x="150" y="328" text-anchor="middle" class="hint">search and failures</text>
@@ -32,10 +32,10 @@
       <circle cx="525" cy="292" r="70" fill="#1F6968"/><circle cx="525" cy="248" r="16" fill="#D2E0E2"/><text x="525" y="255" text-anchor="middle" class="number">4</text><text x="525" y="299" text-anchor="middle" class="step">Preserve</text><text x="525" y="328" text-anchor="middle" class="hint">verified copy</text>
       <circle cx="650" cy="292" r="70" fill="#1F6968"/><circle cx="650" cy="248" r="16" fill="#D2E0E2"/><text x="650" y="255" text-anchor="middle" class="number">5</text><text x="650" y="299" text-anchor="middle" class="step">Integrate</text><text x="650" y="328" text-anchor="middle" class="hint">explicit paths</text>
       <circle cx="775" cy="292" r="70" fill="#1F6968"/><circle cx="775" cy="248" r="16" fill="#D2E0E2"/><text x="775" y="255" text-anchor="middle" class="number">6</text><text x="775" y="299" text-anchor="middle" class="step">Verify</text><text x="775" y="328" text-anchor="middle" class="hint">main and gates</text>
-      <circle cx="900" cy="292" r="70" fill="#743E37"/><circle cx="900" cy="248" r="16" fill="#F2DED9"/><text x="900" y="255" text-anchor="middle" class="number">7</text><text x="900" y="299" text-anchor="middle" class="step">Retire</text><text x="900" y="328" text-anchor="middle" class="hint">only after closure</text>
+      <circle cx="900" cy="292" r="70" fill="#743E37"/><circle cx="900" cy="248" r="16" fill="#F2DED9"/><text x="900" y="255" text-anchor="middle" class="number">7</text><text x="900" y="299" text-anchor="middle" class="step">Remove</text><text x="900" y="328" text-anchor="middle" class="hint">then inventory</text>
     </g>
     <rect x="65" y="420" width="970" height="190" rx="22" fill="#FFFFFF" stroke="#1F6968" stroke-width="3"/><rect x="65" y="420" width="970" height="190" rx="22" fill="url(#archive)"/>
-    <text x="100" y="468" class="body"><tspan x="100" dy="0">The order prevents a false cleanup story:</tspan><tspan x="100" dy="35">discover every variant; freeze writers; classify its scientific and custody role;</tspan><tspan x="100" dy="30">preserve unique bytes; integrate exact paths; verify the relevant gates and remote state;</tspan><tspan x="100" dy="30">then retire only when recovery and a post-removal inventory pass.</tspan></text>
+    <text x="100" y="468" class="body"><tspan x="100" dy="0">The order prevents a false cleanup story:</tspan><tspan x="100" dy="35">discover every variant; freeze writers; classify its scientific and custody role;</tspan><tspan x="100" dy="30">preserve unique bytes; integrate exact paths; verify the destination-specific gates;</tspan><tspan x="100" dy="30">remove one lane; then inventory and retrieve before declaring retirement complete.</tspan></text>
     <rect x="65" y="650" width="970" height="52" rx="16" fill="#F2DED9" stroke="#743E37" stroke-width="2"/><rect x="65" y="650" width="970" height="52" rx="16" fill="url(#retire)"/>
     <text x="550" y="683" text-anchor="middle" class="stop">NO DESTRUCTIVE RESET - NO PLAIN FORCE PUSH - NO GC BEFORE THIS GATE</text>
     <text x="65" y="735" class="small">Numbered stages and patterned fills supplement the palette; no scientific or accessibility assurance follows from this diagram.</text>

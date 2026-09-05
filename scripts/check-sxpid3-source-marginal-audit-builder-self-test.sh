@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Method catalog: validation.sxpid3-source-marginal-bounded-audit
 set -euo pipefail
+unset BASH_ENV ENV
 
 ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 BUILDER="$ROOT/scripts/build-sxpid3-source-marginal-audit-pdf.sh"
@@ -9,7 +10,7 @@ ID_VARIANCE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-id-varianc
 CANONICAL_PDF="$ROOT/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf"
 CHECK_NAME="SxPID3 source-marginal audit builder self-test"
 
-for command_name in bash cat chmod cmp cp find grep ln mkdir mkfifo mktemp python3 rm shasum; do
+for command_name in bash cat chmod cmp cp env find grep ln mkdir mkfifo mktemp python3 rm rmdir shasum; do
   command -v "$command_name" >/dev/null 2>&1 || {
     echo "$CHECK_NAME failed: missing command: $command_name" >&2
     exit 2
@@ -25,16 +26,76 @@ REAL_CP="$(command -v cp)"
 REAL_CMP="$(command -v cmp)"
 REAL_MKTEMP="$(command -v mktemp)"
 REAL_PYTHON="$(command -v python3)"
+REAL_BASH="${BASH:-}"
+if [[ "$REAL_BASH" != /* || ! -f "$REAL_BASH" || -L "$REAL_BASH" || ! -x "$REAL_BASH" ]]; then
+  echo "$CHECK_NAME failed: current Bash executable is not a direct executable file" >&2
+  exit 2
+fi
 
-TEST_ROOT_LEXICAL="$(mktemp -d "${TMPDIR:-/tmp}/pid-rs-sxpid3-audit-builder-self-test.XXXXXX")"
-TEST_ROOT="$(CDPATH='' cd -- "$TEST_ROOT_LEXICAL" && pwd -P)"
-cleanup() {
-  case "$TEST_ROOT" in
-    */pid-rs-sxpid3-audit-builder-self-test.*) rm -rf -- "$TEST_ROOT" ;;
-    *) echo "$CHECK_NAME failed: refusing unexpected cleanup path: $TEST_ROOT" >&2 ;;
-  esac
+capture_directory_identity() {
+  "$REAL_PYTHON" -I -S -B - "$1" <<'PY'
+import os
+import stat
+import sys
+
+try:
+    metadata = os.lstat(sys.argv[1])
+except OSError:
+    raise SystemExit(1)
+if metadata.st_uid != os.geteuid() or not stat.S_ISDIR(metadata.st_mode):
+    raise SystemExit(1)
+print(f"{metadata.st_dev}:{metadata.st_ino}")
+PY
 }
-trap cleanup EXIT INT TERM
+
+directory_has_identity() {
+  local observed
+  observed="$(capture_directory_identity "$1")" || return 1
+  [[ "$observed" == "$2" ]]
+}
+
+TEST_TMP_INPUT="${TMPDIR:-/tmp}"
+if ! TEST_TMP_BASE="$(CDPATH='' cd -- "$TEST_TMP_INPUT" && pwd -P)"; then
+  echo "$CHECK_NAME failed: cannot canonicalize temporary root: $TEST_TMP_INPUT" >&2
+  exit 2
+fi
+if [[ "$TEST_TMP_BASE" == "/" ]]; then
+  echo "$CHECK_NAME failed: refusing filesystem root as temporary root" >&2
+  exit 2
+fi
+TEST_ROOT_LEXICAL="$(mktemp -d "$TEST_TMP_BASE/pid-rs-sxpid3-audit-builder-self-test.XXXXXX")"
+if [[ ! -d "$TEST_ROOT_LEXICAL" || -L "$TEST_ROOT_LEXICAL" ]] \
+    || ! TEST_ROOT="$(CDPATH='' cd -- "$TEST_ROOT_LEXICAL" && pwd -P)"; then
+  echo "$CHECK_NAME failed: mktemp did not create a direct directory" >&2
+  exit 2
+fi
+TEST_ROOT_NAME="${TEST_ROOT##*/}"
+if [[ "$TEST_ROOT_LEXICAL" != "$TEST_ROOT" \
+    || "$TEST_ROOT" != "$TEST_TMP_BASE/$TEST_ROOT_NAME" \
+    || ! "$TEST_ROOT_NAME" =~ ^pid-rs-sxpid3-audit-builder-self-test\.[[:alnum:]]+$ ]]; then
+  echo "$CHECK_NAME failed: mktemp returned an unexpected test directory" >&2
+  exit 2
+fi
+if ! TEST_ROOT_ID="$(capture_directory_identity "$TEST_ROOT")"; then
+  echo "$CHECK_NAME failed: mktemp test directory lacks fresh-object custody" >&2
+  exit 2
+fi
+cleanup() {
+  local status=$?
+  if [[ "$TEST_ROOT" == "$TEST_TMP_BASE/$TEST_ROOT_NAME" \
+      && "$TEST_ROOT_NAME" =~ ^pid-rs-sxpid3-audit-builder-self-test\.[[:alnum:]]+$ \
+      && -d "$TEST_ROOT" && ! -L "$TEST_ROOT" ]] \
+      && directory_has_identity "$TEST_ROOT" "$TEST_ROOT_ID"; then
+    rm -rf -- "$TEST_ROOT"
+  elif [[ -e "$TEST_ROOT" || -L "$TEST_ROOT" ]]; then
+    echo "$CHECK_NAME failed: refusing unexpected cleanup path: $TEST_ROOT" >&2
+    status=1
+  fi
+  return "$status"
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 FIXTURE_REPO="$TEST_ROOT/repository"
 FIXTURE_SCRIPT="$FIXTURE_REPO/scripts/build-sxpid3-source-marginal-audit-pdf.sh"
@@ -45,8 +106,9 @@ BUILD_TMP="$TEST_ROOT/build-tmp"
 FAKE_BIN="$TEST_ROOT/fake-bin"
 FAKE_FONTS="$TEST_ROOT/fonts"
 LOG_DIRECTORY="$TEST_ROOT/logs"
+LAUNCH_HOME="$TEST_ROOT/launch-home"
 mkdir -p "$FIXTURE_REPO/scripts" "$FIXTURE_FIGURES" "$FIXTURE_LATEX" \
-  "$OUTPUT_DIRECTORY" "$BUILD_TMP" "$FAKE_BIN" "$FAKE_FONTS" "$LOG_DIRECTORY"
+  "$OUTPUT_DIRECTORY" "$BUILD_TMP" "$FAKE_BIN" "$FAKE_FONTS" "$LOG_DIRECTORY" "$LAUNCH_HOME"
 
 cp "$BUILDER" "$FIXTURE_SCRIPT"
 cp "$ID_VARIANCE_CHECK" \
@@ -150,6 +212,18 @@ cat >"$FAKE_BIN/mktemp" <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
 template="${!#}"
+if [[ -n "${PID_RS_FIXTURE_MKTEMP_ESCAPE:-}" && "$1" == "-d" ]]; then
+  escaped="${PID_RS_FIXTURE_ROOT:?}/mktemp-escaped-directory"
+  mkdir "$escaped"
+  printf '%s\n' "$escaped"
+  exit 0
+fi
+if [[ -n "${PID_RS_FIXTURE_MKTEMP_PUBLICATION_ALIAS_SOURCE:-}" && "$1" != "-d" ]]; then
+  alias_path="${template%XXXXXX}HARD01"
+  ln "${PID_RS_FIXTURE_MKTEMP_PUBLICATION_ALIAS_SOURCE:?}" "$alias_path"
+  printf '%s\n' "$alias_path"
+  exit 0
+fi
 case "$template" in
   *X) ;;
   *)
@@ -255,6 +329,9 @@ printf '%s\n' \
   '20,348 tables' \
   '2,197,584' \
   'complete certificate' \
+  'compatibility-literal rejections' \
+  'exact type, shape, and value' \
+  'disposable-checkout integrity failure' \
   'Explicit nonclaims and negative results' >"$output"
 if [[ -n "${PID_RS_MUTATE_SOURCE:-}" ]]; then
   printf '%s\n' 'hostile source mutation' >>"$PID_RS_MUTATE_SOURCE"
@@ -311,44 +388,58 @@ if grep -Fq 'font-alpha-equivalence' "$PDF_CHECK" \
   exit 1
 fi
 STATIC_GUARDS=$((STATIC_GUARDS + 1))
+clean_boundary_count="$(grep -Fc '/usr/bin/env -i PATH="$PATH"' "$PDF_CHECK" || true)"
+if [[ "$clean_boundary_count" -ne 2 ]]; then
+  echo "$CHECK_NAME failed: PDF gate must clean the environment for both nested Bash launches" >&2
+  exit 1
+fi
+STATIC_GUARDS=$((STATIC_GUARDS + 1))
 
 run_builder() {
   local output="$1" stdout="$2" stderr="$3"
   shift 3
-  env PATH="$TEST_PATH" PID_RS_FIXTURE_ROOT="$TEST_ROOT" \
+  /usr/bin/env -i PATH="$TEST_PATH" HOME="$LAUNCH_HOME" TMPDIR="$TEST_ROOT" \
+    PID_RS_FIXTURE_ROOT="$TEST_ROOT" \
     PID_RS_FIXTURE_FONTS="$FAKE_FONTS" \
     PID_RS_PDF_TMPDIR="$BUILD_TMP" PID_RS_REAL_CP="$REAL_CP" \
     PID_RS_REAL_CMP="$REAL_CMP" PID_RS_REAL_MKTEMP="$REAL_MKTEMP" \
-    PID_RS_REAL_PYTHON="$REAL_PYTHON" "$@" \
-    bash --noprofile --norc "$FIXTURE_SCRIPT" "$output" >"$stdout" 2>"$stderr"
+    PID_RS_REAL_PYTHON="$REAL_PYTHON" "$@" BASH_ENV=/dev/null ENV=/dev/null \
+    "$REAL_BASH" --noprofile --norc "$FIXTURE_SCRIPT" "$output" >"$stdout" 2>"$stderr"
 }
 
 run_builder_mode() {
   local mode="$1" output="$2" stdout="$3" stderr="$4"
   shift 4
-  env PATH="$TEST_PATH" PID_RS_FIXTURE_ROOT="$TEST_ROOT" \
+  /usr/bin/env -i PATH="$TEST_PATH" HOME="$LAUNCH_HOME" TMPDIR="$TEST_ROOT" \
+    PID_RS_FIXTURE_ROOT="$TEST_ROOT" \
     PID_RS_FIXTURE_FONTS="$FAKE_FONTS" \
     PID_RS_PDF_TMPDIR="$BUILD_TMP" PID_RS_REAL_CP="$REAL_CP" \
     PID_RS_REAL_CMP="$REAL_CMP" PID_RS_REAL_MKTEMP="$REAL_MKTEMP" \
-    PID_RS_REAL_PYTHON="$REAL_PYTHON" "$@" \
-    bash --noprofile --norc "$FIXTURE_SCRIPT" "$mode" "$output" >"$stdout" 2>"$stderr"
+    PID_RS_REAL_PYTHON="$REAL_PYTHON" "$@" BASH_ENV=/dev/null ENV=/dev/null \
+    "$REAL_BASH" --noprofile --norc "$FIXTURE_SCRIPT" "$mode" "$output" >"$stdout" 2>"$stderr"
 }
 
 run_builder_single_argument() {
   local argument="$1" stdout="$2" stderr="$3"
-  env PATH="$TEST_PATH" PID_RS_FIXTURE_ROOT="$TEST_ROOT" \
+  /usr/bin/env -i PATH="$TEST_PATH" HOME="$LAUNCH_HOME" TMPDIR="$TEST_ROOT" \
+    PID_RS_FIXTURE_ROOT="$TEST_ROOT" \
     PID_RS_FIXTURE_FONTS="$FAKE_FONTS" \
     PID_RS_PDF_TMPDIR="$BUILD_TMP" PID_RS_REAL_CP="$REAL_CP" \
     PID_RS_REAL_CMP="$REAL_CMP" PID_RS_REAL_MKTEMP="$REAL_MKTEMP" \
-    PID_RS_REAL_PYTHON="$REAL_PYTHON" \
-    bash --noprofile --norc "$FIXTURE_SCRIPT" "$argument" >"$stdout" 2>"$stderr"
+    PID_RS_REAL_PYTHON="$REAL_PYTHON" BASH_ENV=/dev/null ENV=/dev/null \
+    "$REAL_BASH" --noprofile --norc "$FIXTURE_SCRIPT" "$argument" >"$stdout" 2>"$stderr"
 }
 
-require_no_publication_residue() {
-  local label="$1" residue
+require_no_temporary_residue() {
+  local label="$1" residue build_residue
   residue="$(find "$OUTPUT_DIRECTORY" -maxdepth 1 -name '.sxpid3-audit.pdf.*' -print -quit)"
   if [[ -n "$residue" ]]; then
     echo "$CHECK_NAME failed: temporary publication residue after $label: $residue" >&2
+    exit 1
+  fi
+  build_residue="$(find "$BUILD_TMP" -maxdepth 1 -name 'pid-rs-sxpid3-audit-pdf.*' -print -quit)"
+  if [[ -n "$build_residue" ]]; then
+    echo "$CHECK_NAME failed: temporary build-root residue after $label: $build_residue" >&2
     exit 1
   fi
 }
@@ -371,7 +462,7 @@ require_success() {
     echo "$CHECK_NAME failed: accepted control lacks success record: $label" >&2
     exit 1
   }
-  require_no_publication_residue "$label"
+  require_no_temporary_residue "$label"
   CONTROLS=$((CONTROLS + 1))
 }
 
@@ -388,7 +479,7 @@ require_failure() {
     echo "$CHECK_NAME failed: hostile case had the wrong diagnostic: $label" >&2
     exit 1
   fi
-  require_no_publication_residue "$label"
+  require_no_temporary_residue "$label"
   HOSTILES=$((HOSTILES + 1))
 }
 
@@ -410,7 +501,7 @@ require_success_mode() {
     echo "$CHECK_NAME failed: accepted mode control lacks success record: $label" >&2
     exit 1
   }
-  require_no_publication_residue "$label"
+  require_no_temporary_residue "$label"
   CONTROLS=$((CONTROLS + 1))
 }
 
@@ -427,7 +518,7 @@ require_failure_mode() {
     echo "$CHECK_NAME failed: hostile mode case had the wrong diagnostic: $label" >&2
     exit 1
   fi
-  require_no_publication_residue "$label"
+  require_no_temporary_residue "$label"
   HOSTILES=$((HOSTILES + 1))
 }
 
@@ -437,6 +528,31 @@ printf '%s\n' 'stale regular output' >"$OUTPUT_DIRECTORY/accepted-existing.pdf"
 require_success accepted-existing "$OUTPUT_DIRECTORY/accepted-existing.pdf"
 require_success_mode --exact explicit-exact "$OUTPUT_DIRECTORY/accepted-explicit-exact.pdf"
 require_success_mode --cross-toolchain cross-equal "$OUTPUT_DIRECTORY/accepted-cross-equal.pdf"
+BASH_ENV_MARKER="$TEST_ROOT/bash-env-was-sourced"
+BASH_ENV_PAYLOAD="$TEST_ROOT/hostile-bash-env.sh"
+printf ': >%q\n' "$BASH_ENV_MARKER" >"$BASH_ENV_PAYLOAD"
+require_success isolated-nested-bash-env "$OUTPUT_DIRECTORY/accepted-isolated-bash-env.pdf" \
+  env BASH_ENV="$BASH_ENV_PAYLOAD" ENV="$BASH_ENV_PAYLOAD"
+if [[ -e "$BASH_ENV_MARKER" || -L "$BASH_ENV_MARKER" ]]; then
+  echo "$CHECK_NAME failed: nested Bash sourced the hostile BASH_ENV payload" >&2
+  exit 1
+fi
+EXPORTED_FUNCTION_MARKER="$TEST_ROOT/exported-function-was-invoked"
+PID_RS_EXPORTED_FUNCTION_MARKER="$EXPORTED_FUNCTION_MARKER"
+export PID_RS_EXPORTED_FUNCTION_MARKER
+mktemp() {
+  : >"$PID_RS_EXPORTED_FUNCTION_MARKER"
+  return 97
+}
+export -f mktemp
+require_success isolated-exported-function \
+  "$OUTPUT_DIRECTORY/accepted-isolated-exported-function.pdf"
+unset -f mktemp
+unset PID_RS_EXPORTED_FUNCTION_MARKER
+if [[ -e "$EXPORTED_FUNCTION_MARKER" || -L "$EXPORTED_FUNCTION_MARKER" ]]; then
+  echo "$CHECK_NAME failed: nested Bash imported an exported function" >&2
+  exit 1
+fi
 require_success trailing-slash-temp "$OUTPUT_DIRECTORY/accepted-trailing-temp.pdf" \
   env PID_RS_PDF_TMPDIR="$BUILD_TMP/"
 ln -s "$BUILD_TMP" "$TEST_ROOT/build-tmp-link"
@@ -448,6 +564,52 @@ require_failure absent-temp-root 'cannot canonicalize temporary root' \
   env PID_RS_PDF_TMPDIR="$TEST_ROOT/absent-build-tmp"
 require_failure root-temp-root 'refusing filesystem root as temporary root' \
   "$OUTPUT_DIRECTORY/root-temp-root.pdf" env PID_RS_PDF_TMPDIR=/
+require_failure escaped-mktemp-build-root 'mktemp returned an unexpected build directory' \
+  "$OUTPUT_DIRECTORY/escaped-mktemp-build-root.pdf" \
+  env PID_RS_FIXTURE_MKTEMP_ESCAPE=1
+if [[ ! -d "$TEST_ROOT/mktemp-escaped-directory" \
+    || -L "$TEST_ROOT/mktemp-escaped-directory" ]]; then
+  echo "$CHECK_NAME failed: escaped-mktemp fixture did not retain its refused directory" >&2
+  exit 1
+fi
+rmdir "$TEST_ROOT/mktemp-escaped-directory"
+
+PUBLICATION_ALIAS_VICTIM="$TEST_ROOT/publication-alias-victim"
+printf '%s\n' 'must remain unchanged' >"$PUBLICATION_ALIAS_VICTIM"
+PUBLICATION_ALIAS_VICTIM_DIGEST="$(shasum -a 256 "$PUBLICATION_ALIAS_VICTIM")"
+PUBLICATION_ALIAS_PATH="$OUTPUT_DIRECTORY/.sxpid3-audit.pdf.HARD01"
+publication_alias_stdout="$LOG_DIRECTORY/publication-temp-hardlink.stdout"
+publication_alias_stderr="$LOG_DIRECTORY/publication-temp-hardlink.stderr"
+publication_alias_output="$OUTPUT_DIRECTORY/publication-temp-hardlink-output.pdf"
+if run_builder "$publication_alias_output" "$publication_alias_stdout" \
+    "$publication_alias_stderr" env \
+    PID_RS_FIXTURE_MKTEMP_PUBLICATION_ALIAS_SOURCE="$PUBLICATION_ALIAS_VICTIM"; then
+  echo "$CHECK_NAME failed: publication-temporary hard-link fixture passed" >&2
+  exit 1
+fi
+grep -Fq 'publication temporary is not a fresh owned single-link file' \
+  "$publication_alias_stderr" || {
+    cat "$publication_alias_stdout" "$publication_alias_stderr" >&2
+    echo "$CHECK_NAME failed: publication-temporary hard-link fixture had the wrong diagnostic" >&2
+    exit 1
+  }
+if [[ ! -f "$PUBLICATION_ALIAS_PATH" || -L "$PUBLICATION_ALIAS_PATH" \
+    || ! "$PUBLICATION_ALIAS_PATH" -ef "$PUBLICATION_ALIAS_VICTIM" ]]; then
+  echo "$CHECK_NAME failed: refused publication hard link was not retained for adjudication" >&2
+  exit 1
+fi
+if [[ "$(shasum -a 256 "$PUBLICATION_ALIAS_VICTIM")" \
+    != "$PUBLICATION_ALIAS_VICTIM_DIGEST" ]]; then
+  echo "$CHECK_NAME failed: publication-temporary hard link changed its victim" >&2
+  exit 1
+fi
+if [[ -e "$publication_alias_output" || -L "$publication_alias_output" ]]; then
+  echo "$CHECK_NAME failed: publication-temporary hard-link fixture published an output" >&2
+  exit 1
+fi
+rm -f -- "$PUBLICATION_ALIAS_PATH"
+require_no_temporary_residue publication-temp-hardlink
+HOSTILES=$((HOSTILES + 1))
 
 missing_cross_stdout="$LOG_DIRECTORY/cross-missing-output.stdout"
 missing_cross_stderr="$LOG_DIRECTORY/cross-missing-output.stderr"

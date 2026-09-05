@@ -1,14 +1,72 @@
 # AGENTS.md
 
-Guidance for AI coding agents (and humans) working in **pid-rs**. Tool-agnostic; Claude Code also
-reads `CLAUDE.md`, which imports this file.
+Operational instructions for **pid-rs**. `CLAUDE.md` imports this file. Start with the session
+handoff, then read this guide in full before you change the designated integration checkout.
 
-This file is the operational guide (policy, commands, conventions, code map). For the *scientific*
-picture — what PID is, which estimator does what, the references, and the caveats — read
-[`README.md`](README.md) first; per-crate docs live in each `crates/*/README.md`.
+## Start or resume a session
+
+1. Read [SESSION_HANDOFF.md](SESSION_HANDOFF.md) and the ignored `.local/SESSION_HANDOFF.md`, when
+   present. Find the current integration checkout, recovery copies, and unfinished work. Verify
+   those locations before use. Machine-specific paths locate evidence; they do not establish it.
+2. Observe the actual root, branch, HEAD, index, staged and unstaged changes, untracked files,
+   worktrees, remote refs, and active writers. Preserve existing bytes before writing. A branch
+   name, dated ledger, old plan, or previous percentage does not establish current progress.
+3. Read the integration checkout in this order: README; mathematical results guide; method catalog
+   and current claim decisions; mathematical workflow; discovery and durability blueprint; formal
+   baseline and scripts guide; then the exact unfinished-work queue. Use the entry points below.
+   Read the definitions, assumptions, proofs, and failure records for the work you select.
+4. Before each important decision, compare at least ten materially distinct routes. Include no
+   action and the simplest applicable non-PID route. State each route's assumptions, failure
+   conditions, and required evidence. Record why you select or reject it and what could change
+   that decision. Cosmetic variants do not count as separate routes.
+5. Obtain independent-first written council critiques before members see each other's conclusions.
+   Apply the required scientific and publication lenses below. Inspect the exact evidence yourself;
+   record shared dependencies and retain dissent. Agreement is not proof or independent review.
+6. Define one coherent milestone with a bounded write scope and explicit completion evidence.
+   Freeze any required claim and judge packet before candidate work. Use gate modes that match the
+   current release and claim state. Historical commands do not create current work items.
+7. Complete the milestone, run its applicable checks, and reconcile code, proofs, claims, and
+   publications. Make a small professional unsigned commit and push under the established
+   authorization. Verify the remote object and required hosted checks at that exact commit. Move
+   accepted work to main only through the preservation and integration procedure below.
+8. Update the handoff with completed obligations, exact evidence, remaining work, and storage
+   locations before a context reset. Do not mark the whole program complete when one milestone ends.
+
+### Where to read next
+
+| Need | Entry point | What governs the work |
+|---|---|---|
+| Project overview and use | [README.md](README.md) | Reading map, API boundaries, examples, and scientific cautions |
+| Mathematical results | [MATHEMATICAL_RESULTS_GUIDE.md](MATHEMATICAL_RESULTS_GUIDE.md) | Navigation to exact statements and proofs; claim decisions retain their authority |
+| Method identity and availability | [method-catalog.json](method-catalog.json), [METHODS.md](METHODS.md), and the current claim decision | Defining source, estimand, implementation status, assumptions, and accepted evidence |
+| Mathematical workflow | [MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md) | Claim packets, proof routes, falsification, councils, and publication procedure |
+| Discovery and preservation | [PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) | Source-transfer review and proposed assurance design; it does not close claims |
+| Formal evidence and checks | [assurance registry](audit/evidence/assurance-registry.json), [formal baseline](audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md), [scripts guide](scripts/README.md) | Exact theorem, toolchain, execution, and custody contracts |
+| Unfinished work and retirement | [SESSION_HANDOFF.md](SESSION_HANDOFF.md), then the current claim and evidence indexes it names | Current obligations; re-observe refs and bytes before integration or deletion |
+| Applications and alternatives | [ecosystem matrix](ECOSYSTEM_CAPABILITIES.md), [sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) | Consumer assumptions, simpler comparators, and qualification gaps |
+
+### Handoff and preservation rules
+
+Use repository-relative links in public documents. Keep machine-specific roots, process handles,
+private locators, and recovery manifests in ignored local records or the appropriate restricted
+store. Preserve permitted working bytes and Git objects outside temporary directories. A Git bundle
+omits uncommitted files. Record each copy's coverage and verify retrieval. Local recovery and remote
+publication are separate obligations.
+
+Assess useful fragments within each branch and worktree. A stale tree can contain a current proof,
+counterexample, correction, or publication asset. Give each relevant fragment a recorded disposition
+and a retrievable successor. Integrate accepted fragments into current main. Preserve load-bearing
+negative evidence with its assumptions, exact inputs, result, rejection reason, and conditions for
+reconsideration. Correct active false claims and retain their original evidence with a clear label.
+
+The handoff must identify unfinished code and proofs, Markdown/PDF consistency work, required
+hosted checks, mainline integration, and unresolved fragment dispositions. A permanently failed
+attempt keeps that result. Retire a branch or worktree only after no process owns it and every
+relevant byte has a verified successor. The detailed rules below define the complete procedure.
 
 ## Contents
 
+- [Start or resume a session](#start-or-resume-a-session)
 - [Commit & attribution policy (READ FIRST)](#commit--attribution-policy-read-first)
 - [What this project is](#what-this-project-is)
 - [Method provenance and novelty claims](#method-provenance-and-novelty-claims)
@@ -591,6 +649,21 @@ on canonical logic gates, with deterministic reference-matching output).
 
 ## Build / test / lint (mirror CI)
 
+This is a command catalog. Select the applicable checks from the changed paths, causal
+dependencies, current claim packet, and release state. Record that scope before execution. The
+catalog includes historical NO-GO results, refusal commands, and ordered replay phases. Do not run
+it as one all-green queue or reopen a closed attempt. A command's presence does not change its
+current authority or expected result.
+
+For Rust or API changes, the practical matrix remains mandatory: stable workspace tests;
+no-default-feature, parallel, all-feature, and release tests; formatting; all-target Clippy; the
+listed rustdoc and docs.rs checks; examples and run-log replay; software-identity and API/package
+checks; and applicable binding tests. Keep the declared dependency-policy preflight and check.
+For publication changes, run the affected complete exact PDF checks and their self-tests, all
+required normal and optimized modes, the full formal-PDF-set check, and publication-link checks.
+Also run the milestone's causal, source-consistency, and package gates. Applicable failures remain
+failures; do not lower scientific thresholds or remove a check to complete the milestone.
+
 Local `just deny` and `just certified-sxpid` require exactly cargo-deny 0.20.2 and run the shared
 version preflight plus its hostile self-test before their policy command. A raw `cargo deny`
 invocation bypasses that repository preflight. The exact version-output check detects the known
@@ -814,7 +887,7 @@ python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger.py
 python3 -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py
 python3 -O -I -S -B scripts/check-sibling-registry-retirement-ledger-self-test.py
 scripts/check-public-api-snapshots.sh                    # rebuild immutable declaration evidence
-scripts/check-release-state.sh candidate                  # pre-tag public-metadata truth
+scripts/check-release-state.sh review-source v0.9.0       # current source-review metadata truth
 ```
 
 For KSG revision 4, keep evidence inventories failure-diverse and numerically separate. The
@@ -869,7 +942,9 @@ CI also sets `RUSTFLAGS=-D warnings`, checks every individual feature on Ubuntu 
 features on macOS and Windows, verifies MSRV 1.89, runs deterministic property and fuzz corpora,
 enforces coverage, reviews package/semver/unused-dependency state, generates an SBOM, scans history
 for secrets, and builds/installs the Python wheel across its minimum/current matrix. `just ci`
-covers the practical local subset; `just release-audit` lists the heavier release-candidate gates.
+covers the practical local subset. Use the broader `just release-audit` only for a release or a
+current lifecycle that requires it, after checking its modes and prerequisites. Use the
+release-state check's `candidate` mode only for a tree whose metadata declares that state.
 
 The example is the quickest "is the core working" check. Expected output (deterministic — the example
 seeds its own RNG):
@@ -916,6 +991,13 @@ pytest crates/pid-python/tests -q
   permutations are also distinct from reordering the branches of one antichain. The Program-A v4
   checker reconstructs this finite three-source model and binds its local record; it does not
   independently interpret the paper, prove Rust refinement, or close any Program A--E.
+- **Acceptance-bearing Python equality is typed:** Python value equality is not exact evidence
+  equality because `False == 0` and `5.0 == 5`. Checks of decoded JSON records and parsed frozen
+  Python registries must compare shape, exact type, and value recursively; JSON parsers must also
+  reject duplicate keys. Add causal normal/optimized hostile tests for discovered coercions, and
+  preserve the pre-correction bytes and minimal witnesses as named negative evidence. Such a repair
+  strengthens the verification chain; it does not upgrade the mathematical result, Program status,
+  source correspondence, or checker independence.
 - **Continuous support is declared, never inferred:** bare default continuous configs are
   intentionally non-runnable. Use the explicit absolute-continuity constructor only when every
   marginal and joint law required by that call has the stated full-dimensional population model.
@@ -1014,6 +1096,18 @@ Wiring rules for the READMEs that do exist:
 
 ## Before you push
 
-Run the build/test/lint block above (all must be clean), update `CHANGELOG.md` under
-`[Unreleased]`, and keep PRs focused. For security issues, follow `SECURITY.md` (do not open a
-public issue). See `CONTRIBUTING.md` for the full contributor guide.
+Complete one coherent milestone and run its applicable causal, source-consistency, package, and
+scientific gates. Use the mandatory Rust/API and publication checks stated above when those
+surfaces change. Record exact inputs, commands, results, and remaining obligations. Keep expected
+diagnostic NO-GO results and lifecycle refusals separate from passing checks. Do not omit a failing
+applicable gate or reinterpret a closed failure as permission to proceed.
+
+Reconcile the changed code, proofs, claims, and publications. Update `CHANGELOG.md` under
+`[Unreleased]` for the accepted change, keep the commit small and unsigned, and push under the
+established authorization. Verify the pushed object and required hosted workflows at its exact
+SHA before advancing main. Then follow the ancestry, lease, preservation, and exact-mainline
+hosted-check procedure above. A side-branch preflight does not satisfy the mainline evidence gate.
+Update the handoff with the result and remaining work.
+
+For security issues, follow `SECURITY.md` and do not open a public issue. See `CONTRIBUTING.md`
+for the full contributor guide.

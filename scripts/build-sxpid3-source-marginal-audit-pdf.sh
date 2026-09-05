@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+unset BASH_ENV ENV
 
 ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 SOURCE="$ROOT/SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
@@ -130,6 +131,45 @@ for command_name in awk cmp cp dirname fc-cache grep kpsewhich lualatex mkdir mk
   fi
 done
 
+# `mktemp` supplies the name, but acceptance also binds the object that name denotes.  This
+# prevents a faulty command from substituting a hard link or a later same-name replacement from
+# becoming an authorized cleanup/publication target.  The checks remain same-user race detection,
+# not a hostile-filesystem theorem.
+capture_path_identity() {
+  local path="$1" kind="$2"
+  python3 -I -S -B - "$path" "$kind" <<'PY'
+import os
+import stat
+import sys
+
+path, kind = sys.argv[1:]
+try:
+    metadata = os.lstat(path)
+except OSError:
+    raise SystemExit(1)
+
+if metadata.st_uid != os.geteuid():
+    raise SystemExit(1)
+if kind == "directory":
+    accepted = stat.S_ISDIR(metadata.st_mode)
+elif kind in {"fresh-file", "owned-single-file"}:
+    accepted = stat.S_ISREG(metadata.st_mode) and metadata.st_nlink == 1
+    if kind == "fresh-file":
+        accepted = accepted and metadata.st_size == 0
+else:
+    raise SystemExit(2)
+if not accepted:
+    raise SystemExit(1)
+print(f"{metadata.st_dev}:{metadata.st_ino}")
+PY
+}
+
+path_has_identity() {
+  local path="$1" kind="$2" expected="$3" observed
+  observed="$(capture_path_identity "$path" "$kind")" || return 1
+  [[ "$observed" == "$expected" ]]
+}
+
 validate_id_variance_checker() {
   local checker="$1"
   if [[ ! -f "$checker" || -L "$checker" ]]; then
@@ -175,20 +215,59 @@ if [[ "$TMP_BASE" == "/" ]]; then
   echo "SxPID3 audit PDF build failed: refusing filesystem root as temporary root" >&2
   exit 2
 fi
-BUILD_ROOT="$(mktemp -d "$TMP_BASE/pid-rs-sxpid3-audit-pdf.XXXXXX")"
+BUILD_ROOT_LEXICAL="$(mktemp -d "$TMP_BASE/pid-rs-sxpid3-audit-pdf.XXXXXX")"
+if [[ ! -d "$BUILD_ROOT_LEXICAL" || -L "$BUILD_ROOT_LEXICAL" ]] \
+    || ! BUILD_ROOT="$(CDPATH='' cd -- "$BUILD_ROOT_LEXICAL" && pwd -P)"; then
+  echo "SxPID3 audit PDF build failed: mktemp did not create a direct directory" >&2
+  exit 2
+fi
+BUILD_ROOT_NAME="${BUILD_ROOT##*/}"
+if [[ "$BUILD_ROOT_LEXICAL" != "$BUILD_ROOT" \
+    || "$BUILD_ROOT" != "$TMP_BASE/$BUILD_ROOT_NAME" \
+    || ! "$BUILD_ROOT_NAME" =~ ^pid-rs-sxpid3-audit-pdf\.[[:alnum:]]+$ ]]; then
+  echo "SxPID3 audit PDF build failed: mktemp returned an unexpected build directory" >&2
+  exit 2
+fi
+if ! BUILD_ROOT_ID="$(capture_path_identity "$BUILD_ROOT" directory)"; then
+  echo "SxPID3 audit PDF build failed: mktemp build directory lacks fresh-object custody" >&2
+  exit 2
+fi
 OUTPUT_TEMP=""
+OUTPUT_TEMP_PARENT=""
+OUTPUT_TEMP_NAME=""
+OUTPUT_TEMP_ID=""
 SOURCE_MANIFEST_BEFORE="$BUILD_ROOT/source-manifest.before"
 SOURCE_MANIFEST_CURRENT="$BUILD_ROOT/source-manifest.current"
 cleanup() {
-  case "$BUILD_ROOT" in
-    "$TMP_BASE"/pid-rs-sxpid3-audit-pdf.*) rm -rf -- "$BUILD_ROOT" ;;
-    *) echo "SxPID3 audit PDF build cleanup refused unexpected path: $BUILD_ROOT" >&2 ;;
-  esac
-  if [[ -n "$OUTPUT_TEMP" && -f "$OUTPUT_TEMP" && ! -L "$OUTPUT_TEMP" ]]; then
-    rm -f -- "$OUTPUT_TEMP"
+  local status=$?
+  if [[ "$BUILD_ROOT" == "$TMP_BASE/$BUILD_ROOT_NAME" \
+      && "$BUILD_ROOT_NAME" =~ ^pid-rs-sxpid3-audit-pdf\.[[:alnum:]]+$ \
+      && -d "$BUILD_ROOT" && ! -L "$BUILD_ROOT" \
+      && -n "$BUILD_ROOT_ID" ]] \
+      && path_has_identity "$BUILD_ROOT" directory "$BUILD_ROOT_ID"; then
+    rm -rf -- "$BUILD_ROOT"
+  elif [[ -e "$BUILD_ROOT" || -L "$BUILD_ROOT" ]]; then
+    echo "SxPID3 audit PDF build cleanup refused unexpected path: $BUILD_ROOT" >&2
+    status=1
   fi
+  if [[ -n "$OUTPUT_TEMP" ]]; then
+    if [[ "$OUTPUT_TEMP_PARENT" != "/" \
+        && "$OUTPUT_TEMP" == "$OUTPUT_TEMP_PARENT/$OUTPUT_TEMP_NAME" \
+        && "$OUTPUT_TEMP_NAME" =~ ^\.sxpid3-audit\.pdf\.[[:alnum:]]+$ \
+        && -f "$OUTPUT_TEMP" && ! -L "$OUTPUT_TEMP" \
+        && -n "$OUTPUT_TEMP_ID" ]] \
+        && path_has_identity "$OUTPUT_TEMP" owned-single-file "$OUTPUT_TEMP_ID"; then
+      rm -f -- "$OUTPUT_TEMP"
+    elif [[ -e "$OUTPUT_TEMP" || -L "$OUTPUT_TEMP" ]]; then
+      echo "SxPID3 audit PDF build cleanup refused unexpected output temporary: $OUTPUT_TEMP" >&2
+      status=1
+    fi
+  fi
+  return "$status"
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 source_manifest() {
   local required_source
@@ -401,7 +480,9 @@ if ! awk 'NR<=2{next} NF==0{next} {seen=1;if($(NF-4)!="yes"||$(NF-2)!="yes")bad=
 fi
 for sentinel in 'Paper event semantics' 'fresh owner-controlled HTTPS' \
     'separate exact compatibility edge' '18/108/166 crosswalk' '20,348 tables' '2,197,584' \
-    'complete certificate' 'Explicit nonclaims and negative results'; do
+    'complete certificate' 'compatibility-literal rejections' \
+    'exact type, shape, and value' 'disposable-checkout integrity failure' \
+    'Explicit nonclaims and negative results'; do
   if ! grep -Fiq -- "$sentinel" "$TEXT"; then
     echo "SxPID3 audit PDF build failed: missing rendered sentinel: $sentinel" >&2
     exit 1
@@ -412,8 +493,34 @@ validate_repeated_inputs
 validate_built_outputs
 validate_output_path "$OUTPUT"
 OUTPUT_DIRECTORY="${OUTPUT%/*}"
-OUTPUT_TEMP="$(mktemp "$OUTPUT_DIRECTORY/.sxpid3-audit.pdf.XXXXXX")"
+OUTPUT_TEMP_LEXICAL="$(mktemp "$OUTPUT_DIRECTORY/.sxpid3-audit.pdf.XXXXXX")"
+OUTPUT_TEMP_NAME="${OUTPUT_TEMP_LEXICAL##*/}"
+if ! OUTPUT_TEMP_PARENT="$(CDPATH='' cd -- "${OUTPUT_TEMP_LEXICAL%/*}" && pwd -P)"; then
+  echo "SxPID3 audit PDF build failed: cannot canonicalize publication temporary parent" >&2
+  exit 2
+fi
+OUTPUT_TEMP_CANDIDATE="$OUTPUT_TEMP_PARENT/$OUTPUT_TEMP_NAME"
+if [[ "$OUTPUT_TEMP_LEXICAL" != "$OUTPUT_TEMP_CANDIDATE" \
+    || "$OUTPUT_TEMP_PARENT" != "$OUTPUT_DIRECTORY" \
+    || ! "$OUTPUT_TEMP_NAME" =~ ^\.sxpid3-audit\.pdf\.[[:alnum:]]+$ \
+    || ! -f "$OUTPUT_TEMP_CANDIDATE" || -L "$OUTPUT_TEMP_CANDIDATE" ]]; then
+  echo "SxPID3 audit PDF build failed: mktemp returned an unexpected publication temporary" >&2
+  exit 2
+fi
+if ! OUTPUT_TEMP_ID="$(capture_path_identity "$OUTPUT_TEMP_CANDIDATE" fresh-file)"; then
+  echo "SxPID3 audit PDF build failed: publication temporary is not a fresh owned single-link file" >&2
+  exit 2
+fi
+OUTPUT_TEMP="$OUTPUT_TEMP_CANDIDATE"
+if ! path_has_identity "$OUTPUT_TEMP" fresh-file "$OUTPUT_TEMP_ID"; then
+  echo "SxPID3 audit PDF build failed: publication temporary changed before copy" >&2
+  exit 1
+fi
 cp "$FIRST" "$OUTPUT_TEMP"
+if ! path_has_identity "$OUTPUT_TEMP" owned-single-file "$OUTPUT_TEMP_ID"; then
+  echo "SxPID3 audit PDF build failed: publication temporary changed during copy" >&2
+  exit 1
+fi
 if ! cmp -s "$FIRST" "$OUTPUT_TEMP"; then
   echo "SxPID3 audit PDF build failed: publication copy differs from the validated first build" >&2
   exit 1
@@ -421,8 +528,13 @@ fi
 validate_repeated_inputs
 validate_built_outputs
 validate_output_path "$OUTPUT"
+if ! path_has_identity "$OUTPUT_TEMP" owned-single-file "$OUTPUT_TEMP_ID"; then
+  echo "SxPID3 audit PDF build failed: publication temporary changed before rename" >&2
+  exit 1
+fi
 mv -f -- "$OUTPUT_TEMP" "$OUTPUT"
 OUTPUT_TEMP=""
+OUTPUT_TEMP_ID=""
 validate_repeated_inputs
 validate_built_outputs
 validate_output_path "$OUTPUT"

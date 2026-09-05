@@ -8,7 +8,7 @@ FILTER="$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-bluep
 FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint"
 DEFAULT_OUTPUT="$ROOT/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf"
 OUTPUT="${1:-$DEFAULT_OUTPUT}"
-SOURCE_DATE_EPOCH_VALUE=1788307200
+SOURCE_DATE_EPOCH_VALUE=1788393600
 JOB_NAME="pid-discovery-verification-and-durability-blueprint"
 
 if [[ "$#" -gt 1 || -z "$OUTPUT" ]]; then
@@ -350,8 +350,13 @@ build_once() {
     "Semantic transfer firewall, part 1"
     "averaged empirical categorical SxPID3"
     "108 keyed scalar audit expressions"
-    "Dated 1 September 2026 adversarial publication closure"
-    "PASS identifies current-byte evidence"
+    "Dated 1 September 2026 adversarial publication review"
+    "Current 3 September 2026 SxPID3 evidence delta"
+    "Programs A--E closed remains 0 of 5"
+    "coherently resealed compatibility-literal mutations"
+    "disposable checkout"
+    "lost tracked paths"
+    "PASS identifies evidence bound to"
     "seventy typed rows in total"
     "Twenty mandatory core lenses"
     "Fifty additional artifact-specific hostile lenses"
@@ -360,7 +365,7 @@ build_once() {
     "bounded corpus and optional shards"
     "Autoresearch without evidence laundering"
     "Repository durability and promotion"
-    "remote-ref, ancestry, hosted-run, and recovery-drill checks pass"
+    "Removal is then one bounded operation"
     "Durable promotion state machine, part 1"
     "Review-boundary safety disposition"
     "Source-anchored claim register"

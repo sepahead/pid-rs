@@ -61,13 +61,13 @@ INDEPENDENT_ROUTE_PATH: Final[Path] = (
 
 FORMAT: Final[str] = "pid-rs/sxpid3-mgw-v5-program-a-semantic-bridge/v4"
 EXPECTED_DOCUMENT_SHA256: Final[str] = (
-    "b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb"
+    "cc2f228fec62603da61e5fd3f75550a727978aeda20225abe80b5d9be2fdce0d"
 )
-EXPECTED_DOCUMENT_BYTES: Final[int] = 33_942
+EXPECTED_DOCUMENT_BYTES: Final[int] = 35_510
 EXPECTED_RECORD_SHA256: Final[str] = (
-    "dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24"
+    "447094be207f4e5798ea602b7ee737baac8df8ec835ccc4d4f90c41514e5b7c1"
 )
-EXPECTED_RECORD_BYTES: Final[int] = 17_458
+EXPECTED_RECORD_BYTES: Final[int] = 18_491
 
 EXPECTED_COMPATIBILITY_FILES: Final[dict[str, dict[str, object]]] = {
     "conventions": {
@@ -316,8 +316,22 @@ EXPECTED_HISTORICAL_FALSE_GREEN_COVERAGE: Final[list[dict[str, str]]] = [
 ]
 
 EXPECTED_VALIDATION: Final[dict[str, object]] = {
-    "canonical_record_policy": "utf8_lf_canonical_pretty_json_duplicate_keys_rejected_exact_bytes_bound",
+    "canonical_record_policy": "utf8_lf_canonical_pretty_json_duplicate_keys_rejected_exact_bytes_and_json_value_types_bound",
     "coordinated_reseal_boundary": "deliberately_accepted_in_isolated_negative_control_no_semantic_or_review_credit",
+    "current_false_green_corrections": [
+        {
+            "current_control": "recursive_exact_json_type_and_value_comparison_with_boolean_zero_and_float_integer_hostile_tests",
+            "id": "V4-FG-STATUS-TYPE-COERCION",
+            "prior_behavior": "python_value_equality_admitted_false_for_integer_zero_and_5.0_for_integer_five_after_record_digest_reseal",
+            "scope": "verification_chain_defect_not_a_change_to_the_reconstructed_mathematics_or_open_program_status",
+        },
+        {
+            "current_control": "recursive_exact_python_literal_type_and_value_comparison_with_boolean_integer_and_float_integer_hostile_tests",
+            "id": "V4-FG-PYTHON-LITERAL-TYPE-COERCION",
+            "prior_behavior": "python_value_equality_admitted_false_for_tuple_integer_zero_and_129.0_for_integer_129_after_compatibility_file_and_digest_reseal",
+            "scope": "verification_chain_defect_not_a_change_to_the_mathematical_registry_values_or_open_program_status",
+        }
+    ],
     "historical_false_green_coverage": EXPECTED_HISTORICAL_FALSE_GREEN_COVERAGE,
     "required_replay_commands": [
         "python3 -I -S -B scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
@@ -331,8 +345,9 @@ EXPECTED_VALIDATION: Final[dict[str, object]] = {
         "alternate_input_rejections": 4,
         "baseline_executions": 2,
         "compatibility_drift_rejections": 6,
+        "compatibility_reseal_rejections": 4,
         "document_drift_rejections": 2,
-        "record_reseal_rejections": 24,
+        "record_reseal_rejections": 28,
         "semantic_source_rejections": 12,
     },
 }
@@ -345,6 +360,38 @@ class CheckError(RuntimeError):
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise CheckError(message)
+
+
+def exact_typed_equal(actual: object, expected: object) -> bool:
+    """Compare supported JSON/Python literals without Python numeric coercions."""
+
+    if type(actual) is not type(expected):
+        return False
+    if type(expected) is dict:
+        actual_dict = actual
+        expected_dict = expected
+        if len(actual_dict) != len(expected_dict):
+            return False
+        actual_keys = tuple(actual_dict)
+        for expected_key, expected_value in expected_dict.items():
+            matching_keys = tuple(
+                actual_key
+                for actual_key in actual_keys
+                if exact_typed_equal(actual_key, expected_key)
+            )
+            if len(matching_keys) != 1:
+                return False
+            if not exact_typed_equal(actual_dict[matching_keys[0]], expected_value):
+                return False
+        return True
+    if type(expected) in (list, tuple):
+        actual_sequence = actual
+        expected_sequence = expected
+        return len(actual_sequence) == len(expected_sequence) and all(
+            exact_typed_equal(left, right)
+            for left, right in zip(actual_sequence, expected_sequence, strict=True)
+        )
+    return actual == expected
 
 
 def canonical_json(value: object) -> bytes:
@@ -479,51 +526,73 @@ def validate_frozen_compatibility(
     convention_keys, convention_zeta, convention_mobius = parse_conventions(
         conventions_raw
     )
-    require(convention_keys == key_tuple, "derived carrier differs from conventions")
-    require(convention_zeta == zeta_signatures, "derived zeta differs from conventions")
     require(
-        convention_mobius == mobius_sparse,
+        exact_typed_equal(convention_keys, key_tuple),
+        "derived carrier differs from conventions",
+    )
+    require(
+        exact_typed_equal(convention_zeta, zeta_signatures),
+        "derived zeta differs from conventions",
+    )
+    require(
+        exact_typed_equal(convention_mobius, mobius_sparse),
         "derived Mobius inverse differs from conventions",
     )
 
     require(
-        literal_assignment(
-            primary_raw,
-            "EXPECTED_AUDIT_STABLE_KEYS",
-            "primary bounded route",
-        )
-        == key_tuple,
+        exact_typed_equal(
+            literal_assignment(
+                primary_raw,
+                "EXPECTED_AUDIT_STABLE_KEYS",
+                "primary bounded route",
+            ),
+            key_tuple,
+        ),
         "derived carrier differs from primary bounded-route registry",
     )
     require(
-        literal_assignment(
-            primary_raw, "EXPECTED_ZETA_SIGNATURES", "primary bounded route"
-        )
-        == zeta_signatures,
+        exact_typed_equal(
+            literal_assignment(
+                primary_raw, "EXPECTED_ZETA_SIGNATURES", "primary bounded route"
+            ),
+            zeta_signatures,
+        ),
         "derived zeta differs from primary bounded-route registry",
     )
     require(
-        literal_assignment(
-            primary_raw, "EXPECTED_MOBIUS_SPARSE", "primary bounded route"
-        )
-        == mobius_sparse,
+        exact_typed_equal(
+            literal_assignment(
+                primary_raw, "EXPECTED_MOBIUS_SPARSE", "primary bounded route"
+            ),
+            mobius_sparse,
+        ),
         "derived Mobius inverse differs from primary bounded-route registry",
     )
     require(
-        literal_assignment(independent_raw, "EXPECTED_NODE_KEYS", "independent route")
-        == key_tuple,
+        exact_typed_equal(
+            literal_assignment(
+                independent_raw, "EXPECTED_NODE_KEYS", "independent route"
+            ),
+            key_tuple,
+        ),
         "derived carrier differs from independent-route registry",
     )
     require(
-        literal_assignment(independent_raw, "EXPECTED_ZETA_ONES", "independent route")
-        == sum(value for row in zeta for value in row),
+        exact_typed_equal(
+            literal_assignment(
+                independent_raw, "EXPECTED_ZETA_ONES", "independent route"
+            ),
+            sum(value for row in zeta for value in row),
+        ),
         "derived zeta census differs from independent-route registry",
     )
     require(
-        literal_assignment(
-            independent_raw, "EXPECTED_MOBIUS_NONZERO", "independent route"
-        )
-        == sum(value != 0 for row in mobius for value in row),
+        exact_typed_equal(
+            literal_assignment(
+                independent_raw, "EXPECTED_MOBIUS_NONZERO", "independent route"
+            ),
+            sum(value != 0 for row in mobius for value in row),
+        ),
         "derived Mobius census differs from independent-route registry",
     )
     return EXPECTED_COMPATIBILITY_EDGE
@@ -917,37 +986,57 @@ def validate_record(
         ),
         "record",
     )
-    require(record["format"] == FORMAT, "record format changed")
+    require(exact_typed_equal(record["format"], FORMAT), "record format changed")
     require(
-        record["primary_source"] == EXPECTED_SOURCE, "primary-source identity changed"
+        exact_typed_equal(record["primary_source"], EXPECTED_SOURCE),
+        "primary-source identity changed",
     )
-    require(record["anchors"] == EXPECTED_ANCHORS, "source-anchor map changed")
-    require(record["status"] == EXPECTED_STATUS, "claim/program status changed")
-    require(record["boundaries"] == EXPECTED_BOUNDARIES, "evidence boundaries changed")
     require(
-        record["compatibility_edge"] == compatibility_edge,
+        exact_typed_equal(record["anchors"], EXPECTED_ANCHORS),
+        "source-anchor map changed",
+    )
+    require(
+        exact_typed_equal(record["status"], EXPECTED_STATUS),
+        "claim/program status changed",
+    )
+    require(
+        exact_typed_equal(record["boundaries"], EXPECTED_BOUNDARIES),
+        "evidence boundaries changed",
+    )
+    require(
+        exact_typed_equal(record["compatibility_edge"], compatibility_edge),
         "frozen compatibility edge changed",
     )
-    require(record["validation"] == EXPECTED_VALIDATION, "validation contract changed")
-    require(record["derivation"] == derived, "recorded exact derivation changed")
     require(
-        record["scope"]
-        == {
-            "pid": "categorical Makkeh--Gutknecht--Wibral shared exclusions only",
-            "source_count": 3,
-            "source_alphabet_cardinalities": "arbitrary positive finite for the generic equality-kernel/count argument",
-            "target_cardinality": "arbitrary positive finite for the generic equality-kernel/count argument",
-            "units": "paper bits mapped to repository nats by multiplication with ln(2)",
-        },
+        exact_typed_equal(record["validation"], EXPECTED_VALIDATION),
+        "validation contract changed",
+    )
+    require(
+        exact_typed_equal(record["derivation"], derived),
+        "recorded exact derivation changed",
+    )
+    require(
+        exact_typed_equal(
+            record["scope"],
+            {
+                "pid": "categorical Makkeh--Gutknecht--Wibral shared exclusions only",
+                "source_count": 3,
+                "source_alphabet_cardinalities": "arbitrary positive finite for the generic equality-kernel/count argument",
+                "target_cardinality": "arbitrary positive finite for the generic equality-kernel/count argument",
+                "units": "paper bits mapped to repository nats by multiplication with ln(2)",
+            },
+        ),
         "scope changed",
     )
     require(
-        record["document"]
-        == {
-            "bytes": len(document_raw),
-            "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
-            "sha256": sha256_bytes(document_raw),
-        },
+        exact_typed_equal(
+            record["document"],
+            {
+                "bytes": len(document_raw),
+                "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
+                "sha256": sha256_bytes(document_raw),
+            },
+        ),
         "document binding changed",
     )
 

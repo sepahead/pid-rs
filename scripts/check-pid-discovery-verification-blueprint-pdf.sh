@@ -11,21 +11,37 @@ FILTER="$ROOT/audit/formal/latex/pid-discovery-verification-and-durability-bluep
 FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint"
 SELF_TEST="$ROOT/scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh"
 DECISION_V2="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md"
+DECISION_V3="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md"
+EVIDENCE_MATRIX_V3="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md"
+SOURCE_CORRESPONDENCE_V4="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md"
+SEMANTIC_BRIDGE_V4="$ROOT/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json"
 EVIDENCE_ADJUDICATION_INDEX="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md"
+TYPE_COERCION_FAILURE="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md"
+HISTORICAL_CHECKER_DISPOSITION="$ROOT/audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md"
+CHECKOUT_INTEGRITY_INCIDENT="$ROOT/audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md"
 CONVENTIONS="$ROOT/claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md"
 PRIMARY_RETIREMENT_LEDGER="$ROOT/audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json"
 SIBLING_RETIREMENT_LEDGER="$ROOT/audit/evidence/sibling-registry-retirement-ledger-2026-09-01.json"
-VISUAL_RECEIPT="$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-02.md"
+VISUAL_RECEIPT="$ROOT/audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-03.md"
 DECISION_V2_SHA256="f5bfef2afa6237661e031d416497e17f2aad01b17de61f15e9aba1a6e9ff6c59"
-EVIDENCE_ADJUDICATION_INDEX_SHA256="0410df9f4163d2ccd2e4bb993fed9fd3d1598fae13bd3bc58cf30784966bbab4"
+DECISION_V3_SHA256="24544d7b3af575ecff706e88d20b8c8e18372c13711fc508e60cd31beffcc152"
+EVIDENCE_MATRIX_V3_SHA256="61aa07eb34344608b7683fc00f064ffcc914c74a1c39cb016a9ea0020b82667b"
+SOURCE_CORRESPONDENCE_V4_SHA256="cc2f228fec62603da61e5fd3f75550a727978aeda20225abe80b5d9be2fdce0d"
+SEMANTIC_BRIDGE_V4_SHA256="447094be207f4e5798ea602b7ee737baac8df8ec835ccc4d4f90c41514e5b7c1"
+EVIDENCE_ADJUDICATION_INDEX_SHA256="1ffc5a5f7047ac1774b2089a62015f6101812048f90fdc3e5699b26e292400c4"
+TYPE_COERCION_FAILURE_SHA256="5ea3d1f818b1ff225d8312d4885df09f5d42bddc657c095806712f8fa536a323"
+HISTORICAL_CHECKER_DISPOSITION_SHA256="79a920053461217328687bd8a64ae9bfe06194d81308db1c113e403e95b06172"
+CHECKOUT_INTEGRITY_INCIDENT_SHA256="171c06c7b3ddb8383cd75d33c408a17f70b09e4641780acc826355f46348eea6"
 CONVENTIONS_SHA256="2d14bea9d6f0a2d07493ddaf7d89a130f4ad62680319cb9efba465590c2250c7"
 PRIMARY_RETIREMENT_LEDGER_SHA256="29c6d6e0b2fe4b51b154e88be950db32ad214f64a67041c1ad215e756c8270bf"
 SIBLING_RETIREMENT_LEDGER_SHA256="25b226abce58071ffa383753528300b7b2ef7203c47b07bb5f9a1b3b02e08420"
-VISUAL_RECEIPT_SHA256="01e2e8b39aa27fd69f733ad1ee6c01f2de8f6e4e7b2e4e1c7e568ea47957d120"
-VISUAL_RECEIPT_PDF_SHA256="18d034deb7f131e8e93170f4dd064980ab9f40cbdda208b512dbf68a58af3a0a"
+VISUAL_RECEIPT_SHA256="6702c1364fc64d0ff03acaec5af87078ad0c8dbcf4c3f15d36baa48b57c6a8b7"
+VISUAL_RECEIPT_PDF_SHA256="b82c5a0a400ccb129195c3db6e765c7861605f84710226cedd01246967cca7d7"
+VISUAL_RECEIPT_SOURCE_SHA256="8b446accb257531dbf219670a39c8f1e4b794671bb85ff06f3992bdcdfd5e9c1"
+VISUAL_RECEIPT_SOURCE_BYTES=115793
 CHECK_NAME="PID discovery/verification/durability blueprint PDF check"
 MODE="${1:---exact}"
-EXPECTED_PAGES=29
+EXPECTED_PAGES=31
 EXPECTED_PYPDF_VERSION="6.15.0"
 
 if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
@@ -53,7 +69,14 @@ required_inputs=(
   "$FILTER"
   "$SELF_TEST"
   "$DECISION_V2"
+  "$DECISION_V3"
+  "$EVIDENCE_MATRIX_V3"
+  "$SOURCE_CORRESPONDENCE_V4"
+  "$SEMANTIC_BRIDGE_V4"
   "$EVIDENCE_ADJUDICATION_INDEX"
+  "$TYPE_COERCION_FAILURE"
+  "$HISTORICAL_CHECKER_DISPOSITION"
+  "$CHECKOUT_INTEGRITY_INCIDENT"
   "$CONVENTIONS"
   "$PRIMARY_RETIREMENT_LEDGER"
   "$SIBLING_RETIREMENT_LEDGER"
@@ -100,9 +123,78 @@ require_unique_fragment() {
   fi
 }
 
-require_sha256 "$DECISION_V2" "$DECISION_V2_SHA256" "decision-v2 current-evidence"
+require_sha256 "$DECISION_V2" "$DECISION_V2_SHA256" "decision-v2 historical evidence"
+require_sha256 "$DECISION_V3" "$DECISION_V3_SHA256" "decision-v3 current evidence"
+require_sha256 "$EVIDENCE_MATRIX_V3" "$EVIDENCE_MATRIX_V3_SHA256" \
+  "evidence-matrix-v3 current evidence"
+require_sha256 "$SOURCE_CORRESPONDENCE_V4" "$SOURCE_CORRESPONDENCE_V4_SHA256" \
+  "source-correspondence-v4 current evidence"
+require_sha256 "$SEMANTIC_BRIDGE_V4" "$SEMANTIC_BRIDGE_V4_SHA256" \
+  "Program-A semantic-bridge-v4 machine evidence"
+if ! python3 -I -S -B - "$SEMANTIC_BRIDGE_V4" <<'PY'
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import sys
+
+
+def reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+try:
+    record = json.loads(
+        Path(sys.argv[1]).read_text(encoding="utf-8"),
+        object_pairs_hook=reject_duplicate_keys,
+    )
+except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
+    raise SystemExit(f"cannot decode bound machine record: {error}")
+
+expected_status = {
+    "complete_target": "proposed_open",
+    "d2_event_count_bridge":
+        "exact_generic_indicator_argument_with_bounded_executable_reconstruction",
+    "h1_independent_human_custody": "open",
+    "l1_carrier": "exact_fin3_executable_reconstruction_formal_completeness_open",
+    "l2_order_zeta_mobius":
+        "exact_fin3_executable_reconstruction_dual_formal_routes_open",
+    "program_a": "partial_open",
+    "programs_closed": 0,
+    "programs_total": 5,
+    "s1_source_correspondence":
+        "owner_controlled_source_review_recorded_independent_external_review_open",
+}
+status = record.get("status") if type(record) is dict else None
+status_is_exact = (
+    type(status) is dict
+    and set(status) == set(expected_status)
+    and all(
+        type(status[key]) is type(expected_value)
+        and status[key] == expected_value
+        for key, expected_value in expected_status.items()
+    )
+)
+if not status_is_exact:
+    raise SystemExit("bound machine-record status object differs from the exact open boundary")
+PY
+then
+  echo "$CHECK_NAME: semantic-bridge-v4 status boundary drifted" >&2
+  exit 1
+fi
 require_sha256 "$EVIDENCE_ADJUDICATION_INDEX" "$EVIDENCE_ADJUDICATION_INDEX_SHA256" \
   "evidence-adjudication index"
+require_sha256 "$TYPE_COERCION_FAILURE" "$TYPE_COERCION_FAILURE_SHA256" \
+  "typed-equality negative evidence"
+require_sha256 "$HISTORICAL_CHECKER_DISPOSITION" "$HISTORICAL_CHECKER_DISPOSITION_SHA256" \
+  "historical-checker archive disposition"
+require_sha256 "$CHECKOUT_INTEGRITY_INCIDENT" "$CHECKOUT_INTEGRITY_INCIDENT_SHA256" \
+  "checkout-integrity incident record"
 require_sha256 "$CONVENTIONS" "$CONVENTIONS_SHA256" "frozen SxPID3 conventions"
 require_sha256 "$PRIMARY_RETIREMENT_LEDGER" "$PRIMARY_RETIREMENT_LEDGER_SHA256" \
   "primary retirement ledger"
@@ -120,78 +212,115 @@ require_unique_line "$VISUAL_RECEIPT" \
   "subject: \`PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf\`" \
   "visual-review receipt subject"
 require_unique_line "$VISUAL_RECEIPT" \
+  "source: \`PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md\`" \
+  "visual-review receipt source"
+require_unique_line "$VISUAL_RECEIPT" \
+  "source_bytes: \`$VISUAL_RECEIPT_SOURCE_BYTES\`" \
+  "visual-review receipt source byte binding"
+require_unique_line "$VISUAL_RECEIPT" \
+  "source_sha256: \`$VISUAL_RECEIPT_SOURCE_SHA256\`" \
+  "visual-review receipt source digest binding"
+if [[ "$(wc -c <"$SOURCE" | tr -d ' ')" != "$VISUAL_RECEIPT_SOURCE_BYTES" ]]; then
+  echo "$CHECK_NAME: visual-review receipt source byte binding drifted" >&2
+  exit 1
+fi
+require_sha256 "$SOURCE" "$VISUAL_RECEIPT_SOURCE_SHA256" \
+  "visual-review receipt source Markdown"
+require_unique_line "$VISUAL_RECEIPT" \
   "pdf_sha256: \`$VISUAL_RECEIPT_PDF_SHA256\`" \
   "visual-review receipt PDF binding"
-require_unique_line "$VISUAL_RECEIPT" "pages: \`29\`" \
+require_unique_line "$VISUAL_RECEIPT" "pages: \`31\`" \
   "visual-review receipt page scope"
-require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_rendered: \`1-29\`" \
+require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_rendered: \`1-31\`" \
   "visual-review receipt color render scope"
-require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_reviewed: \`1-29\`" \
+require_unique_line "$VISUAL_RECEIPT" "color_120_dpi_pages_reviewed: \`1-31\`" \
   "visual-review receipt color review scope"
-require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_rendered: \`1-29\`" \
+require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_rendered: \`1-31\`" \
   "visual-review receipt grayscale render scope"
-require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_reviewed: \`1-29\`" \
+require_unique_line "$VISUAL_RECEIPT" "grayscale_120_dpi_pages_reviewed: \`1-31\`" \
   "visual-review receipt grayscale review scope"
 require_unique_line "$VISUAL_RECEIPT" \
-  "spot_300_dpi_pages_reviewed: \`1,3,13-16,21-29\`" \
+  "spot_300_dpi_pages_reviewed: \`1,3,9,12,14-20,22-24,26-28,30-31\`" \
   "visual-review receipt high-resolution spot scope"
 require_unique_line "$VISUAL_RECEIPT" \
-  "delta_reference_pdf_sha256: \`51a5d399cdcddbdf0ae4aea13a0d5726b79c8e81b417f845e0968b7e310e3d27\`" \
+  "delta_reference_pdf_sha256: \`18d034deb7f131e8e93170f4dd064980ab9f40cbdda208b512dbf68a58af3a0a\`" \
   "visual-review receipt predecessor binding"
-require_unique_line "$VISUAL_RECEIPT" "delta_reference_pages: \`28\`" \
+require_unique_line "$VISUAL_RECEIPT" "delta_reference_pages: \`29\`" \
   "visual-review receipt predecessor page scope"
 require_unique_line "$VISUAL_RECEIPT" "delta_120_dpi_raster_identical_pages: \`none\`" \
   "visual-review receipt unchanged-page boundary"
 require_unique_line "$VISUAL_RECEIPT" \
-  "delta_120_dpi_changed_or_added_pages_reviewed: \`1-29\`" \
+  "delta_120_dpi_changed_or_added_pages_reviewed: \`1-31\`" \
   "visual-review receipt delta-review scope"
 require_unique_line "$VISUAL_RECEIPT" "lens_count: \`20\`" \
   "visual-review receipt lens count"
 require_unique_line "$VISUAL_RECEIPT" "status: \`passed\`" \
   "visual-review receipt disposition"
 
-require_unique_line "$DECISION_V2" '**Disposition: proposed/open.**' \
-  "decision-v2 disposition boundary"
-require_unique_line "$DECISION_V2" \
+require_unique_line "$DECISION_V3" '**Disposition: proposed/open.**' \
+  "decision-v3 disposition boundary"
+require_unique_line "$DECISION_V3" \
   '**Complete target-implication evidence label: no accepted end-to-end evidence.**' \
-  "decision-v2 complete-target boundary"
-require_unique_fragment "$DECISION_V2" \
-  'Neither result closes the prospective certificate implication.' \
-  "decision-v2 scoped-result boundary"
-require_unique_fragment "$DECISION_V2" \
-  '| A: source and combinatorial semantics | Partial |' \
-  "decision-v2 Program A status"
-require_unique_fragment "$DECISION_V2" \
-  '| B: dual formal semantics | Partial at the generic algebra layer |' \
-  "decision-v2 Program B status"
-require_unique_fragment "$DECISION_V2" \
-  '| C: certified numerics | Bounded exact sign/zero partial result |' \
-  "decision-v2 Program C status"
-require_unique_fragment "$DECISION_V2" \
-  '| D: compiled Rust refinement | Lexical routing observation only |' \
-  "decision-v2 Program D status"
-require_unique_fragment "$DECISION_V2" \
-  '| E: replay, provenance, and adjudication | Source-bound local receipt and partial mutation evidence |' \
-  "decision-v2 Program E status"
-require_unique_fragment "$DECISION_V2" \
-  '- 108 PID atoms, lattice nodes, or independent degrees of freedom;' \
-  "decision-v2 108-expression taxonomy"
-require_unique_fragment "$DECISION_V2" \
-  '- the 166-position SxPID4 lattice;' \
-  "decision-v2 four-source boundary"
+  "decision-v3 complete-target boundary"
+require_unique_fragment "$DECISION_V3" \
+  'Decision record 3 retains the two scoped results accepted by decision record 2 and accepts one' \
+  "decision-v3 scoped-result boundary"
+require_unique_fragment "$DECISION_V3" \
+  'Programs A--E closed remains **0 of 5**.' \
+  "decision-v3 Programs A--E status"
+require_unique_fragment "$DECISION_V3" \
+  'Programs B--E receive no new closure from this record.' \
+  "decision-v3 Programs B--E boundary"
+require_unique_fragment "$DECISION_V3" \
+  'These are not 108 atoms, nodes, or independent degrees' \
+  "decision-v3 108-expression taxonomy"
+require_unique_fragment "$DECISION_V3" \
+  'The separate 166 count is the four-source carrier.' \
+  "decision-v3 four-source boundary"
+require_unique_fragment "$SOURCE_CORRESPONDENCE_V4" \
+  'Program A remains **partial/open** because its frozen closure rule requires independent source' \
+  "source-correspondence-v4 Program A boundary"
+require_unique_fragment "$SOURCE_CORRESPONDENCE_V4" \
+  'Status fields require Program A partial/open and Programs closed 0/5' \
+  "source-correspondence-v4 Programs A--E boundary"
+require_unique_fragment "$EVIDENCE_MATRIX_V3" \
+  '| J1 | This revision-preserving decision | Proposed/open | All applicable obligations and Programs A--E closed without substitution |' \
+  "evidence-matrix-v3 terminal-governance boundary"
 require_unique_line "$EVIDENCE_ADJUDICATION_INDEX" \
-  '| 1 | 2 | [claim-v1.md](claim-v1.md) | [decision-v2.md](decision-v2.md) | [evidence-matrix-v2.md](evidence-matrix-v2.md) | Current proposed/open decision; two scoped sub-results receive credit, but Programs A--E remain open |' \
+  '| 1 | 3 | [claim-v1.md](claim-v1.md) | [decision-v3.md](decision-v3.md) | [evidence-matrix-v3.md](evidence-matrix-v3.md) | Current proposed/open decision; owner-controlled revision-5 source correspondence and exact Fin-3 semantic reconstruction receive scoped credit, two v4 typed-equality false greens are corrected and retained, and Programs A--E remain open |' \
   "evidence-adjudication current pointer/status boundary"
+require_unique_fragment "$TYPE_COERCION_FAILURE" \
+  'Real verification-chain defects; corrected in the current candidate before any integration to' \
+  "retained typed-equality failure disposition"
+require_unique_fragment "$TYPE_COERCION_FAILURE" \
+  '`ee93b97fc779191306e34efc02c5ff2c78bc4162` used ordinary Python equality at two acceptance' \
+  "retained typed-equality pre-correction commit"
+require_unique_fragment "$TYPE_COERCION_FAILURE" \
+  '| Primary-route Möbius tuple index | integer `0` in `(0, 1)` | Boolean `False` in `(False, 1)` | Accepted | Rejected |' \
+  "retained compatibility-literal type-coercion witness"
+require_unique_fragment "$HISTORICAL_CHECKER_DISPOSITION" \
+  'seven historical mutation recipes: five for v1 and two' \
+  "historical-checker seven-recipe boundary"
+require_unique_fragment "$CHECKOUT_INTEGRITY_INCIDENT" \
+  'cause unresolved; no mathematical result changed' \
+  "checkout-integrity causal boundary"
 require_unique_fragment "$SOURCE" \
-  'Decision record 2 keeps the complete target **proposed/open**;' \
+  'Decision record 3 keeps the complete target **proposed/open**.' \
   "blueprint current-decision summary"
 require_unique_fragment "$SOURCE" \
-  'None closes an end-to-end implication, and this report does not close the claim.' \
+  'No Program is closed,' \
   "blueprint Program A--E status summary"
 
 for required_link in \
+    'claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md' \
     'claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md' \
+    'claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md' \
+    'claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md' \
+    'audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json' \
     'claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md' \
+    'claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md' \
+    'audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md' \
+    'audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md' \
     'claims/SX-CERTIFIED-AVERAGED-PID3-001/conventions.md#the-complete-18-node-carrier' \
     'audit/evidence/worktree-and-branch-preservation-2026-08-27.md' \
     'audit/evidence/worktree-and-branch-retirement-ledger-2026-09-01.json' \
@@ -298,21 +427,25 @@ validate_pdf() {
   fi
   for sentinel in \
       'PrimeGapsLib observations are dated 19 August 2026' \
-      'Decision record 2 keeps the complete target' \
+      'Decision record 3 keeps the complete target' \
       '108 keyed scalar audit expressions' \
-      'Dated 1 September 2026 adversarial publication closure' \
-      'PASS identifies current-byte evidence' \
+      'Dated 1 September 2026 adversarial publication review' \
+      'PASS identifies evidence bound to' \
       'seventy typed rows in total' \
       'Twenty mandatory core lenses' \
       'Fifty additional artifact-specific hostile lenses' \
       'Ten materially distinct routes' \
+      'Current 3 September 2026 SxPID3 evidence delta' \
+      'Programs A--E closed remains 0 of 5' \
       'D1 remains open' \
+      'coherently resealed compatibility-literal mutations' \
+      'disposable checkout' 'lost tracked paths' \
       'bounded corpus and optional shards' \
       'Semantic transfer firewall, part 1' \
       'Semantic transfer firewall, part 2' \
       'Durable promotion state machine, part 1' \
       'Durable promotion state machine, part 2' \
-      'remote-ref, ancestry, hosted-run, and recovery-drill checks pass' \
+      'Removal is then one bounded operation' \
       'There is no accepted cross-toolchain equivalence relation' \
       'Source-anchored claim register'; do
     if ! grep -Fq "$sentinel" "$text"; then
@@ -359,9 +492,30 @@ if pypdf.__version__ != expected_pypdf_version:
 
 markdown = source_path.read_text(encoding="utf-8")
 github_navigation_links = {
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md":
+        "https://github.com/sepahead/pid-rs/blob/main/claims/"
+        "SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md",
     "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md":
         "https://github.com/sepahead/pid-rs/blob/main/claims/"
         "SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md":
+        "https://github.com/sepahead/pid-rs/blob/main/claims/"
+        "SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md",
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md":
+        "https://github.com/sepahead/pid-rs/blob/main/claims/"
+        "SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
+    "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json":
+        "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/"
+        "sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+    "claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md":
+        "https://github.com/sepahead/pid-rs/blob/main/claims/"
+        "SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md",
+    "audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md":
+        "https://github.com/sepahead/pid-rs/blob/main/audit/archive/"
+        "sxpid3-s1-historical-checkers-v1/DISPOSITION.md",
+    "audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md":
+        "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/"
+        "sxpid3-pdf-checkout-integrity-incident-2026-09-04.md",
     "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md":
         "https://github.com/sepahead/pid-rs/blob/main/claims/"
         "SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md",
@@ -402,7 +556,7 @@ except Exception as error:
     fail(f"cannot parse strictly: {error}")
 
 metadata = reader.metadata
-expected_pdf_date = "D:20260902000000Z"
+expected_pdf_date = "D:20260903000000Z"
 if metadata is None or metadata.get("/CreationDate") != expected_pdf_date or metadata.get("/ModDate") != expected_pdf_date:
     fail("deterministic creation/modification chronology metadata drifted")
 

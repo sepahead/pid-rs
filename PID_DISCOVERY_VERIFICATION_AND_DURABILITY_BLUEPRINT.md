@@ -1,7 +1,7 @@
 ---
 title: "PID discovery, verification, and durability blueprint"
 subtitle: "PrimeGaps lessons, semantic-transfer firewalls, a proposed exact-SxPID3 assurance architecture, autoresearch, and durable promotion"
-date: "2 September 2026"
+date: "3 September 2026"
 lang: en
 ---
 
@@ -16,10 +16,27 @@ Math's `PrimeGapsLib` at exact Git commit
 then asks which proof-engineering patterns can improve `pid-rs` discovery and verification.
 
 The current status of the proposed SxPID3 packet is governed separately by
-[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md) and the
+[decision record 3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md) and the
 [evidence-adjudication index](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md),
-not by the dated PrimeGaps review. Decision record 2 keeps the complete target **proposed/open**;
-it credits two scoped results and leaves every load-bearing end-to-end cut open. The frozen
+not by the dated PrimeGaps review. Decision record 3 keeps the complete target **proposed/open**.
+It retains the two scoped results from historical
+[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md) and gives scoped credit to
+an owner-controlled revision-5 source correspondence and exact Fin-3 semantic reconstruction. The
+[current evidence matrix](claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md) and
+[source correspondence](claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md) state
+the exact credit and its residual boundaries. The bound
+[machine record](audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json) carries the
+canonical reconstruction and status fields. The current checker requires recursive equality of
+type, shape, and value for every verdict-bearing record object and all six parsed compatibility
+registries. Its pre-correction committed v4 predecessor accepted two typed JSON-status impostors
+and two typed Python-literal impostors after coherent resealing. The exact pre-correction bytes,
+four reproductions, and repair remain explicit
+[negative evidence](claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md).
+Those defects concerned the verification chain, not the mathematics or adjudication. The
+[inert historical-checker archive](audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md)
+separately retains seven mutation recipes and fourteen mode-specific observations from two
+superseded checkers; it is not executed and earns zero closure credit. Every Program
+A--E closure remains open; the count is **0 of 5**. The frozen
 [revision-1 index](claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md) remains historical
 intake evidence and is not silently rewritten as a current decision pointer.
 
@@ -41,7 +58,7 @@ accepted certificate.
 
 The process is part of the result. This document therefore records the source inventory, formulas,
 theorem chain, the dated 20-lens transfer council, a separate 1 September 2026 70-lens adversarial
-closure (20 mandatory core plus 50 additional artifact-specific lenses), a separate 10-route
+publication review (20 mandatory core plus 50 additional artifact-specific lenses), a separate 10-route
 comparison, dissent and limitations, the autoresearch boundary, the implementation
 roadmap, the evidence hierarchy, and the repository durability state machine. Exact path
 inventories, hashes, run rosters, and mutation records belong in machine-readable JSON or TSV
@@ -371,7 +388,7 @@ vote. Each lens asks a different question of the same proposed transfer. Agreeme
 does not create evidence, and a single load-bearing objection can veto promotion. The detailed
 evidence and nonimplications are preserved in the machine-readable transfer ledger. The table below
 uses the same canonical names, numbering, and order as that historical 20-lens registry; it is the
-human synthesis of those exact rows. The separate current closure in the next section does not
+human synthesis of those exact rows. The separate later review in the next section does not
 retroactively change these rows.
 
 | # | Lens | PrimeGaps observation | PID decision |
@@ -412,24 +429,27 @@ retroactively change these rows.
 - **Dissent retained:** the semantic DAG may be unnecessary. A simpler direct reconstruction is
   the baseline and remains preferred unless profiling and proof size show a measured benefit.
 
-## Dated 1 September 2026 adversarial publication closure
+## Dated 1 September 2026 adversarial publication review
 
-This is a new review of the present publication and decision boundary, not an amendment to the
-historical 20-lens ledger. Twenty mandatory core lenses and fifty additional artifact-specific
+This is the preserved review of the 1 September publication and then-current decision boundary,
+not an amendment to the historical 20-lens ledger. Twenty mandatory core lenses and fifty
+additional artifact-specific
 lenses were applied beyond the ordinary author pass: seventy typed rows in total, with each row
 counted once. Thematic overlap between a core question and a finer artifact-specific attack is
 intentional; the count is coverage, not independence. Ten materially distinct routes were then
 compared separately, including no action and the simplest applicable non-PID route. The counts are
 coverage checklists, not mathematical evidence.
-The closure verdict is narrow: publish this document as a proposed/open research blueprint, preserve
-the two scoped decision-record-2 results, and grant no complete-certificate, estimator, population,
-application, novelty, or cross-toolchain-PDF credit.
+The verdict at that review boundary was narrow: publish this document as a proposed/open research
+blueprint, preserve the two scoped decision-record-2 results, and grant no complete-certificate,
+estimator, population, application, novelty, or cross-toolchain-PDF credit.
 
-The audit subject is this blueprint's current wording and the open certificate boundary that it
-reports. Each row below has exactly one typed disposition. `PASS` identifies current-byte evidence;
-`CORRECT` records an old and corrected statement; `NARROW` retains an explicit scope; `OPEN` names an
-unclosed obligation; `NEGATIVE` retains a counterexample or prohibited route; and `N/A` gives a typed
-applicability reason. A publication-level pass never closes the underlying certificate.
+The audit subject is the blueprint wording and open certificate boundary as they stood on 1
+September. Each row below has exactly one typed disposition. `PASS` identifies evidence bound to
+the bytes reviewed on that date; `CORRECT` records an old and corrected statement; `NARROW` retains
+an explicit scope; `OPEN` names an unclosed obligation; `NEGATIVE` retains a counterexample or
+prohibited route; and `N/A` gives a typed applicability reason. A publication-level pass never
+closes the underlying certificate. The current 3 September evidence delta follows the route
+comparison and does not retroactively rewrite these rows.
 
 ### Twenty mandatory core lenses
 
@@ -507,7 +527,7 @@ or selecting a favorable subpart.
 | 41 | SMT trust boundary | `NARROW` - Unsatisfiability concerns only the encoded finite theory; `unknown` is no evidence and two solvers can share the same mistranscription. |
 | 42 | Mutation causality | `OPEN` - Each accepted hostile mutation must fail through its intended predicate, but the complete causal suite and fault-model coverage are not claimed. |
 | 43 | Route independence | `NARROW` - The route section and shared-cut paragraph distinguish language, algorithm, parser, data, semantic, toolchain, host, model-lineage, reviewer, and custody cuts; shared source and local custody remain explicit. |
-| 44 | Current-decision freshness | `CORRECT` - Old wording treated the 31 August closure and Program rows as current; the corrected 1 September closure binds the current decision/index bytes, which retain D1 and every Program A--E status, while coordinated resealing is not an authenticity theorem. |
+| 44 | Current-decision freshness | `CORRECT` - Earlier wording treated the 31 August boundary and Program rows as current. At this dated review, the document bound the then-current decision-v2/index bytes, which retained D1 and every Program A--E status. The separate 3 September delta records decision-v3; coordinated resealing is not an authenticity theorem. |
 | 45 | Selection and autoresearch | `OPEN` - The promotion ledger freezes grammar, objective, budget, exposure, stopping, withdrawals, and judge authority, but it supplies no acceptance receipt for a future adaptive run. |
 | 46 | External custody | `OPEN` - Same-repository hashes and same-host reruns provide no independent acquisition, authenticity, or institutional-review receipt; fresh separately held replay remains required. |
 | 47 | Link and PDF portability | `CORRECT` - Old prose said all active actions were rejected; the corrected contract admits only the declared catalog/outline/link navigation whitelist, keeps Markdown links relative, and limits exact rendering to the same toolchain. |
@@ -541,6 +561,71 @@ Dissent is preserved: the semantic DAG may add more proof surface than value; ex
 premature; and the correct application decision can be to use no PID at all. New evidence can change
 those dispositions only through a premise-explicit source map, generated-answer-blind direct replay, measured
 resource results, causal hostile tests, and fresh independently held execution.
+
+## Current 3 September 2026 SxPID3 evidence delta
+
+Decision record 3 does not change the frozen revision-1 target. It preserves the two bounded
+results from decision record 2 and accepts one additional scoped result: an owner-controlled reading
+of Makkeh--Gutknecht--Wibral revision 5, connected to an executable reconstruction from small
+definitions. The source map includes a 20-lens adversarial council. That council is integrator-owned
+and is not independent review.
+
+The reconstruction assumes three ordered categorical sources with nonempty finite alphabets, one
+finite categorical target, a positive finite count total, and evaluation only at positive-count
+keyed rows. It uses natural logarithms in this repository. The paper's bit values are converted by
+multiplication by the positive constant $\ln 2$. The older exhaustive audit has the narrower domain
+of three binary sources, one binary target, and total count $1\le N\le5$.
+
+The new evidence derives the following finite objects instead of importing generated answer tables:
+
+| Object | Exact result | What the result does not establish |
+|---|---:|---|
+| Nonempty antichains of the seven nonzero source masks | 18 | A four-source carrier or an arbitrary-source theorem |
+| Ordered carrier comparisons and true order entries | 324 and 129 | Correct source interpretation merely from matrix shape |
+| Nonzero entries of the exact two-sided Möbius inverse | 65 | A proof-assistant theorem or a second solver route |
+| Source-event and event/target truth cases | 144 and 288 | Canonical byte decoding or compiled Rust parity |
+| Source-label automorphisms | 6 | Exchange of a source role with the target role |
+
+The semantic point is not only the census. MGW Equation (4) joins individual source-equality
+statements by OR. MGW Equations (5)--(8) use AND inside each source collection and OR across
+collections. Thus `01+02` and `03` are different events: on equality pattern `010`, the first is
+true and the second is false. This retained witness rejects two plausible connective swaps. A
+separate indicator argument proves, for arbitrary finite nonnegative row counts and a positive
+keyed row,
+
+$$
+0<c_z\le V_{\alpha,z}\le U_{\alpha,z}\le N,
+\qquad V_{\alpha,z}\le T_z\le N.
+$$
+
+This inequality is conditional on the declared row semantics. It does not prove that arbitrary
+bytes decode uniquely to such rows; canonical-input obligation D1 remains open.
+
+The generated carrier, zeta table, and Möbius matrix match the frozen conventions and primary route
+entry by entry. The second route matches the 18-key registry and the 129/65 lattice censuses. This is
+an exact compatibility edge for the named bytes. It does not execute either old route, compare their
+event kernels, make them independent, or establish Rust refinement. Named semantic and record
+mutations fail. In normal and optimized Python, the current self-test runs two baselines and rejects
+four alternate-input routes, 28 canonical-record reseals, 12 semantic-source mutations, six raw
+compatibility-file drifts, four coherently resealed compatibility-literal mutations, and two
+document drifts. Four of the 28 record executions cover Boolean `false` versus integer `0` and
+floating `5.0` versus integer `5`; the four separately counted compatibility-reseal executions
+cover Boolean `False` versus an integer Möbius entry and floating `129.0` versus integer census
+`129`. Two deliberately coordinated prose/record/checker reseals can still pass. Those accepted
+negative controls show why hashes and owner-controlled checkers cannot replace independent semantic
+review. These are named-fault results, not proof that the checker has no other false green.
+
+This definition-generated reconstruction is the current owner-controlled semantic reference. It is
+not the selected future direct 108-product baseline, and it is not the proposed semantic mass DAG.
+Those later routes must be derived and checked without importing this reference's generated values
+as acceptance answers.
+
+The current adjudication is therefore precise: source correspondence and finite semantic
+reconstruction are materially stronger, but Program A remains partial/open and the number of
+Programs A--E closed remains **0 of 5**. Concrete Fin-3 Lean and independently encoded solver
+routes, canonical parsing, directed logarithm intervals, compiled refinement, and independent
+custody remain open. No result transfers to another PID, a continuous estimator, a population
+claim, or an application without a separate mapping theorem and its assumptions.
 
 ## The transfer ledger: adopt structure, not conclusions
 
@@ -595,7 +680,7 @@ Williams--Beer $I_{\min}$, BROJA, the continuous Ehrlich shared-exclusions const
 target-free analogue, the full mixed-dimensional continuous PID3, KSG, fitted quantization, or
 pointwise certification. These measures and estimands have different definitions and assumptions;
 their atoms must not be pooled or relabeled. The complete packet remains proposed/open. Current
-decision-v2 evidence is partial and bounded; it does not close any end-to-end implication.
+decision-v3 evidence is partial and bounded; it does not close any end-to-end implication.
 
 The assumptions for every equation in this section are: three ordered finite source alphabets
 $\mathcal S_1,\mathcal S_2,\mathcal S_3$; one finite target alphabet $\mathcal T$; one finite,
@@ -715,7 +800,7 @@ floating tolerance. Magnitudes require a separate outward interval for $(1/N)\ln
 overlap is not enough, and an interval touching zero does not decide exact sign.
 
 Negative signed-net atoms are not merely hypothetical. The current bounded evidence matrix at
-`claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v2.md` records $N=3$, key `02+04`, and exact
+`claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md` records $N=3$, key `02+04`, and exact
 net product $R^{\mathrm{sx}}=9/16$, hence $(1/3)\ln(9/16)<0$. This is a bounded categorical witness,
 not a population or other-PID theorem. Clamping, taking an absolute value, or retaining only
 positive entries would change the declared object.
@@ -846,10 +931,12 @@ No downstream green box repairs an upstream semantic error. The five closure pro
 | E: adversarial replay | Are bytes, dependencies, mutations, first results, and custody complete? | content manifests, fresh replay, hostile fixtures, independent adjudication | hashes and reruns are not scientific truth |
 
 The complete target remains proposed/open for `SX-CERTIFIED-AVERAGED-PID3-001`. As recorded in
-[decision record 2](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md), Programs A and B have
-scoped partial results; Program C has a bounded exact sign/zero result; Program D has only a
-lexical routing observation; and Program E has source-bound local receipt and partial mutation
-evidence. None closes an end-to-end implication, and this report does not close the claim.
+[decision record 3](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md), Program A now has an
+owner-controlled source map and exact executable Fin-3 semantic reconstruction in addition to its
+earlier scoped evidence. Program B has generic algebra and no concrete Fin-3 formal closure;
+Program C has a bounded exact sign/zero result; Program D has only a lexical routing observation;
+and Program E has source-bound local receipts and partial mutation evidence. No Program is closed,
+none of these results closes an end-to-end implication, and this report does not close the claim.
 Canonical-input obligation D1 remains an upstream requirement even though the frozen Program A--E
 “Current obligations” rows do not name it. Promotion requires every frozen obligation, including
 D1, as well as every Program closure condition; a five-row Program summary is not a complete
@@ -973,10 +1060,12 @@ score, model consensus, and repeated rediscovery are discovery signals, not evid
 
 ### Council protocol
 
-For current consequential designs, twenty mandatory core lenses and at least thirty additional
-artifact-specific lenses are applied in three passes. This publication uses fifty additional
-lenses, for seventy current lenses in total. The earlier twenty-lens transfer council remains a
-dated historical review; it is not the current coverage threshold:
+For consequential designs, twenty mandatory core lenses plus at least thirty additional
+artifact-specific lenses are applied in three passes. The 1 September publication review used
+twenty core and fifty additional lenses, for seventy typed rows in that dated pass. The 19 August
+transfer council remains a separate historical review. The Program A source map adds a separate
+twenty-lens integrator review dated 3 September. These reviews overlap, are not independent, and
+must not be added into an assurance score:
 
 1. independent pre-merge memos identify the strongest falsifier and most likely hidden shared cut;
 2. an integrator reconstructs decisive facts from primary sources and synthesizes competing
@@ -1057,6 +1146,9 @@ Other recurring failures and their repairs are:
 | A partial clone reported zero missing objects reachable from one observed `HEAD` | Inspect promisor configuration, partial-clone filter, pack markers, traversal root, and lazy-fetch setting | State only the observed-`HEAD` closure; replay a separately identified bundle in an isolated repository for its advertised ref; make no global-completeness claim |
 | A commit unreachable from observed live refs was treated as if it lacked custody | Match the exact object to the advertised bundle inventory and isolated replay result | Record live-ref reachability and custody as separate fields; retain the registry only for remaining unadjudicated content, not for a custody gap that the evidence closes |
 | An archived object identifier lost its leading hexadecimal digit | Enforce the full 40-hex SHA-1 grammar and cross-check the object, tree, and parent tuple | Restore the exact identifier and reject abbreviated or malformed identities before any ancestry or preservation conclusion |
+| The pre-correction Program-A-v4 checker accepted JSON `false` as integer `0` and `5.0` as integer `5` after coherent digest resealing | Two minimal typed-status substitutions run in normal and optimized Python; the old fixed success line concealed the decoded type drift | Compare every verdict-bearing JSON object recursively by exact type, shape, and value; retain the pre-correction commit and a first-class failure record; keep the PDF wrapper's typed status check as defense in depth |
+| The same checker accepted a Boolean in an integer Möbius tuple and floating `129.0` as integer census `129` after coherent compatibility-file and digest resealing | Two minimal parsed-literal substitutions run in normal and optimized Python; fixed success text concealed the parsed type drift | Apply the same recursive typed comparator to all six frozen-registry comparisons; retain both witnesses; do not infer that Python source is a safe general untrusted certificate format |
+| A disposable checkout lost tracked paths and object connectivity during an exact PDF-check attempt | Stop immediately; preserve 26 enumerated WIP files; record the full 644-entry porcelain census and invalid Git pointers; statically audit all three scripts without inferring causation | Recover from an independently intact no-hardlink checkout; replace the insufficient `BASH_ENV`-only and regular-file-only defenses with a clean nested environment plus object/link identity checks; require pre/post manifests in a canary; retain the [incident record](audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md) with rejected routes and cause unresolved |
 
 This failure ledger is part of the method. It explains why a green theorem can coexist with a red
 certification chain, why a branch can be mostly obsolete yet still be non-discardable, and why
@@ -1093,17 +1185,20 @@ The durability sequence is exact: freeze writers; inventory every visible and re
 byte; classify each variant; commit or externally preserve unique material; bind bundle size and
 SHA-256; compare advertised refs with the frozen intended-ref inventory; run bundle verification
 and a clean recovery drill; integrate explicit paths from fresh `main`; regenerate
-Markdown/TeX/PDF and source-state derivatives; run applicable local gates; push
-the exact descendant with an expected-old lease; query remote `main`; require hosted success on
-that exact object; and only then retire branches, worktrees, and caches. A post-removal inventory
-must show that no required object became unreachable.
+Markdown/TeX/PDF and source-state derivatives; and run applicable local gates. For a mainline
+successor, push the exact descendant with an expected-old lease, query the remote ref, prove
+ancestry, and require applicable hosted success on that exact object. For archive-only material,
+bind the durable locator, retention statement, and successful retrieval without inventing mainline
+or hosted-run credit. Only after the relevant pre-removal controls pass may one named branch or
+worktree be removed. An immediate post-removal object inventory and successor retrieval complete
+retirement; cache deletion and garbage collection remain later operations.
 
-![Numbered stages show that retirement follows verification rather than replacing it.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-stages.svg)
+![Numbered stages show that bounded removal follows verification and that retirement completes only after a post-removal check.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-stages.svg)
 
-![Availability, acceptance, and recoverability are distinct; every retirement condition must hold.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-storage.svg)
+![Availability, acceptance, and recoverability are distinct; mainline and archive paths have different removal controls, followed by one post-removal completion check.](audit/formal/latex/figures/pid-discovery-verification-and-durability-blueprint/durable-promotion-state-machine-storage.svg)
 
 ```text
-Discover -> Freeze -> Classify -> Preserve -> Integrate -> Verify -> Retire
+Discover -> Freeze -> Classify -> Preserve -> Integrate -> Verify -> Remove -> Post-check -> Retired
 ```
 
 ### Storage and trust ladder
@@ -1161,15 +1256,21 @@ lint, documentation, PDF, and mutation gates. After push, bind the exact remote 
 identities. Local and remote `main` must resolve to the same intended commit without a
 non-fast-forward update or plain `--force`.
 
-A branch or worktree is retirement-eligible only when:
+A branch or worktree is **removal-eligible** only when:
 
 1. no process owns it;
 2. every dirty, untracked, and relevant ignored byte has an explicit disposition;
-3. its commits are remote-main ancestors, or every unique payload has a durable successor and
-   recovery ledger;
+3. its destination-specific controls pass: a mainline successor has exact remote-ref, ancestry,
+   and applicable hosted-run evidence, while an archive-only successor has a durable locator,
+   retention statement, and recovery evidence without pretending to be on `main`;
 4. restricted material has a safe non-public home;
-5. the remote-ref, ancestry, hosted-run, and recovery-drill checks pass; and
-6. a post-removal inventory shows no newly unreachable required object.
+5. the relevant successor has passed a retrieval or recovery drill.
+
+Removal is then one bounded operation. **Retirement is complete only after** a post-removal
+inventory shows that no required object became newly unreachable and that every named successor is
+still retrievable. If that check fails, restore the lane or recover its payload before any further
+cleanup. A post-removal observation cannot be a precondition for removal; it is the completion gate
+that follows it.
 
 Cache deletion and Git garbage collection come last, after a retention window and repeated object
 inventory. Remote archive branches remain until exact preimages have a main-reachable or verified
@@ -1196,16 +1297,19 @@ section nor becomes a live, global branch or filesystem authority.
 ## Implementation roadmap for SxPID3
 
 The order below optimizes for semantic risk reduction, not visual progress. It is a prospective
-roadmap from the current decision-v2 boundary: it preserves partial bounded evidence without
-calling it an accepted certifier or silently re-opening the frozen revision-1 claim.
+roadmap from the current decision-v3 boundary: it preserves partial bounded evidence without
+calling it an accepted certifier or silently changing the frozen revision-1 claim.
 
 ### Phase 0: preserve and adjudicate the packet
 
-- Preserve the frozen revision-1 packet, current decision-v2 record, and bounded negative results
-  as distinct evidence objects.
+- Preserve the frozen revision-1 packet, historical decision-v2 record, current decision-v3 record,
+  and bounded negative results as distinct evidence objects.
 - Keep the complete target proposed/open while the evidence-adjudication index remains the current
   pointer; do not edit the historical revision index to make later evidence appear contemporaneous.
-- Pin the exact Makkeh--Gutknecht--Wibral source and construct a paper-equation-to-local-formula map.
+- Preserve the owner-controlled revision-5 source map and obtain a separately controlled
+  acquisition, reading, objections record, and durable custody receipt.
+- Formalize the concrete Fin-3 event, carrier, order, and inverse without importing the executable
+  reconstruction as an answer table; add an independently encoded solver-neutral route.
 - Decide whether the semantic DAG is internal revision-1 machinery or a claim-v2 acceptance object
   before changing an acceptance rule, schema, registry, or resource policy.
 
@@ -1214,10 +1318,15 @@ calling it an accepted certifier or silently re-opening the frozen revision-1 cl
 ### Phase 1: simple direct specification
 
 - Implement the strict canonical decoder and direct event-count route.
-- Reconstruct all 18 antichains, order entries, $Z$, $M$, 54 cumulative component expressions,
-  54 atom component expressions, and the 108 keyed scalar audit expressions without generated
-  acceptance tables. Do not label those expressions as atoms or independent degrees of freedom.
-- Add minimal exact witnesses for every semantic mutation and the noncanonical-factor example.
+- Treat the completed definition-generated 18-node carrier, 324-entry order/zeta table, 65-nonzero
+  two-sided inverse, and 144/288 truth reconstructions as checked semantic foundations, not as
+  answer tables for later routes. Reconstruct those objects independently at the formal and solver
+  cuts.
+- From canonical count bytes, implement the direct 54 cumulative, 54 atom, and 108-keyed exact
+  product route without importing generated acceptance values. Do not label all 108 expressions as
+  atoms or independent degrees of freedom.
+- Retain the existing connective, target, weighting, order, and coordinated-reseal witnesses; add
+  causal controls for the canonical decoder, products, resources, and full keyed output route.
 
 **Promotion condition:** implementation-disjoint, generated-answer-blind review and exact keyed
 results on hand-checkable fixtures.
@@ -1298,9 +1407,11 @@ comparators, warm-cache evidence, sparse process provenance, and no same-revisio
 receipt.
 
 For `pid-rs`, the best next step is not to imitate prime-gap mathematics or immediately build a
-packed kernel. It is to preserve the open SxPID3 packet, close the paper-to-formula map, implement a
-simple generated-answer-blind exact route, and pilot a two-view proof-carrying semantic IR whose semantic and
-arithmetic obligations are separately testable. Only measured benefit justifies packing or
+packed kernel. It is to preserve the open SxPID3 packet, submit the owner-controlled source map to
+independent review, formalize its concrete Fin-3 semantics through non-importing Lean and
+solver-neutral routes, implement a simple generated-answer-blind exact route, and pilot a two-view
+proof-carrying semantic IR whose semantic and arithmetic obligations are separately testable. Only
+measured benefit justifies packing or
 internal sharding. Only closure of every frozen obligation, including D1, and every Program A--E
 closure condition can justify a certificate disposition. Nothing in that path upgrades KSG,
 continuous PID, population inference, or scientific interpretation without their own evidence.
@@ -1343,10 +1454,15 @@ credit.
 - Axiom Math, [PrimeGapsLib at reviewed commit](https://github.com/AxiomMath/PrimeGapsLib/tree/1faa7b14e82ddebc2772dfb9153922f01b106477).
 - Axiom Math, [interactive bounded-prime-gaps paper](https://primegaps.axiommath.ai/paper/).
 - Axiom Math, [formalization blueprint PDF](https://primegaps.axiommath.ai/blueprint.pdf).
-- Makkeh, Gutknecht, and Wibral, *Introducing a differentiable measure of pointwise shared information*, Physical Review E 103, 032149 (2021), arXiv:2002.03356.
+- Makkeh, Gutknecht, and Wibral, [*Introducing a differentiable measure of pointwise shared
+  information*](https://doi.org/10.1103/PhysRevE.103.032149), *Physical Review E* 103, 032149
+  (2021); the current source correspondence binds [arXiv revision 5](https://arxiv.org/abs/2002.03356).
 - Williams and Beer, [*Nonnegative Decomposition of Multivariate Information*](https://arxiv.org/abs/1004.2515) (2010), defining the distinct $I_{\min}$ redundancy functional.
 - Bertschinger, Rauh, Olbrich, Jost, and Ay, [*Quantifying Unique Information*](https://doi.org/10.3390/e16042161), *Entropy* 16, 2161--2183 (2014), a basis for the distinct BROJA family.
 - Ehrlich, Schick-Poland, Makkeh, Lanfermann, Wollstadt, and Wibral, [*Partial Information Decomposition for Continuous Variables Based on Shared Exclusions: Analytical Formulation and Estimation*](https://doi.org/10.1103/PhysRevE.110.014115), *Physical Review E* 110, 014115 (2024).
 - Gian-Carlo Rota, [*On the Foundations of Combinatorial Theory I. Theory of Möbius Functions*](https://doi.org/10.1007/BF00531932), *Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete* 2, 340--368 (1964).
 - `pid-rs`, `MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md`, the existing repository-wide scientific and autoresearch process record.
 - `pid-rs`, `claims/SX-CERTIFIED-AVERAGED-PID3-001/`, proposed revision-1 specification and open Programs A--E.
+- `pid-rs`, [current SxPID3 decision record](claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md),
+  [source correspondence](claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md), and
+  [bound machine record](audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json).

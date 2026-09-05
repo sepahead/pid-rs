@@ -388,7 +388,9 @@ AUTORESEARCH_SOURCE_SEMANTICS: Final[str] = (
     "an exact checked witness rather than the discovery trajectory."
 )
 
-WORKFLOW_SECTION_START: Final[str] = "### 6. Run the required 20-lens adversarial audit\n"
+WORKFLOW_SECTION_START: Final[str] = (
+    "### 6. Run the required 20-core/50-lens adversarial audit\n"
+)
 WORKFLOW_SECTION_END: Final[str] = (
     "For every strict sign, ranking, or separation claim, bind an exact or enclosed positive margin"
 )

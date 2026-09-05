@@ -7,8 +7,22 @@
 
 local dropped_title = false
 local github_navigation_links = {
+  ["claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md",
   ["claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md"] =
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v2.md",
+  ["claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md",
+  ["claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
+  ["audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+  ["claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/failures/python-status-type-coercion.md",
+  ["audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md",
+  ["audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md"] =
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/sxpid3-pdf-checkout-integrity-incident-2026-09-04.md",
   ["claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md"] =
     "https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md",
   ["claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md"] =
@@ -36,11 +50,11 @@ local figure_panels = {
     "The PID pilot and promotion evidence remain separate from prohibited transfers of prime-gap conclusions."
   },
   ["durable-promotion-state-machine-stages.pdf"] = {
-    "Durable promotion state machine, part 1: the seven ordered stages from discovery through retirement.",
+    "Durable promotion state machine, part 1: seven stages through bounded removal, followed by post-removal completion.",
     "Numbered stages show that retirement follows verification rather than replacing it."
   },
   ["durable-promotion-state-machine-storage.pdf"] = {
-    "Durable promotion state machine, part 2: the storage and promotion paths and retirement gate.",
+    "Durable promotion state machine, part 2: two successor paths, destination-specific removal controls, and post-removal completion.",
     "Availability, acceptance, and recoverability are distinct; every retirement condition must hold."
   },
 }

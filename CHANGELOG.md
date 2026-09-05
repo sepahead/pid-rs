@@ -9,18 +9,50 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Rewrite the session entry and reader guides around current claim decisions, ten-route planning,
+  independent-first critique, and small verified commit/push milestones. Preserve the interrupted
+  blueprint receipt with an explicit superseded disposition. Record fresh 31-page visual review,
+  the retracted display-induced collision alarm, and the bounded recovery and scientific councils.
+  These documentation changes grant no theorem, consumer, release, or branch-retirement credit.
+
 - Rebuild and visually adjudicate the two canonical workflow publications without changing any
   accepted PID theorem, estimator, or numerical result. The mathematical-workflow artifact is now
   87 A4 pages with a complete color/grayscale review, a 24-page high-resolution spot set, 20 named
   review lenses, and 381 hostile controls including 24 receipt mutations. The discovery and
-  durability blueprint is now 29 A4 pages with a complete color/grayscale review, a 15-page
+  durability blueprint is now 31 A4 pages with a complete color/grayscale review, a 19-page
   high-resolution spot set, 20 named review lenses, a 70-row worked council
-  (20 mandatory core plus 50 artifact-specific lenses), ten separately compared routes, and 72
+  (20 mandatory core plus 50 artifact-specific lenses), ten separately compared routes, and 81
   hostile controls. Both receipts bind exact PDF bytes and state that visual inspection does not
   prove mathematics, accessibility, toolchain authenticity, or independent scientific review. The
-  2 September blueprint edition now uses matching deterministic creation/modification dates; its
-  declared same-renderer rasters are byte-identical to the immediately preceding reviewed 29-page
-  subject, so this is a metadata chronology correction rather than a visual or mathematical change.
+  3 September blueprint edition incorporates the owner-controlled Program-A-v4 source
+  correspondence and exact finite reconstruction while keeping Program A partial/open and Programs
+  A--E closed at 0 of 5. It distinguishes the selected future direct verifier from a conditional
+  semantic-DAG optimization, records rejected and superseded routes with their failure reasons,
+  corrects the destination-specific removal/post-removal chronology, and requires recursive exact
+  type, shape, and value equality at both the authoritative Program-A checker's JSON-record and
+  parsed-registry boundaries; the publication wrapper independently preserves exact JSON status
+  checks. The exact pre-correction Program-A bytes, four minimal witnesses for two false-green
+  classes, repair, and nonimplications remain in a first-class negative-evidence record. The
+  Program-A hostile suite rejects 14 canonical-record mutation shapes in normal and optimized
+  Python, for 28 mode-specific record-rejection executions total; four of those executions are the
+  two JSON typed substitutions in both modes. Four additional mode-specific executions reject two
+  coherently resealed compatibility-literal substitutions. No complete
+  page raster matched the immediately preceding reviewed 29-page subject under the declared
+  same-renderer comparison, so all 31 current pages received fresh color/grayscale contact-sheet
+  inspection. The PrimeGaps transfer-ledger
+  gate now follows the workflow's renamed 20-core/50-lens section while continuing to bind only the
+  same canonical 20-row core registry.
+
+- Preserve the bounded record of a disposable-checkout integrity failure observed during an exact
+  SxPID3 PDF-check attempt. The record distinguishes observations from causation, binds recovery of
+  a 26-file WIP overlay, and keeps the event separate from mathematical results. The focused PDF
+  scripts now cross an external clean-environment boundary for nested Bash, validate temporary
+  objects against exact canonical parents and device/inode identities, reject single-file
+  publication temporaries with additional links, and strengthen cleanup guards. Hostile
+  `BASH_ENV`, exported-function, escaped-directory-`mktemp`, and publication-hard-link fixtures
+  preserve the rejected routes. A fresh exact-byte no-hardlink canary passes nine controls and 38
+  hostile cases, builds only to scratch, and leaves its source, object, status, and connectivity
+  manifests byte-identical.
 
 - Add a dated, closed-schema post-publication custody receipt for the accepted mainline closure.
   The machine record binds the exact publication commit, tree, and parent; the observed remote-head
@@ -295,15 +327,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   build. Cross mode requires an explicit scratch output distinct from the canonical PDF and rejects
   exact, hard-link, and symbolic aliases. It resolves its existing temporary root to one physical
   path, strips a trailing slash before Kpathsea use, and rejects an absent root or filesystem `/`.
-  A focused fake-tool suite accepts seven exact/cross and temporary-root
-  controls and rejects 36 mode, fallback, renderer, path, alias, nonregular-file, and mid-build
+  A focused fake-tool suite accepts nine exact/cross, environment-isolation, and temporary-root
+  controls and rejects 38 mode, fallback, renderer, path, alias, nonregular-file, and mid-build
   mutation cases;
-  eight hard-link cases cover every required source, and four static guards keep the
+  eight hard-link cases cover every required source, and five static guards keep the
   rebuilt-versus-committed comparison outside the ID projection and reject any guide-only
   font-resource alpha comparator in the SxPID3 builder or PDF gate. It also requires terminal
   `mktemp` placeholders, calls each build directly so Bash `errexit` is not suppressed by command
   substitution, treats failed Pandoc and every nonzero LuaLaTeX pass as fatal even if usable-looking
-  TeX or stale-looking PDF/log files exist, and leaves no residual temporary publication file. The
+  TeX or stale-looking PDF/log files exist, and leaves no residual ordinary publication or build
+  temporary. An exported-function poison control establishes why `BASH_ENV=/dev/null` alone is
+  insufficient; a publication-temporary hard-link mutant must be rejected before its victim can be
+  overwritten. The
   suite also mutates a staged parser and a previously compared build during later PDF inspection;
   repeated digest checks reject both before publication. This protection is bounded to
   required-source aliases and detected concurrent changes while the

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="760" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc">
-  <title id="title">Durable promotion: storage paths and retirement gate</title>
-  <desc id="desc">Two explicit paths leave a local reference. The preservation path leads to a remote side or archive reference and then to a scholarly or restricted archive. The mainline path leads to remote main and then to a named project release. These storage states remain distinct from mathematical truth and scientific acceptance. A separate retirement checklist requires all listed conditions.</desc>
+  <title id="title">Durable promotion: storage paths, removal eligibility, and retirement completion</title>
+  <desc id="desc">Two explicit paths leave a local reference. The preservation path leads to a remote side or archive reference and then to a scholarly or restricted archive. The mainline path leads to remote main and then to a named project release. Destination-specific controls establish removal eligibility. A post-removal inventory and retrieval check then complete retirement.</desc>
   <defs>
     <pattern id="grain" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M2 5H8M12 14H18M5 18H9" stroke="#D2E0E2" stroke-width="1" opacity=".62"/></pattern>
     <pattern id="availability" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><path d="M0 0V14" stroke="#1F6968" stroke-width="3" opacity=".16"/></pattern>
@@ -39,9 +39,10 @@
     <rect x="373" y="480" width="184" height="62" rx="12" fill="#BBDDD7"/><text x="465" y="504" text-anchor="middle" class="label"><tspan x="465">Named project</tspan><tspan x="465" dy="17">release</tspan></text>
     <text x="100" y="580" class="body"><tspan x="100" dy="0">Archive-only storage can preserve rejected or restricted work.</tspan><tspan x="100" dy="22">Remote main and a named release are separate states.</tspan><tspan x="100" dy="22">Hashes bind bytes; no layer alone proves availability,</tspan><tspan x="100" dy="22">authenticity, mathematical truth, or scientific acceptance.</tspan></text>
     <rect x="675" y="190" width="360" height="470" rx="22" fill="#FFF9F5" stroke="#743E37" stroke-width="3"/><rect x="675" y="190" width="360" height="470" rx="22" fill="url(#gate)"/>
-    <text x="710" y="238" class="gateTitle">Retirement gate</text>
-    <text x="710" y="282" class="gate"><tspan x="710" dy="0">1. No active process owns the lane.</tspan><tspan x="710" dy="46">2. Dirty and ignored bytes are classified.</tspan><tspan x="710" dy="46">3. Unique science has a</tspan><tspan x="730" dy="22">durable successor.</tspan><tspan x="710" dy="42">4. Receipts and gates bind</tspan><tspan x="730" dy="22">the exact remote commit.</tspan><tspan x="710" dy="42">5. Archive-only material has</tspan><tspan x="730" dy="22">locator and recovery.</tspan><tspan x="710" dy="42">6. Post-removal inventory passes.</tspan></text>
-    <text x="710" y="620" class="gateTitle">Every row must be true.</text>
+    <text x="710" y="238" class="gateTitle">Removal eligibility</text>
+    <text x="710" y="282" class="gate"><tspan x="710" dy="0">1. No active process owns the lane.</tspan><tspan x="710" dy="42">2. Dirty and ignored bytes are classified.</tspan><tspan x="710" dy="42">3. Unique science has a</tspan><tspan x="730" dy="21">durable successor.</tspan><tspan x="710" dy="38">4. Mainline evidence binds remote</tspan><tspan x="730" dy="21">ref, ancestry, and relevant CI.</tspan><tspan x="710" dy="38">5. Archive evidence binds locator,</tspan><tspan x="730" dy="21">retention, and recovery.</tspan></text>
+    <text x="710" y="560" class="gateTitle">After bounded removal</text>
+    <text x="710" y="590" class="gate"><tspan x="710" dy="0">Inventory objects and retrieve</tspan><tspan x="710" dy="22">successors; only then close.</tspan></text>
     <text x="65" y="715" class="small">The storage and retirement diagrams are project-defined process guidance, not a release, custody, authenticity, or accessibility certificate.</text>
   </g>
 </svg>

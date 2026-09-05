@@ -47,6 +47,8 @@ layer substitutes for another:
 | The two routes are independent proofs. | Shared-cut inventory | Negative boundary | Rejected | The accurate description is implementation-disjoint under shared semantics |
 | Negative signed-net atoms occur. | Retained exact $9/16$ product witness | Exact counterexample | Supported for categorical MGW Sx on that finite empirical law | No population, causal, or other-PID conclusion follows |
 | The semantic checker is resistant to the seven archived false-green classes. | Exact seven-ID registry and normal/optimized self-test controls | Named hostile-test evidence | Supported for those mutations | Mutation adequacy never proves absence of every defect |
+| Ordinary Python equality enforces exact JSON status types. | Retained `False == 0` and `5.0 == 5` resealed-record witnesses in [the correction record](failures/python-status-type-coercion.md) | Exact counterexample to the pre-correction checker | Falsified for the pre-correction committed v4 checker; corrected current checker uses recursive type, shape, and value equality | The correction is named fault coverage, not a complete schema or checker-correctness proof |
+| Ordinary Python equality enforces exact types for parsed frozen registries. | Retained `(False, 1)` versus `(0, 1)` and `129.0` versus `129` coherently resealed witnesses in [the correction record](failures/python-status-type-coercion.md) | Exact counterexample to the pre-correction checker | Falsified for the pre-correction committed v4 checker; corrected current checker uses recursive type, shape, and value equality | The correction does not make Python source a safe general certificate format or prove checker independence |
 | Alternate evidence paths can redirect the production checker. | No-argument production interface and four alternate-input rejections | Negative executable evidence | Rejected for the tested `--record` and `--source-record` routes | Host/runtime compromise and source replacement remain outside the checker |
 | A coherently resealed but mathematically wrong prose change is rejected. | Deliberately accepted coordinated-reseal negative control | Counterexample to the checker capability | Falsified | Independent review and external custody are required controls |
 | The checker machine-interprets the paper or natural-language correspondence. | Checker source and coordinated-reseal control | Explicit nonclaim | Unsupported | It reconstructs local definitions and binds prose bytes only |
@@ -75,6 +77,10 @@ identities supply the mathematical content.
 
 ## Historical false-green coverage
 
+The [inert archive disposition](../../audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md)
+retains seven mutation recipes and fourteen normal/optimized observations from two superseded
+checkers. It is not executed as current evidence and earns zero closure credit.
+
 | Historical identifier | Current result | Limitation |
 |---|---|---|
 | `V1-FG-INPUT-ROUTE` | Former `--record` route rejects under normal and optimized Python | Covers that argument shape only |
@@ -87,6 +93,13 @@ identities supply the mathematical content.
 
 The self-test additionally requires the coordinated checker/record/document rewrite to pass. This
 prevents the evidence package from claiming a control it does not possess.
+
+## Current v4 false-green corrections
+
+| Identifier | Pre-correction result | Current control | Limitation |
+|---|---|---|---|
+| `V4-FG-STATUS-TYPE-COERCION` | A digest-resealed JSON Boolean `false` could substitute for integer `0`, and JSON `5.0` could substitute for integer `5` | Recursive exact JSON type-and-value comparison plus both causal mutations in normal and optimized Python | Does not prove complete mutation coverage, source meaning, or checker independence |
+| `V4-FG-PYTHON-LITERAL-TYPE-COERCION` | After coherent file/record/checker resealing, a Möbius-tuple integer `0` could become Boolean `False`, and integer census `129` could become floating `129.0` | The same recursive exact comparator covers all six parsed registries; both causal mutations run in normal and optimized Python | Does not make Python literals a general untrusted format or prove compatibility-file semantics |
 
 ## Obligation status after decision record 3
 
@@ -110,7 +123,7 @@ prevents the evidence package from claiming a control it does not possess.
 | X3 | Lexical Rust observations only | Open | Compiled specialized/general keyed comparison against exact reconstruction |
 | Q1 | Full declared 20,348-table/108-expression bounded replay | Strong bounded evidence | Still not arbitrary-domain closure |
 | Q2 | Six source permutations; earlier bounded metamorphic evidence | Partial | Complete declared relabeling, replication, serialization, and Rust path parity |
-| Q3 | Seven historical checker classes plus current semantic/record mutations | Strong named-fault partial | Complete mutation manifest across semantic, formal, numeric, parser, resource, Rust, and receipt layers |
+| Q3 | Seven historical checker classes, two corrected typed-equality false greens, and current semantic/record mutations | Strong named-fault partial | Complete mutation manifest across semantic, formal, numeric, parser, resource, Rust, and receipt layers |
 | P1 | Exact local byte bindings and earlier source-bound receipt | Partial | Complete immutable source/toolchain/input/output archive and fresh extraction replay |
 | H1 | No independent human custody | External/open | Separately acquired, executed, adversarially reviewed, externally anchored record |
 | J1 | This revision-preserving decision | Proposed/open | All applicable obligations and Programs A--E closed without substitution |

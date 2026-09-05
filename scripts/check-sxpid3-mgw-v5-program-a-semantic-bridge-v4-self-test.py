@@ -56,9 +56,9 @@ PRIMARY_ROUTE_REL: Final[Path] = Path(
 )
 INDEPENDENT_ROUTE_REL: Final[Path] = Path("scripts/check-sxpid3-all108-independent.py")
 EXPECTED_CHECKER_SHA256: Final[str] = (
-    "394361524372710179aea41f95f4ddf9559700082a80e02ac0d0a34fbe08ce4a"
+    "e2fd33074973eb6f48881761690c258796dcb09cf4677bd6c39cd9bbd7f65a57"
 )
-EXPECTED_CHECKER_BYTES: Final[int] = 41_953
+EXPECTED_CHECKER_BYTES: Final[int] = 45_107
 EXPECTED_PASS_STDOUT: Final[bytes] = (
     b"SxPID3 MGW-v5 Program-A semantic bridge v4: PASS "
     b"(18 nodes, 129 order pairs, 324 zeta entries, 65 nonzero Mobius entries, "
@@ -73,6 +73,10 @@ EXPECTED_HISTORICAL_FALSE_GREEN_IDS: Final[tuple[str, ...]] = (
     "V1-FG-ROLE-TITLE",
     "V2-FG-INPUT-ROUTE-VIA-SOURCE-RECORD",
     "V2-FG-SCOPE-CUTS-VIA-SOURCE-RECORD",
+)
+EXPECTED_CURRENT_FALSE_GREEN_IDS: Final[tuple[str, ...]] = (
+    "V4-FG-STATUS-TYPE-COERCION",
+    "V4-FG-PYTHON-LITERAL-TYPE-COERCION",
 )
 
 
@@ -179,11 +183,11 @@ def write_record(path: Path, value: dict[str, object]) -> None:
 def reseal_record(checker: Path, record: Path) -> None:
     raw = record.read_bytes()
     checker_raw = checker.read_bytes()
-    old_hash = b"dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24"
+    old_hash = b"447094be207f4e5798ea602b7ee737baac8df8ec835ccc4d4f90c41514e5b7c1"
     new_hash = sha256_bytes(raw).encode("ascii")
     require(checker_raw.count(old_hash) == 1, "record digest literal is not unique")
     checker_raw = checker_raw.replace(old_hash, new_hash, 1)
-    old_size = b"EXPECTED_RECORD_BYTES: Final[int] = 17_458"
+    old_size = b"EXPECTED_RECORD_BYTES: Final[int] = 18_491"
     new_size = f"EXPECTED_RECORD_BYTES: Final[int] = {len(raw)}".encode("ascii")
     require(checker_raw.count(old_size) == 1, "record-size literal is not unique")
     checker.write_bytes(checker_raw.replace(old_size, new_size, 1))
@@ -192,14 +196,87 @@ def reseal_record(checker: Path, record: Path) -> None:
 def reseal_document(checker: Path, document: Path) -> None:
     raw = document.read_bytes()
     checker_raw = checker.read_bytes()
-    old_hash = b"b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb"
+    old_hash = b"cc2f228fec62603da61e5fd3f75550a727978aeda20225abe80b5d9be2fdce0d"
     new_hash = sha256_bytes(raw).encode("ascii")
     require(checker_raw.count(old_hash) == 1, "document digest literal is not unique")
     checker_raw = checker_raw.replace(old_hash, new_hash, 1)
-    old_size = b"EXPECTED_DOCUMENT_BYTES: Final[int] = 33_942"
+    old_size = b"EXPECTED_DOCUMENT_BYTES: Final[int] = 35_510"
     new_size = f"EXPECTED_DOCUMENT_BYTES: Final[int] = {len(raw)}".encode("ascii")
     require(checker_raw.count(old_size) == 1, "document-size literal is not unique")
     checker.write_bytes(checker_raw.replace(old_size, new_size, 1))
+
+
+def reseal_compatibility_file(
+    checker: Path,
+    record_path: Path,
+    compatibility_path: Path,
+    compatibility_key: str,
+) -> None:
+    record = load_record(record_path)
+    edge = record.get("compatibility_edge")
+    require(isinstance(edge, dict), "compatibility edge test precondition")
+    files = edge.get("files")
+    require(isinstance(files, dict), "compatibility files test precondition")
+    identity = files.get(compatibility_key)
+    require(isinstance(identity, dict), "compatibility identity test precondition")
+    old_hash_value = identity.get("sha256")
+    old_size_value = identity.get("bytes")
+    require(isinstance(old_hash_value, str), "compatibility hash test precondition")
+    require(
+        type(old_size_value) is int,
+        "compatibility byte-count test precondition",
+    )
+
+    compatibility_raw = compatibility_path.read_bytes()
+    checker_raw = checker.read_bytes()
+    old_hash = old_hash_value.encode("ascii")
+    new_hash = sha256_bytes(compatibility_raw).encode("ascii")
+    require(
+        checker_raw.count(old_hash) == 1,
+        "compatibility digest literal is not unique",
+    )
+    checker_raw = checker_raw.replace(old_hash, new_hash, 1)
+    old_size = f'"bytes": {old_size_value:_},'.encode("ascii")
+    new_size = f'"bytes": {len(compatibility_raw):_},'.encode("ascii")
+    require(
+        checker_raw.count(old_size) == 1,
+        "compatibility size literal is not unique",
+    )
+    checker.write_bytes(checker_raw.replace(old_size, new_size, 1))
+
+    identity["bytes"] = len(compatibility_raw)
+    identity["sha256"] = sha256_bytes(compatibility_raw)
+    write_record(record_path, record)
+
+
+def compatibility_reseal_mutation(
+    name: str,
+    relative: Path,
+    compatibility_key: str,
+    old: bytes,
+    new: bytes,
+    expected: bytes,
+) -> None:
+    with tempfile.TemporaryDirectory(prefix=f"pid-rs-sxpid3-a-{name}-") as temporary:
+        fixture = Path(temporary) / "repo"
+        copy_fixture(fixture)
+        checker = fixture / CHECKER_REL
+        record_path = fixture / RECORD_REL
+        compatibility_path = fixture / relative
+        replace_once(compatibility_path, old, new)
+        reseal_compatibility_file(
+            checker,
+            record_path,
+            compatibility_path,
+            compatibility_key,
+        )
+        reseal_record(checker, record_path)
+        for optimized in (False, True):
+            require_reject(
+                run(checker, optimized=optimized),
+                expected,
+                f"{name}/optimize={int(optimized)}",
+            )
 
 
 RecordMutation = Callable[[dict[str, object]], None]
@@ -262,6 +339,19 @@ def main() -> int:
         observed_historical_ids == EXPECTED_HISTORICAL_FALSE_GREEN_IDS,
         "historical false-green identifier registry changed",
     )
+    current_corrections = validation.get("current_false_green_corrections")
+    require(
+        isinstance(current_corrections, list),
+        "current false-green correction registry is absent",
+    )
+    observed_current_ids = tuple(
+        entry.get("id") if isinstance(entry, dict) else None
+        for entry in current_corrections
+    )
+    require(
+        observed_current_ids == EXPECTED_CURRENT_FALSE_GREEN_IDS,
+        "current false-green correction identifier registry changed",
+    )
     for required in (
         b"multiply(mobius, zeta) == matrix_identity",
         b"multiply(zeta, mobius) == matrix_identity",
@@ -269,6 +359,8 @@ def main() -> int:
         b"paper_semantics_are_human_read_not_machine_interpreted",
         b"derived Mobius inverse differs from conventions",
         b'programs_closed": 0',
+        b"type(actual) is not type(expected)",
+        b"exact_typed_equal(",
     ):
         require(
             required in checker_raw,
@@ -329,6 +421,16 @@ def main() -> int:
         require(isinstance(status, dict), "program status test precondition")
         status["programs_closed"] = 1
 
+    def boolean_for_integer_zero(record: dict[str, object]) -> None:
+        status = record["status"]
+        require(isinstance(status, dict), "status-type test precondition")
+        status["programs_closed"] = False
+
+    def float_for_integer_five(record: dict[str, object]) -> None:
+        status = record["status"]
+        require(isinstance(status, dict), "status-type test precondition")
+        status["programs_total"] = 5.0
+
     def change_units(record: dict[str, object]) -> None:
         scope = record["scope"]
         require(isinstance(scope, dict), "scope test precondition")
@@ -377,6 +479,16 @@ def main() -> int:
     historical_controls_executed.append("V2-FG-SCOPE-CUTS-VIA-SOURCE-RECORD")
     record_mutation(
         "program-count-escalation", close_program, b"claim/program status changed"
+    )
+    record_mutation(
+        "boolean-false-for-integer-zero",
+        boolean_for_integer_zero,
+        b"claim/program status changed",
+    )
+    record_mutation(
+        "floating-five-for-integer-five",
+        float_for_integer_five,
+        b"claim/program status changed",
     )
     record_mutation("unit-conflation", change_units, b"scope changed")
     record_mutation(
@@ -460,6 +572,23 @@ def main() -> int:
                     f"compatibility-drift-{relative.name}/optimize={int(optimized)}",
                 )
 
+    compatibility_reseal_mutation(
+        "primary-mobius-boolean-for-integer",
+        PRIMARY_ROUTE_REL,
+        "primary_route",
+        b"((0, 1), (9, -1))",
+        b"((False, 1), (9, -1))",
+        b"derived Mobius inverse differs from primary bounded-route registry",
+    )
+    compatibility_reseal_mutation(
+        "independent-zeta-float-for-integer",
+        INDEPENDENT_ROUTE_REL,
+        "independent_route",
+        b"EXPECTED_ZETA_ONES = 129",
+        b"EXPECTED_ZETA_ONES = 129.0",
+        b"derived zeta census differs from independent-route registry",
+    )
+
     # Plain document drift is rejected by its exact-byte binding.
     with tempfile.TemporaryDirectory(
         prefix="pid-rs-sxpid3-a-document-drift-"
@@ -515,8 +644,9 @@ def main() -> int:
     print(
         "SxPID3 MGW-v5 Program-A semantic bridge v4 self-test: PASS "
         "(2 baseline executions; 4 alternate-input rejections; "
-        "24 record-reseal rejections; 12 semantic-source rejections; "
-        "6 compatibility-drift rejections; 2 document-drift rejections; "
+        "28 record-reseal rejections; 12 semantic-source rejections; "
+        "6 compatibility-drift rejections; 4 compatibility-reseal rejections; "
+        "2 document-drift rejections; "
         "2 accepted coordinated-reseal boundary diagnostics)"
     )
     return 0
