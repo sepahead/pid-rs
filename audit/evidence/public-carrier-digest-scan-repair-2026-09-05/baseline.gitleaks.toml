@@ -84,13 +84,3 @@ id = "generic-api-key"
   # keep the exception bound to exactly one complete physical line in that larger context.
   regexes = ['''(?m)^18-key serialization order, 108-coordinate certificate, resource policy, independent-verification$''']
   paths = ['''^claims/SX-CERTIFIED-AVERAGED-PID3-001/claim-v1\.md$''']
-
-  [[rules.allowlists]]
-  description = "Exact public Fin-3 carrier digest in its frozen semantic bridge"
-  condition = "AND"
-  regexTarget = "line"
-  regexes = ['''(?m)^[ \t]*"carrier_keys_sha256":[ \t]*"eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",?[ \t]*$''']
-  paths = [
-    '''^audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4\.json$''',
-    '''^scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4\.py$''',
-  ]

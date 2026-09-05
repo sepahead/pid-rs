@@ -1,0 +1,4976 @@
+{
+  "matrices": [
+    {
+      "case_count": 49,
+      "cases": [
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p0-intended-bare",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 93,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p0-intended-indent-comma",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "5278144b5e03c8e3dee7ba6c890cc920d04b5ed0bfc131cd26124ff7dd8c4839"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p0-intended-tabs",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "00461e10132fe19d8a46f161e6b4bb7fe9f78b814f5a56b56da7597940787d00"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 92,
+                "EndLine": 2,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 5,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p0-intended-json-context",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "b3e4ed935ec03d06796a156d83f682c492ca73026f216c865216ecce789d3e77"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 94,
+                "EndLine": 2,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p0-intended-python-context",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "428498df6dfcbeca4ca3a4503cbb4f3b13b9cabd69966f7f21a53d495480819e"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 4,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 4,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-changed-digest",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "f7f1adabe3ce4aa143b1ce3f97e59eb05d35150742849b2db39cb6995bbae388"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8343225,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8343225,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-changed-last-hex",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "edd577929de997878d30151b6947cc298ab52284e0ef8868a977a961785cbd1d"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8850274,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8850274,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-nonhex",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "75919e313190b1b1cb7687ccc6c432d91c8aac39cbff4e0882b65a0588203f75"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 98,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 98,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-nearby-key",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "653bf9dc91d67ae7ed722a357741b4994af9bcb8b1ece5dce3da101abbf72a6a"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-suffix-key",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "3a317440a5b882e47c34ce71451f8351cdd511ff0980dfafb7ad63472a416552"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-uppercase-key",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "0990e4f8efc8ac2782f069ba4c6b116129a6f3f0e3ae6701fa42cd137fff4eed"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-equals",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "52fc6d79cac6ca51cc0987d2fac9643b56ae927727635cd0958777610cd439e8"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 87,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 87,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-unquoted-key",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "41878b9d473724377fd8ff13caabc53fcd34ea11b7d839457f0ab231fa6d0f5e"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-single-quoted-key",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "c5a61871cab35e557fb3f51338b2be02e0ee7fa11191bd6921d85182cb3fd5da"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 9,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 9,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-prefix",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "9dcf500e196a2fc9fe01cc5f6e190bd028978dbfb32b20de74f3d01fbecdd668"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-suffix-comment",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "012e6daf181f6d3758dde513037827bacc219f3c79d42629367cfbbc659c71da"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 88,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 88,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-missing-value-quote",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "39e3a2797974deb3c25a395074f37b113a4c3dc55750de80a48357b40f985b8d"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-extra-comma",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "f0c0ef3e2230e797ac61020a83172edf69a56bd1b07d1f76d3da5fffe03eacd8"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 83,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 2,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 83,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-adjacent-before",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "4cb2e3d9d5069508a033ae90bd150ac5167f2b86cc6395fdbb624f3493f88b84"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 84,
+                "EndLine": 2,
+                "Entropy": 4.1903186,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 84,
+                "EndLine": 2,
+                "Entropy": 4.1903186,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-adjacent-after",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "8e7345a539b588204d1af4ca3009be827ca63863b8ed166e65427b8e65e16286"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 174,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 92,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 174,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 92,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-adjacent-same-line",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "1fe029eddcdf870b9c8baded1e46a1047e2ddf92b7d14670062cf3cacbd5a394"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json.nearby",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json.nearby:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json.nearby",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json.nearby:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-suffix-path",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json.nearby",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "nearby/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "nearby/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "nearby/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+                "Fingerprint": "nearby/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-prefix-path",
+          "pass": true,
+          "path": "nearby/audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v5.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v5.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v5.json",
+                "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v5.json:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p0-hostile-renamed-path",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v5.json",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p1-intended-bare",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 93,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p1-intended-indent-comma",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "5278144b5e03c8e3dee7ba6c890cc920d04b5ed0bfc131cd26124ff7dd8c4839"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p1-intended-tabs",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "00461e10132fe19d8a46f161e6b4bb7fe9f78b814f5a56b56da7597940787d00"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 92,
+                "EndLine": 2,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 5,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p1-intended-json-context",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "b3e4ed935ec03d06796a156d83f682c492ca73026f216c865216ecce789d3e77"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 94,
+                "EndLine": 2,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "intended",
+          "name": "p1-intended-python-context",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "428498df6dfcbeca4ca3a4503cbb4f3b13b9cabd69966f7f21a53d495480819e"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 4,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 4,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-changed-digest",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "f7f1adabe3ce4aa143b1ce3f97e59eb05d35150742849b2db39cb6995bbae388"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8343225,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8343225,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-changed-last-hex",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "edd577929de997878d30151b6947cc298ab52284e0ef8868a977a961785cbd1d"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8850274,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8850274,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-nonhex",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "75919e313190b1b1cb7687ccc6c432d91c8aac39cbff4e0882b65a0588203f75"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 98,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 98,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-nearby-key",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "653bf9dc91d67ae7ed722a357741b4994af9bcb8b1ece5dce3da101abbf72a6a"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-suffix-key",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "3a317440a5b882e47c34ce71451f8351cdd511ff0980dfafb7ad63472a416552"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-uppercase-key",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "0990e4f8efc8ac2782f069ba4c6b116129a6f3f0e3ae6701fa42cd137fff4eed"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-equals",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "52fc6d79cac6ca51cc0987d2fac9643b56ae927727635cd0958777610cd439e8"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 87,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 87,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-unquoted-key",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "41878b9d473724377fd8ff13caabc53fcd34ea11b7d839457f0ab231fa6d0f5e"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-single-quoted-key",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "c5a61871cab35e557fb3f51338b2be02e0ee7fa11191bd6921d85182cb3fd5da"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 9,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 96,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 9,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-prefix",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "9dcf500e196a2fc9fe01cc5f6e190bd028978dbfb32b20de74f3d01fbecdd668"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-suffix-comment",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "012e6daf181f6d3758dde513037827bacc219f3c79d42629367cfbbc659c71da"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 88,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 88,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-missing-value-quote",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "39e3a2797974deb3c25a395074f37b113a4c3dc55750de80a48357b40f985b8d"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-extra-comma",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "f0c0ef3e2230e797ac61020a83172edf69a56bd1b07d1f76d3da5fffe03eacd8"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 83,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 90,
+                "EndLine": 2,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 83,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-adjacent-before",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "4cb2e3d9d5069508a033ae90bd150ac5167f2b86cc6395fdbb624f3493f88b84"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 84,
+                "EndLine": 2,
+                "Entropy": 4.1903186,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 84,
+                "EndLine": 2,
+                "Entropy": 4.1903186,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-adjacent-after",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "8e7345a539b588204d1af4ca3009be827ca63863b8ed166e65427b8e65e16286"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 174,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 92,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              },
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 174,
+                "EndLine": 1,
+                "Entropy": 4.1903186,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 92,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-adjacent-same-line",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "1fe029eddcdf870b9c8baded1e46a1047e2ddf92b7d14670062cf3cacbd5a394"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py.nearby",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py.nearby:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py.nearby",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py.nearby:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-suffix-path",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py.nearby",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "nearby/scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "nearby/scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "nearby/scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+                "Fingerprint": "nearby/scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-prefix-path",
+          "pass": true,
+          "path": "nearby/scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v5.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v5.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "findings": [
+              {
+                "Commit": "",
+                "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+                "EndColumn": 89,
+                "EndLine": 1,
+                "Entropy": 3.8240879,
+                "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v5.py",
+                "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v5.py:generic-api-key:1",
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1,
+                "SymlinkFile": "",
+                "Tags": []
+              }
+            ]
+          },
+          "kind": "hostile",
+          "name": "p1-hostile-renamed-path",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v5.py",
+          "source_sha256": "b316dcfd11b79ff964c7283a949d47249b927d5c706f88c9a2a8a912b9e47bb1"
+        },
+        {
+          "baseline": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "candidate": {
+            "exit_code": 0,
+            "finding_count": 0,
+            "findings": []
+          },
+          "kind": "config-self-scan",
+          "name": "candidate-config-self-scan",
+          "pass": true,
+          "path": ".gitleaks.toml",
+          "source_sha256": "2567ed22e90ba46b671688c465628d5824a7bc7cb398cb14eb76c63e0cfd9681"
+        }
+      ],
+      "observed_utc": "2026-09-05T06:02:28.369936+00:00",
+      "passed_count": 49,
+      "role": "accepted-policy"
+    },
+    {
+      "case_count": 80,
+      "cases": [
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-json-api-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-json-api-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-json-api-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-json-api-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-json-token-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-json-token-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-json-token-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-json-token-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-same-key-changed-value-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-same-key-changed-value-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-same-key-changed-value-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-same-key-changed-value-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-neighbor-key-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-neighbor-key-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-neighbor-key-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-neighbor-key-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-python-api-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-python-api-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-python-api-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-python-api-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-split-json-value-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-split-json-value-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-split-json-value-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-split-json-value-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            4
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-split-python-value-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-split-python-value-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-split-python-value-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-split-python-value-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            4
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-multiline-between-key-colon-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-multiline-between-key-colon-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-multiline-between-key-colon-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-multiline-between-key-colon-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            4
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-unquoted-api-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-unquoted-api-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-unquoted-api-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-unquoted-api-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-json-no-indent-before-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p0-json-no-indent-before-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p0-json-no-indent-after-gap1",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p0-json-no-indent-after-gap2",
+          "pass": true,
+          "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-json-api-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 88,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-json-api-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-json-api-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 89,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-json-api-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-json-token-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-json-token-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-json-token-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-json-token-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-same-key-changed-value-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 93,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-same-key-changed-value-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-same-key-changed-value-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 94,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-same-key-changed-value-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-neighbor-key-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 102,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 6,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-neighbor-key-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-neighbor-key-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 103,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 7,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-neighbor-key-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-python-api-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 83,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-python-api-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-python-api-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-python-api-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-split-json-value-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-split-json-value-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-split-json-value-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-split-json-value-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            4
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-split-python-value-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-split-python-value-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-split-python-value-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 74,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-split-python-value-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            4
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-multiline-between-key-colon-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-multiline-between-key-colon-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-multiline-between-key-colon-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 76,
+                "EndLine": 4,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-multiline-between-key-colon-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            4
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-unquoted-api-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 81,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 1,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-unquoted-api-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-unquoted-api-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 82,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-unquoted-api-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-json-no-indent-before-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 84,
+                "EndLine": 1,
+                "RuleID": "generic-api-key",
+                "StartColumn": 2,
+                "StartLine": 1
+              }
+            ]
+          },
+          "name": "p1-json-no-indent-before-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            1
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 2,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 2
+              }
+            ]
+          },
+          "name": "p1-json-no-indent-after-gap1",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            2
+          ]
+        },
+        {
+          "baseline": {
+            "exit_code": 1,
+            "finding_count": 2,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "candidate": {
+            "exit_code": 1,
+            "finding_count": 1,
+            "synthetic_value_hits": [
+              {
+                "EndColumn": 85,
+                "EndLine": 3,
+                "RuleID": "generic-api-key",
+                "StartColumn": 3,
+                "StartLine": 3
+              }
+            ]
+          },
+          "name": "p1-json-no-indent-after-gap2",
+          "pass": true,
+          "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+          "synthetic_value_lines": [
+            3
+          ]
+        }
+      ],
+      "observed_utc": "2026-09-05T06:04:53.397824+00:00",
+      "passed_count": 80,
+      "role": "accepted-adjacency"
+    }
+  ],
+  "scope": "Projection of recorded fixture outcomes; no new execution. Full fixture definitions are retained in ci-inline.py; temporary trees are omitted."
+}

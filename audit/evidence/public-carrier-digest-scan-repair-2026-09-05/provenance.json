@@ -1,0 +1,109 @@
+{
+  "construction": "Independent subset/combinations enumeration; no import or execution of repository checker. Compact JSON list of stable keys, no trailing newline.",
+  "historical_blob_scope": "Historical Git source blobs are identified by commit/path/blob and raw SHA-256; they are not copied into this packet. The carrier preimage and recorded finding metadata are included.",
+  "historical_records": [
+    {
+      "bytes": 17458,
+      "commit": "ee93b97fc779191306e34efc02c5ff2c78bc4162",
+      "digest_line": 181,
+      "git_blob": "a14d462ebdea2ed909fa199e1f9fa31727a8fbdf",
+      "matches_independent_preimage": true,
+      "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+      "public_digest": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+      "sha256": "dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24"
+    },
+    {
+      "bytes": 41953,
+      "commit": "ee93b97fc779191306e34efc02c5ff2c78bc4162",
+      "digest_line": 118,
+      "expected_keys_equal_independent_enumeration": true,
+      "git_blob": "039825ef6cb147e44dca0da2f9cfe0073c4f2a8e",
+      "matches_independent_preimage": true,
+      "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "public_digest": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+      "sha256": "394361524372710179aea41f95f4ddf9559700082a80e02ac0d0a34fbe08ce4a"
+    },
+    {
+      "bytes": 17458,
+      "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+      "digest_line": 181,
+      "git_blob": "a14d462ebdea2ed909fa199e1f9fa31727a8fbdf",
+      "matches_independent_preimage": true,
+      "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+      "public_digest": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+      "sha256": "dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24"
+    },
+    {
+      "bytes": 41953,
+      "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+      "digest_line": 118,
+      "expected_keys_equal_independent_enumeration": true,
+      "git_blob": "039825ef6cb147e44dca0da2f9cfe0073c4f2a8e",
+      "matches_independent_preimage": true,
+      "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "public_digest": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+      "sha256": "394361524372710179aea41f95f4ddf9559700082a80e02ac0d0a34fbe08ce4a"
+    }
+  ],
+  "keys": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "01+02",
+    "01+04",
+    "01+06",
+    "02+04",
+    "02+05",
+    "03+04",
+    "03+05",
+    "03+06",
+    "05+06",
+    "01+02+04",
+    "03+05+06"
+  ],
+  "observed_utc": "2026-09-05T05:57:07.261388+00:00",
+  "preimage_bytes": 130,
+  "remote_finding_metadata": [
+    {
+      "Commit": "ee93b97fc779191306e34efc02c5ff2c78bc4162",
+      "EndLine": 181,
+      "Entropy": 3.8240879,
+      "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+      "Fingerprint": "ee93b97fc779191306e34efc02c5ff2c78bc4162:audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:181",
+      "RuleID": "generic-api-key",
+      "StartLine": 181
+    },
+    {
+      "Commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+      "EndLine": 181,
+      "Entropy": 3.8240879,
+      "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+      "Fingerprint": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f:audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:181",
+      "RuleID": "generic-api-key",
+      "StartLine": 181
+    },
+    {
+      "Commit": "ee93b97fc779191306e34efc02c5ff2c78bc4162",
+      "EndLine": 118,
+      "Entropy": 3.8240879,
+      "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "Fingerprint": "ee93b97fc779191306e34efc02c5ff2c78bc4162:scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:118",
+      "RuleID": "generic-api-key",
+      "StartLine": 118
+    },
+    {
+      "Commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+      "EndLine": 118,
+      "Entropy": 3.8240879,
+      "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "Fingerprint": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f:scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:118",
+      "RuleID": "generic-api-key",
+      "StartLine": 118
+    }
+  ],
+  "sha256": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2"
+}

@@ -89,7 +89,7 @@ id = "generic-api-key"
   description = "Exact public Fin-3 carrier digest in its frozen semantic bridge"
   condition = "AND"
   regexTarget = "line"
-  regexes = ['''(?m)^[ \t]*"carrier_keys_sha256":[ \t]*"eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",?[ \t]*$''']
+  regexes = ['''^[ \t]*"carrier_keys_sha256":[ \t]*"eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",?[ \t]*$''']
   paths = [
     '''^audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4\.json$''',
     '''^scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4\.py$''',

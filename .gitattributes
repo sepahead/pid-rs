@@ -38,3 +38,8 @@ audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-
 audit/archive/ksg-m1a-rejected-lifecycle-checker-20260828/payload/** -text -whitespace
 audit/archive/numerical-claim-history-20260725/payload/** -text -whitespace
 audit/archive/sxpid3-s1-historical-checkers-v1/payload/** -text -whitespace
+
+# Preserve the reviewed scanner patch's context-space line and the original council table's
+# trailing blank line. Their exact archived bytes are bound by the accompanying manifest.
+audit/evidence/public-carrier-digest-scan-repair-2026-09-05/ci.yml.patch -text -whitespace
+audit/evidence/public-carrier-digest-scan-repair-2026-09-05/review-dispositions.md -text -whitespace

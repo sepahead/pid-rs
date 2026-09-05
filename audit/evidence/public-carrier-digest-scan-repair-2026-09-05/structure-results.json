@@ -1,0 +1,36 @@
+{
+  "policy": {
+    "adapter_changes": [
+      "config absolute path",
+      "unchanged ignore absolute path",
+      "Darwin executable path"
+    ],
+    "baseline_equals_candidate_after_removing_one_last_allowlist": true,
+    "defaults_extended": true,
+    "new_allowlist": {
+      "condition": "AND",
+      "description": "Exact public Fin-3 carrier digest in its frozen semantic bridge",
+      "paths": [
+        "^audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4\\.json$",
+        "^scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4\\.py$"
+      ],
+      "regexTarget": "line",
+      "regexes": [
+        "(?m)^[ \\t]*\"carrier_keys_sha256\":[ \\t]*\"eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2\",?[ \\t]*$"
+      ]
+    },
+    "new_rule_scope": "generic-api-key",
+    "original_self_test_sha256": "bbf9a2819653bd43588a9d18ab11b1a4941ca6eae4a6f0ef5ad63b180d98b79b",
+    "unchanged_ignored_fingerprint_count": 2,
+    "workflow_sha256": "049ed96393454c64905789c1b2b2613878d9084829cde802cb78d93dd338c896"
+  },
+  "workflow": {
+    "certified_sxpid_job_sha256": "57d9da0e34d99723719040fb8e39490841c48db123074785afe71cb8eab0d028",
+    "certified_sxpid_job_unchanged": true,
+    "changed_jobs": [
+      "secrets"
+    ],
+    "job_count": 26,
+    "original_inline_self_test_is_exact_prefix": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "complete_inline_bytes": 14442,
+  "complete_inline_public_file": "ci-inline.py",
+  "complete_inline_sha256": "a3c5ca3612bfe73ac237667802686fcbc179b01fc817204693d512c0a36c8442",
+  "difference": "Review B removed ten characters from every YAML block line. Twelve empty lines had fewer than ten characters, so that extraction omitted their LF bytes. The coordinator extraction and public file preserve these blank lines.",
+  "parsed_python_ast_equal_without_source_attributes": true,
+  "review_b_fixed_indent_extraction_bytes": 14430,
+  "review_b_fixed_indent_extraction_sha256": "97b790a71f34f02a531dd4e493baac12fef759acbcf6e161bd5d830e7a368058",
+  "schema_version": 1,
+  "scope": "This records a presentation and extraction difference. The original review is preserved with its original observed hash; its extracted bytes are not relabelled as the public complete inline bytes."
+}

@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "exit_code": 0,
+      "role": "reviewer-a-existing-inline",
+      "status_source": "Recorded original review; stream bytes retained.",
+      "stderr": "",
+      "stdout": "Gitleaks narrow-allowlist self-test passed: 10 intended, 63 rejected\n"
+    },
+    {
+      "exit_code": 0,
+      "role": "reviewer-a-extended-inline",
+      "status_source": "Recorded original review; stream bytes retained.",
+      "stderr": "",
+      "stdout": "Gitleaks narrow-allowlist self-test passed: 10 intended, 63 rejected\nGitleaks carrier-policy self-test passed: 10 intended contexts, 38 rejected shapes/paths, 80 retained adjacent credentials, 1 policy-text control\n"
+    },
+    {
+      "exit_code": 0,
+      "role": "coordinator-inline-normal",
+      "seconds": 3.5125061250291765,
+      "stderr": "",
+      "stdout": "Gitleaks narrow-allowlist self-test passed: 10 intended, 63 rejected\nGitleaks carrier-policy self-test passed: 10 intended contexts, 38 rejected shapes/paths, 80 retained adjacent credentials, 1 policy-text control\n"
+    },
+    {
+      "exit_code": 0,
+      "role": "coordinator-inline-optimized",
+      "seconds": 3.6698290000203997,
+      "stderr": "",
+      "stdout": "Gitleaks narrow-allowlist self-test passed: 10 intended, 63 rejected\nGitleaks carrier-policy self-test passed: 10 intended contexts, 38 rejected shapes/paths, 80 retained adjacent credentials, 1 policy-text control\n"
+    }
+  ],
+  "scope": "Recorded output projections, not a new GitHub Actions execution. Coordinator commands use isolated normal and optimized Python; only config, ignore and scanner locations were adapted."
+}

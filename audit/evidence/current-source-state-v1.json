@@ -160,8 +160,8 @@
       {
         "git_mode": "100644",
         "path": ".gitattributes",
-        "sha256": "bc8b8903e816cc3bed46f5703972c4dd8a8d6d95665ce4e350ad683907a123b7",
-        "size_bytes": 2568
+        "sha256": "77858cac2974fcd240e589f3b176eacaab3e583660e1ffa630f04a5cab0ae758",
+        "size_bytes": 2943
       },
       {
         "git_mode": "100644",
@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "049ed96393454c64905789c1b2b2613878d9084829cde802cb78d93dd338c896",
-        "size_bytes": 93067
+        "sha256": "6b0b1c01f0195ebffe188af443706f62fa3c48e0420318d68c7d8b25c6ab3ac9",
+        "size_bytes": 100621
       },
       {
         "git_mode": "100644",
@@ -286,8 +286,8 @@
       {
         "git_mode": "100644",
         "path": ".gitleaks.toml",
-        "sha256": "fc603d1ad33b42fa772612bcf769ca00d18c685479ba2a497b9c491cdca25750",
-        "size_bytes": 3998
+        "sha256": "2567ed22e90ba46b671688c465628d5824a7bc7cb398cb14eb76c63e0cfd9681",
+        "size_bytes": 4449
       },
       {
         "git_mode": "100644",
@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "7e026344df803156e89f925a6c12a1504e4ef2676465a2643f8bed74f0cec7af",
-        "size_bytes": 292484
+        "sha256": "787e61556cf418ba6a1f4ce404e92da47aff071fb5dbf9dca9918b26f3d4b1cb",
+        "size_bytes": 292868
       },
       {
         "git_mode": "100644",
@@ -2172,6 +2172,156 @@
         "path": "audit/evidence/primegaps-to-pid-transfer-ledger-v1.json",
         "sha256": "18763feaa707ea797d409de7df7e152e77fc778d4bd631c2ca9734790a4c7bda",
         "size_bytes": 61999
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05.md",
+        "sha256": "1beef86187ea38a3b0c3254fc397a7f2e1569718c0c43a4a15996928bac5478e",
+        "size_bytes": 7930
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/MANIFEST.json",
+        "sha256": "82a0bb0e719e95cc1d0709de4f29886613b1b08876a984a0c4b5cb958001455d",
+        "size_bytes": 27838
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/PROJECTION_SCOPE.md",
+        "sha256": "4e40d65f25bc89cc41dfbe7cae577d1ef9854934b007793319325500052fdfdc",
+        "size_bytes": 3933
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/baseline.gitleaks.toml",
+        "sha256": "fc603d1ad33b42fa772612bcf769ca00d18c685479ba2a497b9c491cdca25750",
+        "size_bytes": 3998
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/candidate.gitleaks.toml",
+        "sha256": "2567ed22e90ba46b671688c465628d5824a7bc7cb398cb14eb76c63e0cfd9681",
+        "size_bytes": 4449
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/carrier-preimage.json",
+        "sha256": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+        "size_bytes": 130
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/ci-inline.py",
+        "sha256": "a3c5ca3612bfe73ac237667802686fcbc179b01fc817204693d512c0a36c8442",
+        "size_bytes": 14442
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/ci.yml.patch",
+        "sha256": "3e6297f15e361a4014b19e53719c8b395ad3cc0759506f4e9e05b5f900926d07",
+        "size_bytes": 8069
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/execution-results.json",
+        "sha256": "1a90842c0cbb101b8c3cc4dd93e2f63c821bab342346423ff11b30af5eb3235c",
+        "size_bytes": 1638
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/historical-prose-fingerprints.txt",
+        "sha256": "511e3fcac4442c2833651afa498b74678f36a5600dc1ffeebdbfb45c2c795f53",
+        "size_bytes": 220
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/history-results.json",
+        "sha256": "79dbdfd3d3c8adbcd82434f40c45fd08a990148d61d9adf87079dc39ec8e27fc",
+        "size_bytes": 7885
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/hosted-failure-excerpts.json",
+        "sha256": "bb89674a85888efce88387ecc118b1d68cae978e4498f10d7cca6525d06f5541",
+        "size_bytes": 2530
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/inline-extraction.json",
+        "sha256": "5830febf82057a6900f5d44566a51826fc5f05474c84a2a94964eaf7f5412500",
+        "size_bytes": 884
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/matrix-results.json",
+        "sha256": "bb65e82dcbce64e07bf1e77041a64c5760a1d0aaddde565100369b5cb6529f24",
+        "size_bytes": 167877
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/projection-replay-results.json",
+        "sha256": "81618052aad3ede79d73b46a65ddf89b1735591247799c37ae77d7cf746c8d02",
+        "size_bytes": 2608
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/provenance.json",
+        "sha256": "41c00a22811fd9ba35ec9ab380f8883cdee237a850eff6f67ea6fbe987d0d4f3",
+        "size_bytes": 4502
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/rejected-v1-cases.json",
+        "sha256": "32071c1af56b84d13ff5b83451492c8c734ea545ba459584db94e64d02b56323",
+        "size_bytes": 8924
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/rejected-v1-disposition.md",
+        "sha256": "61fc507f9bc9c07dec714c423df2962b3284087670b071389bf0fb9e2b36d2c3",
+        "size_bytes": 284
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/rejected-v1.gitleaks.toml",
+        "sha256": "dc5728e4a915ef509eb5df97fa3bf5418fd583ca929be1f8e42ccff6608c58d9",
+        "size_bytes": 4445
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/replay.py",
+        "sha256": "015c9016de5dedea7cca32842c5b263b439c98db2acd20034bf34b45ae26b5eb",
+        "size_bytes": 4339
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/review-a.md",
+        "sha256": "f1bc51f7bf1f668dca3b2186f255516c4b122f19ee0311d39dd1323712d6aa0d",
+        "size_bytes": 20322
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/review-b-supplement.md",
+        "sha256": "3e73a18a1681f634b4bbf7892fa7c3a980ac8d278d3c16cdb02ccf4324ce94c4",
+        "size_bytes": 7710
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/review-b.md",
+        "sha256": "4587e2ad2f5747ec1c05b47501d1afa8b4b1f78ebe5af7f6e4b460fc3c44d5d8",
+        "size_bytes": 9408
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/review-dispositions.md",
+        "sha256": "a5057fd42db229c250191e56daa9fa48b76a8a775a241322ed6851298301e361",
+        "size_bytes": 6874
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/structure-results.json",
+        "sha256": "c75182f4e50c333993afd94609cb478f7ddb81b9d8c1901ef02ff9a6ea480f52",
+        "size_bytes": 1333
       },
       {
         "git_mode": "100755",
@@ -5830,7 +5980,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "38ebafec0e0217321107acf99936bdaf836f84d543800579c048cf2b87dbd6f2",
+        "sha256": "c767f7d14b7da1fdc8d8e6a62c8144858236f094e8a457a80eeb64a6a1f3c455",
         "size_bytes": 90915
       },
       {
@@ -6394,7 +6544,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "3595559ee4badb13b17fe3f998ad4a83763e1438a37b98e7aa982ee6abc4b40b",
+        "sha256": "7db0df1905c41abc08b6b49b99fbe096e19575dca66eaa45fa643e6239b2358e",
         "size_bytes": 134275
       },
       {
@@ -7154,8 +7304,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "45938672371307d696f30505958fbe41693a49d4b83ffb1260c778dcdca73912",
-    "entry_count": 1168
+    "entries_sha256": "523f85a07057d3de76aa4ca3d2e14e7b4c4dcdffee8ae42547cc77c35953dbf6",
+    "entry_count": 1193
   },
   "subprojections": [
     {
@@ -7183,7 +7333,7 @@
       ]
     },
     {
-      "entries_sha256": "639a8a82f94202557100ff2e961182309acad7bb2038f15279740a2b3665b74c",
+      "entries_sha256": "d9ba40620fb81e326fa3f8a46098334b2b9975e76e4ced44ad4bc6081acac939",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

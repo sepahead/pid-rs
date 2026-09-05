@@ -1,0 +1,1 @@
+Rejected. Exact start/end anchors missed legitimate JSON and Python multiline scan contexts in four of 49 cases. The proposed policy retained all hostile synthetic controls, and config self-scan was clean. Multiline variant must be checked for neighbor suppression before acceptance.

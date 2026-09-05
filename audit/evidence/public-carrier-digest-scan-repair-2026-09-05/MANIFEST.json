@@ -1,0 +1,629 @@
+{
+  "file_count": 23,
+  "files": [
+    {
+      "bytes": 3933,
+      "path": "PROJECTION_SCOPE.md",
+      "sha256": "4e40d65f25bc89cc41dfbe7cae577d1ef9854934b007793319325500052fdfdc"
+    },
+    {
+      "bytes": 3998,
+      "path": "baseline.gitleaks.toml",
+      "sha256": "fc603d1ad33b42fa772612bcf769ca00d18c685479ba2a497b9c491cdca25750"
+    },
+    {
+      "bytes": 4449,
+      "path": "candidate.gitleaks.toml",
+      "sha256": "2567ed22e90ba46b671688c465628d5824a7bc7cb398cb14eb76c63e0cfd9681"
+    },
+    {
+      "bytes": 130,
+      "path": "carrier-preimage.json",
+      "sha256": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2"
+    },
+    {
+      "bytes": 14442,
+      "path": "ci-inline.py",
+      "sha256": "a3c5ca3612bfe73ac237667802686fcbc179b01fc817204693d512c0a36c8442"
+    },
+    {
+      "bytes": 8069,
+      "path": "ci.yml.patch",
+      "sha256": "3e6297f15e361a4014b19e53719c8b395ad3cc0759506f4e9e05b5f900926d07"
+    },
+    {
+      "bytes": 1638,
+      "path": "execution-results.json",
+      "sha256": "1a90842c0cbb101b8c3cc4dd93e2f63c821bab342346423ff11b30af5eb3235c"
+    },
+    {
+      "bytes": 220,
+      "path": "historical-prose-fingerprints.txt",
+      "sha256": "511e3fcac4442c2833651afa498b74678f36a5600dc1ffeebdbfb45c2c795f53"
+    },
+    {
+      "bytes": 7885,
+      "path": "history-results.json",
+      "sha256": "79dbdfd3d3c8adbcd82434f40c45fd08a990148d61d9adf87079dc39ec8e27fc"
+    },
+    {
+      "bytes": 2530,
+      "path": "hosted-failure-excerpts.json",
+      "sha256": "bb89674a85888efce88387ecc118b1d68cae978e4498f10d7cca6525d06f5541"
+    },
+    {
+      "bytes": 884,
+      "path": "inline-extraction.json",
+      "sha256": "5830febf82057a6900f5d44566a51826fc5f05474c84a2a94964eaf7f5412500"
+    },
+    {
+      "bytes": 167877,
+      "path": "matrix-results.json",
+      "sha256": "bb65e82dcbce64e07bf1e77041a64c5760a1d0aaddde565100369b5cb6529f24"
+    },
+    {
+      "bytes": 2608,
+      "path": "projection-replay-results.json",
+      "sha256": "81618052aad3ede79d73b46a65ddf89b1735591247799c37ae77d7cf746c8d02"
+    },
+    {
+      "bytes": 4502,
+      "path": "provenance.json",
+      "sha256": "41c00a22811fd9ba35ec9ab380f8883cdee237a850eff6f67ea6fbe987d0d4f3"
+    },
+    {
+      "bytes": 8924,
+      "path": "rejected-v1-cases.json",
+      "sha256": "32071c1af56b84d13ff5b83451492c8c734ea545ba459584db94e64d02b56323"
+    },
+    {
+      "bytes": 284,
+      "path": "rejected-v1-disposition.md",
+      "sha256": "61fc507f9bc9c07dec714c423df2962b3284087670b071389bf0fb9e2b36d2c3"
+    },
+    {
+      "bytes": 4445,
+      "path": "rejected-v1.gitleaks.toml",
+      "sha256": "dc5728e4a915ef509eb5df97fa3bf5418fd583ca929be1f8e42ccff6608c58d9"
+    },
+    {
+      "bytes": 4339,
+      "path": "replay.py",
+      "sha256": "015c9016de5dedea7cca32842c5b263b439c98db2acd20034bf34b45ae26b5eb"
+    },
+    {
+      "bytes": 20322,
+      "path": "review-a.md",
+      "sha256": "f1bc51f7bf1f668dca3b2186f255516c4b122f19ee0311d39dd1323712d6aa0d"
+    },
+    {
+      "bytes": 7710,
+      "path": "review-b-supplement.md",
+      "sha256": "3e73a18a1681f634b4bbf7892fa7c3a980ac8d278d3c16cdb02ccf4324ce94c4"
+    },
+    {
+      "bytes": 9408,
+      "path": "review-b.md",
+      "sha256": "4587e2ad2f5747ec1c05b47501d1afa8b4b1f78ebe5af7f6e4b460fc3c44d5d8"
+    },
+    {
+      "bytes": 6874,
+      "path": "review-dispositions.md",
+      "sha256": "a5057fd42db229c250191e56daa9fa48b76a8a775a241322ed6851298301e361"
+    },
+    {
+      "bytes": 1333,
+      "path": "structure-results.json",
+      "sha256": "c75182f4e50c333993afd94609cb478f7ddb81b9d8c1901ef02ff9a6ea480f52"
+    }
+  ],
+  "manifest_hash_scope": "This manifest excludes its own bytes to avoid a self-reference. The containing repository commit or incident record may bind its exact SHA-256 separately.",
+  "omissions": [
+    "Machine-specific executable, clone, output and worktree locators are replaced by roles.",
+    "Author, contact, date and commit-message fields are omitted from projected finding records.",
+    "The full set of temporary fixture files is not copied; exact decisive inputs have lossless recipes, while the complete inline program provides executable fixture definitions.",
+    "Only four decisive rejected-policy cases and the original full-matrix totals are retained; the other 45 rejected-version matrix rows are omitted.",
+    "Historical Git source blobs are identified by commit/path/object/hash, but not copied.",
+    "Hosted raw logs are identified by hash, size, job and step. Only the exact selected lines are public.",
+    "Original review formatting and private command/coordination blocks are not fully reconstructible. Their raw hashes are comparison metadata, not public custody claims."
+  ],
+  "prepared_utc": "2026-09-05T06:54:57.375886+00:00",
+  "private_original_projection_map": [
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 3998,
+      "private_original_role": "retained-baseline.gitleaks.toml",
+      "private_original_sha256": "fc603d1ad33b42fa772612bcf769ca00d18c685479ba2a497b9c491cdca25750",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "baseline.gitleaks.toml"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 4449,
+      "private_original_role": "retained-candidate.gitleaks.toml",
+      "private_original_sha256": "2567ed22e90ba46b671688c465628d5824a7bc7cb398cb14eb76c63e0cfd9681",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "candidate.gitleaks.toml"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 4445,
+      "private_original_role": "retained-rejected-v1.gitleaks.toml",
+      "private_original_sha256": "dc5728e4a915ef509eb5df97fa3bf5418fd583ca929be1f8e42ccff6608c58d9",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "rejected-v1.gitleaks.toml"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 130,
+      "private_original_role": "retained-carrier-preimage.json",
+      "private_original_sha256": "eac2b9ff616cce863e48c78fb0398c8ba81a582771f7d68e619c3262929d14a2",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "carrier-preimage.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 8069,
+      "private_original_role": "retained-ci.yml.patch",
+      "private_original_sha256": "3e6297f15e361a4014b19e53719c8b395ad3cc0759506f4e9e05b5f900926d07",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "ci.yml.patch"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 220,
+      "private_original_role": "retained-historical-prose-fingerprints.txt",
+      "private_original_sha256": "511e3fcac4442c2833651afa498b74678f36a5600dc1ffeebdbfb45c2c795f53",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "historical-prose-fingerprints.txt"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 14442,
+      "private_original_role": "retained-ci-inline.py",
+      "private_original_sha256": "a3c5ca3612bfe73ac237667802686fcbc179b01fc817204693d512c0a36c8442",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "ci-inline.py"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 284,
+      "private_original_role": "retained-rejected-v1-disposition.md",
+      "private_original_sha256": "61fc507f9bc9c07dec714c423df2962b3284087670b071389bf0fb9e2b36d2c3",
+      "projection": "exact raw-byte copy",
+      "public_counterparts": [
+        "rejected-v1-disposition.md"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 20255,
+      "private_original_role": "initial-review-a",
+      "private_original_sha256": "4ba535a76bdf882507b1d75deef24890a560c2cf064a7b41c792e62ed83c8018",
+      "projection": "Portable locator substitutions, public evidence references, and replacement of private replay command block; all route/lens rows retained.",
+      "public_counterparts": [
+        "review-a.md",
+        "review-dispositions.md"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 9157,
+      "private_original_role": "initial-review-b",
+      "private_original_sha256": "15fb5bcfbd324eeda27ce053ef40b720b46e993aa72470129fa4762b7048175a",
+      "projection": "Portable locator substitutions; exact local observations and limitations retained.",
+      "public_counterparts": [
+        "review-b.md"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 7421,
+      "private_original_role": "ci-extension-review-b",
+      "private_original_sha256": "d6414dd13bdbf47f334e3cd26e693115fff27e8f214eca1eba25ca92e161b6a8",
+      "projection": "Portable locator substitutions; exact local observations and limitations retained.",
+      "public_counterparts": [
+        "review-b-supplement.md"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 92172,
+      "private_original_role": "reviewer-a-accepted-policy",
+      "private_original_sha256": "216320c89097af9a3da21dc36a1e456fea5ac12a57fe0809095e2ecb2f7e559f",
+      "projection": "Retain every case name, path, result, source identity, and finding coordinates; omit author/contact/message fields and local executable locator.",
+      "public_counterparts": [
+        "matrix-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 65324,
+      "private_original_role": "reviewer-a-accepted-adjacency",
+      "private_original_sha256": "e90835dec5ed58df3f306ddb901d325163fc8bf8e48589cbeaa3c6382e9b00fe",
+      "projection": "Retain every case name, path, result, source identity, and finding coordinates; omit author/contact/message fields and local executable locator.",
+      "public_counterparts": [
+        "matrix-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 96534,
+      "private_original_role": "rejected-v1-full-matrix",
+      "private_original_sha256": "27a0ede554d62ada487b53fc9b98a15cfa5a43c04be18cd1b1c03a1d531fe3e6",
+      "projection": "Retain all four decisive failures and original totals; omit other forty-five rows. Complete decisive input bytes are reconstructible by the declared recipe and verified against the recorded hashes.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 140,
+      "private_original_role": "decisive-input-p0-intended-json-context",
+      "private_original_sha256": "b3e4ed935ec03d06796a156d83f682c492ca73026f216c865216ecce789d3e77",
+      "projection": "Lossless input recipe, reconstructed and byte-compared during projection preparation.",
+      "public_counterparts": [
+        "carrier-preimage.json",
+        "replay.py",
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 623,
+      "private_original_role": "decisive-report-p0-intended-json-context-baseline",
+      "private_original_sha256": "b154896712a12398557d9edc97b7c04b46cfe62e380bb6c77b9777f750f7e208",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 623,
+      "private_original_role": "decisive-report-p0-intended-json-context-rejected_v1",
+      "private_original_sha256": "b154896712a12398557d9edc97b7c04b46cfe62e380bb6c77b9777f750f7e208",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 3,
+      "private_original_role": "decisive-report-p0-intended-json-context-accepted",
+      "private_original_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 156,
+      "private_original_role": "decisive-input-p0-intended-python-context",
+      "private_original_sha256": "428498df6dfcbeca4ca3a4503cbb4f3b13b9cabd69966f7f21a53d495480819e",
+      "projection": "Lossless input recipe, reconstructed and byte-compared during projection preparation.",
+      "public_counterparts": [
+        "carrier-preimage.json",
+        "replay.py",
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 623,
+      "private_original_role": "decisive-report-p0-intended-python-context-baseline",
+      "private_original_sha256": "bc86c7161b9b6550598510a5eb0b5ef83cd3688ce509eb7f309bcf950bf290e3",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 623,
+      "private_original_role": "decisive-report-p0-intended-python-context-rejected_v1",
+      "private_original_sha256": "bc86c7161b9b6550598510a5eb0b5ef83cd3688ce509eb7f309bcf950bf290e3",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 3,
+      "private_original_role": "decisive-report-p0-intended-python-context-accepted",
+      "private_original_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 140,
+      "private_original_role": "decisive-input-p1-intended-json-context",
+      "private_original_sha256": "b3e4ed935ec03d06796a156d83f682c492ca73026f216c865216ecce789d3e77",
+      "projection": "Lossless input recipe, reconstructed and byte-compared during projection preparation.",
+      "public_counterparts": [
+        "carrier-preimage.json",
+        "replay.py",
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 617,
+      "private_original_role": "decisive-report-p1-intended-json-context-baseline",
+      "private_original_sha256": "e851143e5722a84149e603db1b3f577e5b0d6b46abc4e76ae157eb96a889db32",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 617,
+      "private_original_role": "decisive-report-p1-intended-json-context-rejected_v1",
+      "private_original_sha256": "e851143e5722a84149e603db1b3f577e5b0d6b46abc4e76ae157eb96a889db32",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 3,
+      "private_original_role": "decisive-report-p1-intended-json-context-accepted",
+      "private_original_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 156,
+      "private_original_role": "decisive-input-p1-intended-python-context",
+      "private_original_sha256": "428498df6dfcbeca4ca3a4503cbb4f3b13b9cabd69966f7f21a53d495480819e",
+      "projection": "Lossless input recipe, reconstructed and byte-compared during projection preparation.",
+      "public_counterparts": [
+        "carrier-preimage.json",
+        "replay.py",
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 617,
+      "private_original_role": "decisive-report-p1-intended-python-context-baseline",
+      "private_original_sha256": "f31199aa3a56359efa9c73b053e8da60c26ef973f631af643a1ba926c25aa1b5",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 617,
+      "private_original_role": "decisive-report-p1-intended-python-context-rejected_v1",
+      "private_original_sha256": "f31199aa3a56359efa9c73b053e8da60c26ef973f631af643a1ba926c25aa1b5",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 3,
+      "private_original_role": "decisive-report-p1-intended-python-context-accepted",
+      "private_original_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "projection": "Retain redacted finding fields and exact observed scanner status; omit empty author/contact/date/message fields.",
+      "public_counterparts": [
+        "rejected-v1-cases.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 4289,
+      "private_original_role": "reviewer-a-provenance",
+      "private_original_sha256": "272475172e84619eea217114224ac0d5cb03931c7d7247203a61a98de7acdb1a",
+      "projection": "Retain public preimage and historical source identities; omit contact/message/link fields from finding metadata.",
+      "public_counterparts": [
+        "provenance.json",
+        "carrier-preimage.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 6224,
+      "private_original_role": "reviewer-a-full-history",
+      "private_original_sha256": "65038f732ac637dd87754442e582dd7185aab7c71a4148266da14a5f64901e0f",
+      "projection": "Replace executable, clone and output locators by roles; retain counters, statuses and redacted finding metadata.",
+      "public_counterparts": [
+        "history-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 2831,
+      "private_original_role": "coordinator-independent-results",
+      "private_original_sha256": "baa8807019a4606ee992feafd5cc55bbaca05b4a1ddab95e716223ecd63a2bba",
+      "projection": "Replace executable/cwd/output locators by roles; preserve statuses, elapsed times and observation identity.",
+      "public_counterparts": [
+        "history-results.json",
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 3837,
+      "private_original_role": "coordinator-history-baseline",
+      "private_original_sha256": "c4ffb5405de7a73b0397d85f8b3340d0b60fd55c30e94723664ef00d98079a42",
+      "projection": "Retain redacted finding metadata; omit author/contact/date/message/link fields.",
+      "public_counterparts": [
+        "history-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 3,
+      "private_original_role": "coordinator-history-candidate",
+      "private_original_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "projection": "Retain redacted finding metadata; omit author/contact/date/message/link fields.",
+      "public_counterparts": [
+        "history-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 69,
+      "private_original_role": "reviewer-a-existing-inline-stdout",
+      "private_original_sha256": "f8b0dbed59fc1684dd9045274bca7811d1b6c9126dea407f56e97d9ad6324760",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 0,
+      "private_original_role": "reviewer-a-existing-inline-stderr",
+      "private_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 215,
+      "private_original_role": "reviewer-a-extended-inline-stdout",
+      "private_original_sha256": "08995f333e7175ebf1d89cc8295896003bf196893903870d3447dc173680ecad",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 0,
+      "private_original_role": "reviewer-a-extended-inline-stderr",
+      "private_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 215,
+      "private_original_role": "coordinator-inline-normal-stdout",
+      "private_original_sha256": "08995f333e7175ebf1d89cc8295896003bf196893903870d3447dc173680ecad",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 0,
+      "private_original_role": "coordinator-inline-normal-stderr",
+      "private_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 215,
+      "private_original_role": "coordinator-inline-optimized-stdout",
+      "private_original_sha256": "08995f333e7175ebf1d89cc8295896003bf196893903870d3447dc173680ecad",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": true,
+      "private_original_bytes": 0,
+      "private_original_role": "coordinator-inline-optimized-stderr",
+      "private_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "projection": "Exact UTF-8 stream bytes represented as a JSON string.",
+      "public_counterparts": [
+        "execution-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 983,
+      "private_original_role": "reviewer-a-structure",
+      "private_original_sha256": "7cd7ebc94eb296ff35dfa62e3f34e2d037a454695be285f65466763bf4169a14",
+      "projection": "Exact parsed public structure record.",
+      "public_counterparts": [
+        "structure-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 255,
+      "private_original_role": "reviewer-a-workflow-scope",
+      "private_original_sha256": "e208d3185701f58cc39fb03806b2e7619987cb886f717524b9bc0ce2d0d8cb13",
+      "projection": "Exact workflow-scope record.",
+      "public_counterparts": [
+        "structure-results.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 6283,
+      "private_original_role": "separately-extracted-ci-extension",
+      "private_original_sha256": "b36e55cc3b7937a4599a2a5163db42f84d776834d6220eece1e7570ea9f18211",
+      "projection": "Preserve the original extracted-extension identity as comparison metadata. The public complete CI program includes its controls; no exact original extraction-byte reconstruction is claimed.",
+      "public_counterparts": [
+        "review-a.md",
+        "ci-inline.py"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 26133,
+      "private_original_role": "hosted-pdf-download-failure",
+      "private_original_sha256": "109015a3c7cc9da211b58def6972de7b9b72c623478f8195d8505e5f30ab869b",
+      "projection": "Only the identified exact failed-step lines are retained. Raw hash binds the retained private log identity; this is not a complete hosted-log archive.",
+      "public_counterparts": [
+        "hosted-failure-excerpts.json"
+      ]
+    },
+    {
+      "original_bytes_reconstructible_from_projection": false,
+      "private_original_bytes": 36167,
+      "private_original_role": "hosted-secret-scan-failure",
+      "private_original_sha256": "7bfaba6f28fa81718c339f2b18488886356097422c213762b78bd4ebf2d9cbee",
+      "projection": "Only the identified exact failed-step lines are retained. Raw hash binds the retained private log identity; this is not a complete hosted-log archive.",
+      "public_counterparts": [
+        "hosted-failure-excerpts.json"
+      ]
+    }
+  ],
+  "public_directory": "audit/evidence/public-carrier-digest-scan-repair-2026-09-05/",
+  "public_replay_evidence": "projection-replay-results.json",
+  "schema_version": 1,
+  "scope": "Public evidence projection for a narrow scanner repair. The file list binds all other public packet files. It is not a complete private archive, third-party attestation, hosted acceptance result, or secrecy proof."
+}

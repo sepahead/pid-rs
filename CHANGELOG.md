@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Restrict a scanner exception to the exact public Fin-3 carrier digest, its key, and its two
+  semantic-bridge files. Retain the full-history scan and existing controls. Add checks for valid
+  contexts, changed values and paths, and nearby credentials. Preserve the failed hosted scan and
+  rejected anchoring approach; this repair changes no PID definition, estimator, or theorem.
+
 - Rewrite the session entry and reader guides around current claim decisions, ten-route planning,
   independent-first critique, and small verified commit/push milestones. Preserve the interrupted
   blueprint receipt with an explicit superseded disposition. Record fresh 31-page visual review,

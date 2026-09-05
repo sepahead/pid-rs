@@ -1,0 +1,44 @@
+{
+  "excerpts": [
+    {
+      "job_id": 101256372255,
+      "projection": "Exact selected UTF-8 line bytes, including LF and any ANSI control characters, represented as a JSON string. All other log bytes are omitted.",
+      "raw_log_bytes": 26133,
+      "raw_log_sha256": "109015a3c7cc9da211b58def6972de7b9b72c623478f8195d8505e5f30ab869b",
+      "run_attempt": 1,
+      "run_id": 33947582367,
+      "selected_bytes": 154,
+      "selected_line_numbers_one_based": [
+        284,
+        285
+      ],
+      "selected_sha256": "9d6c2a158d323b07eb335b957d6c84231bb20e803b65f220a313f56f7a84b374",
+      "selected_utf8_bytes": "2026-09-05T05:35:11.8938058Z curl: (35) Recv failure: Connection reset by peer\n2026-09-05T05:35:11.8966764Z ##[error]Process completed with exit code 35.\n",
+      "source_role": "hosted-pdf-download-failure",
+      "step_name": "Install pinned Elan",
+      "step_number": 7
+    },
+    {
+      "job_id": 101256372387,
+      "projection": "Exact selected UTF-8 line bytes, including LF and any ANSI control characters, represented as a JSON string. All other log bytes are omitted.",
+      "raw_log_bytes": 36167,
+      "raw_log_sha256": "7bfaba6f28fa81718c339f2b18488886356097422c213762b78bd4ebf2d9cbee",
+      "run_attempt": 1,
+      "run_id": 33947582367,
+      "selected_bytes": 352,
+      "selected_line_numbers_one_based": [
+        405,
+        406,
+        407,
+        408
+      ],
+      "selected_sha256": "407bdc2787970720a62b2e8ba5a12db12e2711afeebd26a7b78786dd265f5072",
+      "selected_utf8_bytes": "2026-09-05T05:39:51.0497769Z \u001b[90m5:39AM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1m268 commits scanned.\u001b[0m\n2026-09-05T05:39:51.0498755Z \u001b[90m5:39AM\u001b[0m \u001b[32mINF\u001b[0m \u001b[1mscanned ~81883959 bytes (81.88 MB) in 16.5s\u001b[0m\n2026-09-05T05:39:51.0499214Z \u001b[90m5:39AM\u001b[0m \u001b[33mWRN\u001b[0m \u001b[1mleaks found: 4\u001b[0m\n2026-09-05T05:39:51.0567686Z ##[error]Process completed with exit code 1.\n",
+      "source_role": "hosted-secret-scan-failure",
+      "step_name": "Run /tmp/gitleaks git --redact --no-banner --log-opts=\"--all\" .",
+      "step_number": 5
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Exact excerpts from two failed steps in one hosted run attempt. Secret-scan excerpt records four findings; projected finding metadata is retained separately. No complete log, complete hosted archive, root cause of transport reset, or successful later run is claimed. Download steps and tool pins are unchanged by the scanner repair."
+}

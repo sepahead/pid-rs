@@ -1,0 +1,240 @@
+{
+  "cases": [
+    {
+      "context_recipe": "json",
+      "name": "p0-intended-json-context",
+      "outcomes": {
+        "accepted": {
+          "exit_code": 0,
+          "finding_count": 0,
+          "findings": []
+        },
+        "baseline": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 92,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+              "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 5,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        },
+        "rejected_v1": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 92,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+              "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 5,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        }
+      },
+      "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+      "source_bytes": 140,
+      "source_sha256": "b3e4ed935ec03d06796a156d83f682c492ca73026f216c865216ecce789d3e77"
+    },
+    {
+      "context_recipe": "python",
+      "name": "p0-intended-python-context",
+      "outcomes": {
+        "accepted": {
+          "exit_code": 0,
+          "finding_count": 0,
+          "findings": []
+        },
+        "baseline": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 94,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+              "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 7,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        },
+        "rejected_v1": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 94,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+              "Fingerprint": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 7,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        }
+      },
+      "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+      "source_bytes": 156,
+      "source_sha256": "428498df6dfcbeca4ca3a4503cbb4f3b13b9cabd69966f7f21a53d495480819e"
+    },
+    {
+      "context_recipe": "json",
+      "name": "p1-intended-json-context",
+      "outcomes": {
+        "accepted": {
+          "exit_code": 0,
+          "finding_count": 0,
+          "findings": []
+        },
+        "baseline": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 92,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+              "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 5,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        },
+        "rejected_v1": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 92,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+              "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 5,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        }
+      },
+      "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "source_bytes": 140,
+      "source_sha256": "b3e4ed935ec03d06796a156d83f682c492ca73026f216c865216ecce789d3e77"
+    },
+    {
+      "context_recipe": "python",
+      "name": "p1-intended-python-context",
+      "outcomes": {
+        "accepted": {
+          "exit_code": 0,
+          "finding_count": 0,
+          "findings": []
+        },
+        "baseline": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 94,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+              "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 7,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        },
+        "rejected_v1": {
+          "exit_code": 1,
+          "finding_count": 1,
+          "findings": [
+            {
+              "Commit": "",
+              "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+              "EndColumn": 94,
+              "EndLine": 2,
+              "Entropy": 3.8240879,
+              "File": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+              "Fingerprint": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py:generic-api-key:2",
+              "Match": "carrier_keys_sha256\": \"REDACTED\"",
+              "RuleID": "generic-api-key",
+              "Secret": "REDACTED",
+              "StartColumn": 7,
+              "StartLine": 2,
+              "SymlinkFile": "",
+              "Tags": []
+            }
+          ]
+        }
+      },
+      "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+      "source_bytes": 156,
+      "source_sha256": "428498df6dfcbeca4ca3a4503cbb4f3b13b9cabd69966f7f21a53d495480819e"
+    }
+  ],
+  "decisive_count": 4,
+  "original_case_count": 49,
+  "original_passed_count": 45,
+  "source_reconstruction": "replay.py uses the exact compact carrier-preimage.json digest and context templates; no fixture token literal is stored."
+}
