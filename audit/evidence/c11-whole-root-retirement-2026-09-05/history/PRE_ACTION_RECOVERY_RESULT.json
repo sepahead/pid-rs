@@ -1,0 +1,20 @@
+{
+  "status": "complete_source_archive_independent_restore_and_bare_recovery_endpoint_verified",
+  "completed_at": "2026-09-05T08:09:51.348580+00:00",
+  "elapsed_seconds": 6.4324287079507485,
+  "source_head": "91d954160a7e717ae46b6088175ae52e92570127",
+  "regular_files": 1551,
+  "directories_excluding_root": 260,
+  "regular_bytes": 225191186,
+  "archive_bytes": 101491167,
+  "archive_sha256": "c90f40228ccbb36123d1a048504faf45c250382339832c31351aacc875048ef7",
+  "source_manifest_sha256": "28308eeab597470e2150f49550ffac8347ccf7f7bcf5688c88c499df2429b7ea",
+  "restored_manifest_sha256": "28308eeab597470e2150f49550ffac8347ccf7f7bcf5688c88c499df2429b7ea",
+  "refs_preserved": 13,
+  "source_unchanged": true,
+  "source_and_replacement_advertised_heads_equal": true,
+  "original_root_removed": false,
+  "original_refs_changed": false,
+  "c12_configuration_changed": false,
+  "boundary": "Complete inventoried regular bytes, directory/file modes, and Git recovery. No ACL, owner, xattr, timestamp, atomic snapshot, off-host durability, or scientific credit."
+}

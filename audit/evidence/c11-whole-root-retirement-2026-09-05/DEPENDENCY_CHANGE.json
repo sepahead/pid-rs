@@ -1,0 +1,36 @@
+{
+  "configuration_after_sha256": "a7f69d1f7508f0ac4df518a4f43cadae87f564959e1948beac1707cec279b2f0",
+  "configuration_before_sha256": "7478578a0515e86207195d3a987a8d374a3e3c6cef2a790fa8c9a435b5e98bcd",
+  "exact_one_line_replacement_verified": true,
+  "fetch_refspec_unchanged": "+refs/heads/*:refs/remotes/c11-source/*",
+  "field": "remote.c11-source.url",
+  "new_endpoint_role": "retained independent bare endpoint",
+  "old_endpoint_role": "retired C11 working clone",
+  "scope": "Read-only comparison of retained action preimages and postimages. Full local configurations are omitted.",
+  "snapshot_comparisons": [
+    {
+      "captured_states_equal": true,
+      "index_sha256": "fe319f7e38f2f010988c30b8bc50632941aaeac2b7d3462c32e1a4f86033d9a5",
+      "nonignored_path_count": 866,
+      "role": "C12 checkout",
+      "scope": "Equality of captured HEAD, branch, refs, NUL status, worktree listing, index digest and nonignored file bytes/modes. Raw path-bearing snapshots remain local.",
+      "snapshot_sha256": [
+        "5d9e3bea8ef016e36f2def65b106d9a2d1361a6feddde89aebea49ef687c3a43",
+        "5d9e3bea8ef016e36f2def65b106d9a2d1361a6feddde89aebea49ef687c3a43",
+        "5d9e3bea8ef016e36f2def65b106d9a2d1361a6feddde89aebea49ef687c3a43"
+      ]
+    },
+    {
+      "captured_states_equal": true,
+      "index_sha256": "88530c14654c223b49c284d01911499cf8fe625dee5b25edda5402716cfb7180",
+      "nonignored_path_count": 968,
+      "role": "linked C12 checkout",
+      "scope": "Equality of captured HEAD, branch, refs, NUL status, worktree listing, index digest and nonignored file bytes/modes. Raw path-bearing snapshots remain local.",
+      "snapshot_sha256": [
+        "589b640058cd1384d3fe6bcfb146f31294aedd32c61a9bdb5ed7ca2d097d7243",
+        "589b640058cd1384d3fe6bcfb146f31294aedd32c61a9bdb5ed7ca2d097d7243",
+        "589b640058cd1384d3fe6bcfb146f31294aedd32c61a9bdb5ed7ca2d097d7243"
+      ]
+    }
+  ]
+}

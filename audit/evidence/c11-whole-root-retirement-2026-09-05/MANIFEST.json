@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "bytes": 1055,
+      "path": "ACTUAL_RESULT.json",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 1055,
+      "retained_local_source_sha256": "6e89538426d7eb8ac5d92789ed2dc345159338c24d3a1ecc1c85ef6e8a63bcc2",
+      "sha256": "6e89538426d7eb8ac5d92789ed2dc345159338c24d3a1ecc1c85ef6e8a63bcc2"
+    },
+    {
+      "bytes": 1059,
+      "path": "history/PRE_ACTION_RECOVERY_RESULT.json",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 1059,
+      "retained_local_source_sha256": "2b18136553310160d06f49185ea3126c552de866b9a877b68d90237ee13e0ac2",
+      "sha256": "2b18136553310160d06f49185ea3126c552de866b9a877b68d90237ee13e0ac2"
+    },
+    {
+      "bytes": 5270,
+      "path": "history/PRE_ACTION_RETIREMENT_PLAN.md",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 5270,
+      "retained_local_source_sha256": "dd868247340ede7d2ab478f316fa30d56e012c8e78ae0e00b8e059213c37183c",
+      "sha256": "dd868247340ede7d2ab478f316fa30d56e012c8e78ae0e00b8e059213c37183c"
+    },
+    {
+      "bytes": 44044,
+      "path": "RETAINED_ACTION_INVENTORY.json",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 44044,
+      "retained_local_source_sha256": "465bfd4eba0f72b82c82d7b94ec3826f83f15b6a41e1ff642628400a59e36bbc",
+      "sha256": "465bfd4eba0f72b82c82d7b94ec3826f83f15b6a41e1ff642628400a59e36bbc"
+    },
+    {
+      "bytes": 1312,
+      "path": "recovery-refs.tsv",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 1312,
+      "retained_local_source_sha256": "f0bdf347a0c3d0855910f8fdd67fff48871505d70baa362ae1c8eeae27fa76eb",
+      "sha256": "f0bdf347a0c3d0855910f8fdd67fff48871505d70baa362ae1c8eeae27fa76eb"
+    },
+    {
+      "bytes": 144,
+      "path": "recovery-advertised-heads.tsv",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 144,
+      "retained_local_source_sha256": "32a626e647f8be64ca71de8ae3119c7a979edbdfa93c3180545bd6a690778951",
+      "sha256": "32a626e647f8be64ca71de8ae3119c7a979edbdfa93c3180545bd6a690778951"
+    },
+    {
+      "bytes": 1388,
+      "path": "history/FETCH_EQUIVALENCE.json",
+      "representation": "structural JSON projection with private path substitution",
+      "retained_local_source_bytes": 1404,
+      "retained_local_source_sha256": "e097052be20642890421e4412a0eb37d5d25fd185f6613646fa4b45725352c15",
+      "sha256": "912b5e082984c2eedbb63c1dccf7b597ab4a6f484ada7d0694601d4af66fd00f"
+    },
+    {
+      "bytes": 771,
+      "path": "history/ACTION_PRECONDITIONS.json",
+      "representation": "structural JSON projection with private path substitution",
+      "retained_local_source_bytes": 730,
+      "retained_local_source_sha256": "dcfb9b451310d6ab7d6eea0148e45fe377789e5560f3115cbf953ebf3c380352",
+      "sha256": "1cf721179e6109a88d23f0d41b8d75b83de30a9fc639dcfc8333dece143ac842"
+    },
+    {
+      "bytes": 1918,
+      "path": "DEPENDENCY_CHANGE.json",
+      "representation": "new scoped public observation",
+      "sha256": "8edf4512d3148c4e0020972a8f951d5595aac5fcbb9a211636e3abb6d729ce2e"
+    },
+    {
+      "bytes": 4914,
+      "path": "SELECTED_COMMANDS.json",
+      "representation": "new scoped public observation",
+      "sha256": "3d13d1ab59d1d55eb93cc4515658f2bf795acc8cdd7282e2599adcb30e0a405d"
+    },
+    {
+      "bytes": 627,
+      "path": "POST_ACTION_OBSERVATION.json",
+      "representation": "new scoped public observation",
+      "sha256": "fc495bf75850d6cae81452df84f64dad1c78198ce42944934f89a080ccf60d64"
+    },
+    {
+      "bytes": 3081,
+      "path": "ROOT_DECISION.md",
+      "representation": "exact original bytes",
+      "retained_local_source_bytes": 3081,
+      "retained_local_source_sha256": "f56411baf927396c43fe6f5341a2d82cf256b6bfbeca2115783c63b07546db96",
+      "sha256": "f56411baf927396c43fe6f5341a2d82cf256b6bfbeca2115783c63b07546db96"
+    },
+    {
+      "bytes": 5494,
+      "path": "RETIREMENT.md",
+      "representation": "new professional actual-outcome account",
+      "sha256": "cbb8f86cc9c75097dc100ba14168b6b9463e209ba5827568e3e896a8e2a10b52"
+    }
+  ],
+  "original_action_manifest_sha256": "465bfd4eba0f72b82c82d7b94ec3826f83f15b6a41e1ff642628400a59e36bbc",
+  "schema": "pid-rs/c11-whole-root-retirement-public-projection-v1",
+  "scope": "Selected exact results and portable projections. Manifest excludes itself. Complete source and action archives remain local; no full public archive, scientific, formal, release, C12 lifecycle, external custody or off-host durability claim.",
+  "status": "actual_operational_retirement_recorded"
+}

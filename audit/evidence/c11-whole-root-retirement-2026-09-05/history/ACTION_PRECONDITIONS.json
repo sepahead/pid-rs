@@ -1,0 +1,15 @@
+{
+  "projection": "Private directory prefixes replaced by documentary role tokens; this is not the complete original byte stream.",
+  "record": {
+    "archive_sha256": "c90f40228ccbb36123d1a048504faf45c250382339832c31351aacc875048ef7",
+    "c12_snapshot_paths": {
+      "{C12_CHECKOUT}": 866,
+      "{LINKED_C12_CHECKOUT}": 968
+    },
+    "recovery_refs": 13,
+    "scope": "No C12 or linked refs/index/nonignored bytes change; ignored caches not inventoried for a local config replacement. C11 complete regular bytes and modes covered.",
+    "source_complete_entries": 1811,
+    "url_expected_after_sha256": "a7f69d1f7508f0ac4df518a4f43cadae87f564959e1948beac1707cec279b2f0",
+    "url_old_sha256": "7478578a0515e86207195d3a987a8d374a3e3c6cef2a790fa8c9a435b5e98bcd"
+  }
+}

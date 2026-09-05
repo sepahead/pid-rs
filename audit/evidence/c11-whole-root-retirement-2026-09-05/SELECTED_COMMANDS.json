@@ -1,0 +1,150 @@
+{
+  "commands": [
+    {
+      "name": "c11-pre-head",
+      "record": {
+        "argv": [
+          "git",
+          "-c",
+          "core.fsmonitor=false",
+          "-c",
+          "core.untrackedCache=false",
+          "-C",
+          "{RETIRED_C11_ROOT}",
+          "rev-parse",
+          "HEAD"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "74cd320442905a0f9343035a73184a2c66072f33ea060cce9d55882d3cb25fad",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e24c993f3cdbc2da74bc23cced89876b8b3fab5f5aef4ba67d0d7f2c2524f0a4"
+    },
+    {
+      "name": "remote-main-pre",
+      "record": {
+        "argv": [
+          "gh",
+          "api",
+          "repos/sepahead/pid-rs/git/ref/heads/main",
+          "--jq",
+          ".object.sha"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "49b19419ce6f207a7503dd58750e3f7f39f8771e801094722234bc803bb8d0a6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e300f09dea3dc88269d6dfc178b8edc312f26113bba8b1a29c2a184e00c22ba3"
+    },
+    {
+      "name": "c11-accepted-ancestor-main",
+      "record": {
+        "argv": [
+          "git",
+          "-c",
+          "core.fsmonitor=false",
+          "-c",
+          "core.untrackedCache=false",
+          "-C",
+          "{INTEGRATION_CHECKOUT}",
+          "merge-base",
+          "--is-ancestor",
+          "91d954160a7e717ae46b6088175ae52e92570127",
+          "e1a6648ccace699e41b4ffa48c6acd79209a7418"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "43e9f4a56cc06ad88f8927847d6ed109cf2d841a784f16d5b4dc39caab623894",
+      "stderr_sha256": "ec3b2a2da5d973ed811ee283fb1f83743252e6d495445386d4495953eb45e3ad",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "mirror-current-fsck",
+      "record": {
+        "argv": [
+          "git",
+          "-c",
+          "core.fsmonitor=false",
+          "-c",
+          "core.untrackedCache=false",
+          "-C",
+          "{RETAINED_BARE_ENDPOINT}",
+          "fsck",
+          "--full",
+          "--no-reflogs"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "7ab019c8624b1b26c4b52e25e48bbcd576bb4da75089779eabfa15d4921c7ea5",
+      "stderr_sha256": "ec3b2a2da5d973ed811ee283fb1f83743252e6d495445386d4495953eb45e3ad",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "c12-rebind-url",
+      "record": {
+        "argv": [
+          "git",
+          "-c",
+          "core.fsmonitor=false",
+          "-c",
+          "core.untrackedCache=false",
+          "-C",
+          "{C12_CHECKOUT}",
+          "config",
+          "--local",
+          "--fixed-value",
+          "--replace-all",
+          "remote.c11-source.url",
+          "{RETAINED_BARE_ENDPOINT}",
+          "{RETIRED_C11_ROOT}"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "52d9bbbe1a2b4756a0f2fb426203056dd0e9c3b30d9b76b54240bf7fbe58d247",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "c12-final-advertisement",
+      "record": {
+        "argv": [
+          "git",
+          "-c",
+          "core.fsmonitor=false",
+          "-c",
+          "core.untrackedCache=false",
+          "-C",
+          "{C12_CHECKOUT}",
+          "ls-remote",
+          "c11-source",
+          "refs/heads/*"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "7a9583302e5ca0331925bedff888de690e9881e2c989b65fa4893d30d89a64ab",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "32a626e647f8be64ca71de8ae3119c7a979edbdfa93c3180545bd6a690778951"
+    },
+    {
+      "name": "mirror-final-refs",
+      "record": {
+        "argv": [
+          "git",
+          "-c",
+          "core.fsmonitor=false",
+          "-c",
+          "core.untrackedCache=false",
+          "-C",
+          "{RETAINED_BARE_ENDPOINT}",
+          "for-each-ref",
+          "--format=%(refname)%09%(objectname)%09%(objecttype)"
+        ],
+        "exit_code": 0
+      },
+      "retained_command_record_sha256": "3c852dc51ed54faec605a107145ecc011c3c2cb2491b20fe06ea52606c040f05",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f0bdf347a0c3d0855910f8fdd67fff48871505d70baa362ae1c8eeae27fa76eb"
+    }
+  ],
+  "projection": "Selected complete command records with private roots replaced by role tokens. Stream hashes refer to retained local originals; this file is not a complete action transcript."
+}

@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Record selective retirement of two stale local refs, three duplicate inert payloads, and the
+  superseded C11 clone after verified source succession and recovery. Preserve rejected history
+  and working bytes; retain a complete local archive and a verified bare recovery endpoint.
+  The dependent C12 checkout and its linked working tree retain their scientific state.
+
 - Restrict a scanner exception to the exact public Fin-3 carrier digest, its key, and its two
   semantic-bridge files. Retain the full-history scan and existing controls. Add checks for valid
   contexts, changed values and paths, and nearby credentials. Preserve the failed hosted scan and

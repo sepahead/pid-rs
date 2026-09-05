@@ -1,0 +1,24 @@
+{
+  "projection": "Private directory prefixes replaced by documentary role tokens; this is not the complete original byte stream.",
+  "record": {
+    "both_fsck_passed": true,
+    "boundary": "Two fresh owned bare consumers, exact current fetch mapping and native Git. No original ref/config mutation, remote GitHub mutation, scientific execution or guarantee about future config changes.",
+    "c12_config_sha256_unchanged": "7478578a0515e86207195d3a987a8d374a3e3c6cef2a790fa8c9a435b5e98bcd",
+    "c12_root": "{C12_CHECKOUT}",
+    "fetch_refspecs": [
+      "+refs/heads/*:refs/remotes/c11-source/*"
+    ],
+    "fetched_ref_roster": [
+      "refs/remotes/c11-source/HEAD\t91d954160a7e717ae46b6088175ae52e92570127\tcommit",
+      "refs/remotes/c11-source/codex/composite-v11-fresh-20260823\t91d954160a7e717ae46b6088175ae52e92570127\tcommit",
+      "refs/remotes/c11-source/main\t337fe9b7f7cf30a8f00138310ce0398d9e95b9c5\tcommit",
+      "refs/tags/v0.9.0\tdafa6cc9655eee70b4524ac92993c0dd820477e0\ttag"
+    ],
+    "fetched_ref_roster_sha256": "3a960db0f49e926efd70dbef33be734e46c690c5eac1aee973750b260c47da5f",
+    "old_url": "{RETIRED_C11_ROOT}",
+    "original_configuration_changed": false,
+    "replacement_url": "{RETAINED_BARE_ENDPOINT}",
+    "status": "original_and_replacement_fetch_behavior_match_for_exact_current_c12_refspecs",
+    "utc": "2026-09-05T08:14:08.508988+00:00"
+  }
+}

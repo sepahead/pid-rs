@@ -1,0 +1,23 @@
+{
+  "started_utc": "2026-09-05T08:41:26.981071+00:00",
+  "url_rebound": true,
+  "original_renamed": true,
+  "original_removed": true,
+  "temporary_roots_removed": [
+    "restored-working",
+    "original-fetch-probe.git",
+    "replacement-fetch-probe.git"
+  ],
+  "observed_main": "e1a6648ccace699e41b4ffa48c6acd79209a7418",
+  "status": "passed",
+  "completed_utc": "2026-09-05T08:41:35.036569+00:00",
+  "elapsed_seconds": 8.055568292038515,
+  "c12_configuration_before_sha256": "7478578a0515e86207195d3a987a8d374a3e3c6cef2a790fa8c9a435b5e98bcd",
+  "c12_configuration_after_sha256": "a7f69d1f7508f0ac4df518a4f43cadae87f564959e1948beac1707cec279b2f0",
+  "complete_c11_regular_files": 1551,
+  "complete_c11_regular_bytes": 225191186,
+  "retained_archive_bytes": 101491167,
+  "retained_mirror_refs": 13,
+  "c12_and_linked_refs_heads_branches_index_status_nonignored_bytes_unchanged": true,
+  "boundary": "Operational recovery only. No scientific, formal, C12 lifecycle, calibration, release, off-host, atomic-snapshot, ACL, owner, xattr or timestamp claim."
+}

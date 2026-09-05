@@ -1,0 +1,11 @@
+{
+  "observed_utc": "2026-09-05T08:52:56.178971+00:00",
+  "retained_action_manifest_sha256": "465bfd4eba0f72b82c82d7b94ec3826f83f15b6a41e1ff642628400a59e36bbc",
+  "retained_archive_bytes": 101491167,
+  "retained_archive_sha256": "c90f40228ccbb36123d1a048504faf45c250382339832c31351aacc875048ef7",
+  "retained_bare_endpoint_present": true,
+  "retired_original_location_absent": true,
+  "scope": "Read-only local observation after the recorded action. No removal, fetch, configuration change, new formal check or off-host durability claim.",
+  "verified_retained_action_bytes": 2243944,
+  "verified_retained_action_files": 259
+}
