@@ -1,0 +1,127 @@
+{
+  "causal_boundary": "Wrong-target proofs compile before rejection at DNF_JUDGE_TARGET_TYPE. Finite negative controls prove explicit witnesses. File/hash/runner failures are reported separately.",
+  "custody_scope": [
+    "C01 canonical regular single-link files and canonical Git root preflight",
+    "C02 deterministic at-open, during-capture and after-capture changes",
+    "C03 exact source pins plus reused pinned tool/package preflight; no repeat of the historical helper mutation suite",
+    "C04 source import/code policy and project source pins",
+    "C05 ambient stale cache exclusion and owned build first",
+    "C06 actual axiom and theorem-kind controls plus prohibited source tokens",
+    "C07 missing, duplicate and unknown actual-record shapes",
+    "C08 malformed/truncated records and nonzero process status",
+    "C09 normal and optimized interpreter runs",
+    "C10 synthetic process status/output controls",
+    "C11 coordinated local contract reseal fails the adopted outer freeze digest",
+    "C12 timeout, reduced memory/output thresholds, child cleanup; operational failures"
+  ],
+  "finite_module": "FiniteControls.lean",
+  "finite_negative_controls": {
+    "M01": [
+      "p02_direction"
+    ],
+    "M02": [
+      "p02_direction"
+    ],
+    "M03": [
+      "m03_existential_branch"
+    ],
+    "M04": [
+      "m04_missing_family_membership"
+    ],
+    "M05": [
+      "m05_or_inside_branch"
+    ],
+    "M06": [
+      "m06_and_across_family"
+    ],
+    "M07": [
+      "m07_all_true_only"
+    ],
+    "M08": [
+      "p09_singleton_collision",
+      "m13_one_pattern_is_insufficient"
+    ],
+    "M09": [
+      "p11_absorption: both order directions; swap the two family roles for the other omitted premise"
+    ],
+    "M10": [
+      "m10_swapped_pattern"
+    ],
+    "M11": [
+      "p07_source_ignores_target"
+    ],
+    "M12": [
+      "p10_diagonal",
+      "m12_diagonal_not_realizing"
+    ],
+    "M13": [
+      "m13_one_pattern_is_insufficient"
+    ],
+    "M14": [
+      "p02_direction: union of the singleton collections gives the both-branch fixture"
+    ],
+    "M16": [
+      "m16_union_membership: membership falsifier; union still preserves inclusion"
+    ]
+  },
+  "nonclaims": [
+    "No full candidate proof at preparation",
+    "No external custody",
+    "No generic estimator validation"
+  ],
+  "positive_controls": {
+    "P01": [
+      "p01_general",
+      "p01_reflexive"
+    ],
+    "P02": [
+      "p02_truth_table",
+      "p02_direction"
+    ],
+    "P03": [
+      "p03_empty_family"
+    ],
+    "P04": [
+      "p04_empty_branch"
+    ],
+    "P05": [
+      "p05_empty_index"
+    ],
+    "P06": [
+      "p06_dependent_key"
+    ],
+    "P07": [
+      "p07_source_ignores_target"
+    ],
+    "P08": [
+      "p08_boolean_alternatives"
+    ],
+    "P09": [
+      "p09_singleton_collision",
+      "m13_one_pattern_is_insufficient"
+    ],
+    "P10": [
+      "p10_diagonal",
+      "m12_diagonal_not_realizing"
+    ],
+    "P11": [
+      "p11_absorption"
+    ],
+    "P12": [
+      "selftest.py: cosmetic source-policy fixture; full candidate semantic replay pending"
+    ]
+  },
+  "schema": "local-dnf-order-controls-v2",
+  "valid_wrong_target_controls": {
+    "M15": [
+      "fin3_only"
+    ],
+    "M17": [
+      "explicit_receiver",
+      "implicit_receiver",
+      "assumed_conclusion",
+      "renamed_premise"
+    ]
+  },
+  "wrong_target_module": "WrongTargets.lean"
+}

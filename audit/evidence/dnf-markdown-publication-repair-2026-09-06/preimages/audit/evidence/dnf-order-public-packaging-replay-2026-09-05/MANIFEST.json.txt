@@ -1,0 +1,187 @@
+{
+  "conversions": [
+    {
+      "conversion": "Parse JSON; replace the declared local path prefixes with role labels; omit filesystem identity vectors; emit sorted two-space JSON with final LF. All result, command, digest, resource, chronology and artifact-inventory fields remain.",
+      "public_bytes": 41665,
+      "public_path": "receipts/selected-normal.json",
+      "public_sha256": "cbedf7e531e0cd7122c93a34d9e6be370302b871a65066bbb66ab4dae92a7949",
+      "raw_bytes": 55583,
+      "raw_sha256": "3f895d0b56c455ad8a68a797e8ec2d0bb41ed1260ac2fd5faeb998753d185573",
+      "raw_source_role": "selected-normal retained run receipt"
+    },
+    {
+      "conversion": "Parse JSON; replace the declared local path prefixes with role labels; omit filesystem identity vectors; emit sorted two-space JSON with final LF. All result, command, digest, resource, chronology and artifact-inventory fields remain.",
+      "public_bytes": 41828,
+      "public_path": "receipts/selected-optimized.json",
+      "public_sha256": "219f5be52a3720d4e222b656894325ae5d6824f5c0d03a1c7e58a904dd75f96b",
+      "raw_bytes": 55746,
+      "raw_sha256": "6cc04970beaf0b0624f2f8e7b2e98c8946f2775f13adeccbca0a145bf00fd634",
+      "raw_source_role": "selected-optimized retained run receipt"
+    },
+    {
+      "conversion": "Parse JSON; replace the declared local path prefixes with role labels; omit filesystem identity vectors; emit sorted two-space JSON with final LF. All result, command, digest, resource, chronology and artifact-inventory fields remain.",
+      "public_bytes": 76049,
+      "public_path": "receipts/controls-normal.json",
+      "public_sha256": "b5a3b01a5a33433a51d201eb5a0022e6c2cf961d1be78c75fb933872ece1eb63",
+      "raw_bytes": 100586,
+      "raw_sha256": "2d8f834ac6458b87114c9d4e235e1c80f81ac79319f3e977b5beea89b67b76a5",
+      "raw_source_role": "controls-normal retained run receipt"
+    },
+    {
+      "conversion": "Parse JSON; replace the declared local path prefixes with role labels; omit filesystem identity vectors; emit sorted two-space JSON with final LF. All result, command, digest, resource, chronology and artifact-inventory fields remain.",
+      "public_bytes": 76390,
+      "public_path": "receipts/controls-optimized.json",
+      "public_sha256": "f4463f855d470ee58c175c4e68d12e1cccbe379f8aa86916bbbb66dc5c4525c2",
+      "raw_bytes": 100927,
+      "raw_sha256": "4ae711f912a3de4516277a738279ab0d905a79e5f6a3f2200ea9077ffacc32c4",
+      "raw_source_role": "controls-optimized retained run receipt"
+    },
+    {
+      "conversion": "Parse JSON; replace the declared local path prefixes with role labels; omit filesystem identity vectors; emit sorted two-space JSON with final LF. All result, command, digest, resource, chronology and artifact-inventory fields remain.",
+      "public_bytes": 12761,
+      "public_path": "receipts/reporting-regression.json",
+      "public_sha256": "db931f99dc4197074cc784312a1da41a83a2a53e8107708e00a35e920ad1e848",
+      "raw_bytes": 22594,
+      "raw_sha256": "d647705b329bfd3371efd6c2ed921710d0222e46100ba824484b0272d44acf4e",
+      "raw_source_role": "reporting-regression retained run receipt"
+    },
+    {
+      "conversion": "Canonical JSON plus declared path-role substitutions. No acceptance or budget field is changed.",
+      "public_bytes": 2619,
+      "public_path": "campaign/FINAL.json",
+      "public_sha256": "67a968bff518cacb401f88d6af4a663bab3f5dbc1d33a663ca1c20540ae61eb2",
+      "raw_bytes": 2619,
+      "raw_sha256": "67a968bff518cacb401f88d6af4a663bab3f5dbc1d33a663ca1c20540ae61eb2",
+      "raw_source_role": "packaging campaign FINAL.json"
+    },
+    {
+      "conversion": "Canonical JSON plus declared path-role substitutions. No acceptance or budget field is changed.",
+      "public_bytes": 1060,
+      "public_path": "campaign/registration.json",
+      "public_sha256": "f3550749a643d14c41390d5c7e795f4107011198ee66df95beac0708dc54bbc5",
+      "raw_bytes": 1060,
+      "raw_sha256": "f3550749a643d14c41390d5c7e795f4107011198ee66df95beac0708dc54bbc5",
+      "raw_source_role": "packaging campaign registration.json"
+    },
+    {
+      "conversion": "Canonical JSON plus declared path-role substitutions.",
+      "public_bytes": 149279,
+      "public_path": "ARTIFACT_REHASH.json",
+      "public_sha256": "918ea496252d57f68ab8e7c0bb071df03e150b59421b80daf172c86fa7c28cb4",
+      "raw_bytes": 156291,
+      "raw_sha256": "edb567aaa4b63503bc17e4d2631191c29373470a6b2f025ae754426be4c32cf0",
+      "raw_source_role": "read-only post-execution artifact rehash"
+    },
+    {
+      "conversion": "Exact bytes; no transformation.",
+      "public_bytes": 8535,
+      "public_path": "selected-semantic-records.log",
+      "public_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "raw_bytes": 8535,
+      "raw_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "raw_source_role": "both selected semantic-judge stdout streams"
+    },
+    {
+      "conversion": "Exact UTF-8 text except replacement of the run-root path prefix with REPORTING_REGRESSION_RUN. All thirteen source positions and type-mismatch messages remain.",
+      "public_bytes": 2769,
+      "public_path": "restored-reporting-diagnostic.log",
+      "public_sha256": "e9b8ace1e4ee5fd301a28302a2bddbace5f5759968a4eba7a9c3a664b606e187",
+      "raw_bytes": 4511,
+      "raw_sha256": "43e19959bca9550128a719c42166b79efdf284b3667e4d90b44e4d50589a7d93",
+      "raw_source_role": "separate restored-reporting-module stdout"
+    }
+  ],
+  "current_reader_manifest": "CURRENT_PUBLICATION_MANIFEST.json",
+  "files": [
+    {
+      "bytes": 149279,
+      "path": "ARTIFACT_REHASH.json",
+      "sha256": "918ea496252d57f68ab8e7c0bb071df03e150b59421b80daf172c86fa7c28cb4"
+    },
+    {
+      "bytes": 24924,
+      "path": "CURRENT_PUBLICATION_MANIFEST.json",
+      "sha256": "83a725d17ef1b82326eb58c3be93d7e2be190926413d0119797ee73aedb7930c"
+    },
+    {
+      "bytes": 3580,
+      "path": "PROJECTION.md",
+      "sha256": "ca33e7693aad61147abc98f18893762ec0e508a67458697e061b50e1dee2b45b"
+    },
+    {
+      "bytes": 4378,
+      "path": "REPLAY_RECEIPT.json",
+      "sha256": "76b1623d0a1065a4a6bf5b1cbe84b51419d60be89364490923d2c4a6bec205d0"
+    },
+    {
+      "bytes": 2619,
+      "path": "campaign/FINAL.json",
+      "sha256": "67a968bff518cacb401f88d6af4a663bab3f5dbc1d33a663ca1c20540ae61eb2"
+    },
+    {
+      "bytes": 1060,
+      "path": "campaign/registration.json",
+      "sha256": "f3550749a643d14c41390d5c7e795f4107011198ee66df95beac0708dc54bbc5"
+    },
+    {
+      "bytes": 1446,
+      "path": "history/PREIMAGES.json",
+      "sha256": "9a700515d7d3f672f63ce005959a7ea4baca7a9512028e0d8a8df298d69434d2"
+    },
+    {
+      "bytes": 19677,
+      "path": "history/exposition-at-packaging.md.txt",
+      "sha256": "298cdd6534dc826202247ba76421d039698cdb79a56eefd61ff509b2aaee27ee"
+    },
+    {
+      "bytes": 5311,
+      "path": "history/reader-entry-at-packaging.md.txt",
+      "sha256": "2f4aad814d1b91845e6b00b203a90564e7a7d5b2fc174cc23f99b6c30ba106d4"
+    },
+    {
+      "bytes": 76049,
+      "path": "receipts/controls-normal.json",
+      "sha256": "b5a3b01a5a33433a51d201eb5a0022e6c2cf961d1be78c75fb933872ece1eb63"
+    },
+    {
+      "bytes": 76390,
+      "path": "receipts/controls-optimized.json",
+      "sha256": "f4463f855d470ee58c175c4e68d12e1cccbe379f8aa86916bbbb66dc5c4525c2"
+    },
+    {
+      "bytes": 12761,
+      "path": "receipts/reporting-regression.json",
+      "sha256": "db931f99dc4197074cc784312a1da41a83a2a53e8107708e00a35e920ad1e848"
+    },
+    {
+      "bytes": 41665,
+      "path": "receipts/selected-normal.json",
+      "sha256": "cbedf7e531e0cd7122c93a34d9e6be370302b871a65066bbb66ab4dae92a7949"
+    },
+    {
+      "bytes": 41828,
+      "path": "receipts/selected-optimized.json",
+      "sha256": "219f5be52a3720d4e222b656894325ae5d6824f5c0d03a1c7e58a904dd75f96b"
+    },
+    {
+      "bytes": 2769,
+      "path": "restored-reporting-diagnostic.log",
+      "sha256": "e9b8ace1e4ee5fd301a28302a2bddbace5f5759968a4eba7a9c3a664b606e187"
+    },
+    {
+      "bytes": 8535,
+      "path": "selected-semantic-records.log",
+      "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334"
+    }
+  ],
+  "historical_manifest_preserved_sha256": "69781060cef002bdb7bb4d7ff92b35947e9e6613c78f7881e931742678ed229b",
+  "intended_repository_directory": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05",
+  "omissions": [
+    "Complete raw run directories and most compiled artifacts/hostile fixture payloads",
+    "Private original path-prefix mapping",
+    "Filesystem identity vectors in projected receipts",
+    "Complete toolchain/runtime filesystem and operating-system state"
+  ],
+  "schema": "pid-rs.dnf-public-packaging-projection.v1",
+  "scope": "Separate portable projection of completed local packaging execution and current-versus-historical reader routing. No new execution or additional independent pair."
+}

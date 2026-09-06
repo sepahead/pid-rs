@@ -1,0 +1,4 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectDefinition.lean:6:0: warning: Definition `test` is a proposition; use `theorem` instead of `def`
+
+Note: This linter can be disabled with `set_option linter.defProp false`
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectDefinition.lean:7:0: error: DNF_JUDGE_DECLARATION_KIND: JudgeControl.test is not a theorem

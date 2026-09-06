@@ -1,0 +1,1 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectMissingRoster.lean:3:0: error: DNF_JUDGE_EXPORT_ROSTER: expected exactly 1 public declarations

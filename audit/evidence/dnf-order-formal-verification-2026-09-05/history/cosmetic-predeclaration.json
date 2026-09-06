@@ -1,0 +1,25 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "deadline_utc": "2026-09-05T08:32:36+00:00",
+    "expected_cosmetic_bytes": 10329,
+    "expected_cosmetic_sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+    "full_slots": [
+      6,
+      7
+    ],
+    "full_wrapper_limit": 8,
+    "prefix_utf8": "/- Cosmetic replay control: unchanged theorem proofs. -/\n",
+    "registered_utc": "2026-09-05T07:47:07.623884+00:00",
+    "schema": "local-dnf-order-repaired-cosmetic-predeclaration-v1",
+    "scope": "Comment-only variant of the separately registered repaired candidate. The old cosmetic source and unexecuted registrations remain preserved; no old result is relabelled.",
+    "scope_adoption_sha256": "d2f9e0f5064389ecb4099f500ebd4767d571860d81301c7f761bc72f5b1c72ba",
+    "source_bytes": 10272,
+    "source_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+    "transformation": "Exact prefix UTF-8 bytes followed by complete unchanged repaired source bytes.",
+    "written_before_cosmetic_source": true,
+    "written_before_cosmetic_tests": true
+  },
+  "retained_local_source_sha256": "4e0f9ac48024f4e9b064d8c327812095bf6470a4a3a9175184d2160f2dd0fe13",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

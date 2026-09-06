@@ -1,0 +1,1834 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "commands": [
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/PidFiniteConvergence/Deterministic.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/PidFiniteConvergence/Deterministic.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.9944051669444889,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-PidFiniteConvergence-Deterministic",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2355150848,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:38.530970+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/PidFiniteConvergence/SxEventBridge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/PidFiniteConvergence/SxEventBridge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.5957130829337984,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-PidFiniteConvergence-SxEventBridge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2399862784,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:40.525567+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/Contract.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Contract.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.44332137494348,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-Contract",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2392375296,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:42.121482+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/JudgeCore.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/JudgeCore.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.9063569999998435,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeCore",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1382580224,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:43.565070+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/JudgeTargets.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/JudgeTargets.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.4255223328946158,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeTargets",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2332999680,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:44.471671+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/JudgeAliases.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/JudgeAliases.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.3327007089974359,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeAliases",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2344796160,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:45.897432+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/ContractJudge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ContractJudge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.5589790000813082,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-ContractJudge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2680848384,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:47.230384+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/ReportingSmoke.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ReportingSmoke.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.6919479579664767,
+        "execution_error": null,
+        "failure": null,
+        "label": "reporting-smoke",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1310081024,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 44,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:48.791114+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/ReportingRestoredLift.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ReportingRestoredLift.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.6830361669417471,
+        "execution_error": null,
+        "failure": null,
+        "label": "ReportingRestoredLift",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1119469568,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 333,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:10:49.483380+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a87c226259d8c05add8f34e6fa713a4833d51132c26a2f234f8f41539c02de37"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/FiniteControls.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/FiniteControls.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.5539164158981293,
+        "execution_error": null,
+        "failure": null,
+        "label": "FiniteControls",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2426961920,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:50.166860+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/WrongTargets.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/WrongTargets.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.3548818749841303,
+        "execution_error": null,
+        "failure": null,
+        "label": "WrongTargets",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2333966336,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:51.721154+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/PositiveTypeControls.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/PositiveTypeControls.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.4869838750455528,
+        "execution_error": null,
+        "failure": null,
+        "label": "PositiveTypeControls",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2705670144,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:10:53.076552+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/Reject_fin3_only.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_fin3_only.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.4356844170251861,
+        "execution_error": null,
+        "failure": null,
+        "label": "Reject_fin3_only",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2706669568,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 280,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:10:54.564029+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "9cb87435e500a64b434030f9566b768c0ab4b202d9561f787b7f0da3ffe068b4"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/Reject_explicit_receiver.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_explicit_receiver.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.429217042052187,
+        "execution_error": null,
+        "failure": null,
+        "label": "Reject_explicit_receiver",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2706014208,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 296,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:10:56.000085+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "98868937a3d090aeb8f36d7cc071ef54c202a214550e49cea11f12b56e0e9296"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/Reject_implicit_receiver.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_implicit_receiver.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.4387677080230787,
+        "execution_error": null,
+        "failure": null,
+        "label": "Reject_implicit_receiver",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2708979712,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 296,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:10:57.429650+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "551860c1b021824a97d24523458a20e69eadb2950f8765dfeef0af0f29ec901b"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/Reject_assumed_conclusion.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_assumed_conclusion.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.430409458000213,
+        "execution_error": null,
+        "failure": null,
+        "label": "Reject_assumed_conclusion",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2710683648,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 298,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:10:58.868773+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "faee172fee4cd978c6bebc539e26393772e8393dde39d91096e07f3bbc80b79e"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/Reject_renamed_premise.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_renamed_premise.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.4325928330654278,
+        "execution_error": null,
+        "failure": null,
+        "label": "Reject_renamed_premise",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2710962176,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 292,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:11:00.299545+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "8bc6f3ff46bae51f75a5cb476be191eb977335ea0d7c291e2258edeb231befbf"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/RejectAxiom.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectAxiom.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.7272744160145521,
+        "execution_error": null,
+        "failure": null,
+        "label": "RejectAxiom",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1347911680,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 230,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:11:01.732489+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "19e44c47922cd4c34ed87dd9c7efa3d225972a0d447f6fb3d6931b6ca9babeae"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/RejectDefinition.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectDefinition.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.7549069169908762,
+        "execution_error": null,
+        "failure": null,
+        "label": "RejectDefinition",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1347354624,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 552,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:11:02.460117+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "9d131bb3893f539b0224407abdca13b0e49afa1668495098082bd8bdd463eb54"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/RejectMissingRoster.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectMissingRoster.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.9159472080646083,
+        "execution_error": null,
+        "failure": null,
+        "label": "RejectMissingRoster",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1410678784,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 240,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:11:03.215387+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "921983b612cf3fe18ae1e6a1aa20613d6df69398454db5d0cf46db643efcb944"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/RejectExtraRoster.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectExtraRoster.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.8634271250339225,
+        "execution_error": null,
+        "failure": null,
+        "label": "RejectExtraRoster",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1412857856,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 238,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:11:04.131789+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "46ae5dc5acf4684d7d3b02c21885020bf56e33b191afe648ca143672d7ae6078"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "pass"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.05027083307504654,
+        "execution_error": null,
+        "failure": null,
+        "label": "silent_success",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 4407296,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:11:05.006861+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "raise SystemExit(3)"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.048742332961410284,
+        "execution_error": null,
+        "failure": null,
+        "label": "nonzero_empty",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 4063232,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 3,
+        "started_utc": "2026-09-05T07:11:05.057362+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "print('DNF_JUDGE_RESULT fake')"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.04970570805016905,
+        "execution_error": null,
+        "failure": null,
+        "label": "stdout_spoof",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 4096000,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 22,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:11:05.106316+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "import sys;sys.stderr.write('bad')"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.04742616694420576,
+        "execution_error": null,
+        "failure": null,
+        "label": "stderr_on_success",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 4292608,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 3,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:11:05.156212+00:00",
+        "stderr_sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "import sys;sys.stdout.write('DNF_');sys.exit(2)"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.04689441598020494,
+        "execution_error": null,
+        "failure": null,
+        "label": "truncated_exit",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1490944,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 4,
+        "returncode": 2,
+        "started_utc": "2026-09-05T07:11:05.203822+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "import sys;sys.stdout.write('x'*1000000)"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.034157666959799826,
+        "execution_error": null,
+        "failure": "output_limit",
+        "label": "output_limit",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4096,
+          "stdout_bytes": 4096
+        },
+        "peak_observed_group_rss_bytes": 1294336,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 4096,
+        "returncode": -9,
+        "started_utc": "2026-09-05T07:11:05.250902+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "import subprocess,time,sys;subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)']);time.sleep(30)"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.5688172919908538,
+        "execution_error": null,
+        "failure": "timeout",
+        "label": "timeout_descendant",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 0.5,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 31653888,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": -9,
+        "started_utc": "2026-09-05T07:11:05.285240+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{PACKAGE_MANAGER_PREFIX}/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+          "-I",
+          "-S",
+          "-B",
+          "-c",
+          "import time;x=bytearray(32*1024*1024);time.sleep(30)"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 0.16167824994772673,
+        "execution_error": null,
+        "failure": "memory_limit",
+        "label": "memory_limit",
+        "limits": {
+          "observed_group_rss_bytes": 16777216,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 10,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 46350336,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": -9,
+        "started_utc": "2026-09-05T07:11:05.854371+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/build/ControlClosure.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ControlClosure.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 1.4365078340051696,
+        "execution_error": null,
+        "failure": null,
+        "label": "ControlClosure",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2706882560,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:11:06.016553+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/leanchecker",
+          "--fresh",
+          "ControlClosure"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src",
+        "elapsed_seconds": 183.2170043749502,
+        "execution_error": null,
+        "failure": null,
+        "label": "kernel-all-positive-controls",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 3078684672,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:11:07.453213+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "declared_local_artifact_inventory": {
+      "00-compile-PidFiniteConvergence-Deterministic/command.json": "97ec645ce9fe2ffc5694528c1020d7dfe714f916d3cd99d9280f9cfe9f723bf5",
+      "00-compile-PidFiniteConvergence-Deterministic/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "00-compile-PidFiniteConvergence-Deterministic/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-compile-PidFiniteConvergence-SxEventBridge/command.json": "e5dc5b3a12721018010309a54a78533b4aa19fe58d813c824780378bd25eb04c",
+      "01-compile-PidFiniteConvergence-SxEventBridge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-compile-PidFiniteConvergence-SxEventBridge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "02-compile-Contract/command.json": "8c50b729595cb1e744ee4c2fe0bb84f21f5c6cae10274663aa6f83169fa8b789",
+      "02-compile-Contract/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "02-compile-Contract/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "03-compile-JudgeCore/command.json": "c03cc9ae3291cbc7ae10541b7e4431fa2fd20a89947c80ab7f6cd9f72c6680f1",
+      "03-compile-JudgeCore/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "03-compile-JudgeCore/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "04-compile-JudgeTargets/command.json": "186d06d12c8bb888e7459034a436ae1d89f82064ad716b95a705a71d039fa72c",
+      "04-compile-JudgeTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "04-compile-JudgeTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-compile-JudgeAliases/command.json": "d2b8b7caeeddcc2a4c795d0b78e3eac3d41d55fdad97706be35dac3b4b4ffb6b",
+      "05-compile-JudgeAliases/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-compile-JudgeAliases/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "06-compile-ContractJudge/command.json": "e7c0301523248fda73233c2b497373978912af874834c649ec7e34421c4c3f0e",
+      "06-compile-ContractJudge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "06-compile-ContractJudge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07-reporting-smoke/command.json": "01724e9c3c68c9b11810d3ebf2a1564ff16d58648d5c85d0ad99c0f8246e29a4",
+      "07-reporting-smoke/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07-reporting-smoke/stdout.log": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+      "08-ReportingRestoredLift/command.json": "ead1c1c5790ed64c20b4a83d070351d2b497da48de578d933dd259c171b27944",
+      "08-ReportingRestoredLift/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "08-ReportingRestoredLift/stdout.log": "a87c226259d8c05add8f34e6fa713a4833d51132c26a2f234f8f41539c02de37",
+      "09-FiniteControls/command.json": "28bd066b07bb99082ddf2eb00b26ef3048bfa4aeffe6072bc00bd1f3fc86f272",
+      "09-FiniteControls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "09-FiniteControls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "10-WrongTargets/command.json": "b5370db45a10b4a6882a23943ce69a3fb331fc7386f105f49287dbdc3af30f26",
+      "10-WrongTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "10-WrongTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "11-PositiveTypeControls/command.json": "6eef3454c6f86df0dd34387b4c562cd1f6888d1144044eb39b0d783383ffc244",
+      "11-PositiveTypeControls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "11-PositiveTypeControls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "12-Reject_fin3_only/command.json": "0838b1c24c9a55a7690201ec26b019a909d214184c2b67bdd13222420fac31eb",
+      "12-Reject_fin3_only/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "12-Reject_fin3_only/stdout.log": "9cb87435e500a64b434030f9566b768c0ab4b202d9561f787b7f0da3ffe068b4",
+      "13-Reject_explicit_receiver/command.json": "3c786d58b9064890e808974b513b8b5475561f1f43389b43e1212d318bcaeb20",
+      "13-Reject_explicit_receiver/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "13-Reject_explicit_receiver/stdout.log": "98868937a3d090aeb8f36d7cc071ef54c202a214550e49cea11f12b56e0e9296",
+      "14-Reject_implicit_receiver/command.json": "a2eeb251f544b0c5c20306924344bb2c73eeb281114fc1a3afc234e9c357b508",
+      "14-Reject_implicit_receiver/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "14-Reject_implicit_receiver/stdout.log": "551860c1b021824a97d24523458a20e69eadb2950f8765dfeef0af0f29ec901b",
+      "15-Reject_assumed_conclusion/command.json": "ca29fab7b28e91be2ff02d5572685cd329931bed00d64dc43ee15803e408ffdd",
+      "15-Reject_assumed_conclusion/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "15-Reject_assumed_conclusion/stdout.log": "faee172fee4cd978c6bebc539e26393772e8393dde39d91096e07f3bbc80b79e",
+      "16-Reject_renamed_premise/command.json": "a5d9557e1cc0452a3a7debb848473a04097ac8192591f7a42d9e64eb14da456d",
+      "16-Reject_renamed_premise/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "16-Reject_renamed_premise/stdout.log": "8bc6f3ff46bae51f75a5cb476be191eb977335ea0d7c291e2258edeb231befbf",
+      "17-RejectAxiom/command.json": "a14bfcd9293fcc74303316f8344a2096fe627ee3d95381e0835b986cc3adccc5",
+      "17-RejectAxiom/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "17-RejectAxiom/stdout.log": "19e44c47922cd4c34ed87dd9c7efa3d225972a0d447f6fb3d6931b6ca9babeae",
+      "18-RejectDefinition/command.json": "60f4884ed272c9c4e1b0703609c4102bcae7cbe0991b615eed8df68307cb423e",
+      "18-RejectDefinition/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "18-RejectDefinition/stdout.log": "9d131bb3893f539b0224407abdca13b0e49afa1668495098082bd8bdd463eb54",
+      "19-RejectMissingRoster/command.json": "caa646dad9f8781869cac60f75a0979023a5616d01ee02215976d8a5dc050fe4",
+      "19-RejectMissingRoster/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "19-RejectMissingRoster/stdout.log": "921983b612cf3fe18ae1e6a1aa20613d6df69398454db5d0cf46db643efcb944",
+      "20-RejectExtraRoster/command.json": "24a1b675d0b9cda28a1ebf3447c462fa09b8ad424a05a1af1403dfcaae535b40",
+      "20-RejectExtraRoster/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "20-RejectExtraRoster/stdout.log": "46ae5dc5acf4684d7d3b02c21885020bf56e33b191afe648ca143672d7ae6078",
+      "21-silent_success/command.json": "f07bd59e97ac6b748d6591410371a7ec0eb0e10b6afaec9d58e19bd0c64e5dcb",
+      "21-silent_success/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "21-silent_success/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "22-nonzero_empty/command.json": "f39d60be5c9e45cf80d69f045d492dd2778fbc06266a6b4e50d40517ef34c3d8",
+      "22-nonzero_empty/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "22-nonzero_empty/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "23-stdout_spoof/command.json": "8916c2fd2fd0ca4d0535834910f8a6274d8d0998b9f19ce5412309b5a52b37a4",
+      "23-stdout_spoof/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "23-stdout_spoof/stdout.log": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+      "24-stderr_on_success/command.json": "ddd0e51809b2f53b883379e059965558ff9faf39577380fc3c4f11905c3a56e6",
+      "24-stderr_on_success/stderr.log": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+      "24-stderr_on_success/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "25-truncated_exit/command.json": "f955c7259c650c86098ec4d1c5fcbfacd9205eb14566d33a88e8d25759129d30",
+      "25-truncated_exit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "25-truncated_exit/stdout.log": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+      "26-output_limit/command.json": "f1c53212b579185e04f8a476741d1d1ab84bb7bc177a663d8c9581483b08ef2c",
+      "26-output_limit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "26-output_limit/stdout.log": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+      "27-timeout_descendant/command.json": "c9ab2d4f18bbf8dd90b6880bbbb367160b7f60e1be44b53aaaecae3ed5ccf962",
+      "27-timeout_descendant/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "27-timeout_descendant/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "28-memory_limit/command.json": "472d69371c8a87373dc15fb32e13e62169a486d192e495781acf777ddc88bd6d",
+      "28-memory_limit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "28-memory_limit/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "29-ControlClosure/command.json": "d964f78c6ab28219626e77494bae6ef42dd65bf4cbec327e9e221e040de8f1b9",
+      "29-ControlClosure/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "29-ControlClosure/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "30-kernel-all-positive-controls/command.json": "1d4f07e1303e2d056d8a9f9f3715f75e653312489fe1ed2518ec8c27e498bc09",
+      "30-kernel-all-positive-controls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "30-kernel-all-positive-controls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "build/Contract.olean": "8013ba04543b8b9bea10382bc331c4dca676576f21e8c784dfed0e0eb2a9b7af",
+      "build/ContractJudge.olean": "3552dfd76ad7f16f8173c91dd9022c825b862e02df94f7ef84f6b07377da169e",
+      "build/ControlClosure.olean": "6e1b0dc2ea49ac8bddd71cb2ea4d693ce5cc1943e8d593b64575fbf071606029",
+      "build/FiniteControls.olean": "9c26b8538cea5b159fc9aaa96b565746f7b38c1d7a0109736a2698a2c21c1f40",
+      "build/JudgeAliases.olean": "670a60bd2f38fb73f1916333dad537c6939765d080f65efcac54e8f9f833e5d9",
+      "build/JudgeCore.olean": "31b15bc3f1e37a4a1b909850d2abe04bfdb0a389a589f2fa4c28c656fa06529d",
+      "build/JudgeTargets.olean": "f547006591192be1fd8834e059c5e4aae8914b3b7735498f40019f47070e3806",
+      "build/PidFiniteConvergence/Deterministic.olean": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9",
+      "build/PidFiniteConvergence/SxEventBridge.olean": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1",
+      "build/PositiveTypeControls.olean": "6b9055067be0a774c1a766135ce7e4b161f50af9aae84c292e01bae25a5a7a7e",
+      "build/ReportingSmoke.olean": "da4ef8cbdfc4b30019d430e814493fbb3007b73b0b94f588e91b53cb89ae4fc5",
+      "build/WrongTargets.olean": "56c8ec823e1f110f2fc5a0a43ea67e088a316b61511130895f07da8d73c5a46f",
+      "custody/during": "d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+      "custody/freeze/AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+      "custody/freeze/Contract.lean": "1b976cc941668585f9d8efeb402ff3c3179433bbacf3e618a75cc1bfd490bd03",
+      "custody/freeze/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "custody/freeze/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "custody/freeze/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "custody/freeze/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "custody/freeze/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+      "custody/freeze/frozen.json": "3d86a688040db234f47069d3861308985d8cff5999aab5a49f22e599fee645f7",
+      "custody/freeze/judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+      "custody/freeze/reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+      "custody/freeze/selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+      "custody/freeze/theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+      "custody/pinroot/audit/formal/lean/PidFiniteConvergence.lean": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+      "custody/pinroot/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "custody/pinroot/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "custody/pinroot/audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+      "custody/pinroot/audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+      "custody/pinroot/audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+      "custody/pinroot/scripts/check-lean-finite-convergence.py": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+      "custody/pinroot/scripts/check-lean-sxpid3-informative-invariance.py": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+      "custody/regular": "c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20",
+      "environment.json": "957577644e757607d543c5c645d0d95cc531b3001ebf944630305f3d917e3af4",
+      "input-bytes/0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+      "input-bytes/13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+      "input-bytes/1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+      "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+      "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+      "input-bytes/2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c",
+      "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+      "input-bytes/3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+      "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+      "input-bytes/4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "input-bytes/4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+      "input-bytes/499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb",
+      "input-bytes/4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7",
+      "input-bytes/4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6",
+      "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "input-bytes/5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85",
+      "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+      "input-bytes/6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+      "input-bytes/713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e",
+      "input-bytes/71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95",
+      "input-bytes/724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+      "input-bytes/73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea",
+      "input-bytes/a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98",
+      "input-bytes/ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e",
+      "input-bytes/b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "input-bytes/cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa",
+      "input-bytes/cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47",
+      "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+      "input-bytes/ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8",
+      "policy-syntax-fixture.txt": "aee2fab1ebbe504a79835374b552424e88ad102889de2822c88fb5db43b478bb",
+      "prefix-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "prefix-stdout.log": "ebce7c6b7a024f5fc95464aefa8bd0e31edbd9b73882ee03662dc3e15c7eb2c7",
+      "src/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "src/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "src/ControlClosure.lean": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb",
+      "src/FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+      "src/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "src/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "src/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "src/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "src/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "src/PositiveTypeControls.lean": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa",
+      "src/RejectAxiom.lean": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98",
+      "src/RejectDefinition.lean": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8",
+      "src/RejectExtraRoster.lean": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7",
+      "src/RejectMissingRoster.lean": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47",
+      "src/Reject_assumed_conclusion.lean": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea",
+      "src/Reject_explicit_receiver.lean": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e",
+      "src/Reject_fin3_only.lean": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6",
+      "src/Reject_implicit_receiver.lean": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85",
+      "src/Reject_renamed_premise.lean": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95",
+      "src/ReportingRestoredLift.lean": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c",
+      "src/ReportingSmoke.lean": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e",
+      "src/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+      "src/WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+    },
+    "inputs": {
+      "{LEAN_TOOLCHAIN}/bin/lean": {
+        "bytes": 49968,
+        "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+      },
+      "{LEAN_TOOLCHAIN}/bin/leanchecker": {
+        "bytes": 78128,
+        "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/FiniteControls.lean": {
+        "bytes": 7136,
+        "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/WrongTargets.lean": {
+        "bytes": 1426,
+        "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/judge.py": {
+        "bytes": 25145,
+        "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ControlClosure.lean": {
+        "bytes": 113,
+        "sha256": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/FiniteControls.lean": {
+        "bytes": 7136,
+        "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/PidFiniteConvergence/Deterministic.lean": {
+        "bytes": 9093,
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/PidFiniteConvergence/SxEventBridge.lean": {
+        "bytes": 27203,
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/PositiveTypeControls.lean": {
+        "bytes": 751,
+        "sha256": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectAxiom.lean": {
+        "bytes": 281,
+        "sha256": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectDefinition.lean": {
+        "bytes": 257,
+        "sha256": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectExtraRoster.lean": {
+        "bytes": 188,
+        "sha256": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectMissingRoster.lean": {
+        "bytes": 146,
+        "sha256": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_assumed_conclusion.lean": {
+        "bytes": 313,
+        "sha256": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_explicit_receiver.lean": {
+        "bytes": 312,
+        "sha256": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_fin3_only.lean": {
+        "bytes": 304,
+        "sha256": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_implicit_receiver.lean": {
+        "bytes": 312,
+        "sha256": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_renamed_premise.lean": {
+        "bytes": 310,
+        "sha256": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ReportingRestoredLift.lean": {
+        "bytes": 196,
+        "sha256": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/ReportingSmoke.lean": {
+        "bytes": 186,
+        "sha256": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/WrongTargets.lean": {
+        "bytes": 1426,
+        "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/selftest.py": {
+        "bytes": 19401,
+        "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence.lean": {
+        "bytes": 371,
+        "sha256": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": {
+        "bytes": 9093,
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": {
+        "bytes": 27203,
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+      },
+      "{REPOSITORY}/audit/formal/lean/lake-manifest.json": {
+        "bytes": 3144,
+        "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+      },
+      "{REPOSITORY}/audit/formal/lean/lakefile.toml": {
+        "bytes": 243,
+        "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+      },
+      "{REPOSITORY}/audit/formal/lean/lean-toolchain": {
+        "bytes": 25,
+        "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+      },
+      "{REPOSITORY}/scripts/check-lean-finite-convergence.py": {
+        "bytes": 58665,
+        "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+      },
+      "{REPOSITORY}/scripts/check-lean-sxpid3-informative-invariance.py": {
+        "bytes": 17039,
+        "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+      }
+    },
+    "pending": [
+      "Complete thirteen-export positive, cosmetic and restored-reporting-module replay are separate obligations; the candidate existed before this amendment.",
+      "No claim of external custody or process isolation from a malicious shared-workspace actor.",
+      "Pinned dependency source preflight is reused; its complete historical mutation suite is not repeated here."
+    ],
+    "python_optimized": 1,
+    "results": [
+      {
+        "category": "custody",
+        "details": "",
+        "name": "ambient_stale_cache_excluded",
+        "status": "pass"
+      },
+      {
+        "category": "positive",
+        "details": "",
+        "name": "contract_raw_alias_preparation",
+        "status": "pass"
+      },
+      {
+        "category": "reporting_regression",
+        "details": "Actual IO action in TermElabM; smoke data are not theorem evidence.",
+        "name": "term_elaboration_reporting_positive",
+        "status": "pass"
+      },
+      {
+        "category": "reporting_regression",
+        "details": "Original CommandElabM lift rejected inside TermElabM.",
+        "name": "ReportingRestoredLift",
+        "status": "pass"
+      },
+      {
+        "category": "finite_counterexamples",
+        "details": "",
+        "name": "FiniteControls",
+        "status": "pass"
+      },
+      {
+        "category": "valid_wrong_target_proofs",
+        "details": "",
+        "name": "WrongTargets",
+        "status": "pass"
+      },
+      {
+        "category": "positive",
+        "details": "",
+        "name": "finite_and_universe_positive_types",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_TARGET_TYPE",
+        "name": "Reject_fin3_only",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_TARGET_TYPE",
+        "name": "Reject_explicit_receiver",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_TARGET_TYPE",
+        "name": "Reject_implicit_receiver",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_TARGET_TYPE",
+        "name": "Reject_assumed_conclusion",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_TARGET_TYPE",
+        "name": "Reject_renamed_premise",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_AXIOM",
+        "name": "RejectAxiom",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_DECLARATION_KIND",
+        "name": "RejectDefinition",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_EXPORT_ROSTER",
+        "name": "RejectMissingRoster",
+        "status": "pass"
+      },
+      {
+        "category": "semantic_rejection",
+        "details": "DNF_JUDGE_EXPORT_ROSTER",
+        "name": "RejectExtraRoster",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "Source syntax only; complete candidate semantic replay is separate.",
+        "name": "P12_cosmetic_source_fragment",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate import roster must be exactly Contract",
+        "name": "extra_import",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate public theorem source roster changed",
+        "name": "unknown_public",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate public theorem source roster changed",
+        "name": "missing_export",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate public theorem source roster changed",
+        "name": "duplicate_export",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate must retain exactly the two strict options",
+        "name": "changed_option",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_sorry",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_axiom",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_native_decide",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_unsafe",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_run_cmd",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_run_tac",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_elab",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_macro",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_initialize",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate source contains prohibited code",
+        "name": "forbidden_attribute",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate must retain exactly the two strict options",
+        "name": "forbidden_set_option_maxRecDepth_0",
+        "status": "pass"
+      },
+      {
+        "category": "source_policy",
+        "details": "candidate import roster must be exactly Contract",
+        "name": "forbidden_import_Lean",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "Synthetic parser records are not theorem evidence.",
+        "name": "exact_parser_shape",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "theorem evidence line count changed",
+        "name": "missing_record",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "theorem evidence identity changed",
+        "name": "duplicate_record",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "disallowed or unordered axiom roster",
+        "name": "unknown_axiom",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "Expecting value: line 1 column 336 (char 335)",
+        "name": "malformed",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "theorem evidence line count changed",
+        "name": "extra_output",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "invalid name roster: axioms",
+        "name": "wrong_field_type",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "theorem evidence fields changed",
+        "name": "unknown_field",
+        "status": "pass"
+      },
+      {
+        "category": "parser_control",
+        "details": "duplicate JSON key: status",
+        "name": "duplicate_json_key",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "",
+        "name": "regular_capture",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "[Errno 2] No such file or directory: '{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/custody/missing'",
+        "name": "missing_file",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "noncanonical or symlink input: {REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/custody/symlink",
+        "name": "symlink_file",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "input must be a regular single-link file: {REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/custody/hardlink",
+        "name": "hardlinked_file",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "input changed after capture: {REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/custody/regular",
+        "name": "changed_after_capture",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "input changed after capture: {REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/custody/regular",
+        "name": "same_bytes_inode_replacement",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "input changed before capture",
+        "name": "inode_replaced_at_open",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "input changed during capture: {REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/custody/during",
+        "name": "bytes_changed_during_capture",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "",
+        "name": "exact_source_pins",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence.lean",
+        "name": "pin_0",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+        "name": "pin_1",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+        "name": "pin_2",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: audit/formal/lean/lake-manifest.json",
+        "name": "pin_3",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: audit/formal/lean/lakefile.toml",
+        "name": "pin_4",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: audit/formal/lean/lean-toolchain",
+        "name": "pin_5",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: scripts/check-lean-sxpid3-informative-invariance.py",
+        "name": "pin_6",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "pinned source changed: scripts/check-lean-finite-convergence.py",
+        "name": "pin_7",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "",
+        "name": "exact_frozen_roster",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "judge freeze is not accepted for a candidate",
+        "name": "amendment_status",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "judge amendment chronology or predecessor binding changed",
+        "name": "amendment_predecessor_freeze_sha256",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "judge amendment chronology or predecessor binding changed",
+        "name": "amendment_candidate_sha256_at_amendment",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "frozen judge input changed: Contract.lean",
+        "name": "changed_contract",
+        "status": "pass"
+      },
+      {
+        "category": "custody",
+        "details": "adopted judge freeze digest changed",
+        "name": "coordinated_contract_reseal",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "",
+        "name": "silent_success",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "nonzero_empty: nonzero process status",
+        "name": "nonzero_empty",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "stdout_spoof: unexpected stdout",
+        "name": "stdout_spoof",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "stderr_on_success: unexpected stderr",
+        "name": "stderr_on_success",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "truncated_exit: nonzero process status",
+        "name": "truncated_exit",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "output_limit: operational failure: output_limit",
+        "name": "output_limit",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "timeout_descendant: operational failure: timeout",
+        "name": "timeout_descendant",
+        "status": "pass"
+      },
+      {
+        "category": "process_control",
+        "details": "memory_limit: operational failure: memory_limit",
+        "name": "memory_limit",
+        "status": "pass"
+      },
+      {
+        "category": "kernel",
+        "details": "",
+        "name": "fresh_positive_control_closure",
+        "status": "pass"
+      }
+    ],
+    "scope": "Amendment controls after the candidate existed. Complete candidate replay is separate.",
+    "status": "amendment_controls_pass"
+  },
+  "retained_local_source_sha256": "517a18ab8d36882b37fd06063028246f5f40d6eb30632f4c306aa1539a26e70b",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

@@ -792,17 +792,21 @@ python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py  # 3 controls + 56 hostiles
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py
-python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v2-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
-python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v2-self-test.py
-scripts/check-mathematical-results-guide-pdf.sh --exact  # raw repeated-build and rebuilt/committed guide bytes
-# The current reviewed 23-page v2 profile accepts only its closed Ubuntu 24.04/x86 producer tuple
-# and retained raw-fixture relation. Exact mode remains same-toolchain byte identity. The retained
-# v2 fixture came from translated local x86 execution; native hosted replay remains pending and has
-# no hosted-execution credit. Retained 16-page v1 packages are historical replay evidence only.
+python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py
+# Retained 23-page v2 replay only; the fixture argument must be absolute.
+HOSTED_GUIDE_V2_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
+python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
+scripts/check-mathematical-results-guide-pdf.sh --exact  # current 24-page v3; raw repeated-build and rebuilt/committed bytes
+# The selected Ubuntu 24.04/x86 route replays historical v2, then refuses the current v3 build.
+# Current hosted admission is pending fresh producer evidence and review; refusal is expected.
+# The v2 fixture came from translated local x86 execution and carries no hosted-execution credit.
+# Retained 16-page v1 packages are also historical replay evidence only.
 scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
 scripts/check-numerical-assurance-pdf.sh --exact  # represented-binary64 assurance, 23 pages
 scripts/check-numerical-assurance-pdf.sh --cross-toolchain
-scripts/check-numerical-assurance-pdf-self-test.sh  # 1 contract + 3 accepted + 32 hostile controls
+scripts/check-numerical-assurance-pdf-self-test.sh  # 1 contract + 3 accepted + 44 hostile controls
 scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh --exact  # current/proposed Galadriel placement guide
 scripts/check-sxpid3-source-marginal-audit-pdf.sh --exact  # canonical MD/PDF SxPID3 audit coherence
 python3 scripts/generate-ksg-local-arithmetic-oracle.py  # no-write replay of all 8,198 rows

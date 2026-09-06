@@ -1,0 +1,49 @@
+ok 1 - production checker retains its independent source, PDF, object, and mode contract
+ok 2 - matching committed and rebuilt bytes pass exact mode
+ok 3 - matching committed and rebuilt bytes pass explicit cross-toolchain mode
+ok 4 - unknown mode is rejected with status 2
+ok 5 - extra arguments are rejected with status 2
+ok 6 - exact mode rejects missing historical Markdown 1
+ok 7 - cross-toolchain mode rejects missing historical Markdown 1
+ok 8 - exact mode rejects historical Markdown byte drift 1
+ok 9 - cross-toolchain mode rejects historical Markdown byte drift 1
+ok 10 - exact mode rejects missing historical Markdown 2
+ok 11 - cross-toolchain mode rejects missing historical Markdown 2
+ok 12 - exact mode rejects historical Markdown byte drift 2
+ok 13 - cross-toolchain mode rejects historical Markdown byte drift 2
+ok 14 - exact mode rejects missing historical Markdown 3
+ok 15 - cross-toolchain mode rejects missing historical Markdown 3
+ok 16 - exact mode rejects historical Markdown byte drift 3
+ok 17 - cross-toolchain mode rejects historical Markdown byte drift 3
+ok 18 - canonical Markdown drift invalidates exact-mode source identity
+ok 19 - cross-toolchain mode cannot bypass canonical Markdown identity
+ok 20 - projection-source drift invalidates the source-derived trailer ID
+ok 21 - cross-toolchain mode cannot bypass imported-figure identity
+ok 22 - symbolic canonical source is rejected before the build
+ok 23 - default exact mode rejects serialization-only byte drift
+ok 24 - explicit cross-toolchain mode admits the reviewed serialization-only fixture
+ok 25 - matching 22-page PDFs cannot bypass the fixed page contract
+ok 26 - matching PDFs with a forged trailer ID are rejected
+ok 27 - matching PDFs without the bounded first-page OpenAction are rejected
+ok 28 - cross-toolchain mode rejects matching PDFs with a forbidden Launch action
+ok 29 - mode-guard weakening is detected
+ok 30 - required-input symlink weakening is detected
+ok 31 - Markdown math-gate bypass is detected
+ok 32 - figure-PDF source binding removal is detected
+ok 33 - builder wiring drift is detected
+ok 34 - fixed page-count weakening is detected
+ok 35 - reviewed text-sentinel removal is detected
+ok 36 - raw-TeX rejection weakening is detected
+ok 37 - source-derived trailer-ID equality inversion is detected
+ok 38 - OpenAction predicate weakening is detected
+ok 39 - forbidden-action predicate weakening is detected
+ok 40 - repository-navigation inventory weakening is detected
+ok 41 - action-count weakening is detected
+ok 42 - all-page raster command weakening is detected
+ok 43 - all-page raster-count weakening is detected
+ok 44 - committed-PDF validation bypass is detected
+ok 45 - rebuilt-PDF validation bypass is detected
+ok 46 - exact-byte comparison inversion is detected
+ok 47 - cross-toolchain text comparison bypass is detected
+ok 48 - cross-toolchain geometry comparison bypass is detected
+OK: numerical assurance PDF checker passed 48 controls (1 contract, 3 accepted-mode, 44 hostile); exact bytes remain mandatory in default mode and cross-toolchain acceptance remains explicit and structurally bounded

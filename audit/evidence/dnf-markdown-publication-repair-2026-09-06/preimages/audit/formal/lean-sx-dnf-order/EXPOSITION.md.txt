@@ -1,0 +1,393 @@
+# From source collections to equality events
+
+This note explains how the order used to label a partial information decomposition (PID)
+corresponds to logical implication. It then identifies the assumptions needed to recover that
+order from categorical equality events. The logic is classical. The repository formalization
+connects it to an existing finite-event representation and records four counterexamples to
+stronger statements.
+
+The statements passed semantic, axiom and fresh-kernel checks. The
+[theorem table](SOURCE_CORRESPONDENCE.md) gives their exact premises and Lean names; the
+[verification record](../../evidence/dnf-order-formal-verification-2026-09-05/RESULTS.md) preserves
+the acceptance evidence and failed routes. Correspondence to the cited papers remains a human
+source review.
+
+## The mathematical objects
+
+Let \(I\) be a set of source indices. In the examples, \(I=\{1,2\}\) or
+\(I=\{1,2,3\}\). A **collection** \(a\) is a finite subset of \(I\). The notation
+\(a\subseteq b\) means that every index in \(a\) also belongs to \(b\); equality is allowed.
+A **family** \(\alpha\) is a finite set of collections. Thus \(\{1,2\}\) is one collection,
+whereas \(\{\{1\},\{2\}\}\) is a family with two collections.
+
+An **antichain** is a family in which no distinct collection contains another. Equivalently,
+if \(a,b\in\alpha\) and \(a\subseteq b\), then \(a=b\). For example,
+\(\{\{1\},\{2\}\}\) is an antichain, but \(\{\{1\},\{1,2\}\}\) is not.
+
+The usual finite PID carrier contains the nonempty antichains of nonempty collections. Williams
+and Beer specify this carrier and its order in Eqs. (4) and (5). These labels do not, by themselves,
+select a numerical redundancy measure. Their \(I_{\min}\) and the later shared-exclusions
+quantity are distinct choices. [Williams and Beer, arXiv:1004.2515v1](https://arxiv.org/pdf/1004.2515v1)
+
+For the generic logical statements below, we also permit an empty family or an empty collection.
+This larger domain makes boundary cases explicit. It must not be confused with the narrower
+paper PID carrier.
+
+A **Boolean pattern** is a function \(e:I\to\{0,1\}\). A collection \(a\) accepts a pattern
+when every index in \(a\) has value 1. A family accepts when at least one of its collections
+accepts. Write
+
+\[
+ F_\alpha(e)
+ \quad\Longleftrightarrow\quad
+ \exists a\in\alpha\;\forall i\in a,\ e_i=1.
+ \tag{1}
+\]
+
+Thus we use **AND within a collection and OR across the family**. This is a monotone disjunctive
+normal form (DNF): changing a 0 to a 1 cannot turn an accepted pattern into a rejected one.
+The empty family accepts no pattern. An empty collection accepts every pattern, so any family
+that contains it accepts every pattern. These are the constant false and constant true cases.
+
+Gutknecht, Wibral, and Makkeh give the same OR-of-ANDs map in Eq. (4.1), relate it to the PID
+order in Theorem 1, and use characteristic truth assignments in the appendix proof. The present
+generic theorem is a formalization of that classical correspondence, with explicit treatment of
+empty families and collections. [Gutknecht, Wibral, and Makkeh, arXiv:2008.09535v2](https://arxiv.org/pdf/2008.09535v2)
+
+## Why the order reverses implication
+
+Define the redundancy order by
+
+\[
+ \alpha\preceq\beta
+ \quad\Longleftrightarrow\quad
+ \forall b\in\beta\;\exists a\in\alpha,\ a\subseteq b.
+ \tag{2}
+\]
+
+For each collection on the right, the family on the left must contain a collection with no more
+requirements. Consequently,
+
+\[
+ \boxed{\alpha\preceq\beta
+ \quad\Longleftrightarrow\quad
+ \forall e,\ F_\beta(e)\Rightarrow F_\alpha(e).}
+ \tag{3: G1}
+\]
+
+Here is the proof in both directions. Suppose first that \(\alpha\preceq\beta\), and that
+\(F_\beta(e)\) holds. Choose a collection \(b\in\beta\) whose indices all have value 1.
+By the order definition, some \(a\in\alpha\) satisfies \(a\subseteq b\). All indices of
+\(a\) therefore have value 1, so \(F_\alpha(e)\) holds.
+
+Conversely, suppose that every pattern accepted by \(\beta\) is accepted by \(\alpha\).
+For an arbitrary \(b\in\beta\), form its characteristic pattern: put 1 exactly on the indices
+in \(b\), and 0 everywhere else. The collection \(b\) accepts this pattern. Some
+\(a\in\alpha\) must therefore accept it too. Every index of \(a\) lies in \(b\), so
+\(a\subseteq b\). This supplies the witness required by (2).
+
+The formal statement uses finite collections and families. It requires neither antichains nor
+nonempty families, and the source index type can be arbitrary. The categorical statements below
+use finite index and value types.
+
+For two sources, put
+\(\alpha=\{\{1\},\{2\}\}\) and \(\beta=\{\{1,2\}\}\). Then
+\(F_\alpha=e_1\lor e_2\), \(F_\beta=e_1\land e_2\), and
+\(\alpha\preceq\beta\).
+
+| Boolean pattern \(e_1e_2\) | \(F_\alpha\): at least one 1 | \(F_\beta\): both 1 |
+|---|---|---|
+| 00 | false | false |
+| 01 | true | false |
+| 10 | true | false |
+| 11 | true | true |
+
+![The OR family accepts equality patterns 01, 10, and 11. The AND family accepts only 11. Thus alpha precedes beta, while the beta event is contained in the alpha event.](event-order.svg)
+
+*Figure 1. The four cells list possible Boolean equality patterns; their area carries no
+probability information. “Included” and hatching both identify accepted patterns. The order
+correspondence is the one in Gutknecht, Wibral, and Makkeh, Eq. (4.1) and Theorem 1. Whether a
+particular categorical domain realizes all four patterns is a separate question.*
+
+## Why the antichain premise matters
+
+For arbitrary families, mutual order need not mean equality. Antichains remove the redundant
+collections that cause this problem. For antichains,
+
+\[
+ \alpha,\beta\text{ antichains},\quad
+ \alpha\preceq\beta,\quad\beta\preceq\alpha
+ \quad\Longrightarrow\quad\alpha=\beta.
+ \tag{G2}
+\]
+
+To prove it, take \(a\in\alpha\). The two order assumptions provide
+\(b\in\beta\) and \(c\in\alpha\) with \(c\subseteq b\subseteq a\).
+Since \(\alpha\) is an antichain, \(c=a\). The inclusions then force \(b=a\), so
+\(a\in\beta\). This proves \(\alpha\subseteq\beta\). The same argument with the roles
+exchanged proves \(\beta\subseteq\alpha\).
+
+Together, G1 and G2 give:
+
+\[
+ \alpha,\beta\text{ antichains},\quad
+ \forall e,\ F_\alpha(e)\Longleftrightarrow F_\beta(e)
+ \quad\Longrightarrow\quad\alpha=\beta.
+ \tag{G3}
+\]
+
+In words, an antichain is determined by its answers on **all** Boolean patterns. Its collections
+are exactly the minimal sets of indices that make its DNF true. The word “all” will matter when
+we restrict attention to a categorical domain.
+
+## Turning equality to an anchor into a pattern
+
+Now assume that \(I\), every source alphabet \(\mathcal X_i\), and the target alphabet
+\(\mathcal T\) are finite. The alphabets need not be the same. A complete categorical key is
+
+\[
+ x=((x_i)_{i\in I},u)\in
+ \Omega:=\left(\prod_{i\in I}\mathcal X_i\right)\times\mathcal T.
+ \tag{4}
+\]
+
+Fix an **anchor** \(z=((s_i)_{i\in I},t)\in\Omega\). It supplies the values to which other
+keys are compared. Define the equality pattern
+
+\[
+ e_z(x)_i=\begin{cases}1&x_i=s_i,\\0&x_i\ne s_i.\end{cases}
+ \tag{5}
+\]
+
+The target coordinate is not tested here. A 1 means “equal to this anchor's source value.” It
+does not mean that the raw source value is 1, or that a sensor is correct.
+
+The collection event and family event are
+
+\[
+ B_a(z):=\{x\in\Omega:\forall i\in a,\ x_i=s_i\},\qquad
+ E_\alpha(z):=\bigcup_{a\in\alpha}B_a(z).
+ \tag{6}
+\]
+
+These are sets before any probability law is assigned. They use the event construction in
+Makkeh, Gutknecht, and Wibral, Eqs. (5)–(8): Eq. (5) uses a conjunction for a joint source
+collection, and Eq. (6) uses a disjunction across collections. This is the categorical event
+underlying their pointwise shared-exclusions measure. [Makkeh, Gutknecht, and Wibral,
+arXiv:2002.03356v5](https://arxiv.org/pdf/2002.03356v5)
+
+Unfolding the definitions gives:
+
+\[
+ x\in E_\alpha(z)\quad\Longleftrightarrow\quad F_\alpha(e_z(x)).
+ \tag{C1}
+\]
+
+Apply G1 to this equality pattern to obtain
+
+\[
+ \alpha\preceq\beta\quad\Longrightarrow\quad E_\beta(z)\subseteq E_\alpha(z).
+ \tag{C2}
+\]
+
+This direction needs no support or pattern-realizability premise. Every key in the smaller
+event satisfies a collection from \(\beta\); the order provides a collection from
+\(\alpha\) with fewer requirements.
+
+For a concrete example, let both source alphabets be \(\{0,1\}\), use source anchor 00, and
+temporarily omit the target column. The raw source values and equality flags run in opposite
+directions:
+
+| Raw source values \(x_1x_2\) | Equality pattern \(e_z(x)\) | In \(E_\alpha(z)\) | In \(E_\beta(z)\) |
+|---|---|---|---|
+| 00 | 11 | yes | yes |
+| 01 | 10 | yes | no |
+| 10 | 01 | yes | no |
+| 11 | 00 | no | no |
+
+Every allowed target value has the same source-event membership in this table. No row counts,
+independence assumption, or probability weights have been supplied.
+
+## When event observations determine the order
+
+Let \(D\subseteq\Omega\) be a specified domain. It might be the full product alphabet, a
+known population support, or an empirical support. State which one is intended. We say that
+\(D\) **realizes every Boolean pattern at \(z\)** if
+
+\[
+ \forall e:I\to\{0,1\}\;\exists x\in D,\ e_z(x)=e.
+ \tag{7}
+\]
+
+Under this sufficient premise, event implication also determines the order:
+
+\[
+ \alpha\preceq\beta
+ \quad\Longleftrightarrow\quad
+ \forall x\in D,\ x\in E_\beta(z)\Rightarrow x\in E_\alpha(z).
+ \tag{C3}
+\]
+
+The forward direction is C2. For the converse, take any Boolean pattern. Premise (7) supplies
+a key in \(D\) with precisely that pattern. Implication between the events at this key becomes
+implication between the two DNFs by C1. Since this works for every pattern, G1 applies. We do
+not claim that (7) is necessary for every particular pair of families; it is a sufficient
+condition that works uniformly for all pairs.
+
+There is a direct way to establish (7) for the **full** product domain. Supply, for each source,
+an alternate value \(r_i\in\mathcal X_i\) with \(r_i\ne s_i\). For a requested pattern,
+choose
+
+\[
+ x_i=\begin{cases}s_i&e_i=1,\\r_i&e_i=0,\end{cases}
+ \qquad u=t.
+ \tag{8: C4}
+\]
+
+This key has exactly the requested equality pattern. The theorem takes the alternates
+and their inequalities as explicit inputs. It does not infer them from a finite sample. Even if
+each alphabet has two values, the constructed combinations need not lie in a restricted domain
+\(D\).
+
+Combining realizability with G3 gives:
+
+\[
+ \begin{gathered}
+ \alpha,\beta\text{ antichains},\quad D\text{ realizes every pattern at }z,\\
+ \forall x\in D,\ x\in E_\alpha(z)\Longleftrightarrow x\in E_\beta(z)
+ \quad\Longrightarrow\quad\alpha=\beta.
+ \end{gathered}
+ \tag{C5}
+\]
+
+Indeed, every Boolean pattern has a representative key in \(D\), so the DNFs agree on all
+patterns. This conclusion can fail if either the antichain premise or the realizability premise
+is removed.
+
+## Restricting to the same target value
+
+Define \(T_z:=\{x=((x_i),u)\in\Omega:u=t\}\). The target-restricted event is
+\(E_\alpha(z)\cap T_z\). Intersecting both sides of C2 with this **same fixed event** gives
+
+\[
+ \alpha\preceq\beta\quad\Longrightarrow\quad
+ E_\beta(z)\cap T_z\subseteq E_\alpha(z)\cap T_z.
+ \tag{C6}
+\]
+
+If a key belongs to the left side, it belongs to \(E_\beta(z)\) and has target value \(t\).
+C2 supplies membership in \(E_\alpha(z)\), while the target equality is unchanged. The
+proof reuses the existing `SxEventBridge` theorem that identifies its target-restricted
+event with this intersection.
+
+A key can match every source of the anchor and have a different target value. It then belongs
+to every nonempty family's source event, but not to its target-restricted event. Source matching
+does not force target matching. No probability or positivity assumption is used in C6.
+A converse for target-restricted events is outside this packet: realization of source patterns
+on \(D\) does not ensure realization inside \(D\cap T_z\).
+
+## Four counterexamples that preserve the boundaries
+
+The four boundary statements use three source indices. The third index is deliberately unused
+by some families. It does not need to carry information for these logical examples.
+
+**B1 — distinct antichains can have the same categorical event.** Give each source and the
+target a one-element alphabet. There is one complete key, and every source always matches its
+anchor. Put \(\lambda=\{\{1\}\}\) and \(\rho=\{\{2\}\}\). Both are antichains, they are
+different, and neither precedes the other: neither singleton collection contains the other.
+Nevertheless \(E_\lambda(z)=E_\rho(z)=\Omega\). Unconditional injectivity of the categorical
+event map is therefore false.
+
+**B2 — an alphabet need not realize every Boolean pattern.** In the same one-element setting,
+the only equality pattern is 111. Pattern 000 is impossible. Thus even the full product domain
+need not realize all patterns. This refutes automatic realizability, which is a different
+stronger assertion from event injectivity in B1. There are no alternate source values to supply
+to C4.
+
+**B3 — binary alphabets do not ensure realizability on a constrained support.** Give all three
+sources alphabet \(\{0,1\}\), keep a one-element target alphabet, and use source anchor 000.
+Restrict the domain to equal source values:
+\(D=\{000,111\}\). On \(D\), the events for \(\lambda\) and \(\rho\) coincide: both
+contain raw row 000 and exclude raw row 111. The equality patterns realized by \(D\) are 111
+and 000. Pattern 100 is missing. In the full product alphabet the two events differ: raw row
+011 has equality pattern 100, so it belongs to \(E_\lambda(z)\) and not
+\(E_\rho(z)\). This single statement records restricted-domain equality, full-domain
+inequality, and failure of realizability. It assigns no probabilities to the two rows.
+
+**B4 — the antichain premise cannot be dropped.** Compare
+\(\gamma=\{\{1\},\{1,2\}\}\) with \(\lambda=\{\{1\}\}\). The first family is not
+an antichain and differs from the second. Both \(\gamma\preceq\lambda\) and
+\(\lambda\preceq\gamma\) hold. Their DNFs agree on every pattern because
+
+\[
+ e_1\lor(e_1\land e_2)=e_1.
+ \tag{9}
+\]
+
+The larger collection adds no accepted pattern. Without the antichain condition, mutual order
+and identical DNF semantics both fail to determine a unique family.
+
+## Sets, probability laws, and finite samples
+
+The formal results concern event logic. A probability law adds event masses. For a declared finite law \(p\) on \(\Omega\), the mass of an event is
+\(p(E)=\sum_{x\in E}p(x)\), and its positive-mass support is
+\(\operatorname{supp}(p)=\{x:p(x)>0\}\). If two events agree on that support, their masses
+agree. Their intersections with the same target event also agree on the support. Equal masses
+alone do not imply equal events.
+
+For a nonempty sample of \(N\) complete keys, the empirical law is
+\(\widehat p(x)=n_x/N\), where \(n_x\) is the observed count. Its support contains the observed
+keys. A population cell with positive probability can be absent from the sample. Event equality
+on \(\operatorname{supp}(\widehat p)\) therefore does not establish event equality on
+\(\operatorname{supp}(p)\), or population calibration of an estimator. These event identities supply no sampling theorem or confidence interval.
+
+For orientation only, with a finite law and a positive-probability anchor, the MGW pointwise
+shared-exclusions quantity can be written in the repository's units as
+
+\[
+ i^{\mathrm{sx}}_\cap(t:\alpha)
+ =\ln\frac{p(E_\alpha(z)\cap T_z)}{p(E_\alpha(z))\,p(T_z)}.
+ \tag{10}
+\]
+
+Here the PID family is nonempty, and the supported anchor belongs to all three relevant events,
+so the three masses are positive. MGW Eq. (8) uses base-2 logarithms; (10) changes the unit to
+nats by using the natural logarithm. This probability formula and its numerical evaluation are outside the formal targets. Averaging it requires the specified joint law or empirical law; obtaining PID
+atoms additionally requires the chosen lattice inversion. [Makkeh, Gutknecht, and Wibral,
+arXiv:2002.03356v5, Eqs. (8) and (13)](https://arxiv.org/pdf/2002.03356v5)
+
+## A cautious category analogy
+
+A temperature channel might report a fixed category from \(\{\text{normal},\text{high}\}\),
+while an acoustic channel reports \(\{\text{quiet},\text{loud}\}\). Relative to the anchor
+\((\text{high},\text{loud})\), the OR family accepts a record when either category matches;
+the AND family requires both. The categories label inputs, not truth, reliability, or causal
+importance. A target such as a separately defined machine state remains a separate coordinate.
+
+Duplicating one categorical channel can produce a diagonal support like B3: two nominal
+coordinates need not provide independently selectable match patterns. This is a synthetic
+analogy, with no claim about a particular physical sensor law or field performance. Thresholds
+learned from data define fitted categories and need their own fit/evaluation protocol. They
+change the estimand; these logical statements give no guarantee that categorization preserves
+the information in continuous measurements. For a practical sensor decision, a direct task-loss
+or ablation comparison may be more useful than a PID.
+
+A statistical application must also specify each row's observation window and target horizon.
+A future target can depend on innovations outside the source window. The source-window length
+alone therefore does not establish independence of complete source-and-target rows. The same-row
+Boolean example here supplies no temporal sampling or concentration theorem.
+
+## What this bridge can support next
+
+At a fixed anchor and a specified domain, two families can be grouped when their restricted
+events are equal. The counterexamples show why this can produce fewer event classes than
+syntactic antichain labels. C1 gives the exact event map, C2 fixes the order direction, and C6
+keeps the target intersection attached to the same anchor. These are useful inputs to a later
+support-quotient construction.
+
+They do not yet justify compressing a PID atom computation. That step still needs a precise
+quotient carrier and order, the required lattice or adjunction properties, factorization of the
+chosen cumulative quantity, and a theorem about the resulting Möbius inversion. Equal numbers
+cannot be merged merely because they happen to coincide. A quotient can also change with the
+anchor; averaging across anchors needs a common representation or a separate correspondence
+theorem. Those obligations belong to a separate task.

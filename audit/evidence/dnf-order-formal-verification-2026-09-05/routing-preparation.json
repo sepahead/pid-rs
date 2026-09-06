@@ -1,0 +1,224 @@
+{
+  "completed_candidate_campaign_repetitions": 0,
+  "lean_commands_executed": 0,
+  "manifest_sha256": "c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013",
+  "positive_preparations": [
+    {
+      "name": "normal-selected",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0d77dde68e2105781ca45e952ac9e3841ba0c005923a8f2909cc3fc03f394881",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "normal-cosmetic",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "cf7c9277a56a7844f56a165d26062c74cb618f35032f9eda2656650d74d208bd",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "normal-self-test",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1cf6f5b91eac07211e0d7a6a7658406d053eb143ee9df1f51ad10e6f5d8714e9",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "normal-reporting-regression",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6c4e16d6733977387e9ad5b66b61dc3d07d499dbedaf613414783da8cc6b5ad9",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "optimized-selected",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "55745e7fab79e9c733787fc5f1e111010b1d740e575cd6398c3fef1d5a7b7eb5",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "optimized-cosmetic",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "88c33c23c5fcbc97d92c1808f39fc09d9b5f9ec66e3abe13b4d8fa7093c5eec4",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "optimized-self-test",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "7bfddcffa7095e2f088a523b647cda5632333ed16146e4f3bd793071cd98122e",
+      "unchanged_frozen_files": 15
+    },
+    {
+      "name": "optimized-reporting-regression",
+      "no_lean_execution": true,
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "ce19cedd6b7c7abd24d54a126c5362ec10ece2cce8c737b96a0c1b24cf106031",
+      "unchanged_frozen_files": 15
+    }
+  ],
+  "rejection_controls": [
+    {
+      "expected_cause": "public routing manifest digest changed",
+      "name": "wrong-manifest",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "f1350d620ad25807471f4d0f055a82ecfceaf253ac487a5154d1ae68f216aaeb",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "invalid run name",
+      "name": "path-escape",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "aa19bc53bb6118b0dbbf31cb2ad73ff27b691e4b7a5ae33eae6bbdfc29628d71",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "reporting regression requires an accepted run",
+      "name": "unknown-regression-receipt",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "a72844702b420cc35bfcd6d3e59d91f7fcbbc6eb95f3fa74b5fd250c7f3dfee0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "source selection applies only to check",
+      "name": "inapplicable-source-switch",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "77a3051df46f7e09f0201d412457fad14d69adaebf1707313da4ec26d0cd4a87",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "public routing input changed: Candidate.lean",
+      "name": "changed-candidate",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "3a6002bfd49209cd1e486064bf25b473fc839ef5950b9366c8368b7b0caa428b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "accepted source or contract identity changed",
+      "name": "resealed-candidate",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "4eff4ad435a8d59b5838d1fdfe34b7298fd078d068d730cd6f3afa13f617df2a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "frozen judge input changed: Contract.lean",
+      "name": "resealed-contract",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "3f284b7bf8f055c21bb4c66a382f270c6f1ca9a9d7642c24a8e9c3737f1dcbf0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "noncanonical or symlink input",
+      "name": "symlink-source",
+      "passed": true,
+      "python_optimized": 0,
+      "returncode": 1,
+      "stderr_sha256": "012b683ea9b728d85abf273307ccf20ec223247d4675746e3784a5eda1d8d6f1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "public routing manifest digest changed",
+      "name": "wrong-manifest",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "f1350d620ad25807471f4d0f055a82ecfceaf253ac487a5154d1ae68f216aaeb",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "invalid run name",
+      "name": "path-escape",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "aa19bc53bb6118b0dbbf31cb2ad73ff27b691e4b7a5ae33eae6bbdfc29628d71",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "reporting regression requires an accepted run",
+      "name": "unknown-regression-receipt",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "a72844702b420cc35bfcd6d3e59d91f7fcbbc6eb95f3fa74b5fd250c7f3dfee0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "source selection applies only to check",
+      "name": "inapplicable-source-switch",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "77a3051df46f7e09f0201d412457fad14d69adaebf1707313da4ec26d0cd4a87",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "public routing input changed: Candidate.lean",
+      "name": "changed-candidate",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "3a6002bfd49209cd1e486064bf25b473fc839ef5950b9366c8368b7b0caa428b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "accepted source or contract identity changed",
+      "name": "resealed-candidate",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "4eff4ad435a8d59b5838d1fdfe34b7298fd078d068d730cd6f3afa13f617df2a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "frozen judge input changed: Contract.lean",
+      "name": "resealed-contract",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "3f284b7bf8f055c21bb4c66a382f270c6f1ca9a9d7642c24a8e9c3737f1dcbf0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "expected_cause": "noncanonical or symlink input",
+      "name": "symlink-source",
+      "passed": true,
+      "python_optimized": 1,
+      "returncode": 1,
+      "stderr_sha256": "1653128d2bf1eb407df71db0785cad5ac6211ae6ee95f040706f57cf1ac3dd78",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reproduction": {
+    "negative": "For each mode: wrong manifest digest; run-name ../escape; missing accepted regression receipt; self-test with cosmetic switch; appended candidate newline; that candidate with a coherently rebound public manifest; appended contract newline with a coherently rebound public manifest; symbolic-link candidate. Each must fail at its recorded cause. All altered inputs were private test copies.",
+    "positive": "For each Python mode use --prepare-only with selected, cosmetic, self-test and separately bound reporting-regression actions; check15 staged freeze hashes and absence of a runs directory."
+  },
+  "schema": "pid-rs/dnf-order-public-routing-preparation-v1",
+  "scope": "Eight exact-input staging checks and sixteen causal rejection controls. Neither prepares a new accepted proof. Full portable replay remains a separate integration gate.",
+  "status": "routing_preparation_pass"
+}

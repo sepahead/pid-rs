@@ -1,0 +1,28 @@
+{
+  "files": {
+    "Candidate.lean": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+    "Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "judge-v3/AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+    "judge-v3/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "judge-v3/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "judge-v3/FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "judge-v3/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "judge-v3/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "judge-v3/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "judge-v3/MUTATION_ROSTER.json": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+    "judge-v3/RESOURCE_AND_EXECUTION_CONTRACT.md": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+    "judge-v3/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "judge-v3/WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+    "judge-v3/frozen.json": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+    "judge-v3/judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+    "judge-v3/reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+    "judge-v3/selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+    "judge-v3/theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+    "replay.py": "1e4c2fc6f5e26c7e770f7cb200e9ad2d118ced821cba2af06669e7ef951bc2c8",
+    "supplemental/reporting-regression-repaired-candidate.py": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea"
+  },
+  "historical_judge_freeze_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+  "schema": "pid-rs/dnf-order-portable-replay-v1",
+  "scope": "Routing and exact-byte staging only. Original fifteen-file judge and all proof predicates are unchanged. This is not a new pre-candidate freeze.",
+  "status": "public_routing_version_after_completed_candidate_campaign"
+}

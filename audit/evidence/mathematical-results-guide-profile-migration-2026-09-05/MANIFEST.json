@@ -1,0 +1,60 @@
+{
+  "schema": "pid-rs/guide-profile-migration-evidence-v1",
+  "recorded_utc": "2026-09-05T13:56:57.964257+00:00",
+  "files": [
+    {
+      "path": "REVIEW.md",
+      "bytes": 4857,
+      "sha256": "9dc8aa5e78464861520227dba9d6af029289314a23616a260b97366fba852570"
+    },
+    {
+      "path": "b5-local-v2.pdf",
+      "bytes": 749067,
+      "sha256": "db24c4008061f9646f4af60e5aa129ae0462e0e9dbf149a0b63d336339de0938"
+    },
+    {
+      "path": "local-exact-attempt01.json",
+      "bytes": 334,
+      "sha256": "d669de74e9e3d3b4e9898f9c593cf171d2ae25ef229493df7a5f993b5a7c2247"
+    },
+    {
+      "path": "local-exact-attempt01.stderr",
+      "bytes": 98,
+      "sha256": "2c194ace30db8d53a0586b1e0fa09341e6b75efba82686f07b502795bf6c7748"
+    },
+    {
+      "path": "local-exact-attempt01.stdout",
+      "bytes": 4750,
+      "sha256": "8fbf9d62daa60b5ba9fe75764f07ee68215eb318a3685261bca4b873535aeb50"
+    },
+    {
+      "path": "local-exact-attempt02.json",
+      "bytes": 332,
+      "sha256": "c259f782d52670f3105afbd097f9a583c1ebc8a97cb2efcd437bdafc6bc8e008"
+    },
+    {
+      "path": "local-exact-attempt02.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "local-exact-attempt02.stdout",
+      "bytes": 4865,
+      "sha256": "b07e5c0de1ca7cbe5079d8dcbb5c998aff7cab5ebd09534d6c8814b40a5b5be7"
+    },
+    {
+      "path": "mode-suite-before-current-sentinel-repair.py",
+      "bytes": 135064,
+      "sha256": "2e3c51b3e6aae35bc32f9257a9b33dd05edc2dc148fcc042969d357708f62e32"
+    },
+    {
+      "path": "wrapper-before-current-sentinel-repair.sh",
+      "bytes": 74169,
+      "sha256": "af711514bf427669a826cab361684e2e94074e5f798dac77e6358a2f15c6fb99"
+    }
+  ],
+  "exact_current_pdf_sha256": "39db599dca0e33b5f0380417f3faaad4fd1067d592141416728f0931e9016b51",
+  "current_wrapper_sha256": "07791c578647a88d07e2bdffedc0f0823af98e214eb0574d86d6cad96ee441dd",
+  "current_mode_suite_sha256": "c19e113fdf7cb1814fa39fab68c655952c2a0a372283d0a96864ff29bdb941aa",
+  "current_hosted_admission": "pending"
+}

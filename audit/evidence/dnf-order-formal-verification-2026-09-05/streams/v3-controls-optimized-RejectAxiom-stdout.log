@@ -1,0 +1,1 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/RejectAxiom.lean:8:0: error: DNF_JUDGE_AXIOM: JudgeControl.test uses JudgeControl.injected

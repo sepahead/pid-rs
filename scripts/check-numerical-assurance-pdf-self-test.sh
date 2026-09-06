@@ -16,6 +16,12 @@ for command_name in bash cat chmod cp git grep ln mkdir mktemp mv python3 rm sha
   }
 done
 
+HISTORICAL_MARKDOWN_INPUTS=(
+  "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md"
+  "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md"
+  "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md"
+)
+
 REQUIRED_PRODUCTION_INPUTS=(
   "$CHECKER"
   "$ROOT/scripts/check-markdown-math.py"
@@ -30,6 +36,9 @@ REQUIRED_PRODUCTION_INPUTS=(
   "$ROOT/audit/formal/latex/figures/numerical-assurance/represented-sum-boundary.svg"
   "$ROOT/audit/formal/latex/figures/numerical-assurance/represented-sum-boundary.pdf"
 )
+for historical_path in "${HISTORICAL_MARKDOWN_INPUTS[@]}"; do
+  REQUIRED_PRODUCTION_INPUTS+=("$ROOT/$historical_path")
+done
 for required in "${REQUIRED_PRODUCTION_INPUTS[@]}"; do
   [[ -f "$required" && ! -L "$required" ]] || {
     echo "$CHECK_NAME: required production input is absent, nonregular, or symbolic: $required" >&2
@@ -101,6 +110,7 @@ PY
 
 make_fixture() {
   local fixture="$1"
+  local historical_path
   mkdir -p \
     "$fixture/scripts" \
     "$fixture/output/pdf" \
@@ -110,6 +120,11 @@ make_fixture() {
 
   cp "$CHECKER" "$fixture/scripts/check-numerical-assurance-pdf.sh"
   cp "$ROOT/scripts/check-markdown-math.py" "$fixture/scripts/"
+  # The production Markdown checker also binds these mandatory archive bytes.
+  for historical_path in "${HISTORICAL_MARKDOWN_INPUTS[@]}"; do
+    mkdir -p "$fixture/${historical_path%/*}"
+    cp "$ROOT/$historical_path" "$fixture/$historical_path"
+  done
   cp "$ROOT/NUMERICAL_ASSURANCE.md" "$fixture/"
   cp "$ROOT/output/pdf/numerical-assurance.pdf" \
     "$fixture/output/pdf/numerical-assurance.pdf"
@@ -431,6 +446,26 @@ expect_success "$fixture" --cross-toolchain \
 expect_usage_status "$fixture" 2 "unknown mode is rejected with status 2" --unknown
 expect_usage_status "$fixture" 2 "extra arguments are rejected with status 2" --exact extra
 
+historical_index=0
+for historical_path in "${HISTORICAL_MARKDOWN_INPUTS[@]}"; do
+  historical_index=$((historical_index + 1))
+  fixture="$TEST_ROOT/missing-history-$historical_index"
+  make_fixture "$fixture"
+  rm "$fixture/$historical_path"
+  expect_failure "$fixture" --exact "cannot read preserved historical Markdown:" \
+    "exact mode rejects missing historical Markdown $historical_index"
+  expect_failure "$fixture" --cross-toolchain "cannot read preserved historical Markdown:" \
+    "cross-toolchain mode rejects missing historical Markdown $historical_index"
+
+  fixture="$TEST_ROOT/changed-history-$historical_index"
+  make_fixture "$fixture"
+  printf '\n' >>"$fixture/$historical_path"
+  expect_failure "$fixture" --exact "preserved historical Markdown exact-byte custody drifted:" \
+    "exact mode rejects historical Markdown byte drift $historical_index"
+  expect_failure "$fixture" --cross-toolchain "preserved historical Markdown exact-byte custody drifted:" \
+    "cross-toolchain mode rejects historical Markdown byte drift $historical_index"
+done
+
 fixture="$TEST_ROOT/source-drift"
 make_fixture "$fixture"
 printf '\nSelf-test source identity mutation.\n' >>"$fixture/NUMERICAL_ASSURANCE.md"
@@ -557,9 +592,9 @@ run_contract_mutation "cross-toolchain geometry comparison bypass is detected" \
   'cmp -s "$tmp_root/committed-geometry.txt" "$tmp_root/rebuilt-geometry.txt" || {' \
   'true || {'
 
-EXPECTED_TOTAL=36
+EXPECTED_TOTAL=48
 EXPECTED_POSITIVE=3
-EXPECTED_HOSTILE=32
+EXPECTED_HOSTILE=44
 EXPECTED_CONTRACT=1
 if [[ "$PASS_COUNT" -ne "$EXPECTED_TOTAL" \
     || "$POSITIVE_COUNT" -ne "$EXPECTED_POSITIVE" \

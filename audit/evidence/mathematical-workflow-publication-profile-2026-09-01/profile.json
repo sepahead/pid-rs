@@ -1,0 +1,11 @@
+{
+  "schema": "pid-rs/historical-workflow-navigation-profile/v1",
+  "status": "historical; not the current publication gate",
+  "pages": 87,
+  "outlines": 90,
+  "named_destinations": 231,
+  "outline_sha256": "03859a7aa1d3320c025c104ce5bd04454b55db1e6bff5b41bb9b67cbf5ee0418",
+  "destination_route_sha256": "73945c7667ab7435811585e8da9e739914e4770b56ed6ad17c09557cfe2fe403",
+  "destination_sha256": "6b9956fad4935ee3c9cf4b5b4a6ba898ed181a87396e6f36b7f6147933b3eb7d",
+  "note": "The retained checker source already contains the September 5 source primer corrections but still enforces the September 1 PDF navigation inventory. Its mixed transitional status is preserved; it is not claimed to reproduce the old full publication."
+}

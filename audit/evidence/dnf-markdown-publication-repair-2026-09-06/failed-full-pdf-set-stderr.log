@@ -1,0 +1,816 @@
+test_check_accepts_exact_and_rejects_stale_without_writing (__main__.SynchronizerTests.test_check_accepts_exact_and_rejects_stale_without_writing) ... ok
+test_destination_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_destination_same_byte_identity_replacement_is_rejected) ... ok
+test_exact_embedding_deterministic_mode_and_idempotence (__main__.SynchronizerTests.test_exact_embedding_deterministic_mode_and_idempotence) ... ok
+test_file_and_parent_directory_are_fsynced (__main__.SynchronizerTests.test_file_and_parent_directory_are_fsynced) ... ok
+test_final_compare_and_swap_race_preserves_concurrent_destination (__main__.SynchronizerTests.test_final_compare_and_swap_race_preserves_concurrent_destination) ... ok
+test_final_compare_and_swap_race_restores_concurrent_hardlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_hardlink) ... ok
+test_final_compare_and_swap_race_restores_concurrent_symlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_symlink) ... ok
+test_hardlinked_source_and_destination_are_rejected (__main__.SynchronizerTests.test_hardlinked_source_and_destination_are_rejected) ... ok
+test_hostile_destination_symlink_replacement_is_rejected (__main__.SynchronizerTests.test_hostile_destination_symlink_replacement_is_rejected) ... ok
+test_malformed_sentinels_fail_closed (__main__.SynchronizerTests.test_malformed_sentinels_fail_closed) ... ok
+test_post_exchange_corruption_is_caught_and_rolled_back (__main__.SynchronizerTests.test_post_exchange_corruption_is_caught_and_rolled_back) ... ok
+test_post_exchange_type_change_preserves_concurrent_path_and_recovery (__main__.SynchronizerTests.test_post_exchange_type_change_preserves_concurrent_path_and_recovery) ... ok
+test_source_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_source_same_byte_identity_replacement_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.034s
+
+OK
+test_check_accepts_exact_and_rejects_stale_without_writing (__main__.SynchronizerTests.test_check_accepts_exact_and_rejects_stale_without_writing) ... ok
+test_destination_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_destination_same_byte_identity_replacement_is_rejected) ... ok
+test_exact_embedding_deterministic_mode_and_idempotence (__main__.SynchronizerTests.test_exact_embedding_deterministic_mode_and_idempotence) ... ok
+test_file_and_parent_directory_are_fsynced (__main__.SynchronizerTests.test_file_and_parent_directory_are_fsynced) ... ok
+test_final_compare_and_swap_race_preserves_concurrent_destination (__main__.SynchronizerTests.test_final_compare_and_swap_race_preserves_concurrent_destination) ... ok
+test_final_compare_and_swap_race_restores_concurrent_hardlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_hardlink) ... ok
+test_final_compare_and_swap_race_restores_concurrent_symlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_symlink) ... ok
+test_hardlinked_source_and_destination_are_rejected (__main__.SynchronizerTests.test_hardlinked_source_and_destination_are_rejected) ... ok
+test_hostile_destination_symlink_replacement_is_rejected (__main__.SynchronizerTests.test_hostile_destination_symlink_replacement_is_rejected) ... ok
+test_malformed_sentinels_fail_closed (__main__.SynchronizerTests.test_malformed_sentinels_fail_closed) ... ok
+test_post_exchange_corruption_is_caught_and_rolled_back (__main__.SynchronizerTests.test_post_exchange_corruption_is_caught_and_rolled_back) ... ok
+test_post_exchange_type_change_preserves_concurrent_path_and_recovery (__main__.SynchronizerTests.test_post_exchange_type_change_preserves_concurrent_path_and_recovery) ... ok
+test_source_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_source_same_byte_identity_replacement_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.028s
+
+OK
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:17: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:17: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:18: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:18: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:19: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:19: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:19: put bare TeX command '\\subseteq' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:20: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:20: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:20: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:21: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:21: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:24: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:24: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:24: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:25: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:25: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:29: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:29: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:29: put bare TeX command '\\min' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:36: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:36: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:36: put bare TeX command '\\to' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:37: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:37: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:40: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:41: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:42: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:43: put bare TeX command '\\exists' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:44: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:45: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:61: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:62: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:63: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:64: put bare TeX command '\\forall' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:65: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:66: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:71: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:72: put bare TeX command '\\boxed' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:73: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:74: put bare TeX command '\\forall' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:75: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:76: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:78: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:78: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:78: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:79: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:79: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:79: put bare TeX command '\\beta' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:80: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:80: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:80: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:81: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:81: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:81: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:83: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:83: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:83: put bare TeX command '\\beta' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:84: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:84: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:84: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:85: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:85: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:86: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:86: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:86: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:87: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:87: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:87: put bare TeX command '\\subseteq' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:94: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:94: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:94: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:95: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:95: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:95: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:96: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:96: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:96: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:98: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:98: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:98: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:117: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:118: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:119: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:120: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:121: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:122: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:124: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:124: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:124: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:125: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:125: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:125: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:126: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:126: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:126: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:127: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:127: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:127: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:128: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:128: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:128: put bare TeX command '\\beta' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:132: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:133: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:134: put bare TeX command '\\forall' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:135: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:136: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:137: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:145: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:145: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:145: put bare TeX command '\\mathcal' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:146: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:146: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:146: put bare TeX command '\\mathcal' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:148: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:149: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:150: put bare TeX command '\\Omega' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:151: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:152: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:154: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:154: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:154: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:157: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:158: put bare TeX command '\\begin' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:159: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:160: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:167: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:168: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:169: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:170: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:171: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:181: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:182: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:183: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:184: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:188: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:189: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:190: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:191: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:194: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:194: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:194: put bare TeX command '\\beta' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:195: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:195: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:195: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:197: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:197: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:201: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:201: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:201: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:213: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:213: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:213: put bare TeX command '\\subseteq' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:215: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:215: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:217: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:218: put bare TeX command '\\forall' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:219: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:220: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:224: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:225: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:226: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:227: put bare TeX command '\\forall' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:228: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:229: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:232: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:232: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:238: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:238: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:238: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:241: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:242: put bare TeX command '\\begin' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:243: put bare TeX command '\\qquad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:244: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:245: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:250: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:250: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:254: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:255: put bare TeX command '\\begin' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:256: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:257: put bare TeX command '\\forall' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:258: put bare TeX command '\\quad' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:259: put bare TeX command '\\end' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:260: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:261: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:263: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:263: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:269: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:269: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:269: put bare TeX command '\\in' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:270: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:270: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:270: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:272: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:273: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:274: put bare TeX command '\\beta' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:275: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:276: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:278: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:278: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:278: put bare TeX command '\\beta' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:279: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:279: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:279: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:287: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:287: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:287: put bare TeX command '\\cap' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:296: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:296: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:296: put bare TeX command '\\lambda' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:298: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:298: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:298: put bare TeX command '\\lambda' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:308: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:308: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:310: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:310: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:310: put bare TeX command '\\lambda' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:311: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:311: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:313: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:313: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:313: put bare TeX command '\\lambda' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:314: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:314: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:314: put bare TeX command '\\rho' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:318: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:318: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:318: put bare TeX command '\\gamma' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:319: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:319: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:319: put bare TeX command '\\gamma' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:320: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:320: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:320: put bare TeX command '\\lambda' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:322: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:323: put bare TeX command '\\lor' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:324: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:325: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:333: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:333: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:333: put bare TeX command '\\Omega' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:334: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:334: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:334: put bare TeX command '\\sum' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:335: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:335: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:335: put bare TeX command '\\operatorname' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:339: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:339: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:340: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:340: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:340: put bare TeX command '\\widehat' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:342: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:342: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:342: put bare TeX command '\\operatorname' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:343: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:343: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:343: put bare TeX command '\\operatorname' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:349: use GitHub math delimiters instead of '\\['
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:350: put bare TeX command '\\mathrm' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:351: put bare TeX command '\\ln' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:352: put bare TeX command '\\tag' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:353: use GitHub math delimiters instead of '\\]'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:362: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:362: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:362: put bare TeX command '\\min' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:369: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:369: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:369: put bare TeX command '\\text' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:370: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:370: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:370: put bare TeX command '\\text' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:371: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:371: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md:371: put bare TeX command '\\text' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:11: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:11: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:11: put bare TeX command '\\min' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:39: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:39: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:40: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:40: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:40: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:41: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:41: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:41: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:42: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:42: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:42: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:44: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:44: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:45: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:45: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:46: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:46: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:47: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:47: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:47: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:48: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:48: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:49: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:49: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:49: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:50: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:50: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:51: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:51: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:66: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:66: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:66: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:67: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:67: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:67: put bare TeX command '\\subseteq' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:78: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:78: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md:78: put bare TeX command '\\lor' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:8: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:8: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:9: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:9: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:10: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:10: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:10: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:11: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:11: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:11: put bare TeX command '\\subseteq' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:12: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:12: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:12: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:14: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:14: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:15: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:15: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:15: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:16: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:16: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:16: put bare TeX command '\\mathcal' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:17: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:17: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:17: put bare TeX command '\\mathcal' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:18: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:18: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:18: put bare TeX command '\\Omega' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:19: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:19: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:20: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:20: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:21: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:21: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:22: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:22: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:23: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:23: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:23: put bare TeX command '\\alpha' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:24: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:24: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:25: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:25: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:25: put bare TeX command '\\Omega' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:26: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:26: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:26: put bare TeX command '\\ne' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:27: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:27: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:27: put bare TeX command '\\Omega' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:28: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:28: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:28: put bare TeX command '\\widehat' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:29: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:29: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:29: put bare TeX command '\\operatorname' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:30: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:30: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:30: put bare TeX command '\\mathrm' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:31: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:31: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:31: put bare TeX command '\\ln' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:36: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:36: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:40: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:40: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:40: put bare TeX command '\\lambda' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:41: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:41: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:41: put bare TeX command '\\rho' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:42: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:42: use GitHub math delimiters instead of '\\)'
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:42: put bare TeX command '\\gamma' inside math delimiters
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:49: use GitHub math delimiters instead of '\\('
+audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md:49: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:17: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:17: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:18: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:18: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:19: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:19: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:19: put bare TeX command '\\subseteq' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:20: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:20: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:20: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:21: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:21: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:24: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:24: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:24: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:25: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:25: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:29: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:29: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:29: put bare TeX command '\\min' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:36: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:36: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:36: put bare TeX command '\\to' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:37: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:37: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:40: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:41: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:42: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:43: put bare TeX command '\\exists' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:44: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:45: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:61: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:62: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:63: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:64: put bare TeX command '\\forall' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:65: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:66: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:71: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:72: put bare TeX command '\\boxed' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:73: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:74: put bare TeX command '\\forall' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:75: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:76: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:78: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:78: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:78: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:79: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:79: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:79: put bare TeX command '\\beta' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:80: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:80: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:80: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:81: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:81: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:81: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:83: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:83: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:83: put bare TeX command '\\beta' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:84: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:84: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:84: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:85: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:85: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:86: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:86: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:86: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:87: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:87: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:87: put bare TeX command '\\subseteq' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:94: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:94: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:94: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:95: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:95: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:95: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:96: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:96: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:96: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:98: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:98: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:98: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:117: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:118: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:119: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:120: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:121: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:122: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:124: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:124: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:124: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:125: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:125: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:125: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:126: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:126: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:126: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:127: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:127: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:127: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:128: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:128: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:128: put bare TeX command '\\beta' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:132: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:133: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:134: put bare TeX command '\\forall' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:135: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:136: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:137: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:145: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:145: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:145: put bare TeX command '\\mathcal' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:146: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:146: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:146: put bare TeX command '\\mathcal' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:148: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:149: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:150: put bare TeX command '\\Omega' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:151: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:152: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:154: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:154: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:154: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:157: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:158: put bare TeX command '\\begin' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:159: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:160: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:167: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:168: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:169: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:170: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:171: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:181: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:182: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:183: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:184: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:188: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:189: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:190: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:191: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:194: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:194: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:194: put bare TeX command '\\beta' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:195: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:195: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:195: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:197: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:197: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:201: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:201: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:201: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:213: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:213: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:213: put bare TeX command '\\subseteq' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:215: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:215: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:217: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:218: put bare TeX command '\\forall' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:219: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:220: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:224: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:225: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:226: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:227: put bare TeX command '\\forall' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:228: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:229: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:232: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:232: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:238: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:238: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:238: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:241: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:242: put bare TeX command '\\begin' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:243: put bare TeX command '\\qquad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:244: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:245: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:250: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:250: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:254: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:255: put bare TeX command '\\begin' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:256: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:257: put bare TeX command '\\forall' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:258: put bare TeX command '\\quad' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:259: put bare TeX command '\\end' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:260: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:261: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:263: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:263: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:269: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:269: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:269: put bare TeX command '\\in' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:270: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:270: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:270: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:272: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:273: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:274: put bare TeX command '\\beta' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:275: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:276: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:278: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:278: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:278: put bare TeX command '\\beta' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:279: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:279: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:279: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:287: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:287: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:287: put bare TeX command '\\cap' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:296: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:296: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:296: put bare TeX command '\\lambda' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:298: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:298: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:298: put bare TeX command '\\lambda' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:308: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:308: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:310: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:310: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:310: put bare TeX command '\\lambda' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:311: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:311: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:313: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:313: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:313: put bare TeX command '\\lambda' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:314: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:314: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:314: put bare TeX command '\\rho' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:318: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:318: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:318: put bare TeX command '\\gamma' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:319: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:319: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:319: put bare TeX command '\\gamma' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:320: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:320: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:320: put bare TeX command '\\lambda' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:322: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:323: put bare TeX command '\\lor' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:324: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:325: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:332: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:332: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:332: put bare TeX command '\\Omega' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:333: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:333: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:333: put bare TeX command '\\sum' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:334: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:334: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:334: put bare TeX command '\\operatorname' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:338: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:338: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:339: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:339: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:339: put bare TeX command '\\widehat' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:341: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:341: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:341: put bare TeX command '\\operatorname' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:342: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:342: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:342: put bare TeX command '\\operatorname' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:347: use GitHub math delimiters instead of '\\['
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:348: put bare TeX command '\\mathrm' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:349: put bare TeX command '\\ln' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:350: put bare TeX command '\\tag' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:351: use GitHub math delimiters instead of '\\]'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:361: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:361: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:361: put bare TeX command '\\text' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:362: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:362: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:362: put bare TeX command '\\text' inside math delimiters
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:363: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:363: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/EXPOSITION.md:363: put bare TeX command '\\text' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:12: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:12: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:12: put bare TeX command '\\min' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:41: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:41: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:42: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:42: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:42: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:43: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:43: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:43: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:44: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:44: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:44: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:46: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:46: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:47: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:47: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:48: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:48: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:49: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:49: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:49: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:50: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:50: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:51: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:51: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:51: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:52: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:52: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:53: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:53: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:68: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:68: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:68: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:69: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:69: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:69: put bare TeX command '\\subseteq' inside math delimiters
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:80: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:80: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md:80: put bare TeX command '\\lor' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:8: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:8: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:9: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:9: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:10: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:10: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:10: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:11: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:11: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:11: put bare TeX command '\\subseteq' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:12: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:12: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:12: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:14: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:14: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:15: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:15: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:15: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:16: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:16: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:16: put bare TeX command '\\mathcal' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:17: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:17: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:17: put bare TeX command '\\mathcal' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:18: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:18: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:18: put bare TeX command '\\Omega' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:19: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:19: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:20: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:20: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:21: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:21: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:22: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:22: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:23: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:23: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:23: put bare TeX command '\\alpha' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:24: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:24: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:25: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:25: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:25: put bare TeX command '\\Omega' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:26: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:26: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:26: put bare TeX command '\\ne' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:27: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:27: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:27: put bare TeX command '\\Omega' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:28: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:28: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:28: put bare TeX command '\\widehat' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:29: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:29: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:29: put bare TeX command '\\operatorname' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:30: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:30: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:30: put bare TeX command '\\mathrm' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:31: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:31: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:31: put bare TeX command '\\ln' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:36: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:36: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:40: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:40: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:40: put bare TeX command '\\lambda' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:41: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:41: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:41: put bare TeX command '\\rho' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:42: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:42: use GitHub math delimiters instead of '\\)'
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:42: put bare TeX command '\\gamma' inside math delimiters
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:49: use GitHub math delimiters instead of '\\('
+audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md:49: use GitHub math delimiters instead of '\\)'
+Markdown math check failed with 779 finding(s)

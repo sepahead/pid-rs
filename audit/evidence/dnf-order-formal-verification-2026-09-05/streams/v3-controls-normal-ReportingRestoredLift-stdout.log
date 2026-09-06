@@ -1,0 +1,6 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-normal-02/src/ReportingRestoredLift.lean:5:2: error: Type mismatch
+  liftIO (IO.println ("DNF_REPORTING_SMOKE " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit

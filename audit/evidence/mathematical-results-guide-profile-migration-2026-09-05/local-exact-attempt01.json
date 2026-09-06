@@ -1,0 +1,9 @@
+{
+  "completed_utc": "2026-09-05T13:44:21.418911+00:00",
+  "exit_code": 1,
+  "failure": null,
+  "elapsed_seconds": 262.02951241703704,
+  "changed_inputs": [],
+  "stdout_sha256": "8fbf9d62daa60b5ba9fe75764f07ee68215eb318a3685261bca4b873535aeb50",
+  "stderr_sha256": "2c194ace30db8d53a0586b1e0fa09341e6b75efba82686f07b502795bf6c7748"
+}

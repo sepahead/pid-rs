@@ -1,0 +1,41 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "all_other_source_bytes_unchanged": true,
+    "ast_restoration_exact": true,
+    "candidate_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+    "candidate_source_registration_sha256": "ce80b8b3e97d24dd92c7d19ad11b4c6a6121f5f6437faf8615b569dd207dce45",
+    "difference_sha256": "46393e143b4a767ae8c2074e610feb2535ff67d818cc8fd0444f956bfa045fd6",
+    "execution_requirements": [
+      "Coordinator adopts the exact supplemental manifest and helper source hash before execution.",
+      "Use an actual accepted repaired-candidate receipt, explicitly bound by its exact hash; no synthetic acceptance record.",
+      "Capture and hash-check the supplemental helper source before execution, execute those captured bytes, verify source bytes and identity again afterward, and retain the capture plus execution record.",
+      "Pass the exact original freeze digest; all original frozen files, including the old helper, remain unchanged.",
+      "Require all original positive receipt, source/artifact/compiler, thirteen-record, fresh-kernel-status and restored exact thirteen-site failure checks."
+    ],
+    "identity_expression_replacement_count": 1,
+    "negative_history": {
+      "old_reporting_candidate_receipt": "74d9aec375c5dd8919c541ab47c547803b4228dd2e62751ac4066062b9bda676",
+      "old_reporting_coordinator_receipt": "f14e29462e063ecc5f1e07a6128ffc6f3df48e1333b5031741505a07ad315d30",
+      "unchanged_v3_roster_failure_receipt": "fc14e33890d2fac9b8a23e51939b1b390573280681b9ff2dfe9dd8c7fd08219d"
+    },
+    "original_freeze_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+    "original_helper_inapplicable_to_repaired_candidate": true,
+    "original_helper_path": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/reporting-regression.py",
+    "original_helper_sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+    "part_of_original_frozen_roster": false,
+    "prepared_utc": "2026-09-05T07:45:46.834294+00:00",
+    "proposed_helper_bytes": 7601,
+    "proposed_helper_path": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/reporting-regression-repaired-candidate.py",
+    "proposed_helper_sha256": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea",
+    "replacement": {
+      "after": "j.digest(candidate) == 'af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2'",
+      "before": "j.digest(candidate) == j.AMENDMENT_CANDIDATE_SHA256"
+    },
+    "schema": "local-dnf-order-repaired-reporting-regression-proposal-v1",
+    "scope": "A separately sealed causal diagnostic with one selected-source identity rebind. It is not a change to the v3 mathematical judge, not part of its frozen roster, and not a new full wrapper run.",
+    "status": "proposed_before_supplement_execution"
+  },
+  "retained_local_source_sha256": "fb2069cc2ecd96cc78e4b378617e0b5cc2674b6c26f16d151aef7fd598598f17",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

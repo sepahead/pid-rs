@@ -1,0 +1,47 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "adopted_utc": "2026-09-05T06:31:58.774757+00:00",
+    "authority_boundary": "Only candidate module, attempt ledger, snapshots, and candidate execution logs may be written. Frozen task/judge/baseline unchanged. The shared-filesystem role contract is not isolation from a malicious OS actor.",
+    "campaign": {
+      "id": "dnf-order-v2-candidate-01",
+      "maximum_development_compilations": 64,
+      "maximum_full_judge_runs": 8,
+      "per_process": "Frozen judge contract: 600 s, Lean allocator -M4096 and sampled process-group RSS cap 4 GiB, 4 MiB per stream; sampled RSS is not an OS hard limit.",
+      "registration": "Register the campaign and every child before code compilation or judge access. Each tested source gets an immutable snapshot and digest.",
+      "selection_rule": "First complete accepted candidate; no selection among numerical or empirical outcomes. Coordinator runs the frozen cosmetic-semantic positive after selection.",
+      "stopping_rule": "Stop candidate editing at the first source that passes normal and optimized complete judges, or at any budget limit. Preserve all tested snapshots and receipts. A failed or timed-out run is not a pass.",
+      "wall_clock_minutes": 120
+    },
+    "candidate_exists_at_adoption": false,
+    "candidate_payload": "Candidate.lean with exactly the frozen thirteen ordered public theorem targets; private helpers allowed by the frozen source policy",
+    "candidate_write_scope": ".local/sx-dnf-order-candidate-v2-20260905",
+    "contract_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "freeze_sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05",
+    "frozen_file_count": 13,
+    "review_basis": [
+      ".local/sx-dnf-order-task-adoption-20260905.md",
+      ".local/sx-dnf-order-independent-review-20260905.md",
+      ".local/sx-dnf-order-judge-v2-20260905/JUDGE_PREPARATION_REPORT.md"
+    ],
+    "root_replays": [
+      {
+        "controls": 70,
+        "optimized": 0,
+        "path": ".local/sx-dnf-order-judge-v2-20260905/runs/root-pre-adoption-normal-01/selftest-receipt.json",
+        "sha256": "1395099ab93356525d1de56b95b13ba89a8ec8fe5738f5b39c658013258094d6"
+      },
+      {
+        "controls": 70,
+        "optimized": 1,
+        "path": ".local/sx-dnf-order-judge-v2-20260905/runs/root-pre-adoption-optimized-01/selftest-receipt.json",
+        "sha256": "71f41b19fb608a30a28abc4a3737f2ea4a10d7951b8af25366fc82e1386bec45"
+      }
+    ],
+    "schema": "pid-rs-local-dnf-judge-adoption-v1",
+    "scope": "Deterministic formal development only. No estimator, calibration, novelty, source-correspondence closure, or mainline publication credit.",
+    "storage_boundary": "Verified local preimages and results only until the permitted packet is committed, pushed, accepted on main, and retrieval is verified."
+  },
+  "retained_local_source_sha256": "042b8f41ad65611d10850fd498fb730fd6cf743418a316be1233feb550f21973",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

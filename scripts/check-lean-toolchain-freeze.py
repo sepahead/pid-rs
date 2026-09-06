@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "b5445fd13b2f31f5c88072007df89ecd7d2d47ec4003b1bfa7b375dfb221c677",
-    "CHANGELOG.md": "787e61556cf418ba6a1f4ce404e92da47aff071fb5dbf9dca9918b26f3d4b1cb",
+    "AGENTS.md": "14ceb5b43dea7ca966c77de92e2b66e352e2c2e3a2bdd6feb7ac4682edf0fdc0",
+    "CHANGELOG.md": "5d81ec57c8f13576587482e7ce500d4da64dc3da924ee22f083d467c77e6da39",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -687,24 +687,24 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "244127cb65744ff5929241192b0e4285ae393cc098722107eac96db37de11e87"
     ),
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": (
-        "e23de4e1ea7b2010e695f08aa57f237f2241dbfa51b3af8f66762ea9b6352709"
+        "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94"
     ),
     "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json": (
         "2152411c804df3a75f6b106ae97761f4812adf2ae8ca963a98a296df812c0e5e"
     ),
     "justfile": "e14e9ba9bdcbe79c16c8047f9d0b978943bde72fd4fe67303c5c0857461abdcc",
     "output/pdf/mathematical-problem-solving-workflow.pdf": (
-        "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798"
+        "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf"
     ),
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
-        "1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab"
+        "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
     ),
-    "scripts/README.md": "e454f5db9cddb08baaf28193f1afedacb591f001f1dade02467cb5f5d0d06cdd",
+    "scripts/README.md": "e580bf1dabfafdbe6dcb19fbe3811cfcddd4880ef19b8a7581488ff6836dbb7d",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "c767f7d14b7da1fdc8d8e6a62c8144858236f094e8a457a80eeb64a6a1f3c455"
+        "5adf209243c6e3469f95dc6a822bab112671dace11c128d81bf8b21486bd5bf9"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -737,11 +737,21 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c9a54df51b2d3f28ed07bc2c47c606b0016f7f82158fccf2db1b2839fb592d7b"
     ),
     "scripts/check-mathematical-workflow-pdf-self-test.sh": (
-        "5b297bef923331687a0c4cf84ebd92dfd206d9eadc03032c531ba7ff091cd6bc"
+        "abe88fca19b2ac04f9fd98f0dc06171e5cbaac1f42c37cfe149419b6a0df822d"
     ),
     "scripts/check-mathematical-workflow-pdf.sh": (
-        "793559bd5d5805418904cc0e71215c5acbe623cb76ca5aff4e3c5426d0cbf8d7"
+        "6cb63edac55ce56c459eb1b4e0ef4cef0ef6a76b3bf8943c197f75dcb38cd18d"
     ),
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602",
+    "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg": "127942939fa8fabcabb541fa31401ad8afc46215542130a0940104731f9ad999",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": "81d75b0deb6623d9230cabba297ed8855cc0421d2ae7949164d551bd2e89eb1f",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg": "ff3b8f2e6df87ecec544d5a11c11329464621e7134f7ba6ec51cfc70f2f88c6e",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": "6df641325ec83dd4edb14b1f4c34468f5c61083a51ef8ebbd4cfb8a81bb731da",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": "47e9e22b2cabd31ce3ba870dd40b68b42eda75a25ce6be1f19c0b3edcc5ee88d",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "2ca3228ea1fc13557b16d447cc9c3e4f623f85b7186e68d5bce5210084b5af63",
 }
 EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS = frozenset(
     {
@@ -762,7 +772,11 @@ EXPECTED_CARGO_DENY_PREFLIGHT_OPERATIONAL_PATHS = frozenset(
     }
 )
 EXPECTED_WORKFLOW_VISUAL_RECEIPT_OPERATIONAL_PATHS = frozenset(
-    {"audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"}
+    {
+        "audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md",
+        "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md",
+        "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json",
+    }
 )
 EXPECTED_CURRENT_OPERATIONAL_ADDED_PATHS = (
     EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS

@@ -65,6 +65,10 @@ C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
 C8_TEXT_PORTABILITY_COUNT=0
 VISUAL_RECEIPT_HOSTILE_COUNT=0
+SPLIT_VISUAL_HOSTILE_COUNT=0
+EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT=4
+MACHINE_SCOPE_HOSTILE_COUNT=0
+EXPECTED_MACHINE_SCOPE_HOSTILE_COUNT=4
 EXPECTED_PREDECESSOR_CONTROL_COUNT=218
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
@@ -74,7 +78,7 @@ EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
 EXPECTED_C8_TEXT_PORTABILITY_COUNT=44
 EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
-EXPECTED_TOTAL_CONTROL_COUNT=381
+EXPECTED_TOTAL_CONTROL_COUNT=389
 # This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -1943,7 +1947,8 @@ copy_manifest_fixture() {
     "scripts/compare-formal-pdf-renders-self-test.py"
     "audit/evidence/x-thread-citation-edge-application.json"
     "audit/evidence/x-thread-citation-source-manifest.json"
-    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
+    "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
     "audit/formal/latex/mathematical-problem-solving-workflow.tex"
     "audit/formal/latex/pid-rs-report-tables.sty"
     "audit/formal/latex/pid-rs-workflow-publication.sty"
@@ -1983,7 +1988,8 @@ copy_manifest_fixture "$BASE_REPOSITORY"
 CHECKER="$BASE_REPOSITORY/scripts/check-mathematical-workflow-pdf.sh"
 BASE_PDF="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.pdf"
 BASE_RENDERING_RECEIPT="$BASE_REPOSITORY/output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"
+BASE_VISUAL_RECEIPT="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
+BASE_VISUAL_RECORDS="$BASE_REPOSITORY/audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
 BASE_MARKDOWN="$BASE_REPOSITORY/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 BASE_FIGURE_DIR="$BASE_REPOSITORY/audit/formal/latex/figures/mathematical-workflow"
 
@@ -4354,7 +4360,7 @@ expect_reject \
   "required TeX assurance-boundary wording must occur once: $direct_literal" \
   run_source_semantic_validator "$case_dir"
 
-direct_literal='AND prerequisites, OR routes, and the complete three-cut family in the frozen example.'
+direct_literal='Route A needs A1, A2, and C; route B needs B1 and C. The frozen example has three inclusion-minimal cuts. All shown routes are accepted; GO names only the illustrated terminal gate state.'
 case_dir="$(mktemp -d "$TEST_ROOT/source-figure2-caption.XXXXXX")"
 make_semantic_fixture "$case_dir"
 replace_once \
@@ -5593,7 +5599,7 @@ chmod u+w "$VISUAL_CONTROL"
 run_visual_validator() {
   python3 -I -S "$VISUAL_VALIDATOR" \
     "$1" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
-    "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI"
+    "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI" "${2:-$BASE_VISUAL_RECORDS}"
 }
 
 expect_visual_reject() {
@@ -5602,7 +5608,7 @@ expect_visual_reject() {
 }
 
 expect_accept \
-  "visual receipt v2 accepts exact artifact bindings, lens evidence, and bounded-review language" \
+  "visual receipt v3 accepts exact artifact bindings, lens evidence, and bounded-review language" \
   run_visual_validator "$VISUAL_CONTROL"
 
 case_file="$TEST_ROOT/visual-private-path.md"
@@ -5615,7 +5621,7 @@ expect_visual_reject \
 
 case_file="$TEST_ROOT/visual-duplicate-field.md"
 cp "$VISUAL_CONTROL" "$case_file"
-printf "schema: \`pid-rs/mathematical-workflow-visual-review/v2\`\n" >>"$case_file"
+printf "schema: \`pid-rs/mathematical-workflow-visual-review/v3\`\n" >>"$case_file"
 expect_visual_reject \
   "visual receipt rejects duplicate canonical fields" \
   "visual receipt must contain exactly one canonical schema field" \
@@ -5633,7 +5639,7 @@ case_file="$TEST_ROOT/visual-pdf-digest.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'pdf_sha256: `ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798`' \
+  'pdf_sha256: `ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf`' \
   'pdf_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
 expect_visual_reject \
   "visual receipt rejects a stale PDF digest binding" \
@@ -5644,7 +5650,7 @@ case_file="$TEST_ROOT/visual-rendering-receipt-digest.md"
 cp "$VISUAL_CONTROL" "$case_file"
 replace_once \
   "$case_file" \
-  'rendering_receipt_sha256: `1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab`' \
+  'rendering_receipt_sha256: `fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea`' \
   'rendering_receipt_sha256: `0000000000000000000000000000000000000000000000000000000000000000`'
 expect_visual_reject \
   "visual receipt rejects a stale rendering-receipt digest binding" \
@@ -5822,6 +5828,62 @@ for context_mode in comment fence quote details reference-comment; do
     "visual receipt rejects fields and claims concealed in $context_mode context" \
     "visual receipt contains forbidden Markdown concealment or non-top-level content" \
     run_visual_validator "$case_file"
+done
+
+# Four added split-review controls; the predecessor 381/24 families stay separate.
+case_file="$TEST_ROOT/visual-false-sole-root.md"
+cp "$VISUAL_CONTROL" "$case_file"
+replace_once "$case_file" \
+  'The source-review agent inspected normal pages 1-48, 65-76 and 77-87 in separate stages; the root agent inspected normal pages 49-64. The declared high-resolution views were split between the source-review stages. No sole-root, independent complete, external or human review is claimed.' \
+  'The root agent completed the page-by-page visual inspection; no independent second-review credit is claimed.'
+expect_reject \
+  "split receipt rejects false sole-root attribution" \
+  "visual receipt required top-level review paragraph is absent or duplicated" \
+  run_visual_validator "$case_file"
+SPLIT_VISUAL_HOSTILE_COUNT=$((SPLIT_VISUAL_HOSTILE_COUNT + 1))
+for split_mode in missing-pages false-view false-reviewer; do
+  case_file="$TEST_ROOT/actual-views-$split_mode.json"
+  python3 -I -S - "$BASE_VISUAL_RECORDS" "$case_file" "$split_mode" <<'PY_SPLIT'
+import json
+from pathlib import Path
+import sys
+value = json.loads(Path(sys.argv[1]).read_text())
+if sys.argv[3] == "missing-pages":
+    value["views"] = [v for v in value["views"] if not (v["stage"] == "science-final" and v["mode"] == "color" and v["dpi"] == 120 and 87 in v["pages"])]
+elif sys.argv[3] == "false-view":
+    value["views"][0]["actual_view"] = False
+elif sys.argv[3] == "false-reviewer":
+    value["views"][0]["reviewer"] = "root"
+else:
+    raise SystemExit("unknown split mutation")
+Path(sys.argv[2]).write_text(json.dumps(value) + "\n")
+PY_SPLIT
+  case "$split_mode" in
+    missing-pages) expected="visual receipt actual-view normal coverage differs: science-final/color" ;;
+    false-view) expected="visual receipt actual-view record does not attest an original-detail actual view" ;;
+    false-reviewer) expected="visual receipt actual-view reviewer partition differs" ;;
+  esac
+  expect_reject "split receipt rejects $split_mode" "$expected" \
+    run_visual_validator "$VISUAL_CONTROL" "$case_file"
+  SPLIT_VISUAL_HOSTILE_COUNT=$((SPLIT_VISUAL_HOSTILE_COUNT + 1))
+done
+
+# Four separate controls reject a full-pass claim for each machine-scoped lens.
+for machine_lens in \
+  'real-text searchability and logical extraction order' \
+  'A4/PDF profile and embedded fonts' \
+  'link/action safety' \
+  'deterministic reproduction'; do
+  case_file="$TEST_ROOT/visual-machine-scope-$MACHINE_SCOPE_HOSTILE_COUNT.md"
+  cp "$VISUAL_CONTROL" "$case_file"
+  replace_once "$case_file" \
+    "| $machine_lens | visual-only |" \
+    "| $machine_lens | passed |"
+  expect_reject \
+    "visual receipt rejects false full-pass scope for $machine_lens" \
+    "visual receipt lens outcome differs for $machine_lens: 'passed'" \
+    run_visual_validator "$case_file"
+  MACHINE_SCOPE_HOSTILE_COUNT=$((MACHINE_SCOPE_HOSTILE_COUNT + 1))
 done
 
 # SVG validator.  All hostile cases start from a control that the same extracted production block
@@ -6753,7 +6815,7 @@ c3_control_count=$((
   + C3_EXECUTABLE_CUSTODY_COUNT
   + C3_FORMAT_CUSTODY_COUNT
 ))
-predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT))
+predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT))
 if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_BOUNDED_PROBE_COUNT" -ne "$EXPECTED_C3_BOUNDED_PROBE_COUNT" \
     || "$C3_ENTRY_WRAPPER_COUNT" -ne "$EXPECTED_C3_ENTRY_WRAPPER_COUNT" \
@@ -6763,12 +6825,14 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_FORMAT_CUSTODY_COUNT" -ne "$EXPECTED_C3_FORMAT_CUSTODY_COUNT" \
     || "$C8_TEXT_PORTABILITY_COUNT" -ne "$EXPECTED_C8_TEXT_PORTABILITY_COUNT" \
     || "$VISUAL_RECEIPT_HOSTILE_COUNT" -ne "$EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT" \
+    || "$SPLIT_VISUAL_HOSTILE_COUNT" -ne "$EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT" \
+    || "$MACHINE_SCOPE_HOSTILE_COUNT" -ne "$EXPECTED_MACHINE_SCOPE_HOSTILE_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; visual-receipt-hostile=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; visual-receipt-hostile=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
@@ -6778,4 +6842,6 @@ printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen fa
   "$C3_EXECUTABLE_CUSTODY_COUNT" \
   "$C3_FORMAT_CUSTODY_COUNT" \
   "$C8_TEXT_PORTABILITY_COUNT" \
-  "$VISUAL_RECEIPT_HOSTILE_COUNT"
+  "$VISUAL_RECEIPT_HOSTILE_COUNT" \
+  "$SPLIT_VISUAL_HOSTILE_COUNT" \
+  "$MACHINE_SCOPE_HOSTILE_COUNT"

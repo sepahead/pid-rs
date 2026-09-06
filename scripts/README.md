@@ -1874,7 +1874,9 @@ fallback is only a bounded publication relation. It is not layout, font, raster,
 mathematical, statistical, estimator, or application equivalence.
 
 `check-numerical-assurance-pdf-self-test.sh` runs one independent checker-contract audit, three
-accepted-mode controls, and 32 hostile controls. It covers source and trailer-identifier drift,
+accepted-mode controls, and 44 hostile controls. Each fixture includes the three exact historical
+Markdown inputs required by the production math checker. Both gate modes reject each missing
+archive and each one-byte archive change. The suite also covers source and trailer-identifier drift,
 symbolic inputs, fixed page count, bounded OpenAction, forbidden actions, sentinels, source roster,
 builder wiring, raster checks, both candidate validations, exact byte comparison, and the bounded
 cross-toolchain text/geometry comparison. A serialization-only fixture must fail exact mode and may
@@ -1933,13 +1935,13 @@ The builder's cross mode is a low-level candidate-generation relation. Publicati
 only from the outer guide gate's selected, digest-pinned profile and its independent artifact checks.
 
 `check-mathematical-results-guide-pdf.sh` keeps the same-toolchain route byte-strict. It applies the
-current v2 strict structure checker to both PDFs and then requires raw equality between the rebuilt
+current v3 strict structure checker to both PDFs and then requires raw equality between the rebuilt
 and committed files. The exact branch neither requires nor reads a hosted or legacy cross-profile
 checker, receipt, or fixture. Explicit `--cross-toolchain` mode first captures and selects a closed
-producer tuple. The Pandoc 3.10.2/Ubuntu 24.04 route selects only the current v2 raw profile. It
-requires the rebuilt PDF to equal the retained v2 fixture byte-for-byte or differ only in the
-strict duplicated final-trailer `/ID` payloads. The separately retained 16-page v1 and legacy
-profiles remain historical evidence and cannot certify the expanded guide.
+producer tuple. The Pandoc 3.10.2/Ubuntu 24.04 route runs the historical v2 replay checks, then
+refuses the current v3 build with an explicit pending-profile diagnostic. Current hosted admission
+requires fresh producer and PDF evidence plus review. The retained v1, v2 and legacy profiles are
+historical evidence and do not admit the current 24-page guide.
 
 The historical `check-mathematical-results-guide-pdf-hosted-raw-profile.py` still binds the exact
 581,296-byte, 16-page hosted
@@ -1947,7 +1949,7 @@ fixture at SHA-256 `408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed542
 A v1 candidate must equal that fixture or have the same length and differ only in the strict two
 duplicated final-trailer `/ID` payloads. The checker then validates both captured byte strings with
 the frozen v1 structure checker, requires their complete typed reports to agree, and publishes
-fresh target and navigation reports. This direct replay does not participate in the current v2
+fresh target and navigation reports. This direct replay does not participate in the current
 wrapper.
 
 The historical hosted self-test has 69 cases: two controls plus 13 raw, six identifier, 10 input, 16 output,
@@ -1965,19 +1967,29 @@ hash-pinned pypdf wheel remains an outer trust boundary. This is one source-spec
 profile, not general Pandoc, TeX Live, renderer, operating-system, future-run, authenticity, PDF/UA,
 mathematical, estimator, statistical, scientific-novelty, or application evidence.
 
-`check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py` is the distinct current-profile
-comparator. It binds the 23-page retained v2 fixture and the v2 strict structure checker by exact
-length and SHA-256. Both fixture and candidate must pass the complete 56-target, 217-navigation-
-record and 2,248-structure-record profile. The raw candidate must equal the fixture or differ only
-in the duplicated final-trailer `/ID` payloads accepted by the separately digest-pinned strict ID
-checker. The retained 744,745-byte v2 fixture has SHA-256
-`b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6` and is a CI-matched
-Ubuntu 24.04/x86 candidate produced under translated local container execution, not a hosted
-capture. A successful hosted cross gate is the
-separate replay observation. Until that run succeeds, the receipt does not claim hosted replay.
-The v2 self-test retains the same 69-case mutation inventory against the new exact fixture and
-structure dependency. This profile does not transfer any mathematical, estimator, statistical,
-scientific-novelty, application, authenticity, PDF/UA, or general toolchain claim.
+The original `check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py` and its receipts
+remain historical. The explicit `check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py`
+adapter selects the recovered, byte-identical `check-mathematical-results-guide-pdf-structure-hosted-v2.py`
+dependency. It preserves the exact 23-page fixture and all original comparison predicates; it is a
+new replay implementation, not an unchanged historical command. Both fixture and candidate must
+pass the complete 56-target, 217-navigation-record and 2,248-structure-record historical profile.
+The raw candidate must equal the fixture or differ only in the duplicated final-trailer `/ID`
+payloads accepted by the separately digest-pinned strict ID checker. The retained 744,745-byte v2
+fixture has SHA-256 `b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6` and is a
+CI-matched Ubuntu 24.04/x86 candidate produced under translated local container execution, not a
+hosted capture. Historical replay does not establish current v3 hosted admission.
+The replay self-test retains the same 69-case mutation inventory against that exact fixture and
+recovered structure dependency. Run it with an absolute fixture path:
+
+```text
+HOSTED_GUIDE_V2_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
+python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
+```
+
+Original checker files and earlier execution records remain unchanged. This historical profile
+does not transfer any mathematical, estimator, statistical, scientific-novelty, application,
+authenticity, PDF/UA, or general toolchain claim.
 
 The separate legacy Pandoc 3.1.3/TeX Live 2023 replay corrected an earlier unretained observation.
 The earlier operator record said that the old build passed the unchanged raw structure digest. The
@@ -2039,9 +2051,10 @@ relation is not imported by the SxPID3 paper gate and transfers no PID theorem o
 
 `check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted producer
 capture, selection, and dispatch blocks and binds their exact source anchors. It admits exact and
-cross mode at the public arity guard, then proves that only the producer tuple selects the current
-v2 hosted or frozen legacy route. Exact mode must invoke no cross-profile artifact relation; the
-hosted v2 route must remain free of the legacy alpha package; and the legacy v1 route
+cross mode at the public arity guard, then checks that only the producer tuple selects the
+historical v2 or frozen legacy package. The selected hosted route must refuse the current v3 build
+while admission is pending. Exact mode must invoke no cross-profile artifact relation; the
+historical v2 route must remain free of the legacy alpha package; and the legacy v1 route
 must remain free of hosted checker, receipt, and fixture state. The suite also exercises fail-closed
 producer and per-run tuple custody. The suite reports its current control and
 hostile inventories at runtime; this guide deliberately does not freeze those evolving counts. This
@@ -2179,7 +2192,7 @@ GoToR file-specification route. Its LPPL Work adapts latex3/pdfresources commit
 ASCII while preserving `/UF` as UTF-16BE, the decoded relative target, and `/D`. A reviewed native
 route installs no fallback writer and preserves bytes outside the same strictly parsed trailer-ID
 payload; mixed, ancient, unreviewed newer, duplicate, or incomplete API states fail closed. The
-current 23-page guide emits no GoToR action: repository navigation is an HTTPS URI so it works
+current 24-page guide emits no GoToR action: repository navigation is an HTTPS URI so it works
 without a matching checkout layout. This compatibility test preserves bounded historical replay
 coverage; it is not evidence that the current PDF contains or needs a file-specification action.
 The hosted workflow requires the old hgeneric and pdfmanagement sources after installation. It
@@ -2333,23 +2346,23 @@ admission is not a full ISO-conformance claim and is recorded in `KNOWN_LIMITATI
 resolves every internal destination, binds the external HTTPS target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
 font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
-in default `--exact` mode. Cross mode uses a separate current v2 raw profile after a closed producer-
-tuple selection; the retained 16-page hosted and legacy packages remain historical only. The current
-graph-aware
-`check-mathematical-results-guide-pdf-structure-v2.py` profile binds the expanded 23-page guide. It
-requires 56 external HTTPS targets, 217 ordered navigation records, 65 named destinations, 18
-outline entries, and 107 link annotations: 89 URI and 18 internal GoTo links, with no GoToR. Its
-1,050 structure elements contain 658 marked-content references and 97 object references; all 107
-URI or internal-GoTo annotations carry `StructParent`, with repeated links permitted to share one
-of the 97 declared structure owners. Its 120 ParentTree mappings, 2,248 semantic structure records, and
+in default `--exact` mode. The selected hosted cross route runs the historical v2 replay checks,
+then refuses before the current build while v3 hosted admission is pending. The retained v1, v2 and
+legacy packages remain historical only. The current graph-aware
+`check-mathematical-results-guide-pdf-structure-v3.py` profile binds the 24-page guide. It requires
+57 external HTTPS targets, 220 ordered navigation records, 67 named destinations, 18 outline
+entries, and 107 link annotations: 89 URI and 18 internal GoTo links, with no GoToR. Its 1,069
+structure elements contain 661 marked-content references and 98 object references; all 107 URI or
+internal-GoTo annotations carry `StructParent`, with repeated links permitted to share one of the
+98 declared structure owners. Its 122 ParentTree mappings, 2,278 semantic structure records, and
 source-specific navigation and structure digests are exact profile obligations. These counts bind
 this artifact version; they are not general PDF requirements.
 
-The v2 policy allows only the declared raw catalog,
+The v3 policy allows only the declared raw catalog,
 page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
 streams, and typed page-resource dependency closures. It binds strict number classes plus
-represented-binary64 values. The v2 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
+represented-binary64 values. The v3 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
 name-tree diagnostic controls, and four output-path controls. The diagnostic controls distinguish
 a non-array, an empty array, an odd array, and an even but wrong canonical pair count. They improve
 the failure explanation without accepting a second name-tree profile.
@@ -2364,7 +2377,7 @@ accessibility policy. The old ASCII `(url)` `/Contents` is a legal PDF text
 string; it fails this guide because it neither equals the URI nor meets the guide's source-specific
 UTF-16BE contract. The old UTF-16BE `/F` is not categorically malformed. The historical v1 guide
 adopted the reviewed upstream portable ASCII `/F` plus Unicode `/UF` policy for its GoToR actions.
-The current v2 guide has no GoToR action and therefore has no current `/F` or `/UF`
+The current v3 guide has no GoToR action and therefore has no current `/F` or `/UF`
 file-specification claim.
 For tagpdf before upstream commit `2846db13f8c4cf2e63fdf4984c66b1f064570708`, the dedicated
 LPPL-1.3c-or-later compatibility source supplies that upstream OpenAction update at
@@ -2377,16 +2390,17 @@ hook. Both paths must emit the same `/S /GoTo`, `/D`, and structure-aware `/SD` 
 the structure checker remains the semantic authority and is not widened for older toolchains.
 It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
 same-toolchain comparison separately binds every artifact byte.
-`check-mathematical-results-guide-pdf-structure-v2-self-test.py` rejects 70 object-graph mutations
+`check-mathematical-results-guide-pdf-structure-v3-self-test.py` rejects 70 object-graph mutations
 and one raw-parser mutation covering active content, aliases, type coercions, malformed numbers,
 destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream
 masquerading, changed link geometry, and canonical-but-wrong URI/internal `/Contents` values under
 normal and optimized Python. Historical v1 tests separately retain the `/F` and `/UF` mutation
-controls for that artifact's GoToR actions. Four v2 CLI controls reject input/output aliases,
+controls for that artifact's GoToR actions. Four v3 CLI controls reject input/output aliases,
 hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
 remains unchanged. The frozen v1 cross-toolchain profiles compare extracted text, geometry, target
 sets, and the bounded semantic navigation/structure projection for their 16-page artifact only.
-The current 23-page v2 profile has independent fixture, receipt, checker, and self-test bindings.
+The current 24-page v3 profile has its own structure checker and self-test. Its hosted relation is
+pending; the retained v2 fixture and receipt govern historical replay only.
 These checks
 establish a source-specific, bounded publication-artifact comparison policy. They are not a generic
 malware-free, viewer-safety, mathematical-truth, or PDF/UA claim. They do not elevate the guide
@@ -2856,12 +2870,15 @@ artifact-retention and rendering gate: it does not instantiate the citation-edge
 proofs, prove any PID claim, establish semantic correctness from visual structure, authenticate the
 toolchain, or turn correlated checks of the same bytes into independent evidence.
 
-The public mathematical-workflow visual-review receipt binds the exact current 87-page PDF and its
-rendering-receipt digest. It records review of all pages at 120 dpi in color and grayscale plus a
-24-page, 300 dpi high-risk spot set through 20 named visual, design, navigation, and semantic
-lenses. The 381-case hostile suite includes 24 causal mutations of that receipt. This is bounded
-human-visible artifact evidence: it is not a mathematical proof, accessibility certification,
-toolchain-authenticity result, or independent scientific review.
+The [September 5 split visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md)
+binds all 87 pages in color and grayscale at 120 dpi, 24 color spots at 300 dpi, and the four
+figure pages in grayscale at 300 dpi. It preserves late observations and reconstructed timing;
+it does not claim sole-root or independent complete review. The checker retains its 381 prior
+controls, including 24 visual negatives, and adds four split-review and four machine-scope
+controls (389 total).
+Twenty scoped lenses separate visible findings from mandatory extraction, font, action and
+reproduction gates. This is agent artifact review, not mathematical proof, accessibility
+certification, human review or hosted success.
 
 The retained `.fls` files and closure manifests bind every raw and resolved input observed after
 each compiler pass, and the two isolated builds must be byte-identical. Raw and resolved map-shaped

@@ -1405,6 +1405,14 @@ def mutate_workflow_visual_receipt_wiring(_checker: ModuleType, root: Path) -> N
     )
 
 
+def mutate_current_workflow_visual_receipt_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(root, 'audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md')
+
+
+def mutate_workflow_actual_view_records_wiring(_checker: ModuleType, root: Path) -> None:
+    mutate_operational_wiring(root, 'audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json')
+
+
 def mutate_formal_pdf_set_wiring(_checker: ModuleType, root: Path) -> None:
     mutate_operational_wiring(root, "scripts/check-formal-pdf-set.sh")
 
@@ -3462,6 +3470,16 @@ MUTATIONS: tuple[Mutation, ...] = (
         "workflow-visual-receipt-operational-wiring-drift",
         mutate_workflow_visual_receipt_wiring,
         "operational wiring digest mismatch: audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md",
+    ),
+    (
+        "current-workflow-visual-receipt-operational-wiring-drift",
+        mutate_current_workflow_visual_receipt_wiring,
+        "operational wiring digest mismatch: audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md",
+    ),
+    (
+        "workflow-actual-view-records-operational-wiring-drift",
+        mutate_workflow_actual_view_records_wiring,
+        "operational wiring digest mismatch: audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json",
     ),
     (
         "formal-pdf-set-operational-wiring-drift",

@@ -1,0 +1,67 @@
+{
+  "schema": "pid-rs/numerical-pdf-fixture-dependency-checks-v1",
+  "recorded_utc": "2026-09-06T05:22:16.184108+00:00",
+  "selftest_sha256": "a47e35f9bea6796cde9db536f8e7cd2c07b3438393a8efbbc6a0c74c0f3e4582",
+  "scope": "Actual complete fixture suite in two process environments. The fixture builder copies the bound numerical PDF. These controls test checker and archive-dependency behavior; they do not replay the real PDF build or prove mathematical claims. The complete aggregate check is separate.",
+  "stdout": "fixture-dependency-self-test.stdout",
+  "runs": [
+    {
+      "configuration": "default environment",
+      "result": {
+        "completed_utc": "2026-09-06T05:19:21.017914+00:00",
+        "command": [
+          "bash",
+          "--noprofile",
+          "--norc",
+          "scripts/check-numerical-assurance-pdf-self-test.sh"
+        ],
+        "exit_code": 0,
+        "failure": null,
+        "changed_inputs": [],
+        "index_unchanged": true,
+        "elapsed_seconds": 14.774665541946888,
+        "stdout_sha256": "5752bb0628259d47e83298d40c859860afad6cecec30b01fa40f53921821cfaa",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_input_count": 559
+      },
+      "receipt_sha256": "5170c22b4229f97a22d11b94477ca2a70b71f713e7fd9fa682b14c43cab5adea",
+      "controls": {
+        "contract": 1,
+        "accepted_modes": 3,
+        "hostile": 44,
+        "total": 48
+      },
+      "captured_inputs_rehashed": 559
+    },
+    {
+      "configuration": "inherited PYTHONOPTIMIZE=1; explicit isolated child flags unchanged",
+      "result": {
+        "completed_utc": "2026-09-06T05:20:11.167076+00:00",
+        "command": [
+          "/usr/bin/env",
+          "PYTHONOPTIMIZE=1",
+          "bash",
+          "--noprofile",
+          "--norc",
+          "scripts/check-numerical-assurance-pdf-self-test.sh"
+        ],
+        "exit_code": 0,
+        "failure": null,
+        "changed_inputs": [],
+        "index_unchanged": true,
+        "elapsed_seconds": 15.786473792046309,
+        "stdout_sha256": "5752bb0628259d47e83298d40c859860afad6cecec30b01fa40f53921821cfaa",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_input_count": 559
+      },
+      "receipt_sha256": "73a1afa17742307325bc0d2c129382628d59063364296272c0c0d48a45be63bb",
+      "controls": {
+        "contract": 1,
+        "accepted_modes": 3,
+        "hostile": 44,
+        "total": 48
+      },
+      "captured_inputs_rehashed": 559
+    }
+  ]
+}

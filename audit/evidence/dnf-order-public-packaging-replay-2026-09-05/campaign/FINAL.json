@@ -1,0 +1,63 @@
+{
+  "control_runs": 2,
+  "deadline_utc": "2026-09-05T09:32:51.052540+00:00",
+  "elapsed_seconds": 838.6419132079463,
+  "failed_attempts": 0,
+  "old_campaign_credit": 0,
+  "public_manifest_sha256": "69781060cef002bdb7bb4d7ff92b35947e9e6613c78f7881e931742678ed229b",
+  "registration_sha256": "f3550749a643d14c41390d5c7e795f4107011198ee66df95beac0708dc54bbc5",
+  "retries": 0,
+  "runs": [
+    {
+      "fresh_kernel_exit_code": 0,
+      "name": "selected-normal",
+      "receipt_sha256": "3f895d0b56c455ad8a68a797e8ec2d0bb41ed1260ac2fd5faeb998753d185573",
+      "seconds": 212.3018622919917,
+      "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "status": "local_semantic_kernel_pass",
+      "theorems": 13
+    },
+    {
+      "fresh_kernel_exit_code": 0,
+      "name": "selected-optimized",
+      "receipt_sha256": "6cc04970beaf0b0624f2f8e7b2e98c8946f2775f13adeccbca0a145bf00fd634",
+      "seconds": 197.49263670807704,
+      "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "status": "local_semantic_kernel_pass",
+      "theorems": 13
+    },
+    {
+      "fresh_kernel_exit_code": 0,
+      "name": "controls-normal",
+      "passed_controls": 75,
+      "receipt_sha256": "2d8f834ac6458b87114c9d4e235e1c80f81ac79319f3e977b5beea89b67b76a5",
+      "seconds": 212.63933920906857,
+      "status": "amendment_controls_pass"
+    },
+    {
+      "fresh_kernel_exit_code": 0,
+      "name": "controls-optimized",
+      "passed_controls": 75,
+      "receipt_sha256": "4ae711f912a3de4516277a738279ab0d905a79e5f6a3f2200ea9077ffacc32c4",
+      "seconds": 214.1922495419858,
+      "status": "amendment_controls_pass"
+    },
+    {
+      "complete_positive_records": 13,
+      "name": "reporting-regression",
+      "receipt_sha256": "d647705b329bfd3371efd6c2ed921710d0222e46100ba824484b0272d44acf4e",
+      "restored_monad_mismatches": 13,
+      "restored_semantic_sha256": "0c1cf11598048c39e8fee92384362e15e2c9e3555dd93f4befa4c15f865889ab",
+      "seconds": 1.8984624999575317,
+      "status": "reporting_regression_pass"
+    }
+  ],
+  "schema": "pid-rs/dnf-order-public-packaging-final-v1",
+  "scope": "A separate public packaging matrix. Worker executes the selected pair and controls; coordinator inspects the actual evidence. No additional independent selected pair or altered historical campaign count.",
+  "selected_full_runs": 2,
+  "separate_reporting_regressions": 1,
+  "started_utc": "2026-09-05T08:47:51.052540+00:00",
+  "status": "complete_pass",
+  "unchanged_public_files": 106,
+  "unchanged_staged_frozen_files_per_run": 15
+}

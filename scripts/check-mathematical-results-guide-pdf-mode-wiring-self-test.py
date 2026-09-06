@@ -29,9 +29,9 @@ WRAPPER = ROOT / "scripts/check-mathematical-results-guide-pdf.sh"
 GUIDE_BUILDER = ROOT / "scripts/build-mathematical-results-guide-pdf.sh"
 SXPID3_WRAPPER = ROOT / "scripts/check-sxpid3-source-marginal-audit-pdf.sh"
 SXPID3_BUILDER = ROOT / "scripts/build-sxpid3-source-marginal-audit-pdf.sh"
-HOSTED_BASENAME = "check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py"
+HOSTED_BASENAME = "check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py"
 HOSTED_SELF_TEST_BASENAME = (
-    "check-mathematical-results-guide-pdf-hosted-raw-profile-v2-self-test.py"
+    "check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py"
 )
 HOSTED_FIXTURE_BASENAME = (
     "mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
@@ -65,7 +65,7 @@ LEGACY_TRAILER_RECEIPT_BASENAME = (
     "mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 )
 EXPECTED_WRAPPER_SHA256 = (
-    "43327805cdf2c442d3e62a71481b50ec13baf49164c8083d8b8a87b7e425c226"
+    "07791c578647a88d07e2bdffedc0f0823af98e214eb0574d86d6cad96ee441dd"
 )
 EXPECTED_CAPTURE_FUNCTION_SHA256 = (
     "a9a7d694fd43cd9888605fc48db5e5dc67bccb59d1a1b9c328de25aff751a088"
@@ -88,8 +88,8 @@ LEGACY_SELF_TEST = ROOT / "scripts" / LEGACY_PORTABILITY_SELF_TEST_BASENAME
 LEGACY_TRAILER_CHECKER = ROOT / "scripts" / LEGACY_TRAILER_CHECK_BASENAME
 LEGACY_TRAILER_SELF_TEST = ROOT / "scripts" / LEGACY_TRAILER_SELF_TEST_BASENAME
 SELECTED_SOURCE_SHA256 = {
-    HOSTED_CHECKER: "29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc",
-    HOSTED_SELF_TEST: "f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9",
+    HOSTED_CHECKER: "875988eadb524ea266e03be47dc71219288a9251c8fa237c155930ad58427fd1",
+    HOSTED_SELF_TEST: "0505f57f88bc35e1f1987b8baefdb73c0ac84e0ef2294f86cd73a37a7d2f20a5",
     LEGACY_ALPHA_CHECKER: "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997",
     LEGACY_ALPHA_SELF_TEST: "07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be",
     LEGACY_CHECKER: "5e59e9fb997098656039db1a60c1e8694a451432618ac2ecd192b402e7a8c319",
@@ -657,10 +657,10 @@ def audit_wrapper(
         require_region_digest(source, EXPECTED_WRAPPER_SHA256, "complete wrapper")
     exact_assignments = {
         "HOSTED_RAW_CHECK": (
-            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py"'
+            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py"'
         ),
         "HOSTED_RAW_SELF_TEST": (
-            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-self-test.py"'
+            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py"'
         ),
         "FONT_ALPHA_CHECK": (
             '"$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"'
@@ -721,19 +721,19 @@ def audit_wrapper(
         "LEGACY_FORMAT_BYTES": "''",
         "LEGACY_FORMAT_SHA256": "''",
         "STRUCTURE_CHECK_SHA256": (
-            "86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77"
+            "b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4"
         ),
         "STRUCTURE_SELF_TEST_SHA256": (
-            "1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4"
+            "a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea"
         ),
         "ID_VARIANCE_CHECK_SHA256": (
             "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
         ),
         "HOSTED_RAW_CHECK_SHA256": (
-            "29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc"
+            "875988eadb524ea266e03be47dc71219288a9251c8fa237c155930ad58427fd1"
         ),
         "HOSTED_RAW_SELF_TEST_SHA256": (
-            "f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9"
+            "0505f57f88bc35e1f1987b8baefdb73c0ac84e0ef2294f86cd73a37a7d2f20a5"
         ),
         "HOSTED_RAW_PROFILE_RECEIPT_SHA256": (
             "56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8"
@@ -795,6 +795,7 @@ def audit_wrapper(
             )
 
     required_once = (
+        ('if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "220" ]]; then', "current v3 navigation inventory"),
         ('MODE="${1:---exact}"', "MODE assignment"),
         (
             'if (( $# > 1 )) || [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then',
@@ -1136,6 +1137,9 @@ def audit_wrapper(
     ):
         if prebuild_dispatch.count(token) != 1:
             raise WiringError(f"{label} count changed")
+    pending_guard = '  if [[ "$CROSS_PROFILE" == "$HOSTED_PROFILE_ID" ]]; then\n    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2\n    exit 1\n  fi\n'
+    if prebuild_dispatch.count(pending_guard) != 1:
+        raise WiringError("current v3 hosted-pending refusal changed")
     if "BUILT" in prebuild_dispatch:
         raise WiringError("pre-build selector inspects a candidate")
     hosted_prebuild = extract_unique(
@@ -1220,7 +1224,7 @@ def audit_wrapper(
         '    validate_pdf built "$BUILT" strict\n'
         "    ;;\n"
         '  --cross-toolchain:"$HOSTED_PROFILE_ID")\n'
-        "    # The hosted checker raw-binds its current-format fixture before strict validation.\n"
+        "    # The historical replay checker raw-binds its retained v2 fixture; current v3 stops above.\n"
         '    validate_pdf built "$BUILT" hosted-raw-and-strict\n'
         "    ;;\n"
         '  --cross-toolchain:"$LEGACY_PROFILE_ID")\n'
@@ -2436,7 +2440,12 @@ def exercise_prebuild_dispatch(root: pathlib.Path, fragment: str) -> int:
         trace = root / f"prebuild-{index}.trace"
         trace.write_text("", encoding="utf-8")
         result = run_bash(harness, mode, profile, str(trace))
-        require_clean_success(result, f"{mode}/{profile or 'empty'} pre-build route")
+        if mode == "--cross-toolchain" and profile == "hosted":
+            require_closed_failure(
+                result, "current v3 hosted profile pending", "current hosted-v3 pending route"
+            )
+        else:
+            require_clean_success(result, f"{mode}/{profile or 'empty'} pre-build route")
         if trace.read_text(encoding="utf-8") != expected:
             raise WiringError(f"{mode}/{profile or 'empty'} pre-build trace changed")
         controls += 1
@@ -2722,6 +2731,10 @@ def expect_mutation_rejected(source: str, old: str, new: str, label: str) -> Non
 
 def run_mutation_suite(source: str) -> int:
     mutations = (
+        ('if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "220" ]]; then', 'if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "217" ]]; then', "stale v2 navigation count"),
+        ('  if [[ "$CROSS_PROFILE" == "$HOSTED_PROFILE_ID" ]]; then\n    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2\n    exit 1\n  fi\n', '  if [[ "$CROSS_PROFILE" == "$HOSTED_PROFILE_ID" ]]; then\n    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2\n    exit 0\n  fi\n', 'hosted pending refusal exits success'),
+        ('  if [[ "$CROSS_PROFILE" == "$HOSTED_PROFILE_ID" ]]; then\n    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2\n    exit 1\n  fi\n', '  if [[ "$CROSS_PROFILE" == "never-admitted-profile" ]]; then\n    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2\n    exit 1\n  fi\n', 'hosted pending condition bypass'),
+        ('  if [[ "$CROSS_PROFILE" == "$HOSTED_PROFILE_ID" ]]; then\n    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2\n    exit 1\n  fi\n', '', 'hosted pending guard removed'),
         (
             'if (( $# > 1 )) || [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then',
             'if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then',
@@ -2743,12 +2756,12 @@ def run_mutation_suite(source: str) -> int:
             "hosted renderer digest zeroed",
         ),
         (
-            "STRUCTURE_CHECK_SHA256=86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77",
+            "STRUCTURE_CHECK_SHA256=b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4",
             "STRUCTURE_CHECK_SHA256=" + "0" * 64,
             "structure checker digest zeroed",
         ),
         (
-            "STRUCTURE_SELF_TEST_SHA256=1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4",
+            "STRUCTURE_SELF_TEST_SHA256=a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea",
             "STRUCTURE_SELF_TEST_SHA256=" + "0" * 64,
             "structure checker self-test digest zeroed",
         ),
@@ -2758,12 +2771,12 @@ def run_mutation_suite(source: str) -> int:
             "trailer-ID checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_CHECK_SHA256=29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc",
+            "HOSTED_RAW_CHECK_SHA256=875988eadb524ea266e03be47dc71219288a9251c8fa237c155930ad58427fd1",
             "HOSTED_RAW_CHECK_SHA256=" + "0" * 64,
             "hosted checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_SELF_TEST_SHA256=f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9",
+            "HOSTED_RAW_SELF_TEST_SHA256=0505f57f88bc35e1f1987b8baefdb73c0ac84e0ef2294f86cd73a37a7d2f20a5",
             "HOSTED_RAW_SELF_TEST_SHA256=" + "0" * 64,
             "hosted self-test digest zeroed",
         ),
@@ -3106,8 +3119,8 @@ def main() -> int:
     )
     print(
         "Boundary: source-extracted producer capture, selection, and dispatch; "
-        "current v2 hosted admission is raw-fixture bound, while frozen v1 routes remain "
-        "historical and exact mode invokes no cross-profile relation."
+        "current v3 hosted admission remains pending; the v2 replay is historical, "
+        "and exact mode invokes no cross-profile relation."
     )
     return 0
 

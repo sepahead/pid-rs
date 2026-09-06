@@ -1,0 +1,28 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "deadline_utc": "2026-09-05T08:32:36Z",
+    "development_compilations_consumed": 5,
+    "development_compile_limit": 64,
+    "evidence_scope_change": "The old duplicate selected pair no longer fits. No additional independent selected pair will be claimed. Both selected and cosmetic sources still require both Python modes and complete unchanged mathematical gates. Original source/failures/allocation remain. Role revision awaits recorded reviewer critique before full execution.",
+    "full_wrapper_limit": 8,
+    "old_candidate_sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+    "old_full_failures_consumed": 3,
+    "original_reporting_helper": "Bound to old candidate and cannot accept repaired candidate. A separately source-bound minimal revised-candidate causal helper is required; frozen v3 files remain unchanged.",
+    "proposed_candidate_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+    "reason": "Pinned Lean kernel-mode tactic makes seven nonprivate auxiliary theorem declarations. Frozen exact thirteen-export roster correctly rejected old candidate. Ordinary decide returns a proof term; complete frozen semantic/axiom/fresh-kernel checks remain required.",
+    "role_revision_proposed_before_test": {
+      "root_selected_normal": 4,
+      "root_selected_optimized": 5,
+      "unallocated_failure_capacity": 8,
+      "worker_cosmetic_normal": 6,
+      "worker_cosmetic_optimized": 7
+    },
+    "schema": "local-dnf-order-candidate-only-repair-registration",
+    "source_evidence": "Lean/Elab/Tactic/Decide.lean ordinary branch90\u201399 and kernel branch108\u2013118, as inspected by verifier; exact local pin/source evidence retained in reviewer diagnostic.",
+    "transformation": "Exactly seven decide +kernel tactics become ordinary decide; no statement, import, option, assumption, theorem name or other source byte changes.",
+    "utc_before_write_and_test": "2026-09-05T07:40:16.086746+00:00"
+  },
+  "retained_local_source_sha256": "ce80b8b3e97d24dd92c7d19ad11b4c6a6121f5f6437faf8615b569dd207dce45",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

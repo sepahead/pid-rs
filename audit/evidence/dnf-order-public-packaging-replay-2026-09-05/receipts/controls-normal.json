@@ -1,0 +1,1829 @@
+{
+  "artifacts": {
+    "00-compile-PidFiniteConvergence-Deterministic/command.json": "f73bdf8266bc9bca9a632ecf043dfa5ae43959a84bb30bc13e8977c34c989998",
+    "00-compile-PidFiniteConvergence-Deterministic/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "00-compile-PidFiniteConvergence-Deterministic/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "01-compile-PidFiniteConvergence-SxEventBridge/command.json": "eac67009bf68c7dbf92fc8338c0ee79adc2ec2eb2fa8af9d5af10906673dd0de",
+    "01-compile-PidFiniteConvergence-SxEventBridge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "01-compile-PidFiniteConvergence-SxEventBridge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "02-compile-Contract/command.json": "ab6a36bae86b7e6f4aafdbaecf6b1f692cd015ce2202daff64d6b4372aaa7706",
+    "02-compile-Contract/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "02-compile-Contract/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "03-compile-JudgeCore/command.json": "5153383ba2fe8f480c15511456a97e324b5c2484b393c5cb2513df3b63f3d2aa",
+    "03-compile-JudgeCore/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "03-compile-JudgeCore/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "04-compile-JudgeTargets/command.json": "0904a9c0025f2d93a3c11f904c6418fa39785111954792cd18f2bb6f455642e1",
+    "04-compile-JudgeTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "04-compile-JudgeTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "05-compile-JudgeAliases/command.json": "a2d87a199ea7f723191dad67697fcf457a105f864a445f755aad606471214e97",
+    "05-compile-JudgeAliases/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "05-compile-JudgeAliases/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "06-compile-ContractJudge/command.json": "166f69a37992cb06c54ad9729fc44a0617f1378b23824b5e6c883296398fa9a3",
+    "06-compile-ContractJudge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "06-compile-ContractJudge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "07-reporting-smoke/command.json": "87431e8c70b33db368256c938235c58e393afcf8c5e4a9d9024d03331986a730",
+    "07-reporting-smoke/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "07-reporting-smoke/stdout.log": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+    "08-ReportingRestoredLift/command.json": "f8622e149db08e0fe27f4c09b156df8e875f09496ba1823e233a83c65a275f48",
+    "08-ReportingRestoredLift/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "08-ReportingRestoredLift/stdout.log": "8ac4d3bfc40c5fd55452ad72b397decb3cc0c599555e8d8124cf0be6f4bc100e",
+    "09-FiniteControls/command.json": "d7707ad292c7592fbde0d77a5af3fd0d8b2a9f7a969df219ff09744ed9b3193a",
+    "09-FiniteControls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "09-FiniteControls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "10-WrongTargets/command.json": "10313a1693259f01d3da13b7f62a9eaf30046b54655edf2b6c7aedd66a8a24cc",
+    "10-WrongTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "10-WrongTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "11-PositiveTypeControls/command.json": "9e5d0afda681478d1814c71821fecc6ffcf721c9179635470dc898ae00033f31",
+    "11-PositiveTypeControls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "11-PositiveTypeControls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "12-Reject_fin3_only/command.json": "1cc917506722ddb7f94f5a5b845ff6ec111e376b81210d96130e39db0123cb28",
+    "12-Reject_fin3_only/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "12-Reject_fin3_only/stdout.log": "9788d235a37571c7e6ab3bfd3144875a5121a258a9f76d29d31cfb3ad21ce62c",
+    "13-Reject_explicit_receiver/command.json": "9de7e20362d1042a878f3b4af51ed9097fcd188a069937ec4d1dd40b7558a593",
+    "13-Reject_explicit_receiver/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "13-Reject_explicit_receiver/stdout.log": "0a42b0b188d65a436a30640b70c2b7b9f1a2ca9f9dd237e98c11f51e7619f543",
+    "14-Reject_implicit_receiver/command.json": "1b6f09a61d436d45f8d864de4286d9a5e9fbd6eee1ad05a2f43174982422294a",
+    "14-Reject_implicit_receiver/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "14-Reject_implicit_receiver/stdout.log": "1453a33f457e13d0e04a99e777ba4b16339948bdd66170f60abf2a8147e9b45d",
+    "15-Reject_assumed_conclusion/command.json": "64ff21ddd90a46561329def55be3ed02980f5bc5ee32cbeaa2d35bdfb9b94652",
+    "15-Reject_assumed_conclusion/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "15-Reject_assumed_conclusion/stdout.log": "01d96468ba8eee7dfce0588a615c41b005567638c2dec433fa3890624c1f1903",
+    "16-Reject_renamed_premise/command.json": "a0a77307408e639e395d9503a1cb9f2780b37f9abec4565c471cdd49a6e2c251",
+    "16-Reject_renamed_premise/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "16-Reject_renamed_premise/stdout.log": "772538f705fb7bf26104a33809457c0c93660f3914c0ba4009a4f0114bd37820",
+    "17-RejectAxiom/command.json": "51deacc733bf8191478aa2476f2c247839a7e75b78928422aad1bd9a17a3105c",
+    "17-RejectAxiom/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "17-RejectAxiom/stdout.log": "47ae26b1dc51a80a78929f079e9ddb95747210fbc3419ca2a0552eee84418fbb",
+    "18-RejectDefinition/command.json": "05607a20bd8ecd08a7b7a472755accf8e045b6558d1b7b185f37ec2a96513607",
+    "18-RejectDefinition/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "18-RejectDefinition/stdout.log": "da0473e2825fc1cb849af649d7073b24ae854690fced2a85062fc5ffcf46bd8e",
+    "19-RejectMissingRoster/command.json": "093060905b8979423b2ffb81082699e98f09231ae877cc36330f213934d5ac62",
+    "19-RejectMissingRoster/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "19-RejectMissingRoster/stdout.log": "f859609df2984c55e2192ddc83bc0b89110925f139a305ed35bd3dfb10a8b380",
+    "20-RejectExtraRoster/command.json": "f12fdc5ef904f8c3005fa89e8bb0482bcd4ce5dd78a6c3b57e3ded315c135a46",
+    "20-RejectExtraRoster/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "20-RejectExtraRoster/stdout.log": "5a9f61ecd6a7f76f2e5310d71a7caa84e47d89f4dd0f60df83dc82874825b2db",
+    "21-silent_success/command.json": "0d378b80dae900b8e1ad88325596b9a6571dee8584ba3ce6657e0a462fa57154",
+    "21-silent_success/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "21-silent_success/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "22-nonzero_empty/command.json": "10ac4d91fc9f147b8355dd587e2fa9db42d78a41d01703aabe2a6e4b7c63d6bf",
+    "22-nonzero_empty/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "22-nonzero_empty/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "23-stdout_spoof/command.json": "e2dbe850280f2442ea9a90feebda25901a7f67e097af23f3f3c57ff7df5dcf32",
+    "23-stdout_spoof/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "23-stdout_spoof/stdout.log": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+    "24-stderr_on_success/command.json": "84d6b6d7c9d5d98425493b4786f7b556007a7c90cc421463d6b628232be2de4a",
+    "24-stderr_on_success/stderr.log": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+    "24-stderr_on_success/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "25-truncated_exit/command.json": "f2d6dafb4d8745571f8c10d839a79e5e9b60aa177c669fed9db1ceabcaf453a7",
+    "25-truncated_exit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "25-truncated_exit/stdout.log": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+    "26-output_limit/command.json": "8ebd6587981e6a0733cf8f6b5ba5c0de6aa467ec6d1544ac249bfa8444230362",
+    "26-output_limit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "26-output_limit/stdout.log": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+    "27-timeout_descendant/command.json": "5a71bbcfda35e67b1492841887ea10196f04a4d8fbe878e843bd39a78485f237",
+    "27-timeout_descendant/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "27-timeout_descendant/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "28-memory_limit/command.json": "0d847465863c14a4866297fe86851a20a8a42d20304394320af4df744cf68597",
+    "28-memory_limit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "28-memory_limit/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "29-ControlClosure/command.json": "621e488a28c7d13f3d597342354c5cf4cc6727ae406dfea3c8ee4d6a67d54e96",
+    "29-ControlClosure/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "29-ControlClosure/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "30-kernel-all-positive-controls/command.json": "9548dc1fd3bcf26ed93635e32a0fbd5a37ecc9d9c76bb317da84b9f94e4895cf",
+    "30-kernel-all-positive-controls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "30-kernel-all-positive-controls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/Contract.olean": "8013ba04543b8b9bea10382bc331c4dca676576f21e8c784dfed0e0eb2a9b7af",
+    "build/ContractJudge.olean": "3552dfd76ad7f16f8173c91dd9022c825b862e02df94f7ef84f6b07377da169e",
+    "build/ControlClosure.olean": "6e1b0dc2ea49ac8bddd71cb2ea4d693ce5cc1943e8d593b64575fbf071606029",
+    "build/FiniteControls.olean": "9c26b8538cea5b159fc9aaa96b565746f7b38c1d7a0109736a2698a2c21c1f40",
+    "build/JudgeAliases.olean": "670a60bd2f38fb73f1916333dad537c6939765d080f65efcac54e8f9f833e5d9",
+    "build/JudgeCore.olean": "31b15bc3f1e37a4a1b909850d2abe04bfdb0a389a589f2fa4c28c656fa06529d",
+    "build/JudgeTargets.olean": "f547006591192be1fd8834e059c5e4aae8914b3b7735498f40019f47070e3806",
+    "build/PidFiniteConvergence/Deterministic.olean": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9",
+    "build/PidFiniteConvergence/SxEventBridge.olean": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1",
+    "build/PositiveTypeControls.olean": "6b9055067be0a774c1a766135ce7e4b161f50af9aae84c292e01bae25a5a7a7e",
+    "build/ReportingSmoke.olean": "da4ef8cbdfc4b30019d430e814493fbb3007b73b0b94f588e91b53cb89ae4fc5",
+    "build/WrongTargets.olean": "56c8ec823e1f110f2fc5a0a43ea67e088a316b61511130895f07da8d73c5a46f",
+    "custody/during": "d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+    "custody/freeze/AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+    "custody/freeze/Contract.lean": "1b976cc941668585f9d8efeb402ff3c3179433bbacf3e618a75cc1bfd490bd03",
+    "custody/freeze/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "custody/freeze/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "custody/freeze/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "custody/freeze/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "custody/freeze/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "custody/freeze/frozen.json": "3d86a688040db234f47069d3861308985d8cff5999aab5a49f22e599fee645f7",
+    "custody/freeze/judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+    "custody/freeze/reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+    "custody/freeze/selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+    "custody/freeze/theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+    "custody/pinroot/audit/formal/lean/PidFiniteConvergence.lean": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+    "custody/pinroot/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "custody/pinroot/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "custody/pinroot/audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "custody/pinroot/audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "custody/pinroot/audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "custody/pinroot/scripts/check-lean-finite-convergence.py": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "custody/pinroot/scripts/check-lean-sxpid3-informative-invariance.py": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+    "custody/regular": "c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20",
+    "environment.json": "1f6ca94edaad6614b0bd0e6afa0713eed95a142ee09dbb96960ca537f53b6930",
+    "input-bytes/0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+    "input-bytes/13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+    "input-bytes/1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+    "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+    "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+    "input-bytes/2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c",
+    "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "input-bytes/3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+    "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "input-bytes/4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "input-bytes/4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+    "input-bytes/499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb",
+    "input-bytes/4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7",
+    "input-bytes/4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6",
+    "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "input-bytes/5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85",
+    "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "input-bytes/6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "input-bytes/713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e",
+    "input-bytes/71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95",
+    "input-bytes/724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "input-bytes/73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea",
+    "input-bytes/a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98",
+    "input-bytes/ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e",
+    "input-bytes/b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "input-bytes/cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa",
+    "input-bytes/cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47",
+    "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "input-bytes/ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8",
+    "policy-syntax-fixture.txt": "aee2fab1ebbe504a79835374b552424e88ad102889de2822c88fb5db43b478bb",
+    "prefix-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-stdout.log": "ebce7c6b7a024f5fc95464aefa8bd0e31edbd9b73882ee03662dc3e15c7eb2c7",
+    "src/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "src/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "src/ControlClosure.lean": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb",
+    "src/FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "src/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "src/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "src/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "src/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "src/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "src/PositiveTypeControls.lean": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa",
+    "src/RejectAxiom.lean": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98",
+    "src/RejectDefinition.lean": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8",
+    "src/RejectExtraRoster.lean": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7",
+    "src/RejectMissingRoster.lean": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47",
+    "src/Reject_assumed_conclusion.lean": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea",
+    "src/Reject_explicit_receiver.lean": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e",
+    "src/Reject_fin3_only.lean": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6",
+    "src/Reject_implicit_receiver.lean": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85",
+    "src/Reject_renamed_premise.lean": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95",
+    "src/ReportingRestoredLift.lean": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c",
+    "src/ReportingSmoke.lean": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e",
+    "src/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "src/WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+  },
+  "commands": [
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/PidFiniteConvergence/Deterministic.olean",
+        "CONTROLS_NORMAL_RUN/src/PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.4393969589145854,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-Deterministic",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2333736960,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:42.312524+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/PidFiniteConvergence/SxEventBridge.olean",
+        "CONTROLS_NORMAL_RUN/src/PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.6027729170164093,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-SxEventBridge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2387378176,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:43.752187+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/Contract.olean",
+        "CONTROLS_NORMAL_RUN/src/Contract.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.4463101249421015,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2355576832,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:45.355311+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/JudgeCore.olean",
+        "CONTROLS_NORMAL_RUN/src/JudgeCore.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.8568380420329049,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-JudgeCore",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1412857856,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:46.801948+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/JudgeTargets.olean",
+        "CONTROLS_NORMAL_RUN/src/JudgeTargets.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.4415256249485537,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-JudgeTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2345320448,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:47.659060+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/JudgeAliases.olean",
+        "CONTROLS_NORMAL_RUN/src/JudgeAliases.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.3980047500226647,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-JudgeAliases",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2335686656,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:49.100936+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/ContractJudge.olean",
+        "CONTROLS_NORMAL_RUN/src/ContractJudge.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.5448712499346584,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-ContractJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2704244736,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:50.499225+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/ReportingSmoke.olean",
+        "CONTROLS_NORMAL_RUN/src/ReportingSmoke.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.6965079579968005,
+      "execution_error": null,
+      "failure": null,
+      "label": "reporting-smoke",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1123139584,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 44,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:52.046102+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/ReportingRestoredLift.olean",
+        "CONTROLS_NORMAL_RUN/src/ReportingRestoredLift.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.7006395830539986,
+      "execution_error": null,
+      "failure": null,
+      "label": "ReportingRestoredLift",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1136263168,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 352,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:54:52.743029+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8ac4d3bfc40c5fd55452ad72b397decb3cc0c599555e8d8124cf0be6f4bc100e"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/FiniteControls.olean",
+        "CONTROLS_NORMAL_RUN/src/FiniteControls.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.623382208053954,
+      "execution_error": null,
+      "failure": null,
+      "label": "FiniteControls",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2416558080,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:53.444184+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/WrongTargets.olean",
+        "CONTROLS_NORMAL_RUN/src/WrongTargets.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.4074003749992698,
+      "execution_error": null,
+      "failure": null,
+      "label": "WrongTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2333982720,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:55.068119+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/PositiveTypeControls.olean",
+        "CONTROLS_NORMAL_RUN/src/PositiveTypeControls.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.5446968750329688,
+      "execution_error": null,
+      "failure": null,
+      "label": "PositiveTypeControls",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2705457152,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:54:56.475991+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/Reject_fin3_only.olean",
+        "CONTROLS_NORMAL_RUN/src/Reject_fin3_only.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.527484791004099,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_fin3_only",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2704736256,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 299,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:54:58.021178+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "9788d235a37571c7e6ab3bfd3144875a5121a258a9f76d29d31cfb3ad21ce62c"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/Reject_explicit_receiver.olean",
+        "CONTROLS_NORMAL_RUN/src/Reject_explicit_receiver.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.5397832080489025,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_explicit_receiver",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2705719296,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 315,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:54:59.549211+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0a42b0b188d65a436a30640b70c2b7b9f1a2ca9f9dd237e98c11f51e7619f543"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/Reject_implicit_receiver.olean",
+        "CONTROLS_NORMAL_RUN/src/Reject_implicit_receiver.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.5360200840514153,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_implicit_receiver",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2704408576,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 315,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:01.089469+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1453a33f457e13d0e04a99e777ba4b16339948bdd66170f60abf2a8147e9b45d"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/Reject_assumed_conclusion.olean",
+        "CONTROLS_NORMAL_RUN/src/Reject_assumed_conclusion.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.5795889999717474,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_assumed_conclusion",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2691596288,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 317,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:02.625933+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "01d96468ba8eee7dfce0588a615c41b005567638c2dec433fa3890624c1f1903"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/Reject_renamed_premise.olean",
+        "CONTROLS_NORMAL_RUN/src/Reject_renamed_premise.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.575286709005013,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_renamed_premise",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2682961920,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 311,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:04.206035+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "772538f705fb7bf26104a33809457c0c93660f3914c0ba4009a4f0114bd37820"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/RejectAxiom.olean",
+        "CONTROLS_NORMAL_RUN/src/RejectAxiom.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.852038332959637,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectAxiom",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1374748672,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 249,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:05.781789+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "47ae26b1dc51a80a78929f079e9ddb95747210fbc3419ca2a0552eee84418fbb"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/RejectDefinition.olean",
+        "CONTROLS_NORMAL_RUN/src/RejectDefinition.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.8154228329658508,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectDefinition",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1285455872,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 590,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:06.634298+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "da0473e2825fc1cb849af649d7073b24ae854690fced2a85062fc5ffcf46bd8e"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/RejectMissingRoster.olean",
+        "CONTROLS_NORMAL_RUN/src/RejectMissingRoster.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.9384983750060201,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectMissingRoster",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1411514368,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 259,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:07.450196+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f859609df2984c55e2192ddc83bc0b89110925f139a305ed35bd3dfb10a8b380"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/RejectExtraRoster.olean",
+        "CONTROLS_NORMAL_RUN/src/RejectExtraRoster.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.9326283750124276,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectExtraRoster",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1410547712,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 257,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:55:08.389134+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5a9f61ecd6a7f76f2e5310d71a7caa84e47d89f4dd0f60df83dc82874825b2db"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "pass"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.058510417002253234,
+      "execution_error": null,
+      "failure": null,
+      "label": "silent_success",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 3653632,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:55:09.334197+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "raise SystemExit(3)"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.05783762503415346,
+      "execution_error": null,
+      "failure": null,
+      "label": "nonzero_empty",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 4407296,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 3,
+      "started_utc": "2026-09-05T08:55:09.393061+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "print('DNF_JUDGE_RESULT fake')"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.05826879199594259,
+      "execution_error": null,
+      "failure": null,
+      "label": "stdout_spoof",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2572288,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 22,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:55:09.451157+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import sys;sys.stderr.write('bad')"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.06176295899786055,
+      "execution_error": null,
+      "failure": null,
+      "label": "stderr_on_success",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 4571136,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 3,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:55:09.509626+00:00",
+      "stderr_sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import sys;sys.stdout.write('DNF_');sys.exit(2)"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.05921025003772229,
+      "execution_error": null,
+      "failure": null,
+      "label": "truncated_exit",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 4472832,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 4,
+      "returncode": 2,
+      "started_utc": "2026-09-05T08:55:09.571600+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import sys;sys.stdout.write('x'*1000000)"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.039496583049185574,
+      "execution_error": null,
+      "failure": "output_limit",
+      "label": "output_limit",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4096,
+        "stdout_bytes": 4096
+      },
+      "peak_observed_group_rss_bytes": 4292608,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 4096,
+      "returncode": -9,
+      "started_utc": "2026-09-05T08:55:09.631087+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import subprocess,time,sys;subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)']);time.sleep(30)"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.5599939579842612,
+      "execution_error": null,
+      "failure": "timeout",
+      "label": "timeout_descendant",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 0.5,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 31653888,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": -9,
+      "started_utc": "2026-09-05T08:55:09.670799+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import time;x=bytearray(32*1024*1024);time.sleep(30)"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 0.16652479104232043,
+      "execution_error": null,
+      "failure": "memory_limit",
+      "label": "memory_limit",
+      "limits": {
+        "observed_group_rss_bytes": 16777216,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 10,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 46317568,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": -9,
+      "started_utc": "2026-09-05T08:55:10.231669+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_NORMAL_RUN/build/ControlClosure.olean",
+        "CONTROLS_NORMAL_RUN/src/ControlClosure.lean"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 1.5598669169703498,
+      "execution_error": null,
+      "failure": null,
+      "label": "ControlClosure",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2696609792,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:55:10.398691+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/leanchecker",
+        "--fresh",
+        "ControlClosure"
+      ],
+      "cwd": "CONTROLS_NORMAL_RUN/src",
+      "elapsed_seconds": 181.34365075000096,
+      "execution_error": null,
+      "failure": null,
+      "label": "kernel-all-positive-controls",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 3081551872,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:55:11.958822+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "inputs": {
+    "CONTROLS_NORMAL_RUN/src/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "CONTROLS_NORMAL_RUN/src/ContractJudge.lean": {
+      "bytes": 2185,
+      "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+    },
+    "CONTROLS_NORMAL_RUN/src/ControlClosure.lean": {
+      "bytes": 113,
+      "sha256": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb"
+    },
+    "CONTROLS_NORMAL_RUN/src/FiniteControls.lean": {
+      "bytes": 7136,
+      "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+    },
+    "CONTROLS_NORMAL_RUN/src/JudgeAliases.lean": {
+      "bytes": 2693,
+      "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+    },
+    "CONTROLS_NORMAL_RUN/src/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "CONTROLS_NORMAL_RUN/src/JudgeTargets.lean": {
+      "bytes": 6849,
+      "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+    },
+    "CONTROLS_NORMAL_RUN/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "CONTROLS_NORMAL_RUN/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "CONTROLS_NORMAL_RUN/src/PositiveTypeControls.lean": {
+      "bytes": 751,
+      "sha256": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa"
+    },
+    "CONTROLS_NORMAL_RUN/src/RejectAxiom.lean": {
+      "bytes": 281,
+      "sha256": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98"
+    },
+    "CONTROLS_NORMAL_RUN/src/RejectDefinition.lean": {
+      "bytes": 257,
+      "sha256": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8"
+    },
+    "CONTROLS_NORMAL_RUN/src/RejectExtraRoster.lean": {
+      "bytes": 188,
+      "sha256": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7"
+    },
+    "CONTROLS_NORMAL_RUN/src/RejectMissingRoster.lean": {
+      "bytes": 146,
+      "sha256": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47"
+    },
+    "CONTROLS_NORMAL_RUN/src/Reject_assumed_conclusion.lean": {
+      "bytes": 313,
+      "sha256": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea"
+    },
+    "CONTROLS_NORMAL_RUN/src/Reject_explicit_receiver.lean": {
+      "bytes": 312,
+      "sha256": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e"
+    },
+    "CONTROLS_NORMAL_RUN/src/Reject_fin3_only.lean": {
+      "bytes": 304,
+      "sha256": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6"
+    },
+    "CONTROLS_NORMAL_RUN/src/Reject_implicit_receiver.lean": {
+      "bytes": 312,
+      "sha256": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85"
+    },
+    "CONTROLS_NORMAL_RUN/src/Reject_renamed_premise.lean": {
+      "bytes": 310,
+      "sha256": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95"
+    },
+    "CONTROLS_NORMAL_RUN/src/ReportingRestoredLift.lean": {
+      "bytes": 196,
+      "sha256": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c"
+    },
+    "CONTROLS_NORMAL_RUN/src/ReportingSmoke.lean": {
+      "bytes": 186,
+      "sha256": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e"
+    },
+    "CONTROLS_NORMAL_RUN/src/SemanticJudge.lean": {
+      "bytes": 7829,
+      "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    "CONTROLS_NORMAL_RUN/src/WrongTargets.lean": {
+      "bytes": 1426,
+      "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/ContractJudge.lean": {
+      "bytes": 2185,
+      "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/FiniteControls.lean": {
+      "bytes": 7136,
+      "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/JudgeAliases.lean": {
+      "bytes": 2693,
+      "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/JudgeTargets.lean": {
+      "bytes": 6849,
+      "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/SemanticJudge.lean": {
+      "bytes": 7829,
+      "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/WrongTargets.lean": {
+      "bytes": 1426,
+      "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/judge.py": {
+      "bytes": 25145,
+      "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+    },
+    "CONTROLS_NORMAL_STAGE/judge-v3/selftest.py": {
+      "bytes": 19401,
+      "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+    },
+    "LEAN_TOOLCHAIN_ROOT/bin/lean": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "LEAN_TOOLCHAIN_ROOT/bin/leanchecker": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/PidFiniteConvergence.lean": {
+      "bytes": 371,
+      "sha256": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "REPOSITORY_ROOT/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "REPOSITORY_ROOT/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "pending": [
+    "Complete thirteen-export positive, cosmetic and restored-reporting-module replay are separate obligations; the candidate existed before this amendment.",
+    "No claim of external custody or process isolation from a malicious shared-workspace actor.",
+    "Pinned dependency source preflight is reused; its complete historical mutation suite is not repeated here."
+  ],
+  "python_optimized": 0,
+  "results": [
+    {
+      "category": "custody",
+      "details": "",
+      "name": "ambient_stale_cache_excluded",
+      "status": "pass"
+    },
+    {
+      "category": "positive",
+      "details": "",
+      "name": "contract_raw_alias_preparation",
+      "status": "pass"
+    },
+    {
+      "category": "reporting_regression",
+      "details": "Actual IO action in TermElabM; smoke data are not theorem evidence.",
+      "name": "term_elaboration_reporting_positive",
+      "status": "pass"
+    },
+    {
+      "category": "reporting_regression",
+      "details": "Original CommandElabM lift rejected inside TermElabM.",
+      "name": "ReportingRestoredLift",
+      "status": "pass"
+    },
+    {
+      "category": "finite_counterexamples",
+      "details": "",
+      "name": "FiniteControls",
+      "status": "pass"
+    },
+    {
+      "category": "valid_wrong_target_proofs",
+      "details": "",
+      "name": "WrongTargets",
+      "status": "pass"
+    },
+    {
+      "category": "positive",
+      "details": "",
+      "name": "finite_and_universe_positive_types",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_fin3_only",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_explicit_receiver",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_implicit_receiver",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_assumed_conclusion",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_renamed_premise",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_AXIOM",
+      "name": "RejectAxiom",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_DECLARATION_KIND",
+      "name": "RejectDefinition",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_EXPORT_ROSTER",
+      "name": "RejectMissingRoster",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_EXPORT_ROSTER",
+      "name": "RejectExtraRoster",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "Source syntax only; complete candidate semantic replay is separate.",
+      "name": "P12_cosmetic_source_fragment",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate import roster must be exactly Contract",
+      "name": "extra_import",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate public theorem source roster changed",
+      "name": "unknown_public",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate public theorem source roster changed",
+      "name": "missing_export",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate public theorem source roster changed",
+      "name": "duplicate_export",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate must retain exactly the two strict options",
+      "name": "changed_option",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_sorry",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_axiom",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_native_decide",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_unsafe",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_run_cmd",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_run_tac",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_elab",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_macro",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_initialize",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_attribute",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate must retain exactly the two strict options",
+      "name": "forbidden_set_option_maxRecDepth_0",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate import roster must be exactly Contract",
+      "name": "forbidden_import_Lean",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "Synthetic parser records are not theorem evidence.",
+      "name": "exact_parser_shape",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence line count changed",
+      "name": "missing_record",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence identity changed",
+      "name": "duplicate_record",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "disallowed or unordered axiom roster",
+      "name": "unknown_axiom",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "Expecting value: line 1 column 336 (char 335)",
+      "name": "malformed",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence line count changed",
+      "name": "extra_output",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "invalid name roster: axioms",
+      "name": "wrong_field_type",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence fields changed",
+      "name": "unknown_field",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "duplicate JSON key: status",
+      "name": "duplicate_json_key",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "",
+      "name": "regular_capture",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "[Errno 2] No such file or directory: 'CONTROLS_NORMAL_RUN/custody/missing'",
+      "name": "missing_file",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "noncanonical or symlink input: CONTROLS_NORMAL_RUN/custody/symlink",
+      "name": "symlink_file",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input must be a regular single-link file: CONTROLS_NORMAL_RUN/custody/hardlink",
+      "name": "hardlinked_file",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed after capture: CONTROLS_NORMAL_RUN/custody/regular",
+      "name": "changed_after_capture",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed after capture: CONTROLS_NORMAL_RUN/custody/regular",
+      "name": "same_bytes_inode_replacement",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed before capture",
+      "name": "inode_replaced_at_open",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed during capture: CONTROLS_NORMAL_RUN/custody/during",
+      "name": "bytes_changed_during_capture",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "",
+      "name": "exact_source_pins",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence.lean",
+      "name": "pin_0",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+      "name": "pin_1",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+      "name": "pin_2",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/lake-manifest.json",
+      "name": "pin_3",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/lakefile.toml",
+      "name": "pin_4",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/lean-toolchain",
+      "name": "pin_5",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: scripts/check-lean-sxpid3-informative-invariance.py",
+      "name": "pin_6",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: scripts/check-lean-finite-convergence.py",
+      "name": "pin_7",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "",
+      "name": "exact_frozen_roster",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "judge freeze is not accepted for a candidate",
+      "name": "amendment_status",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "judge amendment chronology or predecessor binding changed",
+      "name": "amendment_predecessor_freeze_sha256",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "judge amendment chronology or predecessor binding changed",
+      "name": "amendment_candidate_sha256_at_amendment",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "frozen judge input changed: Contract.lean",
+      "name": "changed_contract",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "adopted judge freeze digest changed",
+      "name": "coordinated_contract_reseal",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "",
+      "name": "silent_success",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "nonzero_empty: nonzero process status",
+      "name": "nonzero_empty",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "stdout_spoof: unexpected stdout",
+      "name": "stdout_spoof",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "stderr_on_success: unexpected stderr",
+      "name": "stderr_on_success",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "truncated_exit: nonzero process status",
+      "name": "truncated_exit",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "output_limit: operational failure: output_limit",
+      "name": "output_limit",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "timeout_descendant: operational failure: timeout",
+      "name": "timeout_descendant",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "memory_limit: operational failure: memory_limit",
+      "name": "memory_limit",
+      "status": "pass"
+    },
+    {
+      "category": "kernel",
+      "details": "",
+      "name": "fresh_positive_control_closure",
+      "status": "pass"
+    }
+  ],
+  "scope": "Amendment controls after the candidate existed. Complete candidate replay is separate.",
+  "status": "amendment_controls_pass"
+}

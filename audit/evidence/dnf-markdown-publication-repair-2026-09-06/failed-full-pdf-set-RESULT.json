@@ -1,0 +1,18 @@
+{
+  "index_unchanged": true,
+  "completed_utc": "2026-09-06T01:02:24.733569+00:00",
+  "command": [
+    "bash",
+    "--noprofile",
+    "--norc",
+    "scripts/check-formal-pdf-set.sh",
+    "--exact"
+  ],
+  "exit_code": 1,
+  "failure": null,
+  "changed_inputs": [],
+  "elapsed_seconds": 1552.527035041945,
+  "stdout_sha256": "7b51e742f4cb4f9fdfdb85de7cd3f3ee1181e6f7a90e70da45a62e417b2694be",
+  "stderr_sha256": "6d878c393dd74742a6d06d47d6e8b76af2a580972035ac0ca76c40958419fd09",
+  "captured_input_count": 541
+}

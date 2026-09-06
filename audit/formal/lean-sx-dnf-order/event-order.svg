@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="570" viewBox="0 0 840 570" role="img" aria-labelledby="title desc">
+<title id="title">A stronger logical condition selects fewer equality patterns</title>
+<desc id="desc">For two sources, the family alpha consisting of the two singleton collections gives OR. The family beta containing the joint collection gives AND. OR accepts patterns 10, 01, and 11. AND accepts only 11. Therefore alpha precedes beta in redundancy order, while the beta event is contained in the alpha event. This is a logical example over every Boolean pattern, not an observed data support or a probability estimate.</desc>
+<defs><pattern id="selected" patternUnits="userSpaceOnUse" width="9" height="9"><rect width="9" height="9" fill="#D2E0E2"/><path d="M-2 2L2-2M0 9L9 0M7 11L11 7" stroke="#1F6968" stroke-width="0.75" opacity="0.26"/></pattern></defs>
+<rect width="840" height="570" fill="#F7F3E9"/>
+<path d="M28 24H142" stroke="#B28218" stroke-width="4"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#2C3E50">
+<text x="28" y="63" font-size="28" font-weight="600" fill="#1F3F60">A stronger condition selects fewer patterns</text>
+<text x="28" y="92" font-size="18">Two sources · all Boolean equality patterns · no probability model yet</text>
+<rect x="28" y="116" width="370" height="313" rx="10" fill="white" stroke="#D2E0E2"/>
+<rect x="442" y="116" width="370" height="313" rx="10" fill="white" stroke="#D2E0E2"/>
+<text x="48" y="151" font-size="23" font-weight="600" fill="#1F6968">α = {{1}, {2}}: either source</text>
+<text x="48" y="178" font-size="18">e₁ OR e₂: at least one source matches.</text>
+<text x="462" y="151" font-size="23" font-weight="600" fill="#1F3F60">β = {{1, 2}}: both sources</text>
+<text x="462" y="178" font-size="18">e₁ AND e₂: both sources match.</text>
+<rect x="48" y="198" width="156" height="91" rx="5" fill="#F7F3E9" stroke="#D2E0E2"/>
+<text x="126" y="233" text-anchor="middle" font-size="24" font-weight="600">e = 00</text>
+<text x="126" y="264" text-anchor="middle" font-size="18">excluded</text>
+<rect x="216" y="198" width="156" height="91" rx="5" fill="url(#selected)" stroke="#1F6968"/>
+<text x="294" y="233" text-anchor="middle" font-size="24" font-weight="600">e = 01</text>
+<text x="294" y="264" text-anchor="middle" font-size="18">included</text>
+<rect x="48" y="303" width="156" height="91" rx="5" fill="url(#selected)" stroke="#1F6968"/>
+<text x="126" y="338" text-anchor="middle" font-size="24" font-weight="600">e = 10</text>
+<text x="126" y="369" text-anchor="middle" font-size="18">included</text>
+<rect x="216" y="303" width="156" height="91" rx="5" fill="url(#selected)" stroke="#1F6968"/>
+<text x="294" y="338" text-anchor="middle" font-size="24" font-weight="600">e = 11</text>
+<text x="294" y="369" text-anchor="middle" font-size="18">included</text>
+<rect x="462" y="198" width="156" height="91" rx="5" fill="#F7F3E9" stroke="#D2E0E2"/>
+<text x="540" y="233" text-anchor="middle" font-size="24" font-weight="600">e = 00</text>
+<text x="540" y="264" text-anchor="middle" font-size="18">excluded</text>
+<rect x="630" y="198" width="156" height="91" rx="5" fill="#F7F3E9" stroke="#D2E0E2"/>
+<text x="708" y="233" text-anchor="middle" font-size="24" font-weight="600">e = 01</text>
+<text x="708" y="264" text-anchor="middle" font-size="18">excluded</text>
+<rect x="462" y="303" width="156" height="91" rx="5" fill="#F7F3E9" stroke="#D2E0E2"/>
+<text x="540" y="338" text-anchor="middle" font-size="24" font-weight="600">e = 10</text>
+<text x="540" y="369" text-anchor="middle" font-size="18">excluded</text>
+<rect x="630" y="303" width="156" height="91" rx="5" fill="url(#selected)" stroke="#1F6968"/>
+<text x="708" y="338" text-anchor="middle" font-size="24" font-weight="600">e = 11</text>
+<text x="708" y="369" text-anchor="middle" font-size="18">included</text>
+<text x="420" y="466" text-anchor="middle" font-size="25" font-weight="600" fill="#1F3F60">Order: α ≼ β. Event inclusion: Eβ ⊆ Eα.</text>
+<text x="420" y="497" text-anchor="middle" font-size="18">If both sources match, at least one source matches.</text>
+<text x="420" y="525" text-anchor="middle" font-size="16">The digits record equality to a fixed anchor: 1 = match; 0 = no match.</text>
+<text x="420" y="550" text-anchor="middle" font-size="15">Source: “Bits and Pieces”, arXiv:2008.09535v2, Eq. (4.1), Theorem 1.</text>
+</g></svg>

@@ -1,142 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="180mm" height="105mm" viewBox="0 0 1800 1050" role="img" aria-labelledby="small-ball-title small-ball-desc">
-  <title id="small-ball-title">Common-radius manifold small-ball bridge and its failure boundary</title>
-  <desc id="small-ball-desc">Three panels explain the conditional population lemma. Equal-radius source balls in one homogeneous measured space have a common volume v r. Source-source and target-source-source overlaps are second order, so inclusion-exclusion leaves the first-order source contributions and the common volume factors cancel. A counterfactual first-order source overlap changes the limiting formula. The diagram makes no estimator or finite-sample claim.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="180mm" height="120mm" viewBox="0 0 1800 1200" role="img" aria-labelledby="small-ball-title small-ball-desc">
+  <title id="small-ball-title">Common-radius population bridge: coordinates, overlaps, and cancellation</title>
+  <desc id="small-ball-desc">This figure summarizes the conditional population lemma in the adjacent text. The two sources take values in the same measured space M, but occupy separate source coordinates. Equal-radius balls have the same volume v r. Each source event is the preimage of its own ball under its source variable; the drawings do not imply independence or empty event overlap. The source-source overlap is little o of v r, and the target-source-source overlap is little o of the product w r v r. Local essential bounds are sufficient, not necessary, for these overlap conditions. Inclusion-exclusion leaves leading terms with a common volume factor, which cancels in the probability ratio before taking the natural logarithm. A first-order source overlap can change the denominator. The full hypotheses, density expansions, and limit are stated in the adjacent text. This is a population lemma, not a kNN or finite-sample guarantee.</desc>
   <defs>
-    <pattern id="grid-pattern" width="24" height="24" patternUnits="userSpaceOnUse">
-      <path d="M24 0 H0 V24" fill="none" stroke="#1F6968" stroke-width="1.4" opacity="0.10"/>
+    <pattern id="title-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0 H0 V28" fill="none" stroke="#1F6968" stroke-width="1.2" opacity="0.08"/>
     </pattern>
-    <pattern id="source-a-pattern" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
-      <path d="M0 0 V18" stroke="#1F6968" stroke-width="4" opacity="0.28"/>
-    </pattern>
-    <pattern id="source-b-pattern" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
-      <path d="M0 0 V18" stroke="#916400" stroke-width="4" opacity="0.28"/>
-    </pattern>
-    <pattern id="target-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
-      <circle cx="5" cy="5" r="2.2" fill="#DCA520" opacity="0.42"/>
-      <circle cx="15" cy="15" r="2.2" fill="#DCA520" opacity="0.42"/>
-    </pattern>
-    <pattern id="warning-pattern" width="18" height="18" patternUnits="userSpaceOnUse">
-      <path d="M-5 5 L5 -5 M0 18 L18 0 M13 23 L23 13" stroke="#916400" stroke-width="2.4" opacity="0.24"/>
-    </pattern>
-    <marker id="arrow-navy" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 Z" fill="#2C3E50"/>
+    <marker id="radius-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M0 0 L7 3.5 L0 7 Z" fill="#2C3E50"/>
     </marker>
     <style>
-      .sans { font-family: "Source Sans Pro"; }
-      .kicker { font-size: 25px; font-weight: 700; fill: #916400; letter-spacing: 3.2px; }
-      .title { font-size: 48px; font-weight: 700; fill: #2C3E50; }
-      .subtitle { font-size: 29px; font-weight: 600; fill: #1F6968; }
-      .panel-title { font-size: 31px; font-weight: 700; fill: #1F6968; }
-      .panel-step { font-size: 25px; font-weight: 700; fill: #916400; letter-spacing: 1.5px; }
-      .label { font-size: 28px; font-weight: 600; fill: #2C3E50; }
-      .small { font-size: 25px; font-weight: 400; fill: #2C3E50; }
-      .formula { font-size: 27px; font-weight: 600; fill: #2C3E50; }
-      .formula-small { font-size: 24px; font-weight: 600; fill: #2C3E50; }
-      .emphasis { font-size: 27px; font-weight: 700; fill: #916400; }
-      .emphasis-small { font-size: 24px; font-weight: 700; fill: #916400; }
-      .boundary { font-size: 25px; font-weight: 600; fill: #2C3E50; }
-      .boundary-small { font-size: 23px; font-weight: 600; fill: #2C3E50; }
-      .chip { font-size: 22px; font-weight: 700; fill: #2C3E50; letter-spacing: .7px; }
+      .sans { font-family: "Source Sans Pro"; fill: #2C3E50; }
+      .title { font-size: 46px; font-weight: 700; fill: #1F3F60; }
+      .kicker { font-size: 29px; font-weight: 700; letter-spacing: 2px; fill: #916400; }
+      .subtitle { font-size: 34px; font-weight: 400; fill: #1F6968; }
+      .step { font-size: 30px; font-weight: 700; letter-spacing: 1px; fill: #916400; }
+      .panel-title { font-size: 35px; font-weight: 700; fill: #1F6968; }
+      .body { font-size: 34px; font-weight: 400; }
+      .label { font-size: 34px; font-weight: 600; }
+      .formula { font-family: "Source Sans Pro"; font-size: 36px; font-weight: 400; fill: #2C3E50; }
+      .factor { font-family: "Source Sans Pro"; font-size: 66px; fill: #1F3F60; }
+      .sub { font-size: 72%; baseline-shift: sub; }
+      .boundary { font-size: 34px; font-weight: 600; }
     </style>
   </defs>
-
-  <rect width="1800" height="1050" fill="#F7F3E9"/>
-  <rect x="54" y="42" width="1692" height="116" rx="20" fill="url(#grid-pattern)" stroke="#2C3E50" stroke-width="2" stroke-opacity="0.22"/>
-  <rect x="54" y="42" width="15" height="116" rx="7" fill="#DCA520"/>
+  <rect width="1800" height="1200" fill="#F7F3E9"/>
   <g class="sans">
-    <text x="92" y="77" class="kicker">CONDITIONAL POPULATION BRIDGE</text>
-    <text x="92" y="128" class="title">Why the common-radius volume terms cancel</text>
-    <text x="1130" y="125" class="subtitle">and exactly where the argument can fail</text>
+    <rect x="54" y="34" width="1692" height="130" rx="18" fill="url(#title-grid)" stroke="#D2E0E2" stroke-width="2"/>
+    <rect x="54" y="34" width="12" height="130" rx="6" fill="#B28218"/>
+    <text x="92" y="71" class="kicker">CONDITIONAL POPULATION BRIDGE</text>
+    <text x="92" y="119" class="title">Common radius: coordinates, overlaps, and cancellation</text>
+    <text x="92" y="153" class="subtitle">Use the full hypotheses and density expansions in the adjacent text.</text>
 
-    <!-- Panel 1: geometry and equal first-order volumes. -->
-    <g transform="translate(54 188)">
-      <rect width="520" height="714" rx="22" fill="#E8F0ED" fill-opacity="0.72" stroke="#1F6968" stroke-width="2.5"/>
-      <text x="28" y="42" class="panel-step">STEP 1</text>
-      <text x="28" y="82" class="panel-title">One radius, compatible volumes</text>
-      <text x="28" y="118" class="small">Both sources live in the same homogeneous</text>
-      <text x="28" y="150" class="small">measured space M; the target lives in N.</text>
+    <!-- The cards are coordinate copies, not disjoint events in one sample space. -->
+    <g id="source-coordinates" transform="translate(54 190)">
+      <rect width="520" height="742" rx="20" fill="#F7F3E9" stroke="#1F6968" stroke-width="2.5"/>
+      <text x="28" y="43" class="step">STEP 1 · COORDINATES</text>
+      <text x="28" y="89" class="panel-title">Keep the sources distinct</text>
+      <text x="28" y="136" class="body">Separate source coordinates</text>
+      <text x="28" y="178" class="body">in the same measured space M.</text>
 
-      <path d="M40 252 C126 193 232 206 296 257 C364 311 446 296 484 246 L484 465 C405 510 325 478 259 430 C190 381 109 404 40 457 Z" fill="url(#grid-pattern)" stroke="#1F6968" stroke-width="2"/>
-      <circle cx="164" cy="331" r="92" fill="url(#source-a-pattern)" stroke="#1F6968" stroke-width="5"/>
-      <circle cx="366" cy="331" r="92" fill="url(#source-b-pattern)" stroke="#916400" stroke-width="5"/>
-      <line x1="164" y1="331" x2="244" y2="331" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrow-navy)"/>
-      <line x1="366" y1="331" x2="446" y2="331" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrow-navy)"/>
-      <text x="196" y="316" class="chip">radius r</text>
-      <text x="398" y="316" class="chip">radius r</text>
-      <text x="124" y="342" class="label">E1,r</text>
-      <text x="326" y="342" class="label">E2,r</text>
-      <text x="150" y="493" class="formula-small" text-anchor="middle">volume = v(r)</text>
-      <text x="370" y="493" class="formula-small" text-anchor="middle">volume = v(r)</text>
-
-      <rect x="40" y="534" width="440" height="128" rx="17" fill="#F7F3E9" stroke="#916400" stroke-width="2"/>
-      <circle cx="110" cy="598" r="43" fill="url(#target-pattern)" stroke="#DCA520" stroke-width="4"/>
-      <text x="92" y="607" class="label">Cr</text>
-      <text x="177" y="582" class="formula-small">target-ball volume = w(r)</text>
-      <text x="177" y="616" class="small">Same radius;</text>
-      <text x="177" y="646" class="small">a different dimension</text>
+      <g id="source-one-coordinate" transform="translate(26 205)">
+        <rect width="468" height="148" rx="14" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="3"/>
+        <text x="22" y="42" class="label">Source 1 coordinate</text>
+        <circle cx="73" cy="98" r="34" fill="#D2E0E2" fill-opacity="0.40" stroke="#1F6968" stroke-width="3"/>
+        <line x1="73" y1="98" x2="102" y2="98" stroke="#2C3E50" stroke-width="2.5" marker-end="url(#radius-arrow)"/>
+        <text x="132" y="88" class="body">radius r</text>
+        <text x="132" y="129" class="formula">ball volume v<tspan class="sub">r</tspan></text>
+      </g>
+      <g id="source-two-coordinate" transform="translate(26 373)">
+        <rect width="468" height="148" rx="14" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="3"/>
+        <text x="22" y="42" class="label">Source 2 coordinate</text>
+        <circle cx="73" cy="98" r="34" fill="#D2E0E2" fill-opacity="0.40" stroke="#1F6968" stroke-width="3"/>
+        <line x1="73" y1="98" x2="102" y2="98" stroke="#2C3E50" stroke-width="2.5" marker-end="url(#radius-arrow)"/>
+        <text x="132" y="88" class="body">radius r</text>
+        <text x="132" y="129" class="formula">ball volume v<tspan class="sub">r</tspan></text>
+      </g>
+      <g id="target-coordinate" transform="translate(26 547)">
+        <rect width="468" height="163" rx="14" fill="#F7F3E9" stroke="#916400" stroke-width="2.5"/>
+        <text x="22" y="43" class="label">Target coordinate in N</text>
+        <text x="22" y="86" class="body">Same radius r.</text>
+        <text x="22" y="131" class="formula">Ball volume w<tspan class="sub">r</tspan>.</text>
+      </g>
     </g>
 
-    <!-- Panel 2: asymptotic order ledger. -->
-    <g transform="translate(600 188)">
-      <rect width="570" height="714" rx="22" fill="#F2EBDA" fill-opacity="0.72" stroke="#916400" stroke-width="2.5"/>
-      <text x="28" y="42" class="panel-step">STEP 2</text>
-      <text x="28" y="82" class="panel-title">Keep first order; control overlaps</text>
-      <text x="28" y="124" class="formula">P(Ei,r) = v(r)[ fSi(si) + o(1) ]</text>
-      <text x="28" y="165" class="formula">P(Cr) = w(r)[ fT(t) + o(1) ]</text>
-      <text x="28" y="206" class="formula-small">P(Cr intersection Ei,r)</text>
-      <text x="28" y="236" class="formula-small">= w(r)v(r)[ fT,Si + o(1) ]</text>
-
-      <rect x="26" y="258" width="518" height="154" rx="16" fill="#F7F3E9" stroke="#1F6968" stroke-width="2"/>
-      <text x="48" y="295" class="chip">SOURCE OVERLAP</text>
-      <text x="48" y="330" class="formula-small">P(E1,r intersection E2,r)</text>
-      <text x="48" y="360" class="formula-small">= O(v(r)^2)</text>
-      <text x="48" y="394" class="emphasis-small">= o(v(r)); therefore second order</text>
-
-      <rect x="26" y="430" width="518" height="160" rx="16" fill="#F7F3E9" stroke="#1F6968" stroke-width="2"/>
-      <text x="48" y="467" class="chip">TARGET-CONDITIONED TRIPLE OVERLAP</text>
-      <text x="48" y="501" class="formula-small">P(Cr intersection E1,r intersection E2,r)</text>
-      <text x="48" y="530" class="formula-small">= O(w(r)v(r)^2)</text>
-      <text x="48" y="568" class="emphasis-small">= o(w(r)v(r)); therefore second order</text>
-
-      <path d="M110 613 H460" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrow-navy)"/>
-      <text x="74" y="650" class="formula">P(E1,r union E2,r)</text>
-      <text x="74" y="683" class="small">keeps the two v(r) density terms</text>
+    <g id="overlap-orders" transform="translate(600 190)">
+      <rect width="570" height="742" rx="20" fill="#F7F3E9" stroke="#916400" stroke-width="2.5"/>
+      <text x="28" y="43" class="step">STEP 2 · OVERLAPS</text>
+      <text x="28" y="89" class="panel-title">Control both event overlaps</text>
+      <g id="source-overlap" transform="translate(26 133)">
+        <rect width="518" height="191" rx="14" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="3"/>
+        <text x="23" y="46" class="label">Source overlap</text>
+        <text x="23" y="103" class="formula">Pr(E<tspan class="sub">1,r</tspan> ∩ E<tspan class="sub">2,r</tspan>)</text>
+        <text x="23" y="160" class="formula">= o(v<tspan class="sub">r</tspan>)</text>
+      </g>
+      <g id="target-source-overlap" transform="translate(26 348)">
+        <rect width="518" height="215" rx="14" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="3"/>
+        <text x="23" y="46" class="label">Target-source triple overlap</text>
+        <text x="23" y="112" class="formula">Pr(C<tspan class="sub">r</tspan> ∩ E<tspan class="sub">1,r</tspan> ∩ E<tspan class="sub">2,r</tspan>)</text>
+        <text x="23" y="178" class="formula">= o(w<tspan class="sub">r</tspan>v<tspan class="sub">r</tspan>)</text>
+      </g>
+      <text x="28" y="626" class="body">Local essential bounds</text>
+      <text x="28" y="670" class="body">are sufficient conditions.</text>
+      <text x="28" y="714" class="body">They are not necessary.</text>
     </g>
 
-    <!-- Panel 3: cancellation and first-order-overlap failure boundary. -->
-    <g transform="translate(1196 188)">
-      <rect width="550" height="714" rx="22" fill="#E8F0ED" fill-opacity="0.50" stroke="#2C3E50" stroke-width="2.5"/>
-      <text x="28" y="42" class="panel-step">STEP 3</text>
-      <text x="28" y="82" class="panel-title">Cancel only justified scales</text>
-      <rect x="26" y="108" width="498" height="250" rx="16" fill="#F7F3E9" stroke="#1F6968" stroke-width="2.2"/>
-      <text x="48" y="148" class="chip">COMMON-RADIUS LIMIT</text>
-      <text x="48" y="184" class="formula-small">numerator ≈</text>
-      <text x="48" y="214" class="formula-small">w(r)v(r)[ fT,S1 + fT,S2 ]</text>
-      <text x="48" y="249" class="formula-small">denominator ≈</text>
-      <text x="48" y="279" class="formula-small">w(r)v(r) fT[ fS1 + fS2 ]</text>
-      <path d="M48 300 H478" stroke="#916400" stroke-width="2"/>
-      <text x="48" y="333" class="emphasis-small">w(r)v(r) cancels; density ratio remains</text>
-
-      <rect x="26" y="380" width="498" height="240" rx="16" fill="url(#warning-pattern)" stroke="#916400" stroke-width="3"/>
-      <text x="48" y="419" class="chip">FIRST-ORDER OVERLAP TEST</text>
-      <text x="48" y="454" class="formula-small">If P(E1,r intersection E2,r)</text>
-      <text x="48" y="484" class="formula-small">= kappa v(r) + o(v(r)),</text>
-      <text x="48" y="520" class="formula-small">the overlap is first order, not negligible.</text>
-      <text x="48" y="559" class="emphasis">The denominator changes.</text>
-      <text x="48" y="590" class="small">The displayed Ehrlich density ratio</text>
-      <text x="48" y="614" class="small">no longer follows.</text>
-
-      <rect x="26" y="638" width="498" height="48" rx="12" fill="#2C3E50"/>
-      <text x="275" y="670" class="chip" text-anchor="middle" fill="#F7F3E9" style="fill:#F7F3E9">Population lemma only - no kNN guarantee</text>
+    <g id="cancellation" transform="translate(1196 190)">
+      <rect width="550" height="742" rx="20" fill="#F7F3E9" stroke="#1F3F60" stroke-width="2.5"/>
+      <text x="28" y="43" class="step">STEP 3 · CANCELLATION</text>
+      <text x="28" y="89" class="panel-title">Cancel the common factor</text>
+      <rect x="26" y="133" width="498" height="162" rx="14" fill="#D2E0E2" fill-opacity="0.30" stroke="#D2E0E2" stroke-width="2.5"/>
+      <text x="275" y="186" class="label" text-anchor="middle">Common volume factor</text>
+      <text x="275" y="263" class="factor" text-anchor="middle">w<tspan class="sub">r</tspan>v<tspan class="sub">r</tspan></text>
+      <text x="28" y="359" class="body">Use inclusion-exclusion.</text>
+      <text x="28" y="405" class="body">Numerator and denominator</text>
+      <text x="28" y="450" class="formula">share the factor w<tspan class="sub">r</tspan>v<tspan class="sub">r</tspan>.</text>
+      <text x="28" y="522" class="body">Cancel it in the ratio.</text>
+      <text x="28" y="568" class="body">Then take the natural log.</text>
+      <text x="28" y="650" class="body">Positive limiting density</text>
+      <text x="28" y="695" class="body">sums are required.</text>
     </g>
 
-    <g transform="translate(54 924)">
-      <rect width="1692" height="96" rx="16" fill="#F7F3E9" stroke="#916400" stroke-width="2"/>
-      <rect width="14" height="96" rx="7" fill="#DCA520"/>
-      <text x="38" y="31" class="panel-step">ASSUMPTIONS DO THE WORK</text>
-      <text x="38" y="61" class="boundary-small">Joint absolute continuity; pointwise-continuous density versions; positive limiting density sums;</text>
-      <text x="38" y="87" class="boundary-small">one common shrinking radius; overlap little-o conditions (local essential bounds suffice).</text>
+    <!-- A plain text field, with ornament confined to a narrow labelled rail. -->
+    <g id="failure-boundary" transform="translate(54 958)">
+      <rect width="1692" height="204" rx="16" fill="#F7F3E9" stroke="#743E37" stroke-width="2.5"/>
+      <rect width="12" height="204" rx="6" fill="#743E37"/>
+      <text x="38" y="43" class="step" style="fill:#743E37">FIRST-ORDER OVERLAP · FAILURE BOUNDARY</text>
+      <text x="38" y="88" class="formula">If Pr(E<tspan class="sub">1,r</tspan> ∩ E<tspan class="sub">2,r</tspan>) = κ v<tspan class="sub">r</tspan> + o(v<tspan class="sub">r</tspan>), with κ &gt; 0, the union denominator changes.</text>
+      <text x="38" y="133" class="body">The stated density ratio then need not follow. The full hypotheses and proof are in the text.</text>
+      <text x="38" y="180" class="boundary">Conditional population lemma; no kNN or finite-sample guarantee.</text>
     </g>
   </g>
 </svg>

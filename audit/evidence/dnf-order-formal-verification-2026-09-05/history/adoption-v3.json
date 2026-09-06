@@ -1,0 +1,314 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "adopted_utc": "2026-09-05T07:25:41.689641+00:00",
+    "campaign": {
+      "coordinator_selected_normal_optimized_slots": [
+        7,
+        8
+      ],
+      "deadline_utc": "2026-09-05T08:32:36+00:00",
+      "development_compile_limit": 64,
+      "direct_reporting_compilation": "Separately recorded regression control; does not repeat the complete wrapper.",
+      "full_wrapper_limit": 8,
+      "prior_consumed_full_wrappers": 2,
+      "worker_cosmetic_normal_optimized_slots": [
+        5,
+        6
+      ],
+      "worker_selected_normal_optimized_slots": [
+        3,
+        4
+      ]
+    },
+    "candidate_sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+    "contract_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "freeze_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+    "initial_ten_route_reviews": {
+      "coordinator_sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4",
+      "verifier_sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9"
+    },
+    "required_remaining": [
+      "Complete unchanged-candidate normal and optimized wrapper replay with thirteen real records and fresh kernel closure.",
+      "Comment/whitespace-only candidate variant under the same normal and optimized semantic and kernel gates.",
+      "Direct regression restoring all thirteen original reporting calls after a bound complete selected-candidate pass.",
+      "Coordinator normal and optimized selected-candidate acceptance on the adopted original successor."
+    ],
+    "review_lenses": [
+      {
+        "disposition": "The original mathematical contract is byte-identical.",
+        "lens": "contract identity",
+        "number": 1
+      },
+      {
+        "disposition": "JudgeTargets is unchanged.",
+        "lens": "raw target identity",
+        "number": 2
+      },
+      {
+        "disposition": "JudgeAliases is unchanged.",
+        "lens": "alias identity",
+        "number": 3
+      },
+      {
+        "disposition": "The original thirteen theorem names and order remain.",
+        "lens": "roster identity",
+        "number": 4
+      },
+      {
+        "disposition": "No Fin 3 restriction replaces general targets.",
+        "lens": "general index scope",
+        "number": 5
+      },
+      {
+        "disposition": "Universe-aware complete target checks remain.",
+        "lens": "universe scope",
+        "number": 6
+      },
+      {
+        "disposition": "Complete Pi types reject added explicit receivers.",
+        "lens": "explicit premises",
+        "number": 7
+      },
+      {
+        "disposition": "Complete Pi types reject hidden receivers.",
+        "lens": "implicit premises",
+        "number": 8
+      },
+      {
+        "disposition": "Existing rejection controls remain.",
+        "lens": "assumed conclusion",
+        "number": 9
+      },
+      {
+        "disposition": "Allowed transitive axiom set is unchanged.",
+        "lens": "axiom closure",
+        "number": 10
+      },
+      {
+        "disposition": "Fresh SemanticJudge closure remains mandatory.",
+        "lens": "kernel replay",
+        "number": 11
+      },
+      {
+        "disposition": "Twenty-six raw and alias applications remain.",
+        "lens": "typed applications",
+        "number": 12
+      },
+      {
+        "disposition": "Complete runs must emit thirteen actual records.",
+        "lens": "actual records",
+        "number": 13
+      },
+      {
+        "disposition": "Parser code is byte-equivalent by unchanged function AST.",
+        "lens": "parser strictness",
+        "number": 14
+      },
+      {
+        "disposition": "Restricted candidate policy is unchanged.",
+        "lens": "source policy",
+        "number": 15
+      },
+      {
+        "disposition": "Contract-only candidate import rule remains.",
+        "lens": "imports",
+        "number": 16
+      },
+      {
+        "disposition": "Existing prohibition and negative controls remain.",
+        "lens": "unsafe shortcuts",
+        "number": 17
+      },
+      {
+        "disposition": "Exact public namespace roster remains.",
+        "lens": "unknown exports",
+        "number": 18
+      },
+      {
+        "disposition": "Existing selected candidate is frozen and unchanged.",
+        "lens": "candidate identity",
+        "number": 19
+      },
+      {
+        "disposition": "Separate full semantic replay is required, not just a hash test.",
+        "lens": "cosmetic control",
+        "number": 20
+      },
+      {
+        "disposition": "Exactly thirteen command-specific IO lifts caused old failure.",
+        "lens": "reporting cause",
+        "number": 21
+      },
+      {
+        "disposition": "Only direct IO actions replace the thirteen calls.",
+        "lens": "minimal repair",
+        "number": 22
+      },
+      {
+        "disposition": "The actual term elaborator now executes a reporting smoke.",
+        "lens": "smoke coverage",
+        "number": 23
+      },
+      {
+        "disposition": "The direct complete-module restored-lift regression is required.",
+        "lens": "restored cause",
+        "number": 24
+      },
+      {
+        "disposition": "Twelve Unit expectations and one final metavariable match old output.",
+        "lens": "diagnostic shape",
+        "number": 25
+      },
+      {
+        "disposition": "All seventy prior controls remain in both receipts.",
+        "lens": "old control preservation",
+        "number": 26
+      },
+      {
+        "disposition": "Five new controls are reporting or chronology controls.",
+        "lens": "new control scope",
+        "number": 27
+      },
+      {
+        "disposition": "Two old full failures remain terminal and consumed.",
+        "lens": "old failure preservation",
+        "number": 28
+      },
+      {
+        "disposition": "The first smoke diagnostic-shape failure is retained.",
+        "lens": "preparation failure",
+        "number": 29
+      },
+      {
+        "disposition": "This freeze explicitly occurred after the candidate existed.",
+        "lens": "chronology",
+        "number": 30
+      },
+      {
+        "disposition": "The old freeze digest is bound.",
+        "lens": "predecessor identity",
+        "number": 31
+      },
+      {
+        "disposition": "The new loader rejects a false pre-candidate status.",
+        "lens": "false registration",
+        "number": 32
+      },
+      {
+        "disposition": "Pinned source checks are unchanged.",
+        "lens": "source pins",
+        "number": 33
+      },
+      {
+        "disposition": "Executable identities remain recorded.",
+        "lens": "compiler identity",
+        "number": 34
+      },
+      {
+        "disposition": "Owned build precedes pinned caches; project cache remains excluded.",
+        "lens": "cache boundary",
+        "number": 35
+      },
+      {
+        "disposition": "Existing regular-file and stable-byte checks remain.",
+        "lens": "file capture",
+        "number": 36
+      },
+      {
+        "disposition": "Observed process-group RSS limit is unchanged; it is not a hard OS cap.",
+        "lens": "memory",
+        "number": 37
+      },
+      {
+        "disposition": "Command and campaign deadlines are unchanged.",
+        "lens": "time",
+        "number": 38
+      },
+      {
+        "disposition": "Output caps and unexpected-output rejection remain.",
+        "lens": "output",
+        "number": 39
+      },
+      {
+        "disposition": "Failure requires the existing process-group cleanup checks.",
+        "lens": "process cleanup",
+        "number": 40
+      },
+      {
+        "disposition": "Both control modes passed; both full modes remain required.",
+        "lens": "Python optimization",
+        "number": 41
+      },
+      {
+        "disposition": "Two old plus six allocated full runs retain limit eight.",
+        "lens": "attempt accounting",
+        "number": 42
+      },
+      {
+        "disposition": "Development compile limit remains sixty-four.",
+        "lens": "development accounting",
+        "number": 43
+      },
+      {
+        "disposition": "Initial views preceded exchange; verifier authored old judge.",
+        "lens": "review independence",
+        "number": 44
+      },
+      {
+        "disposition": "Shared filesystem is not malicious-OS isolation.",
+        "lens": "hostile actor boundary",
+        "number": 45
+      },
+      {
+        "disposition": "Old reporting error is not a mathematical counterexample.",
+        "lens": "semantic versus operational failure",
+        "number": 46
+      },
+      {
+        "disposition": "No theorem acceptance is claimed before complete replay.",
+        "lens": "publication boundary",
+        "number": 47
+      },
+      {
+        "disposition": "This repair supplies no novelty or priority evidence.",
+        "lens": "scientific novelty",
+        "number": 48
+      },
+      {
+        "disposition": "No estimator calibration or population claim follows.",
+        "lens": "statistical scope",
+        "number": 49
+      },
+      {
+        "disposition": "Local frozen results do not establish remote or main acceptance.",
+        "lens": "mainline custody",
+        "number": 50
+      }
+    ],
+    "reviewed_control_receipts": [
+      {
+        "controls": 75,
+        "optimized": 0,
+        "path": ".local/sx-dnf-order-judge-v3-20260905/runs/selftest-normal-02/selftest-receipt.json",
+        "sha256": "4660fedd8efa3b885ee02debddc28babf80bf3e196fcd675577948e59634b048"
+      },
+      {
+        "controls": 75,
+        "optimized": 1,
+        "path": ".local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/selftest-receipt.json",
+        "sha256": "517a18ab8d36882b37fd06063028246f5f40d6eb30632f4c306aa1539a26e70b"
+      }
+    ],
+    "root_verified_frozen_files": 15,
+    "root_verified_semantic_change": "exact thirteen IO lift replacements",
+    "root_verified_wrapper_changed_definitions": [
+      "check_freeze"
+    ],
+    "schema": "local-dnf-order-v3-coordinator-adoption",
+    "scope": "Adoption of the unchanged mathematical predicates with minimal reporting repair. This is not full candidate acceptance, pre-candidate registration, external independence, scientific novelty, or estimator validation.",
+    "status": "adopted_after_candidate_before_amended_full_replay"
+  },
+  "retained_local_source_sha256": "ee2847d75e5b34d18e0ee64a7d86562ca216bb6e0237da5eba71362ea83207ba",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

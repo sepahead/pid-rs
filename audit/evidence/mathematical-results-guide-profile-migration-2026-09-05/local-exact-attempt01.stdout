@@ -1,0 +1,37 @@
+OK: Pandoc TeX normalizer self-test (positive_processes=4; rejected_processes=214; content_vectors=85; filesystem_vectors=18; modes=2)
+OK: Pandoc TeX normalizer self-test (positive_processes=4; rejected_processes=214; content_vectors=85; filesystem_vectors=18; modes=2)
+Mathematical results guide builder self-test passed: 69 hostile/control cases.
+Unsafe destinations failed before font discovery; staged substitution failed before rendering.
+Pandoc version-report shape, raw-TeX compatibility/source wiring, and TOC color failed closed.
+Every fixture source hash stayed unchanged.
+tagpdf OpenAction compatibility self-test passed: mode=forced-v0.98w pages=1 page_object=9 structure_object=10 newer_native_absent_fatal=2024-02-23
+hgeneric URI-Contents compatibility self-test passed: mode=native-present controls=6 hostiles=14.
+l3pdffile file-specification compatibility self-test passed: mode=native-present controls=3 hostiles=14.
+Publication figure-asset check passed: 5 digest-bound static one-page open-font CFF derivatives; regeneration closure remains declared cross-host incomplete.
+Publication figure-asset check passed: 5 digest-bound static one-page open-font CFF derivatives; regeneration closure remains declared cross-host incomplete.
+Mathematical results guide figure-asset self-test passed: baseline_modes=2 hostile_mutations=45 modes_per_mutation=2.
+Mathematical results guide figure-asset self-test passed: baseline_modes=2 hostile_mutations=45 modes_per_mutation=2.
+OK: open-font figure regenerator accepted 2 controls and rejected 14 hostile cases
+OK: open-font figure regenerator accepted 2 controls and rejected 14 hostile cases
+Mathematical results guide PDF trailer-ID variance self-test passed: controls=4 hostiles=28.
+Mathematical results guide PDF trailer-ID variance self-test passed: controls=4 hostiles=28.
+Mathematical results guide font-roster self-test passed: controls=2 hostiles=26.
+Mathematical results guide font-roster self-test passed: controls=2 hostiles=26.
+Mathematical results guide prose check passed: sha256=453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847 direct_paragraphs=159 direct_sentences=496 list_items=129 list_sentences=182 headings=23 tables=4 table_cells=90 display_math=28 fenced_code=0 media=2
+Observed maxima: direct_words=25 paragraph_sentences=6 list_words=24
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide prose check passed: sha256=453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847 direct_paragraphs=159 direct_sentences=496 list_items=129 list_sentences=182 headings=23 tables=4 table_cells=90 display_math=28 fenced_code=0 media=2
+Observed maxima: direct_words=25 paragraph_sentences=6 list_words=24
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide prose self-test passed: 59 hostile/control cases.
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide prose self-test passed: 59 hostile/control cases.
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide PDF structure self-test passed: baseline plus 70 object-graph mutations, 1 raw-parser mutation, 4 name-tree diagnostic controls, and 4 output-path controls.
+Boundary: source-specific active-content and navigation policy only; typed represented-binary64 numbers, not lexical PDF-real identity; not a generic malware-free or viewer-safety claim.
+Mathematical results guide PDF structure self-test passed: baseline plus 70 object-graph mutations, 1 raw-parser mutation, 4 name-tree diagnostic controls, and 4 output-path controls.
+Boundary: source-specific active-content and navigation policy only; typed represented-binary64 numbers, not lexical PDF-real identity; not a generic malware-free or viewer-safety claim.
+OK: guide PDF producer-profile mode wiring (controls=80; hostile_mutations=61; exact_cross_checker_invocations=0; current_alpha_invocations=0; legacy_hosted_checker_invocations=0)
+Boundary: source-extracted producer capture, selection, and dispatch; current v3 hosted admission remains pending; the v2 replay is historical, and exact mode invokes no cross-profile relation.
+OK: guide PDF producer-profile mode wiring (controls=80; hostile_mutations=61; exact_cross_checker_invocations=0; current_alpha_invocations=0; legacy_hosted_checker_invocations=0)
+Boundary: source-extracted producer capture, selection, and dispatch; current v3 hosted admission remains pending; the v2 replay is historical, and exact mode invokes no cross-profile relation.

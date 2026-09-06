@@ -4,6 +4,7 @@
 local dropped_title = false
 local last_heading = ""
 local repository_blob_root = "https://github.com/sepahead/pid-rs/blob/main/"
+local common_radius_caption = "The two sources use separate coordinates of the same measured space \\(M\\). Each event \\(E_{i,r}\\) is the preimage under \\(S_i\\) of a radius-\\(r\\) ball with volume \\(v_r\\). The displayed overlap conditions give leading terms with a common factor \\(w_rv_r\\). Inclusion--exclusion and cancellation give the conditional population limit. A nonzero first-order source overlap changes the union denominator. The result is a conditional population lemma, not a finite-sample estimator theorem."
 
 local function figure_block(path, caption, label, width, height)
   local latex = string.format(
@@ -60,7 +61,34 @@ function Header(element)
 end
 
 function Para(element)
+  -- GFM emits a sole image paragraph on the current canonical route.
+  -- Keep its portrait width and add the same reviewed caption used by Figure.
+  if FORMAT:match("latex") and #element.content == 1 then
+    local image = element.content[1]
+    if image.t == "Image" and (
+        image.src == "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg"
+        or image.src == "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf"
+    ) then
+      return figure_block(
+        "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
+        common_radius_caption,
+        "fig:common-radius-small-ball-bridge",
+        "\\linewidth",
+        "155mm"
+      )
+    end
+  end
   local text = pandoc.utils.stringify(element.content)
+  -- Keep the construction and its normalization on one page. The measured
+  -- current group occupies about 192 pt; 16 body baselines reserve 229 pt.
+  if text:match("^When Z=0, draw U_1,U_2 independently%. When Z=1, couple") then
+    return {pandoc.RawBlock("latex", "\\Needspace{16\\baselineskip}"), element}
+  end
+  -- Keep the gauge statement with its assumptions and strict PID nonclaims.
+  -- The measured group occupies about 279 pt; 22 baselines reserve 314 pt.
+  if text:match("^Gauge and dimension boundary%. Suppose the two source%-ball volumes obey") then
+    return {pandoc.RawBlock("latex", "\\Needspace{22\\baselineskip}"), element}
+  end
   if text:match("^The 108 audit expressions expand") then
     return {
       pandoc.RawBlock("latex", "\\clearpage\\vspace*{\\fill}"),
@@ -110,7 +138,7 @@ function Figure(element)
       and (image.src == common_radius_svg or image.src == common_radius_pdf) then
     return landscape_figure_block(
       "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
-      "Common-radius small-ball cancellation and its first-order-overlap failure boundary. The result is a conditional population lemma, not a finite-sample estimator theorem.",
+      common_radius_caption,
       "fig:common-radius-small-ball-bridge"
     )
   end

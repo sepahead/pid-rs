@@ -9,6 +9,26 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Use portable math notation in the categorical event proof guide. Preserve the exact historical
+  drafts and failed publication check, and correct unsupported human-review labels. Include the
+  required historical files in isolated numerical-PDF tests and test missing or changed copies.
+
+- Clarify the mathematical results guide and repair figure labels and wrapping. Bind the
+  revised guide and workflow PDFs to their exact sources and publication profiles. Record
+  the workflow's complete split visual review with its timing limits and separate machine
+  checks; retain the two failed checker attempts and their narrow corrections.
+
+- Add a primary-source comparison with CoMM, I²MoE, RollingQ, CVX/BATCH, and established
+  information, attribution, ablation, and Bayesian-design alternatives. Separate scientific
+  explanation, computational assurance, and downstream benefit. Define fair comparisons and
+  negative outcomes without claiming a measured PID advantage.
+
+- Add thirteen standalone Lean proofs for redundancy order, reverse DNF implication,
+  antichain uniqueness, categorical equality events, and four counterexamples. Document the
+  sufficient pattern-realization premise and provide a portable replay with exact theorem types,
+  axiom records, and fresh kernel checks. Preserve failed attempts and the reporting repair.
+  These event-logic proofs do not establish numerical PID atoms or estimator calibration.
+
 - Record selective retirement of two stale local refs, three duplicate inert payloads, and the
   superseded C11 clone after verified source succession and recovery. Preserve rejected history
   and working bytes; retain a complete local archive and a verified bare recovery endpoint.

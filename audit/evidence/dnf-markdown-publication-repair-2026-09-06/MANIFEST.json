@@ -1,0 +1,97 @@
+{
+  "schema": "pid-rs/dnf-markdown-publication-repair-evidence-v1",
+  "recorded_utc": "2026-09-06T05:22:16.184108+00:00",
+  "scope": "Exact earlier failed streams and correction preimages, scoped Markdown results, and a separate fixture-dependency failure record. Execution scopes and absent raw-public projections are explicit. Self-excluding manifest. Complete fixture-suite results in two environments are separately attached.",
+  "files": [
+    {
+      "path": "MARKDOWN_CHECKS.json",
+      "bytes": 4123,
+      "sha256": "08022f10d4461c085515dbe70515bab85c382c3ce9abb5523be164ea6d57c240"
+    },
+    {
+      "path": "REPAIR.md",
+      "bytes": 2996,
+      "sha256": "0d4882107539efa072dae5037de69ba0eded9ff92aac3cd1a50eab3afd7023b8"
+    },
+    {
+      "path": "failed-full-pdf-set-RESULT.json",
+      "bytes": 509,
+      "sha256": "5d0a85c2311188a30ae0624fbf4cc3f096cec1a15c1a6825707271db0abef8c4"
+    },
+    {
+      "path": "failed-full-pdf-set-stderr.log",
+      "bytes": 104677,
+      "sha256": "6d878c393dd74742a6d06d47d6e8b76af2a580972035ac0ca76c40958419fd09"
+    },
+    {
+      "path": "failed-full-pdf-set-stdout.log",
+      "bytes": 51011,
+      "sha256": "7b51e742f4cb4f9fdfdb85de7cd3f3ee1181e6f7a90e70da45a62e417b2694be"
+    },
+    {
+      "path": "fixture-dependency-checks.json",
+      "bytes": 2558,
+      "sha256": "717895b05cecdb4f6b9fc0f1724f251cab04da0b45c1e80bd8c57fe44d958296"
+    },
+    {
+      "path": "fixture-dependency-failure.json",
+      "bytes": 1466,
+      "sha256": "a39014a9bca9f95744218232e437e6f413a25d1ae22d48c903c6ce44974ded5a"
+    },
+    {
+      "path": "fixture-dependency-self-test.stdout",
+      "bytes": 3124,
+      "sha256": "5752bb0628259d47e83298d40c859860afad6cecec30b01fa40f53921821cfaa"
+    },
+    {
+      "path": "markdown-math-self-test.stdout",
+      "bytes": 79,
+      "sha256": "a582abddbdf50310091ea768cf8f63613cbca710c8b0e64e3279810f40952995"
+    },
+    {
+      "path": "markdown-math.stdout",
+      "bytes": 85,
+      "sha256": "c3fbf3520e69d605d3b063aa97f069b503855e7a1bc293360a4faed263bcc6e0"
+    },
+    {
+      "path": "preimages/audit/evidence/dnf-order-public-packaging-replay-2026-09-05/CURRENT_PUBLICATION_MANIFEST.json.txt",
+      "bytes": 24924,
+      "sha256": "83a725d17ef1b82326eb58c3be93d7e2be190926413d0119797ee73aedb7930c"
+    },
+    {
+      "path": "preimages/audit/evidence/dnf-order-public-packaging-replay-2026-09-05/MANIFEST.json.txt",
+      "bytes": 8953,
+      "sha256": "6a62abb5f9b35c7b193007ef181d7f17ff3b82fa5b40de5827d67d3010b8da89"
+    },
+    {
+      "path": "preimages/audit/formal/lean-sx-dnf-order/EXPOSITION.md.txt",
+      "bytes": 18555,
+      "sha256": "fbd902884f67ca380952ef47e4914376b20b4bcd14180a62806fccd75ce00568"
+    },
+    {
+      "path": "preimages/audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md.txt",
+      "bytes": 12251,
+      "sha256": "098e6bdc873ffda291b35425886c73e6cfdd0f02688a0e049012cfccafc09acf"
+    },
+    {
+      "path": "preimages/audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md.txt",
+      "bytes": 5038,
+      "sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0"
+    },
+    {
+      "path": "preimages/scripts/check-markdown-math-self-test.py.txt",
+      "bytes": 7536,
+      "sha256": "7d05ea5256dec699cb61b14d1d3a45d2f8c4d7ce4841d78193c7624043f94ba8"
+    },
+    {
+      "path": "preimages/scripts/check-markdown-math.py.txt",
+      "bytes": 15710,
+      "sha256": "5eb142b41d42c140d7331dc0e8e1e0885c130b38bcb36ddabf301de18e427335"
+    },
+    {
+      "path": "preimages/scripts/check-numerical-assurance-pdf-self-test.sh.txt",
+      "bytes": 23402,
+      "sha256": "989d05e7711b7c433633302cbd07848d3d4beea66b83660f8799b3eb22d821a0"
+    }
+  ]
+}

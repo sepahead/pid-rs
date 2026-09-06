@@ -27,7 +27,8 @@ SOURCE="audit/formal/latex/mathematical-problem-solving-workflow.tex"
 MARKDOWN="MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md"
 COMMITTED="output/pdf/mathematical-problem-solving-workflow.pdf"
 RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv"
-VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-09-01.md"
+VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
+VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -643,7 +644,7 @@ if [[ "$MODE" != "--refresh" ]]; then
   # agent actually inspects the refreshed pages.  Treating stale or absent output bytes as source
   # inputs made a clean refresh impossible and falsely enlarged the build dependency closure.
   # Exact and cross-toolchain modes still capture the report, rendering, and visual records.
-  manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT")
+  manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT" "$VISUAL_RECORDS")
 fi
 for stem in "${FIGURE_STEMS[@]}"; do
   manifest_paths+=("$FIGURE_DIR/$stem.svg")
@@ -1115,7 +1116,7 @@ if bare_primer_headings:
 typed_heading_counts = {
     r"\PidWorkflowSection{": 3,
     r"\PidWorkflowSubsection{": 15,
-    r"\PidWorkflowSubsubsection{": 1,
+    r"\PidWorkflowSubsubsection{": 2,
     r"\PidWorkflowParagraph{": 1,
 }
 for typed_heading, expected_count in typed_heading_counts.items():
@@ -1181,7 +1182,7 @@ direct_source_literals = (
     "The assurance chain has four distinct objects and three separately justified assurance transitions.",
     "An AND/OR directed acyclic graph has frozen admissible universe U = {A1, A2, B1, C}, route A = {A1, A2, C}, and route B = {B1, C}.",
     "The complete inclusion-minimal cut family is {C}, {A1, B1}, and {A2, B1}; the common goal and synthetic route aggregators are excluded from the admissible cut universe.",
-    "AND prerequisites, OR routes, and the complete three-cut family in the frozen example.",
+    "Route A needs A1, A2, and C; route B needs B1 and C. The frozen example has three inclusion-minimal cuts. All shown routes are accepted; GO names only the illustrated terminal gate state.",
 )
 for literal in direct_source_literals:
     if source.count(literal) != 1:
@@ -1369,7 +1370,7 @@ markdown_digest = hashlib.sha256(markdown_bytes).hexdigest()
 if markdown_digest != "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9":
     fail(f"canonical Markdown exact-byte custody drifted: {markdown_digest}")
 primer_digest = hashlib.sha256(primer.encode("utf-8")).hexdigest()
-if primer_digest != "11e3c67bc678f3a3d1790d4ba25d6447318266b35914e9df5447d1f3d39c557a":
+if primer_digest != "9105575ae7d1b202634c375fc1aa5fc6aafac51db3369aecceae2ba7f16cc1da":
     fail(f"typeset-only primer exact-byte custody drifted: {primer_digest}")
 style_digest = hashlib.sha256(style_bytes).hexdigest()
 if style_digest != "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9":
@@ -1383,11 +1384,13 @@ if [[ "$MODE" != "--refresh" ]]; then
     "$SNAPSHOT_ROOT/$RENDERING_RECEIPT" \
     "$EXPECTED_PAGES" \
     "$RENDER_DPI" \
-    "$HIGH_RESOLUTION_DPI" <<'PY'
+    "$HIGH_RESOLUTION_DPI" \
+    "$SNAPSHOT_ROOT/$VISUAL_RECORDS" <<'PY'
 from __future__ import annotations
 
 from collections import Counter
 import hashlib
+import json
 from pathlib import Path
 import re
 import sys
@@ -1399,6 +1402,7 @@ def fail(detail: str) -> None:
 
 
 receipt_path = Path(sys.argv[1])
+actual_records_path = Path(sys.argv[7])
 pdf_path = Path(sys.argv[2])
 rendering_receipt_path = Path(sys.argv[3])
 expected_pages = int(sys.argv[4])
@@ -1455,6 +1459,12 @@ field_order = (
     "status",
     "review_date_utc",
     "reviewer_kind",
+    "actual_view_records",
+    "actual_view_records_sha256",
+    "normal_review_partition",
+    "high_color_review_partition",
+    "high_gray_review_partition",
+    "timing_scope",
 )
 field_values: dict[str, str] = {}
 for offset, name in enumerate(field_order, start=2):
@@ -1477,11 +1487,11 @@ def field(name: str) -> str:
 
 
 expected_fields = {
-    "schema": "pid-rs/mathematical-workflow-visual-review/v2",
+    "schema": "pid-rs/mathematical-workflow-visual-review/v3",
     "subject": "output/pdf/mathematical-problem-solving-workflow.pdf",
-    "pdf_sha256": "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798",
+    "pdf_sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
     "rendering_receipt": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-    "rendering_receipt_sha256": "1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab",
+    "rendering_receipt_sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea",
     "pages": str(expected_pages),
     "normal_dpi": str(expected_normal_dpi),
     "high_resolution_dpi": str(expected_high_resolution_dpi),
@@ -1491,8 +1501,14 @@ expected_fields = {
     "figure_pages_reviewed": "5,6,10,12",
     "lens_count": "20",
     "status": "passed",
-    "review_date_utc": "2026-09-01",
-    "reviewer_kind": "agent-visual-inspection",
+    "review_date_utc": "2026-09-05",
+    "reviewer_kind": "split-agent-visual-inspection",
+    "actual_view_records": "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json",
+    "actual_view_records_sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
+    "normal_review_partition": "science-original:1-48;root-original:49-64;science-partial:65-76;science-final:77-87;both-modes",
+    "high_color_review_partition": "science-original:1-3,5,6,10,12,46-48;science-final:49-51,58,60,62,65,66,82-87",
+    "high_gray_review_partition": "science-original:5,6,10,12",
+    "timing_scope": "split-stages;original-deadline-not-met;late-and-reconstructed-records-preserved",
 }
 for name, expected in expected_fields.items():
     observed = field(name)
@@ -1566,15 +1582,15 @@ expected_lens_rows = (
     ),
     (
         "real-text searchability and logical extraction order",
-        "Rendered text remains searchable, and extracted title, section, table, caption, and reference text follows logical order.",
+        "Visible reading order was reviewed. Searchability and exact extraction remain separate mandatory machine gates.",
     ),
     (
         "print fidelity",
-        "Digital A4/render checks passed for the reviewed PDF; no physical-printer claim is made.",
+        "Normal and high-resolution digital renders were inspected; A4 geometry is separately gated and no physical-printer claim is made.",
     ),
     (
         "A4/PDF profile and embedded fonts",
-        "The PDF reports A4 pages, the required PDF profile metadata, and embedded fonts; rendered glyphs remain intact.",
+        "Rendered glyphs remain intact. A4 metadata, PDF profile and embedded fonts remain separate mandatory machine gates.",
     ),
     (
         "link/action safety",
@@ -1582,7 +1598,7 @@ expected_lens_rows = (
     ),
     (
         "deterministic reproduction",
-        "Two isolated builds and the committed rendering receipt reproduce the exact reviewed PDF and render digests.",
+        "The receipt binds the exact selected PDF and render digests; deterministic reproduction remains a separate mandatory machine gate.",
     ),
     (
         "source/derived-asset separation",
@@ -1590,7 +1606,7 @@ expected_lens_rows = (
     ),
     (
         "portable repository-local dependencies",
-        "No private host path is recorded; the reviewed document depends only on captured repository-local sources and admitted toolchain inputs.",
+        "This receipt and its view-record projection contain no private host path; dependency custody remains a separate mandatory machine gate.",
     ),
     (
         "normal-size plus high-resolution rendered inspection",
@@ -1650,12 +1666,18 @@ if observed_lens_names != expected_lens_names:
         f"observed {observed_lens_names[mismatch_index - 1]!r}"
     )
 
+expected_lens_outcomes = {
+    "real-text searchability and logical extraction order": "visual-only",
+    "A4/PDF profile and embedded fonts": "visual-only",
+    "link/action safety": "visual-only",
+    "deterministic reproduction": "visual-only",
+}
 for (expected_name, expected_evidence), (name, outcome, evidence) in zip(
     expected_lens_rows, observed_lens_rows
 ):
     if name != expected_name:
         fail(f"internal lens-order adjudication drifted at {expected_name}")
-    if outcome != "passed":
+    if outcome != expected_lens_outcomes.get(name, "passed"):
         fail(f"lens outcome differs for {name}: {outcome!r}")
     if not evidence:
         fail(f"lens evidence is empty for {name}")
@@ -1663,11 +1685,12 @@ for (expected_name, expected_evidence), (name, outcome, evidence) in zip(
         fail(f"lens evidence differs for {name}: {evidence!r}")
 
 required_statements = (
-    f"All {expected_pages} color pages and all {expected_pages} grayscale pages were viewed in page order.",
+    "The split records cover all 87 color pages and all 87 grayscale pages at 120 dpi. Each partition was inspected in page order; no single uninterrupted full-document review is claimed.",
     "No blank, clipped, overlapping, misordered, or visibly corrupt page was observed.",
     "Every workflow figure was reviewed at high resolution in both color and grayscale.",
-    "The root agent completed the page-by-page visual inspection; no independent second-review credit is claimed.",
-    "This receipt records a bounded page-by-page agent visual inspection; it is not a proof of mathematical correctness, accessibility conformance, or semantic completeness.",
+    "The source-review agent inspected normal pages 1-48, 65-76 and 77-87 in separate stages; the root agent inspected normal pages 49-64. The declared high-resolution views were split between the source-review stages. No sole-root, independent complete, external or human review is claimed.",
+    "This receipt combines actual agent observations across bounded stages. The original deadline was not met: pages 45-48 were recorded late and root pages 57-64 have reconstructed timing. Earlier partial and late records remain unchanged. This receipt is not a proof of mathematical correctness, accessibility conformance, semantic completeness or a machine-gate pass.",
+    "Dense contents on page 2, prose on pages 49, 50 and 65, internal identifier wrapping on pages 65, 81 and 82, the path split across pages 47-48, and the heading/table separation on pages 70-71 remain readable advisories; no blocking visual defect was observed.",
 )
 tail_lines = lines[table_cursor + 1 :]
 tail_text = "\n".join(tail_lines)
@@ -1681,6 +1704,102 @@ for statement in required_statements:
         fail(f"required top-level review paragraph is absent or duplicated: {statement}")
 if paragraphs != list(required_statements):
     fail("paragraph inventory differs from the closed schema")
+# Actual-view projection checks precede its frozen digest, so missing coverage and false
+# attribution controls must reach their own semantic diagnostics rather than a stale hash.
+def unique_record_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            fail(f"actual-view duplicate JSON member: {key}")
+        result[key] = value
+    return result
+
+
+try:
+    records_raw = actual_records_path.read_bytes()
+    if not records_raw.endswith(b"\n") or b"\r" in records_raw:
+        fail("actual-view records lack canonical LF termination")
+    records_text = records_raw.decode("utf-8")
+    if any(token in records_text for token in ("/private/", "/Users/", "file://")):
+        fail("actual-view records contain a private or host-local path")
+    records = json.loads(records_text, object_pairs_hook=unique_record_object)
+except (OSError, ValueError) as error:
+    fail(f"actual-view records cannot be read: {error}")
+if not isinstance(records, dict) or set(records) != {"schema", "pdf_sha256", "rendering_receipt_sha256", "scope", "stages", "views"}:
+    fail("actual-view top-level inventory differs")
+if records.get("schema") != "pid-rs/workflow-split-actual-views/v1":
+    fail("actual-view schema differs")
+if records.get("pdf_sha256") != field_values["pdf_sha256"] or records.get("rendering_receipt_sha256") != field_values["rendering_receipt_sha256"]:
+    fail("actual-view subject binding differs")
+expected_owners = {"science-original": "science", "root-original": "root", "science-partial": "science", "science-final": "science"}
+expected_normal = {"science-original": set(range(1, 49)), "root-original": set(range(49, 65)), "science-partial": set(range(65, 77)), "science-final": set(range(77, 88))}
+expected_high = {("science-original", "color"): {1,2,3,5,6,10,12,46,47,48}, ("science-original", "gray"): {5,6,10,12}, ("science-final", "color"): {49,50,51,58,60,62,65,66,82,83,84,85,86,87}}
+stages = records.get("stages")
+if not isinstance(stages, list) or [s.get("id") if isinstance(s, dict) else None for s in stages] != list(expected_owners):
+    fail("actual-view stage inventory differs")
+for stage in stages:
+    if stage.get("reviewer") != expected_owners[stage["id"]]:
+        fail("actual-view stage reviewer differs")
+views = records.get("views")
+if not isinstance(views, list):
+    fail("actual-view records are not a list")
+normal = {(stage, mode): [] for stage in expected_owners for mode in ("color", "gray")}
+high = {(stage, mode): [] for stage in expected_owners for mode in ("color", "gray")}
+render_rows = {}
+for line in rendering_receipt_path.read_text(encoding="utf-8").splitlines()[5:]:
+    cells = line.split("\t")
+    if len(cells) != 10:
+        fail("actual-view rendering row is malformed")
+    if cells[0] not in ("color", "gray") or not re.fullmatch(r"[1-9][0-9]*", cells[1]):
+        fail("actual-view rendering page/mode is malformed")
+    key = (cells[0], int(cells[1]))
+    if key in render_rows:
+        fail("actual-view rendering page/mode is duplicated")
+    render_rows[key] = cells[5]
+observed_images = set()
+for view in views:
+    if not isinstance(view, dict):
+        fail("actual-view record is not an object")
+    stage = view.get("stage")
+    if not isinstance(stage, str) or stage not in expected_owners or view.get("reviewer") != expected_owners[stage]:
+        fail("actual-view reviewer partition differs")
+    if view.get("actual_view") is not True or view.get("detail") != "original":
+        fail("actual-view record does not attest an original-detail actual view")
+    pages = view.get("pages")
+    mode, dpi = view.get("mode"), view.get("dpi")
+    if not isinstance(pages, list) or not pages or any(type(n) is not int or not 1 <= n <= 87 for n in pages) or pages != sorted(set(pages)) or mode not in ("color", "gray") or type(dpi) is not int or dpi not in (120, 300):
+        fail("actual-view page/mode/dpi record is malformed")
+    name = view.get("image")
+    if not isinstance(name, str) or name in observed_images or not re.fullmatch(r"(?:sheets/(?:color|gray)-[0-9]+-[0-9]+|(?:color|gray)-300/page-[0-9]+)\.png", name):
+        fail("actual-view image identity is malformed or duplicated")
+    expected_image = (
+        f"sheets/{mode}-{pages[0]:02d}-{pages[-1]:02d}.png" if dpi == 120
+        else f"{mode}-300/page-{pages[0]:02d}.png"
+    )
+    if name != expected_image or (dpi == 300 and len(pages) != 1):
+        fail("actual-view image name differs from page/mode/dpi")
+    observed_images.add(name)
+    if not re.fullmatch(r"[0-9a-f]{64}", str(view.get("sha256", ""))):
+        fail("actual-view image digest is malformed")
+    if dpi == 120:
+        normal[(stage, mode)].extend(pages)
+        components = view.get("normal_render_components")
+        expected_components = [{"page": n, "sha256": render_rows.get((mode, n))} for n in pages]
+        if components != expected_components or any(c["sha256"] is None for c in expected_components):
+            fail("actual-view normal components differ from rendering receipt")
+    else:
+        high[(stage, mode)].extend(pages)
+for (stage, mode), pages in normal.items():
+    if sorted(pages) != sorted(expected_normal[stage]):
+        fail(f"actual-view normal coverage differs: {stage}/{mode}")
+for key, pages in high.items():
+    if sorted(pages) != sorted(expected_high.get(key, set())):
+        fail(f"actual-view high coverage differs: {key[0]}/{key[1]}")
+if len(observed_images) != 72:
+    fail("actual-view image inventory differs")
+if hashlib.sha256(records_raw).hexdigest() != field_values["actual_view_records_sha256"]:
+    fail("actual-view frozen record digest differs")
+
 PY
 fi
 
@@ -1710,9 +1829,9 @@ expected_geometry = {
 }
 expected_svg_sha256 = {
     "four-object-assurance-chain": "9cd110dcecdd839ea37046cccc8a3a387557ca710c2589faacc367bdb1f7e324",
-    "obligation-dag-minimal-cuts": "2e8edce85d47398482b277fe35218f6d0c245975d3052109fe76a7db61ce97f9",
-    "shared-oracle-correlated-routes": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
-    "invalidation-publication-state-machine": "8c38292e6fcb0b848ebdbc745f48e8e85d9842b7a8184bd7305c593778c7b70e",
+    "obligation-dag-minimal-cuts": "127942939fa8fabcabb541fa31401ad8afc46215542130a0940104731f9ad999",
+    "shared-oracle-correlated-routes": "81d75b0deb6623d9230cabba297ed8855cc0421d2ae7949164d551bd2e89eb1f",
+    "invalidation-publication-state-machine": "ff3b8f2e6df87ecec544d5a11c11329464621e7134f7ba6ec51cfc70f2f88c6e",
 }
 allowed_palette = {
     "#1F3F60",
@@ -4323,16 +4442,16 @@ def walk_outline(items, depth: int = 0) -> None:
 
 
 walk_outline(reader.outline)
-if len(outline_rows) != 90:
+if len(outline_rows) != 91:
     fail(f"outline item inventory drifted: {len(outline_rows)}")
 outline_manifest = "".join(
     f"{depth}\t{title}\t{page_index + 1}\n"
     for depth, title, page_index in outline_rows
 ).encode("utf-8")
 outline_manifest_digest = hashlib.sha256(outline_manifest).hexdigest()
-if outline_manifest_digest != "03859a7aa1d3320c025c104ce5bd04454b55db1e6bff5b41bb9b67cbf5ee0418":
+if outline_manifest_digest != "53f61cc06df9b3a311272c35b85750d608dfd98c17aeb74a18e5e9daa7c4d178":
     fail(f"outline title/depth/target manifest drifted: {outline_manifest_digest}")
-if len(reader.named_destinations) != 231:
+if len(reader.named_destinations) != 232:
     fail(f"named-destination inventory drifted: {len(reader.named_destinations)}")
 
 raw_destination_root = names.get("/Dests")
@@ -4429,7 +4548,7 @@ _raw_first, _raw_last, raw_destination_entries = walk_destination_name_tree(
 )
 raw_destination_names = [name for name, _destination in raw_destination_entries]
 logical_destination_names = sorted(map(str, reader.named_destinations))
-if len(raw_destination_names) != 231 or raw_destination_names != logical_destination_names:
+if len(raw_destination_names) != 232 or raw_destination_names != logical_destination_names:
     fail("raw destination name-tree inventory differs from the logical destination inventory")
 
 
@@ -4487,13 +4606,13 @@ for destination_name, destination in sorted(reader.named_destinations.items()):
 named_destination_route_digest = hashlib.sha256(
     "".join(named_destination_route_rows).encode("utf-8")
 ).hexdigest()
-if named_destination_route_digest != "73945c7667ab7435811585e8da9e739914e4770b56ed6ad17c09557cfe2fe403":
+if named_destination_route_digest != "15832bfb6b103e3661b45094dfaf4feb5180afc4cdad4f0e77e738eabf457080":
     fail(f"named-destination name/page/type manifest drifted: {named_destination_route_digest}")
 if validation_mode in {"--exact", "--refresh"}:
     named_destination_digest = hashlib.sha256(
         "".join(named_destination_rows).encode("utf-8")
     ).hexdigest()
-    if named_destination_digest != "6b9956fad4935ee3c9cf4b5b4a6ba898ed181a87396e6f36b7f6147933b3eb7d":
+    if named_destination_digest != "a3c5fd9a99a73e5bbc061cfaa411156013a17de9ebd3cbcb941929b56ae331bd":
         fail(f"exact named-destination manifest drifted: {named_destination_digest}")
 outline_pages = {
     normalized_heading(re.sub(r"^\s*\d+(?:\.\d+)*\s+", "", title)): page_index

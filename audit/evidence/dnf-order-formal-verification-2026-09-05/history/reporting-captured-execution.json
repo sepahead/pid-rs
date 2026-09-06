@@ -1,0 +1,100 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "development_compile_ordinal": 6,
+    "exit_code": 0,
+    "finished_utc": "2026-09-05T07:51:23.688852+00:00",
+    "inputs": {
+      "{REPOSITORY}/.local/sx-dnf-order-candidate-repair-20260905/reporting-supplement-adoption.json": {
+        "bytes": 724,
+        "sha256": "14b50ee9bdadad1cb465ce5420c4b39ab9e6ba566f278ac1cd34053383c808c1"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/root-repaired-normal-04/receipt.json": {
+        "bytes": 54393,
+        "sha256": "84105eec731d4f72a9af2f76b892445b99291e91dd0a8597d4383ddc27b3e417"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/execute-reporting-supplement-captured.py": {
+        "bytes": 4817,
+        "sha256": "63152f84f6ed32e34edd1eecbe6f47c007e4172b8a9e98000751a93619fb8204"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/AMENDMENT.md": {
+        "bytes": 4085,
+        "sha256": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/FiniteControls.lean": {
+        "bytes": 7136,
+        "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/MUTATION_ROSTER.json": {
+        "bytes": 4191,
+        "sha256": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/RESOURCE_AND_EXECUTION_CONTRACT.md": {
+        "bytes": 10030,
+        "sha256": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/WrongTargets.lean": {
+        "bytes": 1426,
+        "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/frozen.json": {
+        "bytes": 4427,
+        "sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/judge.py": {
+        "bytes": 25145,
+        "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/reporting-regression-repaired-candidate.py": {
+        "bytes": 7601,
+        "sha256": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/reporting-regression.py": {
+        "bytes": 7563,
+        "sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/selftest.py": {
+        "bytes": 19401,
+        "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/theorem-roster.json": {
+        "bytes": 690,
+        "sha256": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/reporting-regression-supplement-proposal.json": {
+        "bytes": 2917,
+        "sha256": "fb2069cc2ecd96cc78e4b378617e0b5cc2674b6c26f16d151aef7fd598598f17"
+      }
+    },
+    "regression_receipt": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-reporting-regression-01/regression-receipt.json",
+    "regression_receipt_sha256": "b6c44f2dec31895437639ded4cb5dc4665dbbdadfbdb686309c30e0146affb8c",
+    "scope": "Separately adopted direct reporting regression; no full wrapper run.",
+    "status": "captured_reporting_regression_pass"
+  },
+  "retained_local_source_sha256": "514593ff5f27f3cecabb3b4ee80c365f51881e2def119f33334a45cb03b18738",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

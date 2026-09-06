@@ -101,41 +101,21 @@ The scoped, reader-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUID
 objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
-for the method catalog, claim packets, or detailed proofs. The current 23-page v2 guide has an
-exact same-toolchain gate and a reviewed, source-specific Ubuntu 24.04/x86 cross-toolchain profile.
-Cross mode accepts that profile only under its closed producer tuple and retained raw-fixture
-relation; exact mode remains same-toolchain byte identity. The retained v2 fixture was captured in
-translated local x86 execution, so a native GitHub-hosted Ubuntu 24.04 replay remains pending and
-receives no hosted-execution credit. The current retained fixture is 744,745 bytes with SHA-256
-`b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6`. Its exact object profile
-binds 56 external targets, 217 navigation records, 65 named destinations, 18 outlines, 107 link
-annotations, 1,050 structure elements, 658 marked-content references, 97 object references, 120
-ParentTree mappings, and 2,248 structure records. The
-[v2 raw-profile receipt](audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json)
-binds that narrow claim. The separate historical
-[Pandoc 3.10.2 raw-profile receipt](audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json)
-and its retained 581,296-byte fixture preserve a 16-page v1 observation. Two independently
-downloaded hosted artifacts were byte-identical. The frozen v1 dispatcher logic records exact
-Pandoc and LuaHBTeX version/digest facts plus direct command, canonical renderer, Kpathsea, and
-format-path/security facts. It also records the distinction between per-run `kpsewhich`/format
-evidence and frozen selectors. Those bytes remain available for historical replay, but they cannot
-admit or certify the expanded v2 document. Exact v2 mode rebuilds from current sources, applies the
-current object and rendering policy, and requires raw equality with the committed PDF. This bounded
-PDF-engineering evidence is not general producer equivalence, authenticity, PDF/UA, mathematical
-correctness, estimator validation, or scientific credit.
+for the method catalog, claim packets, or detailed proofs. The current 24-page guide uses the v3
+structure profile. Its exact-mode check requires a rebuild to match the committed PDF byte for byte.
+Current Ubuntu hosted admission remains pending fresh producer evidence and review. That route
+checks the retained historical v2 package, then stops before the current build with an explicit
+pending-profile result.
 
-A separate
-[bounded Pandoc 3.1.3 portability receipt](audit/evidence/mathematical-results-guide-pandoc-3.1.3-portability-v1.json)
-preserves one earlier operator-observed translated Ubuntu run and a later retained replay. The
-replay did not reproduce the earlier claim of an unchanged raw structure digest. Within the checked
-typed object graph, it found only a source-profiled rename of page-local font resource keys. That
-statement is not a raw-byte claim. A typed pair checker accepts the replay only after it binds the
-exact canonical and retained raw files. A fresh legacy candidate must equal the retained file or
-differ only in its strictly owned duplicated trailer ID. After that raw admission, the checker
-resolves every key to the exact embedded-font closure and requires all decoded content bytes to
-match after the admitted `Tf` name substitutions. The retained replay is not a general
-Pandoc-equivalence, native-hardware, atomic executable-causation, PDF/UA, renderer-equivalence, or
-mathematical-correctness claim.
+The [publication checker guide](scripts/README.md) records the exact profile, commands and
+historical replay boundaries. Earlier v1, v2 and Pandoc 3.1.3 observations remain available there;
+they do not certify the current document. PDF checks establish bounded artifact properties, not
+mathematical truth, estimator validity or application readiness.
+
+The [comparison with alternative and complementary methods](PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md)
+names recent fusion and interaction models alongside MI/CMI, ablation, Shapley–Taylor, Bayesian
+information gain and other PID definitions. It states what added value must be demonstrated and
+when a simpler method should be preferred. No comparative performance advantage is claimed.
 
 The separate [Galadriel and sensor-placement guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md)
 and its [rendered PDF](output/pdf/pid-sensor-placement-and-galadriel-guide.pdf) distinguish three

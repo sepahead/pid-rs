@@ -1,0 +1,842 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "candidate_exists": true,
+    "commands": [
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/PidFiniteConvergence/Deterministic.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/PidFiniteConvergence/Deterministic.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 2.0046451669186354,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-PidFiniteConvergence-Deterministic",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2358525952,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:02.094575+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/PidFiniteConvergence/SxEventBridge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/PidFiniteConvergence/SxEventBridge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.614774459041655,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-PidFiniteConvergence-SxEventBridge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2422013952,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:04.099379+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/Contract.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/Contract.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.42224266694393,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-Contract",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2354872320,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:05.714342+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/JudgeCore.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/JudgeCore.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 0.8579514999873936,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeCore",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1411645440,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:07.136771+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/JudgeTargets.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/JudgeTargets.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.362702124984935,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeTargets",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2349006848,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:07.994928+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/JudgeAliases.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/JudgeAliases.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.2974611669778824,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeAliases",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2329804800,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:09.357832+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/ContractJudge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/ContractJudge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.5534374170238152,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-ContractJudge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2701279232,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:10.655510+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/Candidate.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/Candidate.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.4686529169557616,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-candidate",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2403368960,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:12.215117+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/build/SemanticJudge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/SemanticJudge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 1.8168454999104142,
+        "execution_error": null,
+        "failure": null,
+        "label": "semantic-judge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2757083136,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 8535,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:13.683938+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/leanchecker",
+          "--fresh",
+          "SemanticJudge"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src",
+        "elapsed_seconds": 174.83459583297372,
+        "execution_error": null,
+        "failure": null,
+        "label": "kernel-semantic-closure",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 3082010624,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:56:15.501072+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "declared_local_artifact_inventory": {
+      "00-compile-PidFiniteConvergence-Deterministic/command.json": "9220febb48a5c25ecd7436f5fd05efd2688991fc36833ef6875481df88ae2232",
+      "00-compile-PidFiniteConvergence-Deterministic/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "00-compile-PidFiniteConvergence-Deterministic/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-compile-PidFiniteConvergence-SxEventBridge/command.json": "f81f403c2d4b8f0a8ba9d488ae919964eec8b1e4226b9f88209dd50299d13e3d",
+      "01-compile-PidFiniteConvergence-SxEventBridge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-compile-PidFiniteConvergence-SxEventBridge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "02-compile-Contract/command.json": "0b199e4d17b09e26e724bcda151bf0456e5c0f05e3b56e1c530ad36909a8cc0e",
+      "02-compile-Contract/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "02-compile-Contract/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "03-compile-JudgeCore/command.json": "6f4bf6abe7ddfd224a5a29d274849049d13db3d3b497b8dbba5d453772d66309",
+      "03-compile-JudgeCore/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "03-compile-JudgeCore/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "04-compile-JudgeTargets/command.json": "66f42ca5cbb64a208cf2d88c4a54394fee6a39622b369d38a51103a35b0cf21d",
+      "04-compile-JudgeTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "04-compile-JudgeTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-compile-JudgeAliases/command.json": "59d638b3e5d4a6c08e2a3b8a3e4a2d75ab4309ae702d3c57ebc632663deda062",
+      "05-compile-JudgeAliases/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-compile-JudgeAliases/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "06-compile-ContractJudge/command.json": "bf5591de63b5794f576aaadab541899128c21794f16a251d15a9e97ca8dcea22",
+      "06-compile-ContractJudge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "06-compile-ContractJudge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07-compile-candidate/command.json": "f30c69925155e359c8234d7e1bc7f77c9dbe3118d1dff6fa18419a9b52d49e33",
+      "07-compile-candidate/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07-compile-candidate/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "08-semantic-judge/command.json": "318c1d9c713b9efdedb9fc0b1fee28e6259b19b746e02d9092c7b8023c032d30",
+      "08-semantic-judge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "08-semantic-judge/stdout.log": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "09-kernel-semantic-closure/command.json": "2dbc6a667ef7e926f1948497629b47d4e5205cf73264b393681d078abe112f8b",
+      "09-kernel-semantic-closure/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "09-kernel-semantic-closure/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "build/Candidate.olean": "2e34de238d5ab81e8c5288fc4ed352dd1666d62be2c7ba6cbb0bcd65bb2fd342",
+      "build/Contract.olean": "8013ba04543b8b9bea10382bc331c4dca676576f21e8c784dfed0e0eb2a9b7af",
+      "build/ContractJudge.olean": "3552dfd76ad7f16f8173c91dd9022c825b862e02df94f7ef84f6b07377da169e",
+      "build/JudgeAliases.olean": "670a60bd2f38fb73f1916333dad537c6939765d080f65efcac54e8f9f833e5d9",
+      "build/JudgeCore.olean": "31b15bc3f1e37a4a1b909850d2abe04bfdb0a389a589f2fa4c28c656fa06529d",
+      "build/JudgeTargets.olean": "f547006591192be1fd8834e059c5e4aae8914b3b7735498f40019f47070e3806",
+      "build/PidFiniteConvergence/Deterministic.olean": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9",
+      "build/PidFiniteConvergence/SxEventBridge.olean": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1",
+      "build/SemanticJudge.olean": "0ed957b189165730ef5841473e1e308e380af9a15676407031e295d053f4eb51",
+      "captured-Candidate.lean": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+      "environment.json": "246d03eaeaf722c03206bec34f0193505aa84c577a723d4c6959d576d574c967",
+      "input-bytes/0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+      "input-bytes/13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+      "input-bytes/1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+      "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+      "input-bytes/259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+      "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+      "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+      "input-bytes/3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+      "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+      "input-bytes/4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "input-bytes/42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+      "input-bytes/4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+      "input-bytes/45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+      "input-bytes/49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+      "input-bytes/4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+      "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+      "input-bytes/6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+      "input-bytes/6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+      "input-bytes/724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+      "input-bytes/b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+      "input-bytes/f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+      "prefix-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "prefix-stdout.log": "ebce7c6b7a024f5fc95464aefa8bd0e31edbd9b73882ee03662dc3e15c7eb2c7",
+      "src/Candidate.lean": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+      "src/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "src/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "src/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "src/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "src/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "src/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "src/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "src/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    "freeze": {
+      "adoption_boundary": "Coordinator must inspect and adopt this exact successor manifest digest before amended full candidate replay. The predecessor and both failed full runs remain unchanged.",
+      "campaign": {
+        "coordinator_selected_normal_optimized_slots": [
+          7,
+          8
+        ],
+        "deadline_utc": "2026-09-05T08:32:36+00:00",
+        "development_compile_limit": 64,
+        "direct_reporting_compilation": "Separately recorded regression control; does not repeat the complete wrapper.",
+        "full_wrapper_limit": 8,
+        "prior_consumed_full_wrappers": 2,
+        "worker_cosmetic_normal_optimized_slots": [
+          5,
+          6
+        ],
+        "worker_selected_normal_optimized_slots": [
+          3,
+          4
+        ]
+      },
+      "candidate_exists": true,
+      "candidate_module": "Candidate",
+      "candidate_namespace": "PidSxDnfOrderCandidate",
+      "candidate_sha256_at_amendment": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+      "contract_module": "Contract",
+      "files": {
+        "AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+        "Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+        "ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+        "FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+        "JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+        "JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+        "JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+        "MUTATION_ROSTER.json": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+        "RESOURCE_AND_EXECUTION_CONTRACT.md": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+        "SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+        "WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+        "judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+        "reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+        "selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+        "theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+      },
+      "frozen_utc": "2026-09-05T07:15:06.755760+00:00",
+      "initial_amendment_reviews": {
+        "coordinator_sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4",
+        "verifier_sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9"
+      },
+      "mathematical_contract_revision": 2,
+      "pending_at_freeze": [
+        "Complete unchanged-candidate normal and optimized wrapper replay with thirteen real records and fresh kernel closure.",
+        "Comment/whitespace-only candidate variant under the same normal and optimized semantic and kernel gates.",
+        "Direct regression restoring all thirteen original reporting calls after a bound complete selected-candidate pass.",
+        "Coordinator normal and optimized selected-candidate acceptance on the adopted original successor."
+      ],
+      "pre_freeze_controls": {
+        "normal": {
+          "fresh_kernel_elapsed_seconds": 188.85204875003546,
+          "passed_controls": 75,
+          "path": "runs/selftest-normal-02/selftest-receipt.json",
+          "sha256": "4660fedd8efa3b885ee02debddc28babf80bf3e196fcd675577948e59634b048"
+        },
+        "optimized": {
+          "fresh_kernel_elapsed_seconds": 183.2170043749502,
+          "passed_controls": 75,
+          "path": "runs/selftest-optimized-01/selftest-receipt.json",
+          "sha256": "517a18ab8d36882b37fd06063028246f5f40d6eb30632f4c306aa1539a26e70b"
+        }
+      },
+      "predecessor_freeze_sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05",
+      "prior_failure_receipts": {
+        "candidate_original_judge": "74d9aec375c5dd8919c541ab47c547803b4228dd2e62751ac4066062b9bda676",
+        "coordinator_original_judge": "f14e29462e063ecc5f1e07a6128ffc6f3df48e1333b5031741505a07ad315d30"
+      },
+      "schema": "local-dnf-order-judge-freeze-v3",
+      "scope": "Local reporting amendment after the unchanged candidate existed and compiled, before amended full replay. No pre-candidate registration, external custody, scientific novelty, estimator or consumer claim.",
+      "semantic_judge_module": "SemanticJudge",
+      "status": "frozen_after_candidate_before_replay"
+    },
+    "inputs": {
+      "{LEAN_TOOLCHAIN}/bin/lean": {
+        "bytes": 49968,
+        "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+      },
+      "{LEAN_TOOLCHAIN}/bin/leanchecker": {
+        "bytes": 78128,
+        "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/AMENDMENT.md": {
+        "bytes": 4085,
+        "sha256": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/FiniteControls.lean": {
+        "bytes": 7136,
+        "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/MUTATION_ROSTER.json": {
+        "bytes": 4191,
+        "sha256": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/RESOURCE_AND_EXECUTION_CONTRACT.md": {
+        "bytes": 10030,
+        "sha256": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/WrongTargets.lean": {
+        "bytes": 1426,
+        "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/frozen.json": {
+        "bytes": 4427,
+        "sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/judge.py": {
+        "bytes": 25145,
+        "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/reporting-regression.py": {
+        "bytes": 7563,
+        "sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/Candidate.lean": {
+        "bytes": 10329,
+        "sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/PidFiniteConvergence/Deterministic.lean": {
+        "bytes": 9093,
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/PidFiniteConvergence/SxEventBridge.lean": {
+        "bytes": 27203,
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07/src/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/selftest.py": {
+        "bytes": 19401,
+        "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/theorem-roster.json": {
+        "bytes": 690,
+        "sha256": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/inputs/repaired-cosmetic/Candidate.lean": {
+        "bytes": 10329,
+        "sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence.lean": {
+        "bytes": 371,
+        "sha256": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": {
+        "bytes": 9093,
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": {
+        "bytes": 27203,
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+      },
+      "{REPOSITORY}/audit/formal/lean/lake-manifest.json": {
+        "bytes": 3144,
+        "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+      },
+      "{REPOSITORY}/audit/formal/lean/lakefile.toml": {
+        "bytes": 243,
+        "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+      },
+      "{REPOSITORY}/audit/formal/lean/lean-toolchain": {
+        "bytes": 25,
+        "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+      },
+      "{REPOSITORY}/scripts/check-lean-finite-convergence.py": {
+        "bytes": 58665,
+        "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+      },
+      "{REPOSITORY}/scripts/check-lean-sxpid3-informative-invariance.py": {
+        "bytes": 17039,
+        "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+      }
+    },
+    "scope": "Local semantic/kernel evidence only; no external custody, priority, estimator or consumer claim.",
+    "status": "local_semantic_kernel_pass",
+    "theorems": [
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.order_iff_dnf",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) [inst : DecidableEq.{u + 1} sourceIndex],\n  @PidSxDnfOrderContract.order_iff_dnf_target.{u} sourceIndex inst",
+        "raw_target": "PidSxDnfOrderJudgeTargets.order_iff_dnf",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.order_iff_dnf",
+        "universes": [
+          "u"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.antichain_antisymm",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) [inst : DecidableEq.{u + 1} sourceIndex],\n  @PidSxDnfOrderContract.antichain_antisymm_target.{u} sourceIndex inst",
+        "raw_target": "PidSxDnfOrderJudgeTargets.antichain_antisymm",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.antichain_antisymm",
+        "universes": [
+          "u"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.dnf_injective_on_antichains",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) [inst : DecidableEq.{u + 1} sourceIndex],\n  @PidSxDnfOrderContract.dnf_injective_on_antichains_target.{u} sourceIndex inst",
+        "raw_target": "PidSxDnfOrderJudgeTargets.dnf_injective_on_antichains",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.dnf_injective_on_antichains",
+        "universes": [
+          "u"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.source_event_iff_dnf",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.source_event_iff_dnf_target.{u, v, w} sourceIndex sourceValue targetValue inst inst_1 inst_2\n    inst_3 inst_4 inst_5",
+        "raw_target": "PidSxDnfOrderJudgeTargets.source_event_iff_dnf",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.source_event_iff_dnf",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.order_implies_source_event_subset",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.order_implies_source_event_subset_target.{u, v, w} sourceIndex sourceValue targetValue inst\n    inst_1 inst_2 inst_3 inst_4 inst_5",
+        "raw_target": "PidSxDnfOrderJudgeTargets.order_implies_source_event_subset",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.order_implies_source_event_subset",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.order_iff_implication_on_realizing_domain",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.order_iff_implication_on_realizing_domain_target.{u, v, w} sourceIndex sourceValue targetValue\n    inst inst_1 inst_2 inst_3 inst_4 inst_5",
+        "raw_target": "PidSxDnfOrderJudgeTargets.order_iff_implication_on_realizing_domain",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.order_iff_implication_on_realizing_domain",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.alternate_values_realize_all_patterns",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.alternate_values_realize_all_patterns_target.{u, v, w} sourceIndex sourceValue targetValue inst\n    inst_1 inst_2 inst_3 inst_4 inst_5",
+        "raw_target": "PidSxDnfOrderJudgeTargets.alternate_values_realize_all_patterns",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.alternate_values_realize_all_patterns",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.source_event_injective_on_realizing_domain",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.source_event_injective_on_realizing_domain_target.{u, v, w} sourceIndex sourceValue targetValue\n    inst inst_1 inst_2 inst_3 inst_4 inst_5",
+        "raw_target": "PidSxDnfOrderJudgeTargets.source_event_injective_on_realizing_domain",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.source_event_injective_on_realizing_domain",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.order_implies_target_restricted_subset",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.order_implies_target_restricted_subset_target.{u, v, w} sourceIndex sourceValue targetValue\n    inst inst_1 inst_2 inst_3 inst_4 inst_5",
+        "raw_target": "PidSxDnfOrderJudgeTargets.order_implies_target_restricted_subset",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.order_implies_target_restricted_subset",
+        "universes": [
+          "u",
+          "v",
+          "w"
+        ]
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.singleton_event_collision",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "PidSxDnfOrderContract.singleton_event_collision_target",
+        "raw_target": "PidSxDnfOrderJudgeTargets.singleton_event_collision",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.singleton_event_collision",
+        "universes": []
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.singleton_not_all_patterns",
+        "axioms": [
+          "propext"
+        ],
+        "full_elaborated_type": "PidSxDnfOrderContract.singleton_not_all_patterns_target",
+        "raw_target": "PidSxDnfOrderJudgeTargets.singleton_not_all_patterns",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.singleton_not_all_patterns",
+        "universes": []
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.binary_diagonal_collision",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "PidSxDnfOrderContract.binary_diagonal_collision_target",
+        "raw_target": "PidSxDnfOrderJudgeTargets.binary_diagonal_collision",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.binary_diagonal_collision",
+        "universes": []
+      },
+      {
+        "alias_target": "PidSxDnfOrderJudgeAliases.antichain_premise_is_load_bearing",
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "full_elaborated_type": "PidSxDnfOrderContract.antichain_premise_is_load_bearing_target",
+        "raw_target": "PidSxDnfOrderJudgeTargets.antichain_premise_is_load_bearing",
+        "status": "accepted",
+        "theorem": "PidSxDnfOrderCandidate.antichain_premise_is_load_bearing",
+        "universes": []
+      }
+    ]
+  },
+  "retained_local_source_sha256": "42ee6291b62838fc3b282f43df8d68f05055183072227b242f05bd479d19344a",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

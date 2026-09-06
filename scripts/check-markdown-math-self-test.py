@@ -7,7 +7,8 @@ import importlib.util
 from pathlib import Path
 import sys
 import tempfile
-from types import ModuleType
+from types import ModuleType, SimpleNamespace
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -230,6 +231,72 @@ def main() -> int:
             )
         global MUTATION_COUNT
         MUTATION_COUNT += 1
+
+    expected_historical = {
+        "audit/evidence/dnf-order-formal-verification-2026-09-05/history/"
+        "exposition-before-acceptance/" + name
+        for name in ("EXPOSITION.md", "SOURCE_CORRESPONDENCE.md", "SYMBOL_MAP.md")
+    }
+    if set(CHECKER.PRESERVED_HISTORICAL_MARKDOWN_SHA256) != expected_historical:
+        raise RuntimeError("historical Markdown roster differs from the three retained drafts")
+    for relative in sorted(expected_historical):
+        exact = (ROOT / relative).read_bytes()
+        with tempfile.TemporaryDirectory(prefix="pid-rs-historical-markdown-") as raw:
+            fixture_root = Path(raw)
+            fixture = fixture_root / relative
+            fixture.parent.mkdir(parents=True, exist_ok=True)
+            fixture.write_bytes(exact)
+            if CHECKER.inspect_repository_path(fixture, root=fixture_root):
+                raise RuntimeError("exact historical draft was rejected: " + relative)
+            PASSING_FIXTURE_COUNT += 1
+            fixture.write_bytes(exact + b"\n")
+            drift = CHECKER.inspect_repository_path(fixture, root=fixture_root)
+            if len(drift) != 1 or not drift[0].message.startswith(
+                "preserved historical Markdown exact-byte custody drifted:"):
+                raise RuntimeError("historical byte drift was not rejected: " + relative)
+            MUTATION_COUNT += 1
+            for relocated in (
+                "audit/formal/lean-sx-dnf-order/" + Path(relative).name,
+                str(Path(relative).with_name("unlisted-" + Path(relative).name)),
+            ):
+                other = fixture_root / relocated
+                other.parent.mkdir(parents=True, exist_ok=True)
+                other.write_bytes(exact)
+                rejected = CHECKER.inspect_repository_path(other, root=fixture_root)
+                if not any("use GitHub math delimiters" in item.message for item in rejected):
+                    raise RuntimeError("historical syntax escaped active/unlisted checks: " + relocated)
+                MUTATION_COUNT += 1
+
+    with tempfile.TemporaryDirectory(prefix="pid-rs-omitted-markdown-") as raw:
+        fixture_root = Path(raw)
+        for relative in expected_historical:
+            fixture = fixture_root / relative
+            fixture.parent.mkdir(parents=True, exist_ok=True)
+            fixture.write_bytes((ROOT / relative).read_bytes())
+        # Exercise the actual discovery function with a Git result that omits every
+        # archive. Mandatory exact paths must remain checked even after index deletion.
+        with patch.object(CHECKER, "ROOT", fixture_root), patch.object(
+            CHECKER.subprocess, "run", return_value=SimpleNamespace(stdout=b"")
+        ):
+            discovered = CHECKER.markdown_paths()
+            expected_paths = {fixture_root / relative for relative in expected_historical}
+            if set(discovered) != expected_paths:
+                raise RuntimeError("Git omission removed mandatory historical paths")
+            if any(CHECKER.inspect_repository_path(path, root=fixture_root)
+                   for path in discovered):
+                raise RuntimeError("exact archives failed after Git discovery omission")
+            PASSING_FIXTURE_COUNT += 1
+            for missing in sorted(expected_paths):
+                exact = missing.read_bytes()
+                missing.unlink()
+                discovered = CHECKER.markdown_paths()
+                omitted_findings = [finding for path in discovered
+                    for finding in CHECKER.inspect_repository_path(path, root=fixture_root)]
+                if len(omitted_findings) != 1 or not omitted_findings[0].message.startswith(
+                    "cannot read preserved historical Markdown:"):
+                    raise RuntimeError("missing undiscovered archive was not rejected")
+                MUTATION_COUNT += 1
+                missing.write_bytes(exact)
 
     print(
         "OK: Markdown math checker rejected "

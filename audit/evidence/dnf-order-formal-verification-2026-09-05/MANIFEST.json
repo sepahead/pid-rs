@@ -1,0 +1,851 @@
+{
+  "files": [
+    {
+      "bytes": 3557,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/PROJECTION.md",
+      "representation": "new professional public record or routing source",
+      "sha256": "f72d1c5c49a3462e50ae02f713fc1af6a7f079ee7b420aff774f1da1a4024ee7"
+    },
+    {
+      "bytes": 9491,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/RESULTS.md",
+      "representation": "new professional public record or routing source",
+      "sha256": "32f453f6897f9c5ca493a4345886288b85f3fbb9b16a7cde2bd8ac9c17f2dd76"
+    },
+    {
+      "bytes": 10328,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/Candidate-before-ordinary-decide-repair.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 10328,
+      "retained_local_source_sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+      "sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65"
+    },
+    {
+      "bytes": 10329,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/Candidate-cosmetic.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 10329,
+      "retained_local_source_sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+      "sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a"
+    },
+    {
+      "bytes": 3242,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/adoption-v2.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 2776,
+      "retained_local_source_sha256": "042b8f41ad65611d10850fd498fb730fd6cf743418a316be1233feb550f21973",
+      "sha256": "d72463f91ec89e3c7088d6444919a48801243d21409725ea7bc6c19cf5be5b9c"
+    },
+    {
+      "bytes": 10706,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/adoption-v3.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 9706,
+      "retained_local_source_sha256": "ee2847d75e5b34d18e0ee64a7d86562ca216bb6e0237da5eba71362ea83207ba",
+      "sha256": "f8529467b49e76646ffd5155629b9dc77f53b942df4e8ad69830e51967ec49d4"
+    },
+    {
+      "bytes": 5551,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/amendment-review-coordinator.md",
+      "representation": "Professional review text with machine-locator substitution; historical local artifact references remain documentary",
+      "retained_local_source_bytes": 5551,
+      "retained_local_source_sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4",
+      "sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4"
+    },
+    {
+      "bytes": 5465,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/amendment-review-verifier.md",
+      "representation": "Professional review text with machine-locator substitution; historical local artifact references remain documentary",
+      "retained_local_source_bytes": 5465,
+      "retained_local_source_sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9",
+      "sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9"
+    },
+    {
+      "bytes": 1447,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/cosmetic-predeclaration.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 1025,
+      "retained_local_source_sha256": "4e0f9ac48024f4e9b064d8c327812095bf6470a4a3a9175184d2160f2dd0fe13",
+      "sha256": "a999ac4bf6e9ee52e51681917622d818fcc31d5b700083ade7cfffb66f68fad4"
+    },
+    {
+      "bytes": 19477,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 19477,
+      "retained_local_source_sha256": "c4db853e5f1fa90d43d2ae6a97c4c118b9f3de390b2eee414cef672ca91ff82d",
+      "sha256": "c4db853e5f1fa90d43d2ae6a97c4c118b9f3de390b2eee414cef672ca91ff82d"
+    },
+    {
+      "bytes": 11899,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 11899,
+      "retained_local_source_sha256": "4a4c8c82ec6237e9e735ba038a05ae0824696d7f653d023d5b162ae5c505f3e4",
+      "sha256": "4a4c8c82ec6237e9e735ba038a05ae0824696d7f653d023d5b162ae5c505f3e4"
+    },
+    {
+      "bytes": 5038,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 5038,
+      "retained_local_source_sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0",
+      "sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0"
+    },
+    {
+      "bytes": 4421,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/event-order.svg",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 4421,
+      "retained_local_source_sha256": "a5842a9f20ddf21df1c913f8e660a18ed32b491cf0e42c31fef406c866d30893",
+      "sha256": "a5842a9f20ddf21df1c913f8e660a18ed32b491cf0e42c31fef406c866d30893"
+    },
+    {
+      "bytes": 3388,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/MUTATION_ROSTER.json",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 3388,
+      "retained_local_source_sha256": "40739c97fb98217c709af7815216bf572e7dc9f479c5ad8b82e845783311ff3a",
+      "sha256": "40739c97fb98217c709af7815216bf572e7dc9f479c5ad8b82e845783311ff3a"
+    },
+    {
+      "bytes": 7753,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/RESOURCE_AND_EXECUTION_CONTRACT.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 7753,
+      "retained_local_source_sha256": "a64678a1e23e51630c15b0b3b05a7f2210f26194ac789b561cc737d1eda9e25a",
+      "sha256": "a64678a1e23e51630c15b0b3b05a7f2210f26194ac789b561cc737d1eda9e25a"
+    },
+    {
+      "bytes": 7959,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/SemanticJudge.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 7959,
+      "retained_local_source_sha256": "0c1cf11598048c39e8fee92384362e15e2c9e3555dd93f4befa4c15f865889ab",
+      "sha256": "0c1cf11598048c39e8fee92384362e15e2c9e3555dd93f4befa4c15f865889ab"
+    },
+    {
+      "bytes": 2085,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/frozen.json",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 2085,
+      "retained_local_source_sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05",
+      "sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05"
+    },
+    {
+      "bytes": 24452,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/judge.py",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 24452,
+      "retained_local_source_sha256": "0e50f618b05d059feb6b4e366fa3189ad2c615f9fc6e4b416eb797957e5ed1de",
+      "sha256": "0e50f618b05d059feb6b4e366fa3189ad2c615f9fc6e4b416eb797957e5ed1de"
+    },
+    {
+      "bytes": 16875,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/selftest.py",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 16875,
+      "retained_local_source_sha256": "4bdfffb037e6634994f0a03d90ed39b83e8efa33b3758acc142fefde83eefed9",
+      "sha256": "4bdfffb037e6634994f0a03d90ed39b83e8efa33b3758acc142fefde83eefed9"
+    },
+    {
+      "bytes": 2659,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/source-map.json",
+      "representation": "new professional public record",
+      "sha256": "be5ace38ad2889ba6d182a57f2a8bdab5698fb5dd5ed19a5ec945fdaa874f41a"
+    },
+    {
+      "bytes": 1691,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/narrowed-scope-adoption.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 1261,
+      "retained_local_source_sha256": "d2f9e0f5064389ecb4099f500ebd4767d571860d81301c7f761bc72f5b1c72ba",
+      "sha256": "494321d43800fc9f8830439ebdbb5e8a74bafe04edf9e66b42da715fe583a570"
+    },
+    {
+      "bytes": 6293,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/repair-and-scope-review.md",
+      "representation": "Professional review text with machine-locator substitution; historical local artifact references remain documentary; private source link replaced by exact pinned public Lean source link",
+      "retained_local_source_bytes": 6300,
+      "retained_local_source_sha256": "20cb608e05bca12f307a60e3063924c23811f3b072f9e0dbe5f883918d5e7df5",
+      "sha256": "8c1c3a9ea40df0f2a1c237a9523d6ce2607482ef9481b61a545c5071b46ed123"
+    },
+    {
+      "bytes": 2372,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/repair-registration.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 1944,
+      "retained_local_source_sha256": "ce80b8b3e97d24dd92c7d19ad11b4c6a6121f5f6437faf8615b569dd207dce45",
+      "sha256": "f177fef6cb2277c9121bb1e2882ce2c97213484545c6f87a47ec660c135bbdec"
+    },
+    {
+      "bytes": 5693,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/reporting-captured-execution.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 9801,
+      "retained_local_source_sha256": "514593ff5f27f3cecabb3b4ee80c365f51881e2def119f33334a45cb03b18738",
+      "sha256": "ff90ab261eb612341298668cd154f8ee25ea6a08388ca40bb6fd984ec3bac80e"
+    },
+    {
+      "bytes": 1124,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/reporting-supplement-adoption.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 724,
+      "retained_local_source_sha256": "14b50ee9bdadad1cb465ce5420c4b39ab9e6ba566f278ac1cd34053383c808c1",
+      "sha256": "45a9bec6672c1d554eb5ac6115c7405661b6ba66c2dd3d2af882d4bdd2e12b91"
+    },
+    {
+      "bytes": 3257,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/reporting-supplement-proposal.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 2917,
+      "retained_local_source_sha256": "fb2069cc2ecd96cc78e4b378617e0b5cc2674b6c26f16d151aef7fd598598f17",
+      "sha256": "79b97ab994b3a25f929d9df8803db2a1134e97babbf548fb63f5aed874e3c03b"
+    },
+    {
+      "bytes": 22560,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/roster-diagnostic.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 24683,
+      "retained_local_source_sha256": "ab1d8cf0900ca1470b8018220511df1e44b7babaa7f9f46dd8c231ec1edf4fc8",
+      "sha256": "ae40183d8925a4df24ff0b84b6a5528ace795944f5d9a6b7f193ddf59d5a66b4"
+    },
+    {
+      "bytes": 5016,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/roster-rejection.md",
+      "representation": "Professional review text with machine-locator substitution; historical local artifact references remain documentary",
+      "retained_local_source_bytes": 5016,
+      "retained_local_source_sha256": "d58e14e0ffde743eeaada840b574c483687081a613358ecbafa268d9fbf6737a",
+      "sha256": "d58e14e0ffde743eeaada840b574c483687081a613358ecbafa268d9fbf6737a"
+    },
+    {
+      "bytes": 3646,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/required-matrix.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 3366,
+      "retained_local_source_sha256": "16788ba2d6a47d0c99e548e80a9868d20d7f3fa72b4a2c708636ebcdddadad0f",
+      "sha256": "41e9f5bec31288b0937ba9bef24bee7a474c891d8dd28417ebda28185f191ede"
+    },
+    {
+      "bytes": 9650,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/routing-preparation.json",
+      "representation": "new professional public record or routing source",
+      "sha256": "b20b5d8a99af7b61fbc6c147e6876f89558a06744df2bd79fb3a5da317a3873a"
+    },
+    {
+      "bytes": 32288,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-01-reporting-failure.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 40352,
+      "retained_local_source_sha256": "74d9aec375c5dd8919c541ab47c547803b4228dd2e62751ac4066062b9bda676",
+      "sha256": "a9d6ec3db8a79b19688c46434fb25167b13bf2dbd5c4b8edfec53de19c5f532d"
+    },
+    {
+      "bytes": 31544,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-02-reporting-failure.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 39608,
+      "retained_local_source_sha256": "f14e29462e063ecc5f1e07a6128ffc6f3df48e1333b5031741505a07ad315d30",
+      "sha256": "c0d9e3de8916d9fa8ba1b3a1bd5d74a5cf5da3fd89e2cbd0bc0887091b43d95e"
+    },
+    {
+      "bytes": 35781,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-03-roster-failure.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 44174,
+      "retained_local_source_sha256": "fc14e33890d2fac9b8a23e51939b1b390573280681b9ff2dfe9dd8c7fd08219d",
+      "sha256": "7c3a4adab1ee38abc277a80287fdcceb87ff9a560403468d29484a3c99e6e951"
+    },
+    {
+      "bytes": 46343,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-04-selected-normal.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 54393,
+      "retained_local_source_sha256": "84105eec731d4f72a9af2f76b892445b99291e91dd0a8597d4383ddc27b3e417",
+      "sha256": "a7dd96773143d6280745cf4fc1ada47ac8ea6e671fe56d92495820e5936752e2"
+    },
+    {
+      "bytes": 46454,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-05-selected-optimized.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 54504,
+      "retained_local_source_sha256": "7e5a08a2ef7d3f3d7f201cbe05f50ae44575262d68685c9f9cca8b5e5e9975ba",
+      "sha256": "97d885d597f3abefe351dccf7ecc6be3d77eea1b775809b1d3b180724b28878b"
+    },
+    {
+      "bytes": 48004,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-06-cosmetic-normal.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 56054,
+      "retained_local_source_sha256": "470a71a287021afab61240e82712a60dd3a36ba17d698c732ed005b283cf69bb",
+      "sha256": "fa1774e624469ecb1ab8d87dc79c062a292ff227d5a6192087f01bc6bb332b31"
+    },
+    {
+      "bytes": 48111,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-07-cosmetic-optimized.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 56161,
+      "retained_local_source_sha256": "42ee6291b62838fc3b282f43df8d68f05055183072227b242f05bd479d19344a",
+      "sha256": "14be1761ee4695e5fc9d1338ca9471ae1cb747e4d7245a2fed1a5c15e96ef797"
+    },
+    {
+      "bytes": 15554,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/reporting-regression.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 22224,
+      "retained_local_source_sha256": "b6c44f2dec31895437639ded4cb5dc4665dbbdadfbdb686309c30e0146affb8c",
+      "sha256": "a32f9a128d2e5ef315d0c8487553979c312489570f86e9f2aa4c9c2440bef7e7"
+    },
+    {
+      "bytes": 86655,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/v3-controls-normal.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 97959,
+      "retained_local_source_sha256": "4660fedd8efa3b885ee02debddc28babf80bf3e196fcd675577948e59634b048",
+      "sha256": "17338ba4f1ed2894e6b77838bc9c8730e80f09eaf000b5427a8a22a9dd03623a"
+    },
+    {
+      "bytes": 86965,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/v3-controls-optimized.json",
+      "representation": "JSON structure projection; machine locators and identity tuples omitted",
+      "retained_local_source_bytes": 98269,
+      "retained_local_source_sha256": "517a18ab8d36882b37fd06063028246f5f40d6eb30632f4c306aa1539a26e70b",
+      "sha256": "a8e4437ff67459c29afee0073ae7c37b015ef0c1ae38680022197af42b68b939"
+    },
+    {
+      "bytes": 881,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/source-retrieval.json",
+      "representation": "Source URL and exact reviewed PDF identity retained; local file locator replaced by basename; PDFs omitted",
+      "retained_local_source_bytes": 746,
+      "retained_local_source_sha256": "59cde5628b400acb417e409a160270cf9df2b339f077cc13261b67fd1032eb01",
+      "sha256": "2f559989b948ac0573742165a45de406eb55f7926b4bf7da3bc40fd7d98eb4c7"
+    },
+    {
+      "bytes": 3718,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-01-reporting-failure-semantic-judge-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 4459,
+      "retained_local_source_sha256": "588514342857e65a7fdb8d0376bcc3c82d004931037bbb9a46540c9b5957634c",
+      "sha256": "fa00946936c38838272f9ea0c27e9e785db20e9856aaccdd4ae59c8cd987d228"
+    },
+    {
+      "bytes": 3562,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-02-reporting-failure-semantic-judge-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 4303,
+      "retained_local_source_sha256": "208bab069d1a48f3e9492cd2099ae6b82048405c5daf6a171625544a011b699e",
+      "sha256": "552e4a07eb80801b22865b9a14e88031bf4bc39449d8a1361014dae72176fe3f"
+    },
+    {
+      "bytes": 204,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-03-roster-failure-semantic-judge-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 261,
+      "retained_local_source_sha256": "140118c02ef1669ad28e047d2237a4ac04697749954c9bc2a0a4772e928c2deb",
+      "sha256": "87132628c44193ec7c7bbea9a1b836b59285cfa79b07f31254a6e9a732c42512"
+    },
+    {
+      "bytes": 8535,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-04-selected-normal-semantic-judge-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 8535,
+      "retained_local_source_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334"
+    },
+    {
+      "bytes": 8535,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-05-selected-optimized-semantic-judge-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 8535,
+      "retained_local_source_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334"
+    },
+    {
+      "bytes": 8535,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-06-cosmetic-normal-semantic-judge-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 8535,
+      "retained_local_source_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334"
+    },
+    {
+      "bytes": 8535,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-07-cosmetic-optimized-semantic-judge-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 8535,
+      "retained_local_source_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334"
+    },
+    {
+      "bytes": 3965,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/reporting-regression-restored-thirteen-reporting-sites-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 4706,
+      "retained_local_source_sha256": "e601d6de15ea34c8b12e615f4a3db5b17c41b7c598398212eaa6688e1885030b",
+      "sha256": "a1574a2865ad5dc9da5c90767124b638fd57e11470ba2ab14ec305d2d943b533"
+    },
+    {
+      "bytes": 170,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectAxiom-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 227,
+      "retained_local_source_sha256": "7579601f003da5d79283f4f35221a5a23cfcf09c0f748dc1233cbeed4d1df592",
+      "sha256": "88341a1fcdd7398c7dc9c1de781189b5ac0eae0a54c424c09e19149bfa73eebf"
+    },
+    {
+      "bytes": 432,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectDefinition-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 546,
+      "retained_local_source_sha256": "6eeb371ece509ed7c1f29b645196b643e7790a7b725a299269b720e1b2fa445f",
+      "sha256": "87cec48033faaa60a2616f63c718c6482d25de06bca4b42104476c5d518a0cbd"
+    },
+    {
+      "bytes": 178,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectExtraRoster-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 235,
+      "retained_local_source_sha256": "ff14be2e35166eda327957caf117f67f661dc9ef1c200fb3beab247afaf3afa1",
+      "sha256": "2e40c229cc235b4eefaa96282e449dd33419cc9ce8b0b08bf64292a18b4f1ffa"
+    },
+    {
+      "bytes": 180,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectMissingRoster-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 237,
+      "retained_local_source_sha256": "c20837f7c1ab95c8a3ff8ff73bfc05e338e41720553db3026c4fc1a8134cd77a",
+      "sha256": "94b8e93c2935d5c1a85badc1f9f3d8fbe7219f04111dccd18c005f1a6a048908"
+    },
+    {
+      "bytes": 238,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_assumed_conclusion-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 295,
+      "retained_local_source_sha256": "ca1e6234053c8482a17f9163646cfcbffb1ef42c6598fc874184df7b36ea6e75",
+      "sha256": "1be5a8fc4f3988a9e27eff67e12e8f2899403e570da5b0f68e1f353c7cbc972d"
+    },
+    {
+      "bytes": 236,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_explicit_receiver-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 293,
+      "retained_local_source_sha256": "1dc9cbb13a7b3827c1f823fb25efb66984701f8d722adb8f5d792a67c1dfb464",
+      "sha256": "0501fd676869a5079338fd21d93f03f5d40c9ca31c606c5eb143d57d5fa6479d"
+    },
+    {
+      "bytes": 220,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_fin3_only-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 277,
+      "retained_local_source_sha256": "a0faf1ad497fb3daf7804a208e9914e994dc30f52be5e7a0ffa9b5975504c79d",
+      "sha256": "15aa1000a812768448f6a70848a24814774d539b36282448ffc582fdb23fc1e7"
+    },
+    {
+      "bytes": 236,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_implicit_receiver-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 293,
+      "retained_local_source_sha256": "7c9c3144366a363e683bb8aee5af00d2df73ade677847e4d19076d98c48e5948",
+      "sha256": "44af54346b8010a75db2c36892f2719d8a86c66f5e54ed00271c96a2e83aebb5"
+    },
+    {
+      "bytes": 232,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_renamed_premise-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 289,
+      "retained_local_source_sha256": "9f7d0a401f1c98e51bbecaa23b955f726f89b570431dfc7861b154c3e9015467",
+      "sha256": "3286fb86d2f9ac09e9dbcf8b836cdc76a165b7a489f60b226e0579c60952189d"
+    },
+    {
+      "bytes": 273,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-ReportingRestoredLift-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 330,
+      "retained_local_source_sha256": "5f94f783bc87d1fc4617b3c5dc3853fd38520288b04038cf24616f336489a8fb",
+      "sha256": "60ef56c7cdc17e753cc8b3839c60f7ced23d47a0b4cc958dbbee980e0b72beb5"
+    },
+    {
+      "bytes": 4096,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-output_limit-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 4096,
+      "retained_local_source_sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+      "sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e"
+    },
+    {
+      "bytes": 44,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-reporting-smoke-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 44,
+      "retained_local_source_sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+      "sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233"
+    },
+    {
+      "bytes": 3,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-stderr_on_success-stderr.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 3,
+      "retained_local_source_sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+      "sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1"
+    },
+    {
+      "bytes": 22,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-stdout_spoof-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 22,
+      "retained_local_source_sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+      "sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289"
+    },
+    {
+      "bytes": 4,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-truncated_exit-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 4,
+      "retained_local_source_sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+      "sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea"
+    },
+    {
+      "bytes": 173,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectAxiom-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 230,
+      "retained_local_source_sha256": "19e44c47922cd4c34ed87dd9c7efa3d225972a0d447f6fb3d6931b6ca9babeae",
+      "sha256": "5278f5e6a7e17930b4bc9a0817956101b08425ad9771c3b15f5dc54cc772d651"
+    },
+    {
+      "bytes": 438,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectDefinition-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 552,
+      "retained_local_source_sha256": "9d131bb3893f539b0224407abdca13b0e49afa1668495098082bd8bdd463eb54",
+      "sha256": "f1446deb0bb7fb714a28da8bf5354ef1348829516b9344e6c4fbf631ebc89da1"
+    },
+    {
+      "bytes": 181,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectExtraRoster-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 238,
+      "retained_local_source_sha256": "46ae5dc5acf4684d7d3b02c21885020bf56e33b191afe648ca143672d7ae6078",
+      "sha256": "382101a98227039af99daa3bdcdafe2fbead918be05aa1706541f5238605b636"
+    },
+    {
+      "bytes": 183,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectMissingRoster-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 240,
+      "retained_local_source_sha256": "921983b612cf3fe18ae1e6a1aa20613d6df69398454db5d0cf46db643efcb944",
+      "sha256": "acd33b65f1152695680095c621fd8e0bab5992251f4e958e7974b09342ca7186"
+    },
+    {
+      "bytes": 241,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_assumed_conclusion-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 298,
+      "retained_local_source_sha256": "faee172fee4cd978c6bebc539e26393772e8393dde39d91096e07f3bbc80b79e",
+      "sha256": "98f05ae7e37a78982ba2e6472266664c930ab98609d785acb2da0e6a9d751686"
+    },
+    {
+      "bytes": 239,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_explicit_receiver-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 296,
+      "retained_local_source_sha256": "98868937a3d090aeb8f36d7cc071ef54c202a214550e49cea11f12b56e0e9296",
+      "sha256": "f8b4e937fb3dc2d8a0b2e796c6a5e6efe8c475f5e73646eedc0901a2a8bbfcf1"
+    },
+    {
+      "bytes": 223,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_fin3_only-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 280,
+      "retained_local_source_sha256": "9cb87435e500a64b434030f9566b768c0ab4b202d9561f787b7f0da3ffe068b4",
+      "sha256": "646fd116629d9372d08c917efff2d0f6482385194178429673bd9d6d9b69945a"
+    },
+    {
+      "bytes": 239,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_implicit_receiver-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 296,
+      "retained_local_source_sha256": "551860c1b021824a97d24523458a20e69eadb2950f8765dfeef0af0f29ec901b",
+      "sha256": "5d9d06c7a2fa32788121b89748c38b78524b5e940cb74f15e3b2cbf3b3c69e21"
+    },
+    {
+      "bytes": 235,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_renamed_premise-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 292,
+      "retained_local_source_sha256": "8bc6f3ff46bae51f75a5cb476be191eb977335ea0d7c291e2258edeb231befbf",
+      "sha256": "20748f89cd23b4c0972d09c602ef43a4f0e550ae7340da66766e2f25ac2017e2"
+    },
+    {
+      "bytes": 276,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-ReportingRestoredLift-stdout.log",
+      "representation": "complete text stream with machine-locator substitution",
+      "retained_local_source_bytes": 333,
+      "retained_local_source_sha256": "a87c226259d8c05add8f34e6fa713a4833d51132c26a2f234f8f41539c02de37",
+      "sha256": "54b139bc784144e1e05e56c96ebb8b384b74a826d82db9baee2733345d1a5559"
+    },
+    {
+      "bytes": 4096,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-output_limit-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 4096,
+      "retained_local_source_sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+      "sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e"
+    },
+    {
+      "bytes": 44,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-reporting-smoke-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 44,
+      "retained_local_source_sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+      "sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233"
+    },
+    {
+      "bytes": 3,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-stderr_on_success-stderr.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 3,
+      "retained_local_source_sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+      "sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1"
+    },
+    {
+      "bytes": 22,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-stdout_spoof-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 22,
+      "retained_local_source_sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+      "sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289"
+    },
+    {
+      "bytes": 4,
+      "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-truncated_exit-stdout.log",
+      "representation": "exact stream bytes",
+      "retained_local_source_bytes": 4,
+      "retained_local_source_sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+      "sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea"
+    },
+    {
+      "bytes": 10272,
+      "path": "audit/formal/lean-sx-dnf-order/Candidate.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 10272,
+      "retained_local_source_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+      "sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2"
+    },
+    {
+      "bytes": 12861,
+      "path": "audit/formal/lean-sx-dnf-order/Contract.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 12861,
+      "retained_local_source_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    {
+      "bytes": 19677,
+      "path": "audit/formal/lean-sx-dnf-order/EXPOSITION.md",
+      "representation": "Current status paragraph and proposed-work wording updated; mathematical exposition retained",
+      "retained_local_source_bytes": 19477,
+      "retained_local_source_sha256": "c4db853e5f1fa90d43d2ae6a97c4c118b9f3de390b2eee414cef672ca91ff82d",
+      "sha256": "298cdd6534dc826202247ba76421d039698cdb79a56eefd61ff509b2aaee27ee"
+    },
+    {
+      "bytes": 5311,
+      "path": "audit/formal/lean-sx-dnf-order/README.md",
+      "representation": "new professional public record or routing source",
+      "sha256": "2f4aad814d1b91845e6b00b203a90564e7a7d5b2fc174cc23f99b6c30ba106d4"
+    },
+    {
+      "bytes": 12251,
+      "path": "audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md",
+      "representation": "Status, accepted identity, current evidence links, and actual axiom record updated; source correspondence retained",
+      "retained_local_source_bytes": 11899,
+      "retained_local_source_sha256": "4a4c8c82ec6237e9e735ba038a05ae0824696d7f653d023d5b162ae5c505f3e4",
+      "sha256": "098e6bdc873ffda291b35425886c73e6cfdd0f02688a0e049012cfccafc09acf"
+    },
+    {
+      "bytes": 5038,
+      "path": "audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 5038,
+      "retained_local_source_sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0",
+      "sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0"
+    },
+    {
+      "bytes": 4421,
+      "path": "audit/formal/lean-sx-dnf-order/event-order.svg",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 4421,
+      "retained_local_source_sha256": "a5842a9f20ddf21df1c913f8e660a18ed32b491cf0e42c31fef406c866d30893",
+      "sha256": "a5842a9f20ddf21df1c913f8e660a18ed32b491cf0e42c31fef406c866d30893"
+    },
+    {
+      "bytes": 4085,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/AMENDMENT.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 4085,
+      "retained_local_source_sha256": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+      "sha256": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169"
+    },
+    {
+      "bytes": 12861,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/Contract.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 12861,
+      "retained_local_source_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    {
+      "bytes": 2185,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/ContractJudge.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 2185,
+      "retained_local_source_sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+    },
+    {
+      "bytes": 7136,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/FiniteControls.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 7136,
+      "retained_local_source_sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+      "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+    },
+    {
+      "bytes": 2693,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/JudgeAliases.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 2693,
+      "retained_local_source_sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+    },
+    {
+      "bytes": 3492,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/JudgeCore.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 3492,
+      "retained_local_source_sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    {
+      "bytes": 6849,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/JudgeTargets.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 6849,
+      "retained_local_source_sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+    },
+    {
+      "bytes": 4191,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/MUTATION_ROSTER.json",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 4191,
+      "retained_local_source_sha256": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+      "sha256": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21"
+    },
+    {
+      "bytes": 10030,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/RESOURCE_AND_EXECUTION_CONTRACT.md",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 10030,
+      "retained_local_source_sha256": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+      "sha256": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21"
+    },
+    {
+      "bytes": 7829,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/SemanticJudge.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 7829,
+      "retained_local_source_sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+      "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    {
+      "bytes": 1426,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/WrongTargets.lean",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 1426,
+      "retained_local_source_sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+      "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+    },
+    {
+      "bytes": 4427,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/frozen.json",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 4427,
+      "retained_local_source_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+      "sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586"
+    },
+    {
+      "bytes": 25145,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/judge.py",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 25145,
+      "retained_local_source_sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+      "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+    },
+    {
+      "bytes": 7563,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/reporting-regression.py",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 7563,
+      "retained_local_source_sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+      "sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee"
+    },
+    {
+      "bytes": 19401,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/selftest.py",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 19401,
+      "retained_local_source_sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+      "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+    },
+    {
+      "bytes": 690,
+      "path": "audit/formal/lean-sx-dnf-order/judge-v3/theorem-roster.json",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 690,
+      "retained_local_source_sha256": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+      "sha256": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+    },
+    {
+      "bytes": 2433,
+      "path": "audit/formal/lean-sx-dnf-order/replay-v1.json",
+      "representation": "new professional public record or routing source",
+      "sha256": "c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013"
+    },
+    {
+      "bytes": 7644,
+      "path": "audit/formal/lean-sx-dnf-order/replay.py",
+      "representation": "new professional public record or routing source",
+      "sha256": "1e4c2fc6f5e26c7e770f7cb200e9ad2d118ced821cba2af06669e7ef951bc2c8"
+    },
+    {
+      "bytes": 7601,
+      "path": "audit/formal/lean-sx-dnf-order/supplemental/reporting-regression-repaired-candidate.py",
+      "representation": "exact source bytes",
+      "retained_local_source_bytes": 7601,
+      "retained_local_source_sha256": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea",
+      "sha256": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea"
+    }
+  ],
+  "original_full_campaign": {
+    "deadline_utc": "2026-09-05T08:32:36Z",
+    "development_compilations": 6,
+    "failures": 3,
+    "full_runs": 7,
+    "successes": 4,
+    "unused_slot": 8
+  },
+  "original_judge_v3_freeze_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+  "projection_omissions": [
+    "Machine-specific directory prefixes",
+    "Filesystem identity tuples",
+    "Compiled olean files and executable binaries",
+    "Complete local environment records",
+    "Third-party PDF copies",
+    "Preparation attempts and unexecuted registrations outside this selected packet"
+  ],
+  "projection_rules_document": "audit/evidence/dnf-order-formal-verification-2026-09-05/PROJECTION.md",
+  "public_routing_manifest_sha256": "c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013",
+  "schema": "pid-rs/dnf-order-public-evidence-manifest-v1",
+  "scope": "Selected public projection of the completed DNF/order campaign and new exact-judge routing package. This manifest excludes itself. No complete raw-local archive, external custody, new pre-candidate freeze, scientific novelty or extra independent selected pair is claimed."
+}

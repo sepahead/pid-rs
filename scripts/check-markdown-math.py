@@ -17,6 +17,20 @@ PRESERVED_EXTERNAL_MARKDOWN_SHA256 = {
         "c289373b23aeb521952101e9143d924b60316ccece6ab9be84c2ff2b9b0ebe71"
     ),
 }
+# These pre-acceptance drafts are immutable source evidence, not current rendered prose.
+# Keep the old syntax and reviewer wording exactly as observed. The active explanation is
+# checked normally and corrects the unsupported human-review labels.
+PRESERVED_HISTORICAL_MARKDOWN_SHA256 = {
+    'audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md': (
+        'c4db853e5f1fa90d43d2ae6a97c4c118b9f3de390b2eee414cef672ca91ff82d'
+    ),
+    'audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md': (
+        '4a4c8c82ec6237e9e735ba038a05ae0824696d7f653d023d5b162ae5c505f3e4'
+    ),
+    'audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md': (
+        'd47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0'
+    ),
+}
 LEGACY_DELIMITERS = (r"\[", r"\]", r"\(", r"\)")
 FENCE = re.compile(r"^[ \t]*(?P<run>`{3,}|~{3,})")
 BARE_TEX_COMMAND = re.compile(r"(?<!\\)\\[A-Za-z]+")
@@ -129,7 +143,9 @@ def markdown_paths() -> list[Path]:
     for raw in result.stdout.split(b"\0"):
         if raw:
             paths.append(ROOT / raw.decode("utf-8"))
-    return sorted(paths)
+    # A missing mandatory archive must not disappear through Git path discovery.
+    paths.extend(ROOT / relative for relative in PRESERVED_HISTORICAL_MARKDOWN_SHA256)
+    return sorted(set(paths))
 
 
 def _backtick_run_end(line: str, start: int) -> int:
@@ -464,7 +480,7 @@ def inspect(path: Path) -> list[Finding]:
 
 
 def inspect_repository_path(path: Path, *, root: Path = ROOT) -> list[Finding]:
-    """Inspect repository prose or exact-bind a preserved external submission.
+    """Inspect current prose and bind exact external or historical source evidence.
 
     The external-model audit is retained byte-for-byte as advisory evidence. Its embedded TeX
     preamble is not repository-authored GitHub Markdown and must not be silently rewritten to pass
@@ -476,7 +492,18 @@ def inspect_repository_path(path: Path, *, root: Path = ROOT) -> list[Finding]:
         return [Finding(path, 1, "Markdown path is outside the repository root")]
     expected = PRESERVED_EXTERNAL_MARKDOWN_SHA256.get(relative)
     if expected is None:
-        return inspect(path)
+        historical = PRESERVED_HISTORICAL_MARKDOWN_SHA256.get(relative)
+        if historical is None:
+            return inspect(path)
+        try:
+            observed = hashlib.sha256(path.read_bytes()).hexdigest()
+        except OSError as error:
+            return [Finding(path, 1, f"cannot read preserved historical Markdown: {error}")]
+        if observed != historical:
+            return [Finding(path, 1,
+                "preserved historical Markdown exact-byte custody drifted: "
+                f"expected {historical}, observed {observed}")]
+        return []
     try:
         observed = hashlib.sha256(path.read_bytes()).hexdigest()
     except OSError as error:

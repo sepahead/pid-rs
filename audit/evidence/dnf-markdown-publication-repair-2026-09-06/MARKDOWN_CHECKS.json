@@ -1,0 +1,112 @@
+{
+  "schema": "pid-rs/dnf-markdown-repair-scoped-execution-v1",
+  "recorded_utc": "2026-09-06T04:41:27.195659+00:00",
+  "scope": "Four actual normal/optimized Markdown checker and causal self-test executions. No PDF aggregate, formal theorem, hosted or human review credit. Outer source input records remain local; these exact causal inputs and decisive outputs are public.",
+  "inputs": [
+    {
+      "path": "scripts/check-markdown-math.py",
+      "bytes": 17330,
+      "sha256": "be8b7c9a31bb7687fa074ec5bbd177776da0d9e1026da7f5fdb4194293b5324a"
+    },
+    {
+      "path": "scripts/check-markdown-math-self-test.py",
+      "bytes": 11502,
+      "sha256": "a9b501e3eb792b47b09edb04975ca89c11fb7e3769c260bc787df138ef238f39"
+    },
+    {
+      "path": "audit/formal/lean-sx-dnf-order/EXPOSITION.md",
+      "bytes": 18397,
+      "sha256": "03654e23771cafc9455abd0bda3334f3de6027e3e528a71b243bab7ce5fba9c5"
+    },
+    {
+      "path": "audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md",
+      "bytes": 12263,
+      "sha256": "5017612eff3a8ea6d48b3e877d56eac87df9a2fba6db1632bcd3760876a93fca"
+    },
+    {
+      "path": "audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md",
+      "bytes": 4924,
+      "sha256": "34f1534b9b3c034a89ca21c2cfb46a556e464854f8f0458df40e610d263524c9"
+    }
+  ],
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-markdown-math.py"
+      ],
+      "completed_utc": "2026-09-06T04:40:08.808309+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.8056371250422671,
+      "stdout_path": "markdown-math.stdout",
+      "stdout_sha256": "c3fbf3520e69d605d3b063aa97f069b503855e7a1bc293360a4faed263bcc6e0",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs_unchanged": true,
+      "index_unchanged": true,
+      "private_outer_result_sha256": "a4e870849a43fd7d5884a0bb5c55c287af6d9260fe8c08ac9576d1cad06c52a2"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "-O",
+        "scripts/check-markdown-math.py"
+      ],
+      "completed_utc": "2026-09-06T04:40:33.300068+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.801434125052765,
+      "stdout_path": "markdown-math.stdout",
+      "stdout_sha256": "c3fbf3520e69d605d3b063aa97f069b503855e7a1bc293360a4faed263bcc6e0",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs_unchanged": true,
+      "index_unchanged": true,
+      "private_outer_result_sha256": "44c644052b75996444a06fb58845d356eb4bb1a051e10dc9d11ff5199f3cb6e7"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-markdown-math-self-test.py"
+      ],
+      "completed_utc": "2026-09-06T04:40:33.731860+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.29532545909751207,
+      "stdout_path": "markdown-math-self-test.stdout",
+      "stdout_sha256": "a582abddbdf50310091ea768cf8f63613cbca710c8b0e64e3279810f40952995",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs_unchanged": true,
+      "index_unchanged": true,
+      "private_outer_result_sha256": "bfc90a899380bd51da8ec04424218e2bb93cf63e088d64232bfb046dca0ca5e8"
+    },
+    {
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "-O",
+        "scripts/check-markdown-math-self-test.py"
+      ],
+      "completed_utc": "2026-09-06T04:40:34.163852+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2908038749592379,
+      "stdout_path": "markdown-math-self-test.stdout",
+      "stdout_sha256": "a582abddbdf50310091ea768cf8f63613cbca710c8b0e64e3279810f40952995",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "inputs_unchanged": true,
+      "index_unchanged": true,
+      "private_outer_result_sha256": "14ed36b7081c94737dbb43d3dc16efa9e9732aeba992e4abcebf39108d749915"
+    }
+  ]
+}

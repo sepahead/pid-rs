@@ -1,0 +1,107 @@
+{
+  "additional_independent_selected_pair_claim": false,
+  "artifact_scope": "All409 control/regression artifact references and119 retained input-byte captures were rehashed read-only after execution. The selected pair was separately rehashed by the coordinator. Binary artifacts and complete raw run directories remain local and are not all included here.",
+  "budget": {
+    "control_runs": 2,
+    "minutes": 45,
+    "old_campaign_credit": 0,
+    "retries": 0,
+    "selected_failed_attempts": 0,
+    "selected_full_attempt_cap": 4,
+    "selected_full_runs_used": 2,
+    "separate_reporting_regressions": 1
+  },
+  "candidate_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+  "contract_sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+  "controls": [
+    {
+      "all_cases_pass": true,
+      "cases": 75,
+      "fresh_control_kernel_returncode": 0,
+      "mode": "controls-normal",
+      "receipt": "receipts/controls-normal.json",
+      "status": "amendment_controls_pass"
+    },
+    {
+      "all_cases_pass": true,
+      "cases": 75,
+      "fresh_control_kernel_returncode": 0,
+      "mode": "controls-optimized",
+      "receipt": "receipts/controls-optimized.json",
+      "status": "amendment_controls_pass"
+    }
+  ],
+  "execution_interval_end_source": "Start plus observed total elapsed seconds838.6419132079463; individual command times remain in projected receipts.",
+  "execution_interval_utc": [
+    "2026-09-05T08:47:51.052540Z",
+    "2026-09-05T09:01:49.694453Z"
+  ],
+  "execution_role": "The same review worker ran the selected pair and controls; coordinator review is separate. This is a packaging replay after the original campaign, not an independently authored proof or additional independent selected pair.",
+  "historical_packaging_input_manifest_sha256": "69781060cef002bdb7bb4d7ff92b35947e9e6613c78f7881e931742678ed229b",
+  "judge_v3_freeze_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+  "original_campaign_changed": false,
+  "post_execution_rehash": [
+    {
+      "artifact_hash_mismatches": 0,
+      "artifacts": 187,
+      "captured_inputs": 43,
+      "command_record_mismatches": 0,
+      "command_records": 31,
+      "missing_or_mismatched_input_captures": 0,
+      "run": "public-controls-normal-01"
+    },
+    {
+      "artifact_hash_mismatches": 0,
+      "artifacts": 187,
+      "captured_inputs": 43,
+      "command_record_mismatches": 0,
+      "command_records": 31,
+      "missing_or_mismatched_input_captures": 0,
+      "run": "public-controls-optimized-01"
+    },
+    {
+      "artifact_hash_mismatches": 0,
+      "artifacts": 35,
+      "captured_inputs": 33,
+      "command_record_mismatches": 0,
+      "command_records": 1,
+      "missing_or_mismatched_input_captures": 0,
+      "run": "public-reporting-regression-01"
+    }
+  ],
+  "projection_rules": "PROJECTION.md",
+  "publication_manifest": "CURRENT_PUBLICATION_MANIFEST.json",
+  "reporting_regression": {
+    "candidate_binding": "Unchanged separately adopted repaired-source helper; original frozen helper remains historical.",
+    "concrete_term_unit_mismatches": 12,
+    "final_term_result_metavariable_mismatches": 1,
+    "is_full_wrapper_run": false,
+    "positive_records_bound": 13,
+    "receipt": "receipts/reporting-regression.json",
+    "restored_monad_mismatches": 13,
+    "status": "reporting_regression_pass"
+  },
+  "routing_manifest_sha256": "c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013",
+  "schema": "pid-rs.dnf-order-public-packaging-receipt.v1",
+  "selected_modes": [
+    {
+      "actual_records": 13,
+      "fresh_kernel_returncode": 0,
+      "mode": "selected-normal",
+      "receipt": "receipts/selected-normal.json",
+      "semantic_stdout": "selected-semantic-records.log",
+      "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "status": "local_semantic_kernel_pass"
+    },
+    {
+      "actual_records": 13,
+      "fresh_kernel_returncode": 0,
+      "mode": "selected-optimized",
+      "receipt": "receipts/selected-optimized.json",
+      "semantic_stdout": "selected-semantic-records.log",
+      "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+      "status": "local_semantic_kernel_pass"
+    }
+  ],
+  "status": "completed_separate_local_packaging_matrix"
+}

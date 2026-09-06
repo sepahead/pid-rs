@@ -1,0 +1,78 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:57:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:59:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:61:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:63:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:65:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:67:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:69:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:71:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:73:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:75:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:77:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:79:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM Unit
+{REPOSITORY}/.local/sx-dnf-order-judge-v2-20260905/runs/root-original-judge-defect-01/src/SemanticJudge.lean:81:2: error: Type mismatch
+  liftIO (IO.println ("DNF_JUDGE_RESULT " ++ result.compress))
+has type
+  CommandElabM Unit
+but is expected to have type
+  TermElabM ?m.4

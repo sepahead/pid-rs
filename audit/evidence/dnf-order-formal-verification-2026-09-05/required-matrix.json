@@ -1,0 +1,68 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "all_actual_theorem_records_equal": true,
+    "all_semantic_stdout_bytes_equal": true,
+    "deadline_utc": "2026-09-05T08:32:36+00:00",
+    "development_compilations_consumed": 6,
+    "full_wrappers_consumed": 7,
+    "full_wrappers_failed": 3,
+    "full_wrappers_successful": 4,
+    "original_and_copied_frozen_files_unchanged": 15,
+    "runs": [
+      {
+        "candidate_bytes": 10272,
+        "candidate_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+        "fresh_kernel_elapsed_seconds": 175.00069174997043,
+        "fresh_kernel_exit_code": 0,
+        "path": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/root-repaired-normal-04",
+        "receipt_sha256": "84105eec731d4f72a9af2f76b892445b99291e91dd0a8597d4383ddc27b3e417",
+        "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "slot": 4,
+        "status": "local_semantic_kernel_pass",
+        "theorem_records": 13
+      },
+      {
+        "candidate_bytes": 10272,
+        "candidate_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+        "fresh_kernel_elapsed_seconds": 175.30254012497608,
+        "fresh_kernel_exit_code": 0,
+        "path": "{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/root-repaired-optimized-05",
+        "receipt_sha256": "7e5a08a2ef7d3f3d7f201cbe05f50ae44575262d68685c9f9cca8b5e5e9975ba",
+        "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "slot": 5,
+        "status": "local_semantic_kernel_pass",
+        "theorem_records": 13
+      },
+      {
+        "candidate_bytes": 10329,
+        "candidate_sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+        "fresh_kernel_elapsed_seconds": 173.46907950006425,
+        "fresh_kernel_exit_code": 0,
+        "path": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-normal-06",
+        "receipt_sha256": "470a71a287021afab61240e82712a60dd3a36ba17d698c732ed005b283cf69bb",
+        "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "slot": 6,
+        "status": "local_semantic_kernel_pass",
+        "theorem_records": 13
+      },
+      {
+        "candidate_bytes": 10329,
+        "candidate_sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+        "fresh_kernel_elapsed_seconds": 174.83459583297372,
+        "fresh_kernel_exit_code": 0,
+        "path": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/repaired-cosmetic-optimized-07",
+        "receipt_sha256": "42ee6291b62838fc3b282f43df8d68f05055183072227b242f05bd479d19344a",
+        "semantic_stdout_sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "slot": 7,
+        "status": "local_semantic_kernel_pass",
+        "theorem_records": 13
+      }
+    ],
+    "schema": "local-dnf-order-required-matrix-comparison-v1",
+    "scope": "Two candidate source forms in both Python modes under unchanged v3. Coordinator selected pair plus worker cosmetic pair; no additional duplicate selected pair is claimed.",
+    "unused_reserved_full_slot": 8
+  },
+  "retained_local_source_sha256": "16788ba2d6a47d0c99e548e80a9868d20d7f3fa72b4a2c708636ebcdddadad0f",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

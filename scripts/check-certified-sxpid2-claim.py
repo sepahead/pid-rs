@@ -171,7 +171,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "e454f5db9cddb08baaf28193f1afedacb591f001f1dade02467cb5f5d0d06cdd"
+        "e580bf1dabfafdbe6dcb19fbe3811cfcddd4880ef19b8a7581488ff6836dbb7d"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (

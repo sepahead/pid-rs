@@ -1,0 +1,612 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "candidate_exists": true,
+    "commands": [
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/PidFiniteConvergence/Deterministic.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/PidFiniteConvergence/Deterministic.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 4.498091416899115,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-PidFiniteConvergence-Deterministic",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2370633728,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:34.711543+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/PidFiniteConvergence/SxEventBridge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/PidFiniteConvergence/SxEventBridge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.638966790982522,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-PidFiniteConvergence-SxEventBridge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2394570752,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:39.209727+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/Contract.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/Contract.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.4782166669610888,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-Contract",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2364145664,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:40.848971+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/JudgeCore.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/JudgeCore.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 0.9641531669767573,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeCore",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 1409351680,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:42.327420+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/JudgeTargets.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/JudgeTargets.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.4272426669485867,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeTargets",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2332049408,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:43.291803+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/JudgeAliases.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/JudgeAliases.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.3261221670545638,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-JudgeAliases",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2348761088,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:44.719304+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/ContractJudge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/ContractJudge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.6007907909806818,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-ContractJudge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2708570112,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:46.045676+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/Candidate.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/Candidate.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.574330041068606,
+        "execution_error": null,
+        "failure": null,
+        "label": "compile-candidate",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2397601792,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 0,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:29:47.652988+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/SemanticJudge.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/SemanticJudge.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src",
+        "elapsed_seconds": 1.8913194579072297,
+        "execution_error": null,
+        "failure": null,
+        "label": "semantic-judge",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2759065600,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 261,
+        "returncode": 1,
+        "started_utc": "2026-09-05T07:29:49.227518+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "140118c02ef1669ad28e047d2237a4ac04697749954c9bc2a0a4772e928c2deb"
+      }
+    ],
+    "declared_local_artifact_inventory": {
+      "00-compile-PidFiniteConvergence-Deterministic/command.json": "bcf466dc9cc142a0dada4c987ceaff608ba15fbc621605b6bdf4967d2aebda2c",
+      "00-compile-PidFiniteConvergence-Deterministic/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "00-compile-PidFiniteConvergence-Deterministic/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-compile-PidFiniteConvergence-SxEventBridge/command.json": "0670933ad2d22113d96b16b4c6e0dd8fecd9db338c07505ccd94a2b20c60f6f1",
+      "01-compile-PidFiniteConvergence-SxEventBridge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "01-compile-PidFiniteConvergence-SxEventBridge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "02-compile-Contract/command.json": "6f7c37adaf293ad234471a560c6e983f157624af192c1d7fcf9ed4a824fa3b1e",
+      "02-compile-Contract/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "02-compile-Contract/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "03-compile-JudgeCore/command.json": "fa52fe8d5dcb45198cf17474674a29579382605e1d0f31886fc3e0887fcb86ec",
+      "03-compile-JudgeCore/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "03-compile-JudgeCore/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "04-compile-JudgeTargets/command.json": "dbd27c448031cb216d9304bf35a9176e285645ec2d5b2038598d67c45c76183c",
+      "04-compile-JudgeTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "04-compile-JudgeTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-compile-JudgeAliases/command.json": "75326ddfaac08fb0c0fd7f057ff26e038032bcc9b95105eab68f84b67855e949",
+      "05-compile-JudgeAliases/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "05-compile-JudgeAliases/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "06-compile-ContractJudge/command.json": "ecf4f092f50dfa26a6c8262cbbba5e967e51d486d4ecff50ddcb117c5a6c651a",
+      "06-compile-ContractJudge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "06-compile-ContractJudge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07-compile-candidate/command.json": "9a1366af656c850d9da3c09a17b25446db0f93c991de572d78890899dc1e04aa",
+      "07-compile-candidate/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "07-compile-candidate/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "08-semantic-judge/command.json": "0885855913990595b95921355384d6a83dbd39297c62f946f18624e2361b8c8f",
+      "08-semantic-judge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "08-semantic-judge/stdout.log": "140118c02ef1669ad28e047d2237a4ac04697749954c9bc2a0a4772e928c2deb",
+      "build/Candidate.olean": "fc97ad086681ef63578698c66ec26d08c555c920d4fec74946ddff0a63dfee1a",
+      "build/Contract.olean": "8013ba04543b8b9bea10382bc331c4dca676576f21e8c784dfed0e0eb2a9b7af",
+      "build/ContractJudge.olean": "3552dfd76ad7f16f8173c91dd9022c825b862e02df94f7ef84f6b07377da169e",
+      "build/JudgeAliases.olean": "670a60bd2f38fb73f1916333dad537c6939765d080f65efcac54e8f9f833e5d9",
+      "build/JudgeCore.olean": "31b15bc3f1e37a4a1b909850d2abe04bfdb0a389a589f2fa4c28c656fa06529d",
+      "build/JudgeTargets.olean": "f547006591192be1fd8834e059c5e4aae8914b3b7735498f40019f47070e3806",
+      "build/PidFiniteConvergence/Deterministic.olean": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9",
+      "build/PidFiniteConvergence/SxEventBridge.olean": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1",
+      "captured-Candidate.lean": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+      "environment.json": "92508f9fe3aa4f56a555b53ebc6adbcab7a8b70cfb3a1b80e858eceba2fa5773",
+      "input-bytes/0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+      "input-bytes/13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+      "input-bytes/1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+      "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+      "input-bytes/259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+      "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+      "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+      "input-bytes/3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+      "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+      "input-bytes/4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "input-bytes/42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+      "input-bytes/4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+      "input-bytes/45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+      "input-bytes/49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+      "input-bytes/4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+      "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+      "input-bytes/6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+      "input-bytes/724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+      "input-bytes/76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+      "input-bytes/b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+      "input-bytes/f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+      "prefix-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "prefix-stdout.log": "ebce7c6b7a024f5fc95464aefa8bd0e31edbd9b73882ee03662dc3e15c7eb2c7",
+      "src/Candidate.lean": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+      "src/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "src/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+      "src/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+      "src/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "src/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+      "src/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "src/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "src/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    "failure": "semantic-judge: nonzero process status",
+    "freeze": {
+      "adoption_boundary": "Coordinator must inspect and adopt this exact successor manifest digest before amended full candidate replay. The predecessor and both failed full runs remain unchanged.",
+      "campaign": {
+        "coordinator_selected_normal_optimized_slots": [
+          7,
+          8
+        ],
+        "deadline_utc": "2026-09-05T08:32:36+00:00",
+        "development_compile_limit": 64,
+        "direct_reporting_compilation": "Separately recorded regression control; does not repeat the complete wrapper.",
+        "full_wrapper_limit": 8,
+        "prior_consumed_full_wrappers": 2,
+        "worker_cosmetic_normal_optimized_slots": [
+          5,
+          6
+        ],
+        "worker_selected_normal_optimized_slots": [
+          3,
+          4
+        ]
+      },
+      "candidate_exists": true,
+      "candidate_module": "Candidate",
+      "candidate_namespace": "PidSxDnfOrderCandidate",
+      "candidate_sha256_at_amendment": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+      "contract_module": "Contract",
+      "files": {
+        "AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+        "Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+        "ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+        "FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+        "JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+        "JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+        "JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+        "MUTATION_ROSTER.json": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+        "RESOURCE_AND_EXECUTION_CONTRACT.md": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+        "SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+        "WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+        "judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+        "reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+        "selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+        "theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+      },
+      "frozen_utc": "2026-09-05T07:15:06.755760+00:00",
+      "initial_amendment_reviews": {
+        "coordinator_sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4",
+        "verifier_sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9"
+      },
+      "mathematical_contract_revision": 2,
+      "pending_at_freeze": [
+        "Complete unchanged-candidate normal and optimized wrapper replay with thirteen real records and fresh kernel closure.",
+        "Comment/whitespace-only candidate variant under the same normal and optimized semantic and kernel gates.",
+        "Direct regression restoring all thirteen original reporting calls after a bound complete selected-candidate pass.",
+        "Coordinator normal and optimized selected-candidate acceptance on the adopted original successor."
+      ],
+      "pre_freeze_controls": {
+        "normal": {
+          "fresh_kernel_elapsed_seconds": 188.85204875003546,
+          "passed_controls": 75,
+          "path": "runs/selftest-normal-02/selftest-receipt.json",
+          "sha256": "4660fedd8efa3b885ee02debddc28babf80bf3e196fcd675577948e59634b048"
+        },
+        "optimized": {
+          "fresh_kernel_elapsed_seconds": 183.2170043749502,
+          "passed_controls": 75,
+          "path": "runs/selftest-optimized-01/selftest-receipt.json",
+          "sha256": "517a18ab8d36882b37fd06063028246f5f40d6eb30632f4c306aa1539a26e70b"
+        }
+      },
+      "predecessor_freeze_sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05",
+      "prior_failure_receipts": {
+        "candidate_original_judge": "74d9aec375c5dd8919c541ab47c547803b4228dd2e62751ac4066062b9bda676",
+        "coordinator_original_judge": "f14e29462e063ecc5f1e07a6128ffc6f3df48e1333b5031741505a07ad315d30"
+      },
+      "schema": "local-dnf-order-judge-freeze-v3",
+      "scope": "Local reporting amendment after the unchanged candidate existed and compiled, before amended full replay. No pre-candidate registration, external custody, scientific novelty, estimator or consumer claim.",
+      "semantic_judge_module": "SemanticJudge",
+      "status": "frozen_after_candidate_before_replay"
+    },
+    "inputs": {
+      "{LEAN_TOOLCHAIN}/bin/lean": {
+        "bytes": 49968,
+        "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+      },
+      "{LEAN_TOOLCHAIN}/bin/leanchecker": {
+        "bytes": 78128,
+        "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/AMENDMENT.md": {
+        "bytes": 4085,
+        "sha256": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/FiniteControls.lean": {
+        "bytes": 7136,
+        "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/MUTATION_ROSTER.json": {
+        "bytes": 4191,
+        "sha256": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/RESOURCE_AND_EXECUTION_CONTRACT.md": {
+        "bytes": 10030,
+        "sha256": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/WrongTargets.lean": {
+        "bytes": 1426,
+        "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/frozen.json": {
+        "bytes": 4427,
+        "sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/judge.py": {
+        "bytes": 25145,
+        "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/reporting-regression.py": {
+        "bytes": 7563,
+        "sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/Candidate.lean": {
+        "bytes": 10328,
+        "sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/Contract.lean": {
+        "bytes": 12861,
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/ContractJudge.lean": {
+        "bytes": 2185,
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/JudgeAliases.lean": {
+        "bytes": 2693,
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/JudgeCore.lean": {
+        "bytes": 3492,
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/JudgeTargets.lean": {
+        "bytes": 6849,
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/PidFiniteConvergence/Deterministic.lean": {
+        "bytes": 9093,
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/PidFiniteConvergence/SxEventBridge.lean": {
+        "bytes": 27203,
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/SemanticJudge.lean": {
+        "bytes": 7829,
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/selftest.py": {
+        "bytes": 19401,
+        "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/theorem-roster.json": {
+        "bytes": 690,
+        "sha256": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/inputs/selected/Candidate.lean": {
+        "bytes": 10328,
+        "sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence.lean": {
+        "bytes": 371,
+        "sha256": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": {
+        "bytes": 9093,
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+      },
+      "{REPOSITORY}/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": {
+        "bytes": 27203,
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+      },
+      "{REPOSITORY}/audit/formal/lean/lake-manifest.json": {
+        "bytes": 3144,
+        "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+      },
+      "{REPOSITORY}/audit/formal/lean/lakefile.toml": {
+        "bytes": 243,
+        "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+      },
+      "{REPOSITORY}/audit/formal/lean/lean-toolchain": {
+        "bytes": 25,
+        "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+      },
+      "{REPOSITORY}/scripts/check-lean-finite-convergence.py": {
+        "bytes": 58665,
+        "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+      },
+      "{REPOSITORY}/scripts/check-lean-sxpid3-informative-invariance.py": {
+        "bytes": 17039,
+        "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+      }
+    },
+    "scope": "Local semantic/kernel evidence only; no external custody, priority, estimator or consumer claim.",
+    "status": "not_accepted"
+  },
+  "retained_local_source_sha256": "fc14e33890d2fac9b8a23e51939b1b390573280681b9ff2dfe9dd8c7fd08219d",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

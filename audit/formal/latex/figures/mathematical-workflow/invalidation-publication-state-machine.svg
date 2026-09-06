@@ -45,13 +45,15 @@
     <text x="171" y="246" class="node-title">Source</text>
     <text x="171" y="277" class="node-body">premise or input</text>
 
-    <rect x="322" y="201" width="198" height="104" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
-    <text x="421" y="246" class="node-title">Generator</text>
-    <text x="421" y="277" class="node-body">deterministic rule</text>
+    <rect x="322" y="192" width="198" height="122" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
+    <text x="421" y="229" class="node-title">Generator</text>
+    <text x="421" y="263" class="node-body">deterministic</text>
+    <text x="421" y="290" class="node-body">rule</text>
 
-    <rect x="572" y="201" width="198" height="104" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
-    <text x="671" y="246" class="node-title">Artifact</text>
-    <text x="671" y="277" class="node-body">exact output bytes</text>
+    <rect x="572" y="192" width="198" height="122" rx="15" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
+    <text x="671" y="229" class="node-title">Artifact</text>
+    <text x="671" y="263" class="node-body">exact output</text>
+    <text x="671" y="290" class="node-body">bytes</text>
 
     <rect x="822" y="193" width="198" height="120" rx="15" fill="#D2E0E2" stroke="#B28218" stroke-width="5"/>
     <rect x="850" y="201" width="142" height="34" rx="17" fill="#1F3F60"/>
@@ -75,8 +77,8 @@
 
   <g fill="none" stroke="#1F6968" stroke-width="4" marker-end="url(#state-arrow)">
     <path d="M350 527 H438"/>
-    <path d="M750 527 H838"/>
-    <path d="M1150 527 H1238"/>
+    <path d="M750 527 H814"/>
+    <path d="M1174 527 H1238"/>
   </g>
   <g>
     <rect x="72" y="467" width="278" height="120" rx="18" fill="#F7F3E9" stroke="#1F3F60" stroke-width="4"/>
@@ -91,7 +93,7 @@
     <text x="594" y="540" class="state">Local gates pass</text>
     <text x="594" y="568" class="node-body">exact subject tree bound</text>
 
-    <rect x="838" y="467" width="312" height="120" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
+    <rect x="814" y="467" width="360" height="120" rx="18" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
     <rect x="850" y="482" width="120" height="34" rx="17" fill="#1F6968"/>
     <text x="910" y="506" class="badge">HOSTED</text>
     <text x="994" y="540" class="state">Bound hosted run</text>

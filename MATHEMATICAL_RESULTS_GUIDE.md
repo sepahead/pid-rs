@@ -710,8 +710,8 @@ the missing redundancy term and lattice decomposition.
   still needs a population manifold model and a consistency theorem. No redundancy is computed.
   Raw sensor values do not become hyperbolic by declaration.
 - **Hyperbolic shared exclusions.** No implementation exists. The conditional lemma below settles
-  one population limit only. Estimator consistency and the product-space kernel remain long-term
-  research. No current Galadriel or CREBAIN use depends on them.
+  one population limit only. Estimator consistency, the grouped product-source MI route, and the
+  shared-exclusions kernel remain research tasks. No current Galadriel or CREBAIN use depends on them.
 - **General mixed support.** No estimator is implemented. The Schick-Poland construction still needs
   tractable conditional-kernel and Radon--Nikodým estimation. This gap matters when variables mix
   atoms and continua. It is not deployment-ready.
@@ -729,10 +729,17 @@ $I((S_1,S_2);T)$ as well as a shared-exclusions redundancy. The joint source $(S
 product space. Concatenating two Lorentz-coordinate vectors does not generally produce a point on a
 larger hyperboloid.
 
-The present API supplies no product-manifold neighbour kernel. It also supplies no kernel for
-heterogeneous source and target manifolds. A future route must define the product
-metric, product reference measure, shell convention, and tie rule. Only then can it state that the
-four PID inputs concern the same law and gauge. **[O]**
+The public hyperbolic MI report accepts two Lorentz blocks at curvature $-1$. The blocks can have
+different intrinsic dimensions. The joint neighbourhood uses the maximum of the two geodesic
+distances. This pairwise route therefore already uses a product-manifold neighbourhood.
+
+The public API lacks a grouped source $(S_1,S_2)$ against a third target block. That composition is
+needed for $I((S_1,S_2);T)$. It also lacks a general combination of different geometric model families.
+The internal grouped-source routine accepts only the ordinary Chebyshev configuration.
+
+A manifold PID route still needs the grouped-source and shared-exclusions kernels. It must declare
+product reference measures, compatible source scales, shell conventions, and tie rules. These
+conditions are needed to relate all four inputs to the same law and gauge. **[O]**
 
 #### A proved population-level transfer, and why it stops there
 
@@ -752,6 +759,10 @@ E_{i,r}=\{S_i\in B_M(s_i,r)\},\qquad
 C_r=\{T\in B_N(t,r)\},\qquad
 A_r=E_{1,r}\cup E_{2,r}.
 $$
+
+These events are subsets of the underlying sample space. Their intersection means that the
+source conditions hold on the same draw. The figure shows separate source-coordinate copies of
+$M$. It does not show disjoint sample-space events, and it does not assume source independence.
 
 Assume the joint law of $(T,S_1,S_2)$ is absolutely continuous with respect to
 $\nu\otimes\mu\otimes\mu$. Its displayed marginals are then absolutely continuous with respect to
@@ -815,10 +826,6 @@ $$
 The proof needs only the two displayed little-$o$ overlap conditions. Local essential boundedness is
 a convenient sufficient condition, not a necessary one.
 
-![Common-radius source balls have equal first-order volume. Pair and target-conditioned triple
-overlaps are second order, so inclusion--exclusion leaves the two first-order source contributions.
-The last panel shows why a first-order source overlap would change the limit rather than cancel.](audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg)
-
 Exact inclusion--exclusion now gives
 
 $$
@@ -836,6 +843,12 @@ all sufficiently small $r$. Continuity of $\log$ proves the boxed limit.
 Here $v_r\asymp r^d$ and $w_r\asymp r^q$. The discarded overlap terms are $O(r^{2d})$ and
 $O(r^{q+2d})$. Positivity makes the retained union scales $\Theta(r^d)$ and
 $\Theta(r^{q+d})$. The target dimension can differ because $w_r$ cancels.
+
+![The two sources use separate coordinates of the same measured space $M$. Each event $E_{i,r}$
+is the preimage under $S_i$ of a radius-$r$ ball with volume $v_r$. The displayed overlap conditions
+give leading terms with a common factor $w_rv_r$. Inclusion--exclusion and cancellation give the
+conditional population limit. A nonzero first-order source overlap changes the union denominator.
+The result is a conditional population lemma, not a finite-sample estimator theorem.](audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg)
 
 **Why the displayed smooth marginals do not suffice.** Smooth displayed densities and boundedness of
 the full density do not force a lower-order source overlap. The following absolutely-continuous

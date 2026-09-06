@@ -113,7 +113,7 @@ FIGURE_SPECS = (
     },
     {
         "source": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
-        "source_sha256": "db7c44960fdbad22586e9fbb793deb1944991ff155ceeb13efb9e86774e7a388",
+        "source_sha256": "cac0aca79ed5c2268dbeef4b886e45cb7c4a67dc44d48b0b2daeeaa74a6e17ac",
         "output": "common-radius-small-ball-bridge.pdf",
         "font_programs": {
             "SourceSansPro-Regular",

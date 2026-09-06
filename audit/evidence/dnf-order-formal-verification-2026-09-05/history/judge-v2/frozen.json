@@ -1,0 +1,33 @@
+{
+  "adoption_boundary": "Coordinator must adopt this exact manifest digest before candidate work starts.",
+  "candidate_exists": false,
+  "candidate_module": "Candidate",
+  "candidate_namespace": "PidSxDnfOrderCandidate",
+  "contract_module": "Contract",
+  "files": {
+    "Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "MUTATION_ROSTER.json": "40739c97fb98217c709af7815216bf572e7dc9f479c5ad8b82e845783311ff3a",
+    "RESOURCE_AND_EXECUTION_CONTRACT.md": "a64678a1e23e51630c15b0b3b05a7f2210f26194ac789b561cc737d1eda9e25a",
+    "SemanticJudge.lean": "0c1cf11598048c39e8fee92384362e15e2c9e3555dd93f4befa4c15f865889ab",
+    "WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+    "judge.py": "0e50f618b05d059feb6b4e366fa3189ad2c615f9fc6e4b416eb797957e5ed1de",
+    "selftest.py": "4bdfffb037e6634994f0a03d90ed39b83e8efa33b3758acc142fefde83eefed9",
+    "theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+  },
+  "frozen_utc": "2026-09-05T06:03:45.935760+00:00",
+  "optimized_control_status_at_freeze": "pending; rerun the exact frozen source bytes",
+  "pre_freeze_normal_receipt": {
+    "passed_controls": 70,
+    "path": "runs/selftest-normal-04/selftest-receipt.json",
+    "sha256": "10fe5ddbd04a81aaca585b1ba904b8966700e2ba64e5838ab2ea2e2700b1f170"
+  },
+  "schema": "local-dnf-order-judge-freeze-v2",
+  "scope": "Local pre-candidate judge freeze. No candidate proof, external judge custody, or scientific-novelty claim.",
+  "semantic_judge_module": "SemanticJudge",
+  "status": "frozen_before_candidate"
+}

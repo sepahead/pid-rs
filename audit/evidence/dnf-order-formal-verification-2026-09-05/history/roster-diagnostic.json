@@ -1,0 +1,196 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "commands": [
+      {
+        "command": [
+          "{LEAN_TOOLCHAIN}/bin/lean",
+          "-t",
+          "0",
+          "-M",
+          "4096",
+          "-o",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/diagnostics/roster-01/RosterInspection.olean",
+          "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/diagnostics/roster-01/RosterInspection.lean"
+        ],
+        "cwd": "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/diagnostics/roster-01",
+        "elapsed_seconds": 1.8901488329283893,
+        "execution_error": null,
+        "failure": null,
+        "label": "roster-inspection",
+        "limits": {
+          "observed_group_rss_bytes": 4294967296,
+          "rss_limit_is_hard_os_cap": false,
+          "rss_sample_interval_seconds": 0.1,
+          "seconds": 600,
+          "stderr_bytes": 4194304,
+          "stdout_bytes": 4194304
+        },
+        "peak_observed_group_rss_bytes": 2756116480,
+        "remaining_live_group_processes": [],
+        "retained_stderr_bytes": 0,
+        "retained_stdout_bytes": 16928,
+        "returncode": 0,
+        "started_utc": "2026-09-05T07:34:19.419098+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "f8c768aa9071cee250e80133e12f590d0e2acd5b618c5e8317b952bbae77a1ca"
+      }
+    ],
+    "inputs": {
+      "{LEAN_TOOLCHAIN}/bin/lean": {
+        "bytes": 49968,
+        "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/diagnostics/roster-01/RosterInspection.lean": {
+        "bytes": 1036,
+        "sha256": "3e4798546f7df779ff776a3d05c8f19e8aa5287d0915b29066a9f3333ddf6358"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/Candidate.olean": {
+        "bytes": 263336,
+        "sha256": "fc97ad086681ef63578698c66ec26d08c555c920d4fec74946ddff0a63dfee1a"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/Contract.olean": {
+        "bytes": 199336,
+        "sha256": "8013ba04543b8b9bea10382bc331c4dca676576f21e8c784dfed0e0eb2a9b7af"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/ContractJudge.olean": {
+        "bytes": 2016,
+        "sha256": "3552dfd76ad7f16f8173c91dd9022c825b862e02df94f7ef84f6b07377da169e"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/JudgeAliases.olean": {
+        "bytes": 20616,
+        "sha256": "670a60bd2f38fb73f1916333dad537c6939765d080f65efcac54e8f9f833e5d9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/JudgeCore.olean": {
+        "bytes": 419928,
+        "sha256": "31b15bc3f1e37a4a1b909850d2abe04bfdb0a389a589f2fa4c28c656fa06529d"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/JudgeTargets.olean": {
+        "bytes": 66976,
+        "sha256": "f547006591192be1fd8834e059c5e4aae8914b3b7735498f40019f47070e3806"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/PidFiniteConvergence/Deterministic.olean": {
+        "bytes": 98304,
+        "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/build/PidFiniteConvergence/SxEventBridge.olean": {
+        "bytes": 292592,
+        "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/environment.json": {
+        "bytes": 5533,
+        "sha256": "92508f9fe3aa4f56a555b53ebc6adbcab7a8b70cfb3a1b80e858eceba2fa5773"
+      },
+      "{REPOSITORY}/.local/sx-dnf-order-verifier-replay-v3-20260905/frozen-judge-copy/runs/selected-normal-03/src/Candidate.lean": {
+        "bytes": 10328,
+        "sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65"
+      }
+    },
+    "records": [
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.antichain_antisymm",
+        "type": "\u2200 (sourceIndex : Type u) [inst : DecidableEq.{u + 1} sourceIndex],\n  @PidSxDnfOrderContract.antichain_antisymm_target.{u} sourceIndex inst"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.antichain_premise_is_load_bearing._proof_1_5",
+        "type": "\u2200 (b : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))),\n  @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n      (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n      (@SetLike.instMembership.{0, 0}\n        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n        (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n      PidSxDnfOrderContract.absorbedFamily b \u2192\n    @Exists.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n      fun (a : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))) =>\n      And\n        (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n          (@SetLike.instMembership.{0, 0}\n            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n            (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n          PidSxDnfOrderContract.singletonLeft a)\n        (@LE.le.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (@Preorder.toLE.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (@PartialOrder.toPreorder.{0}\n              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@Finset.instPartialOrder.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n          a b)"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.singleton_event_collision._proof_1_5",
+        "type": "Not\n  (\u2200 (b : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))),\n    @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n        (@SetLike.instMembership.{0, 0}\n          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n        PidSxDnfOrderContract.singletonRight b \u2192\n      @Exists.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        fun (a : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))) =>\n        And\n          (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n            (@SetLike.instMembership.{0, 0}\n              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@Finset.instSetLike.{0}\n                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n            PidSxDnfOrderContract.singletonLeft a)\n          (@LE.le.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (@Preorder.toLE.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@PartialOrder.toPreorder.{0}\n                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n                (@Finset.instPartialOrder.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n            a b))"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.antichain_premise_is_load_bearing._proof_1_2",
+        "type": "Not\n  (\u2200 (a : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))),\n    @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n        (@SetLike.instMembership.{0, 0}\n          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n        PidSxDnfOrderContract.absorbedFamily a \u2192\n      \u2200 (b : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))),\n        @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n            (@SetLike.instMembership.{0, 0}\n              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@Finset.instSetLike.{0}\n                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n            PidSxDnfOrderContract.absorbedFamily b \u2192\n          @LE.le.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@Preorder.toLE.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n                (@PartialOrder.toPreorder.{0}\n                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n                  (@Finset.instPartialOrder.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n              a b \u2192\n            @Eq.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))) a b)"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.order_implies_target_restricted_subset",
+        "type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.order_implies_target_restricted_subset_target.{u, v, w} sourceIndex sourceValue targetValue\n    inst inst_1 inst_2 inst_3 inst_4 inst_5"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.singleton_event_collision",
+        "type": "PidSxDnfOrderContract.singleton_event_collision_target"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.singleton_event_collision._proof_1_4",
+        "type": "@Ne.{1} (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n  PidSxDnfOrderContract.singletonLeft PidSxDnfOrderContract.singletonRight"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.alternate_values_realize_all_patterns",
+        "type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.alternate_values_realize_all_patterns_target.{u, v, w} sourceIndex sourceValue targetValue inst\n    inst_1 inst_2 inst_3 inst_4 inst_5"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.singleton_not_all_patterns",
+        "type": "PidSxDnfOrderContract.singleton_not_all_patterns_target"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.antichain_premise_is_load_bearing._proof_1_3",
+        "type": "@Ne.{1} (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n  PidSxDnfOrderContract.absorbedFamily PidSxDnfOrderContract.singletonLeft"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.source_event_iff_dnf",
+        "type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.source_event_iff_dnf_target.{u, v, w} sourceIndex sourceValue targetValue inst inst_1 inst_2\n    inst_3 inst_4 inst_5"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.order_iff_implication_on_realizing_domain",
+        "type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.order_iff_implication_on_realizing_domain_target.{u, v, w} sourceIndex sourceValue targetValue\n    inst inst_1 inst_2 inst_3 inst_4 inst_5"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.singleton_event_collision._proof_1_6",
+        "type": "Not\n  (\u2200 (b : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))),\n    @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n        (@SetLike.instMembership.{0, 0}\n          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n        PidSxDnfOrderContract.singletonLeft b \u2192\n      @Exists.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        fun (a : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))) =>\n        And\n          (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n            (@SetLike.instMembership.{0, 0}\n              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@Finset.instSetLike.{0}\n                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n            PidSxDnfOrderContract.singletonRight a)\n          (@LE.le.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (@Preorder.toLE.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@PartialOrder.toPreorder.{0}\n                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n                (@Finset.instPartialOrder.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n            a b))"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.order_iff_dnf",
+        "type": "\u2200 (sourceIndex : Type u) [inst : DecidableEq.{u + 1} sourceIndex],\n  @PidSxDnfOrderContract.order_iff_dnf_target.{u} sourceIndex inst"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.antichain_premise_is_load_bearing._proof_1_4",
+        "type": "\u2200 (b : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))),\n  @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n      (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n      (@SetLike.instMembership.{0, 0}\n        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n        (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n        (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n      PidSxDnfOrderContract.singletonLeft b \u2192\n    @Exists.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n      fun (a : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))) =>\n      And\n        (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n          (@SetLike.instMembership.{0, 0}\n            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))\n            (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n          PidSxDnfOrderContract.absorbedFamily a)\n        (@LE.le.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n          (@Preorder.toLE.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n            (@PartialOrder.toPreorder.{0}\n              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))\n              (@Finset.instPartialOrder.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))\n          a b)"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.source_event_injective_on_realizing_domain",
+        "type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.source_event_injective_on_realizing_domain_target.{u, v, w} sourceIndex sourceValue targetValue\n    inst inst_1 inst_2 inst_3 inst_4 inst_5"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.dnf_injective_on_antichains",
+        "type": "\u2200 (sourceIndex : Type u) [inst : DecidableEq.{u + 1} sourceIndex],\n  @PidSxDnfOrderContract.dnf_injective_on_antichains_target.{u} sourceIndex inst"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.binary_diagonal_collision",
+        "type": "PidSxDnfOrderContract.binary_diagonal_collision_target"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.order_implies_source_event_subset",
+        "type": "\u2200 (sourceIndex : Type u) (sourceValue : sourceIndex \u2192 Type v) (targetValue : Type w) [inst : Fintype.{u} sourceIndex]\n  [inst_1 : (source : sourceIndex) \u2192 Fintype.{v} (sourceValue source)] [inst_2 : Fintype.{w} targetValue]\n  [inst_3 : DecidableEq.{u + 1} sourceIndex]\n  [inst_4 : (source : sourceIndex) \u2192 DecidableEq.{v + 1} (sourceValue source)]\n  [inst_5 : DecidableEq.{w + 1} targetValue],\n  @PidSxDnfOrderContract.order_implies_source_event_subset_target.{u, v, w} sourceIndex sourceValue targetValue inst\n    inst_1 inst_2 inst_3 inst_4 inst_5"
+      },
+      {
+        "kind": "theorem",
+        "name": "PidSxDnfOrderCandidate.antichain_premise_is_load_bearing",
+        "type": "PidSxDnfOrderContract.antichain_premise_is_load_bearing_target"
+      }
+    ],
+    "scope": "Declaration inspection only; no formal acceptance or new full wrapper run.",
+    "status": "inspection_completed"
+  },
+  "retained_local_source_sha256": "ab1d8cf0900ca1470b8018220511df1e44b7babaa7f9f46dd8c231ec1edf4fc8",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

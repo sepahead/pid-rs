@@ -1,0 +1,26 @@
+[
+  {
+    "bytes": 1944029,
+    "public_pdf_included": false,
+    "retained_local_basename": "williams-beer-1004.2515v1.pdf",
+    "sha256": "5654e8083b45f1c4fc92669996f647712322a3563a56252dbeb1d0ec46b24678",
+    "status": "retrieved",
+    "url": "https://arxiv.org/pdf/1004.2515v1"
+  },
+  {
+    "bytes": 930075,
+    "public_pdf_included": false,
+    "retained_local_basename": "gutknecht-wibral-makkeh-2008.09535v2.pdf",
+    "sha256": "dc65320690c85aa9617a0af469692200f991f24784aac5d7399fa2c6854533d3",
+    "status": "retrieved",
+    "url": "https://arxiv.org/pdf/2008.09535v2"
+  },
+  {
+    "bytes": 1002114,
+    "public_pdf_included": false,
+    "retained_local_basename": "makkeh-gutknecht-wibral-2002.03356v5.pdf",
+    "sha256": "5939ce0f4c727f1998040421c07a1689af1b8d9a35a0ee3c83fe25cd85263dc6",
+    "status": "retrieved",
+    "url": "https://arxiv.org/pdf/2002.03356v5"
+  }
+]

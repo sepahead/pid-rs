@@ -1,0 +1,1 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-optimized-01/src/Reject_assumed_conclusion.lean:6:0: error: DNF_JUDGE_TARGET_TYPE: PidSxDnfOrderWrongTargets.assumed_conclusion does not have the complete receiver-free target

@@ -24,8 +24,8 @@
     {
       "path": "method-catalog.json",
       "role": "method_catalog",
-      "sha256": "9bb61e401c68c4872ed7ec644b9d09cabdd6a4f58ef4d04057f2f001b037d360",
-      "size_bytes": 459440
+      "sha256": "1bd1c9ce598668305d2328a8dff9e54c0b9526259c79d65d2255a4548e63e72d",
+      "size_bytes": 461056
     },
     {
       "path": "release-scope-1.0.json",
@@ -99,8 +99,8 @@
     {
       "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
       "role": "generated_pdf_byte_identity_only",
-      "sha256": "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798",
-      "size_bytes": 859461
+      "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
+      "size_bytes": 860468
     },
     {
       "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
@@ -310,14 +310,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "b5445fd13b2f31f5c88072007df89ecd7d2d47ec4003b1bfa7b375dfb221c677",
-        "size_bytes": 94689
+        "sha256": "16e12224a80805c7a2d2626be2b245944cc1c8ef34a238ab9b5b26542ccbe8a8",
+        "size_bytes": 95136
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "787e61556cf418ba6a1f4ce404e92da47aff071fb5dbf9dca9918b26f3d4b1cb",
-        "size_bytes": 292868
+        "sha256": "456714f0960dba1166114ccb95009f675e31ee208a6158daf18d6976acf500b8",
+        "size_bytes": 294675
       },
       {
         "git_mode": "100644",
@@ -364,7 +364,7 @@
       {
         "git_mode": "100644",
         "path": "ECOSYSTEM_CAPABILITIES.md",
-        "sha256": "c7a57ae2a1803e0c87bcf3d562b40c7daa1adcb585058992b72740d4c42c7e97",
+        "sha256": "03a86a2e369f3f201ba1cfe455df73d229d9a8981daee4022e94189797257abe",
         "size_bytes": 65091
       },
       {
@@ -424,19 +424,19 @@
       {
         "git_mode": "100644",
         "path": "MATHEMATICAL_RESULTS_GUIDE.md",
-        "sha256": "9aa7092dc80fc343cfe5be1c074a14f85332a6787724375846466ba6ed8cdc66",
-        "size_bytes": 59846
+        "sha256": "453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847",
+        "size_bytes": 60869
       },
       {
         "git_mode": "100644",
         "path": "METHODS.md",
-        "sha256": "618e479f8ecc4057920f74aebdf2130b9d793f53ac01af36cce5e8fa00afbd6b",
-        "size_bytes": 558687
+        "sha256": "f022a09ecf128d0fd33a3a7da01be56305daadeef00a94ab9f5489c64f052b0b",
+        "size_bytes": 560554
       },
       {
         "git_mode": "100644",
         "path": "METHODS_SUMMARY.md",
-        "sha256": "0951f1b9728d81bf4ba6eae20247de77ca43a4367c9b66dc15b60c210fa03712",
+        "sha256": "5a6511f9bbcbeb84e2f8214ae7acd9a0fd01ddc6183128a799df23175a82fce1",
         "size_bytes": 44219
       },
       {
@@ -459,6 +459,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+        "sha256": "96408152a3edaf24f77a4b65f890d131a3f9e5e7be117c9304acefe8e8e3df2c",
+        "size_bytes": 10845
+      },
+      {
+        "git_mode": "100644",
         "path": "PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
         "sha256": "8b446accb257531dbf219670a39c8f1e4b794671bb85ff06f3992bdcdfd5e9c1",
         "size_bytes": 115793
@@ -472,7 +478,7 @@
       {
         "git_mode": "100644",
         "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
-        "sha256": "11d4fd972811c11fb15942898cfeb72d40022554152543cebb1396413c4aaad6",
+        "sha256": "e849eb095a6a01c6c73bd66c96908a709d306b632c29ea6b25bdebc1729700a6",
         "size_bytes": 31466
       },
       {
@@ -484,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "56ecc1785ec3d56d2f921958f2190f8e0ff772f6569b5caadad6a31b0b01d85d",
-        "size_bytes": 83835
+        "sha256": "a5555dc14218b50d9c3857f11bdaccdfd42900b6cdc8e961794055f7d309f4ce",
+        "size_bytes": 81933
       },
       {
         "git_mode": "100644",
@@ -1077,6 +1083,90 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/ACTUAL_RESULT.json",
+        "sha256": "6e89538426d7eb8ac5d92789ed2dc345159338c24d3a1ecc1c85ef6e8a63bcc2",
+        "size_bytes": 1055
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/DEPENDENCY_CHANGE.json",
+        "sha256": "8edf4512d3148c4e0020972a8f951d5595aac5fcbb9a211636e3abb6d729ce2e",
+        "size_bytes": 1918
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/MANIFEST.json",
+        "sha256": "4faa79a9f5adb501aba4787fbc55dfc9a9e669e6d5d0d4c2b0fb4333d33ad18b",
+        "size_bytes": 4673
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/POST_ACTION_OBSERVATION.json",
+        "sha256": "fc495bf75850d6cae81452df84f64dad1c78198ce42944934f89a080ccf60d64",
+        "size_bytes": 627
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/RETAINED_ACTION_INVENTORY.json",
+        "sha256": "465bfd4eba0f72b82c82d7b94ec3826f83f15b6a41e1ff642628400a59e36bbc",
+        "size_bytes": 44044
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/RETIREMENT.md",
+        "sha256": "cbb8f86cc9c75097dc100ba14168b6b9463e209ba5827568e3e896a8e2a10b52",
+        "size_bytes": 5494
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/ROOT_DECISION.md",
+        "sha256": "f56411baf927396c43fe6f5341a2d82cf256b6bfbeca2115783c63b07546db96",
+        "size_bytes": 3081
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/SELECTED_COMMANDS.json",
+        "sha256": "3d13d1ab59d1d55eb93cc4515658f2bf795acc8cdd7282e2599adcb30e0a405d",
+        "size_bytes": 4914
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/history/ACTION_PRECONDITIONS.json",
+        "sha256": "1cf721179e6109a88d23f0d41b8d75b83de30a9fc639dcfc8333dece143ac842",
+        "size_bytes": 771
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/history/FETCH_EQUIVALENCE.json",
+        "sha256": "912b5e082984c2eedbb63c1dccf7b597ab4a6f484ada7d0694601d4af66fd00f",
+        "size_bytes": 1388
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/history/PRE_ACTION_RECOVERY_RESULT.json",
+        "sha256": "2b18136553310160d06f49185ea3126c552de866b9a877b68d90237ee13e0ac2",
+        "size_bytes": 1059
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/history/PRE_ACTION_RETIREMENT_PLAN.md",
+        "sha256": "dd868247340ede7d2ab478f316fa30d56e012c8e78ae0e00b8e059213c37183c",
+        "size_bytes": 5270
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/recovery-advertised-heads.tsv",
+        "sha256": "32a626e647f8be64ca71de8ae3119c7a979edbdfa93c3180545bd6a690778951",
+        "size_bytes": 144
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/c11-whole-root-retirement-2026-09-05/recovery-refs.tsv",
+        "sha256": "f0bdf347a0c3d0855910f8fdd67fff48871505d70baa362ae1c8eeae27fa76eb",
+        "size_bytes": 1312
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/c3-hosted-followup-correction-2026-08-01.md",
         "sha256": "34509f0f2bf0fc5f075cf4556403a2d6bb84932a802746d8508fd66bcc0bcc9c",
         "size_bytes": 76415
@@ -1230,6 +1320,702 @@
         "path": "audit/evidence/current-documentation-bindings-2026-09-05.md",
         "sha256": "f742d731bf297e4241e1d800518dda44c5f79cfcd6b5f50c67e11ed1e760b73e",
         "size_bytes": 5362
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/MANIFEST.json",
+        "sha256": "17faa712d4db2d9d6b6ccd887de31e60b446b9c027a1da4cea01db8808d6f8e1",
+        "size_bytes": 3690
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/MARKDOWN_CHECKS.json",
+        "sha256": "08022f10d4461c085515dbe70515bab85c382c3ce9abb5523be164ea6d57c240",
+        "size_bytes": 4123
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/REPAIR.md",
+        "sha256": "0d4882107539efa072dae5037de69ba0eded9ff92aac3cd1a50eab3afd7023b8",
+        "size_bytes": 2996
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/failed-full-pdf-set-RESULT.json",
+        "sha256": "5d0a85c2311188a30ae0624fbf4cc3f096cec1a15c1a6825707271db0abef8c4",
+        "size_bytes": 509
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/failed-full-pdf-set-stderr.log",
+        "sha256": "6d878c393dd74742a6d06d47d6e8b76af2a580972035ac0ca76c40958419fd09",
+        "size_bytes": 104677
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/failed-full-pdf-set-stdout.log",
+        "sha256": "7b51e742f4cb4f9fdfdb85de7cd3f3ee1181e6f7a90e70da45a62e417b2694be",
+        "size_bytes": 51011
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/fixture-dependency-checks.json",
+        "sha256": "717895b05cecdb4f6b9fc0f1724f251cab04da0b45c1e80bd8c57fe44d958296",
+        "size_bytes": 2558
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/fixture-dependency-failure.json",
+        "sha256": "a39014a9bca9f95744218232e437e6f413a25d1ae22d48c903c6ce44974ded5a",
+        "size_bytes": 1466
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/fixture-dependency-self-test.stdout",
+        "sha256": "5752bb0628259d47e83298d40c859860afad6cecec30b01fa40f53921821cfaa",
+        "size_bytes": 3124
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/markdown-math-self-test.stdout",
+        "sha256": "a582abddbdf50310091ea768cf8f63613cbca710c8b0e64e3279810f40952995",
+        "size_bytes": 79
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/markdown-math.stdout",
+        "sha256": "c3fbf3520e69d605d3b063aa97f069b503855e7a1bc293360a4faed263bcc6e0",
+        "size_bytes": 85
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/audit/evidence/dnf-order-public-packaging-replay-2026-09-05/CURRENT_PUBLICATION_MANIFEST.json.txt",
+        "sha256": "83a725d17ef1b82326eb58c3be93d7e2be190926413d0119797ee73aedb7930c",
+        "size_bytes": 24924
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/audit/evidence/dnf-order-public-packaging-replay-2026-09-05/MANIFEST.json.txt",
+        "sha256": "6a62abb5f9b35c7b193007ef181d7f17ff3b82fa5b40de5827d67d3010b8da89",
+        "size_bytes": 8953
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/audit/formal/lean-sx-dnf-order/EXPOSITION.md.txt",
+        "sha256": "fbd902884f67ca380952ef47e4914376b20b4bcd14180a62806fccd75ce00568",
+        "size_bytes": 18555
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md.txt",
+        "sha256": "098e6bdc873ffda291b35425886c73e6cfdd0f02688a0e049012cfccafc09acf",
+        "size_bytes": 12251
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md.txt",
+        "sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0",
+        "size_bytes": 5038
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/scripts/check-markdown-math-self-test.py.txt",
+        "sha256": "7d05ea5256dec699cb61b14d1d3a45d2f8c4d7ce4841d78193c7624043f94ba8",
+        "size_bytes": 7536
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/scripts/check-markdown-math.py.txt",
+        "sha256": "5eb142b41d42c140d7331dc0e8e1e0885c130b38bcb36ddabf301de18e427335",
+        "size_bytes": 15710
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-markdown-publication-repair-2026-09-06/preimages/scripts/check-numerical-assurance-pdf-self-test.sh.txt",
+        "sha256": "989d05e7711b7c433633302cbd07848d3d4beea66b83660f8799b3eb22d821a0",
+        "size_bytes": 23402
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/MANIFEST.json",
+        "sha256": "69781060cef002bdb7bb4d7ff92b35947e9e6613c78f7881e931742678ed229b",
+        "size_bytes": 47007
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/PROJECTION.md",
+        "sha256": "f72d1c5c49a3462e50ae02f713fc1af6a7f079ee7b420aff774f1da1a4024ee7",
+        "size_bytes": 3557
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/RESULTS.md",
+        "sha256": "32f453f6897f9c5ca493a4345886288b85f3fbb9b16a7cde2bd8ac9c17f2dd76",
+        "size_bytes": 9491
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/Candidate-before-ordinary-decide-repair.lean",
+        "sha256": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+        "size_bytes": 10328
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/Candidate-cosmetic.lean",
+        "sha256": "6ca4bcaf51c3e94db7398c858aaac89d2be72de2ec2ee1b86ae1283db973826a",
+        "size_bytes": 10329
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/adoption-v2.json",
+        "sha256": "d72463f91ec89e3c7088d6444919a48801243d21409725ea7bc6c19cf5be5b9c",
+        "size_bytes": 3242
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/adoption-v3.json",
+        "sha256": "f8529467b49e76646ffd5155629b9dc77f53b942df4e8ad69830e51967ec49d4",
+        "size_bytes": 10706
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/amendment-review-coordinator.md",
+        "sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4",
+        "size_bytes": 5551
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/amendment-review-verifier.md",
+        "sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9",
+        "size_bytes": 5465
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/cosmetic-predeclaration.json",
+        "sha256": "a999ac4bf6e9ee52e51681917622d818fcc31d5b700083ade7cfffb66f68fad4",
+        "size_bytes": 1447
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/EXPOSITION.md",
+        "sha256": "c4db853e5f1fa90d43d2ae6a97c4c118b9f3de390b2eee414cef672ca91ff82d",
+        "size_bytes": 19477
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SOURCE_CORRESPONDENCE.md",
+        "sha256": "4a4c8c82ec6237e9e735ba038a05ae0824696d7f653d023d5b162ae5c505f3e4",
+        "size_bytes": 11899
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/SYMBOL_MAP.md",
+        "sha256": "d47d2ae3d58b4d0c5c7dc7b31741a40cefcda3e6f18ccd6b07031d87102b51a0",
+        "size_bytes": 5038
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/exposition-before-acceptance/event-order.svg",
+        "sha256": "a5842a9f20ddf21df1c913f8e660a18ed32b491cf0e42c31fef406c866d30893",
+        "size_bytes": 4421
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/MUTATION_ROSTER.json",
+        "sha256": "40739c97fb98217c709af7815216bf572e7dc9f479c5ad8b82e845783311ff3a",
+        "size_bytes": 3388
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/RESOURCE_AND_EXECUTION_CONTRACT.md",
+        "sha256": "a64678a1e23e51630c15b0b3b05a7f2210f26194ac789b561cc737d1eda9e25a",
+        "size_bytes": 7753
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/SemanticJudge.lean",
+        "sha256": "0c1cf11598048c39e8fee92384362e15e2c9e3555dd93f4befa4c15f865889ab",
+        "size_bytes": 7959
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/frozen.json",
+        "sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05",
+        "size_bytes": 2085
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/judge.py",
+        "sha256": "0e50f618b05d059feb6b4e366fa3189ad2c615f9fc6e4b416eb797957e5ed1de",
+        "size_bytes": 24452
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/selftest.py",
+        "sha256": "4bdfffb037e6634994f0a03d90ed39b83e8efa33b3758acc142fefde83eefed9",
+        "size_bytes": 16875
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/judge-v2/source-map.json",
+        "sha256": "be5ace38ad2889ba6d182a57f2a8bdab5698fb5dd5ed19a5ec945fdaa874f41a",
+        "size_bytes": 2659
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/narrowed-scope-adoption.json",
+        "sha256": "494321d43800fc9f8830439ebdbb5e8a74bafe04edf9e66b42da715fe583a570",
+        "size_bytes": 1691
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/repair-and-scope-review.md",
+        "sha256": "8c1c3a9ea40df0f2a1c237a9523d6ce2607482ef9481b61a545c5071b46ed123",
+        "size_bytes": 6293
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/repair-registration.json",
+        "sha256": "f177fef6cb2277c9121bb1e2882ce2c97213484545c6f87a47ec660c135bbdec",
+        "size_bytes": 2372
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/reporting-captured-execution.json",
+        "sha256": "ff90ab261eb612341298668cd154f8ee25ea6a08388ca40bb6fd984ec3bac80e",
+        "size_bytes": 5693
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/reporting-supplement-adoption.json",
+        "sha256": "45a9bec6672c1d554eb5ac6115c7405661b6ba66c2dd3d2af882d4bdd2e12b91",
+        "size_bytes": 1124
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/reporting-supplement-proposal.json",
+        "sha256": "79b97ab994b3a25f929d9df8803db2a1134e97babbf548fb63f5aed874e3c03b",
+        "size_bytes": 3257
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/roster-diagnostic.json",
+        "sha256": "ae40183d8925a4df24ff0b84b6a5528ace795944f5d9a6b7f193ddf59d5a66b4",
+        "size_bytes": 22560
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/history/roster-rejection.md",
+        "sha256": "d58e14e0ffde743eeaada840b574c483687081a613358ecbafa268d9fbf6737a",
+        "size_bytes": 5016
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/required-matrix.json",
+        "sha256": "41e9f5bec31288b0937ba9bef24bee7a474c891d8dd28417ebda28185f191ede",
+        "size_bytes": 3646
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/routing-preparation.json",
+        "sha256": "b20b5d8a99af7b61fbc6c147e6876f89558a06744df2bd79fb3a5da317a3873a",
+        "size_bytes": 9650
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-01-reporting-failure.json",
+        "sha256": "a9d6ec3db8a79b19688c46434fb25167b13bf2dbd5c4b8edfec53de19c5f532d",
+        "size_bytes": 32288
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-02-reporting-failure.json",
+        "sha256": "c0d9e3de8916d9fa8ba1b3a1bd5d74a5cf5da3fd89e2cbd0bc0887091b43d95e",
+        "size_bytes": 31544
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-03-roster-failure.json",
+        "sha256": "7c3a4adab1ee38abc277a80287fdcceb87ff9a560403468d29484a3c99e6e951",
+        "size_bytes": 35781
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-04-selected-normal.json",
+        "sha256": "a7dd96773143d6280745cf4fc1ada47ac8ea6e671fe56d92495820e5936752e2",
+        "size_bytes": 46343
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-05-selected-optimized.json",
+        "sha256": "97d885d597f3abefe351dccf7ecc6be3d77eea1b775809b1d3b180724b28878b",
+        "size_bytes": 46454
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-06-cosmetic-normal.json",
+        "sha256": "fa1774e624469ecb1ab8d87dc79c062a292ff227d5a6192087f01bc6bb332b31",
+        "size_bytes": 48004
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/full-07-cosmetic-optimized.json",
+        "sha256": "14be1761ee4695e5fc9d1338ca9471ae1cb747e4d7245a2fed1a5c15e96ef797",
+        "size_bytes": 48111
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/reporting-regression.json",
+        "sha256": "a32f9a128d2e5ef315d0c8487553979c312489570f86e9f2aa4c9c2440bef7e7",
+        "size_bytes": 15554
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/v3-controls-normal.json",
+        "sha256": "17338ba4f1ed2894e6b77838bc9c8730e80f09eaf000b5427a8a22a9dd03623a",
+        "size_bytes": 86655
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/runs/v3-controls-optimized.json",
+        "sha256": "a8e4437ff67459c29afee0073ae7c37b015ef0c1ae38680022197af42b68b939",
+        "size_bytes": 86965
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/source-retrieval.json",
+        "sha256": "2f559989b948ac0573742165a45de406eb55f7926b4bf7da3bc40fd7d98eb4c7",
+        "size_bytes": 881
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-01-reporting-failure-semantic-judge-stdout.log",
+        "sha256": "fa00946936c38838272f9ea0c27e9e785db20e9856aaccdd4ae59c8cd987d228",
+        "size_bytes": 3718
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-02-reporting-failure-semantic-judge-stdout.log",
+        "sha256": "552e4a07eb80801b22865b9a14e88031bf4bc39449d8a1361014dae72176fe3f",
+        "size_bytes": 3562
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-03-roster-failure-semantic-judge-stdout.log",
+        "sha256": "87132628c44193ec7c7bbea9a1b836b59285cfa79b07f31254a6e9a732c42512",
+        "size_bytes": 204
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-04-selected-normal-semantic-judge-stdout.log",
+        "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "size_bytes": 8535
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-05-selected-optimized-semantic-judge-stdout.log",
+        "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "size_bytes": 8535
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-06-cosmetic-normal-semantic-judge-stdout.log",
+        "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "size_bytes": 8535
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/full-07-cosmetic-optimized-semantic-judge-stdout.log",
+        "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "size_bytes": 8535
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/reporting-regression-restored-thirteen-reporting-sites-stdout.log",
+        "sha256": "a1574a2865ad5dc9da5c90767124b638fd57e11470ba2ab14ec305d2d943b533",
+        "size_bytes": 3965
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectAxiom-stdout.log",
+        "sha256": "88341a1fcdd7398c7dc9c1de781189b5ac0eae0a54c424c09e19149bfa73eebf",
+        "size_bytes": 170
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectDefinition-stdout.log",
+        "sha256": "87cec48033faaa60a2616f63c718c6482d25de06bca4b42104476c5d518a0cbd",
+        "size_bytes": 432
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectExtraRoster-stdout.log",
+        "sha256": "2e40c229cc235b4eefaa96282e449dd33419cc9ce8b0b08bf64292a18b4f1ffa",
+        "size_bytes": 178
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-RejectMissingRoster-stdout.log",
+        "sha256": "94b8e93c2935d5c1a85badc1f9f3d8fbe7219f04111dccd18c005f1a6a048908",
+        "size_bytes": 180
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_assumed_conclusion-stdout.log",
+        "sha256": "1be5a8fc4f3988a9e27eff67e12e8f2899403e570da5b0f68e1f353c7cbc972d",
+        "size_bytes": 238
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_explicit_receiver-stdout.log",
+        "sha256": "0501fd676869a5079338fd21d93f03f5d40c9ca31c606c5eb143d57d5fa6479d",
+        "size_bytes": 236
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_fin3_only-stdout.log",
+        "sha256": "15aa1000a812768448f6a70848a24814774d539b36282448ffc582fdb23fc1e7",
+        "size_bytes": 220
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_implicit_receiver-stdout.log",
+        "sha256": "44af54346b8010a75db2c36892f2719d8a86c66f5e54ed00271c96a2e83aebb5",
+        "size_bytes": 236
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-Reject_renamed_premise-stdout.log",
+        "sha256": "3286fb86d2f9ac09e9dbcf8b836cdc76a165b7a489f60b226e0579c60952189d",
+        "size_bytes": 232
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-ReportingRestoredLift-stdout.log",
+        "sha256": "60ef56c7cdc17e753cc8b3839c60f7ced23d47a0b4cc958dbbee980e0b72beb5",
+        "size_bytes": 273
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-output_limit-stdout.log",
+        "sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+        "size_bytes": 4096
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-reporting-smoke-stdout.log",
+        "sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+        "size_bytes": 44
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-stderr_on_success-stderr.log",
+        "sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+        "size_bytes": 3
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-stdout_spoof-stdout.log",
+        "sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+        "size_bytes": 22
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-normal-truncated_exit-stdout.log",
+        "sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+        "size_bytes": 4
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectAxiom-stdout.log",
+        "sha256": "5278f5e6a7e17930b4bc9a0817956101b08425ad9771c3b15f5dc54cc772d651",
+        "size_bytes": 173
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectDefinition-stdout.log",
+        "sha256": "f1446deb0bb7fb714a28da8bf5354ef1348829516b9344e6c4fbf631ebc89da1",
+        "size_bytes": 438
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectExtraRoster-stdout.log",
+        "sha256": "382101a98227039af99daa3bdcdafe2fbead918be05aa1706541f5238605b636",
+        "size_bytes": 181
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-RejectMissingRoster-stdout.log",
+        "sha256": "acd33b65f1152695680095c621fd8e0bab5992251f4e958e7974b09342ca7186",
+        "size_bytes": 183
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_assumed_conclusion-stdout.log",
+        "sha256": "98f05ae7e37a78982ba2e6472266664c930ab98609d785acb2da0e6a9d751686",
+        "size_bytes": 241
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_explicit_receiver-stdout.log",
+        "sha256": "f8b4e937fb3dc2d8a0b2e796c6a5e6efe8c475f5e73646eedc0901a2a8bbfcf1",
+        "size_bytes": 239
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_fin3_only-stdout.log",
+        "sha256": "646fd116629d9372d08c917efff2d0f6482385194178429673bd9d6d9b69945a",
+        "size_bytes": 223
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_implicit_receiver-stdout.log",
+        "sha256": "5d9d06c7a2fa32788121b89748c38b78524b5e940cb74f15e3b2cbf3b3c69e21",
+        "size_bytes": 239
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-Reject_renamed_premise-stdout.log",
+        "sha256": "20748f89cd23b4c0972d09c602ef43a4f0e550ae7340da66766e2f25ac2017e2",
+        "size_bytes": 235
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-ReportingRestoredLift-stdout.log",
+        "sha256": "54b139bc784144e1e05e56c96ebb8b384b74a826d82db9baee2733345d1a5559",
+        "size_bytes": 276
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-output_limit-stdout.log",
+        "sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+        "size_bytes": 4096
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-reporting-smoke-stdout.log",
+        "sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+        "size_bytes": 44
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-stderr_on_success-stderr.log",
+        "sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+        "size_bytes": 3
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-stdout_spoof-stdout.log",
+        "sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+        "size_bytes": 22
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-formal-verification-2026-09-05/streams/v3-controls-optimized-truncated_exit-stdout.log",
+        "sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+        "size_bytes": 4
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/ARTIFACT_REHASH.json",
+        "sha256": "918ea496252d57f68ab8e7c0bb071df03e150b59421b80daf172c86fa7c28cb4",
+        "size_bytes": 149279
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/CURRENT_PUBLICATION_MANIFEST.json",
+        "sha256": "9a4a253e0b9d8fbf3ac610f68e57ba3f4bba55300a8edd04d9e739a5d4c2a1f7",
+        "size_bytes": 24924
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/MANIFEST.json",
+        "sha256": "490053488e45713ff44d5470acf3e43a4973bad749c9b4a8863244d6ed0c31c8",
+        "size_bytes": 8953
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/PROJECTION.md",
+        "sha256": "ca33e7693aad61147abc98f18893762ec0e508a67458697e061b50e1dee2b45b",
+        "size_bytes": 3580
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/REPLAY_RECEIPT.json",
+        "sha256": "76b1623d0a1065a4a6bf5b1cbe84b51419d60be89364490923d2c4a6bec205d0",
+        "size_bytes": 4378
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/campaign/FINAL.json",
+        "sha256": "67a968bff518cacb401f88d6af4a663bab3f5dbc1d33a663ca1c20540ae61eb2",
+        "size_bytes": 2619
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/campaign/registration.json",
+        "sha256": "f3550749a643d14c41390d5c7e795f4107011198ee66df95beac0708dc54bbc5",
+        "size_bytes": 1060
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/history/PREIMAGES.json",
+        "sha256": "9a700515d7d3f672f63ce005959a7ea4baca7a9512028e0d8a8df298d69434d2",
+        "size_bytes": 1446
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/history/exposition-at-packaging.md.txt",
+        "sha256": "298cdd6534dc826202247ba76421d039698cdb79a56eefd61ff509b2aaee27ee",
+        "size_bytes": 19677
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/history/reader-entry-at-packaging.md.txt",
+        "sha256": "2f4aad814d1b91845e6b00b203a90564e7a7d5b2fc174cc23f99b6c30ba106d4",
+        "size_bytes": 5311
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/receipts/controls-normal.json",
+        "sha256": "b5a3b01a5a33433a51d201eb5a0022e6c2cf961d1be78c75fb933872ece1eb63",
+        "size_bytes": 76049
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/receipts/controls-optimized.json",
+        "sha256": "f4463f855d470ee58c175c4e68d12e1cccbe379f8aa86916bbbb66dc5c4525c2",
+        "size_bytes": 76390
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/receipts/reporting-regression.json",
+        "sha256": "db931f99dc4197074cc784312a1da41a83a2a53e8107708e00a35e920ad1e848",
+        "size_bytes": 12761
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/receipts/selected-normal.json",
+        "sha256": "cbedf7e531e0cd7122c93a34d9e6be370302b871a65066bbb66ab4dae92a7949",
+        "size_bytes": 41665
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/receipts/selected-optimized.json",
+        "sha256": "219f5be52a3720d4e222b656894325ae5d6824f5c0d03a1c7e58a904dd75f96b",
+        "size_bytes": 41828
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/restored-reporting-diagnostic.log",
+        "sha256": "e9b8ace1e4ee5fd301a28302a2bddbace5f5759968a4eba7a9c3a664b606e187",
+        "size_bytes": 2769
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/selected-semantic-records.log",
+        "sha256": "d59a9b8f1c15e8eb7a4689ae09119c406f6b718d15e459c819c6a3e7b0eab334",
+        "size_bytes": 8535
       },
       {
         "git_mode": "100644",
@@ -2049,6 +2835,84 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/MANIFEST.json",
+        "sha256": "7c7ae3597506b278f8e00cec31e2e9179deaa011365706effe612f7311b80916",
+        "size_bytes": 2087
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/REVIEW.md",
+        "sha256": "9dc8aa5e78464861520227dba9d6af029289314a23616a260b97366fba852570",
+        "size_bytes": 4857
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/b5-local-v2.pdf",
+        "sha256": "db24c4008061f9646f4af60e5aa129ae0462e0e9dbf149a0b63d336339de0938",
+        "size_bytes": 749067
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/local-exact-attempt01.json",
+        "sha256": "d669de74e9e3d3b4e9898f9c593cf171d2ae25ef229493df7a5f993b5a7c2247",
+        "size_bytes": 334
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/local-exact-attempt01.stderr",
+        "sha256": "2c194ace30db8d53a0586b1e0fa09341e6b75efba82686f07b502795bf6c7748",
+        "size_bytes": 98
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/local-exact-attempt01.stdout",
+        "sha256": "8fbf9d62daa60b5ba9fe75764f07ee68215eb318a3685261bca4b873535aeb50",
+        "size_bytes": 4750
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/local-exact-attempt02.json",
+        "sha256": "c259f782d52670f3105afbd097f9a583c1ebc8a97cb2efcd437bdafc6bc8e008",
+        "size_bytes": 332
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/local-exact-attempt02.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/local-exact-attempt02.stdout",
+        "sha256": "b07e5c0de1ca7cbe5079d8dcbb5c998aff7cab5ebd09534d6c8814b40a5b5be7",
+        "size_bytes": 4865
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/mode-suite-before-current-sentinel-repair.py",
+        "sha256": "2e3c51b3e6aae35bc32f9257a9b33dd05edc2dc148fcc042969d357708f62e32",
+        "size_bytes": 135064
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-profile-migration-2026-09-05/wrapper-before-current-sentinel-repair.sh",
+        "sha256": "af711514bf427669a826cab361684e2e94074e5f798dac77e6358a2f15c6fb99",
+        "size_bytes": 74169
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-publication-profile-2026-09-01/checker-before-2026-09-05-profile-update.sh",
+        "sha256": "4729e35f694634549d1d8e841fe4eb169dd7d3a737ff85ba0024f28c6223e54d",
+        "size_bytes": 254812
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-publication-profile-2026-09-01/profile.json",
+        "sha256": "5a73af37bc195fc09a90dd30105305a8cfba0d72fbb170db7657a7d77133592e",
+        "size_bytes": 729
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-workflow-visual-receipt-2026-08-04.md",
         "sha256": "ad11eed69ca56401f32e12fb1fb47d59682c6aa65b26deb36d89be2c87c708cb",
         "size_bytes": 1237
@@ -2079,14 +2943,32 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md",
+        "sha256": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602",
+        "size_bytes": 5722
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json",
+        "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
+        "size_bytes": 89628
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-visual-review-2026-09-05/checker-before-split-review.sh",
+        "sha256": "cb7a497f7a2b00c54d36f69ce051f0bff31e2795f2a7674dbdb30709467c6873",
+        "size_bytes": 254812
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
-        "sha256": "ade50d9373b8de22f3fcb5d9952bd54b9e072fb59fe14a25ded8e3ca42b99c6d",
+        "sha256": "a86cd07dbc1da65dd6fd42bcb5799391c13d30e2d897bc76c0970601473456a3",
         "size_bytes": 39594
       },
       {
         "git_mode": "100644",
         "path": "audit/evidence/methods-summary-v1.json",
-        "sha256": "5b3fa87b8e7dac6c8d7bebda68b3268ac05adb505877943010f0df9338c57ee2",
+        "sha256": "2ae397094bf3eb4a3428a894f49a7ed91dccab306897f31cc400d167b7673287",
         "size_bytes": 79261
       },
       {
@@ -2116,7 +2998,7 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
-        "sha256": "26881cffc5bf10b46fbff88837f17d110887b85585eda98e987862e4cf9e5508",
+        "sha256": "9cfcac248bdbf8117fd18cea8f4a615f4a4e139e239d87262ef336a51d76d7fe",
         "size_bytes": 58046
       },
       {
@@ -2166,6 +3048,12 @@
         "path": "audit/evidence/post-publication-remote-heads-2026-09-02.tsv",
         "sha256": "b8fee7265e8a6ea38adbd03324cbc22e07785689e5b55e4a51d2101fce018b82",
         "size_bytes": 1302
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/primary-inert-duplicate-retirement-2026-09-05.md",
+        "sha256": "0038255c8614e2f02a0e1adbd2eb559499120f6ae63d1db24252b98079154004",
+        "size_bytes": 1858
       },
       {
         "git_mode": "100644",
@@ -2463,6 +3351,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/workflow-branch-retirement-observation-2026-09-05.md",
+        "sha256": "4700edebf0799cb37a915c1ded55ae7e6d983a3847c8f6e4d37d9ee4edb53b77",
+        "size_bytes": 3458
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/workflow-container-custody-rebind-2026-08-05.md",
         "sha256": "64a47a13c62911857df92f8edcada680ca6728ac6a600728bec961d69eeb10db",
         "size_bytes": 3308
@@ -2656,14 +3550,14 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
-        "sha256": "ab21e0a6d8a2bcdd373a4a527156add8790ab1656dfe09ddff8c3e68d1dcfd82",
-        "size_bytes": 92685
+        "sha256": "bdd7694af0170f65367098d7feb7e316fd6c1e68d673fd6a433453b9908281ed",
+        "size_bytes": 84999
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
-        "sha256": "db7c44960fdbad22586e9fbb793deb1944991ff155ceeb13efb9e86774e7a388",
-        "size_bytes": 10154
+        "sha256": "cac0aca79ed5c2268dbeef4b886e45cb7c4a67dc44d48b0b2daeeaa74a6e17ac",
+        "size_bytes": 8938
       },
       {
         "git_mode": "100644",
@@ -2704,38 +3598,38 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf",
-        "sha256": "0960ae0cbfdf74118111fb994ed08acd6ab6246f2176e552b317cf9fc4ffdbad",
-        "size_bytes": 78387
+        "sha256": "2ca3228ea1fc13557b16d447cc9c3e4f623f85b7186e68d5bce5210084b5af63",
+        "size_bytes": 78447
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg",
-        "sha256": "8c38292e6fcb0b848ebdbc745f48e8e85d9842b7a8184bd7305c593778c7b70e",
-        "size_bytes": 7614
+        "sha256": "ff3b8f2e6df87ecec544d5a11c11329464621e7134f7ba6ec51cfc70f2f88c6e",
+        "size_bytes": 7716
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf",
-        "sha256": "8d730825723c81f4610b188e6f290b85ee89bf2b228337a6ff887bd24ad9423c",
-        "size_bytes": 70068
+        "sha256": "6df641325ec83dd4edb14b1f4c34468f5c61083a51ef8ebbd4cfb8a81bb731da",
+        "size_bytes": 70076
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg",
-        "sha256": "2e8edce85d47398482b277fe35218f6d0c245975d3052109fe76a7db61ce97f9",
-        "size_bytes": 5458
+        "sha256": "127942939fa8fabcabb541fa31401ad8afc46215542130a0940104731f9ad999",
+        "size_bytes": 5456
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf",
-        "sha256": "e067092709715babc62027fa5d8f7da122ebb1837c4eee0ff90ad9c2f2766527",
-        "size_bytes": 73487
+        "sha256": "47e9e22b2cabd31ce3ba870dd40b68b42eda75a25ce6be1f19c0b3edcc5ee88d",
+        "size_bytes": 73502
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg",
-        "sha256": "536dbce98e3122a7dd32be17d262012a22b641e037e564b26091b310c58657ab",
-        "size_bytes": 6064
+        "sha256": "81d75b0deb6623d9230cabba297ed8855cc0421d2ae7949164d551bd2e89eb1f",
+        "size_bytes": 6115
       },
       {
         "git_mode": "100644",
@@ -2902,20 +3796,20 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-problem-solving-workflow.tex",
-        "sha256": "e23de4e1ea7b2010e695f08aa57f237f2241dbfa51b3af8f66762ea9b6352709",
-        "size_bytes": 283145
+        "sha256": "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94",
+        "size_bytes": 284090
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
-        "sha256": "60b1e87ed078195206ff79652fa1f07daf2022aa1d25be73058a9dd48a475d37",
-        "size_bytes": 10201
+        "sha256": "005dc0532c7d893c5cfd91d303f77f20893ab21b78df07c95b09da24b2b40f5f",
+        "size_bytes": 10199
       },
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/filter.lua",
-        "sha256": "f2ebeca58dee36a729969cbe3885d7def9b2fe9781578612236a38bbb14c31cf",
-        "size_bytes": 6895
+        "sha256": "0a19513d0a52c62dd901855b221b870b340eb401a9c81c4ba92af6d77cf9fa0c",
+        "size_bytes": 8715
       },
       {
         "git_mode": "100644",
@@ -2956,7 +3850,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
-        "sha256": "43ef71196bc98d080afe87e35d4a912c6eb6ef1c27b96c1181502d26d165a235",
+        "sha256": "9918831ac46a02111b4f8116f9be97cc30e0661eb2d61d2c0d148ed064a104f8",
         "size_bytes": 12028
       },
       {
@@ -3108,6 +4002,162 @@
         "path": "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
         "sha256": "32b5d5e11aa244cb9683d71281f05b27e8093dd9a4d5e677ad4b1e68ffc76ee4",
         "size_bytes": 12465
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/Candidate.lean",
+        "sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+        "size_bytes": 10272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/Contract.lean",
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+        "size_bytes": 12861
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/EXPOSITION.md",
+        "sha256": "03654e23771cafc9455abd0bda3334f3de6027e3e528a71b243bab7ce5fba9c5",
+        "size_bytes": 18397
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/README.md",
+        "sha256": "fd8f8abbb2693a3f4681e5785fdb4f51f339ca9d13174f85e6d659959c0b5c96",
+        "size_bytes": 3961
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/SOURCE_CORRESPONDENCE.md",
+        "sha256": "5017612eff3a8ea6d48b3e877d56eac87df9a2fba6db1632bcd3760876a93fca",
+        "size_bytes": 12263
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/SYMBOL_MAP.md",
+        "sha256": "34f1534b9b3c034a89ca21c2cfb46a556e464854f8f0458df40e610d263524c9",
+        "size_bytes": 4924
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/event-order.svg",
+        "sha256": "a5842a9f20ddf21df1c913f8e660a18ed32b491cf0e42c31fef406c866d30893",
+        "size_bytes": 4421
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/AMENDMENT.md",
+        "sha256": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+        "size_bytes": 4085
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/Contract.lean",
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+        "size_bytes": 12861
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/ContractJudge.lean",
+        "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+        "size_bytes": 2185
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/FiniteControls.lean",
+        "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+        "size_bytes": 7136
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/JudgeAliases.lean",
+        "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+        "size_bytes": 2693
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/JudgeCore.lean",
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+        "size_bytes": 3492
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/JudgeTargets.lean",
+        "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+        "size_bytes": 6849
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/MUTATION_ROSTER.json",
+        "sha256": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+        "size_bytes": 4191
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/RESOURCE_AND_EXECUTION_CONTRACT.md",
+        "sha256": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+        "size_bytes": 10030
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/SemanticJudge.lean",
+        "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+        "size_bytes": 7829
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/WrongTargets.lean",
+        "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+        "size_bytes": 1426
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/frozen.json",
+        "sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+        "size_bytes": 4427
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/judge.py",
+        "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+        "size_bytes": 25145
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/reporting-regression.py",
+        "sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+        "size_bytes": 7563
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/selftest.py",
+        "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+        "size_bytes": 19401
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/judge-v3/theorem-roster.json",
+        "sha256": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+        "size_bytes": 690
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/replay-v1.json",
+        "sha256": "c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013",
+        "size_bytes": 2433
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/replay.py",
+        "sha256": "1e4c2fc6f5e26c7e770f7cb200e9ad2d118ced821cba2af06669e7ef951bc2c8",
+        "size_bytes": 7644
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-sx-dnf-order/supplemental/reporting-regression-repaired-candidate.py",
+        "sha256": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea",
+        "size_bytes": 7601
       },
       {
         "git_mode": "100644",
@@ -4750,7 +5800,7 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/identity/software-identity-reference-v1.json",
-        "sha256": "edfed2c84d157c584f036a284c7bd166e06c2166e22cb23d4cd8b51718124d06",
+        "sha256": "bb303effea9de986d2703927e51e29b439e19458ac231abf8a0405aca2b7ec00",
         "size_bytes": 1453
       },
       {
@@ -5482,7 +6532,7 @@
       {
         "git_mode": "100644",
         "path": "ecosystem-capabilities.json",
-        "sha256": "66ac0aeaa4680000a30c55fc11838b02c6b27e047a6e8c9d95508c1099ab2560",
+        "sha256": "3921c0331da6e74ab55181346bae12b718bce76a05cc064efff136a1df27d2e6",
         "size_bytes": 71752
       },
       {
@@ -5608,8 +6658,8 @@
       {
         "git_mode": "100644",
         "path": "method-catalog.json",
-        "sha256": "9bb61e401c68c4872ed7ec644b9d09cabdd6a4f58ef4d04057f2f001b037d360",
-        "size_bytes": 459440
+        "sha256": "1bd1c9ce598668305d2328a8dff9e54c0b9526259c79d65d2255a4548e63e72d",
+        "size_bytes": 461056
       },
       {
         "git_mode": "100644",
@@ -5698,20 +6748,20 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.pdf",
-        "sha256": "ab432275c9bf8dc8a47592ade9d9c8e4c164100a5dbcd81510e6950ac7f8d798",
-        "size_bytes": 859461
+        "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf",
+        "size_bytes": 860468
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-        "sha256": "1b874f7cbab86dc884e32b6c133a01feb28deb3d12dd6228d96eb15b2dc14aab",
-        "size_bytes": 19053
+        "sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea",
+        "size_bytes": 19052
       },
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-results-guide.pdf",
-        "sha256": "db24c4008061f9646f4af60e5aa129ae0462e0e9dbf149a0b63d336339de0938",
-        "size_bytes": 749067
+        "sha256": "39db599dca0e33b5f0380417f3faaad4fd1067d592141416728f0931e9016b51",
+        "size_bytes": 748551
       },
       {
         "git_mode": "100644",
@@ -5764,13 +6814,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "e454f5db9cddb08baaf28193f1afedacb591f001f1dade02467cb5f5d0d06cdd",
-        "size_bytes": 267383
+        "sha256": "888bc65bc9cb816c1528dc2ce07514a57465357b69c8d986dc4f4e8a090b7cff",
+        "size_bytes": 268692
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-mathematical-results-guide-pdf.sh",
-        "sha256": "df80b52d5fe9561e8d34eef3a5a94ccd6e826501857c9dc651ca5b933e199fa8",
+        "sha256": "79a638d54ba05a768af2ffae338be87eead5aa0280fba43a5b45b0c0fbd7b5cb",
         "size_bytes": 41784
       },
       {
@@ -5980,7 +7030,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "c767f7d14b7da1fdc8d8e6a62c8144858236f094e8a457a80eeb64a6a1f3c455",
+        "sha256": "5adf209243c6e3469f95dc6a822bab112671dace11c128d81bf8b21486bd5bf9",
         "size_bytes": 90915
       },
       {
@@ -6040,7 +7090,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ecosystem-capabilities.py",
-        "sha256": "8279d2082b553eb30cf45ba24bbdc8b1627a2d67a13d72dddd8f54554b9a989b",
+        "sha256": "7acf090ac557c6f2578914c812fc83d18a394c2dcc8e2cddf1030e5df104e9eb",
         "size_bytes": 72358
       },
       {
@@ -6196,13 +7246,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation-self-test.py",
-        "sha256": "f17b527e3da93071e50ad70575ba445324af0762efa705b43dd8a873d691de48",
+        "sha256": "b34b21ab4e0fc45707612d065ebf472d8bdf570e4644bcf5d911644fa1b90f1e",
         "size_bytes": 21157
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-ksg-harmonic-revision-v4-preservation.py",
-        "sha256": "2e95cd13b9ef80db21dcdbc0b24264200785738d0b8eaed59b616d238c78bd6c",
+        "sha256": "43a591b4b8ace29091d570c28fe4fc7c44d7dcf825bb2514ea2903a390e54b22",
         "size_bytes": 25209
       },
       {
@@ -6538,26 +7588,26 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze-self-test.py",
-        "sha256": "857271dff27857e287664ad21b7ae088ab7c5ac8b25de40594a44175306eca3a",
-        "size_bytes": 137796
+        "sha256": "482de8f885e3909211522b23072bb86e97eb53c550f28519c288abd81306159b",
+        "size_bytes": 138713
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "7db0df1905c41abc08b6b49b99fbe096e19575dca66eaa45fa643e6239b2358e",
-        "size_bytes": 134275
+        "sha256": "e86175ae4fda87b2552dfb4084aedc23cd58a1f136895bff2bd572c0cb32b06c",
+        "size_bytes": 136032
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-markdown-math-self-test.py",
-        "sha256": "7d05ea5256dec699cb61b14d1d3a45d2f8c4d7ce4841d78193c7624043f94ba8",
-        "size_bytes": 7536
+        "sha256": "a9b501e3eb792b47b09edb04975ca89c11fb7e3769c260bc787df138ef238f39",
+        "size_bytes": 11502
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-markdown-math.py",
-        "sha256": "5eb142b41d42c140d7331dc0e8e1e0885c130b38bcb36ddabf301de18e427335",
-        "size_bytes": 15710
+        "sha256": "be8b7c9a31bb7687fa074ec5bbd177776da0d9e1026da7f5fdb4194293b5324a",
+        "size_bytes": 17330
       },
       {
         "git_mode": "100755",
@@ -6574,8 +7624,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-figure-assets.py",
-        "sha256": "9b60c8501ef02c63cd4a6cd5fb808bf0fb0bb04d88e6c8101940cee1cc035a29",
-        "size_bytes": 30970
+        "sha256": "cbafdc3ef94baf8f523a06b76e4e7e115642715f307c871a4c396784d0d6e8b4",
+        "size_bytes": 30968
       },
       {
         "git_mode": "100755",
@@ -6626,6 +7676,18 @@
         "size_bytes": 57857
       },
       {
+        "git_mode": "100755",
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py",
+        "sha256": "0505f57f88bc35e1f1987b8baefdb73c0ac84e0ef2294f86cd73a37a7d2f20a5",
+        "size_bytes": 58173
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py",
+        "sha256": "875988eadb524ea266e03be47dc71219288a9251c8fa237c155930ad58427fd1",
+        "size_bytes": 37356
+      },
+      {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-self-test.py",
         "sha256": "f24a3a3013ccf4f5964f947f26798ad00a01f47b7453a75ce9e29946d28f89f9",
@@ -6658,8 +7720,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
-        "sha256": "e5ed53c60f107f2bb6dd3224cf01ea245f9aecc6bfc08672ff1e9bad6f4f83f1",
-        "size_bytes": 132951
+        "sha256": "c19e113fdf7cb1814fa39fab68c655952c2a0a372283d0a96864ff29bdb941aa",
+        "size_bytes": 135064
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-hosted-v2.py",
+        "sha256": "a70d3c78da7040774c5976f2316480501713eed1e9c865822e3024724a0ccf8d",
+        "size_bytes": 84997
       },
       {
         "git_mode": "100644",
@@ -6680,6 +7748,18 @@
         "size_bytes": 84997
       },
       {
+        "git_mode": "100755",
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py",
+        "sha256": "a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea",
+        "size_bytes": 37822
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v3.py",
+        "sha256": "b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4",
+        "size_bytes": 85043
+      },
+      {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-structure.py",
         "sha256": "50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2",
@@ -6688,8 +7768,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "43327805cdf2c442d3e62a71481b50ec13baf49164c8083d8b8a87b7e425c226",
-        "size_bytes": 73955
+        "sha256": "07791c578647a88d07e2bdffedc0f0823af98e214eb0574d86d6cad96ee441dd",
+        "size_bytes": 74324
       },
       {
         "git_mode": "100644",
@@ -6700,7 +7780,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-prose.py",
-        "sha256": "3effacf1d4a5d621bf15a0e6cd79334661d50c60506f4589a00d27462a2fb3c6",
+        "sha256": "5d443ddf61a6d5c34965ed223f994a96f601dceb1b5a43a95c449938bece6adf",
         "size_bytes": 25355
       },
       {
@@ -6730,14 +7810,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "5b297bef923331687a0c4cf84ebd92dfd206d9eadc03032c531ba7ff091cd6bc",
-        "size_bytes": 281804
+        "sha256": "abe88fca19b2ac04f9fd98f0dc06171e5cbaac1f42c37cfe149419b6a0df822d",
+        "size_bytes": 285614
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "793559bd5d5805418904cc0e71215c5acbe623cb76ca5aff4e3c5426d0cbf8d7",
-        "size_bytes": 254711
+        "sha256": "6cb63edac55ce56c459eb1b4e0ef4cef0ef6a76b3bf8943c197f75dcb38cd18d",
+        "size_bytes": 262546
       },
       {
         "git_mode": "100644",
@@ -6748,7 +7828,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-method-catalog.py",
-        "sha256": "7f16ec1bf2924d491c08cf68721f07a38a81e42e9ce3a95f22222ef549fd89df",
+        "sha256": "9576f4f4b64e1c259a5a39fd46ff231f81de2c75b16e958877051af38b733a6e",
         "size_bytes": 73167
       },
       {
@@ -6766,8 +7846,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-numerical-assurance-pdf-self-test.sh",
-        "sha256": "989d05e7711b7c433633302cbd07848d3d4beea66b83660f8799b3eb22d821a0",
-        "size_bytes": 23402
+        "sha256": "a47e35f9bea6796cde9db536f8e7cd2c07b3438393a8efbbc6a0c74c0f3e4582",
+        "size_bytes": 25249
       },
       {
         "git_mode": "100755",
@@ -7270,7 +8350,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
-        "sha256": "a4200212964e49aafd6a33fd90e2afbb9ffb9337a84f73b09f33729bbd7da0e5",
+        "sha256": "8c45cc8c490db81f84084054549a7654a272abcdaecd897cf7fc80a0439d6d6a",
         "size_bytes": 44186
       },
       {
@@ -7304,8 +8384,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "523f85a07057d3de76aa4ca3d2e14e7b4c4dcdffee8ae42547cc77c35953dbf6",
-    "entry_count": 1193
+    "entries_sha256": "233f9fd1cdb4ff5f593e44c1f059d0767bbb8dbc675b67237381c4c75ae2d52f",
+    "entry_count": 1373
   },
   "subprojections": [
     {
@@ -7317,15 +8397,15 @@
       ]
     },
     {
-      "entries_sha256": "f80dd5d09ffb2f1aec8d8120f6d374c89c011afafbbb62d793d6f6c61432d1a9",
-      "entry_count": 123,
+      "entries_sha256": "b3d864ec3ae21dfb866b2c2d6d1dc67d1f7c4044b99c8f6ed9890e6578558e77",
+      "entry_count": 149,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "811266663f042a5766468cdddfac6c7b667b1465802cbffaf2b2abb9fce28dda",
+      "entries_sha256": "ef38be781f6ea874bba2c7e8bb2f21cba3eef25f109f8980ebcff5adad6b059b",
       "entry_count": 24,
       "name": "generated_pdf_set",
       "selectors": [
@@ -7333,7 +8413,7 @@
       ]
     },
     {
-      "entries_sha256": "d9ba40620fb81e326fa3f8a46098334b2b9975e76e4ced44ad4bc6081acac939",
+      "entries_sha256": "d0498a8865e7a1d3f2c042b1ad2f2d30f6a4a7ad874415f05c7ac94ceb26667a",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

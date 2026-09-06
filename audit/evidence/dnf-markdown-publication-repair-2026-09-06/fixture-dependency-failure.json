@@ -1,0 +1,25 @@
+{
+  "schema": "pid-rs/numerical-pdf-fixture-dependency-failure-v1",
+  "scope": "Exact aggregate terminal metadata plus a diagnostic summary. Full captured inputs and raw streams are retained in local execution records; this public record is not their byte-for-byte projection.",
+  "actual_terminal_result": {
+    "completed_utc": "2026-09-06T05:08:19.560644+00:00",
+    "command": [
+      "bash",
+      "--noprofile",
+      "--norc",
+      "scripts/check-formal-pdf-set.sh",
+      "--exact"
+    ],
+    "exit_code": 1,
+    "failure": null,
+    "changed_inputs": [],
+    "index_unchanged": true,
+    "elapsed_seconds": 1531.692087583011,
+    "stdout_sha256": "44ee12d7607b60efa935f401d1466787e2f73bc4aaf8e48618dc3b3afad7064e",
+    "stderr_sha256": "c0c784bca6a66c15118aec5db302174789c5eed34493142b9af2a41fddd575ca",
+    "captured_input_count": 557
+  },
+  "diagnostic_summary": "The numerical-PDF self-test accepted fixture omitted all three mandatory historical Markdown files. Each produced cannot read preserved historical Markdown; the accepted exact-mode control failed before the PDF comparison.",
+  "root_cause": "The production Markdown checker inspects the repository-visible Markdown set and mandatory historical paths. The isolated fixture copied the checker but omitted its newly required archive inputs.",
+  "successor": "Copy the exact direct archive files into every fixture; preserve custody enforcement and add missing/drift controls in both modes."
+}

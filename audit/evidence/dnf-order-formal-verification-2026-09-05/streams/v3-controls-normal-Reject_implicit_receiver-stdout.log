@@ -1,0 +1,1 @@
+{REPOSITORY}/.local/sx-dnf-order-judge-v3-20260905/runs/selftest-normal-02/src/Reject_implicit_receiver.lean:6:0: error: DNF_JUDGE_TARGET_TYPE: PidSxDnfOrderWrongTargets.implicit_receiver does not have the complete receiver-free target

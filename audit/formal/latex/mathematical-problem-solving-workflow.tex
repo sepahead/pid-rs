@@ -363,6 +363,25 @@ A uniform-in-\(P\) statement would require an \(N(\varepsilon,\eta)\) that works
 \(\exists N\,\forall\varepsilon\).  The claim packet records this order before proof search so that
 a correct proof of a weaker rearrangement is not mistaken for completion.
 
+Start with two routes to one claim. Route A needs premises A1, A2, and C. Route B needs
+premises B1 and C. A route needs all its premises: this is AND. Either fully justified route
+can support the claim: this is OR. Each route also needs evidence that its premises imply
+the claim. The diagram assumes that these route obligations are accepted.
+
+Both routes depend on C. If C lacks accepted evidence, neither route is accepted. A shared
+cut is a set of allowed dependency nodes that meets every route. A cut is inclusion-minimal
+if no proper subset still meets every route. Here the three minimal cuts are
+\(\{C\}\), \(\{A1,B1\}\), and \(\{A2,B1\}\). The figure fixes which nodes are allowed in a cut.
+The GO label states the illustrated gate state; it does not state a new mathematical result.
+
+\PidWorkflowFigure
+  {obligation-dag-minimal-cuts}
+  {An AND/OR directed acyclic graph has frozen admissible universe U = {A1, A2, B1, C}, route A = {A1, A2, C}, and route B = {B1, C}. The complete inclusion-minimal cut family is {C}, {A1, B1}, and {A2, B1}; the common goal and synthetic route aggregators are excluded from the admissible cut universe.}
+  {Route A needs A1, A2, and C; route B needs B1 and C. The frozen example has three inclusion-minimal cuts. All shown routes are accepted; GO names only the illustrated terminal gate state.}
+\FloatBarrier
+
+\PidWorkflowSubsubsection{Advanced definition}
+
 An obligation structure is an AND/OR directed acyclic hypergraph.  Its nodes are propositions or
 finite checks.  An AND-hyperedge \(\{u_1,\ldots,u_r\}\to v\) records that all named premises are
 needed to derive \(v\); alternative incoming hyperedges are OR-routes, any one of which may derive
@@ -377,12 +396,6 @@ candidate, permitted, or accepted and tags every
 cut node as open, closed, or a known common cause.  An accepted route cannot contain an open node;
 a cut over accepted routes may nevertheless expose a closed shared dependency.  Rephrasing an open
 node, or closing one branch of an AND-edge, is not closure.
-
-\PidWorkflowFigure
-  {obligation-dag-minimal-cuts}
-  {An AND/OR directed acyclic graph has frozen admissible universe U = {A1, A2, B1, C}, route A = {A1, A2, C}, and route B = {B1, C}. The complete inclusion-minimal cut family is {C}, {A1, B1}, and {A2, B1}; the common goal and synthetic route aggregators are excluded from the admissible cut universe.}
-  {AND prerequisites, OR routes, and the complete three-cut family in the frozen example.}
-\FloatBarrier
 
 \PidWorkflowSubsection{Certificates and separately specified checking}
 

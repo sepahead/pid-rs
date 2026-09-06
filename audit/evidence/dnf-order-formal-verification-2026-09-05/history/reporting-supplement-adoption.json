@@ -1,0 +1,14 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "original_helper_sha256": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+    "proposal_sha256": "fb2069cc2ecd96cc78e4b378617e0b5cc2674b6c26f16d151aef7fd598598f17",
+    "root_verified": "Exact one occurrence identity expression replacement; all other bytes unchanged.",
+    "scope": "Supplement is outside unchanged frozen v3 roster. Original identity-bound helper is inapplicable to repaired candidate; no result transferred. Complete execution still pending.",
+    "status": "coordinator_adopts_separate_repaired_candidate_reporting_control_before_execution",
+    "supplemental_helper_sha256": "77b310148133573c105827482fc5e53e42ef685fd647914126e5c98a393ac7ea",
+    "utc": "2026-09-05T07:46:48.300973+00:00"
+  },
+  "retained_local_source_sha256": "14b50ee9bdadad1cb465ce5420c4b39ab9e6ba566f278ac1cd34053383c808c1",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

@@ -35,7 +35,7 @@
     <path d="M334 445 C470 445 505 415 620 373"/>
     <path d="M334 530 C470 530 495 460 620 391"/>
     <path d="M910 360 H1040"/>
-    <path d="M1320 360 H1508"/>
+    <path d="M1320 360 H1500"/>
   </g>
 
   <g>
@@ -50,19 +50,20 @@
     <rect x="74" y="493" width="260" height="68" rx="13" fill="#F7F3E9" stroke="#1F3F60" stroke-width="3"/>
     <text x="204" y="535" class="node-title">Suite 5 · replay</text>
 
-    <rect x="620" y="285" width="290" height="150" rx="20" fill="url(#oracle-hatch)" stroke="#B28218" stroke-width="5"/>
-    <rect x="632" y="297" width="266" height="126" rx="14" fill="#F7F3E9" stroke="#B28218" stroke-width="2"/>
+    <rect x="620" y="275" width="290" height="170" rx="20" fill="url(#oracle-hatch)" stroke="#B28218" stroke-width="5"/>
+    <rect x="632" y="287" width="266" height="146" rx="14" fill="#F7F3E9" stroke="#B28218" stroke-width="2"/>
     <rect x="670" y="305" width="190" height="34" rx="17" fill="#1F6968"/>
     <text x="765" y="329" class="badge">SHARED CUT</text>
-    <text x="765" y="371" class="node-title">Semantic oracle C</text>
-    <text x="765" y="401" class="node-body">same algebra + assumptions</text>
+    <text x="765" y="363" class="node-title">Semantic oracle C</text>
+    <text x="765" y="390" class="node-body">same algebra +</text>
+    <text x="765" y="417" class="node-body">assumptions</text>
 
     <rect x="1040" y="306" width="280" height="108" rx="17" fill="#D2E0E2" stroke="#1F6968" stroke-width="4"/>
     <text x="1180" y="351" class="node-title">Comparison result</text>
     <text x="1180" y="383" class="node-body">agreement with C</text>
 
-    <rect x="1508" y="326" width="40" height="68" rx="8" fill="#1F3F60"/>
-    <text x="1528" y="351" class="badge" transform="rotate(90 1528 351)">PASS</text>
+    <rect x="1500" y="316" width="48" height="88" rx="8" fill="#1F3F60"/>
+    <text x="1516" y="360" class="badge" transform="rotate(90 1516 360)">PASS</text>
   </g>
 
   <path d="M51 606 H1549" stroke="#D2E0E2" stroke-width="2"/>
@@ -79,8 +80,8 @@
     <text x="775" y="669" class="node-title">Distinct verifier</text>
     <rect x="1095" y="626" width="280" height="70" rx="13" fill="#F7F3E9" stroke="#B28218" stroke-width="3" stroke-dasharray="10 7"/>
     <text x="1235" y="669" class="node-title">Independence audit</text>
-    <rect x="1500" y="623" width="48" height="76" rx="9" fill="#1F3F60"/>
-    <text x="1524" y="661" class="badge" transform="rotate(90 1524 661)">OPEN</text>
+    <rect x="1500" y="617" width="48" height="88" rx="9" fill="#1F3F60"/>
+    <text x="1516" y="661" class="badge" transform="rotate(90 1516 661)">OPEN</text>
   </g>
 
   <text x="930" y="495" class="small">Breadth ≠ independence; record shared dependencies.</text>

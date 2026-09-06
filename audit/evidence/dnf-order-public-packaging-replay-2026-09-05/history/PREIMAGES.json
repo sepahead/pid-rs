@@ -1,0 +1,22 @@
+{
+  "copied_utc": "2026-09-05T09:45:14.398066+00:00",
+  "files": [
+    {
+      "bytes": 5311,
+      "packaging_time_repository_path": "audit/formal/lean-sx-dnf-order/README.md",
+      "public_retained_preimage_path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/history/reader-entry-at-packaging.md.txt",
+      "representation": "Exact historical Markdown source, retained inert as .md.txt. Its internal relative links use the original packaging_time_repository_path as their base; it is not current reader guidance.",
+      "sha256": "2f4aad814d1b91845e6b00b203a90564e7a7d5b2fc174cc23f99b6c30ba106d4"
+    },
+    {
+      "bytes": 19677,
+      "packaging_time_repository_path": "audit/formal/lean-sx-dnf-order/EXPOSITION.md",
+      "public_retained_preimage_path": "audit/evidence/dnf-order-public-packaging-replay-2026-09-05/history/exposition-at-packaging.md.txt",
+      "representation": "Exact historical Markdown source, retained inert as .md.txt. Its internal relative links use the original packaging_time_repository_path as their base; it is not current reader guidance.",
+      "sha256": "298cdd6534dc826202247ba76421d039698cdb79a56eefd61ff509b2aaee27ee"
+    }
+  ],
+  "original_manifest_path": "audit/evidence/dnf-order-formal-verification-2026-09-05/MANIFEST.json",
+  "original_manifest_sha256": "69781060cef002bdb7bb4d7ff92b35947e9e6613c78f7881e931742678ed229b",
+  "schema": "pid-rs.dnf-packaging-reader-preimages.v1"
+}

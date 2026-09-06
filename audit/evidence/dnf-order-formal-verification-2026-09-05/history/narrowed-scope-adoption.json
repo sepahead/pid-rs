@@ -1,0 +1,29 @@
+{
+  "projection": "Recursive locator substitution and omission of filesystem identity tuples. Source hashes bind retained local originals; this public projection cannot reconstruct omitted locators or identities.",
+  "record": {
+    "candidate_sha256": "af925aacc56cf765e875ba8bdce41e62139fc9c8be9317a87e5d63df69cf7af2",
+    "deadline_utc": "2026-09-05T08:32:36Z",
+    "decision": "Root adopts reviewed candidate-only repair and explicitly narrower four-success role allocation before repaired full replay.",
+    "failure_slots_consumed": [
+      1,
+      2,
+      3
+    ],
+    "freeze_sha256": "45a9309d4a8bb764fcd5ec11fbbd08787bf55da24ea1baf34fada3a22d213586",
+    "lost_evidence": "No additional duplicate worker-selected normal/optimized pair. Prior allocation remains historical, unexecuted.",
+    "mathematical_predicates": "Unchanged frozen v3 complete type, axiom, roster, source, resource and fresh kernel checks.",
+    "registration_sha256": "ce80b8b3e97d24dd92c7d19ad11b4c6a6121f5f6437faf8615b569dd207dce45",
+    "reporting_control": "Separate minimally source-rebound helper still required; original frozen helper stays unchanged and inapplicable to repaired source.",
+    "required_slots": {
+      "4": "root selected normal",
+      "5": "root selected optimized",
+      "6": "worker cosmetic normal",
+      "7": "worker cosmetic optimized"
+    },
+    "review_sha256": "20cb608e05bca12f307a60e3063924c23811f3b072f9e0dbe5f883918d5e7df5",
+    "unused_failure_capacity": 8,
+    "utc": "2026-09-05T07:45:45.023228+00:00"
+  },
+  "retained_local_source_sha256": "d2f9e0f5064389ecb4099f500ebd4767d571860d81301c7f761bc72f5b1c72ba",
+  "schema": "pid-rs/dnf-order-public-projection-v1"
+}

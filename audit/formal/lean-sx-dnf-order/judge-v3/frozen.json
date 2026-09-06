@@ -1,0 +1,79 @@
+{
+  "adoption_boundary": "Coordinator must inspect and adopt this exact successor manifest digest before amended full candidate replay. The predecessor and both failed full runs remain unchanged.",
+  "campaign": {
+    "coordinator_selected_normal_optimized_slots": [
+      7,
+      8
+    ],
+    "deadline_utc": "2026-09-05T08:32:36+00:00",
+    "development_compile_limit": 64,
+    "direct_reporting_compilation": "Separately recorded regression control; does not repeat the complete wrapper.",
+    "full_wrapper_limit": 8,
+    "prior_consumed_full_wrappers": 2,
+    "worker_cosmetic_normal_optimized_slots": [
+      5,
+      6
+    ],
+    "worker_selected_normal_optimized_slots": [
+      3,
+      4
+    ]
+  },
+  "candidate_exists": true,
+  "candidate_module": "Candidate",
+  "candidate_namespace": "PidSxDnfOrderCandidate",
+  "candidate_sha256_at_amendment": "76298a9baaad74f831b5254ccdeb5eeda019ac67769df9fabf2a317694fc4a65",
+  "contract_module": "Contract",
+  "files": {
+    "AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+    "Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "MUTATION_ROSTER.json": "259c4a7692052fb70e8a84470f1e360baf2e669f0ff53b3c3869ee3d8a1f3c21",
+    "RESOURCE_AND_EXECUTION_CONTRACT.md": "49f057bbcc756b3b6ff8cd4572b2f9fbe925fbe8f9a32feddd3d1044d1b72b21",
+    "SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+    "judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+    "reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+    "selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+    "theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f"
+  },
+  "frozen_utc": "2026-09-05T07:15:06.755760+00:00",
+  "initial_amendment_reviews": {
+    "coordinator_sha256": "1e29416f20d8e892537e2648acc0463a0b212083da19d7241e1a8b902dd5b4d4",
+    "verifier_sha256": "f6379c20dd24e0f285e01f4759237fdfdf3dbc25cc6acacf71fae1a0ddf8a8a9"
+  },
+  "mathematical_contract_revision": 2,
+  "pending_at_freeze": [
+    "Complete unchanged-candidate normal and optimized wrapper replay with thirteen real records and fresh kernel closure.",
+    "Comment/whitespace-only candidate variant under the same normal and optimized semantic and kernel gates.",
+    "Direct regression restoring all thirteen original reporting calls after a bound complete selected-candidate pass.",
+    "Coordinator normal and optimized selected-candidate acceptance on the adopted original successor."
+  ],
+  "pre_freeze_controls": {
+    "normal": {
+      "fresh_kernel_elapsed_seconds": 188.85204875003546,
+      "passed_controls": 75,
+      "path": "runs/selftest-normal-02/selftest-receipt.json",
+      "sha256": "4660fedd8efa3b885ee02debddc28babf80bf3e196fcd675577948e59634b048"
+    },
+    "optimized": {
+      "fresh_kernel_elapsed_seconds": 183.2170043749502,
+      "passed_controls": 75,
+      "path": "runs/selftest-optimized-01/selftest-receipt.json",
+      "sha256": "517a18ab8d36882b37fd06063028246f5f40d6eb30632f4c306aa1539a26e70b"
+    }
+  },
+  "predecessor_freeze_sha256": "e4baedd90547d230e18bcfee1867d54e9697238f44ff306cbbd2529bc34b1d05",
+  "prior_failure_receipts": {
+    "candidate_original_judge": "74d9aec375c5dd8919c541ab47c547803b4228dd2e62751ac4066062b9bda676",
+    "coordinator_original_judge": "f14e29462e063ecc5f1e07a6128ffc6f3df48e1333b5031741505a07ad315d30"
+  },
+  "schema": "local-dnf-order-judge-freeze-v3",
+  "scope": "Local reporting amendment after the unchanged candidate existed and compiled, before amended full replay. No pre-candidate registration, external custody, scientific novelty, estimator or consumer claim.",
+  "semantic_judge_module": "SemanticJudge",
+  "status": "frozen_after_candidate_before_replay"
+}

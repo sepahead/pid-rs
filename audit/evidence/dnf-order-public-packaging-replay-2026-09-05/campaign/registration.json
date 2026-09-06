@@ -1,0 +1,22 @@
+{
+  "budget_seconds": 2700,
+  "deadline_utc": "2026-09-05T09:32:51.052540+00:00",
+  "driver_sha256": "179b1c082e05d1c255ca360972efeeb73f333175ab2f4e47bd79c512bda3f56f",
+  "full_selected_attempt_cap": 4,
+  "manifest_sha256": "69781060cef002bdb7bb4d7ff92b35947e9e6613c78f7881e931742678ed229b",
+  "planned_control_runs": 2,
+  "planned_selected_runs": 2,
+  "planned_separate_reporting_regressions": 1,
+  "retry_policy": "Stop at first failure. A selected retry requires a documented cause and separate coordinator direction; cap and deadline do not reset.",
+  "routing_manifest_sha256": "c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013",
+  "schema": "pid-rs/dnf-order-public-packaging-campaign-v1",
+  "scope": "Separate public packaging replay after launcher adoption. No old campaign credit, candidate edits or extra independent selected pair.",
+  "sequence": [
+    "selected-normal",
+    "selected-optimized",
+    "controls-normal",
+    "controls-optimized",
+    "reporting-regression"
+  ],
+  "started_utc": "2026-09-05T08:47:51.052540+00:00"
+}

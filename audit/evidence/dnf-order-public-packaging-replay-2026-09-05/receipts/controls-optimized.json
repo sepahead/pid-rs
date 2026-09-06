@@ -1,0 +1,1829 @@
+{
+  "artifacts": {
+    "00-compile-PidFiniteConvergence-Deterministic/command.json": "9ad2b8298e79b2bcf152ec9a0b37e4f6a859862f2cd98de85204fb47cfe964f1",
+    "00-compile-PidFiniteConvergence-Deterministic/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "00-compile-PidFiniteConvergence-Deterministic/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "01-compile-PidFiniteConvergence-SxEventBridge/command.json": "57c4a87f379fa83b23b7f7ea712a0cb64a3b4d9201cceb1ed3ee64bbc8fc881c",
+    "01-compile-PidFiniteConvergence-SxEventBridge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "01-compile-PidFiniteConvergence-SxEventBridge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "02-compile-Contract/command.json": "bc0c235ff3139da0133068a9e70e4eff0e0d3228e823c8ec376e6b5dfcb5e0c0",
+    "02-compile-Contract/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "02-compile-Contract/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "03-compile-JudgeCore/command.json": "dbb05bdc1f7b0e94adc15547b573a61d7934992c244d17b86e1ca35a0cf2b008",
+    "03-compile-JudgeCore/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "03-compile-JudgeCore/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "04-compile-JudgeTargets/command.json": "414e213d516c5389c7f57709a27f29fbd2c14443a9126ca5c0ae90624e9097f0",
+    "04-compile-JudgeTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "04-compile-JudgeTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "05-compile-JudgeAliases/command.json": "aa9313c695db9b6461c4d736d46618ca7a7956c3b63a3c6eb98018aabf26b656",
+    "05-compile-JudgeAliases/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "05-compile-JudgeAliases/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "06-compile-ContractJudge/command.json": "78d7b9fbb7ce1a796990ca22b2239db69c695f614324a577568570cd91dd7159",
+    "06-compile-ContractJudge/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "06-compile-ContractJudge/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "07-reporting-smoke/command.json": "147dd14057ca358e5977aad0a386690237eddfee12e6efb635485beed6492a93",
+    "07-reporting-smoke/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "07-reporting-smoke/stdout.log": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233",
+    "08-ReportingRestoredLift/command.json": "6f40519591706aaed05ec22c83ea05a3377ce2452bf353fd6be802dcdc1d3651",
+    "08-ReportingRestoredLift/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "08-ReportingRestoredLift/stdout.log": "2e8ebffa1ee021f2a3eb95f830fc8ef8e7bddae63482849b077e24b5fcb1fcf5",
+    "09-FiniteControls/command.json": "3a9cb77c6af4bc1e0344bd51395b9682eeb7deb25268497d70ddfecab45a8706",
+    "09-FiniteControls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "09-FiniteControls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "10-WrongTargets/command.json": "eb189d43fa0d81d12d2a47708bc37c1728cd9de2a7a48f011e8e173db3b33947",
+    "10-WrongTargets/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "10-WrongTargets/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "11-PositiveTypeControls/command.json": "28d3b12c26c455f6b3f13c4336dfa1fb1bc2508250e159ad454434b6176dd715",
+    "11-PositiveTypeControls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "11-PositiveTypeControls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "12-Reject_fin3_only/command.json": "cd8a06a2a3ba45081155bb14cf4a5b54243fd218bacb0619cb7446380548e8c4",
+    "12-Reject_fin3_only/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "12-Reject_fin3_only/stdout.log": "04c07c5be2973146456e1d7f3d856fe2ef3e376e74aa73e8934ed4696a6b703a",
+    "13-Reject_explicit_receiver/command.json": "33e61fdf0377e7c5dc34c7056f9d8653ff1b32fb9ea5638ea4a80bcb9af39841",
+    "13-Reject_explicit_receiver/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "13-Reject_explicit_receiver/stdout.log": "4ddbfb327d0a6e63c7f78b020e09e86c27e7d667f8334e75ccd782cb7dcadda2",
+    "14-Reject_implicit_receiver/command.json": "9985ced9086f06fb52e13c4958239c94b87264ccf3e130dd0bd41cf4ebd53140",
+    "14-Reject_implicit_receiver/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "14-Reject_implicit_receiver/stdout.log": "3c91ea19d33fc97f53c377be0a3d9fb41aee2dd69f9b1f206b2e13286a140493",
+    "15-Reject_assumed_conclusion/command.json": "5af876963be6b8426ae18ef1b20d93713f70186c6c3fe9ffcb2139d7bf6e693a",
+    "15-Reject_assumed_conclusion/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "15-Reject_assumed_conclusion/stdout.log": "8fee60a3c3193403cac130ccab67ddaaac4f3dce55e5053f3bd13da128502a18",
+    "16-Reject_renamed_premise/command.json": "5a9ee1b39d1fc3ab22985d40eb9c893aabaaffc598b4bf8c26d9dcbfd1220e98",
+    "16-Reject_renamed_premise/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "16-Reject_renamed_premise/stdout.log": "3e0b4bc3aaeba65afbe494021d1bf788fdb4f46b8fcb1e6245a42cf1dd37179f",
+    "17-RejectAxiom/command.json": "a92bf8dab645c4581632237e61fdc8d00c787420c847f49d2767ef41aa6d17eb",
+    "17-RejectAxiom/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "17-RejectAxiom/stdout.log": "8df1d9ec14c843606a6c1341d3894675f31e53b0e2da041e83ba6683ad192c16",
+    "18-RejectDefinition/command.json": "49d9c339f5c89993615da6fcd86170db911694e3a94c337bcec8f994b8d45f42",
+    "18-RejectDefinition/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "18-RejectDefinition/stdout.log": "06590e0d1c8bc826b1be73c6e49bc6f2f4a1b867a4a82474f122c3a49507b021",
+    "19-RejectMissingRoster/command.json": "7a9efa8bbfd53044bdcb77f202fecdaa57693f3b880725a2303e1790615bc325",
+    "19-RejectMissingRoster/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "19-RejectMissingRoster/stdout.log": "808d692ce8073e62fde858db0cbab18bf34bf32684cd3a899b923841dea57ed1",
+    "20-RejectExtraRoster/command.json": "7583f941f3a7d193e4a509c895931e05a26d5d1af107e4c6230d8232d00799fa",
+    "20-RejectExtraRoster/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "20-RejectExtraRoster/stdout.log": "b0546384e1fd88e833e326aa924c05c1568ae1b28f9a1a804a1620832d0c1f6d",
+    "21-silent_success/command.json": "d64571bd935ba6715ee923e234f73e50a968739b19fcaeca43b8e6c5c4eb73f6",
+    "21-silent_success/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "21-silent_success/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "22-nonzero_empty/command.json": "d144360970dbb7f3feec39b8e6df0cdd427548bc4709299fa8a322a28e1ebe61",
+    "22-nonzero_empty/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "22-nonzero_empty/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "23-stdout_spoof/command.json": "dc448dc0a5131a06add9e3b6da5571970b1404e1b8ea306601f35e6b0c53059b",
+    "23-stdout_spoof/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "23-stdout_spoof/stdout.log": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289",
+    "24-stderr_on_success/command.json": "6192f33ded41f676344b841ad558973d18fe97c11f1638d4b9f646a8a4af637b",
+    "24-stderr_on_success/stderr.log": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+    "24-stderr_on_success/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "25-truncated_exit/command.json": "5014b93d2914cca8d38d51e7f8b26fefc352e0f12565c4c591026f7b46b86ac0",
+    "25-truncated_exit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "25-truncated_exit/stdout.log": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea",
+    "26-output_limit/command.json": "64fabb64c9aeda136ae05ab139c8b817bbe1a2ddfbfc0a57179c0d63dbc614c9",
+    "26-output_limit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "26-output_limit/stdout.log": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e",
+    "27-timeout_descendant/command.json": "509874f0ef7062c4d3313c6c985ad7700857d5ab4d8f1801269b2f287377414a",
+    "27-timeout_descendant/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "27-timeout_descendant/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "28-memory_limit/command.json": "4c98d9e60953546449962b13c1ac1e252bde5af77f6509df9cf31cb829e5858c",
+    "28-memory_limit/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "28-memory_limit/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "29-ControlClosure/command.json": "72571f2185b5e10ea72a70d2a80e859dc4f5a2ecc07f28e593f53f37aeaa1c5e",
+    "29-ControlClosure/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "29-ControlClosure/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "30-kernel-all-positive-controls/command.json": "6ead4ba3d5ba083e7b964d18c3e32a6131eb2e245da636f8f99703f1dbdeda2b",
+    "30-kernel-all-positive-controls/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "30-kernel-all-positive-controls/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "build/Contract.olean": "8013ba04543b8b9bea10382bc331c4dca676576f21e8c784dfed0e0eb2a9b7af",
+    "build/ContractJudge.olean": "3552dfd76ad7f16f8173c91dd9022c825b862e02df94f7ef84f6b07377da169e",
+    "build/ControlClosure.olean": "6e1b0dc2ea49ac8bddd71cb2ea4d693ce5cc1943e8d593b64575fbf071606029",
+    "build/FiniteControls.olean": "9c26b8538cea5b159fc9aaa96b565746f7b38c1d7a0109736a2698a2c21c1f40",
+    "build/JudgeAliases.olean": "670a60bd2f38fb73f1916333dad537c6939765d080f65efcac54e8f9f833e5d9",
+    "build/JudgeCore.olean": "31b15bc3f1e37a4a1b909850d2abe04bfdb0a389a589f2fa4c28c656fa06529d",
+    "build/JudgeTargets.olean": "f547006591192be1fd8834e059c5e4aae8914b3b7735498f40019f47070e3806",
+    "build/PidFiniteConvergence/Deterministic.olean": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9",
+    "build/PidFiniteConvergence/SxEventBridge.olean": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1",
+    "build/PositiveTypeControls.olean": "6b9055067be0a774c1a766135ce7e4b161f50af9aae84c292e01bae25a5a7a7e",
+    "build/ReportingSmoke.olean": "da4ef8cbdfc4b30019d430e814493fbb3007b73b0b94f588e91b53cb89ae4fc5",
+    "build/WrongTargets.olean": "56c8ec823e1f110f2fc5a0a43ea67e088a316b61511130895f07da8d73c5a46f",
+    "custody/during": "d9298a10d1b0735837dc4bd85dac641b0f3cef27a47e5d53a54f2f3f5b2fcffa",
+    "custody/freeze/AMENDMENT.md": "f749fdbc12dbcb33906077e2db698a83263c6708a49ca9f0b9ad5429bc44e169",
+    "custody/freeze/Contract.lean": "1b976cc941668585f9d8efeb402ff3c3179433bbacf3e618a75cc1bfd490bd03",
+    "custody/freeze/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "custody/freeze/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "custody/freeze/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "custody/freeze/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "custody/freeze/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "custody/freeze/frozen.json": "3d86a688040db234f47069d3861308985d8cff5999aab5a49f22e599fee645f7",
+    "custody/freeze/judge.py": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+    "custody/freeze/reporting-regression.py": "4be51f4832af60bc244fb4e344bd0d1f044ba817dc8f01ae95086bb0390060ee",
+    "custody/freeze/selftest.py": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+    "custody/freeze/theorem-roster.json": "42c250623aec65c772a104beb284e72dbcacceb093093eb78b7ae94bd00e3f1f",
+    "custody/pinroot/audit/formal/lean/PidFiniteConvergence.lean": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+    "custody/pinroot/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "custody/pinroot/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "custody/pinroot/audit/formal/lean/lake-manifest.json": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "custody/pinroot/audit/formal/lean/lakefile.toml": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "custody/pinroot/audit/formal/lean/lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "custody/pinroot/scripts/check-lean-finite-convergence.py": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "custody/pinroot/scripts/check-lean-sxpid3-informative-invariance.py": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+    "custody/regular": "c96c6d5be8d08a12e7b5cdc1b207fa6b2430974c86803d8891675e76fd992c20",
+    "environment.json": "2e4454e1339a4ba82e4cd5b94133683008e48325f0158dadbcaf068f6481d774",
+    "input-bytes/0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d",
+    "input-bytes/13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+    "input-bytes/1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9",
+    "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+    "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc",
+    "input-bytes/2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c",
+    "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "input-bytes/3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8",
+    "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0",
+    "input-bytes/4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "input-bytes/4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340",
+    "input-bytes/499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb",
+    "input-bytes/4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7",
+    "input-bytes/4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6",
+    "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "input-bytes/5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85",
+    "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "input-bytes/6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "input-bytes/713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e",
+    "input-bytes/71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95",
+    "input-bytes/724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "input-bytes/73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea",
+    "input-bytes/a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98",
+    "input-bytes/ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e",
+    "input-bytes/b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "input-bytes/cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa",
+    "input-bytes/cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47",
+    "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0",
+    "input-bytes/ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8",
+    "policy-syntax-fixture.txt": "aee2fab1ebbe504a79835374b552424e88ad102889de2822c88fb5db43b478bb",
+    "prefix-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-stdout.log": "ebce7c6b7a024f5fc95464aefa8bd0e31edbd9b73882ee03662dc3e15c7eb2c7",
+    "src/Contract.lean": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+    "src/ContractJudge.lean": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea",
+    "src/ControlClosure.lean": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb",
+    "src/FiniteControls.lean": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745",
+    "src/JudgeAliases.lean": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9",
+    "src/JudgeCore.lean": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+    "src/JudgeTargets.lean": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18",
+    "src/PidFiniteConvergence/Deterministic.lean": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+    "src/PidFiniteConvergence/SxEventBridge.lean": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+    "src/PositiveTypeControls.lean": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa",
+    "src/RejectAxiom.lean": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98",
+    "src/RejectDefinition.lean": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8",
+    "src/RejectExtraRoster.lean": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7",
+    "src/RejectMissingRoster.lean": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47",
+    "src/Reject_assumed_conclusion.lean": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea",
+    "src/Reject_explicit_receiver.lean": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e",
+    "src/Reject_fin3_only.lean": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6",
+    "src/Reject_implicit_receiver.lean": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85",
+    "src/Reject_renamed_premise.lean": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95",
+    "src/ReportingRestoredLift.lean": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c",
+    "src/ReportingSmoke.lean": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e",
+    "src/SemanticJudge.lean": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be",
+    "src/WrongTargets.lean": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+  },
+  "commands": [
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/PidFiniteConvergence/Deterministic.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.3522488329326734,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-Deterministic",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2358624256,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:14.987717+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/PidFiniteConvergence/SxEventBridge.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4929383330745623,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-SxEventBridge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2392195072,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:16.340263+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/Contract.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/Contract.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.3915414999937639,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2352267264,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:17.833484+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/JudgeCore.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/JudgeCore.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.7976478330092505,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-JudgeCore",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1342914560,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:19.225330+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/JudgeTargets.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/JudgeTargets.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.3227221670094877,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-JudgeTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2350530560,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:20.023249+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/JudgeAliases.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/JudgeAliases.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.274943417054601,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-JudgeAliases",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2323038208,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:21.346252+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/ContractJudge.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/ContractJudge.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4460269999690354,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-ContractJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2715713536,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:22.621468+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/ReportingSmoke.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/ReportingSmoke.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.6681872920598835,
+      "execution_error": null,
+      "failure": null,
+      "label": "reporting-smoke",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1152204800,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 44,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:24.069337+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a2f374978bee0081fe2eedb8840bb506669e8f549ccacbbefd184a1267faa233"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/ReportingRestoredLift.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/ReportingRestoredLift.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.6602192500140518,
+      "execution_error": null,
+      "failure": null,
+      "label": "ReportingRestoredLift",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1171046400,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 355,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:24.737888+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "2e8ebffa1ee021f2a3eb95f830fc8ef8e7bddae63482849b077e24b5fcb1fcf5"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/FiniteControls.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/FiniteControls.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.5841135830851272,
+      "execution_error": null,
+      "failure": null,
+      "label": "FiniteControls",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2404925440,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:25.398584+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/WrongTargets.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/WrongTargets.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.2928550830110908,
+      "execution_error": null,
+      "failure": null,
+      "label": "WrongTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2328330240,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:26.983254+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/PositiveTypeControls.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/PositiveTypeControls.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4962447499856353,
+      "execution_error": null,
+      "failure": null,
+      "label": "PositiveTypeControls",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2706014208,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:28.276686+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/Reject_fin3_only.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/Reject_fin3_only.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4882977500092238,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_fin3_only",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2705686528,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 302,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:29.773463+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "04c07c5be2973146456e1d7f3d856fe2ef3e376e74aa73e8934ed4696a6b703a"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/Reject_explicit_receiver.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/Reject_explicit_receiver.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4726524580037221,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_explicit_receiver",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2705375232,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 318,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:31.262194+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4ddbfb327d0a6e63c7f78b020e09e86c27e7d667f8334e75ccd782cb7dcadda2"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/Reject_implicit_receiver.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/Reject_implicit_receiver.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.517644957988523,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_implicit_receiver",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2699755520,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 318,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:32.738132+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3c91ea19d33fc97f53c377be0a3d9fb41aee2dd69f9b1f206b2e13286a140493"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/Reject_assumed_conclusion.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/Reject_assumed_conclusion.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4696185409557074,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_assumed_conclusion",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2706784256,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 320,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:34.256213+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8fee60a3c3193403cac130ccab67ddaaac4f3dce55e5053f3bd13da128502a18"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/Reject_renamed_premise.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/Reject_renamed_premise.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.4600408339174464,
+      "execution_error": null,
+      "failure": null,
+      "label": "Reject_renamed_premise",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2706554880,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 314,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:35.726261+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3e0b4bc3aaeba65afbe494021d1bf788fdb4f46b8fcb1e6245a42cf1dd37179f"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/RejectAxiom.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/RejectAxiom.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.7545669580576941,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectAxiom",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1335197696,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 252,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:37.186758+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "8df1d9ec14c843606a6c1341d3894675f31e53b0e2da041e83ba6683ad192c16"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/RejectDefinition.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/RejectDefinition.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.755439915927127,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectDefinition",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1338277888,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 596,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:37.941942+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "06590e0d1c8bc826b1be73c6e49bc6f2f4a1b867a4a82474f122c3a49507b021"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/RejectMissingRoster.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/RejectMissingRoster.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.8711765829939395,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectMissingRoster",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1409187840,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 262,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:38.697785+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "808d692ce8073e62fde858db0cbab18bf34bf32684cd3a899b923841dea57ed1"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/RejectExtraRoster.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/RejectExtraRoster.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.8795832500327379,
+      "execution_error": null,
+      "failure": null,
+      "label": "RejectExtraRoster",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1412022272,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 260,
+      "returncode": 1,
+      "started_utc": "2026-09-05T08:58:39.569395+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b0546384e1fd88e833e326aa924c05c1568ae1b28f9a1a804a1620832d0c1f6d"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "pass"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.052641999907791615,
+      "execution_error": null,
+      "failure": null,
+      "label": "silent_success",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 3588096,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:40.460984+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "raise SystemExit(3)"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.05347295803949237,
+      "execution_error": null,
+      "failure": null,
+      "label": "nonzero_empty",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 4325376,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 3,
+      "started_utc": "2026-09-05T08:58:40.513835+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "print('DNF_JUDGE_RESULT fake')"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.05333141703158617,
+      "execution_error": null,
+      "failure": null,
+      "label": "stdout_spoof",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2654208,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 22,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:40.567550+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "23c85443c308457a816e19dd1354993cc70a94348376e3052c6580767671c289"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import sys;sys.stderr.write('bad')"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.051695582922548056,
+      "execution_error": null,
+      "failure": null,
+      "label": "stderr_on_success",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 4096000,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 3,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:40.621083+00:00",
+      "stderr_sha256": "2f05d4b689d270cafb02285f35f44866f7dc8a2d368a3f9d1124373eeab31fb1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import sys;sys.stdout.write('DNF_');sys.exit(2)"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.05102362495381385,
+      "execution_error": null,
+      "failure": null,
+      "label": "truncated_exit",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2129920,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 4,
+      "returncode": 2,
+      "started_utc": "2026-09-05T08:58:40.672984+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "0434c0c6210098cdcd6edde14b17c3ad0d86c4ada1a5aecc9ae7ec334a311aea"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import sys;sys.stdout.write('x'*1000000)"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.03730408300179988,
+      "execution_error": null,
+      "failure": "output_limit",
+      "label": "output_limit",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4096,
+        "stdout_bytes": 4096
+      },
+      "peak_observed_group_rss_bytes": 1490944,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 4096,
+      "returncode": -9,
+      "started_utc": "2026-09-05T08:58:40.724205+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a2e659dacb4691e887ac0139f8893d04764ee197d70fb73d3190d56113d18e3e"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import subprocess,time,sys;subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)']);time.sleep(30)"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.5551515830447897,
+      "execution_error": null,
+      "failure": "timeout",
+      "label": "timeout_descendant",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 0.5,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 31670272,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": -9,
+      "started_utc": "2026-09-05T08:58:40.761721+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "PYTHON_EXECUTABLE",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "import time;x=bytearray(32*1024*1024);time.sleep(30)"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 0.15830008406192064,
+      "execution_error": null,
+      "failure": "memory_limit",
+      "label": "memory_limit",
+      "limits": {
+        "observed_group_rss_bytes": 16777216,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 10,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 46350336,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": -9,
+      "started_utc": "2026-09-05T08:58:41.317157+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "CONTROLS_OPTIMIZED_RUN/build/ControlClosure.olean",
+        "CONTROLS_OPTIMIZED_RUN/src/ControlClosure.lean"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 1.438895459054038,
+      "execution_error": null,
+      "failure": null,
+      "label": "ControlClosure",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2658189312,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:41.475977+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "LEAN_TOOLCHAIN_ROOT/bin/leanchecker",
+        "--fresh",
+        "ControlClosure"
+      ],
+      "cwd": "CONTROLS_OPTIMIZED_RUN/src",
+      "elapsed_seconds": 184.7819020000752,
+      "execution_error": null,
+      "failure": null,
+      "label": "kernel-all-positive-controls",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 3079684096,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-05T08:58:42.915110+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "inputs": {
+    "CONTROLS_OPTIMIZED_RUN/src/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/ContractJudge.lean": {
+      "bytes": 2185,
+      "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/ControlClosure.lean": {
+      "bytes": 113,
+      "sha256": "499a3be3efb078420a4f6d019d740b56f59532b639fff0713464e134111e51eb"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/FiniteControls.lean": {
+      "bytes": 7136,
+      "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/JudgeAliases.lean": {
+      "bytes": 2693,
+      "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/JudgeTargets.lean": {
+      "bytes": 6849,
+      "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/PositiveTypeControls.lean": {
+      "bytes": 751,
+      "sha256": "cd6f78c484c6f92a231e7d0db51e1341e895007e1df75f55131344aed9c201fa"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/RejectAxiom.lean": {
+      "bytes": 281,
+      "sha256": "a1b4878a4dd377dc388ed5f006cd009bcf19dcd51088afe09b119e511af7dc98"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/RejectDefinition.lean": {
+      "bytes": 257,
+      "sha256": "ffa7fb110dd132296c35fc218d5c11cb5aafcc4246612428dcba40a9ab1f1bb8"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/RejectExtraRoster.lean": {
+      "bytes": 188,
+      "sha256": "4b693a74f4f8af6549e610a5f10b8b8b930fb0838964ca115327c3017f83e7a7"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/RejectMissingRoster.lean": {
+      "bytes": 146,
+      "sha256": "cec705f16bafbafabb6da2f2c0ada4dbc3b99fb790d19ee48a27f595496c0a47"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/Reject_assumed_conclusion.lean": {
+      "bytes": 313,
+      "sha256": "73ec908c892e56a5c9af29e42645ff92cea31bbcacee30a2059fba12e6d0eaea"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/Reject_explicit_receiver.lean": {
+      "bytes": 312,
+      "sha256": "713f58adf7b001f1a854b8840af42bf53a71b86fff8a4f1f957d5d664e6c207e"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/Reject_fin3_only.lean": {
+      "bytes": 304,
+      "sha256": "4e2fc52201f0f57d045049e72e237ccee21d828926ff7ef903057fa6fbd241a6"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/Reject_implicit_receiver.lean": {
+      "bytes": 312,
+      "sha256": "5e79fbc8764048db5add0397085a11d07101899ac117d8fe0ecfc3f47560ad85"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/Reject_renamed_premise.lean": {
+      "bytes": 310,
+      "sha256": "71e3f0d777a6df0f68f6691e5006370cd2ccc062173820c4ed0e97302859dd95"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/ReportingRestoredLift.lean": {
+      "bytes": 196,
+      "sha256": "2cd796060e38236b61ae35910385a9ba1fc0bb8f1189b0feb5dcb2bceb45129c"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/ReportingSmoke.lean": {
+      "bytes": 186,
+      "sha256": "ac48cead4df1d2d7a9a75ee6e56d75f653f4fddbb00f5d1ed24cbe3ed87a7e5e"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/SemanticJudge.lean": {
+      "bytes": 7829,
+      "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    "CONTROLS_OPTIMIZED_RUN/src/WrongTargets.lean": {
+      "bytes": 1426,
+      "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/ContractJudge.lean": {
+      "bytes": 2185,
+      "sha256": "b7e2290f11bf81ad004e6369a50c47d31f3496a831969e4621c8660fbaf9a0ea"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/FiniteControls.lean": {
+      "bytes": 7136,
+      "sha256": "724bb5c63bfd4ef57a435ffcafeab80b988f96609a006039e30e2d2c83a43745"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/JudgeAliases.lean": {
+      "bytes": 2693,
+      "sha256": "13cc12db6927db52dcd472bc42f0a895284eeee9e5e9ae08379cc44d4a7981b9"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/JudgeTargets.lean": {
+      "bytes": 6849,
+      "sha256": "4041f2a193688222af33601a31ac39e27674276d223753c0c85bd0d992c68b18"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/SemanticJudge.lean": {
+      "bytes": 7829,
+      "sha256": "6a942296fa7b2dda509dedabfe4ae2103ba83252afb9d5696af00b51584696be"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/WrongTargets.lean": {
+      "bytes": 1426,
+      "sha256": "0188369c73607d4f3d77bcc385f59889086c65e81f7d85f9a0463e82e3837c9d"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/judge.py": {
+      "bytes": 25145,
+      "sha256": "1d80ce12f44e3f602572d5755f059d66b0fdf03fec184f9c0393137b05f8e3e9"
+    },
+    "CONTROLS_OPTIMIZED_STAGE/judge-v3/selftest.py": {
+      "bytes": 19401,
+      "sha256": "4465e34d7bbf1f40748d445e95fce2fcbfa303ff8995ae3fa603bc4f4f67f340"
+    },
+    "LEAN_TOOLCHAIN_ROOT/bin/lean": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "LEAN_TOOLCHAIN_ROOT/bin/leanchecker": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/PidFiniteConvergence.lean": {
+      "bytes": 371,
+      "sha256": "3b99c57000d6bf14077e8caf4de2f86d27f9654a8d984c9fc59d720947de84f8"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "REPOSITORY_ROOT/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "REPOSITORY_ROOT/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "REPOSITORY_ROOT/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "pending": [
+    "Complete thirteen-export positive, cosmetic and restored-reporting-module replay are separate obligations; the candidate existed before this amendment.",
+    "No claim of external custody or process isolation from a malicious shared-workspace actor.",
+    "Pinned dependency source preflight is reused; its complete historical mutation suite is not repeated here."
+  ],
+  "python_optimized": 1,
+  "results": [
+    {
+      "category": "custody",
+      "details": "",
+      "name": "ambient_stale_cache_excluded",
+      "status": "pass"
+    },
+    {
+      "category": "positive",
+      "details": "",
+      "name": "contract_raw_alias_preparation",
+      "status": "pass"
+    },
+    {
+      "category": "reporting_regression",
+      "details": "Actual IO action in TermElabM; smoke data are not theorem evidence.",
+      "name": "term_elaboration_reporting_positive",
+      "status": "pass"
+    },
+    {
+      "category": "reporting_regression",
+      "details": "Original CommandElabM lift rejected inside TermElabM.",
+      "name": "ReportingRestoredLift",
+      "status": "pass"
+    },
+    {
+      "category": "finite_counterexamples",
+      "details": "",
+      "name": "FiniteControls",
+      "status": "pass"
+    },
+    {
+      "category": "valid_wrong_target_proofs",
+      "details": "",
+      "name": "WrongTargets",
+      "status": "pass"
+    },
+    {
+      "category": "positive",
+      "details": "",
+      "name": "finite_and_universe_positive_types",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_fin3_only",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_explicit_receiver",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_implicit_receiver",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_assumed_conclusion",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_TARGET_TYPE",
+      "name": "Reject_renamed_premise",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_AXIOM",
+      "name": "RejectAxiom",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_DECLARATION_KIND",
+      "name": "RejectDefinition",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_EXPORT_ROSTER",
+      "name": "RejectMissingRoster",
+      "status": "pass"
+    },
+    {
+      "category": "semantic_rejection",
+      "details": "DNF_JUDGE_EXPORT_ROSTER",
+      "name": "RejectExtraRoster",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "Source syntax only; complete candidate semantic replay is separate.",
+      "name": "P12_cosmetic_source_fragment",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate import roster must be exactly Contract",
+      "name": "extra_import",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate public theorem source roster changed",
+      "name": "unknown_public",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate public theorem source roster changed",
+      "name": "missing_export",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate public theorem source roster changed",
+      "name": "duplicate_export",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate must retain exactly the two strict options",
+      "name": "changed_option",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_sorry",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_axiom",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_native_decide",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_unsafe",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_run_cmd",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_run_tac",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_elab",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_macro",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_initialize",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate source contains prohibited code",
+      "name": "forbidden_attribute",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate must retain exactly the two strict options",
+      "name": "forbidden_set_option_maxRecDepth_0",
+      "status": "pass"
+    },
+    {
+      "category": "source_policy",
+      "details": "candidate import roster must be exactly Contract",
+      "name": "forbidden_import_Lean",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "Synthetic parser records are not theorem evidence.",
+      "name": "exact_parser_shape",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence line count changed",
+      "name": "missing_record",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence identity changed",
+      "name": "duplicate_record",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "disallowed or unordered axiom roster",
+      "name": "unknown_axiom",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "Expecting value: line 1 column 336 (char 335)",
+      "name": "malformed",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence line count changed",
+      "name": "extra_output",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "invalid name roster: axioms",
+      "name": "wrong_field_type",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "theorem evidence fields changed",
+      "name": "unknown_field",
+      "status": "pass"
+    },
+    {
+      "category": "parser_control",
+      "details": "duplicate JSON key: status",
+      "name": "duplicate_json_key",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "",
+      "name": "regular_capture",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "[Errno 2] No such file or directory: 'CONTROLS_OPTIMIZED_RUN/custody/missing'",
+      "name": "missing_file",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "noncanonical or symlink input: CONTROLS_OPTIMIZED_RUN/custody/symlink",
+      "name": "symlink_file",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input must be a regular single-link file: CONTROLS_OPTIMIZED_RUN/custody/hardlink",
+      "name": "hardlinked_file",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed after capture: CONTROLS_OPTIMIZED_RUN/custody/regular",
+      "name": "changed_after_capture",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed after capture: CONTROLS_OPTIMIZED_RUN/custody/regular",
+      "name": "same_bytes_inode_replacement",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed before capture",
+      "name": "inode_replaced_at_open",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "input changed during capture: CONTROLS_OPTIMIZED_RUN/custody/during",
+      "name": "bytes_changed_during_capture",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "",
+      "name": "exact_source_pins",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence.lean",
+      "name": "pin_0",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+      "name": "pin_1",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+      "name": "pin_2",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/lake-manifest.json",
+      "name": "pin_3",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/lakefile.toml",
+      "name": "pin_4",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: audit/formal/lean/lean-toolchain",
+      "name": "pin_5",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: scripts/check-lean-sxpid3-informative-invariance.py",
+      "name": "pin_6",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "pinned source changed: scripts/check-lean-finite-convergence.py",
+      "name": "pin_7",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "",
+      "name": "exact_frozen_roster",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "judge freeze is not accepted for a candidate",
+      "name": "amendment_status",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "judge amendment chronology or predecessor binding changed",
+      "name": "amendment_predecessor_freeze_sha256",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "judge amendment chronology or predecessor binding changed",
+      "name": "amendment_candidate_sha256_at_amendment",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "frozen judge input changed: Contract.lean",
+      "name": "changed_contract",
+      "status": "pass"
+    },
+    {
+      "category": "custody",
+      "details": "adopted judge freeze digest changed",
+      "name": "coordinated_contract_reseal",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "",
+      "name": "silent_success",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "nonzero_empty: nonzero process status",
+      "name": "nonzero_empty",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "stdout_spoof: unexpected stdout",
+      "name": "stdout_spoof",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "stderr_on_success: unexpected stderr",
+      "name": "stderr_on_success",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "truncated_exit: nonzero process status",
+      "name": "truncated_exit",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "output_limit: operational failure: output_limit",
+      "name": "output_limit",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "timeout_descendant: operational failure: timeout",
+      "name": "timeout_descendant",
+      "status": "pass"
+    },
+    {
+      "category": "process_control",
+      "details": "memory_limit: operational failure: memory_limit",
+      "name": "memory_limit",
+      "status": "pass"
+    },
+    {
+      "category": "kernel",
+      "details": "",
+      "name": "fresh_positive_control_closure",
+      "status": "pass"
+    }
+  ],
+  "scope": "Amendment controls after the candidate existed. Complete candidate replay is separate.",
+  "status": "amendment_controls_pass"
+}

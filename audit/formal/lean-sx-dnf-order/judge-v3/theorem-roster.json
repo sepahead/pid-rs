@@ -1,0 +1,28 @@
+{
+  "boundary": [
+    "singleton_event_collision",
+    "singleton_not_all_patterns",
+    "binary_diagonal_collision",
+    "antichain_premise_is_load_bearing"
+  ],
+  "categorical": [
+    "source_event_iff_dnf",
+    "order_implies_source_event_subset",
+    "order_iff_implication_on_realizing_domain",
+    "alternate_values_realize_all_patterns",
+    "source_event_injective_on_realizing_domain",
+    "order_implies_target_restricted_subset"
+  ],
+  "generic": [
+    "order_iff_dnf",
+    "antichain_antisymm",
+    "dnf_injective_on_antichains"
+  ],
+  "namespace": "PidSxDnfOrderCandidate",
+  "permitted_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "revision": 2
+}

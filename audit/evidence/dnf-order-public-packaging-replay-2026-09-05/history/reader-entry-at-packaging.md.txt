@@ -1,0 +1,75 @@
+# DNF and categorical event order
+
+This standalone Lean lane checks thirteen statements about finite source collections and
+categorical equality events. [Start with the exposition](EXPOSITION.md), then use the
+[symbol map](SYMBOL_MAP.md) and [exact theorem table](SOURCE_CORRESPONDENCE.md).
+
+The generic order is equivalent to reverse implication between monotone disjunctive normal
+forms. Antichains have unique truth functions. Categorical events preserve this implication;
+reflection on a restricted domain requires an explicit pattern-realization premise. Four fixed
+counterexamples show why stronger claims fail. These statements do not establish an estimator,
+atom-compression algorithm, sampling result, or application benefit.
+
+[Candidate.lean](Candidate.lean) and [Contract.lean](Contract.lean) are the exact accepted bytes.
+The [verification record](../../evidence/dnf-order-formal-verification-2026-09-05/RESULTS.md)
+preserves all three failed full runs and the four successful source/mode combinations. The
+original aggregate Lean project and its historical receipts remain unchanged.
+
+## Replay
+
+Use Python 3.11 or newer and the repository's existing Lean 4.33.0 toolchain and exact nine-package
+closure. Follow the [formal baseline guide](../LEAN_4_33_FREEZE_AND_REPLAY.md) for those pins.
+The replay uses the existing reviewed dependency preflight. It does not download or update pins.
+The current runner requires a POSIX host with the process and resource interfaces it uses.
+The retained campaign ran on macOS; no Windows execution is claimed.
+
+Run from the repository root. Each run name must be new. The routing manifest SHA-256 is
+`c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013`.
+
+```text
+python3 -I -S -B audit/formal/lean-sx-dnf-order/replay.py --root . --run-name selected-normal-01 --manifest-sha256 c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013
+python3 -I -S -B -O audit/formal/lean-sx-dnf-order/replay.py --root . --run-name selected-optimized-01 --manifest-sha256 c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013
+python3 -I -S -B audit/formal/lean-sx-dnf-order/replay.py --root . --run-name controls-normal-01 --action self-test --manifest-sha256 c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013
+python3 -I -S -B -O audit/formal/lean-sx-dnf-order/replay.py --root . --run-name controls-optimized-01 --action self-test --manifest-sha256 c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013
+```
+
+Add `--source cosmetic` to a candidate check to use the exact previously declared comment prefix.
+Add `--prepare-only` to inspect the captured inputs and command plan without invoking Lean.
+Preparation success grants no proof credit.
+
+Each command stages the exact judge bytes under
+`.local/sx-dnf-order-public-replay-v1/<run-name>/judge-v3/`. The new result appears under
+`runs/replay/receipt.json`, or `runs/replay/selftest-receipt.json` for controls. The launcher
+replaces its process with the unchanged original entry point. Read the result status and
+command evidence; a prepared command plan is not an execution receipt.
+
+After a fresh selected-source pass, the separate reporting regression can reuse its captured
+imports. Supply that run's exact receipt SHA-256:
+
+```text
+python3 -I -S -B audit/formal/lean-sx-dnf-order/replay.py --root . --run-name reporting-regression-01 --action reporting-regression --accepted-run .local/sx-dnf-order-public-replay-v1/selected-normal-01/judge-v3/runs/replay --accepted-receipt-sha256 <receipt-sha256> --manifest-sha256 c011a0e2414dbdf33a2f8374f8a6a40d53c974e1f46f3bb7db3e5c9cb13e9013
+```
+
+This command uses the separately reviewed repaired-source helper. The original frozen helper
+continues to bind the earlier source and remains historical. The regression restores the exact
+failed reporting module and requires its thirteen original monad mismatches.
+
+## What the judge checks
+
+The semantic judge compares each complete receiver-free theorem type against both a raw target
+and a contract alias, checks its universe parameters and transitive axioms, and requires exactly
+thirteen public declarations in `PidSxDnfOrderCandidate`. It parses thirteen structured records
+and then runs `leanchecker --fresh SemanticJudge`. The candidate uses ordinary `decide`; the
+kernel remains the final proof check. No new axiom or native-evaluation oracle is permitted.
+
+Every Lean command uses `-t 0 -M 4096`. Each command has a 600-second timeout and a 4 MiB limit
+for each output stream. Process-group memory is observed at 0.1-second intervals with a 4 GiB
+threshold. Polling can miss an increase between samples. It is not a hard operating-system cap
+on macOS. The original macOS `setrlimit` failure and the replacement are retained in the
+[resource contract](judge-v3/RESOURCE_AND_EXECUTION_CONTRACT.md). Time, memory and output failures
+are operational failures, not mathematical counterexamples.
+
+`replay-v1.json` binds the new routing launcher, exact accepted source, unchanged judge payload,
+and separate reporting helper. The [historical v3 freeze](judge-v3/frozen.json) keeps its original
+after-candidate chronology and superseded run allocation. A new public replay does not alter
+those historical facts or add independent-review credit to the completed campaign.
