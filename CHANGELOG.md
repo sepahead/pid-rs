@@ -9,6 +9,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Reconcile current documentation bindings after the publication update. Preserve the hosted
+  stale-pin failure and immutable Lean replay history; mathematical sources and claims are unchanged.
+
 - Use portable math notation in the categorical event proof guide. Preserve the exact historical
   drafts and failed publication check, and correct unsupported human-review labels. Include the
   required historical files in isolated numerical-PDF tests and test missing or changed copies.

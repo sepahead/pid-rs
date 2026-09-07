@@ -1,0 +1,194 @@
+{
+  "schema": "pid-rs/publication-current-binding-correction/v1",
+  "recorded_utc": "2026-09-06T16:04:49.045639+00:00",
+  "base_commit": "abc84a02de70fe52ef4a9e7ab16ebed98c180ffd",
+  "problem": "The reviewed publication and numerical-PDF fixture documentation changed after their current digest bindings were selected. The hosted certified-SxPID2 check correctly refused the stale scripts guide binding.",
+  "hosted_evidence": {
+    "run_id": 34042672733,
+    "job_id": 101512127753,
+    "url": "https://github.com/sepahead/pid-rs/actions/runs/34042672733/job/101512127753",
+    "failed_step": "python3 -I -S -B scripts/check-certified-sxpid2-claim.py",
+    "diagnostic": "certified SxPID2 claim check failed: immutable reviewed certified-SxPID documentation digest changed for scripts/README.md: expected e580bf1dabfafdbe6dcb19fbe3811cfcddd4880ef19b8a7581488ff6836dbb7d, observed 888bc65bc9cb816c1528dc2ce07514a57465357b69c8d986dc4f4e8a090b7cff",
+    "boundary": "Earlier exact-product and Lean steps in this job passed. That does not turn the failed job or complete CI run into success."
+  },
+  "recovery": {
+    "old_sources": "The base commit retains the exact prior checker and documentation bytes. The corrected sources are in the containing commit.",
+    "raw_hosted_log_sha256": "baa277068d8aade763e2b9516852e7d4e23ab0fa1d66c817ef466b08bd66c648",
+    "raw_log_retention": "The downloaded full job log is retained in ignored local recovery storage. GitHub retention is service-bound; this record does not claim permanent availability."
+  },
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "old_sha256": "14ceb5b43dea7ca966c77de92e2b66e352e2c2e3a2bdd6feb7ac4682edf0fdc0",
+      "new_sha256": "16e12224a80805c7a2d2626be2b245944cc1c8ef34a238ab9b5b26542ccbe8a8"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "old_sha256": "5d81ec57c8f13576587482e7ce500d4da64dc3da924ee22f083d467c77e6da39",
+      "new_sha256": "dd551781ac27f4851a75fc9b400cfec67b7ae578563a0a5a3408e9c07e4a44b8"
+    },
+    {
+      "path": "scripts/README.md",
+      "old_sha256": "e580bf1dabfafdbe6dcb19fbe3811cfcddd4880ef19b8a7581488ff6836dbb7d",
+      "new_sha256": "888bc65bc9cb816c1528dc2ce07514a57465357b69c8d986dc4f4e8a090b7cff"
+    },
+    {
+      "path": "scripts/check-certified-sxpid2-claim.py",
+      "old_sha256": "5adf209243c6e3469f95dc6a822bab112671dace11c128d81bf8b21486bd5bf9",
+      "new_sha256": "2df2a4281ee6629de435f21e5ba555fe53a4fe3c99f7a227d730398b4490ec13"
+    }
+  ],
+  "preserved_scope": [
+    "All historical r14 maps and replay receipts remain unchanged.",
+    "All mathematical definitions, proof sources, numerical implementations, PDF sources and PDF bytes remain unchanged.",
+    "Only the current reviewed documentation and current operational-wiring bindings are updated."
+  ],
+  "review": {
+    "root": "Read the complete current documentation diff and the exact checker binding scopes; compared all syntax outside the two selected current dictionaries.",
+    "independent_first": "The independent council sealed eleven routes and fifty lenses before its map review, then independently found exactly the same three stale current documents.",
+    "independent_review_limit": "The final council disposition was not completed before its agent disappeared. The root uses the retained bounded map observation and prior accepted documentation reviews; no complete independent correction review is claimed.",
+    "council_initial_sha256": "5afa16ec36da077aab26356ff4ff775b1d47a7e588df7e4770a5a370f971e59e",
+    "council_map_sha256": "d5bc1d2e78ef2694ee1b6f6637a2ee71b7cbd175c1a2c2e17622fb04044859b2"
+  },
+  "formal_or_scientific_credit": "None. This current-binding correction does not replay Lean or expand a PID claim.",
+  "validation": "Applicable current checker and mutation checks must pass on the corrected bytes. Final source-state is generated after all other public bytes are fixed; hosted success remains a separate observation.",
+  "second_hosted_failure": {
+    "run_id": 34042672733,
+    "job_id": 101512127740,
+    "url": "https://github.com/sepahead/pid-rs/actions/runs/34042672733/job/101512127740",
+    "failed_step": "python3 -I -S -B scripts/check-lean-toolchain-freeze.py",
+    "diagnostic": "The current operational-wiring check rejected the stale AGENTS.md digest.",
+    "raw_log_sha256": "03db8c334d400951711c2a1337fe2e2f43b30f4e38203b2a5bfe7e56c34714c8",
+    "scope": "Same current-binding defect; the historical r14 receipt is not changed."
+  },
+  "local_validation": {
+    "completed_utc": "2026-09-06T16:07:36.167137+00:00",
+    "gates": [
+      {
+        "gate": "01-check-certified-sxpid2-claim-0",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "scripts/check-certified-sxpid2-claim.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "7a353bd5cff2a1c982ec762965b8cc3a0008dde74f4214dfeba301e69afb4085",
+        "stdout_sha256": "09dacad5bd95e7f0fbab262c8f15997fe7bee00c4fe14f32c7dd975a700bcea5",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "02-check-certified-sxpid2-claim-1",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "-O",
+          "scripts/check-certified-sxpid2-claim.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "968741c8ca181633709cc922a2357c9554ae99cfbf3c11587e60b73711cbe795",
+        "stdout_sha256": "09dacad5bd95e7f0fbab262c8f15997fe7bee00c4fe14f32c7dd975a700bcea5",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "03-check-certified-sxpid2-claim-self-test-0",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "scripts/check-certified-sxpid2-claim-self-test.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "4ea06498123b7b5466c9a7c1ebc50ab2e6af7af81397c325c84ab1d24ccd3cad",
+        "stdout_sha256": "0defed1691e154e161cb9fd84dc1744f90cc0b5d0a7688dfe853023a7739034f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "04-check-certified-sxpid2-claim-self-test-1",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "-O",
+          "scripts/check-certified-sxpid2-claim-self-test.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "253d289cf6c2dbf6056625ebcd7c66c117fd5b2de434a1a77fbc82bbaf9dc732",
+        "stdout_sha256": "0defed1691e154e161cb9fd84dc1744f90cc0b5d0a7688dfe853023a7739034f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "05-check-lean-toolchain-freeze-0",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "scripts/check-lean-toolchain-freeze.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "2658d35ea6a63fc7fbe4ec613d14e7539bdeef1bf7c10757eed526852ff79e85",
+        "stdout_sha256": "b46178e8b0bcfed546d5b4138acff9e4c54b932a84b3415854cb130bb2a0300f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "06-check-lean-toolchain-freeze-1",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "-O",
+          "scripts/check-lean-toolchain-freeze.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "4790248c7181974ed811f4d743a5f49283de40be315f65f10e7073566104d61c",
+        "stdout_sha256": "b46178e8b0bcfed546d5b4138acff9e4c54b932a84b3415854cb130bb2a0300f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "07-check-lean-toolchain-freeze-self-test-0",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "scripts/check-lean-toolchain-freeze-self-test.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "e79909c13ff0817f895e11c44e0817eec39e2b323c50884b94256865339f23e2",
+        "stdout_sha256": "aee9f4148f9203f0bb8196f96e9a059208ae7df39089003d8e39c8042683844a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      },
+      {
+        "gate": "08-check-lean-toolchain-freeze-self-test-1",
+        "command": [
+          "python3",
+          "-I",
+          "-S",
+          "-B",
+          "-O",
+          "scripts/check-lean-toolchain-freeze-self-test.py"
+        ],
+        "exit_code": 0,
+        "receipt_sha256": "d50df6db8790b3472c9dd661b827691aeca0ab4324d7b712d6a2b4400d434e03",
+        "stdout_sha256": "aee9f4148f9203f0bb8196f96e9a059208ae7df39089003d8e39c8042683844a",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "captured_inputs": 562
+      }
+    ],
+    "scope": "All eight checker/self-test runs passed. Root verified exact retained streams, all 562 captured input files per run and unchanged index. This does not rerun Lean or establish hosted success for the correction."
+  }
+}
