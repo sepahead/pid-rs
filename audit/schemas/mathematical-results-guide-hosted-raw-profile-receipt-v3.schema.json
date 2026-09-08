@@ -1,0 +1,1785 @@
+{
+  "$id": "https://github.com/sepahead/pid-rs/blob/main/audit/schemas/mathematical-results-guide-hosted-raw-profile-receipt-v3.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Closed exact observation schema. It is not an alternate profile source, a runtime verifier or hosted admission. The current wrapper separately binds exact raw receipt bytes, including numeric lexical form and key order. Preserve this observation; new captures need a separately reviewed receipt/version.",
+  "properties": {
+    "canonical_comparison": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical": {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 748551,
+              "type": "integer"
+            },
+            "path": {
+              "const": "output/pdf/mathematical-results-guide.pdf",
+              "type": "string"
+            },
+            "sha256": {
+              "const": "39db599dca0e33b5f0380417f3faaad4fd1067d592141416728f0931e9016b51",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bytes",
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "canonical_and_native_navigation_reports_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "canonical_and_native_target_reports_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "decoded_page_contents_equal_count": {
+          "const": 24,
+          "type": "integer"
+        },
+        "default_text_bytes": {
+          "const": 66384,
+          "type": "integer"
+        },
+        "default_text_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "default_text_sha256": {
+          "const": "4892ec90a22e57d2660238a5d10b7c16500654edd3c9a8412554a3f5283f42d6",
+          "type": "string"
+        },
+        "existing_v3_structure_passed_normal_and_optimized_on_both_pdfs": {
+          "const": true,
+          "type": "boolean"
+        },
+        "font_table_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "font_table_sha256": {
+          "const": "7bace65cc6e5d40836813b2ae5014f6f62fce57a2ea8848c37f6053df4ac1b0f",
+          "type": "string"
+        },
+        "layout_text_bytes": {
+          "const": 81362,
+          "type": "integer"
+        },
+        "layout_text_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "layout_text_sha256": {
+          "const": "a2a10804e94da82d24641b1fd52acfab2252b842c1e05de927ab5aaf9558bcd8",
+          "type": "string"
+        },
+        "observed_raw_object_differences": {
+          "items": false,
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "const": "XMP metadata producer luahbtex-1.18.0 versus luahbtex-1.17.0",
+              "type": "string"
+            },
+            {
+              "const": "XMP creator and title xml:lang x-default versus en-US",
+              "type": "string"
+            },
+            {
+              "const": "Info Producer and PTEX.FullBanner reflect the distinct TeX producers",
+              "type": "string"
+            },
+            {
+              "const": "Cross-reference stream offsets differ after producer metadata length changes",
+              "type": "string"
+            }
+          ],
+          "type": "array"
+        },
+        "raster_comparison": {
+          "additionalProperties": false,
+          "properties": {
+            "color_identical_page_count": {
+              "const": 24,
+              "type": "integer"
+            },
+            "dpi": {
+              "const": 120,
+              "type": "integer"
+            },
+            "grayscale_identical_page_count": {
+              "const": 24,
+              "type": "integer"
+            },
+            "renderer": {
+              "const": "captured Poppler pdftoppm command; no renderer-version claim added by this receipt",
+              "type": "string"
+            },
+            "scope": {
+              "const": "All 24 corresponding pages in both modes have identical retained PNG bytes; one renderer/resolution only.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "color_identical_page_count",
+            "dpi",
+            "grayscale_identical_page_count",
+            "renderer",
+            "scope"
+          ],
+          "type": "object"
+        },
+        "raw_bytes_equal": {
+          "const": false,
+          "type": "boolean"
+        },
+        "raw_metadata_normalization_permitted": {
+          "const": false,
+          "type": "boolean"
+        },
+        "root_existing_structure_comparison_result_sha256": {
+          "const": "7de20c0464164ef03c577844c08527d9dbaf37645dfb9f7d61e5d7afa8bcdddd",
+          "type": "string"
+        },
+        "strict_trailer_id_nonapplicability_reason": {
+          "const": "Canonical and Linux candidate byte lengths differ; no exception relation was executed or inferred between them.",
+          "type": "string"
+        },
+        "strict_trailer_id_relation_applies": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "canonical",
+        "canonical_and_native_navigation_reports_equal",
+        "canonical_and_native_target_reports_equal",
+        "decoded_page_contents_equal_count",
+        "default_text_bytes",
+        "default_text_equal",
+        "default_text_sha256",
+        "existing_v3_structure_passed_normal_and_optimized_on_both_pdfs",
+        "font_table_equal",
+        "font_table_sha256",
+        "layout_text_bytes",
+        "layout_text_equal",
+        "layout_text_sha256",
+        "observed_raw_object_differences",
+        "raster_comparison",
+        "raw_bytes_equal",
+        "raw_metadata_normalization_permitted",
+        "root_existing_structure_comparison_result_sha256",
+        "strict_trailer_id_nonapplicability_reason",
+        "strict_trailer_id_relation_applies"
+      ],
+      "type": "object"
+    },
+    "captured_at_utc": {
+      "const": "2026-09-08T05:40:40.845898+00:00",
+      "type": "string"
+    },
+    "custody_boundaries": {
+      "items": false,
+      "maxItems": 6,
+      "minItems": 6,
+      "prefixItems": [
+        {
+          "const": "All historical v1/v2 and legacy profile bytes, pins, receipts and outcomes remain historical and unchanged.",
+          "type": "string"
+        },
+        {
+          "const": "The locally assembled image identifier is not registry authentication or supply-chain attestation.",
+          "type": "string"
+        },
+        {
+          "const": "The same image retains its previously disclosed font-supply deviation; local output equality is not hosted environment identity.",
+          "type": "string"
+        },
+        {
+          "const": "Raw fixture identity and narrowly located duplicated trailer IDs admit no general metadata, numeric, object-order, compression, text, navigation, structure or font normalization.",
+          "type": "string"
+        },
+        {
+          "const": "Source-only proposal review and normal/optimized controls do not establish implementation correctness for all PDFs.",
+          "type": "string"
+        },
+        {
+          "const": "No mathematical, scientific, estimator-calibration, application, PDF/UA, generic viewer-safety, or hosted-execution credit is inferred.",
+          "type": "string"
+        }
+      ],
+      "type": "array"
+    },
+    "hosted_replay": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "type": "null"
+        },
+        "execution_credit": {
+          "const": "none",
+          "type": "string"
+        },
+        "job_id": {
+          "type": "null"
+        },
+        "next_step": {
+          "const": "After source review and exact local controls, publish the precise candidate/profile wiring and retain a separate actual GitHub-hosted Ubuntu cross-gate result; local candidate evidence cannot supply that hosted term.",
+          "type": "string"
+        },
+        "status": {
+          "const": "pending",
+          "type": "string"
+        },
+        "workflow_run_id": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "execution_credit",
+        "job_id",
+        "next_step",
+        "status",
+        "workflow_run_id"
+      ],
+      "type": "object"
+    },
+    "producer_observation": {
+      "additionalProperties": false,
+      "properties": {
+        "builder_user_uid": {
+          "const": 65534,
+          "type": "integer"
+        },
+        "execution_class": {
+          "const": "translated local Linux container; not GitHub-hosted execution or native x86 hardware evidence",
+          "type": "string"
+        },
+        "local_image_id_not_registry_authenticated": {
+          "const": "sha256:99d68036d810885bfed9828ada5f8751e2a363aef473a15838b567f95c695a39",
+          "type": "string"
+        },
+        "observed_binary_and_format_records": {
+          "items": false,
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 163344464,
+                  "type": "integer"
+                },
+                "mode": {
+                  "const": "0o755",
+                  "type": "string"
+                },
+                "nlink": {
+                  "const": 1,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "/opt/pandoc-3.10.2/bin/pandoc",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce",
+                  "type": "string"
+                },
+                "uid": {
+                  "const": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "bytes",
+                "mode",
+                "nlink",
+                "path",
+                "sha256",
+                "uid"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 7033000,
+                  "type": "integer"
+                },
+                "mode": {
+                  "const": "0o755",
+                  "type": "string"
+                },
+                "nlink": {
+                  "const": 1,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "/usr/bin/luahbtex",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "cc74da0d993e503321f9dd65b8cc5ddf103f2620c4bdbc41798841f253c46e02",
+                  "type": "string"
+                },
+                "uid": {
+                  "const": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "bytes",
+                "mode",
+                "nlink",
+                "path",
+                "sha256",
+                "uid"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 27960,
+                  "type": "integer"
+                },
+                "mode": {
+                  "const": "0o755",
+                  "type": "string"
+                },
+                "nlink": {
+                  "const": 1,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "/usr/bin/kpsewhich",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "e3f241dab416169b9a7c8e0ef719a3cc8568bf51256c7e354811b3963254fcda",
+                  "type": "string"
+                },
+                "uid": {
+                  "const": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "bytes",
+                "mode",
+                "nlink",
+                "path",
+                "sha256",
+                "uid"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 12231665,
+                  "type": "integer"
+                },
+                "mode": {
+                  "const": "0o644",
+                  "type": "string"
+                },
+                "nlink": {
+                  "const": 1,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "/var/lib/texmf/web2c/luahbtex/lualatex.fmt",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "40d6ce24b45663ff282b2d6586416b11831ddcc6b44528a272fe6f8d2cb7c8c9",
+                  "type": "string"
+                },
+                "uid": {
+                  "const": 0,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "bytes",
+                "mode",
+                "nlink",
+                "path",
+                "sha256",
+                "uid"
+              ],
+              "type": "object"
+            }
+          ],
+          "type": "array"
+        },
+        "observed_package_versions": {
+          "additionalProperties": false,
+          "properties": {
+            "lmodern": {
+              "const": "2.005-1",
+              "type": "string"
+            },
+            "poppler-utils": {
+              "const": "24.02.0-1ubuntu9.9",
+              "type": "string"
+            },
+            "texlive-fonts-recommended": {
+              "const": "2023.20240207-1",
+              "type": "string"
+            },
+            "texlive-latex-extra": {
+              "const": "2023.20240207-1",
+              "type": "string"
+            },
+            "texlive-luatex": {
+              "const": "2023.20240207-1",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lmodern",
+            "poppler-utils",
+            "texlive-fonts-recommended",
+            "texlive-latex-extra",
+            "texlive-luatex"
+          ],
+          "type": "object"
+        },
+        "pandoc_version": {
+          "const": "pandoc 3.10.2",
+          "type": "string"
+        },
+        "producer_records_before_after_byte_equal": {
+          "const": true,
+          "type": "boolean"
+        },
+        "renderer_version": {
+          "const": "This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)",
+          "type": "string"
+        },
+        "retained_image_font_supply_context": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "const": "The unchanged locally assembled image retains its documented omission of texlive-fonts-extra and three Source Sans Pro OTF face substitutions. This is retained image context, not a fresh complete package-filesystem or font-distribution verification. Hosted CI remains a separate decisive replay.",
+              "type": "string"
+            },
+            "historical_v2_receipt_path": {
+              "const": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json",
+              "type": "string"
+            },
+            "historical_v2_receipt_sha256": {
+              "const": "56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8",
+              "type": "string"
+            }
+          },
+          "required": [
+            "description",
+            "historical_v2_receipt_path",
+            "historical_v2_receipt_sha256"
+          ],
+          "type": "object"
+        },
+        "source_date_epoch": {
+          "const": 1788393600,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "builder_user_uid",
+        "execution_class",
+        "local_image_id_not_registry_authenticated",
+        "observed_binary_and_format_records",
+        "observed_package_versions",
+        "pandoc_version",
+        "producer_records_before_after_byte_equal",
+        "renderer_version",
+        "retained_image_font_supply_context",
+        "source_date_epoch"
+      ],
+      "type": "object"
+    },
+    "profile_id": {
+      "const": "hosted-pandoc-3.10.2-ubuntu-24.04-raw-v3-bound",
+      "type": "string"
+    },
+    "prospective_code_binding": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_relation": {
+          "const": "Candidate equals retained fixture bytes or differs only in the separately pinned strict duplicated final-trailer ID payloads; both complete current-v3 strict reports must agree with unchanged canonical manifest digests.",
+          "type": "string"
+        },
+        "new_source_execution_status_at_capture": {
+          "const": "not_run_by_source_author; root must separately execute exact proposal before adoption",
+          "type": "string"
+        },
+        "raw_checker": {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 37355,
+              "type": "integer"
+            },
+            "path": {
+              "const": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py",
+              "type": "string"
+            },
+            "sha256": {
+              "const": "bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bytes",
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "raw_self_test": {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 59837,
+              "type": "integer"
+            },
+            "path": {
+              "const": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py",
+              "type": "string"
+            },
+            "sha256": {
+              "const": "3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bytes",
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "same_toolchain_boundary": {
+          "const": "Same-toolchain exact mode retains strict raw-byte comparison and does not execute, read or select the cross-profile fixture/receipt/relation.",
+          "type": "string"
+        },
+        "self_test_declared_controls": {
+          "const": 2,
+          "type": "integer"
+        },
+        "self_test_declared_hostiles": {
+          "const": 68,
+          "type": "integer"
+        },
+        "self_test_declared_total": {
+          "const": 70,
+          "type": "integer"
+        },
+        "unchanged_id_checker": {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 11115,
+              "type": "integer"
+            },
+            "path": {
+              "const": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+              "type": "string"
+            },
+            "sha256": {
+              "const": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bytes",
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "unchanged_structure_checker": {
+          "additionalProperties": false,
+          "properties": {
+            "bytes": {
+              "const": 85043,
+              "type": "integer"
+            },
+            "path": {
+              "const": "scripts/check-mathematical-results-guide-pdf-structure-v3.py",
+              "type": "string"
+            },
+            "sha256": {
+              "const": "b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4",
+              "type": "string"
+            }
+          },
+          "required": [
+            "bytes",
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "acceptance_relation",
+        "new_source_execution_status_at_capture",
+        "raw_checker",
+        "raw_self_test",
+        "same_toolchain_boundary",
+        "self_test_declared_controls",
+        "self_test_declared_hostiles",
+        "self_test_declared_total",
+        "unchanged_id_checker",
+        "unchanged_structure_checker"
+      ],
+      "type": "object"
+    },
+    "repeatability_observations": {
+      "additionalProperties": false,
+      "properties": {
+        "final_capture_result_sha256": {
+          "const": "f9371dad7395e01c26b6068c5440559fce55d5f3ccb37c54f77f38404b0c931f",
+          "type": "string"
+        },
+        "inner_acceptance_relation": {
+          "const": "raw byte equality or the separately pinned strict duplicated final-trailer ID relation",
+          "type": "string"
+        },
+        "internal_isolated_builds_per_invocation": {
+          "const": 2,
+          "type": "integer"
+        },
+        "mode": {
+          "const": "--cross-toolchain",
+          "type": "string"
+        },
+        "outer_builder_invocations": {
+          "const": 2,
+          "type": "integer"
+        },
+        "outer_emitted_outputs_byte_identical": {
+          "const": true,
+          "type": "boolean"
+        },
+        "runs": {
+          "items": false,
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "completed_at_utc": {
+                  "const": "2026-09-08T05:39:08.707162+00:00",
+                  "type": "string"
+                },
+                "output_bytes": {
+                  "const": 748561,
+                  "type": "integer"
+                },
+                "output_sha256": {
+                  "const": "d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24",
+                  "type": "string"
+                },
+                "returncode": {
+                  "const": 0,
+                  "type": "integer"
+                },
+                "started_at_utc": {
+                  "const": "2026-09-08T05:37:40.554629+00:00",
+                  "type": "string"
+                },
+                "stderr_sha256": {
+                  "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "type": "string"
+                },
+                "stdout_sha256": {
+                  "const": "9c60aec082d253179c6a239ab0a61e4c5bfc5d596a3809e4c2b2a47cefb3e30e",
+                  "type": "string"
+                },
+                "timed_out": {
+                  "const": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "completed_at_utc",
+                "output_bytes",
+                "output_sha256",
+                "returncode",
+                "started_at_utc",
+                "stderr_sha256",
+                "stdout_sha256",
+                "timed_out"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "completed_at_utc": {
+                  "const": "2026-09-08T05:40:38.212073+00:00",
+                  "type": "string"
+                },
+                "output_bytes": {
+                  "const": 748561,
+                  "type": "integer"
+                },
+                "output_sha256": {
+                  "const": "d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24",
+                  "type": "string"
+                },
+                "returncode": {
+                  "const": 0,
+                  "type": "integer"
+                },
+                "started_at_utc": {
+                  "const": "2026-09-08T05:39:08.986399+00:00",
+                  "type": "string"
+                },
+                "stderr_sha256": {
+                  "const": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                  "type": "string"
+                },
+                "stdout_sha256": {
+                  "const": "d9de48afea033acf64a618c169c12e297d1c09ac77b9108638e52b2f31c72e0a",
+                  "type": "string"
+                },
+                "timed_out": {
+                  "const": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "completed_at_utc",
+                "output_bytes",
+                "output_sha256",
+                "returncode",
+                "started_at_utc",
+                "stderr_sha256",
+                "stdout_sha256",
+                "timed_out"
+              ],
+              "type": "object"
+            }
+          ],
+          "type": "array"
+        },
+        "two_zero_builder_preparation_failures_retained": {
+          "items": false,
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "const": "AttributeError: PosixPath has no chown; no builder executed",
+              "type": "string"
+            },
+            {
+              "const": "FileExistsError: pre-existing empty image Pandoc directory; no builder executed",
+              "type": "string"
+            }
+          ],
+          "type": "array"
+        }
+      },
+      "required": [
+        "final_capture_result_sha256",
+        "inner_acceptance_relation",
+        "internal_isolated_builds_per_invocation",
+        "mode",
+        "outer_builder_invocations",
+        "outer_emitted_outputs_byte_identical",
+        "runs",
+        "two_zero_builder_preparation_failures_retained"
+      ],
+      "type": "object"
+    },
+    "retained_fixture": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "const": 748561,
+          "type": "integer"
+        },
+        "encrypted": {
+          "const": false,
+          "type": "boolean"
+        },
+        "forms": {
+          "const": "none",
+          "type": "string"
+        },
+        "goto_annotations": {
+          "const": 18,
+          "type": "integer"
+        },
+        "javascript": {
+          "const": false,
+          "type": "boolean"
+        },
+        "link_annotations": {
+          "const": 107,
+          "type": "integer"
+        },
+        "marked_content_references": {
+          "const": 661,
+          "type": "integer"
+        },
+        "named_destinations": {
+          "const": 67,
+          "type": "integer"
+        },
+        "navigation_payload_bytes": {
+          "const": 53670,
+          "type": "integer"
+        },
+        "navigation_records": {
+          "const": 220,
+          "type": "integer"
+        },
+        "navigation_sha256": {
+          "const": "4d3914cf914496ed2aff921f8676cf39ce2b73161285e2164c10b83d825c1a44",
+          "type": "string"
+        },
+        "object_references": {
+          "const": 98,
+          "type": "integer"
+        },
+        "outline_entries": {
+          "const": 18,
+          "type": "integer"
+        },
+        "page_geometry_points": {
+          "items": false,
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "const": 0,
+              "type": "integer"
+            },
+            {
+              "const": 0,
+              "type": "integer"
+            },
+            {
+              "const": 595.276,
+              "type": "number"
+            },
+            {
+              "const": 841.89,
+              "type": "number"
+            }
+          ],
+          "type": "array"
+        },
+        "pages": {
+          "const": 24,
+          "type": "integer"
+        },
+        "parent_tree_mappings": {
+          "const": 122,
+          "type": "integer"
+        },
+        "path": {
+          "const": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf",
+          "type": "string"
+        },
+        "pdf_version": {
+          "const": "1.7",
+          "type": "string"
+        },
+        "rotated_page": {
+          "const": 7,
+          "type": "integer"
+        },
+        "rotation_degrees": {
+          "const": 90,
+          "type": "integer"
+        },
+        "sha256": {
+          "const": "d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24",
+          "type": "string"
+        },
+        "structure_elements": {
+          "const": 1069,
+          "type": "integer"
+        },
+        "structure_payload_bytes": {
+          "const": 116820,
+          "type": "integer"
+        },
+        "structure_records": {
+          "const": 2278,
+          "type": "integer"
+        },
+        "structure_sha256": {
+          "const": "7231f57e615831ab41d8070c2247b23b8bf2b80d8a4fcbeed737198bc24bd0f8",
+          "type": "string"
+        },
+        "tagged": {
+          "const": true,
+          "type": "boolean"
+        },
+        "target_payload_bytes": {
+          "const": 4312,
+          "type": "integer"
+        },
+        "target_sha256": {
+          "const": "1142501b51446aba6709e6bde2d3c7ad9c69e2df2f6701c4e7eee3615b5d0f2f",
+          "type": "string"
+        },
+        "targets": {
+          "const": 57,
+          "type": "integer"
+        },
+        "uri_annotations": {
+          "const": 89,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "bytes",
+        "encrypted",
+        "forms",
+        "goto_annotations",
+        "javascript",
+        "link_annotations",
+        "marked_content_references",
+        "named_destinations",
+        "navigation_payload_bytes",
+        "navigation_records",
+        "navigation_sha256",
+        "object_references",
+        "outline_entries",
+        "page_geometry_points",
+        "pages",
+        "parent_tree_mappings",
+        "path",
+        "pdf_version",
+        "rotated_page",
+        "rotation_degrees",
+        "sha256",
+        "structure_elements",
+        "structure_payload_bytes",
+        "structure_records",
+        "structure_sha256",
+        "tagged",
+        "target_payload_bytes",
+        "target_sha256",
+        "targets",
+        "uri_annotations"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "const": "pid-rs.mathematical-results-guide-hosted-raw-profile-receipt.v3",
+      "type": "string"
+    },
+    "scope": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_version": {
+          "const": "current-24-page-v3",
+          "type": "string"
+        },
+        "estimator_validation_credit": {
+          "const": false,
+          "type": "boolean"
+        },
+        "evidence_class": {
+          "const": "bounded source-specific publication candidate capture",
+          "type": "string"
+        },
+        "hosted_execution_credit": {
+          "const": false,
+          "type": "boolean"
+        },
+        "mathematical_result_credit": {
+          "const": false,
+          "type": "boolean"
+        },
+        "pdf_ua_conformance_credit": {
+          "const": false,
+          "type": "boolean"
+        },
+        "scientific_result_credit": {
+          "const": false,
+          "type": "boolean"
+        },
+        "subject": {
+          "const": "MATHEMATICAL_RESULTS_GUIDE.md",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact_version",
+        "estimator_validation_credit",
+        "evidence_class",
+        "hosted_execution_credit",
+        "mathematical_result_credit",
+        "pdf_ua_conformance_credit",
+        "scientific_result_credit",
+        "subject"
+      ],
+      "type": "object"
+    },
+    "source_snapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "builder_source_closure": {
+          "items": false,
+          "maxItems": 29,
+          "minItems": 29,
+          "prefixItems": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 60869,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "MATHEMATICAL_RESULTS_GUIDE.md",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 5828,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "THIRD_PARTY_NOTICES.md",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "6e4c22671de954d579c33b86e39f1bcc9e4c347942a9310508ba36c7cfcd8baa",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 84999,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "bdd7694af0170f65367098d7feb7e316fd6c1e68d673fd6a433453b9908281ed",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 8938,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "cac0aca79ed5c2268dbeef4b886e45cb7c4a67dc44d48b0b2daeeaa74a6e17ac",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 90737,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "154ffaa4342fb85096e7d585a59fc81c565d7205a128902d7ede141541617acc",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 12333,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 82732,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "7d873332c3eb890d35457cd66d3dea9574d164d90826c6911e77019d9490dc61",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 10320,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "e79ef4f3290f094efc1f786977800f4d4bd8a101760f57ed528c988d6d621042",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 77858,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "6cfa13f06f20b6240abb3b28e4aca60611b410fa88c9eb7a0074f2985bf1aa02",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 5368,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 29172,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 5143,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 10199,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "005dc0532c7d893c5cfd91d303f77f20893ab21b78df07c95b09da24b2b40f5f",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 8715,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/filter.lua",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "0a19513d0a52c62dd901855b221b870b340eb401a9c81c4ba92af6d77cf9fa0c",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 1377,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 52635,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 4529,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 5617,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/header.tex",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "4164304f3bff4f58ee98aaa534db8de78ddd714923837d80971a967a9221bcf6",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 7231,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "6294db9644cff4d7ded8e2a98415d72cb73fae4f3a55ad705607b39edc391ad5",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 10773,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "a8eb78a26f554117fd5ff9661e617e0348e8e69fce3f63e3ff3c1321b51aa36a",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 12028,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "9918831ac46a02111b4f8116f9be97cc30e0661eb2d61d2c0d148ed064a104f8",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 2237,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 4234,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 41784,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "scripts/build-mathematical-results-guide-pdf.sh",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "79a638d54ba05a768af2ffae338be87eead5aa0280fba43a5b45b0c0fbd7b5cb",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 30968,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "scripts/check-mathematical-results-guide-figure-assets.py",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "cbafdc3ef94baf8f523a06b76e4e7e115642715f307c871a4c396784d0d6e8b4",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 5064,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "scripts/check-mathematical-results-guide-font-roster.py",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8c849135d8",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 11115,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 28930,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "scripts/normalize-mathematical-results-guide-pandoc-tex.py",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "401271a933917833e7eca8654bd24e23f42fe19dfeab85c28165815bf55554bf",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "const": 44186,
+                  "type": "integer"
+                },
+                "path": {
+                  "const": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
+                  "type": "string"
+                },
+                "sha256": {
+                  "const": "8c45cc8c490db81f84084054549a7654a272abcdaecd897cf7fc80a0439d6d6a",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bytes",
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            }
+          ],
+          "type": "array"
+        },
+        "builder_source_closure_count": {
+          "const": 29,
+          "type": "integer"
+        },
+        "git_head_context_only": {
+          "const": "e726576ef963a82dd672b0c48f91e406d4b601ce",
+          "type": "string"
+        },
+        "git_head_is_not_the_candidate_authority": {
+          "const": true,
+          "type": "boolean"
+        },
+        "registered_full_snapshot_bytes": {
+          "const": 81302345,
+          "type": "integer"
+        },
+        "registered_full_snapshot_entries": {
+          "const": 1376,
+          "type": "integer"
+        },
+        "registered_full_snapshot_manifest_sha256": {
+          "const": "6a3309728985743888234afa8e2aa40e26fb85a1b4a8c9de08c9225a9abd48d8",
+          "type": "string"
+        },
+        "source_unchanged_observed": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "builder_source_closure",
+        "builder_source_closure_count",
+        "git_head_context_only",
+        "git_head_is_not_the_candidate_authority",
+        "registered_full_snapshot_bytes",
+        "registered_full_snapshot_entries",
+        "registered_full_snapshot_manifest_sha256",
+        "source_unchanged_observed"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "const": "translated_local_candidate_retained_hosted_replay_pending",
+      "type": "string"
+    }
+  },
+  "required": [
+    "canonical_comparison",
+    "captured_at_utc",
+    "custody_boundaries",
+    "hosted_replay",
+    "producer_observation",
+    "profile_id",
+    "prospective_code_binding",
+    "repeatability_observations",
+    "retained_fixture",
+    "schema",
+    "scope",
+    "source_snapshot",
+    "status"
+  ],
+  "title": "Exact current 24-page guide translated Linux candidate receipt v3",
+  "type": "object"
+}

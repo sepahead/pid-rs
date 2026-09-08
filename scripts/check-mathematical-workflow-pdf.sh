@@ -127,7 +127,7 @@ for command in "${commands[@]}"; do
     exit 2
   fi
   command_search_path="$command_path"
-  command_path="$("$BOOTSTRAP_PYTHON" -I -S -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$command_path")"
+  command_path="$("$BOOTSTRAP_PYTHON" -I -S -B -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$command_path")"
   if [[ ! -f "$command_path" || ! -x "$command_path" ]]; then
     echo "$CHECK_NAME: command does not resolve to a regular executable: $command" >&2
     exit 2
@@ -170,7 +170,7 @@ verify_command_resolution() {
       echo "$CHECK_NAME: captured command disappeared from the isolated search path: $command" >&2
       exit 2
     fi
-    observed_path="$("$resolver" -I -S -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$observed_path")"
+    observed_path="$("$resolver" -I -S -B -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$observed_path")"
     if [[ "$observed_path" != "${command_paths[$command_index]}" ]]; then
       echo "$CHECK_NAME: isolated search path resolves different executable bytes: $command" >&2
       exit 2
@@ -207,7 +207,7 @@ elif [[ -z "${PID_RS_WORKFLOW_PDF_LOCK_FD+x}" \
   echo "$CHECK_NAME: publication lock environment is only partially specified" >&2
   exit 2
 fi
-if python3 -I -S - \
+if python3 -I -S -B - \
   "$ROOT" \
   "$LOCK_CHECKER" \
   "$MODE" \
@@ -303,12 +303,12 @@ if [[ "$LOCK_BOOTSTRAP_PARENT" -eq 1 ]]; then
 fi
 
 sha256_file() {
-  python3 -I -S -c \
+  python3 -I -S -B -c \
     'import hashlib, pathlib, sys; print(hashlib.sha256(pathlib.Path(sys.argv[1]).read_bytes()).hexdigest())' \
     "$1"
 }
 
-if ! python3 -I -S -c 'import sys, sysconfig; [sys.path.insert(0, p) for p in dict.fromkeys((sysconfig.get_path("purelib"), sysconfig.get_path("platlib"))) if p]; import pypdf; sys.exit(pypdf.__version__ != sys.argv[1])' \
+if ! python3 -I -S -B -c 'import sys, sysconfig; [sys.path.insert(0, p) for p in dict.fromkeys((sysconfig.get_path("purelib"), sysconfig.get_path("platlib"))) if p]; import pypdf; sys.exit(pypdf.__version__ != sys.argv[1])' \
     "$EXPECTED_PYPDF_VERSION" >/dev/null 2>&1; then
   echo "$CHECK_NAME: exact Python package pypdf==$EXPECTED_PYPDF_VERSION is required" >&2
   exit 2
@@ -386,7 +386,7 @@ trap cleanup_build_root EXIT
 
 capture_executable_manifest() {
   local output="$1"
-  python3 -I -S - "$output" "${#commands[@]}" "${commands[@]}" "${command_paths[@]}" <<'PY'
+  python3 -I -S -B - "$output" "${#commands[@]}" "${commands[@]}" "${command_paths[@]}" <<'PY'
 from __future__ import annotations
 
 import hashlib
@@ -505,7 +505,7 @@ PY
 
 capture_pypdf_manifest() {
   local output="$1"
-  python3 -I -S - "$output" "$EXPECTED_PYPDF_VERSION" <<'PY'
+  python3 -I -S -B - "$output" "$EXPECTED_PYPDF_VERSION" <<'PY'
 from __future__ import annotations
 
 import hashlib
@@ -657,7 +657,7 @@ capture_manifest() {
   local base="$1"
   local output="$2"
   local snapshot_destination="$3"
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$base" \
     "$output" \
     "$snapshot_destination" \
@@ -857,7 +857,7 @@ PY
 }
 
 verify_snapshot_readonly() {
-  python3 -I -S - "$SNAPSHOT_ROOT" "${manifest_paths[@]}" <<'PY'
+  python3 -I -S -B - "$SNAPSHOT_ROOT" "${manifest_paths[@]}" <<'PY'
 from __future__ import annotations
 
 import os
@@ -927,7 +927,7 @@ if [[ "$PHASE" == "capture" ]]; then
     echo "$CHECK_NAME: source snapshot differs from the initial repository inputs" >&2
     exit 1
   fi
-  python3 -I -S - "$SNAPSHOT_ROOT" <<'PY'
+  python3 -I -S -B - "$SNAPSHOT_ROOT" <<'PY'
 from pathlib import Path
 import stat
 import sys
@@ -978,7 +978,7 @@ if ! cmp -s "$BUILD_ROOT/root-inputs.before.tsv" "$BUILD_ROOT/snapshot-inputs.ts
 fi
 verify_snapshot_readonly
 
-python3 -I -S - \
+python3 -I -S -B - \
   "$SNAPSHOT_ROOT/$SOURCE" \
   "$SNAPSHOT_ROOT/$MARKDOWN" \
   "$SNAPSHOT_ROOT/$PUBLICATION_STYLE" \
@@ -1378,7 +1378,7 @@ if style_digest != "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7f
 PY
 
 if [[ "$MODE" != "--refresh" ]]; then
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$SNAPSHOT_ROOT/$VISUAL_RECEIPT" \
     "$SNAPSHOT_ROOT/$COMMITTED" \
     "$SNAPSHOT_ROOT/$RENDERING_RECEIPT" \
@@ -1803,7 +1803,7 @@ if hashlib.sha256(records_raw).hexdigest() != field_values["actual_view_records_
 PY
 fi
 
-python3 -I -S - "$SNAPSHOT_ROOT/$FIGURE_DIR" "${FIGURE_STEMS[@]}" <<'PY'
+python3 -I -S -B - "$SNAPSHOT_ROOT/$FIGURE_DIR" "${FIGURE_STEMS[@]}" <<'PY'
 from __future__ import annotations
 
 import hashlib
@@ -2260,15 +2260,17 @@ for stem in stems:
         )
 PY
 
-python3 -I -S "$SNAPSHOT_ROOT/scripts/check-citation-edge-countermodel.py" >/dev/null
-python3 -I -S "$SNAPSHOT_ROOT/scripts/check-citation-edge-countermodel-self-test.py" >/dev/null
-python3 -I -S "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py" \
+# Isolated mode ignores PYTHONDONTWRITEBYTECODE; explicit -B keeps source imports
+# from creating bytecode inside the captured snapshot, including when run as root.
+python3 -I -S -B "$SNAPSHOT_ROOT/scripts/check-citation-edge-countermodel.py" >/dev/null
+python3 -I -S -B "$SNAPSHOT_ROOT/scripts/check-citation-edge-countermodel-self-test.py" >/dev/null
+python3 -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py" \
   >/dev/null 2>&1
-python3 -O -I -S "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py" \
+python3 -O -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py" \
   >/dev/null 2>&1
-python3 -I -S "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py" \
+python3 -I -S -B "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py" \
   >/dev/null 2>&1
-python3 -O -I -S "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py" \
+python3 -O -I -S -B "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py" \
   >/dev/null 2>&1
 bash "$SNAPSHOT_ROOT/scripts/check-formal-pdf-log-self-test.sh" >/dev/null
 if [[ "$MODE" != "--refresh" ]]; then
@@ -2341,7 +2343,7 @@ font_files=(
 )
 
 capture_font_exact() {
-  python3 -I -S - "$1" "$2" "$3" "$4" "$5" <<'PY'
+  python3 -I -S -B - "$1" "$2" "$3" "$4" "$5" <<'PY'
 from __future__ import annotations
 
 import os
@@ -2605,7 +2607,7 @@ PY
 }
 
 capture_format_exact() {
-  python3 -I -S - "$1" "$2" "$3" <<'PY'
+  python3 -I -S -B - "$1" "$2" "$3" <<'PY'
 from __future__ import annotations
 
 import hashlib
@@ -2849,7 +2851,7 @@ PY
 }
 
 verify_captured_format_exact() {
-  python3 -I -S - "$1" "$2" "$3" <<'PY'
+  python3 -I -S -B - "$1" "$2" "$3" <<'PY'
 from __future__ import annotations
 
 import hashlib
@@ -3156,7 +3158,7 @@ decorate_figure_pdf() {
   local output_pdf="$2"
   local title="$3"
   local source_svg="$4"
-  python3 -I -S - "$raw_pdf" "$output_pdf" "$title" "$source_svg" <<'PY'
+  python3 -I -S -B - "$raw_pdf" "$output_pdf" "$title" "$source_svg" <<'PY'
 import hashlib
 from pathlib import Path
 import sys
@@ -3282,7 +3284,7 @@ validate_figure_pdf() {
     echo "$CHECK_NAME: $label does not embed both Source Sans and Latin Modern Roman" >&2
     exit 1
   fi
-  python3 -I -S - "$pdf" "$title" "$height_mm" "$source_svg" <<'PY'
+  python3 -I -S -B - "$pdf" "$title" "$height_mm" "$source_svg" <<'PY'
 import hashlib
 from pathlib import Path
 import sys
@@ -3471,7 +3473,7 @@ compare_render_sets() {
   local pages="$3"
   local label="$4"
   local receipt="$5"
-  python3 -I -S "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders.py" \
+  python3 -I -S -B "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders.py" \
     --left-dir "$left_directory" \
     --right-dir "$right_directory" \
     --pages "$pages" \
@@ -3652,7 +3654,7 @@ build_report() {
     "$run_empty_fonts" \
     "$run_tmp" \
     "$pass_dir"
-  python3 -I -S - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<'PY'
+  python3 -I -S -B - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<'PY'
 from __future__ import annotations
 
 import os
@@ -3897,7 +3899,7 @@ EOF
       echo "$CHECK_NAME: $run_name pass $pass_number lacks one exact pre-source map sentinel" >&2
       exit 1
     fi
-    current_state="$(python3 -I -S - "$run_dir" "$REPORT_STEM" <<'PY'
+    current_state="$(python3 -I -S -B - "$run_dir" "$REPORT_STEM" <<'PY'
 from pathlib import Path
 import hashlib
 import sys
@@ -3967,7 +3969,7 @@ if ! cmp -s "$BUILT_A" "$BUILT_B"; then
   exit 1
 fi
 
-python3 -I -S - \
+python3 -I -S -B - \
   "$BUILD_ROOT/build-a" \
   "$BUILD_ROOT/build-b" \
   "$ROOT" \
@@ -4246,7 +4248,7 @@ if grep -F -- "$REPLACEMENT_CHARACTER" "$BUILD_ROOT/built.txt" >/dev/null; then
   echo "$CHECK_NAME: rendered text contains a Unicode replacement character" >&2
   exit 1
 fi
-python3 -I -S - "$BUILD_ROOT/built.txt" <<'PY'
+python3 -I -S -B - "$BUILD_ROOT/built.txt" <<'PY'
 from pathlib import Path
 import sys
 
@@ -4301,7 +4303,7 @@ validate_report_pdf() {
     fi
   done
   validate_font_table "$pdf" "$label"
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$pdf" \
     "$SNAPSHOT_ROOT/$MARKDOWN" \
     "$EXPECTED_PAGES" \
@@ -4857,7 +4859,7 @@ if [[ "$MODE" == "--exact" ]]; then
     exit 1
   fi
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$BUILD_ROOT/built-a.navigation.tsv" \
     "$BUILD_ROOT/committed.navigation.tsv" <<'PY'
 from pathlib import Path
@@ -4961,7 +4963,7 @@ if [[ "$MODE" == "--cross-toolchain" ]]; then
 fi
 
 GENERATED_RECEIPT="$BUILD_ROOT/$REPORT_STEM.rendering-receipt.tsv"
-python3 -I -S - \
+python3 -I -S -B - \
   "$BUILT_A" \
   "$COLOR_RENDER" \
   "$GRAY_RENDER" \
@@ -5133,7 +5135,7 @@ validate_rendering_receipt_pair() {
   local pages="$5"
   local dpi="$6"
   local validation_mode="$7"
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$committed_receipt" \
     "$committed_pdf" \
     "$generated_receipt" \
@@ -5261,7 +5263,7 @@ elif [[ "$MODE" == "--cross-toolchain" ]]; then
     "$BUILD_ROOT/committed.txt" \
     committed-layout \
     layout
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$BUILD_ROOT/built.plain.txt" \
     "$BUILD_ROOT/committed.plain.txt" \
     "$BUILD_ROOT/built.txt" \
@@ -5568,7 +5570,7 @@ if [[ "$MODE" == "--refresh" ]]; then
     refresh_sources+=("$REPORT_FIGURE_DIR/$stem.pdf")
     refresh_destinations+=("$FIGURE_DIR/$stem.pdf")
   done
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$ROOT" \
     "$BUILD_ROOT/root-inputs.before.tsv" \
     "${#refresh_sources[@]}" \
@@ -6248,7 +6250,7 @@ finally:
     os.close(root_descriptor)
 PY
   capture_manifest "$ROOT" "$BUILD_ROOT/root-inputs.post-refresh.tsv" ""
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$BUILD_ROOT/root-inputs.before.tsv" \
     "$BUILD_ROOT/root-inputs.post-refresh.tsv" \
     "$ROOT" \

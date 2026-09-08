@@ -27,19 +27,19 @@ TRAILER_ID_OBSERVATION_CHECK_SHA256=e531d58620ff41275b741666a119a1245d5ec2a08fa9
 TRAILER_ID_OBSERVATION_SELF_TEST_SHA256=9b1d0da3dffc87e9d46a4986b9c54c457c036ff0cd0a0966f08155aad7b5b65b
 STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v3.py"
 STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py"
-HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py"
-HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py"
+HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py"
+HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py"
 FONT_ALPHA_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"
 FONT_ALPHA_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence-self-test.py"
 MODE_WIRING_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py"
-RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
-HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json"
+RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf"
+HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v3.json"
 RETAINED_FONT_ALPHA_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
 STRUCTURE_CHECK_SHA256=b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4
 STRUCTURE_SELF_TEST_SHA256=a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea
-HOSTED_RAW_CHECK_SHA256=875988eadb524ea266e03be47dc71219288a9251c8fa237c155930ad58427fd1
-HOSTED_RAW_SELF_TEST_SHA256=0505f57f88bc35e1f1987b8baefdb73c0ac84e0ef2294f86cd73a37a7d2f20a5
-HOSTED_RAW_PROFILE_RECEIPT_SHA256=56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8
+HOSTED_RAW_CHECK_SHA256=bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241
+HOSTED_RAW_SELF_TEST_SHA256=3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4
+HOSTED_RAW_PROFILE_RECEIPT_SHA256=bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3
 FONT_ALPHA_CHECK_SHA256=5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997
 FONT_ALPHA_SELF_TEST_SHA256=07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be
 PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
@@ -53,7 +53,7 @@ LEGACY_PANDOC_PORTABILITY_RECEIPT_SHA256=7ea2acf89c8a33f5666ab9798a594c24febdad6
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT_SHA256=cd5602bb28dce0780c4bac5f70097e496d2afe9141a8210f249332b5e6d93596
 
-HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v2-bound
+HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v3-bound
 HOSTED_PANDOC_VERSION='pandoc 3.10.2'
 HOSTED_PANDOC_SHA256=867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
 HOSTED_RENDERER_VERSION='This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)'
@@ -1178,10 +1178,6 @@ if [[ "$MODE" == "--cross-toolchain" ]]; then
       exit 1
       ;;
   esac
-  if [[ "$CROSS_PROFILE" == "$HOSTED_PROFILE_ID" ]]; then
-    echo "$CHECK_NAME: current v3 hosted profile pending; historical v2 replay grants no current-source admission" >&2
-    exit 1
-  fi
 fi
 # CROSS_PROFILE_SELECTION_END
 PID_RS_PDF_TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$MODE" "$BUILT" \
@@ -1569,7 +1565,7 @@ case "$MODE:$CROSS_PROFILE" in
     validate_pdf built "$BUILT" strict
     ;;
   --cross-toolchain:"$HOSTED_PROFILE_ID")
-    # The historical replay checker raw-binds its retained v2 fixture; current v3 stops above.
+    # The v3 checker raw-binds one retained 24-page candidate and unchanged strict manifests.
     validate_pdf built "$BUILT" hosted-raw-and-strict
     ;;
   --cross-toolchain:"$LEGACY_PROFILE_ID")

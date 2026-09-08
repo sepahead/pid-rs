@@ -8,6 +8,11 @@ handoff. No local path is required by the public mathematical documents.
 
 ## Resumed recovery checkpoint
 
+The [publication runtime and profile successor](audit/evidence/publication-runtime-profile-repair-2026-09-08.md)
+adds the tested explicit-bytecode flags and current results-guide Linux profile. Its production
+and hosted statuses are separate from the passing focused controls. Historical failure records
+retain their original source versions and outcomes.
+
 The [8 September PDF repair record](audit/evidence/workflow-pdf-text-profile-repair-2026-09-08.md)
 updates the text-portability failure, passing local controls and complete exact PDF suite. It also
 records the separate Linux cache-directory failure and pending results-guide profile. Use its

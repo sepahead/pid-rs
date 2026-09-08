@@ -109,6 +109,7 @@ def invoke(
         sys.executable,
         "-I",
         "-S",
+        "-B",
         str(COMPARATOR),
         "--left-dir",
         str(left),

@@ -1938,10 +1938,46 @@ only from the outer guide gate's selected, digest-pinned profile and its indepen
 current v3 strict structure checker to both PDFs and then requires raw equality between the rebuilt
 and committed files. The exact branch neither requires nor reads a hosted or legacy cross-profile
 checker, receipt, or fixture. Explicit `--cross-toolchain` mode first captures and selects a closed
-producer tuple. The Pandoc 3.10.2/Ubuntu 24.04 route runs the historical v2 replay checks, then
-refuses the current v3 build with an explicit pending-profile diagnostic. Current hosted admission
-requires fresh producer and PDF evidence plus review. The retained v1, v2 and legacy profiles are
-historical evidence and do not admit the current 24-page guide.
+producer tuple. The Pandoc 3.10.2/Ubuntu 24.04 route selects the current v3 raw profile. It binds
+one retained 748,561-byte, 24-page candidate at SHA-256
+`d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24`.
+Two outer builder invocations in one translated local Linux container emitted those same bytes;
+this is local candidate evidence, and actual GitHub-hosted replay remains a separate obligation.
+The retained v1, v2 and legacy profiles remain historical and do not admit the current guide.
+
+The current `check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py` accepts that exact
+fixture or a same-length candidate differing solely in the separately pinned strict duplicated
+final-trailer `/ID` payloads. Both captured byte strings must also pass the unchanged current v3
+structure checker with its canonical manifest digests, and their complete typed reports must
+agree. The profile admits no other metadata, font, object-order, compression, numeric, text,
+navigation or structure normalization. Canonical and retained Linux PDFs have different raw
+metadata and byte lengths, while their default/layout text, font tables and all 24 corresponding
+page images at 120 dpi agree in both color and grayscale. That one renderer/resolution comparison
+is a bounded observation, not a general rendering or accessibility claim.
+
+The new v3 self-test declares 70 cases: two controls plus 13 raw, six identifier, 10 input,
+16 output, six dependency, 14 source and three stability hostiles. Its source audit rejects a
+floating-point fixture-length literal, and its canonical target, navigation and structure
+expectations are fixed independently of the candidate comparator. Every subprocess case runs
+under normal and optimized isolated Python; the complete suite is also required in both modes
+for direct API controls. The current focused commands are:
+
+```text
+HOSTED_GUIDE_V3_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf"
+python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py "$HOSTED_GUIDE_V3_FIXTURE"
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py "$HOSTED_GUIDE_V3_FIXTURE"
+python3 -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
+```
+
+The [v3 capture receipt](../audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v3.json)
+records the source closure, observed producers, two completed builders and two earlier preparation
+failures that executed no builders. It preserves the retained image's font-supply deviation and
+explicitly records hosted replay as pending. The
+[closed receipt schema](../audit/schemas/mathematical-results-guide-hosted-raw-profile-receipt-v3.schema.json)
+describes this exact observation; the wrapper binds the complete receipt bytes by SHA-256. The
+schema is documentation of that frozen record, not a separately executed admission checker.
+Later test and hosted results belong in separate evidence records and do not rewrite this capture.
 
 The historical `check-mathematical-results-guide-pdf-hosted-raw-profile.py` still binds the exact
 581,296-byte, 16-page hosted
@@ -2346,9 +2382,10 @@ admission is not a full ISO-conformance claim and is recorded in `KNOWN_LIMITATI
 resolves every internal destination, binds the external HTTPS target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
 font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
-in default `--exact` mode. The selected hosted cross route runs the historical v2 replay checks,
-then refuses before the current build while v3 hosted admission is pending. The retained v1, v2 and
-legacy packages remain historical only. The current graph-aware
+in default `--exact` mode. The selected hosted cross route uses the finite current v3 raw profile
+and its normal/optimized source controls. Its retained candidate was captured locally; actual
+hosted replay remains a separate obligation. The retained v1, v2 and legacy packages remain
+historical only. The current graph-aware
 `check-mathematical-results-guide-pdf-structure-v3.py` profile binds the 24-page guide. It requires
 57 external HTTPS targets, 220 ordered navigation records, 67 named destinations, 18 outline
 entries, and 107 link annotations: 89 URI and 18 internal GoTo links, with no GoToR. Its 1,069
@@ -2399,8 +2436,9 @@ controls for that artifact's GoToR actions. Four v3 CLI controls reject input/ou
 hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
 remains unchanged. The frozen v1 cross-toolchain profiles compare extracted text, geometry, target
 sets, and the bounded semantic navigation/structure projection for their 16-page artifact only.
-The current 24-page v3 profile has its own structure checker and self-test. Its hosted relation is
-pending; the retained v2 fixture and receipt govern historical replay only.
+The current 24-page v3 profile has its own structure checker, raw profile and self-tests. The
+retained v2 fixture and receipt govern historical replay only; the new v3 local capture does not
+supply hosted execution credit.
 These checks
 establish a source-specific, bounded publication-artifact comparison policy. They are not a generic
 malware-free, viewer-safety, mathematical-truth, or PDF/UA claim. They do not elevate the guide
@@ -2873,10 +2911,11 @@ toolchain, or turn correlated checks of the same bytes into independent evidence
 The [September 5 split visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md)
 binds all 87 pages in color and grayscale at 120 dpi, 24 color spots at 300 dpi, and the four
 figure pages in grayscale at 300 dpi. It preserves late observations and reconstructed timing;
-it does not claim sole-root or independent complete review. The current self-test retains 345
+it does not claim sole-root or independent complete review. The current self-test retains 357
 controls outside the text-portability family, including 24 visual negatives, four split-review
-controls and four machine-scope controls. Its 71 text-portability controls bring the declared total
-to 416. Compact fixtures use independent literal diagram sequences from retained real extractions;
+controls, four machine-scope controls and 12 Python-bytecode controls. Its 71 text-portability
+controls bring the declared total to 428. Compact fixtures use independent literal diagram sequences
+from retained real extractions;
 synthetic surrounding prose and page partitions keep the controls small. They cover all nine
 ordered pairs of the three observed producer profiles, admitted ASCII whitespace, paired malformed
 labels and bounds, an unlisted permutation of the new page 12 profile, and strict content/order
@@ -2885,6 +2924,14 @@ integers. Fixture expectations are never derived from the candidate checker.
 Twenty scoped lenses separate visible findings from mandatory extraction, font, action and
 reproduction gates. This is agent artifact review, not mathematical proof, accessibility
 certification, human review or hosted success.
+
+Production Python launches and positive verifier children use explicit `-B` alongside isolation;
+`-I` ignores `PYTHONDONTWRITEBYTECODE`, so the environment variable alone cannot prevent adjacent
+module caches. Source controls bind all 36 production launch sites and the two transitive Python
+command vectors while preserving normal and optimized runs. Focused controls import the actual
+synchronizer through its existing loader prefix, distinguish the environment-only failure from
+explicit no-bytecode behavior, and retain rejection of both writable and undeclared cache
+directories. The complete source-snapshot inventory and mode guard remains unchanged.
 
 The retained `.fls` files and closure manifests bind every raw and resolved input observed after
 each compiler pass, and the two isolated builds must be byte-identical. Raw and resolved map-shaped

@@ -64,6 +64,7 @@ C3_FLS_MAP_PATH_COUNT=0
 C3_EXECUTABLE_CUSTODY_COUNT=0
 C3_FORMAT_CUSTODY_COUNT=0
 C8_TEXT_PORTABILITY_COUNT=0
+PYTHON_BYTECODE_COUNT=0
 VISUAL_RECEIPT_HOSTILE_COUNT=0
 SPLIT_VISUAL_HOSTILE_COUNT=0
 EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT=4
@@ -77,8 +78,9 @@ EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
 EXPECTED_C8_TEXT_PORTABILITY_COUNT=71
+EXPECTED_PYTHON_BYTECODE_COUNT=12
 EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
-EXPECTED_TOTAL_CONTROL_COUNT=416
+EXPECTED_TOTAL_CONTROL_COUNT=428
 # This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -101,7 +103,7 @@ for resolved_command in \
 done
 
 reset_result_log() {
-  python3 -I -S - "$RESULT_LOG" <<'PY'
+  python3 -I -S -B - "$RESULT_LOG" <<'PY'
 import os
 from pathlib import Path
 import stat
@@ -148,7 +150,7 @@ PY
 }
 
 prove_probe_group_absent() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 import os
 import sys
 import time
@@ -201,7 +203,7 @@ run_bounded_probe() {
     set -m
     (
       set +m
-      probe_anchor_pid="$(python3 -I -S -c 'import os; print(os.getppid())')"
+      probe_anchor_pid="$(python3 -I -S -B -c 'import os; print(os.getppid())')"
       readonly probe_anchor_pid
       # The anchor must survive the watchdog's advisory TERM so a final group SIGKILL can still use
       # the original PGID.  Usually the parent cancels the watchdog and dispatches that KILL; the
@@ -214,7 +216,7 @@ run_bounded_probe() {
       probe_status=$?
       set -e
       set +e
-      python3 -I -S - "$decision_root" "$probe_status" <<'PY'
+      python3 -I -S -B - "$decision_root" "$probe_status" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -304,7 +306,7 @@ PY
       exit 125
     ) &
     probe_pid=$!
-    python3 -I -S - \
+    python3 -I -S -B - \
       "$probe_pid" "$timeout_seconds" "$decision_root" <<'PY' \
       >/dev/null 2>&1 &
 import os
@@ -480,7 +482,7 @@ PY
     # protocol, not authenticity against a same-UID writer that can replace the entire private
     # root between the checked transitions.
     set +e
-    decision_record_kind="$(python3 -I -S - "$decision_root" "$timeout_seconds" <<'PY'
+    decision_record_kind="$(python3 -I -S -B - "$decision_root" "$timeout_seconds" <<'PY'
 import os
 from pathlib import Path
 import re
@@ -592,7 +594,7 @@ PY
     wait "$watchdog_pid" 2>/dev/null || true
     if [[ "$decision_record_kind" == probe-status:* ]]; then
       # RELEASE_READINESS_VALIDATE: parse exact marker custody before group membership/release.
-      python3 -I -S - \
+      python3 -I -S -B - \
         "$release_ready_marker" "$decision_publication_grace_seconds" <<'PY'
 import os
 import stat
@@ -656,7 +658,7 @@ PY
       fi
       probe_status="${decision_record_kind#probe-status:}"
 
-      "$PROBE_CLEANUP_PYTHON" -I -S - "$probe_pid" "$PS_COMMAND" <<'PY'
+      "$PROBE_CLEANUP_PYTHON" -I -S -B - "$probe_pid" "$PS_COMMAND" <<'PY'
 import os
 import signal
 import subprocess
@@ -784,7 +786,7 @@ publish_test_probe_status_atomically() {
   local decision_root="$1"
   local payload_text="$2"
   local final_mode="$3"
-  python3 -I -S - "$decision_root" "$payload_text" "$final_mode" <<'PY'
+  python3 -I -S -B - "$decision_root" "$payload_text" "$final_mode" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -844,6 +846,9 @@ pass() {
       ;;
     c8-text-portability)
       C8_TEXT_PORTABILITY_COUNT=$((C8_TEXT_PORTABILITY_COUNT + 1))
+      ;;
+    python-bytecode)
+      PYTHON_BYTECODE_COUNT=$((PYTHON_BYTECODE_COUNT + 1))
       ;;
     *)
       fail "unknown active C3 control family: $C3_ACTIVE_FAMILY"
@@ -1019,7 +1024,7 @@ set +e
 # shellcheck disable=SC2016
 run_bounded_probe 1 \
   bash --noprofile --norc -c \
-    'python3 -I -S -c '\''import time; time.sleep(300)'\'' & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; wait "$descendant"' \
+    'python3 -I -S -B -c '\''import time; time.sleep(300)'\'' & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; wait "$descendant"' \
     bash "$DESCENDANT_PID_FILE" \
   >"$RESULT_LOG" 2>&1
 watchdog_status=$?
@@ -1028,7 +1033,7 @@ if [[ "$watchdog_status" -ne 124 ]] \
     || ! grep -F -- 'bounded probe exceeded 1 seconds' "$RESULT_LOG" >/dev/null; then
   fail "bounded-probe watchdog did not report its exact timeout status"
 fi
-python3 -I -S - "$DESCENDANT_PID_FILE" <<'PY'
+python3 -I -S -B - "$DESCENDANT_PID_FILE" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -1056,7 +1061,7 @@ set +e
 # shellcheck disable=SC2016
 run_bounded_probe 1 \
   bash --noprofile --norc -c \
-    'python3 -I -S -c '\''import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)'\'' "$2" & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; for _ in {1..100}; do [[ -e "$2" ]] && break; sleep 0.01; done; [[ -e "$2" ]] || exit 88; wait "$descendant"' \
+    'python3 -I -S -B -c '\''import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)'\'' "$2" & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; for _ in {1..100}; do [[ -e "$2" ]] && break; sleep 0.01; done; [[ -e "$2" ]] || exit 88; wait "$descendant"' \
     bash "$IGNORING_DESCENDANT_PID_FILE" "$IGNORING_DESCENDANT_READY_FILE" \
   >"$RESULT_LOG" 2>&1
 watchdog_status=$?
@@ -1065,7 +1070,7 @@ if [[ "$watchdog_status" -ne 124 ]] \
     || ! grep -F -- 'bounded probe exceeded 1 seconds' "$RESULT_LOG" >/dev/null; then
   fail "bounded-probe escalation did not report its exact timeout status"
 fi
-python3 -I -S - "$IGNORING_DESCENDANT_PID_FILE" <<'PY'
+python3 -I -S -B - "$IGNORING_DESCENDANT_PID_FILE" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -1122,7 +1127,7 @@ set +e
 # shellcheck disable=SC2016
 run_bounded_probe 2 \
   bash --noprofile --norc -c \
-    'python3 -I -S -c '\''import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)'\'' "$2" & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; for _ in {1..100}; do [[ -e "$2" ]] && break; sleep 0.01; done; [[ -e "$2" ]] || exit 88; exit 0' \
+    'python3 -I -S -B -c '\''import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)'\'' "$2" & descendant=$!; printf '\''%s\n'\'' "$descendant" >"$1"; for _ in {1..100}; do [[ -e "$2" ]] && break; sleep 0.01; done; [[ -e "$2" ]] || exit 88; exit 0' \
     bash "$ORPHAN_PID_FILE" "$ORPHAN_READY_FILE" \
   >"$RESULT_LOG" 2>&1
 orphan_status=$?
@@ -1132,7 +1137,7 @@ if [[ "$orphan_status" -ne 125 ]] \
       "$RESULT_LOG" >/dev/null; then
   fail "ordinary probe completion did not reject its surviving process-group member"
 fi
-python3 -I -S - "$ORPHAN_PID_FILE" <<'PY'
+python3 -I -S -B - "$ORPHAN_PID_FILE" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -1158,7 +1163,7 @@ claim_probe_decision_without_record() {
   # record publication remains bounded by the parent's separate five-second decision-publication
   # grace; this no-record fixture never enters completion-readiness validation.
   mkdir "$TEST_ROOT/probe-decision-$PASS_COUNT"
-  python3 -I -S -c \
+  python3 -I -S -B -c \
     'import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)' \
     "$PUBLICATION_STALL_READY_FILE" &
   publication_stall_descendant=$!
@@ -1180,7 +1185,7 @@ if [[ "$publication_status" -ne 125 ]] \
       "$RESULT_LOG" >/dev/null; then
   fail "decision-publication stall did not reach its bounded custody rejection"
 fi
-python3 -I -S - "$PUBLICATION_STALL_PID_FILE" <<'PY'
+python3 -I -S -B - "$PUBLICATION_STALL_PID_FILE" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -1211,7 +1216,7 @@ publish_malformed_status_with_descendant() {
   # release-readiness node is needed for this hostile branch.
   umask 077
   mkdir "$malformed_decision_root"
-  python3 -I -S -c \
+  python3 -I -S -B -c \
     'import signal, sys, time; from pathlib import Path; signal.signal(signal.SIGTERM, signal.SIG_IGN); Path(sys.argv[1]).write_text("ready\n", encoding="ascii", newline="\n"); time.sleep(300)' \
     "$MALFORMED_STATUS_READY_FILE" &
   malformed_status_descendant=$!
@@ -1237,7 +1242,7 @@ if [[ "$malformed_status" -ne 125 ]] \
       "$RESULT_LOG" >/dev/null; then
   fail "malformed completion record did not reach its bounded custody rejection"
 fi
-python3 -I -S - "$MALFORMED_STATUS_PID_FILE" <<'PY'
+python3 -I -S -B - "$MALFORMED_STATUS_PID_FILE" <<'PY'
 import os
 from pathlib import Path
 import sys
@@ -1316,7 +1321,7 @@ expect_result_log_reset_reject \
   "$TEST_ROOT/result-log-symlink" \
   "result-log reset rejects a symlink without following it"
 
-python3 -I -S -c 'import os, sys; os.mkfifo(sys.argv[1])' "$TEST_ROOT/result-log-fifo"
+python3 -I -S -B -c 'import os, sys; os.mkfifo(sys.argv[1])' "$TEST_ROOT/result-log-fifo"
 expect_result_log_reset_reject \
   "$TEST_ROOT/result-log-fifo" \
   "result-log reset rejects a FIFO without blocking"
@@ -1340,7 +1345,7 @@ replace_once() {
   local path="$1"
   local old="$2"
   local new="$3"
-  python3 -I -S - "$path" "$old" "$new" <<'PY'
+  python3 -I -S -B - "$path" "$old" "$new" <<'PY'
 from pathlib import Path
 import copy
 import sys
@@ -1360,7 +1365,7 @@ mutate_run_bounded_probe_once() {
   local path="$1"
   local old="$2"
   local new="$3"
-  python3 -I -S - "$path" "$old" "$new" <<'PY'
+  python3 -I -S -B - "$path" "$old" "$new" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1380,7 +1385,7 @@ PY
 }
 
 validate_watchdog_timeout_order() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1434,7 +1439,7 @@ PY
 }
 
 validate_release_readiness_order() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1522,7 +1527,7 @@ prepare_watchdog_mutant() {
   local source="$1"
   local destination="$2"
   cp "$source" "$destination"
-  python3 -I -S - "$source" "$destination" <<'PY'
+  python3 -I -S -B - "$source" "$destination" <<'PY'
 import os
 from pathlib import Path
 import stat
@@ -1762,7 +1767,7 @@ expect_accept \
 
 case_file="$TEST_ROOT/watchdog-timeout-order-reversed.sh"
 prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
-python3 -I -S - "$case_file" <<'PY'
+python3 -I -S -B - "$case_file" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1792,7 +1797,7 @@ expect_reject \
 
 case_file="$TEST_ROOT/watchdog-late-group-order-reversed.sh"
 prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
-python3 -I -S - "$case_file" <<'PY'
+python3 -I -S -B - "$case_file" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1823,7 +1828,7 @@ expect_reject \
 
 case_file="$TEST_ROOT/watchdog-timeout-commit-removed.sh"
 prepare_watchdog_mutant "$SELFTEST_SOURCE" "$case_file"
-python3 -I -S - "$case_file" <<'PY'
+python3 -I -S -B - "$case_file" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1860,7 +1865,7 @@ extract_heredoc_containing() {
   local checker="$1"
   local marker="$2"
   local destination="$3"
-  python3 -I -S - "$checker" "$marker" "$destination" <<'PY'
+  python3 -I -S -B - "$checker" "$marker" "$destination" <<'PY'
 from pathlib import Path
 import sys
 
@@ -1902,7 +1907,7 @@ extract_shell_region() {
   local start_marker="$2"
   local end_marker="$3"
   local destination="$4"
-  python3 -I -S - "$checker" "$start_marker" "$end_marker" "$destination" <<'PY'
+  python3 -I -S -B - "$checker" "$start_marker" "$end_marker" "$destination" <<'PY'
 from pathlib import Path
 import sys
 
@@ -2090,7 +2095,7 @@ probe_projection_command_array
     echo "text-portability source invariant drifted: nonempty command-array probe changed" >&2
     return 1
   fi
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import ast
 import hashlib
@@ -2142,7 +2147,7 @@ required_once = (
     'if built_tokens != committed_tokens:',
     'if built_default_raw != committed_default_raw:',
     'if built_counter != committed_counter:',
-    """python3 -I -S - \\
+    """python3 -I -S -B - \\
     "$BUILD_ROOT/built.plain.txt" \\
     "$BUILD_ROOT/committed.plain.txt" \\
     "$BUILD_ROOT/built.txt" \\
@@ -2255,7 +2260,7 @@ make_text_portability_fixture() {
   local directory="$1"
   local variant="$2"
   mkdir "$directory"
-  python3 -I -S - "$directory" "$variant" <<'PY'
+  python3 -I -S -B - "$directory" "$variant" <<'PY'
 from pathlib import Path
 import hashlib
 import json
@@ -2541,7 +2546,7 @@ PY
 
 run_text_portability_validator() {
   local directory="$1"
-  python3 -I -S "$TEXT_PORTABILITY_VALIDATOR" \
+  python3 -I -S -B "$TEXT_PORTABILITY_VALIDATOR" \
     "$directory/built.plain.txt" \
     "$directory/committed.plain.txt" \
     "$directory/built.layout.txt" \
@@ -2849,7 +2854,7 @@ run_font_capture() {
   local debian_root="$4"
   local destination_root="$5"
   mkdir "$destination_root"
-  python3 -I -S "$FONT_SOURCE_VALIDATOR" \
+  python3 -I -S -B "$FONT_SOURCE_VALIDATOR" \
     "$font_name" "$query_path" "$dist_root" "$debian_root" "$destination_root" || return $?
   cmp "$query_path" "$destination_root/$font_name"
 }
@@ -2936,7 +2941,7 @@ expect_reject \
   lmroman10-regular.otf \
   "$FONT_PARENT_SYMLINK/fonts/opentype/public/lm/lmroman10-regular.otf" \
   "$FONT_PARENT_SYMLINK" "$FONT_DEBIAN" "$FONT_FIXTURE/symlink-parent.otf"
-python3 -I -S -c 'import os, sys; os.mkfifo(sys.argv[1])' \
+python3 -I -S -B -c 'import os, sys; os.mkfifo(sys.argv[1])' \
   "$FONT_DEBIAN/fonts/opentype/public/lm/lmroman10-bold.otf"
 expect_reject \
   "font source rejects a FIFO without blocking" \
@@ -2952,7 +2957,7 @@ ln -s "$FONT_DESTINATION_OUTSIDE" "$FONT_DESTINATION_SYMLINK"
 expect_reject \
   "font capture rejects a symlinked destination directory" \
   "font source cannot open direct directory component 'destination-symlink'" \
-  python3 -I -S "$FONT_SOURCE_VALIDATOR" \
+  python3 -I -S -B "$FONT_SOURCE_VALIDATOR" \
   lmroman10-regular.otf \
   "$FONT_DIST/fonts/opentype/public/lm/lmroman10-regular.otf" \
   "$FONT_DIST" "$FONT_DEBIAN" "$FONT_DESTINATION_SYMLINK"
@@ -2976,7 +2981,7 @@ run_format_capture() {
   local captured_size
   local captured_sha256
   mkdir "$destination_root"
-  receipt="$(python3 -I -S "$FORMAT_SOURCE_VALIDATOR" \
+  receipt="$(python3 -I -S -B "$FORMAT_SOURCE_VALIDATOR" \
     "$query_path" "$source_root" "$destination_root")" || return $?
   IFS=$'\t' read -r captured_size captured_sha256 <<<"$receipt"
   if [[ ! "$captured_size" =~ ^[1-9][0-9]*$ \
@@ -2985,7 +2990,7 @@ run_format_capture() {
     return 1
   fi
   chmod 0555 "$destination_root"
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
     "$destination_root/lualatex.fmt" "$captured_size" "$captured_sha256" || return $?
   cmp "$query_path" "$destination_root/lualatex.fmt"
 }
@@ -3018,7 +3023,7 @@ run_private_format_lookup() {
 }
 
 validate_format_custody_source() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -3090,7 +3095,7 @@ try:
     compiler_call = build_region.index("        lualatex \\")
     final_verify = text.index("if ! verify_captured_format_exact", build_b)
     fls_closure = text.index(
-        'python3 -I -S - \\\n  "$BUILD_ROOT/build-a"', final_verify
+        'python3 -I -S -B - \\\n  "$BUILD_ROOT/build-a"', final_verify
     )
 except ValueError as error:
     fail(f"ordered format-custody source region is absent: {error}")
@@ -3108,7 +3113,7 @@ mutate_occurrence() {
   local old="$2"
   local new="$3"
   local occurrence="$4"
-  python3 -I -S - "$path" "$old" "$new" "$occurrence" <<'PY'
+  python3 -I -S -B - "$path" "$old" "$new" "$occurrence" <<'PY'
 from pathlib import Path
 import sys
 
@@ -3137,7 +3142,7 @@ PY
 move_format_verifier_for_mutation() {
   local path="$1"
   local mode="$2"
-  python3 -I -S - "$path" "$mode" <<'PY'
+  python3 -I -S -B - "$path" "$mode" <<'PY'
 from pathlib import Path
 import sys
 
@@ -3213,7 +3218,7 @@ expect_reject \
 
 FORMAT_EMPTY_SYSVAR="$FORMAT_FIXTURE/empty-source-sysvar"
 mkdir -p "$FORMAT_EMPTY_SYSVAR/web2c/luahbtex"
-python3 -I -S -c 'from pathlib import Path; import sys; Path(sys.argv[1]).touch()' \
+python3 -I -S -B -c 'from pathlib import Path; import sys; Path(sys.argv[1]).touch()' \
   "$FORMAT_EMPTY_SYSVAR/web2c/luahbtex/lualatex.fmt"
 expect_reject \
   "format capture rejects an empty exact source before reading" \
@@ -3224,7 +3229,7 @@ expect_reject \
 
 FORMAT_OVERSIZE_SYSVAR="$FORMAT_FIXTURE/oversize-source-sysvar"
 mkdir -p "$FORMAT_OVERSIZE_SYSVAR/web2c/luahbtex"
-python3 -I -S -c \
+python3 -I -S -B -c \
   'import sys; stream = open(sys.argv[1], "xb"); stream.truncate(64 * 1024 * 1024 + 1); stream.close()' \
   "$FORMAT_OVERSIZE_SYSVAR/web2c/luahbtex/lualatex.fmt"
 expect_reject \
@@ -3309,7 +3314,7 @@ expect_reject \
 
 FORMAT_FIFO_SYSVAR="$FORMAT_FIXTURE/fifo-sysvar"
 mkdir -p "$FORMAT_FIFO_SYSVAR/web2c/luahbtex"
-python3 -I -S -c 'import os, sys; os.mkfifo(sys.argv[1])' \
+python3 -I -S -B -c 'import os, sys; os.mkfifo(sys.argv[1])' \
   "$FORMAT_FIFO_SYSVAR/web2c/luahbtex/lualatex.fmt"
 expect_reject \
   "format capture rejects a FIFO at the exact leaf without blocking" \
@@ -3325,20 +3330,20 @@ ln -s "$FORMAT_DESTINATION_OUTSIDE" "$FORMAT_DESTINATION_SYMLINK"
 expect_reject \
   "format capture rejects a symlinked private destination root" \
   "format source cannot open direct directory component 'destination-symlink'" \
-  python3 -I -S "$FORMAT_SOURCE_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_SOURCE_VALIDATOR" \
   "$FORMAT_SOURCE" "$FORMAT_SYSVAR" "$FORMAT_DESTINATION_SYMLINK"
 
 FORMAT_PREEXISTING_DESTINATION="$FORMAT_FIXTURE/preexisting-destination"
 mkdir "$FORMAT_PREEXISTING_DESTINATION"
-python3 -I -S -c 'from pathlib import Path; import sys; Path(sys.argv[1]).touch()' \
+python3 -I -S -B -c 'from pathlib import Path; import sys; Path(sys.argv[1]).touch()' \
   "$FORMAT_PREEXISTING_DESTINATION/lualatex.fmt"
 expect_reject \
   "format capture rejects an empty preexisting destination leaf" \
   "format source cannot create the exclusive private format leaf" \
-  python3 -I -S "$FORMAT_SOURCE_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_SOURCE_VALIDATOR" \
   "$FORMAT_SOURCE" "$FORMAT_SYSVAR" "$FORMAT_PREEXISTING_DESTINATION"
 
-FORMAT_FIXTURE_RECEIPT="$(python3 -I -S - "$FORMAT_SOURCE" <<'PY'
+FORMAT_FIXTURE_RECEIPT="$(python3 -I -S -B - "$FORMAT_SOURCE" <<'PY'
 from pathlib import Path
 import hashlib
 import sys
@@ -3367,7 +3372,7 @@ make_format_replay_fixture "$case_dir"
 expect_reject \
   "format replay rejects a wrong same-size digest receipt" \
   "captured format digest receipt drifted" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" \
   0000000000000000000000000000000000000000000000000000000000000000
 
@@ -3376,7 +3381,7 @@ make_format_replay_fixture "$case_dir"
 expect_reject \
   "format replay rejects a wrong size receipt" \
   "captured format mode or size receipt drifted" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$((FORMAT_FIXTURE_BYTES + 1))" "$FORMAT_FIXTURE_SHA256"
 
 case_dir="$FORMAT_FIXTURE/replay-wrong-file-mode"
@@ -3385,7 +3390,7 @@ chmod 0644 "$case_dir/lualatex.fmt"
 expect_reject \
   "format replay rejects a writable captured-format file" \
   "captured format mode or size receipt drifted" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
 
 case_dir="$FORMAT_FIXTURE/replay-wrong-root-mode"
@@ -3394,7 +3399,7 @@ chmod 0755 "$case_dir"
 expect_reject \
   "format replay rejects a writable private-format root" \
   "captured format root is not a mode-0555 directory" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
 
 case_dir="$FORMAT_FIXTURE/replay-hardlink"
@@ -3403,7 +3408,7 @@ ln "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE/replay-hardlink-alias"
 expect_reject \
   "format replay rejects a multiply linked captured-format file" \
   "captured format is not a single-link regular file" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
 
 case_dir="$FORMAT_FIXTURE/replay-extra-root-entry"
@@ -3415,7 +3420,7 @@ chmod 0555 "$case_dir"
 expect_reject \
   "format replay rejects an extra entry in the sealed private root" \
   "captured format root inventory is not exact" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
 
 case_dir="$FORMAT_FIXTURE/replay-leaf-symlink"
@@ -3425,7 +3430,7 @@ chmod 0555 "$case_dir"
 expect_reject \
   "format replay rejects a symlink at its exact private leaf" \
   "captured format descriptor open failed" \
-  python3 -I -S "$FORMAT_REPLAY_VALIDATOR" \
+  python3 -I -S -B "$FORMAT_REPLAY_VALIDATOR" \
   "$case_dir/lualatex.fmt" "$FORMAT_FIXTURE_BYTES" "$FORMAT_FIXTURE_SHA256"
 
 case_file="$TEST_ROOT/format-capture-source-nofollow-removed.sh"
@@ -3510,7 +3515,7 @@ expect_reject \
 
 case_file="$TEST_ROOT/format-compiler-environment-consumer-removed.sh"
 cp "$CHECKER" "$case_file"
-python3 -I -S - "$case_file" <<'PY'
+python3 -I -S -B - "$case_file" <<'PY'
 from pathlib import Path
 import sys
 
@@ -3577,7 +3582,7 @@ expect_reject \
 C3_ACTIVE_FAMILY=""
 
 validate_map_file_free_wrapper_custody() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -3585,7 +3590,7 @@ import sys
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 required_once = (
     'ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"',
-    'python3 -I -S - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<\'PY\'',
+    'python3 -I -S -B - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<\'PY\'',
     r'    "\\pdfextension mapfile {}\n"',
     'pid_rs_existing_find_map = luatexbase.callback_descriptions("find_map_file")',
     "for _ in pid_rs_pairs(pid_rs_existing_find_map) do",
@@ -3630,7 +3635,7 @@ ordered = (
 positions = [text.index(literal) for literal in ordered]
 if positions != sorted(positions):
     raise SystemExit("map-file-free entry-wrapper operations are out of order")
-writer = text.index('python3 -I -S - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE"')
+writer = text.index('python3 -I -S -B - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE"')
 compiler = text.index("        lualatex ", writer)
 jobname = text.index('-jobname="$REPORT_STEM"', compiler)
 entry = text.index('          "$entry_wrapper"', jobname)
@@ -3648,10 +3653,10 @@ expect_accept \
 
 ENTRY_FIXTURE="$TEST_ROOT/entry-wrapper-fixture"
 mkdir "$ENTRY_FIXTURE"
-python3 -I -S "$ENTRY_WRAPPER_WRITER" \
+python3 -I -S -B "$ENTRY_WRAPPER_WRITER" \
   "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" \
   /captured/source/workflow.tex
-python3 -I -S - "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" <<'PY'
+python3 -I -S -B - "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" <<'PY'
 from pathlib import Path
 import stat
 import sys
@@ -3949,7 +3954,7 @@ make_runtime_map_probe() {
       fail "unknown runtime map probe mode: $mode"
       ;;
   esac
-  python3 -I -S "$ENTRY_WRAPPER_WRITER" \
+  python3 -I -S -B "$ENTRY_WRAPPER_WRITER" \
     "$fixture_root/pid-rs-map-file-free-entry.tex" \
     "$fixture_root/source.tex"
   (
@@ -4053,7 +4058,7 @@ make_fls_closure_fixture() {
 
 run_fls_closure_validator() {
   local fixture_root="$1"
-  python3 -I -S "$FLS_CLOSURE_VALIDATOR" \
+  python3 -I -S -B "$FLS_CLOSURE_VALIDATOR" \
     "$fixture_root/run-a" \
     "$fixture_root/run-b" \
     "$fixture_root/repository" \
@@ -4154,7 +4159,7 @@ expect_accept \
 
 case_dir="$(mktemp -d "$TEST_ROOT/fls-missing-private-format.XXXXXX")"
 make_fls_closure_fixture "$case_dir"
-python3 -I -S - "$case_dir" <<'PY'
+python3 -I -S -B - "$case_dir" <<'PY'
 from pathlib import Path
 import sys
 
@@ -4219,7 +4224,7 @@ expect_reject \
 C3_ACTIVE_FAMILY=""
 
 validate_pypdf_path_order() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -4257,7 +4262,7 @@ expect_reject \
   validate_pypdf_path_order "$case_file"
 
 validate_command_resolution_custody() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -4318,7 +4323,7 @@ done
 C3_ACTIVE_FAMILY=""
 
 validate_lock_bootstrap_custody() {
-  python3 -I -S - "$1" <<'PY'
+  python3 -I -S -B - "$1" <<'PY'
 from pathlib import Path
 import sys
 
@@ -4412,7 +4417,7 @@ make_semantic_fixture() {
 
 run_source_semantic_validator() {
   local directory="$1"
-  python3 -I -S "$SOURCE_SEMANTIC_VALIDATOR" \
+  python3 -I -S -B "$SOURCE_SEMANTIC_VALIDATOR" \
     "$directory/workflow.tex" \
     "$directory/workflow.md" \
     "$directory/publication.sty" \
@@ -4424,7 +4429,7 @@ mutate_canonical_pair() {
   local markdown="$2"
   local old="$3"
   local new="$4"
-  python3 -I -S - "$source" "$markdown" "$old" "$new" <<'PY'
+  python3 -I -S -B - "$source" "$markdown" "$old" "$new" <<'PY'
 from pathlib import Path
 import sys
 
@@ -4925,7 +4930,7 @@ expect_reject \
 make_rendered_text_control() {
   local directory="$1"
   mkdir -p "$directory"
-  python3 -I -S - "$RENDERED_TEXT_VALIDATOR" "$directory/built.txt" <<'PY'
+  python3 -I -S -B - "$RENDERED_TEXT_VALIDATOR" "$directory/built.txt" <<'PY'
 from pathlib import Path
 import shlex
 import sys
@@ -4998,7 +5003,7 @@ expect_reject \
 
 expect_accept \
   "standalone Figure 2 PDF sentinel remains a stable heading prefix" \
-  python3 -I -S - "$CHECKER" <<'PY'
+  python3 -I -S -B - "$CHECKER" <<'PY'
 from pathlib import Path
 import sys
 
@@ -5024,7 +5029,7 @@ printf 'bounded-executable-control\n' >"$case_dir/tool"
 chmod 755 "$case_dir/tool"
 expect_accept \
   "executable manifest accepts one bounded regular executable" \
-  python3 -I -S "$EXECUTABLE_VALIDATOR" \
+  python3 -I -S -B "$EXECUTABLE_VALIDATOR" \
   "$case_dir/manifest.tsv" 1 tool "$case_dir/tool"
 
 case_dir="$(mktemp -d "$TEST_ROOT/executable-symlink.XXXXXX")"
@@ -5034,7 +5039,7 @@ ln -s "$case_dir/real-tool" "$case_dir/tool"
 expect_reject \
   "executable manifest rejects a symlink path" \
   "executable capture path is not a regular non-symlink file: tool:" \
-  python3 -I -S "$EXECUTABLE_VALIDATOR" \
+  python3 -I -S -B "$EXECUTABLE_VALIDATOR" \
   "$case_dir/manifest.tsv" 1 tool "$case_dir/tool"
 
 case_dir="$(mktemp -d "$TEST_ROOT/executable-duplicate.XXXXXX")"
@@ -5043,17 +5048,17 @@ chmod 755 "$case_dir/tool"
 expect_reject \
   "executable manifest rejects duplicate command names" \
   "executable capture received an invalid command inventory" \
-  python3 -I -S "$EXECUTABLE_VALIDATOR" \
+  python3 -I -S -B "$EXECUTABLE_VALIDATOR" \
   "$case_dir/manifest.tsv" 2 tool tool "$case_dir/tool" "$case_dir/tool"
 
 case_dir="$(mktemp -d "$TEST_ROOT/executable-env-shebang.XXXXXX")"
 printf '#!/usr/bin/env runner\n' >"$case_dir/script"
 printf 'bounded-delegated-interpreter\n' >"$case_dir/runner"
 chmod 755 "$case_dir/script" "$case_dir/runner"
-env_path="$(python3 -I -S -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$(type -P env)")"
+env_path="$(python3 -I -S -B -c 'import os, sys; print(os.path.realpath(sys.argv[1]))' "$(type -P env)")"
 expect_accept \
   "executable manifest closes an env shebang over both env and its delegated interpreter" \
-  python3 -I -S "$EXECUTABLE_VALIDATOR" \
+  python3 -I -S -B "$EXECUTABLE_VALIDATOR" \
   "$case_dir/manifest.tsv" 3 script env runner \
   "$case_dir/script" "$env_path" "$case_dir/runner"
 
@@ -5063,11 +5068,11 @@ chmod 755 "$case_dir/script"
 expect_reject \
   "executable manifest rejects an uncaptured delegated shebang interpreter" \
   "delegated shebang interpreter is absent from the executable manifest: script: absent-runner" \
-  python3 -I -S "$EXECUTABLE_VALIDATOR" \
+  python3 -I -S -B "$EXECUTABLE_VALIDATOR" \
   "$case_dir/manifest.tsv" 2 script env "$case_dir/script" "$env_path"
 
 case_dir="$(mktemp -d "$TEST_ROOT/executable-size.XXXXXX")"
-python3 -I -S - "$case_dir/tool" <<'PY'
+python3 -I -S -B - "$case_dir/tool" <<'PY'
 from pathlib import Path
 import sys
 
@@ -5079,7 +5084,7 @@ chmod 755 "$case_dir/tool"
 expect_reject \
   "executable manifest rejects a file above its 512 MiB bound" \
   "executable capture file exceeds the 512 MiB executable-capture bound: tool:" \
-  python3 -I -S "$EXECUTABLE_VALIDATOR" \
+  python3 -I -S -B "$EXECUTABLE_VALIDATOR" \
   "$case_dir/manifest.tsv" 1 tool "$case_dir/tool"
 
 # Bootstrap and command-admission controls.  Each case exits before source capture or TeX work.
@@ -5208,7 +5213,7 @@ make_capture_fixture() {
 run_capture_validator() {
   local directory="$1"
   shift
-  python3 -I -S "$CAPTURE_VALIDATOR" \
+  python3 -I -S -B "$CAPTURE_VALIDATOR" \
     "$directory/base" "$directory/manifest.tsv" "" "figures" 1 alpha "$@"
 }
 
@@ -5303,7 +5308,7 @@ case_dir="$(mktemp -d "$TEST_ROOT/snapshot-control.XXXXXX")/snapshot"
 make_snapshot_fixture "$case_dir"
 expect_accept \
   "read-only snapshot accepts exact 0555/0444 single-link inventory" \
-  python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-symlink.XXXXXX")/snapshot"
 mkdir -p "$case_dir/a"
@@ -5313,7 +5318,7 @@ chmod 555 "$case_dir/a" "$case_dir"
 expect_reject \
   "read-only snapshot rejects a symlink file" \
   "contains a non-regular file: 'a/input.txt'" \
-  python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-hardlink.XXXXXX")/snapshot"
 make_snapshot_fixture "$case_dir"
@@ -5321,7 +5326,7 @@ ln "$case_dir/a/input.txt" "${case_dir%/*}/second-link.txt"
 expect_reject \
   "read-only snapshot rejects a multiply-linked file" \
   "file is not a single-link mode-0444 regular file: 'a/input.txt'" \
-  python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-mode.XXXXXX")/snapshot"
 make_snapshot_fixture "$case_dir"
@@ -5329,7 +5334,7 @@ chmod 755 "$case_dir/a"
 expect_reject \
   "read-only snapshot rejects writable directory mode" \
   "directory mode drifted from 0555: 'a'" \
-  python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
 
 case_dir="$(mktemp -d "$TEST_ROOT/snapshot-extra.XXXXXX")/snapshot"
 mkdir -p "$case_dir/a" "$case_dir/extra"
@@ -5339,7 +5344,234 @@ chmod 555 "$case_dir/a" "$case_dir/extra" "$case_dir"
 expect_reject \
   "read-only snapshot rejects an undeclared directory" \
   "directory inventory drifted;" \
-  python3 -I -S "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" a/input.txt
+
+# Python bytecode custody: isolated mode ignores PYTHON* environment variables. Bind the
+# actual interpreter flags and exercise the unchanged adjacent-module import prefix in a
+# writable private fixture; the production snapshot guard remains strict under every uid.
+validate_python_bytecode_custody() {
+  python3 -I -S -B - "$1" "$2" "$3" <<'PY'
+import ast
+from pathlib import Path
+import re
+import sys
+
+
+def fail(detail: str) -> None:
+    raise SystemExit(f"Python bytecode source custody: {detail}")
+
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+pattern = re.compile(
+    r'(?<![\w])(?:python3|"\$BOOTSTRAP_PYTHON"|"\$resolver")'
+    r'(?P<flags>(?: -[A-Za-z]+)+)'
+)
+launches = list(pattern.finditer(text))
+if len(launches) != 36:
+    fail("production Python launch inventory differs from 36")
+optimized = 0
+for launch in launches:
+    flags = launch["flags"].split()
+    if flags[-1:] == ["-c"]:
+        flags.pop()
+    if flags not in (["-I", "-S", "-B"], ["-O", "-I", "-S", "-B"]):
+        fail("production Python flags lack exact isolated no-bytecode custody")
+    optimized += flags[0] == "-O"
+if optimized != 2:
+    fail("normal/optimized production launch partition differs")
+required_consumers = (
+    ('python3 -I -S -B', 'check-citation-edge-countermodel.py'),
+    ('python3 -I -S -B', 'check-citation-edge-countermodel-self-test.py'),
+    ('python3 -I -S -B', 'sync-mathematical-workflow-tex-self-test.py'),
+    ('python3 -O -I -S -B', 'sync-mathematical-workflow-tex-self-test.py'),
+    ('python3 -I -S -B', 'compare-formal-pdf-renders-self-test.py'),
+    ('python3 -O -I -S -B', 'compare-formal-pdf-renders-self-test.py'),
+    ('python3 -I -S -B', 'compare-formal-pdf-renders.py'),
+)
+for prefix, filename in required_consumers:
+    if text.count(f'{prefix} "$SNAPSHOT_ROOT/scripts/{filename}"') != 1:
+        fail(f"captured consumer launch differs: {filename}")
+for argument, expected_script in ((sys.argv[2], "CHECKER"), (sys.argv[3], "COMPARATOR")):
+    tree = ast.parse(Path(argument).read_text(encoding="utf-8"))
+    vectors = []
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.List, ast.Tuple)) or not node.elts:
+            continue
+        first = node.elts[0]
+        if (isinstance(first, ast.Attribute) and first.attr == "executable"
+                and isinstance(first.value, ast.Name) and first.value.id == "sys"):
+            vectors.append(node.elts)
+    if len(vectors) != 1:
+        fail(f"transitive Python vector inventory differs: {expected_script}")
+    vector = vectors[0]
+    expected = ast.parse(
+        f'[sys.executable, "-I", "-S", "-B", str({expected_script})]', mode="eval"
+    ).body.elts
+    if len(vector) < 5 or any(
+        ast.dump(actual) != ast.dump(wanted)
+        for actual, wanted in zip(vector[:5], expected)
+    ):
+        fail(f"transitive Python flags lack exact isolated no-bytecode custody: {expected_script}")
+PY
+}
+
+probe_python_bytecode_import() {
+  local mode="$1"
+  python3 -I -S -B - "$BASE_REPOSITORY/scripts" "$TEST_ROOT" "$mode" <<'PY'
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+
+
+source = Path(sys.argv[1])
+mode = sys.argv[3]
+variants = {
+    "environment-only": (["-I", "-S"], False, 0),
+    "explicit-bytecode-off": (["-I", "-S", "-B"], True, 0),
+    "optimized-bytecode-off": (["-O", "-I", "-S", "-B"], True, 1),
+}
+if mode not in variants:
+    raise SystemExit("unknown Python bytecode import fixture")
+flags, expected_disabled, expected_optimization = variants[mode]
+raw = (source / "sync-mathematical-workflow-tex-self-test.py").read_text(encoding="utf-8")
+delimiter = "\n\nclass Fixture:"
+if raw.count(delimiter) != 1:
+    raise SystemExit("Python bytecode import prefix boundary drifted")
+prefix = raw.split(delimiter, 1)[0]
+if prefix.count("SPEC.loader.exec_module(SYNC)") != 1:
+    raise SystemExit("Python bytecode actual import operation drifted")
+with tempfile.TemporaryDirectory(prefix="python-bytecode-", dir=sys.argv[2]) as temporary:
+    scripts = Path(temporary) / "scripts"
+    scripts.mkdir()
+    shutil.copyfile(source / "sync-mathematical-workflow-tex.py",
+                    scripts / "sync-mathematical-workflow-tex.py")
+    loader = scripts / "import-prefix.py"
+    loader.write_text(prefix + '\nimport json\nprint(json.dumps({"disabled": sys.dont_write_bytecode, "optimization": sys.flags.optimize}))\n',
+                      encoding="utf-8", newline="\n")
+    # This environment value is intentionally present in all three fixtures: -I ignores it.
+    completed = subprocess.run(
+        [sys.executable, *flags, str(loader)],
+        cwd=temporary,
+        env={"PYTHONDONTWRITEBYTECODE": "1", "LC_ALL": "C", "LANG": "C", "TZ": "UTC"},
+        capture_output=True, text=True, check=False, timeout=20,
+    )
+    if completed.returncode != 0 or completed.stderr:
+        raise SystemExit(f"Python bytecode import fixture failed: {completed.returncode}: {completed.stderr}")
+    observed = json.loads(completed.stdout)
+    if (observed != {"disabled": expected_disabled, "optimization": expected_optimization}
+            or type(observed["disabled"]) is not bool
+            or type(observed["optimization"]) is not int):
+        raise SystemExit("Python bytecode interpreter flags differ from fixture expectation")
+    cache = scripts / "__pycache__"
+    if expected_disabled:
+        if cache.exists():
+            raise SystemExit("explicit -B created a source-adjacent cache")
+    elif not cache.is_dir() or len(list(cache.glob("sync-mathematical-workflow-tex.*.pyc"))) != 1:
+        raise SystemExit("isolated environment-only control did not create the expected cache")
+PY
+}
+
+C3_ACTIVE_FAMILY="python-bytecode"
+BYTECODE_CITATION_HELPER="$BASE_REPOSITORY/scripts/check-citation-edge-countermodel-self-test.py"
+BYTECODE_RENDER_HELPER="$BASE_REPOSITORY/scripts/compare-formal-pdf-renders-self-test.py"
+expect_accept \
+  "Python bytecode custody binds every production launch and both transitive vectors" \
+  validate_python_bytecode_custody "$CHECKER" "$BYTECODE_CITATION_HELPER" "$BYTECODE_RENDER_HELPER"
+
+case_file="$TEST_ROOT/python-bytecode-normal-missing.sh"
+cp "$CHECKER" "$case_file"
+replace_once "$case_file" \
+  'python3 -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"' \
+  'python3 -I -S "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"'
+expect_reject \
+  "Python bytecode custody rejects a normal import consumer without -B" \
+  "production Python flags lack exact isolated no-bytecode custody" \
+  validate_python_bytecode_custody "$case_file" "$BYTECODE_CITATION_HELPER" "$BYTECODE_RENDER_HELPER"
+
+case_file="$TEST_ROOT/python-bytecode-optimized-missing.sh"
+cp "$CHECKER" "$case_file"
+replace_once "$case_file" \
+  'python3 -O -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"' \
+  'python3 -O -I -S "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"'
+expect_reject \
+  "Python bytecode custody rejects an optimized import consumer without -B" \
+  "production Python flags lack exact isolated no-bytecode custody" \
+  validate_python_bytecode_custody "$case_file" "$BYTECODE_CITATION_HELPER" "$BYTECODE_RENDER_HELPER"
+
+case_file="$TEST_ROOT/python-bytecode-after-script.sh"
+cp "$CHECKER" "$case_file"
+replace_once "$case_file" \
+  'python3 -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"' \
+  'python3 -I -S "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py" -B'
+expect_reject \
+  "Python bytecode custody rejects -B passed as a script argument" \
+  "production Python flags lack exact isolated no-bytecode custody" \
+  validate_python_bytecode_custody "$case_file" "$BYTECODE_CITATION_HELPER" "$BYTECODE_RENDER_HELPER"
+
+case_file="$TEST_ROOT/python-bytecode-optimization-erased.sh"
+cp "$CHECKER" "$case_file"
+replace_once "$case_file" \
+  'python3 -O -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"' \
+  'python3 -I -S -B "$SNAPSHOT_ROOT/scripts/sync-mathematical-workflow-tex-self-test.py"'
+expect_reject \
+  "Python bytecode custody retains the normal and optimized launch distinction" \
+  "normal/optimized production launch partition differs" \
+  validate_python_bytecode_custody "$case_file" "$BYTECODE_CITATION_HELPER" "$BYTECODE_RENDER_HELPER"
+
+case_file="$TEST_ROOT/python-bytecode-citation-child.py"
+cp "$BYTECODE_CITATION_HELPER" "$case_file"
+replace_once "$case_file" \
+  '[sys.executable, "-I", "-S", "-B", str(CHECKER)' \
+  '[sys.executable, "-I", "-S", str(CHECKER)'
+expect_reject \
+  "Python bytecode custody rejects a citation child without -B" \
+  "transitive Python flags lack exact isolated no-bytecode custody: CHECKER" \
+  validate_python_bytecode_custody "$CHECKER" "$case_file" "$BYTECODE_RENDER_HELPER"
+
+case_file="$TEST_ROOT/python-bytecode-render-child.py"
+cp "$BYTECODE_RENDER_HELPER" "$case_file"
+replace_once "$case_file" \
+  $'        "-S",\n        "-B",\n        str(COMPARATOR),' \
+  $'        "-S",\n        str(COMPARATOR),'
+expect_reject \
+  "Python bytecode custody rejects a render-comparator child without -B" \
+  "transitive Python flags lack exact isolated no-bytecode custody: COMPARATOR" \
+  validate_python_bytecode_custody "$CHECKER" "$BYTECODE_CITATION_HELPER" "$case_file"
+
+expect_accept \
+  "isolated actual import ignores the environment-only no-bytecode setting" \
+  probe_python_bytecode_import environment-only
+expect_accept \
+  "explicit -B prevents an actual adjacent-module cache in normal mode" \
+  probe_python_bytecode_import explicit-bytecode-off
+expect_accept \
+  "explicit -B prevents an actual adjacent-module cache while preserving optimized mode" \
+  probe_python_bytecode_import optimized-bytecode-off
+
+case_dir="$(mktemp -d "$TEST_ROOT/snapshot-python-cache-mode.XXXXXX")/snapshot"
+mkdir -p "$case_dir/scripts/__pycache__"
+printf 'captured\n' >"$case_dir/scripts/input.txt"
+chmod 444 "$case_dir/scripts/input.txt"
+chmod 555 "$case_dir/scripts" "$case_dir"
+expect_reject \
+  "read-only snapshot still rejects a newly created writable Python cache directory" \
+  "directory mode drifted from 0555: 'scripts/__pycache__'" \
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" scripts/input.txt
+
+case_dir="$(mktemp -d "$TEST_ROOT/snapshot-python-cache-inventory.XXXXXX")/snapshot"
+mkdir -p "$case_dir/scripts/__pycache__"
+printf 'captured\n' >"$case_dir/scripts/input.txt"
+chmod 444 "$case_dir/scripts/input.txt"
+chmod 555 "$case_dir/scripts/__pycache__" "$case_dir/scripts" "$case_dir"
+expect_reject \
+  "read-only snapshot still rejects an undeclared cache after chmod 0555" \
+  "directory inventory drifted;" \
+  python3 -I -S -B "$SNAPSHOT_VALIDATOR" "$case_dir" scripts/input.txt
+C3_ACTIVE_FAMILY=""
+
 
 # Refresh writer: exercise descriptor-relative success, cross-binding, object-type rejection,
 # stable-parent admission, exact non-output-source/figure inventories, and rollback through final
@@ -5375,7 +5607,7 @@ make_refresh_fixture() {
     printf 'new-%s-pdf-bytes\n' "$stem" \
       >"$directory/source/figures/$stem.pdf"
   done
-  python3 -I -S - \
+  python3 -I -S -B - \
     "$directory/source/workflow.pdf" \
     "$directory/source/workflow.tsv" \
     "$directory/root" \
@@ -5412,7 +5644,7 @@ run_refresh_writer() {
   local directory="$1"
   local writer="${2:-$REFRESH_WRITER}"
   local figure_directory="audit/formal/latex/figures/mathematical-workflow"
-  python3 -I -S "$writer" \
+  python3 -I -S -B "$writer" \
     "$directory/root" \
     "$directory/source/root-inputs.tsv" \
     6 \
@@ -5439,7 +5671,7 @@ assert_no_refresh_staging_residue() {
 
 assert_no_refresh_temporaries() {
   local directory="$1"
-  python3 -I -S - "$directory/root/output/pdf" <<'PY'
+  python3 -I -S -B - "$directory/root/output/pdf" <<'PY'
 from pathlib import Path
 import stat
 import sys
@@ -5694,7 +5926,7 @@ expect_reject \
   "refresh writer detects and restores a symlink replacement in its final swap window" \
   "destination changed in the final compare-and-swap window: output/pdf/workflow.pdf" \
   run_refresh_writer "$case_dir" "$symlink_race_writer"
-python3 -I -S - "$case_dir/root/output/pdf/workflow.pdf" <<'PY'
+python3 -I -S -B - "$case_dir/root/output/pdf/workflow.pdf" <<'PY'
 from pathlib import Path
 import os
 import stat
@@ -5729,7 +5961,7 @@ expect_reject \
 printf 'concurrent-hardlink-bytes\n' >"$case_dir/concurrent-hardlink.pdf"
 cmp "$case_dir/concurrent-hardlink.pdf" "$case_dir/root/output/pdf/workflow.pdf" \
   || fail "refresh final-CAS recovery did not preserve concurrent hard-link bytes"
-python3 -I -S - \
+python3 -I -S -B - \
   "$case_dir/root/output/pdf/workflow.pdf" \
   "$case_dir/root/output/pdf/.concurrent-hardlink-second" <<'PY'
 from pathlib import Path
@@ -5763,7 +5995,7 @@ expect_reject \
   "refresh rollback preserves a type-changing writer that arrives after installation" \
   "replacement failed and rollback was incomplete" \
   run_refresh_writer "$case_dir" "$post_install_writer"
-python3 -I -S - "$case_dir/root/output/pdf/workflow.pdf" <<'PY'
+python3 -I -S -B - "$case_dir/root/output/pdf/workflow.pdf" <<'PY'
 from pathlib import Path
 import os
 import stat
@@ -5780,7 +6012,7 @@ if (
 PY
 cmp "$case_dir/old.tsv" "$case_dir/root/output/pdf/workflow.tsv" \
   || fail "refresh post-install race changed the original receipt"
-python3 -I -S - \
+python3 -I -S -B - \
   "$case_dir/root/output/pdf" \
   "$case_dir/old.pdf" <<'PY'
 from pathlib import Path
@@ -5856,7 +6088,7 @@ cp "$BASE_VISUAL_RECEIPT" "$VISUAL_CONTROL"
 chmod u+w "$VISUAL_CONTROL"
 
 run_visual_validator() {
-  python3 -I -S "$VISUAL_VALIDATOR" \
+  python3 -I -S -B "$VISUAL_VALIDATOR" \
     "$1" "$BASE_PDF" "$BASE_RENDERING_RECEIPT" \
     "$EXPECTED_PAGES" "$EXPECTED_DPI" "$EXPECTED_HIGH_RESOLUTION_DPI" "${2:-$BASE_VISUAL_RECORDS}"
 }
@@ -6040,7 +6272,7 @@ expect_visual_reject \
   run_visual_validator "$case_file"
 
 case_file="$TEST_ROOT/visual-crlf.md"
-python3 -I -S - "$VISUAL_CONTROL" "$case_file" <<'PY'
+python3 -I -S -B - "$VISUAL_CONTROL" "$case_file" <<'PY'
 from pathlib import Path
 import sys
 
@@ -6056,7 +6288,7 @@ expect_visual_reject \
 mutate_visual_context() {
   local destination="$1"
   local mode="$2"
-  python3 -I -S - "$VISUAL_CONTROL" "$destination" "$mode" <<'PY'
+  python3 -I -S -B - "$VISUAL_CONTROL" "$destination" "$mode" <<'PY'
 from pathlib import Path
 import sys
 
@@ -6102,7 +6334,7 @@ expect_reject \
 SPLIT_VISUAL_HOSTILE_COUNT=$((SPLIT_VISUAL_HOSTILE_COUNT + 1))
 for split_mode in missing-pages false-view false-reviewer; do
   case_file="$TEST_ROOT/actual-views-$split_mode.json"
-  python3 -I -S - "$BASE_VISUAL_RECORDS" "$case_file" "$split_mode" <<'PY_SPLIT'
+  python3 -I -S -B - "$BASE_VISUAL_RECORDS" "$case_file" "$split_mode" <<'PY_SPLIT'
 import json
 from pathlib import Path
 import sys
@@ -6154,7 +6386,7 @@ SVG_STEMS=(
   invalidation-publication-state-machine
 )
 run_svg_validator() {
-  python3 -I -S "$SVG_VALIDATOR" "$1" "${SVG_STEMS[@]}"
+  python3 -I -S -B "$SVG_VALIDATOR" "$1" "${SVG_STEMS[@]}"
 }
 
 expect_accept \
@@ -6387,7 +6619,7 @@ expect_reject \
 
 case_dir="$(mktemp -d "$TEST_ROOT/svg-palette.XXXXXX")"
 make_svg_case "$case_dir"
-python3 -I -S - "$case_dir/four-object-assurance-chain.svg" <<'PY'
+python3 -I -S -B - "$case_dir/four-object-assurance-chain.svg" <<'PY'
 from pathlib import Path
 import sys
 
@@ -6429,7 +6661,7 @@ expect_reject \
 # the generated side so each rejection is labelled and branch-specific.
 run_rendering_receipt_validator() {
   local generated_receipt="$1"
-  python3 -I -S "$RENDERING_RECEIPT_VALIDATOR" \
+  python3 -I -S -B "$RENDERING_RECEIPT_VALIDATOR" \
     "$BASE_RENDERING_RECEIPT" "$BASE_PDF" \
     "$generated_receipt" "$BASE_PDF" \
     "$EXPECTED_PAGES" "$EXPECTED_DPI" --exact
@@ -6443,7 +6675,7 @@ mutate_rendering_receipt() {
   local source="$1"
   local destination="$2"
   local mode="$3"
-  python3 -I -S - "$source" "$destination" "$mode" <<'PY'
+  python3 -I -S -B - "$source" "$destination" "$mode" <<'PY'
 from pathlib import Path
 import sys
 
@@ -6534,7 +6766,7 @@ make_navigation_fixture() {
 
 run_navigation_comparator() {
   local directory="$1"
-  python3 -I -S "$NAVIGATION_COMPARATOR" \
+  python3 -I -S -B "$NAVIGATION_COMPARATOR" \
     "$directory/left.tsv" "$directory/right.tsv"
 }
 
@@ -6606,7 +6838,7 @@ run_report_validator() {
   local manifest
   manifest="$TEST_ROOT/report-navigation-$(basename "$pdf").tsv"
   rm -f -- "$manifest"
-  if ! python3 -I -S "$REPORT_VALIDATOR" \
+  if ! python3 -I -S -B "$REPORT_VALIDATOR" \
       "$pdf" "$BASE_MARKDOWN" "$EXPECTED_PAGES" "$mode" "$manifest"; then
     return 1
   fi
@@ -6622,7 +6854,7 @@ expect_accept \
 make_pdf_mutant() {
   local destination="$1"
   local mode="$2"
-  python3 -I -S - "$BASE_PDF" "$destination" "$mode" <<'PY'
+  python3 -I -S -B - "$BASE_PDF" "$destination" "$mode" <<'PY'
 from pathlib import Path
 import copy
 import sys
@@ -7074,7 +7306,7 @@ c3_control_count=$((
   + C3_EXECUTABLE_CUSTODY_COUNT
   + C3_FORMAT_CUSTODY_COUNT
 ))
-predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT))
+predecessor_control_count=$((PASS_COUNT - c3_control_count - C8_TEXT_PORTABILITY_COUNT - PYTHON_BYTECODE_COUNT - SPLIT_VISUAL_HOSTILE_COUNT - MACHINE_SCOPE_HOSTILE_COUNT))
 if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_BOUNDED_PROBE_COUNT" -ne "$EXPECTED_C3_BOUNDED_PROBE_COUNT" \
     || "$C3_ENTRY_WRAPPER_COUNT" -ne "$EXPECTED_C3_ENTRY_WRAPPER_COUNT" \
@@ -7083,15 +7315,16 @@ if [[ "$C3_ACTIVE_FAMILY" != "" \
     || "$C3_EXECUTABLE_CUSTODY_COUNT" -ne "$EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT" \
     || "$C3_FORMAT_CUSTODY_COUNT" -ne "$EXPECTED_C3_FORMAT_CUSTODY_COUNT" \
     || "$C8_TEXT_PORTABILITY_COUNT" -ne "$EXPECTED_C8_TEXT_PORTABILITY_COUNT" \
+    || "$PYTHON_BYTECODE_COUNT" -ne "$EXPECTED_PYTHON_BYTECODE_COUNT" \
     || "$VISUAL_RECEIPT_HOSTILE_COUNT" -ne "$EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT" \
     || "$SPLIT_VISUAL_HOSTILE_COUNT" -ne "$EXPECTED_SPLIT_VISUAL_HOSTILE_COUNT" \
     || "$MACHINE_SCOPE_HOSTILE_COUNT" -ne "$EXPECTED_MACHINE_SCOPE_HOSTILE_COUNT" \
     || "$predecessor_control_count" -ne "$EXPECTED_PREDECESSOR_CONTROL_COUNT" \
     || "$PASS_COUNT" -ne "$EXPECTED_TOTAL_CONTROL_COUNT" ]]; then
-  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
+  fail "frozen control-family partition drifted: predecessor=$predecessor_control_count, bounded-probe=$C3_BOUNDED_PROBE_COUNT, entry-wrapper=$C3_ENTRY_WRAPPER_COUNT, runtime-map=$C3_RUNTIME_MAP_COUNT, fls-map-path=$C3_FLS_MAP_PATH_COUNT, executable-custody=$C3_EXECUTABLE_CUSTODY_COUNT, format-custody=$C3_FORMAT_CUSTODY_COUNT, c8-text-portability=$C8_TEXT_PORTABILITY_COUNT, python-bytecode=$PYTHON_BYTECODE_COUNT, visual-receipt-hostile=$VISUAL_RECEIPT_HOSTILE_COUNT, split-visual-hostile=$SPLIT_VISUAL_HOSTILE_COUNT, machine-scope-hostile=$MACHINE_SCOPE_HOSTILE_COUNT, total=$PASS_COUNT"
 fi
 
-printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; visual-receipt-hostile=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
+printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=%d, bounded-probe=%d, entry-wrapper=%d, runtime-map=%d, fls-map-path=%d, executable-custody=%d, format-custody=%d, c8-text-portability=%d; python-bytecode=%d; visual-receipt-hostile=%d; split-visual-hostile=%d; machine-scope-hostile=%d; no report compilation was performed\n' \
   "$PASS_COUNT" \
   "$predecessor_control_count" \
   "$C3_BOUNDED_PROBE_COUNT" \
@@ -7101,6 +7334,7 @@ printf 'OK: %d bounded workflow-PDF checker controls/mutations passed; frozen fa
   "$C3_EXECUTABLE_CUSTODY_COUNT" \
   "$C3_FORMAT_CUSTODY_COUNT" \
   "$C8_TEXT_PORTABILITY_COUNT" \
+  "$PYTHON_BYTECODE_COUNT" \
   "$VISUAL_RECEIPT_HOSTILE_COUNT" \
   "$SPLIT_VISUAL_HOSTILE_COUNT" \
   "$MACHINE_SCOPE_HOSTILE_COUNT"

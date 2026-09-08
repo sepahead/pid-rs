@@ -9,6 +9,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Prevent Python bytecode writes during isolated workflow PDF checks. Add a source-bound Linux
+  profile for the current 24-page results guide. Preserve the failed production run, exact
+  historical profiles, and [successor evidence](audit/evidence/publication-runtime-profile-repair-2026-09-08.md).
+
 - Repair the workflow PDF text comparison for four recorded diagram extraction orders. Keep
   exact default text, page contents, and prose order. Add controls for malformed equal inputs
   and non-integer profile keys. Preserve the failed builds and the

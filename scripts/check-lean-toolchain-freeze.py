@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "16e12224a80805c7a2d2626be2b245944cc1c8ef34a238ab9b5b26542ccbe8a8",
-    "CHANGELOG.md": "681af42cacb6074745c585c3f82237f657e0cc0a8d243caf035eaef88ad0f370",
+    "CHANGELOG.md": "602317e376ea785a1b766d3382ecc377a09dfcce98617e0392aeb6e847de6c13",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -699,12 +699,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
     ),
-    "scripts/README.md": "a21884cf1b4471eaf0d21df7e7c9462e69e4367ef61ccee8e70a1854e8dd0e7f",
+    "scripts/README.md": "15e08844dd125757424f2eb729aaffe05d105decb7245eedcc9c0b06fa174c2c",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "0f6efde3e8cb34c4a44386250c8f3a6e0bb517f95d0a0af3c485eb0a709bc516"
+        "4bc7bf5ee959f44541cc4af579edc19ddc635a334ce69c20ef0bc3810e708896"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -737,10 +737,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c9a54df51b2d3f28ed07bc2c47c606b0016f7f82158fccf2db1b2839fb592d7b"
     ),
     "scripts/check-mathematical-workflow-pdf-self-test.sh": (
-        "8b2abde57783899cfb65091e5a5b103d41466aa9a66115130a63818e6fd14d62"
+        "a2796f2a53810406ad8e90fb7763a4632fcdae98424cb9ab37329b9739e48159"
     ),
     "scripts/check-mathematical-workflow-pdf.sh": (
-        "20e891182a611fdeac59afd8a1fde9f0f4ba8bfa22c045f9c276a61dea0deffa"
+        "dd5fee753e9036965f397a1bf5e27f9b80c7ffeeacee4bcac3c067913c30a183"
     ),
     "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602",
     "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
