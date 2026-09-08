@@ -1,0 +1,47 @@
+{
+  "audit/formal/latex/pid-rs-report-tables.sty": {
+    "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+    "bytes": 4051,
+    "original": "REPOSITORY/audit/formal/latex/pid-rs-report-tables.sty"
+  },
+  "audit/formal/latex/pid-rs-workflow-publication.sty": {
+    "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+    "bytes": 8607,
+    "original": "REPOSITORY/audit/formal/latex/pid-rs-workflow-publication.sty"
+  },
+  "audit/formal/latex/prefix-mgw-mean/body.expected.md": {
+    "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+    "bytes": 18318,
+    "original": "REPOSITORY/.local/sx-mean-publication-finalization-source-20260908/public/audit/formal/latex/prefix-mgw-mean/body.expected.md"
+  },
+  "audit/formal/latex/prefix-mgw-mean/body.expected.tex": {
+    "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+    "bytes": 20395,
+    "original": "REPOSITORY/.local/sx-mean-publication-finalization-source-20260908/public/audit/formal/latex/prefix-mgw-mean/body.expected.tex"
+  },
+  "audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex": {
+    "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+    "bytes": 1994,
+    "original": "REPOSITORY/.local/sx-mean-publication-finalization-source-20260908/public/audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex"
+  },
+  "audit/formal/latex/prefix-mgw-mean/retained-rank.pdf": {
+    "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+    "bytes": 67407,
+    "original": "REPOSITORY/.local/sx-mean-publication-finalization-source-20260908/public/audit/formal/latex/prefix-mgw-mean/retained-rank.pdf"
+  },
+  "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md": {
+    "sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e",
+    "bytes": 18335,
+    "original": "REPOSITORY/.local/sx-mean-publication-finalization-source-20260908/public/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md"
+  },
+  "audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+    "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd",
+    "bytes": 4656,
+    "original": "REPOSITORY/.local/sx-mean-publication-finalization-source-20260908/public/audit/formal/lean-prefix-mgw-mean/retained-rank.svg"
+  },
+  "scripts/check-formal-pdf-log.sh": {
+    "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da",
+    "bytes": 2417,
+    "original": "REPOSITORY/scripts/check-formal-pdf-log.sh"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "reviewed_utc": "2026-09-08T07:40:35.234218+00:00",
+  "scope": "Root inspected actual selected normal/O, cosmetic normal/O, and wrong-final semantic/kernel replay. Same three locally accepted theorems; no new scientific target or theorem.",
+  "reports": [
+    {
+      "attempt": "attempt-001",
+      "status": "fresh_semantic_kernel_pass",
+      "result_sha256": "d033021fb1e299492a9318e4a9a9702ddfc0278168b64f8f8ab0e195ab08eed0",
+      "artifacts_rehashed": 240,
+      "inputs_rehashed": 107,
+      "actual_commands": 26,
+      "completed_utc": "2026-09-08T07:22:34.659244+00:00"
+    },
+    {
+      "attempt": "attempt-002",
+      "status": "fresh_semantic_kernel_pass",
+      "result_sha256": "02bf686e0f521a491a5ad1803d9f6efe12b19a7a26e7b2ccb2c940e886f644ae",
+      "artifacts_rehashed": 241,
+      "inputs_rehashed": 107,
+      "actual_commands": 26,
+      "completed_utc": "2026-09-08T07:26:40.332880+00:00"
+    },
+    {
+      "attempt": "attempt-003",
+      "status": "fresh_semantic_kernel_pass",
+      "result_sha256": "b98b0b0ad7a01e3ed7197b00831be28413dec77523199628d88e92ec6345ec20",
+      "artifacts_rehashed": 241,
+      "inputs_rehashed": 107,
+      "actual_commands": 26,
+      "completed_utc": "2026-09-08T07:30:49.836034+00:00"
+    },
+    {
+      "attempt": "attempt-004",
+      "status": "fresh_semantic_kernel_pass",
+      "result_sha256": "871bc7c846ac1fbbdd8cdc88bf14a2596f66fcad112dca256d08cec65587e36c",
+      "artifacts_rehashed": 241,
+      "inputs_rehashed": 107,
+      "actual_commands": 26,
+      "completed_utc": "2026-09-08T07:34:57.295900+00:00"
+    },
+    {
+      "attempt": "attempt-005",
+      "status": "expected_target_rejection",
+      "result_sha256": "f47ee36be40b1211cfa3fa31b9bb485e9754e78b5214bdc29b6c805db334563a",
+      "artifacts_rehashed": 231,
+      "inputs_rehashed": 109,
+      "actual_commands": 24,
+      "completed_utc": "2026-09-08T07:35:33.410737+00:00"
+    }
+  ],
+  "actual_compiler_kernel_children": 123,
+  "actual_version_probes": 5,
+  "aggregate_sha256": "8dcc7e8115dfe506c2631234ad10ab1ae51c033628fec02c8be958d5658f4dcb",
+  "all_current_artifacts_and_captured_inputs_rehashed": true,
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "limitations": "Exact formal statements and cooperative observed lifecycle only; no source-to-dependency-olean authenticity, atomic snapshot, hard deadline, numerical refinement, bias, calibration, continuous/other-PID or consumer claim."
+}

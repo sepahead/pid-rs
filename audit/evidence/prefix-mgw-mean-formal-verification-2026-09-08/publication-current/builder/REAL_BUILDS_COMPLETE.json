@@ -1,0 +1,97 @@
+{
+  "status": "normal_optimized_two_builds_each_passed_causal_controls_pending",
+  "results": [
+    {
+      "mode": 0,
+      "failure": null,
+      "commands": [
+        {
+          "command": [
+            "HOST_HOMEBREW/bin/python3",
+            "-I",
+            "-S",
+            "-B",
+            "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root/scripts/build-prefix-mgw-mean-pdf.py",
+            "--root",
+            "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root",
+            "--work-dir",
+            "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal",
+            "--exact",
+            "--check"
+          ],
+          "cwd": "REPOSITORY",
+          "label": "actual-mean-builder",
+          "started_utc": "2026-09-08T08:58:44.313669+00:00",
+          "elapsed_seconds": 14.129697583033703,
+          "returncode": 0,
+          "failure": null,
+          "execution_error": null,
+          "limits": {
+            "seconds": 600,
+            "observed_group_rss_bytes": 4294967296,
+            "rss_sample_interval_seconds": 0.1,
+            "rss_limit_is_hard_os_cap": false,
+            "stdout_bytes": 4194304,
+            "stderr_bytes": 4194304
+          },
+          "peak_observed_group_rss_bytes": 1154465792,
+          "remaining_live_group_processes": [],
+          "stdout_sha256": "262591c28aacb1e38dd2ad522cca63ffc2cb0af34a309b413e443f013af4d165",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retained_stdout_bytes": 60,
+          "retained_stderr_bytes": 0
+        }
+      ],
+      "completed_utc": "2026-09-08T08:58:58.444856+00:00",
+      "work": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal"
+    },
+    {
+      "mode": 1,
+      "failure": null,
+      "commands": [
+        {
+          "command": [
+            "HOST_HOMEBREW/bin/python3",
+            "-I",
+            "-S",
+            "-B",
+            "-O",
+            "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root/scripts/build-prefix-mgw-mean-pdf.py",
+            "--root",
+            "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root",
+            "--work-dir",
+            "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized",
+            "--exact",
+            "--check"
+          ],
+          "cwd": "REPOSITORY",
+          "label": "actual-mean-builder",
+          "started_utc": "2026-09-08T08:59:00.947752+00:00",
+          "elapsed_seconds": 13.954654249944724,
+          "returncode": 0,
+          "failure": null,
+          "execution_error": null,
+          "limits": {
+            "seconds": 600,
+            "observed_group_rss_bytes": 4294967296,
+            "rss_sample_interval_seconds": 0.1,
+            "rss_limit_is_hard_os_cap": false,
+            "stdout_bytes": 4194304,
+            "stderr_bytes": 4194304
+          },
+          "peak_observed_group_rss_bytes": 1198915584,
+          "remaining_live_group_processes": [],
+          "stdout_sha256": "262591c28aacb1e38dd2ad522cca63ffc2cb0af34a309b413e443f013af4d165",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "retained_stdout_bytes": 60,
+          "retained_stderr_bytes": 0
+        }
+      ],
+      "completed_utc": "2026-09-08T08:59:14.903888+00:00",
+      "work": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized"
+    }
+  ],
+  "completed_utc": "2026-09-08T08:59:14.904515+00:00",
+  "pdf_sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+  "new_proofs": 0
+}

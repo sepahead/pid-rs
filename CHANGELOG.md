@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Publish the categorical MGW prefix-mean bridge with its three locally accepted Lean exports,
+  complete proof sources, standalone Markdown/PDF, retained-rank figure, replay controls and
+  positive and negative evidence. Keep the accepted proof inputs and historical failures
+  unchanged; hosted mean replay and Linux mean-PDF reproduction remain separate obligations.
+
 - Correct stale Linux results-guide instructions in the README and operational guide to match
   the adopted v3 profile. Preserve exact-mode checks and historical profile records.
 

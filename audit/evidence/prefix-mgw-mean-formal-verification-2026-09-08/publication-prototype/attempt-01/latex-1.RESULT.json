@@ -1,0 +1,14 @@
+{
+  "started_utc": "2026-09-08T07:28:13.623105+00:00",
+  "command": [
+    "/Library/TeX/texbin/lualatex",
+    "-no-shell-escape",
+    "-interaction=nonstopmode",
+    "-halt-on-error",
+    "-file-line-error",
+    "prefix-mgw-mean.tex"
+  ],
+  "cwd": "<repository>/.local/sx-mean-exposition-pdf-root-20260908/attempt-01",
+  "returncode": 1,
+  "completed_utc": "2026-09-08T07:28:15.309800+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/bin/bash",
+    "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root/scripts/check-formal-pdf-log.sh",
+    "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1/prefix-mgw-mean.log"
+  ],
+  "completed_utc": "2026-09-08T08:59:11.062761+00:00",
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+  "returncode": 0,
+  "started_utc": "2026-09-08T08:59:11.041079+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

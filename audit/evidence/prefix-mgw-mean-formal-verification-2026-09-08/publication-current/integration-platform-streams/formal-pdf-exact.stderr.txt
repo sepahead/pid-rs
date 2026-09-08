@@ -1,0 +1,36 @@
+test_check_accepts_exact_and_rejects_stale_without_writing (__main__.SynchronizerTests.test_check_accepts_exact_and_rejects_stale_without_writing) ... ok
+test_destination_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_destination_same_byte_identity_replacement_is_rejected) ... ok
+test_exact_embedding_deterministic_mode_and_idempotence (__main__.SynchronizerTests.test_exact_embedding_deterministic_mode_and_idempotence) ... ok
+test_file_and_parent_directory_are_fsynced (__main__.SynchronizerTests.test_file_and_parent_directory_are_fsynced) ... ok
+test_final_compare_and_swap_race_preserves_concurrent_destination (__main__.SynchronizerTests.test_final_compare_and_swap_race_preserves_concurrent_destination) ... ok
+test_final_compare_and_swap_race_restores_concurrent_hardlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_hardlink) ... ok
+test_final_compare_and_swap_race_restores_concurrent_symlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_symlink) ... ok
+test_hardlinked_source_and_destination_are_rejected (__main__.SynchronizerTests.test_hardlinked_source_and_destination_are_rejected) ... ok
+test_hostile_destination_symlink_replacement_is_rejected (__main__.SynchronizerTests.test_hostile_destination_symlink_replacement_is_rejected) ... ok
+test_malformed_sentinels_fail_closed (__main__.SynchronizerTests.test_malformed_sentinels_fail_closed) ... ok
+test_post_exchange_corruption_is_caught_and_rolled_back (__main__.SynchronizerTests.test_post_exchange_corruption_is_caught_and_rolled_back) ... ok
+test_post_exchange_type_change_preserves_concurrent_path_and_recovery (__main__.SynchronizerTests.test_post_exchange_type_change_preserves_concurrent_path_and_recovery) ... ok
+test_source_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_source_same_byte_identity_replacement_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.024s
+
+OK
+test_check_accepts_exact_and_rejects_stale_without_writing (__main__.SynchronizerTests.test_check_accepts_exact_and_rejects_stale_without_writing) ... ok
+test_destination_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_destination_same_byte_identity_replacement_is_rejected) ... ok
+test_exact_embedding_deterministic_mode_and_idempotence (__main__.SynchronizerTests.test_exact_embedding_deterministic_mode_and_idempotence) ... ok
+test_file_and_parent_directory_are_fsynced (__main__.SynchronizerTests.test_file_and_parent_directory_are_fsynced) ... ok
+test_final_compare_and_swap_race_preserves_concurrent_destination (__main__.SynchronizerTests.test_final_compare_and_swap_race_preserves_concurrent_destination) ... ok
+test_final_compare_and_swap_race_restores_concurrent_hardlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_hardlink) ... ok
+test_final_compare_and_swap_race_restores_concurrent_symlink (__main__.SynchronizerTests.test_final_compare_and_swap_race_restores_concurrent_symlink) ... ok
+test_hardlinked_source_and_destination_are_rejected (__main__.SynchronizerTests.test_hardlinked_source_and_destination_are_rejected) ... ok
+test_hostile_destination_symlink_replacement_is_rejected (__main__.SynchronizerTests.test_hostile_destination_symlink_replacement_is_rejected) ... ok
+test_malformed_sentinels_fail_closed (__main__.SynchronizerTests.test_malformed_sentinels_fail_closed) ... ok
+test_post_exchange_corruption_is_caught_and_rolled_back (__main__.SynchronizerTests.test_post_exchange_corruption_is_caught_and_rolled_back) ... ok
+test_post_exchange_type_change_preserves_concurrent_path_and_recovery (__main__.SynchronizerTests.test_post_exchange_type_change_preserves_concurrent_path_and_recovery) ... ok
+test_source_same_byte_identity_replacement_is_rejected (__main__.SynchronizerTests.test_source_same_byte_identity_replacement_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.023s
+
+OK

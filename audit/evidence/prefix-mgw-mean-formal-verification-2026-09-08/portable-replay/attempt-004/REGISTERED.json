@@ -1,0 +1,10 @@
+{
+  "action": "check",
+  "manifest_sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618",
+  "original_sha256": "4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409",
+  "output": "attempt-004",
+  "prepare_only": false,
+  "python_optimized": 1,
+  "registered_utc": "2026-09-08T07:30:49.918629+00:00",
+  "source": "cosmetic"
+}

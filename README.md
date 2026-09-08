@@ -66,6 +66,7 @@ you interpret an estimate.
 | Assess continuous data | [Continuous quickstart](#continuous-quickstart), [scientific cautions](#scientific-cautions) | Support declarations, reports, geometry limits, and experimental PID boundaries |
 | Choose a method or API | [Methods summary](METHODS_SUMMARY.md), [full catalog](METHODS.md) | Defining sources, repository compositions, input domains, feature gates, and limitations |
 | Study the mathematics | [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) | Nine result families with motivation, formulas, assumptions, evidence, cost, and complete proof links |
+| Study finite-prefix MGW means | [Standalone mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md), [PDF](output/pdf/prefix-mgw-mean.pdf) | Three separately verified formal results for a project-defined categorical statistic; no new estimator API or finite-sample coverage claim |
 | Check a claim | [Assurance registry](audit/evidence/assurance-registry.json), [known limitations](KNOWN_LIMITATIONS.md) | Scoped evidence and open obligations; follow each claim's current decision |
 | Assess an application | [Ecosystem capabilities](ECOSYSTEM_CAPABILITIES.md), [sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) | Physical inputs, alphabets, targets, simpler comparators, resource limits, and qualification gaps |
 | Develop or review a result | [Mathematical workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md), [discovery and durability blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) | Proof routes, counterexamples, failed attempts, formal checks, councils, and evidence preservation |
@@ -105,6 +106,13 @@ for the method catalog, claim packets, or detailed proofs. The current 24-page g
 structure profile. Its exact-mode check requires a rebuild to match the committed PDF byte for byte.
 The selected Ubuntu 24.04/x86 cross-toolchain route checks a fresh build against the reviewed
 v3 raw profile. Strict structure and navigation checks still apply.
+
+The separate [categorical MGW mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md) and
+[nine-page PDF](output/pdf/prefix-mgw-mean.pdf) give actual finite-law mean identities and
+convergence for a specified prefix statistic. A worked independent-binary example shows why a
+positive short-prefix mean need not indicate dependence. Its three locally accepted exports use a
+separate replay package; they add no Rust/Python estimator or confidence guarantee and do not
+change the frozen aggregate Lean baseline or the guide's nine-family inventory.
 
 The [publication checker guide](scripts/README.md) records the exact profile, commands and
 historical replay boundaries. Earlier v1, v2 and Pandoc 3.1.3 observations remain available there;

@@ -1,0 +1,10 @@
+{
+  "adapter_sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a",
+  "completed_utc": "2026-09-08T06:59:01.406069+00:00",
+  "failure": "PermissionError(13, 'Permission denied')",
+  "manifest_sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618",
+  "new_mean_theorems_proved": 0,
+  "records": [],
+  "scope": "synthetic whole-entrypoint controls; no proof or adoption",
+  "status": "failed"
+}

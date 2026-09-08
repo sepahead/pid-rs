@@ -1,0 +1,421 @@
+{
+  "schema": "pid-rs/mean-publication-integration-platform-observation/v1",
+  "evidence_class": "operational_execution_and_source_scope_review",
+  "attempt": "mean-publication-integration-v2-2026-09-08",
+  "attempt_status": "failed",
+  "base_commit_oid": "0c220bbcb16b258c778bea40a0cfe70c055aba12",
+  "registered_utc": "2026-09-08T11:11:32.628925+00:00",
+  "original_integration_deadline_utc": "2026-09-08T15:06:05.117272+00:00",
+  "failure_observed_utc": "2026-09-08T12:14:19.047037+00:00",
+  "closed_utc": "2026-09-08T12:24:18.156734+00:00",
+  "raw_stage_manifest": {
+    "members": 68,
+    "sha256": "026db4120ae6adb676228ea96b2dd2601483711e0fae262f801cc76f6607ce9f"
+  },
+  "counts": {
+    "actual_top_level_invocations": 15,
+    "individual_passes": 14,
+    "failed_invocations": 1
+  },
+  "source_state": {
+    "staged_changed_paths_at_attempt": 1555,
+    "proposal_manifest_sha256": "1a140f8cb0141336ecc8631cf49a51618056e633711d21d796af23a435ab6458",
+    "current_support_pin_correction_manifest_sha256": "cd03c2291e14ca0dc448617fb225974130b00d6611e932115245c0ae43b8cd39",
+    "independent_current_composition_comparison_entries": 1555,
+    "independent_current_composition_mismatches": 0,
+    "scope": "bounded correspondence of the adopted1553-file proposal plus4-file correction with current public bytes; not an atomic execution snapshot"
+  },
+  "failure": {
+    "command": [
+      "bash",
+      "scripts/check-formal-pdf-set.sh",
+      "--cross-toolchain"
+    ],
+    "returncode": 1,
+    "diagnostic": "producer tuple rejected: Pandoc has a symbolic or noncanonical component",
+    "following_diagnostic": "Mathematical results guide PDF check: before producer tuple could not be captured",
+    "guide_complete_producer_tuple_captured": false,
+    "guide_profile_selector_reached": false,
+    "guide_primary_pdf_build_reached": false,
+    "scope": "The aggregate ran earlier PDF gates before this failure; no claim of zero PDF activity is made."
+  },
+  "applicability_review": {
+    "actual_cause": "The guide producer-capture Pandoc direct-path snapshot refused a symbolic or noncanonical component.",
+    "separate_source_inference": "The current guide cross selector offers one eligible hosted Ubuntu24.04/Linux profile and a deliberately incomplete legacy Linux profile; no native Darwin profile is admitted.",
+    "alias_only_repair_sufficient": false,
+    "native_exact": "The full --exact aggregate passed, including two fresh builds of the exact mean PDF. This does not turn the failed cross invocation into success.",
+    "linux_cross": "Still required at the new exact committed descendant under its actual supported hosted profile. Prior866 execution does not transfer.",
+    "mean_cross_relation": "The mean PDF remains exact-only; the Linux aggregate must observe its status2 refusal, not award Linux mean-PDF reproduction."
+  },
+  "remaining": [
+    "Record the failed attempt without reopening its clock or changing its status.",
+    "Finish a separately reviewed continuation under the original local deadline; any changed input receives its applicable causal check.",
+    "Generate current-source identity last and verify clean post-commit identity at the new SHA.",
+    "Obtain all five required exact-commit hosted preflights before any separately reviewed main promotion.",
+    "Hosted mean proof replay and Linux mean-PDF reproduction remain separate open obligations."
+  ],
+  "nonclaims": [
+    "No new theorem, numerical result, estimator calibration, deployment value or C12 qualification.",
+    "No broad Darwin-versus-Linux equivalence conclusion.",
+    "Individual passing commands retain only their exact input/environment scope.",
+    "This public projection omits private locators/process IDs and does not claim complete off-host raw-stage recovery."
+  ],
+  "individual_commands": [
+    {
+      "case": "check-certified-sxpid2-claim-0",
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-certified-sxpid2-claim.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:32.671396+00:00",
+      "completed_utc": "2026-09-08T11:11:32.747989+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 93,
+          "sha256": "09dacad5bd95e7f0fbab262c8f15997fe7bee00c4fe14f32c7dd975a700bcea5"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-certified-sxpid2-claim-1",
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-certified-sxpid2-claim.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:32.748376+00:00",
+      "completed_utc": "2026-09-08T11:11:32.823003+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 93,
+          "sha256": "09dacad5bd95e7f0fbab262c8f15997fe7bee00c4fe14f32c7dd975a700bcea5"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-certified-sxpid2-claim-self-test-0",
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-certified-sxpid2-claim-self-test.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:32.823363+00:00",
+      "completed_utc": "2026-09-08T11:11:41.288709+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 58,
+          "sha256": "0defed1691e154e161cb9fd84dc1744f90cc0b5d0a7688dfe853023a7739034f"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-certified-sxpid2-claim-self-test-1",
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-certified-sxpid2-claim-self-test.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:41.289073+00:00",
+      "completed_utc": "2026-09-08T11:11:49.725972+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 58,
+          "sha256": "0defed1691e154e161cb9fd84dc1744f90cc0b5d0a7688dfe853023a7739034f"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-lean-toolchain-freeze-0",
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-toolchain-freeze.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:49.726370+00:00",
+      "completed_utc": "2026-09-08T11:11:49.908832+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 422,
+          "sha256": "b46178e8b0bcfed546d5b4138acff9e4c54b932a84b3415854cb130bb2a0300f"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-lean-toolchain-freeze-1",
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-toolchain-freeze.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:49.909301+00:00",
+      "completed_utc": "2026-09-08T11:11:50.089535+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 422,
+          "sha256": "b46178e8b0bcfed546d5b4138acff9e4c54b932a84b3415854cb130bb2a0300f"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-lean-toolchain-freeze-self-test-0",
+      "command": [
+        "python3",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-toolchain-freeze-self-test.py"
+      ],
+      "registered_utc": "2026-09-08T11:11:50.089870+00:00",
+      "completed_utc": "2026-09-08T11:12:11.288924+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 217,
+          "sha256": "aee9f4148f9203f0bb8196f96e9a059208ae7df39089003d8e39c8042683844a"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-lean-toolchain-freeze-self-test-1",
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-S",
+        "-B",
+        "scripts/check-lean-toolchain-freeze-self-test.py"
+      ],
+      "registered_utc": "2026-09-08T11:12:11.289366+00:00",
+      "completed_utc": "2026-09-08T11:12:32.051001+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 217,
+          "sha256": "aee9f4148f9203f0bb8196f96e9a059208ae7df39089003d8e39c8042683844a"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-publication-links-0",
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/check-publication-links.py"
+      ],
+      "registered_utc": "2026-09-08T11:12:32.051344+00:00",
+      "completed_utc": "2026-09-08T11:12:58.416157+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 231,
+          "sha256": "f5ddc088b0edacee1f2c81663e5353e8c411450ba5dbd71ddce8f88592acef87"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-publication-links-1",
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-B",
+        "scripts/check-publication-links.py"
+      ],
+      "registered_utc": "2026-09-08T11:12:58.416571+00:00",
+      "completed_utc": "2026-09-08T11:13:26.255030+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 231,
+          "sha256": "f5ddc088b0edacee1f2c81663e5353e8c411450ba5dbd71ddce8f88592acef87"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-publication-links-self-test-0",
+      "command": [
+        "python3",
+        "-I",
+        "-B",
+        "scripts/check-publication-links-self-test.py"
+      ],
+      "registered_utc": "2026-09-08T11:13:26.255523+00:00",
+      "completed_utc": "2026-09-08T11:14:24.326562+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 116,
+          "sha256": "33af791f6d1ce92bdeb01946f39675bd5fd2223b1a6cf4a34fa2b2c93a23bb83"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "check-publication-links-self-test-1",
+      "command": [
+        "python3",
+        "-O",
+        "-I",
+        "-B",
+        "scripts/check-publication-links-self-test.py"
+      ],
+      "registered_utc": "2026-09-08T11:14:24.327049+00:00",
+      "completed_utc": "2026-09-08T11:15:20.825287+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 115,
+          "sha256": "e514b32adc4330baefe4158605d844fae2c50ec82912b1745d2556fd01f96177"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "formal-pdf-selftest",
+      "command": [
+        "bash",
+        "scripts/check-formal-pdf-set-self-test.sh"
+      ],
+      "registered_utc": "2026-09-08T11:15:20.825638+00:00",
+      "completed_utc": "2026-09-08T11:15:32.513774+00:00",
+      "timeout_seconds": 900,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 5222,
+          "sha256": "1e86b242a99682774e315a404cee728288da5fdff9406bef5da0c233d528a57c"
+        },
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "case": "formal-pdf-exact",
+      "command": [
+        "bash",
+        "scripts/check-formal-pdf-set.sh",
+        "--exact"
+      ],
+      "registered_utc": "2026-09-08T11:15:32.514120+00:00",
+      "completed_utc": "2026-09-08T11:46:06.229867+00:00",
+      "timeout_seconds": 4200,
+      "returncode": 0,
+      "streams": {
+        "stdout": {
+          "bytes": 61190,
+          "sha256": "a2c5449473a37ee904f1205f7b9aa573da209462fdf642fe115a49c7520e8246"
+        },
+        "stderr": {
+          "bytes": 4070,
+          "sha256": "c416babca482054b28242cdedc7459d4c37a056f792e75e550de777d8d95b877"
+        }
+      }
+    },
+    {
+      "case": "formal-pdf-cross",
+      "command": [
+        "bash",
+        "scripts/check-formal-pdf-set.sh",
+        "--cross-toolchain"
+      ],
+      "registered_utc": "2026-09-08T11:46:06.230810+00:00",
+      "completed_utc": "2026-09-08T12:14:19.047037+00:00",
+      "timeout_seconds": 4200,
+      "returncode": 1,
+      "streams": {
+        "stdout": {
+          "bytes": 54595,
+          "sha256": "3f90b2047b51bc44fd951a0296811f6b43ce8f243fea1335079d690227f84bdf"
+        },
+        "stderr": {
+          "bytes": 4530,
+          "sha256": "d33991fcbace34cd783e6b81cca88644ec28dfe1fcbc6a2a3bd3e6e6ca0e91d5"
+        }
+      }
+    }
+  ],
+  "stream_projection": "integration-platform-projection.json"
+}

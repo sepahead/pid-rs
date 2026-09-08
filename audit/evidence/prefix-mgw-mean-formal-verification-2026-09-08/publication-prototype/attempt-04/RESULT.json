@@ -1,0 +1,47 @@
+{
+  "status": "built_pending_visual_review",
+  "defects": [],
+  "commands": [
+    {
+      "started_utc": "2026-09-08T07:44:03.263234+00:00",
+      "command": [
+        "/opt/homebrew/bin/pandoc",
+        "--from=markdown",
+        "--to=latex",
+        "--shift-heading-level-by=-1",
+        "--wrap=none",
+        "--output=body.tex",
+        "body.md"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:44:03.586859+00:00"
+    },
+    {
+      "started_utc": "2026-09-08T07:44:03.587673+00:00",
+      "command": [
+        "/Library/TeX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:44:05.485924+00:00"
+    },
+    {
+      "started_utc": "2026-09-08T07:44:05.486193+00:00",
+      "command": [
+        "/Library/TeX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:44:07.427718+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-08T07:44:07.428364+00:00"
+}

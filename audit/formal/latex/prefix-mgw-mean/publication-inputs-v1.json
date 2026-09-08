@@ -1,0 +1,53 @@
+{
+  "HTTPS_successor_review_sha256": "77611473469a648091f157ffa64a18f68825e856ce7ffc0a911eabab36114702",
+  "boundary": "Current publication inputs are outside the unchanged accepted48member replay unit. Two private fresh producers and root visual/URI review establish this PDF identity; public builder execution and integration remain separate.",
+  "cross_toolchain_relation": "none; explicit status2 refusal before a build",
+  "expected_pages": 9,
+  "expected_pandoc_version": "pandoc 3.10.2",
+  "expected_pdf_sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+  "files": {
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/latex/prefix-mgw-mean/body.expected.md": {
+      "bytes": 18318,
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0"
+    },
+    "audit/formal/latex/prefix-mgw-mean/body.expected.tex": {
+      "bytes": 20395,
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37"
+    },
+    "audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex": {
+      "bytes": 1994,
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6"
+    },
+    "audit/formal/latex/prefix-mgw-mean/retained-rank.pdf": {
+      "bytes": 67407,
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894"
+    },
+    "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md": {
+      "bytes": 18335,
+      "sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e"
+    },
+    "audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+      "bytes": 4656,
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    "output/pdf/prefix-mgw-mean.pdf": {
+      "bytes": 162538,
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "prototype_review_sha256": "3c3d9f1e831df74c18c0f257ce29684d2bf6031ae0c1558028d3540524c9fa59",
+  "schema": "pid-rs/prefix-mgw-mean-publication-inputs-v1",
+  "status": "locally_reviewed_two_private_HTTPS_productions_public_builder_controls_pending"
+}

@@ -1,0 +1,5 @@
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/Candidate.lean:262:6: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.

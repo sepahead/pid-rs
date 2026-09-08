@@ -1,0 +1,10 @@
+{
+  "at_utc": "2026-09-08T07:01:04.763984+00:00",
+  "failure_sha256": "4032bb92ecb8679b89892294883d57a913176113cddabf58c7747705dd3dbbbe",
+  "fixture_root_mode": "0o555",
+  "package_exists": false,
+  "registered_cases_completed": 0,
+  "reason": "shutil.copytree fixture-root onto existing root copies its read-only root mode; subsequent package mkdir fails before the later owner-mode correction.",
+  "control_driver_invocations": 0,
+  "status": "failed before first instrumented adapter invocation; no retry in original stage"
+}

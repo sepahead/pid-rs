@@ -1,0 +1,13 @@
+{
+  "deadline_utc": "2026-09-08T07:14:01.263624+00:00",
+  "new_mean_theorems_proved": 0,
+  "owner": "/root",
+  "registered_utc": "2026-09-08T06:59:01.263624+00:00",
+  "schema": "portable-mean-supervisor-controls-execution-v1",
+  "source_sha256": {
+    "stage-supervisor.py": "529245c5f842283132f8fe21a2555968a8f9c29950489f41c2639ace08f7f569",
+    "supervisor-child.py": "eb299195965846edd99ad3f19ee0c2cb77c172c23d0295cb6e162769378e1d4e",
+    "supervisor-controls.py": "29c0646d6be07f4160b1a82b610376de77be4f6d2dc009293d805814fa748f8c"
+  },
+  "status": "root-reviewed-source-ready-for-controls"
+}

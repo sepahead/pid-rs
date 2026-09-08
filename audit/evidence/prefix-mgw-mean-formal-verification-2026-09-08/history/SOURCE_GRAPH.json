@@ -1,0 +1,35 @@
+{
+  "dependencies": [
+    "PidFiniteConvergence/Deterministic",
+    "PidFiniteConvergence/SxEventBridge",
+    "MgwBridgeDepsV1/SxDnf/Contract",
+    "MgwBridgeDepsV1/JoinLog/Contract",
+    "MgwBridgeDepsV1/SxDnf/JudgeCore",
+    "MgwBridgeDepsV1/SxDnf/Proofs",
+    "MgwBridgeDepsV1/JoinLog/Proofs",
+    "PidMgwBridge/Contract",
+    "PidMgwBridge/RawTargets",
+    "PidMgwBridge/AliasTargets",
+    "PidMgwBridge/JudgeCore",
+    "PidMgwBridge/Candidate",
+    "PidMgwBridge/SemanticJudge",
+    "PidPrefixProbability/Contract",
+    "PidPrefixProbability/RawTargets",
+    "PidPrefixProbability/AliasTargets",
+    "PidPrefixProbability/Candidate",
+    "PidPrefixProbability/SemanticJudge"
+  ],
+  "trusted_types": [
+    "PidPrefixMgwMean/Contract",
+    "PidPrefixMgwMean/RawTargets",
+    "PidPrefixMgwMean/AliasTargets"
+  ],
+  "new_modules": [
+    "PidPrefixMgwMean/Candidate",
+    "PidPrefixMgwMean/SemanticJudge"
+  ],
+  "root": "PrefixMgwMeanCandidateRoot",
+  "full_children": 25,
+  "wrong_final_children": 23,
+  "development_children": 1
+}

@@ -1,0 +1,267 @@
+{
+  "schema": "pid-rs/prefix-mgw-mean-exact-proof-acceptance-v2",
+  "accepted_utc": "2026-09-08T05:03:36.029238+00:00",
+  "scope": "Three exact finite-categorical MGW targets: arbitrary signed finite word/join coefficients; actual finite-law integrability and fresh-anchor retained-rank expectation; supported unique informative/misinformative inverses, actual component HasSums and finite-block expectation limit to joint-law MGW mean.",
+  "selected_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+  "cosmetic_sha256": "4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409",
+  "freeze_sha256": "d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0",
+  "campaign_sha256": "c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243",
+  "theorems": [
+    {
+      "alias_target": "PidPrefixMgwMeanAliasTargets.word_coefficient_join_power",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwMeanContract.word_coefficient_join_power_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwMeanRawTargets.word_coefficient_join_power",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwMeanCandidate.word_coefficient_join_power",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwMeanAliasTargets.finite_block_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwMeanContract.finite_block_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwMeanRawTargets.finite_block_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwMeanCandidate.finite_block_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwMeanAliasTargets.prefix_expectations_to_mgw_mean",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwMeanContract.prefix_expectations_to_mgw_mean_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwMeanRawTargets.prefix_expectations_to_mgw_mean",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwMeanCandidate.prefix_expectations_to_mgw_mean",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "final_matrix": "Four exact semantic/axiom/fresh-kernel passes and same-selected-source actual wrong-final-type rejection",
+  "normal_optimized_cosmetic_semantic_arrays_identical": true,
+  "reports": [
+    {
+      "attempt": "attempts/001-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "2796b8ebed5c87a076fa14fd3facdd78179fdac07560a02c26ff094c9ec77c09",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/002-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "e54f6b5dcf015d5a875d751a47538841bd903e52b52c08d802a68a64023ab4b8",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/003-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "d401a106b0ed5b9d45dbf7ed3c0fba27a6164ecd955c30d44931adff57faa72c",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/004-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "7790a62139f10b33ad87b93154074f2a1f968a3826dad06ebc73571c5e33ce5f",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/005-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "70bd577486c462d4babb98a744270d9cb4be333b3df9d79fcd3584f97e8a49a1",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/006-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "4733b4657a8524351af1ff2f9b4bafb905c9facd831780b05b4dce14b31e685d",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/007-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "73400fc821693ef24f63592b7f79c2f2295787671573af3eb927866d8607ab0e",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/008-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "27b0a903085b5d108c21bd6706fd2e56900a0292a04c04fcb6767a7feccea846",
+      "children": 1,
+      "artifacts_rehashed": 151,
+      "captured_inputs_rehashed": 164
+    },
+    {
+      "attempt": "attempts/009-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "5ee193a34996525620bcdb0fa05cd3c4ec63c525dd8f4f1517595ea9c3dbf346",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/010-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "80b39104343a647be93ce8c7843812e6d0870518b47b843b7d18543bcc844479",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/011-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "efdcfdee5bbe20ffcf1a167cdbe9da73aa5619a16e4edd491444f20f50d56f2f",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/012-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "ec7f5ed6abbc45668da172cb520eb68f244d3cbb7fb5e6d8a752a39f3dfb69a5",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/013-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+      "result_sha256": "22455acb60be82c9b40394409cf3bb74f41da25b85886dad9af8fb43d0ca3777",
+      "children": 1,
+      "artifacts_rehashed": 149,
+      "captured_inputs_rehashed": 163
+    },
+    {
+      "attempt": "attempts/014-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "f0dd3d1b90e01a6aff9c84f6c1260e53be4905eb74b5614a825d6409abff10f0",
+      "children": 1,
+      "artifacts_rehashed": 151,
+      "captured_inputs_rehashed": 164
+    },
+    {
+      "attempt": "attempts/015-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "3c95e6cc000c4c9226c7d41a4092944294a9cab64e9bb3764254acfe5f21e2c7",
+      "children": 1,
+      "artifacts_rehashed": 151,
+      "captured_inputs_rehashed": 164
+    },
+    {
+      "attempt": "attempts/016-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "0cbf203b0f88ccdfe8f7976c167a43182cc8dc0c53e5b270d28fbdacd79b67ba",
+      "children": 1,
+      "artifacts_rehashed": 151,
+      "captured_inputs_rehashed": 164
+    },
+    {
+      "attempt": "attempts/017-full-0",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "5b90925ff33db838e3bd33b2301b8172c77f5168e3532841f266ba51ef8493ea",
+      "children": 25,
+      "artifacts_rehashed": 253,
+      "captured_inputs_rehashed": 146
+    },
+    {
+      "attempt": "attempts/018-full-1",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "6cf40f442047220a55717d9eb0336ae2c44bed1d70d23e503fee3d3ba5a0b2f5",
+      "children": 25,
+      "artifacts_rehashed": 253,
+      "captured_inputs_rehashed": 146
+    },
+    {
+      "attempt": "attempts/019-full-0",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "93f635f05ec08fb97b4a9d4cf3c1f900b986054f3cfac112ab6b8bde8845811e",
+      "children": 25,
+      "artifacts_rehashed": 253,
+      "captured_inputs_rehashed": 146
+    },
+    {
+      "attempt": "attempts/020-full-1",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "f30ce9c9d0d6107b97668c4c9bc20f2637256c71e2d8c257e5ce7159d2c46688",
+      "children": 25,
+      "artifacts_rehashed": 253,
+      "captured_inputs_rehashed": 146
+    },
+    {
+      "attempt": "attempts/021-wrong-last-target-0",
+      "status": "expected_target_rejection",
+      "failure": null,
+      "result_sha256": "9865791a59342b391a6bd982707ecb0a173dfb4a9bea1108b69834560894c7c0",
+      "children": 23,
+      "artifacts_rehashed": 242,
+      "captured_inputs_rehashed": 147
+    }
+  ],
+  "total_actual_compiler_kernel_children": 139,
+  "development_attempts": 16,
+  "full_budget_attempts": 5,
+  "prior_v1_development_attempts": 1,
+  "prior_v1_status": "expired_failed_immutable",
+  "source_review_report_sha256": "773132e2f82492f2170e8ec486f88ce1a720176f2b99e6bd1c8a2d8ec96aa9ce",
+  "source_review_manifest_sha256": "2b0815e5e0b9a8deb3e581529561af22d9a439f0c58fdd96f5c80adea5432cbf",
+  "source_review_members_rehashed": 49,
+  "root_review": "Read complete component proof bodies, exact full target definitions, semantic and wrong-final streams, final independent-first advisory source report, routes and lenses. Rehashed all artifacts and captured inputs of all21attempts and all49finalreviewmembers. No frozen mathematical target, import, axiom or acceptance change.",
+  "retained_failures": "Twelve v2 development failures and the expired v1 failed attempt remain unchanged. Successful source-elaboration repairs did not retrospectively relabel failures.",
+  "nonclaims": "No finite-horizon unbiasedness, bias rate, confidence coverage, common-space almost-sure convergence, Rust/Python or numerical refinement, continuous/other-PID/hyperbolic transfer, application superiority or scientific-priority claim.",
+  "public_packaging": "Pending portable replay/adoption, MD/PDF claims and mainline publication. Local acceptance is not remote-main durability."
+}

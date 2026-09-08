@@ -1,0 +1,6 @@
+{
+  "started_utc": "2026-09-08T07:34:35.311345+00:00",
+  "scope": "Typesetting successor: isolated Source Sans Pro font discovery, pre-heading reservation, explicit page boundaries before the two example/edge-case sections. Mathematical Markdown unchanged.",
+  "prior_layout_findings": "attempt-02/ROOT_VISUAL_FINDINGS.json",
+  "max_lualatex_passes": 2
+}

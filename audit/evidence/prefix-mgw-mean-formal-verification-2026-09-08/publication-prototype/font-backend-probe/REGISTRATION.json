@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-09-08T07:42:16.519768+00:00",
+  "source": "https://docs.gtk.org/PangoCairo/type_func.FontMap.new.html",
+  "declared_correction": "Explicitly select the documented fc backend; a successful fc-match alone did not prove the renderer used it.",
+  "max_rsvg_invocations": 1,
+  "max_seconds": 30,
+  "selected_environment": {
+    "FONTCONFIG_FILE": "<repository>/.local/sx-mean-exposition-pdf-root-20260908/attempt-03/fontconfig.xml",
+    "PANGOCAIRO_BACKEND": "fc",
+    "XDG_CACHE_HOME": "<repository>/.local/sx-mean-exposition-pdf-root-20260908/attempt-03/font-cache"
+  }
+}

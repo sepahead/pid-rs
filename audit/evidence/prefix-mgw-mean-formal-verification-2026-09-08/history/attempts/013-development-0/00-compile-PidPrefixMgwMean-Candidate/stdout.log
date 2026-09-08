@@ -1,0 +1,140 @@
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:46:6: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Real.instAddCommMonoid = Real.instAddCommGroup.toAddCommMonoid
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.73} {β : α → Sort ?u.72} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_3
+L : Type u
+inst✝² : Fintype L
+inst✝¹ : PartialOrder L
+inst✝ : DecidableLE L
+terms : ℕ → L → ℝ
+limit : L → ℝ
+h : ∀ (a : L), HasSum (fun n => PidJoinLogContract.cumulative (terms n) a) (PidJoinLogContract.cumulative limit a)
+a : L
+ih : ∀ y < a, HasSum (fun n => terms n y) (limit y)
+hs : ∀ x ∈ Finset.univ.erase a, HasSum (fun n => if x ≤ a then terms n x else 0) (if x ≤ a then limit x else 0)
+hrest :
+  HasSum (fun b => ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0)
+    (∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0)
+hdifference :
+  HasSum
+    (fun b => PidJoinLogContract.cumulative (terms b) a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0)
+    (PidJoinLogContract.cumulative limit a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0)
+⊢ Real.instAddCommMonoid = Real.instAddCommGroup.toAddCommMonoid
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:49:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  PidJoinLogContract.cumulative ?f ?a
+in the target expression
+  (fun n => terms n a) = fun b =>
+    PidJoinLogContract.cumulative (terms b) a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0
+
+case e'_5
+L : Type u
+inst✝² : Fintype L
+inst✝¹ : PartialOrder L
+inst✝ : DecidableLE L
+terms : ℕ → L → ℝ
+limit : L → ℝ
+h : ∀ (a : L), HasSum (fun n => PidJoinLogContract.cumulative (terms n) a) (PidJoinLogContract.cumulative limit a)
+a : L
+ih : ∀ y < a, HasSum (fun n => terms n y) (limit y)
+hs : ∀ x ∈ Finset.univ.erase a, HasSum (fun n => if x ≤ a then terms n x else 0) (if x ≤ a then limit x else 0)
+hrest :
+  HasSum (fun b => ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0)
+    (∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0)
+hdifference :
+  HasSum
+    (fun b => PidJoinLogContract.cumulative (terms b) a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0)
+    (PidJoinLogContract.cumulative limit a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0)
+⊢ (fun n => terms n a) = fun b =>
+    PidJoinLogContract.cumulative (terms b) a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:34:13: error: unsolved goals
+case e'_6
+L : Type u
+inst✝² : Fintype L
+inst✝¹ : PartialOrder L
+inst✝ : DecidableLE L
+terms : ℕ → L → ℝ
+limit : L → ℝ
+h : ∀ (a : L), HasSum (fun n => PidJoinLogContract.cumulative (terms n) a) (PidJoinLogContract.cumulative limit a)
+a : L
+ih : ∀ y < a, HasSum (fun n => terms n y) (limit y)
+hs : ∀ x ∈ Finset.univ.erase a, HasSum (fun n => if x ≤ a then terms n x else 0) (if x ≤ a then limit x else 0)
+hrest :
+  HasSum (fun b => ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0)
+    (∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0)
+hdifference :
+  HasSum
+    (fun b => PidJoinLogContract.cumulative (terms b) a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then terms b i else 0)
+    (PidJoinLogContract.cumulative limit a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0)
+⊢ limit a = PidJoinLogContract.cumulative limit a - ∑ i ∈ Finset.univ.erase a, if i ≤ a then limit i else 0
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:69:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:70:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:75:2: error: Type mismatch
+  ha
+has type
+  HasSum
+    (fun n =>
+      @PidJoinLogContract.cumulative (Node I) (nodeFintype I)
+        (@Preorder.toLE (Node I) (@PartialOrder.toPreorder (Node I) sigma.toPartialOrder)) (Classical.decRel LE.le)
+        (terms n) a)
+    (PidJoinLogContract.cumulative limit a)
+but is expected to have type
+  HasSum
+    (fun n =>
+      @PidJoinLogContract.cumulative (Node I) this✝
+        (@Preorder.toLE (Node I) (@PartialOrder.toPreorder (Node I) (Subtype.partialOrder fun family => Valid family)))
+        (fun a b => Subtype.decidableLE a b) (terms n) a)
+    (PidJoinLogContract.cumulative limit a)
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:137:24: error: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:176:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:177:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:181:4: error: Type mismatch
+  hword I X T r z b n sigma hsigma
+has type
+  wordCoefficient r z b (n + 1) =
+    @PidJoinLogContract.joinPower (Node I) (nodeFintype I) sigma (Classical.decEq (Node I)) (weights r z) n b
+but is expected to have type
+  wordCoefficient r z b (n + 1) =
+    @PidJoinLogContract.joinPower (Node I) this✝ this (fun a b => Subtype.instDecidableEq a b) (weights r z) n b
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/013-development-0/src/PidPrefixMgwMean/Candidate.lean:200:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`

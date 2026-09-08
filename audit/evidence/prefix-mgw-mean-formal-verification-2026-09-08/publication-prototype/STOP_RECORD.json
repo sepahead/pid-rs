@@ -1,0 +1,9 @@
+{
+  "stopped_utc": "2026-09-08T08:03:15.737331+00:00",
+  "status": "complete_private_prototype_review",
+  "original_deadline_utc": "2026-09-08T08:11:28.276943+00:00",
+  "full_pdf_attempts": 4,
+  "new_theorems": 0,
+  "public_adoption": false,
+  "remaining": "Production integration/repeated builds/source checks and hosted/main publication are separate."
+}

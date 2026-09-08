@@ -1,0 +1,32 @@
+{
+  "candidate_write_scope": "candidate/Candidate.lean",
+  "children_per_development": 1,
+  "children_per_expected_wrong_last_rejection": 23,
+  "children_per_full_success": 25,
+  "clock_rule": "New revision-2 720-minute prospective interval. Never restart or extend this interval. Original v1 remains expired and incomplete.",
+  "combined_development_limit": 80,
+  "deadline_utc": "2026-09-08T15:26:27.884039+00:00",
+  "final_matrix": [
+    "selected normal",
+    "selected optimized",
+    "cosmetic normal",
+    "cosmetic optimized",
+    "same-selected-source wrong-last-target"
+  ],
+  "freeze_sha256": "d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0",
+  "max_concurrent_wrappers": 1,
+  "max_development_attempts": 79,
+  "max_full_attempts": 8,
+  "per_child_limits": {
+    "lean_allocator_MiB": 4096,
+    "observed_group_RSS_bytes": 4294967296,
+    "retained_stream_bytes": 4194304,
+    "seconds": 600
+  },
+  "prior_development_attempts": 1,
+  "prior_full_attempts": 0,
+  "registered_utc": "2026-09-08T03:26:27.884039+00:00",
+  "schema": "pid-rs/prefix-mgw-mean-proof-campaign-v2",
+  "scope": "Three exact mean targets: signed coefficient/join correspondence, actual finite block mean, and MGW expectation limit. No finite-sample bias, confidence coverage, terminal-cycle, refinement or application result.",
+  "selection_rule_sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42"
+}

@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "d0d55b74cbd83958888e23efde3f9386d6e0305199c6bd41ee80bfd1c4558f8a",
-    "CHANGELOG.md": "802989d319255e5e41046e1f7539068a15ab06b40ea44ad1e7270876a4f3a668",
+    "CHANGELOG.md": "623412b45bb56d3f00bbc2bedf44a16d03920f6c7fcb15d58cbdf99ed1bea5a9",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -684,7 +684,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ),
     C12_TERMINAL_RECORD_RELATIVE: C12_TERMINAL_RECORD_SHA256,
     "audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md": (
-        "244127cb65744ff5929241192b0e4285ae393cc098722107eac96db37de11e87"
+        "70986cfe81e40c300a18b1e63bddaa6ba681ecf25a45bcc59acf6233e2285d03"
     ),
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": (
         "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94"
@@ -699,12 +699,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
     ),
-    "scripts/README.md": "15e08844dd125757424f2eb729aaffe05d105decb7245eedcc9c0b06fa174c2c",
+    "scripts/README.md": "15ddcc0ed01fcde58e439d68a145cc3232f521d75d1d087554c3e26167372750",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "4bc7bf5ee959f44541cc4af579edc19ddc635a334ce69c20ef0bc3810e708896"
+        "0173f54ac5663214a59a89d88117bb6c8d622abed3bcb97b87104f798c632a54"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -713,7 +713,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "089725d8c8c547d1bcc67f194602b33991a8d6faf28c0dac1aa5357b20a3ddc7"
+        "ffe540c5cd5f4f5baeb3f45c69de38c36920a438eded59bd35b374abe96114a3"
     ),
     "scripts/check-formal-pdf-style.py": (
         "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"

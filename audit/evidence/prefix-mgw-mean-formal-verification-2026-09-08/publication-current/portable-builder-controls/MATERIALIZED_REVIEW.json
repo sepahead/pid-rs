@@ -1,0 +1,168 @@
+{
+  "completed_utc": "2026-09-08T10:37:32.030713+00:00",
+  "members": {
+    "SOURCE_MANIFEST.json": {
+      "bytes": 2437,
+      "mode": 420,
+      "sha256": "41c326c40ca081513addf9123fb2d049b12e85876c8cfae6c55173b14af86df8",
+      "type": "file"
+    },
+    "inputs": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/INERT_FIXTURES.json": {
+      "bytes": 2581,
+      "mode": 420,
+      "sha256": "860b904ef5affb557d4ef37f4d2db6ba35bfec3310ef0d9a3f7e903760b0336c",
+      "type": "file"
+    },
+    "inputs/real-profile": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/body.pandoc.raw.tex": {
+      "bytes": 20310,
+      "mode": 420,
+      "sha256": "cc4d258a4626cf03f0ed2425ef6a009e1ee7bf5525b3b50d075060bb67e778e0",
+      "type": "file"
+    },
+    "inputs/real-profile/build-prefix-mgw-mean-pdf.py": {
+      "bytes": 14029,
+      "mode": 420,
+      "sha256": "4b8509424a2baa580ef336c79eff2e4c4583dcc51a5efa74aca15806b7518d24",
+      "type": "file"
+    },
+    "inputs/real-profile/publication-inputs-v1.json": {
+      "bytes": 2542,
+      "mode": 420,
+      "sha256": "e85c572d7221a5a46c1200e9e0dde12f73d50def5a0b5dd5bbaf5e4bd97fe09f",
+      "type": "file"
+    },
+    "inputs/real-profile/tree": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/audit": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/audit/formal": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/audit/formal/latex": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "mode": 420,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "mode": 420,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/body.expected.md": {
+      "bytes": 18318,
+      "mode": 420,
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/body.expected.tex": {
+      "bytes": 20395,
+      "mode": 420,
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex": {
+      "bytes": 1994,
+      "mode": 420,
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/retained-rank.pdf": {
+      "bytes": 67407,
+      "mode": 420,
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/lean-prefix-mgw-mean": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md": {
+      "bytes": 18335,
+      "mode": 420,
+      "sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+      "bytes": 4656,
+      "mode": 420,
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/output": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/output/pdf": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/output/pdf/prefix-mgw-mean.pdf": {
+      "bytes": 162538,
+      "mode": 420,
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "type": "file"
+    },
+    "inputs/real-profile/tree/scripts": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "inputs/real-profile/tree/scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "mode": 420,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da",
+      "type": "file"
+    },
+    "proposal": {
+      "bytes": 0,
+      "mode": 493,
+      "type": "directory"
+    },
+    "proposal/inert-pdf-tool.py": {
+      "bytes": 5156,
+      "mode": 420,
+      "sha256": "6c09c75512853563b6bb7fa0c470283bc9e6f12cda617028ca36f3521bdabd31",
+      "type": "file"
+    },
+    "proposal/mean-pdf-builder-controls.py": {
+      "bytes": 34566,
+      "mode": 420,
+      "sha256": "05681f8bab3c2676ef4753188b0f3fe4b45359b896157cd23f484e3b2f4efa05",
+      "type": "file"
+    }
+  },
+  "status": "exact17files12directories_verified"
+}

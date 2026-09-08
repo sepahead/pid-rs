@@ -1,0 +1,14 @@
+{
+  "builder_control_PDF_Lean_checker_test_executions": 0,
+  "closed_utc": "2026-09-08T09:22:11.311989+00:00",
+  "corrected_accidental_new_file_write_outside_lane": true,
+  "on_time": false,
+  "original_deadline_utc": "2026-09-08T09:21:59.311250+00:00",
+  "public_Git_mutations": 0,
+  "remaining": [
+    "independent root source review",
+    "actual inert controls and complete stream review",
+    "separate actual public builder production qualification"
+  ],
+  "status": "source_proposal_sealed_unexecuted"
+}

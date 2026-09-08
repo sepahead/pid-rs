@@ -1,0 +1,37 @@
+{
+  "pandoc": {
+    "selector": "HOST_HOMEBREW/bin/pandoc",
+    "target": "HOST_HOMEBREW/Cellar/pandoc/3.10.2/bin/pandoc",
+    "sha256": "1662f49c035168d1e608ad9d923df75e4b00ac014d096349b2027ad38f84dd6e"
+  },
+  "lualatex": {
+    "selector": "HOST_TEX/texbin/lualatex",
+    "target": "/usr/local/texlive/2024/bin/universal-darwin/luahbtex",
+    "sha256": "8522fe5f3d9e78dc36a1d39236da77757c8584b3b21e9806af4ba7bfc8b54ed3"
+  },
+  "bash": {
+    "selector": "/bin/bash",
+    "target": "/bin/bash",
+    "sha256": "fde343ee184953c1fa1185abddeaa8be61c6acbebae4eb54db5d6b55b09a5755"
+  },
+  "pdfinfo": {
+    "selector": "HOST_HOMEBREW/bin/pdfinfo",
+    "target": "HOST_HOMEBREW/Cellar/poppler/26.06.0/bin/pdfinfo",
+    "sha256": "fb3efce3511f41cdaba07b433676d3603d80a10e35d61c99830e1a2d1a44bb66"
+  },
+  "pdffonts": {
+    "selector": "HOST_HOMEBREW/bin/pdffonts",
+    "target": "HOST_HOMEBREW/Cellar/poppler/26.06.0/bin/pdffonts",
+    "sha256": "09bac53ccfd92f65c58e52716766c31e41ea9867acfccfa1ba2538c2188e4198"
+  },
+  "pdftotext": {
+    "selector": "HOST_HOMEBREW/bin/pdftotext",
+    "target": "HOST_HOMEBREW/Cellar/poppler/26.06.0/bin/pdftotext",
+    "sha256": "81aa90ed17f1da12588ea396971f999a8aa352a228b76e9d53cadf9da47ae66c"
+  },
+  "pdftoppm": {
+    "selector": "HOST_HOMEBREW/bin/pdftoppm",
+    "target": "HOST_HOMEBREW/Cellar/poppler/26.06.0/bin/pdftoppm",
+    "sha256": "76126535b3a04b7be1db84808e39c4e71218903d4d7cbe846b9b4514c97caf0a"
+  }
+}

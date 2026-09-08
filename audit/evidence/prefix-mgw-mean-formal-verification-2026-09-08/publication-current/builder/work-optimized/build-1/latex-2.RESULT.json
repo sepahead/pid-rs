@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "HOST_TEX/texbin/lualatex",
+    "-no-shell-escape",
+    "-interaction=nonstopmode",
+    "-halt-on-error",
+    "-file-line-error",
+    "prefix-mgw-mean.tex"
+  ],
+  "completed_utc": "2026-09-08T08:59:11.040333+00:00",
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+  "returncode": 0,
+  "started_utc": "2026-09-08T08:59:09.208817+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3"
+}

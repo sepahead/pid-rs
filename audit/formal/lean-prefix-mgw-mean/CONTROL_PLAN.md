@@ -1,0 +1,27 @@
+# Exact reuse and new controls to execute later
+
+This is a control design, not passing test evidence. No adapter, parser suite, compiler, kernel or numerical fixture was invoked during source preparation. The two Lean files under `preparation/` are unchanged historical type/object controls; they are not additional mean proofs.
+
+The original mean acceptance and operational-control adoption identify the historical source-policy, strict-record, reporter and process tests. The new adapter preserves the runtime, three policies, all actual judges and proof sources. Reuse those exact historical predicates and their documented rejection causes. Do not rerun unrelated scientific searches, invent many equivalent controls, or advertise transferred evidence as newly executed.
+
+| Area | Evidence that may transfer by exact source identity | Fresh check needed for this adapter |
+|---|---|---|
+| Runtime snapshot and resource runner | Exact `bd8a9f22…` utility bytes and their historical resource/capture controls | New path bootstrap, fresh stage containment, ledger mutation, deadline call sites and final preservation behavior. |
+| Mean/11/6 source and record policies | Exact three policy sources, ordered records and receiver-free target checks | Normal/optimized loading and correct family dispatch; prevent an inherited array from satisfying the three-mean requirement. |
+| Actual Lean judges | Unchanged raw/alias/universe/axiom/export checks and historical synthetic reporter controls | Confirm adapter compiles each actual judge, compares its own family, and closes the correct fresh combined root. |
+| Wrong-last target | Historical same-selected-source transformation and actual last-target mismatch | Same-stage prerequisite pass, exact variant hash, actual raw/alias error and exactly the first two accepted mean records. |
+| Generic and DNF dependencies | Previously accepted import-only transport, exact proof bodies | Fresh closure under the exact namespaced modules. No separate new generic/DNF roster credit. |
+
+Freeze one control roster in a new registration before executing it. The following are materially different failure routes, not a promised passing count. Exercise every changed source branch in normal and optimized isolated Python; one test can cover several guards only when its actual causal failure is preserved and identified.
+
+1. **Package identity:** wrong manifest digest; missing selected source; altered contract/raw target/semantic judge; missing adapter entry; changed exact expected dependency or mean array; wrong cosmetic source. Each must refuse before an unauthorized compiler child.
+2. **Routing and custody:** stage outside the required root, symlink/hardlink input, symlink lock/ledger, repeated output, injected aggregate project object/search path, and source change after capture. Confirm immutable inputs and fresh build precedence, then preserve the real observed rejection.
+3. **Registration and mode:** invalid/future/expired clock, Boolean integer bounds, absent/pending/wrong-source control adoption, altered owner/manifest/tool pin, attempt/probe/compiler caps, simultaneous wrappers, normal versus `-O`, and prohibited development/unknown action. The original closed campaign and preparation directories must be unnecessary for a public run.
+4. **Deadline and stop call sites:** STOP before setup and between children; expiry during byte rehash, external dependency preflight, the runtime's internal source hashing/child registration, child execution, and final artifact preservation. Confirm the combined adapter/supervisor prevents late compiler launch and a late closure cannot report success. The unchanged helper queries' bounded but non-clamped preflight behavior and the non-atomic caller-check/launch gap must be explicit.
+5. **Record identity:** duplicate/missing/reordered records, duplicate JSON keys, nonfinite JSON values, wrong raw/alias/type/universe/axiom/export values, and swapping the six/eleven/three arrays. Reuse the existing policy control vectors; run them through the actual newly loaded dispatch.
+6. **Actual source/judge behavior:** use the inherited small synthetic graph for adapter plumbing and actual reporter call sites if needed. Preserve miniature versus mean distinctions. Wrong final target without a prior exact selected pass must refuse early; after a real selected pass it must reach the actual semantic type error, with no kernel success fabricated.
+7. **Failure preservation:** failed spawn, resource/stream cap, unexpected stderr, signal interruption and incomplete cleanup at the new route. Reuse exact Runner-level baseline tests; target the new wrapping/finalization paths with source-bound fixtures. Missing or crashed controls are not passes.
+
+Root should set the actual bounded controls budget after inspecting existing harnesses and the changed adapter. The old control campaign's exhausted deadline is not reusable, and these text entries do not authorize extra Lean work. A repaired adapter needs preserved source preimages, a new manifest digest and a scoped control disposition. The production proof matrix then runs under its separate 120-minute registration.
+
+The source-only proposal deliberately does not claim an executable new control harness. Implementing and executing this bounded matrix is a remaining infrastructure obligation before the proposed adapter is advertised as accepted public replay.

@@ -1,0 +1,70 @@
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/002-development-0/src/PidPrefixMgwMean/Candidate.lean:118:4: error: unsolved goals
+case pos
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁶ : Fintype I
+inst✝⁵ : Nonempty I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+z : Key I X T
+rows : List (Key I X T)
+hne : rows ≠ []
+b : Node I
+this : Fintype (Node I) := nodeFintype I
+hm : ∀ x ∈ rows, (mismatches z x).Nonempty
+hf :
+  Valid (rawPrefixFamily z rows) ∧
+    ∀ (b : Node I), rawLE (rawPrefixFamily z rows) ↑b ↔ ∀ x ∈ rows, rawLE (singles (mismatches z x)) ↑b
+a0 : Node I := ⟨rawPrefixFamily z rows, ⋯⟩
+he : ∀ (a : Node I), prefixEvent z a rows ↔ a = a0
+hc : (∀ x ∈ rows, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z) ↔ rawLE ↑a0 ↑b
+⊢ (if rawLE ↑a0 ↑b then 1 else 0) =
+    if
+        ∀ (a : (source : I) → X source) (b_1 : T),
+          (a, b_1) ∈ rows → (a, b_1) ∉ PidFiniteConvergence.sxSourceEvent (↑b) z then
+      1
+    else 0
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/002-development-0/src/PidPrefixMgwMean/Candidate.lean:122:2: error: unsolved goals
+case neg
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁶ : Fintype I
+inst✝⁵ : Nonempty I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+z : Key I X T
+rows : List (Key I X T)
+hne : rows ≠ []
+b : Node I
+this : Fintype (Node I) := nodeFintype I
+hm : ¬∀ x ∈ rows, (mismatches z x).Nonempty
+he : ∀ (a : Node I), ¬prefixEvent z a rows
+hc : ¬∀ x ∈ rows, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z
+⊢ (∑ x, if rawLE ↑x ↑b then 0 else 0) = 0
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/002-development-0/src/PidPrefixMgwMean/Candidate.lean:118:16: error: This simp argument is unused:
+  hc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/002-development-0/src/PidPrefixMgwMean/Candidate.lean:129:29: error: This simp argument is unused:
+  Finset.sum_const_zero
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [he, if_false, if_neg hc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/002-development-0/src/PidPrefixMgwMean/Candidate.lean:224:6: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.

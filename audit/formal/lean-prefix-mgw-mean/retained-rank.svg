@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="88mm" viewBox="0 0 1600 880" role="img" aria-labelledby="rank-title rank-description">
+  <title id="rank-title">The negative prefix uses retained target rank</title>
+  <desc id="rank-description">One source has anchor value zero and target zero. Three successive draws are source one target one, source one target zero, and source one target zero. Every source mismatches the anchor, so the positive increments are one, one half and one third. The first target does not match and is not retained. The negative increments are zero, one and one half. Their denominators count retained target matches, not raw elapsed time. The signed block value is one third. This is one possible block, not an expected value.</desc>
+  <defs>
+    <marker id="time-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#1F6968"/>
+    </marker>
+    <style>
+      .title { font-family: 'Source Sans Pro', sans-serif; font-size: 40px; font-weight: 700; fill: #1F3F60; }
+      .eyebrow { font-family: 'Source Sans Pro', sans-serif; font-size: 25px; font-weight: 700; letter-spacing: 2px; fill: #596A73; }
+      .label { font-family: 'Source Sans Pro', sans-serif; font-size: 29px; font-weight: 600; fill: #2C3E50; }
+      .body { font-family: 'Source Sans Pro', sans-serif; font-size: 28px; fill: #2C3E50; }
+      .value { font-family: 'Source Sans Pro', sans-serif; font-size: 35px; font-weight: 700; fill: #1F3F60; text-anchor: middle; }
+      .cell { font-family: 'Source Sans Pro', sans-serif; font-size: 29px; fill: #2C3E50; text-anchor: middle; }
+      .note { font-family: 'Source Sans Pro', sans-serif; font-size: 27px; fill: #596A73; }
+    </style>
+  </defs>
+  <rect width="1600" height="880" fill="#F7F3E9"/>
+  <text x="52" y="47" class="eyebrow">CATEGORICAL MGW · ONE SOURCE</text>
+  <path d="M52 76 H1548" stroke="#D2E0E2" stroke-width="2"/>
+  <path d="M52 76 H310" stroke="#B28218" stroke-width="7"/>
+  <text x="52" y="132" class="title">Count target matches, not elapsed time</text>
+  <text x="52" y="182" class="body">Anchor: (S, T) = (0, 0). Each draw below mismatches the source.</text>
+
+  <text x="52" y="252" class="label">Raw time</text>
+  <path d="M410 242 H1480" stroke="#1F6968" stroke-width="3" marker-end="url(#time-arrow)"/>
+  <g fill="#F7F3E9" stroke="#1F6968" stroke-width="2">
+    <circle cx="570" cy="242" r="26"/>
+    <circle cx="950" cy="242" r="26"/>
+    <circle cx="1330" cy="242" r="26"/>
+  </g>
+  <text x="570" y="253" class="cell">1</text>
+  <text x="950" y="253" class="cell">2</text>
+  <text x="1330" y="253" class="cell">3</text>
+
+  <text x="52" y="329" class="label">Complete draw (S, T)</text>
+  <g fill="#FFFFFF" stroke="#1F3F60" stroke-width="2">
+    <rect x="428" y="289" width="284" height="68" rx="12"/>
+    <rect x="808" y="289" width="284" height="68" rx="12"/>
+    <rect x="1188" y="289" width="284" height="68" rx="12"/>
+  </g>
+  <text x="570" y="335" class="value">(1, 1)</text>
+  <text x="950" y="335" class="value">(1, 0)</text>
+  <text x="1330" y="335" class="value">(1, 0)</text>
+
+  <rect x="36" y="389" width="1512" height="105" rx="12" fill="#D2E0E2"/>
+  <text x="52" y="431" class="label">Positive increment</text>
+  <text x="52" y="471" class="note">Denominator = raw time</text>
+  <text x="570" y="454" class="value">1</text>
+  <text x="950" y="454" class="value">1/2</text>
+  <text x="1330" y="454" class="value">1/3</text>
+
+  <text x="52" y="547" class="label">Target filter</text>
+  <text x="570" y="547" class="cell">Do not retain</text>
+  <text x="950" y="547" class="cell">Retain: first match</text>
+  <text x="1330" y="547" class="cell">Retain: second match</text>
+
+  <rect x="36" y="576" width="1512" height="108" rx="12" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+  <text x="52" y="617" class="label">Negative increment</text>
+  <text x="52" y="657" class="note">Denominator = retained rank</text>
+  <text x="570" y="641" class="value">0</text>
+  <text x="950" y="641" class="value">1</text>
+  <text x="1330" y="641" class="value">1/2</text>
+
+  <text x="52" y="738" class="label">Signed increment</text>
+  <text x="570" y="738" class="value">1</text>
+  <text x="950" y="738" class="value">−1/2</text>
+  <text x="1330" y="738" class="value">−1/6</text>
+  <path d="M52 772 H1548" stroke="#D2E0E2" stroke-width="2"/>
+  <text x="52" y="817" class="body">Block value: 1 − 1/2 − 1/6 = 1/3.</text>
+  <text x="730" y="817" class="note">One possible block; this is not an expected value.</text>
+</svg>

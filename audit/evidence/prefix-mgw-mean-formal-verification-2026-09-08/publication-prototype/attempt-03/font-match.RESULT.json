@@ -1,0 +1,11 @@
+{
+  "started_utc": "2026-09-08T07:34:35.547949+00:00",
+  "command": [
+    "/opt/homebrew/bin/fc-match",
+    "--format",
+    "%{family}\n%{file}\n",
+    "Source Sans Pro"
+  ],
+  "returncode": 0,
+  "completed_utc": "2026-09-08T07:34:35.593182+00:00"
+}

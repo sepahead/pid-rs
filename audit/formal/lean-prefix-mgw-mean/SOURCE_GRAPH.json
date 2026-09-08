@@ -1,0 +1,280 @@
+{
+  "counts_are_not_added_by_recompilation": true,
+  "inherited_semantic_record_counts": {
+    "mgw": 11,
+    "probability": 6
+  },
+  "modules": [
+    {
+      "bytes": 9093,
+      "family": "inherited_finite_definitions",
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.NegMulLog"
+      ],
+      "module": "PidFiniteConvergence.Deterministic",
+      "path": "sources/PidFiniteConvergence/Deterministic.lean",
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    {
+      "bytes": 27203,
+      "family": "inherited_finite_definitions",
+      "imports": [
+        "PidFiniteConvergence.Deterministic",
+        "Mathlib.Data.Fintype.Pi"
+      ],
+      "module": "PidFiniteConvergence.SxEventBridge",
+      "path": "sources/PidFiniteConvergence/SxEventBridge.lean",
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    {
+      "bytes": 12861,
+      "family": "inherited_dnf",
+      "imports": [
+        "PidFiniteConvergence.SxEventBridge"
+      ],
+      "module": "MgwBridgeDepsV1.SxDnf.Contract",
+      "path": "sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    {
+      "bytes": 3873,
+      "family": "inherited_generic_join_log",
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.Deriv",
+        "Mathlib.Data.Finset.Lattice.Fold"
+      ],
+      "module": "MgwBridgeDepsV1.JoinLog.Contract",
+      "path": "sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    {
+      "bytes": 3492,
+      "family": "inherited_dnf",
+      "imports": [
+        "Lean",
+        "Lean.Util.CollectAxioms",
+        "Mathlib.Data.List.Defs"
+      ],
+      "module": "MgwBridgeDepsV1.SxDnf.JudgeCore",
+      "path": "sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    {
+      "bytes": 10294,
+      "family": "inherited_dnf",
+      "imports": [
+        "MgwBridgeDepsV1.SxDnf.Contract"
+      ],
+      "module": "MgwBridgeDepsV1.SxDnf.Proofs",
+      "path": "sources/MgwBridgeDepsV1/SxDnf/Proofs.lean",
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    {
+      "bytes": 15705,
+      "family": "inherited_generic_join_log",
+      "imports": [
+        "MgwBridgeDepsV1.JoinLog.Contract"
+      ],
+      "module": "MgwBridgeDepsV1.JoinLog.Proofs",
+      "path": "sources/MgwBridgeDepsV1/JoinLog/Proofs.lean",
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    {
+      "bytes": 11737,
+      "family": "inherited_mgw",
+      "imports": [
+        "MgwBridgeDepsV1.SxDnf.Contract",
+        "MgwBridgeDepsV1.JoinLog.Contract",
+        "Mathlib.Data.Fintype.Powerset"
+      ],
+      "module": "PidMgwBridge.Contract",
+      "path": "sources/PidMgwBridge/Contract.lean",
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    {
+      "bytes": 7481,
+      "family": "inherited_mgw",
+      "imports": [
+        "PidMgwBridge.Contract"
+      ],
+      "module": "PidMgwBridge.RawTargets",
+      "path": "sources/PidMgwBridge/RawTargets.lean",
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    {
+      "bytes": 1458,
+      "family": "inherited_mgw",
+      "imports": [
+        "PidMgwBridge.Contract"
+      ],
+      "module": "PidMgwBridge.AliasTargets",
+      "path": "sources/PidMgwBridge/AliasTargets.lean",
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    {
+      "bytes": 1165,
+      "family": "inherited_mgw",
+      "imports": [
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "module": "PidMgwBridge.JudgeCore",
+      "path": "sources/PidMgwBridge/JudgeCore.lean",
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    {
+      "bytes": 26432,
+      "family": "inherited_mgw",
+      "imports": [
+        "PidMgwBridge.Contract",
+        "MgwBridgeDepsV1.SxDnf.Proofs",
+        "MgwBridgeDepsV1.JoinLog.Proofs"
+      ],
+      "module": "PidMgwBridge.Candidate",
+      "path": "sources/PidMgwBridge/Candidate.lean",
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    {
+      "bytes": 5851,
+      "family": "inherited_mgw",
+      "imports": [
+        "PidMgwBridge.Candidate",
+        "PidMgwBridge.RawTargets",
+        "PidMgwBridge.AliasTargets",
+        "PidMgwBridge.JudgeCore"
+      ],
+      "module": "PidMgwBridge.SemanticJudge",
+      "path": "sources/PidMgwBridge/SemanticJudge.lean",
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    {
+      "bytes": 7101,
+      "family": "inherited_probability",
+      "imports": [
+        "PidMgwBridge.Contract",
+        "Mathlib.MeasureTheory.Constructions.Pi",
+        "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "Mathlib.Probability.Independence.Basic"
+      ],
+      "module": "PidPrefixProbability.Contract",
+      "path": "sources/PidPrefixProbability/Contract.lean",
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    {
+      "bytes": 4337,
+      "family": "inherited_probability",
+      "imports": [
+        "PidPrefixProbability.Contract"
+      ],
+      "module": "PidPrefixProbability.RawTargets",
+      "path": "sources/PidPrefixProbability/RawTargets.lean",
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    {
+      "bytes": 839,
+      "family": "inherited_probability",
+      "imports": [
+        "PidPrefixProbability.Contract"
+      ],
+      "module": "PidPrefixProbability.AliasTargets",
+      "path": "sources/PidPrefixProbability/AliasTargets.lean",
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    {
+      "bytes": 20207,
+      "family": "inherited_probability",
+      "imports": [
+        "PidPrefixProbability.Contract"
+      ],
+      "module": "PidPrefixProbability.Candidate",
+      "path": "sources/PidPrefixProbability/Candidate.lean",
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    {
+      "bytes": 4219,
+      "family": "inherited_probability",
+      "imports": [
+        "PidPrefixProbability.Candidate",
+        "PidPrefixProbability.RawTargets",
+        "PidPrefixProbability.AliasTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "module": "PidPrefixProbability.SemanticJudge",
+      "path": "sources/PidPrefixProbability/SemanticJudge.lean",
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    {
+      "bytes": 4277,
+      "family": "mean",
+      "imports": [
+        "PidPrefixProbability.Contract",
+        "Mathlib.Topology.Algebra.InfiniteSum.NatInt"
+      ],
+      "module": "PidPrefixMgwMean.Contract",
+      "path": "sources/PidPrefixMgwMean/Contract.lean",
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    {
+      "bytes": 4716,
+      "family": "mean",
+      "imports": [
+        "PidPrefixMgwMean.Contract"
+      ],
+      "module": "PidPrefixMgwMean.RawTargets",
+      "path": "sources/PidPrefixMgwMean/RawTargets.lean",
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    {
+      "bytes": 605,
+      "family": "mean",
+      "imports": [
+        "PidPrefixMgwMean.Contract"
+      ],
+      "module": "PidPrefixMgwMean.AliasTargets",
+      "path": "sources/PidPrefixMgwMean/AliasTargets.lean",
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    {
+      "bytes": 40511,
+      "family": "mean",
+      "imports": [
+        "PidPrefixMgwMean.Contract",
+        "PidMgwBridge.Candidate",
+        "PidPrefixProbability.Candidate"
+      ],
+      "module": "PidPrefixMgwMean.Candidate",
+      "path": "sources/PidPrefixMgwMean/Candidate.lean",
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    {
+      "bytes": 2658,
+      "family": "mean",
+      "imports": [
+        "PidPrefixMgwMean.Candidate",
+        "PidPrefixMgwMean.RawTargets",
+        "PidPrefixMgwMean.AliasTargets",
+        "MgwBridgeDepsV1.SxDnf.JudgeCore"
+      ],
+      "module": "PidPrefixMgwMean.SemanticJudge",
+      "path": "sources/PidPrefixMgwMean/SemanticJudge.lean",
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    {
+      "bytes": 114,
+      "family": "combined_root",
+      "imports": [
+        "PidMgwBridge.SemanticJudge",
+        "PidPrefixProbability.SemanticJudge",
+        "PidPrefixMgwMean.SemanticJudge"
+      ],
+      "module": "PrefixMgwMeanCandidateRoot",
+      "path": "sources/PrefixMgwMeanCandidateRoot.lean",
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    }
+  ],
+  "new_mean_exports": 3,
+  "other_inherited_family_counts": {
+    "dnf": 13,
+    "generic_join_log": 8
+  },
+  "schema": "pid-rs/mean-source-ownership-v1"
+}

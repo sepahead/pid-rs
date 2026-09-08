@@ -1,0 +1,8 @@
+{
+  "closed_utc": "2026-09-08T07:41:05.438469+00:00",
+  "status": "complete accepted scoped replay; no additional attempts",
+  "original_deadline": "2026-09-08T09:17:49.720256+00:00",
+  "acceptance_sha256": "5746ec542928722ca6a712036b9b313054aca0a294c1c840789c474128c7c7ff",
+  "outer_exec_session": 10602,
+  "outer_observed_exitcode": 0
+}

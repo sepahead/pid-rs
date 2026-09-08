@@ -1,0 +1,27 @@
+{
+  "completed_utc": "2026-09-08T08:57:00.553965+00:00",
+  "status": "root_reviewed_two_identical_HTTPS_successor_productions",
+  "pdf_sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+  "bytes": 162538,
+  "page_count": 9,
+  "reviewed_page_renders": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "render_dpi": 95,
+  "all_nine_render_bytes_equal_reviewed_prototype": true,
+  "layout_text_equal_reviewed_prototype": true,
+  "uri_change": "Page1 verification record now uses exact absolute GitHub HTTPS main navigation; the two MGW source URLs remain unchanged.",
+  "fonts": "All fifteen subsets embedded with Unicode mapping; SourceSansPro and Latin Modern; no Helvetica/Type3.",
+  "visual_review": "Root actually viewed all nine new page images. Clear formulas and source/target assumptions, complete retained-rank diagram, unclipped tables and correct page breaks. Same95dpi page bytes and extracted layout text as the prior reviewed prototype. Prior exact formula/domain/reader/high-resolution/grayscale reviews remain scoped to their unchanged visual and source bytes.",
+  "producer_evidence": "Two fresh private build directories, actual Pandoc3.10.2 and LuaHBTeX1.18.0/TeXLive2024, two TeX passes each, strict final logs, stable recorded source/tool bytes; both actual PDFs identical.",
+  "remaining_obligations": "Public builder actual normal/optimized repeated runs and causal controls, manifest/profile wiring, publication-link/inventory checks, complete public packaging/navigation and exact hosted/main integration. This producer review is not public publication or a new theorem.",
+  "new_proofs": 0
+}

@@ -1,0 +1,470 @@
+{
+  "at_utc": "2026-09-08T07:02:54.263289+00:00",
+  "scope": "Preserve sealed input and proposed-file modes in the new source copy, so the actual private-copy root mutation remains causal. Bytes match SOURCE_FREEZE.",
+  "entries": [
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum/NatInt.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake/packages",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/lean-toolchain",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/lake-manifest.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/lakefile.toml",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean/.lake",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/preparation/PidPrefixMgwMean/PreparationControls.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/preparation/PidPrefixMgwMean/TypeJudge.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/SxDnf",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1/JoinLog",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/PidFiniteConvergence/SxEventBridge.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidFiniteConvergence/Deterministic.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixMgwMean/AliasTargets.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixMgwMean/SemanticJudge.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixMgwMean/Contract.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixMgwMean/Candidate.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixMgwMean/RawTargets.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixProbability/AliasTargets.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixProbability/SemanticJudge.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixProbability/Contract.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixProbability/Candidate.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixProbability/RawTargets.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge/AliasTargets.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge/SemanticJudge.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge/Contract.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge/Candidate.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge/RawTargets.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge/JudgeCore.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal/lean",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/current-policy/helper-controls-1/RESULT.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/helper-controls-0/RESULT.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/python-controls-1/RESULT.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/python-controls-0/RESULT.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-entrypoint-control-supplement-20260907T1610/entrypoint-supplement.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-v2-preflight-controls-root-20260908/control.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040/python-controls.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040/mini-driver.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040/semantic-variants.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support/ACCEPTED_DEPENDENCY_RECORDS.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support/mgw-policy.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support/policy.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support/EXPECTED_MEAN_RECORDS.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support/runtime.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support/prefix-policy.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/controls/Candidate.wrong-last.lean.txt",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/controls/Candidate.cosmetic.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/MgwBridgeDepsV1",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/PrefixMgwMeanCandidateRoot.lean",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources/PidFiniteConvergence",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixMgwMean",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/PidPrefixProbability",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/sources/PidMgwBridge",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/preparation/NEW_IMPORT_SOURCE_PINS.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/preparation/TARGET_ROSTER.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/preparation/PidPrefixMgwMean",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/preparation/CONTROL_ROSTER.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/audit/formal",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/scripts/check-lean-sxpid3-informative-invariance.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/fixture-root/scripts/check-lean-finite-convergence.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-entrypoint-control-supplement-20260907T1610",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-v2-preflight-controls-root-20260908",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/current-policy/python-controls.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/mgw-policy.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/helper-controls.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/policy.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/runtime.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/prefix-policy.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/helper-controls-1",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/current-policy/PYTHON_CONTROL_FREEZE.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/reuse/current-policy/helper-controls-0",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/current-policy/python-controls-1",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/current-policy/python-controls-0",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/historical",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse/current-policy",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/audit",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root/scripts",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/author-inputs/CONTROL_REUSE_INVENTORY.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/author-inputs/INTEGRATION_OBLIGATIONS.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-support",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/retained-rank.svg",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/SOURCE_CORRESPONDENCE.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-proposed.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/DEPENDENCIES.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/replay-proposed-v1.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/CONTROLS_ACCEPTANCE.template.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/README.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/SOURCE_GRAPH.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/controls",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/CONTROL_PLAN.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/sources",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package/REPLAY_DESIGN.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/REGISTRATION.template.json",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/EXPOSITION.md",
+      "mode": "0o444"
+    },
+    {
+      "path": "inputs/package/preparation",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/reuse",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/fixture-root",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/author-inputs",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs/package",
+      "mode": "0o555"
+    },
+    {
+      "path": "inputs",
+      "mode": "0o555"
+    },
+    {
+      "path": "proposed/adapter-controls.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "proposed/supervisor-child.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "proposed/control-child.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "proposed/supervisor-controls.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "proposed/stage-supervisor.py",
+      "mode": "0o444"
+    },
+    {
+      "path": "proposed",
+      "mode": "0o555"
+    }
+  ]
+}

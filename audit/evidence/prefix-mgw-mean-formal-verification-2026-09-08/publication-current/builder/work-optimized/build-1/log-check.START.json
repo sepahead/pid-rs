@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/bin/bash",
+    "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root/scripts/check-formal-pdf-log.sh",
+    "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1/prefix-mgw-mean.log"
+  ],
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+  "started_utc": "2026-09-08T08:59:11.041079+00:00"
+}

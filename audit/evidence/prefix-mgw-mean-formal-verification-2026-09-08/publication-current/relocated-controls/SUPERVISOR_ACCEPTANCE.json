@@ -1,0 +1,9 @@
+{
+  "completed_utc": "2026-09-08T10:13:25.262003+00:00",
+  "within_original_deadline": true,
+  "status": "accepted_actual_relocated_supervisor_controls",
+  "cases": 12,
+  "new_mean_theorems": 0,
+  "review_sha256": "43387bca13f02c3c2412264ad5e25a842b5793aaa82e9431ada63f12eda1aeb7",
+  "scope": "Actual bounded inert Python processes exercise unchanged supervisor and Runtime; no hard-real-time, complete OS monitoring, Lean or proof claim."
+}

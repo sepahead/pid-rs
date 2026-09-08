@@ -1,0 +1,9 @@
+{
+  "at_utc": "2026-09-08T06:59:01.263624+00:00",
+  "source_manifest_sha256": "cf3a020395d9daee3409858bfc1443a5b348f99350e5a04df5a5490de972515b",
+  "all_packet_members_root_rehashed": 123,
+  "full_source_read": true,
+  "independent_source_critique": "running, results withheld pending sealed source critique",
+  "maximum_harness_invocations": 1,
+  "proof_credit": 0
+}

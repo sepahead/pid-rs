@@ -1,0 +1,6 @@
+{
+  "started_utc": "2026-09-08T07:30:20.909948+00:00",
+  "scope": "Typesetting successor: Pandoc unnumbered-table counter and line-breaking code identifiers; headings shifted to primary document level. Mathematics unchanged.",
+  "prior_failed_attempt": "attempt-01",
+  "max_lualatex_passes": 2
+}

@@ -1,0 +1,6 @@
+{
+  "started_utc": "2026-09-08T07:28:13.124773+00:00",
+  "scope": "First actual private PDF prototype build; no mathematical source change",
+  "max_lualatex_passes": 2,
+  "max_seconds_per_process": 300
+}

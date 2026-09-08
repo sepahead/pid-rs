@@ -1,0 +1,9 @@
+{
+  "candidate_sha256": "1672caa008c2022943cbc38411786d91a150b5ac435bb8f7cb1bc659b903b7c2",
+  "kind": "development",
+  "mode": 0,
+  "output": "attempts/007-development-0",
+  "prospective_compiler_kernel_children": 1,
+  "registered_utc": "2026-09-08T03:39:13.657668+00:00",
+  "slot_kind": "development"
+}

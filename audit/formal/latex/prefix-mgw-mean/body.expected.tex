@@ -1,0 +1,351 @@
+This note explains the finite-row expectation bridge for the categorical shared-exclusions PID of Makkeh, Gutknecht and Wibral (MGW). The three exact targets were accepted locally on 8 September 2026 after the complete semantic and fresh-kernel matrix. The portable replay was also accepted locally after four complete proof replays and the required rejection of an altered final theorem. Hosted replay and mainline publication remain separate. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md}{verification record} separates those statuses.
+
+The practical question is precise: can a statistic that observes complete categorical rows, rather than a supplied probability table, have an expectation that approaches a specified MGW atom? The three accepted theorems answer that question for a particular prefix statistic. They do not yet give a usable sample-size rule. A short prefix can have the wrong sign even when the true atom is zero or negative.
+
+MGW defines the information functional. The prefix experiment and its expectation bridge are project constructions. No claim of scientific priority or superiority follows from their presence in this repository. The defining source is Makkeh, Gutknecht and Wibral, \emph{Introducing a differentiable measure of pointwise shared information}, \href{https://arxiv.org/abs/2002.03356v5}{arXiv:2002.03356v5}, \href{https://doi.org/10.1103/PhysRevE.103.032149}{Physical Review E 103, 032149}. This note uses natural logarithms and nats; the paper also presents formulas in bits.
+
+\PidMeanSection{1. Data, law and information question}\label{data-law-and-information-question}
+
+Let \(I\) be a finite, nonempty set of source indices. Source \(i\) has a finite alphabet \(\mathcal X_i\), and the target has a finite alphabet \(\mathcal T\). A complete row is
+
+\[
+z=((s_i)_{i\in I},t)\in\mathcal K
+   =\left(\prod_{i\in I}\mathcal X_i\right)\times\mathcal T.
+\]
+
+Let \(p:\mathcal K\to[0,1]\) satisfy \(\sum_zp(z)=1\). Distinct rows in the experiment are independent draws from this same law. Sources and target within one row may have any dependence permitted by \(p\). No Gaussian prior, density, distance metric or independence between sensors is assumed.
+
+For example, a row can contain fixed categorical outputs from an acoustic sensor and a thermal sensor, together with a labeled environmental event. Each source is the entire declared sensor output. A source can have many internal features. Grouping those features into sources is part of the question; changing the grouping changes the PID lattice.
+
+If continuous observations are binned, the theorem concerns the resulting categorical variables. The bin edges and any learned preprocessing must be fixed before the evaluation experiment to justify the stated fixed-law interpretation. The theorem does not identify this binned PID with Ehrlich's continuous shared-exclusions functional. An embedding into hyperbolic space also supplies none of the required statistical assumptions by itself.
+
+\PidMeanSection{2. A node is a collection of alternatives}\label{a-node-is-a-collection-of-alternatives}
+
+A PID node \(\alpha\) is a nonempty antichain of nonempty subsets of \(I\). Here \emph{antichain} means that no distinct members contain one another. At anchor row \(z\), its source event is
+
+\[
+E_\alpha(z)=
+\bigcup_{A\in\alpha}
+\{x\in\mathcal K:x_i=z_i\text{ for every }i\in A\}.
+\]
+
+There is an AND within each source collection and an OR between collections. For two sources, \(\{\{1\},\{2\}\}\) means that either source matches the anchor. The node \(\{\{1,2\}\}\) requires both to match. Their events differ even though they use the same two sensors.
+
+The redundancy order is
+
+\[
+\alpha\preceq\beta
+\quad\Longleftrightarrow\quad
+\text{for every }B\in\beta\text{ there is }A\in\alpha\text{ with }A\subseteq B.
+\]
+
+For a function \(f\) on the nodes, define its lower cumulative sum by
+
+\[
+(\mathcal Zf)(\beta)=\sum_{\alpha\preceq\beta}f(\alpha).
+\]
+
+The full finite node set is used in this sum. Restricting it to a few selected nodes generally changes the inverse problem.
+
+Fix a supported anchor, meaning \(p(z)>0\), and write
+
+\[
+a_\beta=P(E_\beta(z)),\qquad
+v=P(T=t_z),\qquad
+q_\beta=P(E_\beta(z),T=t_z).
+\]
+
+The anchor belongs to these events. Consequently \(0<a_\beta\le1\) and \(0<q_\beta\le v\le1\). These facts justify each logarithm and division below.
+
+The MGW informative and misinformative atom functions, denoted by \(\pi_z^+\) and \(\pi_z^-\), are the unique functions whose lower cumulatives satisfy
+
+\[
+\mathcal Z\pi_z^+(\beta)=-\log a_\beta,
+\qquad
+\mathcal Z\pi_z^-(\beta)=\log(v/q_\beta).
+\]
+
+Their signed difference is the local atom \(\pi_z=\pi_z^+-\pi_z^-\). The population atom is the complete joint-law average
+
+\[
+\Pi(\alpha)=\sum_{z:p(z)>0}p(z)\pi_z(\alpha).
+\]
+
+In particular, the local shared information at node \(\beta\) is \(\log(q_\beta/(v a_\beta))\). It is a cumulative quantity, not generally an individual atom. Negative signed atoms are permitted. None is clamped to zero.
+
+\PidMeanSection{3. What the prefix statistic observes}\label{what-the-prefix-statistic-observes}
+
+For an anchor \(z\) and a fresh row \(x\), define its mismatch set
+
+\[
+M_z(x)=\{i\in I:x_i\ne z_i\}.
+\]
+
+Replace a nonempty mismatch set by the node of its singleton members. Join two nodes by taking all unions of one member from each node, then keeping only inclusion-minimal unions. This operation is the least upper bound for \(\preceq\).
+
+For a nonempty row list \(x_1,\ldots,x_j\) whose mismatch sets are all nonempty, let \(G_z(x_1,\ldots,x_j)\) be the repeated join of its singleton mismatch families. For such lists, define the prefix event
+
+\[
+F_{z,\alpha}(x_1,\ldots,x_j)
+\quad\Longleftrightarrow\quad
+G_z(x_1,\ldots,x_j)=\alpha.
+\]
+
+Set this event to false for an empty list or any list containing an empty mismatch set. Thus a complete source match makes the event false without requiring a join of invalid nodes.
+
+The positive increment at raw time \(j\ge1\) is
+
+\[
+A_j^{z,\alpha}(x_1,\ldots,x_j)
+=\frac{\mathbf1\{F_{z,\alpha}(x_1,\ldots,x_j)\}}{j}.
+\]
+
+The negative increment uses only rows whose target matches the anchor target. Let \(R_j\) be that retained list, in its original order, and \(N_j=|R_j|\). Then
+
+\[
+B_j^{z,\alpha}(x_1,\ldots,x_j)=
+\begin{cases}
+\mathbf1\{F_{z,\alpha}(R_j)\}/N_j,&t_{x_j}=t_z,\\
+0,&t_{x_j}\ne t_z.
+\end{cases}
+\]
+
+Both increments are nonnegative. The first case has \(N_j\ge1\), because the current row is retained. The denominator is retained rank, not raw elapsed time. The current-target condition also matters: a target mismatch must not count an unchanged retained prefix again.
+
+A block of horizon \(h\) consists of one fresh anchor \(Z_0\) and \(h\) fresh draws \(Z_1,\ldots,Z_h\). All \(h+1\) rows are iid from \(p\). Its signed statistic is
+
+\[
+Y_h(\alpha)=\sum_{j=1}^{h}
+\left(A_j^{Z_0,\alpha}(Z_1,\ldots,Z_j)
+-B_j^{Z_0,\alpha}(Z_1,\ldots,Z_j)\right).
+\]
+
+At \(h=0\), this is the empty sum, hence zero. The previously checked finite-probability family gives the pathwise bound \(-H_h\le Y_h\le H_h\), where \(H_h=\sum_{j=1}^h1/j\). Its block-independence result concerns disjoint iid blocks in the specified product experiment. It does not cover overlapping windows in a time series.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={A three-draw block showing raw time, target filtering and retained rank}]{retained-rank.pdf}}
+\caption{A three-draw block showing raw time, target filtering and retained rank}
+\end{figure}
+
+The diagram follows one possible block for one binary source. Its block value is \(1/3\). It illustrates the statistic's definition; it is not the expected value over random blocks.
+
+\PidMeanSection{4. The finite coefficient identity}\label{the-finite-coefficient-identity}
+
+This step allows arbitrary signed real weights \(r(x)\); normalization and positivity are not required. Define
+
+\[
+c_j^z(\alpha)=\sum_{(x_1,\ldots,x_j)\in\mathcal K^j}
+\left(\prod_{\ell=1}^j r(x_\ell)\right)
+\mathbf1\{F_{z,\alpha}(x_1,\ldots,x_j)\},\qquad j\ge1.
+\]
+
+The generator weight at node \(\alpha\) is the total \(r\)-weight of rows whose nonempty singleton mismatch family equals \(\alpha\). Call this function \(w_r^z\). For node functions \(f,g\), their join convolution is
+
+\[
+(f*g)(\gamma)=\sum_{\beta,\delta:\,\beta\vee\delta=\gamma}f(\beta)g(\delta),
+\]
+
+where the sum runs over all node pairs whose join equals \(\gamma\). Then
+
+\[
+c_j^z=\underbrace{w_r^z*\cdots*w_r^z}_{j\text{ factors}}.
+\]
+
+The formal \texttt{joinPower\ w\ n} has \(n+1\) factors, so the exact statement uses \texttt{wordCoefficient\ ...\ (n+1)}. Removing that shift changes the theorem.
+
+To prove the identity, first sum the coefficient over all nodes below \(\beta\). A valid repeated join lies below \(\beta\) exactly when each row is outside \(E_\beta(z)\). Finite distributivity therefore gives
+
+\[
+\mathcal Zc_j^z(\beta)
+=\left(\sum_{x\notin E_\beta(z)}r(x)\right)^j
+=\bigl(\mathcal Zw_r^z(\beta)\bigr)^j.
+\]
+
+The cumulative of join convolution is the product of the cumulatives, so the repeated convolution has the same expression. Lower cumulative sums determine a function uniquely on a finite partial order. This proves equality at each node, including for signed \(r\).
+
+\PidMeanSection{5. Expectations under the actual row law}\label{expectations-under-the-actual-row-law}
+
+The formal row law is the finite product of the categorical measure \(\sum_xp(x)\delta_x\). Thus a word \((x_1,\ldots,x_j)\) has mass \(\prod_\ell p(x_\ell)\). Every real-valued function on this finite space is integrable. These facts are conclusions of the preceding finite-probability proofs, not assumptions about an integral supplied to this theorem.
+
+For every anchor \(z\), define the finite-row expectations
+
+\[
+u_j^z(\alpha)=E[A_j^{z,\alpha}],\qquad
+d_j^z(\alpha)=E[B_j^{z,\alpha}].
+\]
+
+At a supported anchor, the positive formula and the coefficient identity give
+
+\[
+\mathcal Zu_j^z(\beta)=\frac{(1-a_\beta)^j}{j}.
+\]
+
+For the negative formula, the current row must match the target. If exactly \(k\) of the previous \(j-1\) rows also match, there are \(k+1\) retained rows. The exact cumulative expectation is
+
+\[
+\mathcal Zd_j^z(\beta)=
+\sum_{k=0}^{j-1}\binom{j-1}{k}
+v^{k+1}(1-v)^{j-1-k}
+\frac{(1-q_\beta/v)^{k+1}}{k+1}.
+\]
+
+Here \(1-q_\beta/v\) is the conditional probability of source-event exclusion given the anchor target. The retained-rank denominator stays inside the sum.
+
+The identity
+
+\[
+\frac{\binom{j-1}{k}}{k+1}=\frac{\binom{j}{k+1}}{j}
+\]
+
+and \(v^{k+1}(1-q_\beta/v)^{k+1}=(v-q_\beta)^{k+1}\) reduce the sum to a binomial expansion with its zero-index term removed:
+
+\[
+\mathcal Zd_j^z(\beta)
+=\frac{((v-q_\beta)+(1-v))^j-(1-v)^j}{j}
+=\frac{(1-q_\beta)^j-(1-v)^j}{j}.
+\]
+
+This calculation divides by \(v\) and positive integers only. It does not divide by \(1-v\) or \(v-q_\beta\). It therefore includes constant targets \(v=1\) and the boundary \(q_\beta=v\).
+
+Finally, finite product marginalization removes unused rows from each prefix. Splitting off the independent anchor gives the exact finite-horizon identity
+
+\[
+E[Y_h(\alpha)]
+=\sum_zp(z)\sum_{j=1}^h\bigl(u_j^z(\alpha)-d_j^z(\alpha)\bigr).
+\]
+
+At zero-mass anchors the entire weighted contribution is zero. Their values are not used to justify conditional laws or logarithms.
+
+\PidMeanSection{6. Why the mean converges to the named atom}\label{why-the-mean-converges-to-the-named-atom}
+
+For \(0<x\le1\), the natural-logarithm series is
+
+\[
+\sum_{j=1}^{\infty}\frac{(1-x)^j}{j}=-\log x.
+\]
+
+The formal proof uses the pinned Mathlib theorem \texttt{Real.hasSum\_pow\_div\_log\_of\_abs\_lt\_one} with \(|1-x|<1\). The endpoint \(x=1\) gives a zero series. This is a classical logarithm identity, not a project novelty.
+
+Applying it to the two cumulative expectations gives
+
+\[
+\sum_{j=1}^{\infty}\mathcal Zu_j^z(\beta)=-\log a_\beta,
+\qquad
+\sum_{j=1}^{\infty}\mathcal Zd_j^z(\beta)=\log(v/q_\beta).
+\]
+
+These are exactly the lower cumulatives that define the two MGW inverses. To pass from cumulative series to atom series, use induction on the finite partial order. At node \(\beta\), split the cumulative into its own coordinate and the finitely many strictly lower coordinates. The induction hypothesis supplies a \texttt{HasSum} result for each lower coordinate. Subtract their finite sum from the cumulative \texttt{HasSum} result. The remaining series has the required coordinate total.
+
+This step proves the series statements themselves. It does not assume coordinate summability or exchange an unjustified signed infinite double sum. It yields
+
+\[
+\sum_{j=1}^{\infty}u_j^z(\alpha)=\pi_z^+(\alpha),
+\qquad
+\sum_{j=1}^{\infty}d_j^z(\alpha)=\pi_z^-(\alpha).
+\]
+
+Choose the unique inverses on supported anchors and extend both by zero elsewhere. Taking natural partial sums and then the finite anchor average proves
+
+\[
+\lim_{h\to\infty} E[Y_h(\alpha)]=\Pi(\alpha).
+\]
+
+The expectation at each \(h\) uses its specified finite product space. This conclusion is a limit of expectations. It is not an almost-sure statement on a common infinite sample space, and it does not by itself prove consistency for a chosen sequence of empirical block averages.
+
+\clearpage
+\PidMeanSection{7. A sensor with no target information can give a positive short-prefix mean}\label{a-sensor-with-no-target-information-can-give-a-positive-short-prefix-mean}
+
+Let a binary sensor output \(S\) and a binary target \(T\) be independent and fair. The four complete rows \((0,0),(0,1),(1,0),(1,1)\) each have probability \(1/4\). There is one PID node. Fix anchor \((0,0)\). The one-draw contributions are:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrr@{}}
+\toprule\noalign{}
+Draw & Positive increment & Negative increment & Signed increment \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\((0,0)\) & 0 & 0 & 0 \\
+\((0,1)\) & 0 & 0 & 0 \\
+\((1,0)\) & 1 & 1 & 0 \\
+\((1,1)\) & 1 & 0 & 1 \\
+\end{longtable}
+}
+
+With one source, the only local MGW atom is \(\log[p(s,t)/(p_S(s)p_T(t))]\) at a supported row, where \(p_S\) and \(p_T\) are the marginal laws. Its joint-law average is mutual information. Every other anchor has the same table after relabeling. Therefore \(E[Y_1]=1/4\), while the true MGW atom is \(I(S;T)=0\).
+
+Here \(a=v=1/2\) and \(q=1/4\). At raw time two, the negative cumulative expectation is
+
+\[
+d_2=\frac{(3/4)^2-(1/2)^2}{2}=\frac5{32}.
+\]
+
+One contribution is \((1/2)(1/4)/1=1/8\): the first row misses the target, and the second matches the target but mismatches the source. The other is \((1/4)^2/2=1/32\): both retained rows mismatch the source. Replacing retained rank by raw time gives \(3/32\), which is incorrect. Since \(u_2=1/8\), the horizon-two mean is \(1/4+1/8-5/32=7/32\).
+
+These exact symbolic examples explain two required safeguards: preserve retained rank, and do not label a finite horizon as unbiased. They are exposition calculations; a separate executable fixture or specialized formal theorem must be named before claiming that either example itself has been executed or formally specialized.
+
+\clearpage
+\PidMeanSection{8. Edge cases and permitted interpretations}\label{edge-cases-and-permitted-interpretations}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Case
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Required interpretation
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Horizon zero & The statistic and its mean are zero. This does not imply that the population atom is zero. \\
+Zero-mass categories & Allowed. Off-support inverse values are set to zero; no conditioning at a zero-mass anchor is used. \\
+Empty complete-row carrier & Incompatible with a normalized finite law. No additional inhabitance assumption is silently imposed. The source-index set itself is explicitly nonempty. \\
+Constant target & Supported anchors have \(v=1\). Each draw in the support is retained. The two prefix increments agree and cancel. \\
+Source-event mass one & Its positive cumulative series is zero. This does not justify discarding unrelated node coordinates. \\
+Restricted mass equals target mass & The negative cumulative series is zero, including its boundary terms. \\
+Very rare supported anchors & Logarithms remain defined, but convergence can be slow. The theorem supplies no uniform rate over all finite laws. \\
+Negative signed atom & Allowed by MGW. Neither components nor MI terms may be clamped to force a preferred sign. \\
+Dependent sensor channels within a row & Allowed by the joint law. Independence is required between the complete rows in this experiment. \\
+Missing channels, quantization or changing preprocessing & Define the complete-row alphabet and resulting estimand explicitly. The theorem does not choose a missing-data or preprocessing model. \\
+Time dependence or overlapping blocks & Outside the stated iid experiment. A separate probability argument is required. \\
+Resampling observed rows & The sampling law is then the empirical PMF. Convergence under that law does not establish population calibration. \\
+High-dimensional or hyperbolic representation & The categorical theorem uses equality events. It proves no geometric estimator theorem and does not remove rare-event or alphabet-size costs. \\
+\end{longtable}
+}
+
+\PidMeanSection{9. What this adds, and what must come next}\label{what-this-adds-and-what-must-come-next}
+
+The bridge supplies a missing connection between a concrete row experiment and a named population PID functional. Finite reconstruction algebra alone cannot establish that connection. Here the finite law, integrals, target-conditioned retained rank, genuine series convergence, inverse identification and joint-law averaging all have explicit roles.
+
+For a sensor study, this is a foundation for an estimator design, not a recommendation to deploy the prefix statistic. Before use, the implementation needs a refinement argument, numerical and resource contracts, a bias bound, a sampling-error bound and tests against appropriate alternatives. Direct held-out task loss, MI/CMI, fixed-model and retrained ablation, failure utility and coverage can answer useful sensor questions with fewer assumptions. MGW is relevant when its particular redundant/unique/synergistic allocation answers a question those summaries leave open.
+
+The next proposed mathematical route bounds the omitted positive and negative tails through the overlap probability \(q_\alpha(z)\). That route remains a separate theorem obligation. Likewise, a Boolean truth-table representation of node joins remains a separate computational refinement obligation. Neither follows merely because the expectation bridge passes.
+
+The formal correspondence is:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Formal target
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Conclusion explained here
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{word\_coefficient\_join\_power} & Section 4: signed finite-word coefficient equals the exact repeated join convolution, with degree \(n+1\). \\
+\texttt{finite\_block\_expectation} & Section 5: actual integrability, fresh-anchor average and exact retained-rank finite expectation, including \(h=0\). \\
+\texttt{prefix\_expectations\_to\_mgw\_mean} & Section 6: supported unique inverses, off-support zero extension, component \texttt{HasSum} results and the limit of actual finite-block expectations. \\
+\end{longtable}
+}
+
+The defining scientific source, the repository formal definitions, the formal proof, an executable algorithm and practical sensor value are separate objects. The final publication must link the accepted evidence for each claimed connection and leave the remaining connections explicitly open.

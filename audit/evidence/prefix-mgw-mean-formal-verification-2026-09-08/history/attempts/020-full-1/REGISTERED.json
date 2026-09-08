@@ -1,0 +1,9 @@
+{
+  "candidate_sha256": "4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409",
+  "kind": "full",
+  "mode": 1,
+  "output": "attempts/020-full-1",
+  "prospective_compiler_kernel_children": 25,
+  "registered_utc": "2026-09-08T04:47:02.101735+00:00",
+  "slot_kind": "full"
+}

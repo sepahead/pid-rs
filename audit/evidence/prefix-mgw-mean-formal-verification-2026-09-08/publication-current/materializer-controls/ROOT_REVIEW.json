@@ -1,0 +1,1370 @@
+{
+  "observed_utc": "2026-09-08T10:00:13.968866+00:00",
+  "source_members_rehashed": 29,
+  "executed_source_copies_checked": 192,
+  "totals": [
+    {
+      "mode": 0,
+      "cases": 96,
+      "result_sha256": "26fdde618c9015cbb75428d0bb56ad0a2e01b36a4450ca98bd52429c479ffe45",
+      "completed_utc": "2026-09-08T09:58:09.495381+00:00"
+    },
+    {
+      "mode": 1,
+      "cases": 96,
+      "result_sha256": "5e30b37a60974258e619031b5521cb11c4426fac2cfcc992c3d0ac327e394161",
+      "completed_utc": "2026-09-08T09:58:16.353244+00:00"
+    }
+  ],
+  "exact_positive_declared_files_checked": 79,
+  "exact_positive_path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-0/000-0-valid-exact/destination",
+  "issues": [],
+  "observed_surviving_case_groups": [],
+  "rows": [
+    {
+      "outer_mode": 0,
+      "name": "valid-exact",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-umask-077",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-repacked",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-reversed-order",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "manifest-byte-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "manifest-invalid-json",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "manifest-duplicate-key",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "archive-byte-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "archive-truncated",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "archive-unreadable-repinned",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-INPUT_PINS.json",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/adapter-controls.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/control-child.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/stage-supervisor.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/supervisor-child.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/supervisor-controls.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-length-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-byte-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-length-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-file-mode",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-directory-mode",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-extra",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-missing-file",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-missing-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-missing-root",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-empty-inventory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-duplicate",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-absolute",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-parent-traversal",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-dot-prefix",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-double-slash",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-wrong-root",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-symbolic-link",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-hard-link",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-fifo",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-file-as-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-directory-as-file",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-existing-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-existing-file",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-symbolic-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-dangling-link",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-symbolic-parent",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-noncanonical-parent",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-isolation",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-no-site",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-no-bytecode",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-destination",
+      "child_mode": 0,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "unknown-option",
+      "child_mode": 0,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-exact",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-umask-077",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-repacked",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "valid-reversed-order",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "manifest-byte-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "manifest-invalid-json",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "manifest-duplicate-key",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "archive-byte-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "archive-truncated",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "archive-unreadable-repinned",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-INPUT_PINS.json",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/adapter-controls.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/control-child.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/stage-supervisor.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/supervisor-child.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-proposed/supervisor-controls.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "source-length-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-byte-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-length-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-file-mode",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-directory-mode",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-extra",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-missing-file",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-missing-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-missing-root",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-empty-inventory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-duplicate",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-absolute",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-parent-traversal",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-dot-prefix",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-double-slash",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-wrong-root",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-symbolic-link",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-hard-link",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-fifo",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-file-as-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "member-directory-as-file",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-existing-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-existing-file",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-symbolic-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-dangling-link",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-symbolic-parent",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "destination-noncanonical-parent",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-isolation",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-no-site",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-no-bytecode",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "missing-destination",
+      "child_mode": 1,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "name": "unknown-option",
+      "child_mode": 1,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-exact",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-umask-077",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-repacked",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-reversed-order",
+      "child_mode": 0,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "manifest-byte-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "manifest-invalid-json",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "manifest-duplicate-key",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "archive-byte-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "archive-truncated",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "archive-unreadable-repinned",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-INPUT_PINS.json",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/adapter-controls.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/control-child.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/stage-supervisor.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/supervisor-child.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/supervisor-controls.py",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-length-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-byte-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-length-change",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-file-mode",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-directory-mode",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-extra",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-missing-file",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-missing-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-missing-root",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-empty-inventory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-duplicate",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-absolute",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-parent-traversal",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-dot-prefix",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-double-slash",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-wrong-root",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-symbolic-link",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-hard-link",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-fifo",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-file-as-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-directory-as-file",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-existing-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-existing-file",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-symbolic-directory",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-dangling-link",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-symbolic-parent",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-noncanonical-parent",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-isolation",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-no-site",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-no-bytecode",
+      "child_mode": 0,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-destination",
+      "child_mode": 0,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "unknown-option",
+      "child_mode": 0,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-exact",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-umask-077",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-repacked",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "valid-reversed-order",
+      "child_mode": 1,
+      "actual_returncode": 0,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "manifest-byte-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "manifest-invalid-json",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "manifest-duplicate-key",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "archive-byte-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "archive-truncated",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "archive-unreadable-repinned",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-INPUT_PINS.json",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/adapter-controls.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/control-child.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/stage-supervisor.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/supervisor-child.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-proposed/supervisor-controls.py",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "source-length-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-byte-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-length-change",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-file-mode",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-directory-mode",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-extra",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-missing-file",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-missing-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-missing-root",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-empty-inventory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-duplicate",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-absolute",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-parent-traversal",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-dot-prefix",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-double-slash",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-wrong-root",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-symbolic-link",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-hard-link",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-fifo",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-file-as-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "member-directory-as-file",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-existing-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-existing-file",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-symbolic-directory",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-dangling-link",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-symbolic-parent",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "destination-noncanonical-parent",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-isolation",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-no-site",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-no-bytecode",
+      "child_mode": 1,
+      "actual_returncode": 1,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "missing-destination",
+      "child_mode": 1,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "name": "unknown-option",
+      "child_mode": 1,
+      "actual_returncode": 2,
+      "status": "matched_expected_entrypoint_behavior"
+    }
+  ],
+  "scope": "Actual setup/control outcomes and exact materialized byte/mode relation. No downstream control or theorem credit."
+}

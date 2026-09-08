@@ -1,0 +1,47 @@
+{
+  "source_review_sha256": "3e483284da1a081f2a74e700f98ce173df4dc35c77e325010fa059a7387ee135",
+  "changes": [
+    {
+      "before": "The separate portable replay is in progress and remains unadopted.",
+      "after": "The portable replay was also accepted locally after four complete proof replays and the required rejection of an altered final theorem. Hosted replay and mainline publication remain separate."
+    },
+    {
+      "before": "For a nonempty row list $x_1,\\ldots,x_j$, let $G_z(x_1,\\ldots,x_j)$ be the repeated join of its singleton mismatch families. Define the prefix event",
+      "after": "For a nonempty row list $x_1,\\ldots,x_j$ whose mismatch sets are all nonempty, let $G_z(x_1,\\ldots,x_j)$ be the repeated join of its singleton mismatch families. For such lists, define the prefix event"
+    },
+    {
+      "before": "\\bigl(M_z(x_\\ell)\\ne\\varnothing\\text{ for all }\\ell\\bigr)\n\\ \\text{and}\\ G_z(x_1,\\ldots,x_j)=\\alpha.",
+      "after": "G_z(x_1,\\ldots,x_j)=\\alpha."
+    },
+    {
+      "before": "For an empty list this event is false. A complete source match also makes it false. The explicit validity condition prevents an empty family from being treated as a valid node.",
+      "after": "Set this event to false for an empty list or any list containing an empty mismatch set. Thus a complete source match makes the event false without requiring a join of invalid nodes."
+    },
+    {
+      "before": "The first case has $N_j\\ge1$, because the current row is retained.",
+      "after": "Both increments are nonnegative. The first case has $N_j\\ge1$, because the current row is retained."
+    },
+    {
+      "before": "For supported $z$, write",
+      "after": "For every anchor $z$, define the finite-row expectations"
+    },
+    {
+      "before": "The positive formula and the coefficient identity give",
+      "after": "At a supported anchor, the positive formula and the coefficient identity give"
+    },
+    {
+      "before": "The implementation uses the pinned Mathlib theorem",
+      "after": "The formal proof uses the pinned Mathlib theorem"
+    },
+    {
+      "before": "Every other anchor has the same calculation after relabeling. Therefore $E[Y_1]=1/4$, while the true MGW atom is $I(S;T)=0$.",
+      "after": "With one source, the only local MGW atom is $\\log[p(s,t)/(p_S(s)p_T(t))]$ at a supported row, where $p_S$ and $p_T$ are the marginal laws. Its joint-law average is mutual information. Every other anchor has the same table after relabeling. Therefore $E[Y_1]=1/4$, while the true MGW atom is $I(S;T)=0$."
+    },
+    {
+      "before": "Call this function $w_r^z$. If node functions are convolved by the join operation, then",
+      "after": "Call this function $w_r^z$. For node functions $f,g$, their join convolution is\n\n$$\n(f*g)(\\gamma)=\\sum_{\\beta,\\delta:\\,\\beta\\vee\\delta=\\gamma}f(\\beta)g(\\delta),\n$$\n\nwhere the sum runs over all node pairs whose join equals $\\gamma$. Then"
+    }
+  ],
+  "result_sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e",
+  "scope": "Totalize exposition domains consistently with the already accepted formal definitions; add explicit reader definitions and report actual portable acceptance. No formal target or proof edit."
+}

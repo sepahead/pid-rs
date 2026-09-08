@@ -1,0 +1,23 @@
+{
+  "accepted_utc": "2026-09-08T07:17:49.720256+00:00",
+  "adapter_sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a",
+  "evidence": {
+    "actual_adapter_controls": {
+      "path": ".local/sx-mean-adapter-copy-root-mode-controls-root-20260908/results/RESULT.json",
+      "sha256": "feaa42d048a4bd83a84df2ffc4ccc7e1922b3df27618556ce608279b06cd9eb5"
+    },
+    "actual_supervisor_controls": {
+      "path": ".local/sx-mean-supervisor-controls-root-20260908/results/RESULT.json",
+      "sha256": "aec67e37443c6ae386566bde29e78033c4ebcff570a6b478f4073432f18d18ff"
+    }
+  },
+  "manifest_sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618",
+  "new_mean_theorems_proved": 0,
+  "owner": "root",
+  "review_manifest_sha256": "55a1c2a95e33d7e014b2a67961a0bf29910b2af9aa3edd3f388ae09abd6d8eb6",
+  "review_report_sha256": "b175bde1ef987bd8d776104dc08aeaa7e45f5d77baf004cb900abdc5c3bc7aa2",
+  "root_disposition": "Read exact unchanged adapter and supervisor, five control sources, original failure and one-line successor. Root rehashed all26548 adapter objects and210 supervisor files; now all69 independent-review members and entire portable manifest. Corrected 198 controls/218 instrumented entrypoint invocations and12 actual inert supervisor controls match. Independent-first report and original failures retained. Scope is a fresh cooperative single-owner POSIX replay, no hostile sandbox, atomic launch/deadline/process-census, source-to-dependency binary authenticity, or mathematical credit. Runtime late-hash gap remains documented.",
+  "root_result_review_sha256": "dd3623a16accfb284be64a4f3e3c9870186db71d8443acedc9e4e75e63818424",
+  "schema": "pid-rs/portable-mean-controls-acceptance-v1",
+  "status": "adopted_completed_portable_mean_controls"
+}

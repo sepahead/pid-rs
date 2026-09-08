@@ -1,0 +1,4100 @@
+{
+  "accepted_mgw_dependency_records": [
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.actual_join_lub",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.actual_join_lub_target.{u}",
+      "raw_target": "PidMgwBridgeRawTargets.actual_join_lub",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.actual_join_lub",
+      "universes": [
+        "u"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.mismatch_generator_and_exclusion",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.mismatch_generator_and_exclusion_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.mismatch_generator_and_exclusion",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.mismatch_generator_and_exclusion",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.generator_nonnegative_and_total",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.generator_nonnegative_and_total_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.generator_nonnegative_and_total",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.generator_nonnegative_and_total",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.generator_lower_cumulative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.generator_lower_cumulative_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.generator_lower_cumulative",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.generator_lower_cumulative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.target_conditioning_mass",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.target_conditioning_mass_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.target_conditioning_mass",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.target_conditioning_mass",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.supported_anchor_domains",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.supported_anchor_domains_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.supported_anchor_domains",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.supported_anchor_domains",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.conditional_generator_support",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.conditional_generator_support_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.conditional_generator_support",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.conditional_generator_support",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.informative_inverse_identification",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.informative_inverse_identification_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.informative_inverse_identification",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.informative_inverse_identification",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.misinformative_inverse_identification",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.misinformative_inverse_identification_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.misinformative_inverse_identification",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.misinformative_inverse_identification",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.component_nonnegative_strict_support",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.component_nonnegative_strict_support_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.component_nonnegative_strict_support",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.component_nonnegative_strict_support",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.signed_mgw_cumulative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.signed_mgw_cumulative_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.signed_mgw_cumulative",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.signed_mgw_cumulative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "accepted_prefix_dependency_records": [
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.finite_law_measure",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.finite_law_measure_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.finite_law_measure",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.finite_law_measure",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.finite_product_law",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.finite_product_law_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.finite_product_law",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.finite_product_law",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.positive_increment_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.positive_increment_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.positive_increment_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.positive_increment_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.negative_increment_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.negative_increment_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.negative_increment_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.negative_increment_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.block_range",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.block_range_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.block_range",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.block_range",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.block_product_independence",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.block_product_independence_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.block_product_independence",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.block_product_independence",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "artifacts": {
+    "00-compile-PidFiniteConvergence-Deterministic/command.json": {
+      "bytes": 1439,
+      "sha256": "55894e010738e2831f44c09adb44ed0bca4634b8904caa43d58b2a0c23799fa7"
+    },
+    "00-compile-PidFiniteConvergence-Deterministic/registered.json": {
+      "bytes": 3496,
+      "sha256": "ba4942cb3f1b7668ae88b22fa1186a7925fd8e1cc174ebe2e0150788bc333b24"
+    },
+    "00-compile-PidFiniteConvergence-Deterministic/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "00-compile-PidFiniteConvergence-Deterministic/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "01-compile-PidFiniteConvergence-SxEventBridge/command.json": {
+      "bytes": 1438,
+      "sha256": "e3dfd57adc813264ccb210da8f9231eef40f784eb6de003c2d8ff1a451912796"
+    },
+    "01-compile-PidFiniteConvergence-SxEventBridge/registered.json": {
+      "bytes": 3496,
+      "sha256": "ba0a2dd1e8f0ec5bd77da0a61ed005c04f757bbf7d245b64019930b7ca6eaa33"
+    },
+    "01-compile-PidFiniteConvergence-SxEventBridge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "01-compile-PidFiniteConvergence-SxEventBridge/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "02-compile-MgwBridgeDepsV1-SxDnf-Contract/command.json": {
+      "bytes": 1427,
+      "sha256": "bd489a614d131058ca521e75f7c1d385bed9af4248f4ffe1cfdceecbfe30e708"
+    },
+    "02-compile-MgwBridgeDepsV1-SxDnf-Contract/registered.json": {
+      "bytes": 3484,
+      "sha256": "e1377e4ef0ac512bddce87f5a5a6838e67d1e1fa30323cd4f64f99b919affa39"
+    },
+    "02-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "02-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "03-compile-MgwBridgeDepsV1-JoinLog-Contract/command.json": {
+      "bytes": 1433,
+      "sha256": "ad57c757e9cdaf0b356d2e2474b3831eacf08309d8cf2aaf8607bb99871251ab"
+    },
+    "03-compile-MgwBridgeDepsV1-JoinLog-Contract/registered.json": {
+      "bytes": 3490,
+      "sha256": "eff5075f625aa6699fe24c4b7c783233baacf18072827fe4c13730c16b423efa"
+    },
+    "03-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "03-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "04-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/command.json": {
+      "bytes": 1429,
+      "sha256": "b721b62dd8397412fec5f3cb0884b8741d0d5f5c568fb948e3d09060b7152578"
+    },
+    "04-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/registered.json": {
+      "bytes": 3487,
+      "sha256": "5f898c2e2f24988f6b6b3c767aab745dce0a3939fc8329bd8f5c7748a1d60588"
+    },
+    "04-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "04-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-Proofs/command.json": {
+      "bytes": 1421,
+      "sha256": "084f3c5ec9eef35f133d1469784fc7cf146df9e78d83f214879c98834220b5e7"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-Proofs/registered.json": {
+      "bytes": 3478,
+      "sha256": "e8811ebbfcda16b85a84dbf22e007d5b589899b3edb9ca1e912f77c70463cdf4"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-Proofs/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-Proofs/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "06-compile-MgwBridgeDepsV1-JoinLog-Proofs/command.json": {
+      "bytes": 1427,
+      "sha256": "d79a5692d85ab9326033b9c0ff488ee8595eac8d223d85bebc6596655d683520"
+    },
+    "06-compile-MgwBridgeDepsV1-JoinLog-Proofs/registered.json": {
+      "bytes": 3484,
+      "sha256": "f8677b3b474c622df14c8670563eb87a03e5232e52577369fb79098247b77777"
+    },
+    "06-compile-MgwBridgeDepsV1-JoinLog-Proofs/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "06-compile-MgwBridgeDepsV1-JoinLog-Proofs/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "07-compile-PidMgwBridge-Contract/command.json": {
+      "bytes": 1400,
+      "sha256": "7d8d760edc6f42a6c82098f8ae914ba05fe82df43b687d277ddf2d0ff30c541e"
+    },
+    "07-compile-PidMgwBridge-Contract/registered.json": {
+      "bytes": 3457,
+      "sha256": "01bbdd49f93fa5f66e67085cb9177854dca0a0d26328a877555a322524a232c7"
+    },
+    "07-compile-PidMgwBridge-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "07-compile-PidMgwBridge-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "08-compile-PidMgwBridge-RawTargets/command.json": {
+      "bytes": 1406,
+      "sha256": "0e5cec2b6648f9ef992127021ffde96f6799dc75ecbda97514611dfd55bca976"
+    },
+    "08-compile-PidMgwBridge-RawTargets/registered.json": {
+      "bytes": 3463,
+      "sha256": "5d823c15e07e8d18896bc8d8734ed9c3d43c59805226f9a64e9079a903b9418e"
+    },
+    "08-compile-PidMgwBridge-RawTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "08-compile-PidMgwBridge-RawTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "09-compile-PidMgwBridge-AliasTargets/command.json": {
+      "bytes": 1412,
+      "sha256": "2a098b5638d0edce9985b6ec179d2cda96db55421d7ae00516ff83f17595e9b9"
+    },
+    "09-compile-PidMgwBridge-AliasTargets/registered.json": {
+      "bytes": 3469,
+      "sha256": "86f975f27f2438e936f5b437d6df981f6d74fa71f09524ff1ee42e75fd10e42e"
+    },
+    "09-compile-PidMgwBridge-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "09-compile-PidMgwBridge-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "10-compile-PidMgwBridge-JudgeCore/command.json": {
+      "bytes": 1403,
+      "sha256": "65d05a9966c04312b9d963d8ad67f6d869e59d1b830ff1478641313c1b8d089f"
+    },
+    "10-compile-PidMgwBridge-JudgeCore/registered.json": {
+      "bytes": 3460,
+      "sha256": "a1e64c9f3a61349e77f7ffbb4a9475dca1c690004cf639217d6526c625739fc8"
+    },
+    "10-compile-PidMgwBridge-JudgeCore/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "10-compile-PidMgwBridge-JudgeCore/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "11-compile-PidMgwBridge-Candidate/command.json": {
+      "bytes": 1403,
+      "sha256": "d9ef0b543148b86cbba84b8ffc06a6d7e70aa7a798b398c4e98b408482a90069"
+    },
+    "11-compile-PidMgwBridge-Candidate/registered.json": {
+      "bytes": 3460,
+      "sha256": "6c47bf07c54df431fab1df36129f8878d03622c2ea9bd7ba9c0e8b93fbe85c4a"
+    },
+    "11-compile-PidMgwBridge-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "11-compile-PidMgwBridge-Candidate/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "12-compile-PidMgwBridge-SemanticJudge/command.json": {
+      "bytes": 1418,
+      "sha256": "0d3c714ea3eff3ce47c94dcc1b6f63edb89320090639aa2156bc21b377cfb7a4"
+    },
+    "12-compile-PidMgwBridge-SemanticJudge/registered.json": {
+      "bytes": 3472,
+      "sha256": "2d5b5b783ce958a3ed6392e5a02a3a6acd83fdd5b763852ef64b7f2a1de2eb73"
+    },
+    "12-compile-PidMgwBridge-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "12-compile-PidMgwBridge-SemanticJudge/stdout.log": {
+      "bytes": 4588,
+      "sha256": "3feda996f3c9d84eb2dd8b4f29f1ce46faa57687f80479942625104e9b06caa8"
+    },
+    "13-compile-PidPrefixProbability-Contract/command.json": {
+      "bytes": 1424,
+      "sha256": "8130c4562d622dbfe9e3b1df7500c2451b4ca1e219a24a28d7b8973fe2034706"
+    },
+    "13-compile-PidPrefixProbability-Contract/registered.json": {
+      "bytes": 3481,
+      "sha256": "7a18ed1ac7883c80af2fd31d367207dcab50388a3ad5fb04971ff2bac0fd6a87"
+    },
+    "13-compile-PidPrefixProbability-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "13-compile-PidPrefixProbability-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "14-compile-PidPrefixProbability-RawTargets/command.json": {
+      "bytes": 1430,
+      "sha256": "33dd6f5622ed2f6ce304cb106a67242861c48c5306b095bac1999569bf3eaa0e"
+    },
+    "14-compile-PidPrefixProbability-RawTargets/registered.json": {
+      "bytes": 3487,
+      "sha256": "a256f1f867ca63b3357cdc95ef1d5f8aa46bd9f851cd4feedacd5d020d761cc5"
+    },
+    "14-compile-PidPrefixProbability-RawTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "14-compile-PidPrefixProbability-RawTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "15-compile-PidPrefixProbability-AliasTargets/command.json": {
+      "bytes": 1435,
+      "sha256": "33bf1da34fcca00e3cd05a4f9b86cc53ddc514a9ba2d1616f1669845fa2f23e7"
+    },
+    "15-compile-PidPrefixProbability-AliasTargets/registered.json": {
+      "bytes": 3493,
+      "sha256": "df82b031d1361a8a4a93b251a756b881631d293b85a2d636064e144de13ebdac"
+    },
+    "15-compile-PidPrefixProbability-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "15-compile-PidPrefixProbability-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "16-compile-PidPrefixProbability-Candidate/command.json": {
+      "bytes": 1426,
+      "sha256": "b9dd66228bbc09645cb613f41bdecd684ae215a78c488a27a5568e7701062799"
+    },
+    "16-compile-PidPrefixProbability-Candidate/registered.json": {
+      "bytes": 3484,
+      "sha256": "8f222f117e85ec7fab04820fdc04231235e953942c9080285fc3202763f167b1"
+    },
+    "16-compile-PidPrefixProbability-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "16-compile-PidPrefixProbability-Candidate/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "17-compile-PidPrefixProbability-SemanticJudge/command.json": {
+      "bytes": 1441,
+      "sha256": "7071ca457ce9fe38e5a19423aacb9afe029664a4706d68d7226a6f7d88b52494"
+    },
+    "17-compile-PidPrefixProbability-SemanticJudge/registered.json": {
+      "bytes": 3496,
+      "sha256": "5f300c00a93a547db842f466773bf94316cdfc86b6bf0f797fd6f165ad3c8b02"
+    },
+    "17-compile-PidPrefixProbability-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "17-compile-PidPrefixProbability-SemanticJudge/stdout.log": {
+      "bytes": 2608,
+      "sha256": "3973534a927f9d5a913dbdd45485cc4455188c0c72665f0c48ea01a3ca8864ae"
+    },
+    "18-compile-PidPrefixMgwMean-Contract/command.json": {
+      "bytes": 1412,
+      "sha256": "b6685544ee6cda4dd5d548d76e895467578b22d2aa90251e63a42560f6b6e028"
+    },
+    "18-compile-PidPrefixMgwMean-Contract/registered.json": {
+      "bytes": 3469,
+      "sha256": "8d33de8437c549c94d5b5aa95ab24972af8070c6bfd1e71dfde67ac02e721a92"
+    },
+    "18-compile-PidPrefixMgwMean-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "18-compile-PidPrefixMgwMean-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "19-compile-PidPrefixMgwMean-RawTargets/command.json": {
+      "bytes": 1418,
+      "sha256": "7f6922f09f005b1ea3cef4c9a670e5c310d74b76b5ba40a706fa33df42c081cc"
+    },
+    "19-compile-PidPrefixMgwMean-RawTargets/registered.json": {
+      "bytes": 3475,
+      "sha256": "719c11dca609eae3169c74e6cf2174886522ea1cf9653df4380608b2c217f04b"
+    },
+    "19-compile-PidPrefixMgwMean-RawTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "19-compile-PidPrefixMgwMean-RawTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "20-compile-PidPrefixMgwMean-AliasTargets/command.json": {
+      "bytes": 1424,
+      "sha256": "4cf6baaae4d3262ff04ef75cc6ccef242b2d73b78572f0bc95757adef21e26d8"
+    },
+    "20-compile-PidPrefixMgwMean-AliasTargets/registered.json": {
+      "bytes": 3481,
+      "sha256": "7214a5489af9f9f9da7989183c49e7762170403e02e945d606dd7a5ec3ebdf81"
+    },
+    "20-compile-PidPrefixMgwMean-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "20-compile-PidPrefixMgwMean-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "21-compile-PidPrefixMgwMean-Candidate/command.json": {
+      "bytes": 1415,
+      "sha256": "5afd2bdd5f1cffda179a8279ac0c7f563d98f0848eaf88e51334f64efe5f80da"
+    },
+    "21-compile-PidPrefixMgwMean-Candidate/registered.json": {
+      "bytes": 3472,
+      "sha256": "0c7b0fb4b36e142fdb8954f9733d3424e938a94ab71ec823e868cebb0ce1def0"
+    },
+    "21-compile-PidPrefixMgwMean-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "21-compile-PidPrefixMgwMean-Candidate/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "22-compile-PidPrefixMgwMean-SemanticJudge/command.json": {
+      "bytes": 1430,
+      "sha256": "6a834c04f0fa06a106ad969c2406584976bba7578e0836fcfe3346011a2500f8"
+    },
+    "22-compile-PidPrefixMgwMean-SemanticJudge/registered.json": {
+      "bytes": 3484,
+      "sha256": "99fd66450b7a357b56738a1d7acaa4883045b91383df30225d6c3a07157f6856"
+    },
+    "22-compile-PidPrefixMgwMean-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "22-compile-PidPrefixMgwMean-SemanticJudge/stdout.log": {
+      "bytes": 1309,
+      "sha256": "d5b1a6407db9b15013d1a8d60226286895fa95241625db512af65988d937d224"
+    },
+    "23-compile-root/command.json": {
+      "bytes": 1393,
+      "sha256": "fb95adaaa484651e14888a7a8e46df446389d9576f5fb888e1335758d95c1917"
+    },
+    "23-compile-root/registered.json": {
+      "bytes": 3557,
+      "sha256": "b7a06d7ba85ab8f375e206e16e12177bd2c404906f338be0db359be204ba2697"
+    },
+    "23-compile-root/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "23-compile-root/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "24-fresh-kernel/command.json": {
+      "bytes": 1045,
+      "sha256": "296d519bf3dc8c18d7a6f30baed8074727df317ecbf2fae062544b290d84c0d6"
+    },
+    "24-fresh-kernel/registered.json": {
+      "bytes": 3209,
+      "sha256": "a38387a9e950626fa0195244b13b2f17377c5509bc367e538f482ca7aeac0fc1"
+    },
+    "24-fresh-kernel/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "24-fresh-kernel/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Candidate.executed.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "Candidate.original.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "EXECUTION_INPUT.json": {
+      "bytes": 409,
+      "sha256": "e8b2013cf3cf7cb30a5922bd554a4687eac7b818db52a4a6585af26a760a7192"
+    },
+    "REGISTERED.json": {
+      "bytes": 284,
+      "sha256": "c5e4c21ed1237ae304d98df093f0e2bb389ba3012d914a6d35eace49a3407834"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482048,
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "build/PidPrefixMgwMean/SemanticJudge.olean": {
+      "bytes": 95616,
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "build/PrefixMgwMeanCandidateRoot.olean": {
+      "bytes": 1784,
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "input-bytes/03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "input-bytes/04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "input-bytes/0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "input-bytes/0e0ad5294744ae7891cbc99a35d746d99c5a04eb6bfeb23dd550e319f59978cd": {
+      "bytes": 21987,
+      "sha256": "0e0ad5294744ae7891cbc99a35d746d99c5a04eb6bfeb23dd550e319f59978cd"
+    },
+    "input-bytes/0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94": {
+      "bytes": 21519,
+      "sha256": "0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94"
+    },
+    "input-bytes/100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "input-bytes/1219c832c6ea51c258eff977e52689870a1f13289900648c05ee52c9ea8e2586": {
+      "bytes": 21219,
+      "sha256": "1219c832c6ea51c258eff977e52689870a1f13289900648c05ee52c9ea8e2586"
+    },
+    "input-bytes/17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "input-bytes/1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "input-bytes/1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18": {
+      "bytes": 833,
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "input-bytes/1e79216a4a682db954a8f80be5a829a52e6a7b83073d7853bffed063f9acc42c": {
+      "bytes": 4056,
+      "sha256": "1e79216a4a682db954a8f80be5a829a52e6a7b83073d7853bffed063f9acc42c"
+    },
+    "input-bytes/1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0": {
+      "bytes": 1784,
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "input-bytes/1f10a446ba72dc293a910f7a8459d068b8e610d180cd5d05956b441904ad1091": {
+      "bytes": 619,
+      "sha256": "1f10a446ba72dc293a910f7a8459d068b8e610d180cd5d05956b441904ad1091"
+    },
+    "input-bytes/24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "input-bytes/266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed": {
+      "bytes": 12566,
+      "sha256": "266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed"
+    },
+    "input-bytes/26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "input-bytes/2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "input-bytes/2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "input-bytes/301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "input-bytes/311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8": {
+      "bytes": 1812,
+      "sha256": "311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8"
+    },
+    "input-bytes/323aaa341e62afb4eeb05e03a7fc4321170c8cb904e3d5844cbc36cdff4f2c1a": {
+      "bytes": 932,
+      "sha256": "323aaa341e62afb4eeb05e03a7fc4321170c8cb904e3d5844cbc36cdff4f2c1a"
+    },
+    "input-bytes/3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "input-bytes/3a08e0c2fc46533bbd104858195d17339513fd1559d47cc9d4dea45c49583135": {
+      "bytes": 1423,
+      "sha256": "3a08e0c2fc46533bbd104858195d17339513fd1559d47cc9d4dea45c49583135"
+    },
+    "input-bytes/3a4a7134beea242c7e16a40bcf156fa50f7e6e0867ca7198586469bd0076e48a": {
+      "bytes": 3433,
+      "sha256": "3a4a7134beea242c7e16a40bcf156fa50f7e6e0867ca7198586469bd0076e48a"
+    },
+    "input-bytes/3d1159d500222161d5b8744bf69c603b30537b8cfdf035e2993bf5e811813040": {
+      "bytes": 5004,
+      "sha256": "3d1159d500222161d5b8744bf69c603b30537b8cfdf035e2993bf5e811813040"
+    },
+    "input-bytes/3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "input-bytes/416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "input-bytes/433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd": {
+      "bytes": 90152,
+      "sha256": "433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd"
+    },
+    "input-bytes/43bea30f78bdf707ec47f168db6d3ad7847ec50119b08a3d852d751ae5baaae7": {
+      "bytes": 483,
+      "sha256": "43bea30f78bdf707ec47f168db6d3ad7847ec50119b08a3d852d751ae5baaae7"
+    },
+    "input-bytes/4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "input-bytes/544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "input-bytes/55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "input-bytes/5d2b7239e8aad9c76da66205d3d6f896ecc46550fdd8ed17d1f47edc27a23324": {
+      "bytes": 1156,
+      "sha256": "5d2b7239e8aad9c76da66205d3d6f896ecc46550fdd8ed17d1f47edc27a23324"
+    },
+    "input-bytes/5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "input-bytes/6481e19309a4e11730229a254558670a909d261a285f766ea5e2f577e8274e48": {
+      "bytes": 4309,
+      "sha256": "6481e19309a4e11730229a254558670a909d261a285f766ea5e2f577e8274e48"
+    },
+    "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "input-bytes/6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0": {
+      "bytes": 22296,
+      "sha256": "6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0"
+    },
+    "input-bytes/6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e": {
+      "bytes": 700,
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "input-bytes/6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed": {
+      "bytes": 9076,
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "input-bytes/6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "input-bytes/6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6": {
+      "bytes": 166,
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "input-bytes/71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "input-bytes/7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "input-bytes/77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098": {
+      "bytes": 4383,
+      "sha256": "77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098"
+    },
+    "input-bytes/7c8f3da74a5c22ba0d261cdbcb5331859c3d3a212255d1d2911399c4b72edd37": {
+      "bytes": 390,
+      "sha256": "7c8f3da74a5c22ba0d261cdbcb5331859c3d3a212255d1d2911399c4b72edd37"
+    },
+    "input-bytes/7cfb4b5206651746d3054f68282b5d15518722ec54b6061f661a1232aa46078f": {
+      "bytes": 1407,
+      "sha256": "7cfb4b5206651746d3054f68282b5d15518722ec54b6061f661a1232aa46078f"
+    },
+    "input-bytes/7e93526b76e17707a61f30557ab0f4eb341994fdcba1475c6391771c0750082e": {
+      "bytes": 162596,
+      "sha256": "7e93526b76e17707a61f30557ab0f4eb341994fdcba1475c6391771c0750082e"
+    },
+    "input-bytes/847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "input-bytes/89c9bb3745a2b73914e0f9f4bb6161424d7afa201741acd434e1116bc1253f64": {
+      "bytes": 385,
+      "sha256": "89c9bb3745a2b73914e0f9f4bb6161424d7afa201741acd434e1116bc1253f64"
+    },
+    "input-bytes/8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "input-bytes/8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "input-bytes/8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36": {
+      "bytes": 4769,
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "input-bytes/9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "input-bytes/93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0": {
+      "bytes": 453,
+      "sha256": "93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0"
+    },
+    "input-bytes/93fa792309e44bfc1a3cf36a6021574000eee84e8cea088abcf12649423bec19": {
+      "bytes": 4118,
+      "sha256": "93fa792309e44bfc1a3cf36a6021574000eee84e8cea088abcf12649423bec19"
+    },
+    "input-bytes/97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "input-bytes/9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "input-bytes/9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568": {
+      "bytes": 1269,
+      "sha256": "9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568"
+    },
+    "input-bytes/a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "input-bytes/a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261": {
+      "bytes": 4926,
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "input-bytes/a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "input-bytes/a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "input-bytes/af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c": {
+      "bytes": 6761,
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "input-bytes/afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "input-bytes/b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "input-bytes/b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "input-bytes/b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "input-bytes/baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db": {
+      "bytes": 26028,
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "input-bytes/bd228dfd054515ed93e62f172872e54183774e8c7e591ac039591793ca42577d": {
+      "bytes": 520,
+      "sha256": "bd228dfd054515ed93e62f172872e54183774e8c7e591ac039591793ca42577d"
+    },
+    "input-bytes/bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "input-bytes/bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8": {
+      "bytes": 95616,
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "input-bytes/c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243": {
+      "bytes": 1424,
+      "sha256": "c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243"
+    },
+    "input-bytes/c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "input-bytes/c53802e8ff88f6394ff09eb352f70f365c6ee8f146495f4f940e982de8b88d37": {
+      "bytes": 3092,
+      "sha256": "c53802e8ff88f6394ff09eb352f70f365c6ee8f146495f4f940e982de8b88d37"
+    },
+    "input-bytes/c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d": {
+      "bytes": 7827,
+      "sha256": "c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d"
+    },
+    "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "input-bytes/cae0627801b6375082b8619c3d404a041e6f6f4d6321531c50c40d9444b8fead": {
+      "bytes": 1775,
+      "sha256": "cae0627801b6375082b8619c3d404a041e6f6f4d6321531c50c40d9444b8fead"
+    },
+    "input-bytes/cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8": {
+      "bytes": 1119,
+      "sha256": "cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8"
+    },
+    "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "input-bytes/d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "input-bytes/d32d4cc34564429652223fdee179dc1901c0cb181749e200e646ec8bbbbb6764": {
+      "bytes": 463,
+      "sha256": "d32d4cc34564429652223fdee179dc1901c0cb181749e200e646ec8bbbbb6764"
+    },
+    "input-bytes/d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0": {
+      "bytes": 9936,
+      "sha256": "d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0"
+    },
+    "input-bytes/d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "input-bytes/d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "input-bytes/deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "input-bytes/dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a": {
+      "bytes": 11183,
+      "sha256": "dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a"
+    },
+    "input-bytes/e6b5fe155921318273037f8c332fcf8f5f15c2247e2add8102f261ad8f9d238b": {
+      "bytes": 4397,
+      "sha256": "e6b5fe155921318273037f8c332fcf8f5f15c2247e2add8102f261ad8f9d238b"
+    },
+    "input-bytes/e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "input-bytes/e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42": {
+      "bytes": 1870,
+      "sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42"
+    },
+    "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "input-bytes/eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "input-bytes/eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec": {
+      "bytes": 1482048,
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "input-bytes/edb2bd4bcb92c25276367a80b7a462c02cc8977163825f9314359e74450f0338": {
+      "bytes": 162306,
+      "sha256": "edb2bd4bcb92c25276367a80b7a462c02cc8977163825f9314359e74450f0338"
+    },
+    "input-bytes/fef85f4cafc1a8efceb2bc2c7dc245e19e697ff98ff3898bad3562c8d49c789f": {
+      "bytes": 1033,
+      "sha256": "fef85f4cafc1a8efceb2bc2c7dc245e19e697ff98ff3898bad3562c8d49c789f"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    }
+  },
+  "captured_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+  "commands": [
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidFiniteConvergence/Deterministic.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 2.4753178750397637,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-Deterministic",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2365538304,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:47.328587+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidFiniteConvergence/SxEventBridge.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 4.331791249918751,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-SxEventBridge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2388639744,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:49.814835+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/SxDnf/Contract.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/SxDnf/Contract.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.4489690830232576,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2352807936,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:54.154025+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/JoinLog/Contract.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/JoinLog/Contract.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.3822941669495776,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-JoinLog-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2317942784,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:55.610788+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 0.899938290938735,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-JudgeCore",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1382940672,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:57.000747+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/SxDnf/Proofs.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/SxDnf/Proofs.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.4852295420132577,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-Proofs",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2406039552,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:57.908051+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/JoinLog/Proofs.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/JoinLog/Proofs.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.6022509169997647,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-JoinLog-Proofs",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2424438784,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:25:59.401040+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/Contract.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/Contract.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.4471773749683052,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2359263232,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:01.010986+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/RawTargets.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/RawTargets.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.4123843749985099,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-RawTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2348548096,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:02.465943+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/AliasTargets.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/AliasTargets.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.3668533749878407,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-AliasTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2345779200,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:03.886400+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/JudgeCore.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/JudgeCore.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 0.8180429160129279,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-JudgeCore",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1281671168,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:05.262215+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/Candidate.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/Candidate.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.8280936669325456,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2433286144,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:06.088296+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/SemanticJudge.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/SemanticJudge.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.8883525419514626,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-SemanticJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2753347584,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 4588,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:07.924690+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3feda996f3c9d84eb2dd8b4f29f1ce46faa57687f80479942625104e9b06caa8"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/Contract.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/Contract.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.6373648750595748,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2641494016,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:09.821591+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/RawTargets.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/RawTargets.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.5201125839957967,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-RawTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2630418432,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:11.467515+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/AliasTargets.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/AliasTargets.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.487013667006977,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-AliasTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2622390272,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:12.996448+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/Candidate.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/Candidate.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 2.167154291062616,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2706948096,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:14.491791+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/SemanticJudge.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/SemanticJudge.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 2.034265583031811,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-SemanticJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 3001679872,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 2608,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:16.668010+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3973534a927f9d5a913dbdd45485cc4455188c0c72665f0c48ea01a3ca8864ae"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/Contract.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/Contract.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.5059012920828536,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2633646080,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:18.711479+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/RawTargets.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/RawTargets.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.5443914999486879,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-RawTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2629255168,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:20.226084+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/AliasTargets.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/AliasTargets.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.4759496670449153,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-AliasTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2586312704,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:21.779339+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/Candidate.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/Candidate.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.9482578339520842,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2737537024,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:23.264321+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/SemanticJudge.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/SemanticJudge.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 2.0291985829826444,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-SemanticJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2997501952,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 1309,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:25.222047+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d5b1a6407db9b15013d1a8d60226286895fa95241625db512af65988d937d224"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PrefixMgwMeanCandidateRoot.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PrefixMgwMeanCandidateRoot.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 1.6980660828994587,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-root",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2936864768,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:27.261009+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/leanchecker",
+        "--fresh",
+        "PrefixMgwMeanCandidateRoot"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src",
+      "elapsed_seconds": 224.49080475000665,
+      "execution_error": null,
+      "failure": null,
+      "label": "fresh-kernel",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 3385540608,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T04:26:28.969118+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "completed_utc": "2026-09-08T04:30:26.991012+00:00",
+  "executed_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+  "inputs": {
+    "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean": {
+      "bytes": 49968,
+      "identity": [
+        16777231,
+        858824670,
+        33261,
+        1,
+        49968,
+        1786337446000000000,
+        1787517629783998060
+      ],
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/leanchecker": {
+      "bytes": 78128,
+      "identity": [
+        16777231,
+        858824673,
+        33261,
+        1,
+        78128,
+        1786337447000000000,
+        1787517629786607579
+      ],
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/ACCEPTED_DEPENDENCY_RECORDS.json": {
+      "bytes": 9076,
+      "identity": [
+        16777231,
+        930460134,
+        33188,
+        1,
+        9076,
+        1788837762618369604,
+        1788837762618369604
+      ],
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/ADOPTION_PREPARATION.json": {
+      "bytes": 385,
+      "identity": [
+        16777231,
+        930460197,
+        33188,
+        1,
+        385,
+        1788837762626741878,
+        1788837762626741878
+      ],
+      "sha256": "89c9bb3745a2b73914e0f9f4bb6161424d7afa201741acd434e1116bc1253f64"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/CAMPAIGN.json": {
+      "bytes": 1424,
+      "identity": [
+        16777231,
+        930469134,
+        33188,
+        1,
+        1424,
+        1788837987887256070,
+        1788837987887256070
+      ],
+      "sha256": "c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/FROZEN.json": {
+      "bytes": 9936,
+      "identity": [
+        16777231,
+        930469133,
+        33188,
+        1,
+        9936,
+        1788837987887062444,
+        1788837987887062444
+      ],
+      "sha256": "d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_ACCEPTANCE.json": {
+      "bytes": 4397,
+      "identity": [
+        16777231,
+        930469131,
+        33188,
+        1,
+        4397,
+        1788837987883897728,
+        1788837987883897728
+      ],
+      "sha256": "e6b5fe155921318273037f8c332fcf8f5f15c2247e2add8102f261ad8f9d238b"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_ACCEPTANCE.predecessor.json.txt": {
+      "bytes": 4383,
+      "identity": [
+        16777231,
+        930460151,
+        33188,
+        1,
+        4383,
+        1788837762620909361,
+        1788837762620909361
+      ],
+      "sha256": "77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_PLAN.md": {
+      "bytes": 3092,
+      "identity": [
+        16777231,
+        930460139,
+        33188,
+        1,
+        3092,
+        1788837762619041481,
+        1788837762619041481
+      ],
+      "sha256": "c53802e8ff88f6394ff09eb352f70f365c6ee8f146495f4f940e982de8b88d37"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/PREPARATION_ADOPTION.json": {
+      "bytes": 1423,
+      "identity": [
+        16777231,
+        930460155,
+        33188,
+        1,
+        1423,
+        1788837762621292237,
+        1788837762621292237
+      ],
+      "sha256": "3a08e0c2fc46533bbd104858195d17339513fd1559d47cc9d4dea45c49583135"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/PREPARATION_INPUT_PINS.json": {
+      "bytes": 3433,
+      "identity": [
+        16777231,
+        930460152,
+        33188,
+        1,
+        3433,
+        1788837762620995403,
+        1788837762620995403
+      ],
+      "sha256": "3a4a7134beea242c7e16a40bcf156fa50f7e6e0867ca7198586469bd0076e48a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/PRIOR_CAMPAIGN_TERMINAL.json": {
+      "bytes": 1775,
+      "identity": [
+        16777231,
+        930460156,
+        33188,
+        1,
+        1775,
+        1788837762621368404,
+        1788837762621368404
+      ],
+      "sha256": "cae0627801b6375082b8619c3d404a041e6f6f4d6321531c50c40d9444b8fead"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/ROOT_SOURCE_REHASH.json": {
+      "bytes": 619,
+      "identity": [
+        16777231,
+        930465757,
+        33188,
+        1,
+        619,
+        1788837855631522661,
+        1788837855631522661
+      ],
+      "sha256": "1f10a446ba72dc293a910f7a8459d068b8e610d180cd5d05956b441904ad1091"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SELECTION_RULE.json": {
+      "bytes": 1870,
+      "identity": [
+        16777231,
+        930460153,
+        33188,
+        1,
+        1870,
+        1788837762621081028,
+        1788837762621081028
+      ],
+      "sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SELECTION_RULE.predecessor.json.txt": {
+      "bytes": 1407,
+      "identity": [
+        16777231,
+        930460138,
+        33188,
+        1,
+        1407,
+        1788837762618842772,
+        1788837762618842772
+      ],
+      "sha256": "7cfb4b5206651746d3054f68282b5d15518722ec54b6061f661a1232aa46078f"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_CORRECTION.json": {
+      "bytes": 463,
+      "identity": [
+        16777231,
+        930460143,
+        33188,
+        1,
+        463,
+        1788837762619474315,
+        1788837762619474315
+      ],
+      "sha256": "d32d4cc34564429652223fdee179dc1901c0cb181749e200e646ec8bbbbb6764"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_GRAPH.json": {
+      "bytes": 1033,
+      "identity": [
+        16777231,
+        930460146,
+        33188,
+        1,
+        1033,
+        1788837762620000442,
+        1788837762620000442
+      ],
+      "sha256": "fef85f4cafc1a8efceb2bc2c7dc245e19e697ff98ff3898bad3562c8d49c789f"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_REVIEW.json": {
+      "bytes": 520,
+      "identity": [
+        16777231,
+        930469132,
+        33188,
+        1,
+        520,
+        1788837987884027644,
+        1788837987884027644
+      ],
+      "sha256": "bd228dfd054515ed93e62f172872e54183774e8c7e591ac039591793ca42577d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_REVIEW.predecessor.json.txt": {
+      "bytes": 932,
+      "identity": [
+        16777231,
+        930460145,
+        33188,
+        1,
+        932,
+        1788837762619916567,
+        1788837762619916567
+      ],
+      "sha256": "323aaa341e62afb4eeb05e03a7fc4321170c8cb904e3d5844cbc36cdff4f2c1a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SemanticJudge.lean.in": {
+      "bytes": 2658,
+      "identity": [
+        16777231,
+        930460132,
+        33188,
+        1,
+        2658,
+        1788837762617800686,
+        1788837762617800686
+      ],
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/TASK.md": {
+      "bytes": 5004,
+      "identity": [
+        16777231,
+        930460154,
+        33188,
+        1,
+        5004,
+        1788837762621217029,
+        1788837762621217029
+      ],
+      "sha256": "3d1159d500222161d5b8744bf69c603b30537b8cfdf035e2993bf5e811813040"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/TASK.predecessor.md": {
+      "bytes": 4056,
+      "identity": [
+        16777231,
+        930460147,
+        33188,
+        1,
+        4056,
+        1788837762620242568,
+        1788837762620242568
+      ],
+      "sha256": "1e79216a4a682db954a8f80be5a829a52e6a7b83073d7853bffed063f9acc42c"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "identity": [
+        16777231,
+        930660563,
+        33188,
+        1,
+        60008,
+        1788841556899495313,
+        1788841556899638676
+      ],
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "identity": [
+        16777231,
+        930660598,
+        33188,
+        1,
+        573576,
+        1788841560916880158,
+        1788841560917020774
+      ],
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "identity": [
+        16777231,
+        930660553,
+        33188,
+        1,
+        199552,
+        1788841555508327967,
+        1788841555509758219
+      ],
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "identity": [
+        16777231,
+        930660573,
+        33188,
+        1,
+        420976,
+        1788841557828265987,
+        1788841557828417767
+      ],
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "identity": [
+        16777231,
+        930660586,
+        33188,
+        1,
+        261984,
+        1788841559302818106,
+        1788841559302970637
+      ],
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "identity": [
+        16777231,
+        930660456,
+        33188,
+        1,
+        98304,
+        1788841549682675667,
+        1788841549683130819
+      ],
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "identity": [
+        16777231,
+        930660541,
+        33188,
+        1,
+        292592,
+        1788841554052299131,
+        1788841554052452408
+      ],
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "identity": [
+        16777231,
+        930660634,
+        33188,
+        1,
+        10952,
+        1788841565165103529,
+        1788841565165257313
+      ],
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "identity": [
+        16777231,
+        930660656,
+        33188,
+        1,
+        963440,
+        1788841567806496252,
+        1788841567806666787
+      ],
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "identity": [
+        16777231,
+        930660610,
+        33188,
+        1,
+        126464,
+        1788841562369403564,
+        1788841562369551264
+      ],
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "identity": [
+        16777231,
+        930660641,
+        33188,
+        1,
+        92232,
+        1788841566007158970,
+        1788841566007275465
+      ],
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "identity": [
+        16777231,
+        930660623,
+        33188,
+        1,
+        68424,
+        1788841563789311143,
+        1788841563789437636
+      ],
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "identity": [
+        16777231,
+        930660671,
+        33188,
+        1,
+        3088,
+        1788841569713129837,
+        1788841569713233000
+      ],
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "identity": [
+        16777231,
+        930660791,
+        33188,
+        1,
+        5872,
+        1788841583156777573,
+        1788841583156915903
+      ],
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482048,
+      "identity": [
+        16777231,
+        930660803,
+        33188,
+        1,
+        1482048,
+        1788841585111620150,
+        1788841585111795439
+      ],
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "identity": [
+        16777231,
+        930660769,
+        33188,
+        1,
+        60160,
+        1788841580118068888,
+        1788841580118218927
+      ],
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "identity": [
+        16777231,
+        930660781,
+        33188,
+        1,
+        65016,
+        1788841581670446322,
+        1788841581674181792
+      ],
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixMgwMean/SemanticJudge.olean": {
+      "bytes": 95616,
+      "identity": [
+        16777231,
+        930660813,
+        33188,
+        1,
+        95616,
+        1788841587137749178,
+        1788841587139036034
+      ],
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "identity": [
+        16777231,
+        930660719,
+        33188,
+        1,
+        7136,
+        1788841574384212328,
+        1788841574384361198
+      ],
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "identity": [
+        16777231,
+        930660728,
+        33188,
+        1,
+        1070496,
+        1788841576558527006,
+        1788841576558707210
+      ],
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "identity": [
+        16777231,
+        930660685,
+        33188,
+        1,
+        122808,
+        1788841571362629150,
+        1788841571362777937
+      ],
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "identity": [
+        16777231,
+        930660695,
+        33188,
+        1,
+        66104,
+        1788841572892694528,
+        1788841572892828107
+      ],
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "identity": [
+        16777231,
+        930660747,
+        33188,
+        1,
+        95640,
+        1788841578596490002,
+        1788841578596640415
+      ],
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/build/PrefixMgwMeanCandidateRoot.olean": {
+      "bytes": 1784,
+      "identity": [
+        16777231,
+        930660845,
+        33188,
+        1,
+        1784,
+        1788841588845846566,
+        1788841588845958148
+      ],
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        930660383,
+        33188,
+        1,
+        3873,
+        1788841547317807994,
+        1788841547317807994
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        930660386,
+        33188,
+        1,
+        15705,
+        1788841547318351754,
+        1788841547318351754
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        930660381,
+        33188,
+        1,
+        12861,
+        1788841547317597772,
+        1788841547317597772
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        930660384,
+        33188,
+        1,
+        3492,
+        1788841547317974471,
+        1788841547317974471
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        930660385,
+        33188,
+        1,
+        10294,
+        1788841547318169695,
+        1788841547318169695
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        930660377,
+        33188,
+        1,
+        9093,
+        1788841547317062302,
+        1788841547317062302
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        930660378,
+        33188,
+        1,
+        27203,
+        1788841547317302770,
+        1788841547317302770
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        930660390,
+        33188,
+        1,
+        1458,
+        1788841547319041244,
+        1788841547319041244
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        930660392,
+        33188,
+        1,
+        26432,
+        1788841547319441066,
+        1788841547319441066
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        930660388,
+        33188,
+        1,
+        11737,
+        1788841547318561726,
+        1788841547318561726
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        930660391,
+        33188,
+        1,
+        1165,
+        1788841547319237843,
+        1788841547319237843
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        930660389,
+        33188,
+        1,
+        7481,
+        1788841547318728828,
+        1788841547318728828
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        930660393,
+        33188,
+        1,
+        5851,
+        1788841547319630373,
+        1788841547319630373
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        930660403,
+        33188,
+        1,
+        605,
+        1788841547321061723,
+        1788841547321061723
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "identity": [
+        16777231,
+        930660404,
+        33188,
+        1,
+        40511,
+        1788841547321171541,
+        1788841547321171541
+      ],
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        930660401,
+        33188,
+        1,
+        4277,
+        1788841547320745390,
+        1788841547320745390
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        930660402,
+        33188,
+        1,
+        4716,
+        1788841547320901327,
+        1788841547320901327
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "identity": [
+        16777231,
+        930660405,
+        33188,
+        1,
+        2658,
+        1788841547321326145,
+        1788841547321326145
+      ],
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        930660397,
+        33188,
+        1,
+        839,
+        1788841547320192673,
+        1788841547320192673
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        930660398,
+        33188,
+        1,
+        20207,
+        1788841547320379523,
+        1788841547320379523
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        930660395,
+        33188,
+        1,
+        7101,
+        1788841547319846136,
+        1788841547319846136
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        930660396,
+        33188,
+        1,
+        4337,
+        1788841547320021862,
+        1788841547320021862
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        930660399,
+        33188,
+        1,
+        4219,
+        1788841547320550083,
+        1788841547320550083
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/018-full-1/src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "identity": [
+        16777231,
+        930660818,
+        33188,
+        1,
+        114,
+        1788841587251963322,
+        1788841587251963322
+      ],
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py": {
+      "bytes": 22296,
+      "identity": [
+        16777231,
+        930460148,
+        33188,
+        1,
+        22296,
+        1788837762620341901,
+        1788837762620341901
+      ],
+      "sha256": "6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py.before-prior-preimages.txt": {
+      "bytes": 21987,
+      "identity": [
+        16777231,
+        930460133,
+        33188,
+        1,
+        21987,
+        1788837762618211103,
+        1788837762618211103
+      ],
+      "sha256": "0e0ad5294744ae7891cbc99a35d746d99c5a04eb6bfeb23dd550e319f59978cd"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py.predecessor.txt": {
+      "bytes": 21219,
+      "identity": [
+        16777231,
+        930460149,
+        33188,
+        1,
+        21219,
+        1788837762620542652,
+        1788837762620542652
+      ],
+      "sha256": "1219c832c6ea51c258eff977e52689870a1f13289900648c05ee52c9ea8e2586"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py.revision.diff": {
+      "bytes": 4309,
+      "identity": [
+        16777231,
+        930460137,
+        33188,
+        1,
+        4309,
+        1788837762618677646,
+        1788837762618677646
+      ],
+      "sha256": "6481e19309a4e11730229a254558670a909d261a285f766ea5e2f577e8274e48"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/candidate/Candidate.lean": {
+      "bytes": 40511,
+      "identity": [
+        16777231,
+        930469583,
+        33188,
+        1,
+        40511,
+        1788840587646669768,
+        1788840587646669768
+      ],
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/mgw-policy.py": {
+      "bytes": 4926,
+      "identity": [
+        16777231,
+        930460141,
+        33188,
+        1,
+        4926,
+        1788837762619253523,
+        1788837762619253523
+      ],
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/policy.py": {
+      "bytes": 6761,
+      "identity": [
+        16777231,
+        930460142,
+        33188,
+        1,
+        6761,
+        1788837762619386523,
+        1788837762619386523
+      ],
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/prefix-policy.py": {
+      "bytes": 4769,
+      "identity": [
+        16777231,
+        930460150,
+        33188,
+        1,
+        4769,
+        1788837762620677194,
+        1788837762620677194
+      ],
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/ATTEMPT_LEDGER.json": {
+      "bytes": 453,
+      "identity": [
+        16777231,
+        930460161,
+        33188,
+        1,
+        453,
+        1788837762621828281,
+        1788837762621828281
+      ],
+      "sha256": "93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/CAMPAIGN.json": {
+      "bytes": 1269,
+      "identity": [
+        16777231,
+        930460158,
+        33188,
+        1,
+        1269,
+        1788837762621550280,
+        1788837762621550280
+      ],
+      "sha256": "9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/FROZEN.json": {
+      "bytes": 7827,
+      "identity": [
+        16777231,
+        930460160,
+        33188,
+        1,
+        7827,
+        1788837762621751364,
+        1788837762621751364
+      ],
+      "sha256": "c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/STOP_RECORD.json": {
+      "bytes": 1119,
+      "identity": [
+        16777231,
+        930460159,
+        33188,
+        1,
+        1119,
+        1788837762621629197,
+        1788837762621629197
+      ],
+      "sha256": "cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/attempts/001-development-0/00-compile-PidPrefixMgwMean-Candidate/stdout.log": {
+      "bytes": 12566,
+      "identity": [
+        16777231,
+        930460196,
+        33188,
+        1,
+        12566,
+        1788837762626574378,
+        1788837762626574378
+      ],
+      "sha256": "266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/attempts/001-development-0/Candidate.original.lean": {
+      "bytes": 11183,
+      "identity": [
+        16777231,
+        930460194,
+        33188,
+        1,
+        11183,
+        1788837762626126085,
+        1788837762626126085
+      ],
+      "sha256": "dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/attempts/001-development-0/RESULT.json": {
+      "bytes": 90152,
+      "identity": [
+        16777231,
+        930460193,
+        33188,
+        1,
+        90152,
+        1788837762626013834,
+        1788837762626013834
+      ],
+      "sha256": "433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/runtime.py": {
+      "bytes": 27277,
+      "identity": [
+        16777231,
+        930460144,
+        33188,
+        1,
+        27277,
+        1788837762619575274,
+        1788837762619575274
+      ],
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/source-preparation-history/SOURCE_REGISTRATION.json": {
+      "bytes": 390,
+      "identity": [
+        16777231,
+        930460140,
+        33188,
+        1,
+        390,
+        1788837762619123189,
+        1788837762619123189
+      ],
+      "sha256": "7c8f3da74a5c22ba0d261cdbcb5331859c3d3a212255d1d2911399c4b72edd37"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/source-preparation-history/STOP_RECORD.json": {
+      "bytes": 483,
+      "identity": [
+        16777231,
+        930460136,
+        33188,
+        1,
+        483,
+        1788837762618500396,
+        1788837762618500396
+      ],
+      "sha256": "43bea30f78bdf707ec47f168db6d3ad7847ec50119b08a3d852d751ae5baaae7"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        930460190,
+        33188,
+        1,
+        3873,
+        1788837762625716208,
+        1788837762625716208
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        930460189,
+        33188,
+        1,
+        15705,
+        1788837762625626542,
+        1788837762625626542
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        930460186,
+        33188,
+        1,
+        12861,
+        1788837762625096998,
+        1788837762625096998
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        930460187,
+        33188,
+        1,
+        3492,
+        1788837762625196374,
+        1788837762625196374
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        930460185,
+        33188,
+        1,
+        10294,
+        1788837762624708039,
+        1788837762624708039
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        930460165,
+        33188,
+        1,
+        9093,
+        1788837762622291323,
+        1788837762622291323
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        930460164,
+        33188,
+        1,
+        27203,
+        1788837762622168906,
+        1788837762622168906
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        930460177,
+        33188,
+        1,
+        1458,
+        1788837762623503119,
+        1788837762623503119
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        930460180,
+        33188,
+        1,
+        26432,
+        1788837762624198371,
+        1788837762624198371
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        930460179,
+        33188,
+        1,
+        11737,
+        1788837762623781203,
+        1788837762623781203
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        930460182,
+        33188,
+        1,
+        1165,
+        1788837762624430496,
+        1788837762624430496
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        930460181,
+        33188,
+        1,
+        7481,
+        1788837762624334371,
+        1788837762624334371
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        930460178,
+        33188,
+        1,
+        5851,
+        1788837762623660536,
+        1788837762623660536
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        930460167,
+        33188,
+        1,
+        605,
+        1788837762622442824,
+        1788837762622442824
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        930460168,
+        33188,
+        1,
+        4277,
+        1788837762622583824,
+        1788837762622583824
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        930460169,
+        33188,
+        1,
+        4716,
+        1788837762622723825,
+        1788837762622723825
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        930460171,
+        33188,
+        1,
+        839,
+        1788837762622874492,
+        1788837762622874492
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        930460174,
+        33188,
+        1,
+        20207,
+        1788837762623233076,
+        1788837762623233076
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        930460173,
+        33188,
+        1,
+        7101,
+        1788837762623136409,
+        1788837762623136409
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        930460175,
+        33188,
+        1,
+        4337,
+        1788837762623363035,
+        1788837762623363035
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        930460172,
+        33188,
+        1,
+        4219,
+        1788837762623006284,
+        1788837762623006284
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/CONTROL_ROSTER.json": {
+      "bytes": 833,
+      "identity": [
+        16777231,
+        929469581,
+        33188,
+        1,
+        833,
+        1788671323784068335,
+        1788671323784068335
+      ],
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/DEPENDENCY_SOURCE_PINS.json": {
+      "bytes": 4118,
+      "identity": [
+        16777231,
+        929469576,
+        33188,
+        1,
+        4118,
+        1788671323783153183,
+        1788671323783153183
+      ],
+      "sha256": "93fa792309e44bfc1a3cf36a6021574000eee84e8cea088abcf12649423bec19"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/NEW_IMPORT_SOURCE_PINS.json": {
+      "bytes": 166,
+      "identity": [
+        16777231,
+        929469577,
+        33188,
+        1,
+        166,
+        1788671323783273181,
+        1788671323783273181
+      ],
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/PREPARATION_REGISTRATION.json": {
+      "bytes": 1812,
+      "identity": [
+        16777231,
+        929469525,
+        33188,
+        1,
+        1812,
+        1788671323778900046,
+        1788671323778900046
+      ],
+      "sha256": "311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/PREPARATION_SCOPE_SEAL.json": {
+      "bytes": 1156,
+      "identity": [
+        16777231,
+        929469582,
+        33188,
+        1,
+        1156,
+        1788671323784156375,
+        1788671323784156375
+      ],
+      "sha256": "5d2b7239e8aad9c76da66205d3d6f896ecc46550fdd8ed17d1f47edc27a23324"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/REGISTRATION.json": {
+      "bytes": 1812,
+      "identity": [
+        16777231,
+        929469524,
+        33188,
+        1,
+        1812,
+        1788671323778789673,
+        1788671323778789673
+      ],
+      "sha256": "311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/TARGET_ROSTER.json": {
+      "bytes": 700,
+      "identity": [
+        16777231,
+        929469578,
+        33188,
+        1,
+        700,
+        1788671323783339347,
+        1788671323783339347
+      ],
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/environment.json": {
+      "bytes": 21519,
+      "identity": [
+        16777231,
+        929476277,
+        33188,
+        1,
+        21519,
+        1788671760687713134,
+        1788671760687713134
+      ],
+      "sha256": "0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/receipt.json": {
+      "bytes": 162306,
+      "identity": [
+        16777231,
+        929495515,
+        33188,
+        1,
+        162306,
+        1788672005598873854,
+        1788672005598873854
+      ],
+      "sha256": "edb2bd4bcb92c25276367a80b7a462c02cc8977163825f9314359e74450f0338"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-optimized-01/receipt.json": {
+      "bytes": 162596,
+      "identity": [
+        16777231,
+        929551248,
+        33188,
+        1,
+        162596,
+        1788672364006700600,
+        1788672364006700600
+      ],
+      "sha256": "7e93526b76e17707a61f30557ab0f4eb341994fdcba1475c6391771c0750082e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        929469559,
+        33188,
+        1,
+        3873,
+        1788671323781582293,
+        1788671323781582293
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        929469562,
+        33188,
+        1,
+        15705,
+        1788671323781921120,
+        1788671323781921120
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        929469557,
+        33188,
+        1,
+        12861,
+        1788671323781464253,
+        1788671323781464253
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        929469560,
+        33188,
+        1,
+        3492,
+        1788671323781677499,
+        1788671323781677499
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        929469561,
+        33188,
+        1,
+        10294,
+        1788671323781781414,
+        1788671323781781414
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        929469553,
+        33188,
+        1,
+        9093,
+        1788671323781172383,
+        1788671323781172383
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        929469554,
+        33188,
+        1,
+        27203,
+        1788671323781277464,
+        1788671323781277464
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        929469566,
+        33188,
+        1,
+        1458,
+        1788671323782284406,
+        1788671323782284406
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        929469568,
+        33188,
+        1,
+        26432,
+        1788671323782481694,
+        1788671323782481694
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        929469564,
+        33188,
+        1,
+        11737,
+        1788671323782064076,
+        1788671323782064076
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        929469567,
+        33188,
+        1,
+        1165,
+        1788671323782375196,
+        1788671323782375196
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        929469565,
+        33188,
+        1,
+        7481,
+        1788671323782182283,
+        1788671323782182283
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        929469569,
+        33188,
+        1,
+        5851,
+        1788671323782572651,
+        1788671323782572651
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        929469543,
+        33188,
+        1,
+        605,
+        1788671323780133817,
+        1788671323780133817
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        929469545,
+        33188,
+        1,
+        4277,
+        1788671323780290273,
+        1788671323780290273
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        929469547,
+        33188,
+        1,
+        4716,
+        1788671323780436312,
+        1788671323780436312
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        929469573,
+        33188,
+        1,
+        839,
+        1788671323782857188,
+        1788671323782857188
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        929469574,
+        33188,
+        1,
+        20207,
+        1788671323782950770,
+        1788671323782950770
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        929469571,
+        33188,
+        1,
+        7101,
+        1788671323782689233,
+        1788671323782689233
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        929469572,
+        33188,
+        1,
+        4337,
+        1788671323782766231,
+        1788671323782766231
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        929469575,
+        33188,
+        1,
+        4219,
+        1788671323783043727,
+        1788671323783043727
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<REPOSITORY>/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum/NatInt.lean": {
+      "bytes": 26028,
+      "identity": [
+        16777231,
+        925038154,
+        33188,
+        1,
+        26028,
+        1787505286799294946,
+        1788583562191313019
+      ],
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "<REPOSITORY>/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "identity": [
+        16777231,
+        924801089,
+        33188,
+        1,
+        3144,
+        1788495973000000000,
+        1788578758439315095
+      ],
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "<REPOSITORY>/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "identity": [
+        16777231,
+        924801090,
+        33188,
+        1,
+        243,
+        1788495973000000000,
+        1788578758439502136
+      ],
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "<REPOSITORY>/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "identity": [
+        16777231,
+        924801091,
+        33188,
+        1,
+        25,
+        1788495973000000000,
+        1788578758439828177
+      ],
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "<REPOSITORY>/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "identity": [
+        16777231,
+        924801637,
+        33188,
+        1,
+        58665,
+        1788495973000000000,
+        1788578758673032477
+      ],
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "<REPOSITORY>/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "identity": [
+        16777231,
+        924801644,
+        33261,
+        1,
+        17039,
+        1788495973000000000,
+        1788578758675481635
+      ],
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "observed_candidate_metadata": {
+    "mode": 33188,
+    "mtime_ns": 1788840587646669768,
+    "size": 40511
+  },
+  "registered": {
+    "candidate_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+    "kind": "full",
+    "mode": 1,
+    "output": "attempts/018-full-1",
+    "prospective_compiler_kernel_children": 25,
+    "registered_utc": "2026-09-08T04:25:47.303870+00:00",
+    "slot_kind": "full"
+  },
+  "semantic_records": [
+    {
+      "alias_target": "PidPrefixMgwMeanAliasTargets.word_coefficient_join_power",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwMeanContract.word_coefficient_join_power_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwMeanRawTargets.word_coefficient_join_power",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwMeanCandidate.word_coefficient_join_power",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwMeanAliasTargets.finite_block_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwMeanContract.finite_block_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwMeanRawTargets.finite_block_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwMeanCandidate.finite_block_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwMeanAliasTargets.prefix_expectations_to_mgw_mean",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwMeanContract.prefix_expectations_to_mgw_mean_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwMeanRawTargets.prefix_expectations_to_mgw_mean",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwMeanCandidate.prefix_expectations_to_mgw_mean",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "status": "fresh_semantic_kernel_pass"
+}

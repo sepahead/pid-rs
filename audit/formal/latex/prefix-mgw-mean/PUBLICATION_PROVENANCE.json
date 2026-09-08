@@ -1,0 +1,67 @@
+{
+  "figure_pdf": {
+    "path": "retained-rank.pdf",
+    "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894"
+  },
+  "figure_producer": {
+    "command_shape": "rsvg-convert -f pdf -o retained-rank.pdf retained-rank.svg",
+    "environment": {
+      "FONTCONFIG_FILE": "explicit three-font configuration in original producer receipt",
+      "PANGOCAIRO_BACKEND": "fc"
+    },
+    "reason": "fc-match alone did not prevent Helvetica fallback; explicit Cairo font backend did."
+  },
+  "licenses": [
+    "../mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+    "../mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+    "../mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt"
+  ],
+  "markdown": {
+    "path": "../../lean-prefix-mgw-mean/EXPOSITION.current.md",
+    "sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e"
+  },
+  "obligations": [
+    "New builder and fresh HOME/PATH behavior require actual normal/O causal controls and repeated production.",
+    "An actual reviewed successor hash is mandatory; the prototype identity remains historical. No whitespace, metadata or font normalization is admitted.",
+    "The frozen derivative is a pinned build input; recreating SVG-to-PDF requires its own producer observation.",
+    "No Linux profile, accessibility certification, physical-print validation or new theorem credit."
+  ],
+  "pdf": {
+    "bytes": 162516,
+    "pages": 9,
+    "path": "../../../evidence/prefix-mgw-mean-formal-verification-2026-09-08/publication-prototype/attempt-04/prefix-mgw-mean.pdf",
+    "sha256": "b4382567d21f1f353230daad6fcdfb7538a8ecafaaa509ec93ca8c78ecdae01e"
+  },
+  "prior_attempts": {
+    "01": "failed; retain source/log",
+    "02": "built eight pages; table split and fallback fonts",
+    "03": "built nine pages; Helvetica remained",
+    "04": "locally accepted source/visual prototype"
+  },
+  "production_successor": {
+    "canonical_markdown_unchanged": true,
+    "new_uri": "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md",
+    "pdf_sha256": null,
+    "relative_uri_rejection": "scripts/check-publication-links.py rejects relative PDF URI"
+  },
+  "prototype_producer": {
+    "lualatex": "LuaHBTeX 1.18.0 (TeX Live 2024)",
+    "pandoc": "3.10.2",
+    "passes": 2
+  },
+  "reader_manifest_sha256": "8e43666fbb4c93f02901e20b15ece88aac4fbedbb1206fdcaaa1ce39a1fe1e80",
+  "reader_review_sha256": "293bc3375038111dd96896f9dc3922afd8330bd1ccba78b5d7fca5787659613c",
+  "root_manifest_sha256": "71eeb0f5698ed39beaa022617f50ad848c60df5ecb6aa8f1e3afe1431fe31d7f",
+  "root_review_sha256": "3c3d9f1e831df74c18c0f257ce29684d2bf6031ae0c1558028d3540524c9fa59",
+  "schema": "pid-rs/prefix-mgw-mean-publication-provenance-v1",
+  "source_sans_pro_inputs": {
+    "SourceSansPro-Bold.otf": "daccddbe3dd60fe10f6e8a785eda187925da6b611141024dffa43626998dfc7c",
+    "SourceSansPro-Regular.otf": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51",
+    "SourceSansPro-Semibold.otf": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2"
+  },
+  "source_svg": {
+    "path": "../../lean-prefix-mgw-mean/retained-rank.svg",
+    "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+  },
+  "status": "reviewed prototype retained; HTTPS-link production successor blocked pending actual PDF identity"
+}

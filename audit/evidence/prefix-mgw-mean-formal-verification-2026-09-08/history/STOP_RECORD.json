@@ -1,0 +1,8 @@
+{
+  "stopped_utc": "2026-09-08T05:03:36.685346+00:00",
+  "status": "completed_exact_three_target_proof_campaign",
+  "acceptance_sha256": "26789c336a5928a07786bc2e1867f600995c09300a1e9b056083349a2fce3fb2",
+  "actual_attempts": 21,
+  "actual_compiler_kernel_children": 139,
+  "scope": "Stop this local proof campaign after complete frozen matrix and root source/evidence adjudication. Whole-project goal remains ACTIVE."
+}

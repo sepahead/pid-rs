@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-09-08T07:28:13.261282+00:00",
+  "command": [
+    "/opt/homebrew/bin/pandoc",
+    "--from=markdown",
+    "--to=latex",
+    "--wrap=none",
+    "--output=body.tex",
+    "body.md"
+  ],
+  "cwd": "<repository>/.local/sx-mean-exposition-pdf-root-20260908/attempt-01"
+}

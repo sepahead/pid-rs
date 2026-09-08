@@ -1,0 +1,22 @@
+{
+  "controls": [
+    "exact-word_coefficient_join_power",
+    "explicit-receiver-word_coefficient_join_power",
+    "implicit-receiver-word_coefficient_join_power",
+    "extra-universe-word_coefficient_join_power",
+    "exact-finite_block_expectation",
+    "explicit-receiver-finite_block_expectation",
+    "implicit-receiver-finite_block_expectation",
+    "extra-universe-finite_block_expectation",
+    "exact-prefix_expectations_to_mgw_mean",
+    "explicit-receiver-prefix_expectations_to_mgw_mean",
+    "implicit-receiver-prefix_expectations_to_mgw_mean",
+    "extra-universe-prefix_expectations_to_mgw_mean",
+    "wrong_degree_offset",
+    "received_nonnegative_mass",
+    "wrong_raw_time_rank",
+    "received_log_model",
+    "received_mean_outcome"
+  ],
+  "status": "prospective type-only controls, no mathematical candidate"
+}

@@ -1,0 +1,10 @@
+--- sealed controls
++++ fixture-root-mode successor
+@@ -149,6 +149,7 @@
+ def fixture(directory, name):
+     root = directory / 'root'; root.mkdir()
+     shutil.copytree(LANE / 'inputs/fixture-root', root, dirs_exist_ok=True)
++    root.chmod(0o755)  # copytree copied the sealed root mode; this is our new fixture.
+     package = root / 'package'; shutil.copytree(LANE / 'inputs/package', package)
+     # Retained inputs are sealed read-only. Only newly created fixture copies
+     # receive writable owner modes for the named causal mutations.

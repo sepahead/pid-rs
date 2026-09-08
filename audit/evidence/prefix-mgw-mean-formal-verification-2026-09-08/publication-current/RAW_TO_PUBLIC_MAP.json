@@ -1,0 +1,942 @@
+{
+  "files": {
+    "builder-controls-v1-source/STOP_RECORD.json": {
+      "public_bytes": 511,
+      "public_sha256": "d34316d4e9115a6d9e01409051089e9e5e182a944b7813856a48d4a713797252",
+      "raw_bytes": 511,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "d34316d4e9115a6d9e01409051089e9e5e182a944b7813856a48d4a713797252",
+      "raw_stage": "sx-mean-pdf-builder-controls-source-20260908"
+    },
+    "builder-controls-v2/ACCEPTANCE.json": {
+      "public_bytes": 884,
+      "public_sha256": "8fb7044f41d8ef7fcb21127759657de97a6cdd2fb043b1a82906f9df246674f5",
+      "raw_bytes": 884,
+      "raw_relative": "ACCEPTANCE.json",
+      "raw_sha256": "8fb7044f41d8ef7fcb21127759657de97a6cdd2fb043b1a82906f9df246674f5",
+      "raw_stage": "sx-mean-pdf-builder-controls-v2-root-20260908"
+    },
+    "builder-controls-v2/ROOT_CASE_REVIEW.json": {
+      "public_bytes": 51125,
+      "public_sha256": "4d58dc40f60cb8cdc49320688af1c1f0ad59ab3c6c174acfedf2d56c8d273c4b",
+      "raw_bytes": 51125,
+      "raw_relative": "ROOT_CASE_REVIEW.json",
+      "raw_sha256": "4d58dc40f60cb8cdc49320688af1c1f0ad59ab3c6c174acfedf2d56c8d273c4b",
+      "raw_stage": "sx-mean-pdf-builder-controls-v2-root-20260908"
+    },
+    "builder-controls-v2/STOP_RECORD.json": {
+      "public_bytes": 186,
+      "public_sha256": "7e9616969dd719945c5ed099f644c5063348468e0f3056070039e6b54985b07f",
+      "raw_bytes": 186,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "7e9616969dd719945c5ed099f644c5063348468e0f3056070039e6b54985b07f",
+      "raw_stage": "sx-mean-pdf-builder-controls-v2-root-20260908"
+    },
+    "builder-controls-v2/inert-controls-0/RESULT.json": {
+      "public_bytes": 95765,
+      "public_sha256": "e536e6c1d6f4c58d5b4af07f752facf91eff62b80f732324dfa5ca7c26ea6525",
+      "raw_bytes": 95765,
+      "raw_relative": "inert-controls-0/RESULT.json",
+      "raw_sha256": "e536e6c1d6f4c58d5b4af07f752facf91eff62b80f732324dfa5ca7c26ea6525",
+      "raw_stage": "sx-mean-pdf-builder-controls-v2-root-20260908"
+    },
+    "builder-controls-v2/inert-controls-1/RESULT.json": {
+      "public_bytes": 95765,
+      "public_sha256": "f371133547ed1b31934b55269c1fdcfcf1c7f0e72d93da053897b8ccc5e2963c",
+      "raw_bytes": 95765,
+      "raw_relative": "inert-controls-1/RESULT.json",
+      "raw_sha256": "f371133547ed1b31934b55269c1fdcfcf1c7f0e72d93da053897b8ccc5e2963c",
+      "raw_stage": "sx-mean-pdf-builder-controls-v2-root-20260908"
+    },
+    "builder/REAL_BUILDS_COMPLETE.json": {
+      "public_bytes": 3581,
+      "public_sha256": "be750c4c2c3fbb97ef89e5d8dfa47882cadc91773e25074cc357dd08244badfb",
+      "raw_bytes": 4171,
+      "raw_relative": "REAL_BUILDS_COMPLETE.json",
+      "raw_sha256": "fa361b4c8aa59c5e57fd27c266b8635cfb852f3cf374933fa4e1dbfa78de3163",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/ROOT_CONTROL_FAILURE.json": {
+      "public_bytes": 869,
+      "public_sha256": "23bff7ba37f3bf56918c9d9fde8d84afa5b28707c2a0cef82f136b96a39253fe",
+      "raw_bytes": 928,
+      "raw_relative": "ROOT_CONTROL_FAILURE.json",
+      "raw_sha256": "7e8b6507c6c65a142497b798efc1a82470ed4abf3e884224dd5ad93da488d483",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/ROOT_REAL_BUILD_REVIEW.json": {
+      "public_bytes": 39139,
+      "public_sha256": "0c4e8b6b18707234b817d9fbdf48117c464f961482ef35d9aafd7a7f6b695f76",
+      "raw_bytes": 39139,
+      "raw_relative": "ROOT_REAL_BUILD_REVIEW.json",
+      "raw_sha256": "0c4e8b6b18707234b817d9fbdf48117c464f961482ef35d9aafd7a7f6b695f76",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/STOP_RECORD.json": {
+      "public_bytes": 444,
+      "public_sha256": "0bb06cd32b8c1938ee3bfcab087c238c115b769133315ab984c5036112f805d5",
+      "raw_bytes": 444,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "0bb06cd32b8c1938ee3bfcab087c238c115b769133315ab984c5036112f805d5",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/RESULT.json": {
+      "public_bytes": 6550,
+      "public_sha256": "3628a1ce0e1b5fa11e975c090f3dca193ec53f5307407b9599da8d034622a072",
+      "raw_bytes": 7396,
+      "raw_relative": "work-normal/RESULT.json",
+      "raw_sha256": "cb7726eba117e1796f5876e44c38f1897d78121be60146683c2d6e2ad20970be",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-1.RESULT.json": {
+      "public_bytes": 565,
+      "public_sha256": "af82d2ec6dc63f45166438239d2c8c0b08b63c590c19ef911f6255c2c5f4a861",
+      "raw_bytes": 628,
+      "raw_relative": "work-normal/build-1/latex-1.RESULT.json",
+      "raw_sha256": "243788ca496d8d21526e4a84a4337c0ebc54fe2e532db707027cefc1a509cb39",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-1.START.json": {
+      "public_bytes": 317,
+      "public_sha256": "d30c083576d1c53758449af1f51de05371acb234e440c60925eb44c9737da62d",
+      "raw_bytes": 380,
+      "raw_relative": "work-normal/build-1/latex-1.START.json",
+      "raw_sha256": "843094470d43b034b0cbb63377117adf2066893b8a5a0c2df9fd23addf1c2ee3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-1.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-1/latex-1.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-1.stdout": {
+      "public_bytes": 13735,
+      "public_sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f",
+      "raw_bytes": 13735,
+      "raw_relative": "work-normal/build-1/latex-1.stdout",
+      "raw_sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-2.RESULT.json": {
+      "public_bytes": 565,
+      "public_sha256": "e635251aef438aa056b1931988a0cb6a7e6382bd8ad4552ab0c0e627beceda40",
+      "raw_bytes": 628,
+      "raw_relative": "work-normal/build-1/latex-2.RESULT.json",
+      "raw_sha256": "d4998a247bc41631b53c434c7aedc39e4af34b57293d340ab76d6ee71a7672ff",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-2.START.json": {
+      "public_bytes": 317,
+      "public_sha256": "8bbc201668a62dbdcf4324dd7e67829a0b798c754e4ac308416915e819ac1127",
+      "raw_bytes": 380,
+      "raw_relative": "work-normal/build-1/latex-2.START.json",
+      "raw_sha256": "b1dd48b1895d57cf35dcf59567d63fd4559fab81218ade0287077f22c78fc1cd",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-2.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-1/latex-2.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/latex-2.stdout": {
+      "public_bytes": 13329,
+      "public_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_bytes": 13329,
+      "raw_relative": "work-normal/build-1/latex-2.stdout",
+      "raw_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/log-check.RESULT.json": {
+      "public_bytes": 616,
+      "public_sha256": "189deb0193901de7de02eab5d8062003ec0540f2c569f82f0ad6da3fc4e73d1e",
+      "raw_bytes": 793,
+      "raw_relative": "work-normal/build-1/log-check.RESULT.json",
+      "raw_sha256": "682cc36bc7daddf473e4d21542a44dad0309efa98cb311196b3fbd7d327b3464",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/log-check.START.json": {
+      "public_bytes": 368,
+      "public_sha256": "c7a18ecf1e71111cdf2052495bb85641f9b9274e3cbaf5f9175d2692b5f55e58",
+      "raw_bytes": 545,
+      "raw_relative": "work-normal/build-1/log-check.START.json",
+      "raw_sha256": "525f1312f4f6ae713652cf3f641239d1cd40d34daab35b88c9b884d460821373",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/log-check.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-1/log-check.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/log-check.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-1/log-check.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/pandoc.RESULT.json": {
+      "public_bytes": 571,
+      "public_sha256": "7f9532fe5bdee1a7ce41dc28ea8f620cc3571d7dac489b11ff1cf8ba03e54614",
+      "raw_bytes": 630,
+      "raw_relative": "work-normal/build-1/pandoc.RESULT.json",
+      "raw_sha256": "e01ca441b88a610c985ad4d3245d08fc974c135bb0df02d5c38d778973edb2d7",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/pandoc.START.json": {
+      "public_bytes": 323,
+      "public_sha256": "2e159f67e0d8d415df3dd704fc28d14fcb9a387daf51f30b02bb1cbdd232311e",
+      "raw_bytes": 382,
+      "raw_relative": "work-normal/build-1/pandoc.START.json",
+      "raw_sha256": "2538cf08a263d2aeb4c817047a51d725c4fe9970214876d9f53f3b01d04854a2",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/pandoc.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-1/pandoc.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-1/pandoc.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-1/pandoc.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-1.RESULT.json": {
+      "public_bytes": 565,
+      "public_sha256": "9ed8549a4baa0e1fe916842cb4853607e5b73f3398ce94a1085a15f1326cd7e9",
+      "raw_bytes": 628,
+      "raw_relative": "work-normal/build-2/latex-1.RESULT.json",
+      "raw_sha256": "5d4900563eb0f5657b5038dfb68a7408de43d256fbed4d0c0b2714fab8b1710f",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-1.START.json": {
+      "public_bytes": 317,
+      "public_sha256": "67ddb812d5685dcb5ca765b8c30d23906a26ff00e25375a24e9b446436c315e5",
+      "raw_bytes": 380,
+      "raw_relative": "work-normal/build-2/latex-1.START.json",
+      "raw_sha256": "7448f7cd6288a5228f4185f36446583bf570587f4c24010277aed5cd9c32ff16",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-1.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-2/latex-1.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-1.stdout": {
+      "public_bytes": 13598,
+      "public_sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2",
+      "raw_bytes": 13598,
+      "raw_relative": "work-normal/build-2/latex-1.stdout",
+      "raw_sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-2.RESULT.json": {
+      "public_bytes": 565,
+      "public_sha256": "6d8d7cafe01ea796d18e70eae94fc1758f5dcf484e295023febaa33ca6936915",
+      "raw_bytes": 628,
+      "raw_relative": "work-normal/build-2/latex-2.RESULT.json",
+      "raw_sha256": "a64718d778660e9efaef01976ad91723b6277f2cb37309f3cabede9405dae990",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-2.START.json": {
+      "public_bytes": 317,
+      "public_sha256": "e0217b2834bbd6c7d84223b8de44039d5753437ed8bdb126981bcf98bd6c8b06",
+      "raw_bytes": 380,
+      "raw_relative": "work-normal/build-2/latex-2.START.json",
+      "raw_sha256": "15aa0b1dd46a187e743726de9c709394582db310f7dfee676bff5654168903c0",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-2.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-2/latex-2.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/latex-2.stdout": {
+      "public_bytes": 13329,
+      "public_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_bytes": 13329,
+      "raw_relative": "work-normal/build-2/latex-2.stdout",
+      "raw_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/log-check.RESULT.json": {
+      "public_bytes": 616,
+      "public_sha256": "bf3bc94ad6f6f8ff2b624604619e074f8aa4314d5000c72e900afc54595a9bc8",
+      "raw_bytes": 793,
+      "raw_relative": "work-normal/build-2/log-check.RESULT.json",
+      "raw_sha256": "cebbd6d82754f5bb1ca6dceadad5c97d9eaa36975a37d637fd2a404f326a1242",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/log-check.START.json": {
+      "public_bytes": 368,
+      "public_sha256": "fd1864708c9f06a808e49f28525780863cdbe1109cb7b494d0d5074d4d091a61",
+      "raw_bytes": 545,
+      "raw_relative": "work-normal/build-2/log-check.START.json",
+      "raw_sha256": "c1149cf9dfcc40268428400742b3415955716c9692b20fd7426df0c8ec0477e9",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/log-check.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-2/log-check.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/log-check.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-2/log-check.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/pandoc.RESULT.json": {
+      "public_bytes": 571,
+      "public_sha256": "a89a77fe5323fbfaf3efb5b93fefb2caa8c5fcd0904d48ab4587490f37264324",
+      "raw_bytes": 630,
+      "raw_relative": "work-normal/build-2/pandoc.RESULT.json",
+      "raw_sha256": "6d100fd659e9ae8a68d5ccc0eaa85bc71d7fc144151a28bef2a6dbef2374d0de",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/pandoc.START.json": {
+      "public_bytes": 323,
+      "public_sha256": "79b11cec4106092c8f20a147acfbfa2bcb26d507d7807e2fc525aeb037cfa2b7",
+      "raw_bytes": 382,
+      "raw_relative": "work-normal/build-2/pandoc.START.json",
+      "raw_sha256": "dbd38a22644c7786fe258f9ca8490fe16c1d52627d50d617bda3a0f1fe140588",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/pandoc.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-2/pandoc.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/build-2/pandoc.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/build-2/pandoc.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/lualatex-version.RESULT.json": {
+      "public_bytes": 445,
+      "public_sha256": "ce64a2bcbf2da1eae7ae1c51e1da00d77e80299042eef6945763dcc3694ad6ab",
+      "raw_bytes": 508,
+      "raw_relative": "work-normal/lualatex-version.RESULT.json",
+      "raw_sha256": "0e33fec42e05102604633a11f3d5ba962a6b4732cd7e877a00e5b9f2ae4785a3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/lualatex-version.START.json": {
+      "public_bytes": 197,
+      "public_sha256": "38e56868d52ea0415da3d8bb0fa2e77e81006cb09122c01a221bb674eb7a72aa",
+      "raw_bytes": 260,
+      "raw_relative": "work-normal/lualatex-version.START.json",
+      "raw_sha256": "a43fcd69c30a13dbe95602cd65af3d0dc0abcbac84ec6d2048985e1a263c7915",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/lualatex-version.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/lualatex-version.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/lualatex-version.stdout": {
+      "public_bytes": 453,
+      "public_sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602",
+      "raw_bytes": 453,
+      "raw_relative": "work-normal/lualatex-version.stdout",
+      "raw_sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/pandoc-version.RESULT.json": {
+      "public_bytes": 445,
+      "public_sha256": "67edc5243e0bf6b1d8f365f3bcb0c75a81f7f996740eb5602d7548533b2cbc14",
+      "raw_bytes": 504,
+      "raw_relative": "work-normal/pandoc-version.RESULT.json",
+      "raw_sha256": "f850c2c03045f859d83b5c01ba2b854a6881a9f9b00ace7bedac1b3718651e5a",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/pandoc-version.START.json": {
+      "public_bytes": 197,
+      "public_sha256": "35fc62deeff3b201aff8775cb49ff14e41414a841a6d2c97b6272136c2a76edf",
+      "raw_bytes": 256,
+      "raw_relative": "work-normal/pandoc-version.START.json",
+      "raw_sha256": "d8152e85d8e865b4f2b529128c9d1490c1638a5ff53a9fd24a4005abf545ac33",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/pandoc-version.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-normal/pandoc-version.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-normal/pandoc-version.stdout": {
+      "public_bytes": 389,
+      "public_sha256": "dc24a60f45e099a274a9a4f11c95c33554844319c5acb97984a3cde31eb4e6c6",
+      "raw_bytes": 448,
+      "raw_relative": "work-normal/pandoc-version.stdout",
+      "raw_sha256": "41b7451ffdbf7dcefa4744e519b4d8f9f6062ca1c74c46876bc45a21ccefbbc8",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/RESULT.json": {
+      "public_bytes": 6586,
+      "public_sha256": "d2c18509e5bc04aadf61c3438494da778796b534faf44d4dba718b4a7951bd57",
+      "raw_bytes": 7432,
+      "raw_relative": "work-optimized/RESULT.json",
+      "raw_sha256": "8f0950dd27dd2033cfe02034c4d8c2fbdbb3419eb3055a109545fe2598c9af7d",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-1.RESULT.json": {
+      "public_bytes": 568,
+      "public_sha256": "370ebebbcded3a79a32291c5aa4156171f2d3d091fbad28696dae9cdc03d66c7",
+      "raw_bytes": 631,
+      "raw_relative": "work-optimized/build-1/latex-1.RESULT.json",
+      "raw_sha256": "62b4df6d18eff84c702f43c08908a9847b1e17ba8b3babc44e54114614b0f7ec",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-1.START.json": {
+      "public_bytes": 320,
+      "public_sha256": "7a562610cfda5292fdf90fbbdd36177ab076293c2b7c5fbb6a8b4e6b6589c447",
+      "raw_bytes": 383,
+      "raw_relative": "work-optimized/build-1/latex-1.START.json",
+      "raw_sha256": "fcf2d4169045a73660f67d23c3aa23034d948f943abee31d37f1b20cfeec9525",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-1.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-1/latex-1.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-1.stdout": {
+      "public_bytes": 13735,
+      "public_sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f",
+      "raw_bytes": 13735,
+      "raw_relative": "work-optimized/build-1/latex-1.stdout",
+      "raw_sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-2.RESULT.json": {
+      "public_bytes": 568,
+      "public_sha256": "a52fd4167d0ffc5f867ba5a77afb77f7baf64a13b801247342232ba23e987cd4",
+      "raw_bytes": 631,
+      "raw_relative": "work-optimized/build-1/latex-2.RESULT.json",
+      "raw_sha256": "d5fbd6cb2f99f7809efe1c7c3cc611d3434a796aeb772101e5e004fad4975a9a",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-2.START.json": {
+      "public_bytes": 320,
+      "public_sha256": "310d1bd944ab895b2fb48889f5378b8391f70ee5eae2e3e3ef89c76feec71428",
+      "raw_bytes": 383,
+      "raw_relative": "work-optimized/build-1/latex-2.START.json",
+      "raw_sha256": "d653bd9457a4593a14dfad726d79a18477977e4b53dfd0d3ff652d559cb9e477",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-2.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-1/latex-2.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/latex-2.stdout": {
+      "public_bytes": 13329,
+      "public_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_bytes": 13329,
+      "raw_relative": "work-optimized/build-1/latex-2.stdout",
+      "raw_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/log-check.RESULT.json": {
+      "public_bytes": 622,
+      "public_sha256": "f8a821af679c64bdd23fe453dc1ba2fefb3850f48e7da6267d4764661a772967",
+      "raw_bytes": 799,
+      "raw_relative": "work-optimized/build-1/log-check.RESULT.json",
+      "raw_sha256": "4aa2e3d2b08196cec8e14865fba5b7646242a74863644665ed33f9451ad7e507",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/log-check.START.json": {
+      "public_bytes": 374,
+      "public_sha256": "c79143ef3e94a6205f1c4320ba8ff6f49f546651639fe46c394094f2f567dca7",
+      "raw_bytes": 551,
+      "raw_relative": "work-optimized/build-1/log-check.START.json",
+      "raw_sha256": "10f47ab0b41278eaec92420a04249757b06bcfdf103c2c456d4b8e2799c25b23",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/log-check.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-1/log-check.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/log-check.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-1/log-check.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/pandoc.RESULT.json": {
+      "public_bytes": 574,
+      "public_sha256": "56cfdcbe2e714250975c06baaad52f7da78912738455158880e51a206b61563f",
+      "raw_bytes": 633,
+      "raw_relative": "work-optimized/build-1/pandoc.RESULT.json",
+      "raw_sha256": "6a4075477b48a7a26b76a71dca406af01b574ab928e7b12a51b05ab4f0b5cbb5",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/pandoc.START.json": {
+      "public_bytes": 326,
+      "public_sha256": "0d3c4a6c9a99c199ae15369ff569dbb8df269cc4cc2e04f587f174d2e581d93d",
+      "raw_bytes": 385,
+      "raw_relative": "work-optimized/build-1/pandoc.START.json",
+      "raw_sha256": "a1ec71c200cd363b61204ea8fc969e33397b812601f006384e65966393a1a5ae",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/pandoc.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-1/pandoc.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-1/pandoc.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-1/pandoc.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-1.RESULT.json": {
+      "public_bytes": 568,
+      "public_sha256": "0adba5b4fe4e10a23bfc28d7af07afa3d73100a097b2ff9dec6d302c28f5290a",
+      "raw_bytes": 631,
+      "raw_relative": "work-optimized/build-2/latex-1.RESULT.json",
+      "raw_sha256": "9604eae6cd1275d936d9f0cdc37f7eb200a84b2d42f65a51a4080ec4448870d8",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-1.START.json": {
+      "public_bytes": 320,
+      "public_sha256": "13164c658918d8189ce3f2a3f681456f642c309ad30294ddd3461eaaff5afac9",
+      "raw_bytes": 383,
+      "raw_relative": "work-optimized/build-2/latex-1.START.json",
+      "raw_sha256": "301d0b216d1fd94ba9919fd3a243a2112a56e80925c10facbb5a651f2613edb0",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-1.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-2/latex-1.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-1.stdout": {
+      "public_bytes": 13598,
+      "public_sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2",
+      "raw_bytes": 13598,
+      "raw_relative": "work-optimized/build-2/latex-1.stdout",
+      "raw_sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-2.RESULT.json": {
+      "public_bytes": 568,
+      "public_sha256": "bac2fa24f5e809de20d164828e95b3fb7e86d61a71d4f4bb32932b253f1a88c6",
+      "raw_bytes": 631,
+      "raw_relative": "work-optimized/build-2/latex-2.RESULT.json",
+      "raw_sha256": "daaaf33818eccaf86c2d7967a5a33d66e55c7976b3693c14bace2a8a75d404b7",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-2.START.json": {
+      "public_bytes": 320,
+      "public_sha256": "16405cc3ed2da247e0c206b00b1db3a900c3e31d72ee6488e9ab7279cb9b0770",
+      "raw_bytes": 383,
+      "raw_relative": "work-optimized/build-2/latex-2.START.json",
+      "raw_sha256": "4b60b433adaf3abb0288a5853ed142cba7ff9a43075b199603c35b57cd940941",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-2.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-2/latex-2.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/latex-2.stdout": {
+      "public_bytes": 13329,
+      "public_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_bytes": 13329,
+      "raw_relative": "work-optimized/build-2/latex-2.stdout",
+      "raw_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/log-check.RESULT.json": {
+      "public_bytes": 622,
+      "public_sha256": "ec57792421b67924eae06b0a201a53cdc16b93e5e26b510bd118426368e4e517",
+      "raw_bytes": 799,
+      "raw_relative": "work-optimized/build-2/log-check.RESULT.json",
+      "raw_sha256": "efc02c74ead402ad8c5ec8035cb629eb605597996e3932d7214f201294dbeba0",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/log-check.START.json": {
+      "public_bytes": 374,
+      "public_sha256": "b3aa13c7172c19e80f8b30fc580f0abfbcb3576ee9530113f5a9788eeba99a4c",
+      "raw_bytes": 551,
+      "raw_relative": "work-optimized/build-2/log-check.START.json",
+      "raw_sha256": "19823c003049d2922a8c6d567e83dd7f647b918c01bd77cc41399451a36a7e3f",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/log-check.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-2/log-check.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/log-check.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-2/log-check.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/pandoc.RESULT.json": {
+      "public_bytes": 574,
+      "public_sha256": "790ca23249e4664af6a27891f43ed4c58924e744d56a033efe7f36f54ee34eb7",
+      "raw_bytes": 633,
+      "raw_relative": "work-optimized/build-2/pandoc.RESULT.json",
+      "raw_sha256": "e7627139295a9c97962502c7759f1e83d0f93526b67a53141365e016db3fb1fd",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/pandoc.START.json": {
+      "public_bytes": 326,
+      "public_sha256": "eae2495bd1f9b0681455ef5eb4bd27556159743d534b82c96f53c955c4307c4a",
+      "raw_bytes": 385,
+      "raw_relative": "work-optimized/build-2/pandoc.START.json",
+      "raw_sha256": "8db96fda1da0821967df6a33a2e9b7b8d1823f16c02138d57d6de8796fa55f57",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/pandoc.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-2/pandoc.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/build-2/pandoc.stdout": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/build-2/pandoc.stdout",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/lualatex-version.RESULT.json": {
+      "public_bytes": 448,
+      "public_sha256": "913d3b36c56209626ca1b1e3fb0edb80b3ccc74ffd1322048c2ae75686f292aa",
+      "raw_bytes": 511,
+      "raw_relative": "work-optimized/lualatex-version.RESULT.json",
+      "raw_sha256": "13108586447a327eb3eea8a0665f97e1d6bcbf3db83a6b353d4cd6f2ef25ede3",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/lualatex-version.START.json": {
+      "public_bytes": 200,
+      "public_sha256": "50c528c46e9f752d26be1eacb0bf57ee6da010fe302acf88618c20d78926b1c4",
+      "raw_bytes": 263,
+      "raw_relative": "work-optimized/lualatex-version.START.json",
+      "raw_sha256": "e2a14cb03778ae13193589591e2d1d6e5b205dd3cb50ff0f9f68212ce2f16347",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/lualatex-version.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/lualatex-version.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/lualatex-version.stdout": {
+      "public_bytes": 453,
+      "public_sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602",
+      "raw_bytes": 453,
+      "raw_relative": "work-optimized/lualatex-version.stdout",
+      "raw_sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/pandoc-version.RESULT.json": {
+      "public_bytes": 448,
+      "public_sha256": "3fba781b1d252255346eabfdf75e94d8e77de9b7dcd6a587e8baf93f54a35b19",
+      "raw_bytes": 507,
+      "raw_relative": "work-optimized/pandoc-version.RESULT.json",
+      "raw_sha256": "2c5d6623d9bf3be22803644c32e102a71db2af6adc1350af59a9715eb739dc89",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/pandoc-version.START.json": {
+      "public_bytes": 200,
+      "public_sha256": "cd5a1afb3d7b42f973c617ddfbfdcd4cbca136f6687500e5ca573cc0d7c6725a",
+      "raw_bytes": 259,
+      "raw_relative": "work-optimized/pandoc-version.START.json",
+      "raw_sha256": "d5c767b03d2b6357dc0dc18df2a579048a6f2f52514fce843ae89109b419d043",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/pandoc-version.stderr": {
+      "public_bytes": 0,
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0,
+      "raw_relative": "work-optimized/pandoc-version.stderr",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "builder/work-optimized/pandoc-version.stdout": {
+      "public_bytes": 392,
+      "public_sha256": "933b30a4712ec598a3248e424990f0d9160354d5bfd12d27971adb006aaec032",
+      "raw_bytes": 451,
+      "raw_relative": "work-optimized/pandoc-version.stdout",
+      "raw_sha256": "6d569106c6d3db6324f9aef413238175f120ff2cc679a8a88549ab57288d1207",
+      "raw_stage": "sx-mean-pdf-builder-root-20260908"
+    },
+    "https-production/INPUTS.json": {
+      "public_bytes": 2559,
+      "public_sha256": "1ec091abda94a6717a7b9accf9f7b447158293f2e1d42eb33e6646d02c5f836c",
+      "raw_bytes": 3090,
+      "raw_relative": "INPUTS.json",
+      "raw_sha256": "234546a1e3395a102c4f4604b689c73ef252cfde31ef23a5a95fcbfa4dfa6e2c",
+      "raw_stage": "sx-mean-https-pdf-production-root-20260908"
+    },
+    "https-production/PRODUCTION_COMPLETE.json": {
+      "public_bytes": 293,
+      "public_sha256": "7ce5a328c0ee60892f985b81979f55232b099aca09da65a91664863f5f9d4955",
+      "raw_bytes": 293,
+      "raw_relative": "PRODUCTION_COMPLETE.json",
+      "raw_sha256": "7ce5a328c0ee60892f985b81979f55232b099aca09da65a91664863f5f9d4955",
+      "raw_stage": "sx-mean-https-pdf-production-root-20260908"
+    },
+    "https-production/ROOT_PDF_REVIEW.json": {
+      "public_bytes": 1664,
+      "public_sha256": "77611473469a648091f157ffa64a18f68825e856ce7ffc0a911eabab36114702",
+      "raw_bytes": 1664,
+      "raw_relative": "ROOT_PDF_REVIEW.json",
+      "raw_sha256": "77611473469a648091f157ffa64a18f68825e856ce7ffc0a911eabab36114702",
+      "raw_stage": "sx-mean-https-pdf-production-root-20260908"
+    },
+    "https-production/STOP_RECORD.json": {
+      "public_bytes": 430,
+      "public_sha256": "a9d13b61836b6c993f33d2ba47c6d2a3dbda7e490229b6eac3a34b069ed36af6",
+      "raw_bytes": 430,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "a9d13b61836b6c993f33d2ba47c6d2a3dbda7e490229b6eac3a34b069ed36af6",
+      "raw_stage": "sx-mean-https-pdf-production-root-20260908"
+    },
+    "https-production/TOOLS.json": {
+      "public_bytes": 1441,
+      "public_sha256": "6e697184f0146a833101a818cc309bafa5bb031f5dac78935c9b3718bc35052c",
+      "raw_bytes": 1445,
+      "raw_relative": "TOOLS.json",
+      "raw_sha256": "129ac38276962d8c19c41da5cbfd7b9420493a98a2ad20e540c094fd85b7df11",
+      "raw_stage": "sx-mean-https-pdf-production-root-20260908"
+    },
+    "https-production/profile-proposal/IDENTITY.json": {
+      "public_bytes": 553,
+      "public_sha256": "642aac8d871b9806cfa402214094e1d120cccb3d9333417e075f3c228a902ae4",
+      "raw_bytes": 553,
+      "raw_relative": "profile-proposal/IDENTITY.json",
+      "raw_sha256": "642aac8d871b9806cfa402214094e1d120cccb3d9333417e075f3c228a902ae4",
+      "raw_stage": "sx-mean-https-pdf-production-root-20260908"
+    },
+    "materializer-controls/ACCEPTANCE.json": {
+      "public_bytes": 833,
+      "public_sha256": "d2259e4a47812ef0f1c4c77ef868819ac97152755646cef9be7ac5a7e1b2f083",
+      "raw_bytes": 892,
+      "raw_relative": "ACCEPTANCE.json",
+      "raw_sha256": "d5304e8dc6063f612f4a82acc86f12012e1ce42d6b7092c4e32ca3db05d8bc90",
+      "raw_stage": "sx-mean-materializer-controls-root-20260908"
+    },
+    "materializer-controls/ROOT_REVIEW.json": {
+      "public_bytes": 36139,
+      "public_sha256": "067794263657b1b28199fa6fb0a86834c487c600b7ee1572ae8b59de83459eda",
+      "raw_bytes": 36198,
+      "raw_relative": "ROOT_REVIEW.json",
+      "raw_sha256": "4c1f220948adc3023523bd35ee873b443b01005ca6b1039c9911d93d3fbcd146",
+      "raw_stage": "sx-mean-materializer-controls-root-20260908"
+    },
+    "materializer-controls/STOP_RECORD.json": {
+      "public_bytes": 150,
+      "public_sha256": "3ac54fbafcfb91f54c266e78395f3d76ce9722681f6b4fdefd031a51596b6948",
+      "raw_bytes": 150,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "3ac54fbafcfb91f54c266e78395f3d76ce9722681f6b4fdefd031a51596b6948",
+      "raw_stage": "sx-mean-materializer-controls-root-20260908"
+    },
+    "materializer-controls/controls-0/RESULT.json": {
+      "public_bytes": 161285,
+      "public_sha256": "197b8c93f028c86b247bcb777e06b281241d9966f3c03a96c29db3ca1fd7d8b9",
+      "raw_bytes": 182761,
+      "raw_relative": "controls-0/RESULT.json",
+      "raw_sha256": "26fdde618c9015cbb75428d0bb56ad0a2e01b36a4450ca98bd52429c479ffe45",
+      "raw_stage": "sx-mean-materializer-controls-root-20260908"
+    },
+    "materializer-controls/controls-1/RESULT.json": {
+      "public_bytes": 161285,
+      "public_sha256": "0ce4520edca71345bc1d99fd97147086bfc40f24cb9acb389e6d2eced210d17b",
+      "raw_bytes": 182761,
+      "raw_relative": "controls-1/RESULT.json",
+      "raw_sha256": "5e30b37a60974258e619031b5521cb11c4426fac2cfcc992c3d0ac327e394161",
+      "raw_stage": "sx-mean-materializer-controls-root-20260908"
+    },
+    "portable-builder-controls/ACCEPTANCE.json": {
+      "public_bytes": 734,
+      "public_sha256": "af02a317865e650296af575b105ac38cf0eea6b2d36ba032e6254366d8179515",
+      "raw_bytes": 734,
+      "raw_relative": "ACCEPTANCE.json",
+      "raw_sha256": "af02a317865e650296af575b105ac38cf0eea6b2d36ba032e6254366d8179515",
+      "raw_stage": "sx-mean-pdf-controls-relocated-root-20260908"
+    },
+    "portable-builder-controls/MATERIALIZED_REVIEW.json": {
+      "public_bytes": 5193,
+      "public_sha256": "8a29e1c2c5e4ad68bac67e356618305533fd0ecd1041fa437c0a5bb2f9d478dd",
+      "raw_bytes": 5193,
+      "raw_relative": "MATERIALIZED_REVIEW.json",
+      "raw_sha256": "8a29e1c2c5e4ad68bac67e356618305533fd0ecd1041fa437c0a5bb2f9d478dd",
+      "raw_stage": "sx-mean-pdf-controls-relocated-root-20260908"
+    },
+    "portable-builder-controls/ROOT_CASE_REVIEW.json": {
+      "public_bytes": 70588,
+      "public_sha256": "ed28074768f72dc48fbcef769a45945a644235f59586f5145e8b3c3f32f2cecb",
+      "raw_bytes": 70588,
+      "raw_relative": "ROOT_CASE_REVIEW.json",
+      "raw_sha256": "ed28074768f72dc48fbcef769a45945a644235f59586f5145e8b3c3f32f2cecb",
+      "raw_stage": "sx-mean-pdf-controls-relocated-root-20260908"
+    },
+    "portable-builder-controls/STOP_RECORD.json": {
+      "public_bytes": 182,
+      "public_sha256": "07f79aba2dd4b635ac5b4ed28512784e598fdb1926dc55a610c70f492719d61c",
+      "raw_bytes": 182,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "07f79aba2dd4b635ac5b4ed28512784e598fdb1926dc55a610c70f492719d61c",
+      "raw_stage": "sx-mean-pdf-controls-relocated-root-20260908"
+    },
+    "portable-builder-controls/inert-controls-0/RESULT.json": {
+      "public_bytes": 95765,
+      "public_sha256": "a35437e20db212c4e1002306060f627f0eb0aec544693205adbc289b185f5a1e",
+      "raw_bytes": 95765,
+      "raw_relative": "inert-controls-0/RESULT.json",
+      "raw_sha256": "a35437e20db212c4e1002306060f627f0eb0aec544693205adbc289b185f5a1e",
+      "raw_stage": "sx-mean-pdf-controls-relocated-root-20260908"
+    },
+    "portable-builder-controls/inert-controls-1/RESULT.json": {
+      "public_bytes": 95765,
+      "public_sha256": "0f0c2b2ac1563dcc9a95042f6672b4679a1699dd8aa7888d3f0251ed72540b23",
+      "raw_bytes": 95765,
+      "raw_relative": "inert-controls-1/RESULT.json",
+      "raw_sha256": "0f0c2b2ac1563dcc9a95042f6672b4679a1699dd8aa7888d3f0251ed72540b23",
+      "raw_stage": "sx-mean-pdf-controls-relocated-root-20260908"
+    },
+    "relocated-controls/ACCEPTANCE.json": {
+      "public_bytes": 1132,
+      "public_sha256": "6daeac00fa481e53fd710539e2d63e5c12b9809285ef5223e71f696be4510dbf",
+      "raw_bytes": 1132,
+      "raw_relative": "ACCEPTANCE.json",
+      "raw_sha256": "6daeac00fa481e53fd710539e2d63e5c12b9809285ef5223e71f696be4510dbf",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    },
+    "relocated-controls/ROOT_REVIEW.json": {
+      "public_bytes": 895,
+      "public_sha256": "20553a6549c3949ccfa48c61d6235543450ae38337e9a495864cea9692eb8aad",
+      "raw_bytes": 895,
+      "raw_relative": "ROOT_REVIEW.json",
+      "raw_sha256": "20553a6549c3949ccfa48c61d6235543450ae38337e9a495864cea9692eb8aad",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    },
+    "relocated-controls/ROOT_SUPERVISOR_REVIEW.json": {
+      "public_bytes": 3304,
+      "public_sha256": "43387bca13f02c3c2412264ad5e25a842b5793aaa82e9431ada63f12eda1aeb7",
+      "raw_bytes": 3304,
+      "raw_relative": "ROOT_SUPERVISOR_REVIEW.json",
+      "raw_sha256": "43387bca13f02c3c2412264ad5e25a842b5793aaa82e9431ada63f12eda1aeb7",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    },
+    "relocated-controls/STOP_RECORD.json": {
+      "public_bytes": 197,
+      "public_sha256": "1049431025e988730c4d0c09c1ce5e09ac1f9df9e7ff2e98e57d4da022d7a59a",
+      "raw_bytes": 197,
+      "raw_relative": "STOP_RECORD.json",
+      "raw_sha256": "1049431025e988730c4d0c09c1ce5e09ac1f9df9e7ff2e98e57d4da022d7a59a",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    },
+    "relocated-controls/SUPERVISOR_ACCEPTANCE.json": {
+      "public_bytes": 442,
+      "public_sha256": "1c8c905fc483f4c91b081c65aefdd079a4ddfa96d285b6dd260110f9dd24c2f3",
+      "raw_bytes": 442,
+      "raw_relative": "SUPERVISOR_ACCEPTANCE.json",
+      "raw_sha256": "1c8c905fc483f4c91b081c65aefdd079a4ddfa96d285b6dd260110f9dd24c2f3",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    },
+    "relocated-controls/adapter/RESULT.json": {
+      "public_bytes": 80305,
+      "public_sha256": "29191b0acec7a150d2b7f5d3b0cbe42edaa5218ac45f0147de5416271996c456",
+      "raw_bytes": 80305,
+      "raw_relative": "adapter/RESULT.json",
+      "raw_sha256": "29191b0acec7a150d2b7f5d3b0cbe42edaa5218ac45f0147de5416271996c456",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    },
+    "relocated-controls/supervisor/RESULT.json": {
+      "public_bytes": 2641,
+      "public_sha256": "24f578901e22f22b1b80725565a06526e1d1df920a905652893f50f9894fce2c",
+      "raw_bytes": 2641,
+      "raw_relative": "supervisor/RESULT.json",
+      "raw_sha256": "24f578901e22f22b1b80725565a06526e1d1df920a905652893f50f9894fce2c",
+      "raw_stage": "sx-mean-relocated-controls-root-20260908"
+    }
+  },
+  "locator_prefixes": {
+    "HOST_HOMEBREW": "logical host locator",
+    "HOST_TEMP": "logical host locator",
+    "HOST_TEX": "logical host locator",
+    "HOST_TMP": "logical host locator",
+    "REPOSITORY": "logical host locator",
+    "USER_HOME": "logical host locator"
+  },
+  "schema": "pid-rs/mean-publication-receipt-projection-v1",
+  "scope": "Exact selected receipt and producer-stream projections. Raw hash fields inside historical records remain raw identities. Logical locator substitution is not byte identity or a replay. Complete private fixture trees, process tables, caches, binaries, copied dependency snapshots and rendered QA images are retained but not redistributed. Original closed stage manifests govern their custody."
+}

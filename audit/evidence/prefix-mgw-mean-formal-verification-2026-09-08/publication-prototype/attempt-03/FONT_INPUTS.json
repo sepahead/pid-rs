@@ -1,0 +1,17 @@
+[
+  {
+    "name": "SourceSansPro-Regular.otf",
+    "path": "/usr/local/texlive/2024/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf",
+    "sha256": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51"
+  },
+  {
+    "name": "SourceSansPro-Semibold.otf",
+    "path": "/usr/local/texlive/2024/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Semibold.otf",
+    "sha256": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2"
+  },
+  {
+    "name": "SourceSansPro-Bold.otf",
+    "path": "/usr/local/texlive/2024/texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Bold.otf",
+    "sha256": "daccddbe3dd60fe10f6e8a785eda187925da6b611141024dffa43626998dfc7c"
+  }
+]

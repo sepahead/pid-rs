@@ -1,0 +1,1819 @@
+{
+  "observed_utc": "2026-09-08T09:37:24.680813+00:00",
+  "source_members_rehashed": 31,
+  "executed_source_copies_checked": 224,
+  "unique_exact_diff_texts": 20,
+  "totals": [
+    {
+      "mode": 0,
+      "cases": 112,
+      "tool_starts": 266,
+      "result_sha256": "e536e6c1d6f4c58d5b4af07f752facf91eff62b80f732324dfa5ca7c26ea6525",
+      "completed_utc": "2026-09-08T09:34:42.091464+00:00"
+    },
+    {
+      "mode": 1,
+      "cases": 112,
+      "tool_starts": 266,
+      "result_sha256": "f371133547ed1b31934b55269c1fdcfcf1c7f0e72d93da053897b8ccc5e2963c",
+      "completed_utc": "2026-09-08T09:35:31.817645+00:00"
+    }
+  ],
+  "issues": [],
+  "observed_surviving_case_groups": [],
+  "rows": [
+    {
+      "outer_mode": 0,
+      "case": "000-0-real-profile-exact",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "001-0-real-profile-check",
+      "actual_returncode": 0,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "002-0-real-profile-new-output",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "003-0-selected-lualatex-name",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "004-0-cross-refusal",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "005-0-unresolved-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "006-0-unresolved-PDF-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "007-0-unresolved-manifest-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "008-0-manifest-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "009-0-duplicate-profile-key",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "010-0-nonfinite-profile-number",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "011-0-nonobject-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "012-0-wrong-profile-schema",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "013-0-boolean-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "014-0-floating-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "015-0-wrong-profile-PDF-digest",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "016-0-unsafe-profile-source-path",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "017-0-missing-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "018-0-changed-Markdown-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "019-0-changed-figure-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "020-0-symbolic-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "021-0-hardlinked-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "022-0-boolean-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "023-0-floating-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "024-0-Markdown-title",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "025-0-Markdown-verification-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "026-0-Markdown-figure-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "027-0-Markdown-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "028-0-TeX-section-inventory",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "029-0-TeX-pagebreak-anchor",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "030-0-TeX-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "031-0-Pandoc-version",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "032-0-LuaLaTeX-version",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "033-0-missing-selected-tool",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "034-0-relative-tool-selector",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "035-0-selector-drift-before-launch",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "036-0-selector-drift-after-launch",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "037-0-Pandoc-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "038-0-LuaLaTeX-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "039-0-log-command-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "040-0-producer-zero-with-stderr",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "041-0-actual-subprocess-timeout",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "042-0-wrong-PDF-bytes",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "043-0-second-build-PDF-mismatch",
+      "actual_returncode": 1,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "044-0-source-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "045-0-source-mode-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "046-0-tool-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "047-0-existing-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "048-0-symbolic-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "049-0-existing-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "050-0-canonical-input-output",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "051-0-symbolic-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "052-0-symbolic-output-parent",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "053-0-missing-isolation-flag",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "054-0-missing-work-argument",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "055-0-unknown-option",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "056-1-real-profile-exact",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "057-1-real-profile-check",
+      "actual_returncode": 0,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "058-1-real-profile-new-output",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "059-1-selected-lualatex-name",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "060-1-cross-refusal",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "061-1-unresolved-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "062-1-unresolved-PDF-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "063-1-unresolved-manifest-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "064-1-manifest-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "065-1-duplicate-profile-key",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "066-1-nonfinite-profile-number",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "067-1-nonobject-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "068-1-wrong-profile-schema",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "069-1-boolean-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "070-1-floating-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "071-1-wrong-profile-PDF-digest",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "072-1-unsafe-profile-source-path",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "073-1-missing-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "074-1-changed-Markdown-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "075-1-changed-figure-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "076-1-symbolic-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "077-1-hardlinked-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "078-1-boolean-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "079-1-floating-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "080-1-Markdown-title",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "081-1-Markdown-verification-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "082-1-Markdown-figure-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "083-1-Markdown-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "084-1-TeX-section-inventory",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "085-1-TeX-pagebreak-anchor",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "086-1-TeX-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "087-1-Pandoc-version",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "088-1-LuaLaTeX-version",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "089-1-missing-selected-tool",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "090-1-relative-tool-selector",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "091-1-selector-drift-before-launch",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "092-1-selector-drift-after-launch",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "093-1-Pandoc-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "094-1-LuaLaTeX-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "095-1-log-command-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "096-1-producer-zero-with-stderr",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "097-1-actual-subprocess-timeout",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "098-1-wrong-PDF-bytes",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "099-1-second-build-PDF-mismatch",
+      "actual_returncode": 1,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "100-1-source-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "101-1-source-mode-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "102-1-tool-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "103-1-existing-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "104-1-symbolic-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "105-1-existing-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "106-1-canonical-input-output",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "107-1-symbolic-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "108-1-symbolic-output-parent",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "109-1-missing-isolation-flag",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "110-1-missing-work-argument",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 0,
+      "case": "111-1-unknown-option",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "000-0-real-profile-exact",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "001-0-real-profile-check",
+      "actual_returncode": 0,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "002-0-real-profile-new-output",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "003-0-selected-lualatex-name",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "004-0-cross-refusal",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "005-0-unresolved-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "006-0-unresolved-PDF-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "007-0-unresolved-manifest-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "008-0-manifest-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "009-0-duplicate-profile-key",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "010-0-nonfinite-profile-number",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "011-0-nonobject-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "012-0-wrong-profile-schema",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "013-0-boolean-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "014-0-floating-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "015-0-wrong-profile-PDF-digest",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "016-0-unsafe-profile-source-path",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "017-0-missing-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "018-0-changed-Markdown-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "019-0-changed-figure-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "020-0-symbolic-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "021-0-hardlinked-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "022-0-boolean-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "023-0-floating-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "024-0-Markdown-title",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "025-0-Markdown-verification-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "026-0-Markdown-figure-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "027-0-Markdown-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "028-0-TeX-section-inventory",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "029-0-TeX-pagebreak-anchor",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "030-0-TeX-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "031-0-Pandoc-version",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "032-0-LuaLaTeX-version",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "033-0-missing-selected-tool",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "034-0-relative-tool-selector",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "035-0-selector-drift-before-launch",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "036-0-selector-drift-after-launch",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "037-0-Pandoc-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "038-0-LuaLaTeX-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "039-0-log-command-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "040-0-producer-zero-with-stderr",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "041-0-actual-subprocess-timeout",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "042-0-wrong-PDF-bytes",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "043-0-second-build-PDF-mismatch",
+      "actual_returncode": 1,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "044-0-source-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "045-0-source-mode-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "046-0-tool-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "047-0-existing-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "048-0-symbolic-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "049-0-existing-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "050-0-canonical-input-output",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "051-0-symbolic-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "052-0-symbolic-output-parent",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "053-0-missing-isolation-flag",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "054-0-missing-work-argument",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "055-0-unknown-option",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "056-1-real-profile-exact",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "057-1-real-profile-check",
+      "actual_returncode": 0,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "058-1-real-profile-new-output",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "059-1-selected-lualatex-name",
+      "actual_returncode": 0,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "060-1-cross-refusal",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "061-1-unresolved-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "062-1-unresolved-PDF-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "063-1-unresolved-manifest-pin-only",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "064-1-manifest-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "065-1-duplicate-profile-key",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "066-1-nonfinite-profile-number",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "067-1-nonobject-profile",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "068-1-wrong-profile-schema",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "069-1-boolean-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "070-1-floating-page-count",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "071-1-wrong-profile-PDF-digest",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "072-1-unsafe-profile-source-path",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "073-1-missing-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "074-1-changed-Markdown-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "075-1-changed-figure-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "076-1-symbolic-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "077-1-hardlinked-input",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "078-1-boolean-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "079-1-floating-input-size",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "080-1-Markdown-title",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "081-1-Markdown-verification-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "082-1-Markdown-figure-link",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "083-1-Markdown-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "084-1-TeX-section-inventory",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "085-1-TeX-pagebreak-anchor",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "086-1-TeX-derived-body",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "087-1-Pandoc-version",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "088-1-LuaLaTeX-version",
+      "actual_returncode": 1,
+      "tool_starts": 2,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "089-1-missing-selected-tool",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "090-1-relative-tool-selector",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "091-1-selector-drift-before-launch",
+      "actual_returncode": 1,
+      "tool_starts": 1,
+      "tool_completions": 1,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "092-1-selector-drift-after-launch",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "093-1-Pandoc-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 3,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "094-1-LuaLaTeX-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "095-1-log-command-actual-nonzero",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "096-1-producer-zero-with-stderr",
+      "actual_returncode": 1,
+      "tool_starts": 4,
+      "tool_completions": 4,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "097-1-actual-subprocess-timeout",
+      "actual_returncode": 1,
+      "tool_starts": 3,
+      "tool_completions": 2,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "098-1-wrong-PDF-bytes",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "099-1-second-build-PDF-mismatch",
+      "actual_returncode": 1,
+      "tool_starts": 10,
+      "tool_completions": 10,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "100-1-source-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "101-1-source-mode-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "102-1-tool-byte-drift",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "103-1-existing-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "104-1-symbolic-work-directory",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "105-1-existing-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "106-1-canonical-input-output",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "107-1-symbolic-output-file",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "108-1-symbolic-output-parent",
+      "actual_returncode": 1,
+      "tool_starts": 6,
+      "tool_completions": 6,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "109-1-missing-isolation-flag",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "110-1-missing-work-argument",
+      "actual_returncode": 1,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    },
+    {
+      "outer_mode": 1,
+      "case": "111-1-unknown-option",
+      "actual_returncode": 2,
+      "tool_starts": 0,
+      "tool_completions": 0,
+      "status": "matched_expected_inert_entrypoint_behavior"
+    }
+  ],
+  "scope": "Root reads typed actual case outcomes, all saved outer streams, exact executed source correspondence and source custody. No theorem/PDF production credit."
+}

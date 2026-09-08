@@ -1,0 +1,3452 @@
+{
+  "accepted_mgw_dependency_records": [
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.actual_join_lub",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.actual_join_lub_target.{u}",
+      "raw_target": "PidMgwBridgeRawTargets.actual_join_lub",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.actual_join_lub",
+      "universes": [
+        "u"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.mismatch_generator_and_exclusion",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.mismatch_generator_and_exclusion_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.mismatch_generator_and_exclusion",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.mismatch_generator_and_exclusion",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.generator_nonnegative_and_total",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.generator_nonnegative_and_total_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.generator_nonnegative_and_total",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.generator_nonnegative_and_total",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.generator_lower_cumulative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.generator_lower_cumulative_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.generator_lower_cumulative",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.generator_lower_cumulative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.target_conditioning_mass",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.target_conditioning_mass_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.target_conditioning_mass",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.target_conditioning_mass",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.supported_anchor_domains",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.supported_anchor_domains_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.supported_anchor_domains",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.supported_anchor_domains",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.conditional_generator_support",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.conditional_generator_support_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.conditional_generator_support",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.conditional_generator_support",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.informative_inverse_identification",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.informative_inverse_identification_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.informative_inverse_identification",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.informative_inverse_identification",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.misinformative_inverse_identification",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.misinformative_inverse_identification_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.misinformative_inverse_identification",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.misinformative_inverse_identification",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.component_nonnegative_strict_support",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.component_nonnegative_strict_support_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.component_nonnegative_strict_support",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.component_nonnegative_strict_support",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.signed_mgw_cumulative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.signed_mgw_cumulative_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.signed_mgw_cumulative",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.signed_mgw_cumulative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "accepted_prefix_dependency_records": [
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.finite_law_measure",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.finite_law_measure_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.finite_law_measure",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.finite_law_measure",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.finite_product_law",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.finite_product_law_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.finite_product_law",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.finite_product_law",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.positive_increment_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.positive_increment_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.positive_increment_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.positive_increment_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.negative_increment_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.negative_increment_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.negative_increment_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.negative_increment_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.block_range",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.block_range_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.block_range",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.block_range",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.block_product_independence",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.block_product_independence_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.block_product_independence",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.block_product_independence",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "artifacts": {
+    "00-tool-version/command.json": {
+      "bytes": 1029,
+      "sha256": "d217d68d02c567932ccf20dda215ae1b2fa63bfe1574961af90fe53dfbcd19a4"
+    },
+    "00-tool-version/registered.json": {
+      "bytes": 3218,
+      "sha256": "2ddf4a3028cca6b4b1f4d2e68729e36eb1ae6875e967628f61fabde630f71f63"
+    },
+    "00-tool-version/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "00-tool-version/stdout.log": {
+      "bytes": 106,
+      "sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+    },
+    "01-compile-PidFiniteConvergence-Deterministic/command.json": {
+      "bytes": 1511,
+      "sha256": "b939bbea188fcdcac7868192fcef7bbc7153508fd931589dd4fe4483d158bcf1"
+    },
+    "01-compile-PidFiniteConvergence-Deterministic/registered.json": {
+      "bytes": 3699,
+      "sha256": "2b6b9a83b0af901029fb425836b650fb95c2abe8fe964ed9e6ace34c9919ce3e"
+    },
+    "01-compile-PidFiniteConvergence-Deterministic/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "01-compile-PidFiniteConvergence-Deterministic/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "02-compile-PidFiniteConvergence-SxEventBridge/command.json": {
+      "bytes": 1511,
+      "sha256": "6e4061b21d48bdbea2935e64b94428946483663a6a09a679c7fe1c1756ec4c26"
+    },
+    "02-compile-PidFiniteConvergence-SxEventBridge/registered.json": {
+      "bytes": 3699,
+      "sha256": "e73f1a0f6a9064e76a17a0471c4459500f4f5c6ed10cd81dd24ec065188d0139"
+    },
+    "02-compile-PidFiniteConvergence-SxEventBridge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "02-compile-PidFiniteConvergence-SxEventBridge/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "03-compile-MgwBridgeDepsV1-SxDnf-Contract/command.json": {
+      "bytes": 1499,
+      "sha256": "65a6cc2c8702535267ff6cca3e30a118f5d570965aa98b71c5012ec64bc1a39c"
+    },
+    "03-compile-MgwBridgeDepsV1-SxDnf-Contract/registered.json": {
+      "bytes": 3687,
+      "sha256": "59db16c634b3c93f83ad9dde382af5f98e392351b9889eaff2534aa3c1fd169f"
+    },
+    "03-compile-MgwBridgeDepsV1-SxDnf-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "03-compile-MgwBridgeDepsV1-SxDnf-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "04-compile-MgwBridgeDepsV1-JoinLog-Contract/command.json": {
+      "bytes": 1505,
+      "sha256": "79c8b72f3913f43577c609dd39d8468e7fca21e4a30e4e3fcaab8691be83dba0"
+    },
+    "04-compile-MgwBridgeDepsV1-JoinLog-Contract/registered.json": {
+      "bytes": 3693,
+      "sha256": "b5979d7bcf207580c8e6276d20a356a0e00e1cb848cbf7aae0ab75c90921fa81"
+    },
+    "04-compile-MgwBridgeDepsV1-JoinLog-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "04-compile-MgwBridgeDepsV1-JoinLog-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/command.json": {
+      "bytes": 1502,
+      "sha256": "75c03eaf3dec35e3552a847509d96f5787db2b7e5ca7f7fa835749230494adbb"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/registered.json": {
+      "bytes": 3690,
+      "sha256": "45450f7cb4fe79ca9ad05da68158fc1ca800c7149a4fdb40e90c4c2f1ae7edf0"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "05-compile-MgwBridgeDepsV1-SxDnf-JudgeCore/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "06-compile-MgwBridgeDepsV1-SxDnf-Proofs/command.json": {
+      "bytes": 1493,
+      "sha256": "61a1b71461d64de232508f3a7aa35ccdca9a558d76f09ba853e397a12cf9caea"
+    },
+    "06-compile-MgwBridgeDepsV1-SxDnf-Proofs/registered.json": {
+      "bytes": 3681,
+      "sha256": "9680ae5bb2fe6741f8d61f99bfc157d34ca453e18b83a97d705a2b0a918de035"
+    },
+    "06-compile-MgwBridgeDepsV1-SxDnf-Proofs/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "06-compile-MgwBridgeDepsV1-SxDnf-Proofs/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "07-compile-MgwBridgeDepsV1-JoinLog-Proofs/command.json": {
+      "bytes": 1499,
+      "sha256": "304c0a2cb036255c066c9322d835e16f34b80d1ac2474f376ac419afe1159e32"
+    },
+    "07-compile-MgwBridgeDepsV1-JoinLog-Proofs/registered.json": {
+      "bytes": 3687,
+      "sha256": "44b98ab91c330eb16001c03b99c12070c4e018e0700417a1209cfce07117f048"
+    },
+    "07-compile-MgwBridgeDepsV1-JoinLog-Proofs/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "07-compile-MgwBridgeDepsV1-JoinLog-Proofs/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "08-compile-PidMgwBridge-Contract/command.json": {
+      "bytes": 1472,
+      "sha256": "e4da0fcae21b584c5dffb295c9266ecb4377c8a36e72316b4da60cdb715ed6e2"
+    },
+    "08-compile-PidMgwBridge-Contract/registered.json": {
+      "bytes": 3660,
+      "sha256": "23cde8d84e53130f15b1cb4e267b78125f154ad7fada2042df55a019cc67f626"
+    },
+    "08-compile-PidMgwBridge-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "08-compile-PidMgwBridge-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "09-compile-PidMgwBridge-RawTargets/command.json": {
+      "bytes": 1478,
+      "sha256": "24ec19b3821a852fbb2f3f31dad1b46a4a2e1422bfcb9d594f21add8144dd88a"
+    },
+    "09-compile-PidMgwBridge-RawTargets/registered.json": {
+      "bytes": 3666,
+      "sha256": "fa367f4f91cdf9349d155f9a3c06c9702a9577b93c5d64fd4c9814810dbdf4a9"
+    },
+    "09-compile-PidMgwBridge-RawTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "09-compile-PidMgwBridge-RawTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "10-compile-PidMgwBridge-AliasTargets/command.json": {
+      "bytes": 1483,
+      "sha256": "658f2df27548bc3cef9d5e925bba1b7d21ad64b58a30207091daeda81a58d92e"
+    },
+    "10-compile-PidMgwBridge-AliasTargets/registered.json": {
+      "bytes": 3672,
+      "sha256": "64ea378f02ed750df86493d0a277000b10906e23076c9ad17331db24bbdc3731"
+    },
+    "10-compile-PidMgwBridge-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "10-compile-PidMgwBridge-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "11-compile-PidMgwBridge-JudgeCore/command.json": {
+      "bytes": 1475,
+      "sha256": "73a4f8b3d7334065be31e5de5e7bc96e6ad209feb06855e10d8975e57a492b06"
+    },
+    "11-compile-PidMgwBridge-JudgeCore/registered.json": {
+      "bytes": 3663,
+      "sha256": "3845d5b23ff84d954afaf6e0be8f7e497891ac78ee49744465b3dd5230d2b4bc"
+    },
+    "11-compile-PidMgwBridge-JudgeCore/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "11-compile-PidMgwBridge-JudgeCore/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "12-compile-PidMgwBridge-Candidate/command.json": {
+      "bytes": 1475,
+      "sha256": "f7cbf2c763a24f4fe3986f5627b6aa14a3a015a23e359373dcc013dc9d38cdab"
+    },
+    "12-compile-PidMgwBridge-Candidate/registered.json": {
+      "bytes": 3663,
+      "sha256": "5416128d6de243799571611db18d0eb100f900fb7f55811a241474d640d1f97a"
+    },
+    "12-compile-PidMgwBridge-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "12-compile-PidMgwBridge-Candidate/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "13-compile-PidMgwBridge-SemanticJudge/command.json": {
+      "bytes": 1490,
+      "sha256": "dd547f56330488352616fb4dc07ba5597afb7bfb63520d861a0dd2d3bd297977"
+    },
+    "13-compile-PidMgwBridge-SemanticJudge/registered.json": {
+      "bytes": 3675,
+      "sha256": "e101e94d468126d6e0202b77c4ae0cee3b02f5be4ee6a099cd0f48f11de07f90"
+    },
+    "13-compile-PidMgwBridge-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "13-compile-PidMgwBridge-SemanticJudge/stdout.log": {
+      "bytes": 4588,
+      "sha256": "3feda996f3c9d84eb2dd8b4f29f1ce46faa57687f80479942625104e9b06caa8"
+    },
+    "14-compile-PidPrefixProbability-Contract/command.json": {
+      "bytes": 1496,
+      "sha256": "c7431ed2df7afc828553fa92991a18a587f0b9cdf2333519bab633a2e6672518"
+    },
+    "14-compile-PidPrefixProbability-Contract/registered.json": {
+      "bytes": 3684,
+      "sha256": "7f0119773178917ad95c413ae0249b7876399d1ec2af0f51b0a8f0f69649ec69"
+    },
+    "14-compile-PidPrefixProbability-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "14-compile-PidPrefixProbability-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "15-compile-PidPrefixProbability-RawTargets/command.json": {
+      "bytes": 1502,
+      "sha256": "6e7309dd71fd80c43d645fca312e1c32bd1459f93d744996662735ab14d7077d"
+    },
+    "15-compile-PidPrefixProbability-RawTargets/registered.json": {
+      "bytes": 3690,
+      "sha256": "4b01ce3fe3b6e3f78919a68b2b9cc5c37ff76e0e0eb74ba7c26c47221611f971"
+    },
+    "15-compile-PidPrefixProbability-RawTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "15-compile-PidPrefixProbability-RawTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "16-compile-PidPrefixProbability-AliasTargets/command.json": {
+      "bytes": 1508,
+      "sha256": "bf2d2e704fe72fdca657cb31444991cfebdd63bfb701f3a25732dfe24c8e7e1e"
+    },
+    "16-compile-PidPrefixProbability-AliasTargets/registered.json": {
+      "bytes": 3696,
+      "sha256": "d4c7d8edb142ec7f72d65dceaac1f7b17ff3e6a50bf2bad1c749c23909699558"
+    },
+    "16-compile-PidPrefixProbability-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "16-compile-PidPrefixProbability-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "17-compile-PidPrefixProbability-Candidate/command.json": {
+      "bytes": 1499,
+      "sha256": "459fdd63e538fe889b659f63208f297011a933dc445bed9962d518a2126f7577"
+    },
+    "17-compile-PidPrefixProbability-Candidate/registered.json": {
+      "bytes": 3687,
+      "sha256": "de7133328e5ecc02fa3751eb7b76cb1480bcaa2fea36098fe7866603a4ead642"
+    },
+    "17-compile-PidPrefixProbability-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "17-compile-PidPrefixProbability-Candidate/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "18-compile-PidPrefixProbability-SemanticJudge/command.json": {
+      "bytes": 1514,
+      "sha256": "8b1155248b968793621dca0f04481608cb8cbd187a56c307b98eda987340f64b"
+    },
+    "18-compile-PidPrefixProbability-SemanticJudge/registered.json": {
+      "bytes": 3699,
+      "sha256": "150858500559c899d882c8746562de630939acb1deebe26abf87859340cb5d8e"
+    },
+    "18-compile-PidPrefixProbability-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "18-compile-PidPrefixProbability-SemanticJudge/stdout.log": {
+      "bytes": 2608,
+      "sha256": "3973534a927f9d5a913dbdd45485cc4455188c0c72665f0c48ea01a3ca8864ae"
+    },
+    "19-compile-PidPrefixMgwMean-Contract/command.json": {
+      "bytes": 1484,
+      "sha256": "a6df7dfa52cfe359f95e797ddbd723eef96a4a91af0426246b494d87d1c357bf"
+    },
+    "19-compile-PidPrefixMgwMean-Contract/registered.json": {
+      "bytes": 3672,
+      "sha256": "15fe2bd7b21efd0fd8bc829a25fb709ea913966b3a14e675e7508d2435b4668d"
+    },
+    "19-compile-PidPrefixMgwMean-Contract/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "19-compile-PidPrefixMgwMean-Contract/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "20-compile-PidPrefixMgwMean-RawTargets/command.json": {
+      "bytes": 1490,
+      "sha256": "0bce3664df0d572194c7c4cab582744a0e90007569baa37466384c0e9d686216"
+    },
+    "20-compile-PidPrefixMgwMean-RawTargets/registered.json": {
+      "bytes": 3678,
+      "sha256": "827cc5b7cd4c80a1d259de76dab4bb025edaf8ca414ecf83d6ac39943ec228bd"
+    },
+    "20-compile-PidPrefixMgwMean-RawTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "20-compile-PidPrefixMgwMean-RawTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "21-compile-PidPrefixMgwMean-AliasTargets/command.json": {
+      "bytes": 1496,
+      "sha256": "5f09783a72fbc1e76425d42baaa175de39a8ed287687031475e83dc35c762914"
+    },
+    "21-compile-PidPrefixMgwMean-AliasTargets/registered.json": {
+      "bytes": 3684,
+      "sha256": "5dceebde8eaf2a1bdec8b139a675fa3d6cd081b40591d41686d8be08f836c388"
+    },
+    "21-compile-PidPrefixMgwMean-AliasTargets/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "21-compile-PidPrefixMgwMean-AliasTargets/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "22-compile-PidPrefixMgwMean-Candidate/command.json": {
+      "bytes": 1486,
+      "sha256": "042d3ec66508ad18ed924c7b2b7de9a314ed872a7f3a9c6c26064622f360f871"
+    },
+    "22-compile-PidPrefixMgwMean-Candidate/registered.json": {
+      "bytes": 3675,
+      "sha256": "a93cef98d95235a5c3a3f0b4ed2d5fe176a993d0c5649f4db7607209dd864e38"
+    },
+    "22-compile-PidPrefixMgwMean-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "22-compile-PidPrefixMgwMean-Candidate/stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "23-compile-PidPrefixMgwMean-SemanticJudge/command.json": {
+      "bytes": 1502,
+      "sha256": "7e36394e12b1860a8d17d48522009b3e2e4710c42343439168220068e051efef"
+    },
+    "23-compile-PidPrefixMgwMean-SemanticJudge/registered.json": {
+      "bytes": 3687,
+      "sha256": "25f05feaa89fa77ccb2efbdb0a439be0947714dac35f1ecae74b1a714012c260"
+    },
+    "23-compile-PidPrefixMgwMean-SemanticJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "23-compile-PidPrefixMgwMean-SemanticJudge/stdout.log": {
+      "bytes": 1978,
+      "sha256": "b5b8669e57e4928acdc39fedf2b19039cd54cb56ac93471663088ad671d2bba5"
+    },
+    "ATTEMPT_LEDGER.preimage.json": {
+      "bytes": 81264,
+      "sha256": "b853110d48bed9d32cd053655deea91859536b1f806fd9d04053e49e06e8bfef"
+    },
+    "COMMAND_PLAN.json": {
+      "bytes": 15618,
+      "sha256": "60bc484bad94ea7d0cbba000592e40ad8188a646012e7b29752df60bf0f27526"
+    },
+    "Candidate.executed.lean": {
+      "bytes": 40437,
+      "sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173"
+    },
+    "Candidate.original.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "REGISTERED.json": {
+      "bytes": 371,
+      "sha256": "4429f5be6dee59c4a2af941fb4b1d4521fbbaaa101bfdcc6141203034373fe45"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482080,
+      "sha256": "922d569add4ee659d9e95af69f289c72b6375e8b433b627fc99127ca6578d06e"
+    },
+    "build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "environment.json": {
+      "bytes": 3547,
+      "sha256": "7613502f0c3c373384b83915cd9f2ad8e9b7c138131e0cc425ff02cb1a83da76"
+    },
+    "input-bytes/02bf686e0f521a491a5ad1803d9f6efe12b19a7a26e7b2ccb2c940e886f644ae": {
+      "bytes": 146150,
+      "sha256": "02bf686e0f521a491a5ad1803d9f6efe12b19a7a26e7b2ccb2c940e886f644ae"
+    },
+    "input-bytes/03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "input-bytes/04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "input-bytes/0c82d5a71cd2e162e1e24522cf1d7574cc29dc03fff9a7353d20365c3c70934f": {
+      "bytes": 5798,
+      "sha256": "0c82d5a71cd2e162e1e24522cf1d7574cc29dc03fff9a7353d20365c3c70934f"
+    },
+    "input-bytes/0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "input-bytes/100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "input-bytes/121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a": {
+      "bytes": 23865,
+      "sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a"
+    },
+    "input-bytes/17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "input-bytes/1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "input-bytes/19f9595197825a5276645b70d6d765b82273fe5d736559135b8c53b5eb1ef473": {
+      "bytes": 9826,
+      "sha256": "19f9595197825a5276645b70d6d765b82273fe5d736559135b8c53b5eb1ef473"
+    },
+    "input-bytes/1af68131943966d04716cc04a756f9c6c4c9f59f4610b511010ff64702bad611": {
+      "bytes": 696,
+      "sha256": "1af68131943966d04716cc04a756f9c6c4c9f59f4610b511010ff64702bad611"
+    },
+    "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "input-bytes/1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18": {
+      "bytes": 833,
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "input-bytes/24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "input-bytes/26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "input-bytes/2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "input-bytes/2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "input-bytes/301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "input-bytes/36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd": {
+      "bytes": 4656,
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    "input-bytes/3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "input-bytes/3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "input-bytes/416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "input-bytes/4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "input-bytes/4c5c1109d131cbaae0a430675a9c5267c8bde3c68eb1e485c1e813a4e5687444": {
+      "bytes": 1882,
+      "sha256": "4c5c1109d131cbaae0a430675a9c5267c8bde3c68eb1e485c1e813a4e5687444"
+    },
+    "input-bytes/4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409": {
+      "bytes": 40560,
+      "sha256": "4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409"
+    },
+    "input-bytes/544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "input-bytes/55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "input-bytes/5a8391dd636b9d9a07edd9599f38f7febcde70fb84c2e67f2f60ae1757cefbe0": {
+      "bytes": 9193,
+      "sha256": "5a8391dd636b9d9a07edd9599f38f7febcde70fb84c2e67f2f60ae1757cefbe0"
+    },
+    "input-bytes/5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "input-bytes/6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e": {
+      "bytes": 700,
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "input-bytes/6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed": {
+      "bytes": 9076,
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "input-bytes/6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "input-bytes/6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6": {
+      "bytes": 166,
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "input-bytes/71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "input-bytes/7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "input-bytes/7421ed870e73c6155846c7d56129c62ff307a37e8b3b159e5af04b2f5f2fadbf": {
+      "bytes": 635,
+      "sha256": "7421ed870e73c6155846c7d56129c62ff307a37e8b3b159e5af04b2f5f2fadbf"
+    },
+    "input-bytes/7582a686a39922b57baa3d3ee89015aa35f26942a1c2dbd02049773f8dd8cac3": {
+      "bytes": 1796,
+      "sha256": "7582a686a39922b57baa3d3ee89015aa35f26942a1c2dbd02049773f8dd8cac3"
+    },
+    "input-bytes/7ab3bb12d6e0f4d2306d3161315cfc88ae253a427c825d5b116e912aa83bc959": {
+      "bytes": 1525,
+      "sha256": "7ab3bb12d6e0f4d2306d3161315cfc88ae253a427c825d5b116e912aa83bc959"
+    },
+    "input-bytes/7bf79e9da59fa738470992b0fb8dd41f010075eac14f7cb6cbee43a81730dc5e": {
+      "bytes": 5420,
+      "sha256": "7bf79e9da59fa738470992b0fb8dd41f010075eac14f7cb6cbee43a81730dc5e"
+    },
+    "input-bytes/7cb5228c90c43c48040ae37958743073b87ead9ec1066242ed3d3a5532186005": {
+      "bytes": 12097,
+      "sha256": "7cb5228c90c43c48040ae37958743073b87ead9ec1066242ed3d3a5532186005"
+    },
+    "input-bytes/847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "input-bytes/84900c6eff0ab2e0ef42bd02ce33be72b7693fbd1b95932c05c9a7861c96a678": {
+      "bytes": 6679,
+      "sha256": "84900c6eff0ab2e0ef42bd02ce33be72b7693fbd1b95932c05c9a7861c96a678"
+    },
+    "input-bytes/8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "input-bytes/8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "input-bytes/8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36": {
+      "bytes": 4769,
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "input-bytes/922d569add4ee659d9e95af69f289c72b6375e8b433b627fc99127ca6578d06e": {
+      "bytes": 1482080,
+      "sha256": "922d569add4ee659d9e95af69f289c72b6375e8b433b627fc99127ca6578d06e"
+    },
+    "input-bytes/9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "input-bytes/97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "input-bytes/9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "input-bytes/a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "input-bytes/a17a7d1538c2f2d548374ca9ad5e5b23e7a5dc47c5c330cca1cc419412e645a9": {
+      "bytes": 2570,
+      "sha256": "a17a7d1538c2f2d548374ca9ad5e5b23e7a5dc47c5c330cca1cc419412e645a9"
+    },
+    "input-bytes/a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261": {
+      "bytes": 4926,
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "input-bytes/a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "input-bytes/a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "input-bytes/acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618": {
+      "bytes": 6583,
+      "sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618"
+    },
+    "input-bytes/af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c": {
+      "bytes": 6761,
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "input-bytes/afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "input-bytes/b0a33ac4aaf6ecf57eb3aff993d6750cdb58c7e583be74a9146cd676b1279316": {
+      "bytes": 17841,
+      "sha256": "b0a33ac4aaf6ecf57eb3aff993d6750cdb58c7e583be74a9146cd676b1279316"
+    },
+    "input-bytes/b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "input-bytes/b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "input-bytes/b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "input-bytes/baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db": {
+      "bytes": 26028,
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "input-bytes/bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "input-bytes/c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "input-bytes/d033021fb1e299492a9318e4a9a9702ddfc0278168b64f8f8ab0e195ab08eed0": {
+      "bytes": 146004,
+      "sha256": "d033021fb1e299492a9318e4a9a9702ddfc0278168b64f8f8ab0e195ab08eed0"
+    },
+    "input-bytes/d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "input-bytes/d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "input-bytes/d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "input-bytes/deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "input-bytes/e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173": {
+      "bytes": 40437,
+      "sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173"
+    },
+    "input-bytes/e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "input-bytes/eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "input-bytes/ef436681af295e17904284ad8933030857dae06819cf9917a24817a7f6495b3e": {
+      "bytes": 324,
+      "sha256": "ef436681af295e17904284ad8933030857dae06819cf9917a24817a7f6495b3e"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40437,
+      "sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173"
+    },
+    "src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "--version"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 0.062360749929212034,
+      "execution_error": null,
+      "failure": null,
+      "label": "tool-version",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 327680,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 106,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:34:57.824641+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidFiniteConvergence/Deterministic.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidFiniteConvergence/Deterministic.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 2.1253382499562576,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-Deterministic",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2358804480,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:34:57.893601+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidFiniteConvergence/SxEventBridge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.5854522499721497,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidFiniteConvergence-SxEventBridge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2386460672,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:00.025758+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/SxDnf/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/SxDnf/Contract.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4078877500724047,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2362474496,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:01.623326+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/JoinLog/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/JoinLog/Contract.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.2974034580402076,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-JoinLog-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2298757120,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:03.037963+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 0.8496514169964939,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-JudgeCore",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1411792896,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:04.342550+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/SxDnf/Proofs.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/SxDnf/Proofs.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4062655000016093,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-SxDnf-Proofs",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2374795264,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:05.198833+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/JoinLog/Proofs.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/JoinLog/Proofs.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.5070009590126574,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-MgwBridgeDepsV1-JoinLog-Proofs",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2399223808,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:06.611752+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/Contract.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.3609324169810861,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2363375616,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:08.126170+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/RawTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/RawTargets.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.3239102080697194,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-RawTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2332540928,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:09.494016+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/AliasTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/AliasTargets.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.279690666939132,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-AliasTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2330394624,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:10.825052+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/JudgeCore.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/JudgeCore.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 0.7640569159993902,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-JudgeCore",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 1354678272,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:12.111956+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/Candidate.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/Candidate.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.7437805410008878,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2427584512,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:12.883158+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/SemanticJudge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/SemanticJudge.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.7436028750380501,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidMgwBridge-SemanticJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2756067328,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 4588,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:14.634270+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3feda996f3c9d84eb2dd8b4f29f1ce46faa57687f80479942625104e9b06caa8"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/Contract.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.5956820419523865,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2625224704,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:16.385320+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/RawTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/RawTargets.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4456035840557888,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-RawTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2609397760,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:17.988935+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/AliasTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/AliasTargets.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4130634580506012,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-AliasTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2611232768,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:19.442268+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/Candidate.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/Candidate.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 2.1714462499367073,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2704474112,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:20.863123+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/SemanticJudge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/SemanticJudge.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 2.0068574169417843,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixProbability-SemanticJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2999779328,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 2608,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:23.042584+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3973534a927f9d5a913dbdd45485cc4455188c0c72665f0c48ea01a3ca8864ae"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/Contract.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4714951670030132,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-Contract",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2609364992,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:25.057819+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/RawTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/RawTargets.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4901559160789475,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-RawTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2619670528,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:26.537853+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/AliasTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/AliasTargets.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.4108850830234587,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-AliasTargets",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2612953088,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:28.036725+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/Candidate.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/Candidate.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.919302292051725,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2781544448,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 0,
+      "returncode": 0,
+      "started_utc": "2026-09-08T07:35:29.456106+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/SemanticJudge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/SemanticJudge.lean"
+      ],
+      "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src",
+      "elapsed_seconds": 1.9779689169954509,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-SemanticJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2996453376,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 1978,
+      "returncode": 1,
+      "started_utc": "2026-09-08T07:35:31.384225+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b5b8669e57e4928acdc39fedf2b19039cd54cb56ac93471663088ad671d2bba5"
+    }
+  ],
+  "completed_utc": "2026-09-08T07:35:33.410737+00:00",
+  "executed_sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173",
+  "inputs": {
+    "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean": {
+      "bytes": 49968,
+      "identity": [
+        16777231,
+        858824670,
+        33261,
+        1,
+        49968,
+        1786337446000000000,
+        1787517629783998060
+      ],
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/leanchecker": {
+      "bytes": 78128,
+      "identity": [
+        16777231,
+        858824673,
+        33261,
+        1,
+        78128,
+        1786337447000000000,
+        1787517629786607579
+      ],
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/CONTROLS_ACCEPTANCE.json": {
+      "bytes": 1796,
+      "identity": [
+        16777231,
+        931447086,
+        33188,
+        1,
+        1796,
+        1788851869720784193,
+        1788851869720784193
+      ],
+      "sha256": "7582a686a39922b57baa3d3ee89015aa35f26942a1c2dbd02049773f8dd8cac3"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/REGISTRATION.json": {
+      "bytes": 696,
+      "identity": [
+        16777231,
+        931447087,
+        33188,
+        1,
+        696,
+        1788851869720899402,
+        1788851869720899402
+      ],
+      "sha256": "1af68131943966d04716cc04a756f9c6c4c9f59f4610b511010ff64702bad611"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-001/Candidate.original.lean": {
+      "bytes": 40511,
+      "identity": [
+        16777231,
+        931447290,
+        33188,
+        1,
+        40511,
+        1788851882864750360,
+        1788851882864750360
+      ],
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-001/RESULT.json": {
+      "bytes": 146004,
+      "identity": [
+        16777231,
+        931462154,
+        33188,
+        1,
+        146004,
+        1788852154659819978,
+        1788852154659819978
+      ],
+      "sha256": "d033021fb1e299492a9318e4a9a9702ddfc0278168b64f8f8ab0e195ab08eed0"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-002/Candidate.original.lean": {
+      "bytes": 40511,
+      "identity": [
+        16777231,
+        931462166,
+        33188,
+        1,
+        40511,
+        1788852154770258651,
+        1788852154770258651
+      ],
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-002/RESULT.json": {
+      "bytes": 146150,
+      "identity": [
+        16777231,
+        931472107,
+        33188,
+        1,
+        146150,
+        1788852400333436647,
+        1788852400333436647
+      ],
+      "sha256": "02bf686e0f521a491a5ad1803d9f6efe12b19a7a26e7b2ccb2c940e886f644ae"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "identity": [
+        16777231,
+        931497565,
+        33188,
+        1,
+        60008,
+        1788852904249052814,
+        1788852904249214688
+      ],
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "identity": [
+        16777231,
+        931497679,
+        33188,
+        1,
+        573576,
+        1788852908018747636,
+        1788852908020138964
+      ],
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "identity": [
+        16777231,
+        931497554,
+        33188,
+        1,
+        199552,
+        1788852902934090743,
+        1788852902934254784
+      ],
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "identity": [
+        16777231,
+        931497616,
+        33188,
+        1,
+        420976,
+        1788852905120392367,
+        1788852905121695112
+      ],
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "identity": [
+        16777231,
+        931497628,
+        33188,
+        1,
+        261984,
+        1788852906515843013,
+        1788852906516778802
+      ],
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "identity": [
+        16777231,
+        931497490,
+        33188,
+        1,
+        98304,
+        1788852899927534709,
+        1788852899927898875
+      ],
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "identity": [
+        16777231,
+        931497532,
+        33188,
+        1,
+        292592,
+        1788852901510832824,
+        1788852901511298447
+      ],
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "identity": [
+        16777231,
+        931497705,
+        33188,
+        1,
+        10952,
+        1788852912018071814,
+        1788852912018231313
+      ],
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "identity": [
+        16777231,
+        931497773,
+        33188,
+        1,
+        963440,
+        1788852914537521991,
+        1788852914537955864
+      ],
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "identity": [
+        16777231,
+        931497690,
+        33188,
+        1,
+        126464,
+        1788852909403399615,
+        1788852909403552322
+      ],
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "identity": [
+        16777231,
+        931497720,
+        33188,
+        1,
+        92232,
+        1788852912809890120,
+        1788852912810020703
+      ],
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "identity": [
+        16777231,
+        931497697,
+        33188,
+        1,
+        68424,
+        1788852910734460084,
+        1788852910734602750
+      ],
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "identity": [
+        16777231,
+        931497784,
+        33188,
+        1,
+        3088,
+        1788852916280993344,
+        1788852916281094469
+      ],
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "identity": [
+        16777231,
+        931497924,
+        33188,
+        1,
+        5872,
+        1788852929348143985,
+        1788852929348250610
+      ],
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482080,
+      "identity": [
+        16777231,
+        931497947,
+        33188,
+        1,
+        1482080,
+        1788852931250575915,
+        1788852931251164871
+      ],
+      "sha256": "922d569add4ee659d9e95af69f289c72b6375e8b433b627fc99127ca6578d06e"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "identity": [
+        16777231,
+        931497895,
+        33188,
+        1,
+        60160,
+        1788852926427513507,
+        1788852926427856714
+      ],
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "identity": [
+        16777231,
+        931497912,
+        33188,
+        1,
+        65016,
+        1788852927926370479,
+        1788852927926849685
+      ],
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "identity": [
+        16777231,
+        931497856,
+        33188,
+        1,
+        7136,
+        1788852920757691330,
+        1788852920757796955
+      ],
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "identity": [
+        16777231,
+        931497872,
+        33188,
+        1,
+        1070496,
+        1788852922935389029,
+        1788852922935977485
+      ],
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "identity": [
+        16777231,
+        931497796,
+        33188,
+        1,
+        122808,
+        1788852917886003213,
+        1788852917886161212
+      ],
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "identity": [
+        16777231,
+        931497808,
+        33188,
+        1,
+        66104,
+        1788852919340405723,
+        1788852919340556139
+      ],
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "identity": [
+        16777231,
+        931497885,
+        33188,
+        1,
+        95640,
+        1788852924938949249,
+        1788852924939324956
+      ],
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        931497251,
+        33188,
+        1,
+        3873,
+        1788852897410135315,
+        1788852897410135315
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        931497254,
+        33188,
+        1,
+        15705,
+        1788852897410561564,
+        1788852897410561564
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        931497249,
+        33188,
+        1,
+        12861,
+        1788852897409979899,
+        1788852897409979899
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        931497252,
+        33188,
+        1,
+        3492,
+        1788852897410323940,
+        1788852897410323940
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        931497253,
+        33188,
+        1,
+        10294,
+        1788852897410439689,
+        1788852897410439689
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        931497245,
+        33188,
+        1,
+        9093,
+        1788852897409146236,
+        1788852897409146236
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        931497246,
+        33188,
+        1,
+        27203,
+        1788852897409609317,
+        1788852897409609317
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        931497258,
+        33188,
+        1,
+        1458,
+        1788852897410986937,
+        1788852897410986937
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        931497260,
+        33188,
+        1,
+        26432,
+        1788852897411699101,
+        1788852897411699101
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        931497256,
+        33188,
+        1,
+        11737,
+        1788852897410700855,
+        1788852897410700855
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        931497259,
+        33188,
+        1,
+        1165,
+        1788852897411086270,
+        1788852897411086270
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        931497257,
+        33188,
+        1,
+        7481,
+        1788852897410886563,
+        1788852897410886563
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        931497261,
+        33188,
+        1,
+        5851,
+        1788852897411812601,
+        1788852897411812601
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        931497271,
+        33188,
+        1,
+        605,
+        1788852897412801222,
+        1788852897412801222
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40437,
+      "identity": [
+        16777231,
+        931497272,
+        33188,
+        1,
+        40437,
+        1788852897412906513,
+        1788852897412906513
+      ],
+      "sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        931497269,
+        33188,
+        1,
+        4277,
+        1788852897412596223,
+        1788852897412596223
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        931497270,
+        33188,
+        1,
+        4716,
+        1788852897412700264,
+        1788852897412700264
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "identity": [
+        16777231,
+        931497273,
+        33188,
+        1,
+        2658,
+        1788852897413007888,
+        1788852897413007888
+      ],
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        931497265,
+        33188,
+        1,
+        839,
+        1788852897412151474,
+        1788852897412151474
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        931497266,
+        33188,
+        1,
+        20207,
+        1788852897412344015,
+        1788852897412344015
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        931497263,
+        33188,
+        1,
+        7101,
+        1788852897411948267,
+        1788852897411948267
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        931497264,
+        33188,
+        1,
+        4337,
+        1788852897412053058,
+        1788852897412053058
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        931497267,
+        33188,
+        1,
+        4219,
+        1788852897412450223,
+        1788852897412450223
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "identity": [
+        16777231,
+        931497274,
+        33188,
+        1,
+        114,
+        1788852897413107054,
+        1788852897413107054
+      ],
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/CONTROLS_ACCEPTANCE.template.json": {
+      "bytes": 324,
+      "identity": [
+        16777231,
+        930945730,
+        33188,
+        1,
+        324,
+        1788845708491519848,
+        1788845708491519848
+      ],
+      "sha256": "ef436681af295e17904284ad8933030857dae06819cf9917a24817a7f6495b3e"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/CONTROL_PLAN.md": {
+      "bytes": 5420,
+      "identity": [
+        16777231,
+        930912747,
+        33188,
+        1,
+        5420,
+        1788845708491914267,
+        1788845708491914267
+      ],
+      "sha256": "7bf79e9da59fa738470992b0fb8dd41f010075eac14f7cb6cbee43a81730dc5e"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/DEPENDENCIES.md": {
+      "bytes": 5798,
+      "identity": [
+        16777231,
+        930873655,
+        33188,
+        1,
+        5798,
+        1788844984355394769,
+        1788844984355394769
+      ],
+      "sha256": "0c82d5a71cd2e162e1e24522cf1d7574cc29dc03fff9a7353d20365c3c70934f"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/EXPOSITION.md": {
+      "bytes": 17841,
+      "identity": [
+        16777231,
+        930784778,
+        33188,
+        1,
+        17841,
+        1788844444148770326,
+        1788844444148770326
+      ],
+      "sha256": "b0a33ac4aaf6ecf57eb3aff993d6750cdb58c7e583be74a9146cd676b1279316"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/README.md": {
+      "bytes": 1882,
+      "identity": [
+        16777231,
+        930873654,
+        33188,
+        1,
+        1882,
+        1788844984355232059,
+        1788844984355232059
+      ],
+      "sha256": "4c5c1109d131cbaae0a430675a9c5267c8bde3c68eb1e485c1e813a4e5687444"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/REGISTRATION.template.json": {
+      "bytes": 635,
+      "identity": [
+        16777231,
+        930912748,
+        33188,
+        1,
+        635,
+        1788845708491380181,
+        1788845708491380181
+      ],
+      "sha256": "7421ed870e73c6155846c7d56129c62ff307a37e8b3b159e5af04b2f5f2fadbf"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/REPLAY_DESIGN.md": {
+      "bytes": 9826,
+      "identity": [
+        16777231,
+        930912746,
+        33188,
+        1,
+        9826,
+        1788845708491707474,
+        1788845708491707474
+      ],
+      "sha256": "19f9595197825a5276645b70d6d765b82273fe5d736559135b8c53b5eb1ef473"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/SOURCE_CORRESPONDENCE.md": {
+      "bytes": 6679,
+      "identity": [
+        16777231,
+        930873656,
+        33188,
+        1,
+        6679,
+        1788844984355520270,
+        1788844984355520270
+      ],
+      "sha256": "84900c6eff0ab2e0ef42bd02ce33be72b7693fbd1b95932c05c9a7861c96a678"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/SOURCE_GRAPH.json": {
+      "bytes": 9193,
+      "identity": [
+        16777231,
+        930920799,
+        33188,
+        1,
+        9193,
+        1788845708566806584,
+        1788845708566806584
+      ],
+      "sha256": "5a8391dd636b9d9a07edd9599f38f7febcde70fb84c2e67f2f60ae1757cefbe0"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/controls/Candidate.cosmetic.lean": {
+      "bytes": 40560,
+      "identity": [
+        16777231,
+        930920786,
+        33188,
+        1,
+        40560,
+        1788845708562157309,
+        1788845708562157309
+      ],
+      "sha256": "4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/controls/Candidate.wrong-last.lean.txt": {
+      "bytes": 40437,
+      "identity": [
+        16777231,
+        930920787,
+        33188,
+        1,
+        40437,
+        1788845708562524852,
+        1788845708562524852
+      ],
+      "sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/preparation/CONTROL_ROSTER.json": {
+      "bytes": 833,
+      "identity": [
+        16777231,
+        930783504,
+        33188,
+        1,
+        833,
+        1788844443939703040,
+        1788844443939703040
+      ],
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/preparation/NEW_IMPORT_SOURCE_PINS.json": {
+      "bytes": 166,
+      "identity": [
+        16777231,
+        930783506,
+        33188,
+        1,
+        166,
+        1788844443939874417,
+        1788844443939874417
+      ],
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/preparation/PidPrefixMgwMean/PreparationControls.lean": {
+      "bytes": 12097,
+      "identity": [
+        16777231,
+        930783500,
+        33188,
+        1,
+        12097,
+        1788844443939250495,
+        1788844443939250495
+      ],
+      "sha256": "7cb5228c90c43c48040ae37958743073b87ead9ec1066242ed3d3a5532186005"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/preparation/PidPrefixMgwMean/TypeJudge.lean": {
+      "bytes": 2570,
+      "identity": [
+        16777231,
+        930783498,
+        33188,
+        1,
+        2570,
+        1788844443938948159,
+        1788844443938948159
+      ],
+      "sha256": "a17a7d1538c2f2d548374ca9ad5e5b23e7a5dc47c5c330cca1cc419412e645a9"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/preparation/TARGET_ROSTER.json": {
+      "bytes": 700,
+      "identity": [
+        16777231,
+        930783502,
+        33188,
+        1,
+        700,
+        1788844443939520455,
+        1788844443939520455
+      ],
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-proposed-v1.json": {
+      "bytes": 6583,
+      "identity": [
+        16777231,
+        930920800,
+        33188,
+        1,
+        6583,
+        1788845708570975856,
+        1788845708570975856
+      ],
+      "sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-proposed.py": {
+      "bytes": 23865,
+      "identity": [
+        16777231,
+        930794255,
+        33188,
+        1,
+        23865,
+        1788845708491190972,
+        1788845708491190972
+      ],
+      "sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-support/ACCEPTED_DEPENDENCY_RECORDS.json": {
+      "bytes": 9076,
+      "identity": [
+        16777231,
+        930783494,
+        33188,
+        1,
+        9076,
+        1788844443938119736,
+        1788844443938119736
+      ],
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-support/EXPECTED_MEAN_RECORDS.json": {
+      "bytes": 1525,
+      "identity": [
+        16777231,
+        930783508,
+        33188,
+        1,
+        1525,
+        1788844443940131627,
+        1788844443940131627
+      ],
+      "sha256": "7ab3bb12d6e0f4d2306d3161315cfc88ae253a427c825d5b116e912aa83bc959"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-support/mgw-policy.py": {
+      "bytes": 4926,
+      "identity": [
+        16777231,
+        930783492,
+        33188,
+        1,
+        4926,
+        1788844443937930109,
+        1788844443937930109
+      ],
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-support/policy.py": {
+      "bytes": 6761,
+      "identity": [
+        16777231,
+        930783488,
+        33188,
+        1,
+        6761,
+        1788844443937464814,
+        1788844443937464814
+      ],
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-support/prefix-policy.py": {
+      "bytes": 4769,
+      "identity": [
+        16777231,
+        930783490,
+        33188,
+        1,
+        4769,
+        1788844443937701691,
+        1788844443937701691
+      ],
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "identity": [
+        16777231,
+        930783486,
+        33188,
+        1,
+        27277,
+        1788844443937205437,
+        1788844443937205437
+      ],
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+      "bytes": 4656,
+      "identity": [
+        16777231,
+        930784780,
+        33188,
+        1,
+        4656,
+        1788844444149497207,
+        1788844444149497207
+      ],
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        930783440,
+        33188,
+        1,
+        3873,
+        1788844443931279305,
+        1788844443931279305
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        930783446,
+        33188,
+        1,
+        15705,
+        1788844443931942477,
+        1788844443931942477
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        930783437,
+        33188,
+        1,
+        12861,
+        1788844443931064262,
+        1788844443931064262
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        930783442,
+        33188,
+        1,
+        3492,
+        1788844443931463057,
+        1788844443931463057
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        930783444,
+        33188,
+        1,
+        10294,
+        1788844443931675850,
+        1788844443931675850
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        930783431,
+        33188,
+        1,
+        9093,
+        1788844443930452340,
+        1788844443930452340
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        930783433,
+        33188,
+        1,
+        27203,
+        1788844443930722134,
+        1788844443930722134
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        930783453,
+        33188,
+        1,
+        1458,
+        1788844443932622399,
+        1788844443932622399
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        930783457,
+        33188,
+        1,
+        26432,
+        1788844443933053278,
+        1788844443933053278
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        930783449,
+        33188,
+        1,
+        11737,
+        1788844443932175104,
+        1788844443932175104
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        930783455,
+        33188,
+        1,
+        1165,
+        1788844443932805943,
+        1788844443932805943
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        930783451,
+        33188,
+        1,
+        7481,
+        1788844443932441564,
+        1788844443932441564
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        930783459,
+        33188,
+        1,
+        5851,
+        1788844443933306488,
+        1788844443933306488
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        930783477,
+        33188,
+        1,
+        605,
+        1788844443935225962,
+        1788844443935225962
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "identity": [
+        16777231,
+        930783479,
+        33188,
+        1,
+        40511,
+        1788844443935932385,
+        1788844443935932385
+      ],
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        930783473,
+        33188,
+        1,
+        4277,
+        1788844443934787750,
+        1788844443934787750
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        930783475,
+        33188,
+        1,
+        4716,
+        1788844443935034252,
+        1788844443935034252
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "identity": [
+        16777231,
+        930783481,
+        33188,
+        1,
+        2658,
+        1788844443936139595,
+        1788844443936139595
+      ],
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        930783466,
+        33188,
+        1,
+        839,
+        1788844443934014577,
+        1788844443934014577
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        930783468,
+        33188,
+        1,
+        20207,
+        1788844443934252454,
+        1788844443934252454
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        930783462,
+        33188,
+        1,
+        7101,
+        1788844443933595074,
+        1788844443933595074
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        930783464,
+        33188,
+        1,
+        4337,
+        1788844443933834826,
+        1788844443933834826
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        930783470,
+        33188,
+        1,
+        4219,
+        1788844443934517957,
+        1788844443934517957
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/sources/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "identity": [
+        16777231,
+        930783483,
+        33188,
+        1,
+        114,
+        1788844443936305429,
+        1788844443936305429
+      ],
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "<repository>/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum/NatInt.lean": {
+      "bytes": 26028,
+      "identity": [
+        16777231,
+        925038154,
+        33188,
+        1,
+        26028,
+        1787505286799294946,
+        1788583562191313019
+      ],
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "<repository>/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "identity": [
+        16777231,
+        924801089,
+        33188,
+        1,
+        3144,
+        1788495973000000000,
+        1788578758439315095
+      ],
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "<repository>/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "identity": [
+        16777231,
+        924801090,
+        33188,
+        1,
+        243,
+        1788495973000000000,
+        1788578758439502136
+      ],
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "<repository>/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "identity": [
+        16777231,
+        924801091,
+        33188,
+        1,
+        25,
+        1788495973000000000,
+        1788578758439828177
+      ],
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "<repository>/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "identity": [
+        16777231,
+        924801637,
+        33188,
+        1,
+        58665,
+        1788495973000000000,
+        1788578758673032477
+      ],
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "<repository>/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "identity": [
+        16777231,
+        924801644,
+        33261,
+        1,
+        17039,
+        1788495973000000000,
+        1788578758675481635
+      ],
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "portable_lean_version": "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "prior_full_passes": [
+    {
+      "receipt": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-001/RESULT.json",
+      "sha256": "d033021fb1e299492a9318e4a9a9702ddfc0278168b64f8f8ab0e195ab08eed0"
+    },
+    {
+      "receipt": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-002/RESULT.json",
+      "sha256": "02bf686e0f521a491a5ad1803d9f6efe12b19a7a26e7b2ccb2c940e886f644ae"
+    }
+  ],
+  "registered": {
+    "action": "wrong-last-target",
+    "manifest_sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618",
+    "original_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+    "output": "attempt-005",
+    "prepare_only": false,
+    "python_optimized": 0,
+    "registered_utc": "2026-09-08T07:34:57.379569+00:00",
+    "source": "selected"
+  },
+  "schema": "pid-rs/prefix-mgw-mean-packaging-result-v1",
+  "scope": "Packaging replay after exact local acceptance; three mean exports, inherited eleven and six records.",
+  "status": "expected_target_rejection"
+}

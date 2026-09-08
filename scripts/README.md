@@ -3010,18 +3010,27 @@ they encode the same finite countermodel and therefore are not independent mathe
 Neither formalizes motivic homotopy, validates the cited theorem, establishes the imported-arrow
 correspondence, or proves a PID claim.
 
+The separate [categorical MGW mean package](../audit/formal/lean-prefix-mgw-mean/PUBLICATION.md)
+contains three locally accepted formal results for a project-defined finite-prefix statistic.
+It adds no Rust/Python estimator or statistical coverage guarantee. Its [current replay guide](../audit/formal/lean-prefix-mgw-mean/REPLAY.current.md)
+separates the unchanged proof adapter, inert controls and actual publication evidence.
+`build-prefix-mgw-mean-pdf.py --exact --check` makes two fresh builds and requires the exact
+reviewed PDF; `--cross-toolchain` refuses with status 2 before building. The [portable PDF controls](../audit/formal/lean-prefix-mgw-mean/pdf-controls/CONTROLS.md)
+exercise this whole entrypoint with inert tools and have separate execution receipts. They do not
+produce a new publication PDF or prove a theorem.
+
 `check-formal-pdf-set.sh` fails closed if the declared standalone LaTeX sources, declared
 Markdown sources, renderer fragments, and PDF basename inventory differ, if an unexpected paper
 is present without an explicit inventory update, or if any individual PDF gate fails. Its default
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
-portability relation, except that the root blueprint and dated post-publication custody receipt
-deliberately have no reviewed cross-toolchain profiles. The aggregate requires each checker to
-refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain credit; status 0
-or any other refusal status fails the aggregate. The aggregate self-test protects both exact-only
-checker blocks, their hostile suites, their exact-mode calls, their cross-mode probes, and their
-status-2 branches against removal or weakening. It also binds the custody record checker in normal
-and optimized Python and its hostile suite. For the 87-page mathematical
+portability relation, except that the root blueprint, dated post-publication custody receipt and
+standalone mean exposition deliberately have no reviewed cross-toolchain profiles. The aggregate
+requires each route to refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain
+credit; status 0 or any other refusal status fails the aggregate. The aggregate self-test protects
+all three exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
+branches against removal or weakening. It also protects the existing blueprint/custody hostile-suite
+calls and binds the custody record checker in normal and optimized Python and its hostile suite. For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
 tab, and line-feed runs, with exactly two admitted complete diagram profiles on each of pages 10

@@ -1,0 +1,57 @@
+{
+  "status": "built_pending_visual_review",
+  "defects": [],
+  "commands": [
+    {
+      "started_utc": "2026-09-08T07:34:35.547949+00:00",
+      "command": [
+        "/opt/homebrew/bin/fc-match",
+        "--format",
+        "%{family}\n%{file}\n",
+        "Source Sans Pro"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:34:35.593182+00:00"
+    },
+    {
+      "started_utc": "2026-09-08T07:34:35.593449+00:00",
+      "command": [
+        "/opt/homebrew/bin/rsvg-convert",
+        "-f",
+        "pdf",
+        "-o",
+        "retained-rank.pdf",
+        "retained-rank.svg"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:34:35.731536+00:00"
+    },
+    {
+      "started_utc": "2026-09-08T07:34:35.731810+00:00",
+      "command": [
+        "/Library/TeX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:34:37.668698+00:00"
+    },
+    {
+      "started_utc": "2026-09-08T07:34:37.668974+00:00",
+      "command": [
+        "/Library/TeX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "returncode": 0,
+      "completed_utc": "2026-09-08T07:34:39.612349+00:00"
+    }
+  ],
+  "completed_utc": "2026-09-08T07:34:39.613009+00:00"
+}

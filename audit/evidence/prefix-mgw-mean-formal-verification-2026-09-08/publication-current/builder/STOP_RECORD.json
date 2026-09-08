@@ -1,0 +1,10 @@
+{
+  "closed_utc": "2026-09-08T09:31:12.549331+00:00",
+  "original_deadline_utc": "2026-09-08T09:58:39.851368+00:00",
+  "status": "closed_real_builds_passed_controls_failed",
+  "source_stage_late": true,
+  "real_builder_invocations": 2,
+  "causal_suite_invocations": 1,
+  "unused_second_causal_invocation": "not reused to claim complete repaired matrix",
+  "successor": "Separate reviewed control revision required; original failure remains."
+}

@@ -1,0 +1,894 @@
+{
+  "observed_utc": "2026-09-08T09:04:23.656823+00:00",
+  "status": "actual_normal_optimized_builder_repeats_passed_controls_pending",
+  "produced": [
+    {
+      "mode": "normal",
+      "build": 1,
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    {
+      "mode": "normal",
+      "build": 2,
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    {
+      "mode": "optimized",
+      "build": 1,
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    {
+      "mode": "optimized",
+      "build": 2,
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    }
+  ],
+  "issues": [],
+  "artifacts": {
+    "CRITERIA.md": {
+      "sha256": "0fead09900fafb70b9c29f279c69014e7fc0ed751e8a9dd24b674242fb06b7a6",
+      "bytes": 1315
+    },
+    "REAL_BUILDS_COMPLETE.json": {
+      "sha256": "fa361b4c8aa59c5e57fd27c266b8635cfb852f3cf374933fa4e1dbfa78de3163",
+      "bytes": 4171
+    },
+    "REGISTRATION.json": {
+      "sha256": "ebbb8f5a3b033dc82db9db58c085a78649e2ff0cb58688ddf22fed38a0ea348a",
+      "bytes": 846
+    },
+    "SOURCE_MANIFEST.json": {
+      "sha256": "3d9f6662526cae8bc7581039aaf559e8fd6ae58f6cb61343c9b702f34eab4e74",
+      "bytes": 1932
+    },
+    "production-normal/00-actual-mean-builder/command.json": {
+      "sha256": "72f1594c4ce27d658286cf845ff8b595f88f6cef7dabf253442ff13aebf5f6d9",
+      "bytes": 1376
+    },
+    "production-normal/00-actual-mean-builder/registered.json": {
+      "sha256": "efa9bc65ee2a2797b19c9fda2a5e87c002e1e614b2cb86b47ee481003e0eaf1f",
+      "bytes": 5914461
+    },
+    "production-normal/00-actual-mean-builder/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "production-normal/00-actual-mean-builder/stdout.log": {
+      "sha256": "262591c28aacb1e38dd2ad522cca63ffc2cb0af34a309b413e443f013af4d165",
+      "bytes": 60
+    },
+    "production-normal/REGISTERED.json": {
+      "sha256": "e472f539c7b2d7f059067126a8558eaacd5480891f84723e86eb39604a6b7eb9",
+      "bytes": 711
+    },
+    "production-normal/SUPERVISOR_RESULT.json": {
+      "sha256": "c094a8fd3919f81d5ea955f0a7a10121605b47a15f16286c4cb6c13bf1a981fa",
+      "bytes": 1767
+    },
+    "production-optimized/00-actual-mean-builder/command.json": {
+      "sha256": "8ae821bc06284e6f1aadc6afb450a7173e1c28c9c56a078d854bbf72e9c9cfda",
+      "bytes": 1389
+    },
+    "production-optimized/00-actual-mean-builder/registered.json": {
+      "sha256": "04b2e9beae54a3336f62f9c36880477695c26f053a54883b292432c0f4526a5a",
+      "bytes": 5914477
+    },
+    "production-optimized/00-actual-mean-builder/stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "production-optimized/00-actual-mean-builder/stdout.log": {
+      "sha256": "262591c28aacb1e38dd2ad522cca63ffc2cb0af34a309b413e443f013af4d165",
+      "bytes": 60
+    },
+    "production-optimized/REGISTERED.json": {
+      "sha256": "700f96ed904032ee7423521ae7689b1c8a36352666d85130ba2fa2a512c7dd26",
+      "bytes": 724
+    },
+    "production-optimized/SUPERVISOR_RESULT.json": {
+      "sha256": "a92a4abc75e09847e80220435da6d8d3ce4df5b2cfdbda14c051d37a138f0925",
+      "bytes": 1787
+    },
+    "root/audit/formal/latex/pid-rs-report-tables.sty": {
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+      "bytes": 4051
+    },
+    "root/audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+      "bytes": 8607
+    },
+    "root/audit/formal/latex/prefix-mgw-mean/body.expected.md": {
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+      "bytes": 18318
+    },
+    "root/audit/formal/latex/prefix-mgw-mean/body.expected.tex": {
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+      "bytes": 20395
+    },
+    "root/audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex": {
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+      "bytes": 1994
+    },
+    "root/audit/formal/latex/prefix-mgw-mean/publication-inputs-v1.json": {
+      "sha256": "e85c572d7221a5a46c1200e9e0dde12f73d50def5a0b5dd5bbaf5e4bd97fe09f",
+      "bytes": 2542
+    },
+    "root/audit/formal/latex/prefix-mgw-mean/retained-rank.pdf": {
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+      "bytes": 67407
+    },
+    "root/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md": {
+      "sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e",
+      "bytes": 18335
+    },
+    "root/audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd",
+      "bytes": 4656
+    },
+    "root/output/pdf/prefix-mgw-mean.pdf": {
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    "root/scripts/build-prefix-mgw-mean-pdf.py": {
+      "sha256": "4b8509424a2baa580ef336c79eff2e4c4583dcc51a5efa74aca15806b7518d24",
+      "bytes": 14029
+    },
+    "root/scripts/check-formal-pdf-log.sh": {
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da",
+      "bytes": 2417
+    },
+    "run-real-builds.py": {
+      "sha256": "10270c526b8d4beb34f93be74f2912e4e751e245d9341ca2a0dc6d633d16de0c",
+      "bytes": 2511
+    },
+    "work-normal/ENVIRONMENT.json": {
+      "sha256": "7890263778ca07654fafd3731c117a9723c21a3e060dfcdcb982e1ba970d3787",
+      "bytes": 360
+    },
+    "work-normal/INPUTS.json": {
+      "sha256": "7c5644cf3cd963be847ddc3d051fa5cf28f4ba0704e902d5d553f0ea62c56925",
+      "bytes": 2240
+    },
+    "work-normal/RESULT.json": {
+      "sha256": "cb7726eba117e1796f5876e44c38f1897d78121be60146683c2d6e2ad20970be",
+      "bytes": 7396
+    },
+    "work-normal/build-1/body.md": {
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+      "bytes": 18318
+    },
+    "work-normal/build-1/body.pandoc.raw.tex": {
+      "sha256": "cc4d258a4626cf03f0ed2425ef6a009e1ee7bf5525b3b50d075060bb67e778e0",
+      "bytes": 20310
+    },
+    "work-normal/build-1/body.tex": {
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+      "bytes": 20395
+    },
+    "work-normal/build-1/latex-1.RESULT.json": {
+      "sha256": "243788ca496d8d21526e4a84a4337c0ebc54fe2e532db707027cefc1a509cb39",
+      "bytes": 628
+    },
+    "work-normal/build-1/latex-1.START.json": {
+      "sha256": "843094470d43b034b0cbb63377117adf2066893b8a5a0c2df9fd23addf1c2ee3",
+      "bytes": 380
+    },
+    "work-normal/build-1/latex-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-1/latex-1.stdout": {
+      "sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f",
+      "bytes": 13735
+    },
+    "work-normal/build-1/latex-2.RESULT.json": {
+      "sha256": "d4998a247bc41631b53c434c7aedc39e4af34b57293d340ab76d6ee71a7672ff",
+      "bytes": 628
+    },
+    "work-normal/build-1/latex-2.START.json": {
+      "sha256": "b1dd48b1895d57cf35dcf59567d63fd4559fab81218ade0287077f22c78fc1cd",
+      "bytes": 380
+    },
+    "work-normal/build-1/latex-2.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-1/latex-2.stdout": {
+      "sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "bytes": 13329
+    },
+    "work-normal/build-1/log-check.RESULT.json": {
+      "sha256": "682cc36bc7daddf473e4d21542a44dad0309efa98cb311196b3fbd7d327b3464",
+      "bytes": 793
+    },
+    "work-normal/build-1/log-check.START.json": {
+      "sha256": "525f1312f4f6ae713652cf3f641239d1cd40d34daab35b88c9b884d460821373",
+      "bytes": 545
+    },
+    "work-normal/build-1/log-check.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-1/log-check.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-1/pandoc.RESULT.json": {
+      "sha256": "e01ca441b88a610c985ad4d3245d08fc974c135bb0df02d5c38d778973edb2d7",
+      "bytes": 630
+    },
+    "work-normal/build-1/pandoc.START.json": {
+      "sha256": "2538cf08a263d2aeb4c817047a51d725c4fe9970214876d9f53f3b01d04854a2",
+      "bytes": 382
+    },
+    "work-normal/build-1/pandoc.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-1/pandoc.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-1/pid-rs-report-tables.sty": {
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+      "bytes": 4051
+    },
+    "work-normal/build-1/pid-rs-workflow-publication.sty": {
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+      "bytes": 8607
+    },
+    "work-normal/build-1/prefix-mgw-mean.aux": {
+      "sha256": "ba771ef65d385659cba72ebd00b1dd8c66ad7b4b248e6428f5cc4df1e6c26089",
+      "bytes": 8466
+    },
+    "work-normal/build-1/prefix-mgw-mean.log": {
+      "sha256": "1758474237cb4bbb4a24b87b04bb65c83a257ddf282c7efed43c64c79c3f52b4",
+      "bytes": 59615
+    },
+    "work-normal/build-1/prefix-mgw-mean.pdf": {
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    "work-normal/build-1/prefix-mgw-mean.tex": {
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+      "bytes": 1994
+    },
+    "work-normal/build-1/retained-rank.pdf": {
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+      "bytes": 67407
+    },
+    "work-normal/build-2/body.md": {
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+      "bytes": 18318
+    },
+    "work-normal/build-2/body.pandoc.raw.tex": {
+      "sha256": "cc4d258a4626cf03f0ed2425ef6a009e1ee7bf5525b3b50d075060bb67e778e0",
+      "bytes": 20310
+    },
+    "work-normal/build-2/body.tex": {
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+      "bytes": 20395
+    },
+    "work-normal/build-2/latex-1.RESULT.json": {
+      "sha256": "5d4900563eb0f5657b5038dfb68a7408de43d256fbed4d0c0b2714fab8b1710f",
+      "bytes": 628
+    },
+    "work-normal/build-2/latex-1.START.json": {
+      "sha256": "7448f7cd6288a5228f4185f36446583bf570587f4c24010277aed5cd9c32ff16",
+      "bytes": 380
+    },
+    "work-normal/build-2/latex-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-2/latex-1.stdout": {
+      "sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2",
+      "bytes": 13598
+    },
+    "work-normal/build-2/latex-2.RESULT.json": {
+      "sha256": "a64718d778660e9efaef01976ad91723b6277f2cb37309f3cabede9405dae990",
+      "bytes": 628
+    },
+    "work-normal/build-2/latex-2.START.json": {
+      "sha256": "15aa0b1dd46a187e743726de9c709394582db310f7dfee676bff5654168903c0",
+      "bytes": 380
+    },
+    "work-normal/build-2/latex-2.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-2/latex-2.stdout": {
+      "sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "bytes": 13329
+    },
+    "work-normal/build-2/log-check.RESULT.json": {
+      "sha256": "cebbd6d82754f5bb1ca6dceadad5c97d9eaa36975a37d637fd2a404f326a1242",
+      "bytes": 793
+    },
+    "work-normal/build-2/log-check.START.json": {
+      "sha256": "c1149cf9dfcc40268428400742b3415955716c9692b20fd7426df0c8ec0477e9",
+      "bytes": 545
+    },
+    "work-normal/build-2/log-check.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-2/log-check.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-2/pandoc.RESULT.json": {
+      "sha256": "6d100fd659e9ae8a68d5ccc0eaa85bc71d7fc144151a28bef2a6dbef2374d0de",
+      "bytes": 630
+    },
+    "work-normal/build-2/pandoc.START.json": {
+      "sha256": "dbd38a22644c7786fe258f9ca8490fe16c1d52627d50d617bda3a0f1fe140588",
+      "bytes": 382
+    },
+    "work-normal/build-2/pandoc.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-2/pandoc.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/build-2/pid-rs-report-tables.sty": {
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+      "bytes": 4051
+    },
+    "work-normal/build-2/pid-rs-workflow-publication.sty": {
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+      "bytes": 8607
+    },
+    "work-normal/build-2/prefix-mgw-mean.aux": {
+      "sha256": "ba771ef65d385659cba72ebd00b1dd8c66ad7b4b248e6428f5cc4df1e6c26089",
+      "bytes": 8466
+    },
+    "work-normal/build-2/prefix-mgw-mean.log": {
+      "sha256": "ab736019c11ec4e50f8697ffe360963a9f9bb9486f19649da1bc164ed18222df",
+      "bytes": 59615
+    },
+    "work-normal/build-2/prefix-mgw-mean.pdf": {
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    "work-normal/build-2/prefix-mgw-mean.tex": {
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+      "bytes": 1994
+    },
+    "work-normal/build-2/retained-rank.pdf": {
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+      "bytes": 67407
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/latinmodern-math.lua": {
+      "sha256": "c56d16aeb1865fc6285817a483ec10db5bf28f7f440e2ff55aa10f75e3f69eb1",
+      "bytes": 1044062
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/latinmodern-math.luc": {
+      "sha256": "9f30987d3c3f53cebf822c49b9cc838ead12bab08dc416027bf4e0ecb9b9a8db",
+      "bytes": 637084
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-italic.lua": {
+      "sha256": "21778cc0594c6bf752526fde4a7cf0464b6db9f2c173ee57f15eef7b8af45950",
+      "bytes": 132270
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-italic.luc": {
+      "sha256": "431ef11f4b9621a0ee3ef19af0f8a1e0da92794f4b01c03f5acd90d918456f1c",
+      "bytes": 82963
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.lua": {
+      "sha256": "780ca38056fba0ca1aadfa0cf9578cc2c6d421adc93a1f1b396b6445f93c7b1b",
+      "bytes": 131561
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.luc": {
+      "sha256": "20188bc00cea1d4ac8ffc6b366a48d3faf8746c25a37fc00753175c149e44296",
+      "bytes": 81837
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-bold.lua": {
+      "sha256": "2104afdba8ec20184a1aaefe80616e9908d50642d46fcf8deeb7c904c52a068d",
+      "bytes": 131586
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-bold.luc": {
+      "sha256": "31e0f7a0516c0712d8c2a7724355e63ca8b8fd83bfa891ba4d64627e31191f58",
+      "bytes": 82076
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-boldoblique.lua": {
+      "sha256": "e5c9dbd9699f53f73671e2acca6b848f6bb45ef8ae0bf542c5eb278d4d1ac258",
+      "bytes": 132156
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-boldoblique.luc": {
+      "sha256": "22a57306fc26871950858cc52afbe2913cdd3a92f73efb6412efa2dab32800d3",
+      "bytes": 83191
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.lua": {
+      "sha256": "933ca6583d117010626b6f84add44b5c7bbd6eb2a4cb74bf87c7920676346ed7",
+      "bytes": 200534
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.luc": {
+      "sha256": "b1483ab845167cda46a1ae44bcf6f35916a743c28c399b08140cbdb45db289ed",
+      "bytes": 128410
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bolditalic.lua": {
+      "sha256": "e51cf3e47669ab07fea8e8d3acb4a59f51a075511a52842e8dd99f440af1d49b",
+      "bytes": 211377
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bolditalic.luc": {
+      "sha256": "ece564d95d705cafc4892ee1706f5432883ce0465e628df8dfc0115e86624301",
+      "bytes": 136491
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.lua": {
+      "sha256": "d792ad42be7668c77ff390d820d60801201a89eb6ac9d1fadf20fc4c6850fc9b",
+      "bytes": 212518
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.luc": {
+      "sha256": "ea1b7a69334ed798ba582288bed2d9844be5d31275b3ddbd3aafbbc5e449e24e",
+      "bytes": 136312
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.lua": {
+      "sha256": "0ed023b7d49275839af59a6b62b5f96229917a82c55d8184d58dc8c7d45a1536",
+      "bytes": 200911
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc": {
+      "sha256": "a2e25976b77be5a7f95a7f5e5e79acd85acafbad3e75f5c7ac1eff9fadcbfe80",
+      "bytes": 127327
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regular.lua": {
+      "sha256": "87ac4fa3d4ba2859e45b1be5d7eab2bc29fbb31b752549535947ad0fee4ff76a",
+      "bytes": 1119363
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regular.luc": {
+      "sha256": "96788310d901409f99a87e73960d8b29299a35dc3dc3160b4b58bc329551dc54",
+      "bytes": 709693
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regularit.lua": {
+      "sha256": "3d4b04a79f485daa65d26e861ca4b9acf163363799341413e9779a267faa43ad",
+      "bytes": 682673
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regularit.luc": {
+      "sha256": "8d514c26f215c8b4fd32ee3df50e43287c6cad841a8edf56f100ca126e5975aa",
+      "bytes": 432507
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semibold.lua": {
+      "sha256": "fc729c424614689fdc97b7d9b435ca54ce8f685af1ad9f5bff2b5637b6148f2e",
+      "bytes": 1114093
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semibold.luc": {
+      "sha256": "6100efc236578d7fda51e505d05845b9f7e05b60f7fe3f648c7e2a1cee715dd8",
+      "bytes": 700408
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semiboldit.lua": {
+      "sha256": "93f59b7160690cef9c060470a14e468ecb977858966d968754dea613eb9a7b96",
+      "bytes": 682775
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semiboldit.luc": {
+      "sha256": "e7e770e8c24c0a32e0500f0fa2353fb7f2e25a4c920806b38780e09c471edeaa",
+      "bytes": 439926
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-lookup-cache.lua": {
+      "sha256": "46135cf340eebe69457c1775b6e78a126bc0cd0d2d6182bf3fa1a9fdf5512e2c",
+      "bytes": 10
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-lookup-cache.luc": {
+      "sha256": "e1b6cae5ff86c9cfa2a0d37d3a9e4f23d2708f93efb8d8e2d82e90cbce85c796",
+      "bytes": 88
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.lua.gz": {
+      "sha256": "3c3c809c44e6f1087e8e230bdd828092a8921849ffed002fd1dc225a1fe88d5f",
+      "bytes": 272143
+    },
+    "work-normal/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz": {
+      "sha256": "7a3b33a76666b179dd6380a7d6e6daf32ab1896e5431c2efe757a3afc361c7ae",
+      "bytes": 390151
+    },
+    "work-normal/lualatex-version.RESULT.json": {
+      "sha256": "0e33fec42e05102604633a11f3d5ba962a6b4732cd7e877a00e5b9f2ae4785a3",
+      "bytes": 508
+    },
+    "work-normal/lualatex-version.START.json": {
+      "sha256": "a43fcd69c30a13dbe95602cd65af3d0dc0abcbac84ec6d2048985e1a263c7915",
+      "bytes": 260
+    },
+    "work-normal/lualatex-version.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/lualatex-version.stdout": {
+      "sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602",
+      "bytes": 453
+    },
+    "work-normal/pandoc-version.RESULT.json": {
+      "sha256": "f850c2c03045f859d83b5c01ba2b854a6881a9f9b00ace7bedac1b3718651e5a",
+      "bytes": 504
+    },
+    "work-normal/pandoc-version.START.json": {
+      "sha256": "d8152e85d8e865b4f2b529128c9d1490c1638a5ff53a9fd24a4005abf545ac33",
+      "bytes": 256
+    },
+    "work-normal/pandoc-version.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-normal/pandoc-version.stdout": {
+      "sha256": "41b7451ffdbf7dcefa4744e519b4d8f9f6062ca1c74c46876bc45a21ccefbbc8",
+      "bytes": 448
+    },
+    "work-optimized/ENVIRONMENT.json": {
+      "sha256": "44f0666b4bfa63e32f0a21dca72fafb317b5e2cb765f3e46db5781707d07ad90",
+      "bytes": 366
+    },
+    "work-optimized/INPUTS.json": {
+      "sha256": "7c5644cf3cd963be847ddc3d051fa5cf28f4ba0704e902d5d553f0ea62c56925",
+      "bytes": 2240
+    },
+    "work-optimized/RESULT.json": {
+      "sha256": "8f0950dd27dd2033cfe02034c4d8c2fbdbb3419eb3055a109545fe2598c9af7d",
+      "bytes": 7432
+    },
+    "work-optimized/build-1/body.md": {
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+      "bytes": 18318
+    },
+    "work-optimized/build-1/body.pandoc.raw.tex": {
+      "sha256": "cc4d258a4626cf03f0ed2425ef6a009e1ee7bf5525b3b50d075060bb67e778e0",
+      "bytes": 20310
+    },
+    "work-optimized/build-1/body.tex": {
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+      "bytes": 20395
+    },
+    "work-optimized/build-1/latex-1.RESULT.json": {
+      "sha256": "62b4df6d18eff84c702f43c08908a9847b1e17ba8b3babc44e54114614b0f7ec",
+      "bytes": 631
+    },
+    "work-optimized/build-1/latex-1.START.json": {
+      "sha256": "fcf2d4169045a73660f67d23c3aa23034d948f943abee31d37f1b20cfeec9525",
+      "bytes": 383
+    },
+    "work-optimized/build-1/latex-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-1/latex-1.stdout": {
+      "sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f",
+      "bytes": 13735
+    },
+    "work-optimized/build-1/latex-2.RESULT.json": {
+      "sha256": "d5fbd6cb2f99f7809efe1c7c3cc611d3434a796aeb772101e5e004fad4975a9a",
+      "bytes": 631
+    },
+    "work-optimized/build-1/latex-2.START.json": {
+      "sha256": "d653bd9457a4593a14dfad726d79a18477977e4b53dfd0d3ff652d559cb9e477",
+      "bytes": 383
+    },
+    "work-optimized/build-1/latex-2.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-1/latex-2.stdout": {
+      "sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "bytes": 13329
+    },
+    "work-optimized/build-1/log-check.RESULT.json": {
+      "sha256": "4aa2e3d2b08196cec8e14865fba5b7646242a74863644665ed33f9451ad7e507",
+      "bytes": 799
+    },
+    "work-optimized/build-1/log-check.START.json": {
+      "sha256": "10f47ab0b41278eaec92420a04249757b06bcfdf103c2c456d4b8e2799c25b23",
+      "bytes": 551
+    },
+    "work-optimized/build-1/log-check.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-1/log-check.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-1/pandoc.RESULT.json": {
+      "sha256": "6a4075477b48a7a26b76a71dca406af01b574ab928e7b12a51b05ab4f0b5cbb5",
+      "bytes": 633
+    },
+    "work-optimized/build-1/pandoc.START.json": {
+      "sha256": "a1ec71c200cd363b61204ea8fc969e33397b812601f006384e65966393a1a5ae",
+      "bytes": 385
+    },
+    "work-optimized/build-1/pandoc.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-1/pandoc.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-1/pid-rs-report-tables.sty": {
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+      "bytes": 4051
+    },
+    "work-optimized/build-1/pid-rs-workflow-publication.sty": {
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+      "bytes": 8607
+    },
+    "work-optimized/build-1/prefix-mgw-mean.aux": {
+      "sha256": "ba771ef65d385659cba72ebd00b1dd8c66ad7b4b248e6428f5cc4df1e6c26089",
+      "bytes": 8466
+    },
+    "work-optimized/build-1/prefix-mgw-mean.log": {
+      "sha256": "1ae57c963554f617ff93ba6ce898a58caaec192b8e6c9c5b2ebb867d2cb074b5",
+      "bytes": 59624
+    },
+    "work-optimized/build-1/prefix-mgw-mean.pdf": {
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    "work-optimized/build-1/prefix-mgw-mean.tex": {
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+      "bytes": 1994
+    },
+    "work-optimized/build-1/retained-rank.pdf": {
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+      "bytes": 67407
+    },
+    "work-optimized/build-2/body.md": {
+      "sha256": "a70fd8884f2c3776e8ee02a46b827b9b78de1c120bdfb4950fa948830d483ed0",
+      "bytes": 18318
+    },
+    "work-optimized/build-2/body.pandoc.raw.tex": {
+      "sha256": "cc4d258a4626cf03f0ed2425ef6a009e1ee7bf5525b3b50d075060bb67e778e0",
+      "bytes": 20310
+    },
+    "work-optimized/build-2/body.tex": {
+      "sha256": "072c44932b22d0f2219b3a13559bfd66aa873dae0171319a3dee636f509d5e37",
+      "bytes": 20395
+    },
+    "work-optimized/build-2/latex-1.RESULT.json": {
+      "sha256": "9604eae6cd1275d936d9f0cdc37f7eb200a84b2d42f65a51a4080ec4448870d8",
+      "bytes": 631
+    },
+    "work-optimized/build-2/latex-1.START.json": {
+      "sha256": "301d0b216d1fd94ba9919fd3a243a2112a56e80925c10facbb5a651f2613edb0",
+      "bytes": 383
+    },
+    "work-optimized/build-2/latex-1.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-2/latex-1.stdout": {
+      "sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2",
+      "bytes": 13598
+    },
+    "work-optimized/build-2/latex-2.RESULT.json": {
+      "sha256": "daaaf33818eccaf86c2d7967a5a33d66e55c7976b3693c14bace2a8a75d404b7",
+      "bytes": 631
+    },
+    "work-optimized/build-2/latex-2.START.json": {
+      "sha256": "4b60b433adaf3abb0288a5853ed142cba7ff9a43075b199603c35b57cd940941",
+      "bytes": 383
+    },
+    "work-optimized/build-2/latex-2.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-2/latex-2.stdout": {
+      "sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3",
+      "bytes": 13329
+    },
+    "work-optimized/build-2/log-check.RESULT.json": {
+      "sha256": "efc02c74ead402ad8c5ec8035cb629eb605597996e3932d7214f201294dbeba0",
+      "bytes": 799
+    },
+    "work-optimized/build-2/log-check.START.json": {
+      "sha256": "19823c003049d2922a8c6d567e83dd7f647b918c01bd77cc41399451a36a7e3f",
+      "bytes": 551
+    },
+    "work-optimized/build-2/log-check.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-2/log-check.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-2/pandoc.RESULT.json": {
+      "sha256": "e7627139295a9c97962502c7759f1e83d0f93526b67a53141365e016db3fb1fd",
+      "bytes": 633
+    },
+    "work-optimized/build-2/pandoc.START.json": {
+      "sha256": "8db96fda1da0821967df6a33a2e9b7b8d1823f16c02138d57d6de8796fa55f57",
+      "bytes": 385
+    },
+    "work-optimized/build-2/pandoc.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-2/pandoc.stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/build-2/pid-rs-report-tables.sty": {
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+      "bytes": 4051
+    },
+    "work-optimized/build-2/pid-rs-workflow-publication.sty": {
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+      "bytes": 8607
+    },
+    "work-optimized/build-2/prefix-mgw-mean.aux": {
+      "sha256": "ba771ef65d385659cba72ebd00b1dd8c66ad7b4b248e6428f5cc4df1e6c26089",
+      "bytes": 8466
+    },
+    "work-optimized/build-2/prefix-mgw-mean.log": {
+      "sha256": "d7fa774b5f27c6b8cf628daa779a42533758214db4af4b0525e98799cbac400b",
+      "bytes": 59624
+    },
+    "work-optimized/build-2/prefix-mgw-mean.pdf": {
+      "sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+      "bytes": 162538
+    },
+    "work-optimized/build-2/prefix-mgw-mean.tex": {
+      "sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+      "bytes": 1994
+    },
+    "work-optimized/build-2/retained-rank.pdf": {
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+      "bytes": 67407
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/latinmodern-math.lua": {
+      "sha256": "c56d16aeb1865fc6285817a483ec10db5bf28f7f440e2ff55aa10f75e3f69eb1",
+      "bytes": 1044062
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/latinmodern-math.luc": {
+      "sha256": "9f30987d3c3f53cebf822c49b9cc838ead12bab08dc416027bf4e0ecb9b9a8db",
+      "bytes": 637084
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-italic.lua": {
+      "sha256": "21778cc0594c6bf752526fde4a7cf0464b6db9f2c173ee57f15eef7b8af45950",
+      "bytes": 132270
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-italic.luc": {
+      "sha256": "431ef11f4b9621a0ee3ef19af0f8a1e0da92794f4b01c03f5acd90d918456f1c",
+      "bytes": 82963
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.lua": {
+      "sha256": "780ca38056fba0ca1aadfa0cf9578cc2c6d421adc93a1f1b396b6445f93c7b1b",
+      "bytes": 131561
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.luc": {
+      "sha256": "20188bc00cea1d4ac8ffc6b366a48d3faf8746c25a37fc00753175c149e44296",
+      "bytes": 81837
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-bold.lua": {
+      "sha256": "2104afdba8ec20184a1aaefe80616e9908d50642d46fcf8deeb7c904c52a068d",
+      "bytes": 131586
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-bold.luc": {
+      "sha256": "31e0f7a0516c0712d8c2a7724355e63ca8b8fd83bfa891ba4d64627e31191f58",
+      "bytes": 82076
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-boldoblique.lua": {
+      "sha256": "e5c9dbd9699f53f73671e2acca6b848f6bb45ef8ae0bf542c5eb278d4d1ac258",
+      "bytes": 132156
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmonolt10-boldoblique.luc": {
+      "sha256": "22a57306fc26871950858cc52afbe2913cdd3a92f73efb6412efa2dab32800d3",
+      "bytes": 83191
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.lua": {
+      "sha256": "933ca6583d117010626b6f84add44b5c7bbd6eb2a4cb74bf87c7920676346ed7",
+      "bytes": 200534
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.luc": {
+      "sha256": "b1483ab845167cda46a1ae44bcf6f35916a743c28c399b08140cbdb45db289ed",
+      "bytes": 128410
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bolditalic.lua": {
+      "sha256": "e51cf3e47669ab07fea8e8d3acb4a59f51a075511a52842e8dd99f440af1d49b",
+      "bytes": 211377
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bolditalic.luc": {
+      "sha256": "ece564d95d705cafc4892ee1706f5432883ce0465e628df8dfc0115e86624301",
+      "bytes": 136491
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.lua": {
+      "sha256": "d792ad42be7668c77ff390d820d60801201a89eb6ac9d1fadf20fc4c6850fc9b",
+      "bytes": 212518
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.luc": {
+      "sha256": "ea1b7a69334ed798ba582288bed2d9844be5d31275b3ddbd3aafbbc5e449e24e",
+      "bytes": 136312
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.lua": {
+      "sha256": "0ed023b7d49275839af59a6b62b5f96229917a82c55d8184d58dc8c7d45a1536",
+      "bytes": 200911
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc": {
+      "sha256": "a2e25976b77be5a7f95a7f5e5e79acd85acafbad3e75f5c7ac1eff9fadcbfe80",
+      "bytes": 127327
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regular.lua": {
+      "sha256": "9aeb4b53b13995e0024f45e7202e761f96d481fb5291f989a95a62262b74baa5",
+      "bytes": 1119363
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regular.luc": {
+      "sha256": "098ab9c27d17a9652173976e186592ed6cf2c4e1245a3020b1319bf4d0c02916",
+      "bytes": 709693
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regularit.lua": {
+      "sha256": "4191d590642407c0fe20cb7dad1afd24364352a2f815c87ba769c4f5bc7b87b4",
+      "bytes": 682673
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-regularit.luc": {
+      "sha256": "bb9ccc9a47c033f2204f7e28280a43bcaa557587d44f45d4e8b41d5a4e78da84",
+      "bytes": 432507
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semibold.lua": {
+      "sha256": "679f50e5447e332a1b87203ca272a3cda6a383538a9b7a0ad473f2dccbb2c9e8",
+      "bytes": 1114093
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semibold.luc": {
+      "sha256": "5e271d07a3d56350c9fdfac37590882bb464f52a72494758a3063fa28e681f32",
+      "bytes": 700408
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semiboldit.lua": {
+      "sha256": "2cc8e2cc098ce866fe4d8a73247f374c16ca5d02fe1843515c8fbb55d237ad00",
+      "bytes": 682775
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/sourcesanspro-semiboldit.luc": {
+      "sha256": "603c5b0dbef40d09b9ff4a99435385cfce3f037d75cd886462162374757bf1dc",
+      "bytes": 439926
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-lookup-cache.lua": {
+      "sha256": "46135cf340eebe69457c1775b6e78a126bc0cd0d2d6182bf3fa1a9fdf5512e2c",
+      "bytes": 10
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-lookup-cache.luc": {
+      "sha256": "e1b6cae5ff86c9cfa2a0d37d3a9e4f23d2708f93efb8d8e2d82e90cbce85c796",
+      "bytes": 88
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.lua.gz": {
+      "sha256": "55026d10038e87709fafeaf42df72fb4d9abd194600a4d91c75482c5e981a93c",
+      "bytes": 272143
+    },
+    "work-optimized/home/Library/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz": {
+      "sha256": "436252338dab8f7b5f87bbcbdc42f8b8f0e5f52b89f003cba12f8a97e58b6fe6",
+      "bytes": 390151
+    },
+    "work-optimized/lualatex-version.RESULT.json": {
+      "sha256": "13108586447a327eb3eea8a0665f97e1d6bcbf3db83a6b353d4cd6f2ef25ede3",
+      "bytes": 511
+    },
+    "work-optimized/lualatex-version.START.json": {
+      "sha256": "e2a14cb03778ae13193589591e2d1d6e5b205dd3cb50ff0f9f68212ce2f16347",
+      "bytes": 263
+    },
+    "work-optimized/lualatex-version.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/lualatex-version.stdout": {
+      "sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602",
+      "bytes": 453
+    },
+    "work-optimized/pandoc-version.RESULT.json": {
+      "sha256": "2c5d6623d9bf3be22803644c32e102a71db2af6adc1350af59a9715eb739dc89",
+      "bytes": 507
+    },
+    "work-optimized/pandoc-version.START.json": {
+      "sha256": "d5c767b03d2b6357dc0dc18df2a579048a6f2f52514fce843ae89109b419d043",
+      "bytes": 259
+    },
+    "work-optimized/pandoc-version.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "work-optimized/pandoc-version.stdout": {
+      "sha256": "6d569106c6d3db6324f9aef413238175f120ff2cc679a8a88549ab57288d1207",
+      "bytes": 451
+    }
+  },
+  "new_proofs": 0
+}

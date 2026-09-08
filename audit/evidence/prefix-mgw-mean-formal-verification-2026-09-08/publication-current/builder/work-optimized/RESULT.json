@@ -1,0 +1,160 @@
+{
+  "build_count": 2,
+  "bytes": 162538,
+  "commands": [
+    {
+      "argv": [
+        "HOST_HOMEBREW/bin/pandoc",
+        "--version"
+      ],
+      "completed_utc": "2026-09-08T08:59:01.137964+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:01.089736+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6d569106c6d3db6324f9aef413238175f120ff2cc679a8a88549ab57288d1207"
+    },
+    {
+      "argv": [
+        "HOST_TEX/texbin/lualatex",
+        "--version"
+      ],
+      "completed_utc": "2026-09-08T08:59:01.144443+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:01.138554+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602"
+    },
+    {
+      "argv": [
+        "HOST_HOMEBREW/bin/pandoc",
+        "--from=markdown",
+        "--to=latex",
+        "--shift-heading-level-by=-1",
+        "--wrap=none",
+        "--output=body.tex",
+        "body.md"
+      ],
+      "completed_utc": "2026-09-08T08:59:01.189834+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:01.146171+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "HOST_TEX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "completed_utc": "2026-09-08T08:59:09.208254+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:01.190865+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "be4153b211fc3bfd0d4153a53959dd776dd10a36da754287b9a5985ff55c291f"
+    },
+    {
+      "argv": [
+        "HOST_TEX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "completed_utc": "2026-09-08T08:59:11.040333+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:09.208817+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3"
+    },
+    {
+      "argv": [
+        "/bin/bash",
+        "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root/scripts/check-formal-pdf-log.sh",
+        "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1/prefix-mgw-mean.log"
+      ],
+      "completed_utc": "2026-09-08T08:59:11.062761+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-1",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:11.041079+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "HOST_HOMEBREW/bin/pandoc",
+        "--from=markdown",
+        "--to=latex",
+        "--shift-heading-level-by=-1",
+        "--wrap=none",
+        "--output=body.tex",
+        "body.md"
+      ],
+      "completed_utc": "2026-09-08T08:59:11.144966+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-2",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:11.063782+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "HOST_TEX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "completed_utc": "2026-09-08T08:59:12.980858+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-2",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:11.146265+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3e68a8eeb8dcc07b5e4691a05f3b7ea4fc9ec0839bfb808343dbb350b620d3d2"
+    },
+    {
+      "argv": [
+        "HOST_TEX/texbin/lualatex",
+        "-no-shell-escape",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "prefix-mgw-mean.tex"
+      ],
+      "completed_utc": "2026-09-08T08:59:14.812305+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-2",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:12.981507+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "cd7007361885c9ef2d2da9e7a10d7161f2a14c7782185d538d8865e7c97590d3"
+    },
+    {
+      "argv": [
+        "/bin/bash",
+        "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/root/scripts/check-formal-pdf-log.sh",
+        "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-2/prefix-mgw-mean.log"
+      ],
+      "completed_utc": "2026-09-08T08:59:14.831997+00:00",
+      "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-optimized/build-2",
+      "returncode": 0,
+      "started_utc": "2026-09-08T08:59:14.812988+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "completed_utc": "2026-09-08T08:59:14.859497+00:00",
+  "pdf_sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+  "scope": "exact finite publication profile; no new theorem or accessibility credit",
+  "source_and_tools_unchanged": true,
+  "started_utc": "2026-09-08T08:59:00.980202+00:00",
+  "status": "exact_reviewed_pdf_reproduced"
+}

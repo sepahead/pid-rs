@@ -1,0 +1,41 @@
+{
+  "accepted_mean_theorems": 0,
+  "actual_development_attempts": 1,
+  "actual_full_attempts": 0,
+  "carryover_rule": "Newrevisionuses79developmentand8fullslots; previous1developmentremainscountedintotal80. Priorfailureandclockcannotbecompletedorrelabeled.",
+  "evidence_boundary": "Futurekernelproofcanestablishonlynewexactformalpredicate; no preregistered/selectionunbiased/empiricalconfirmationclaim. Existingdevelopmentfeedbackisexplicitlyexposed.",
+  "files": {
+    "ATTEMPT_LEDGER.json": {
+      "bytes": 453,
+      "sha256": "93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0"
+    },
+    "CAMPAIGN.json": {
+      "bytes": 1269,
+      "sha256": "9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568"
+    },
+    "FROZEN.json": {
+      "bytes": 7827,
+      "sha256": "c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d"
+    },
+    "STOP_RECORD.json": {
+      "bytes": 1119,
+      "sha256": "cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8"
+    },
+    "attempts/001-development-0/00-compile-PidPrefixMgwMean-Candidate/stdout.log": {
+      "bytes": 12566,
+      "sha256": "266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed"
+    },
+    "attempts/001-development-0/Candidate.original.lean": {
+      "bytes": 11183,
+      "sha256": "dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a"
+    },
+    "attempts/001-development-0/RESULT.json": {
+      "bytes": 90152,
+      "sha256": "433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd"
+    }
+  },
+  "observed_utc": "2026-09-07T21:22:41.469185+00:00",
+  "prior_root": ".local/sx-mean-wrapper-adopted-source-20260907",
+  "prior_status": "closed_incomplete_original_deadline_exhausted",
+  "schema": "pid-rs/mean-prior-terminal-v1"
+}

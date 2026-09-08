@@ -1,0 +1,2775 @@
+{
+  "artifacts": {
+    "00-compile-PidPrefixMgwMean-Candidate/command.json": {
+      "bytes": 1437,
+      "sha256": "139c307a7bbd377cf4771bad315235291f50dc2ed00aa0e41a22178f8e092a39"
+    },
+    "00-compile-PidPrefixMgwMean-Candidate/registered.json": {
+      "bytes": 3500,
+      "sha256": "e270d8291c54ce97370641823d03c24e49bb5b6fe5ce3d49cbaaa1fc34866b2b"
+    },
+    "00-compile-PidPrefixMgwMean-Candidate/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "00-compile-PidPrefixMgwMean-Candidate/stdout.log": {
+      "bytes": 448,
+      "sha256": "5952ea5b7f8174cb1283b39362a8eac4865cf28cdef7c473b93688b263cd4f7e"
+    },
+    "Candidate.executed.lean": {
+      "bytes": 21327,
+      "sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6"
+    },
+    "Candidate.original.lean": {
+      "bytes": 21327,
+      "sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6"
+    },
+    "EXECUTION_INPUT.json": {
+      "bytes": 429,
+      "sha256": "e669ac6b0ec4e0213368eb219eabf3af6feb10fbb06763c33c779906f5e543f4"
+    },
+    "REGISTERED.json": {
+      "bytes": 304,
+      "sha256": "94a721b75934fc7c92f3d3918e211af6d98c08e8190c8cc02973346547cf3db4"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "input-bytes/03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "input-bytes/04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "input-bytes/0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "input-bytes/0e0ad5294744ae7891cbc99a35d746d99c5a04eb6bfeb23dd550e319f59978cd": {
+      "bytes": 21987,
+      "sha256": "0e0ad5294744ae7891cbc99a35d746d99c5a04eb6bfeb23dd550e319f59978cd"
+    },
+    "input-bytes/0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94": {
+      "bytes": 21519,
+      "sha256": "0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94"
+    },
+    "input-bytes/100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "input-bytes/1219c832c6ea51c258eff977e52689870a1f13289900648c05ee52c9ea8e2586": {
+      "bytes": 21219,
+      "sha256": "1219c832c6ea51c258eff977e52689870a1f13289900648c05ee52c9ea8e2586"
+    },
+    "input-bytes/1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "input-bytes/1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18": {
+      "bytes": 833,
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "input-bytes/1e79216a4a682db954a8f80be5a829a52e6a7b83073d7853bffed063f9acc42c": {
+      "bytes": 4056,
+      "sha256": "1e79216a4a682db954a8f80be5a829a52e6a7b83073d7853bffed063f9acc42c"
+    },
+    "input-bytes/1f10a446ba72dc293a910f7a8459d068b8e610d180cd5d05956b441904ad1091": {
+      "bytes": 619,
+      "sha256": "1f10a446ba72dc293a910f7a8459d068b8e610d180cd5d05956b441904ad1091"
+    },
+    "input-bytes/24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "input-bytes/266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed": {
+      "bytes": 12566,
+      "sha256": "266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed"
+    },
+    "input-bytes/26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "input-bytes/2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "input-bytes/2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "input-bytes/301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "input-bytes/311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8": {
+      "bytes": 1812,
+      "sha256": "311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8"
+    },
+    "input-bytes/323aaa341e62afb4eeb05e03a7fc4321170c8cb904e3d5844cbc36cdff4f2c1a": {
+      "bytes": 932,
+      "sha256": "323aaa341e62afb4eeb05e03a7fc4321170c8cb904e3d5844cbc36cdff4f2c1a"
+    },
+    "input-bytes/3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "input-bytes/3a08e0c2fc46533bbd104858195d17339513fd1559d47cc9d4dea45c49583135": {
+      "bytes": 1423,
+      "sha256": "3a08e0c2fc46533bbd104858195d17339513fd1559d47cc9d4dea45c49583135"
+    },
+    "input-bytes/3a4a7134beea242c7e16a40bcf156fa50f7e6e0867ca7198586469bd0076e48a": {
+      "bytes": 3433,
+      "sha256": "3a4a7134beea242c7e16a40bcf156fa50f7e6e0867ca7198586469bd0076e48a"
+    },
+    "input-bytes/3d1159d500222161d5b8744bf69c603b30537b8cfdf035e2993bf5e811813040": {
+      "bytes": 5004,
+      "sha256": "3d1159d500222161d5b8744bf69c603b30537b8cfdf035e2993bf5e811813040"
+    },
+    "input-bytes/3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "input-bytes/416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "input-bytes/433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd": {
+      "bytes": 90152,
+      "sha256": "433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd"
+    },
+    "input-bytes/43bea30f78bdf707ec47f168db6d3ad7847ec50119b08a3d852d751ae5baaae7": {
+      "bytes": 483,
+      "sha256": "43bea30f78bdf707ec47f168db6d3ad7847ec50119b08a3d852d751ae5baaae7"
+    },
+    "input-bytes/4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "input-bytes/544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "input-bytes/55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "input-bytes/5d2b7239e8aad9c76da66205d3d6f896ecc46550fdd8ed17d1f47edc27a23324": {
+      "bytes": 1156,
+      "sha256": "5d2b7239e8aad9c76da66205d3d6f896ecc46550fdd8ed17d1f47edc27a23324"
+    },
+    "input-bytes/5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "input-bytes/6481e19309a4e11730229a254558670a909d261a285f766ea5e2f577e8274e48": {
+      "bytes": 4309,
+      "sha256": "6481e19309a4e11730229a254558670a909d261a285f766ea5e2f577e8274e48"
+    },
+    "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "input-bytes/6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0": {
+      "bytes": 22296,
+      "sha256": "6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0"
+    },
+    "input-bytes/6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e": {
+      "bytes": 700,
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "input-bytes/6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed": {
+      "bytes": 9076,
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "input-bytes/6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "input-bytes/6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6": {
+      "bytes": 166,
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "input-bytes/71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "input-bytes/7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "input-bytes/77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098": {
+      "bytes": 4383,
+      "sha256": "77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098"
+    },
+    "input-bytes/7c8f3da74a5c22ba0d261cdbcb5331859c3d3a212255d1d2911399c4b72edd37": {
+      "bytes": 390,
+      "sha256": "7c8f3da74a5c22ba0d261cdbcb5331859c3d3a212255d1d2911399c4b72edd37"
+    },
+    "input-bytes/7cfb4b5206651746d3054f68282b5d15518722ec54b6061f661a1232aa46078f": {
+      "bytes": 1407,
+      "sha256": "7cfb4b5206651746d3054f68282b5d15518722ec54b6061f661a1232aa46078f"
+    },
+    "input-bytes/7e93526b76e17707a61f30557ab0f4eb341994fdcba1475c6391771c0750082e": {
+      "bytes": 162596,
+      "sha256": "7e93526b76e17707a61f30557ab0f4eb341994fdcba1475c6391771c0750082e"
+    },
+    "input-bytes/847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "input-bytes/89c9bb3745a2b73914e0f9f4bb6161424d7afa201741acd434e1116bc1253f64": {
+      "bytes": 385,
+      "sha256": "89c9bb3745a2b73914e0f9f4bb6161424d7afa201741acd434e1116bc1253f64"
+    },
+    "input-bytes/8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "input-bytes/8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "input-bytes/8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36": {
+      "bytes": 4769,
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "input-bytes/9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "input-bytes/93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0": {
+      "bytes": 453,
+      "sha256": "93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0"
+    },
+    "input-bytes/93fa792309e44bfc1a3cf36a6021574000eee84e8cea088abcf12649423bec19": {
+      "bytes": 4118,
+      "sha256": "93fa792309e44bfc1a3cf36a6021574000eee84e8cea088abcf12649423bec19"
+    },
+    "input-bytes/97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "input-bytes/9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "input-bytes/9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568": {
+      "bytes": 1269,
+      "sha256": "9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568"
+    },
+    "input-bytes/a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "input-bytes/a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261": {
+      "bytes": 4926,
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "input-bytes/a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "input-bytes/a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "input-bytes/af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c": {
+      "bytes": 6761,
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "input-bytes/afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "input-bytes/b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "input-bytes/b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "input-bytes/b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "input-bytes/baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db": {
+      "bytes": 26028,
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "input-bytes/bd228dfd054515ed93e62f172872e54183774e8c7e591ac039591793ca42577d": {
+      "bytes": 520,
+      "sha256": "bd228dfd054515ed93e62f172872e54183774e8c7e591ac039591793ca42577d"
+    },
+    "input-bytes/bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "input-bytes/c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243": {
+      "bytes": 1424,
+      "sha256": "c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243"
+    },
+    "input-bytes/c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "input-bytes/c53802e8ff88f6394ff09eb352f70f365c6ee8f146495f4f940e982de8b88d37": {
+      "bytes": 3092,
+      "sha256": "c53802e8ff88f6394ff09eb352f70f365c6ee8f146495f4f940e982de8b88d37"
+    },
+    "input-bytes/c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d": {
+      "bytes": 7827,
+      "sha256": "c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d"
+    },
+    "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "input-bytes/cae0627801b6375082b8619c3d404a041e6f6f4d6321531c50c40d9444b8fead": {
+      "bytes": 1775,
+      "sha256": "cae0627801b6375082b8619c3d404a041e6f6f4d6321531c50c40d9444b8fead"
+    },
+    "input-bytes/cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8": {
+      "bytes": 1119,
+      "sha256": "cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8"
+    },
+    "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "input-bytes/d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "input-bytes/d32d4cc34564429652223fdee179dc1901c0cb181749e200e646ec8bbbbb6764": {
+      "bytes": 463,
+      "sha256": "d32d4cc34564429652223fdee179dc1901c0cb181749e200e646ec8bbbbb6764"
+    },
+    "input-bytes/d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0": {
+      "bytes": 9936,
+      "sha256": "d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0"
+    },
+    "input-bytes/d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "input-bytes/d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "input-bytes/dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6": {
+      "bytes": 21327,
+      "sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6"
+    },
+    "input-bytes/deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "input-bytes/dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a": {
+      "bytes": 11183,
+      "sha256": "dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a"
+    },
+    "input-bytes/e6b5fe155921318273037f8c332fcf8f5f15c2247e2add8102f261ad8f9d238b": {
+      "bytes": 4397,
+      "sha256": "e6b5fe155921318273037f8c332fcf8f5f15c2247e2add8102f261ad8f9d238b"
+    },
+    "input-bytes/e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42": {
+      "bytes": 1870,
+      "sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42"
+    },
+    "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "input-bytes/eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "input-bytes/edb2bd4bcb92c25276367a80b7a462c02cc8977163825f9314359e74450f0338": {
+      "bytes": 162306,
+      "sha256": "edb2bd4bcb92c25276367a80b7a462c02cc8977163825f9314359e74450f0338"
+    },
+    "input-bytes/fef85f4cafc1a8efceb2bc2c7dc245e19e697ff98ff3898bad3562c8d49c789f": {
+      "bytes": 1033,
+      "sha256": "fef85f4cafc1a8efceb2bc2c7dc245e19e697ff98ff3898bad3562c8d49c789f"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 21327,
+      "sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6"
+    },
+    "src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    }
+  },
+  "captured_sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6",
+  "commands": [
+    {
+      "command": [
+        "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixMgwMean/Candidate.olean",
+        "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/Candidate.lean"
+      ],
+      "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src",
+      "elapsed_seconds": 8.235126750078052,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-PidPrefixMgwMean-Candidate",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 600,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2686582784,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 448,
+      "returncode": 1,
+      "started_utc": "2026-09-08T03:47:24.404318+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "5952ea5b7f8174cb1283b39362a8eac4865cf28cdef7c473b93688b263cd4f7e"
+    }
+  ],
+  "completed_utc": "2026-09-08T03:47:32.677812+00:00",
+  "executed_sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6",
+  "failure": "compile-PidPrefixMgwMean-Candidate: nonzero process status",
+  "inputs": {
+    "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean": {
+      "bytes": 49968,
+      "identity": [
+        16777231,
+        858824670,
+        33261,
+        1,
+        49968,
+        1786337446000000000,
+        1787517629783998060
+      ],
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/leanchecker": {
+      "bytes": 78128,
+      "identity": [
+        16777231,
+        858824673,
+        33261,
+        1,
+        78128,
+        1786337447000000000,
+        1787517629786607579
+      ],
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/ACCEPTED_DEPENDENCY_RECORDS.json": {
+      "bytes": 9076,
+      "identity": [
+        16777231,
+        930460134,
+        33188,
+        1,
+        9076,
+        1788837762618369604,
+        1788837762618369604
+      ],
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/ADOPTION_PREPARATION.json": {
+      "bytes": 385,
+      "identity": [
+        16777231,
+        930460197,
+        33188,
+        1,
+        385,
+        1788837762626741878,
+        1788837762626741878
+      ],
+      "sha256": "89c9bb3745a2b73914e0f9f4bb6161424d7afa201741acd434e1116bc1253f64"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/CAMPAIGN.json": {
+      "bytes": 1424,
+      "identity": [
+        16777231,
+        930469134,
+        33188,
+        1,
+        1424,
+        1788837987887256070,
+        1788837987887256070
+      ],
+      "sha256": "c14b37b0a370682e13f923f9a75f09639e37cbab51b568c5b951be46be3a3243"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/FROZEN.json": {
+      "bytes": 9936,
+      "identity": [
+        16777231,
+        930469133,
+        33188,
+        1,
+        9936,
+        1788837987887062444,
+        1788837987887062444
+      ],
+      "sha256": "d7c6f1aedb8510777383625b037eabc42f2ec6fa8616a10d014b48719f637ac0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_ACCEPTANCE.json": {
+      "bytes": 4397,
+      "identity": [
+        16777231,
+        930469131,
+        33188,
+        1,
+        4397,
+        1788837987883897728,
+        1788837987883897728
+      ],
+      "sha256": "e6b5fe155921318273037f8c332fcf8f5f15c2247e2add8102f261ad8f9d238b"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_ACCEPTANCE.predecessor.json.txt": {
+      "bytes": 4383,
+      "identity": [
+        16777231,
+        930460151,
+        33188,
+        1,
+        4383,
+        1788837762620909361,
+        1788837762620909361
+      ],
+      "sha256": "77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_PLAN.md": {
+      "bytes": 3092,
+      "identity": [
+        16777231,
+        930460139,
+        33188,
+        1,
+        3092,
+        1788837762619041481,
+        1788837762619041481
+      ],
+      "sha256": "c53802e8ff88f6394ff09eb352f70f365c6ee8f146495f4f940e982de8b88d37"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/PREPARATION_ADOPTION.json": {
+      "bytes": 1423,
+      "identity": [
+        16777231,
+        930460155,
+        33188,
+        1,
+        1423,
+        1788837762621292237,
+        1788837762621292237
+      ],
+      "sha256": "3a08e0c2fc46533bbd104858195d17339513fd1559d47cc9d4dea45c49583135"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/PREPARATION_INPUT_PINS.json": {
+      "bytes": 3433,
+      "identity": [
+        16777231,
+        930460152,
+        33188,
+        1,
+        3433,
+        1788837762620995403,
+        1788837762620995403
+      ],
+      "sha256": "3a4a7134beea242c7e16a40bcf156fa50f7e6e0867ca7198586469bd0076e48a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/PRIOR_CAMPAIGN_TERMINAL.json": {
+      "bytes": 1775,
+      "identity": [
+        16777231,
+        930460156,
+        33188,
+        1,
+        1775,
+        1788837762621368404,
+        1788837762621368404
+      ],
+      "sha256": "cae0627801b6375082b8619c3d404a041e6f6f4d6321531c50c40d9444b8fead"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/ROOT_SOURCE_REHASH.json": {
+      "bytes": 619,
+      "identity": [
+        16777231,
+        930465757,
+        33188,
+        1,
+        619,
+        1788837855631522661,
+        1788837855631522661
+      ],
+      "sha256": "1f10a446ba72dc293a910f7a8459d068b8e610d180cd5d05956b441904ad1091"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SELECTION_RULE.json": {
+      "bytes": 1870,
+      "identity": [
+        16777231,
+        930460153,
+        33188,
+        1,
+        1870,
+        1788837762621081028,
+        1788837762621081028
+      ],
+      "sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SELECTION_RULE.predecessor.json.txt": {
+      "bytes": 1407,
+      "identity": [
+        16777231,
+        930460138,
+        33188,
+        1,
+        1407,
+        1788837762618842772,
+        1788837762618842772
+      ],
+      "sha256": "7cfb4b5206651746d3054f68282b5d15518722ec54b6061f661a1232aa46078f"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_CORRECTION.json": {
+      "bytes": 463,
+      "identity": [
+        16777231,
+        930460143,
+        33188,
+        1,
+        463,
+        1788837762619474315,
+        1788837762619474315
+      ],
+      "sha256": "d32d4cc34564429652223fdee179dc1901c0cb181749e200e646ec8bbbbb6764"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_GRAPH.json": {
+      "bytes": 1033,
+      "identity": [
+        16777231,
+        930460146,
+        33188,
+        1,
+        1033,
+        1788837762620000442,
+        1788837762620000442
+      ],
+      "sha256": "fef85f4cafc1a8efceb2bc2c7dc245e19e697ff98ff3898bad3562c8d49c789f"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_REVIEW.json": {
+      "bytes": 520,
+      "identity": [
+        16777231,
+        930469132,
+        33188,
+        1,
+        520,
+        1788837987884027644,
+        1788837987884027644
+      ],
+      "sha256": "bd228dfd054515ed93e62f172872e54183774e8c7e591ac039591793ca42577d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SOURCE_REVIEW.predecessor.json.txt": {
+      "bytes": 932,
+      "identity": [
+        16777231,
+        930460145,
+        33188,
+        1,
+        932,
+        1788837762619916567,
+        1788837762619916567
+      ],
+      "sha256": "323aaa341e62afb4eeb05e03a7fc4321170c8cb904e3d5844cbc36cdff4f2c1a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/SemanticJudge.lean.in": {
+      "bytes": 2658,
+      "identity": [
+        16777231,
+        930460132,
+        33188,
+        1,
+        2658,
+        1788837762617800686,
+        1788837762617800686
+      ],
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/TASK.md": {
+      "bytes": 5004,
+      "identity": [
+        16777231,
+        930460154,
+        33188,
+        1,
+        5004,
+        1788837762621217029,
+        1788837762621217029
+      ],
+      "sha256": "3d1159d500222161d5b8744bf69c603b30537b8cfdf035e2993bf5e811813040"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/TASK.predecessor.md": {
+      "bytes": 4056,
+      "identity": [
+        16777231,
+        930460147,
+        33188,
+        1,
+        4056,
+        1788837762620242568,
+        1788837762620242568
+      ],
+      "sha256": "1e79216a4a682db954a8f80be5a829a52e6a7b83073d7853bffed063f9acc42c"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "identity": [
+        16777231,
+        930544806,
+        33188,
+        1,
+        60008,
+        1788839244384705440,
+        1788839244384705440
+      ],
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "identity": [
+        16777231,
+        930544812,
+        33188,
+        1,
+        573576,
+        1788839244386601151,
+        1788839244386601151
+      ],
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "identity": [
+        16777231,
+        930544802,
+        33188,
+        1,
+        199552,
+        1788839244383858230,
+        1788839244383858230
+      ],
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "identity": [
+        16777231,
+        930544808,
+        33188,
+        1,
+        420976,
+        1788839244385211399,
+        1788839244385211399
+      ],
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "identity": [
+        16777231,
+        930544810,
+        33188,
+        1,
+        261984,
+        1788839244385685358,
+        1788839244385685358
+      ],
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "identity": [
+        16777231,
+        930544794,
+        33188,
+        1,
+        98304,
+        1788839244382712437,
+        1788839244382712437
+      ],
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "identity": [
+        16777231,
+        930544796,
+        33188,
+        1,
+        292592,
+        1788839244383192021,
+        1788839244383192021
+      ],
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "identity": [
+        16777231,
+        930544820,
+        33188,
+        1,
+        10952,
+        1788839244388170070,
+        1788839244388170070
+      ],
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "identity": [
+        16777231,
+        930544824,
+        33188,
+        1,
+        963440,
+        1788839244389265780,
+        1788839244389265780
+      ],
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "identity": [
+        16777231,
+        930544816,
+        33188,
+        1,
+        126464,
+        1788839244387456111,
+        1788839244387456111
+      ],
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "identity": [
+        16777231,
+        930544822,
+        33188,
+        1,
+        92232,
+        1788839244388527987,
+        1788839244388527987
+      ],
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "identity": [
+        16777231,
+        930544818,
+        33188,
+        1,
+        68424,
+        1788839244387848611,
+        1788839244387848611
+      ],
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "identity": [
+        16777231,
+        930544826,
+        33188,
+        1,
+        3088,
+        1788839244390043864,
+        1788839244390043864
+      ],
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "identity": [
+        16777231,
+        930544846,
+        33188,
+        1,
+        5872,
+        1788839244394131704,
+        1788839244394131704
+      ],
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "identity": [
+        16777231,
+        930544842,
+        33188,
+        1,
+        60160,
+        1788839244393385161,
+        1788839244393385161
+      ],
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "identity": [
+        16777231,
+        930544844,
+        33188,
+        1,
+        65016,
+        1788839244393769578,
+        1788839244393769578
+      ],
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "identity": [
+        16777231,
+        930544834,
+        33188,
+        1,
+        7136,
+        1788839244391316658,
+        1788839244391316658
+      ],
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "identity": [
+        16777231,
+        930544836,
+        33188,
+        1,
+        1070496,
+        1788839244392113618,
+        1788839244392113618
+      ],
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "identity": [
+        16777231,
+        930544830,
+        33188,
+        1,
+        122808,
+        1788839244390529449,
+        1788839244390529449
+      ],
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "identity": [
+        16777231,
+        930544832,
+        33188,
+        1,
+        66104,
+        1788839244390942241,
+        1788839244390942241
+      ],
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "identity": [
+        16777231,
+        930544838,
+        33188,
+        1,
+        95640,
+        1788839244392954785,
+        1788839244392954785
+      ],
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        930544804,
+        33188,
+        1,
+        3873,
+        1788839244384329606,
+        1788839244384329606
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        930544811,
+        33188,
+        1,
+        15705,
+        1788839244386170650,
+        1788839244386170650
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        930544799,
+        33188,
+        1,
+        12861,
+        1788839244383549688,
+        1788839244383549688
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        930544807,
+        33188,
+        1,
+        3492,
+        1788839244384860649,
+        1788839244384860649
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        930544809,
+        33188,
+        1,
+        10294,
+        1788839244385424858,
+        1788839244385424858
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        930544792,
+        33188,
+        1,
+        9093,
+        1788839244382470437,
+        1788839244382470437
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        930544795,
+        33188,
+        1,
+        27203,
+        1788839244382909104,
+        1788839244382909104
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        930544819,
+        33188,
+        1,
+        1458,
+        1788839244388011070,
+        1788839244388011070
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        930544823,
+        33188,
+        1,
+        26432,
+        1788839244388686779,
+        1788839244388686779
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        930544814,
+        33188,
+        1,
+        11737,
+        1788839244387184402,
+        1788839244387184402
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        930544821,
+        33188,
+        1,
+        1165,
+        1788839244388317028,
+        1788839244388317028
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        930544817,
+        33188,
+        1,
+        7481,
+        1788839244387652653,
+        1788839244387652653
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        930544825,
+        33188,
+        1,
+        5851,
+        1788839244389881864,
+        1788839244389881864
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        930544845,
+        33188,
+        1,
+        605,
+        1788839244393940579,
+        1788839244393940579
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 21327,
+      "identity": [
+        16777231,
+        930544847,
+        33188,
+        1,
+        21327,
+        1788839244394222204,
+        1788839244394222204
+      ],
+      "sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        930544840,
+        33188,
+        1,
+        4277,
+        1788839244393163036,
+        1788839244393163036
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        930544843,
+        33188,
+        1,
+        4716,
+        1788839244393559036,
+        1788839244393559036
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "identity": [
+        16777231,
+        930544848,
+        33188,
+        1,
+        2658,
+        1788839244394366621,
+        1788839244394366621
+      ],
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        930544833,
+        33188,
+        1,
+        839,
+        1788839244391122699,
+        1788839244391122699
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        930544835,
+        33188,
+        1,
+        20207,
+        1788839244391473492,
+        1788839244391473492
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        930544828,
+        33188,
+        1,
+        7101,
+        1788839244390257490,
+        1788839244390257490
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        930544831,
+        33188,
+        1,
+        4337,
+        1788839244390738574,
+        1788839244390738574
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/010-development-0/src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        930544837,
+        33188,
+        1,
+        4219,
+        1788839244392754827,
+        1788839244392754827
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py": {
+      "bytes": 22296,
+      "identity": [
+        16777231,
+        930460148,
+        33188,
+        1,
+        22296,
+        1788837762620341901,
+        1788837762620341901
+      ],
+      "sha256": "6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py.before-prior-preimages.txt": {
+      "bytes": 21987,
+      "identity": [
+        16777231,
+        930460133,
+        33188,
+        1,
+        21987,
+        1788837762618211103,
+        1788837762618211103
+      ],
+      "sha256": "0e0ad5294744ae7891cbc99a35d746d99c5a04eb6bfeb23dd550e319f59978cd"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py.predecessor.txt": {
+      "bytes": 21219,
+      "identity": [
+        16777231,
+        930460149,
+        33188,
+        1,
+        21219,
+        1788837762620542652,
+        1788837762620542652
+      ],
+      "sha256": "1219c832c6ea51c258eff977e52689870a1f13289900648c05ee52c9ea8e2586"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/campaign.py.revision.diff": {
+      "bytes": 4309,
+      "identity": [
+        16777231,
+        930460137,
+        33188,
+        1,
+        4309,
+        1788837762618677646,
+        1788837762618677646
+      ],
+      "sha256": "6481e19309a4e11730229a254558670a909d261a285f766ea5e2f577e8274e48"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/candidate/Candidate.lean": {
+      "bytes": 21327,
+      "identity": [
+        16777231,
+        930469583,
+        33188,
+        1,
+        21327,
+        1788839244026416327,
+        1788839244026416327
+      ],
+      "sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/mgw-policy.py": {
+      "bytes": 4926,
+      "identity": [
+        16777231,
+        930460141,
+        33188,
+        1,
+        4926,
+        1788837762619253523,
+        1788837762619253523
+      ],
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/policy.py": {
+      "bytes": 6761,
+      "identity": [
+        16777231,
+        930460142,
+        33188,
+        1,
+        6761,
+        1788837762619386523,
+        1788837762619386523
+      ],
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/prefix-policy.py": {
+      "bytes": 4769,
+      "identity": [
+        16777231,
+        930460150,
+        33188,
+        1,
+        4769,
+        1788837762620677194,
+        1788837762620677194
+      ],
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/ATTEMPT_LEDGER.json": {
+      "bytes": 453,
+      "identity": [
+        16777231,
+        930460161,
+        33188,
+        1,
+        453,
+        1788837762621828281,
+        1788837762621828281
+      ],
+      "sha256": "93cb40e667c41d68ef5cf09b6e416e8ca480411e761ca540da345fefff24e0d0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/CAMPAIGN.json": {
+      "bytes": 1269,
+      "identity": [
+        16777231,
+        930460158,
+        33188,
+        1,
+        1269,
+        1788837762621550280,
+        1788837762621550280
+      ],
+      "sha256": "9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/FROZEN.json": {
+      "bytes": 7827,
+      "identity": [
+        16777231,
+        930460160,
+        33188,
+        1,
+        7827,
+        1788837762621751364,
+        1788837762621751364
+      ],
+      "sha256": "c9701580edd609d15d2bc3e3cb82f98a2351ebf1087322390f2a15f8f901454d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/STOP_RECORD.json": {
+      "bytes": 1119,
+      "identity": [
+        16777231,
+        930460159,
+        33188,
+        1,
+        1119,
+        1788837762621629197,
+        1788837762621629197
+      ],
+      "sha256": "cce92e8db23e6b4f26b7054c85824a0fdf2a71bdb1b9d39ac32fab10bae87fd8"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/attempts/001-development-0/00-compile-PidPrefixMgwMean-Candidate/stdout.log": {
+      "bytes": 12566,
+      "identity": [
+        16777231,
+        930460196,
+        33188,
+        1,
+        12566,
+        1788837762626574378,
+        1788837762626574378
+      ],
+      "sha256": "266daaa00af1fb31b7c8c8a02adbc2204863021c9a6b3cda113a1924392331ed"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/attempts/001-development-0/Candidate.original.lean": {
+      "bytes": 11183,
+      "identity": [
+        16777231,
+        930460194,
+        33188,
+        1,
+        11183,
+        1788837762626126085,
+        1788837762626126085
+      ],
+      "sha256": "dfbc330e5e9bba63b3b6100a4265bcc49d46b71da6b70f53ca7b3983cb61cf0a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/previous-terminal/attempts/001-development-0/RESULT.json": {
+      "bytes": 90152,
+      "identity": [
+        16777231,
+        930460193,
+        33188,
+        1,
+        90152,
+        1788837762626013834,
+        1788837762626013834
+      ],
+      "sha256": "433ba322c6ce2673856c4fc7ccb142604558228844572a51fcbdd0009aabd0cd"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/runtime.py": {
+      "bytes": 27277,
+      "identity": [
+        16777231,
+        930460144,
+        33188,
+        1,
+        27277,
+        1788837762619575274,
+        1788837762619575274
+      ],
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/source-preparation-history/SOURCE_REGISTRATION.json": {
+      "bytes": 390,
+      "identity": [
+        16777231,
+        930460140,
+        33188,
+        1,
+        390,
+        1788837762619123189,
+        1788837762619123189
+      ],
+      "sha256": "7c8f3da74a5c22ba0d261cdbcb5331859c3d3a212255d1d2911399c4b72edd37"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/source-preparation-history/STOP_RECORD.json": {
+      "bytes": 483,
+      "identity": [
+        16777231,
+        930460136,
+        33188,
+        1,
+        483,
+        1788837762618500396,
+        1788837762618500396
+      ],
+      "sha256": "43bea30f78bdf707ec47f168db6d3ad7847ec50119b08a3d852d751ae5baaae7"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        930460190,
+        33188,
+        1,
+        3873,
+        1788837762625716208,
+        1788837762625716208
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        930460189,
+        33188,
+        1,
+        15705,
+        1788837762625626542,
+        1788837762625626542
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        930460186,
+        33188,
+        1,
+        12861,
+        1788837762625096998,
+        1788837762625096998
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        930460187,
+        33188,
+        1,
+        3492,
+        1788837762625196374,
+        1788837762625196374
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        930460185,
+        33188,
+        1,
+        10294,
+        1788837762624708039,
+        1788837762624708039
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        930460165,
+        33188,
+        1,
+        9093,
+        1788837762622291323,
+        1788837762622291323
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        930460164,
+        33188,
+        1,
+        27203,
+        1788837762622168906,
+        1788837762622168906
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        930460177,
+        33188,
+        1,
+        1458,
+        1788837762623503119,
+        1788837762623503119
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        930460180,
+        33188,
+        1,
+        26432,
+        1788837762624198371,
+        1788837762624198371
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        930460179,
+        33188,
+        1,
+        11737,
+        1788837762623781203,
+        1788837762623781203
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        930460182,
+        33188,
+        1,
+        1165,
+        1788837762624430496,
+        1788837762624430496
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        930460181,
+        33188,
+        1,
+        7481,
+        1788837762624334371,
+        1788837762624334371
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        930460178,
+        33188,
+        1,
+        5851,
+        1788837762623660536,
+        1788837762623660536
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        930460167,
+        33188,
+        1,
+        605,
+        1788837762622442824,
+        1788837762622442824
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        930460168,
+        33188,
+        1,
+        4277,
+        1788837762622583824,
+        1788837762622583824
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        930460169,
+        33188,
+        1,
+        4716,
+        1788837762622723825,
+        1788837762622723825
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        930460171,
+        33188,
+        1,
+        839,
+        1788837762622874492,
+        1788837762622874492
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        930460174,
+        33188,
+        1,
+        20207,
+        1788837762623233076,
+        1788837762623233076
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        930460173,
+        33188,
+        1,
+        7101,
+        1788837762623136409,
+        1788837762623136409
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        930460175,
+        33188,
+        1,
+        4337,
+        1788837762623363035,
+        1788837762623363035
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/sources/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        930460172,
+        33188,
+        1,
+        4219,
+        1788837762623006284,
+        1788837762623006284
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/CONTROL_ROSTER.json": {
+      "bytes": 833,
+      "identity": [
+        16777231,
+        929469581,
+        33188,
+        1,
+        833,
+        1788671323784068335,
+        1788671323784068335
+      ],
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/DEPENDENCY_SOURCE_PINS.json": {
+      "bytes": 4118,
+      "identity": [
+        16777231,
+        929469576,
+        33188,
+        1,
+        4118,
+        1788671323783153183,
+        1788671323783153183
+      ],
+      "sha256": "93fa792309e44bfc1a3cf36a6021574000eee84e8cea088abcf12649423bec19"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/NEW_IMPORT_SOURCE_PINS.json": {
+      "bytes": 166,
+      "identity": [
+        16777231,
+        929469577,
+        33188,
+        1,
+        166,
+        1788671323783273181,
+        1788671323783273181
+      ],
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/PREPARATION_REGISTRATION.json": {
+      "bytes": 1812,
+      "identity": [
+        16777231,
+        929469525,
+        33188,
+        1,
+        1812,
+        1788671323778900046,
+        1788671323778900046
+      ],
+      "sha256": "311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/PREPARATION_SCOPE_SEAL.json": {
+      "bytes": 1156,
+      "identity": [
+        16777231,
+        929469582,
+        33188,
+        1,
+        1156,
+        1788671323784156375,
+        1788671323784156375
+      ],
+      "sha256": "5d2b7239e8aad9c76da66205d3d6f896ecc46550fdd8ed17d1f47edc27a23324"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/REGISTRATION.json": {
+      "bytes": 1812,
+      "identity": [
+        16777231,
+        929469524,
+        33188,
+        1,
+        1812,
+        1788671323778789673,
+        1788671323778789673
+      ],
+      "sha256": "311f0f26c190be29eace4daf9824aaf2df64bc2fd977599279a0bddd580054c8"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/TARGET_ROSTER.json": {
+      "bytes": 700,
+      "identity": [
+        16777231,
+        929469578,
+        33188,
+        1,
+        700,
+        1788671323783339347,
+        1788671323783339347
+      ],
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "identity": [
+        16777231,
+        929476595,
+        33188,
+        1,
+        60008,
+        1788671767321044127,
+        1788671767321528369
+      ],
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "identity": [
+        16777231,
+        929477162,
+        33188,
+        1,
+        573576,
+        1788671771446119447,
+        1788671771446414859
+      ],
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "identity": [
+        16777231,
+        929476532,
+        33188,
+        1,
+        199552,
+        1788671765857395385,
+        1788671765857952168
+      ],
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "identity": [
+        16777231,
+        929476620,
+        33188,
+        1,
+        420976,
+        1788671768274001835,
+        1788671768274444286
+      ],
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "identity": [
+        16777231,
+        929476963,
+        33188,
+        1,
+        261984,
+        1788671769805240242,
+        1788671769805822399
+      ],
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "identity": [
+        16777231,
+        929476411,
+        33188,
+        1,
+        98304,
+        1788671762715401604,
+        1788671762715518894
+      ],
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "identity": [
+        16777231,
+        929476472,
+        33188,
+        1,
+        292592,
+        1788671764363910974,
+        1788671764364283927
+      ],
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "identity": [
+        16777231,
+        929477805,
+        33188,
+        1,
+        10952,
+        1788671775914773669,
+        1788671775915129538
+      ],
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "identity": [
+        16777231,
+        929478287,
+        33188,
+        1,
+        963440,
+        1788671778699070492,
+        1788671778699507568
+      ],
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "identity": [
+        16777231,
+        929477370,
+        33188,
+        1,
+        126464,
+        1788671773036121001,
+        1788671773036445203
+      ],
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "identity": [
+        16777231,
+        929477967,
+        33188,
+        1,
+        92232,
+        1788671776804925714,
+        1788671776805021088
+      ],
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "identity": [
+        16777231,
+        929477545,
+        33188,
+        1,
+        68424,
+        1788671774484656160,
+        1788671774485027821
+      ],
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "identity": [
+        16777231,
+        929478444,
+        33188,
+        1,
+        3088,
+        1788671780670947809,
+        1788671780671047182
+      ],
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "identity": [
+        16777231,
+        929482794,
+        33188,
+        1,
+        5872,
+        1788671794811572526,
+        1788671794811704108
+      ],
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "identity": [
+        16777231,
+        929482727,
+        33188,
+        1,
+        60160,
+        1788671791712824899,
+        1788671791712936273
+      ],
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "identity": [
+        16777231,
+        929482769,
+        33188,
+        1,
+        65016,
+        1788671793293096448,
+        1788671793293559399
+      ],
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "identity": [
+        16777231,
+        929479414,
+        33188,
+        1,
+        7136,
+        1788671785592649983,
+        1788671785592750606
+      ],
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "identity": [
+        16777231,
+        929480427,
+        33188,
+        1,
+        1070496,
+        1788671787966908679,
+        1788671787967509086
+      ],
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "identity": [
+        16777231,
+        929478992,
+        33188,
+        1,
+        122808,
+        1788671782429580053,
+        1788671782430026087
+      ],
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "identity": [
+        16777231,
+        929479216,
+        33188,
+        1,
+        66104,
+        1788671784072549432,
+        1788671784072665013
+      ],
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "identity": [
+        16777231,
+        929481232,
+        33188,
+        1,
+        95640,
+        1788671790082430269,
+        1788671790082886887
+      ],
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/environment.json": {
+      "bytes": 21519,
+      "identity": [
+        16777231,
+        929476277,
+        33188,
+        1,
+        21519,
+        1788671760687713134,
+        1788671760687713134
+      ],
+      "sha256": "0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/receipt.json": {
+      "bytes": 162306,
+      "identity": [
+        16777231,
+        929495515,
+        33188,
+        1,
+        162306,
+        1788672005598873854,
+        1788672005598873854
+      ],
+      "sha256": "edb2bd4bcb92c25276367a80b7a462c02cc8977163825f9314359e74450f0338"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-optimized-01/receipt.json": {
+      "bytes": 162596,
+      "identity": [
+        16777231,
+        929551248,
+        33188,
+        1,
+        162596,
+        1788672364006700600,
+        1788672364006700600
+      ],
+      "sha256": "7e93526b76e17707a61f30557ab0f4eb341994fdcba1475c6391771c0750082e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "identity": [
+        16777231,
+        929469559,
+        33188,
+        1,
+        3873,
+        1788671323781582293,
+        1788671323781582293
+      ],
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "identity": [
+        16777231,
+        929469562,
+        33188,
+        1,
+        15705,
+        1788671323781921120,
+        1788671323781921120
+      ],
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "identity": [
+        16777231,
+        929469557,
+        33188,
+        1,
+        12861,
+        1788671323781464253,
+        1788671323781464253
+      ],
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "identity": [
+        16777231,
+        929469560,
+        33188,
+        1,
+        3492,
+        1788671323781677499,
+        1788671323781677499
+      ],
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "identity": [
+        16777231,
+        929469561,
+        33188,
+        1,
+        10294,
+        1788671323781781414,
+        1788671323781781414
+      ],
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "identity": [
+        16777231,
+        929469553,
+        33188,
+        1,
+        9093,
+        1788671323781172383,
+        1788671323781172383
+      ],
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "identity": [
+        16777231,
+        929469554,
+        33188,
+        1,
+        27203,
+        1788671323781277464,
+        1788671323781277464
+      ],
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "identity": [
+        16777231,
+        929469566,
+        33188,
+        1,
+        1458,
+        1788671323782284406,
+        1788671323782284406
+      ],
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "identity": [
+        16777231,
+        929469568,
+        33188,
+        1,
+        26432,
+        1788671323782481694,
+        1788671323782481694
+      ],
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "identity": [
+        16777231,
+        929469564,
+        33188,
+        1,
+        11737,
+        1788671323782064076,
+        1788671323782064076
+      ],
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "identity": [
+        16777231,
+        929469567,
+        33188,
+        1,
+        1165,
+        1788671323782375196,
+        1788671323782375196
+      ],
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "identity": [
+        16777231,
+        929469565,
+        33188,
+        1,
+        7481,
+        1788671323782182283,
+        1788671323782182283
+      ],
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "identity": [
+        16777231,
+        929469569,
+        33188,
+        1,
+        5851,
+        1788671323782572651,
+        1788671323782572651
+      ],
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "identity": [
+        16777231,
+        929469543,
+        33188,
+        1,
+        605,
+        1788671323780133817,
+        1788671323780133817
+      ],
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "identity": [
+        16777231,
+        929469545,
+        33188,
+        1,
+        4277,
+        1788671323780290273,
+        1788671323780290273
+      ],
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "identity": [
+        16777231,
+        929469547,
+        33188,
+        1,
+        4716,
+        1788671323780436312,
+        1788671323780436312
+      ],
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "identity": [
+        16777231,
+        929469573,
+        33188,
+        1,
+        839,
+        1788671323782857188,
+        1788671323782857188
+      ],
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "identity": [
+        16777231,
+        929469574,
+        33188,
+        1,
+        20207,
+        1788671323782950770,
+        1788671323782950770
+      ],
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "identity": [
+        16777231,
+        929469571,
+        33188,
+        1,
+        7101,
+        1788671323782689233,
+        1788671323782689233
+      ],
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "identity": [
+        16777231,
+        929469572,
+        33188,
+        1,
+        4337,
+        1788671323782766231,
+        1788671323782766231
+      ],
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "<REPOSITORY>/.local/sx-prefix-mgw-mean-type-preparation-20260906/sources/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "identity": [
+        16777231,
+        929469575,
+        33188,
+        1,
+        4219,
+        1788671323783043727,
+        1788671323783043727
+      ],
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "<REPOSITORY>/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum/NatInt.lean": {
+      "bytes": 26028,
+      "identity": [
+        16777231,
+        925038154,
+        33188,
+        1,
+        26028,
+        1787505286799294946,
+        1788583562191313019
+      ],
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "<REPOSITORY>/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "identity": [
+        16777231,
+        924801089,
+        33188,
+        1,
+        3144,
+        1788495973000000000,
+        1788578758439315095
+      ],
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "<REPOSITORY>/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "identity": [
+        16777231,
+        924801090,
+        33188,
+        1,
+        243,
+        1788495973000000000,
+        1788578758439502136
+      ],
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "<REPOSITORY>/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "identity": [
+        16777231,
+        924801091,
+        33188,
+        1,
+        25,
+        1788495973000000000,
+        1788578758439828177
+      ],
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "<REPOSITORY>/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "identity": [
+        16777231,
+        924801637,
+        33188,
+        1,
+        58665,
+        1788495973000000000,
+        1788578758673032477
+      ],
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "<REPOSITORY>/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "identity": [
+        16777231,
+        924801644,
+        33261,
+        1,
+        17039,
+        1788495973000000000,
+        1788578758675481635
+      ],
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "observed_candidate_metadata": {
+    "mode": 33188,
+    "mtime_ns": 1788839244026416327,
+    "size": 21327
+  },
+  "registered": {
+    "candidate_sha256": "dac38c3c0f97ca3d1a76aae135d8f897eaa16fd0b10a3b16b8a22faa311ed6d6",
+    "kind": "development",
+    "mode": 0,
+    "output": "attempts/010-development-0",
+    "prospective_compiler_kernel_children": 1,
+    "registered_utc": "2026-09-08T03:47:24.374535+00:00",
+    "slot_kind": "development"
+  },
+  "status": "failed"
+}

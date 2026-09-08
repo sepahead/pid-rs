@@ -1,0 +1,8 @@
+{
+  "argv": [
+    "HOST_TEX/texbin/lualatex",
+    "--version"
+  ],
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal",
+  "started_utc": "2026-09-08T08:58:44.499186+00:00"
+}

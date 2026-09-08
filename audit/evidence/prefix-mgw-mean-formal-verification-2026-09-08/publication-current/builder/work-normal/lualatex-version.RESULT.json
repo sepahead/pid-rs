@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "HOST_TEX/texbin/lualatex",
+    "--version"
+  ],
+  "completed_utc": "2026-09-08T08:58:44.505132+00:00",
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal",
+  "returncode": 0,
+  "started_utc": "2026-09-08T08:58:44.499186+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "a562b1fb7f185e32627d21ee1c00c32754195e78ff9b6384205057191047f602"
+}

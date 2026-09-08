@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "HOST_HOMEBREW/bin/pandoc",
+    "--from=markdown",
+    "--to=latex",
+    "--shift-heading-level-by=-1",
+    "--wrap=none",
+    "--output=body.tex",
+    "body.md"
+  ],
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal/build-2",
+  "started_utc": "2026-09-08T08:58:54.539065+00:00"
+}

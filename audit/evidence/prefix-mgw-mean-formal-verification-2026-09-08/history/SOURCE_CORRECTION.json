@@ -1,0 +1,11 @@
+{
+  "utc": "2026-09-07T21:38:46.471720+00:00",
+  "status": "source_preparation_only",
+  "changes": [
+    "Bind actual prior terminal preimage bytes through Snapshot",
+    "Make selection-rule v2 carryover and exposed-feedback boundary explicit"
+  ],
+  "driver_sha256": "6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0",
+  "selection_rule_sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42",
+  "new_compiler_children": 0
+}

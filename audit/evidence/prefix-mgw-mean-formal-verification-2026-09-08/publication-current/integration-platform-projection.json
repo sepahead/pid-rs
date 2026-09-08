@@ -1,0 +1,75 @@
+{
+  "schema": "pid-rs/mean-publication-integration-stream-projection/v1",
+  "scope": "four decisive full aggregate streams from one failed local integration attempt; no new proof or acceptance predicate",
+  "raw_stage_manifest_sha256": "026db4120ae6adb676228ea96b2dd2601483711e0fae262f801cc76f6607ce9f",
+  "rules": [
+    "Exact stderr bytes are retained when no private locator occurs.",
+    "Only declared machine locator substrings are replaced in stdout; all other bytes remain unchanged.",
+    "Private absolute locator preimages and complete68-member raw stage remain in the local custody record; this projection does not claim an independent or publicly retrievable archive.",
+    "A projected stream is not raw-byte execution evidence; use the separately stated original digest for raw custody."
+  ],
+  "streams": [
+    {
+      "logical_raw_member": "causal/formal-pdf-exact/stdout",
+      "public_path": "audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/publication-current/integration-platform-streams/formal-pdf-exact.stdout.txt",
+      "raw_bytes": 61190,
+      "raw_sha256": "a2c5449473a37ee904f1205f7b9aa573da209462fdf642fe115a49c7520e8246",
+      "public_bytes": 60991,
+      "public_sha256": "53423991edba6202db16b3e37f12245c6b0ff50f3115a0fcf897b2e622f8626e",
+      "relation": "explicit_machine_locator_projection",
+      "logical_replacements": [
+        {
+          "logical_locator": "<REPOSITORY_ROOT>",
+          "occurrences": 1
+        },
+        {
+          "logical_locator": "<NATIVE_TEMP_ROOT>",
+          "occurrences": 3
+        },
+        {
+          "logical_locator": "<NATIVE_TEXLIVE_2024_FORMAT>",
+          "occurrences": 1
+        }
+      ],
+      "embedded_digests": "unchanged; embedded historical digests refer to their original named objects, not projected stream bytes"
+    },
+    {
+      "logical_raw_member": "causal/formal-pdf-exact/stderr",
+      "public_path": "audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/publication-current/integration-platform-streams/formal-pdf-exact.stderr.txt",
+      "raw_bytes": 4070,
+      "raw_sha256": "c416babca482054b28242cdedc7459d4c37a056f792e75e550de777d8d95b877",
+      "public_bytes": 4070,
+      "public_sha256": "c416babca482054b28242cdedc7459d4c37a056f792e75e550de777d8d95b877",
+      "relation": "exact_bytes",
+      "logical_replacements": [],
+      "embedded_digests": "unchanged; embedded historical digests refer to their original named objects, not projected stream bytes"
+    },
+    {
+      "logical_raw_member": "causal/formal-pdf-cross/stdout",
+      "public_path": "audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/publication-current/integration-platform-streams/formal-pdf-cross.stdout.txt",
+      "raw_bytes": 54595,
+      "raw_sha256": "3f90b2047b51bc44fd951a0296811f6b43ce8f243fea1335079d690227f84bdf",
+      "public_bytes": 54562,
+      "public_sha256": "c2fe16a029e5c46d782b2be61ad0651cf9f280e87371876c1caeae0fad6aada3",
+      "relation": "explicit_machine_locator_projection",
+      "logical_replacements": [
+        {
+          "logical_locator": "<NATIVE_TEXLIVE_2024_FORMAT>",
+          "occurrences": 1
+        }
+      ],
+      "embedded_digests": "unchanged; embedded historical digests refer to their original named objects, not projected stream bytes"
+    },
+    {
+      "logical_raw_member": "causal/formal-pdf-cross/stderr",
+      "public_path": "audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/publication-current/integration-platform-streams/formal-pdf-cross.stderr.txt",
+      "raw_bytes": 4530,
+      "raw_sha256": "d33991fcbace34cd783e6b81cca88644ec28dfe1fcbc6a2a3bd3e6e6ca0e91d5",
+      "public_bytes": 4530,
+      "public_sha256": "d33991fcbace34cd783e6b81cca88644ec28dfe1fcbc6a2a3bd3e6e6ca0e91d5",
+      "relation": "exact_bytes",
+      "logical_replacements": [],
+      "embedded_digests": "unchanged; embedded historical digests refer to their original named objects, not projected stream bytes"
+    }
+  ]
+}

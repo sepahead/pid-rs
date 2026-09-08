@@ -1,0 +1,10 @@
+{
+  "pdf_sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+  "pdf_bytes": 162538,
+  "manifest_sha256": "e85c572d7221a5a46c1200e9e0dde12f73d50def5a0b5dd5bbaf5e4bd97fe09f",
+  "builder_sha256": "4b8509424a2baa580ef336c79eff2e4c4583dcc51a5efa74aca15806b7518d24",
+  "source_builder_sha256": "0794fc8debea05f80e84bf891053504643922f67e3a43f29d7faf02b3aed37aa",
+  "only_builder_edits": "Two profile constant declarations filled from actual observed and reviewed bytes.",
+  "public_builder_executions": 0,
+  "controls_pending": true
+}

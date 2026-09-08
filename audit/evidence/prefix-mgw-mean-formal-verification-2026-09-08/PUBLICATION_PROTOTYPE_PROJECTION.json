@@ -1,0 +1,140 @@
+[
+  {
+    "bytes": 1857,
+    "public_relative": "publication-prototype/attempt-01/prefix-mgw-mean.tex",
+    "raw_sha256": "9cb16bd9cb2979f889267a5bada3137c2bd103eb1898e5226bbfc392c5e11047",
+    "transformed": false
+  },
+  {
+    "bytes": 17749,
+    "public_relative": "publication-prototype/attempt-01/body.md.txt",
+    "raw_sha256": "70d9c23a82dd00c6082b14cd9f3d48f7e0dc76ee2122c84f2880e9f299eb621f",
+    "transformed": false
+  },
+  {
+    "bytes": 19758,
+    "public_relative": "publication-prototype/attempt-01/body.tex",
+    "raw_sha256": "1ca1b9c482bb1e83aa000ea06cd5943447726e2345bcdb2ddefc81656345688f",
+    "transformed": false
+  },
+  {
+    "bytes": 17811,
+    "public_relative": "publication-prototype/attempt-01/EXPOSITION.md.txt",
+    "raw_sha256": "610c04045baa5e6e7e3e25a7a4e358a17a437a95dc9b1a5ae8bfb721cd42ab30",
+    "transformed": false
+  },
+  {
+    "bytes": 147783,
+    "public_relative": "publication-prototype/attempt-02/prefix-mgw-mean.pdf",
+    "raw_sha256": "d218edd41fca015ca50e6eaefd7959d7ddfb485f0fb8ba682a733691f391b78d",
+    "transformed": false
+  },
+  {
+    "bytes": 1917,
+    "public_relative": "publication-prototype/attempt-02/prefix-mgw-mean.tex",
+    "raw_sha256": "60776c7397d73b34e82d81924932a208c42195d906fe6dcb7307ada4b247c92c",
+    "transformed": false
+  },
+  {
+    "bytes": 17749,
+    "public_relative": "publication-prototype/attempt-02/body.md.txt",
+    "raw_sha256": "70d9c23a82dd00c6082b14cd9f3d48f7e0dc76ee2122c84f2880e9f299eb621f",
+    "transformed": false
+  },
+  {
+    "bytes": 19731,
+    "public_relative": "publication-prototype/attempt-02/body.tex",
+    "raw_sha256": "79805afc29310eb153f58861b8cf99e46cf9045fbd88b3cc34cd8ae84373e355",
+    "transformed": false
+  },
+  {
+    "bytes": 17811,
+    "public_relative": "publication-prototype/attempt-02/EXPOSITION.md.txt",
+    "raw_sha256": "610c04045baa5e6e7e3e25a7a4e358a17a437a95dc9b1a5ae8bfb721cd42ab30",
+    "transformed": false
+  },
+  {
+    "bytes": 149474,
+    "public_relative": "publication-prototype/attempt-03/prefix-mgw-mean.pdf",
+    "raw_sha256": "5aeb6a01aed9af5b604f616fd10b597792f00707f24a7ddf142d1aedd2872c6e",
+    "transformed": false
+  },
+  {
+    "bytes": 1994,
+    "public_relative": "publication-prototype/attempt-03/prefix-mgw-mean.tex",
+    "raw_sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+    "transformed": false
+  },
+  {
+    "bytes": 17749,
+    "public_relative": "publication-prototype/attempt-03/body.md.txt",
+    "raw_sha256": "70d9c23a82dd00c6082b14cd9f3d48f7e0dc76ee2122c84f2880e9f299eb621f",
+    "transformed": false
+  },
+  {
+    "bytes": 19816,
+    "public_relative": "publication-prototype/attempt-03/body.tex",
+    "raw_sha256": "a769eccd451e0ffa9448f149b09f4745668d2b8d8e3d041855547f3464ce0bd3",
+    "transformed": false
+  },
+  {
+    "bytes": 17811,
+    "public_relative": "publication-prototype/attempt-03/EXPOSITION.md.txt",
+    "raw_sha256": "610c04045baa5e6e7e3e25a7a4e358a17a437a95dc9b1a5ae8bfb721cd42ab30",
+    "transformed": false
+  },
+  {
+    "bytes": 162516,
+    "public_relative": "publication-prototype/attempt-04/prefix-mgw-mean.pdf",
+    "raw_sha256": "b4382567d21f1f353230daad6fcdfb7538a8ecafaaa509ec93ca8c78ecdae01e",
+    "transformed": false
+  },
+  {
+    "bytes": 1994,
+    "public_relative": "publication-prototype/attempt-04/prefix-mgw-mean.tex",
+    "raw_sha256": "a70f70c685ebfefcce05b7b3fd3500d7d0634d8b5a82e4728615840eb0376be6",
+    "transformed": false
+  },
+  {
+    "bytes": 18279,
+    "public_relative": "publication-prototype/attempt-04/body.md.txt",
+    "raw_sha256": "ec4dfbc87a313efd7f108734b60c058a185df0a1d4b4db6d178bff1c9b3c02c6",
+    "transformed": false
+  },
+  {
+    "bytes": 20356,
+    "public_relative": "publication-prototype/attempt-04/body.tex",
+    "raw_sha256": "4dc177f3ead1b5fb1f9ce54cd0d99836ba0d9c4a073183c1d49a6c1f7883130b",
+    "transformed": false
+  },
+  {
+    "bytes": 18335,
+    "public_relative": "publication-prototype/attempt-04/EXPOSITION.md.txt",
+    "raw_sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e",
+    "transformed": false
+  },
+  {
+    "bytes": 1242,
+    "projected_sha256": "54db53afcb2d12abd8b6419d01a3e70af6acd667f53b062dda63954f9af5c314",
+    "public_relative": "publication-prototype/font-backend-probe/RESULT.json",
+    "raw_sha256": "3b221901806d4d0d8d6f6616a3bb363b2baee7aee8a407b96ab743bca5593a5b"
+  },
+  {
+    "bytes": 708,
+    "projected_sha256": "644401d70022b2a097ced613b85294579987bcd803b41cff34ac9dc5f0d5302f",
+    "public_relative": "publication-prototype/font-backend-probe/REGISTRATION.json",
+    "raw_sha256": "312a68d0ff6f3168ceadd7103034fd4eee7a81c1d3aceca67b240ef7582dab0b"
+  },
+  {
+    "bytes": 658,
+    "projected_sha256": "ebcfb603c493fdd914f993c1469f6f61b12b84d57acc49e36e45ba7f80cbaad1",
+    "public_relative": "publication-prototype/font-backend-probe/pdffonts.stdout",
+    "raw_sha256": "ebcfb603c493fdd914f993c1469f6f61b12b84d57acc49e36e45ba7f80cbaad1"
+  },
+  {
+    "bytes": 0,
+    "projected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "public_relative": "publication-prototype/font-backend-probe/pdffonts.stderr",
+    "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

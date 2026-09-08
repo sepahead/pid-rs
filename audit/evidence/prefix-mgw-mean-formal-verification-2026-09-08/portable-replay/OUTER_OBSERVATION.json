@@ -1,0 +1,6 @@
+{
+  "observed_utc": "2026-09-08T07:18:49.114230+00:00",
+  "exec_session_id": 10602,
+  "command": "python3 -I -S -B .local/sx-mean-public-adapter-controls-source-20260908/proposed/stage-supervisor.py --plan .local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/SUPERVISOR_PLAN.json --plan-sha256 538adeede587ac3807d14f6c8a5a95826a200cecb2fb64d3a5d3951afe807222 --output .local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/supervised",
+  "scope": "Observation after the actual exec tool returned a live session; supervisor records own precise child launches. Not an invented launch time."
+}

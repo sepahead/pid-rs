@@ -1,0 +1,10 @@
+{
+  "action": "wrong-last-target",
+  "manifest_sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618",
+  "original_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+  "output": "attempt-005",
+  "prepare_only": false,
+  "python_optimized": 0,
+  "registered_utc": "2026-09-08T07:34:57.379569+00:00",
+  "source": "selected"
+}

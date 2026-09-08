@@ -1,0 +1,124 @@
+{
+  "reviewed_utc": "2026-09-08T08:03:15.736922+00:00",
+  "status": "private_prototype_source_and_visual_review_accepted",
+  "pdf_sha256": "b4382567d21f1f353230daad6fcdfb7538a8ecafaaa509ec93ca8c78ecdae01e",
+  "markdown_sha256": "b8b1244f3b216c30aa5bd69a4a8c1274555fdaf8544c32b09508a09bb892d21e",
+  "reviewer": "root; same-model advisory council separately scoped",
+  "root_actual_views": [
+    {
+      "path": "attempt-04/render/page-1.png",
+      "bytes": 239351,
+      "sha256": "d5d3ff4b82aa9d5ad232c6dcfed89ea72e02d0af7884f512db19d0b51e82c0da"
+    },
+    {
+      "path": "attempt-04/render/page-2.png",
+      "bytes": 164878,
+      "sha256": "2553f7bd6c6e6227f9b500d12e95ed724f9331e44fd42d589e908792bb8c617b"
+    },
+    {
+      "path": "attempt-04/render/page-3.png",
+      "bytes": 174729,
+      "sha256": "0a6db3377966ae97a1187381b151bb06e4fb23cabbb6080a8de67e40345005c2"
+    },
+    {
+      "path": "attempt-04/render/page-4.png",
+      "bytes": 136568,
+      "sha256": "bd105cf9f6f64206818a54d14a0d61794a6889c4a7991c65628686e829574c0c"
+    },
+    {
+      "path": "attempt-04/render/page-5.png",
+      "bytes": 172828,
+      "sha256": "6cee4666534310a2db6fc5a2274b367798597427b309bc503268072a9b3c1815"
+    },
+    {
+      "path": "attempt-04/render/page-6.png",
+      "bytes": 145520,
+      "sha256": "52c35463d3ef3f2d65c5d53c21149af85e5e4521ed542ba0e09e08a7e7446d3c"
+    },
+    {
+      "path": "attempt-04/render/page-7.png",
+      "bytes": 138634,
+      "sha256": "09cd6211c2febeb64e688620b7c042b61af8757550973bb2cdcc1d6631a644be"
+    },
+    {
+      "path": "attempt-04/render/page-8.png",
+      "bytes": 220433,
+      "sha256": "3d6f9c2e4a5c4da0db394e614320dbb4d7fe7d3b7ad4d3b857d8127b32c1d542"
+    },
+    {
+      "path": "attempt-04/render/page-9.png",
+      "bytes": 104041,
+      "sha256": "93979ff43746a224883dee8eaa3bfd08f4a4cffc9c65ebaea623f678536bed43"
+    },
+    {
+      "path": "attempt-04/render/high-3-3.png",
+      "bytes": 420399,
+      "sha256": "c03989771093d277db593c6d49418b1b45ca79f160c2eb40af1170dfd0e8cbfe"
+    },
+    {
+      "path": "attempt-04/render/high-4-4.png",
+      "bytes": 333831,
+      "sha256": "48b99002b8f2d0205441967337ab079bce6c34944701c0eadaf38b2831363489"
+    },
+    {
+      "path": "attempt-04/render/high-5-5.png",
+      "bytes": 410651,
+      "sha256": "a13d3885f92ab90ac81f8ea1eb64a50fb93781a0ea4b87d5d60acce0fb7c4cb2"
+    },
+    {
+      "path": "attempt-04/render/high-7-7.png",
+      "bytes": 325401,
+      "sha256": "262241a77302cab37018565c8a7aca43ccc89433736bbabca94381d0d7ab5e0c"
+    },
+    {
+      "path": "attempt-04/render/gray-4.png",
+      "bytes": 128409,
+      "sha256": "02c84772585474889f19645a84bdb9047c6f06fa4ef9ada03a19ff95419566fb"
+    },
+    {
+      "path": "attempt-04/render/gray-8.png",
+      "bytes": 206727,
+      "sha256": "0cfcf052a44bc86e2330e3363474d73cc8459a46def158b4fb7fb2a8adb6b7ed"
+    }
+  ],
+  "observations": [
+    "All nine complete normal-size pages actually read: no clipped formulas, missing glyphs, overlaps, lost table rows or inconsistent diagram values observed.",
+    "High-resolution pages3,4,5,7 inspected for mismatch-event domain, fractions, retained-rank definition and arithmetic counterexample.",
+    "Grayscale4,8 preserve diagram labels, values and edge-case table.",
+    "Independent complete final review and twenty-lens table read; all100 retained members rehashed.",
+    "Exact corrected domains match the already reviewed formal definitions; no theorem target changed."
+  ],
+  "twenty_visual_lenses": {
+    "hierarchy": "clear title, numbered sections, displays and captions",
+    "typography": "body and math legible; long code identifier remains inside text block",
+    "grid": "tables/figure and text fit A4 margins",
+    "spacing": "no isolated table row; spacious closing pages contain all text",
+    "narrative": "law to events to statistic to coefficient to mean to convergence to counterexample",
+    "motif_provenance": "exact existing repository publication styles retained",
+    "motif_coherence": "consistent corner/line motifs",
+    "ornamental_restraint": "outside reading blocks",
+    "palette": "lapis title/turquoise subordinate roles inspected",
+    "pattern_data_separation": "patterns carry no mathematical status",
+    "color_redundant_labels": "all figure quantities text labeled",
+    "grayscale": "actual pages4,8 viewed",
+    "text_search": "retained text extraction and reader report; not semantic accessibility",
+    "print": "normal and enlarged raster views only; no physical print",
+    "pdf_fonts": "A4 nine-page PDF1.7; embedded SourceSansPro/LatinModern; no Type3 in inventory",
+    "links": "actual reader annotation evidence agrees with derived PDF-relative mapping; no target execution",
+    "determinism": "one final build; no byte-reproducibility claim",
+    "source_derived": "MD/SVG/figurePDF/bodyPDF identities separate",
+    "portable_dependencies": "shared local style plus fonts; production builder still separate",
+    "render_inspection": "exact credited images listed"
+  },
+  "independent_review": {
+    "manifest_sha256": "8e43666fbb4c93f02901e20b15ece88aac4fbedbb1206fdcaaa1ce39a1fe1e80",
+    "members": 100,
+    "bytes": 8729746,
+    "all_match": true
+  },
+  "limits": [
+    "No public adoption, clean production build, hosted result, screen-reader/PDF-UA/PDF-A certification or new theorem credit.",
+    "The formal result is finite categorical MGW expectation convergence, not finite unbiasedness, bias bounds, stopped laws, consistency of empirical estimates, Rust refinement or consumer readiness."
+  ],
+  "prior_attempts": "All four original attempt directories retained; attempt01 failed,02/03 superseded with their observed defects."
+}

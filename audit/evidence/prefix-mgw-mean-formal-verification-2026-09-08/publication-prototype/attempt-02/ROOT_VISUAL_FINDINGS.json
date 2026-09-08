@@ -1,0 +1,21 @@
+{
+  "pages_actually_viewed_normal": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "pdf_sha256": "d218edd41fca015ca50e6eaefd7959d7ddfb485f0fb8ba682a733691f391b78d",
+  "findings": [
+    "Four-row finite example table splits across pages6/7. Keep it with its introduction.",
+    "Edge-case table leaves one row onpage8; allocate coherent table space.",
+    "SVG font declared Source Sans Pro but pdffonts records Helvetica fallback and Type3shims. Use isolated reviewed SourceSans fonts for vector conversion.",
+    "Use pre-heading space reservation to keep section title/rail/body coherent."
+  ],
+  "status": "not accepted for publication; new layout/font successor needed",
+  "scope": "Eight actual normal-size visual inspections; no high-resolution/grayscale check yet."
+}

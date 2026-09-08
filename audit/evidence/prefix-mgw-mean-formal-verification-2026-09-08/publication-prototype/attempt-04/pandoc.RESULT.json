@@ -1,0 +1,14 @@
+{
+  "started_utc": "2026-09-08T07:44:03.263234+00:00",
+  "command": [
+    "/opt/homebrew/bin/pandoc",
+    "--from=markdown",
+    "--to=latex",
+    "--shift-heading-level-by=-1",
+    "--wrap=none",
+    "--output=body.tex",
+    "body.md"
+  ],
+  "returncode": 0,
+  "completed_utc": "2026-09-08T07:44:03.586859+00:00"
+}

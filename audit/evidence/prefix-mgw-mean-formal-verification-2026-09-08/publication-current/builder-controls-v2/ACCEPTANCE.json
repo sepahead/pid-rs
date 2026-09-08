@@ -1,0 +1,13 @@
+{
+  "closed_utc": "2026-09-08T09:43:21.598317+00:00",
+  "status": "root_accepts_exact_v2_inert_control_matrix",
+  "builder_sha256": "4b8509424a2baa580ef336c79eff2e4c4583dcc51a5efa74aca15806b7518d24",
+  "source_manifest_sha256": "9fba540341f69bf3b624b8633e4c8a5c762f63f38d7ccefde3acafebbfd31b70",
+  "actual_cases": 224,
+  "actual_inert_tool_starts": 532,
+  "actual_PDF_productions": 0,
+  "new_proofs": 0,
+  "root_case_review_sha256": "4d58dc40f60cb8cdc49320688af1c1f0ad59ab3c6c174acfedf2d56c8d273c4b",
+  "scope": "Exact operational dispatch, input, producer-failure, repeated-output and custody predicates. Root read the whole source, every executed copy and all actual case results; no complete-control credit transferred from failed predecessor.",
+  "remaining": "Materializer and relocated controls, publication integration/gates and hosted/mainline obligations remain separate."
+}

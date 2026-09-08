@@ -50,6 +50,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "pid2-represented-coordinate-assurance"
   "pid-sensor-placement-and-galadriel-guide"
   "post-publication-custody-2026-09-02"
+  "prefix-mgw-mean"
   "sxpid3-source-marginal-and-bounded-audit"
 )
 
@@ -59,6 +60,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "PID2_REPRESENTED_COORDINATE_ASSURANCE.md"
   "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
   "audit/evidence/post-publication-custody-2026-09-02.md"
+  "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
 )
 
@@ -247,8 +249,25 @@ scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh "$MODE"
 scripts/check-sxpid3-source-marginal-audit-pdf.sh "$MODE"
 scripts/check-two-source-sxpid-count-atom-bridge-pdf.sh "$MODE"
 
+# The new mean exposition admits exact reviewed bytes only; retain fresh build evidence.
+if [[ "$MODE" == "--exact" ]]; then
+  MEAN_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mean-publication.XXXXXX")"
+  python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --exact --check --work-dir "$MEAN_BUILD_PARENT/build"
+else
+  if python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --cross-toolchain; then
+    echo "formal PDF set: mean exposition cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    MEAN_CROSS_STATUS=$?
+  fi
+  if [[ "$MEAN_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: mean exposition refusal returned $MEAN_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint and post-publication custody receipt intentionally have no accepted cross-toolchain relation, and both status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt and mean exposition intentionally have no accepted cross-toolchain relation, and all three status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

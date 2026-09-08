@@ -1,0 +1,8 @@
+{
+  "at_utc": "2026-09-08T07:02:54.265197+00:00",
+  "scope": "Only own newly copied fixture root gains owner writability before second copytree. All98case definitions, expectations and accepted adapter/runtime/policy bytes unchanged. Original failed invocation has0drivercalls; separately retained.",
+  "source_freeze_sha256": "cc3ecfdb55daf4d1e00e9f14171e5943e3b950a96175958dcbbe6c9b61d59a13",
+  "maximum_harness_invocations": 1,
+  "original_outer_deadline_retained": "2026-09-08T07:44:01.262947+00:00",
+  "independent_critique": "Independent reviewer separately identified same source ordering issue before any result exposure; full source critique pending."
+}

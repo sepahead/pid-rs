@@ -1,0 +1,22 @@
+{
+  "targets": [
+    {
+      "name": "word_coefficient_join_power",
+      "raw": "PidPrefixMgwMeanRawTargets.word_coefficient_join_power",
+      "alias": "PidPrefixMgwMeanAliasTargets.word_coefficient_join_power",
+      "universes": 3
+    },
+    {
+      "name": "finite_block_expectation",
+      "raw": "PidPrefixMgwMeanRawTargets.finite_block_expectation",
+      "alias": "PidPrefixMgwMeanAliasTargets.finite_block_expectation",
+      "universes": 3
+    },
+    {
+      "name": "prefix_expectations_to_mgw_mean",
+      "raw": "PidPrefixMgwMeanRawTargets.prefix_expectations_to_mgw_mean",
+      "alias": "PidPrefixMgwMeanAliasTargets.prefix_expectations_to_mgw_mean",
+      "universes": 3
+    }
+  ]
+}

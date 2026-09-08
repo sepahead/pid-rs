@@ -1,0 +1,15 @@
+{
+  "completed_utc": "2026-09-08T07:42:16.553542+00:00",
+  "command": [
+    "/opt/homebrew/bin/rsvg-convert",
+    "-f",
+    "pdf",
+    "-o",
+    "<repository>/.local/sx-mean-exposition-pdf-root-20260908/font-backend-probe/retained-rank.pdf",
+    "<repository>/.local/sx-mean-exposition-pdf-root-20260908/retained-rank.svg"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "fonts": "name                                 type              encoding         emb sub uni object ID\n------------------------------------ ----------------- ---------------- --- --- --- ---------\nXUMZTF+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes      7  0\nKCPQEW+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes      8  0\nSQDXBX+SourceSansPro-Semibold        Type 1C           WinAnsi          yes yes yes      9  0\nRUVTQV+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     10  0\nAEFGHS+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     11  0\n",
+  "pdf_sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894"
+}

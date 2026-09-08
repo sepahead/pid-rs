@@ -1,0 +1,18 @@
+{
+  "adapter_result_sha256": "29191b0acec7a150d2b7f5d3b0cbe42edaa5218ac45f0147de5416271996c456",
+  "completed_utc": "2026-09-08T10:13:09.753858+00:00",
+  "counts": {
+    "adapter_drivers": 218,
+    "artifacts": 12587,
+    "supervisor_records": 12
+  },
+  "issues": [
+    "driver mode",
+    "driver mode",
+    "artifact mismatch adapter/177-1-wrong-prior-byte-drift/root/.local/prefix-mgw-mean-public-replay-v1/control-stage/attempt-001/Candidate.original.lean",
+    "artifact mismatch adapter/079-0-wrong-prior-byte-drift/root/.local/prefix-mgw-mean-public-replay-v1/control-stage/attempt-001/Candidate.original.lean"
+  ],
+  "observed_survivors": [],
+  "scope": "Relocated unchanged inert controls; zero new mean theorems. Artifact mutations must receive individual dispositions before closure.",
+  "supervisor_result_sha256": "24f578901e22f22b1b80725565a06526e1d1df920a905652893f50f9894fce2c"
+}

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "<HOME>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+    "-t",
+    "0",
+    "-M",
+    "4096",
+    "-o",
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/020-full-1/build/MgwBridgeDepsV1/JoinLog/Contract.olean",
+    "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/020-full-1/src/MgwBridgeDepsV1/JoinLog/Contract.lean"
+  ],
+  "cwd": "<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/020-full-1/src",
+  "elapsed_seconds": 1.3423859160393476,
+  "execution_error": null,
+  "failure": null,
+  "label": "compile-MgwBridgeDepsV1-JoinLog-Contract",
+  "limits": {
+    "observed_group_rss_bytes": 4294967296,
+    "rss_limit_is_hard_os_cap": false,
+    "rss_sample_interval_seconds": 0.1,
+    "seconds": 600,
+    "stderr_bytes": 4194304,
+    "stdout_bytes": 4194304
+  },
+  "peak_observed_group_rss_bytes": 2288648192,
+  "remaining_live_group_processes": [],
+  "retained_stderr_bytes": 0,
+  "retained_stdout_bytes": 0,
+  "returncode": 0,
+  "started_utc": "2026-09-08T04:47:07.239301+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

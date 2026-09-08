@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "path": "EXPOSITION.original.md",
+      "bytes": 17841,
+      "sha256": "b0a33ac4aaf6ecf57eb3aff993d6750cdb58c7e583be74a9146cd676b1279316"
+    },
+    {
+      "path": "EXPOSITION.md",
+      "bytes": 17811,
+      "sha256": "610c04045baa5e6e7e3e25a7a4e358a17a437a95dc9b1a5ae8bfb721cd42ab30"
+    },
+    {
+      "path": "retained-rank.svg",
+      "bytes": 4656,
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    {
+      "path": "pid-rs-report-tables.sty",
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    {
+      "path": "pid-rs-workflow-publication.sty",
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    {
+      "path": "prefix-mgw-mean.tex",
+      "bytes": 1865,
+      "sha256": "28be070a8700b8ad4da3de471149d94c7819092bdab66137980d863651a2b677"
+    }
+  ],
+  "only_markdown_edit": {
+    "preimage": "This portable source package is a proposal: its new adapter and public replay remain unexecuted.",
+    "replacement": "The separate portable replay is in progress and remains unadopted."
+  },
+  "scope": "All mathematical exposition bytes unchanged. Pandoc body will mechanically remove only top title and replace the SVG extension with its vector PDF derivative."
+}

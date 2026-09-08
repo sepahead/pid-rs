@@ -1,0 +1,12 @@
+{
+  "observed_utc": "2026-09-08T09:31:12.549331+00:00",
+  "status": "actual_control_invocation_failed_at_wrong_timeout_boundary",
+  "completed_expected_rows": 41,
+  "failed_case": "041-0-actual-subprocess-timeout",
+  "actual_diagnostic": "Mean publication build failed: Command '['REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/inert-controls-0/041-0-actual-subprocess-timeout/tools/bin/pandoc', '--version']' timed out after 0.2 seconds\n",
+  "optimized_invocation": "not_run_after_normal_failure",
+  "actual_real_builder_runs": "Both normal/optimized repeated real builds passed; unchanged evidence.",
+  "acceptance": "No complete causal-control matrix accepted. Production builder unchanged.",
+  "observed_prior_case_process_groups": [],
+  "process_observation_limit": "Read-only bounded ps observation; not an atomic census or escaped-descendant guarantee."
+}

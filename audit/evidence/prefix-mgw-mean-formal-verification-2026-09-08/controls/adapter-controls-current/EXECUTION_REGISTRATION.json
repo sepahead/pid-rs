@@ -1,0 +1,13 @@
+{
+  "adapter_sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a",
+  "deadline_utc": "2026-09-08T07:44:01.262947+00:00",
+  "new_mean_theorems_proved": 0,
+  "owner": "/root",
+  "registered_utc": "2026-09-08T07:02:54.265021+00:00",
+  "schema": "portable-mean-adapter-controls-execution-v1",
+  "source_sha256": {
+    "adapter-controls.py": "13935af0e5acdf6ad5164f4dd1274f81e58a4ced3588e6259fc687b466c6bb19",
+    "control-child.py": "53fe8b4f034c9ba769a73afbc289bd53edbd4c60054429506869327aee4869d3"
+  },
+  "status": "root-reviewed-source-ready-for-controls"
+}

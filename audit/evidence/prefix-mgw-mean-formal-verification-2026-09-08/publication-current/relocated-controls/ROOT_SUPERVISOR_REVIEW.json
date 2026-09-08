@@ -1,0 +1,103 @@
+{
+  "completed_utc": "2026-09-08T10:13:08.315769+00:00",
+  "issues": [],
+  "records": [
+    {
+      "case": "success",
+      "exit": 0,
+      "failure": null,
+      "mode": 0,
+      "receipt_sha256": "95171b384054dfcbce9e225e25374e01772caec3356a1f0b0be5575a678cb023",
+      "status": "observed_expected_completion_not_adopted"
+    },
+    {
+      "case": "failure",
+      "exit": 3,
+      "failure": "wrapper returned nonzero",
+      "mode": 0,
+      "receipt_sha256": "60405bd825e49966ac05c620615d50778332bde7d7f3fd4546101c6d0ddfd69d",
+      "status": "failed"
+    },
+    {
+      "case": "preflight-delay",
+      "exit": -15,
+      "failure": "supervisory cleanup interval reached",
+      "mode": 0,
+      "receipt_sha256": "f456b2353cd0005bce8c1b4ef37dfebb76ef87e7d0883c4cb1a3657a76ebbffd",
+      "status": "failed"
+    },
+    {
+      "case": "runtime-hash-delay",
+      "exit": -15,
+      "failure": "supervisory cleanup interval reached",
+      "mode": 0,
+      "receipt_sha256": "ee72d265c3683ae4ee03a8e1c20d670a2129bc304cc8ad65238785fdb4796392",
+      "status": "failed"
+    },
+    {
+      "case": "runtime-child-delay",
+      "exit": 3,
+      "failure": "supervisory cleanup interval reached",
+      "mode": 0,
+      "receipt_sha256": "bcfce9ad0a6aaac319ae23c396ef38edc2874de8dbe42e16450097ca0fcb2b8c",
+      "status": "failed"
+    },
+    {
+      "case": "finalization-delay",
+      "exit": -9,
+      "failure": "deadline or cleanup failure; separate Runtime groups require recorded survivor review",
+      "mode": 0,
+      "receipt_sha256": "83d52b5fbe393819232bd637443604959d89a024ce4da7107e87e014146e5364",
+      "status": "failed"
+    },
+    {
+      "case": "success",
+      "exit": 0,
+      "failure": null,
+      "mode": 1,
+      "receipt_sha256": "b6190fa4cf527cdbb4688d2433bf8c11310fc231f189ac9f5a5df462ad775a85",
+      "status": "observed_expected_completion_not_adopted"
+    },
+    {
+      "case": "failure",
+      "exit": 3,
+      "failure": "wrapper returned nonzero",
+      "mode": 1,
+      "receipt_sha256": "d9227104085b289e0f8b2e4a9b31489b145bbc73bcae2ceeb1796fddf428f342",
+      "status": "failed"
+    },
+    {
+      "case": "preflight-delay",
+      "exit": -15,
+      "failure": "supervisory cleanup interval reached",
+      "mode": 1,
+      "receipt_sha256": "6d5bda3f63042fd660660c7eda48852e213bea1339a698274bf9fbfcb679e7d6",
+      "status": "failed"
+    },
+    {
+      "case": "runtime-hash-delay",
+      "exit": -15,
+      "failure": "supervisory cleanup interval reached",
+      "mode": 1,
+      "receipt_sha256": "fe86593b279cf87cfb66f172aea32a4185fe43ea4055698dc3f941c1516c7aab",
+      "status": "failed"
+    },
+    {
+      "case": "runtime-child-delay",
+      "exit": 3,
+      "failure": "supervisory cleanup interval reached",
+      "mode": 1,
+      "receipt_sha256": "3bb3d1af3d00a1444bdd20a4944d86fe8a93315ec896f223ff72a6ada696f65d",
+      "status": "failed"
+    },
+    {
+      "case": "finalization-delay",
+      "exit": -9,
+      "failure": "deadline or cleanup failure; separate Runtime groups require recorded survivor review",
+      "mode": 1,
+      "receipt_sha256": "db7b03ab6605bc2a389f99b14d020c768205fb97675bc2b864f50c313c14130f",
+      "status": "failed"
+    }
+  ],
+  "scope": "Read all actual saved supervisor and Runtime causal receipts; no new proofs."
+}

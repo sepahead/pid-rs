@@ -1,0 +1,22 @@
+{
+  "schema": "pid-rs/portable-mean-replay-acceptance-v1",
+  "accepted_utc": "2026-09-08T07:41:05.437654+00:00",
+  "status": "accepted_portable_replay_of_three_previously_accepted_mean_theorems",
+  "new_mean_theorems_proved": 0,
+  "previous_mean_acceptance_sha256": "26789c336a5928a07786bc2e1867f600995c09300a1e9b056083349a2fce3fb2",
+  "adapter_sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a",
+  "manifest_sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618",
+  "selected_sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+  "root_replay_review_sha256": "560acd5d3d0893c8f806c30cfe1ea315334df3fd98b7330529a25d39df7709d5",
+  "control_acceptance_sha256": "7582a686a39922b57baa3d3ee89015aa35f26942a1c2dbd02049773f8dd8cac3",
+  "actual_compiler_kernel_children": 123,
+  "actual_tool_probes": 5,
+  "actual_full_positive_replays": 4,
+  "actual_wrong_last_target_rejections": 1,
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "scope": "Finite categorical MGWv5, nats, complete iid rows with arbitrary within-row dependence. Same exact coefficient, finite expectation and supported mean-limit statements; canonical public placement/PDF/hosted/main publication remain separate. No bias/finite-horizon unbiasedness/stopping/regeneration/confidence/implementation/consumer or novelty claim."
+}

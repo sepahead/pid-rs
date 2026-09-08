@@ -1,0 +1,13 @@
+{
+  "adapter_cases": 198,
+  "completed_utc": "2026-09-08T10:14:25.432865+00:00",
+  "declared_artifacts_rehashed": 12587,
+  "findings_disposition": "The two optimization-two controls intentionally supply mode2, reject before result, and match their actual diagnostic. The two wrong-prior-byte-drift controls intentionally replace preserved prior candidate bytes after its receipt; root read the exact synthetic replacement, and the subsequent entrypoint rejected it. No unexplained mismatch remains. All other declared artifact bytes match.",
+  "instrumented_adapter_entrypoints": 218,
+  "root_review_sha256": "20553a6549c3949ccfa48c61d6235543450ae38337e9a495864cea9692eb8aad",
+  "scope": "Operational controls only; unchanged sources, relocated exact accepted materializer output, zero new theorem or real compiler/PDF execution. Source-root and process observations are bounded, not atomic.",
+  "status": "accepted_actual_relocated_adapter_and_supervisor_controls",
+  "supervisor_acceptance_sha256": "1c8c905fc483f4c91b081c65aefdd079a4ddfa96d285b6dd260110f9dd24c2f3",
+  "supervisor_cases": 12,
+  "within_original_deadline": true
+}

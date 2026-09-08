@@ -1,0 +1,305 @@
+{
+  "schema": "pid-rs/mgw-exact-proof-acceptance-v1",
+  "accepted_utc": "2026-09-05T23:34:24.286640+00:00",
+  "scope": "Exact eleven frozen finite-categorical MGW order/generator/conditional-mass/inverse/support/signed-cumulative theorems under pinned dependencies and standard allowed axioms. No population sampling, calibration, estimator implementation, scientific priority or application claim.",
+  "selected_sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453",
+  "cosmetic_sha256": "8aba3635278215fdf365207631dc8e85a82caaee9c9d22d955897cda333e9191",
+  "freeze_sha256": "eef6576e56828225579a8dcd0bc50da7dfacfd9f6c90a256af4e894b5de832a9",
+  "campaign_sha256": "43133cac8aba3d85249ace7e2674553eefc814bac56632ae7ffd2ccc5a4eb5e1",
+  "theorems": [
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.actual_join_lub",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.actual_join_lub_target.{u}",
+      "raw_target": "PidMgwBridgeRawTargets.actual_join_lub",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.actual_join_lub",
+      "universes": [
+        "u"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.mismatch_generator_and_exclusion",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.mismatch_generator_and_exclusion_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.mismatch_generator_and_exclusion",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.mismatch_generator_and_exclusion",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.generator_nonnegative_and_total",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.generator_nonnegative_and_total_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.generator_nonnegative_and_total",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.generator_nonnegative_and_total",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.generator_lower_cumulative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.generator_lower_cumulative_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.generator_lower_cumulative",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.generator_lower_cumulative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.target_conditioning_mass",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.target_conditioning_mass_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.target_conditioning_mass",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.target_conditioning_mass",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.supported_anchor_domains",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.supported_anchor_domains_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.supported_anchor_domains",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.supported_anchor_domains",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.conditional_generator_support",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.conditional_generator_support_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.conditional_generator_support",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.conditional_generator_support",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.informative_inverse_identification",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.informative_inverse_identification_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.informative_inverse_identification",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.informative_inverse_identification",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.misinformative_inverse_identification",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.misinformative_inverse_identification_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.misinformative_inverse_identification",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.misinformative_inverse_identification",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.component_nonnegative_strict_support",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.component_nonnegative_strict_support_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.component_nonnegative_strict_support",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.component_nonnegative_strict_support",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidMgwBridgeAliasTargets.signed_mgw_cumulative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidMgwBridgeContract.signed_mgw_cumulative_target.{u, v, w}",
+      "raw_target": "PidMgwBridgeRawTargets.signed_mgw_cumulative",
+      "status": "accepted",
+      "theorem": "PidMgwBridgeCandidate.signed_mgw_cumulative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "final_matrix": "Four exact semantic/axiom/fresh-kernel passes and same-selected-source actual wrong-final-type rejection",
+  "normal_optimized_cosmetic_semantic_arrays_identical": true,
+  "reports": [
+    {
+      "attempt": "attempts/001-development-0",
+      "status": "failed",
+      "failure": "compile-PidMgwBridge-Candidate: nonzero process status",
+      "result_sha256": "067d03fa64d40898c3d890377b32ec4565afacc7422ffe4c5cd348c26b40e5af",
+      "children": 1,
+      "artifacts_rehashed": 126,
+      "captured_input_buffers_rehashed": 118
+    },
+    {
+      "attempt": "attempts/002-development-0",
+      "status": "failed",
+      "failure": "compile-PidMgwBridge-Candidate: nonzero process status",
+      "result_sha256": "b56138df64af2b72aed6496275a95daddbc4d42d1a197227de29e137ec9bbbd7",
+      "children": 1,
+      "artifacts_rehashed": 126,
+      "captured_input_buffers_rehashed": 118
+    },
+    {
+      "attempt": "attempts/003-development-0",
+      "status": "failed",
+      "failure": "compile-PidMgwBridge-Candidate: nonzero process status",
+      "result_sha256": "9db4472e06abccb77cc9cd0fc37e38d9dbf7e544a2fa6caad885f06dd12c0690",
+      "children": 1,
+      "artifacts_rehashed": 126,
+      "captured_input_buffers_rehashed": 118
+    },
+    {
+      "attempt": "attempts/004-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "3421f319071a083301e9f3fedd15ceb5c4c274a0a7996324af9613fd18aef27a",
+      "children": 1,
+      "artifacts_rehashed": 128,
+      "captured_input_buffers_rehashed": 119
+    },
+    {
+      "attempt": "attempts/005-full-0",
+      "status": "failed",
+      "failure": "compile-PidMgwBridge-SemanticJudge: nonzero process status",
+      "result_sha256": "0fdcce52656e65fe55c3bebc8451389674028f6c6b9dea99d6b1c7002af6aadd",
+      "children": 21,
+      "artifacts_rehashed": 208,
+      "captured_input_buffers_rehashed": 100
+    },
+    {
+      "attempt": "attempts/006-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "2758376e54ccae1a7d852c48b07ca93bc2ca3301c21e0bbb854db4880d53d97a",
+      "children": 1,
+      "artifacts_rehashed": 128,
+      "captured_input_buffers_rehashed": 119
+    },
+    {
+      "attempt": "attempts/007-full-0",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "9129517c9163a40d2dd9949b31870968c076e2b16c8dc1994754de3bcefc35d5",
+      "children": 23,
+      "artifacts_rehashed": 222,
+      "captured_input_buffers_rehashed": 103
+    },
+    {
+      "attempt": "attempts/008-full-1",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "cf0e27d61932095c963e08417d0069d508442748c11bf0a1d040573c4b633f01",
+      "children": 23,
+      "artifacts_rehashed": 222,
+      "captured_input_buffers_rehashed": 103
+    },
+    {
+      "attempt": "attempts/009-full-0",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "3a98561f4a4c64121ed11106eab9b8b1ec0b1ee5d17a8f0d1417c9c6dae3e96b",
+      "children": 23,
+      "artifacts_rehashed": 222,
+      "captured_input_buffers_rehashed": 103
+    },
+    {
+      "attempt": "attempts/010-full-1",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "19198c62eed12132b8eba5a7df39834c884360189e05dfb4e97f6294dd973e9a",
+      "children": 23,
+      "artifacts_rehashed": 222,
+      "captured_input_buffers_rehashed": 103
+    },
+    {
+      "attempt": "attempts/011-wrong-last-target-0",
+      "status": "expected_target_rejection",
+      "failure": null,
+      "result_sha256": "2508c3a73ab42308a7805f9abb2730d3789884d587804c1df9cdc11825e585a2",
+      "children": 21,
+      "artifacts_rehashed": 211,
+      "captured_input_buffers_rehashed": 104
+    }
+  ],
+  "total_actual_compiler_kernel_children": 139,
+  "development_attempts": 5,
+  "full_budget_attempts": 6,
+  "root_review": "Full initial proof source read, exact private-body renaming verified and final direct aliases read. Every retained artifact and captured input buffer in all eleven attempts rehashed. Independent exact-object and wrapper councils adopted before campaign.",
+  "retained_failure": "Three early development failures plus initial full public-roster failure; candidate proof bodies moved private, targets and judge unchanged.",
+  "public_packaging": "Pending separately scoped portable replay/adoption. This local acceptance is not remote-main publication."
+}

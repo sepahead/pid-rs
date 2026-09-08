@@ -1,0 +1,13 @@
+{
+  "cases": 224,
+  "completed_utc": "2026-09-08T10:42:46.950033+00:00",
+  "inert_tool_starts": 532,
+  "new_PDF_productions": 0,
+  "new_proofs": 0,
+  "normal_result_sha256": "a35437e20db212c4e1002306060f627f0eb0aec544693205adbc289b185f5a1e",
+  "optimized_result_sha256": "0f0c2b2ac1563dcc9a95042f6672b4679a1699dd8aa7888d3f0251ed72540b23",
+  "review_sha256": "ed28074768f72dc48fbcef769a45945a644235f59586f5145e8b3c3f32f2cecb",
+  "scope": "Exact portable archive extraction and actual normal/O control suites. No acceptance for altered sources or fresh platform/proof/PDF production.",
+  "source_manifest_sha256": "41c326c40ca081513addf9123fb2d049b12e85876c8cfae6c55173b14af86df8",
+  "status": "accepted_actual_portable_pdf_controls"
+}

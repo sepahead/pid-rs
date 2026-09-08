@@ -1,0 +1,80 @@
+{
+  "completed_utc": "2026-09-08T10:04:09.860010+00:00",
+  "new_mean_theorems_proved": 0,
+  "records": [
+    {
+      "case": "success",
+      "mode": 0,
+      "receipt_sha256": "95171b384054dfcbce9e225e25374e01772caec3356a1f0b0be5575a678cb023",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "failure",
+      "mode": 0,
+      "receipt_sha256": "60405bd825e49966ac05c620615d50778332bde7d7f3fd4546101c6d0ddfd69d",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "preflight-delay",
+      "mode": 0,
+      "receipt_sha256": "f456b2353cd0005bce8c1b4ef37dfebb76ef87e7d0883c4cb1a3657a76ebbffd",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "runtime-hash-delay",
+      "mode": 0,
+      "receipt_sha256": "ee72d265c3683ae4ee03a8e1c20d670a2129bc304cc8ad65238785fdb4796392",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "runtime-child-delay",
+      "mode": 0,
+      "receipt_sha256": "bcfce9ad0a6aaac319ae23c396ef38edc2874de8dbe42e16450097ca0fcb2b8c",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "finalization-delay",
+      "mode": 0,
+      "receipt_sha256": "83d52b5fbe393819232bd637443604959d89a024ce4da7107e87e014146e5364",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "success",
+      "mode": 1,
+      "receipt_sha256": "b6190fa4cf527cdbb4688d2433bf8c11310fc231f189ac9f5a5df462ad775a85",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "failure",
+      "mode": 1,
+      "receipt_sha256": "d9227104085b289e0f8b2e4a9b31489b145bbc73bcae2ceeb1796fddf428f342",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "preflight-delay",
+      "mode": 1,
+      "receipt_sha256": "6d5bda3f63042fd660660c7eda48852e213bea1339a698274bf9fbfcb679e7d6",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "runtime-hash-delay",
+      "mode": 1,
+      "receipt_sha256": "fe86593b279cf87cfb66f172aea32a4185fe43ea4055698dc3f941c1516c7aab",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "runtime-child-delay",
+      "mode": 1,
+      "receipt_sha256": "3bb3d1af3d00a1444bdd20a4944d86fe8a93315ec896f223ff72a6ada696f65d",
+      "status": "matched_expected_behavior"
+    },
+    {
+      "case": "finalization-delay",
+      "mode": 1,
+      "receipt_sha256": "db7b03ab6605bc2a389f99b14d020c768205fb97675bc2b864f50c313c14130f",
+      "status": "matched_expected_behavior"
+    }
+  ],
+  "scope": "actual supervisor and unchanged Runtime against bounded inert Python processes",
+  "status": "controls_matched_expected_behavior_not_adopted"
+}

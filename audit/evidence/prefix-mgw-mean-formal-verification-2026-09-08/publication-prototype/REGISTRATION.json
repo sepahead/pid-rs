@@ -1,0 +1,55 @@
+{
+  "registered_utc": "2026-09-08T07:26:28.276943+00:00",
+  "deadline_utc": "2026-09-08T08:11:28.276943+00:00",
+  "scope": "Private standalone PDF prototype of exactly the already accepted mean exposition. No new mathematical candidate, no public edit, no change to accepted sources or statements. Render, inspect every page and exact text/formula correspondence before publication.",
+  "owner": "root",
+  "max_pdf_build_attempts": 4,
+  "max_lualatex_passes_per_attempt": 3,
+  "max_process_seconds": 300,
+  "source": "../sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/EXPOSITION.md",
+  "prior_source_review": "../sx-mean-standalone-exposition-root-20260908/READER_AND_VISUAL_REVIEW.md",
+  "scientific_lenses": "Reuse exact mathematical-route/50-lens source reviews only for unchanged formulas and definitions. New PDF requires its own twenty visual dispositions.",
+  "routes": [
+    {
+      "route": "Keep Markdown only",
+      "disposition": "Does not finish requested PDF; fallback if build fails."
+    },
+    {
+      "route": "Publish the existing source package alone",
+      "disposition": "Formal sources are insufficient as junior-reader explanation."
+    },
+    {
+      "route": "Reuse results-guide full builder",
+      "disposition": "Hardcoded guide structure and nine-family profile would misstate this document."
+    },
+    {
+      "route": "Pandoc fragment plus existing report style",
+      "disposition": "Selected: one mathematical Markdown source, explicit small TeX wrapper, exact reviewed palette/motifs."
+    },
+    {
+      "route": "Manually duplicate all mathematics in TeX",
+      "disposition": "Unnecessary divergence risk from canonical explanatory Markdown."
+    },
+    {
+      "route": "ReportLab direct typesetting",
+      "disposition": "Additional mathematical layout and font pipeline without reuse benefit."
+    },
+    {
+      "route": "Browser print from HTML",
+      "disposition": "Additional renderer with less reuse of the established mathematical publication style."
+    },
+    {
+      "route": "Embed screenshots of equations",
+      "disposition": "Poor extraction/accessibility and print quality."
+    },
+    {
+      "route": "Extend the public results guide now",
+      "disposition": "Would mix this private accepted proof package into the separate frozen publication repair milestone."
+    },
+    {
+      "route": "Use a new custom design",
+      "disposition": "No demonstrated need; requested repository-local palette and pattern source already exist."
+    }
+  ],
+  "boundary": "Prototype and reviewer output confer no new theorem, scientific priority, estimator or consumer qualification."
+}

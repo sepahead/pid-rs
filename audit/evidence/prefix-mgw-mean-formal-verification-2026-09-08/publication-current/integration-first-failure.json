@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-I",
+    "-S",
+    "-B",
+    "scripts/check-certified-sxpid2-claim.py"
+  ],
+  "completed_utc": "2026-09-08T11:06:39.630158+00:00",
+  "diagnostic": "certified SxPID2 claim check failed: immutable reviewed certified-SxPID support-gate digest changed for scripts/check-formal-pdf-set.sh: expected 089725d8c8c547d1bcc67f194602b33991a8d6faf28c0dac1aa5357b20a3ddc7, observed ffe540c5cd5f4f5baeb3f45c69de38c36920a438eded59bd35b374abe96114a3",
+  "omissions": "Machine-specific working directory and process identifier omitted; complete raw result retained in local recovery. This projection has no independent execution credit.",
+  "raw_result_bytes": 643,
+  "raw_result_sha256": "e3db8122c3f4e1f107d512c8c334c5ffd2f3303a7928315f8a53ab5962308b03",
+  "registered_utc": "2026-09-08T11:06:39.554719+00:00",
+  "returncode": 1,
+  "scope": "Actual first current-container integration check; no mathematical counterexample",
+  "status": "failed"
+}

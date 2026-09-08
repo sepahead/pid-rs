@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "HOST_HOMEBREW/bin/pandoc",
+    "--version"
+  ],
+  "completed_utc": "2026-09-08T08:58:44.498586+00:00",
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal",
+  "returncode": 0,
+  "started_utc": "2026-09-08T08:58:44.458362+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "41b7451ffdbf7dcefa4744e519b4d8f9f6062ca1c74c46876bc45a21ccefbbc8"
+}

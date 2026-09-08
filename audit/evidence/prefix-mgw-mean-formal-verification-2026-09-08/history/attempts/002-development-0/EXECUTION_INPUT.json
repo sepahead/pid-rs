@@ -1,0 +1,12 @@
+{
+  "executed_sha256": "75aa04903f4b4be0cc762997a20a3bfae3d8fd742f5a46ff808e83886e257101",
+  "registered": {
+    "candidate_sha256": "75aa04903f4b4be0cc762997a20a3bfae3d8fd742f5a46ff808e83886e257101",
+    "kind": "development",
+    "mode": 0,
+    "output": "attempts/002-development-0",
+    "prospective_compiler_kernel_children": 1,
+    "registered_utc": "2026-09-08T03:29:20.897722+00:00",
+    "slot_kind": "development"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "accepted_mean_theorems": 0,
+  "actual_attempts": 1,
+  "actual_compiler_children": 1,
+  "actual_failure": "First helper source failed Lean universes/decidability/rewrite/linter/heartbeat checks; retained byte-for-byte. No accepted firstmeanresult.",
+  "actual_terminal_utc": "2026-09-07T16:32:45.654413+00:00",
+  "full_attempts": 0,
+  "future_boundary": "A later deterministic formal artifact may receive only its separately checked predicate under a new expressly versioned task/judge packet. It cannot complete or relabel this terminal campaign.",
+  "observation_gap": "Actual toolclock16:32 then21:08:39 aroundexplicitagentusagefailure. No further process exists; no old clock extension or retroactive success.",
+  "original_campaign_sha256": "9fa6402b21b9f4286288bb59aa6763c50c8ed533018edbe3800bf1fdef45d568",
+  "original_deadline": "2026-09-07T18:31:43.379378+00:00",
+  "original_start": "2026-09-07T16:31:43.379378+00:00",
+  "root_rehash": {
+    "artifacts": 129,
+    "input_buffers": 143
+  },
+  "status": "closed_incomplete_original_deadline_exhausted",
+  "stopped_utc": "2026-09-07T21:10:33.757389+00:00"
+}

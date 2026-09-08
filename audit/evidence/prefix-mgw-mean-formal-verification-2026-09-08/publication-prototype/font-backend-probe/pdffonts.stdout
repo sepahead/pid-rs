@@ -1,0 +1,7 @@
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+XUMZTF+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes      7  0
+KCPQEW+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes      8  0
+SQDXBX+SourceSansPro-Semibold        Type 1C           WinAnsi          yes yes yes      9  0
+RUVTQV+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     10  0
+AEFGHS+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     11  0

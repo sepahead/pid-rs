@@ -1,0 +1,35 @@
+# Three mean targets: historical acceptance and proposed public source
+
+The original local campaign accepted the three exact mean targets at **2026-09-08 05:03:36 UTC**. The [acceptance](history/ACCEPTANCE.json) has original SHA-256 `26789c336a5928a07786bc2e1867f600995c09300a1e9b056083349a2fce3fb2`. The selected 890-line candidate has SHA-256 `17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a`; its accepted cosmetic variant has SHA-256 `4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409`. The [STOP record](history/STOP_RECORD.json) closes that campaign.
+
+This evidence package is a **source-only portable proposal**. Its new adapter has not run. Historical full results are not new public replay results, and copied preparation/type/reporting controls are not new mean proofs.
+
+| Attempt | Historical outcome | Interpretation |
+|---|---|---|
+| [001](history/attempts/001-development-0/RESULT.json)–[007](history/attempts/007-development-0/RESULT.json) | Development compilation failed. | Retained proof elaboration/source failures; no full acceptance. |
+| [008](history/attempts/008-development-0/RESULT.json) | Development compilation passed. | Intermediate source development, not full three-target acceptance. |
+| [009](history/attempts/009-development-0/RESULT.json)–[013](history/attempts/013-development-0/RESULT.json) | Development compilation failed. | Remaining mean-series/source obligations; earlier failures stay in the record. |
+| [014](history/attempts/014-development-0/RESULT.json), [015](history/attempts/015-development-0/RESULT.json), [016](history/attempts/016-development-0/RESULT.json) | Development compilation passed. | Attempt 016 supplied the complete selected source; compilation remained distinct from semantic/kernel acceptance. |
+| [017 selected normal](history/attempts/017-full-0/RESULT.json) | Exact semantic/fresh-kernel pass. | 25 compiler/kernel children; original result SHA `5b90925ff33db838e3bd33b2301b8172c77f5168e3532841f266ba51ef8493ea`. |
+| [018 selected optimized](history/attempts/018-full-1/RESULT.json) | Same full pass. | Original result SHA `6cf40f442047220a55717d9eb0336ae2c44bed1d70d23e503fee3d3ba5a0b2f5`. |
+| [019 cosmetic normal](history/attempts/019-full-0/RESULT.json) | Same full pass. | Original result SHA `93f635f05ec08fb97b4a9d4cf3c1f900b986054f3cfac112ab6b8bde8845811e`. |
+| [020 cosmetic optimized](history/attempts/020-full-1/RESULT.json) | Same full pass. | Original result SHA `f30ce9c9d0d6107b97668c4c9bc20f2637256c71e2d8c257e5ce7159d2c46688`. |
+| [021 wrong final target](history/attempts/021-wrong-last-target-0/RESULT.json) | Actual last-type rejection. | 23 compiler children; original result SHA `9865791a59342b391a6bd982707ecb0a173dfb4a9bea1108b69834560894c7c0`. |
+
+Each retained attempt includes its result, registration, source variants, command records and full bounded stdout/stderr streams, including empty streams. Twelve v2 development failures, four development passes, four full passes and one negative full-budget attempt used 139 actual compiler/kernel children. These are historical counts, not replenished execution allowance or additional theorem counts.
+
+The [earlier v1 attempt](history/prior-v1/attempts/001-development-0/RESULT.json) failed compilation and its original campaign expired. Its [terminal evidence](history/prior-v1/STOP_RECORD.json), failed source and diagnostic stream remain preserved. Later v2 success cannot complete its old deadline or turn a development failure into a mathematical counterexample. Frozen mathematical targets were not weakened to admit the selected proof. Source development and formal proof acceptance are distinguished from an empirical confirmatory experiment.
+
+All four full positive results contain identical three-mean arrays, the accepted eleven MGW/six probability arrays, and fresh `PrefixMgwMeanCandidateRoot` closure. The same-selected-source wrong-target run reaches both actual final raw/alias type mismatches and the inherited judge's `DNF_JUDGE_TARGET_TYPE` marker. That prefix names the reused implementation; its tested declaration is the final mean theorem. It is not a DNF negative control or a separate two-mean-proof result.
+
+## Identity, projection and dependencies
+
+[RAW_TO_PUBLIC_MAP.json](RAW_TO_PUBLIC_MAP.json) records source logical locators, original raw SHA/size and public projected SHA/size for copied artifacts. Original raw buffers and their absolute locator inventory remain in the ignored source-preparation lane. Public text substitutes logical repository, home and temporary locators; embedded historical artifact hashes keep their original raw-byte meanings. No original report or stopped campaign was edited.
+
+The source proposal independently checked every copied result digest against the root acceptance and preserved the copied source buffers. The original acceptance reports its complete historical artifact/input rehash. This compact projection does not redistribute compiled objects, complete external caches or every binary input buffer, and its source copying is not a new full archive audit or kernel replay.
+
+The [dependency inventory](../../formal/lean-prefix-mgw-mean/DEPENDENCIES.md) separates already public DNF13, locally accepted generic8/MGW11/probability6, and mean3. [Generic](dependencies/generic-acceptance.json), [MGW](dependencies/mgw-acceptance.json), and [probability](dependencies/probability-acceptance.json) acceptance projections accompany the exact inherited source snapshots. Their separate standalone public adapters/replays remain pending. The new mean closure checks inherited records without increasing the accepted family counts.
+
+Read the [current explanation](../../formal/lean-prefix-mgw-mean/EXPOSITION.md) and [exact source correspondence](../../formal/lean-prefix-mgw-mean/SOURCE_CORRESPONDENCE.md). Only the explanatory opening status was reconciled with later local acceptance; the closed earlier exposition remains preserved by its original source hash. The retained-rank SVG is copied unchanged, with no new render/visual evidence claimed here.
+
+The result concerns actual finite-law expectations approaching the categorical MGW mean in nats. Finite-horizon unbiasedness, error rates, coverage, a common-space almost-sure limit, executable refinement, continuous/other-PID transfer, application superiority and scientific-priority claims remain outside these three targets. Public replay, catalog/source links, MD/PDF and hosted/mainline publication are separate remaining gates.

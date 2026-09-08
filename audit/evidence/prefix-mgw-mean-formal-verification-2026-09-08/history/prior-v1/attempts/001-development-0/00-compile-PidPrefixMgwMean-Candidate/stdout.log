@@ -1,0 +1,228 @@
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:17:0: error: declaration `_private.PidPrefixMgwMean.Candidate.0.PidPrefixMgwMeanCandidate.valid_generator` contains universe level metavariables at the expression
+  I → Type ?u.44
+in the declaration body
+  fun {I} {X} {T} [Fintype I] [Nonempty I] [(i : I) → Fintype (X i)] [Fintype T] [DecidableEq I]
+      [(i : I) → DecidableEq (X i)] [DecidableEq T] z x h =>
+    PidMgwBridgeCandidate.mismatch_generator_and_exclusion.{u, ?u.44, ?u.43}.left I (mismatches z x) h
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:80:6: error: Tactic `assumption` failed
+
+case cons
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁶ : Fintype I
+inst✝⁵ : Nonempty I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+z x : Key I X T
+xs : List (Key I X T)
+hne : x :: xs ≠ []
+hm : ∀ x_1 ∈ x :: xs, (mismatches z x_1).Nonempty
+g : Node I := ⟨singles (mismatches z x), ⋯⟩
+ht :
+  Valid (List.foldl (fun family row => rawJoin family (singles (mismatches z row))) (↑g) xs) ∧
+    ∀ (b : Node I),
+      rawLE (List.foldl (fun family row => rawJoin family (singles (mismatches z row))) (↑g) xs) ↑b ↔
+        rawLE ↑g ↑b ∧ ∀ x ∈ xs, rawLE (singles (mismatches z x)) ↑b
+b : Node I
+⊢ (rawLE ↑g ↑b ∧ ∀ x ∈ xs, rawLE (singles (mismatches z x)) ↑b) ↔
+    rawLE (singles (mismatches z x)) ↑b ∧ ∀ x ∈ xs, rawLE (singles (mismatches z x)) ↑b
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:89:8: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Decidable (prefixEvent z a rows)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:88:19: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Decidable (rawLE ↑a ↑b)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:92:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:115:4: error: unsolved goals
+case pos
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁶ : Fintype I
+inst✝⁵ : Nonempty I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+z : Key I X T
+rows : List (Key I X T)
+hne : rows ≠ []
+b : Node I
+this : Fintype (Node I) := nodeFintype I
+hm : ∀ x ∈ rows, (mismatches z x).Nonempty
+hf :
+  Valid (rawPrefixFamily z rows) ∧
+    ∀ (b : Node I), rawLE (rawPrefixFamily z rows) ↑b ↔ ∀ x ∈ rows, rawLE (singles (mismatches z x)) ↑b
+a0 : Node I := ⟨rawPrefixFamily z rows, ⋯⟩
+he : ∀ (a : Node I), prefixEvent z a rows ↔ a = a0
+hc : (∀ x ∈ rows, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z) ↔ rawLE ↑a0 ↑b
+⊢ sorry () =
+    if
+        ∀ (a : (source : I) → X source) (b_1 : T),
+          (a, b_1) ∈ rows → (a, b_1) ∉ PidFiniteConvergence.sxSourceEvent (↑b) z then
+      1
+    else 0
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:116:4: error: unsolved goals
+case pos.h₀
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁶ : Fintype I
+inst✝⁵ : Nonempty I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+z : Key I X T
+rows : List (Key I X T)
+hne : rows ≠ []
+b : Node I
+this : Fintype (Node I) := nodeFintype I
+hm : ∀ x ∈ rows, (mismatches z x).Nonempty
+hf :
+  Valid (rawPrefixFamily z rows) ∧
+    ∀ (b : Node I), rawLE (rawPrefixFamily z rows) ↑b ↔ ∀ x ∈ rows, rawLE (singles (mismatches z x)) ↑b
+a0 : Node I := ⟨rawPrefixFamily z rows, ⋯⟩
+he : ∀ (a : Node I), prefixEvent z a rows ↔ a = a0
+hc : (∀ x ∈ rows, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z) ↔ rawLE ↑a0 ↑b
+a : Node I
+_ha : a ∈ Finset.univ
+hne_a : a ≠ a0
+⊢ sorry () = 0
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:119:2: error: unsolved goals
+case neg
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁶ : Fintype I
+inst✝⁵ : Nonempty I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+z : Key I X T
+rows : List (Key I X T)
+hne : rows ≠ []
+b : Node I
+this : Fintype (Node I) := nodeFintype I
+hm : ¬∀ x ∈ rows, (mismatches z x).Nonempty
+he : ∀ (a : Node I), ¬prefixEvent z a rows
+hc : ¬∀ x ∈ rows, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z
+⊢ ↑(Fintype.card (Node I)) * sorry () =
+    if
+        ∀ (a : (source : I) → X source) (b_1 : T),
+          (a, b_1) ∈ rows → (a, b_1) ∉ PidFiniteConvergence.sxSourceEvent (↑b) z then
+      1
+    else 0
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:115:12: error: This simp argument is unused:
+  he
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:115:16: error: This simp argument is unused:
+  hc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:117:12: error: This simp argument is unused:
+  he
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hne_a]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:117:16: error: This simp argument is unused:
+  hne_a
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:126:10: error: This simp argument is unused:
+  he
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:126:14: error: This simp argument is unused:
+  hc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:157:6: error: Tactic `rewrite` failed: motive is not type correct:
+  fun _a => ((∏ i, r (word i)) * if _a then 1 else 0) = ∏ i, if P (word i) then r (word i) else 0
+Error: Application type mismatch: The argument
+  List.decidableBAll P (List.ofFn word)
+has type
+  Decidable (∀ x ∈ List.ofFn word, P x)
+but is expected to have type
+  Decidable _a
+in the application
+  @ite ℝ _a (List.decidableBAll P (List.ofFn word))
+
+Explanation: The rewrite tactic rewrites an expression 'e' using an equality 'a = b' by the following process. First, it looks for all 'a' in 'e'. Second, it tries to abstract these occurrences of 'a' to create a function 'm := fun _a => ...', called the *motive*, with the property that 'm a' is definitionally equal to 'e'. Third, we observe that 'congrArg' implies that 'm a = m b', which can be used with lemmas such as 'Eq.mpr' to change the goal. However, if 'e' depends on specific properties of 'a', then the motive 'm' might not typecheck.
+
+Possible solutions: use rewrite's 'occs' configuration option to limit which occurrences are rewritten, or use 'simp' or 'conv' mode, which have strategies for certain kinds of dependencies (these tactics can handle proofs and 'Decidable' instances whose types depend on the rewritten term, and 'simp' can apply user-defined '@[congr]' theorems as well).
+
+K : Type u
+inst✝¹ : Fintype K
+r : K → ℝ
+P : K → Prop
+inst✝ : DecidablePred P
+n : ℕ
+word : Fin n → K
+_hw : word ∈ Finset.univ
+⊢ ((∏ i, r (word i)) * if ∀ x ∈ List.ofFn word, P x then 1 else 0) = ∏ i, if P (word i) then r (word i) else 0
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:176:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:168:0: error: (deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:234:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:235:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+<REPOSITORY>/.local/sx-mean-wrapper-adopted-source-20260907/attempts/001-development-0/src/PidPrefixMgwMean/Candidate.lean:230:14: error: (kernel) unknown constant '_private.PidPrefixMgwMean.Candidate.0.PidPrefixMgwMeanCandidate.word_cumulative'

@@ -1,0 +1,33 @@
+{
+  "command": [
+    "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+    "-t",
+    "0",
+    "-M",
+    "4096",
+    "-o",
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-001/build/PidMgwBridge/SemanticJudge.olean",
+    "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-001/src/PidMgwBridge/SemanticJudge.lean"
+  ],
+  "cwd": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-001/src",
+  "elapsed_seconds": 1.9837747500278056,
+  "execution_error": null,
+  "failure": null,
+  "label": "compile-PidMgwBridge-SemanticJudge",
+  "limits": {
+    "observed_group_rss_bytes": 4294967296,
+    "rss_limit_is_hard_os_cap": false,
+    "rss_sample_interval_seconds": 0.1,
+    "seconds": 600,
+    "stderr_bytes": 4194304,
+    "stdout_bytes": 4194304
+  },
+  "peak_observed_group_rss_bytes": 2757017600,
+  "remaining_live_group_processes": [],
+  "retained_stderr_bytes": 0,
+  "retained_stdout_bytes": 4588,
+  "returncode": 0,
+  "started_utc": "2026-09-08T07:18:33.610385+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "3feda996f3c9d84eb2dd8b4f29f1ce46faa57687f80479942625104e9b06caa8"
+}

@@ -1,0 +1,13 @@
+{
+  "closed_utc": "2026-09-08T10:00:55.377508+00:00",
+  "status": "root_accepts_exact_materializer_and_192_inert_control_outcomes",
+  "actual_cases": 192,
+  "actual_materializer_children": 192,
+  "downstream_control_children": 0,
+  "new_theorems": 0,
+  "materializer_sha256": "86e4ecb24e1afdc15caecfabee2f51ce6786f1dc9184513af636a3a4c5990ac1",
+  "source_manifest_sha256": "95451ead1ab77ffab7d17d85fd2fe0a4a5ea84934f29acb13d7507c34b91fef2",
+  "root_review_sha256": "4c1f220948adc3023523bd35ee873b443b01005ca6b1039c9911d93d3fbcd146",
+  "eligible_exact_materialized_input": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-0/000-0-valid-exact/destination",
+  "scope": "Exact pinned distribution and stated causal setup controls; no generic untrusted-manifest, race, sandbox, proof or public integration claim."
+}

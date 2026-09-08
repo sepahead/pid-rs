@@ -1,0 +1,10 @@
+{
+  "adapter": "<repository>/.local/sx-mean-public-packaging-source-20260908/public/audit/formal/lean-prefix-mgw-mean/replay-proposed.py",
+  "registration_sha256": "1af68131943966d04716cc04a756f9c6c4c9f59f4610b511010ff64702bad611",
+  "root": "<repository>",
+  "schema": "portable-mean-supervisor-plan-v1",
+  "stage": "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908",
+  "status": "root-reviewed-ready-to-execute",
+  "supervisor_sha256": "529245c5f842283132f8fe21a2555968a8f9c29950489f41c2639ace08f7f569",
+  "toolchain_prefix": "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823"
+}

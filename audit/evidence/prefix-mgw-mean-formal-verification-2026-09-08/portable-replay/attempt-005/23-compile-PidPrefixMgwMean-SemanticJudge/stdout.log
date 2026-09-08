@@ -1,0 +1,15 @@
+<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/SemanticJudge.lean:26:72: error: Type mismatch
+  PidPrefixMgwMeanCandidate.prefix_expectations_to_mgw_mean
+has type
+  True
+but is expected to have type
+  PidPrefixMgwMeanRawTargets.prefix_expectations_to_mgw_mean
+<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/SemanticJudge.lean:27:74: error: Type mismatch
+  PidPrefixMgwMeanCandidate.prefix_expectations_to_mgw_mean
+has type
+  True
+but is expected to have type
+  PidPrefixMgwMeanAliasTargets.prefix_expectations_to_mgw_mean
+PREFIX_MGW_MEAN_JUDGE_RESULT {"alias_target":"PidPrefixMgwMeanAliasTargets.word_coefficient_join_power","axioms":["Classical.choice","Quot.sound","propext"],"full_elaborated_type":"PidPrefixMgwMeanContract.word_coefficient_join_power_target.{u, v, w}","raw_target":"PidPrefixMgwMeanRawTargets.word_coefficient_join_power","status":"accepted","theorem":"PidPrefixMgwMeanCandidate.word_coefficient_join_power","universes":["u","v","w"]}
+PREFIX_MGW_MEAN_JUDGE_RESULT {"alias_target":"PidPrefixMgwMeanAliasTargets.finite_block_expectation","axioms":["Classical.choice","Quot.sound","propext"],"full_elaborated_type":"PidPrefixMgwMeanContract.finite_block_expectation_target.{u, v, w}","raw_target":"PidPrefixMgwMeanRawTargets.finite_block_expectation","status":"accepted","theorem":"PidPrefixMgwMeanCandidate.finite_block_expectation","universes":["u","v","w"]}
+<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-005/src/PidPrefixMgwMean/SemanticJudge.lean:29:0: error: DNF_JUDGE_TARGET_TYPE: PidPrefixMgwMeanCandidate.prefix_expectations_to_mgw_mean does not have the complete receiver-free target

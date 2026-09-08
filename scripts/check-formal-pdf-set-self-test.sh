@@ -66,6 +66,7 @@ MARKDOWN_SOURCES=(
   PID2_REPRESENTED_COORDINATE_ASSURANCE.md
   PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
   audit/evidence/post-publication-custody-2026-09-02.md
+  audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
@@ -86,6 +87,7 @@ STANDALONE=(
   pid2-represented-coordinate-assurance
   pid-sensor-placement-and-galadriel-guide
   post-publication-custody-2026-09-02
+  prefix-mgw-mean
   support-change-tolerant-averaged-sxpid-continuity
   sxpid3-source-marginal-and-bounded-audit
   two-source-sxpid-count-atom-bridge
@@ -96,7 +98,8 @@ make_fixture() {
   local fixture="$1"
   local stem
   mkdir -p "$fixture/scripts" "$fixture/audit/evidence" \
-    "$fixture/audit/formal/latex" "$fixture/output/pdf"
+    "$fixture/audit/formal/latex" "$fixture/output/pdf" \
+    "$fixture/audit/formal/lean-prefix-mgw-mean"
   cp "$PRODUCTION_GATE" "$fixture/scripts/check-formal-pdf-set.sh"
   chmod 0755 "$fixture/scripts/check-formal-pdf-set.sh"
   for stem in "${LATEX_STANDALONE[@]}"; do
@@ -358,6 +361,18 @@ for literal in (
 PY
 }
 
+validate_mean_gate_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected = '# The new mean exposition admits exact reviewed bytes only; retain fresh build evidence.\nif [[ "$MODE" == "--exact" ]]; then\n  MEAN_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mean-publication.XXXXXX")"\n  python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --exact --check --work-dir "$MEAN_BUILD_PARENT/build"\nelse\n  if python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --cross-toolchain; then\n    echo "formal PDF set: mean exposition cross-toolchain mode unexpectedly accepted" >&2\n    exit 1\n  else\n    MEAN_CROSS_STATUS=$?\n  fi\n  if [[ "$MEAN_CROSS_STATUS" -ne 2 ]]; then\n    echo "formal PDF set: mean exposition refusal returned $MEAN_CROSS_STATUS, expected 2" >&2\n    exit 1\n  fi\nfi\n\n'
+if text.count(expected) != 1:
+    raise SystemExit("mean exposition exact/refusal wiring drifted")
+PY
+}
+
 validate_terminal_success_contract() {
   python3 -I -S - "$1" <<'PY'
 from pathlib import Path
@@ -368,7 +383,7 @@ text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint and post-publication custody receipt intentionally have no accepted cross-toolchain relation, and both status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt and mean exposition intentionally have no accepted cross-toolchain relation, and all three status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -873,6 +888,43 @@ inverting the blueprint cross refusal probe is rejected	  if scripts/check-pid-d
 changing the blueprint cross refusal contract from status 2 is rejected	  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 2 ]]; then	  if [[ "$BLUEPRINT_CROSS_STATUS" -ne 1 ]]; then
 conditionally skipping the blueprint exact branch is rejected	if [[ "$MODE" == "--exact" ]]; then\n  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact	if [[ "$MODE" == "--cross-toolchain" ]]; then\n  scripts/check-pid-discovery-verification-blueprint-pdf.sh --exact
 EOF
+
+if ! validate_mean_gate_wiring "$PRODUCTION_GATE" >"$TEST_ROOT/mean-production.stdout" 2>"$TEST_ROOT/mean-production.stderr"; then
+  cat "$TEST_ROOT/mean-production.stderr" >&2
+  exit 1
+fi
+pass "mean exposition exact build and explicit cross refusal are wired"
+
+while IFS=$'\t' read -r label before after; do
+  case_file="$TEST_ROOT/mean-gate-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$before" "$after" <<'PY'
+from pathlib import Path
+import sys
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+before, after = sys.argv[2:]
+if text.count(before) != 1:
+    raise SystemExit("mean mutation anchor drifted")
+path.write_text(text.replace(before, after, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_mean_gate_wiring "$case_file" >"$TEST_ROOT/mean-$PASS_COUNT.stdout" 2>"$TEST_ROOT/mean-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: mean wiring mutation accepted: $label" >&2
+    exit 1
+  fi
+  if ! grep -Fq "mean exposition exact/refusal wiring drifted" "$TEST_ROOT/mean-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/mean-$PASS_COUNT.stderr" >&2
+    exit 1
+  fi
+  pass "$label"
+done <<'MEAN_CASES'
+mean exact build cannot be skipped	  python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --exact --check --work-dir "$MEAN_BUILD_PARENT/build"	  :
+mean exact failure cannot be ignored	--exact --check --work-dir "$MEAN_BUILD_PARENT/build"	--exact --check --work-dir "$MEAN_BUILD_PARENT/build" || true
+mean repeated build cannot be removed	--exact --check --work-dir "$MEAN_BUILD_PARENT/build"	--exact --work-dir "$MEAN_BUILD_PARENT/build"
+mean cross refusal cannot become exact mode	  if python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --cross-toolchain; then	  if python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --exact; then
+mean cross success cannot be accepted	  if python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --cross-toolchain; then	  if ! python3 -I -S -B scripts/build-prefix-mgw-mean-pdf.py --cross-toolchain; then
+mean refusal must require status two	  if [[ "$MEAN_CROSS_STATUS" -ne 2 ]]; then	  if [[ "$MEAN_CROSS_STATUS" -ne 1 ]]; then
+MEAN_CASES
 
 case_file="$TEST_ROOT/temporary-root-cdpath-bypass.sh"
 cp "$PRODUCTION_GATE" "$case_file"

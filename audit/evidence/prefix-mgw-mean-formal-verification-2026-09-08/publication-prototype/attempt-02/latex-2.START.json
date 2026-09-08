@@ -1,0 +1,11 @@
+{
+  "started_utc": "2026-09-08T07:30:22.961573+00:00",
+  "command": [
+    "/Library/TeX/texbin/lualatex",
+    "-no-shell-escape",
+    "-interaction=nonstopmode",
+    "-halt-on-error",
+    "-file-line-error",
+    "prefix-mgw-mean.tex"
+  ]
+}

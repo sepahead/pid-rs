@@ -1,0 +1,3479 @@
+{
+  "cases": 96,
+  "completed_utc": "2026-09-08T09:58:16.353244+00:00",
+  "new_mean_theorems_proved": 0,
+  "records": [
+    {
+      "completed_utc": "2026-09-08T09:58:09.673518+00:00",
+      "earlier_actual_positive_receipts": {},
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "valid-exact",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61147,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:09.597411+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:09.760304+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "valid-umask-077",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61148,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:09.680620+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:09.848491+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "valid-repacked",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61149,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:09.769867+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:09.936050+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "valid-reversed-order",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61151,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:09.858412+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:09.985107+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "manifest-byte-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61152,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:09.943637+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 959,
+        "sha256": "b15441bca257c57d7001445fb9db5c05f69f7eb9780a15bfcdf3327894f2ccac"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.031147+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "manifest-invalid-json",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61153,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:09.992143+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 962,
+        "sha256": "cac7f7c67ccd8771c73a1e6d8f347f5b6e2e5193851af47eb80c45de57e9a9a0"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.080072+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "manifest-duplicate-key",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61154,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.038715+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 965,
+        "sha256": "c1c3334ab00d9732b6c62127f462d8202e190b48843388bee92caa59c90ebca2"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.128316+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "archive-byte-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61155,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.086215+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1112,
+        "sha256": "f7fe66aa15312fcb6dd69fbe02cf9ae280ba748d6329bf7ccf92e9e37b58e652"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.213617+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "archive-truncated",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61156,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.136764+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1106,
+        "sha256": "3c93fc0a6b10396461c6a9d2fffb47ab524d3a3e474eaae59ec52c7d11a81e0e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.293243+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "archive-unreadable-repinned",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61158,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.219055+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1478,
+        "sha256": "dcd6248029ec317d157201ea9dd752d93da24adca4b903f8e3693e6620436b41"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.340890+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-INPUT_PINS.json",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61159,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.300792+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1095,
+        "sha256": "d9b67a63dbc1b0579fc1da7f4309e41cbde92fc792486fd66f8cf7ed16d5e298"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.390213+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-proposed/adapter-controls.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61160,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.348538+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1147,
+        "sha256": "395dc04f14d43c1f60124b7d3b1446d37d62f0bbd2d3b5f16195970b296abae7"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.437335+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-proposed/control-child.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61161,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.397451+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1135,
+        "sha256": "1148e45d3a0cb41a983a1500bbef3f92429c1087664dc39a38ed3d9c023ab82e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.486511+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-proposed/stage-supervisor.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61162,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.444939+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1147,
+        "sha256": "536a45026f9db3659a2f0729704205305f7223616d1238d3774b1ac216358e51"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.565774+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-proposed/supervisor-child.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61163,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.493871+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1147,
+        "sha256": "57ac620df9ae5856a004ee67c914291975be720efe31b55fa91e04d2d2eee06d"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.647175+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-proposed/supervisor-controls.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61165,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.574002+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1159,
+        "sha256": "b8471ee229593af85195aee2ca4668ede7c97d56487d4a6a2d93b853784793e4"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.695499+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "source-length-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61166,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.654754+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1089,
+        "sha256": "08b3c1c794d76fab978995755d4e30798666749a470c6c370fdee097da20761a"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.784399+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-byte-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61167,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.707021+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1058,
+        "sha256": "2bf4a1a17d2f9d8648251e83a94aef64ae7caf5360af3372b8c6b489ffac0a77"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.870079+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-length-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61168,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.795962+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1064,
+        "sha256": "d2ccfbcef51a6b12650afe9b778becad109decf3e30a2938a020aaa94a9f22cb"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:10.923262+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-file-mode",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61169,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.882260+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 999,
+        "sha256": "917460bad99401df5415d7239f7da919356300abb91f68bffdedee3854badb1e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.012121+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-directory-mode",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61171,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:10.934837+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1014,
+        "sha256": "6c469ec6fa9e6aac2be5f56c96268287ce34c324e65bb4cfdedbc3af0eebd393"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.100668+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-extra",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61172,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.025313+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 987,
+        "sha256": "e89238fefd584cee357d2e99413795c8d36dd66e09b0d49eabccecaee647853d"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.187148+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-missing-file",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61173,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.112991+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 979,
+        "sha256": "4ad8cd13dcb2b27077f19ae1e0b6751f30bc545edda9bd56e8e9440c134044cb"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.277877+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-missing-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61174,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.199493+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 994,
+        "sha256": "2523d01896c92a4e27ee0df4df2a948695ad7bb318772e12c5d26cefd9b1c1fa"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.369252+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-missing-root",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61176,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.290166+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 979,
+        "sha256": "c1c168a47e0f5dfce6935a6fec7152f585ea900f5589fd7bb214a5ebc7adce24"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.416771+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-empty-inventory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61177,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.375674+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 988,
+        "sha256": "b543386a7556fe5d6937d0f18ef0d33af0b00d999035aef6951114923e5d1293"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.502621+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-duplicate",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61178,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.428711+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1228,
+        "sha256": "b769a0a97841b77c8797cdee8fb75c1d7dd56a5f64f22a5c417f8862aa68ba99"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.555867+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-absolute",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61179,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.514415+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1225,
+        "sha256": "87f6cbe47d1024061adc721436226b6460924a2a24e4fdec9e88fa261ab58031"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.645333+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-parent-traversal",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61181,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.568302+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1249,
+        "sha256": "4a61a4413d4a89ed6e124fb5ec0afca2f70161eae18fa1ad7bb84e4b589bb7fc"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.731338+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-dot-prefix",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61192,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.657436+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1231,
+        "sha256": "3bcbe7b45581cd7ab8904b8f2596523a73d00897a368a424f86fda0c85a285ba"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.816240+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-double-slash",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61193,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.743475+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1237,
+        "sha256": "c4853b3c6ab85459c5891d36a162807a82f97903bb650c5b1ea7f523f6c12f9b"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.901819+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-wrong-root",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61194,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.827979+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1231,
+        "sha256": "81b4858e57f1117b698869b75cb1e9db14cef24979240b4832054fbfc10bf05e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:11.955418+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-symbolic-link",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61195,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.913916+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1081,
+        "sha256": "a445432f1969ef4980fa8212fe5dd44bb10faae1d8cda462827d7a31b681f6de"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.042550+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-hard-link",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61196,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:11.967379+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1069,
+        "sha256": "77734a5000eccf7b342b60172e7bbf16017093039532d0adb0a64388652894d9"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.096262+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-fifo",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61198,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.054813+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1054,
+        "sha256": "98f5c2d2c3b1861306516200ca63d69dfcff2f86287fd69fc6e55ebe7331f442"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.184045+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-file-as-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61199,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.109119+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1093,
+        "sha256": "13c0d41d127f4dc6d7d381215e531663fa9b6327799e8ce75203df03b6759f89"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.236954+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "member-directory-as-file",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61200,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.196563+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 954,
+        "sha256": "b46ee63492a84053e2507efc6e0601c7df5fb9e9e5348cbb3c2df8862efe247f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.286046+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "destination-existing-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61201,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.244665+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1348,
+        "sha256": "8fa438f44b97da3becb9fa78f20c0508d7c8d166f471e422f92a402ca2ae5e1b"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.334385+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "destination-existing-file",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61202,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.293405+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1333,
+        "sha256": "0195b6c59ab6fc0a617b0c4d78cd29ac429ac32e97c2a0574f42faa5a65cbff3"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.417019+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "destination-symbolic-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61203,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.342140+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1348,
+        "sha256": "4283cf4b6fa37cee366fabfa95a4c3d4b0d4497a98b01c4b5eba631f4d1a9805"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.495145+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "destination-dangling-link",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61205,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.424953+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1333,
+        "sha256": "574ea8e7856c59179c2d8aee4b1bc44776f7e58592e45dfc02e2adada89e2b88"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.577988+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "destination-symbolic-parent",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61206,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.503303+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1339,
+        "sha256": "96952b9434c492020c9d93a0194e3e5a1ad0d26b51aa9d7a68704058c682a650"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.659014+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "destination-noncanonical-parent",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61207,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.586114+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1351,
+        "sha256": "e2b74968165043cbe02771ab4d1a23a000da28347183d75a52de713044f726a3"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.741887+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "missing-isolation",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61208,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.666803+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1047,
+        "sha256": "213b5f3fd6283b83294d5cf1d362b2e047c63ba8bb0ae030976647c5359e1e32"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.825987+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "missing-no-site",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61210,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.749559+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1041,
+        "sha256": "08ca54ca041969053991c48cb69be0a57f6f9db761d9fcfa32678b7704c14d3f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.874739+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "missing-no-bytecode",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61211,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:12.833309+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1053,
+        "sha256": "d2648aed609a8d8878bc2f7af2e729bcec9a9e21f5d6a1271469ea4f706e364f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.922426+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "missing-destination",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61212,
+      "returncode": 2,
+      "started_utc": "2026-09-08T09:58:12.882184+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 128,
+        "sha256": "c7995c0f02c25dbbcb43995566a88db717b0bbfef4ed33f7446ec79105f4539c"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:12.967390+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/000-0-valid-exact/CASE_RESULT.json",
+          "sha256": "6fbf27635acc009f7023a8574d64dca6b579ff19447c6898f65425e09ea555c9"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/002-0-valid-repacked/CASE_RESULT.json",
+          "sha256": "d629f4674a4bbddfe33b014f432a12620b67f1952e798857aa159ec1f8789fb4"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/003-0-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "1fb80461ab615d9be547afb01fc0dfdd2b4e76aedcd6ff17c19b830503c60dbb"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/001-0-valid-umask-077/CASE_RESULT.json",
+          "sha256": "a312fcedc08181f4769fcdc9bf11b1641e9b5c41b681f53c09bc62c2ef645290"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 0,
+      "name": "unknown-option",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61213,
+      "returncode": 2,
+      "started_utc": "2026-09-08T09:58:12.929644+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 120,
+        "sha256": "6305043f1002736b537e0d87354be0d0464215c2791cd813c3b22b1b965eea2e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.053870+00:00",
+      "earlier_actual_positive_receipts": {},
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "valid-exact",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61214,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:12.975102+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.140273+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "valid-umask-077",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61215,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:13.061822+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.229360+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "valid-repacked",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61217,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:13.149841+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.319894+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "valid-reversed-order",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61218,
+      "returncode": 0,
+      "started_utc": "2026-09-08T09:58:13.238784+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 73,
+        "sha256": "f5dd4e2052e43a2af9891e842aaf4808608c44d5fa46e602ee190dc291c8934b"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.366277+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "manifest-byte-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61219,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.327608+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 959,
+        "sha256": "ddcdd3770445bf3e92bbf1ec6ae75c7e76f06657f7264606346eb5131779a68f"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.411848+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "manifest-invalid-json",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61220,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.373451+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 962,
+        "sha256": "ec926837d8c6f7035b5559d193dc138fdb324b8a2ee56d938040b8b92ee2d982"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.493377+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "manifest-duplicate-key",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61221,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.419433+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 965,
+        "sha256": "b5d8df330c0432c98c1861af6e230dd8a242a549e4cb0b89f86023971fb3b285"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.540090+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "archive-byte-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61223,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.499802+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1112,
+        "sha256": "63f8b657cbb6d734117f3c6d1381bf282247a1bc1490052bb5808db7febb50f3"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.619880+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "archive-truncated",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61224,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.547559+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1106,
+        "sha256": "1a8c59275a09446e6863383eaf588aee625d03cba69f90b9993bff1292dfdcca"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.697587+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "archive-unreadable-repinned",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61225,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.625211+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1478,
+        "sha256": "b33695cc3ee6be100a87ef63a5d97b756668bc3bc985173d913328aabb05fd1b"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.780578+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-INPUT_PINS.json",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61226,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.705020+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1095,
+        "sha256": "eab203c8f655d7f6677fcb9328702188ad4b34c5041ea9b9d95d8c5287011a02"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.863688+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-proposed/adapter-controls.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61227,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.788428+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1147,
+        "sha256": "7f67bafb2ecbf6d4eb42401a1c37822838af2ff01409fc512e9dd21cd6824a5e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.913058+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-proposed/control-child.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61229,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.871705+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1135,
+        "sha256": "a8938372273efdf99cbac830892748589134b9a25a920ac638c24ba0c2652e1a"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:13.995020+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-proposed/stage-supervisor.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61230,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:13.920279+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1147,
+        "sha256": "335fa0f3db1f05ce3fbe407d7ed6fad239105dc4e6d2e1d2c6fbe7b5589fbaf9"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.077155+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-proposed/supervisor-child.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61231,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.002631+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1147,
+        "sha256": "52fd88d2f28abb9a990ff3e2afcd5921748e8eab79f8d3cc81369ff3299db49b"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.124362+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-proposed/supervisor-controls.py",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61232,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.084784+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1159,
+        "sha256": "94f07f2356089dd6646ea8c653463f2002801059bff315369d7901383f6fa9d2"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.171844+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "source-length-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61233,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.131850+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1089,
+        "sha256": "20e88961ebeff2467a3cbae9f4c226914b94b5b5c25eebd25ef701d355fe1133"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.225211+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-byte-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61234,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.183698+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1058,
+        "sha256": "844fe6f103974ca556839d20830567a0c8e0c642caec5e5862ba838f3c21e915"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.307021+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-length-change",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61236,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.236710+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1064,
+        "sha256": "ed4f8b2afde23a8d20f0073ee27a5848327f8a2c44652cfea0e75f7232b95a7d"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.395481+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-file-mode",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61237,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.319111+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 999,
+        "sha256": "000839789550814fa79844c0c2021e9351628cb61dba806f6f6a9ea49a5b4d96"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.448236+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-directory-mode",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61238,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.407046+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1014,
+        "sha256": "87d493dd0713789b01b627bfd96251fc594b009ca203b04ee0847c82f919b410"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.534706+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-extra",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61239,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.460542+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 987,
+        "sha256": "dfc1a8220be9520bee87664cc8615c41ecbb259edb5cde2f278da54c633b01d3"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.617540+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-missing-file",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61240,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.546624+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 979,
+        "sha256": "6da7814ecb6405ae684b7b1e61083a043f823f9630e90d01b756ebe0e174f3ea"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.706112+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-missing-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61242,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.629548+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 994,
+        "sha256": "c9965bb0d7c0909da808a3147a8da8c55cb6316268b9daeb2fdbb7b7f858919a"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.796728+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-missing-root",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61256,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.718064+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 979,
+        "sha256": "f8e06d4fefb0019e5497196f668fceaa447de8efaa5ffeae5d4c883520d9a311"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.876203+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-empty-inventory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61307,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.803010+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 988,
+        "sha256": "57d8dbacf5586bfc7c237efc68c36efef4aab23c9015fff850562939c63855ca"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.929774+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-duplicate",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61308,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.888362+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1228,
+        "sha256": "12b6e674cc4b5d5dca0472efa18a9ace96adeea5cabe9200ed0e8e1b70d47ca3"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:14.983587+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-absolute",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61309,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.942194+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1225,
+        "sha256": "821600290f581b7f21e8664c4184483b9bab63d6fb707261f9d8a4fc94e97140"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.072495+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-parent-traversal",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61311,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:14.996141+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1249,
+        "sha256": "3d5c1c732ce0efbedfde4b38ec5b73a6732f977b79e0fdd2cd8264a3b3bf63c6"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.161209+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-dot-prefix",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61312,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.084375+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1231,
+        "sha256": "ddb3a85a4427b87f5f636691890c7380a609008dc0e5363704475778d8cda156"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.214087+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-double-slash",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61313,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.173117+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1237,
+        "sha256": "c65651334777baa0933d29e646a418b3875bb08f3e7385f9cc994db8063209f0"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.301264+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-wrong-root",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61314,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.225881+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1231,
+        "sha256": "5440a12f49e96529130769d5c2e7217c57878fcbbf91d600fd95735b1bf49d38"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.386304+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-symbolic-link",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61315,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.313285+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1081,
+        "sha256": "1e65ece144808b2edcc42d26afb0d6e147e1ca21b60859e1e3abf091d4ad2cd1"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.470802+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-hard-link",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61317,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.397861+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1069,
+        "sha256": "48e89dd615cffc036c8601d813647766c79ea1872693bd1f47159b6804891ed1"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.524951+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-fifo",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61318,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.483377+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1054,
+        "sha256": "69bacfa330dad6928eb410b80f5444b5f021ceece052828959f7d96abb504b87"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.607200+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-file-as-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61319,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.536708+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1093,
+        "sha256": "6c4c35b01797c7a756a609aaea46eb06d146ea287082e3bb14e155b07d9c6b60"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.690368+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "member-directory-as-file",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61320,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.618917+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 954,
+        "sha256": "ba15016466e02335f59d8cda6bbefa70b73fac4aa8b56d79097be8f5f4c9fdb1"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.772116+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "destination-existing-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61321,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.697965+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1348,
+        "sha256": "7b9277efd0f2ae5b4a1cc56b4e133830e5a2a3996ecd828ae9ae6bef4d505f1c"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.819926+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "destination-existing-file",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61323,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.779555+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1333,
+        "sha256": "91c86968213771e690720948c027fa0b7d978a239b669bb5cce363bd7504b3b9"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.869439+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "destination-symbolic-directory",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61324,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.828062+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1348,
+        "sha256": "f7e3b3a8be422e4e615c365e9135904fa65956fd241fe431ce5bb4516002cb25"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.916197+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "destination-dangling-link",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61325,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.876829+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1333,
+        "sha256": "fee35095e13732ed7559d39270860ce70921a648cbb0c4b71c6119bc4a26960d"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:15.998629+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "destination-symbolic-parent",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61326,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:15.923558+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1339,
+        "sha256": "209faa13aff375eacdbfb010b41ad1d101fcb432780fdfebc9192d0d71cf2349"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:16.046792+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "destination-noncanonical-parent",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61327,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:16.006151+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1351,
+        "sha256": "afbf17f69c071fac5c2bdc6790a2289233943973f7c13ddc78b66bef2062f5b5"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:16.125900+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "missing-isolation",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61329,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:16.054092+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1047,
+        "sha256": "c66774f9de8fc33100691c35f8dd4a03a7f4d71c05c92d71e7b790d6e0398385"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:16.206968+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "missing-no-site",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61330,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:16.133224+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1041,
+        "sha256": "23c5dc175752f663dee0ecd8c3f25c11e8c09dd44f4d97894dddd70a61db6d31"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:16.255659+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "missing-no-bytecode",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61343,
+      "returncode": 1,
+      "started_utc": "2026-09-08T09:58:16.214221+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 1053,
+        "sha256": "562e17d98ec5a395b13c9af39c47126cec923e7a88a314c62a24ce9e1f2674f9"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:16.303468+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "missing-destination",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61355,
+      "returncode": 2,
+      "started_utc": "2026-09-08T09:58:16.263577+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 128,
+        "sha256": "c7995c0f02c25dbbcb43995566a88db717b0bbfef4ed33f7446ec79105f4539c"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "completed_utc": "2026-09-08T09:58:16.352008+00:00",
+      "earlier_actual_positive_receipts": {
+        "valid-exact": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/048-1-valid-exact/CASE_RESULT.json",
+          "sha256": "74390dbc58ba84266c37f6132e5a2ca1f36d24f1dcd30a1c2cae16abd34e09f2"
+        },
+        "valid-repacked": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/050-1-valid-repacked/CASE_RESULT.json",
+          "sha256": "41560b7df7ba4204151ebceaee96a3060d8e87d9cf6057019822f9fd71f17c71"
+        },
+        "valid-reversed-order": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/051-1-valid-reversed-order/CASE_RESULT.json",
+          "sha256": "da1215d4fb0066e76437337b8b24256930ad7d4df36ea1566420a40981736a8e"
+        },
+        "valid-umask-077": {
+          "path": "REPOSITORY/.local/sx-mean-materializer-controls-root-20260908/controls-1/049-1-valid-umask-077/CASE_RESULT.json",
+          "sha256": "130445bd8f355a664ba52f701e1097f5b279057e30beab47ca2db78e25e32d63"
+        }
+      },
+      "materializer_launched": true,
+      "mode": 1,
+      "name": "unknown-option",
+      "no_downstream_control_or_proof_credit": true,
+      "pid": 61363,
+      "returncode": 2,
+      "started_utc": "2026-09-08T09:58:16.310958+00:00",
+      "status": "matched_expected_entrypoint_behavior",
+      "stderr": {
+        "bytes": 120,
+        "sha256": "6305043f1002736b537e0d87354be0d0464215c2791cd813c3b22b1b965eea2e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "scope": "materializer entrypoint only; no downstream inert controls or Lean/PDF execution",
+  "status": "all_registered_materializer_cases_matched"
+}

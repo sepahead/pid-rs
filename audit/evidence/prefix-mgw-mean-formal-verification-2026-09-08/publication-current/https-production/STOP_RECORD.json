@@ -1,0 +1,10 @@
+{
+  "status": "private_HTTPS_PDF_production_and_root_visual_review_complete",
+  "completed_utc": "2026-09-08T09:01:09.314576+00:00",
+  "original_deadline_utc": "2026-09-08T09:33:23.538319+00:00",
+  "production_attempts": 2,
+  "maximum_attempts": 3,
+  "actual_pdf_sha256": "e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d",
+  "public_builder_stage": ".local/sx-mean-pdf-builder-root-20260908",
+  "new_proofs": 0
+}

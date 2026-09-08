@@ -1,0 +1,213 @@
+{
+  "schema": "pid-rs/prefix-probability-exact-proof-acceptance-v1",
+  "accepted_utc": "2026-09-06T00:08:49.183628+00:00",
+  "scope": "Six exact finite-categorical probability targets: actual finite law/product measures and integrals; positive and target-filtered negative increment expectations; pathwise harmonic range; actual block marginal laws, measurability, integrability and independence. This proves probability properties of the specified finite experiment. MGW mean identification, infinite/stopped-cycle probability, truncation bias, concentration/calibration, implementation correspondence, practical value and priority remain separate.",
+  "selected_sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323",
+  "cosmetic_sha256": "a32fe45b04b026072478c199af638c4e63ddf9a746fee36a0fa013b2d1b832bc",
+  "freeze_sha256": "ba045faa763867f6cd83f9aa3e023610dadd3a0db7e6abbd0117aa79c5d7b029",
+  "campaign_sha256": "10dd540dfa7054bf46dab5f683717f87f57af4a2f84ef3ffc8f080dfe8139ae5",
+  "theorems": [
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.finite_law_measure",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.finite_law_measure_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.finite_law_measure",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.finite_law_measure",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.finite_product_law",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.finite_product_law_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.finite_product_law",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.finite_product_law",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.positive_increment_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.positive_increment_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.positive_increment_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.positive_increment_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.negative_increment_expectation",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.negative_increment_expectation_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.negative_increment_expectation",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.negative_increment_expectation",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.block_range",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.block_range_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.block_range",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.block_range",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixProbabilityAliasTargets.block_product_independence",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixProbabilityContract.block_product_independence_target.{u, v, w}",
+      "raw_target": "PidPrefixProbabilityRawTargets.block_product_independence",
+      "status": "accepted",
+      "theorem": "PidPrefixProbabilityCandidate.block_product_independence",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ],
+  "final_matrix": "Four exact semantic/axiom/fresh-kernel passes and same-selected-source actual wrong-final-type rejection",
+  "normal_optimized_cosmetic_semantic_arrays_identical": true,
+  "reports": [
+    {
+      "attempt": "attempts/001-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixProbability-Candidate: nonzero process status",
+      "result_sha256": "e517b841e3af064f10d98ccb9eac7ecede0b0471eb4d896823e7f69c6511d0c3",
+      "children": 1,
+      "artifacts_rehashed": 87,
+      "captured_input_buffers_rehashed": 79
+    },
+    {
+      "attempt": "attempts/002-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixProbability-Candidate: nonzero process status",
+      "result_sha256": "534bdcf5306a5f2d046b64738fa2e95b49aea5cc02efe228ab6514961570bbd0",
+      "children": 1,
+      "artifacts_rehashed": 87,
+      "captured_input_buffers_rehashed": 79
+    },
+    {
+      "attempt": "attempts/003-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixProbability-Candidate: nonzero process status",
+      "result_sha256": "4140f605b13403d0fb207ff23d45b26d3e468eae991a54f3497c63437a5ea1fc",
+      "children": 1,
+      "artifacts_rehashed": 87,
+      "captured_input_buffers_rehashed": 79
+    },
+    {
+      "attempt": "attempts/004-development-0",
+      "status": "failed",
+      "failure": "compile-PidPrefixProbability-Candidate: nonzero process status",
+      "result_sha256": "3bb947c92dff69ebc9182dc189b9aca1c82104e83d0dd12bfec296b4d66a26ac",
+      "children": 1,
+      "artifacts_rehashed": 87,
+      "captured_input_buffers_rehashed": 79
+    },
+    {
+      "attempt": "attempts/005-development-0",
+      "status": "development_compile_pass",
+      "failure": null,
+      "result_sha256": "6d87ab8c7934796440d88696961a491e6e032d144d969b55d48100c4ffaa1cfe",
+      "children": 1,
+      "artifacts_rehashed": 89,
+      "captured_input_buffers_rehashed": 80
+    },
+    {
+      "attempt": "attempts/006-full-0",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "bf5ec16fd662993c72b83cad474cf2142574b7384a5224a6a7a69cf0bb53b3ad",
+      "children": 13,
+      "artifacts_rehashed": 143,
+      "captured_input_buffers_rehashed": 74
+    },
+    {
+      "attempt": "attempts/007-full-1",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "b96d2b192d6fa5b07789ff1516f57853183571ebeb9054edc3a68bf9819fb6c7",
+      "children": 13,
+      "artifacts_rehashed": 143,
+      "captured_input_buffers_rehashed": 74
+    },
+    {
+      "attempt": "attempts/008-full-0",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "d4a9e87a028a201623942726c06ee795fa602454ee2c36afad8f6e8b792fd3f8",
+      "children": 13,
+      "artifacts_rehashed": 143,
+      "captured_input_buffers_rehashed": 74
+    },
+    {
+      "attempt": "attempts/009-full-1",
+      "status": "fresh_semantic_kernel_pass",
+      "failure": null,
+      "result_sha256": "470869fbce9059de8b1d2de1341b273d952ff85535315e6f4be7e941e7518264",
+      "children": 13,
+      "artifacts_rehashed": 143,
+      "captured_input_buffers_rehashed": 74
+    },
+    {
+      "attempt": "attempts/010-wrong-last-target-0",
+      "status": "expected_target_rejection",
+      "failure": null,
+      "result_sha256": "a6e9bfd46f4650014fcc927249b0488994ea78534b646fd02a649e2f8bf86027",
+      "children": 11,
+      "artifacts_rehashed": 132,
+      "captured_input_buffers_rehashed": 75
+    }
+  ],
+  "total_actual_compiler_kernel_children": 68,
+  "development_attempts": 5,
+  "full_budget_attempts": 5,
+  "root_review": "Full464-line selected proof source read, including finite weighted Dirac integrals, ordered filtered-word induction, binomial target-rank identity, retained-rank harmonic bound, and actual product-map independence. Full final semantic and wrong-target streams inspected. Every retained artifact and captured input buffer from all10attempts rehashed. Exact six-target and wrapper councils adopted before campaign. Candidate proofs and judge share the pinned Mathlib/kernel trust surface; no human or external review claim.",
+  "retained_failures": "Four development compilation failures remain unchanged with exact sources and outputs. No frozen statement, judge, imports, budgets or acceptance predicate changed.",
+  "public_packaging": "Pending separately scoped portable replay/adoption. Local acceptance is not remote-main publication."
+}

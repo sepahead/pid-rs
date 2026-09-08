@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "HOST_HOMEBREW/bin/pandoc",
+    "--from=markdown",
+    "--to=latex",
+    "--shift-heading-level-by=-1",
+    "--wrap=none",
+    "--output=body.tex",
+    "body.md"
+  ],
+  "completed_utc": "2026-09-08T08:58:44.581036+00:00",
+  "cwd": "REPOSITORY/.local/sx-mean-pdf-builder-root-20260908/work-normal/build-1",
+  "returncode": 0,
+  "started_utc": "2026-09-08T08:58:44.506103+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

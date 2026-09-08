@@ -1,0 +1,768 @@
+OK: publication links are portable from the staged snapshot (338 Markdown files, 2244 rendered targets, 22 PDFs, 2063 unique PDF action dictionaries, 4084 PDF destinations; external reachability is outside this deterministic gate)
+OK: publication links are portable from the staged snapshot (338 Markdown files, 2244 rendered targets, 22 PDFs, 2063 unique PDF action dictionaries, 4084 PDF destinations; external reachability is outside this deterministic gate)
+OK: publication link portability self-test passed (4 controls; 111/111 hostile mutations rejected; optimized=False)
+OK: publication link portability self-test passed (4 controls; 111/111 hostile mutations rejected; optimized=True)
+ok 1 - declared source-typed inventory is accepted
+ok 2 - slash-terminated temporary root is canonicalized
+ok 3 - filesystem root is rejected as temporary root
+ok 4 - absent temporary root is rejected
+ok 5 - relative temporary root ignores hostile CDPATH
+ok 6 - temporary-root resolution is CDPATH-isolated and shared
+ok 7 - staged publication links and hostile fixtures run in normal and optimized Python
+ok 8 - numerical-assurance gate and hostile self-test are contiguous
+ok 9 - removing the numerical-assurance hostile self-test is rejected
+ok 10 - weakening the numerical-assurance hostile self-test with or-true is rejected
+ok 11 - removing python3 -I -B scripts/check-publication-links.py is rejected
+ok 12 - removing python3 -O -I -B scripts/check-publication-links.py is rejected
+ok 13 - removing python3 -I -B scripts/check-publication-links-self-test.py is rejected
+ok 14 - removing python3 -O -I -B scripts/check-publication-links-self-test.py is rejected
+ok 15 - publication-link suffix-or-true bypass is rejected
+ok 16 - publication-link prefix-false-and bypass is rejected
+ok 17 - conditional exact-only publication-link bypass is rejected
+ok 18 - blueprint self-test, exact relation, and status-2 cross refusal are contiguous
+ok 19 - custody record/PDF gates and hostile suites are contiguous
+ok 20 - terminal success messages distinguish profiled and exact-only papers
+ok 21 - exact success message cannot omit the custody receipt
+ok 22 - cross success message cannot call all papers profiled
+ok 23 - removing scripts/check-post-publication-custody-pdf-self-test.sh is rejected
+ok 24 - removing python3 -I -S -B scripts/check-post-publication-custody.py is rejected
+ok 25 - removing python3 -O -I -S -B scripts/check-post-publication-custody.py is rejected
+ok 26 - removing python3 -I -S -B scripts/check-post-publication-custody-self-test.py is rejected
+ok 27 - removing python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py is rejected
+ok 28 - removing the blueprint hostile self-test is rejected
+ok 29 - changing the blueprint exact invocation to cross mode is rejected
+ok 30 - changing the blueprint cross probe to exact mode is rejected
+ok 31 - weakening the blueprint exact invocation with or-true is rejected
+ok 32 - inverting the blueprint cross refusal probe is rejected
+ok 33 - changing the blueprint cross refusal contract from status 2 is rejected
+ok 34 - conditionally skipping the blueprint exact branch is rejected
+ok 35 - mean exposition exact build and explicit cross refusal are wired
+ok 36 - mean exact build cannot be skipped
+ok 37 - mean exact failure cannot be ignored
+ok 38 - mean repeated build cannot be removed
+ok 39 - mean cross refusal cannot become exact mode
+ok 40 - mean cross success cannot be accepted
+ok 41 - mean refusal must require status two
+ok 42 - temporary-root CDPATH isolation bypass is rejected
+ok 43 - workflow child requires zero status and silent stderr
+ok 44 - workflow status-zero stderr bypass is rejected
+ok 45 - workflow cleanup preserves success and removes its diagnostic
+ok 46 - workflow cleanup preserves an ordinary nonzero status
+ok 47 - workflow cleanup preserves direct SIGINT as status 130
+ok 48 - workflow cleanup preserves direct SIGTERM as status 143
+ok 49 - workflow cleanup failure escalates successful status to one
+ok 50 - workflow decision accepts zero status with silent stderr
+ok 51 - workflow decision rejects zero status with stderr
+ok 52 - workflow decision preserves nonzero status with silent stderr
+ok 53 - workflow decision preserves nonzero status while replaying stderr
+ok 54 - missing renderer fragment is rejected
+ok 55 - unexpected TeX source is rejected
+ok 56 - symbolic TeX source is rejected
+ok 57 - missing standalone-paper PDF is rejected
+ok 58 - unexpected PDF is rejected
+ok 59 - symbolic PDF is rejected
+ok 60 - nonregular PDF inventory entry is rejected
+ok 61 - missing Markdown paper source MATHEMATICAL_RESULTS_GUIDE.md is rejected
+ok 62 - symbolic Markdown paper source MATHEMATICAL_RESULTS_GUIDE.md is rejected
+ok 63 - missing Markdown paper source NUMERICAL_ASSURANCE.md is rejected
+ok 64 - symbolic Markdown paper source NUMERICAL_ASSURANCE.md is rejected
+ok 65 - missing Markdown paper source PID2_REPRESENTED_COORDINATE_ASSURANCE.md is rejected
+ok 66 - symbolic Markdown paper source PID2_REPRESENTED_COORDINATE_ASSURANCE.md is rejected
+ok 67 - missing Markdown paper source PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md is rejected
+ok 68 - symbolic Markdown paper source PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md is rejected
+ok 69 - missing Markdown paper source audit/evidence/post-publication-custody-2026-09-02.md is rejected
+ok 70 - symbolic Markdown paper source audit/evidence/post-publication-custody-2026-09-02.md is rejected
+ok 71 - missing Markdown paper source audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md is rejected
+ok 72 - symbolic Markdown paper source audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md is rejected
+ok 73 - missing Markdown paper source SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md is rejected
+ok 74 - symbolic Markdown paper source SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md is rejected
+OK: 74 formal-PDF typed-inventory controls passed
+OK: all 14 standalone formal papers use the shared visual system; 1 renderer fragment passed its declared syntactic role contract
+OK: eleven formal-PDF visual-system and role mutations fail closed
+OK: workflow TeX embeds the canonical Markdown byte-for-byte
+OK: 24 formal-PDF log mutations fail closed; nine clean/convergence and two interface controls pass
+OK: formal PDF render comparator passed 25 deterministic adversarial cases
+OK: formal PDF render comparator passed 25 deterministic adversarial cases
+ok 1 - bounded-probe watchdog preserves normal success
+ok 2 - bounded-probe watchdog preserves an ordinary nonzero status
+ok 3 - bounded-probe succeeds with an induced readiness window and observed elapsed time of at least one second
+ok 4 - bounded-probe rejects a noncanonical release-readiness payload after one descriptor grace
+ok 5 - bounded-probe rejects a canonical-payload completion record with mode 0644
+ok 6 - bounded-probe validates the canonical watchdog-error decision record before status 125
+ok 7 - bounded-probe timeout returns 124 and terminates its descendant process group
+ok 8 - bounded-probe timeout completes SIGKILL cleanup for a TERM-ignoring descendant
+ok 9 - rejection-status classifier credits only exact typed statuses 1 and 2
+ok 10 - rejection classifier denies marker-bearing self-SIGTERM status 143
+ok 11 - bounded-probe ordinary completion rejects and kills a surviving descendant
+ok 12 - bounded-probe rejects an exclusive decision claim without a published record
+ok 13 - bounded-probe rejects malformed decision payload only after descendant cleanup
+ok 14 - bounded-probe cleanup-helper launch failure kills the anchored group and rejects
+ok 15 - bounded-probe membership-command failure kills the anchored group and rejects
+ok 16 - result-log reset accepts one direct single-link regular file
+ok 17 - result-log reset rejects a symlink without following it
+ok 18 - result-log reset rejects a FIFO without blocking
+ok 19 - result-log reset rejects a directory
+ok 20 - result-log reset rejects a multiply linked regular file
+ok 21 - result-log hardlink rejection preserves the preexisting shared bytes
+ok 22 - release-readiness source custody orders publisher exit, trap, marker, wait, validation, and membership
+ok 23 - release-readiness source custody rejects a missing pre-readiness release trap
+ok 24 - release-readiness source custody rejects bypass of exact payload validation
+ok 25 - release-readiness source custody rejects removal of descriptor no-follow
+ok 26 - release-readiness source custody rejects bypass of regular-file/link-count validation
+ok 27 - release-readiness source custody rejects bypass of mode-0600 validation
+ok 28 - release-readiness source custody rejects bypass of descriptor/leaf identity validation
+ok 29 - decision-record source custody rejects bypass of private-root mode validation
+ok 30 - decision-record source custody rejects bypass of regular-file/link-count validation
+ok 31 - decision-record source custody rejects bypass of descriptor/leaf identity validation
+ok 32 - decision-record source custody rejects bypass of exact timeout payload validation
+ok 33 - decision-record source custody rejects bypass of allowed watchdog-error payload validation
+ok 34 - watchdog source custody records timeout classification before process-group termination
+ok 35 - watchdog source custody rejects TERM-before-timeout-classification reordering
+ok 36 - watchdog source custody rejects timeout classification before late group adjudication
+ok 37 - watchdog source custody rejects an uncommitted timeout marker
+ok 38 - production validator heredocs and rendered-text/font-query regions extract uniquely and parse
+ok 39 - text portability accepts the literal real diagram profiles: exact
+ok 40 - text portability accepts the literal real diagram profiles: committed-ubuntu-self
+ok 41 - text portability accepts the literal real diagram profiles: committed-producer-pair
+ok 42 - text portability accepts the literal real diagram profiles: committed-producer-pair-reversed
+ok 43 - text portability accepts the literal real diagram profiles: native-producer-pair
+ok 44 - text portability accepts the literal real diagram profiles: native-producer-pair-reversed
+ok 45 - text portability accepts the literal real diagram profiles: native-producer-self
+ok 46 - text portability accepts the literal real diagram profiles: native-macos-pair
+ok 47 - text portability accepts the literal real diagram profiles: native-macos-pair-reversed
+ok 48 - text portability admits only ASCII layout-whitespace drift, including reviewed diagrams
+ok 49 - text portability rejects plain-content drift in default extraction
+ok 50 - text portability rejects plain-whitespace drift in default extraction
+ok 51 - text portability rejects plain-order drift in default extraction
+ok 52 - text portability rejects invalid UTF-8
+ok 53 - text portability rejects a missing form feed
+ok 54 - text portability rejects an extra form feed
+ok 55 - text portability rejects bytes after the terminal form feed
+ok 56 - text portability rejects an empty page
+ok 57 - text portability rejects control-cr
+ok 58 - text portability rejects control-vt
+ok 59 - text portability rejects control-nul
+ok 60 - text portability rejects control-del
+ok 61 - text portability rejects control-c1
+ok 62 - text portability rejects control-bom
+ok 63 - text portability rejects control-zero-width
+ok 64 - text portability rejects control-nbsp
+ok 65 - text portability rejects control-em-space
+ok 66 - text portability rejects layout-substitute token-frequency drift
+ok 67 - text portability rejects layout-drop token-frequency drift
+ok 68 - text portability rejects layout-duplicate token-frequency drift
+ok 69 - text portability rejects layout-page-move token-frequency drift
+ok 70 - text portability rejects ordinary-page layout token reordering
+ok 71 - text portability rejects non-label prose reordering on reviewed page 10
+ok 72 - text portability rejects non-label prose reordering on reviewed page 12
+ok 73 - text portability rejects prefix prose reordering on reviewed page 10
+ok 74 - text portability rejects paired label-absent on page 10
+ok 75 - text portability rejects paired label-duplicate on page 10
+ok 76 - text portability rejects paired label-moved on page 10
+ok 77 - text portability rejects paired anchor-absent on page 10
+ok 78 - text portability rejects paired anchor-duplicate on page 10
+ok 79 - text portability rejects a paired absent opening bound on page 10
+ok 80 - text portability rejects a paired duplicate opening bound on page 10
+ok 81 - text portability rejects a paired absent closing bound on page 10
+ok 82 - text portability rejects a paired duplicate closing bound on page 10
+ok 83 - text portability rejects paired reversed diagram bounds on page 10
+ok 84 - text portability rejects prefix prose reordering on reviewed page 12
+ok 85 - text portability rejects paired label-absent on page 12
+ok 86 - text portability rejects paired label-duplicate on page 12
+ok 87 - text portability rejects paired label-moved on page 12
+ok 88 - text portability rejects paired anchor-absent on page 12
+ok 89 - text portability rejects paired anchor-duplicate on page 12
+ok 90 - text portability rejects a paired absent opening bound on page 12
+ok 91 - text portability rejects a paired duplicate opening bound on page 12
+ok 92 - text portability rejects a paired absent closing bound on page 12
+ok 93 - text portability rejects a paired duplicate closing bound on page 12
+ok 94 - text portability rejects paired reversed diagram bounds on page 12
+ok 95 - text portability rejects a paired unlisted page 10 permutation
+ok 96 - text portability rejects a paired unlisted permutation of the new native page 12 profile
+ok 97 - text portability rejects a paired changed suite number inside page 10
+ok 98 - production source binds diagnostic-clean default/layout extraction and comparator order
+ok 99 - text-portability source custody rejects default extraction rerouted through layout mode
+ok 100 - text-portability source custody rejects default projection arguments aliased to layout
+ok 101 - text-portability source custody rejects committed layout extraction rerouted through default mode
+ok 102 - text-portability source custody rejects comparator argument aliasing
+ok 103 - text-portability source custody rejects comparator bypass
+ok 104 - text-portability source custody rejects text-extraction diagnostic bypass
+ok 105 - text-portability source custody rejects an unreviewed profile order
+ok 106 - text-portability source custody rejects floating-point page key 10.0
+ok 107 - text-portability source custody rejects floating-point page key 12.0
+ok 108 - text-portability source custody rejects profile validation bypass on equal pairs
+ok 109 - text-portability source custody rejects deletion of surrounding prose
+ok 110 - Debian overlay query accepts a successful exact-root result
+ok 111 - Debian overlay query accepts the normalized absent-variable value after command substitution
+ok 112 - Debian overlay query rejects an empty unexpected failure status
+ok 113 - Debian overlay query rejects output attached to absent-variable status
+ok 114 - Debian overlay query rejects success without a declared root
+ok 115 - font source admits the exact TeX Live Source Sans path
+ok 116 - font source admits the exact TeX Live Latin Modern path
+ok 117 - font source admits Ubuntu's exact TEXMFDEBIAN Latin Modern path
+ok 118 - font source admits Ubuntu's exact TEXMFDEBIAN Latin Modern Math path
+ok 119 - font source rejects an empty Kpathsea result
+ok 120 - font source rejects a multiline Kpathsea result
+ok 121 - font source rejects a path outside both exact TeX roots
+ok 122 - font source rejects Source Sans selected from the Debian overlay
+ok 123 - font source rejects redundant-slash query spelling
+ok 124 - font source rejects dot-component query spelling
+ok 125 - font source rejects a symlink at an otherwise allowlisted path
+ok 126 - font source rejects a symlinked intermediate directory
+ok 127 - font source rejects a FIFO without blocking
+ok 128 - font capture rejects a symlinked destination directory
+ok 129 - format custody captures the exact generated leaf into a byte-identical sealed one-file root
+ok 130 - format custody rejects a different leaf beneath the same generated-state root
+ok 131 - format custody rejects the expected leaf outside the exact generated-state root
+ok 132 - format custody rejects an empty Kpathsea result
+ok 133 - format custody rejects a multiline Kpathsea result
+ok 134 - format custody rejects a relative Kpathsea result
+ok 135 - format custody rejects redundant-slash spelling of the otherwise exact source
+ok 136 - format capture rejects an empty exact source before reading
+ok 137 - format capture rejects a sparse 64-MiB-plus-one exact source before reading
+ok 138 - private TEXFORMATS exposes exactly one search directory and its captured format
+ok 139 - private TEXFORMATS rejects a trailing-colon expansion even when the captured format wins
+ok 140 - production source preserves exact format capture, sealing, lookup, FLS, and build ordering
+ok 141 - format source custody rejects removal of the exact LuaHBTeX engine selector
+ok 142 - format source custody rejects compilation moved before capture and sealing
+ok 143 - format source custody rejects weakening the read-only root snapshot guard
+ok 144 - format source custody rejects broad TeX-root admission in place of exact-path admission
+ok 145 - format capture rejects a symlink at the otherwise exact generated-format leaf
+ok 146 - format capture rejects a symlinked intermediate generated-format directory
+ok 147 - format capture rejects a FIFO at the exact leaf without blocking
+ok 148 - format capture rejects a symlinked private destination root
+ok 149 - format capture rejects an empty preexisting destination leaf
+ok 150 - format replay rejects a wrong same-size digest receipt
+ok 151 - format replay rejects a wrong size receipt
+ok 152 - format replay rejects a writable captured-format file
+ok 153 - format replay rejects a writable private-format root
+ok 154 - format replay rejects a multiply linked captured-format file
+ok 155 - format replay rejects an extra entry in the sealed private root
+ok 156 - format replay rejects a symlink at its exact private leaf
+ok 157 - format source custody rejects removal of source-leaf no-follow
+ok 158 - format source custody rejects removal of the complete source-chain rewalk comparison
+ok 159 - format source custody rejects removal of the destination-chain rewalk comparison
+ok 160 - format source custody rejects removal of replay leaf no-follow
+ok 161 - format source custody rejects removal of the replay digest comparison
+ok 162 - format source custody rejects removal of the replay single-link comparison
+ok 163 - format source custody rejects removal of exclusive destination creation
+ok 164 - format source custody rejects removal of the compiler's private format search path
+ok 165 - format source custody rejects bypass of the private environment by the actual compiler
+ok 166 - format source custody rejects moving per-pass verification before the bounded pass loop
+ok 167 - format source custody rejects moving per-pass verification after LuaLaTeX
+ok 168 - format source custody rejects moving final verification before both isolated builds
+ok 169 - format source custody rejects omission of the final source/size/digest receipt
+ok 170 - map-file-free wrapper custody binds capture, callback denials, order, sentinel, job name, and FLS evidence
+ok 171 - entry-wrapper writer produces the exact ordered single-link mode-0444 bytes
+ok 172 - map-file-free wrapper custody rejects removal of the default-map disabling primitive
+ok 173 - map-file-free wrapper custody rejects moving default-map suppression after source loading
+ok 174 - map-file-free wrapper custody rejects removal of the preexisting map-callback inventory
+ok 175 - map-file-free wrapper custody rejects drift of the map-lookup registration description
+ok 176 - map-file-free wrapper custody rejects a find_map_file handler changed from denial to return
+ok 177 - map-file-free wrapper custody rejects drift of the category-2 defense-in-depth guard
+ok 178 - map-file-free wrapper custody rejects drift of the generated pre-source sentinel
+ok 179 - map-file-free wrapper custody rejects a duplicated success sentinel
+ok 180 - map-file-free wrapper custody rejects removal of the stable report job name
+ok 181 - map-file-free wrapper custody rejects bypass of the captured run entry
+ok 182 - entry-wrapper custody rejects removal of descriptor no-follow capture
+ok 183 - map-path custody rejects removal of the case-insensitive fonts/map component check
+ok 184 - map-path custody rejects removal of the raw-input FLS check
+ok 185 - map-path custody rejects removal of the resolved-input FLS check
+ok 186 - FLS custody rejects removal of the exact per-run entry-wrapper requirement
+ok 187 - entry-wrapper denies toolchain-selected pdftex.map bytes renamed for the TeX primitive
+ok 188 - entry-wrapper denies toolchain-selected pdftex.map bytes requested by absolute path
+ok 189 - entry-wrapper denies toolchain-selected pdftex.map bytes beneath a TEXMF-shaped path
+ok 190 - entry-wrapper denies toolchain-selected pdftex.map bytes renamed for pdf.mapfile
+ok 191 - entry-wrapper denies an absolute toolchain-selected pdftex.map request from pdf.mapfile
+ok 192 - entry-wrapper category-2 defense rejects a simulated font-map event
+ok 193 - entry-wrapper explicitly does not claim to deny file-free TeX/Lua mapline state mutation
+ok 194 - FLS closure accepts a bounded fixture with its exact entry and no font-map file path evidence
+ok 195 - FLS paths cannot classify toolchain-selected pdftex.map bytes renamed outside fonts/map
+ok 196 - FLS closure rejects a raw .map alias even when its target has no map suffix
+ok 197 - FLS closure rejects a mixed-case raw .MAP suffix
+ok 198 - FLS closure rejects a raw hidden .MaP leaf
+ok 199 - FLS closure rejects a non-.map file beneath mixed-case fonts/map components
+ok 200 - FLS closure rejects a raw non-map alias resolving beneath fonts/map
+ok 201 - FLS closure rejects a raw neutral alias resolving to a mixed-case .MaP leaf
+ok 202 - FLS closure admits the one exact raw and resolved private-format path
+ok 203 - FLS closure rejects a pass that omits the captured private format
+ok 204 - FLS closure rejects an extra format beneath the otherwise allowed TeX installation root
+ok 205 - FLS closure rejects a mixed-case raw .FMT alias resolving to a neutral target
+ok 206 - FLS closure rejects a neutral raw alias resolving to a mixed-case .FMT target
+ok 207 - FLS closure rejects a raw alias even when it resolves to the exact private format
+ok 208 - pypdf manifest capture and all consumers share one package-root precedence
+ok 209 - pypdf path-order guard rejects a capture/import precedence mismatch
+ok 210 - command resolution is rebound initially, before manifests, and after build/validation consumers
+ok 211 - command-resolution custody guard rejects removal of the post-validation check
+ok 212 - command-resolution custody rejects missing transitive basename
+ok 213 - command-resolution custody rejects missing transitive ps
+ok 214 - command-resolution custody rejects missing transitive sleep
+ok 215 - publication-lock bootstrap propagates status and rejects partial or forged inherited state
+ok 216 - publication-lock guard rejects launcher continuation after its lock-bearing child
+ok 217 - publication-lock guard rejects forged-root fallthrough
+ok 218 - publication-lock runtime rejects a partial inherited environment
+ok 219 - publication-lock runtime rejects a nonnumeric inherited descriptor
+ok 220 - publication source semantic validator accepts the exact canonical pair
+ok 221 - TeX source rejects executable or inert bytes after the reviewed Markdown enclosure
+ok 222 - canonical semantics reject a required scientific assertion retained only in fenced code
+ok 223 - TeX source rejects auto-numbered display collisions
+ok 224 - TeX source rejects alternate auto-numbered amsmath environments
+ok 225 - TeX source rejects headings that can anchor before their page break
+ok 226 - TeX source rejects duplicate or nonmonotone manual equation tags
+ok 227 - TeX source rejects an extra visible starred equation tag
+ok 228 - exact primer custody rejects a TeX csname heading bypass
+ok 229 - exact style custody rejects removal of heading space reservation
+ok 230 - TeX source rejects removal of the pre-longtable page reservation
+ok 231 - TeX source rejects removal of the three-transition obligation boundary
+ok 232 - TeX source rejects removal of the figure transition boundary
+ok 233 - TeX source rejects removal of the Figure 2 frozen-universe and route binding
+ok 234 - TeX source rejects removal of the Figure 2 complete-cut prose binding
+ok 235 - TeX source rejects drift of the Figure 2 complete-family caption
+ok 236 - canonical Markdown rejects whitespace-bearing inline code
+ok 237 - canonical Markdown rejects a hosted-renderer display delimiter below four spaces
+ok 238 - canonical Markdown rejects a hosted-renderer proof continuation below four spaces
+ok 239 - canonical Markdown rejects a hosted-renderer transfer conjunction below four spaces
+ok 240 - canonical Markdown rejects a hosted-renderer prime-side continuation below four spaces
+ok 241 - canonical semantics reject drift of the MGW primary-source revision pin
+ok 242 - canonical semantics reject drift of the KSG erratum source pin
+ok 243 - canonical semantics reject removal of the frozen cut universe
+ok 244 - canonical semantics reject weakening the binary64 exceptional-case literal
+ok 245 - canonical semantics reject removal of the completion-predicate claim field
+ok 246 - canonical semantics reject conflation of completeness with an evidence class
+ok 247 - canonical semantics reject overbroad proof-process source attribution
+ok 248 - canonical semantics reject removal of the noncommuting-operation audit
+ok 249 - canonical semantics reject weakening the compatible-joint-witness requirement
+ok 250 - canonical semantics reject removal of the total-error-versus-margin requirement
+ok 251 - canonical semantics reject a generic PID import object
+ok 252 - canonical semantics reject a generic PID claim-packet object
+ok 253 - canonical semantics reject removal of identification/overlap counterexamples
+ok 254 - canonical semantics reject removal of adjacent-method negative controls
+ok 255 - canonical semantics reject promotion of an attributed autoresearch case study to PID authority
+ok 256 - canonical semantics reject conflation of remote-main recovery with archival preservation
+ok 257 - canonical semantics reject an unsupported positive PID novelty count
+ok 258 - canonical Markdown rejects a required assertion retained only in an HTML comment
+ok 259 - canonical Markdown exact-source custody rejects otherwise unrecognized byte drift
+ok 260 - rendered-text binding accepts the exact production sentinel inventory
+ok 261 - rendered-text binding rejects drift of the Figure 2 heading
+ok 262 - rendered-text binding rejects omission of the third Figure 2 cut
+ok 263 - standalone Figure 2 PDF sentinel remains a stable heading prefix
+ok 264 - executable manifest accepts one bounded regular executable
+ok 265 - executable manifest rejects a symlink path
+ok 266 - executable manifest rejects duplicate command names
+ok 267 - executable manifest closes an env shebang over both env and its delegated interpreter
+ok 268 - executable manifest rejects an uncaptured delegated shebang interpreter
+ok 269 - executable manifest rejects a file above its 512 MiB bound
+ok 270 - repository/temporary PATH bootstrap Python is rejected
+ok 271 - repository/temporary PATH command is rejected
+ok 272 - verify phase without bootstrap custody is rejected
+ok 273 - unknown internal phase is rejected
+ok 274 - Kpathsea/XML-unsafe temporary root is rejected
+ok 275 - Kpathsea/XML-unsafe repository root is rejected
+ok 276 - capture-to-verify re-exec strips BASH_ENV, ENV, and PYTHONPATH
+ok 277 - source capture accepts canonical single-link regular inventory
+ok 278 - refresh-mode source capture permits an absent generated figure PDF
+ok 279 - exact-mode source capture requires every declared figure PDF
+ok 280 - source capture rejects a symlink leaf
+ok 281 - source capture rejects a multiply-linked input
+ok 282 - source capture rejects a symlink path component
+ok 283 - figure inventory rejects an undeclared entry
+ok 284 - figure inventory rejects a multiply-linked declared entry
+ok 285 - source manifest rejects duplicate path declarations
+ok 286 - source manifest rejects parent-traversal spelling
+ok 287 - read-only snapshot accepts exact 0555/0444 single-link inventory
+ok 288 - read-only snapshot rejects a symlink file
+ok 289 - read-only snapshot rejects a multiply-linked file
+ok 290 - read-only snapshot rejects writable directory mode
+ok 291 - read-only snapshot rejects an undeclared directory
+ok 292 - Python bytecode custody binds every production launch and both transitive vectors
+ok 293 - Python bytecode custody rejects a normal import consumer without -B
+ok 294 - Python bytecode custody rejects an optimized import consumer without -B
+ok 295 - Python bytecode custody rejects -B passed as a script argument
+ok 296 - Python bytecode custody retains the normal and optimized launch distinction
+ok 297 - Python bytecode custody rejects a citation child without -B
+ok 298 - Python bytecode custody rejects a render-comparator child without -B
+ok 299 - isolated actual import ignores the environment-only no-bytecode setting
+ok 300 - explicit -B prevents an actual adjacent-module cache in normal mode
+ok 301 - explicit -B prevents an actual adjacent-module cache while preserving optimized mode
+ok 302 - read-only snapshot still rejects a newly created writable Python cache directory
+ok 303 - read-only snapshot still rejects an undeclared cache after chmod 0555
+ok 304 - refresh writer installs the cross-bound pair through stable descriptors
+ok 305 - refresh success leaves exact mode-0644 single-link files and no staging residue
+ok 306 - refresh writer installs all six artifacts when every destination is initially absent
+ok 307 - refresh absent-destination path leaves exact files and no staging residue
+ok 308 - refresh writer rejects a receipt that does not bind its staged PDF
+ok 309 - refresh writer rejects a symlink source
+ok 310 - refresh writer rejects a multiply linked destination
+ok 311 - refresh writer rejects a symlink destination parent
+ok 312 - refresh writer reports an injected second-replacement failure
+ok 313 - refresh ordinary-exception rollback restores all six original files without staging residue
+ok 314 - refresh writer rolls back an initially absent first destination
+ok 315 - refresh rollback removes an installed node whose destination was initially absent
+ok 316 - refresh writer rolls back four completed replacements spanning two parents
+ok 317 - refresh rollback restores completed report, receipt, and figure replacements
+ok 318 - refresh writer detects a destination replacement in its final compare-and-swap window
+ok 319 - refresh final-CAS rollback preserves concurrent bytes and all untouched artifacts
+ok 320 - refresh writer detects and restores a symlink replacement in its final swap window
+ok 321 - refresh final-CAS recovery preserves a concurrent symlink without staging residue
+ok 322 - refresh writer detects and restores a multiply linked replacement in its final swap window
+ok 323 - refresh final-CAS recovery preserves a concurrent hard link without staging residue
+ok 324 - refresh rollback preserves a type-changing writer that arrives after installation
+ok 325 - refresh incomplete rollback retains the displaced original while preserving a concurrent path
+ok 326 - refresh writer rolls back all six artifacts after final live verification begins
+ok 327 - refresh final-verification failure restores every original artifact
+ok 328 - refresh writer rolls back all artifacts when a non-output source drifts after installation
+ok 329 - refresh post-install source drift is detected inside the rollback window
+ok 330 - refresh writer rolls back all artifacts when the final figure inventory gains an extra node
+ok 331 - refresh final-inventory failure preserves the extra node and restores all six outputs
+ok 332 - visual receipt v3 accepts exact artifact bindings, lens evidence, and bounded-review language
+ok 333 - visual receipt rejects private host paths
+ok 334 - visual receipt rejects duplicate canonical fields
+ok 335 - visual receipt rejects an extra undeclared field
+ok 336 - visual receipt rejects a stale PDF digest binding
+ok 337 - visual receipt rejects a stale rendering-receipt digest binding
+ok 338 - visual receipt rejects lens-count drift
+ok 339 - visual receipt rejects normal-DPI drift
+ok 340 - visual receipt rejects high-resolution-DPI drift
+ok 341 - visual receipt rejects high-resolution spot-list drift
+ok 342 - visual receipt rejects a missing canonical lens
+ok 343 - visual receipt rejects a duplicated canonical lens
+ok 344 - visual receipt rejects reordered canonical lenses
+ok 345 - visual receipt rejects an extra undeclared lens row
+ok 346 - visual receipt rejects an invalid lens outcome
+ok 347 - visual receipt rejects empty lens evidence
+ok 348 - visual receipt rejects frozen lens-evidence drift
+ok 349 - visual receipt rejects weakened required review language
+ok 350 - visual receipt rejects an undeclared contradictory top-level paragraph
+ok 351 - visual receipt rejects noncanonical CRLF bytes
+ok 352 - visual receipt rejects fields and claims concealed in comment context
+ok 353 - visual receipt rejects fields and claims concealed in fence context
+ok 354 - visual receipt rejects fields and claims concealed in quote context
+ok 355 - visual receipt rejects fields and claims concealed in details context
+ok 356 - visual receipt rejects fields and claims concealed in reference-comment context
+ok 357 - split receipt rejects false sole-root attribution
+ok 358 - split receipt rejects missing-pages
+ok 359 - split receipt rejects false-view
+ok 360 - split receipt rejects false-reviewer
+ok 361 - visual receipt rejects false full-pass scope for real-text searchability and logical extraction order
+ok 362 - visual receipt rejects false full-pass scope for A4/PDF profile and embedded fonts
+ok 363 - visual receipt rejects false full-pass scope for link/action safety
+ok 364 - visual receipt rejects false full-pass scope for deterministic reproduction
+ok 365 - SVG validator accepts all four exact source figures
+ok 366 - Figure 2 rejects drift of the source-SVG title/description binding
+ok 367 - Figure 2 rejects omission of the A2,B1 minimal cut from metadata
+ok 368 - Figure 2 rejects an added nonminimal A1,A2,B1 metadata cut
+ok 369 - Figure 2 rejects drift of route A metadata
+ok 370 - Figure 2 rejects drift of the frozen admissible universe metadata
+ok 371 - Figure 2 rejects deletion of the accessible frozen-universe literal
+ok 372 - Figure 2 rejects deletion of the accessible route-family literal
+ok 373 - Figure 2 rejects deletion of the accessible complete-cut-family literal
+ok 374 - Figure 2 rejects deletion of the visible OR-acceptance literal
+ok 375 - Figure 2 rejects deletion of the visible frozen-universe inventory
+ok 376 - Figure 2 rejects deletion of the visible route inventory
+ok 377 - Figure 2 rejects deletion of the visible complete-cut inventory
+ok 378 - Figure 2 rejects the old route-node cut while retaining required semantics
+ok 379 - SVG rejects DOCTYPE/entity declarations
+ok 380 - SVG rejects external/executable resource forms
+ok 381 - SVG rejects hidden content
+ok 382 - SVG rejects a required literal hidden by a presentation attribute
+ok 383 - SVG excludes required literals placed in nonrendered definition containers
+ok 384 - SVG rejects required semantic text made nonvisible with a none fill
+ok 385 - SVG rejects required semantic text anchored outside the declared viewBox
+ok 386 - SVG exact-source custody rejects otherwise unrecognized byte drift
+ok 387 - SVG rejects event-handler attributes
+ok 388 - SVG rejects paint outside the exact project palette
+ok 389 - SVG rejects duplicate XML identifiers
+ok 390 - SVG rejects non-local href attributes
+ok 391 - rendering receipt accepts exact v2 row inventory and PDF binding
+ok 392 - rendering receipt rejects noncanonical integers
+ok 393 - rendering receipt rejects row reordering
+ok 394 - rendering receipt rejects noncanonical PNG digests
+ok 395 - rendering receipt rejects grayscale chroma
+ok 396 - rendering receipt rejects a stale PDF binding
+ok 397 - cross-toolchain navigation accepts identical route and coordinate manifests
+ok 398 - cross-toolchain navigation admits exactly the documented two-point coordinate boundary
+ok 399 - cross-toolchain navigation rejects movement above two points
+ok 400 - cross-toolchain navigation rejects outline-page drift
+ok 401 - cross-toolchain navigation rejects null-coordinate status drift
+ok 402 - cross-toolchain navigation rejects annotation-flag drift
+ok 403 - report validator accepts the exact copied publication PDF
+ok 404 - report PDF rejects a catalog OpenAction
+ok 405 - report PDF rejects a competing legacy catalog destination dictionary
+ok 406 - report PDF rejects page additional actions
+ok 407 - report PDF rejects a viewer-visible CropBox that clips the MediaBox
+ok 408 - report PDF rejects an ArtBox that differs from the MediaBox
+ok 409 - report PDF rejects a non-unit page UserUnit
+ok 410 - report PDF rejects a nonzero MediaBox origin even when every page box agrees
+ok 411 - report PDF deep walk rejects a reachable JavaScript key
+ok 412 - report PDF deep walk rejects a reachable explicit action object
+ok 413 - report PDF deep walk rejects an untyped launch action outside /A
+ok 414 - report PDF deep walk rejects presentation-step action containers
+ok 415 - report PDF rejects an outline redirect to a TOC page that repeats its title
+ok 416 - cross-toolchain report validation rejects same-inventory named-destination page drift
+ok 417 - report PDF rejects same-page named-destination coordinate drift
+ok 418 - report PDF rejects a same-value duplicate in the raw destination name tree
+ok 419 - report PDF rejects a conflicting duplicate in the raw destination name tree
+ok 420 - report PDF rejects a dangling internal GoTo consumer
+ok 421 - report PDF rejects a rendered HTTPS URI absent from the canonical source
+ok 422 - report PDF rejects an unapproved unauthenticated HTTP URI
+ok 423 - report PDF rejects a link rectangle outside its page
+ok 424 - report PDF rejects a zero-width link rectangle
+ok 425 - report PDF rejects a positive but sub-point link rectangle
+ok 426 - report PDF rejects unreviewed alternate link QuadPoints geometry
+ok 427 - report PDF rejects a Hidden annotation flag
+ok 428 - report PDF rejects a NoView annotation flag
+OK: 428 bounded workflow-PDF checker controls/mutations passed; frozen families predecessor=218, bounded-probe=37, entry-wrapper=17, runtime-map=7, fls-map-path=8, executable-custody=3, format-custody=47, c8-text-portability=71; python-bytecode=12; visual-receipt-hostile=24; split-visual-hostile=4; machine-scope-hostile=4; no report compilation was performed
+ok 1 - exact fixture accepts matching committed bytes with a trailing-slash temporary root
+ok 2 - production checker retains the load-bearing exact/status/PDF validation contract
+ok 3 - cross-toolchain mode refuses with exact status 2 and no invented profile
+ok 4 - page-count weakening is rejected
+ok 5 - A4 predicate drift is rejected
+ok 6 - PDF-version predicate drift is rejected
+ok 7 - metadata predicate drift is rejected
+ok 8 - embedded-font predicate drift is rejected
+ok 9 - current-evidence sentinel removal is rejected
+ok 10 - all-page raster command drift is rejected
+ok 11 - all-page grayscale command drift is rejected
+ok 12 - all-page raster count weakening is rejected
+ok 13 - all-page grayscale count weakening is rejected
+ok 14 - navigation/action audit bypass is rejected
+ok 15 - rebuilt-PDF validation bypass is rejected
+ok 16 - committed-PDF validation bypass is rejected
+ok 17 - committed-byte comparison inversion is rejected
+ok 18 - decision freshness invocation removal is rejected
+ok 19 - machine-record identity invocation removal is rejected
+ok 20 - typed-equality negative-evidence identity invocation removal is rejected
+ok 21 - historical-checker disposition identity invocation removal is rejected
+ok 22 - checkout-integrity incident identity invocation removal is rejected
+ok 23 - machine-record status predicate removal is rejected
+ok 24 - visual-receipt identity invocation removal is rejected
+ok 25 - visual-receipt subject-PDF binding removal is rejected
+ok 26 - visual-receipt source-Markdown binding removal is rejected
+ok 27 - visual-receipt review-scope weakening is rejected
+ok 28 - visual-receipt disposition weakening is rejected
+ok 29 - catalog OpenAction validation removal is rejected
+ok 30 - page active-content predicate weakening is rejected
+ok 31 - deep unauthorized-action predicate weakening is rejected
+ok 32 - non-annotation URI predicate weakening is rejected
+ok 33 - link-owner predicate weakening is rejected
+ok 34 - outline-owner predicate weakening is rejected
+ok 35 - retirement-ledger link binding removal is rejected
+ok 36 - sibling-ledger link binding removal is rejected
+ok 37 - cross refusal status weakening is rejected
+ok 38 - committed-byte drift rejects
+ok 39 - missing builder rejects before publication comparison
+ok 40 - unresealed decision-v3 byte drift rejects
+ok 41 - coordinated decision digest reseal cannot promote the disposition
+ok 42 - coordinated decision digest reseal cannot invent complete target evidence
+ok 43 - coordinated decision digest reseal cannot turn scoped results into closure
+ok 44 - coordinated decision digest reseal cannot upgrade Program A
+ok 45 - coordinated decision digest reseal cannot close Programs B through E
+ok 46 - coordinated decision digest reseal cannot relabel 108 expressions as atoms
+ok 47 - coordinated decision digest reseal cannot import the SxPID4 carrier
+ok 48 - coordinated index digest reseal cannot change the current status
+ok 49 - coordinated machine-record digest reseal cannot promote Program A
+ok 50 - typed-equality negative-evidence byte drift rejects
+ok 51 - historical-checker disposition byte drift rejects
+ok 52 - checkout-integrity incident byte drift rejects
+ok 53 - coordinated reseal cannot substitute Boolean false for integer zero
+ok 54 - coordinated reseal cannot substitute floating five for integer five
+ok 55 - frozen conventions byte drift rejects
+ok 56 - missing complete-registry link rejects
+ok 57 - unresealed blueprint visual-review receipt byte drift rejects
+ok 58 - coordinated visual-receipt digest reseal cannot weaken the reviewed page scope
+ok 59 - coordinated visual-receipt digest reseal cannot substitute an unreviewed disposition
+ok 60 - unresealed sibling-registry ledger byte drift rejects
+ok 61 - missing sibling-registry ledger link rejects
+ok 62 - missing declared SVG source rejects
+ok 63 - coordinated PDF-version drift rejects
+ok 64 - coordinated page-count drift rejects
+ok 65 - relative PDF URI rejects even when builder and committed bytes agree
+ok 66 - undeclared HTTPS PDF URI rejects
+ok 67 - page additional-action dictionary rejects even when it carries a file URI
+ok 68 - catalog additional-action dictionary rejects
+ok 69 - catalog OpenAction rejects a Named action in place of the intended first-page GoTo
+ok 70 - coordinated descriptive-metadata drift rejects
+ok 71 - JavaScript PDF action rejects
+ok 72 - launch PDF action rejects
+ok 73 - Named link action rejects
+ok 74 - Hide link action rejects
+ok 75 - ResetForm link action rejects
+ok 76 - annotation additional-action dictionary rejects
+ok 77 - hidden annotation flag rejects
+ok 78 - embedded or external file specification rejects
+ok 79 - non-annotation URI carrier rejects
+ok 80 - undeclared non-annotation action carrier rejects
+ok 81 - production builder canonicalizes a trailing-slash temporary root
+OK: PID blueprint PDF check self-test passed 81 checks
+OK: PID discovery/verification/durability blueprint PDF check exact committed-byte relation passed (sha256=b82c5a0a400ccb129195c3db6e765c7861605f84710226cedd01246967cca7d7)
+ok 1 - production checker retains the exact, receipt, profile, stderr, and cleanup contract
+ok 2 - same-toolchain byte comparison removal is rejected
+ok 3 - committed-byte comparison weakening is rejected
+ok 4 - visual-receipt identity binding removal is rejected
+ok 5 - visual-receipt subject-PDF binding removal is rejected
+ok 6 - visual-receipt subject-locator weakening is rejected
+ok 7 - visual-review page-scope weakening is rejected
+ok 8 - visual-review disposition weakening is rejected
+ok 9 - A4 profile weakening is rejected
+ok 10 - PDF-version profile weakening is rejected
+ok 11 - active-content metadata weakening is rejected
+ok 12 - embedded-font predicate weakening is rejected
+ok 13 - cross-toolchain status weakening is rejected
+ok 14 - builder-stderr rejection removal is rejected
+ok 15 - isolated-shell builder control removal is rejected
+ok 16 - optimized custody-record check removal is rejected
+ok 17 - temporary cleanup command removal is rejected
+ok 18 - temporary cleanup target broadening is rejected
+ok 19 - EXIT cleanup trap removal is rejected
+ok 20 - cleanup failure-status preservation weakening is rejected
+ok 21 - matching bytes pass once after exactly two fast isolated builds and leave no checker scratch
+ok 22 - cross-toolchain mode refuses with exact status 2
+ok 23 - unknown mode refuses with usage status 2
+ok 24 - extra argument refuses with usage status 2
+ok 25 - unresealed visual-review receipt drift rejects before building
+ok 26 - coordinated receipt-digest reseal cannot weaken the visual disposition
+ok 27 - resealed committed-byte drift still fails the independent build comparison
+ok 28 - coordinated PDF/build/receipt byte drift cannot weaken the PDF 1.7 profile
+ok 29 - builder stderr is fatal and failure cleanup removes checker scratch
+ok 30 - nondeterministic second build is rejected and failure cleanup removes checker scratch
+ok 31 - optimized custody-record failure cannot fall through to a PDF build
+ok 32 - symbolic builder input is rejected before execution
+ok 33 - filesystem root is refused as a temporary cleanup domain
+OK: post-publication custody PDF check self-test passed 33 controls (2 accepted, 31 hostile; 19 source-contract mutations)
+OK: post-publication custody snapshot and exact remote-head manifest are bounded and consistent
+OK: post-publication custody snapshot and exact remote-head manifest are bounded and consistent
+OK: post-publication custody hostile suite observed 56 fail-closed mutations and 3 baseline/isolation controls
+OK: post-publication custody hostile suite observed 56 fail-closed mutations and 3 baseline/isolation controls
+OK: post-publication custody snapshot and exact remote-head manifest are bounded and consistent
+OK: post-publication custody snapshot and exact remote-head manifest are bounded and consistent
+OK: custody receipt is a reproducible 6-page A4 PDF 1.7 artifact with embedded fonts and bounded HTTPS actions
+OK: certified SxPID2 assurance PDF is warning-free and same-toolchain reproducible (2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c)
+OK: 92 finite-convergence document provenance, theorem-name, assumption, and evidence-boundary anchors are coherent
+OK: dependency-colored SxPID PDF is lint-clean, semantically complete, font-complete, warning-free, and same-toolchain reproducible (38a96f735f14a22c68470a4f34ca96eada8a6883afbbe746b6646f7f31eba315)
+OK: ecosystem compatibility audit PDF is warning-free and same-toolchain reproducible (9fd7fdb2eedfa940c9f2d7aa19c8e944cd6847a78418e37048ee6567e38413c7)
+OK: exact log-product SxPID2 PDF is warning-free and same-toolchain reproducible (ffa12c97a5869b248d11cc5b669f09556810747ae5ef77b497f34e57ca349529)
+OK: 92 finite-convergence document provenance, theorem-name, assumption, and evidence-boundary anchors are coherent
+OK: finite-alphabet convergence PDF is lint-clean, semantically complete, font-complete, warning-free, and same-toolchain reproducible (28d632b4cfe68b7119d826bc736762d8c819f7b55a98ee8ca64c23ecff46c777)
+OK: formal-tool adoption PDF is warning-free and same-toolchain reproducible (938a07768d503b7a2cc289d25160000074bfbc2b418a7e4b3c3e212b612bf6fb)
+OK: foundational SxPID audit PDF, exact witnesses, and Lean firewall are warning-free and reproducible (ca9c295dcb7afc6fbceedd444a8e59ddae36a09845efb05ae14d76acccde207a)
+OK: immutable v4/v5 exact publication gates and the keyed v6 object/text/geometry/font/color/gray adjudication passed; byte-different render-equivalent fixtures were admitted and all hostiles were rejected
+OK: composite-v6 boundary PDF has exact source, vector, object, render, receipt, and same-toolchain custody (52751c8701ad527040907e399f41ee6579616bc63db1af174bea65e5303da09a)
+OK: composite-v7 boundary PDF has exact source, vector, object, render, receipt, and same-toolchain custody (2b05eb2e9d1e694d2f2f04b2bed3acf9b7f1c2eb1ac6672c48757ef9d067d33f)
+OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and 87-page dual-render receipt are exact (ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf; receipt fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea; executable manifest 5053eb6d7deb625d42cb23590e6fb8529043b9f26d01b28ba364c3c58cdc1d85; pypdf manifest d7c4a8a0c3cab75719a010c7d0b325f0a9de6458101bb8657c6b56d936d89108; format source <NATIVE_TEXLIVE_2024_FORMAT>; format snapshot 12255194 bytes sha256 e254bc4c8dc1304a4cc099c92ad6e4d81da90805d113069c954da5a69d04bffa)
+OK: support-change-tolerant SxPID PDF is warning-free and same-toolchain reproducible (d2b3227444a0a610169b609ff5e7f3ecc930d5289ac7ff3a5504bf1a0f185d51)
+OK: Pandoc TeX normalizer self-test (positive_processes=4; rejected_processes=214; content_vectors=85; filesystem_vectors=18; modes=2)
+OK: Pandoc TeX normalizer self-test (positive_processes=4; rejected_processes=214; content_vectors=85; filesystem_vectors=18; modes=2)
+Mathematical results guide builder self-test passed: 69 hostile/control cases.
+Unsafe destinations failed before font discovery; staged substitution failed before rendering.
+Pandoc version-report shape, raw-TeX compatibility/source wiring, and TOC color failed closed.
+Every fixture source hash stayed unchanged.
+tagpdf OpenAction compatibility self-test passed: mode=forced-v0.98w pages=1 page_object=9 structure_object=10 newer_native_absent_fatal=2024-02-23
+hgeneric URI-Contents compatibility self-test passed: mode=native-present controls=6 hostiles=14.
+l3pdffile file-specification compatibility self-test passed: mode=native-present controls=3 hostiles=14.
+Publication figure-asset check passed: 5 digest-bound static one-page open-font CFF derivatives; regeneration closure remains declared cross-host incomplete.
+Publication figure-asset check passed: 5 digest-bound static one-page open-font CFF derivatives; regeneration closure remains declared cross-host incomplete.
+Mathematical results guide figure-asset self-test passed: baseline_modes=2 hostile_mutations=45 modes_per_mutation=2.
+Mathematical results guide figure-asset self-test passed: baseline_modes=2 hostile_mutations=45 modes_per_mutation=2.
+OK: open-font figure regenerator accepted 2 controls and rejected 14 hostile cases
+OK: open-font figure regenerator accepted 2 controls and rejected 14 hostile cases
+Mathematical results guide PDF trailer-ID variance self-test passed: controls=4 hostiles=28.
+Mathematical results guide PDF trailer-ID variance self-test passed: controls=4 hostiles=28.
+Mathematical results guide font-roster self-test passed: controls=2 hostiles=26.
+Mathematical results guide font-roster self-test passed: controls=2 hostiles=26.
+Mathematical results guide prose check passed: sha256=453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847 direct_paragraphs=159 direct_sentences=496 list_items=129 list_sentences=182 headings=23 tables=4 table_cells=90 display_math=28 fenced_code=0 media=2
+Observed maxima: direct_words=25 paragraph_sentences=6 list_words=24
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide prose check passed: sha256=453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847 direct_paragraphs=159 direct_sentences=496 list_items=129 list_sentences=182 headings=23 tables=4 table_cells=90 display_math=28 fenced_code=0 media=2
+Observed maxima: direct_words=25 paragraph_sentences=6 list_words=24
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide prose self-test passed: 59 hostile/control cases.
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide prose self-test passed: 59 hostile/control cases.
+Boundary: selected pid-rs editorial checks only; not ASD-STE100 conformance, compliance, or certification.
+Mathematical results guide PDF structure self-test passed: baseline plus 70 object-graph mutations, 1 raw-parser mutation, 4 name-tree diagnostic controls, and 4 output-path controls.
+Boundary: source-specific active-content and navigation policy only; typed represented-binary64 numbers, not lexical PDF-real identity; not a generic malware-free or viewer-safety claim.
+Mathematical results guide PDF structure self-test passed: baseline plus 70 object-graph mutations, 1 raw-parser mutation, 4 name-tree diagnostic controls, and 4 output-path controls.
+Boundary: source-specific active-content and navigation policy only; typed represented-binary64 numbers, not lexical PDF-real identity; not a generic malware-free or viewer-safety claim.
+OK: guide PDF producer-profile mode wiring (controls=80; hostile_mutations=61; exact_cross_checker_invocations=0; current_alpha_invocations=0; legacy_hosted_checker_invocations=0)
+Boundary: source-extracted producer capture, selection, and dispatch; current v3 selects one raw-bound local candidate for separate hosted replay; the retained v2 packages remain historical, and exact mode invokes no cross-profile relation.
+OK: guide PDF producer-profile mode wiring (controls=80; hostile_mutations=61; exact_cross_checker_invocations=0; current_alpha_invocations=0; legacy_hosted_checker_invocations=0)
+Boundary: source-extracted producer capture, selection, and dispatch; current v3 selects one raw-bound local candidate for separate hosted replay; the retained v2 packages remain historical, and exact mode invokes no cross-profile relation.
+OK: Mathematical results guide PDF check passed (39db599dca0e33b5f0380417f3faaad4fd1067d592141416728f0931e9016b51)
+OK: Markdown math uses portable GitHub delimiters, commands, and bounded inline math
+figure-assets=GO count=2
+figure-assets=GO count=2
+OK: built <NATIVE_TEMP_ROOT>/pid-rs-numerical-assurance-check.47qH5g/rebuilt.pdf pages=23 sha256=362ac22df6c13db43a3e1fa9a70e23b1cc08ac4d764a0a202e873f67fcbe7e63
+pdf-objects=GO pages=23 forms=2 goto=34 uri=15 gotor=0
+pdf-objects=GO pages=23 forms=2 goto=34 uri=15 gotor=0
+OK: numerical assurance PDF mode=--exact pages=23 sha256=362ac22df6c13db43a3e1fa9a70e23b1cc08ac4d764a0a202e873f67fcbe7e63
+ok 1 - production checker retains its independent source, PDF, object, and mode contract
+ok 2 - matching committed and rebuilt bytes pass exact mode
+ok 3 - matching committed and rebuilt bytes pass explicit cross-toolchain mode
+ok 4 - unknown mode is rejected with status 2
+ok 5 - extra arguments are rejected with status 2
+ok 6 - exact mode rejects missing historical Markdown 1
+ok 7 - cross-toolchain mode rejects missing historical Markdown 1
+ok 8 - exact mode rejects historical Markdown byte drift 1
+ok 9 - cross-toolchain mode rejects historical Markdown byte drift 1
+ok 10 - exact mode rejects missing historical Markdown 2
+ok 11 - cross-toolchain mode rejects missing historical Markdown 2
+ok 12 - exact mode rejects historical Markdown byte drift 2
+ok 13 - cross-toolchain mode rejects historical Markdown byte drift 2
+ok 14 - exact mode rejects missing historical Markdown 3
+ok 15 - cross-toolchain mode rejects missing historical Markdown 3
+ok 16 - exact mode rejects historical Markdown byte drift 3
+ok 17 - cross-toolchain mode rejects historical Markdown byte drift 3
+ok 18 - canonical Markdown drift invalidates exact-mode source identity
+ok 19 - cross-toolchain mode cannot bypass canonical Markdown identity
+ok 20 - projection-source drift invalidates the source-derived trailer ID
+ok 21 - cross-toolchain mode cannot bypass imported-figure identity
+ok 22 - symbolic canonical source is rejected before the build
+ok 23 - default exact mode rejects serialization-only byte drift
+ok 24 - explicit cross-toolchain mode admits the reviewed serialization-only fixture
+ok 25 - matching 22-page PDFs cannot bypass the fixed page contract
+ok 26 - matching PDFs with a forged trailer ID are rejected
+ok 27 - matching PDFs without the bounded first-page OpenAction are rejected
+ok 28 - cross-toolchain mode rejects matching PDFs with a forbidden Launch action
+ok 29 - mode-guard weakening is detected
+ok 30 - required-input symlink weakening is detected
+ok 31 - Markdown math-gate bypass is detected
+ok 32 - figure-PDF source binding removal is detected
+ok 33 - builder wiring drift is detected
+ok 34 - fixed page-count weakening is detected
+ok 35 - reviewed text-sentinel removal is detected
+ok 36 - raw-TeX rejection weakening is detected
+ok 37 - source-derived trailer-ID equality inversion is detected
+ok 38 - OpenAction predicate weakening is detected
+ok 39 - forbidden-action predicate weakening is detected
+ok 40 - repository-navigation inventory weakening is detected
+ok 41 - action-count weakening is detected
+ok 42 - all-page raster command weakening is detected
+ok 43 - all-page raster-count weakening is detected
+ok 44 - committed-PDF validation bypass is detected
+ok 45 - rebuilt-PDF validation bypass is detected
+ok 46 - exact-byte comparison inversion is detected
+ok 47 - cross-toolchain text comparison bypass is detected
+ok 48 - cross-toolchain geometry comparison bypass is detected
+OK: numerical assurance PDF checker passed 48 controls (1 contract, 3 accepted-mode, 44 hostile); exact bytes remain mandatory in default mode and cross-toolchain acceptance remains explicit and structurally bounded
+OK: Markdown math uses portable GitHub delimiters, commands, and bounded inline math
+OK: Markdown math uses portable GitHub delimiters, commands, and bounded inline math
+OK: Markdown math uses portable GitHub delimiters, commands, and bounded inline math
+OK: built <NATIVE_TEMP_ROOT>/pid-rs-pid2-assurance-check.gh3jls/rebuilt.pdf pages=19 sha256=7a9e3eae66d5e5e269f2d316c23d69f222c75f8226d26238691bcd96af1281f9
+pdf-objects=GO pages=19 goto=39 uri=3 gotor=0
+pdf-objects=GO pages=19 goto=39 uri=3 gotor=0
+OK: PID2 represented-coordinate assurance PDF mode=--exact pages=19 sha256=7a9e3eae66d5e5e269f2d316c23d69f222c75f8226d26238691bcd96af1281f9
+OK: Markdown math uses portable GitHub delimiters, commands, and bounded inline math
+benchmark-evidence=GO archive_sha256=debd6e36e662dfe50e377bfdef588dc85019f389e5712035009666f112e1eb56 criterion_json=16
+figure-assets=GO count=3
+figure-assets=GO count=3
+OK: built <NATIVE_TEMP_ROOT>/pid-rs-sensor-placement-check.gCDRRP/rebuilt.pdf pages=46 sha256=e4a2190007f818fe22cbfa3639e374ccadc77ea308975698148655cd8bb8bc60
+object-check=GO pages=46 links=136 unique_https=40 type3_space_shims=18
+object-check=GO pages=46 links=136 unique_https=40 type3_space_shims=18
+OK: <REPOSITORY_ROOT>/output/pdf/pid-sensor-placement-and-galadriel-guide.pdf mode=--exact relation=raw-byte-identical sha256=e4a2190007f818fe22cbfa3639e374ccadc77ea308975698148655cd8bb8bc60 pages=46 rendered=46
+Publication figure-asset check passed: 5 digest-bound static one-page open-font CFF derivatives; regeneration closure remains declared cross-host incomplete.
+Publication figure-asset check passed: 5 digest-bound static one-page open-font CFF derivatives; regeneration closure remains declared cross-host incomplete.
+OK: SxPID3 source-marginal audit builder self-test (controls=9; hostile_cases=38; required_source_aliases=8; static_guards=5)
+OK: SxPID3 source-marginal/bounded-audit PDF check passed (788b993f39133f1bf0b1d5e81f61421d9f6a35ea774db53ff50fa3eed21a8cd2)
+OK: two-source SxPID count-to-atom PDF is lint-clean, contains the required bounded-scope sections, is font-complete and warning-free, and is same-toolchain reproducible (75aa66c9911dac0e1699795d4b0e8d84ac294d23b482d623381554af151af880)
+OK: mean exposition exact reviewed PDF reproduced; builds=2
+OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact

@@ -1,0 +1,629 @@
+{
+  "archive": {
+    "bytes": 1054720,
+    "path": "inputs.tar",
+    "sha256": "8546b744a387237ba09a1045953c4f9f8a40a308571da030a2b036a396445f3a"
+  },
+  "files": {
+    "INPUT_PINS.json": {
+      "bytes": 9030,
+      "mode": 420,
+      "sha256": "e257f1b32dfb6cb04ae1dac20db65142c22a64b050292da67a552560dacdb95c"
+    },
+    "proposed/adapter-controls.py": {
+      "bytes": 29004,
+      "mode": 292,
+      "sha256": "13935af0e5acdf6ad5164f4dd1274f81e58a4ced3588e6259fc687b466c6bb19"
+    },
+    "proposed/control-child.py": {
+      "bytes": 12726,
+      "mode": 292,
+      "sha256": "53fe8b4f034c9ba769a73afbc289bd53edbd4c60054429506869327aee4869d3"
+    },
+    "proposed/stage-supervisor.py": {
+      "bytes": 16867,
+      "mode": 292,
+      "sha256": "529245c5f842283132f8fe21a2555968a8f9c29950489f41c2639ace08f7f569"
+    },
+    "proposed/supervisor-child.py": {
+      "bytes": 4018,
+      "mode": 292,
+      "sha256": "eb299195965846edd99ad3f19ee0c2cb77c172c23d0295cb6e162769378e1d4e"
+    },
+    "proposed/supervisor-controls.py": {
+      "bytes": 9256,
+      "mode": 292,
+      "sha256": "29c0646d6be07f4160b1a82b610376de77be4f6d2dc009293d805814fa748f8c"
+    }
+  },
+  "members": {
+    "inputs": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/author-inputs": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/author-inputs/CONTROL_REUSE_INVENTORY.json": {
+      "bytes": 3787,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "f3226a3a39da2c8301beb6ab3ad6a1193856945744d5b663ee6110cbec298847"
+    },
+    "inputs/author-inputs/INTEGRATION_OBLIGATIONS.md": {
+      "bytes": 5912,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "840113786eea07a30b1cbb65abebd630082953558122d07a14cb3bbe693eb440"
+    },
+    "inputs/fixture-root": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/audit/formal/lean/.lake/packages/mathlib/Mathlib/Topology/Algebra/InfiniteSum/NatInt.lean": {
+      "bytes": 26028,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "baf24e8f1910d71dc46896e12aeb8b0eab33bcfddd67c12c102faeb6b17f28db"
+    },
+    "inputs/fixture-root/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "inputs/fixture-root/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "inputs/fixture-root/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "inputs/fixture-root/scripts": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/fixture-root/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "inputs/fixture-root/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "inputs/package": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/CONTROLS_ACCEPTANCE.template.json": {
+      "bytes": 324,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "ef436681af295e17904284ad8933030857dae06819cf9917a24817a7f6495b3e"
+    },
+    "inputs/package/CONTROL_PLAN.md": {
+      "bytes": 5420,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "7bf79e9da59fa738470992b0fb8dd41f010075eac14f7cb6cbee43a81730dc5e"
+    },
+    "inputs/package/DEPENDENCIES.md": {
+      "bytes": 5798,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "0c82d5a71cd2e162e1e24522cf1d7574cc29dc03fff9a7353d20365c3c70934f"
+    },
+    "inputs/package/EXPOSITION.md": {
+      "bytes": 17841,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b0a33ac4aaf6ecf57eb3aff993d6750cdb58c7e583be74a9146cd676b1279316"
+    },
+    "inputs/package/README.md": {
+      "bytes": 1882,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "4c5c1109d131cbaae0a430675a9c5267c8bde3c68eb1e485c1e813a4e5687444"
+    },
+    "inputs/package/REGISTRATION.template.json": {
+      "bytes": 635,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "7421ed870e73c6155846c7d56129c62ff307a37e8b3b159e5af04b2f5f2fadbf"
+    },
+    "inputs/package/REPLAY_DESIGN.md": {
+      "bytes": 9826,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "19f9595197825a5276645b70d6d765b82273fe5d736559135b8c53b5eb1ef473"
+    },
+    "inputs/package/SOURCE_CORRESPONDENCE.md": {
+      "bytes": 6679,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "84900c6eff0ab2e0ef42bd02ce33be72b7693fbd1b95932c05c9a7861c96a678"
+    },
+    "inputs/package/SOURCE_GRAPH.json": {
+      "bytes": 9193,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "5a8391dd636b9d9a07edd9599f38f7febcde70fb84c2e67f2f60ae1757cefbe0"
+    },
+    "inputs/package/controls": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/controls/Candidate.cosmetic.lean": {
+      "bytes": 40560,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "4dc776110f0db0a370123c011d8fe05e2a0abcf99a55dd1b76c9ec335ed71409"
+    },
+    "inputs/package/controls/Candidate.wrong-last.lean.txt": {
+      "bytes": 40437,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "e771fadb86748ebd3d7c0f703801b852d20fc1883c4465e8d65c9cd445aeb173"
+    },
+    "inputs/package/preparation": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/preparation/CONTROL_ROSTER.json": {
+      "bytes": 833,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "1e6ecd939840a8bf22048f83fca05ae11e407c2365c264682799c3ba5a566e18"
+    },
+    "inputs/package/preparation/NEW_IMPORT_SOURCE_PINS.json": {
+      "bytes": 166,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6"
+    },
+    "inputs/package/preparation/PidPrefixMgwMean": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/preparation/PidPrefixMgwMean/PreparationControls.lean": {
+      "bytes": 12097,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "7cb5228c90c43c48040ae37958743073b87ead9ec1066242ed3d3a5532186005"
+    },
+    "inputs/package/preparation/PidPrefixMgwMean/TypeJudge.lean": {
+      "bytes": 2570,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "a17a7d1538c2f2d548374ca9ad5e5b23e7a5dc47c5c330cca1cc419412e645a9"
+    },
+    "inputs/package/preparation/TARGET_ROSTER.json": {
+      "bytes": 700,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "6d8f082335521023cea870944ae174a3cc7eb057b6b1b32269485c4fb984c27e"
+    },
+    "inputs/package/replay-proposed-v1.json": {
+      "bytes": 6583,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "acc59640c0f135063bd58b8827ffc9d058e3d3a82d0e1ab0f980fad881d4b618"
+    },
+    "inputs/package/replay-proposed.py": {
+      "bytes": 23865,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "121068917f2cdc0e3b3098c63869227be9511d7df5f9c011d3d68f980308220a"
+    },
+    "inputs/package/replay-support": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/replay-support/ACCEPTED_DEPENDENCY_RECORDS.json": {
+      "bytes": 9076,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "6ecb6d7eab81ef0c96b176b4d6b69b75901f8875036ea838c09506e65cfc4fed"
+    },
+    "inputs/package/replay-support/EXPECTED_MEAN_RECORDS.json": {
+      "bytes": 1525,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "7ab3bb12d6e0f4d2306d3161315cfc88ae253a427c825d5b116e912aa83bc959"
+    },
+    "inputs/package/replay-support/mgw-policy.py": {
+      "bytes": 4926,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "inputs/package/replay-support/policy.py": {
+      "bytes": 6761,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "inputs/package/replay-support/prefix-policy.py": {
+      "bytes": 4769,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "inputs/package/replay-support/runtime.py": {
+      "bytes": 27277,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "inputs/package/retained-rank.svg": {
+      "bytes": 4656,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    "inputs/package/sources": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/MgwBridgeDepsV1": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/JoinLog": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/SxDnf": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "inputs/package/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "inputs/package/sources/PidFiniteConvergence": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "inputs/package/sources/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "inputs/package/sources/PidMgwBridge": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "inputs/package/sources/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "inputs/package/sources/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "inputs/package/sources/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "inputs/package/sources/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "inputs/package/sources/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "inputs/package/sources/PidPrefixMgwMean": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "inputs/package/sources/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "inputs/package/sources/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "inputs/package/sources/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "inputs/package/sources/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "inputs/package/sources/PidPrefixProbability": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/package/sources/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "inputs/package/sources/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "inputs/package/sources/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "inputs/package/sources/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "inputs/package/sources/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "inputs/package/sources/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "inputs/reuse": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/current-policy": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/current-policy/PYTHON_CONTROL_FREEZE.json": {
+      "bytes": 1414,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "90d81f699682610a8ba0e0210475cf89e8c5cfa89f6aec948321929eeb813839"
+    },
+    "inputs/reuse/current-policy/helper-controls-0": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/current-policy/helper-controls-0/RESULT.json": {
+      "bytes": 35858,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "2ac82ed7333b6d838f3b64dfe56e9b2ff1a024a2bec09faf8546821e65646c76"
+    },
+    "inputs/reuse/current-policy/helper-controls-1": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/current-policy/helper-controls-1/RESULT.json": {
+      "bytes": 35858,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "d8d547e6f7903a07996ec5bf12f935bbcdbf471c216b21b852c2e998611fbd25"
+    },
+    "inputs/reuse/current-policy/helper-controls.py": {
+      "bytes": 9961,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "61a5b481fc55340094f54206058e5005de603dfb1690177bf26f59655a302fbc"
+    },
+    "inputs/reuse/current-policy/mgw-policy.py": {
+      "bytes": 4926,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261"
+    },
+    "inputs/reuse/current-policy/policy.py": {
+      "bytes": 6761,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c"
+    },
+    "inputs/reuse/current-policy/prefix-policy.py": {
+      "bytes": 4769,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36"
+    },
+    "inputs/reuse/current-policy/python-controls-0": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/current-policy/python-controls-0/RESULT.json": {
+      "bytes": 90554,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bed6fe27506a12fd4d0984227c77271bdf44c410ea5ea70f33e2d94a538debc9"
+    },
+    "inputs/reuse/current-policy/python-controls-1": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/current-policy/python-controls-1/RESULT.json": {
+      "bytes": 90554,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "d6b5b576d27a06fead86282648e429db17d63c16ac3efb93575a6cf527a4a7f1"
+    },
+    "inputs/reuse/current-policy/python-controls.py": {
+      "bytes": 18575,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "3c509e7b9be76fbcec9cd09e35f5536a17ecce39a3560d2b662d8eb0f819ea01"
+    },
+    "inputs/reuse/current-policy/runtime.py": {
+      "bytes": 27277,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "inputs/reuse/historical": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/historical/sx-mean-entrypoint-control-supplement-20260907T1610": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/historical/sx-mean-entrypoint-control-supplement-20260907T1610/entrypoint-supplement.py": {
+      "bytes": 7447,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "1fa4a6edf6ebc3590720a80a1d5f458c479a57f741742fa7ef4304c101d97321"
+    },
+    "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040/mini-driver.py": {
+      "bytes": 13579,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "02fba15f0e87f294d6f94fd691d9739635854a31a07c3396059ad636a75192e3"
+    },
+    "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040/python-controls.py": {
+      "bytes": 18575,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "3c509e7b9be76fbcec9cd09e35f5536a17ecce39a3560d2b662d8eb0f819ea01"
+    },
+    "inputs/reuse/historical/sx-mean-operational-controls-20260907T1040/semantic-variants.py": {
+      "bytes": 7808,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "64dfdd33489fed1c6a693473e975ac0fdf626a001f32f2855a9ce792aea16955"
+    },
+    "inputs/reuse/historical/sx-mean-v2-preflight-controls-root-20260908": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "inputs/reuse/historical/sx-mean-v2-preflight-controls-root-20260908/control.py": {
+      "bytes": 11273,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "0ef26220cbc8b97cb27f36857a5e476dc28ebe6a382218f626f150f36c4f988d"
+    }
+  },
+  "schema": "pid-rs/portable-mean-control-distribution-v1",
+  "scope": "Exact accepted control sources and inert source inputs; staging has not executed."
+}

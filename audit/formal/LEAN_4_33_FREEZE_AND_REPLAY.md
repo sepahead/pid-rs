@@ -30,6 +30,15 @@ denote a calendar date, replay schema, theorem, review, assurance tier, or indep
 the current receipt remains schema v2 and receives execution credit only when it exists and
 validates.
 
+## Separate finite-prefix mean publication
+
+The [standalone categorical MGW mean package](lean-prefix-mgw-mean/PUBLICATION.md) has separate
+local acceptance for three formal results and its own unchanged 48-input replay manifest. It does
+not extend this frozen project graph, alter its `r14` receipt or add to that receipt's entry count.
+Its [current results](../evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md) give
+the exact statements, execution evidence and remaining publication obligations. No new estimator
+implementation or statistical qualification follows from this navigation link.
+
 ## Current exact-C12 operational boundary
 
 The Lean baseline and its accepted `r14` receipt remain frozen, but the surrounding composite

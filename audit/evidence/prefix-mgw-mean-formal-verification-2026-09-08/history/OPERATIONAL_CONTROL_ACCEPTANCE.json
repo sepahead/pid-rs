@@ -1,0 +1,53 @@
+{
+  "adopted_utc": "2026-09-08T03:26:27.879752+00:00",
+  "candidate_path_absent_at_adoption": true,
+  "driver_sha256": "6832b65b573fbee9cea6ce6ef1aeac936f4cc21a75210fc982fef550385e94f0",
+  "evidence": [
+    {
+      "path": ".local/sx-mean-proof-campaign-v2-20260908/OPERATIONAL_CONTROL_ACCEPTANCE.predecessor.json.txt",
+      "sha256": "77728f3ea7b823b5b7ec48ac0be3018e52441bcc7bcd1067cc9a04dec85d2098"
+    },
+    {
+      "path": ".local/sx-mean-v2-final-source-review-20260908/FINAL_SEAL.json",
+      "sha256": "cec3baa0cd3abc391b1ba54d58947907470c8d0c9e7cfb665828d10ef7d2c04f"
+    },
+    {
+      "path": ".local/sx-mean-v2-actual-control-review-20260908/FINAL_SEAL.json",
+      "sha256": "3d3766ca3adfe766779d45df5101b71fd36e13a3da4ba87fcaeeffb8add6ebb4"
+    },
+    {
+      "path": ".local/sx-mean-helper-final-source-review-20260908/FINAL_SEAL.json",
+      "sha256": "e257eb26bae331efa35a0050625b5b23bd28b0144e990bbd5b47e7daf4effbe4"
+    },
+    {
+      "path": ".local/sx-mean-v2-preflight-controls-root-20260908/CONTROL_FREEZE.json",
+      "sha256": "f46090596ed0ffaa9b26424a017886485a7d73880eb6a4d616a1c2565d3419b4"
+    },
+    {
+      "path": ".local/sx-mean-v2-preflight-controls-root-20260908/mode-0/RESULT.json",
+      "sha256": "d1dad1693724725e8d8360427e42adda9189e61320105b6db7467f04c81a0400"
+    },
+    {
+      "path": ".local/sx-mean-v2-preflight-controls-root-20260908/mode-1/RESULT.json",
+      "sha256": "4ff5fe10173b6fcd5a0cb4580bcd3f2c64efd25867339995e00aa743822e04c1"
+    },
+    {
+      "path": ".local/sx-mean-v2-preflight-controls-root-20260908/ROOT_REHASH.json",
+      "sha256": "15704dd9a9614eac3c8f12c46b09cc39ce5fa06f354bc839d1d6f4efbf652709"
+    }
+  ],
+  "new_control_scope": "Exact production main preflight AST lines63-129, real unchanged Snapshot, synthetic task/freeze, 32 cases each normal/O. Excludes argparse/lock/policy/ledger/toolchain/child execution and production finally. No generic sandbox or empirical selection credit.",
+  "new_mean_theorems_proved": 0,
+  "policy_sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c",
+  "prior_boundary": "Original v1 remains closed incomplete with one failed development child and zero full runs/mean proofs. New v2 uses residual79development8full and a new720minute prospective interval.",
+  "review_independence": "Initial reasoning order only; shared model lineage, host, repository, semantic sources and task. No human or institutional independence.",
+  "root_disposition": "Root read complete driver, exact revision diff, repaired source, independent-first source and control reviews, full control harness and actual causal errors. Root rehashed 4428 artifacts and 2096 captured inputs; all 90 source-review members and this control-review manifest. Adopt new v2 changed-preflight controls only; transfer unchanged runtime/policy/reporter/finally evidence under the exact predecessor adoption. No source, target or acceptance weakening.",
+  "routes_and_lenses": "Root selected repaired finite cumulative route 3 in the complete helper review (12 materially distinct routes and 50 named lenses), and source preparation then new residual-budget revision in lifecycle review (10 routes, 50 named lenses). No-action leaves the proof open; simple exclusion-mass/MI alternatives do not establish the requested atom mean. Direct word recursion remains a fallback if concrete compiler evidence defeats finite cumulative elaboration. Do not restore/extend v1 or replenish its consumed attempt.",
+  "runtime_sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d",
+  "schema": "pid-rs/prefix-mgw-mean-operational-control-adoption-v2",
+  "scientific_boundary": "Exact deterministic formal predicates only after actual complete proof checks. No finite-horizon unbiasedness, bias/coverage, continuous transfer, software refinement or application advantage.",
+  "selection_boundary": "Exact v2 selection bytes adopted. First complete three-target source within v2, selected/cosmetic normal/O and same-source wrong-last control; matrix root-enforced, not a semantic selection parser. Private helper compile pass is never full acceptance.",
+  "selection_rule_sha256": "e993cedfd1079c96df9d7f8707036ff40c39303f871079ad12573d2731cb4e42",
+  "semantic_reporter_sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df",
+  "status": "adopted_completed_operational_controls"
+}

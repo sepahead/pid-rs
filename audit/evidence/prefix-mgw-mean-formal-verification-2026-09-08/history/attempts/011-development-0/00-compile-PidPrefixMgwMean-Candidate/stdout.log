@@ -1,0 +1,16 @@
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/011-development-0/src/PidPrefixMgwMean/Candidate.lean:258:27: error: Application type mismatch: The argument
+  Eq.trans hp hm
+has type
+  ∑ word,
+      (∏ i, r (word i)) *
+        @ite ℝ (∀ x ∈ List.ofFn word, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z)
+          (List.decidableBAll (fun x => x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z) (List.ofFn word)) 1 0 =
+    cumulative (weights r z) b ^ (n + 1)
+but is expected to have type
+  ∑ word,
+      (∏ i, r (word i)) *
+        @ite ℝ (∀ x ∈ List.ofFn word, x ∉ PidFiniteConvergence.sxSourceEvent (↑b) z) Fintype.decidableForallFintype 1
+          0 =
+    cumulative (weights r z) b ^ (n + 1)
+in the application
+  Eq.trans hi (Eq.trans hp hm)

@@ -1,0 +1,330 @@
+{
+  "commands": [
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidFiniteConvergence/Deterministic.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidFiniteConvergence/Deterministic.lean"
+      ],
+      "module": "PidFiniteConvergence/Deterministic"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidFiniteConvergence/SxEventBridge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "module": "PidFiniteConvergence/SxEventBridge"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/MgwBridgeDepsV1/SxDnf/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/MgwBridgeDepsV1/SxDnf/Contract.lean"
+      ],
+      "module": "MgwBridgeDepsV1/SxDnf/Contract"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/MgwBridgeDepsV1/JoinLog/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/MgwBridgeDepsV1/JoinLog/Contract.lean"
+      ],
+      "module": "MgwBridgeDepsV1/JoinLog/Contract"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+      ],
+      "module": "MgwBridgeDepsV1/SxDnf/JudgeCore"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/MgwBridgeDepsV1/SxDnf/Proofs.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/MgwBridgeDepsV1/SxDnf/Proofs.lean"
+      ],
+      "module": "MgwBridgeDepsV1/SxDnf/Proofs"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/MgwBridgeDepsV1/JoinLog/Proofs.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/MgwBridgeDepsV1/JoinLog/Proofs.lean"
+      ],
+      "module": "MgwBridgeDepsV1/JoinLog/Proofs"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidMgwBridge/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidMgwBridge/Contract.lean"
+      ],
+      "module": "PidMgwBridge/Contract"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidMgwBridge/RawTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidMgwBridge/RawTargets.lean"
+      ],
+      "module": "PidMgwBridge/RawTargets"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidMgwBridge/AliasTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidMgwBridge/AliasTargets.lean"
+      ],
+      "module": "PidMgwBridge/AliasTargets"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidMgwBridge/JudgeCore.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidMgwBridge/JudgeCore.lean"
+      ],
+      "module": "PidMgwBridge/JudgeCore"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidMgwBridge/Candidate.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidMgwBridge/Candidate.lean"
+      ],
+      "module": "PidMgwBridge/Candidate"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidMgwBridge/SemanticJudge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidMgwBridge/SemanticJudge.lean"
+      ],
+      "module": "PidMgwBridge/SemanticJudge"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixProbability/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixProbability/Contract.lean"
+      ],
+      "module": "PidPrefixProbability/Contract"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixProbability/RawTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixProbability/RawTargets.lean"
+      ],
+      "module": "PidPrefixProbability/RawTargets"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixProbability/AliasTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixProbability/AliasTargets.lean"
+      ],
+      "module": "PidPrefixProbability/AliasTargets"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixProbability/Candidate.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixProbability/Candidate.lean"
+      ],
+      "module": "PidPrefixProbability/Candidate"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixProbability/SemanticJudge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixProbability/SemanticJudge.lean"
+      ],
+      "module": "PidPrefixProbability/SemanticJudge"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixMgwMean/Contract.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixMgwMean/Contract.lean"
+      ],
+      "module": "PidPrefixMgwMean/Contract"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixMgwMean/RawTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixMgwMean/RawTargets.lean"
+      ],
+      "module": "PidPrefixMgwMean/RawTargets"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixMgwMean/AliasTargets.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixMgwMean/AliasTargets.lean"
+      ],
+      "module": "PidPrefixMgwMean/AliasTargets"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixMgwMean/Candidate.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixMgwMean/Candidate.lean"
+      ],
+      "module": "PidPrefixMgwMean/Candidate"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PidPrefixMgwMean/SemanticJudge.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PidPrefixMgwMean/SemanticJudge.lean"
+      ],
+      "module": "PidPrefixMgwMean/SemanticJudge"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/build/PrefixMgwMeanCandidateRoot.olean",
+        "<repository>/.local/prefix-mgw-mean-public-replay-v1/current-controls-adopted-20260908/attempt-004/src/PrefixMgwMeanCandidateRoot.lean"
+      ],
+      "module": "PrefixMgwMeanCandidateRoot"
+    },
+    {
+      "command": [
+        "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/leanchecker",
+        "--fresh",
+        "PrefixMgwMeanCandidateRoot"
+      ],
+      "module": "fresh-kernel"
+    }
+  ],
+  "expected_compiler_kernel_children": 25,
+  "probe": [
+    "<home>/.local/engram-reviewed-tools/lean-4.33.0-reviewed-20260823/bin/lean",
+    "--version"
+  ],
+  "status": "prepared_no_execution"
+}

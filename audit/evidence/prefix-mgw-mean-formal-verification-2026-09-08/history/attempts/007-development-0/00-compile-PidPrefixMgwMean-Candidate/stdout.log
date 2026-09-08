@@ -1,0 +1,10 @@
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/007-development-0/src/PidPrefixMgwMean/Candidate.lean:90:2: error: Type mismatch: After simplification, term
+  mean_weighted_prefix_add p hp F m (h - m)
+ has type
+  ∑ x ∈ @Finset.univ (Fin (m + (h - m)) → K) Pi.instFintype,
+      (∏ i, p (x i)) * F (List.take m (List.ofFn fun i => x (Fin.cast ⋯ i))) =
+    ∑ word, (∏ i, p (word i)) * F (List.ofFn word)
+but is expected to have type
+  ∑ word ∈ @Finset.univ (Fin h → K) Pi.instFintype, (∏ i, p (word i)) * F (List.take m (List.ofFn word)) =
+    ∑ word, (∏ i, p (word i)) * F (List.ofFn word)
+<REPOSITORY>/.local/sx-mean-proof-campaign-v2-20260908/attempts/007-development-0/src/PidPrefixMgwMean/Candidate.lean:138:45: error(lean.unknownIdentifier): Unknown identifier `j.val`
