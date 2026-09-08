@@ -76,9 +76,9 @@ EXPECTED_C3_RUNTIME_MAP_COUNT=7
 EXPECTED_C3_FLS_MAP_PATH_COUNT=8
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
-EXPECTED_C8_TEXT_PORTABILITY_COUNT=44
+EXPECTED_C8_TEXT_PORTABILITY_COUNT=71
 EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
-EXPECTED_TOTAL_CONTROL_COUNT=389
+EXPECTED_TOTAL_CONTROL_COUNT=416
 # This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -2092,6 +2092,9 @@ probe_projection_command_array
   fi
   python3 -I -S - "$1" <<'PY'
 from pathlib import Path
+import ast
+import hashlib
+import json
 import sys
 
 
@@ -2124,9 +2127,19 @@ required_once = (
     '"$BUILD_ROOT/committed.plain.txt" \\\n    committed-default \\\n    default',
     '"$BUILD_ROOT/committed.txt" \\\n    committed-layout \\\n    layout',
     'def validate_projection(path: Path, label: str, expected_pages: int)',
-    'reviewed_layout_relocations = {',
-    '10: (("Comparison", "result"), ("Suite", "3", "·", "corpus"))',
-    '("premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes")',
+    'def canonical_reviewed_diagram(',
+    'reviewed_layout_diagrams = {',
+    "('ROUTE', 'DEPENDENCE')",
+    "('Figure', '3:')",
+    "('CHANGE', 'CONTROL')",
+    "('Figure', '4:')",
+    'if actual not in profiles:',
+    'if first >= after:',
+    'return tokens[:first] + list(profiles[0]) + tokens[after:]',
+    'if page_number in reviewed_layout_diagrams:',
+    'built_tokens = canonical_reviewed_diagram(',
+    'committed_tokens = canonical_reviewed_diagram(',
+    'if built_tokens != committed_tokens:',
     'if built_default_raw != committed_default_raw:',
     'if built_counter != committed_counter:',
     """python3 -I -S - \\
@@ -2143,6 +2156,77 @@ if text.count('if [[ -s "$diagnostic" ]]') != 2:
     fail("render and text diagnostic guards are not both present")
 if text.count('extract_report_text \\\n    "$SNAPSHOT_ROOT/$COMMITTED"') != 2:
     fail("committed default/layout extraction call inventory differs from two")
+# Inspect actual source data without executing the checker. The expected region
+# boundaries, profile lengths and digests are literal measurements of retained
+# real projections, not values inferred from the candidate being checked.
+expected_profile_inventory = [
+    (10, ("ROUTE", "DEPENDENCE"), ("Figure", "3:"), [
+        (77, "8d3c2ff3b2aa2779d9a902b51187631c18adc86e340725c8e649fa1292b32bd5"),
+        (77, "5ab5cb84f68d16df51d381dd91524b0b2493f7f809ab93fec33f00a1da86d03a"),
+    ]),
+    (12, ("CHANGE", "CONTROL"), ("Figure", "4:"), [
+        (98, "1a562811c965a8113552eeab2fe0cff61e4839e0e59ad71cded1d7c3536208ce"),
+        (98, "3f5269ede48a8604ed52b8e6e92c46c84648032c0432e31896515cdc29f52f10"),
+    ]),
+]
+
+
+def profile_identity(node: ast.AST) -> tuple[int, str]:
+    if not (
+        isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == "tuple"
+        and len(node.args) == 1
+        and not node.keywords
+    ):
+        fail("profile is not one literal token tuple")
+    split = node.args[0]
+    if not (
+        isinstance(split, ast.Call)
+        and isinstance(split.func, ast.Attribute)
+        and split.func.attr == "split"
+        and isinstance(split.func.value, ast.Constant)
+        and type(split.func.value.value) is str
+        and len(split.args) == 1
+        and isinstance(split.args[0], ast.Constant)
+        and split.args[0].value == " "
+        and not split.keywords
+    ):
+        fail("profile is not a literal split at ASCII spaces")
+    tokens = split.func.value.value.split(" ")
+    raw = json.dumps(tokens, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    return len(tokens), hashlib.sha256(raw).hexdigest()
+
+
+try:
+    first = text.index("reviewed_layout_diagrams = {")
+    after = text.index("\n# This is a specification sanity check", first)
+    statements = ast.parse(text[first:after]).body
+    if len(statements) != 1 or not isinstance(statements[0], ast.Assign):
+        fail("profile inventory is not one assignment")
+    node = statements[0].value
+    if not isinstance(node, ast.Dict):
+        fail("profile inventory is not a literal dictionary")
+    actual_profile_inventory = []
+    for key, value in zip(node.keys, node.values):
+        if not isinstance(value, ast.Tuple) or len(value.elts) != 3:
+            fail("profile entry is not an opening/closing/profiles tuple")
+        opening, closing, profiles = value.elts
+        if not isinstance(profiles, ast.Tuple):
+            fail("profiles are not a literal tuple")
+        parsed_key = ast.literal_eval(key)
+        if type(parsed_key) is not int:
+            fail("profile page key is not an exact integer")
+        actual_profile_inventory.append((
+            parsed_key, ast.literal_eval(opening), ast.literal_eval(closing),
+            [profile_identity(profile) for profile in profiles.elts],
+        ))
+except (ValueError, TypeError, SyntaxError) as error:
+    fail(f"profile inventory cannot be read as static data: {error}")
+if actual_profile_inventory != expected_profile_inventory:
+    fail("complete diagram profile inventory differs from the four reviewed real sequences")
+
+
 try:
     helper = text.index("extract_report_text() {")
     built_layout = text.index(
@@ -2173,12 +2257,83 @@ make_text_portability_fixture() {
   mkdir "$directory"
   python3 -I -S - "$directory" "$variant" <<'PY'
 from pathlib import Path
+import hashlib
+import json
 import sys
 
 
 root = Path(sys.argv[1])
 variant = sys.argv[2]
 expected_pages = 87
+
+# Independent literal fixtures transcribed from retained real layout projections.
+# These data are never read or reconstructed from the candidate checker. Only the
+# complete diagram regions are real; surrounding prose and 87-page default text
+# below are compact synthetic controls, not a retained full PDF extraction.
+# Committed PDF: macOS layout 343661 bytes, SHA-256
+# eb8afb8442d2badf8a331ccb0f3479d36a0fa348bb48fabfa20944c4b13f4201;
+# Ubuntu layout 343939 bytes, SHA-256
+# fb5ec8ffbdc1d4a32d047a78c3a20964e60165ca8b94988362f477e49a551626.
+# Source-bound native Ubuntu build, 2026-09-08: layout 343873 bytes, SHA-256
+# 0402ec226e9141242bb0a923adcc1b8e9f9c07faa12969b1ac426a78c63b0dbf;
+# built PDF SHA-256
+# 273257154992a7dcdad2a801d06e6f94fc103b2ce3a5a0f0f9a52ee650a0b9c2.
+# All retained default projections: 276802 bytes, SHA-256
+# 53b732dbf99781d5f8dfec82ed77ff73954f24386972f443b7f6334975b8aa23.
+PAGE10_MACOS = """
+ROUTE DEPENDENCE Five test suites may still be one semantic route Suite 1 ·
+fixture Suite 2 · property SHARED CUT Comparison result Suite 3 · corpus Semantic
+oracle C agreement with C PASS same algebra + assumptions Suite 4 · mutation
+Breadth ≠ independence; record shared dependencies. Suite 5 · replay Result state:
+PASS · audit state: OPEN Candidate route: separate formulation and verifier,
+followed by a dependency audit Separate formulation Distinct verifier Independence
+audit OPEN
+""".split()
+PAGE10_UBUNTU = """
+ROUTE DEPENDENCE Five test suites may still be one semantic route Suite 1 ·
+fixture Suite 2 · property SHARED CUT Comparison result PASS Suite 3 · corpus
+Semantic oracle C same algebra + agreement with C assumptions Suite 4 · mutation
+Breadth ≠ independence; record shared dependencies. Suite 5 · replay Result state:
+PASS · audit state: OPEN Candidate route: separate formulation and verifier,
+followed by a dependency audit OPEN Separate formulation Distinct verifier
+Independence audit
+""".split()
+PAGE12_COMMITTED = """
+CHANGE CONTROL Invalidation follows prerequisite → dependent edges EDGE
+ORIENTATION: prerequisite → dependent Generator Artifact CHANGED Source Gate
+Publication deterministic exact output Checker premise or input STALE / rerun
+STALE / retract rule bytes semantic verdict PUBLICATION STATE: advance with bound
+evidence; reopen after a prerequisite change OPEN CANDIDATE HOSTED PUBLISHED
+Evidence incomplete Local gates pass Bound hosted run Receipt-bound claim claim is
+not current exact subject tree bound receipt binds run + commit current until
+invalidated invalidating prerequisite change → OPEN + STALE Workflow state ≠
+evidence class or claim disposition; unreachable nodes retain their governed
+state.
+""".split()
+PAGE12_NATIVE = """
+CHANGE CONTROL Invalidation follows prerequisite → dependent edges EDGE
+ORIENTATION: prerequisite → dependent Generator Artifact CHANGED Source Gate
+Publication premise or input deterministic exact output Checker STALE / rerun
+STALE / retract rule bytes semantic verdict PUBLICATION STATE: advance with bound
+evidence; reopen after a prerequisite change OPEN CANDIDATE HOSTED PUBLISHED
+Evidence incomplete Local gates pass Bound hosted run Receipt-bound claim claim is
+not current exact subject tree bound receipt binds run + commit current until
+invalidated invalidating prerequisite change → OPEN + STALE Workflow state ≠
+evidence class or claim disposition; unreachable nodes retain their governed
+state.
+""".split()
+
+# Digests cover JSON token arrays with UTF-8 and compact separators. They were
+# measured from the real streams above, independently of the checker source.
+for tokens, count, digest in (
+    (PAGE10_MACOS, 77, "8d3c2ff3b2aa2779d9a902b51187631c18adc86e340725c8e649fa1292b32bd5"),
+    (PAGE10_UBUNTU, 77, "5ab5cb84f68d16df51d381dd91524b0b2493f7f809ab93fec33f00a1da86d03a"),
+    (PAGE12_COMMITTED, 98, "1a562811c965a8113552eeab2fe0cff61e4839e0e59ad71cded1d7c3536208ce"),
+    (PAGE12_NATIVE, 98, "3f5269ede48a8604ed52b8e6e92c46c84648032c0432e31896515cdc29f52f10"),
+):
+    raw = json.dumps(tokens, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    if len(tokens) != count or hashlib.sha256(raw).hexdigest() != digest:
+        raise SystemExit("independent real diagram fixture identity drifted")
 
 
 def find_once(tokens: list[str], needle: list[str]) -> int:
@@ -2198,40 +2353,45 @@ def remove_once(tokens: list[str], needle: list[str]) -> int:
     return index
 
 
-def layout_tokens(page_number: int) -> list[str]:
+def layout_tokens(page_number: int, producer: str) -> list[str]:
     if page_number == 10:
-        return [
-            "Layout", "page-10", "prefix-a", "prefix-b",
-            "Comparison", "result", "Suite", "3", "·", "corpus",
-            "suffix-a", "suffix-b",
-        ]
-    if page_number == 12:
-        return [
-            "Layout", "page-12", "prefix-a", "prefix-b", "Checker",
-            "premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes",
-            "suffix-a", "suffix-b",
-        ]
-    return ["Layout", f"page-{page_number}", "alpha", "beta", "gamma"]
+        profile = PAGE10_MACOS if producer == "macos" else PAGE10_UBUNTU
+        closing = ["Figure", "3:"]
+    elif page_number == 12:
+        profile = PAGE12_NATIVE if producer == "native" else PAGE12_COMMITTED
+        closing = ["Figure", "4:"]
+    else:
+        return ["Layout", f"page-{page_number}", "alpha", "beta", "gamma"]
+    return (
+        ["Layout", f"page-{page_number}", "prefix-a", "prefix-b"]
+        + profile + closing + ["suffix-a", "suffix-b"]
+    )
 
 
+# All nine ordered pairs of the three observed producer profiles are explicit.
+# The native/native case protects validation of the newly admitted equal pair.
+producer_pairs = {
+    "exact": ("macos", "macos"),
+    "committed-ubuntu-self": ("ubuntu", "ubuntu"),
+    "committed-producer-pair": ("ubuntu", "macos"),
+    "committed-producer-pair-reversed": ("macos", "ubuntu"),
+    "native-producer-pair": ("native", "ubuntu"),
+    "native-producer-pair-reversed": ("ubuntu", "native"),
+    "native-producer-self": ("native", "native"),
+    "native-macos-pair": ("native", "macos"),
+    "native-macos-pair-reversed": ("macos", "native"),
+    "whitespace": ("native", "ubuntu"),
+}
+producer_built, producer_committed = producer_pairs.get(variant, ("macos", "macos"))
+if variant == "page12-native-unlisted-order":
+    producer_built, producer_committed = "native", "native"
 plain_built = [f"Plain page-{number} alpha beta gamma\n" for number in range(1, expected_pages + 1)]
 plain_committed = list(plain_built)
-layout_built = [layout_tokens(number) for number in range(1, expected_pages + 1)]
-layout_committed = [list(tokens) for tokens in layout_built]
+layout_built = [layout_tokens(number, producer_built) for number in range(1, expected_pages + 1)]
+layout_committed = [layout_tokens(number, producer_committed) for number in range(1, expected_pages + 1)]
 
-if variant == "exact":
+if variant in producer_pairs:
     pass
-elif variant == "whitespace":
-    pass
-elif variant == "label-flip":
-    for page_number, label, anchor in (
-        (10, ["Comparison", "result"], ["Suite", "3", "·", "corpus"]),
-        (12, ["Checker"], ["premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes"]),
-    ):
-        tokens = layout_built[page_number - 1]
-        remove_once(tokens, label)
-        anchor_index = find_once(tokens, anchor)
-        tokens[anchor_index + len(anchor) : anchor_index + len(anchor)] = label
 elif variant == "plain-content":
     plain_committed[2] = plain_committed[2].replace("alpha", "delta", 1)
 elif variant == "plain-whitespace":
@@ -2241,6 +2401,7 @@ elif variant == "plain-order":
 elif variant in {
     "layout-substitute", "layout-drop", "layout-duplicate", "layout-page-move",
     "layout-order", "layout-order-p10", "layout-order-p12",
+    "layout-prefix-order-p10", "layout-prefix-order-p12",
 }:
     if variant == "layout-substitute":
         layout_committed[2][find_once(layout_committed[2], ["gamma"])] = "delta"
@@ -2253,10 +2414,12 @@ elif variant in {
         layout_committed[3].append("gamma")
     elif variant == "layout-order":
         layout_committed[2][-2:] = reversed(layout_committed[2][-2:])
-    elif variant == "layout-order-p10":
-        layout_committed[9][-2:] = reversed(layout_committed[9][-2:])
     else:
-        layout_committed[11][-2:] = reversed(layout_committed[11][-2:])
+        page_index = 9 if variant.endswith("p10") else 11
+        if "prefix" in variant:
+            layout_committed[page_index][2:4] = reversed(layout_committed[page_index][2:4])
+        else:
+            layout_committed[page_index][-2:] = reversed(layout_committed[page_index][-2:])
 elif variant.startswith("page10-label-") or variant.startswith("page12-label-"):
     page_number = 10 if variant.startswith("page10") else 12
     label = ["Comparison", "result"] if page_number == 10 else ["Checker"]
@@ -2272,11 +2435,7 @@ elif variant.startswith("page10-label-") or variant.startswith("page12-label-"):
             raise SystemExit(f"unknown label mutation: {variant}")
 elif variant.startswith("page10-anchor-") or variant.startswith("page12-anchor-"):
     page_number = 10 if variant.startswith("page10") else 12
-    anchor = (
-        ["Suite", "3", "·", "corpus"]
-        if page_number == 10
-        else ["premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes"]
-    )
+    anchor = ["Suite", "3", "·", "corpus"] if page_number == 10 else ["premise", "or", "input"]
     for tokens in (layout_built[page_number - 1], layout_committed[page_number - 1]):
         original = remove_once(tokens, anchor)
         if variant.endswith("absent"):
@@ -2285,6 +2444,42 @@ elif variant.startswith("page10-anchor-") or variant.startswith("page12-anchor-"
             tokens[original:original] = anchor + anchor
         else:
             raise SystemExit(f"unknown anchor mutation: {variant}")
+elif any(variant.startswith(f"page{page}-{marker}-") for page in (10, 12) for marker in ("opening", "closing")):
+    page_number = 10 if variant.startswith("page10") else 12
+    if "-opening-" in variant:
+        marker = ["ROUTE", "DEPENDENCE"] if page_number == 10 else ["CHANGE", "CONTROL"]
+    else:
+        marker = ["Figure", "3:"] if page_number == 10 else ["Figure", "4:"]
+    for tokens in (layout_built[page_number - 1], layout_committed[page_number - 1]):
+        original = remove_once(tokens, marker)
+        if variant.endswith("absent"):
+            continue
+        if variant.endswith("duplicate"):
+            tokens[original:original] = marker + marker
+        else:
+            raise SystemExit(f"unknown bounds mutation: {variant}")
+elif variant in {"page10-bounds-reversed", "page12-bounds-reversed"}:
+    page_number = 10 if variant.startswith("page10") else 12
+    opening = ["ROUTE", "DEPENDENCE"] if page_number == 10 else ["CHANGE", "CONTROL"]
+    closing = ["Figure", "3:"] if page_number == 10 else ["Figure", "4:"]
+    for tokens in (layout_built[page_number - 1], layout_committed[page_number - 1]):
+        first, after = find_once(tokens, opening), find_once(tokens, closing)
+        tokens[first : first + len(opening)] = closing
+        tokens[after : after + len(closing)] = opening
+elif variant == "page10-unlisted-order":
+    for tokens in (layout_built[9], layout_committed[9]):
+        index = find_once(tokens, ["Five", "test"])
+        tokens[index : index + 2] = ["test", "Five"]
+elif variant == "page12-native-unlisted-order":
+    for tokens in (layout_built[11], layout_committed[11]):
+        phrase = ["premise", "or", "input"]
+        remove_once(tokens, phrase)
+        index = find_once(tokens, ["deterministic"])
+        tokens[index + 1 : index + 1] = phrase
+elif variant == "page10-suite-number":
+    for tokens in (layout_built[9], layout_committed[9]):
+        index = find_once(tokens, ["Suite", "3", "·", "corpus"])
+        tokens[index + 1] = "9"
 elif variant in {
     "control-cr", "control-vt", "control-nul", "control-del", "control-c1",
     "control-bom", "control-zero-width", "control-nbsp", "control-em-space",
@@ -2312,7 +2507,7 @@ def plain_bytes(pages: list[str]) -> bytes:
 def render_layout(pages: list[list[str]], side: str) -> bytes:
     rendered = []
     for page_number, tokens in enumerate(pages, start=1):
-        if variant == "whitespace" and page_number == 5:
+        if variant == "whitespace" and page_number in {5, 10, 12}:
             separator = " \t\n  " if side == "built" else "   "
         else:
             separator = " "
@@ -2362,15 +2557,18 @@ text_portability_case() {
 }
 
 C3_ACTIVE_FAMILY="c8-text-portability"
+for variant in \
+  exact committed-ubuntu-self \
+  committed-producer-pair committed-producer-pair-reversed \
+  native-producer-pair native-producer-pair-reversed native-producer-self \
+  native-macos-pair native-macos-pair-reversed; do
+  expect_accept \
+    "text portability accepts the literal real diagram profiles: $variant" \
+    run_text_portability_validator "$(text_portability_case "$variant")"
+done
 expect_accept \
-  "text portability accepts exact default and layout projections" \
-  run_text_portability_validator "$(text_portability_case exact)"
-expect_accept \
-  "text portability admits only ASCII layout-whitespace drift" \
+  "text portability admits only ASCII layout-whitespace drift, including reviewed diagrams" \
   run_text_portability_validator "$(text_portability_case whitespace)"
-expect_accept \
-  "text portability admits the two reviewed diagram-label flips across exact anchors" \
-  run_text_portability_validator "$(text_portability_case label-flip)"
 
 for variant in plain-content plain-whitespace plain-order; do
   expect_reject \
@@ -2431,44 +2629,60 @@ for variant in layout-substitute layout-drop layout-duplicate layout-page-move; 
 done
 expect_reject \
   "text portability rejects ordinary-page layout token reordering" \
-  "layout token order differs on page 3" \
+  "layout token order differs outside admitted diagram profiles on page 3" \
   run_text_portability_validator "$(text_portability_case layout-order)"
 expect_reject \
   "text portability rejects non-label prose reordering on reviewed page 10" \
-  "layout residual token order differs on reviewed page 10" \
+  "layout token order differs outside admitted diagram profiles on page 10" \
   run_text_portability_validator "$(text_portability_case layout-order-p10)"
 expect_reject \
   "text portability rejects non-label prose reordering on reviewed page 12" \
-  "layout residual token order differs on reviewed page 12" \
+  "layout token order differs outside admitted diagram profiles on page 12" \
   run_text_portability_validator "$(text_portability_case layout-order-p12)"
 
 for page_number in 10 12; do
   expect_reject \
-    "text portability rejects absent reviewed label on page $page_number" \
-    "layout page $page_number reviewed label occurrence count is 0" \
+    "text portability rejects prefix prose reordering on reviewed page $page_number" \
+    "layout token order differs outside admitted diagram profiles on page $page_number" \
     run_text_portability_validator \
-      "$(text_portability_case "page${page_number}-label-absent")"
+      "$(text_portability_case "layout-prefix-order-p${page_number}")"
+  for mutation in label-absent label-duplicate label-moved anchor-absent anchor-duplicate; do
+    expect_reject \
+      "text portability rejects paired $mutation on page $page_number" \
+      "layout page $page_number reviewed diagram token order is not an admitted profile on built" \
+      run_text_portability_validator \
+        "$(text_portability_case "page${page_number}-$mutation")"
+  done
+  for marker in opening closing; do
+    expect_reject \
+      "text portability rejects a paired absent $marker bound on page $page_number" \
+      "layout page $page_number reviewed diagram $marker occurrence count is 0 on built" \
+      run_text_portability_validator \
+        "$(text_portability_case "page${page_number}-$marker-absent")"
+    expect_reject \
+      "text portability rejects a paired duplicate $marker bound on page $page_number" \
+      "layout page $page_number reviewed diagram $marker occurrence count is 2 on built" \
+      run_text_portability_validator \
+        "$(text_portability_case "page${page_number}-$marker-duplicate")"
+  done
   expect_reject \
-    "text portability rejects duplicated reviewed label on page $page_number" \
-    "layout page $page_number reviewed label occurrence count is 2" \
+    "text portability rejects paired reversed diagram bounds on page $page_number" \
+    "layout page $page_number reviewed diagram bounds are reversed on built" \
     run_text_portability_validator \
-      "$(text_portability_case "page${page_number}-label-duplicate")"
-  expect_reject \
-    "text portability rejects reviewed label moved away from its anchor on page $page_number" \
-    "layout page $page_number reviewed label is not immediately before or after its exact anchor" \
-    run_text_portability_validator \
-      "$(text_portability_case "page${page_number}-label-moved")"
-  expect_reject \
-    "text portability rejects absent reviewed anchor on page $page_number" \
-    "layout page $page_number reviewed anchor occurrence count is 0" \
-    run_text_portability_validator \
-      "$(text_portability_case "page${page_number}-anchor-absent")"
-  expect_reject \
-    "text portability rejects duplicated reviewed anchor on page $page_number" \
-    "layout page $page_number reviewed anchor occurrence count is 2" \
-    run_text_portability_validator \
-      "$(text_portability_case "page${page_number}-anchor-duplicate")"
+      "$(text_portability_case "page${page_number}-bounds-reversed")"
 done
+expect_reject \
+  "text portability rejects a paired unlisted page 10 permutation" \
+  "layout page 10 reviewed diagram token order is not an admitted profile on built" \
+  run_text_portability_validator "$(text_portability_case page10-unlisted-order)"
+expect_reject \
+  "text portability rejects a paired unlisted permutation of the new native page 12 profile" \
+  "layout page 12 reviewed diagram token order is not an admitted profile on built" \
+  run_text_portability_validator "$(text_portability_case page12-native-unlisted-order)"
+expect_reject \
+  "text portability rejects a paired changed suite number inside page 10" \
+  "layout page 10 reviewed diagram token order is not an admitted profile on built" \
+  run_text_portability_validator "$(text_portability_case page10-suite-number)"
 
 expect_accept \
   "production source binds diagnostic-clean default/layout extraction and comparator order" \
@@ -2536,6 +2750,51 @@ replace_once \
   $'if false; then\n      cat "$diagnostic" >&2\n      echo "$CHECK_NAME: Poppler emitted a text-extraction diagnostic: $label" >&2'
 expect_reject \
   "text-portability source custody rejects text-extraction diagnostic bypass" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+case_file="$TEST_ROOT/text-portability-profile-order-drifted.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'Publication premise or input deterministic exact output Checker STALE / rerun' \
+  'Publication deterministic premise or input exact output Checker STALE / rerun'
+expect_reject \
+  "text-portability source custody rejects an unreviewed profile order" \
+  "complete diagram profile inventory differs from the four reviewed real sequences" \
+  validate_text_portability_source "$case_file"
+
+for page_number in 10 12; do
+  case_file="$TEST_ROOT/text-portability-floating-page-${page_number}.sh"
+  cp "$CHECKER" "$case_file"
+  replace_once \
+    "$case_file" \
+    "    ${page_number}: (" \
+    "    ${page_number}.0: ("
+  expect_reject \
+    "text-portability source custody rejects floating-point page key ${page_number}.0" \
+    "profile page key is not an exact integer" \
+    validate_text_portability_source "$case_file"
+done
+
+case_file="$TEST_ROOT/text-portability-equal-pair-profile-bypassed.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'if page_number in reviewed_layout_diagrams:' \
+  'if page_number in reviewed_layout_diagrams and built_tokens != committed_tokens:'
+expect_reject \
+  "text-portability source custody rejects profile validation bypass on equal pairs" \
+  "text-portability source invariant drifted" \
+  validate_text_portability_source "$case_file"
+
+case_file="$TEST_ROOT/text-portability-surrounding-prose-dropped.sh"
+cp "$CHECKER" "$case_file"
+replace_once \
+  "$case_file" \
+  'return tokens[:first] + list(profiles[0]) + tokens[after:]' \
+  'return list(profiles[0])'
+expect_reject \
+  "text-portability source custody rejects deletion of surrounding prose" \
   "text-portability source invariant drifted" \
   validate_text_portability_source "$case_file"
 C3_ACTIVE_FAMILY=""

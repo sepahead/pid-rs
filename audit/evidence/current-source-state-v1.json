@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "dd551781ac27f4851a75fc9b400cfec67b7ae578563a0a5a3408e9c07e4a44b8",
-        "size_bytes": 294871
+        "sha256": "681af42cacb6074745c585c3f82237f657e0cc0a8d243caf035eaef88ad0f370",
+        "size_bytes": 295209
       },
       {
         "git_mode": "100644",
@@ -526,8 +526,8 @@
       {
         "git_mode": "100644",
         "path": "SESSION_HANDOFF.md",
-        "sha256": "19a07fafe3c524de203a1ac24b7e0a263d4088185c099ee66d1441032b28cb75",
-        "size_bytes": 25704
+        "sha256": "4dcd7c6815904a65c9a09ac2aa2a2153f1b9390890f26adb6474c5a90c3ce131",
+        "size_bytes": 26152
       },
       {
         "git_mode": "100644",
@@ -3402,6 +3402,12 @@
         "path": "audit/evidence/workflow-pdf-luatex-map-free-correction-2026-08-06.md",
         "sha256": "2397e8da3d45818a72418bc3894ac8e9d73bbbb7400886c6c03b24df78c6e944",
         "size_bytes": 46089
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/workflow-pdf-text-profile-repair-2026-09-08.md",
+        "sha256": "cb3f30fff01d9214676486bb0568da2759d84ba08bf75e43a21855a9ea44d3ac",
+        "size_bytes": 7312
       },
       {
         "git_mode": "100644",
@@ -6820,8 +6826,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "888bc65bc9cb816c1528dc2ce07514a57465357b69c8d986dc4f4e8a090b7cff",
-        "size_bytes": 268692
+        "sha256": "a21884cf1b4471eaf0d21df7e7c9462e69e4367ef61ccee8e70a1854e8dd0e7f",
+        "size_bytes": 269856
       },
       {
         "git_mode": "100755",
@@ -7036,7 +7042,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "2df2a4281ee6629de435f21e5ba555fe53a4fe3c99f7a227d730398b4490ec13",
+        "sha256": "0f6efde3e8cb34c4a44386250c8f3a6e0bb517f95d0a0af3c485eb0a709bc516",
         "size_bytes": 90915
       },
       {
@@ -7600,7 +7606,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "ee96b05ccf2f4b75880aac903c20f65d3241d6b62751cc15f524dc6a1914b0ba",
+        "sha256": "86259b5c4cf54b898ef2f7540feb11ea6ca0c4d8ea014abe4745f379e69e7664",
         "size_bytes": 136032
       },
       {
@@ -7816,14 +7822,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "abe88fca19b2ac04f9fd98f0dc06171e5cbaac1f42c37cfe149419b6a0df822d",
-        "size_bytes": 285614
+        "sha256": "8b2abde57783899cfb65091e5a5b103d41466aa9a66115130a63818e6fd14d62",
+        "size_bytes": 298976
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "6cb63edac55ce56c459eb1b4e0ef4cef0ef6a76b3bf8943c197f75dcb38cd18d",
-        "size_bytes": 262546
+        "sha256": "20e891182a611fdeac59afd8a1fde9f0f4ba8bfa22c045f9c276a61dea0deffa",
+        "size_bytes": 266564
       },
       {
         "git_mode": "100644",
@@ -8390,8 +8396,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "1cd0c0adc235012864a01042f38520677d337b45efe63d03b1bf7f237b4dc06d",
-    "entry_count": 1374
+    "entries_sha256": "b748482b347ffb75720387854aad9130d2dd4d5cb4ef231a15c3d146a5d031b0",
+    "entry_count": 1375
   },
   "subprojections": [
     {
@@ -8419,7 +8425,7 @@
       ]
     },
     {
-      "entries_sha256": "9bfe69fd22f9d0b1a8124fee2adf5da83955607e3660cfcb06b47f9953894a50",
+      "entries_sha256": "52d342332de87fa34c690c7050c23060f71b18e1fa01c60486aff348f0d57ea3",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

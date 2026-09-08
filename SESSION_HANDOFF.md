@@ -8,6 +8,12 @@ handoff. No local path is required by the public mathematical documents.
 
 ## Resumed recovery checkpoint
 
+The [8 September PDF repair record](audit/evidence/workflow-pdf-text-profile-repair-2026-09-08.md)
+updates the text-portability failure, passing local controls and complete exact PDF suite. It also
+records the separate Linux cache-directory failure and pending results-guide profile. Use its
+current status and the ignored local handoff before acting on older process observations.
+Required hosted checks remain separate from these local results.
+
 The [5 September milestone record](audit/evidence/documentation-verifier-milestone-2026-09-05.md)
 tracks the current recovery after the interrupted observations below. It records the fresh
 archive, independent-first councils, current publication repair, execution failures and fixes,

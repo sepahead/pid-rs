@@ -2873,9 +2873,15 @@ toolchain, or turn correlated checks of the same bytes into independent evidence
 The [September 5 split visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md)
 binds all 87 pages in color and grayscale at 120 dpi, 24 color spots at 300 dpi, and the four
 figure pages in grayscale at 300 dpi. It preserves late observations and reconstructed timing;
-it does not claim sole-root or independent complete review. The checker retains its 381 prior
-controls, including 24 visual negatives, and adds four split-review and four machine-scope
-controls (389 total).
+it does not claim sole-root or independent complete review. The current self-test retains 345
+controls outside the text-portability family, including 24 visual negatives, four split-review
+controls and four machine-scope controls. Its 71 text-portability controls bring the declared total
+to 416. Compact fixtures use independent literal diagram sequences from retained real extractions;
+synthetic surrounding prose and page partitions keep the controls small. They cover all nine
+ordered pairs of the three observed producer profiles, admitted ASCII whitespace, paired malformed
+labels and bounds, an unlisted permutation of the new page 12 profile, and strict content/order
+failures. Source controls also reject floating-point page keys that compare equal to the reviewed
+integers. Fixture expectations are never derived from the candidate checker.
 Twenty scoped lenses separate visible findings from mandatory extraction, font, action and
 reproduction gates. This is agent artifact review, not mathematical proof, accessibility
 certification, human review or hosted success.
@@ -2971,11 +2977,18 @@ status-2 branches against removal or weakening. It also binds the custody record
 and optimized Python and its hostile suite. For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
-tab, and line-feed runs, except for the uniquely identified `Comparison result` and `Checker`
-diagram labels moving only across their exact adjacent anchors on pages 10 and 12; exact per-page
-token frequencies everywhere; and the existing page, geometry, navigation, font, and bounded
-same-renderer color/grayscale raster predicates. CI uses cross-toolchain mode because an unpinned
-runner TeX installation cannot defensibly promise byte identity with the maintainer toolchain.
+tab, and line-feed runs, with exactly two admitted complete diagram profiles on each of pages 10
+and 12; exact per-page token frequencies everywhere; and the existing page, geometry, navigation,
+font, and bounded
+same-renderer color/grayscale raster predicates. The 77-token page 10 profiles are bounded by unique
+`ROUTE DEPENDENCE` and `Figure 3:` markers; the 98-token page 12 profiles by unique `CHANGE CONTROL`
+and `Figure 4:` markers. Both sides must independently match an admitted whole profile, even when
+the input token sequences are identical. Prefix prose, captions, suffix prose and every other
+page retain exact token order. The profiles come from retained macOS/Ubuntu extractions of the
+committed PDF and the source-bound native Ubuntu build reviewed on September 8; an unlisted order
+requires new retained evidence and a separate review. CI uses cross-toolchain mode because an
+unpinned runner TeX installation cannot defensibly promise byte identity with the maintainer
+toolchain.
 This relation does not prove identical layout, mathematical correctness, accessibility,
 renderer independence, pixel identity, or cross-toolchain PDF byte identity. These checks prevent
 a mathematical source or rendered paper from being silently omitted. They verify artifact

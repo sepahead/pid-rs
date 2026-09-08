@@ -5360,34 +5360,35 @@ def subsequence_starts(tokens: list[str], subsequence: tuple[str, ...]) -> list[
     ]
 
 
-def remove_reviewed_label(
+def canonical_reviewed_diagram(
     tokens: list[str],
-    label: tuple[str, ...],
-    anchor: tuple[str, ...],
+    opening: tuple[str, ...],
+    closing: tuple[str, ...],
+    profiles: tuple[tuple[str, ...], ...],
     page_number: int,
     side: str,
 ) -> list[str]:
-    label_starts = subsequence_starts(tokens, label)
-    if len(label_starts) != 1:
+    # The profile enumerates every token inside one bounded diagram. It does not
+    # permit arbitrary permutations, delete labels, or normalize surrounding prose.
+    bounds = []
+    for name, marker in (("opening", opening), ("closing", closing)):
+        starts = subsequence_starts(tokens, marker)
+        if len(starts) != 1:
+            fail(
+                f"layout page {page_number} reviewed diagram {name} occurrence "
+                f"count is {len(starts)} on {side}, expected one"
+            )
+        bounds.append(starts[0])
+    first, after = bounds
+    if first >= after:
+        fail(f"layout page {page_number} reviewed diagram bounds are reversed on {side}")
+    actual = tuple(tokens[first:after])
+    if actual not in profiles:
         fail(
-            f"layout page {page_number} reviewed label occurrence count is "
-            f"{len(label_starts)} on {side}, expected one"
+            f"layout page {page_number} reviewed diagram token order is not an "
+            f"admitted profile on {side}: {len(actual)}/{digest_tokens(list(actual))}"
         )
-    label_start = label_starts[0]
-    residual = tokens[:label_start] + tokens[label_start + len(label) :]
-    anchor_starts = subsequence_starts(residual, anchor)
-    if len(anchor_starts) != 1:
-        fail(
-            f"layout page {page_number} reviewed anchor occurrence count is "
-            f"{len(anchor_starts)} on {side}, expected one"
-        )
-    anchor_start = anchor_starts[0]
-    if label_start not in {anchor_start, anchor_start + len(anchor)}:
-        fail(
-            f"layout page {page_number} reviewed label is not immediately before or "
-            f"after its exact anchor on {side}"
-        )
-    return residual
+    return tokens[:first] + list(profiles[0]) + tokens[after:]
 
 
 try:
@@ -5428,13 +5429,73 @@ if built_default_raw != committed_default_raw:
         f"committed={len(committed_default_raw)}/{digest_bytes(committed_default_raw)}"
     )
 
-reviewed_layout_relocations = {
-    10: (("Comparison", "result"), ("Suite", "3", "·", "corpus")),
+# These finite profiles bind the complete diagram text between unique markers.
+# They are observed orders from retained macOS/Ubuntu extractions of the current
+# committed PDF and a source-bound native Ubuntu build reviewed on 2026-09-08.
+# The two page-10 profiles have 77 tokens; the two page-12 profiles have 98.
+# Other producer orders require new retained evidence and a separate review.
+# Keep default bytes, page frequencies, surrounding prose and other pages strict.
+reviewed_layout_diagrams = {
+    10: (
+        ('ROUTE', 'DEPENDENCE'),
+        ('Figure', '3:'),
+        (
+            tuple((
+                'ROUTE DEPENDENCE Five test suites may still be one semantic route Suite 1 · '
+                'fixture Suite 2 · property SHARED CUT Comparison result Suite 3 · corpus Semantic '
+                'oracle C agreement with C PASS same algebra + assumptions Suite 4 · mutation '
+                'Breadth ≠ independence; record shared dependencies. Suite 5 · replay Result state: '
+                'PASS · audit state: OPEN Candidate route: separate formulation and verifier, '
+                'followed by a dependency audit Separate formulation Distinct verifier Independence '
+                'audit OPEN'
+            ).split(" ")),
+            tuple((
+                'ROUTE DEPENDENCE Five test suites may still be one semantic route Suite 1 · '
+                'fixture Suite 2 · property SHARED CUT Comparison result PASS Suite 3 · corpus '
+                'Semantic oracle C same algebra + agreement with C assumptions Suite 4 · mutation '
+                'Breadth ≠ independence; record shared dependencies. Suite 5 · replay Result state: '
+                'PASS · audit state: OPEN Candidate route: separate formulation and verifier, '
+                'followed by a dependency audit OPEN Separate formulation Distinct verifier '
+                'Independence audit'
+            ).split(" ")),
+        ),
+    ),
     12: (
-        ("Checker",),
-        ("premise", "or", "input", "deterministic", "rule", "exact", "output", "bytes"),
+        ('CHANGE', 'CONTROL'),
+        ('Figure', '4:'),
+        (
+            tuple((
+                'CHANGE CONTROL Invalidation follows prerequisite → dependent edges EDGE '
+                'ORIENTATION: prerequisite → dependent Generator Artifact CHANGED Source Gate '
+                'Publication deterministic exact output Checker premise or input STALE / rerun '
+                'STALE / retract rule bytes semantic verdict PUBLICATION STATE: advance with bound '
+                'evidence; reopen after a prerequisite change OPEN CANDIDATE HOSTED PUBLISHED '
+                'Evidence incomplete Local gates pass Bound hosted run Receipt-bound claim claim is '
+                'not current exact subject tree bound receipt binds run + commit current until '
+                'invalidated invalidating prerequisite change → OPEN + STALE Workflow state ≠ '
+                'evidence class or claim disposition; unreachable nodes retain their governed '
+                'state.'
+            ).split(" ")),
+            tuple((
+                'CHANGE CONTROL Invalidation follows prerequisite → dependent edges EDGE '
+                'ORIENTATION: prerequisite → dependent Generator Artifact CHANGED Source Gate '
+                'Publication premise or input deterministic exact output Checker STALE / rerun '
+                'STALE / retract rule bytes semantic verdict PUBLICATION STATE: advance with bound '
+                'evidence; reopen after a prerequisite change OPEN CANDIDATE HOSTED PUBLISHED '
+                'Evidence incomplete Local gates pass Bound hosted run Receipt-bound claim claim is '
+                'not current exact subject tree bound receipt binds run + commit current until '
+                'invalidated invalidating prerequisite change → OPEN + STALE Workflow state ≠ '
+                'evidence class or claim disposition; unreachable nodes retain their governed '
+                'state.'
+            ).split(" ")),
+        ),
     ),
 }
+# This is a specification sanity check, not a normalization of input counters.
+for page_number, (opening, closing, profiles) in reviewed_layout_diagrams.items():
+    if not profiles or any(Counter(profile) != Counter(profiles[0]) for profile in profiles):
+        fail(f"reviewed diagram profile token inventory differs on page {page_number}")
+
 for page_number, (built_page, committed_page) in enumerate(
     zip(built_layout_pages, committed_layout_pages), start=1
 ):
@@ -5449,23 +5510,17 @@ for page_number, (built_page, committed_page) in enumerate(
             f"committed={len(committed_tokens)}/{len(committed_counter)}/"
             f"{digest_counter(committed_counter)}"
         )
-    if page_number in reviewed_layout_relocations:
-        label, anchor = reviewed_layout_relocations[page_number]
-        built_residual = remove_reviewed_label(
-            built_tokens, label, anchor, page_number, "built"
+    if page_number in reviewed_layout_diagrams:
+        opening, closing, profiles = reviewed_layout_diagrams[page_number]
+        built_tokens = canonical_reviewed_diagram(
+            built_tokens, opening, closing, profiles, page_number, "built"
         )
-        committed_residual = remove_reviewed_label(
-            committed_tokens, label, anchor, page_number, "committed"
+        committed_tokens = canonical_reviewed_diagram(
+            committed_tokens, opening, closing, profiles, page_number, "committed"
         )
-        if built_residual != committed_residual:
-            fail(
-                f"layout residual token order differs on reviewed page {page_number}: "
-                f"built={len(built_residual)}/{digest_tokens(built_residual)}; "
-                f"committed={len(committed_residual)}/{digest_tokens(committed_residual)}"
-            )
-    elif built_tokens != committed_tokens:
+    if built_tokens != committed_tokens:
         fail(
-            f"layout token order differs on page {page_number}: "
+            f"layout token order differs outside admitted diagram profiles on page {page_number}: "
             f"built={len(built_tokens)}/{digest_tokens(built_tokens)}; "
             f"committed={len(committed_tokens)}/{digest_tokens(committed_tokens)}"
         )
@@ -6442,7 +6497,7 @@ PYPDF_MANIFEST_DIGEST="$(sha256_file "$BUILD_ROOT/pypdf.before.tsv")"
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and $EXPECTED_PAGES-page dual-render receipt are exact ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
-  echo "OK: workflow PDF and four SVG/PDF pairs passed their bounded cross-toolchain gates; the report has exact default Poppler extraction bytes, exact per-page layout tokens except the two reviewed adjacent diagram-label relocations, and bounded same-renderer color/grayscale pixels across $EXPECTED_PAGES pages ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
+  echo "OK: workflow PDF and four SVG/PDF pairs passed their bounded cross-toolchain gates; the report has exact default Poppler extraction bytes, exact per-page layout token counts and ordered prose with only the two complete reviewed diagram profiles on each of pages 10 and 12, and bounded same-renderer color/grayscale pixels across $EXPECTED_PAGES pages ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
 else
   echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; a new scoped visual-review receipt must now be bound before --exact can pass"
 fi

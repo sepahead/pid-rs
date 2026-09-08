@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Repair the workflow PDF text comparison for four recorded diagram extraction orders. Keep
+  exact default text, page contents, and prose order. Add controls for malformed equal inputs
+  and non-integer profile keys. Preserve the failed builds and the
+  [repair evidence](audit/evidence/workflow-pdf-text-profile-repair-2026-09-08.md).
+
 - Reconcile current documentation bindings after the publication update. Preserve the hosted
   stale-pin failure and immutable Lean replay history; mathematical sources and claims are unchanged.
 
