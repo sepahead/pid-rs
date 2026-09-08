@@ -310,14 +310,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "d0d55b74cbd83958888e23efde3f9386d6e0305199c6bd41ee80bfd1c4558f8a",
-        "size_bytes": 95133
+        "sha256": "6fb02ab3e38c71a27c7bbfcbb0a5506bbea87f59a881fc9e39ae47fd492a536a",
+        "size_bytes": 95718
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "623412b45bb56d3f00bbc2bedf44a16d03920f6c7fcb15d58cbdf99ed1bea5a9",
-        "size_bytes": 296061
+        "sha256": "9deba667b3b1e3d42b2231ddd8050135309ef3aca18d8cf4e8555941c0fb9ebf",
+        "size_bytes": 296183
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "db70359ba4d98fd304a7942b7bb5b460efb3aca1250dc65c0ac88c1232b108eb",
-        "size_bytes": 82726
+        "sha256": "5b574c985681973f8ef4f3fb374b0e0d02d3fe6a48cb0b437110e4590c007e81",
+        "size_bytes": 82946
       },
       {
         "git_mode": "100644",
@@ -16162,8 +16162,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "15ddcc0ed01fcde58e439d68a145cc3232f521d75d1d087554c3e26167372750",
-        "size_bytes": 274376
+        "sha256": "77f081f49a15fc6b25c31757fbb6dbd145aaca529c7bf2f0ecbeae16b601c5f2",
+        "size_bytes": 274266
       },
       {
         "git_mode": "100755",
@@ -16384,7 +16384,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "0173f54ac5663214a59a89d88117bb6c8d622abed3bcb97b87104f798c632a54",
+        "sha256": "72ff1b39074c45d51cf79c5b4f0897cf4c511d2197a280240a6f522a2af74f27",
         "size_bytes": 90915
       },
       {
@@ -16948,7 +16948,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "129e5c8ec6d107597a591dd1dcbc5625443e4422b9ff9c9b19a5796706156d92",
+        "sha256": "2fe7aaf2e9bc7e0dd2c55229c63cba784223ee989ba120a37feb2c2ef35c6777",
         "size_bytes": 136032
       },
       {
@@ -17750,7 +17750,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "1f0422bc60397a84f7134d4ce100bf8f871d3e6eef306cb23aed5f8734cdf175",
+    "entries_sha256": "69cd13dfb0aef43fa2e5daca3fe9613d709fd3b955b2ed61f61b5a9b41a7c9cf",
     "entry_count": 2934
   },
   "subprojections": [
@@ -17779,7 +17779,7 @@
       ]
     },
     {
-      "entries_sha256": "f3ddb9162179fe4701b86a80e44a302a86ad414d5826e959a833727e50b9ba71",
+      "entries_sha256": "53ef8b85422bdee95cf9ab23d4c90da6512347744f10cd3b929e892c07fe8db8",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

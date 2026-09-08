@@ -98,6 +98,14 @@ dependence-aware uncertainty quantification (block bootstrap, permutation nulls,
 Benjamini–Hochberg/Yekutieli FDR adjustment), reproducible run-logs, typed package-safe software
 identity, and Python bindings.
 
+Use Rust by default for production runtime algorithms, numerical kernels, validation, and
+diagnostics. Prioritize numerical stability and edge cases before adding bindings. Python remains
+appropriate for verification, reference calculations, proof orchestration, and publication tooling.
+Retain existing Python tooling unless a specific measured performance gain, concrete safety
+improvement, or demonstrated runtime-reuse benefit justifies a Rust implementation. Record that
+benefit and preserve the tool's scientific, failure, resource, and provenance contracts through
+the change.
+
 ## Method provenance and novelty claims
 
 **“New in pid-rs” means implementation, API, composition, diagnostic, or engineering work new to

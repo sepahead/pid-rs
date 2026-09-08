@@ -3365,10 +3365,9 @@ historical v0.9.0 ledger as tag-scoped inventory rather than current line or hum
 authenticity, review, scientific, formal, visual, release, or application evidence.
 The top-level `generated_pdfs` field is a selected 11-file PDF byte roster retained for its declared
 roles; it is not an exhaustive directory listing. The `generated_pdf_set` subprojection covers all
-repository-visible entries selected by `output/pdf/`, including the current 20 PDFs and four TSV
-rendering receipts. The directory count is descriptive of this candidate and must be regenerated,
-not hand-maintained as an invariant, after the final
-source freeze; neither count implies that a PDF was rebuilt, reviewed, or accepted.
+repository-visible entries under `output/pdf/`, including PDFs and adjacent rendering receipts.
+Regenerate the manifest after the final source freeze; inclusion does not mean that a PDF was
+rebuilt, reviewed, or accepted.
 
 `check-post-commit-source-state-v2.py` performs that resolution without putting a commit identifier
 back into the tracked manifest. From a clean committed checkout it compares the index and exact

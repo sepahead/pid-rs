@@ -55,6 +55,10 @@ multiple-testing correction, preprocessing, and structured run-logs. Generic res
 are descriptive unless a statistic-specific calibration theorem is supplied. The estimator core is
 safe Rust (`#![forbid(unsafe_code)]`) and reports all information quantities in nats.
 
+The estimator and run-log runtime code is implemented in Rust. The optional Python bindings call
+the Rust core; Python scripts support verification, reference calculations, proof orchestration,
+and publication tooling.
+
 ## Read, use, or continue the project
 
 Choose the entry point for your task. Read the input assumptions and scientific cautions before
