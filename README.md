@@ -103,9 +103,8 @@ keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, W
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
 for the method catalog, claim packets, or detailed proofs. The current 24-page guide uses the v3
 structure profile. Its exact-mode check requires a rebuild to match the committed PDF byte for byte.
-Current Ubuntu hosted admission remains pending fresh producer evidence and review. That route
-checks the retained historical v2 package, then stops before the current build with an explicit
-pending-profile result.
+The selected Ubuntu 24.04/x86 cross-toolchain route checks a fresh build against the reviewed
+v3 raw profile. Strict structure and navigation checks still apply.
 
 The [publication checker guide](scripts/README.md) records the exact profile, commands and
 historical replay boundaries. Earlier v1, v2 and Pandoc 3.1.3 observations remain available there;

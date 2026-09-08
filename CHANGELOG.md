@@ -9,6 +9,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Correct stale Linux results-guide instructions in the README and operational guide to match
+  the adopted v3 profile. Preserve exact-mode checks and historical profile records.
+
 - Prevent Python bytecode writes during isolated workflow PDF checks. Add a source-bound Linux
   profile for the current 24-page results guide. Preserve the failed production run, exact
   historical profiles, and [successor evidence](audit/evidence/publication-runtime-profile-repair-2026-09-08.md).

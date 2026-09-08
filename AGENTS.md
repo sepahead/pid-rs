@@ -799,8 +799,8 @@ HOSTED_GUIDE_V2_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3
 python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
 scripts/check-mathematical-results-guide-pdf.sh --exact  # current 24-page v3; raw repeated-build and rebuilt/committed bytes
-# The selected Ubuntu 24.04/x86 route replays historical v2, then refuses the current v3 build.
-# Current hosted admission is pending fresh producer evidence and review; refusal is expected.
+# The selected Ubuntu 24.04/x86 route rebuilds current v3 against its reviewed raw fixture.
+# Exact fixture bytes or the strict trailer-ID relation are required, with strict v3 structure.
 # The v2 fixture came from translated local x86 execution and carries no hosted-execution credit.
 # Retained 16-page v1 packages are also historical replay evidence only.
 scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain

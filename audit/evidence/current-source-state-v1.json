@@ -310,14 +310,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "16e12224a80805c7a2d2626be2b245944cc1c8ef34a238ab9b5b26542ccbe8a8",
-        "size_bytes": 95136
+        "sha256": "d0d55b74cbd83958888e23efde3f9386d6e0305199c6bd41ee80bfd1c4558f8a",
+        "size_bytes": 95133
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "602317e376ea785a1b766d3382ecc377a09dfcce98617e0392aeb6e847de6c13",
-        "size_bytes": 295510
+        "sha256": "802989d319255e5e41046e1f7539068a15ab06b40ea44ad1e7270876a4f3a668",
+        "size_bytes": 295690
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "a5555dc14218b50d9c3857f11bdaccdfd42900b6cdc8e961794055f7d309f4ce",
-        "size_bytes": 81933
+        "sha256": "55a18e03ea3f16f4d576ac0627b2ee75812e9032ddad205635a17e33e3c79e2d",
+        "size_bytes": 81880
       },
       {
         "git_mode": "100644",
@@ -7630,7 +7630,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "4d70014dc02c0347a38ead2ebe09a434b0d14918f299342d19109139dfc26355",
+        "sha256": "9b7876c846c9319d8cc02b7c050ecb7c8393dfaab205e197ddec850575d6bc24",
         "size_bytes": 136032
       },
       {
@@ -8432,7 +8432,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "9b16ea89f3fd9dd64c168435005f4ccb7a8752d0605382c6f71bc4be3f061f8a",
+    "entries_sha256": "ce0f8ab0157a25c2eb428d5e7ab7c86d4fc66c39d4a199b657a30af64a2d4e78",
     "entry_count": 1381
   },
   "subprojections": [
@@ -8461,7 +8461,7 @@
       ]
     },
     {
-      "entries_sha256": "e1b59d3463a4701376b67fc82ff4282a17b7766f0c5001a19df3bb8af2b4196d",
+      "entries_sha256": "c1d38c3da21af310f065e7b65e58c1741099e1ab7793edc9010c59c646f21915",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
