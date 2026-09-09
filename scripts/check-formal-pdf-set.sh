@@ -51,6 +51,7 @@ STANDALONE_MARKDOWN_PAPERS=(
   "pid-sensor-placement-and-galadriel-guide"
   "post-publication-custody-2026-09-02"
   "prefix-mgw-mean"
+  "recorded-office-sensors"
   "sxpid3-source-marginal-and-bounded-audit"
 )
 
@@ -61,6 +62,7 @@ STANDALONE_MARKDOWN_SOURCES=(
   "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
   "audit/evidence/post-publication-custody-2026-09-02.md"
   "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md"
+  "audit/evidence/real-occupancy-sensors-example-2026-09-08.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
 )
 
@@ -266,8 +268,32 @@ else
   fi
 fi
 
+# Recorded sensors retain discovery separately from an admitted exact reference.
+OCCUPANCY_CONTROL_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-recorded-sensors-controls.XXXXXX")"
+python3 -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir "$OCCUPANCY_CONTROL_PARENT/normal"
+python3 -O -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir "$OCCUPANCY_CONTROL_PARENT/optimized"
+if [[ "$MODE" == "--exact" ]]; then
+  if [[ -z "${PID_RS_OCCUPANCY_TEX_ROOT:-}" ]]; then
+    echo "formal PDF set: exact recorded sensors require PID_RS_OCCUPANCY_TEX_ROOT" >&2
+    exit 2
+  fi
+  OCCUPANCY_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-recorded-sensors.XXXXXX")"
+  python3 -I -S -B scripts/build-recorded-office-sensors-pdf.py --exact --check --tex-root "$PID_RS_OCCUPANCY_TEX_ROOT" --work-dir "$OCCUPANCY_BUILD_PARENT/build"
+else
+  if python3 -I -S -B scripts/build-recorded-office-sensors-pdf.py --cross-toolchain; then
+    echo "formal PDF set: recorded sensors cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    OCCUPANCY_CROSS_STATUS=$?
+  fi
+  if [[ "$OCCUPANCY_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: recorded sensors refusal returned $OCCUPANCY_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt and mean exposition intentionally have no accepted cross-toolchain relation, and all three status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition and recorded-sensor document intentionally have no accepted cross-toolchain relation, and all four status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

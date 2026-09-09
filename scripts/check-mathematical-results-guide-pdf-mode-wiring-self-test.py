@@ -2054,7 +2054,7 @@ def exercise_capture_function(root: pathlib.Path, fragment: str) -> int:
         "format_mode": "0444",
         "format_nlink": "1",
         "format_uid": str(os.geteuid()),
-        "format_gid": str(os.getegid()),
+        "format_gid": str(format_path.stat().st_gid),
         "format_writable": "no",
     }
     for key, expected in expected_stable.items():

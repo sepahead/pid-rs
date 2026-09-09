@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="80mm" viewBox="0 0 1680 800" role="img" aria-labelledby="title desc">
+  <title id="title">Signed MGW terms explain a small conditional mutual information</title>
+  <desc id="desc">For the later occupancy recording, unique CO2 is minus 0.178691053 nats and synergy is plus 0.180249065 nats. Their sum is conditional mutual information of 0.001558012 nats. All three bars use the same linear scale and zero. The signed terms nearly cancel. These are empirical categorical MGW values, not continuous PID or a sensor-placement recommendation.</desc>
+  <style>
+    text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
+    .title { font-size: 44px; font-weight: 700; fill: #1F3F60; }
+    .label { font-size: 34px; font-weight: 700; }
+    .body { font-size: 30px; }
+    .tick { font-size: 27px; }
+  </style>
+  <rect width="1680" height="800" fill="#F7F3E9"/>
+  <rect width="1680" height="24" fill="#1F3F60"/>
+  <text x="70" y="92" class="title">Signed terms explain a small conditional MI</text>
+  <text x="70" y="143" class="body">Later recording · fixed four-bin Light and CO₂ · binary occupancy</text>
+  <path d="M1060 188 V610" stroke="#2C3E50" stroke-width="2" stroke-dasharray="8 7"/>
+  <text x="70" y="237" class="label">Unique CO₂</text>
+  <text x="70" y="282" class="body">−0.178691053 nats</text>
+  <rect x="702.617895" y="222" width="357.382105" height="48" fill="#743E37"/>
+  <text x="70" y="367" class="label">Synergy</text>
+  <text x="70" y="412" class="body">+0.180249065 nats</text>
+  <rect x="1060" y="352" width="360.498130" height="48" fill="#1F6968"/>
+  <text x="70" y="497" class="label">Conditional MI</text>
+  <text x="70" y="542" class="body">+0.001558012 nats</text>
+  <rect x="1060" y="482" width="3.116025" height="48" fill="#1F3F60"/>
+  <path d="M1064 506 H1130" stroke="#1F3F60" stroke-width="2"/>
+  <text x="1150" y="516" class="body">Small positive remainder</text>
+  <path d="M560 610 H1560 M560 600 V620 M810 600 V620 M1060 600 V620 M1310 600 V620 M1560 600 V620" fill="none" stroke="#2C3E50" stroke-width="2"/>
+  <g text-anchor="middle" class="tick">
+    <text x="560" y="653">−0.25</text><text x="810" y="653">−0.125</text>
+    <text x="1060" y="653">0</text><text x="1310" y="653">+0.125</text><text x="1560" y="653">+0.25</text>
+  </g>
+  <text x="70" y="709" class="body">Unique CO₂ + synergy = I(CO₂ bin; occupancy | Light bin)</text>
+  <text x="70" y="757" class="tick">One common linear scale, in nats. Signed MGW contributions are not sensor fault scores.</text>
+</svg>

@@ -1,0 +1,713 @@
+{
+  "scope": "Three fixed empirical MGW PMFs; definition-level natural-log arithmetic with integer event counts. No population calibration or formal Rust refinement. Outcomes were already visible; development comparison only.",
+  "rows": [
+    {
+      "recording": "datatraining.txt",
+      "n": 8143,
+      "states": 16,
+      "edges": [
+        [
+          0.0,
+          386.5833333333325,
+          773.166666666665,
+          1159.7499999999975,
+          1546.33333333333
+        ],
+        [
+          412.75,
+          816.6875,
+          1220.625,
+          1624.5625,
+          2028.5
+        ]
+      ],
+      "terms": [
+        {
+          "state": [
+            0,
+            0,
+            0
+          ],
+          "count": 6110,
+          "union_count": 6888,
+          "union_target_count": 6367,
+          "target_count": 6414,
+          "local_net_nats": 0.16002319512348967
+        },
+        {
+          "state": [
+            0,
+            0,
+            1
+          ],
+          "count": 4,
+          "union_count": 6888,
+          "union_target_count": 521,
+          "target_count": 1729,
+          "local_net_nats": -1.0321705485703592
+        },
+        {
+          "state": [
+            0,
+            1,
+            0
+          ],
+          "count": 137,
+          "union_count": 7204,
+          "union_target_count": 6371,
+          "target_count": 6414,
+          "local_net_nats": 0.11579557703467251
+        },
+        {
+          "state": [
+            0,
+            1,
+            1
+          ],
+          "count": 4,
+          "union_count": 7204,
+          "union_target_count": 833,
+          "target_count": 1729,
+          "local_net_nats": -0.6077426083451631
+        },
+        {
+          "state": [
+            0,
+            2,
+            0
+          ],
+          "count": 59,
+          "union_count": 6541,
+          "union_target_count": 6324,
+          "target_count": 6414,
+          "local_net_nats": 0.20493742158218098
+        },
+        {
+          "state": [
+            0,
+            2,
+            1
+          ],
+          "count": 1,
+          "union_count": 6541,
+          "union_target_count": 217,
+          "target_count": 1729,
+          "local_net_nats": -1.8563325286369123
+        },
+        {
+          "state": [
+            0,
+            3,
+            0
+          ],
+          "count": 18,
+          "union_count": 6515,
+          "union_target_count": 6324,
+          "target_count": 6414,
+          "local_net_nats": 0.20892026998444818
+        },
+        {
+          "state": [
+            0,
+            3,
+            1
+          ],
+          "count": 2,
+          "union_count": 6515,
+          "union_target_count": 191,
+          "target_count": 1729,
+          "local_net_nats": -1.9799736057284747
+        },
+        {
+          "state": [
+            1,
+            0,
+            0
+          ],
+          "count": 40,
+          "union_count": 7922,
+          "union_target_count": 6200,
+          "target_count": 6414,
+          "local_net_nats": -0.006418845934647938
+        },
+        {
+          "state": [
+            1,
+            0,
+            1
+          ],
+          "count": 510,
+          "union_count": 7922,
+          "union_target_count": 1722,
+          "target_count": 1729,
+          "local_net_nats": 0.02345816258965496
+        },
+        {
+          "state": [
+            1,
+            1,
+            0
+          ],
+          "count": 47,
+          "union_count": 1946,
+          "union_target_count": 224,
+          "target_count": 6414,
+          "local_net_nats": -1.9232096496768794
+        },
+        {
+          "state": [
+            1,
+            1,
+            1
+          ],
+          "count": 822,
+          "union_count": 1946,
+          "union_target_count": 1722,
+          "target_count": 1729,
+          "local_net_nats": 1.4273258780255667
+        },
+        {
+          "state": [
+            1,
+            2,
+            1
+          ],
+          "count": 206,
+          "union_count": 1865,
+          "union_target_count": 1719,
+          "target_count": 1729,
+          "local_net_nats": 1.468097129088774
+        },
+        {
+          "state": [
+            1,
+            3,
+            1
+          ],
+          "count": 180,
+          "union_count": 1825,
+          "union_target_count": 1720,
+          "target_count": 1729,
+          "local_net_nats": 1.4903597595747478
+        },
+        {
+          "state": [
+            2,
+            0,
+            0
+          ],
+          "count": 1,
+          "union_count": 6667,
+          "union_target_count": 6153,
+          "target_count": 6414,
+          "local_net_nats": 0.15844534533646135
+        },
+        {
+          "state": [
+            3,
+            0,
+            0
+          ],
+          "count": 2,
+          "union_count": 6667,
+          "union_target_count": 6153,
+          "target_count": 6414,
+          "local_net_nats": 0.15844534533646135
+        }
+      ],
+      "comparisons": [
+        {
+          "field": "red",
+          "definition_value": 0.32700818927433095,
+          "rust_value": 0.3270081892743308,
+          "absolute_difference": 1.6653345369377348e-16
+        },
+        {
+          "field": "unq1",
+          "definition_value": 0.137262473143423,
+          "rust_value": 0.1372624731434231,
+          "absolute_difference": 1.1102230246251565e-16
+        },
+        {
+          "field": "unq2",
+          "definition_value": -0.11595973773604018,
+          "rust_value": -0.11595973773604001,
+          "absolute_difference": 1.6653345369377348e-16
+        },
+        {
+          "field": "syn",
+          "definition_value": 0.12091160632844183,
+          "rust_value": 0.12091160632844175,
+          "absolute_difference": 8.326672684688674e-17
+        },
+        {
+          "field": "mi_s1_t",
+          "definition_value": 0.46427066241775394,
+          "rust_value": 0.464270662417754,
+          "absolute_difference": 5.551115123125783e-17
+        },
+        {
+          "field": "mi_s2_t",
+          "definition_value": 0.21104845153829077,
+          "rust_value": 0.2110484515382908,
+          "absolute_difference": 2.7755575615628914e-17
+        },
+        {
+          "field": "mi_s1s2_t",
+          "definition_value": 0.4692225310101556,
+          "rust_value": 0.4692225310101556,
+          "absolute_difference": 0.0
+        }
+      ]
+    },
+    {
+      "recording": "datatest.txt",
+      "n": 2665,
+      "states": 10,
+      "edges": [
+        [
+          0.0,
+          386.5833333333325,
+          773.166666666665,
+          1159.7499999999975,
+          1546.33333333333
+        ],
+        [
+          412.75,
+          816.6875,
+          1220.625,
+          1624.5625,
+          2028.5
+        ]
+      ],
+      "terms": [
+        {
+          "state": [
+            0,
+            0,
+            0
+          ],
+          "count": 1528,
+          "union_count": 1875,
+          "union_target_count": 1671,
+          "target_count": 1693,
+          "local_net_nats": 0.3385155446576921
+        },
+        {
+          "state": [
+            0,
+            0,
+            1
+          ],
+          "count": 3,
+          "union_count": 1875,
+          "union_target_count": 204,
+          "target_count": 972,
+          "local_net_nats": -1.2096404124207891
+        },
+        {
+          "state": [
+            0,
+            1,
+            0
+          ],
+          "count": 111,
+          "union_count": 2253,
+          "union_target_count": 1661,
+          "target_count": 1693,
+          "local_net_nats": 0.14885912364786003
+        },
+        {
+          "state": [
+            1,
+            0,
+            0
+          ],
+          "count": 32,
+          "union_count": 2529,
+          "union_target_count": 1582,
+          "target_count": 1693,
+          "local_net_nats": -0.01543214387555638
+        },
+        {
+          "state": [
+            1,
+            0,
+            1
+          ],
+          "count": 201,
+          "union_count": 2529,
+          "union_target_count": 947,
+          "target_count": 972,
+          "local_net_nats": 0.026323378655618963
+        },
+        {
+          "state": [
+            1,
+            1,
+            0
+          ],
+          "count": 22,
+          "union_count": 1134,
+          "union_target_count": 165,
+          "target_count": 1693,
+          "local_net_nats": -1.473859055920307
+        },
+        {
+          "state": [
+            1,
+            1,
+            1
+          ],
+          "count": 564,
+          "union_count": 1134,
+          "union_target_count": 969,
+          "target_count": 972,
+          "local_net_nats": 0.8513616597425748
+        },
+        {
+          "state": [
+            1,
+            2,
+            1
+          ],
+          "count": 179,
+          "union_count": 998,
+          "union_target_count": 944,
+          "target_count": 972,
+          "local_net_nats": 0.9529764219735426
+        },
+        {
+          "state": [
+            2,
+            1,
+            1
+          ],
+          "count": 22,
+          "union_count": 722,
+          "union_target_count": 589,
+          "target_count": 972,
+          "local_net_nats": 0.8050045768982664
+        },
+        {
+          "state": [
+            3,
+            1,
+            1
+          ],
+          "count": 3,
+          "union_count": 722,
+          "union_target_count": 589,
+          "target_count": 972,
+          "local_net_nats": 0.8050045768982664
+        }
+      ],
+      "comparisons": [
+        {
+          "field": "red",
+          "definition_value": 0.44029806193270227,
+          "rust_value": 0.44029806193270227,
+          "absolute_difference": 0.0
+        },
+        {
+          "field": "unq1",
+          "definition_value": 0.1287638817730068,
+          "rust_value": 0.12876388177300685,
+          "absolute_difference": 5.551115123125783e-17
+        },
+        {
+          "field": "unq2",
+          "definition_value": -0.15070199066964357,
+          "rust_value": -0.15070199066964363,
+          "absolute_difference": 5.551115123125783e-17
+        },
+        {
+          "field": "syn",
+          "definition_value": 0.15941183002710696,
+          "rust_value": 0.15941183002710713,
+          "absolute_difference": 1.6653345369377348e-16
+        },
+        {
+          "field": "mi_s1_t",
+          "definition_value": 0.5690619437057091,
+          "rust_value": 0.569061943705709,
+          "absolute_difference": 1.1102230246251565e-16
+        },
+        {
+          "field": "mi_s2_t",
+          "definition_value": 0.2895960712630587,
+          "rust_value": 0.2895960712630587,
+          "absolute_difference": 0.0
+        },
+        {
+          "field": "mi_s1s2_t",
+          "definition_value": 0.5777717830631725,
+          "rust_value": 0.5777717830631725,
+          "absolute_difference": 0.0
+        }
+      ]
+    },
+    {
+      "recording": "datatest2.txt",
+      "n": 9752,
+      "states": 16,
+      "edges": [
+        [
+          0.0,
+          386.5833333333325,
+          773.166666666665,
+          1159.7499999999975,
+          1546.33333333333
+        ],
+        [
+          412.75,
+          816.6875,
+          1220.625,
+          1624.5625,
+          2028.5
+        ]
+      ],
+      "terms": [
+        {
+          "state": [
+            0,
+            0,
+            0
+          ],
+          "count": 6354,
+          "union_count": 8497,
+          "union_target_count": 7687,
+          "target_count": 7703,
+          "local_net_nats": 0.13567995915373224
+        },
+        {
+          "state": [
+            0,
+            0,
+            1
+          ],
+          "count": 9,
+          "union_count": 8497,
+          "union_target_count": 810,
+          "target_count": 2049,
+          "local_net_nats": -0.7903136684148492
+        },
+        {
+          "state": [
+            0,
+            1,
+            0
+          ],
+          "count": 473,
+          "union_count": 8649,
+          "union_target_count": 7669,
+          "target_count": 7703,
+          "local_net_nats": 0.115605050266489
+        },
+        {
+          "state": [
+            0,
+            1,
+            1
+          ],
+          "count": 2,
+          "union_count": 8649,
+          "union_target_count": 980,
+          "target_count": 2049,
+          "local_net_nats": -0.6175258917196866
+        },
+        {
+          "state": [
+            0,
+            2,
+            0
+          ],
+          "count": 788,
+          "union_count": 7903,
+          "union_target_count": 7653,
+          "target_count": 7703,
+          "local_net_nats": 0.20371782241308747
+        },
+        {
+          "state": [
+            0,
+            2,
+            1
+          ],
+          "count": 1,
+          "union_count": 7903,
+          "union_target_count": 250,
+          "target_count": 2049,
+          "local_net_nats": -1.893416272420521
+        },
+        {
+          "state": [
+            0,
+            3,
+            0
+          ],
+          "count": 38,
+          "union_count": 7698,
+          "union_target_count": 7653,
+          "target_count": 7703,
+          "local_net_nats": 0.2299997017743713
+        },
+        {
+          "state": [
+            1,
+            0,
+            0
+          ],
+          "count": 34,
+          "union_count": 8446,
+          "union_target_count": 6404,
+          "target_count": 7703,
+          "local_net_nats": -0.040907632569141934
+        },
+        {
+          "state": [
+            1,
+            0,
+            1
+          ],
+          "count": 688,
+          "union_count": 8446,
+          "union_target_count": 2042,
+          "target_count": 2049,
+          "local_net_nats": 0.14035728615292967
+        },
+        {
+          "state": [
+            1,
+            1,
+            0
+          ],
+          "count": 16,
+          "union_count": 2452,
+          "union_target_count": 523,
+          "target_count": 7703,
+          "local_net_nats": -1.3092153041830374
+        },
+        {
+          "state": [
+            1,
+            1,
+            1
+          ],
+          "count": 964,
+          "union_count": 2452,
+          "union_target_count": 1929,
+          "target_count": 2049,
+          "local_net_nats": 1.3202182387718346
+        },
+        {
+          "state": [
+            1,
+            2,
+            1
+          ],
+          "count": 238,
+          "union_count": 2762,
+          "union_target_count": 1924,
+          "target_count": 2049,
+          "local_net_nats": 1.198571820178622
+        },
+        {
+          "state": [
+            1,
+            3,
+            1
+          ],
+          "count": 33,
+          "union_count": 2011,
+          "union_target_count": 1923,
+          "target_count": 2049,
+          "local_net_nats": 1.5153748787383354
+        },
+        {
+          "state": [
+            2,
+            0,
+            1
+          ],
+          "count": 110,
+          "union_count": 7197,
+          "union_target_count": 809,
+          "target_count": 2049,
+          "local_net_nats": -0.6255001115271049
+        },
+        {
+          "state": [
+            2,
+            1,
+            1
+          ],
+          "count": 2,
+          "union_count": 1569,
+          "union_target_count": 1080,
+          "target_count": 2049,
+          "local_net_nats": 1.1866430903074405
+        },
+        {
+          "state": [
+            3,
+            1,
+            1
+          ],
+          "count": 2,
+          "union_count": 1459,
+          "union_target_count": 970,
+          "target_count": 2049,
+          "local_net_nats": 1.1519100458968505
+        }
+      ],
+      "comparisons": [
+        {
+          "field": "red",
+          "definition_value": 0.2762384577293374,
+          "rust_value": 0.2762384577293375,
+          "absolute_difference": 1.1102230246251565e-16
+        },
+        {
+          "field": "unq1",
+          "definition_value": 0.2047814202532997,
+          "rust_value": 0.20478142025329962,
+          "absolute_difference": 8.326672684688674e-17
+        },
+        {
+          "field": "unq2",
+          "definition_value": -0.17869105251543138,
+          "rust_value": -0.17869105251543144,
+          "absolute_difference": 5.551115123125783e-17
+        },
+        {
+          "field": "syn",
+          "definition_value": 0.1802490649198324,
+          "rust_value": 0.18024906491983247,
+          "absolute_difference": 8.326672684688674e-17
+        },
+        {
+          "field": "mi_s1_t",
+          "definition_value": 0.4810198779826371,
+          "rust_value": 0.4810198779826372,
+          "absolute_difference": 5.551115123125783e-17
+        },
+        {
+          "field": "mi_s2_t",
+          "definition_value": 0.09754740521390604,
+          "rust_value": 0.09754740521390605,
+          "absolute_difference": 1.3877787807814457e-17
+        },
+        {
+          "field": "mi_s1s2_t",
+          "definition_value": 0.48257789038703813,
+          "rust_value": 0.48257789038703813,
+          "absolute_difference": 0.0
+        }
+      ]
+    }
+  ],
+  "completed_utc": "2026-09-09T02:00:57.914043+00:00",
+  "completed_monotonic_ns": 1065176213280125,
+  "status": "all21finite_numerical_comparisons_within1e-12"
+}

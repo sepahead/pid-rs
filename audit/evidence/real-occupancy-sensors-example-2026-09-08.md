@@ -1,0 +1,232 @@
+# Recorded office sensors: what categorical and continuous shared exclusions can establish
+
+**Evidence status:** the Rust example has compiled, passed Clippy, built in release mode and evaluated all three recordings. It produced categorical MGW results and the three expected continuous-support refusals. A separate calculation from integer event counts agrees with all 21 compared MI and net-atom values within 1e-12 nats. These are finite numerical checks, not a formal Rust refinement or population-calibration theorem. PDF layout and reproduction are assessed separately from these numerical checks.
+
+This example uses recorded room measurements and photograph-derived occupancy labels. Four training-fitted bins for light and CO₂ give a small categorical object that the existing shared-exclusions API can evaluate. The same binary target prevents admission to the current continuous Ehrlich/Wibral estimator. Keeping both findings visible is part of the example.
+
+## Data and roles
+
+UCI identifies this as experimental office-occupancy data, with occupancy labels obtained from photographs taken every minute. The download contains three time-series files. UCI lists temperature in °C, relative humidity in %, light in lux, CO₂ in ppm, and humidity ratio in kg water vapor/kg air; it identifies humidity ratio as derived from temperature and relative humidity. These are the provider's provenance and units, not an independent audit of the instruments or labels. The retrieved record does not specify a timezone or the exact humidity-ratio formula. [UCI Occupancy Detection](https://archive.ics.uci.edu/dataset/357/occupancy+detection).
+
+| Role | File | Rows | Timestamp range, timezone unspecified | Occupied rows |
+|---|---|---:|---|---:|
+| Training | `datatraining.txt` | 8,143 | 2015-02-04 17:51:00 → 2015-02-10 09:33:00 | 1,729 |
+| Earlier held-out | `datatest.txt` | 2,665 | 2015-02-02 14:19:00 → 2015-02-04 10:43:00 | 972 |
+| Later held-out | `datatest2.txt` | 9,752 | 2015-02-11 14:48:00 → 2015-02-18 09:19:00 | 2,049 |
+
+The official first test recording predates training. It is a held-out earlier-recording comparison, not prospective evaluation. The second test recording follows training and provides the later-recording comparison. The recordings have no shared timestamps, but that does not establish statistical independence. No room, person, or building beyond the recorded office is held out here.
+
+![Recording roles and aligned inputs. Only training rows determine the two source maps.](../formal/latex/figures/real-occupancy-sensors/recording-roles.svg)
+
+One original row supplies two simultaneous sources, light and CO₂, and the original binary target, occupancy. The target means the provider's unoccupied/occupied label; it does not encode head count, comfort, ventilation adequacy, energy use, a forecast horizon, or sensor quality. No lag, interpolation, resampling or timestamp join is used for this same-row task. An association with occupancy cannot identify its physical cause.
+
+The table below transcribes the first raw data row in each file, including channels excluded from the main pair. The timestamps and decimal strings are preserved; the table is not a generated measurement.
+
+| Original field | Training row | Earlier test row | Later test row |
+|---|---|---|---|
+| Row identifier | 1 | 140 | 1 |
+| Timestamp | 2015-02-04 17:51:00 | 2015-02-02 14:19:00 | 2015-02-11 14:48:00 |
+| Temperature (°C) | 23.18 | 23.7 | 21.76 |
+| Relative humidity (%) | 27.272 | 26.272 | 31.1333333333333 |
+| Light (lux) | 426 | 585.2 | 437.333333333333 |
+| CO₂ (ppm) | 721.25 | 749.2 | 1029.66666666667 |
+| Humidity ratio (kg water vapor/kg air) | 0.00479298817650529 | 0.00476416302416414 | 0.00502101089021385 |
+| Occupancy (0/1) | 1 | 1 | 1 |
+
+## What the files actually contain
+
+Parsing the original CSV bytes gives 20,560 rows with no empty or nonfinite numeric cells, invalid target labels, duplicate timestamps or non-increasing timestamps. Every within-file interval is 59, 60 or 61 seconds. Counts of those intervals are 1,629/4,884/1,629 in training, 534/1,596/534 in the earlier test, and 1,951/5,849/1,951 in the later test. This supports approximate minute spacing, not an exact 60-second cadence. Missing physical events or label errors cannot be ruled out by complete CSV fields.
+
+The header has seven named fields, while data rows have eight fields because a leading row identifier is unnamed. Identifiers restart across files and must not be used to join recordings. Timestamps are quoted in the first two files and unquoted in `datatest2.txt`. The example parses this specific, hash-checked format; it is not a general CSV loader.
+
+The UCI table's integer type labels for temperature and light do not match the fractional values in the files. For example, training contains 7,653 fractional temperature readings and 1,085 fractional light readings. Decimal strings with long tails also occur. Printed precision, instrument resolution, within-minute aggregation and physical measurement accuracy are different things; the retrieved metadata does not establish the latter three.
+
+Some complete five-channel tuples repeat: duplicate excess beyond one occurrence per distinct tuple is 867 in training, 82 in the earlier test and 488 in the later test. For the selected light/CO₂ pair the corresponding counts are 4,411, 643 and 4,493. Training has 889 distinct represented light values and 2,282 distinct represented CO₂ values. Such counts describe these records; they do not identify the population support or an effective independent sample size.
+
+The following moments use the empirical distribution assigning mass 1/n to each row. Standard deviations divide by n. Bounds are observed minima and maxima, not population bounds. Light retains lux and CO₂ retains ppm; neither source is standardized for the categorical map.
+
+| Recording | Channel | Observed min | Observed max | Empirical mean | Empirical SD |
+|---|---|---:|---:|---:|---:|
+| Training | Light | 0.000000 | 1546.333333 | 119.519375 | 194.743846 |
+| Training | CO2 | 412.750000 | 2028.500000 | 606.546243 | 314.301576 |
+| Earlier held-out | Light | 0.000000 | 1697.250000 | 193.227556 | 250.163957 |
+| Earlier held-out | CO2 | 427.500000 | 1402.250000 | 717.906470 | 292.626801 |
+| Later held-out | Light | 0.000000 | 1581.000000 | 123.067930 | 208.210599 |
+| Later held-out | CO2 | 484.666667 | 2076.500000 | 753.224832 | 297.080881 |
+
+Full per-channel ranges, moments, decimal-place counts, smallest positive represented decimal spacings, repeated values, daily sample/label counts and raw sample rows are in [data facts](real-occupancy-sensors-example-2026-09-08/data-facts.json). Daily groups are retained for interpretation; their sizes and occupancy proportions differ. February 7–8 in training and February 14–15 in the later test each contain 1,440 rows with an all-zero target. Under each of those daily empirical PMFs, target entropy and all Shannon mutual informations with that target are zero.
+
+## The fitted categorical object
+
+Let L and C denote the light and CO₂ values in an aligned row, and Y the original occupancy bit. Fit four equal-width bins separately to L and C in `datatraining.txt`, then apply those same maps to all three recordings. Four bins and this source pair were fixed before viewing numerical outcomes; the tests do not select either choice.
+
+The light edges, in lux, are `[0, 386.5833333333325, 773.166666666665, 1159.7499999999975, 1546.33333333333]`. The CO₂ edges, in ppm, are `[412.75, 816.6875, 1220.625, 1624.5625, 2028.5]`. Interior edges go to the higher bin, the training minimum goes to bin 0, and the maximum goes to bin 3. Values below/above the training range go to the boundary bins under an explicitly declared `ClampToBoundary` policy. There is one above-range light value in each test and three above-range CO₂ values in the later test. No selected source falls below its training minimum. The default error policy would therefore reject affected held-out transforms; retaining those rows requires the explicit tail rule.
+
+The empirical object in each recording is the joint PMF of `(Q_L(L), Q_C(C), Y)`, conditional on the retained training maps. Its nominal alphabet has 4 × 4 × 2 = 32 states. Only 16, 10 and 16 joint states are observed in training, the earlier test and the later test, respectively. Six, two and four observed cells have fewer than five rows; minimum positive cell counts are one, three and one. An absent empirical cell is not evidence that the corresponding population probability is zero.
+
+`EqualWidthQuantizer` retains each fitted map, its training/input identities and its occupancy diagnostics. The [Rust example](../../crates/pid-core/examples/occupancy_sensors.rs) feeds the two transformed matrices and the unchanged binary target to `discrete_sxpid2_averaged_with_budget`, retaining both quantizer reports alongside the result. This explicit composition avoids quantizing an already binary target. The categorical call's encoding tag describes its supplied integer labels; the surrounding report identifies the fitted source estimand.
+
+The PID quantity is the Makkeh–Gutknecht–Wibral shared-exclusions decomposition on that empirical PMF. It is measure-specific; Shannon MI and CMI alone do not determine its atoms. The reported atom net values are signed and must not be clamped. The implementation and provenance distinctions are documented in the [method catalog](../../METHODS.md), with the defining paper, Makkeh–Gutknecht–Wibral, *Introducing a differentiable measure of pointwise shared information*, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5). The [complete Rust output](real-occupancy-sensors-example-2026-09-08/runtime-results.json) retains informative, misinformative and net components.
+
+## Shannon comparisons on the same PMF
+
+Let $A=Q_L(L)$ and $B=Q_C(C)$ denote the fitted source labels. For finite variables $X,Y$ in a nonempty recording of $N>0$ rows, write $\widehat p(x,y)=N_{x,y}/N$ for the fraction of rows in each joint state, and obtain marginal probabilities by summation. Entropy measures target uncertainty, while mutual information measures the average change in target information when the source is given:
+
+$$
+H(Y)=-\sum_{y:\widehat p(y)>0}\widehat p(y)\log\widehat p(y),
+\qquad
+I(X;Y)=\sum_{(x,y):\widehat p(x,y)>0}
+\widehat p(x,y)\log\frac{\widehat p(x,y)}{\widehat p(x)\widehat p(y)}.
+$$
+
+Only positive joint masses enter the sum, so every displayed logarithm has a positive argument. For $X=(A,B)$, the same definition gives joint-source MI. Conditional MI averages the information within each supported $A=a$ group:
+
+$$
+I(B;Y\mid A)=\sum_{(a,b,y):\widehat p(a,b,y)>0}
+\widehat p(a,b,y)\log
+\frac{\widehat p(a,b,y)\widehat p(a)}{\widehat p(a,b)\widehat p(a,y)}
+=I(A,B;Y)-I(A;Y).
+$$
+
+The last equality follows by expanding the two MI logarithms and cancelling their common marginal factors. Each formula describes one recording's empirical PMF. These are the classical Shannon quantities, separate from the measure-specific MGW redundancy defined below. [Gray, *Entropy and Information Theory*, §5.5](https://ee.stanford.edu/~gray/it.pdf).
+
+The following calculations were executed with standard-library counts and natural logarithms. They use each recording's labels and its empirical PMF, with the same training-fitted maps. They are descriptive plug-in values, not independent-sample estimates with calibrated uncertainty. For finite categorical Y, the population or empirical Shannon MI is bounded between zero and H(Y). For this binary target, H(Y) is at most ln 2 ≈ 0.693147 nats. CMI has its corresponding nonnegative conditional-entropy bound. These bounds follow from finite-target conditional entropy and the Shannon chain rule; see [Gray, *Entropy and Information Theory*, corrected first edition (2023), §5.5, Lemmas 5.5.2, 5.5.6–5.5.7](https://ee.stanford.edu/~gray/it.pdf). They do not impose nonnegativity on shared-exclusions atoms.
+
+| Recording | H(Y) | I(L;Y) | I(C;Y) | I(L,C;Y) | I(C;Y given L) | I(L;Y given C) |
+|---|---:|---:|---:|---:|---:|---:|
+| Training | 0.517027 | 0.464271 | 0.211048 | 0.469223 | 0.004952 | 0.258174 |
+| Earlier held-out | 0.656090 | 0.569062 | 0.289596 | 0.577772 | 0.008710 | 0.288176 |
+| Later held-out | 0.514103 | 0.481020 | 0.097547 | 0.482578 | 0.001558 | 0.385030 |
+
+In this table L and C abbreviate their fitted categorical labels. CMI is computed by the chain-rule difference using the same empirical PMF, for example I(C;Y given L) = I(L,C;Y) − I(L;Y). CO₂ carries little additional plug-in information once the light bin is given, especially in the later recording. This is a statement about these maps and recordings, not an assertion that CO₂ has no useful role under different lighting, time alignment or prediction tasks. It is also not a PID redundancy or synergy estimate.
+
+## From one recorded row to the MGW decomposition
+
+Write $A=Q_L(L)$ and $B=Q_C(C)$ for the fitted source labels. Choose a row uniformly from one recording of $N$ rows. This defines its empirical PMF without an IID assumption about the physical time series. For a supported outcome $(a,b,y)$, let $E_{a,b}$ be the event $A=a$ **or** $B=b$. Let $N_E$, $N_y$ and $N_{E,y}$ count rows in that event, rows with target $y$, and rows satisfying both conditions. The pointwise MGW redundancy is
+
+$$
+i^{\mathrm{sx}}_\cap(y;a,b)
+=\log\frac{\widehat P(Y=y\mid E_{a,b})}{\widehat P(Y=y)}
+=\log\frac{N\,N_{E,y}}{N_E N_y}.
+$$
+
+All three denominator/intersection counts are positive for an observed outcome. The disjunction is essential: it expresses the shared exclusion event in this definition. Replacing it by an intersection or a minimum of two mutual informations defines a different quantity. This is the published categorical MGW construction, applied to the empirical law; it is not a new estimator. [Makkeh–Gutknecht–Wibral, arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5).
+
+For the first training row, light $426$ lux maps to $a=1$, CO₂ $721.25$ ppm maps to $b=0$, and $y=1$. There are $N=8143$ rows, $N_E=7922$ rows in the source disjunction, $N_y=1729$ occupied rows, and $N_{E,y}=1722$ occupied rows in the disjunction. Thus
+
+$$
+i^{\mathrm{sx}}_\cap(1;1,0)
+=\log\frac{8143\cdot1722}{7922\cdot1729}
+=\log\frac{14022246}{13697138}.
+$$
+
+This is approximately $0.023458163$ nats. The triple $(1,0,1)$ occurs in 510 rows; all of them have this same local value. To obtain averaged redundancy $R$, weight each supported triple's local value by its empirical frequency $N_{a,b,y}/N$:
+
+$$
+R=\sum_{(a,b,y):N_{a,b,y}>0}
+\frac{N_{a,b,y}}{N}\,i^{\mathrm{sx}}_\cap(y;a,b).
+$$
+
+The two-source reconstruction then gives the unique light contribution $U_L$, unique CO₂ contribution $U_C$, and synergy $S$:
+
+$$
+U_L=I(A;Y)-R,\qquad U_C=I(B;Y)-R,
+$$
+$$
+S=I(A,B;Y)-I(A;Y)-I(B;Y)+R.
+$$
+
+All terms in these equations use the same empirical PMF and natural logarithm. Averaging the separate informative and misinformative components gives the net values below. The complete output retains both components so a signed net value does not hide their difference.
+
+| Recording | Redundancy $R$ | Unique light $U_L$ | Unique CO₂ $U_C$ | Synergy $S$ | Joint MI |
+|---|---:|---:|---:|---:|---:|
+| Training | 0.327008189 | 0.137262473 | −0.115959738 | 0.120911606 | 0.469222531 |
+| Earlier held-out | 0.440298062 | 0.128763882 | −0.150701991 | 0.159411830 | 0.577771783 |
+| Later held-out | 0.276238458 | 0.204781420 | −0.178691053 | 0.180249065 | 0.482577890 |
+
+Values are in nats and rounded for display. The largest absolute atom-sum residual in the unrounded Rust output is $2.22\times10^{-16}$ nats. A separate direct calculation from integer disjunction counts reproduces the four net atoms and three MIs for each recording; its largest absolute difference from Rust is $1.67\times10^{-16}$ nats. The [42 supported-state records and 21 comparisons](real-occupancy-sensors-example-2026-09-08/definition-check.json) expose each event count and local value. This finite check tests the defining redundancy as well as the reconstruction identities; it supplies no universal floating-point error bound.
+
+### Why a positive synergy is not a sensor-selection verdict
+
+Subtracting the light-only identity from the joint identity gives
+
+$$
+I(B;Y\mid A)=U_C+S.
+$$
+
+For the later recording, the right-hand side is approximately
+$-0.178691053+0.180249065=0.001558012$ nats. The sizeable positive synergy is nearly cancelled by negative unique CO₂ information. Clamping the negative term would destroy this relation and greatly overstate the measured additional information.
+
+![Signed MGW contributions nearly cancel when computing the later recording's conditional mutual information.](../formal/latex/figures/real-occupancy-sensors/signed-cancellation.svg)
+
+Negative $U_C$ is a signed contribution under this particular decomposition. It does not identify a faulty sensor, intentional misinformation, or a harmful causal effect. Conversely, positive $S$ alone does not establish that installing CO₂ sensing improves a decision system. Here PID exposes how its signed contributions combine; CMI summarizes the additional empirical information, and the predictive scores below measure a separate fixed decision rule. A sensor recommendation would also require task loss, acquisition cost and an appropriate validation design.
+
+## Fixed predictive comparisons
+
+All predictor probabilities are fitted on training only. The constant model uses the training occupancy fraction 1,729/8,143. For each one-source bin or pair of bins, the other models use the add-one Bernoulli estimate `(occupied + 1)/(total + 2)`. An unseen training cell gets probability 1/2. Classification declares occupied at probability at least 1/2. No held-out tuning or model selection was performed.
+
+These are same-row occupancy classifiers. Accuracy, balanced accuracy and Brier score are dimensionless; log loss uses natural logarithms and is reported in nats per row. Accuracy and Brier score are bounded in [0,1]. Balanced accuracy averages the two class recalls and is undefined for a one-class daily group; the full held-out recordings both contain both classes. The retained daily JSON uses null for the undefined case. Smoothed probabilities and the nondegenerate training prior make every observed log loss finite. No population loss moment or calibration assumption is needed to calculate these finite empirical averages.
+
+| Recording | Predictor | Accuracy | Balanced accuracy | Brier score | Log loss |
+|---|---|---:|---:|---:|---:|
+| Earlier held-out | constant | 0.635272 | 0.500000 | 0.254927 | 0.716812 |
+| Earlier held-out | light | 0.969231 | 0.969649 | 0.024603 | 0.097773 |
+| Earlier held-out | co2 | 0.873546 | 0.855782 | 0.112753 | 0.389536 |
+| Earlier held-out | pair | 0.978612 | 0.982509 | 0.022241 | 0.089744 |
+| Later held-out | constant | 0.789889 | 0.500000 | 0.165969 | 0.514118 |
+| Later held-out | light | 0.981952 | 0.966008 | 0.011556 | 0.047443 |
+| Later held-out | co2 | 0.782404 | 0.717718 | 0.164311 | 0.506560 |
+| Later held-out | pair | 0.982363 | 0.966984 | 0.011683 | 0.050762 |
+
+Higher accuracy is better; lower Brier score and log loss are better. On the later recording, adding CO₂ to the light-bin predictor corrects four classifications, but slightly worsens both probability scores. The CO₂-only classifier has lower overall accuracy than the constant classifier while having higher balanced accuracy. These comparisons show why a single favorable metric cannot establish a general benefit. No PID-based predictor was evaluated, so none of these differences is attributed to PID.
+
+| Recording | Predictor | True negative | False positive | False negative | True positive | Rows in unseen training cells |
+|---|---|---:|---:|---:|---:|---:|
+| Earlier held-out | constant | 1693 | 0 | 972 | 0 | 0 |
+| Earlier held-out | light | 1639 | 54 | 28 | 944 | 0 |
+| Earlier held-out | co2 | 1560 | 133 | 204 | 768 | 0 |
+| Earlier held-out | pair | 1639 | 54 | 3 | 969 | 25 |
+| Later held-out | constant | 7703 | 0 | 2049 | 0 | 0 |
+| Later held-out | light | 7653 | 50 | 126 | 1923 | 0 |
+| Later held-out | co2 | 6388 | 1315 | 807 | 1242 | 0 |
+| Later held-out | pair | 7653 | 50 | 122 | 1927 | 4 |
+
+The 25 and four unseen pair-bin rows in the earlier and later tests matter: the fixed probability-1/2 and tie rule predicts occupancy for them. Improvements in thresholded classification are therefore not evidence of confident predictions for novel combinations. The exact counts, per-day evaluations and information values are retained in [descriptive comparisons](real-occupancy-sensors-example-2026-09-08/descriptive-comparisons.json).
+
+## The continuous Ehrlich/Wibral track
+
+The continuous shared-exclusions method of Ehrlich, Schick-Poland, Makkeh, Lanfermann, Wollstadt and Wibral is a different functional and estimator from the fitted categorical calculation. Its primary record describes a continuous formulation and nearest-neighbor estimator; its reported Honda application is a **simulated** energy-management system. That example does not provide recorded office measurements. [Ehrlich et al., *Partial Information Decomposition for Continuous Variables based on Shared Exclusions: Analytical Formulation and Estimation*, arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3).
+
+The current repository implementation is experimental and restricted to equal ambient source dimensions, declared regular full-dimensional population support and a specified source-coordinate gauge. The two scalar sources meet the dimension count, but the binary occupancy target fails the required full-dimensional continuous joint-law condition. With the optional feature enabled, the example called the complete continuous PID2 report API with `KnownAtomicOrMixed`. All three calls returned the required `UnsupportedSupportContract` variant and no numerical continuous PID. This tests those three declared-support refusals; it does not prove all support guards. The retained raw source units are lux and ppm, without jitter or scaling; those coordinate choices would matter for a continuous shared-exclusions estimand.
+
+Repeated recorded values and temporal sampling are separate issues. An underlying analog quantity may be continuous while its stored readings are rounded or aggregated. Finite observations cannot establish a population density, finite population MI, IID rows, regular neighbor geometry or estimator calibration. Uncorrelated observations need not be independent; striding the recordings does not prove IID. Adding artificial noise would define a new observation model and target, not repair the original occupancy estimand.
+
+Humidity ratio is especially instructive. UCI calls it derived from temperature and relative humidity, so it must not be advertised as another independent instrument. Yet the CSV contains three represented temperature/humidity pairs with slightly different humidity-ratio strings. For example `(21.7 °C, 20.075%)` occurs at training row IDs 2,584 and 2,585 with humidity ratios `0.00321644884277157` and `0.00321644884277158`. The [three exact witness pairs](real-occupancy-sensors-example-2026-09-08/humidity-ratio-negative-witnesses.json) preserve that negative finding. It prevents claiming an exact binary64 functional relation from the printed inputs. The physical derivation formula, input precision and pressure assumptions remain unverified; the tiny discrepancies do not establish a new independent noise source.
+
+For standard Borel random variables X and Y with measurable f and Y = f(X) almost surely, a non-atomic target law implies infinite MI. A countably supported target instead has MI equal to its entropy (which may itself be infinite); a binary target has entropy at most ln 2, and a constant target has MI zero. Failure of full-dimensional continuous support alone is insufficient to infer infinite MI. These are consequences of the general-alphabet information definition and finite quantization; see [Gray, §5.5, Lemma 5.5.1 and Corollary 5.5.6](https://ee.stanford.edu/~gray/it.pdf). The empirical constant-target daily groups above are a concrete finite example of the zero-MI case.
+
+A separate continuous question could use sources `temperature(t)` and `light(t)` with target `CO₂(t + 15 minutes)`. It would concern future CO₂, not occupancy. A separately logged standard-library alignment calculation used exact timestamp matches within each recording. It retained only 3,793 training, 1,237 earlier-test and 4,545 later-test rows. Fifteen rows at the end of each recording have no in-record future target; a further 4,335, 1,413 and 5,192 internal rows, respectively, have no exact 900-second match. These counts are retained in the [alignment evidence](real-occupancy-sensors-example-2026-09-08/future-co2-alignment.json). The observed near-minute cadence does not justify silently replacing an exact 15-minute lag with a 15-row shift. A declared alignment or rounding rule must retain its exclusions and must not cross recording boundaries. Before any continuous number is admitted, the population observation model, treatment of rounded values, dependence model, target finiteness conditions and training-fitted source gauge must be stated and defended. Their truth is not established here. Only the alignment description has been executed; continuous estimation on this changed target remains conditional and unexecuted.
+
+## Execution, resource bounds and retained failures
+
+The executed example checked the three original file hashes and row counts, fitted on training only, and emitted complete quantizer and categorical reports. Rust's source edges, tail counts and Shannon values agree with the retained descriptive calculations. Each result also includes the library's conservative resource estimate. The declared per-call budget is 64 MiB, one thread, 1,000,000 pairwise distances and a 4,000,000,000-operation hint. These ceilings do not guarantee process RSS or elapsed time.
+
+| Recording | Estimated allocation exposure (bytes) | Operation hint | Pairwise distances |
+|---|---:|---:|---:|
+| Training | 7,366,072 | 2,127,384,267 | 0 |
+| Earlier held-out | 2,413,960 | 229,052,508 | 0 |
+| Later held-out | 8,820,608 | 3,049,939,088 | 0 |
+
+The operation hint assumes that every row may occupy a different joint state. The actual categorical calculation iterates over the observed empirical states. These resource-accounting units are not CPU-instruction counts, and the allocation estimate is not a measured peak RSS. The full output is written after all three recordings succeed; a failed call instead leaves an error and nonzero exit.
+
+Three unsuccessful execution steps are retained in the development record. First, formatting a SHA-256 array directly as hexadecimal failed to compile; explicit byte formatting fixed that defect without changing the expected hashes. Second, mixed Rust compiler versions caused Clippy to reject compiled dependencies; a consistent Rust 1.96 toolchain and separate build directory resolved that environment mismatch. Third, the original 100,000,000-operation budget was too small: the first categorical call requested 2,127,384,267 and correctly refused to run. The explicit 4,000,000,000 ceiling covers all three reported estimates; the library guard was not changed.
+
+The final default check, experimental Clippy check, release build and example process all exited successfully. The example process completed in one observed supervised interval of about 0.37 seconds under a 60-second limit, 2 MiB per-stream limits and a sampled 4 GiB process-group RSS ceiling. This single run is not a throughput benchmark or hard operating-system resource guarantee.
+
+No bootstrap interval, permutation null, significance test or population estimator guarantee follows from this run. Uncertainty analysis would need a justified sampling design that accounts for the time series. PDF rendering, source agreement and numerical verification are separate checks.
+
+## Attribution and source identity
+
+Data and transcribed rows: Luis Candanedo (2016), *Occupancy Detection*, UCI Machine Learning Repository, [DOI 10.24432/C5X01N](https://doi.org/10.24432/C5X01N), made available by UCI under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Transformations here comprise four training-fitted source bins, explicit boundary clamping, empirical summaries and fixed train-only conditional-frequency baselines. The associated paper by Candanedo and Feldheim is *Accurate occupancy detection of an office room from light, temperature, humidity and CO₂ measurements using statistical learning models*, *Energy and Buildings* 112, 28–39, [institutional primary record](https://orbi.umons.ac.be/handle/20.500.12907/17305?locale=fr), DOI 10.1016/j.enbuild.2015.11.071. That record dates online publication to 2 December 2015; UCI's data donation is in 2016. No access-restricted full paper or photographs were retrieved.
+
+The [official ZIP](https://archive.ics.uci.edu/static/public/357/occupancy+detection.zip) is 335,713 bytes with SHA-256 `4ae3f46aa98eedff564a9f6924d1635173e2fd2c816004342a9be93076d3a81a`. Its three members total 1,497,104 uncompressed bytes. Individual hashes are retained in the example and data-facts JSON. Hashes identify the retrieved bytes; they do not certify measurements, labels, license authority or scientific validity.

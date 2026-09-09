@@ -1,0 +1,591 @@
+{
+  "measurement_scope": "Recorded CSV values only; no population moments, independence, calibration or Rust PID execution inferred.",
+  "files": {
+    "datatraining.txt": {
+      "sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+      "rows": 8143,
+      "header_columns": 7,
+      "data_columns": 8,
+      "row_id_range": [
+        1,
+        8143
+      ],
+      "row_ids_unique": true,
+      "first_timestamp": "2015-02-04 17:51:00",
+      "last_timestamp": "2015-02-10 09:33:00",
+      "timezone": "not stated by retrieved primary metadata; parsed as timezone-naive",
+      "missing_cells": 0,
+      "nonfinite_cells": 0,
+      "timestamps_duplicate_excess": 0,
+      "interval_seconds_counts": {
+        "59": 1629,
+        "60": 4884,
+        "61": 1629
+      },
+      "strict_time_increase": true,
+      "occupancy_counts": {
+        "0": 6414,
+        "1": 1729
+      },
+      "occupancy_transitions": 40,
+      "five_channel_duplicate_excess": 867,
+      "light_co2_pair_duplicate_excess": 4411,
+      "channels": {
+        "Temperature": {
+          "min": 19.0,
+          "max": 23.18,
+          "empirical_mean": 20.61908364034549,
+          "empirical_sd_denominator_n": 1.0168539980465574,
+          "binary64_unique_values": 265,
+          "repeated_value_excess": 7878,
+          "noninteger_rows": 7653,
+          "printed_decimal_places_counts": {
+            "0": 490,
+            "1": 2992,
+            "2": 3346,
+            "3": 686,
+            "4": 198,
+            "5": 1,
+            "13": 430
+          },
+          "smallest_positive_printed_decimal_spacing": "0.0016666666667",
+          "adjacent_equal_pairs": 5007
+        },
+        "Humidity": {
+          "min": 16.745,
+          "max": 39.1175,
+          "empirical_mean": 25.731507286421873,
+          "empirical_sd_denominator_n": 5.5308713593497485,
+          "binary64_unique_values": 1325,
+          "repeated_value_excess": 6818,
+          "noninteger_rows": 7531,
+          "printed_decimal_places_counts": {
+            "0": 612,
+            "1": 2688,
+            "2": 2813,
+            "3": 963,
+            "4": 460,
+            "5": 2,
+            "13": 605
+          },
+          "smallest_positive_printed_decimal_spacing": "0.0008333333333",
+          "adjacent_equal_pairs": 3597
+        },
+        "Light": {
+          "min": 0.0,
+          "max": 1546.33333333333,
+          "empirical_mean": 119.5193745138974,
+          "empirical_sd_denominator_n": 194.74384595148763,
+          "binary64_unique_values": 889,
+          "repeated_value_excess": 7254,
+          "noninteger_rows": 1085,
+          "printed_decimal_places_counts": {
+            "0": 7058,
+            "1": 476,
+            "2": 350,
+            "11": 1,
+            "12": 178,
+            "13": 65,
+            "14": 15
+          },
+          "smallest_positive_printed_decimal_spacing": "0.066666666667",
+          "adjacent_equal_pairs": 6137
+        },
+        "CO2": {
+          "min": 412.75,
+          "max": 2028.5,
+          "empirical_mean": 606.5462431945639,
+          "empirical_sd_denominator_n": 314.30157622237306,
+          "binary64_unique_values": 2282,
+          "repeated_value_excess": 5861,
+          "noninteger_rows": 3848,
+          "printed_decimal_places_counts": {
+            "0": 4295,
+            "1": 2001,
+            "2": 797,
+            "3": 3,
+            "11": 164,
+            "12": 883
+          },
+          "smallest_positive_printed_decimal_spacing": "0.05",
+          "adjacent_equal_pairs": 359
+        },
+        "HumidityRatio": {
+          "min": 0.00267412691390407,
+          "max": 0.00647601323671025,
+          "empirical_mean": 0.00386250667832036,
+          "empirical_sd_denominator_n": 0.0008522789623220698,
+          "binary64_unique_values": 3583,
+          "repeated_value_excess": 4560,
+          "noninteger_rows": 8143,
+          "printed_decimal_places_counts": {
+            "13": 2,
+            "14": 72,
+            "15": 38,
+            "16": 698,
+            "17": 7333
+          },
+          "smallest_positive_printed_decimal_spacing": "1E-17",
+          "adjacent_equal_pairs": 2616
+        }
+      },
+      "days": {
+        "2015-02-04": {
+          "rows": 369,
+          "occupied": 16
+        },
+        "2015-02-05": {
+          "rows": 1440,
+          "occupied": 539
+        },
+        "2015-02-06": {
+          "rows": 1440,
+          "occupied": 586
+        },
+        "2015-02-07": {
+          "rows": 1440,
+          "occupied": 0
+        },
+        "2015-02-08": {
+          "rows": 1440,
+          "occupied": 0
+        },
+        "2015-02-09": {
+          "rows": 1440,
+          "occupied": 534
+        },
+        "2015-02-10": {
+          "rows": 574,
+          "occupied": 54
+        }
+      },
+      "raw_first_three_rows": [
+        [
+          "1",
+          "2015-02-04 17:51:00",
+          "23.18",
+          "27.272",
+          "426",
+          "721.25",
+          "0.00479298817650529",
+          "1"
+        ],
+        [
+          "2",
+          "2015-02-04 17:51:59",
+          "23.15",
+          "27.2675",
+          "429.5",
+          "714",
+          "0.00478344094931065",
+          "1"
+        ],
+        [
+          "3",
+          "2015-02-04 17:53:00",
+          "23.15",
+          "27.245",
+          "426",
+          "713.5",
+          "0.00477946352442199",
+          "1"
+        ]
+      ]
+    },
+    "datatest.txt": {
+      "sha256": "1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f",
+      "rows": 2665,
+      "header_columns": 7,
+      "data_columns": 8,
+      "row_id_range": [
+        140,
+        2804
+      ],
+      "row_ids_unique": true,
+      "first_timestamp": "2015-02-02 14:19:00",
+      "last_timestamp": "2015-02-04 10:43:00",
+      "timezone": "not stated by retrieved primary metadata; parsed as timezone-naive",
+      "missing_cells": 0,
+      "nonfinite_cells": 0,
+      "timestamps_duplicate_excess": 0,
+      "interval_seconds_counts": {
+        "59": 534,
+        "60": 1596,
+        "61": 534
+      },
+      "strict_time_increase": true,
+      "occupancy_counts": {
+        "0": 1693,
+        "1": 972
+      },
+      "occupancy_transitions": 26,
+      "five_channel_duplicate_excess": 82,
+      "light_co2_pair_duplicate_excess": 643,
+      "channels": {
+        "Temperature": {
+          "min": 20.2,
+          "max": 24.4083333333333,
+          "empirical_mean": 21.4338762887519,
+          "empirical_sd_denominator_n": 1.0278312827143523,
+          "binary64_unique_values": 335,
+          "repeated_value_excess": 2330,
+          "noninteger_rows": 2566,
+          "printed_decimal_places_counts": {
+            "0": 99,
+            "1": 1032,
+            "2": 943,
+            "3": 328,
+            "4": 95,
+            "13": 168
+          },
+          "smallest_positive_printed_decimal_spacing": "0.0021428571429",
+          "adjacent_equal_pairs": 1503
+        },
+        "Humidity": {
+          "min": 22.1,
+          "max": 31.4725,
+          "empirical_mean": 25.353936799785583,
+          "empirical_sd_denominator_n": 2.4363850885656806,
+          "binary64_unique_values": 725,
+          "repeated_value_excess": 1940,
+          "noninteger_rows": 2516,
+          "printed_decimal_places_counts": {
+            "0": 149,
+            "1": 796,
+            "2": 850,
+            "3": 422,
+            "4": 199,
+            "13": 249
+          },
+          "smallest_positive_printed_decimal_spacing": "0.0003333333333",
+          "adjacent_equal_pairs": 973
+        },
+        "Light": {
+          "min": 0.0,
+          "max": 1697.25,
+          "empirical_mean": 193.2275556151166,
+          "empirical_sd_denominator_n": 250.16395748247444,
+          "binary64_unique_values": 428,
+          "repeated_value_excess": 2237,
+          "noninteger_rows": 390,
+          "printed_decimal_places_counts": {
+            "0": 2275,
+            "1": 219,
+            "2": 77,
+            "12": 93,
+            "13": 1
+          },
+          "smallest_positive_printed_decimal_spacing": "0.047619047619",
+          "adjacent_equal_pairs": 1945
+        },
+        "CO2": {
+          "min": 427.5,
+          "max": 1402.25,
+          "empirical_mean": 717.9064701152506,
+          "empirical_sd_denominator_n": 292.6268010992887,
+          "binary64_unique_values": 1894,
+          "repeated_value_excess": 771,
+          "noninteger_rows": 2009,
+          "printed_decimal_places_counts": {
+            "0": 656,
+            "1": 871,
+            "2": 641,
+            "3": 2,
+            "11": 118,
+            "12": 377
+          },
+          "smallest_positive_printed_decimal_spacing": "0.028571428571",
+          "adjacent_equal_pairs": 35
+        },
+        "HumidityRatio": {
+          "min": 0.00330331447223472,
+          "max": 0.00537775883971339,
+          "empirical_mean": 0.004027010287333592,
+          "empirical_sd_denominator_n": 0.0006104581236202999,
+          "binary64_unique_values": 1506,
+          "repeated_value_excess": 1159,
+          "noninteger_rows": 2665,
+          "printed_decimal_places_counts": {
+            "14": 2,
+            "15": 16,
+            "16": 227,
+            "17": 2420
+          },
+          "smallest_positive_printed_decimal_spacing": "1E-17",
+          "adjacent_equal_pairs": 686
+        }
+      },
+      "days": {
+        "2015-02-02": {
+          "rows": 581,
+          "occupied": 203
+        },
+        "2015-02-03": {
+          "rows": 1440,
+          "occupied": 599
+        },
+        "2015-02-04": {
+          "rows": 644,
+          "occupied": 170
+        }
+      },
+      "raw_first_three_rows": [
+        [
+          "140",
+          "2015-02-02 14:19:00",
+          "23.7",
+          "26.272",
+          "585.2",
+          "749.2",
+          "0.00476416302416414",
+          "1"
+        ],
+        [
+          "141",
+          "2015-02-02 14:19:59",
+          "23.718",
+          "26.29",
+          "578.4",
+          "760.4",
+          "0.00477266099212519",
+          "1"
+        ],
+        [
+          "142",
+          "2015-02-02 14:21:00",
+          "23.73",
+          "26.23",
+          "572.666666666667",
+          "769.666666666667",
+          "0.00476515255246541",
+          "1"
+        ]
+      ]
+    },
+    "datatest2.txt": {
+      "sha256": "d026d1bd5aeccd4aff4f3b3710d48e40613bd5fc370db7e61bbdcaa50d985095",
+      "rows": 9752,
+      "header_columns": 7,
+      "data_columns": 8,
+      "row_id_range": [
+        1,
+        9752
+      ],
+      "row_ids_unique": true,
+      "first_timestamp": "2015-02-11 14:48:00",
+      "last_timestamp": "2015-02-18 09:19:00",
+      "timezone": "not stated by retrieved primary metadata; parsed as timezone-naive",
+      "missing_cells": 0,
+      "nonfinite_cells": 0,
+      "timestamps_duplicate_excess": 0,
+      "interval_seconds_counts": {
+        "59": 1951,
+        "60": 5849,
+        "61": 1951
+      },
+      "strict_time_increase": true,
+      "occupancy_counts": {
+        "0": 7703,
+        "1": 2049
+      },
+      "occupancy_transitions": 48,
+      "five_channel_duplicate_excess": 488,
+      "light_co2_pair_duplicate_excess": 4493,
+      "channels": {
+        "Temperature": {
+          "min": 19.5,
+          "max": 24.39,
+          "empirical_mean": 21.001768440661746,
+          "empirical_sd_denominator_n": 1.020640881175142,
+          "binary64_unique_values": 303,
+          "repeated_value_excess": 9449,
+          "noninteger_rows": 8631,
+          "printed_decimal_places_counts": {
+            "0": 1121,
+            "1": 3120,
+            "2": 4007,
+            "3": 709,
+            "4": 221,
+            "13": 574
+          },
+          "smallest_positive_printed_decimal_spacing": "0.0025",
+          "adjacent_equal_pairs": 5986
+        },
+        "Humidity": {
+          "min": 21.865,
+          "max": 39.5,
+          "empirical_mean": 29.891910206453375,
+          "empirical_sd_denominator_n": 3.9526411333578464,
+          "binary64_unique_values": 1479,
+          "repeated_value_excess": 8273,
+          "noninteger_rows": 9304,
+          "printed_decimal_places_counts": {
+            "0": 448,
+            "1": 3016,
+            "2": 3450,
+            "3": 1449,
+            "4": 516,
+            "13": 873
+          },
+          "smallest_positive_printed_decimal_spacing": "0.0008333333333",
+          "adjacent_equal_pairs": 3430
+        },
+        "Light": {
+          "min": 0.0,
+          "max": 1581.0,
+          "empirical_mean": 123.06792965545529,
+          "empirical_sd_denominator_n": 208.2105990192955,
+          "binary64_unique_values": 1140,
+          "repeated_value_excess": 8612,
+          "noninteger_rows": 1197,
+          "printed_decimal_places_counts": {
+            "0": 8555,
+            "1": 513,
+            "2": 351,
+            "12": 223,
+            "13": 85,
+            "14": 25
+          },
+          "smallest_positive_printed_decimal_spacing": "0.05",
+          "adjacent_equal_pairs": 7223
+        },
+        "CO2": {
+          "min": 484.666666666667,
+          "max": 2076.5,
+          "empirical_mean": 753.2248316584632,
+          "empirical_sd_denominator_n": 297.0808806474222,
+          "binary64_unique_values": 3023,
+          "repeated_value_excess": 6729,
+          "noninteger_rows": 4740,
+          "printed_decimal_places_counts": {
+            "0": 5012,
+            "1": 2502,
+            "2": 850,
+            "3": 1,
+            "11": 211,
+            "12": 1176
+          },
+          "smallest_positive_printed_decimal_spacing": "0.033333333333",
+          "adjacent_equal_pairs": 400
+        },
+        "HumidityRatio": {
+          "min": 0.00327476397660048,
+          "max": 0.00576860834754997,
+          "empirical_mean": 0.0045887780342922105,
+          "empirical_sd_denominator_n": 0.0005309573854382408,
+          "binary64_unique_values": 4826,
+          "repeated_value_excess": 4926,
+          "noninteger_rows": 9752,
+          "printed_decimal_places_counts": {
+            "13": 1,
+            "14": 9,
+            "15": 88,
+            "16": 916,
+            "17": 8738
+          },
+          "smallest_positive_printed_decimal_spacing": "1E-17",
+          "adjacent_equal_pairs": 2514
+        }
+      },
+      "days": {
+        "2015-02-11": {
+          "rows": 552,
+          "occupied": 214
+        },
+        "2015-02-12": {
+          "rows": 1440,
+          "occupied": 244
+        },
+        "2015-02-13": {
+          "rows": 1440,
+          "occupied": 494
+        },
+        "2015-02-14": {
+          "rows": 1440,
+          "occupied": 0
+        },
+        "2015-02-15": {
+          "rows": 1440,
+          "occupied": 0
+        },
+        "2015-02-16": {
+          "rows": 1440,
+          "occupied": 551
+        },
+        "2015-02-17": {
+          "rows": 1440,
+          "occupied": 537
+        },
+        "2015-02-18": {
+          "rows": 560,
+          "occupied": 9
+        }
+      },
+      "raw_first_three_rows": [
+        [
+          "1",
+          "2015-02-11 14:48:00",
+          "21.76",
+          "31.1333333333333",
+          "437.333333333333",
+          "1029.66666666667",
+          "0.00502101089021385",
+          "1"
+        ],
+        [
+          "2",
+          "2015-02-11 14:49:00",
+          "21.79",
+          "31",
+          "437.333333333333",
+          "1000",
+          "0.00500858127480172",
+          "1"
+        ],
+        [
+          "3",
+          "2015-02-11 14:50:00",
+          "21.7675",
+          "31.1225",
+          "434",
+          "1003.75",
+          "0.0050215691326541",
+          "1"
+        ]
+      ]
+    }
+  },
+  "bins": 4,
+  "total_rows": 20560,
+  "cross_file_timestamp_intersections": {
+    "datatraining.txt / datatest.txt": 0,
+    "datatraining.txt / datatest2.txt": 0,
+    "datatest.txt / datatest2.txt": 0
+  },
+  "chronological_file_order": [
+    "datatest.txt",
+    "datatraining.txt",
+    "datatest2.txt"
+  ],
+  "training_only_edges": {
+    "Light": [
+      0.0,
+      386.5833333333325,
+      773.166666666665,
+      1159.7499999999975,
+      1546.33333333333
+    ],
+    "CO2": [
+      412.75,
+      816.6875,
+      1220.625,
+      1624.5625,
+      2028.5
+    ]
+  },
+  "humidity_ratio_represented_pair_check": {
+    "temperature_humidity_unique_pairs": 9686,
+    "pairs_with_multiple_humidity_ratios": 3,
+    "scope": "Checks represented CSV inputs only; does not identify physical formula or establish population dependence."
+  }
+}

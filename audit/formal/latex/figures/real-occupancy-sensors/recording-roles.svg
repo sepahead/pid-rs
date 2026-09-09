@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="85mm" viewBox="0 0 1680 850" role="img" aria-labelledby="title desc">
+  <title id="title">Three recorded groups and one aligned observation</title>
+  <desc id="desc">The earlier held-out recording precedes training; the later held-out recording follows it. Only training determines the light and CO2 bins. Each CSV row supplies the two sources and the original binary occupancy label. The continuous occupancy track is blocked by the binary target.</desc>
+  <defs>
+    <style>
+      text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
+      .title { font-size: 46px; font-weight: 700; }
+      .label { font-size: 34px; font-weight: 700; }
+      .body { font-size: 30px; }
+      .small { font-size: 28px; }
+      .teal { fill: #1F6968; }
+    </style>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1 1 L11 6 L1 11" fill="none" stroke="#1F6968" stroke-width="2"/></marker>
+  </defs>
+  <rect width="1680" height="850" fill="#F7F3E9"/>
+  <rect width="1680" height="35" fill="#2C3E50"/>
+  <rect x="70" y="78" width="12" height="48" fill="#B28218"/>
+  <text x="108" y="117" class="title">Recorded groups, explicit roles</text>
+  <text x="70" y="172" class="body">Chronology matters. No random row split is used.</text>
+  <g transform="translate(70 215)">
+    <rect width="480" height="185" rx="18" fill="#F2EBDA" stroke="#916400" stroke-width="3"/>
+    <text x="25" y="48" class="label">Earlier held-out</text>
+    <text x="25" y="95" class="body">Feb 2–4 · 2,665 rows</text>
+    <text x="25" y="143" class="small">Evaluated with later training maps</text>
+  </g>
+  <g transform="translate(600 215)">
+    <rect width="480" height="185" rx="18" fill="#E8F0ED" stroke="#1F6968" stroke-width="4"/>
+    <text x="25" y="48" class="label teal">Training only</text>
+    <text x="25" y="95" class="body">Feb 4–10 · 8,143 rows</text>
+    <text x="25" y="143" class="small">Fit four bins per source</text>
+  </g>
+  <g transform="translate(1130 215)">
+    <rect width="480" height="185" rx="18" fill="#F2EBDA" stroke="#916400" stroke-width="3"/>
+    <text x="25" y="48" class="label">Later held-out</text>
+    <text x="25" y="95" class="body">Feb 11–18 · 9,752 rows</text>
+    <text x="25" y="143" class="small">Apply the fixed training maps</text>
+  </g>
+  <path d="M70 445 H1600" stroke="#1F6968" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="70" y="495" class="body">One CSV row: one timestamp, aligned sources and original target.</text>
+  <rect x="70" y="532" width="480" height="122" rx="16" fill="#E8F0ED" stroke="#1F6968" stroke-width="3"/>
+  <text x="95" y="578" class="label">Light (lux) → bin 0–3</text>
+  <text x="95" y="625" class="body">First categorical source</text>
+  <rect x="600" y="532" width="480" height="122" rx="16" fill="#E8F0ED" stroke="#1F6968" stroke-width="3"/>
+  <text x="625" y="578" class="label">CO₂ (ppm) → bin 0–3</text>
+  <text x="625" y="625" class="body">Second categorical source</text>
+  <rect x="1130" y="532" width="480" height="122" rx="16" fill="#F2EBDA" stroke="#916400" stroke-width="3"/>
+  <text x="1155" y="578" class="label">Occupancy 0 / 1</text>
+  <text x="1155" y="625" class="body">Original same-row target</text>
+  <text x="70" y="721" class="label">Nominal alphabet: 4 × 4 × 2 states. Information: nats.</text>
+  <text x="70" y="775" class="body">Current continuous API: binary target fails its support contract.</text>
+  <text x="70" y="822" class="small">Source: UCI Occupancy Detection · All recordings are from February 2015.</text>
+</svg>

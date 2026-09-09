@@ -1,0 +1,119 @@
+[
+  {
+    "temperature_humidity": [
+      21.7,
+      20.075
+    ],
+    "humidity_ratio_max_minus_min": 9.974659986866641e-18,
+    "witnesses": [
+      {
+        "file": "datatraining.txt",
+        "line": 2585,
+        "fields": [
+          "2584",
+          "2015-02-06 12:53:59",
+          "21.7",
+          "20.075",
+          "44",
+          "754.75",
+          "0.00321644884277157",
+          "0"
+        ],
+        "humidity_ratio_binary64_hex": "0x1.a5961d2d8c49dp-9"
+      },
+      {
+        "file": "datatraining.txt",
+        "line": 2586,
+        "fields": [
+          "2585",
+          "2015-02-06 12:55:00",
+          "21.7",
+          "20.075",
+          "60.25",
+          "755",
+          "0.00321644884277158",
+          "0"
+        ],
+        "humidity_ratio_binary64_hex": "0x1.a5961d2d8c4b4p-9"
+      }
+    ]
+  },
+  {
+    "temperature_humidity": [
+      22.575,
+      25.075
+    ],
+    "humidity_ratio_max_minus_min": 9.540979117872439e-18,
+    "witnesses": [
+      {
+        "file": "datatest.txt",
+        "line": 175,
+        "fields": [
+          "313",
+          "2015-02-02 17:12:00",
+          "22.575",
+          "25.075",
+          "433",
+          "818.25",
+          "0.00424454028030122",
+          "1"
+        ],
+        "humidity_ratio_binary64_hex": "0x1.162b91b0c13a3p-8"
+      },
+      {
+        "file": "datatest.txt",
+        "line": 189,
+        "fields": [
+          "327",
+          "2015-02-02 17:25:59",
+          "22.575",
+          "25.075",
+          "433",
+          "834.5",
+          "0.00424454028030123",
+          "1"
+        ],
+        "humidity_ratio_binary64_hex": "0x1.162b91b0c13aep-8"
+      }
+    ]
+  },
+  {
+    "temperature_humidity": [
+      21.0,
+      26.245
+    ],
+    "humidity_ratio_max_minus_min": 1.0408340855860843e-17,
+    "witnesses": [
+      {
+        "file": "datatest2.txt",
+        "line": 1920,
+        "fields": [
+          "1919",
+          "2015-02-12 22:46:00",
+          "21",
+          "26.245",
+          "0",
+          "561",
+          "0.0040336524783309",
+          "0"
+        ],
+        "humidity_ratio_binary64_hex": "0x1.0859757a5511ep-8"
+      },
+      {
+        "file": "datatest2.txt",
+        "line": 1968,
+        "fields": [
+          "1967",
+          "2015-02-12 23:34:00",
+          "21",
+          "26.245",
+          "0",
+          "570.5",
+          "0.00403365247833091",
+          "0"
+        ],
+        "humidity_ratio_binary64_hex": "0x1.0859757a5512ap-8"
+      }
+    ]
+  }
+]

@@ -161,6 +161,19 @@ comparator with a different redundancy definition. The stable categorical calls 
 accept fixed fitted quantizer outputs and embed every quantization report in their result.
 A runnable SxPID demo on canonical gates: `cargo run --release --example discrete_sxpid`.
 
+The [recorded office-sensor example](../../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
+uses training-fitted light and CO₂ bins with the original binary occupancy target. It retains
+signed MGW atoms, complete quantizer reports, resource estimates and fixed predictive comparisons.
+These are finite empirical results; temporal sampling and sensor-selection value need separate
+evidence. After downloading the three UCI files, run:
+
+```text
+cargo run --locked --release -p pid-core --example occupancy_sensors -- DATA_DIRECTORY
+```
+
+Adding `--features experimental-continuous` also checks the continuous API's refusal of the
+declared atomic/mixed occupancy law. It does not produce a continuous occupancy PID.
+
 On the two-bit COPY of independent fair sources, T = (S₁, S₂), categorical SxPID assigns
 redundancy ln(4/3) nats, whereas `I_min` assigns ln(2) nats. The identity axiom of
 [Harder, Salge & Polani (2013)](https://doi.org/10.1103/PhysRevE.87.012130) instead requires

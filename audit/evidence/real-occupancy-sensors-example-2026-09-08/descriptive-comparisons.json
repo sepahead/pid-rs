@@ -1,0 +1,2012 @@
+{
+  "scope": "Fixed training-derived maps and predictions; per-recording descriptive plug-in information and observed predictive errors, with no IID inference.",
+  "training_file": "datatraining.txt",
+  "bins": 4,
+  "edges": {
+    "Light": [
+      0.0,
+      386.5833333333325,
+      773.166666666665,
+      1159.7499999999975,
+      1546.33333333333
+    ],
+    "CO2": [
+      412.75,
+      816.6875,
+      1220.625,
+      1624.5625,
+      2028.5
+    ]
+  },
+  "tail_policy": "ClampToBoundary",
+  "predictors": "Constant empirical training prevalence; other models add-one Bernoulli smoothing (positive+1)/(total+2), unseen cell p=1/2, classification p>=1/2.",
+  "files": {
+    "datatraining.txt": {
+      "shannon": {
+        "n": 8143,
+        "units": "nats",
+        "H_occupancy": 0.5170269154705952,
+        "I_light_target": 0.46427066241775405,
+        "I_co2_target": 0.211048451538291,
+        "I_pair_target": 0.46922253101015565,
+        "I_light_target_given_co2": 0.25817407947186466,
+        "I_co2_target_given_light": 0.004951868592401598,
+        "observed_joint_cells": 16,
+        "nominal_joint_cells": 32,
+        "unobserved_nominal_joint_cells": 16,
+        "observed_cells_below_5": 6,
+        "minimum_observed_joint_count": 1,
+        "joint_counts": [
+          {
+            "light_bin": 0,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 6110
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 4
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 1,
+            "occupancy": 0,
+            "count": 137
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 4
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 2,
+            "occupancy": 0,
+            "count": 59
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 2,
+            "occupancy": 1,
+            "count": 1
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 3,
+            "occupancy": 0,
+            "count": 18
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 3,
+            "occupancy": 1,
+            "count": 2
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 40
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 510
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 1,
+            "occupancy": 0,
+            "count": 47
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 822
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 2,
+            "occupancy": 1,
+            "count": 206
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 3,
+            "occupancy": 1,
+            "count": 180
+          },
+          {
+            "light_bin": 2,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 1
+          },
+          {
+            "light_bin": 3,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 2
+          }
+        ]
+      },
+      "tail_counts": {
+        "Light": {
+          "below": 0,
+          "above": 0
+        },
+        "CO2": {
+          "below": 0,
+          "above": 0
+        }
+      },
+      "predictive": {},
+      "daily": {
+        "2015-02-04": {
+          "shannon": {
+            "n": 369,
+            "units": "nats",
+            "H_occupancy": 0.17848053657903598,
+            "I_light_target": 0.17848053657903598,
+            "I_co2_target": 0.0,
+            "I_pair_target": 0.17848053657903598,
+            "I_light_target_given_co2": 0.17848053657903598,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 2,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 30,
+            "observed_cells_below_5": 0,
+            "minimum_observed_joint_count": 16,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 353
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 16
+              }
+            ]
+          },
+          "predictive": {}
+        },
+        "2015-02-05": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6612074690804199,
+            "I_light_target": 0.5022045996777461,
+            "I_co2_target": 0.29897317308121707,
+            "I_pair_target": 0.50853195038377,
+            "I_light_target_given_co2": 0.2095587773025529,
+            "I_co2_target_given_light": 0.00632735070602386,
+            "observed_joint_cells": 8,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 24,
+            "observed_cells_below_5": 2,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 807
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 30
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 3
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 17
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 93
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 47
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 442
+              }
+            ]
+          },
+          "predictive": {}
+        },
+        "2015-02-06": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6757271174397907,
+            "I_light_target": 0.6122239950785444,
+            "I_co2_target": 0.20632563743521604,
+            "I_pair_target": 0.6195901686339831,
+            "I_light_target_given_co2": 0.41326453119876705,
+            "I_co2_target_given_light": 0.007366173555438671,
+            "observed_joint_cells": 5,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 27,
+            "observed_cells_below_5": 1,
+            "minimum_observed_joint_count": 2,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 837
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 17
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 309
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 275
+              }
+            ]
+          },
+          "predictive": {}
+        },
+        "2015-02-07": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": -0.0,
+            "I_light_target": 0.0,
+            "I_co2_target": 0.0,
+            "I_pair_target": 0.0,
+            "I_light_target_given_co2": 0.0,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 4,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 28,
+            "observed_cells_below_5": 3,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1436
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1
+              },
+              {
+                "light_bin": 2,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1
+              },
+              {
+                "light_bin": 3,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 2
+              }
+            ]
+          },
+          "predictive": {}
+        },
+        "2015-02-08": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": -0.0,
+            "I_light_target": 0.0,
+            "I_co2_target": 0.0,
+            "I_pair_target": 0.0,
+            "I_light_target_given_co2": 0.0,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 1,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 31,
+            "observed_cells_below_5": 0,
+            "minimum_observed_joint_count": 1440,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1440
+              }
+            ]
+          },
+          "predictive": {}
+        },
+        "2015-02-09": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6593977055702662,
+            "I_light_target": 0.6250082198181997,
+            "I_co2_target": 0.3071393141960095,
+            "I_pair_target": 0.6345891933183139,
+            "I_light_target_given_co2": 0.3274498791223044,
+            "I_co2_target_given_light": 0.00958097350011422,
+            "observed_joint_cells": 13,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 19,
+            "observed_cells_below_5": 5,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 719
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 107
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 0,
+                "count": 59
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 3,
+                "occupancy": 0,
+                "count": 18
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 3,
+                "occupancy": 1,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 3
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 40
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 103
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 2,
+                "occupancy": 1,
+                "count": 206
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 3,
+                "occupancy": 1,
+                "count": 180
+              }
+            ]
+          },
+          "predictive": {}
+        },
+        "2015-02-10": {
+          "shannon": {
+            "n": 574,
+            "units": "nats",
+            "H_occupancy": 0.31186960444897965,
+            "I_light_target": 0.2968377894566842,
+            "I_co2_target": 0.008294956916289398,
+            "I_pair_target": 0.2969668678860586,
+            "I_light_target_given_co2": 0.2886719109697692,
+            "I_co2_target_given_light": 0.00012907842937437408,
+            "observed_joint_cells": 4,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 28,
+            "observed_cells_below_5": 2,
+            "minimum_observed_joint_count": 2,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 518
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 52
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 2
+              }
+            ]
+          },
+          "predictive": {}
+        }
+      }
+    },
+    "datatest.txt": {
+      "shannon": {
+        "n": 2665,
+        "units": "nats",
+        "H_occupancy": 0.6560900721020294,
+        "I_light_target": 0.5690619437057092,
+        "I_co2_target": 0.28959607126305853,
+        "I_pair_target": 0.5777717830631723,
+        "I_light_target_given_co2": 0.2881757118001138,
+        "I_co2_target_given_light": 0.008709839357463167,
+        "observed_joint_cells": 10,
+        "nominal_joint_cells": 32,
+        "unobserved_nominal_joint_cells": 22,
+        "observed_cells_below_5": 2,
+        "minimum_observed_joint_count": 3,
+        "joint_counts": [
+          {
+            "light_bin": 0,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 1528
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 3
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 1,
+            "occupancy": 0,
+            "count": 111
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 32
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 201
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 1,
+            "occupancy": 0,
+            "count": 22
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 564
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 2,
+            "occupancy": 1,
+            "count": 179
+          },
+          {
+            "light_bin": 2,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 22
+          },
+          {
+            "light_bin": 3,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 3
+          }
+        ]
+      },
+      "tail_counts": {
+        "Light": {
+          "below": 0,
+          "above": 1
+        },
+        "CO2": {
+          "below": 0,
+          "above": 0
+        }
+      },
+      "predictive": {
+        "constant": {
+          "n": 2665,
+          "tn": 1693,
+          "fp": 0,
+          "fn": 972,
+          "tp": 0,
+          "accuracy": 0.6352720450281426,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.2549267299167017,
+          "log_loss_nats": 0.7168119880515001,
+          "unseen_training_predictor_cell_rows": 0
+        },
+        "light": {
+          "n": 2665,
+          "tn": 1639,
+          "fp": 54,
+          "fn": 28,
+          "tp": 944,
+          "accuracy": 0.9692307692307692,
+          "balanced_accuracy": 0.9696486865549017,
+          "brier_score": 0.024603060389190846,
+          "log_loss_nats": 0.0977729357742339,
+          "unseen_training_predictor_cell_rows": 0
+        },
+        "co2": {
+          "n": 2665,
+          "tn": 1560,
+          "fp": 133,
+          "fn": 204,
+          "tp": 768,
+          "accuracy": 0.873545966228893,
+          "balanced_accuracy": 0.8557823426892142,
+          "brier_score": 0.11275264458790704,
+          "log_loss_nats": 0.38953629465758083,
+          "unseen_training_predictor_cell_rows": 0
+        },
+        "pair": {
+          "n": 2665,
+          "tn": 1639,
+          "fp": 54,
+          "fn": 3,
+          "tp": 969,
+          "accuracy": 0.9786116322701689,
+          "balanced_accuracy": 0.9825087688594285,
+          "brier_score": 0.022241142792912526,
+          "log_loss_nats": 0.08974404392437282,
+          "unseen_training_predictor_cell_rows": 25
+        }
+      },
+      "daily": {
+        "2015-02-02": {
+          "shannon": {
+            "n": 581,
+            "units": "nats",
+            "H_occupancy": 0.6470729260607117,
+            "I_light_target": 0.507469357086304,
+            "I_co2_target": 0.4101975257410655,
+            "I_pair_target": 0.5230067460023533,
+            "I_light_target_given_co2": 0.11280922026128781,
+            "I_co2_target_given_light": 0.015537388916049277,
+            "observed_joint_cells": 6,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 26,
+            "observed_cells_below_5": 1,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 355
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 12
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 25
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 11
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 177
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 581,
+              "tn": 378,
+              "fp": 0,
+              "fn": 203,
+              "tp": 0,
+              "accuracy": 0.6506024096385542,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.246106545930483,
+              "log_loss_nats": 0.6967148014854104,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 581,
+              "tn": 355,
+              "fp": 23,
+              "fn": 1,
+              "tp": 202,
+              "accuracy": 0.9586919104991394,
+              "balanced_accuracy": 0.9671136653895275,
+              "brier_score": 0.038366491456378486,
+              "log_loss_nats": 0.1489415324368678,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 581,
+              "tn": 367,
+              "fp": 11,
+              "fn": 26,
+              "tp": 177,
+              "accuracy": 0.9363166953528399,
+              "balanced_accuracy": 0.9214103265827405,
+              "brier_score": 0.06469688498544264,
+              "log_loss_nats": 0.25904933026645144,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 581,
+              "tn": 355,
+              "fp": 23,
+              "fn": 1,
+              "tp": 202,
+              "accuracy": 0.9586919104991394,
+              "balanced_accuracy": 0.9671136653895275,
+              "brier_score": 0.03748481090460393,
+              "log_loss_nats": 0.1419018466169513,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-03": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6789586124947661,
+            "I_light_target": 0.624662166865494,
+            "I_co2_target": 0.2874427194596594,
+            "I_pair_target": 0.6290506745469078,
+            "I_light_target_given_co2": 0.3416079550872484,
+            "I_co2_target_given_light": 0.004388507681413745,
+            "observed_joint_cells": 8,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 24,
+            "observed_cells_below_5": 1,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 715
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 111
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 6
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 100
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 9
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 319
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 2,
+                "occupancy": 1,
+                "count": 179
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 841,
+              "fp": 0,
+              "fn": 599,
+              "tp": 0,
+              "accuracy": 0.5840277777777778,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.2844096467861551,
+              "log_loss_nats": 0.7839901423580006,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 826,
+              "fp": 15,
+              "fn": 1,
+              "tp": 598,
+              "accuracy": 0.9888888888888889,
+              "balanced_accuracy": 0.9902473206434028,
+              "brier_score": 0.011105562091457835,
+              "log_loss_nats": 0.057653820630287546,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 721,
+              "fp": 120,
+              "fn": 101,
+              "tp": 498,
+              "accuracy": 0.8465277777777778,
+              "balanced_accuracy": 0.8443491828433835,
+              "brier_score": 0.13199433784305747,
+              "log_loss_nats": 0.4377070336192847,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 826,
+              "fp": 15,
+              "fn": 1,
+              "tp": 598,
+              "accuracy": 0.9888888888888889,
+              "balanced_accuracy": 0.9902473206434028,
+              "brier_score": 0.010997458189220396,
+              "log_loss_nats": 0.055551164619046425,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-04": {
+          "shannon": {
+            "n": 644,
+            "units": "nats",
+            "H_occupancy": 0.5771738739583742,
+            "I_light_target": 0.4853396568215338,
+            "I_co2_target": 0.21649188143151832,
+            "I_pair_target": 0.49159911840371184,
+            "I_light_target_given_co2": 0.2751072369721935,
+            "I_co2_target_given_light": 0.00625946158217805,
+            "observed_joint_cells": 8,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 24,
+            "observed_cells_below_5": 3,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 458
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 14
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 76
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 68
+              },
+              {
+                "light_bin": 2,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 22
+              },
+              {
+                "light_bin": 3,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 3
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 644,
+              "tn": 474,
+              "fp": 0,
+              "fn": 170,
+              "tp": 0,
+              "accuracy": 0.7360248447204969,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.1969595352023851,
+              "log_loss_nats": 0.5847311234451921,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 644,
+              "tn": 458,
+              "fp": 16,
+              "fn": 26,
+              "tp": 144,
+              "accuracy": 0.9347826086956522,
+              "balanced_accuracy": 0.9066517746339042,
+              "brier_score": 0.04236679346170562,
+              "log_loss_nats": 0.14131730090822844,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 644,
+              "tn": 472,
+              "fp": 2,
+              "fn": 77,
+              "tp": 93,
+              "accuracy": 0.8773291925465838,
+              "balanced_accuracy": 0.7714197071233557,
+              "brier_score": 0.11308239309973198,
+              "log_loss_nats": 0.39954726081657554,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 644,
+              "tn": 458,
+              "fp": 16,
+              "fn": 1,
+              "tp": 169,
+              "accuracy": 0.9736024844720497,
+              "balanced_accuracy": 0.9801811863986101,
+              "brier_score": 0.033629861203508735,
+              "log_loss_nats": 0.11914476261269875,
+              "unseen_training_predictor_cell_rows": 25
+            }
+          }
+        }
+      }
+    },
+    "datatest2.txt": {
+      "shannon": {
+        "n": 9752,
+        "units": "nats",
+        "H_occupancy": 0.5141033645279653,
+        "I_light_target": 0.481019877982637,
+        "I_co2_target": 0.09754740521390626,
+        "I_pair_target": 0.48257789038703813,
+        "I_light_target_given_co2": 0.3850304851731319,
+        "I_co2_target_given_light": 0.0015580124044011212,
+        "observed_joint_cells": 16,
+        "nominal_joint_cells": 32,
+        "unobserved_nominal_joint_cells": 16,
+        "observed_cells_below_5": 4,
+        "minimum_observed_joint_count": 1,
+        "joint_counts": [
+          {
+            "light_bin": 0,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 6354
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 9
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 1,
+            "occupancy": 0,
+            "count": 473
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 2
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 2,
+            "occupancy": 0,
+            "count": 788
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 2,
+            "occupancy": 1,
+            "count": 1
+          },
+          {
+            "light_bin": 0,
+            "co2_bin": 3,
+            "occupancy": 0,
+            "count": 38
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 0,
+            "occupancy": 0,
+            "count": 34
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 688
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 1,
+            "occupancy": 0,
+            "count": 16
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 964
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 2,
+            "occupancy": 1,
+            "count": 238
+          },
+          {
+            "light_bin": 1,
+            "co2_bin": 3,
+            "occupancy": 1,
+            "count": 33
+          },
+          {
+            "light_bin": 2,
+            "co2_bin": 0,
+            "occupancy": 1,
+            "count": 110
+          },
+          {
+            "light_bin": 2,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 2
+          },
+          {
+            "light_bin": 3,
+            "co2_bin": 1,
+            "occupancy": 1,
+            "count": 2
+          }
+        ]
+      },
+      "tail_counts": {
+        "Light": {
+          "below": 0,
+          "above": 1
+        },
+        "CO2": {
+          "below": 0,
+          "above": 3
+        }
+      },
+      "predictive": {
+        "constant": {
+          "n": 9752,
+          "tn": 7703,
+          "fp": 0,
+          "fn": 2049,
+          "tp": 0,
+          "accuracy": 0.7898892534864643,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.16596914406047703,
+          "log_loss_nats": 0.5141181210964696,
+          "unseen_training_predictor_cell_rows": 0
+        },
+        "light": {
+          "n": 9752,
+          "tn": 7653,
+          "fp": 50,
+          "fn": 126,
+          "tp": 1923,
+          "accuracy": 0.9819524200164069,
+          "balanced_accuracy": 0.9660078055192887,
+          "brier_score": 0.011556000266268865,
+          "log_loss_nats": 0.047443050772729076,
+          "unseen_training_predictor_cell_rows": 0
+        },
+        "co2": {
+          "n": 9752,
+          "tn": 6388,
+          "fp": 1315,
+          "fn": 807,
+          "tp": 1242,
+          "accuracy": 0.7824036095159967,
+          "balanced_accuracy": 0.7177183159039974,
+          "brier_score": 0.16431099649635308,
+          "log_loss_nats": 0.5065597371399897,
+          "unseen_training_predictor_cell_rows": 0
+        },
+        "pair": {
+          "n": 9752,
+          "tn": 7653,
+          "fp": 50,
+          "fn": 122,
+          "tp": 1927,
+          "accuracy": 0.9823625922887613,
+          "balanced_accuracy": 0.9669838914148474,
+          "brier_score": 0.011683151859365975,
+          "log_loss_nats": 0.05076201919167954,
+          "unseen_training_predictor_cell_rows": 4
+        }
+      },
+      "daily": {
+        "2015-02-11": {
+          "shannon": {
+            "n": 552,
+            "units": "nats",
+            "H_occupancy": 0.6676995319873551,
+            "I_light_target": 0.6267127756759291,
+            "I_co2_target": 0.09403882373587369,
+            "I_pair_target": 0.6336081818069792,
+            "I_light_target_given_co2": 0.5395693580711055,
+            "I_co2_target_given_light": 0.006895406131050108,
+            "observed_joint_cells": 7,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 25,
+            "observed_cells_below_5": 4,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 332
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 0,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 3,
+                "occupancy": 0,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 154
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 3
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 59
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 552,
+              "tn": 338,
+              "fp": 0,
+              "fn": 214,
+              "tp": 0,
+              "accuracy": 0.6123188405797102,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.2681326445477843,
+              "log_loss_nats": 0.7469022594711675,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 552,
+              "tn": 335,
+              "fp": 3,
+              "fn": 1,
+              "tp": 213,
+              "accuracy": 0.9927536231884058,
+              "balanced_accuracy": 0.993225681579384,
+              "brier_score": 0.0076403897151151754,
+              "log_loss_nats": 0.04819668522878078,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 552,
+              "tn": 332,
+              "fp": 6,
+              "fn": 155,
+              "tp": 59,
+              "accuracy": 0.7083333333333334,
+              "balanced_accuracy": 0.6289747276447493,
+              "brier_score": 0.2539564382078789,
+              "log_loss_nats": 0.8095638579527162,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 552,
+              "tn": 335,
+              "fp": 3,
+              "fn": 1,
+              "tp": 213,
+              "accuracy": 0.9927536231884058,
+              "balanced_accuracy": 0.993225681579384,
+              "brier_score": 0.008594293624675692,
+              "log_loss_nats": 0.057304381500812636,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-12": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.45500421434352445,
+            "I_light_target": 0.406796358183555,
+            "I_co2_target": 0.0516547612141266,
+            "I_pair_target": 0.4092263237360414,
+            "I_light_target_given_co2": 0.3575715625219148,
+            "I_co2_target_given_light": 0.002429965552486424,
+            "observed_joint_cells": 10,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 22,
+            "observed_cells_below_5": 4,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1119
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 5
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 69
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 0,
+                "count": 1
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 7
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 150
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 84
+              },
+              {
+                "light_bin": 2,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 2
+              },
+              {
+                "light_bin": 3,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 2
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 1196,
+              "fp": 0,
+              "fn": 244,
+              "tp": 0,
+              "accuracy": 0.8305555555555556,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.14257216196620065,
+              "log_loss_nats": 0.4608070433494711,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 1189,
+              "fp": 7,
+              "fn": 10,
+              "tp": 234,
+              "accuracy": 0.9881944444444445,
+              "balanced_accuracy": 0.9765817753166292,
+              "brier_score": 0.010336960343235625,
+              "log_loss_nats": 0.05394175906175789,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 1126,
+              "fp": 70,
+              "fn": 155,
+              "tp": 89,
+              "accuracy": 0.84375,
+              "balanced_accuracy": 0.6531128351335052,
+              "brier_score": 0.13080217679681413,
+              "log_loss_nats": 0.4334552277448989,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 1189,
+              "fp": 7,
+              "fn": 6,
+              "tp": 238,
+              "accuracy": 0.9909722222222223,
+              "balanced_accuracy": 0.9847784966281046,
+              "brier_score": 0.009785181372406677,
+              "log_loss_nats": 0.055287556920258094,
+              "unseen_training_predictor_cell_rows": 4
+            }
+          }
+        },
+        "2015-02-13": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6430414371437195,
+            "I_light_target": 0.5821453416967566,
+            "I_co2_target": 0.0,
+            "I_pair_target": 0.5821453416967566,
+            "I_light_target_given_co2": 0.5821453416967566,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 5,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 27,
+            "observed_cells_below_5": 1,
+            "minimum_observed_joint_count": 2,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 928
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 18
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 382
+              },
+              {
+                "light_bin": 2,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 110
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 946,
+              "fp": 0,
+              "fn": 494,
+              "tp": 0,
+              "accuracy": 0.6569444444444444,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.24245771465630941,
+              "log_loss_nats": 0.6884007750456186,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 928,
+              "fp": 18,
+              "fn": 112,
+              "tp": 382,
+              "accuracy": 0.9097222222222222,
+              "balanced_accuracy": 0.8771259340414788,
+              "brier_score": 0.04727786369156192,
+              "log_loss_nats": 0.14487072210277294,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 946,
+              "fp": 0,
+              "fn": 494,
+              "tp": 0,
+              "accuracy": 0.6569444444444444,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.29603540385921157,
+              "log_loss_nats": 0.9313823576376914,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 928,
+              "fp": 18,
+              "fn": 112,
+              "tp": 382,
+              "accuracy": 0.9097222222222222,
+              "balanced_accuracy": 0.8771259340414788,
+              "brier_score": 0.047513235472460565,
+              "log_loss_nats": 0.14729619235695413,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-14": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": -0.0,
+            "I_light_target": 0.0,
+            "I_co2_target": 0.0,
+            "I_pair_target": 0.0,
+            "I_light_target_given_co2": 0.0,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 2,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 30,
+            "observed_cells_below_5": 1,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1439
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 1440,
+              "fp": 0,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "brier_score": 0.04508386254065452,
+              "log_loss_nats": 0.2386755612140311,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 1439,
+              "fp": 1,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 0.9993055555555556,
+              "balanced_accuracy": null,
+              "brier_score": 0.000632036604809232,
+              "log_loss_nats": 0.0039927906169530455,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 1440,
+              "fp": 0,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "brier_score": 0.005963387398306229,
+              "log_loss_nats": 0.08036764675031915,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 1439,
+              "fp": 1,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 0.9993055555555556,
+              "balanced_accuracy": null,
+              "brier_score": 0.00059578323812646,
+              "log_loss_nats": 0.0026228330689114965,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-15": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": -0.0,
+            "I_light_target": 0.0,
+            "I_co2_target": 0.0,
+            "I_pair_target": 0.0,
+            "I_light_target_given_co2": 0.0,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 2,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 30,
+            "observed_cells_below_5": 0,
+            "minimum_observed_joint_count": 6,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 1434
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 6
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 1440,
+              "fp": 0,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "brier_score": 0.04508386254065452,
+              "log_loss_nats": 0.2386755612140311,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 1434,
+              "fp": 6,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 0.9958333333333333,
+              "balanced_accuracy": null,
+              "brier_score": 0.0037742902566864737,
+              "log_loss_nats": 0.014479565062738555,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 1440,
+              "fp": 0,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 1.0,
+              "balanced_accuracy": null,
+              "brier_score": 0.005963387398306229,
+              "log_loss_nats": 0.08036764675031915,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 1434,
+              "fp": 6,
+              "fn": 0,
+              "tp": 0,
+              "accuracy": 0.9958333333333333,
+              "balanced_accuracy": null,
+              "brier_score": 0.003571357670273046,
+              "log_loss_nats": 0.011647687643282157,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-16": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6653412243651039,
+            "I_light_target": 0.6277292022843981,
+            "I_co2_target": 0.2774847138112062,
+            "I_pair_target": 0.6277292022843981,
+            "I_light_target_given_co2": 0.3502444884731919,
+            "I_co2_target_given_light": 0.0,
+            "observed_joint_cells": 4,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 28,
+            "observed_cells_below_5": 0,
+            "minimum_observed_joint_count": 11,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 583
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 295
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 11
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 551
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 889,
+              "fp": 0,
+              "fn": 551,
+              "tp": 0,
+              "accuracy": 0.6173611111111111,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.2652316206696542,
+              "log_loss_nats": 0.7402921458723403,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 878,
+              "fp": 11,
+              "fn": 0,
+              "tp": 551,
+              "accuracy": 0.9923611111111111,
+              "balanced_accuracy": 0.9938132733408325,
+              "brier_score": 0.007822654077711422,
+              "log_loss_nats": 0.043344427747657656,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 583,
+              "fp": 306,
+              "fn": 0,
+              "tp": 551,
+              "accuracy": 0.7875,
+              "balanced_accuracy": 0.8278965129358831,
+              "brier_score": 0.15711009783128677,
+              "log_loss_nats": 0.4708917555157263,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 878,
+              "fp": 11,
+              "fn": 0,
+              "tp": 551,
+              "accuracy": 0.9923611111111111,
+              "balanced_accuracy": 0.9938132733408325,
+              "brier_score": 0.008232946414025947,
+              "log_loss_nats": 0.05145337204108013,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-17": {
+          "shannon": {
+            "n": 1440,
+            "units": "nats",
+            "H_occupancy": 0.6604897519542142,
+            "I_light_target": 0.6342277377596917,
+            "I_co2_target": 0.25142269474715095,
+            "I_pair_target": 0.641671003032896,
+            "I_light_target_given_co2": 0.3902483082857451,
+            "I_co2_target_given_light": 0.00744326527320438,
+            "observed_joint_cells": 12,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 20,
+            "observed_cells_below_5": 5,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 519
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 70
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 0,
+                "count": 284
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 3,
+                "occupancy": 0,
+                "count": 26
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 0,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 0,
+                "occupancy": 1,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 2
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 1,
+                "occupancy": 1,
+                "count": 270
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 2,
+                "occupancy": 1,
+                "count": 232
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 3,
+                "occupancy": 1,
+                "count": 31
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 1440,
+              "tn": 903,
+              "fp": 0,
+              "fn": 537,
+              "tp": 0,
+              "accuracy": 0.6270833333333333,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.2596380297190081,
+              "log_loss_nats": 0.7275468968973561,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 1440,
+              "tn": 899,
+              "fp": 4,
+              "fn": 2,
+              "tp": 535,
+              "accuracy": 0.9958333333333333,
+              "balanced_accuracy": 0.9959229631829346,
+              "brier_score": 0.004780816012356104,
+              "log_loss_nats": 0.036833943340162184,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 1440,
+              "tn": 521,
+              "fp": 382,
+              "fn": 3,
+              "tp": 534,
+              "accuracy": 0.7326388888888888,
+              "balanced_accuracy": 0.7856895389050774,
+              "brier_score": 0.18549446837812217,
+              "log_loss_nats": 0.5381833013477091,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 1440,
+              "tn": 899,
+              "fp": 4,
+              "fn": 2,
+              "tp": 535,
+              "accuracy": 0.9958333333333333,
+              "balanced_accuracy": 0.9959229631829346,
+              "brier_score": 0.004952413055231901,
+              "log_loss_nats": 0.037672009133418116,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        },
+        "2015-02-18": {
+          "shannon": {
+            "n": 560,
+            "units": "nats",
+            "H_occupancy": 0.08232803187333451,
+            "I_light_target": 0.0692697431202974,
+            "I_co2_target": 0.006677775084090842,
+            "I_pair_target": 0.06943589709669029,
+            "I_light_target_given_co2": 0.06275812201259945,
+            "I_co2_target_given_light": 0.00016615397639288543,
+            "observed_joint_cells": 6,
+            "nominal_joint_cells": 32,
+            "unobserved_nominal_joint_cells": 26,
+            "observed_cells_below_5": 2,
+            "minimum_observed_joint_count": 1,
+            "joint_counts": [
+              {
+                "light_bin": 0,
+                "co2_bin": 1,
+                "occupancy": 0,
+                "count": 39
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 0,
+                "count": 502
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 2,
+                "occupancy": 1,
+                "count": 1
+              },
+              {
+                "light_bin": 0,
+                "co2_bin": 3,
+                "occupancy": 0,
+                "count": 10
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 2,
+                "occupancy": 1,
+                "count": 6
+              },
+              {
+                "light_bin": 1,
+                "co2_bin": 3,
+                "occupancy": 1,
+                "count": 2
+              }
+            ]
+          },
+          "predictive": {
+            "constant": {
+              "n": 560,
+              "tn": 551,
+              "fp": 0,
+              "fn": 9,
+              "tp": 0,
+              "accuracy": 0.9839285714285714,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.054330410846824585,
+              "log_loss_nats": 0.2597442380910459,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "light": {
+              "n": 560,
+              "tn": 551,
+              "fp": 0,
+              "fn": 1,
+              "tp": 8,
+              "accuracy": 0.9982142857142857,
+              "balanced_accuracy": 0.9444444444444444,
+              "brier_score": 0.0018163665241979654,
+              "log_loss_nats": 0.013773288334332348,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "co2": {
+              "n": 560,
+              "tn": 0,
+              "fp": 551,
+              "fn": 0,
+              "tp": 9,
+              "accuracy": 0.01607142857142857,
+              "balanced_accuracy": 0.5,
+              "brier_score": 0.601795779907747,
+              "log_loss_nats": 1.5057112134358641,
+              "unseen_training_predictor_cell_rows": 0
+            },
+            "pair": {
+              "n": 560,
+              "tn": 551,
+              "fp": 0,
+              "fn": 1,
+              "tp": 8,
+              "accuracy": 0.9982142857142857,
+              "balanced_accuracy": 0.9444444444444444,
+              "brier_score": 0.003022725091572471,
+              "log_loss_nats": 0.04069374087997917,
+              "unseen_training_predictor_cell_rows": 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

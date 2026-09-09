@@ -3019,16 +3019,53 @@ reviewed PDF; `--cross-toolchain` refuses with status 2 before building. The [po
 exercise this whole entrypoint with inert tools and have separate execution receipts. They do not
 produce a new publication PDF or prove a theorem.
 
+The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
+uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v1.json`. Discovery derives the
+pinned TeX body and retains raw commands/streams; it does not adopt its PDF. Exact mode refuses
+until the profile has an admitted reference, then compares fresh raw PDF bytes with that reference.
+`--check` makes two fresh builds. Supply a canonical TeX Live root explicitly; there is no `HOME`
+override. The existing Runner provides per-child limits and attempts cleanup while it retains
+ownership of the unreaped child group. An interruption during `Popen` construction before the
+process handle is returned can leave no handle for cleanup. It cannot safely signal a numeric group
+after reaping its leader; a subsequently observed live group is a failure. Termination is not
+guaranteed across either the `Popen` construction window or the reap window. Retain actual outer
+exits and survivor records. The leaf adds a shared 900-second deadline and sampled pre/post disk checks,
+not a hard quota or cadence guarantee.
+
+Builder setup failures after its owned-work `try` block begins are recorded in `RESULT.json` when
+the final write succeeds; earlier failures are reported on outer stderr. The controls have additional
+setup before their result-writing `try` block, so an owned control work directory may have no
+`RESULT.json`. Retain actual outer stderr and exit for both programs. A receipt does not substitute
+for the actual exit or its final deadline check.
+
+Two committed figure-PDF derivatives are consumed with their SVG/PDF input pins; SVG regeneration
+and actual page/font/navigation review remain separate. No dataset download or Rust rerun occurs.
+
+```text
+python3 -I -S -B scripts/build-recorded-office-sensors-pdf.py --discover --check --tex-root <canonical-tex-root> --work-dir <fresh-work> --output <new-pdf>
+python3 -I -S -B scripts/build-recorded-office-sensors-pdf.py --exact --check --tex-root <canonical-tex-root> --work-dir <fresh-work>
+python3 -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir <fresh-control-work>
+python3 -O -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir <different-fresh-control-work>
+```
+
+The finite whole-entrypoint controls use deliberately repinned inert producers and placeholder
+PDF bytes. They test causal failures and retention, not valid PDF generation or scientific results.
+The aggregate runs these controls in normal/optimized Python. Exact aggregate execution requires
+`PID_RS_OCCUPANCY_TEX_ROOT`; cross-toolchain mode retains an early status-2 refusal. Existing staged
+publication-link controls own semantic unsafe-action tests; byte-drift controls do not replace them.
+A source-proposal profile with a pending reference is intentionally not an exact publication pass.
+
 `check-formal-pdf-set.sh` fails closed if the declared standalone LaTeX sources, declared
 Markdown sources, renderer fragments, and PDF basename inventory differ, if an unexpected paper
 is present without an explicit inventory update, or if any individual PDF gate fails. Its default
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
 portability relation, except that the root blueprint, dated post-publication custody receipt and
-standalone mean exposition deliberately have no reviewed cross-toolchain profiles. The aggregate
+standalone mean exposition and recorded-sensor document deliberately have no reviewed cross-toolchain profiles. The aggregate
 requires each route to refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain
 credit; status 0 or any other refusal status fails the aggregate. The aggregate self-test protects
-all three exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
+all four exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
 branches against removal or weakening. It also protects the existing blueprint/custody hostile-suite
 calls and binds the custody record checker in normal and optimized Python and its hostile suite. For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical

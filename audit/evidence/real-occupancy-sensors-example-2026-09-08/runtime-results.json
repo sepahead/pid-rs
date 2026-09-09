@@ -1,0 +1,1367 @@
+{
+  "chronology": "datatest precedes training; datatest2 follows training",
+  "dataset": "UCI Occupancy Detection, DOI 10.24432/C5X01N",
+  "fixed_bins_per_source": 4,
+  "resource_budget_per_library_call": {
+    "max_bytes": 67108864,
+    "max_operations_hint": 4000000000,
+    "max_pairwise_distances": 1000000,
+    "max_threads": 1
+  },
+  "results": [
+    {
+      "atom_sum_minus_joint_mi_nats": 5.551115123125783e-17,
+      "continuous_track": {
+        "error": "pid2_isx_estimate: support contract `known_atomic_or_mixed` is unsupported by this continuous estimator",
+        "numeric_continuous_pid": null,
+        "status": "expected_support_rejection_observed"
+      },
+      "daily_target_counts_0_1": {
+        "2015-02-04": [
+          353,
+          16
+        ],
+        "2015-02-05": [
+          901,
+          539
+        ],
+        "2015-02-06": [
+          854,
+          586
+        ],
+        "2015-02-07": [
+          1440,
+          0
+        ],
+        "2015-02-08": [
+          1440,
+          0
+        ],
+        "2015-02-09": [
+          906,
+          534
+        ],
+        "2015-02-10": [
+          520,
+          54
+        ]
+      },
+      "estimand": "Empirical joint PMF of training-fitted Q_light(Light), Q_co2(CO2), original occupancy 0/1",
+      "first_timestamp": "2015-02-04 17:51:00",
+      "last_timestamp": "2015-02-10 09:33:00",
+      "raw_sha256": "b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56",
+      "recording": "datatraining.txt",
+      "rows": 8143,
+      "scope": "Finite recorded empirical PMF; signed atoms retained; no calibrated sampling inference or sensor-placement conclusion",
+      "shannon_cmi_co2_given_light": 0.004951868592401598,
+      "shannon_cmi_light_given_co2": 0.25817407947186477,
+      "shared_exclusions_empirical": {
+        "empirical_pmf": {
+          "low_count_joint_states": 6,
+          "maximum_observed_count": 6110,
+          "minimum_observed_count": 1,
+          "observed_coverage_indicator": 0.9997543902738548,
+          "observed_joint_states": 16,
+          "population_caveat": "direct evaluation on the empirical categorical PMF; unseen population states have empirical probability zero and plug-in bias remains",
+          "sample_count": 8143,
+          "singleton_joint_states": 2
+        },
+        "input": {
+          "encoding": "Categorical",
+          "observed_cardinalities": [
+            4,
+            4,
+            2
+          ]
+        },
+        "mi_s1_t": 0.464270662417754,
+        "mi_s1s2_t": 0.4692225310101556,
+        "mi_s2_t": 0.2110484515382908,
+        "pointwise": [],
+        "pointwise_included": false,
+        "red": {
+          "informative_nats": 0.3549872338700079,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.027979044595677103,
+          "net_nats": 0.3270081892743308
+        },
+        "syn": {
+          "informative_nats": 0.13472893529244442,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.013817328964002666,
+          "net_nats": 0.12091160632844175
+        },
+        "unq1": {
+          "informative_nats": 0.1774405104093593,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.0401780372659362,
+          "net_nats": 0.1372624731434231
+        },
+        "unq2": {
+          "informative_nats": 0.27043599370128596,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.386395731437326,
+          "net_nats": -0.11595973773604001
+        }
+      },
+      "shared_exclusions_resource_estimate": {
+        "estimated_bytes": 7366072,
+        "operations_hint": 2127384267,
+        "pairwise_distances": 0
+      },
+      "source1_quantizer": {
+        "bin_edges": [
+          [
+            0.0,
+            386.5833333333325,
+            773.166666666665,
+            1159.7499999999975,
+            1546.33333333333
+          ]
+        ],
+        "bins_per_dimension": 4,
+        "categorical_output_hash": [
+          212,
+          75,
+          139,
+          253,
+          192,
+          244,
+          72,
+          202,
+          90,
+          254,
+          128,
+          46,
+          190,
+          250,
+          11,
+          57,
+          25,
+          165,
+          173,
+          105,
+          122,
+          220,
+          97,
+          122,
+          232,
+          129,
+          19,
+          168,
+          160,
+          181,
+          202,
+          0
+        ],
+        "dimensions": 1,
+        "distinct_binary64_edge_value_counts": [
+          5
+        ],
+        "empty_joint_cells": 0,
+        "estimand_statement": "PID of the declared fitted equal-width quantized variables; not continuous PID",
+        "low_count_joint_cells": 2,
+        "maximum_observed_cell_count": 6335,
+        "minimum_observed_cell_count": 1,
+        "n_samples": 8143,
+        "nominal_joint_cardinality": 4,
+        "observed_joint_cardinality": 4,
+        "observed_label_counts": [
+          4
+        ],
+        "out_of_range_policy": "ClampToBoundary",
+        "positive_width_interval_counts": [
+          4
+        ],
+        "reachable_binary64_label_counts": [
+          4
+        ],
+        "reachable_joint_cardinality": 4,
+        "scaling_description": "raw light in lux; training recording only",
+        "structurally_unreachable_joint_cells": 0,
+        "training_input_hash": [
+          99,
+          4,
+          252,
+          76,
+          85,
+          168,
+          77,
+          13,
+          150,
+          5,
+          147,
+          194,
+          86,
+          30,
+          90,
+          169,
+          190,
+          113,
+          42,
+          234,
+          76,
+          128,
+          221,
+          209,
+          151,
+          212,
+          228,
+          3,
+          130,
+          163,
+          7,
+          124
+        ],
+        "transform_input_hash": [
+          183,
+          248,
+          215,
+          157,
+          95,
+          108,
+          147,
+          171,
+          73,
+          43,
+          238,
+          229,
+          0,
+          163,
+          56,
+          48,
+          205,
+          204,
+          138,
+          230,
+          252,
+          128,
+          147,
+          216,
+          227,
+          58,
+          206,
+          17,
+          49,
+          67,
+          221,
+          134
+        ],
+        "unobserved_reachable_joint_cells": 0
+      },
+      "source1_tails": {
+        "above_training_max": 0,
+        "below_training_min": 0
+      },
+      "source2_quantizer": {
+        "bin_edges": [
+          [
+            412.75,
+            816.6875,
+            1220.625,
+            1624.5625,
+            2028.5
+          ]
+        ],
+        "bins_per_dimension": 4,
+        "categorical_output_hash": [
+          76,
+          81,
+          187,
+          79,
+          44,
+          208,
+          153,
+          51,
+          118,
+          26,
+          158,
+          58,
+          79,
+          123,
+          153,
+          230,
+          221,
+          208,
+          39,
+          94,
+          139,
+          131,
+          1,
+          110,
+          105,
+          218,
+          208,
+          224,
+          72,
+          106,
+          251,
+          238
+        ],
+        "dimensions": 1,
+        "distinct_binary64_edge_value_counts": [
+          5
+        ],
+        "empty_joint_cells": 0,
+        "estimand_statement": "PID of the declared fitted equal-width quantized variables; not continuous PID",
+        "low_count_joint_cells": 0,
+        "maximum_observed_cell_count": 6667,
+        "minimum_observed_cell_count": 200,
+        "n_samples": 8143,
+        "nominal_joint_cardinality": 4,
+        "observed_joint_cardinality": 4,
+        "observed_label_counts": [
+          4
+        ],
+        "out_of_range_policy": "ClampToBoundary",
+        "positive_width_interval_counts": [
+          4
+        ],
+        "reachable_binary64_label_counts": [
+          4
+        ],
+        "reachable_joint_cardinality": 4,
+        "scaling_description": "raw CO2 in ppm; training recording only",
+        "structurally_unreachable_joint_cells": 0,
+        "training_input_hash": [
+          239,
+          78,
+          10,
+          9,
+          28,
+          193,
+          233,
+          189,
+          150,
+          77,
+          221,
+          118,
+          89,
+          33,
+          45,
+          122,
+          166,
+          2,
+          127,
+          251,
+          180,
+          231,
+          174,
+          16,
+          169,
+          11,
+          193,
+          163,
+          99,
+          30,
+          38,
+          56
+        ],
+        "transform_input_hash": [
+          242,
+          196,
+          138,
+          51,
+          209,
+          39,
+          28,
+          99,
+          99,
+          48,
+          245,
+          18,
+          79,
+          127,
+          75,
+          181,
+          115,
+          38,
+          236,
+          220,
+          89,
+          159,
+          76,
+          174,
+          240,
+          102,
+          125,
+          122,
+          181,
+          147,
+          156,
+          61
+        ],
+        "unobserved_reachable_joint_cells": 0
+      },
+      "source2_tails": {
+        "above_training_max": 0,
+        "below_training_min": 0
+      },
+      "timezone": "unspecified in retrieved metadata",
+      "units": "nats"
+    },
+    {
+      "atom_sum_minus_joint_mi_nats": 2.220446049250313e-16,
+      "continuous_track": {
+        "error": "pid2_isx_estimate: support contract `known_atomic_or_mixed` is unsupported by this continuous estimator",
+        "numeric_continuous_pid": null,
+        "status": "expected_support_rejection_observed"
+      },
+      "daily_target_counts_0_1": {
+        "2015-02-02": [
+          378,
+          203
+        ],
+        "2015-02-03": [
+          841,
+          599
+        ],
+        "2015-02-04": [
+          474,
+          170
+        ]
+      },
+      "estimand": "Empirical joint PMF of training-fitted Q_light(Light), Q_co2(CO2), original occupancy 0/1",
+      "first_timestamp": "2015-02-02 14:19:00",
+      "last_timestamp": "2015-02-04 10:43:00",
+      "raw_sha256": "1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f",
+      "recording": "datatest.txt",
+      "rows": 2665,
+      "scope": "Finite recorded empirical PMF; signed atoms retained; no calibrated sampling inference or sensor-placement conclusion",
+      "shannon_cmi_co2_given_light": 0.0087098393574635,
+      "shannon_cmi_light_given_co2": 0.28817571180011375,
+      "shared_exclusions_empirical": {
+        "empirical_pmf": {
+          "low_count_joint_states": 2,
+          "maximum_observed_count": 1528,
+          "minimum_observed_count": 3,
+          "observed_coverage_indicator": 1.0,
+          "observed_joint_states": 10,
+          "population_caveat": "direct evaluation on the empirical categorical PMF; unseen population states have empirical probability zero and plug-in bias remains",
+          "sample_count": 2665,
+          "singleton_joint_states": 0
+        },
+        "input": {
+          "encoding": "Categorical",
+          "observed_cardinalities": [
+            4,
+            3,
+            2
+          ]
+        },
+        "mi_s1_t": 0.569061943705709,
+        "mi_s1s2_t": 0.5777717830631725,
+        "mi_s2_t": 0.2895960712630587,
+        "pointwise": [],
+        "pointwise_included": false,
+        "red": {
+          "informative_nats": 0.47966649972037606,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.039368437787673814,
+          "net_nats": 0.44029806193270227
+        },
+        "syn": {
+          "informative_nats": 0.18345769935794778,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.02404586933084065,
+          "net_nats": 0.15941183002710713
+        },
+        "unq1": {
+          "informative_nats": 0.2337835847973754,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.10501970302436857,
+          "net_nats": 0.12876388177300685
+        },
+        "unq2": {
+          "informative_nats": 0.3286445731535504,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.479346563823194,
+          "net_nats": -0.15070199066964363
+        }
+      },
+      "shared_exclusions_resource_estimate": {
+        "estimated_bytes": 2413960,
+        "operations_hint": 229052508,
+        "pairwise_distances": 0
+      },
+      "source1_quantizer": {
+        "bin_edges": [
+          [
+            0.0,
+            386.5833333333325,
+            773.166666666665,
+            1159.7499999999975,
+            1546.33333333333
+          ]
+        ],
+        "bins_per_dimension": 4,
+        "categorical_output_hash": [
+          178,
+          162,
+          73,
+          187,
+          11,
+          73,
+          150,
+          1,
+          179,
+          250,
+          90,
+          8,
+          162,
+          159,
+          71,
+          143,
+          39,
+          182,
+          36,
+          196,
+          196,
+          251,
+          231,
+          63,
+          23,
+          90,
+          200,
+          244,
+          50,
+          6,
+          229,
+          237
+        ],
+        "dimensions": 1,
+        "distinct_binary64_edge_value_counts": [
+          5
+        ],
+        "empty_joint_cells": 0,
+        "estimand_statement": "PID of the declared fitted equal-width quantized variables; not continuous PID",
+        "low_count_joint_cells": 1,
+        "maximum_observed_cell_count": 1642,
+        "minimum_observed_cell_count": 3,
+        "n_samples": 2665,
+        "nominal_joint_cardinality": 4,
+        "observed_joint_cardinality": 4,
+        "observed_label_counts": [
+          4
+        ],
+        "out_of_range_policy": "ClampToBoundary",
+        "positive_width_interval_counts": [
+          4
+        ],
+        "reachable_binary64_label_counts": [
+          4
+        ],
+        "reachable_joint_cardinality": 4,
+        "scaling_description": "raw light in lux; training recording only",
+        "structurally_unreachable_joint_cells": 0,
+        "training_input_hash": [
+          99,
+          4,
+          252,
+          76,
+          85,
+          168,
+          77,
+          13,
+          150,
+          5,
+          147,
+          194,
+          86,
+          30,
+          90,
+          169,
+          190,
+          113,
+          42,
+          234,
+          76,
+          128,
+          221,
+          209,
+          151,
+          212,
+          228,
+          3,
+          130,
+          163,
+          7,
+          124
+        ],
+        "transform_input_hash": [
+          61,
+          182,
+          160,
+          26,
+          234,
+          137,
+          230,
+          19,
+          104,
+          98,
+          118,
+          233,
+          166,
+          170,
+          126,
+          76,
+          46,
+          91,
+          129,
+          108,
+          232,
+          145,
+          170,
+          54,
+          98,
+          61,
+          229,
+          129,
+          206,
+          13,
+          19,
+          144
+        ],
+        "unobserved_reachable_joint_cells": 0
+      },
+      "source1_tails": {
+        "above_training_max": 1,
+        "below_training_min": 0
+      },
+      "source2_quantizer": {
+        "bin_edges": [
+          [
+            412.75,
+            816.6875,
+            1220.625,
+            1624.5625,
+            2028.5
+          ]
+        ],
+        "bins_per_dimension": 4,
+        "categorical_output_hash": [
+          206,
+          177,
+          60,
+          201,
+          49,
+          114,
+          101,
+          171,
+          133,
+          82,
+          108,
+          114,
+          211,
+          135,
+          44,
+          189,
+          203,
+          90,
+          103,
+          66,
+          205,
+          250,
+          251,
+          203,
+          245,
+          63,
+          50,
+          180,
+          224,
+          181,
+          195,
+          69
+        ],
+        "dimensions": 1,
+        "distinct_binary64_edge_value_counts": [
+          5
+        ],
+        "empty_joint_cells": 1,
+        "estimand_statement": "PID of the declared fitted equal-width quantized variables; not continuous PID",
+        "low_count_joint_cells": 0,
+        "maximum_observed_cell_count": 1764,
+        "minimum_observed_cell_count": 179,
+        "n_samples": 2665,
+        "nominal_joint_cardinality": 4,
+        "observed_joint_cardinality": 3,
+        "observed_label_counts": [
+          3
+        ],
+        "out_of_range_policy": "ClampToBoundary",
+        "positive_width_interval_counts": [
+          4
+        ],
+        "reachable_binary64_label_counts": [
+          4
+        ],
+        "reachable_joint_cardinality": 4,
+        "scaling_description": "raw CO2 in ppm; training recording only",
+        "structurally_unreachable_joint_cells": 0,
+        "training_input_hash": [
+          239,
+          78,
+          10,
+          9,
+          28,
+          193,
+          233,
+          189,
+          150,
+          77,
+          221,
+          118,
+          89,
+          33,
+          45,
+          122,
+          166,
+          2,
+          127,
+          251,
+          180,
+          231,
+          174,
+          16,
+          169,
+          11,
+          193,
+          163,
+          99,
+          30,
+          38,
+          56
+        ],
+        "transform_input_hash": [
+          18,
+          212,
+          93,
+          38,
+          8,
+          227,
+          60,
+          157,
+          42,
+          167,
+          61,
+          158,
+          55,
+          110,
+          68,
+          165,
+          11,
+          73,
+          250,
+          30,
+          181,
+          173,
+          219,
+          76,
+          64,
+          86,
+          171,
+          235,
+          25,
+          134,
+          11,
+          162
+        ],
+        "unobserved_reachable_joint_cells": 1
+      },
+      "source2_tails": {
+        "above_training_max": 0,
+        "below_training_min": 0
+      },
+      "timezone": "unspecified in retrieved metadata",
+      "units": "nats"
+    },
+    {
+      "atom_sum_minus_joint_mi_nats": 0.0,
+      "continuous_track": {
+        "error": "pid2_isx_estimate: support contract `known_atomic_or_mixed` is unsupported by this continuous estimator",
+        "numeric_continuous_pid": null,
+        "status": "expected_support_rejection_observed"
+      },
+      "daily_target_counts_0_1": {
+        "2015-02-11": [
+          338,
+          214
+        ],
+        "2015-02-12": [
+          1196,
+          244
+        ],
+        "2015-02-13": [
+          946,
+          494
+        ],
+        "2015-02-14": [
+          1440,
+          0
+        ],
+        "2015-02-15": [
+          1440,
+          0
+        ],
+        "2015-02-16": [
+          889,
+          551
+        ],
+        "2015-02-17": [
+          903,
+          537
+        ],
+        "2015-02-18": [
+          551,
+          9
+        ]
+      },
+      "estimand": "Empirical joint PMF of training-fitted Q_light(Light), Q_co2(CO2), original occupancy 0/1",
+      "first_timestamp": "2015-02-11 14:48:00",
+      "last_timestamp": "2015-02-18 09:19:00",
+      "raw_sha256": "d026d1bd5aeccd4aff4f3b3710d48e40613bd5fc370db7e61bbdcaa50d985095",
+      "recording": "datatest2.txt",
+      "rows": 9752,
+      "scope": "Finite recorded empirical PMF; signed atoms retained; no calibrated sampling inference or sensor-placement conclusion",
+      "shannon_cmi_co2_given_light": 0.0015580124044009547,
+      "shannon_cmi_light_given_co2": 0.3850304851731321,
+      "shared_exclusions_empirical": {
+        "empirical_pmf": {
+          "low_count_joint_states": 4,
+          "maximum_observed_count": 6354,
+          "minimum_observed_count": 1,
+          "observed_coverage_indicator": 0.9998974569319115,
+          "observed_joint_states": 16,
+          "population_caveat": "direct evaluation on the empirical categorical PMF; unseen population states have empirical probability zero and plug-in bias remains",
+          "sample_count": 9752,
+          "singleton_joint_states": 1
+        },
+        "input": {
+          "encoding": "Categorical",
+          "observed_cardinalities": [
+            4,
+            4,
+            2
+          ]
+        },
+        "mi_s1_t": 0.4810198779826372,
+        "mi_s1s2_t": 0.48257789038703813,
+        "mi_s2_t": 0.09754740521390605,
+        "pointwise": [],
+        "pointwise_included": false,
+        "red": {
+          "informative_nats": 0.30336500452482507,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.027126546795487563,
+          "net_nats": 0.2762384577293375
+        },
+        "syn": {
+          "informative_nats": 0.1947158703520923,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.014466805432259828,
+          "net_nats": 0.18024906491983247
+        },
+        "unq1": {
+          "informative_nats": 0.2622359750152175,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.05745455476191788,
+          "net_nats": 0.20478142025329962
+        },
+        "unq2": {
+          "informative_nats": 0.4780845481806559,
+          "interpretation": {
+            "aggregation_scope": "empirical_pmf_average",
+            "context_requirement": "containing_result_for_coordinate_and_realization_context",
+            "contract_revision": 1,
+            "coordinate_semantics": "source_collection_antichain_mobius_contribution",
+            "decomposition_measure": "shared_exclusions_sxpid",
+            "evidential_scope": "statistical_information_under_supplied_distribution",
+            "guard_origin": "project_defined",
+            "not_established_by_atom_alone": [
+              "intentional_deception",
+              "causal_effect",
+              "fault_attribution",
+              "per_source_responsibility",
+              "measure_independent_decomposition",
+              "unbiased_population_estimate"
+            ]
+          },
+          "misinformative_nats": 0.6567756006960873,
+          "net_nats": -0.17869105251543144
+        }
+      },
+      "shared_exclusions_resource_estimate": {
+        "estimated_bytes": 8820608,
+        "operations_hint": 3049939088,
+        "pairwise_distances": 0
+      },
+      "source1_quantizer": {
+        "bin_edges": [
+          [
+            0.0,
+            386.5833333333325,
+            773.166666666665,
+            1159.7499999999975,
+            1546.33333333333
+          ]
+        ],
+        "bins_per_dimension": 4,
+        "categorical_output_hash": [
+          97,
+          150,
+          9,
+          109,
+          249,
+          80,
+          230,
+          16,
+          107,
+          23,
+          110,
+          248,
+          253,
+          225,
+          137,
+          226,
+          127,
+          49,
+          249,
+          55,
+          10,
+          212,
+          6,
+          233,
+          177,
+          70,
+          164,
+          130,
+          214,
+          141,
+          110,
+          111
+        ],
+        "dimensions": 1,
+        "distinct_binary64_edge_value_counts": [
+          5
+        ],
+        "empty_joint_cells": 0,
+        "estimand_statement": "PID of the declared fitted equal-width quantized variables; not continuous PID",
+        "low_count_joint_cells": 1,
+        "maximum_observed_cell_count": 7665,
+        "minimum_observed_cell_count": 2,
+        "n_samples": 9752,
+        "nominal_joint_cardinality": 4,
+        "observed_joint_cardinality": 4,
+        "observed_label_counts": [
+          4
+        ],
+        "out_of_range_policy": "ClampToBoundary",
+        "positive_width_interval_counts": [
+          4
+        ],
+        "reachable_binary64_label_counts": [
+          4
+        ],
+        "reachable_joint_cardinality": 4,
+        "scaling_description": "raw light in lux; training recording only",
+        "structurally_unreachable_joint_cells": 0,
+        "training_input_hash": [
+          99,
+          4,
+          252,
+          76,
+          85,
+          168,
+          77,
+          13,
+          150,
+          5,
+          147,
+          194,
+          86,
+          30,
+          90,
+          169,
+          190,
+          113,
+          42,
+          234,
+          76,
+          128,
+          221,
+          209,
+          151,
+          212,
+          228,
+          3,
+          130,
+          163,
+          7,
+          124
+        ],
+        "transform_input_hash": [
+          187,
+          89,
+          82,
+          234,
+          236,
+          229,
+          107,
+          31,
+          155,
+          121,
+          116,
+          36,
+          203,
+          212,
+          149,
+          164,
+          29,
+          52,
+          255,
+          4,
+          152,
+          13,
+          133,
+          138,
+          216,
+          3,
+          204,
+          4,
+          232,
+          102,
+          57,
+          34
+        ],
+        "unobserved_reachable_joint_cells": 0
+      },
+      "source1_tails": {
+        "above_training_max": 1,
+        "below_training_min": 0
+      },
+      "source2_quantizer": {
+        "bin_edges": [
+          [
+            412.75,
+            816.6875,
+            1220.625,
+            1624.5625,
+            2028.5
+          ]
+        ],
+        "bins_per_dimension": 4,
+        "categorical_output_hash": [
+          135,
+          49,
+          123,
+          177,
+          43,
+          18,
+          109,
+          32,
+          87,
+          229,
+          121,
+          64,
+          24,
+          57,
+          151,
+          139,
+          198,
+          62,
+          222,
+          134,
+          155,
+          120,
+          156,
+          101,
+          71,
+          195,
+          228,
+          27,
+          45,
+          164,
+          67,
+          254
+        ],
+        "dimensions": 1,
+        "distinct_binary64_edge_value_counts": [
+          5
+        ],
+        "empty_joint_cells": 0,
+        "estimand_statement": "PID of the declared fitted equal-width quantized variables; not continuous PID",
+        "low_count_joint_cells": 0,
+        "maximum_observed_cell_count": 7195,
+        "minimum_observed_cell_count": 71,
+        "n_samples": 9752,
+        "nominal_joint_cardinality": 4,
+        "observed_joint_cardinality": 4,
+        "observed_label_counts": [
+          4
+        ],
+        "out_of_range_policy": "ClampToBoundary",
+        "positive_width_interval_counts": [
+          4
+        ],
+        "reachable_binary64_label_counts": [
+          4
+        ],
+        "reachable_joint_cardinality": 4,
+        "scaling_description": "raw CO2 in ppm; training recording only",
+        "structurally_unreachable_joint_cells": 0,
+        "training_input_hash": [
+          239,
+          78,
+          10,
+          9,
+          28,
+          193,
+          233,
+          189,
+          150,
+          77,
+          221,
+          118,
+          89,
+          33,
+          45,
+          122,
+          166,
+          2,
+          127,
+          251,
+          180,
+          231,
+          174,
+          16,
+          169,
+          11,
+          193,
+          163,
+          99,
+          30,
+          38,
+          56
+        ],
+        "transform_input_hash": [
+          235,
+          8,
+          58,
+          181,
+          192,
+          202,
+          158,
+          182,
+          129,
+          62,
+          153,
+          239,
+          11,
+          244,
+          216,
+          80,
+          62,
+          147,
+          161,
+          33,
+          30,
+          6,
+          218,
+          40,
+          230,
+          51,
+          221,
+          158,
+          27,
+          210,
+          227,
+          143
+        ],
+        "unobserved_reachable_joint_cells": 0
+      },
+      "source2_tails": {
+        "above_training_max": 3,
+        "below_training_min": 0
+      },
+      "timezone": "unspecified in retrieved metadata",
+      "units": "nats"
+    }
+  ],
+  "training_file": "datatraining.txt"
+}

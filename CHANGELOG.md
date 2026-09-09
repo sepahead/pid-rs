@@ -7,7 +7,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Add a Rust example for recorded UCI office sensors, with training-fitted categorical MGW PID,
+  continuous-support refusals, complete numerical output and a derivation from integer event
+  counts. Document signed-atom cancellation, predictive comparisons, temporal and support limits,
+  resource estimates and unsuccessful execution steps. Include a standalone Markdown/PDF report
+  with vector figures and an exact reproduction check for its declared toolchain.
+
 ### Changed
+
+- Correct the results-guide PDF fixture to compare the format file's actual group ownership.
+  A file's group can differ from the process's effective group. Preserve the production
+  metadata checks and the synthetic profile-selector fixture. Retain the
+  [failure and focused validation](audit/evidence/pdf-format-group-fixture-repair-2026-09-09.md).
 
 - Exclude local research scratch files from the temporary API-mutation checkout. Preserve the
   compiled API checks and propagate cleanup failures.

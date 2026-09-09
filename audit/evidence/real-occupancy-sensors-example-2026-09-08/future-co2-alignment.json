@@ -1,0 +1,29 @@
+{
+  "scope": "Source preparation only: exact timestamp alignment for a changed, future-CO2 question; no continuous estimator or population model admitted.",
+  "lag_seconds": 900,
+  "sources": [
+    "Temperature(t) in degrees C",
+    "Light(t) in lux"
+  ],
+  "target": "CO2(t+900 seconds) in ppm",
+  "files": {
+    "datatest.txt": {
+      "input_rows": 2665,
+      "aligned_rows": 1237,
+      "end_of_recording_unmatched": 15,
+      "internal_exact_timestamp_unmatched": 1413
+    },
+    "datatest2.txt": {
+      "input_rows": 9752,
+      "aligned_rows": 4545,
+      "end_of_recording_unmatched": 15,
+      "internal_exact_timestamp_unmatched": 5192
+    },
+    "datatraining.txt": {
+      "input_rows": 8143,
+      "aligned_rows": 3793,
+      "end_of_recording_unmatched": 15,
+      "internal_exact_timestamp_unmatched": 4335
+    }
+  }
+}

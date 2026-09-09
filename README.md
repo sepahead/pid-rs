@@ -577,6 +577,20 @@ cargo run --release -p pid-core --features experimental-continuous --example ksg
 cargo run --release --example discrete_sxpid
 ```
 
+The [recorded office-sensor example](audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
+([standalone PDF](output/pdf/recorded-office-sensors.pdf))
+uses 20,560 UCI measurements. It fits light and CO₂ bins on training data, calculates categorical
+MGW atoms, and compares MI, CMI and fixed prediction scores. Its worked count calculation shows
+why signed contributions matter and why positive synergy alone cannot justify another sensor.
+The binary occupancy target produces an explicit refusal from the continuous estimator.
+
+Download the three files from [UCI Occupancy Detection](https://doi.org/10.24432/C5X01N), then run:
+
+```bash
+cargo run --locked --release -p pid-core --features experimental-continuous \
+  --example occupancy_sensors -- DATA_DIRECTORY
+```
+
 ## Scientific cautions
 
 These estimators are not interchangeable with ground truth.
