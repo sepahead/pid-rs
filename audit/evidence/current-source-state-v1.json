@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "296dbfa2b696baa951c48f74c194b2daa07d142d302b662650d8746ff88a0738",
-        "size_bytes": 297846
+        "sha256": "9a33867a6d4fbf2a8e7b5385aaf162fc820d74f3ad51e7d73da685630b8202cf",
+        "size_bytes": 298097
       },
       {
         "git_mode": "100644",
@@ -2982,6 +2982,12 @@
         "path": "audit/evidence/methods-summary-v1.json",
         "sha256": "2ae397094bf3eb4a3428a894f49a7ed91dccab306897f31cc400d167b7673287",
         "size_bytes": 79261
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/occupancy-freeze-pin-failure-2026-09-09.md",
+        "sha256": "890b3b2d2320e1c10187a6fc113a02213cbb60ce40f300240c8bbd54f61fa32f",
+        "size_bytes": 1774
       },
       {
         "git_mode": "100644",
@@ -17062,7 +17068,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "695e4614955977c96ce0ee5d4898f808d63bdb37a664687bba18564659e44bdf",
+        "sha256": "6cf58432ecda36ee5a5e7f8a09c8fabee6d8ffbd56016ac340ae9c14c3b8672b",
         "size_bytes": 136032
       },
       {
@@ -17870,8 +17876,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "88ffb5087b828918c43cb4395ee6bdd222ec6a86d4c866cf5f9ccc9ff5de126f",
-    "entry_count": 2954
+    "entries_sha256": "cd356d99ffb10319747096d00a81eeb8d7715abf1c699a89342f1727aed13941",
+    "entry_count": 2955
   },
   "subprojections": [
     {
@@ -17899,7 +17905,7 @@
       ]
     },
     {
-      "entries_sha256": "cb64bb1aeb032e4a9dcf6131c47bcbadc32aca5bcd95070fb16728acbc35628f",
+      "entries_sha256": "fbf7bd28bda18c954dcddf17eaefe8e2959983d9e71ee62b902a1306fb772438",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

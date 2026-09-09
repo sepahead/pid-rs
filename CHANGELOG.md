@@ -17,6 +17,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Correct the current Lean toolchain gate's changelog and certified-checker bindings after
+  the publication-support correction. Preserve historical replay hashes and the
+  [hosted failure](audit/evidence/occupancy-freeze-pin-failure-2026-09-09.md).
+
 - Refresh the certified-SxPID2 checker's reviewed scripts-guide and PDF-aggregate bindings
   after the recorded-sensor publication. Preserve the whole-file digest checks and the
   [hosted stale-binding failure](https://github.com/sepahead/pid-rs/actions/runs/34371927477/job/102535051042).
