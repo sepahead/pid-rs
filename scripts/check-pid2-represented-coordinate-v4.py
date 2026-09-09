@@ -38,7 +38,7 @@ SOURCE_SHA256 = {
         "6e7d6be525878638e4be253aff9bd74d25dd94afb53f1b520fb8e4e1a0a8cdfb"
     ),
     "crates/pid-core/src/pid2.rs": (
-        "d9fe89db5fcabd1b2666be5581726b18c8bf465b71d7ebc21e3fe3089007e147"
+        "c063c108758c926202a38b76fa4e962418a281d4896445924edd56bd4cd6faec"
     ),
     "crates/pid-core/tests/pid2.rs": (
         "967a26dac7633841ac14670e5f4d3362e0a4cfcf35beed72ef264d8b9d5b70bf"

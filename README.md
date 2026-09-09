@@ -629,10 +629,16 @@ These estimators are not interchangeable with ground truth.
   opt-in presentation transform; do not apply it to terms entering PID/Shannon identities or
   inferential procedures.
 - High intrinsic dimension and distance concentration can invalidate nearest-neighbour geometry.
-- Exact deterministic maps between continuous variables have singular joint laws and infinite
-  mutual information, outside this finite-MI estimator's domain. An explicit observation-noise
-  model defines a different noisy population law. Finite mutual information remains a separate
-  population assumption. Otherwise, use a suitable discrete or mixed estimator. Near-deterministic
+- For real random vectors $X,Y$ of positive dimensions with $Y=f(X)$ almost surely and
+  measurable $f$, a non-atomic target law (no point masses) gives infinite mutual information: the
+  joint law is concentrated on the graph of $f$, which has zero mass under the product of the
+  marginals. This follows from the relative-entropy definition of MI
+  ([Gray, Sections 5.2 and 5.5](https://ee.stanford.edu/~gray/it.pdf)).
+  Determinism alone is insufficient: a finite-valued deterministic target has $I(X;Y)=H(Y)$,
+  including zero for a constant target. These joint laws still fail this continuous path's
+  full-dimensional density premise. These are population quantities in nats; the identities need
+  no moment assumptions and provide no finite-sample accuracy bound. An explicit observation-noise
+  model changes the population law; finite MI remains a separate assumption. Near-deterministic
   dependence can still require prohibitive sample sizes even in low dimension.
 - A practical general estimator for arbitrary combinations of discrete, continuous, singular, and
   mixed support remains absent. [Barà et al. (2025)](https://doi.org/10.1103/58bg-5n9s) provide a

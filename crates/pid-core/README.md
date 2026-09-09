@@ -489,10 +489,16 @@ method for a discrete target with continuous sources. That method is not impleme
 restricted orientation does not make the full-dimensional KSG or research PID3 paths applicable
 to general mixed support.
 
-The continuous KSG/PID path also requires finite mutual information. An exact deterministic map
-between continuous variables has a singular joint law and infinite MI. An explicit
-observation-noise model defines a different noisy population law. Finite mutual information
-remains a separate population assumption. Otherwise, use an estimator for discrete or mixed data.
+The continuous KSG/PID path also requires finite mutual information. For real random vectors `X,Y`
+of positive dimensions with `Y = f(X)` almost surely and measurable `f`, a non-atomic target law
+(no point masses) gives infinite MI: the joint law is concentrated on the graph of `f`, which has
+zero mass under the product of the marginals. This follows from the relative-entropy definition
+of MI ([Gray, Sections 5.2 and 5.5](https://ee.stanford.edu/~gray/it.pdf)). Determinism alone is
+insufficient: a finite-valued deterministic target has `I(X;Y) = H(Y)`, including zero for a constant
+target. These joint laws still fail this continuous path's full-dimensional density premise. These are population
+quantities in nats; the identities need no moment assumptions and provide no finite-sample accuracy
+bound. An explicit observation-noise model changes the population law; finite MI remains a separate
+assumption.
 
 It also requires a unique positive k-th-neighbor boundary: collapsed radii and positive shell ties
 are rejected rather than resolved by an undocumented rank convention. Jitter changes the estimated

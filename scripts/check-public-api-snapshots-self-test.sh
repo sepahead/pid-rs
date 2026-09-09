@@ -380,7 +380,7 @@ if [[ -e "$TMP/competing-system-cargo-executed" ]]; then
 fi
 
 mkdir "$TMP/repo"
-tar --exclude './.git' --exclude './target' -cf - -C "$REPO_ROOT" . \
+tar --exclude './.git' --exclude './target' --exclude './.local' -cf - -C "$REPO_ROOT" . \
   | tar -xf - -C "$TMP/repo"
 "$API_PYTHON_EXECUTABLE" -I -S -B - \
   "$TMP/repo/crates/pid-core/src/report.rs" <<'PY'

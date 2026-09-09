@@ -461,10 +461,10 @@ impl IsxConfig {
 ///   use a discrete, quantized, or mixed-support estimator.
 /// - Can fail in high ambient/intrinsic dimension due to distance concentration.
 /// - Can require prohibitive samples under strong dependence (very large true MI).
-/// - Exact deterministic continuous maps have infinite MI and fall outside the estimator's domain.
-///   An explicit observation-noise model defines a different noisy population law. Finite MI
-///   remains a separate population assumption. Otherwise, use a suitable discrete or mixed
-///   estimator.
+/// - For real random vectors with `Y = f(X)` almost surely and measurable `f`, a non-atomic `Y`
+///   (no point masses) implies infinite MI. A constant `Y` has zero MI, but still fails the
+///   continuous path's full-dimensional joint-density premise. An explicit observation-noise model
+///   changes the population law; finite MI remains a separate population assumption.
 /// - The two source matrices must have the same ambient column count. The small-ball
 ///   disjunction compares their raw neighborhood radii, whose asymptotic scaling depends on
 ///   dimension; unequal-dimensional source balls therefore do not share the estimator's

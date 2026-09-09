@@ -9,6 +9,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Exclude local research scratch files from the temporary API-mutation checkout. Preserve the
+  compiled API checks and propagate cleanup failures.
+
+- Correct the deterministic-target and row-independence assumptions in continuous-estimator
+  documentation. Distinguish non-atomic targets from finite or constant targets, and explain why
+  subsampling or zero autocorrelation does not establish independent rows. Numerical behavior
+  and public APIs are unchanged.
+
 - Clarify the Rust runtime/Python tooling boundary and remove a stale generated-PDF count
   from the source-state guide.
 

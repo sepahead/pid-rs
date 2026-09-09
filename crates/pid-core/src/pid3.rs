@@ -557,8 +557,12 @@ impl Pid3Result {
 /// dimensions or reference measures.
 ///
 /// Relative source units/preprocessing are part of the continuous shared-exclusions estimand;
-/// record them and do not compare atoms across schemes. Exact deterministic continuous maps have
-/// infinite MI and require a justified noise model or a suitable discrete/mixed estimator.
+/// record them and do not compare atoms across schemes. For a required MI `I(X;T)`, `X` denotes
+/// the relevant source group. That MI is infinite if `T` is almost surely a measurable function
+/// of `X` and has no point masses.
+/// A constant target has zero MI, but still fails the full-dimensional joint-density premise.
+/// An explicit observation-noise model changes the population law; finite MI remains a separate
+/// assumption.
 /// Collapsed or ambiguous positive k-th-neighbor shells are rejected rather than assigned a silent
 /// tie convention.
 #[cfg(feature = "research-mixed-dimension-pid3")]

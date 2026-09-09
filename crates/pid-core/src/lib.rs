@@ -45,13 +45,16 @@
 //! quantities (see the `exp0` diagnostic binary and the project README).
 //!
 //! # Estimator cautions (read before using on VLA embeddings)
-//! - kNN estimators assume i.i.d. samples; trajectories violate this unless you subsample.
+//! - The supported continuous kNN interpretation assumes i.i.d. rows from one fixed joint law.
+//!   Subsampling or zero autocorrelation does not establish i.i.d. rows; guarantees for dependent
+//!   rows require a separate estimator theorem with explicit dependence assumptions.
 //! - High ambient/intrinsic dimension can collapse kNN geometry (distance concentration).
 //! - Strong dependence (near-deterministic mappings) can require prohibitive samples even at low
 //!   dimension.
-//! - Exact deterministic continuous maps have singular joint laws and infinite mutual information,
-//!   outside the finite-MI KSG/PID domain. An explicit observation-noise model defines a different
-//!   noisy population law. Finite mutual information remains a separate population assumption.
+//! - For real random vectors with `Y = f(X)` almost surely and measurable `f`, a non-atomic `Y`
+//!   (no point masses) implies infinite MI. A constant `Y` instead has zero MI, but still violates
+//!   the continuous path's full-dimensional joint-density premise. An explicit observation-noise
+//!   model changes the population law; finite MI remains a separate assumption.
 //! - Relative source units and preprocessing are part of the continuous `I^sx_∩` estimand because
 //!   they define how source neighborhoods are compared. Record them and do not pool atoms across
 //!   schemes.

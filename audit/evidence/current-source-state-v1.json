@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "9deba667b3b1e3d42b2231ddd8050135309ef3aca18d8cf4e8555941c0fb9ebf",
-        "size_bytes": 296183
+        "sha256": "90337135b8ee78bd91a6aa2f1429532579ba4e1dc1b7c37b1b346dabe657333a",
+        "size_bytes": 296649
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "5b574c985681973f8ef4f3fb374b0e0d02d3fe6a48cb0b437110e4590c007e81",
-        "size_bytes": 82946
+        "sha256": "c7b93411a6e5bb13f6cf4e8cbaf31f0649d60804784a887b8136c828e634fd5e",
+        "size_bytes": 83460
       },
       {
         "git_mode": "100644",
@@ -15106,8 +15106,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/README.md",
-        "sha256": "da2734bfb662e62efe1735debe5648aa28727bb966acd54a5b586bbc95310d8f",
-        "size_bytes": 41899
+        "sha256": "cfc850624b8310bdb1f775a3eeef005250702ccef8153cff6903f12706b29cb9",
+        "size_bytes": 42445
       },
       {
         "git_mode": "100644",
@@ -15220,8 +15220,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/isx.rs",
-        "sha256": "c93588ea5be183525f7f985a6a5015f352b4ac3b637a824118dcad924e8c6014",
-        "size_bytes": 65045
+        "sha256": "2f8d49f17307b4cf6c8cb284287e0d5c09affff36c96e3abca82c1f2a25db79a",
+        "size_bytes": 65118
       },
       {
         "git_mode": "100644",
@@ -15232,14 +15232,14 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/ksg.rs",
-        "sha256": "6455675f596a8ec62c0b3626cfa00b94081af8040341c82736382ed44c1ed20d",
-        "size_bytes": 122166
+        "sha256": "27dfb6e510364ab716c78e29bcafdd0a7a8447a3c63f23589df370851ac28872",
+        "size_bytes": 122561
       },
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/lib.rs",
-        "sha256": "cecac958bd1550d5a93c20e5aa7682a744ba5e57dff99db9d61197ee79648d8f",
-        "size_bytes": 28419
+        "sha256": "9a6c77053d0faece7258325890c91d3d8635b81e168c1ef8c2f25cb431bacbe9",
+        "size_bytes": 28688
       },
       {
         "git_mode": "100644",
@@ -15280,14 +15280,14 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/pid2.rs",
-        "sha256": "d9fe89db5fcabd1b2666be5581726b18c8bf465b71d7ebc21e3fe3089007e147",
-        "size_bytes": 79304
+        "sha256": "c063c108758c926202a38b76fa4e962418a281d4896445924edd56bd4cd6faec",
+        "size_bytes": 79552
       },
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/pid3.rs",
-        "sha256": "342194895951ba61ff6ebc5871c14162f011d9397253b7bebb69efe24a54e6d2",
-        "size_bytes": 59634
+        "sha256": "d4f49f73245eede187e48c197667391681b9dbac03e077cf9f6fb330013298f4",
+        "size_bytes": 59882
       },
       {
         "git_mode": "100644",
@@ -16948,7 +16948,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "2fe7aaf2e9bc7e0dd2c55229c63cba784223ee989ba120a37feb2c2ef35c6777",
+        "sha256": "f76eef0a69720129998093713c722eb25015953f373378043a543c6462f0d585",
         "size_bytes": 136032
       },
       {
@@ -17266,7 +17266,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-pid2-represented-coordinate-v4.py",
-        "sha256": "e91cb77f295be4d75a5575078aa08767c49179b0b59de3e35ca07628f6c06c2c",
+        "sha256": "e692aa619924575b51afa83d506a49eebc3fa35a19743f870b9eee55a36ea9c2",
         "size_bytes": 38853
       },
       {
@@ -17332,8 +17332,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-public-api-snapshots-self-test.sh",
-        "sha256": "5ed4172819dd5dc75376f081af790745fa144f5c593466cabf1c1838db02ec28",
-        "size_bytes": 17512
+        "sha256": "86b425218d923adc021026263aecdd849b7a25971d2a5a4bd6d40b9751dd2196",
+        "size_bytes": 17533
       },
       {
         "git_mode": "100755",
@@ -17750,7 +17750,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "69cd13dfb0aef43fa2e5daca3fe9613d709fd3b955b2ed61f61b5a9b41a7c9cf",
+    "entries_sha256": "5dd7a168b05055296fac64dd1f81794b1bc33f09fd91fa544cb36fdda8d42453",
     "entry_count": 2934
   },
   "subprojections": [
@@ -17779,7 +17779,7 @@
       ]
     },
     {
-      "entries_sha256": "53ef8b85422bdee95cf9ab23d4c90da6512347744f10cd3b929e892c07fe8db8",
+      "entries_sha256": "b41d2b9c8ba078f2490f1003bbaa4c2ee2bab59d99fcd346a359aa854d4010e1",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

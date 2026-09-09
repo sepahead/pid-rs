@@ -2078,9 +2078,11 @@ pub(crate) fn hash_text(value: &str) -> [u8; 32] {
 ///   full-dimensional and absolutely continuous. Exact coordinate ties are incompatible with the
 ///   estimator's ideal i.i.d., unrounded continuous-sample conditions, but neither identify their
 ///   cause nor classify population support; all-unique finite observations do not prove the model.
-/// - **i.i.d. samples:** KSG assumes independent samples from a fixed distribution. For time-series
-///   data (VLA trajectories), autocorrelation can seriously bias estimates unless you subsample or
-///   otherwise account for dependence.
+/// - **i.i.d. samples:** the supported KSG interpretation assumes i.i.d. rows from one fixed joint
+///   law. Published consistency results impose additional integrability, density, dimension, and
+///   k assumptions ([Gao, Oh, and Viswanath, Section 3](https://arxiv.org/abs/1604.03006v2)).
+///   Subsampling or zero autocorrelation does not establish i.i.d. rows; dependence-aware
+///   uncertainty alone does not establish estimator consistency for dependent rows.
 /// - **Observed ties and geometry:** exact coordinate ties are rejected by the continuous-sample
 ///   preflight. Separately, an otherwise accepted sample can still produce a non-positive kNN
 ///   radius or multiple observations on a positive boundary; those cases trigger
@@ -2092,10 +2094,11 @@ pub(crate) fn hash_text(value: &str) -> [u8; 32] {
 ///   estimator can become unstable or dominated by finite-sample noise.
 /// - **Strong dependence:** even at low dimension, near-deterministic relationships (very large
 ///   true MI) can require prohibitive sample sizes for kNN MI (see Gao, Ver Steeg, Galstyan 2015).
-///   An exact deterministic map between continuous variables has infinite MI and is outside this
-///   estimator's domain. An explicit observation-noise model defines a different noisy population
-///   law. Finite MI remains a separate population assumption. Otherwise, use a suitable discrete
-///   or mixed method.
+///   For real random vectors with `Y = f(X)` almost surely and measurable `f`, a non-atomic `Y`
+///   (no point masses) implies infinite MI. Determinism alone is insufficient: a constant `Y` has
+///   zero MI, while the joint law still fails this estimator's full-dimensional density premise.
+///   An explicit observation-noise model changes the population law; finite MI remains a separate
+///   population assumption. A different support requires a scientifically suitable method.
 /// - **Clamping:** `KsgConfig` returns signed estimates by default. Opting into
 ///   `NegativeHandling::ClampToZero` is a presentation transform, not a mathematical property of
 ///   the estimator, and must not be applied before algebraic identities or inference.
