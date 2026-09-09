@@ -17,6 +17,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Refresh the certified-SxPID2 checker's reviewed scripts-guide and PDF-aggregate bindings
+  after the recorded-sensor publication. Preserve the whole-file digest checks and the
+  [hosted stale-binding failure](https://github.com/sepahead/pid-rs/actions/runs/34371927477/job/102535051042).
+  The claim, mathematical sources and certificate predicates are unchanged.
+
 - Correct the results-guide PDF fixture to compare the format file's actual group ownership.
   A file's group can differ from the process's effective group. Preserve the production
   metadata checks and the synthetic profile-selector fixture. Retain the

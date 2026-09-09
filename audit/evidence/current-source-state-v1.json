@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "f584cf2c0f01a4b10dd32f2b664b0d04b0615aab056ea4b17dfecc575de66c74",
-        "size_bytes": 297479
+        "sha256": "296dbfa2b696baa951c48f74c194b2daa07d142d302b662650d8746ff88a0738",
+        "size_bytes": 297846
       },
       {
         "git_mode": "100644",
@@ -16498,7 +16498,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "72ff1b39074c45d51cf79c5b4f0897cf4c511d2197a280240a6f522a2af74f27",
+        "sha256": "2cbd13279ad8309995d3a7b59be58e6de25b4ec3d5824b2d42286e66ba634735",
         "size_bytes": 90915
       },
       {
@@ -17870,7 +17870,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "7f19feecd08d7b442f03a30d89b49776584c4c88c01cc15736595cf958cce675",
+    "entries_sha256": "88ffb5087b828918c43cb4395ee6bdd222ec6a86d4c866cf5f9ccc9ff5de126f",
     "entry_count": 2954
   },
   "subprojections": [
@@ -17899,7 +17899,7 @@
       ]
     },
     {
-      "entries_sha256": "c56fe9e3e234d76cd75d5842121ff32636bdc5da4342279df136d87f9729181d",
+      "entries_sha256": "cb64bb1aeb032e4a9dcf6131c47bcbadc32aca5bcd95070fb16728acbc35628f",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
