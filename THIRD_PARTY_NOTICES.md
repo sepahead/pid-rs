@@ -3,8 +3,8 @@
 This repository's project-authored material is licensed as stated in
 [`README.md`](README.md), except where a file carries a more specific notice. The mathematical
 results guide uses the Pandoc template projections described below. It, the separate SxPID3
-source-marginal audit, and the numerical-assurance note use the embedded font subsets described
-below. The complete input font files are not stored in this repository.
+source-marginal audit, the numerical-assurance note, and the finite MGW paper use the embedded
+font subsets described below. The complete input font files are not stored in this repository.
 
 ## Pandoc 3.1.3 and 3.10.2 LaTeX projections
 
@@ -90,3 +90,30 @@ guide uses four, the SxPID3 source-marginal audit uses two, and the numerical-as
 two; one crosswalk derivative is shared by the first two documents. The count describes the
 bounded renderer inventory. It does not establish SVG/PDF semantic equivalence, accessibility,
 authenticity, or mathematical correctness.
+
+## Finite MGW publication fonts
+
+The [finite MGW PDF](output/pdf/mgw-fixed-world-added-information.pdf) has recorded embedded
+subsets of Source Sans Pro Regular, Semibold and Bold; Latin Modern Roman 10 Regular, Bold and
+Italic; Latin Modern Mono 10 Regular; and Latin Modern Math Regular. Full input font programs are
+not redistributed. The [publication input profile](audit/formal/latex/mgw-fixed-world/publication-inputs-v1.json)
+records exact input identities; its controlled font roster is larger than the set of embedded
+faces and does not by itself establish publication admission.
+
+Source Sans Pro uses the [SIL Open Font License 1.1](audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt)
+identified above. The finite profile also includes the Regular Italic and Semibold Italic input
+faces. Latin Modern Roman and Mono belong to the Latin Modern 2.004 family, copyright
+2003–2009 by Bogusław Jackowski and Janusz M. Nowacki on behalf of TeX Users Groups. Their
+[GUST Font License 1.0](audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt)
+and [family manifest](audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt)
+are already retained. The finite profile additionally lists Roman 10 Bold Italic, Roman 12 Regular
+and Bold, Mono 10 Italic, and Mono Light 10 Bold and Bold Oblique as controlled inputs.
+
+Latin Modern Math 1.959 retains the package's copyright 2012–2014 for the math extensions by
+Bogusław Jackowski, Piotr Strzelczyk and Piotr Pianowski on behalf of TeX Users Groups. Exact
+copies of its [GUST Font License](audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/GUST-FONT-LICENSE.txt),
+[manifest](audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/MANIFEST-Latin-Modern-Math.txt)
+and [package description and notices](audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/README-Latin-Modern-Math.txt)
+are retained separately from the Latin Modern text-family records. Its 1,456-byte license copy
+and the text family's 1,377-byte copy are different source artifacts. Both refer to LPPL
+1.3c-or-later conditions; the repository retains [LPPL 1.3c](LICENSE-LPPL-1.3c).

@@ -1,0 +1,360 @@
+{
+  "adapter_cases": [
+    {
+      "case": "positive-fixed-inputs",
+      "outcome": "accepted"
+    },
+    {
+      "case": "positive-empty-object-tree",
+      "outcome": "accepted"
+    },
+    {
+      "case": "positive-absent-load-root",
+      "outcome": "accepted"
+    },
+    {
+      "case": "absent-load-root-appeared",
+      "cause": "previously absent installed load root appeared",
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-source",
+      "cause": "source tree membership differs from frozen pins: <synthetic-fixture-root>/missing-source/work",
+      "outcome": "rejected"
+    },
+    {
+      "case": "extra-source",
+      "cause": "extra, symbolic or special source entry: <synthetic-fixture-root>/extra-source/work/B.lean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "changed-source",
+      "cause": "source/tool drift: <synthetic-fixture-root>/changed-source/work/A.lean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "symbolic-source",
+      "cause": "extra, symbolic or special source entry: <synthetic-fixture-root>/symbolic-source/work/B.lean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "changed-installed-input",
+      "cause": "installed input metadata changed: <synthetic-fixture-root>/changed-installed-input/load/A.olean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "extra-installed-input",
+      "cause": "installed load-path membership changed",
+      "outcome": "rejected"
+    },
+    {
+      "case": "symbolic-installed-input",
+      "cause": "symbolic or special installed load member",
+      "outcome": "rejected"
+    },
+    {
+      "case": "symbolic-object",
+      "cause": "symbolic object path: <synthetic-fixture-root>/symbolic-object/objects/A.olean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "expired-window",
+      "cause": "registered execution window ended during metadata observation",
+      "outcome": "rejected"
+    },
+    {
+      "case": "disk-limit",
+      "cause": "sampled stage logical-byte limit exceeded",
+      "outcome": "rejected"
+    },
+    {
+      "case": "invalid-bytecode-cache-ignored-by-source-loader",
+      "outcome": "accepted"
+    },
+    {
+      "case": "changed-runtime-rejected-before-exec",
+      "outcome": "rejected"
+    }
+  ],
+  "entry_prefix_cases": [
+    {
+      "case": "optimized-native-entry-refused",
+      "cause": "requires Python 3.11+ -I -S -B without -O",
+      "outcome": "rejected"
+    }
+  ],
+  "native_children": 0,
+  "optimization": 1,
+  "original_actual_tool_sha256": "356d416a4764a60e3edbe3ca9d38dd54f171d5e44e8f179ee54d72074f4db1bb",
+  "original_result_sha256": "11ebdc01fff0df749af448742722fead86318877ea9bba8b3e9ea638ad42b5e0",
+  "projection_scope": "Only the machine-specific fixture prefix is replaced. This is not the raw result or a new execution.",
+  "report_validator": {
+    "accepted_cases": 3,
+    "case_count": 43,
+    "cases": [
+      {
+        "actual": "accept",
+        "case": "positive-schema",
+        "expected": "accept"
+      },
+      {
+        "actual": "accept",
+        "case": "positive-synthetic-bindings",
+        "expected": "accept"
+      },
+      {
+        "actual": "reject",
+        "case": "J01-missing",
+        "code": "json.bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J02-empty",
+        "code": "json.bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J03-truncated",
+        "code": "json.frame",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J04-second-document",
+        "code": "json.malformed",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J05-duplicate-key",
+        "code": "json.duplicate_key",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J06-bool",
+        "code": "report.count",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J06-float",
+        "code": "report.count",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J06-string",
+        "code": "report.count",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J07-missing-row",
+        "code": "report.rows",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J08-duplicate-row",
+        "code": "row.fqn",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J09-order",
+        "code": "row.fqn",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J10-fqn",
+        "code": "row.fqn",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J11-extra-top",
+        "code": "report.keys",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J11-missing-row-key",
+        "code": "row.keys",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-status",
+        "code": "report.fixed",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-kind",
+        "code": "row.kind",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-universe",
+        "code": "row.universes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-defeq-type",
+        "code": "row.type_defeq",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-empty-candidate_type",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-empty-target_type",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-empty-target_value",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-wrong-type",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-forbidden",
+        "code": "row.axiom_allowlist",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-duplicate",
+        "code": "row.axiom_order_unique",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-unsorted",
+        "code": "row.axiom_order_unique",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-wrong-type",
+        "code": "row.axiom_type",
+        "expected": "reject"
+      },
+      {
+        "actual": "accept-schema-only",
+        "case": "J15-valid-shape-alone",
+        "expected": "accept-schema-only"
+      },
+      {
+        "actual": "reject",
+        "case": "J15-output-forgery",
+        "code": "completion.report_bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-failed-exit",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-bool-exit",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-timeout",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-status",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-argv",
+        "code": "record.invocation",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-source",
+        "code": "record.identity",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-objects",
+        "code": "record.identity",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-timeout-bound",
+        "code": "record.timeout",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-stderr",
+        "code": "record.stderr",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J17-missing-kernel",
+        "code": "binding.record_bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J17-failed-kernel",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J17-nonempty-kernel",
+        "code": "record.kernel_stdout",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J18-self-rebased-forgery",
+        "code": "binding.record_bytes",
+        "expected": "reject"
+      }
+    ],
+    "fixture_report_sha256": "2ecffd8d4ecc687dcc89309af41a0339380ebdb90542c5e0407781d8786d0b4f",
+    "genuine_producer_or_theorem_credit": false,
+    "native_children": 0,
+    "optimized": true,
+    "rejected_cases": 40,
+    "status": "synthetic-selfchecks-completed"
+  },
+  "scope": "Exact entry prefix, adapter function bodies, and source-loader statements on synthetic inputs; no complete-entry, process-monitor, native-proof, or independent acceptance credit. Optimized native entry is deliberately refused.",
+  "status": "synthetic controls completed"
+}

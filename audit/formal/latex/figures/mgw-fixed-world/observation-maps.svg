@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="96mm" viewBox="0 0 1680 960" role="img" aria-labelledby="title desc">
+  <title id="title">One finite world, two added sources</title>
+  <desc id="desc">Three independent fair bits A, B and U give eight worlds of mass one eighth. Both observation maps keep baseline A and target Y equal to the pair A,B. Adding U gives eight distinct observations of mass one eighth. Adding B gives four observations of mass two eighths because the two values of U merge. Both MGW synergies are log four thirds; conditional mutual information after A is zero for U and log two for B. Exact finite-law illustration; the accompanying paper states its proof and application scope.</desc>
+  <defs>
+    <style>
+      text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
+      .title { font-size: 44px; font-weight: 700; fill: #1F3F60; }
+      .label { font-size: 36px; font-weight: 700; }
+      .body { font-size: 32px; }
+      .small { font-size: 28px; }
+      .draft { font-size: 25px; font-weight: 700; fill: #916400; }
+    </style>
+    <marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 24 20" refX="22" refY="10" markerWidth="24" markerHeight="20" orient="auto"><path d="M2 2 L22 10 L2 18" fill="none" stroke="#1F6968" stroke-width="3" stroke-linecap="butt" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1680" height="960" fill="#F7F3E9"/>
+  <rect width="1680" height="26" fill="#1F3F60"/>
+  <text x="70" y="94" class="title">One world, two ways to add a source</text>
+  <text x="70" y="158" class="body">A, B and U are independent fair bits: eight worlds, each with probability 1/8.</text>
+  <rect x="310" y="206" width="1060" height="160" rx="18" fill="#F2EBDA" stroke="#916400" stroke-width="3"/>
+  <text x="350" y="261" class="label">Held fixed in both comparisons</text>
+  <text x="350" y="317" class="body">Existing source: A</text>
+  <text x="850" y="317" class="body">Target: Y = (A,B)</text>
+  <path d="M840 366 V404 H440 V430 M840 404 H1240 V430" fill="none" stroke="#1F6968" stroke-width="3"/>
+  <path d="M440 430 V448" fill="none" stroke="#1F6968" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+  <path d="M1240 430 V448" fill="none" stroke="#1F6968" stroke-width="3" stroke-linecap="butt" marker-end="url(#arrow)"/>
+  <rect x="70" y="470" width="740" height="295" rx="18" fill="#E8F0ED" stroke="#1F6968" stroke-width="3"/>
+  <text x="100" y="523" class="label">Candidate U: independent extra bit</text>
+  <text x="100" y="579" class="body">Sources (A,U); target (A,B)</text>
+  <text x="100" y="635" class="body">Eight observations; each has mass 1/8</text>
+  <text x="100" y="691" class="small">The source pair and target together</text>
+  <text x="100" y="733" class="small">identify all three original bits.</text>
+  <rect x="870" y="470" width="740" height="295" rx="18" fill="#E8F0ED" stroke="#1F6968" stroke-width="3"/>
+  <text x="900" y="523" class="label">Candidate B: complete the target</text>
+  <text x="900" y="579" class="body">Sources (A,B); target (A,B)</text>
+  <text x="900" y="635" class="body">Four observations; each has mass 2/8</text>
+  <text x="900" y="691" class="small">For each fixed (A,B), worlds with</text>
+  <text x="900" y="733" class="small">U=0 and U=1 merge into one output.</text>
+  <text x="100" y="825" class="body">MGW synergy: log(4/3)</text>
+  <text x="900" y="825" class="body">MGW synergy: log(4/3)</text>
+  <text x="100" y="877" class="label">Added information after A: 0</text>
+  <text x="900" y="877" class="label">Added information after A: log 2</text>
+  <text x="70" y="936" class="small">Added information here is conditional mutual information after A. All values are in nats.</text>
+</svg>

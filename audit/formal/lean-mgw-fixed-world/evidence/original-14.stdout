@@ -1,0 +1,1 @@
+PidMgwFixedWorld/Judge.lean:17:0: error: Elaborated theorem type differs from frozen target: PidMgwFixedWorld.Candidate.cmi_different

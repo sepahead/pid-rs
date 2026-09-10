@@ -1,0 +1,414 @@
+{
+  "adapter_cases": [
+    {
+      "case": "positive-fixed-inputs",
+      "outcome": "accepted"
+    },
+    {
+      "case": "positive-empty-object-tree",
+      "outcome": "accepted"
+    },
+    {
+      "case": "positive-absent-load-root",
+      "outcome": "accepted"
+    },
+    {
+      "case": "absent-load-root-appeared",
+      "cause": "previously absent installed load root appeared",
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-source",
+      "cause": "source tree membership differs from frozen pins: <synthetic-fixture-root>/missing-source/work",
+      "outcome": "rejected"
+    },
+    {
+      "case": "extra-source",
+      "cause": "extra, symbolic or special source entry: <synthetic-fixture-root>/extra-source/work/B.lean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "changed-source",
+      "cause": "source/tool drift: <synthetic-fixture-root>/changed-source/work/A.lean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "symbolic-source",
+      "cause": "extra, symbolic or special source entry: <synthetic-fixture-root>/symbolic-source/work/B.lean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "changed-installed-input",
+      "cause": "installed input metadata changed: <synthetic-fixture-root>/changed-installed-input/load/A.olean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "extra-installed-input",
+      "cause": "installed load-path membership changed",
+      "outcome": "rejected"
+    },
+    {
+      "case": "symbolic-installed-input",
+      "cause": "symbolic or special installed load member",
+      "outcome": "rejected"
+    },
+    {
+      "case": "symbolic-object",
+      "cause": "symbolic object path: <synthetic-fixture-root>/symbolic-object/objects/A.olean",
+      "outcome": "rejected"
+    },
+    {
+      "case": "expired-window",
+      "cause": "registered execution window ended during metadata observation",
+      "outcome": "rejected"
+    },
+    {
+      "case": "disk-limit",
+      "cause": "sampled stage logical-byte limit exceeded",
+      "outcome": "rejected"
+    },
+    {
+      "case": "invalid-bytecode-cache-ignored-by-source-loader",
+      "outcome": "accepted"
+    },
+    {
+      "case": "changed-runtime-rejected-before-exec",
+      "outcome": "rejected"
+    }
+  ],
+  "entry_prefix_cases": [
+    {
+      "case": "positive-prefix",
+      "outcome": "accepted"
+    },
+    {
+      "case": "wrong-admission-pin",
+      "cause": "out-of-band admission binding differs",
+      "outcome": "rejected"
+    },
+    {
+      "case": "false-admission",
+      "cause": "native execution has not been admitted",
+      "outcome": "rejected"
+    },
+    {
+      "case": "integer-admission",
+      "cause": "native execution has not been admitted",
+      "outcome": "rejected"
+    },
+    {
+      "case": "string-admission",
+      "cause": "native execution has not been admitted",
+      "outcome": "rejected"
+    },
+    {
+      "case": "caller-drift",
+      "cause": "caller drift",
+      "outcome": "rejected"
+    },
+    {
+      "case": "fixed-plan-drift",
+      "cause": "fixed binding drift: EXECUTION_PLAN.json",
+      "outcome": "rejected"
+    },
+    {
+      "case": "ordinal-outside-plan",
+      "cause": "ordinal outside admitted plan",
+      "outcome": "rejected"
+    },
+    {
+      "case": "prior-stop",
+      "cause": "prior unexpected outcome requires separate review",
+      "outcome": "rejected"
+    },
+    {
+      "case": "initial-object-drift",
+      "cause": "initial object state changed",
+      "outcome": "rejected"
+    },
+    {
+      "case": "missing-root-review",
+      "cause": "[Errno 2] No such file or directory: '<synthetic-fixture-root>/entry-missing-root-review/checks/01/ROOT_ACCEPTED.json'",
+      "outcome": "rejected"
+    },
+    {
+      "case": "repeat-output",
+      "cause": "[Errno 17] File exists: '<synthetic-fixture-root>/entry-repeat-output/checks/01'",
+      "outcome": "rejected"
+    }
+  ],
+  "native_children": 0,
+  "optimization": 0,
+  "original_actual_tool_sha256": "0616ef040e252551fb2613736825b287f190685ae3b336f4ef051aaea846f2f7",
+  "original_result_sha256": "048c377f42303ccef6df194fc92782c180d4fbc8d6ef40b0dc28c8ec1b395e7b",
+  "projection_scope": "Only the machine-specific fixture prefix is replaced. This is not the raw result or a new execution.",
+  "report_validator": {
+    "accepted_cases": 3,
+    "case_count": 43,
+    "cases": [
+      {
+        "actual": "accept",
+        "case": "positive-schema",
+        "expected": "accept"
+      },
+      {
+        "actual": "accept",
+        "case": "positive-synthetic-bindings",
+        "expected": "accept"
+      },
+      {
+        "actual": "reject",
+        "case": "J01-missing",
+        "code": "json.bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J02-empty",
+        "code": "json.bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J03-truncated",
+        "code": "json.frame",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J04-second-document",
+        "code": "json.malformed",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J05-duplicate-key",
+        "code": "json.duplicate_key",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J06-bool",
+        "code": "report.count",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J06-float",
+        "code": "report.count",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J06-string",
+        "code": "report.count",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J07-missing-row",
+        "code": "report.rows",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J08-duplicate-row",
+        "code": "row.fqn",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J09-order",
+        "code": "row.fqn",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J10-fqn",
+        "code": "row.fqn",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J11-extra-top",
+        "code": "report.keys",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J11-missing-row-key",
+        "code": "row.keys",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-status",
+        "code": "report.fixed",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-kind",
+        "code": "row.kind",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-universe",
+        "code": "row.universes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J12-defeq-type",
+        "code": "row.type_defeq",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-empty-candidate_type",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-empty-target_type",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-empty-target_value",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J13-wrong-type",
+        "code": "row.expression",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-forbidden",
+        "code": "row.axiom_allowlist",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-duplicate",
+        "code": "row.axiom_order_unique",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-unsorted",
+        "code": "row.axiom_order_unique",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J14-wrong-type",
+        "code": "row.axiom_type",
+        "expected": "reject"
+      },
+      {
+        "actual": "accept-schema-only",
+        "case": "J15-valid-shape-alone",
+        "expected": "accept-schema-only"
+      },
+      {
+        "actual": "reject",
+        "case": "J15-output-forgery",
+        "code": "completion.report_bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-failed-exit",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-bool-exit",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-timeout",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-status",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-argv",
+        "code": "record.invocation",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-source",
+        "code": "record.identity",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-objects",
+        "code": "record.identity",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-timeout-bound",
+        "code": "record.timeout",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J16-stderr",
+        "code": "record.stderr",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J17-missing-kernel",
+        "code": "binding.record_bytes",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J17-failed-kernel",
+        "code": "record.terminal",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J17-nonempty-kernel",
+        "code": "record.kernel_stdout",
+        "expected": "reject"
+      },
+      {
+        "actual": "reject",
+        "case": "J18-self-rebased-forgery",
+        "code": "binding.record_bytes",
+        "expected": "reject"
+      }
+    ],
+    "fixture_report_sha256": "2ecffd8d4ecc687dcc89309af41a0339380ebdb90542c5e0407781d8786d0b4f",
+    "genuine_producer_or_theorem_credit": false,
+    "native_children": 0,
+    "optimized": false,
+    "rejected_cases": 40,
+    "status": "synthetic-selfchecks-completed"
+  },
+  "scope": "Exact entry prefix, adapter function bodies, and source-loader statements on synthetic inputs; no complete-entry, process-monitor, native-proof, or independent acceptance credit. Optimized native entry is deliberately refused.",
+  "status": "synthetic controls completed"
+}

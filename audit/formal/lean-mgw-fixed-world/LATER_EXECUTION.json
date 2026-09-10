@@ -1,0 +1,525 @@
+{
+  "adapter_sources": {
+    "judge_report_validation.py": {
+      "bytes": 17036,
+      "path": "replay-support/adapter-v2/judge_report_validation.py",
+      "sha256": "d63b0473e3f1a53322a37aa4ef9f3dde4cb68dd3887553781766c8ec7ae69d28"
+    },
+    "observe-installed-post.py": {
+      "bytes": 2077,
+      "path": "replay-support/adapter-v2/observe-installed-post.py",
+      "sha256": "dfef92e5b70d6df432de16ccd8cbd2dda03bc56ae0e586f6521465b840b3ed6c"
+    },
+    "observe-installed.py": {
+      "bytes": 2092,
+      "path": "replay-support/adapter-v2/observe-installed.py",
+      "sha256": "1ffd9eabcf86430f8c5172e4078dc1402b2612ba129eecca7883382ad31dd432"
+    },
+    "prepare.py": {
+      "bytes": 10563,
+      "path": "replay-support/adapter-v2/prepare.py",
+      "sha256": "511675b8cb3757aac7e94e15a32f2e4e2259a478138b5f64f3e8e300173f64d4"
+    },
+    "run-one.py": {
+      "bytes": 14492,
+      "path": "replay-support/adapter-v2/run-one.py",
+      "sha256": "b9a0e5e6e7cb15f1cc34a8da2486f6c66eef9bca91fa4ab5e1a5004073a04b7e"
+    },
+    "runtime.py": {
+      "bytes": 27277,
+      "path": "replay-support/adapter-v2/runtime.py",
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "static-controls.py": {
+      "bytes": 12040,
+      "path": "replay-support/adapter-v2/static-controls.py",
+      "sha256": "cf4b1c9334f4998ec2c0812f9350a43dcaa148268f2f35137e6d4cfa7ba92fef"
+    }
+  },
+  "installation_profile": {
+    "compressed_bytes": 6692890,
+    "compressed_sha256": "9df95071625c0cb84b526bc5876cb75b0b187ec6dcbd9ce5692f7513708663a4",
+    "declared_file_bytes": 9300355733,
+    "files": 139934,
+    "path": "replay-support/installed-profile-macos-arm64-v1.json.gz",
+    "scope": "Exact relative-path installed-byte profile for the observed macOS ARM64 installation; not an installation recipe, external toolchain-source proof, or cross-platform qualification.",
+    "uncompressed_bytes": 28745640,
+    "uncompressed_sha256": "f9ec05aa708a293e265b4d6891e66744d1b7fc01737331a905a0b6d3d742874c"
+  },
+  "installed_observations": [
+    {
+      "failures": [],
+      "full_byte_and_metadata_observations": 139934,
+      "original_record_sha256": "c8623fc0b0d9e7d3b756b9fe1c41a203115b2b294675c3863774e4517864b702",
+      "phase": "before",
+      "source_manifest_sha256": "5c5084b179a132fcc6856a905a34634c9ee04cc508bad60a08023636efef456f",
+      "utc": "2026-09-09T19:10:11.490371+00:00"
+    },
+    {
+      "failures": [],
+      "full_byte_and_metadata_observations": 139934,
+      "original_record_sha256": "210b63e5c153067081858a4722a789f90e9674ff78aba090f4e964c91300a699",
+      "phase": "after",
+      "source_manifest_sha256": "5c5084b179a132fcc6856a905a34634c9ee04cc508bad60a08023636efef456f",
+      "utc": "2026-09-09T19:30:29.673937+00:00"
+    }
+  ],
+  "native_observations": [
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidFiniteConvergence/Deterministic.lean"
+      ],
+      "completed_utc": "2026-09-09T19:14:08.011158+00:00",
+      "elapsed_seconds": 11.349773624911904,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidFiniteConvergence.Deterministic",
+      "ordinal": 1,
+      "original_actual_tool_sha256": "9c335fadbf7e3c28b8ede5774580fdd970ddd3c860eef51e37810be23027af9f",
+      "original_result_sha256": "72822a2ab6028faaacdb1db15afe9e2570a3c1e842a6177f05bdf43ffcea4cf9",
+      "original_root_review_sha256": "6371f61b272bdf99d3fbe9ed4a39d1c5d9cce96f40baa169d453565a55c5d86c",
+      "peak_observed_group_rss_bytes": 2370502656,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:13:52.599704+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-01.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-01.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidFiniteConvergence/SxEventBridge.lean"
+      ],
+      "completed_utc": "2026-09-09T19:16:11.870313+00:00",
+      "elapsed_seconds": 1.6604852501768619,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidFiniteConvergence.SxEventBridge",
+      "ordinal": 2,
+      "original_actual_tool_sha256": "b9e2e4c171c0e939d77887e5babdf78c77e4657d574e4fb4b80f06023398f280",
+      "original_result_sha256": "92f6e79ece4e5df4afbaf7670fdd480731ac270cf6d1fcc135d4b4e3cfa58065",
+      "original_root_review_sha256": "4f300eb67f3cfeeee06d44fd51ad5ddf372e7fd5dbbef58f77bebcacb7e0358e",
+      "peak_observed_group_rss_bytes": 2387361792,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:16:06.712634+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-02.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-02.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidFiniteConvergence/FractionalCover.lean"
+      ],
+      "completed_utc": "2026-09-09T19:17:08.916136+00:00",
+      "elapsed_seconds": 1.4768077079206705,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidFiniteConvergence.FractionalCover",
+      "ordinal": 3,
+      "original_actual_tool_sha256": "eba562c9dec7e2d1a11ec4e03ae789a1f4f658e94aabbb4960896f3347e3adae",
+      "original_result_sha256": "9b6af9c42807eb8196abe1ce8d4ca1be9501c6cfd5c05f9e2dfd14f4af5d40f9",
+      "original_root_review_sha256": "313c0aa835b2626dc9683858c32c7b7a1d2d5d6aab1c3f4d01a6a3bb7d894867",
+      "peak_observed_group_rss_bytes": 2382184448,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:17:04.869552+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-03.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-03.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidFiniteConvergence/TwoSourceCountEventBridge.lean"
+      ],
+      "completed_utc": "2026-09-09T19:18:58.652439+00:00",
+      "elapsed_seconds": 1.8884574580006301,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidFiniteConvergence.TwoSourceCountEventBridge",
+      "ordinal": 4,
+      "original_actual_tool_sha256": "6f634b72cc5adfba6f68acd5544e1bedf822b064d44cd3ccd3c3b68be4fb3617",
+      "original_result_sha256": "a0e85ce348b86afbac37f6f3e1e751789d116b3c0f5be28171a9806cef8cc01d",
+      "original_root_review_sha256": "f257e53a2ae95f82ad3acaa1c31611be5de494a0689927636a0a6d848ab604ae",
+      "peak_observed_group_rss_bytes": 2430189568,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:18:53.268879+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-04.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-04.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean"
+      ],
+      "completed_utc": "2026-09-09T19:19:36.272825+00:00",
+      "elapsed_seconds": 2.045087832957506,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidFiniteConvergence.TwoSourceMobiusAtomBridge",
+      "ordinal": 5,
+      "original_actual_tool_sha256": "52357fde0c438903704d4acd55b4fb6ee9240a81c642dbe97f558ba3a81d7969",
+      "original_result_sha256": "b76dadd72b20faa9c8e42698aef604dd5a83fd31281e82bd7a8c63add2c4fce5",
+      "original_root_review_sha256": "e79e7bc9e82f674c2256762f92e4217a7b62ef1186cc89d40158daffc1bb11f8",
+      "peak_observed_group_rss_bytes": 2509602816,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:19:30.662847+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-05.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-05.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidMgwFixedWorld/Contract.lean"
+      ],
+      "completed_utc": "2026-09-09T19:20:50.217286+00:00",
+      "elapsed_seconds": 1.4882678338326514,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidMgwFixedWorld.Contract",
+      "ordinal": 6,
+      "original_actual_tool_sha256": "1fada3e95e00ec38069cf5703471857ee25d7452660933deb9524a6c9d85fa27",
+      "original_result_sha256": "cfed462e68781301e7f4027757844058778898eebc31f3c34082f5b701c6c84e",
+      "original_root_review_sha256": "f720fb873d95c7445f57d1b69f5a03dfdacadb74196bb6704bd919a818001468",
+      "peak_observed_group_rss_bytes": 2363047936,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:20:45.394450+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-06.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-06.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidMgwFixedWorld/RawTargets.lean"
+      ],
+      "completed_utc": "2026-09-09T19:21:54.857474+00:00",
+      "elapsed_seconds": 1.3919331249780953,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidMgwFixedWorld.RawTargets",
+      "ordinal": 7,
+      "original_actual_tool_sha256": "85b10605a0c08d2c3f742aa628c5deb5a16ff2d72d81f64d5560eb2fd8bd3af4",
+      "original_result_sha256": "b7cf637e3c0e79592ffe144708d3fa8694c81b06d42ef20cabb3388f78b705cb",
+      "original_root_review_sha256": "b0f32a1698a7c5cb368a63ae93ea38fa43ae36fc71843bee7370d8f4f37b13da",
+      "peak_observed_group_rss_bytes": 2327969792,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:21:50.172271+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-07.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-07.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidMgwFixedWorld/Candidate.lean"
+      ],
+      "completed_utc": "2026-09-09T19:23:22.636398+00:00",
+      "elapsed_seconds": 8.776188291842118,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidMgwFixedWorld.Candidate",
+      "ordinal": 8,
+      "original_actual_tool_sha256": "979dd8e13cd52dc77cc37233c58daa6a223862bf006990832f78c4e67e9a584f",
+      "original_result_sha256": "cdae7b8301891d7d2a9d8ec498a4355eb0d3ccb3a0f4979377f1956d5815be32",
+      "original_root_review_sha256": "6f19ec97232b52b520ecd0b35cc28db37d8958cda7c07b2008e3dfbfb6252c9a",
+      "peak_observed_group_rss_bytes": 2556805120,
+      "remaining_observed_group_members": [],
+      "role": "compiler",
+      "started_utc": "2026-09-09T19:23:09.591300+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-08.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-08.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "lean",
+        "-t",
+        "0",
+        "-o",
+        "<fresh object>",
+        "PidMgwFixedWorld/Judge.lean"
+      ],
+      "completed_utc": "2026-09-09T19:24:42.673304+00:00",
+      "elapsed_seconds": 3.4785174580756575,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 60,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidMgwFixedWorld.Judge",
+      "ordinal": 9,
+      "original_actual_tool_sha256": "981a9b9eb2e9efd2f7d1206c604c4ab91947dc62f347031b1eca7fbeb264d429",
+      "original_result_sha256": "1bcc0567269a590da2ba95d375f1e2833fe48a901cfabe4ca77b5d637a33ba5b",
+      "original_root_review_sha256": "6fe0fd8284de7c6b75437fe132b18d70f29ed4a3e20be2d1780b289cd4d1f931",
+      "peak_observed_group_rss_bytes": 2739257344,
+      "remaining_observed_group_members": [],
+      "role": "judge",
+      "started_utc": "2026-09-09T19:24:34.482462+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-09.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 41589,
+          "path": "evidence/later-09.stdout",
+          "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14"
+        }
+      }
+    },
+    {
+      "actual_native_exit": 0,
+      "actual_outer_exit": 0,
+      "argument_projection": [
+        "leanchecker",
+        "--fresh",
+        "PidMgwFixedWorld.Candidate"
+      ],
+      "completed_utc": "2026-09-09T19:28:48.117353+00:00",
+      "elapsed_seconds": 163.26839612494223,
+      "limits": {
+        "observed_group_rss_bytes": 8589934592,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 300,
+        "stderr_bytes": 8388608,
+        "stdout_bytes": 8388608
+      },
+      "module": "PidMgwFixedWorld.Candidate",
+      "ordinal": 10,
+      "original_actual_tool_sha256": "37574cc332957363abe6761d0cbbbe8b3141ff17985502a2c0c2e985a6c56b91",
+      "original_result_sha256": "640810cc5b5027abcce2f32d78924bc3717924d8749779f6f53ade976b05eed9",
+      "original_root_review_sha256": "3acd2073dd277c9097c626687b00fd6a7f99d3c450df915c8608123ae1c351da",
+      "peak_observed_group_rss_bytes": 2647146496,
+      "remaining_observed_group_members": [],
+      "role": "fresh-same-kernel",
+      "started_utc": "2026-09-09T19:26:00.756672+00:00",
+      "streams": {
+        "stderr": {
+          "bytes": 0,
+          "path": "evidence/later-10.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 0,
+          "path": "evidence/later-10.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "no_new_scientific_theorem_or_statistical_calibration": true,
+  "original_closure_sha256": "767d33a36a93f5d2756dac0468741a6276ca10851b7ab59813d5c5b9fc6d191c",
+  "retained_preparation_failure": {
+    "cause": "An absent historical CLI search component was incorrectly required to exist.",
+    "original_disposition_sha256": "21302f813a33f3ca78ce7e47d735e9228e71f15532692ac22e9dd45ea96b50df",
+    "retained_sources": "replay-support/negative/preparation-v1/",
+    "revision": 1,
+    "status": "stopped before materialization",
+    "successor": "Revision2 binds the absence and rejects its later appearance."
+  },
+  "schema": "pid-rs/mgw-fixed-world-later-execution-v1",
+  "scope": "Projection of the closed later fixed-source development replay. Raw native streams are exact; machine-specific command paths and full custody are omitted. No new execution or authenticity claim.",
+  "source_graph_sha256": "11a229b232d7b605fe5ec5e83b4c5c36d50e7fc7dbd79991cd5e5e45c38fe9f0",
+  "synthetic_controls": [
+    {
+      "adapter_cases": 16,
+      "entry_prefix_cases": 12,
+      "native_children": 0,
+      "path": "replay-support/static-normal-v2.json",
+      "report_cases": 43
+    },
+    {
+      "adapter_cases": 16,
+      "entry_prefix_cases": 1,
+      "native_children": 0,
+      "path": "replay-support/static-optimized-v2.json",
+      "report_cases": 43
+    }
+  ]
+}

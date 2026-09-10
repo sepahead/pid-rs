@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="120mm" viewBox="0 0 1680 1200" role="img" aria-labelledby="title desc">
+  <title id="title">The same MGW synergy can accompany different added target information</title>
+  <desc id="desc">Exact finite categorical population comparison in nats. A, B and U are mutually independent fair bits. Baseline A and target Y=(A,B) are shared. Candidate C is U in the first column and B in the second; each source pair is uniform on four pairs. The four signed MGW atoms are redundancy ln(4/3), unique A ln(3/2), unique C minus ln(4/3) for U and ln(3/2) for B, and synergy ln(4/3) in both columns. Unique C plus synergy equals I(C;Y given A), which is zero for U and ln 2 for B. The full decomposition therefore retains the distinction. Signed cancellation is already in the MGW RndErr example. Priority of this matched comparison is unestablished. Explanatory figure. The table states exact finite-law values; the picture itself is not a proof or deployment evidence.</desc>
+  <style>
+    text { font-family: "Source Sans Pro"; fill: #2C3E50; }
+    .title { font-size: 52px; font-weight: 700; fill: #1F3F60; }
+    .body { font-size: 34px; }
+    .small { font-size: 32px; }
+    .heading { font-size: 38px; font-weight: 700; fill: #1F6968; }
+    .value { font-size: 42px; font-weight: 600; text-anchor: middle; }
+    .negative { fill: #743E37; }
+    .strong { font-weight: 700; }
+    .rule { stroke: #D2E0E2; stroke-width: 2; }
+  </style>
+  <rect width="1680" height="1200" fill="#F7F3E9"/>
+  <rect width="1680" height="12" fill="#1F3F60"/>
+  <text x="60" y="82" class="title">Same synergy. Different added information.</text>
+  <text x="60" y="133" class="small">Finite categorical MGW shared exclusions · signed population atoms · nats</text>
+
+  <rect x="60" y="164" width="1560" height="157" rx="12" fill="#D2E0E2"/>
+  <text x="84" y="207" class="body strong">Shared law: A, B and U are mutually independent fair bits.</text>
+  <text x="84" y="251" class="body">Baseline A; target Y = (A, B); added candidate C is U or B.</text>
+  <text x="84" y="295" class="small">Both source pairs have P(A = a, C = c) = 1/4 for a, c in {0, 1}.</text>
+
+  <text x="84" y="381" class="heading">Signed MGW atom</text>
+  <text x="862" y="374" class="heading" text-anchor="middle">Add C = U</text>
+  <text x="1360" y="374" class="heading" text-anchor="middle">Add C = B</text>
+  <text x="862" y="416" class="small" text-anchor="middle">Unrelated to target Y</text>
+  <text x="1360" y="416" class="small" text-anchor="middle">Missing target bit</text>
+  <g transform="translate(0 35)">
+  <path d="M60 406 H1620" class="rule"/>
+  <path d="M1110 342 V767" class="rule"/>
+
+  <text x="84" y="461" class="body">Redundancy</text>
+  <text x="862" y="461" class="value">ln(4/3)</text>
+  <text x="1360" y="461" class="value">ln(4/3)</text>
+  <path d="M60 489 H1620" class="rule"/>
+
+  <text x="84" y="544" class="body">Unique baseline A</text>
+  <text x="862" y="544" class="value">ln(3/2)</text>
+  <text x="1360" y="544" class="value">ln(3/2)</text>
+  <path d="M60 572 H1620" class="rule"/>
+
+  <text x="84" y="627" class="body">Unique added C</text>
+  <text x="862" y="627" class="value negative">−ln(4/3)</text>
+  <text x="1360" y="627" class="value">ln(3/2)</text>
+
+  <rect x="60" y="656" width="1560" height="83" rx="8" fill="#D2E0E2"/>
+  <text x="84" y="711" class="body strong">Net synergy S</text>
+  <text x="862" y="711" class="value">ln(4/3)</text>
+  <text x="1360" y="711" class="value">ln(4/3)</text>
+
+  <text x="84" y="799" class="body strong">Added information</text>
+  <text x="84" y="841" class="body">I(C; Y | A)</text>
+  <text x="862" y="822" class="value">0</text>
+  <text x="1360" y="822" class="value">ln 2</text>
+  <path d="M60 868 H1620" class="rule"/>
+
+  <text x="84" y="922" class="body strong">Unique added C + net synergy = added conditional MI</text>
+  <text x="84" y="971" class="small">U: −ln(4/3) + ln(4/3) = 0</text>
+  <text x="900" y="971" class="small">B: ln(3/2) + ln(4/3) = ln 2</text>
+
+  <text x="60" y="1030" class="small">Synergy ties; the full signed decomposition retains the CMI difference.</text>
+  <text x="60" y="1073" class="small">Signed cancellation is published in MGW (RndErr, §VI.3 / Table III).</text>
+  <text x="60" y="1116" class="small">Matched comparison: priority unestablished; no estimator or deployment claim.</text>
+  </g>
+</svg>

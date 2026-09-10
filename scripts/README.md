@@ -3056,16 +3056,45 @@ The aggregate runs these controls in normal/optimized Python. Exact aggregate ex
 publication-link controls own semantic unsafe-action tests; byte-drift controls do not replace them.
 A source-proposal profile with a pending reference is intentionally not an exact publication pass.
 
+The [finite MGW archive](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) retains the
+21-target fixed-law comparison and its existing execution evidence. Its dedicated
+`build-mgw-fixed-world-pdf.py` binds the paper, all nine formal source dependencies,
+the target report, source map and three unchanged SVG/PDF figure pairs. It does not rerun Lean.
+The exact input profile is
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v1.json`.
+Discovery produces a candidate and retained diagnostics without admitting it. Exact mode refuses
+a pending reference; after admission it requires the specified finite-paper PDF bytes. Both modes
+with `--check` request two fresh builds. Supply `--tex-root` explicitly and use fresh work;
+a requested output must also be new, outside that work and distinct from the reference.
+The shared runtime's bounded observations and cleanup limits described above still apply.
+
+```text
+python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --discover --check --tex-root <canonical-tex-root> --work-dir <fresh-work> --output <new-pdf>
+python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root <canonical-tex-root> --work-dir <different-fresh-work>
+python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir <fresh-normal-control-work>
+python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir <fresh-optimized-control-work>
+python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain
+```
+
+The last command must refuse with status 2 before build prerequisites; it grants no cross-toolchain
+PDF equivalence. The aggregate runs the finite leaf controls in both Python modes and requires
+`PID_RS_MGW_FIXED_WORLD_TEX_ROOT` for its exact build, in addition to the existing
+`PID_RS_OCCUPANCY_TEX_ROOT` prerequisite. Keep actual outer statuses and retained result
+files for every run. Synthetic control results concern their specified mutations; publication
+admission, visual review, public replay-controller qualification and fresh hosted formal evidence
+require their own records. These command descriptions report no new successful execution.
+
 `check-formal-pdf-set.sh` fails closed if the declared standalone LaTeX sources, declared
 Markdown sources, renderer fragments, and PDF basename inventory differ, if an unexpected paper
 is present without an explicit inventory update, or if any individual PDF gate fails. Its default
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
-portability relation, except that the root blueprint, dated post-publication custody receipt and
-standalone mean exposition and recorded-sensor document deliberately have no reviewed cross-toolchain profiles. The aggregate
+portability relation, except that the root blueprint, dated post-publication custody receipt,
+standalone mean exposition, recorded-sensor document and finite MGW paper deliberately have no
+reviewed cross-toolchain profiles. The aggregate
 requires each route to refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain
 credit; status 0 or any other refusal status fails the aggregate. The aggregate self-test protects
-all four exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
+all five exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
 branches against removal or weakening. It also protects the existing blueprint/custody hostile-suite
 calls and binds the custody record checker in normal and optimized Python and its hostile suite. For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical

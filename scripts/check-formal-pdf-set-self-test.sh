@@ -62,6 +62,7 @@ LATEX_STANDALONE=(
 )
 MARKDOWN_SOURCES=(
   MATHEMATICAL_RESULTS_GUIDE.md
+  audit/evidence/mgw-fixed-world-added-information-2026-09-09.md
   NUMERICAL_ASSURANCE.md
   PID2_REPRESENTED_COORDINATE_ASSURANCE.md
   PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
@@ -84,6 +85,7 @@ STANDALONE=(
   ksg-m1a-composite-v7-boundary
   mathematical-results-guide
   mathematical-problem-solving-workflow
+  mgw-fixed-world-added-information
   numerical-assurance
   pid2-represented-coordinate-assurance
   pid-sensor-placement-and-galadriel-guide
@@ -386,6 +388,18 @@ if text.count(expected) != 1:
 PY
 }
 
+validate_mgw_fixed_world_gate_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+expected = "# Finite MGW retains discovery separately from an admitted exact reference.\nMGW_FIXED_WORLD_CONTROL_PARENT=\"$(mktemp -d \"$FORMAL_TMP_ROOT/pid-rs-mgw-fixed-world-controls.XXXXXX\")\"\npython3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir \"$MGW_FIXED_WORLD_CONTROL_PARENT/normal\"\npython3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir \"$MGW_FIXED_WORLD_CONTROL_PARENT/optimized\"\nif [[ \"$MODE\" == \"--exact\" ]]; then\n  if [[ -z \"${PID_RS_MGW_FIXED_WORLD_TEX_ROOT:-}\" ]]; then\n    echo \"formal PDF set: exact finite MGW requires PID_RS_MGW_FIXED_WORLD_TEX_ROOT\" >&2\n    exit 2\n  fi\n  MGW_FIXED_WORLD_BUILD_PARENT=\"$(mktemp -d \"$FORMAL_TMP_ROOT/pid-rs-mgw-fixed-world.XXXXXX\")\"\n  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root \"$PID_RS_MGW_FIXED_WORLD_TEX_ROOT\" --work-dir \"$MGW_FIXED_WORLD_BUILD_PARENT/build\"\nelse\n  if python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain; then\n    echo \"formal PDF set: finite MGW cross-toolchain mode unexpectedly accepted\" >&2\n    exit 1\n  else\n    MGW_FIXED_WORLD_CROSS_STATUS=$?\n  fi\n  if [[ \"$MGW_FIXED_WORLD_CROSS_STATUS\" -ne 2 ]]; then\n    echo \"formal PDF set: finite MGW refusal returned $MGW_FIXED_WORLD_CROSS_STATUS, expected 2\" >&2\n    exit 1\n  fi\nfi\n\n"
+if text.count(expected) != 1:
+    raise SystemExit("finite MGW exact/refusal/control wiring drifted")
+PY
+}
+
 validate_terminal_success_contract() {
   python3 -I -S - "$1" <<'PY'
 from pathlib import Path
@@ -396,7 +410,7 @@ text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition and recorded-sensor document intentionally have no accepted cross-toolchain relation, and all four status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document and finite MGW paper intentionally have no accepted cross-toolchain relation, and all five status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -823,6 +837,7 @@ PY
 done <<'CASES'
 exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
 cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
+cross success message cannot omit the fifth refusal	all five status-2 refusals	all four status-2 refusals
 CASES
 
 for removed_invocation in \
@@ -978,6 +993,60 @@ occupancy normal controls cannot be skipped	python3 -I -S -B scripts/check-recor
 occupancy optimized controls cannot be ignored	python3 -O -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir "$OCCUPANCY_CONTROL_PARENT/optimized"	python3 -O -I -S -B scripts/check-recorded-office-sensors-pdf-self-test.py --work-dir "$OCCUPANCY_CONTROL_PARENT/optimized" || true
 OCCUPANCY_CASES
 
+if ! validate_mgw_fixed_world_gate_wiring "$PRODUCTION_GATE" >"$TEST_ROOT/mgw-production.stdout" 2>"$TEST_ROOT/mgw-production.stderr"; then
+  cat "$TEST_ROOT/mgw-production.stderr" >&2
+  exit 1
+fi
+pass "finite MGW exact build, both control modes and status-2 cross refusal are wired"
+
+while IFS=$'\t' read -r label before after; do
+  case_file="$TEST_ROOT/mgw-fixed-world-gate-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$before" "$after" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+before = sys.argv[2].replace(r"\n", "\n")
+after = sys.argv[3].replace(r"\n", "\n")
+if text.count(before) != 1:
+    raise SystemExit("finite MGW mutation anchor drifted")
+path.write_text(text.replace(before, after, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_mgw_fixed_world_gate_wiring "$case_file" >"$TEST_ROOT/mgw-$PASS_COUNT.stdout" 2>"$TEST_ROOT/mgw-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: finite MGW wiring mutation accepted: $label" >&2
+    exit 1
+  fi
+  if ! grep -Fq "finite MGW exact/refusal/control wiring drifted" "$TEST_ROOT/mgw-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/mgw-$PASS_COUNT.stdout" "$TEST_ROOT/mgw-$PASS_COUNT.stderr" >&2
+    echo "$CHECK_NAME: finite MGW wiring mutation failed for a noncausal reason: $label" >&2
+    exit 1
+  fi
+  pass "$label"
+done <<'MGW_FIXED_WORLD_CASES'
+finite MGW exact build cannot be skipped	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"	  :
+finite MGW exact failure cannot be swallowed	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build" || true
+finite MGW repeated build cannot be removed	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"
+finite MGW exact mode cannot become discovery	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --discover --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"
+finite MGW exact branch cannot be conditionally skipped	if [[ "$MODE" == "--exact" ]]; then\n  if [[ -z "${PID_RS_MGW_FIXED_WORLD_TEX_ROOT:-}" ]]; then	if [[ "$MODE" == "--cross-toolchain" ]]; then\n  if [[ -z "${PID_RS_MGW_FIXED_WORLD_TEX_ROOT:-}" ]]; then
+finite MGW requires an explicit TeX root	  if [[ -z "${PID_RS_MGW_FIXED_WORLD_TEX_ROOT:-}" ]]; then	  if false; then
+finite MGW exact invocation cannot omit the TeX selector	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"
+finite MGW cannot borrow the recorded-sensor TeX selector	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"	  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_OCCUPANCY_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"
+finite MGW cross probe cannot be omitted	  if python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain; then	  if false; then
+finite MGW cross probe cannot become exact	  if python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain; then	  if python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact; then
+finite MGW cross success cannot be accepted	  if python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain; then	  if ! python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain; then
+finite MGW refusal must require status two	  if [[ "$MGW_FIXED_WORLD_CROSS_STATUS" -ne 2 ]]; then	  if [[ "$MGW_FIXED_WORLD_CROSS_STATUS" -ne 1 ]]; then
+finite MGW cannot fabricate the child refusal status	    MGW_FIXED_WORLD_CROSS_STATUS=$?	    MGW_FIXED_WORLD_CROSS_STATUS=2
+finite MGW normal controls cannot be skipped	python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"	:
+finite MGW normal control failure cannot be swallowed	python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"	python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal" || true
+finite MGW optimized controls cannot be skipped	python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized"	:
+finite MGW optimized control failure cannot be swallowed	python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized"	python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized" || true
+finite MGW optimized controls cannot lose optimization	python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized"	python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized"
+finite MGW control modes cannot share one work directory	python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized"	python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"
+finite MGW normal controls cannot be skipped by a false prefix	python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"	false && python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"
+MGW_FIXED_WORLD_CASES
+
 case_file="$TEST_ROOT/temporary-root-cdpath-bypass.sh"
 cp "$PRODUCTION_GATE" "$case_file"
 python3 -I -S - "$case_file" <<'PY'
@@ -1092,6 +1161,12 @@ fixture="$TEST_ROOT/missing-pdf"
 make_fixture "$fixture"
 mv "$fixture/output/pdf/${STANDALONE[0]}.pdf" "$fixture/removed-paper.pdf"
 expect_failure "missing standalone-paper PDF is rejected" "$fixture" \
+  "rendered PDF inventory differs"
+
+fixture="$TEST_ROOT/missing-finite-mgw-pdf"
+make_fixture "$fixture"
+mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed-finite-mgw.pdf"
+expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
 fixture="$TEST_ROOT/extra-pdf"

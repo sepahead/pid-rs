@@ -46,6 +46,7 @@ STANDALONE_LATEX_PAPERS=(
 
 STANDALONE_MARKDOWN_PAPERS=(
   "mathematical-results-guide"
+  "mgw-fixed-world-added-information"
   "numerical-assurance"
   "pid2-represented-coordinate-assurance"
   "pid-sensor-placement-and-galadriel-guide"
@@ -57,6 +58,7 @@ STANDALONE_MARKDOWN_PAPERS=(
 
 STANDALONE_MARKDOWN_SOURCES=(
   "MATHEMATICAL_RESULTS_GUIDE.md"
+  "audit/evidence/mgw-fixed-world-added-information-2026-09-09.md"
   "NUMERICAL_ASSURANCE.md"
   "PID2_REPRESENTED_COORDINATE_ASSURANCE.md"
   "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
@@ -292,8 +294,32 @@ else
   fi
 fi
 
+# Finite MGW retains discovery separately from an admitted exact reference.
+MGW_FIXED_WORLD_CONTROL_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mgw-fixed-world-controls.XXXXXX")"
+python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"
+python3 -O -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/optimized"
+if [[ "$MODE" == "--exact" ]]; then
+  if [[ -z "${PID_RS_MGW_FIXED_WORLD_TEX_ROOT:-}" ]]; then
+    echo "formal PDF set: exact finite MGW requires PID_RS_MGW_FIXED_WORLD_TEX_ROOT" >&2
+    exit 2
+  fi
+  MGW_FIXED_WORLD_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mgw-fixed-world.XXXXXX")"
+  python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --exact --check --tex-root "$PID_RS_MGW_FIXED_WORLD_TEX_ROOT" --work-dir "$MGW_FIXED_WORLD_BUILD_PARENT/build"
+else
+  if python3 -I -S -B scripts/build-mgw-fixed-world-pdf.py --cross-toolchain; then
+    echo "formal PDF set: finite MGW cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    MGW_FIXED_WORLD_CROSS_STATUS=$?
+  fi
+  if [[ "$MGW_FIXED_WORLD_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: finite MGW refusal returned $MGW_FIXED_WORLD_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition and recorded-sensor document intentionally have no accepted cross-toolchain relation, and all four status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document and finite MGW paper intentionally have no accepted cross-toolchain relation, and all five status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

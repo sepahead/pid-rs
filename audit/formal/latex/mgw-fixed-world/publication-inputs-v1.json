@@ -1,0 +1,1878 @@
+{
+  "body_expectation": "Exact v7 Pandoc body, reproduced by both dedicated discovery builds and retained independently of this profile.",
+  "expected_document": {
+    "bytes": 231798,
+    "path": "output/pdf/mgw-fixed-world-added-information.pdf",
+    "reported_pages": 9,
+    "sha256": "24c16b51c970d9cec8847f923d76f0d7e8a0bd137f54512e028de0e2712ec378"
+  },
+  "files": {
+    "METHODS.md": {
+      "bytes": 560554,
+      "mode": "0o644",
+      "sha256": "f022a09ecf128d0fd33a3a7da01be56305daadeef00a94ab9f5489c64f052b0b"
+    },
+    "audit/evidence/mgw-fixed-world-added-information-2026-09-09.md": {
+      "bytes": 20647,
+      "mode": "0o644",
+      "sha256": "01f12cf08104181b88b7d842bf275cfdd68db4d5a087348f0a0c2e667d2a7abf"
+    },
+    "audit/evidence/mgw-fixed-world-added-information-2026-09-09/source-map.json": {
+      "bytes": 22270,
+      "mode": "0o644",
+      "sha256": "b579fbbf742c84844519b4ccab85cfb5757a28985308f8496ae5bdacdcc78744"
+    },
+    "audit/evidence/mgw-fixed-world-added-information-2026-09-09/target-report.json": {
+      "bytes": 41589,
+      "mode": "0o644",
+      "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14"
+    },
+    "audit/evidence/real-occupancy-sensors-example-2026-09-08.md": {
+      "bytes": 29487,
+      "mode": "0o644",
+      "sha256": "0fe76ae499d78913a7bd924bfc7d85a5ab7418173971bfc5496eccd8b3e93c1e"
+    },
+    "audit/formal/latex/figures/mgw-fixed-world/mgw-matched-comparison.pdf": {
+      "bytes": 63453,
+      "mode": "0o644",
+      "sha256": "c66f0453eb7c65216d940fbcafe3c2de3864a63b5cda3cb27039e9e3abd95946"
+    },
+    "audit/formal/latex/figures/mgw-fixed-world/mgw-matched-comparison.svg": {
+      "bytes": 4473,
+      "mode": "0o644",
+      "sha256": "97ae61ea43d0c8c7da7a17edc6c88f10f719f74564e4dce2b0c9470e558c687f"
+    },
+    "audit/formal/latex/figures/mgw-fixed-world/observation-maps.pdf": {
+      "bytes": 36291,
+      "mode": "0o644",
+      "sha256": "7dd7cc5399171a340f19f371d86816ffd9045f8489b5463b74fc567aae26bce1"
+    },
+    "audit/formal/latex/figures/mgw-fixed-world/observation-maps.svg": {
+      "bytes": 3808,
+      "mode": "0o644",
+      "sha256": "2556d84470fd706cbd360b82700ab3a69dc1f1d3e4a7afbce90fff65e7716739"
+    },
+    "audit/formal/latex/figures/mgw-fixed-world/shared-exclusion-events.pdf": {
+      "bytes": 40639,
+      "mode": "0o644",
+      "sha256": "21df701675231780c89f5d56b4455224badba6c8b4bc5e443f55db97b42c5ea7"
+    },
+    "audit/formal/latex/figures/mgw-fixed-world/shared-exclusion-events.svg": {
+      "bytes": 5906,
+      "mode": "0o644",
+      "sha256": "18ab10ec76da4107b3f9a1d3ebfdf5d19e4762782928020e99fcfa29c70e24bf"
+    },
+    "audit/formal/latex/mgw-fixed-world/body.expected.tex": {
+      "bytes": 29078,
+      "mode": "0o644",
+      "sha256": "e725b0186210a3bacd04d2fc85e9cb29f26d00c029d39738bc20501d7df54b88"
+    },
+    "audit/formal/latex/mgw-fixed-world/filter.lua": {
+      "bytes": 2642,
+      "mode": "0o644",
+      "sha256": "de5cfc61b7a1e3da964173265884df7fbfa56cf39b3e16403d3bf40accd76c32"
+    },
+    "audit/formal/latex/mgw-fixed-world/publication.tex": {
+      "bytes": 2271,
+      "mode": "0o644",
+      "sha256": "af1a17dc874708f2e6d678e511c6e3cc78a0cc03b4be8d896303a7758b97a4b2"
+    },
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "mode": "0o644",
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "mode": "0o644",
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/lean-mgw-fixed-world/EVIDENCE.md": {
+      "bytes": 9987,
+      "mode": "0o644",
+      "sha256": "c0ec23d0d6fc4e4cc393e33fdda264a525bea196092bb85adf1470cdd6c0dadb"
+    },
+    "audit/formal/lean-mgw-fixed-world/HISTORICAL_EXECUTION.json": {
+      "bytes": 36430,
+      "mode": "0o644",
+      "sha256": "646c4af332c9e0c6b414789c7c94e74210bfc61b9e78f0bacb25841a8a6fec87"
+    },
+    "audit/formal/lean-mgw-fixed-world/LATER_EXECUTION.json": {
+      "bytes": 19750,
+      "mode": "0o644",
+      "sha256": "8cda3ae6a93ff734bf56cc948fdcb84f11bcfb652c10fb2229ef570c994934c0"
+    },
+    "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20329,
+      "mode": "0o644",
+      "sha256": "ebcb137d87aac64569ac9ec055eb5839e8f252fdf0913490f1efe761956cd4a4"
+    },
+    "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Contract.lean": {
+      "bytes": 4117,
+      "mode": "0o644",
+      "sha256": "d5e34836c52bead88f6279d63ea7c4261613ebe5455e3986d2ef333b15490df9"
+    },
+    "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Judge.lean": {
+      "bytes": 6067,
+      "mode": "0o644",
+      "sha256": "ac55f846665e3016736b9f9cc0f07e876d639cdafdbda9041829cb07794317bb"
+    },
+    "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/RawTargets.lean": {
+      "bytes": 3238,
+      "mode": "0o644",
+      "sha256": "308c379003168dc89fffc3a40cb47923489f573ed79bbd4500b0163f1eb7ed76"
+    },
+    "audit/formal/lean-mgw-fixed-world/REPLAY.md": {
+      "bytes": 6668,
+      "mode": "0o644",
+      "sha256": "d6e015ff8ec8638181e87da9e1105612416300965d56a7705d134cdb86eb02b1"
+    },
+    "audit/formal/lean-mgw-fixed-world/SOURCE_GRAPH.json": {
+      "bytes": 5686,
+      "mode": "0o644",
+      "sha256": "11a229b232d7b605fe5ec5e83b4c5c36d50e7fc7dbd79991cd5e5e45c38fe9f0"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-01.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-01.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-02.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-02.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-03.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-03.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-04.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-04.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-05.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-05.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-06.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-06.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-07.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-07.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-08.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-08.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-09.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-09.stdout": {
+      "bytes": 41589,
+      "mode": "0o644",
+      "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-10.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/later-10.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-01.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-01.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-02.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-02.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-03.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-03.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-04.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-04.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-05.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-05.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-06.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-06.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-07.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-07.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-08.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-08.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-09.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-09.stdout": {
+      "bytes": 41589,
+      "mode": "0o644",
+      "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-10.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-10.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-11.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-11.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-12.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-12.stdout": {
+      "bytes": 134,
+      "mode": "0o644",
+      "sha256": "9f6d51b11ffe629b13b7cb631a82ff19c2e1220ce084a08da049381a42e4aefe"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-13.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-13.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-14.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-14.stdout": {
+      "bytes": 134,
+      "mode": "0o644",
+      "sha256": "9f6d51b11ffe629b13b7cb631a82ff19c2e1220ce084a08da049381a42e4aefe"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-15.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-15.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-16.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-16.stdout": {
+      "bytes": 110,
+      "mode": "0o644",
+      "sha256": "5007dd65c61fe472b31c74c4f0f5ac24ecdc8e9878aa51adcc7746324c1bd65b"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-17.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/original-17.stdout": {
+      "bytes": 196,
+      "mode": "0o644",
+      "sha256": "18ea4766d8d2326463a5b3b3fb217469fa129609cfdfc23e786e1ea494c2e43f"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-01.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-01.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-02.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-02.stdout": {
+      "bytes": 110,
+      "mode": "0o644",
+      "sha256": "5007dd65c61fe472b31c74c4f0f5ac24ecdc8e9878aa51adcc7746324c1bd65b"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-03.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-03.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-04.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-04.stdout": {
+      "bytes": 134,
+      "mode": "0o644",
+      "sha256": "9f6d51b11ffe629b13b7cb631a82ff19c2e1220ce084a08da049381a42e4aefe"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-05.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-05.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-06.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-06.stdout": {
+      "bytes": 141,
+      "mode": "0o644",
+      "sha256": "dfd34e40bd9338dbed34af75496b3321e3f0b0696d0701f4d4f8c1fef4bcba80"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-07.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-07.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-08.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-08.stdout": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-09.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-09.stdout": {
+      "bytes": 146,
+      "mode": "0o644",
+      "sha256": "a84c47bfab17fe5dedc4fe3e88a80077d2266fb6c19aeb44dde3d46e01d7c941"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-10.stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "audit/formal/lean-mgw-fixed-world/evidence/suffix-10.stdout": {
+      "bytes": 71,
+      "mode": "0o644",
+      "sha256": "a4f1d4aa9a8cf72a55a06229d90630b30fd44382ef7b41c5e861af2cee25883b"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/original-M01/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20144,
+      "mode": "0o644",
+      "sha256": "98ea1bbfd86794c4d0d48a4568e2dd76e44d441ba70a914ab2eb4ef7a9255bc7"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/original-M02/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20188,
+      "mode": "0o644",
+      "sha256": "d66dcb3fccd278fb3d27b2d5d8c0ed5173a81cef0d1bc01393f391dd1014a8ff"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/original-M03/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20337,
+      "mode": "0o644",
+      "sha256": "d65530a858a8e71057fada0b1172babcacc27cc30e8816a25adaf13f727fb0d6"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/original-M04/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20325,
+      "mode": "0o644",
+      "sha256": "cfd4304567fddbcdb1b26074f7fe9ac1b3e97c2cc136d634e1659cf4cbac1ff1"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/suffix-M04/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20360,
+      "mode": "0o644",
+      "sha256": "38ec2218f10ee4d92c0a8d278648041251ec6e942de9571e1432ffea06fb83d1"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/suffix-M05/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20356,
+      "mode": "0o644",
+      "sha256": "46087d18c46f298f256c28e74bcc104d5fa07bf4ee1bed7da602a58a99903d06"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/suffix-M06/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20245,
+      "mode": "0o644",
+      "sha256": "8870e87aa848cb9202437c709dc02b9c72042e622ee06c9329c3c6454f08b2c2"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/suffix-M07/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20253,
+      "mode": "0o644",
+      "sha256": "44de8fdef650ef4069c7d3bd3e13daf457c174be371db00f46d7d24c5a0a40c0"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/suffix-M07/PidMgwFixedWorld/NegativeHelper.lean": {
+      "bytes": 240,
+      "mode": "0o644",
+      "sha256": "a2dc71b076a16c94a8c2c71d298fba0880cb00c16505226ad677a4fc2bebe448"
+    },
+    "audit/formal/lean-mgw-fixed-world/negative/suffix-M08/PidMgwFixedWorld/Candidate.lean": {
+      "bytes": 20180,
+      "mode": "0o644",
+      "sha256": "bf85ed15703dbc953048d7b9fb229f000c9264438bef117863b7896abeef9b96"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/STATIC_CONTROL_PLAN_V2.json": {
+      "bytes": 1003,
+      "mode": "0o644",
+      "sha256": "9a1700e87b31a9fb9466b18efbecaad88629fb62127adfb88666d3e768fe17ec"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/judge_report_validation.py": {
+      "bytes": 17036,
+      "mode": "0o644",
+      "sha256": "d63b0473e3f1a53322a37aa4ef9f3dde4cb68dd3887553781766c8ec7ae69d28"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/observe-installed-post.py": {
+      "bytes": 2077,
+      "mode": "0o644",
+      "sha256": "dfef92e5b70d6df432de16ccd8cbd2dda03bc56ae0e586f6521465b840b3ed6c"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/observe-installed.py": {
+      "bytes": 2092,
+      "mode": "0o644",
+      "sha256": "1ffd9eabcf86430f8c5172e4078dc1402b2612ba129eecca7883382ad31dd432"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/prepare.py": {
+      "bytes": 10563,
+      "mode": "0o644",
+      "sha256": "511675b8cb3757aac7e94e15a32f2e4e2259a478138b5f64f3e8e300173f64d4"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/run-one.py": {
+      "bytes": 14492,
+      "mode": "0o644",
+      "sha256": "b9a0e5e6e7cb15f1cc34a8da2486f6c66eef9bca91fa4ab5e1a5004073a04b7e"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/runtime.py": {
+      "bytes": 27277,
+      "mode": "0o644",
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/static-controls.py": {
+      "bytes": 12040,
+      "mode": "0o644",
+      "sha256": "cf4b1c9334f4998ec2c0812f9350a43dcaa148268f2f35137e6d4cfa7ba92fef"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/installed-profile-macos-arm64-v1.json.gz": {
+      "bytes": 6692890,
+      "mode": "0o644",
+      "sha256": "9df95071625c0cb84b526bc5876cb75b0b187ec6dcbd9ce5692f7513708663a4"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/negative/preparation-v1/DISPOSITION.json": {
+      "bytes": 591,
+      "mode": "0o644",
+      "sha256": "21302f813a33f3ca78ce7e47d735e9228e71f15532692ac22e9dd45ea96b50df"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/negative/preparation-v1/prepare.py": {
+      "bytes": 10275,
+      "mode": "0o644",
+      "sha256": "8801192b8c6c61c08809789b2a6e25db501c39ba4f7dd13b88f6b6a5db2f619b"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/negative/preparation-v1/run-one.py": {
+      "bytes": 14302,
+      "mode": "0o644",
+      "sha256": "8fcfbf1bda2725eeac83fa8749701ccf746d105b6b01b8e0c191508147fddbaa"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/static-normal-v2.json": {
+      "bytes": 10978,
+      "mode": "0o644",
+      "sha256": "aba918ede9561c5b956da2b32d8f94927434c911e4bd85cec49e45549f6dace3"
+    },
+    "audit/formal/lean-mgw-fixed-world/replay-support/static-optimized-v2.json": {
+      "bytes": 9510,
+      "mode": "0o644",
+      "sha256": "86bbf8bcc35f9be70b9204c2798924bac653a4267eb4e245f4f9c318031f6331"
+    },
+    "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "mode": "0o644",
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "audit/formal/lean/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "mode": "0o644",
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean": {
+      "bytes": 25943,
+      "mode": "0o644",
+      "sha256": "4ea504a565a69f5222c205e01050b750e780ed17cb02558fe08e0c32e2f5718c"
+    },
+    "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "mode": "0o644",
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean": {
+      "bytes": 24105,
+      "mode": "0o644",
+      "sha256": "fa3a1c5450648da4c4768dbd88e261abf1bcd3051f5af4526a63631c83f8648a"
+    },
+    "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean": {
+      "bytes": 47567,
+      "mode": "0o644",
+      "sha256": "bc282ca506f50ac5af661b87b166cc76561a4da308ffe39892ad8df7f2fd875e"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "mode": "0o755",
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "font_lookup_scope": "Re-declare the pinned initial lmr shapes after the owned-path macro, then use owned paths for fontspec. All copied fonts are pinned. No name database or system font lookup is authorized; actual first-pass recorder validation is required.",
+  "fonts": {
+    "SourceSansPro-Bold.otf": "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Bold.otf",
+    "SourceSansPro-Regular.otf": "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf",
+    "SourceSansPro-RegularIt.otf": "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-RegularIt.otf",
+    "SourceSansPro-Semibold.otf": "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Semibold.otf",
+    "SourceSansPro-SemiboldIt.otf": "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-SemiboldIt.otf",
+    "latinmodern-math.otf": "texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf",
+    "lmmono10-italic.otf": "texmf-dist/fonts/opentype/public/lm/lmmono10-italic.otf",
+    "lmmono10-regular.otf": "texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf",
+    "lmmonolt10-bold.otf": "texmf-dist/fonts/opentype/public/lm/lmmonolt10-bold.otf",
+    "lmmonolt10-boldoblique.otf": "texmf-dist/fonts/opentype/public/lm/lmmonolt10-boldoblique.otf",
+    "lmroman10-bold.otf": "texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf",
+    "lmroman10-bolditalic.otf": "texmf-dist/fonts/opentype/public/lm/lmroman10-bolditalic.otf",
+    "lmroman10-italic.otf": "texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf",
+    "lmroman10-regular.otf": "texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf",
+    "lmroman12-bold.otf": "texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf",
+    "lmroman12-regular.otf": "texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf"
+  },
+  "input_observation_scope": "Dedicated discovery on 9 September 2026 captured 369 inputs: 132 candidate sources/builder/profile entries, 231 declared TeX files and six tools. Both final recorders contain 253 INPUT rows, 214 external TeX paths and all seven required local paper inputs, with no outside-root path. Both fresh PDFs match the reviewed v7 reference. These are bounded recorded observations, not complete OS/native-loader closure or independent tracing of native reads.",
+  "profile": "darwin-arm64-texlive-2024-pandoc-3.10.2",
+  "reference": {
+    "sha256": "24c16b51c970d9cec8847f923d76f0d7e8a0bd137f54512e028de0e2712ec378",
+    "status": "admitted"
+  },
+  "schema": "pid-rs/mgw-fixed-world-publication-v1",
+  "scope": "Exact local document-reference profile admitted after reviewed dedicated discovery. No theorem replay, scientific-priority, public replay-controller or deployment qualification.",
+  "source_epoch": "1788912000",
+  "tex_files": {
+    "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Bold.otf": {
+      "bytes": 298076,
+      "mode": "0o644",
+      "sha256": "daccddbe3dd60fe10f6e8a785eda187925da6b611141024dffa43626998dfc7c"
+    },
+    "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Regular.otf": {
+      "bytes": 293200,
+      "mode": "0o644",
+      "sha256": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51"
+    },
+    "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-RegularIt.otf": {
+      "bytes": 208408,
+      "mode": "0o644",
+      "sha256": "d38e0d70cd4f4aa072457c5ae647b987f10c3cea34bff581ee358a7c2a526053"
+    },
+    "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-Semibold.otf": {
+      "bytes": 295952,
+      "mode": "0o644",
+      "sha256": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2"
+    },
+    "texmf-dist/fonts/opentype/adobe/sourcesanspro/SourceSansPro-SemiboldIt.otf": {
+      "bytes": 210012,
+      "mode": "0o644",
+      "sha256": "cdeddc767fdb11770451c5fac8f98b7d343b7fc9604f9db5034f50f7f437047a"
+    },
+    "texmf-dist/fonts/opentype/public/lm-math/latinmodern-math.otf": {
+      "bytes": 733736,
+      "mode": "0o644",
+      "sha256": "6075562b771f8b82f0c179e363389684f2dd09de30038269e2628e504bd7be0f"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmmono10-italic.otf": {
+      "bytes": 63584,
+      "mode": "0o644",
+      "sha256": "14e6328a5383d2b927c47051093ce0aff60deea07e6df71b8b99ee8d9c2ff8f2"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf": {
+      "bytes": 64684,
+      "mode": "0o644",
+      "sha256": "22deb6d3be3ffcb40b33f0e010afb256c677d97c2a2bdee1f5740cdc97751558"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmmonolt10-bold.otf": {
+      "bytes": 66332,
+      "mode": "0o644",
+      "sha256": "2f4ae1bd30d4203a1c74c61d61dddbd5e2c2d5a7001d456b1b98e08b7c47ffb9"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmmonolt10-boldoblique.otf": {
+      "bytes": 75300,
+      "mode": "0o644",
+      "sha256": "a739b6deaafe0b9e8ae1eec9db1f425c52e1f6f483ca8e07e359bdd118310bba"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf": {
+      "bytes": 111240,
+      "mode": "0o644",
+      "sha256": "102fe06c430a8b681b2bf6876b7cd967ae4d47b4b6b41d915eb7913b726d9fb1"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmroman10-bolditalic.otf": {
+      "bytes": 118204,
+      "mode": "0o644",
+      "sha256": "c37a28eed7a6e03f792b98b5e5f637b2fcda378bb4855f99284f1a88fe35f124"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf": {
+      "bytes": 118828,
+      "mode": "0o644",
+      "sha256": "c1fce25075567bb8dbf2151658c3b442690041db17a2d49fc9e55905ea5b7169"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf": {
+      "bytes": 111536,
+      "mode": "0o644",
+      "sha256": "1aa18cfefa58132c52ce5de70db1fd1154201c19cd2b2cdaffba4906a33e6852"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf": {
+      "bytes": 110496,
+      "mode": "0o644",
+      "sha256": "28c8782ac2b6486958b5dc7610ada7800c53546ff7f36bc65909a876e1cd338e"
+    },
+    "texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf": {
+      "bytes": 110400,
+      "mode": "0o644",
+      "sha256": "e6be218ae83e61aa8a29990d3cdc401c678c1962188cb9a4a8b6359e4f5e5870"
+    },
+    "texmf-dist/fonts/tfm/public/cm/cmmi10.tfm": {
+      "bytes": 1528,
+      "mode": "0o644",
+      "sha256": "e442c5487f84df70218ff37f775c87060856f5b6e04c011b6cadbbadfcf46645"
+    },
+    "texmf-dist/fonts/tfm/public/cm/cmmi5.tfm": {
+      "bytes": 1508,
+      "mode": "0o644",
+      "sha256": "8839e40838381a0a3c976bdd5becf72afd60bde5a965c3d9b985c3479c6cf75e"
+    },
+    "texmf-dist/fonts/tfm/public/cm/cmmi6.tfm": {
+      "bytes": 1512,
+      "mode": "0o644",
+      "sha256": "ab6ecb4aaba9ca1b4259b1d1f64309a785bbaeb09183fd79a066b7764a448a28"
+    },
+    "texmf-dist/fonts/tfm/public/cm/cmmi7.tfm": {
+      "bytes": 1528,
+      "mode": "0o644",
+      "sha256": "ce55681703aae565f17286d800ea9780223132589bdbaeda1751b869aba26a38"
+    },
+    "texmf-dist/fonts/tfm/public/cm/cmmi9.tfm": {
+      "bytes": 1524,
+      "mode": "0o644",
+      "sha256": "20672649a2f07eef8fe07ccb42eeb731023e48f2e0797ecef57c0887da46c032"
+    },
+    "texmf-dist/tex/context/base/mkii/supp-pdf.mkii": {
+      "bytes": 71627,
+      "mode": "0o644",
+      "sha256": "5dd3675b88c7b61d3703e6bf35ed75623acc6b163dff7b1477b485cee8ad71cb"
+    },
+    "texmf-dist/tex/generic/bigintcalc/bigintcalc.sty": {
+      "bytes": 40635,
+      "mode": "0o644",
+      "sha256": "050f2ad3a3671a1f4f9bcf97784836301bc751507e7ada546632379406aea103"
+    },
+    "texmf-dist/tex/generic/bitset/bitset.sty": {
+      "bytes": 33961,
+      "mode": "0o644",
+      "sha256": "af5c7196c69dc9d28225189169b60c9b9039125bc1756c04d54886f0a3e1891e"
+    },
+    "texmf-dist/tex/generic/gettitlestring/gettitlestring.sty": {
+      "bytes": 8371,
+      "mode": "0o644",
+      "sha256": "26ab10fd43fd5a90f98bcbed3a99978808da8878eb73835db4e0346371aee41e"
+    },
+    "texmf-dist/tex/generic/iftex/iftex.sty": {
+      "bytes": 7237,
+      "mode": "0o644",
+      "sha256": "2de50639c1f27201f2b4d04e9083e0a51fc5a73b8908eea2e80d6e3205636d4a"
+    },
+    "texmf-dist/tex/generic/iftex/ifvtex.sty": {
+      "bytes": 1057,
+      "mode": "0o644",
+      "sha256": "1138730b9ad7d9f664b4760a4ea0ae0945afd21c006b76b67e623e863bbf3756"
+    },
+    "texmf-dist/tex/generic/infwarerr/infwarerr.sty": {
+      "bytes": 8356,
+      "mode": "0o644",
+      "sha256": "8c3e23b8bb7d940ff26cb0cf96e0151f540acf55020dc3c1aa8bcdb2eb66305c"
+    },
+    "texmf-dist/tex/generic/intcalc/intcalc.sty": {
+      "bytes": 31769,
+      "mode": "0o644",
+      "sha256": "1343ba1b10b245bfd199c22947249af1d756808690c7811c90f07fe0a3772080"
+    },
+    "texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty": {
+      "bytes": 5412,
+      "mode": "0o644",
+      "sha256": "c42f0c2628dc5fbd95b535cf8cd3cc964347653c099d38c0d416f896d84e8240"
+    },
+    "texmf-dist/tex/generic/ltxcmds/ltxcmds.sty": {
+      "bytes": 17865,
+      "mode": "0o644",
+      "sha256": "8fea89995d37ba4c69137186faafc589c470edcc5026d8a31aadbe5cef47dcb4"
+    },
+    "texmf-dist/tex/generic/pdfescape/pdfescape.sty": {
+      "bytes": 19007,
+      "mode": "0o644",
+      "sha256": "b3f0e56366c11b85dae521f9a48a6fd415dec1ce8c83152fde813a9f64445b49"
+    },
+    "texmf-dist/tex/generic/pdftexcmds/pdftexcmds.lua": {
+      "bytes": 9447,
+      "mode": "0o644",
+      "sha256": "872a8889c423ec55c119f78055c7b92768af2fc8d480d44d04899581e347a363"
+    },
+    "texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty": {
+      "bytes": 20089,
+      "mode": "0o644",
+      "sha256": "2df7e0bd148c99d8097352b8ac9948dccf91d61ba360dcf43f82206933b6045b"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex": {
+      "bytes": 1016,
+      "mode": "0o644",
+      "sha256": "ec94fcfeeda3204c4e43d2008be50b6005da0e642deafaead137284d66e82926"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex": {
+      "bytes": 43820,
+      "mode": "0o644",
+      "sha256": "1668608078204a627d6e67a853f8a904e6149b901607ae177741c650b143a94e"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex": {
+      "bytes": 19324,
+      "mode": "0o644",
+      "sha256": "545c4616f93c5f5d25bc04090a0b7ef869bab84b3952fadfd539d71187c83fe0"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex": {
+      "bytes": 6038,
+      "mode": "0o644",
+      "sha256": "81862c3425e8aa2a82e605eb8fde07b1b7b47862b981922393d4f54ca9fa6250"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex": {
+      "bytes": 6911,
+      "mode": "0o644",
+      "sha256": "758e504e9c194cf9bbed098700b1d7969420e9a87552222d3000084a9d095571"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex": {
+      "bytes": 4883,
+      "mode": "0o644",
+      "sha256": "743e89ac1e529af45751fa85fde4b3438284a63dfd53ff52c94c2f229b20beff"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex": {
+      "bytes": 2544,
+      "mode": "0o644",
+      "sha256": "541e41626d66e0e8bc8b5249805c9efbb134dfe0dc85c63102eea3c2d21da6f0"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex": {
+      "bytes": 44195,
+      "mode": "0o644",
+      "sha256": "64b0b4193616b937a2b4520c678f8863ae06ab38385bb58db437b39a8f27719b"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex": {
+      "bytes": 17311,
+      "mode": "0o644",
+      "sha256": "ebcf9d5dec1714b575ffef09be6cdf03eaf1501f511204d7efae5d73b07b2221"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex": {
+      "bytes": 21302,
+      "mode": "0o644",
+      "sha256": "165569c2ffb6a80272d2853c3d3c4373c386391e8cbb81ed9683ae2a810dd28c"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex": {
+      "bytes": 9691,
+      "mode": "0o644",
+      "sha256": "f91d37fcda30e70ae85fbd9030682bc64df4424fc1260704def57dc6c444a63a"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex": {
+      "bytes": 33335,
+      "mode": "0o644",
+      "sha256": "7533dd80c95a5124726b0a617a5f458226d4a7490bcd209e3fd7e717e24dc127"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex": {
+      "bytes": 2965,
+      "mode": "0o644",
+      "sha256": "6143371709342ea83dcdb1744a229d18f4c1ee670e1e31b496046a708bfa3e66"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex": {
+      "bytes": 5196,
+      "mode": "0o644",
+      "sha256": "0bc32a855862a83b7ece27d2ebf6bfeace759d6b64fb776394eee13d62401350"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex": {
+      "bytes": 20821,
+      "mode": "0o644",
+      "sha256": "cd9bb9fbaac3f5bca5bedd77ca07a8c4457467869e2303fdf2b446a30dca9f9f"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex": {
+      "bytes": 35249,
+      "mode": "0o644",
+      "sha256": "b111efaa8b7c0905870b1ce9bcf400cd59c8db3cfa8d7ae91e7d63c1bac747cc"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex": {
+      "bytes": 22012,
+      "mode": "0o644",
+      "sha256": "bdea875774b4ad7a1e12debc67c46286245031f5c2e287c9e192f3ca4b6193b6"
+    },
+    "texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex": {
+      "bytes": 8893,
+      "mode": "0o644",
+      "sha256": "ea5e14f7fade556cee79636a6824710e97db928542fc1b23dfa618ff6448688e"
+    },
+    "texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex": {
+      "bytes": 15929,
+      "mode": "0o644",
+      "sha256": "8207f9fe44c55f382b943c0d9ed3e61571825585318111ad1e357746712e6079"
+    },
+    "texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatterns.code.tex": {
+      "bytes": 770,
+      "mode": "0o644",
+      "sha256": "27327333540a339d82b43b8cf717c063e9bd62e8816cd5050b72a665ae332551"
+    },
+    "texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex": {
+      "bytes": 11518,
+      "mode": "0o644",
+      "sha256": "992706da31e055cdbecf5b1bf1b9c267383e3b4d4385773448f868e1cabf17f2"
+    },
+    "texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex": {
+      "bytes": 186782,
+      "mode": "0o644",
+      "sha256": "e7c6e44b8fb9fe8fab049144fbe3e430dbc2b441148d72999e309cd5fc3a83c5"
+    },
+    "texmf-dist/tex/generic/pgf/libraries/pgflibrarypatterns.code.tex": {
+      "bytes": 7936,
+      "mode": "0o644",
+      "sha256": "0a0a790434c4064847cd05249bc93bd08cdf903e892b06e57a7688ebd0a29ea5"
+    },
+    "texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex": {
+      "bytes": 32995,
+      "mode": "0o644",
+      "sha256": "b3db772dd8eb595d8a5c8ef8d232862f9cef97d4ac9dedee283ad7b6e83361dd"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfint.code.tex": {
+      "bytes": 3063,
+      "mode": "0o644",
+      "sha256": "95f8053efeeb2267d543d8d1afb10195d6114765eea7b90755b4e0c359324d64"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmath.code.tex": {
+      "bytes": 949,
+      "mode": "0o644",
+      "sha256": "7fa0ff434e9cdeb14c40f326d53e6ea0273ef2046daf28987992e2488d186c85"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex": {
+      "bytes": 13270,
+      "mode": "0o644",
+      "sha256": "14bf1941381e7eb35dce4850d0aa819360f1db9ba9752c81cff19920f2c4c7b7"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex": {
+      "bytes": 104717,
+      "mode": "0o644",
+      "sha256": "ccd576f7cebab3a0c5d5cdef41fc44e638d7bb4a20e0a0465160eba1757795e5"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex": {
+      "bytes": 10165,
+      "mode": "0o644",
+      "sha256": "f83601dd74e8c166162cb3daf926744c44ccf15a0122e17613658f82fa64c6a9"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex": {
+      "bytes": 28178,
+      "mode": "0o644",
+      "sha256": "c94abbd89ad0556546d9e5053af16b58ce7f38d19c379b27309e5fefd23908f8"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex": {
+      "bytes": 9649,
+      "mode": "0o644",
+      "sha256": "9758185623cce6b2a8d4a504d10dfd0a01ef6d3480794fa4c466384f4c08540c"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex": {
+      "bytes": 3865,
+      "mode": "0o644",
+      "sha256": "ea5ff35778088d94d8d2f1a20075ec57cc4ecd22844f9c288625a6db59ba7818"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex": {
+      "bytes": 3177,
+      "mode": "0o644",
+      "sha256": "6e9383c1e63a6dbcfd2d95369905df566bdb6e7374c06e28c15a25eb782dc46b"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex": {
+      "bytes": 11024,
+      "mode": "0o644",
+      "sha256": "51038be668b2083ac5e8ae38a1da6f75091ee9471d71f33749d01a8bff1a9aa6"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex": {
+      "bytes": 7890,
+      "mode": "0o644",
+      "sha256": "c10a26a167c06b16e2d80ee4b119f77818ba2357ece3e5bc3cf7470c5dfb09f9"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex": {
+      "bytes": 3379,
+      "mode": "0o644",
+      "sha256": "9b980e1373f9451da75cc6030a5b4c1671b88a1b14b45ed172cfb7cf2607fe1f"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex": {
+      "bytes": 92405,
+      "mode": "0o644",
+      "sha256": "1c8834abe00807467a52d31ef96032d5084b2560eea45995018084d13a3cde3c"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex": {
+      "bytes": 37466,
+      "mode": "0o644",
+      "sha256": "8986f92b517f94415ae5642fc03eb9a8998fdaab446ab2e10f97985d5a9589da"
+    },
+    "texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex": {
+      "bytes": 8471,
+      "mode": "0o644",
+      "sha256": "cda208d98bdc556a06f5915571c6ce4d98c18aa639c4782a56c6d32a6ba68055"
+    },
+    "texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex": {
+      "bytes": 21211,
+      "mode": "0o644",
+      "sha256": "ceafd7c1de02bde3d5a7570489ed6a150db51aabd658c1c78acf1ee5b5f89c6e"
+    },
+    "texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex": {
+      "bytes": 16121,
+      "mode": "0o644",
+      "sha256": "f5454a5037c902bf21166d9592d5d15790f4b70c00a636d2b2fc47b76c8ccb21"
+    },
+    "texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex": {
+      "bytes": 44792,
+      "mode": "0o644",
+      "sha256": "da529b71510425e3a42b242f71ae849f74c09fd8197f7c18e3abb723b67ef958"
+    },
+    "texmf-dist/tex/generic/pgf/pgf.revision.tex": {
+      "bytes": 114,
+      "mode": "0o644",
+      "sha256": "ac54ea0a31097f28b4e37b09fa17985728d589c10640cf220d7e959f63b9e731"
+    },
+    "texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg": {
+      "bytes": 926,
+      "mode": "0o644",
+      "sha256": "eb308ac3d665db8dd3c03b18328c551609346c659c2ce0e5029223fbcc339cb3"
+    },
+    "texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def": {
+      "bytes": 5542,
+      "mode": "0o644",
+      "sha256": "babfe19163bca9c6fa5b1abb6b6154cd0d1ca98888f08f1bf7d06a74de5fd330"
+    },
+    "texmf-dist/tex/generic/pgf/systemlayer/pgfsys-luatex.def": {
+      "bytes": 13255,
+      "mode": "0o644",
+      "sha256": "886838765f41bdbb8a97700bdf958330abbb0ab8e7d713a9cb60fdaca78d09b4"
+    },
+    "texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex": {
+      "bytes": 61351,
+      "mode": "0o644",
+      "sha256": "aa771cadef59f480af688c690c5de28e23636ef4890842b9758b7d8943ede4ac"
+    },
+    "texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex": {
+      "bytes": 1896,
+      "mode": "0o644",
+      "sha256": "818b8e3cd0606bdb8ac7fbaccc5f80033672fa817537536f76bc67bc3942928c"
+    },
+    "texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex": {
+      "bytes": 7778,
+      "mode": "0o644",
+      "sha256": "6ea4caeea5bcb6cd60b80ef4607e8a79824ec0cdcebb47424c1bdbe0c2ea6671"
+    },
+    "texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex": {
+      "bytes": 24033,
+      "mode": "0o644",
+      "sha256": "5787859fab7c72cc3dfd7134e78bbb0e770a43e7da39f93732c24232249fdde8"
+    },
+    "texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex": {
+      "bytes": 39784,
+      "mode": "0o644",
+      "sha256": "212f64f8641fb944a006a3c0825e78d30b0a2c5e3b4c4d62ff59ef61214caeed"
+    },
+    "texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex": {
+      "bytes": 37433,
+      "mode": "0o644",
+      "sha256": "b3d57e19c1893ef33eb240cb7da4286418481b44f7b0ab1677fbc190d6a85201"
+    },
+    "texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex": {
+      "bytes": 4385,
+      "mode": "0o644",
+      "sha256": "6d28f51c1b4cb933969339982286f86bb1c9af70ed34535482321de4cd491664"
+    },
+    "texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex": {
+      "bytes": 29239,
+      "mode": "0o644",
+      "sha256": "7e25bd0bcb3399a5b1ee01c882d0bd51b455fcd1798edf4ecbde4bfc5c2198e1"
+    },
+    "texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def": {
+      "bytes": 6950,
+      "mode": "0o644",
+      "sha256": "6afcd415b6831a153969f66e8b06e9045fe5a5a40239ef51d76de757105396a2"
+    },
+    "texmf-dist/tex/generic/stringenc/stringenc.sty": {
+      "bytes": 21514,
+      "mode": "0o644",
+      "sha256": "b134a7bba648a6987afc83ddfb6a3fcdad43bcae6b616e533eb484306d56ac45"
+    },
+    "texmf-dist/tex/generic/unicode-data/CaseFolding.txt": {
+      "bytes": 84870,
+      "mode": "0o644",
+      "sha256": "4e55acfdc32825a22e87670e9056a3bf94ad7c5400065778e9e10f8314372bcf"
+    },
+    "texmf-dist/tex/generic/unicode-data/PropList.txt": {
+      "bytes": 136397,
+      "mode": "0o644",
+      "sha256": "05672956317b6296bc2ec3d6cef1f6452b57ff4f2efc6dc55b0a19277d5fcfd1"
+    },
+    "texmf-dist/tex/generic/unicode-data/ScriptExtensions.txt": {
+      "bytes": 22174,
+      "mode": "0o644",
+      "sha256": "fdfd54237a2c0452ba1060571fd1e58fd46aeecdfda7c5b5be1b716dad755cec"
+    },
+    "texmf-dist/tex/generic/unicode-data/Scripts.txt": {
+      "bytes": 184280,
+      "mode": "0o644",
+      "sha256": "0eacb65169ae6eb1d399cd70826b3da15fff19f6f586eecf819b70c83b1d9b32"
+    },
+    "texmf-dist/tex/generic/unicode-data/SpecialCasing.txt": {
+      "bytes": 16832,
+      "mode": "0o644",
+      "sha256": "55a477efd933a52cd27e6a9bf70265bb2d8814af31aab07767abc8eb421f27ef"
+    },
+    "texmf-dist/tex/generic/unicode-data/UnicodeData.txt": {
+      "bytes": 1914200,
+      "mode": "0o644",
+      "sha256": "2fc713e6a31a87c4850a37fe2caffa4218180fadb5de86b43a143ddb4581fb86"
+    },
+    "texmf-dist/tex/generic/unicode-data/WordBreakProperty.txt": {
+      "bytes": 109117,
+      "mode": "0o644",
+      "sha256": "0f5f68bdab1bac4a2bf6576530dca10a322eadbc980b386a7627c89929053dc5"
+    },
+    "texmf-dist/tex/generic/uniquecounter/uniquecounter.sty": {
+      "bytes": 7008,
+      "mode": "0o644",
+      "sha256": "9d11c81501953d689787ff14c073d2f1eda5874068db9e882b8dbbf9a9d863b0"
+    },
+    "texmf-dist/tex/latex/amsmath/amsbsy.sty": {
+      "bytes": 2222,
+      "mode": "0o644",
+      "sha256": "f69355f4b0a8b650296fe2fd9471783a6940e6525efd5d7d306b5477daef494d"
+    },
+    "texmf-dist/tex/latex/amsmath/amsgen.sty": {
+      "bytes": 4173,
+      "mode": "0o644",
+      "sha256": "1232e78c8af6c4bc16c024fe33b9c4c3322679ad6887be22bc013ddb8d254ed9"
+    },
+    "texmf-dist/tex/latex/amsmath/amsmath.sty": {
+      "bytes": 88371,
+      "mode": "0o644",
+      "sha256": "da22219a49c094141141bb29034c438d1ccba8a9afe6cdd5d15b96c15bf56901"
+    },
+    "texmf-dist/tex/latex/amsmath/amsopn.sty": {
+      "bytes": 4474,
+      "mode": "0o644",
+      "sha256": "981dbcccfc3a2449768ae5b1cb7b8b1468bb1f7842429067cd6f6ef0ade42fc2"
+    },
+    "texmf-dist/tex/latex/amsmath/amstext.sty": {
+      "bytes": 2444,
+      "mode": "0o644",
+      "sha256": "2bf2e4f0efe99c33bfd757e1dee1b4267742f8af3e449d6bdb4342c2917b1bce"
+    },
+    "texmf-dist/tex/latex/auxhook/auxhook.sty": {
+      "bytes": 3935,
+      "mode": "0o644",
+      "sha256": "1d9f36f4e9674bef594a47cac7d5781e9f7e0c7c8edf9f72769f4dc6f10d1b5f"
+    },
+    "texmf-dist/tex/latex/base/article.cls": {
+      "bytes": 20144,
+      "mode": "0o644",
+      "sha256": "859217b3457cca472e5a96ef193218c87a4e62a6445cdd501ba7e1954fa32afa"
+    },
+    "texmf-dist/tex/latex/base/atbegshi-ltx.sty": {
+      "bytes": 3045,
+      "mode": "0o644",
+      "sha256": "6720c4cf09cf91e8055b9ad4b54275cbd690be65b1f36805fa457c059d2e29a2"
+    },
+    "texmf-dist/tex/latex/base/atveryend-ltx.sty": {
+      "bytes": 2462,
+      "mode": "0o644",
+      "sha256": "95a2509f9ade1283bc842ed5c90084853892b67ab7acccfbf85b8acd38e1d7e3"
+    },
+    "texmf-dist/tex/latex/base/fix-cm.sty": {
+      "bytes": 14741,
+      "mode": "0o644",
+      "sha256": "e138d7499fd8ebcf48de16a6caa88a7da1ad04e0608b2975adb013bf6e86359b"
+    },
+    "texmf-dist/tex/latex/base/fontenc.sty": {
+      "bytes": 5119,
+      "mode": "0o644",
+      "sha256": "b17f7346c2d881bba3bde28711e53cc7d3125e5ea440672f59bbbdbbd95499ed"
+    },
+    "texmf-dist/tex/latex/base/ltluatex.lua": {
+      "bytes": 24543,
+      "mode": "0o644",
+      "sha256": "e9646b75a2a5b918b792d48b1163b6375dc079810b3c22f6ade903743dc2a0cb"
+    },
+    "texmf-dist/tex/latex/base/size11.clo": {
+      "bytes": 8464,
+      "mode": "0o644",
+      "sha256": "9ecfd9ff838f6e15cce1dfbdde454e92f13228cd08b2fb26e11f821bf95055c7"
+    },
+    "texmf-dist/tex/latex/base/ts1enc.def": {
+      "bytes": 8090,
+      "mode": "0o644",
+      "sha256": "046c866dbc903cc8f66f4e86eacc121edd77fd3ea3b9a2ba6a5bae19990415ad"
+    },
+    "texmf-dist/tex/latex/base/tulmr.fd": {
+      "bytes": 4822,
+      "mode": "0o644",
+      "sha256": "f34d5f8531ca599969203c8ba3fe0c5f127d16eebb3531f5ab66d3079b281140"
+    },
+    "texmf-dist/tex/latex/bookmark/bkm-pdftex.def": {
+      "bytes": 8818,
+      "mode": "0o644",
+      "sha256": "8e01370bb81faebfaf5715cb3f7ef242b34dac04d38d6c9542cd6790a8b4eb44"
+    },
+    "texmf-dist/tex/latex/bookmark/bookmark.sty": {
+      "bytes": 18245,
+      "mode": "0o644",
+      "sha256": "81cb5aeb52520a14445b3bdd6ee4cd6b4c32404cda6ba3106a9049b9672e7203"
+    },
+    "texmf-dist/tex/latex/booktabs/booktabs.sty": {
+      "bytes": 6078,
+      "mode": "0o644",
+      "sha256": "3fe694a5406f84847143e56ba1841385364277cfe7694a9f4bc0072ca8656abc"
+    },
+    "texmf-dist/tex/latex/caption/caption.sty": {
+      "bytes": 56128,
+      "mode": "0o644",
+      "sha256": "94b3a07d83bfdc9171d3fcb5ea510e6a9ce01ff9bebac37a1dc066e55f6ad48f"
+    },
+    "texmf-dist/tex/latex/caption/caption3.sty": {
+      "bytes": 72619,
+      "mode": "0o644",
+      "sha256": "73f00aabd0be454c9e552841856c573e096ef42d032fe9fd1801763b1b37bea5"
+    },
+    "texmf-dist/tex/latex/caption/ltcaption.sty": {
+      "bytes": 7418,
+      "mode": "0o644",
+      "sha256": "314e0af4d7edcc038eb4dab681b2ccb472d4282f282f4188c8154c2403eb842e"
+    },
+    "texmf-dist/tex/latex/colortbl/colortbl.sty": {
+      "bytes": 12355,
+      "mode": "0o644",
+      "sha256": "a696d6c768edfd5e6697f7435254903efaa4f8a3a188b1980d67c70544cdfd71"
+    },
+    "texmf-dist/tex/latex/enumitem/enumitem.sty": {
+      "bytes": 51697,
+      "mode": "0o644",
+      "sha256": "a217353d233e54e8c0944d87ea2924ec1f20d849a35b749698df03884856e5e3"
+    },
+    "texmf-dist/tex/latex/eso-pic/eso-pic.sty": {
+      "bytes": 11876,
+      "mode": "0o644",
+      "sha256": "8554cb0a5449a031f5d78cc67c824d23afb4b1a4dd11ca9946447185bb274464"
+    },
+    "texmf-dist/tex/latex/etoolbox/etoolbox.sty": {
+      "bytes": 46845,
+      "mode": "0o644",
+      "sha256": "b10381f0017ae75bd03dc9175b35ad56b93fdd24f2a47dd4aa9c6987ef35ccdb"
+    },
+    "texmf-dist/tex/latex/fancyhdr/fancyhdr.sty": {
+      "bytes": 18450,
+      "mode": "0o644",
+      "sha256": "cc6791065900f898299156662bf8a8d7d462daf2bb9af5a84bca6eb63dcac0a0"
+    },
+    "texmf-dist/tex/latex/float/float.sty": {
+      "bytes": 6749,
+      "mode": "0o644",
+      "sha256": "be4a09ab7ded44b4ce97ba20a3a3efbb061d186327d5db61f8de6a3cab5019aa"
+    },
+    "texmf-dist/tex/latex/fontspec/fontspec-luatex.sty": {
+      "bytes": 151535,
+      "mode": "0o644",
+      "sha256": "9f0acc314769e68234e85b3308851aaa45897f38ca150ec5df3c4658e2c6367f"
+    },
+    "texmf-dist/tex/latex/fontspec/fontspec.cfg": {
+      "bytes": 549,
+      "mode": "0o644",
+      "sha256": "f31d038ca5322ef4fc3fbe391f42695bf1305567a04b6ac1005964703dd1232a"
+    },
+    "texmf-dist/tex/latex/fontspec/fontspec.lua": {
+      "bytes": 3021,
+      "mode": "0o644",
+      "sha256": "7edd7152492e221a0711f5303c143cc9bd6769da9f3f8fa2ca7ed1933cd06bd1"
+    },
+    "texmf-dist/tex/latex/fontspec/fontspec.sty": {
+      "bytes": 3484,
+      "mode": "0o644",
+      "sha256": "245664cea4030dd170b7d9fdc839104a63c0156aba8e8a996720ea3dd02e7d1d"
+    },
+    "texmf-dist/tex/latex/geometry/geometry.sty": {
+      "bytes": 41601,
+      "mode": "0o644",
+      "sha256": "d5d36ad74051ad36288242b51438e2d9a5db2bd6c063b9b5704d0931fbc9f439"
+    },
+    "texmf-dist/tex/latex/graphics-cfg/color.cfg": {
+      "bytes": 1213,
+      "mode": "0o644",
+      "sha256": "a3529ccdadc8248b4c5d7c34ceea53bdc1509b54f18a192ad51b924bd297d8df"
+    },
+    "texmf-dist/tex/latex/graphics-cfg/graphics.cfg": {
+      "bytes": 1224,
+      "mode": "0o644",
+      "sha256": "feb91e48789a21e4acced98e952c77a2e2cf4a77e01bf147b59fa56a1b3f2008"
+    },
+    "texmf-dist/tex/latex/graphics-def/luatex.def": {
+      "bytes": 19478,
+      "mode": "0o644",
+      "sha256": "13a061e52073fad9e8acb60d2d7174821dec95b554c8678b24c4fdd85bc4aa77"
+    },
+    "texmf-dist/tex/latex/graphics/graphics.sty": {
+      "bytes": 18387,
+      "mode": "0o644",
+      "sha256": "36e2e612e708d04785971d6bcfed324d0a0f9ce337ea73680e69dd2603d0327a"
+    },
+    "texmf-dist/tex/latex/graphics/graphicx.sty": {
+      "bytes": 8010,
+      "mode": "0o644",
+      "sha256": "e9fe8e56401707f18a3d18716dadfd1dab999d02118c82af05691599cedec445"
+    },
+    "texmf-dist/tex/latex/graphics/keyval.sty": {
+      "bytes": 2671,
+      "mode": "0o644",
+      "sha256": "8434ad08617159240fd19b4fcae8bf79a6137af413f3798c8a750e9839f8902e"
+    },
+    "texmf-dist/tex/latex/graphics/mathcolor.ltx": {
+      "bytes": 2885,
+      "mode": "0o644",
+      "sha256": "0804bb6e9e1eeeaeda861f29206d308194ea7cc846e38abaa344cdefa1d408cd"
+    },
+    "texmf-dist/tex/latex/graphics/trig.sty": {
+      "bytes": 4023,
+      "mode": "0o644",
+      "sha256": "c2a4f1d01abaf7ad739f1af03238ebb6ab35a7bbfbd5d713acceddda4fb043d5"
+    },
+    "texmf-dist/tex/latex/hycolor/hycolor.sty": {
+      "bytes": 17914,
+      "mode": "0o644",
+      "sha256": "8acaa03eda19a8158780356701e905e354e1dc47dc736e6e26fc860c12a15e14"
+    },
+    "texmf-dist/tex/latex/hyperref/hluatex.def": {
+      "bytes": 51074,
+      "mode": "0o644",
+      "sha256": "40905b3430fe0bf1173bff444678ffb4f24acf00f0a3a0e1055fee2c4d86cdb6"
+    },
+    "texmf-dist/tex/latex/hyperref/hyperref.sty": {
+      "bytes": 220920,
+      "mode": "0o644",
+      "sha256": "3e2bd51be23486a776165ebda8bdef7d442c0b779db14652dcc1e40429b1c1ad"
+    },
+    "texmf-dist/tex/latex/hyperref/nameref.sty": {
+      "bytes": 11026,
+      "mode": "0o644",
+      "sha256": "1bd958ef4ce46f3d15f7c77f6c2d084289e0e6d6017d5a3a341d83f0998b99a7"
+    },
+    "texmf-dist/tex/latex/hyperref/pd1enc.def": {
+      "bytes": 14249,
+      "mode": "0o644",
+      "sha256": "860fb14ebfbd12904aca6dff9e05fad399529d7fe8c00d9b130f02bbc892925d"
+    },
+    "texmf-dist/tex/latex/hyperref/puenc.def": {
+      "bytes": 117112,
+      "mode": "0o644",
+      "sha256": "70942bf5c0f0725234b8677e18170952b39b5959d6b1d5f9ccfb1ec88a049bf5"
+    },
+    "texmf-dist/tex/latex/kvoptions/kvoptions.sty": {
+      "bytes": 22555,
+      "mode": "0o644",
+      "sha256": "70595629ec990ba8c0b6e6a54afcff2603464e6fce380a54a98549a78d2fc74a"
+    },
+    "texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty": {
+      "bytes": 13815,
+      "mode": "0o644",
+      "sha256": "e3fcf7f3372a27bb478eb9488eca1e25ed382480d02a6898f190bd955388e055"
+    },
+    "texmf-dist/tex/latex/l3backend/l3backend-luatex.def": {
+      "bytes": 30427,
+      "mode": "0o644",
+      "sha256": "1bd728b36fb7d777c7a7072684d8ef24fe0e61447580f2db4404a03b9b8c3445"
+    },
+    "texmf-dist/tex/latex/l3backend/l3backend-luatex.lua": {
+      "bytes": 3839,
+      "mode": "0o644",
+      "sha256": "a3a9ddb513e2b25fb7253e3232bd06c08f7c3af069b27cf79e85a3e0be911d87"
+    },
+    "texmf-dist/tex/latex/l3kernel/expl3.lua": {
+      "bytes": 16940,
+      "mode": "0o644",
+      "sha256": "ba2110590faeb86f258d6a57f14332066e613a4e8210d12622980bb33721c1a3"
+    },
+    "texmf-dist/tex/latex/l3kernel/expl3.sty": {
+      "bytes": 6565,
+      "mode": "0o644",
+      "sha256": "031f0ee8e4751aff29af9cfda2ced8a8e3f52eb158e682c510856e3ed36d9361"
+    },
+    "texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty": {
+      "bytes": 4674,
+      "mode": "0o644",
+      "sha256": "abc88154119ab6fb15ec11da3643c68519d6a6ad1bbe19a2762eec08cccf15c4"
+    },
+    "texmf-dist/tex/latex/l3packages/xparse/xparse.sty": {
+      "bytes": 9327,
+      "mode": "0o644",
+      "sha256": "f5d74008cd05735dfcc8b972eae85a6bf6a9fe286da4a86fece0a9fad37a8297"
+    },
+    "texmf-dist/tex/latex/microtype/microtype-luatex.def": {
+      "bytes": 38850,
+      "mode": "0o644",
+      "sha256": "1dc739c9ce9b42b041a81cc1ae93483e587efc46a7ed94feedc01c5cfc783082"
+    },
+    "texmf-dist/tex/latex/microtype/microtype.cfg": {
+      "bytes": 26842,
+      "mode": "0o644",
+      "sha256": "a4bd4486751d955ae22f96563e5306c9a45227e5ffd25d19dffda84c4d90a5d5"
+    },
+    "texmf-dist/tex/latex/microtype/microtype.lua": {
+      "bytes": 6496,
+      "mode": "0o644",
+      "sha256": "c00e9851526548a2da106da083acffedd12670ae8862d52ad15ecc64661a4c7e"
+    },
+    "texmf-dist/tex/latex/microtype/microtype.sty": {
+      "bytes": 98531,
+      "mode": "0o644",
+      "sha256": "1a41c71483a682e5443508d023fc2d01a3b96e8bdf914f0331a39760ef281549"
+    },
+    "texmf-dist/tex/latex/needspace/needspace.sty": {
+      "bytes": 852,
+      "mode": "0o644",
+      "sha256": "5ae673ce2a80fb868c954373252294d9e6469feeb78b445182772fd043eb0914"
+    },
+    "texmf-dist/tex/latex/newunicodechar/newunicodechar.sty": {
+      "bytes": 4131,
+      "mode": "0o644",
+      "sha256": "ba2b7810e73cc8a670f4e89b6f952d025152228496ead8dc2a92bfd77e05aae4"
+    },
+    "texmf-dist/tex/latex/pgf/basiclayer/pgf.sty": {
+      "bytes": 1090,
+      "mode": "0o644",
+      "sha256": "99e08946749446e0b9b7faa985f8202740a94476f9e99bab5286cca5ce4766e9"
+    },
+    "texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty": {
+      "bytes": 373,
+      "mode": "0o644",
+      "sha256": "3a52a05062a74a763ee604b4a3d20f0be4a4b99fe8182373e30ccea0abafc96e"
+    },
+    "texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty": {
+      "bytes": 21013,
+      "mode": "0o644",
+      "sha256": "7df38d1bb03d0bf642b3f53c38d86641765d950f82d481ebd63c67838bc78ee7"
+    },
+    "texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty": {
+      "bytes": 989,
+      "mode": "0o644",
+      "sha256": "b5a95ba245bb51ce01e5ead16e818a0024f16cd208df3386b30ba0798a911344"
+    },
+    "texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty": {
+      "bytes": 339,
+      "mode": "0o644",
+      "sha256": "6e39ff4fdf9f126aff28880a7dd59fccc0e6735409d92ca455cdd2a4f2b4db53"
+    },
+    "texmf-dist/tex/latex/pgf/math/pgfmath.sty": {
+      "bytes": 306,
+      "mode": "0o644",
+      "sha256": "4abed7d8c88642201dd1a932a435ae05a1f2659f1f7e95c72d6b5347c83d232a"
+    },
+    "texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty": {
+      "bytes": 443,
+      "mode": "0o644",
+      "sha256": "cc7121c5706c5c52807aea879ca0a9083a8dc81b04d96303d0d398804d9d3d52"
+    },
+    "texmf-dist/tex/latex/pgf/utilities/pgffor.sty": {
+      "bytes": 348,
+      "mode": "0o644",
+      "sha256": "5ae03317ea221a6f68d807775bd06a10625aa9fb1f590dbe2114688f735c447d"
+    },
+    "texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty": {
+      "bytes": 274,
+      "mode": "0o644",
+      "sha256": "b90072b20d0590f23fd0ad273d059e3b7737319b3fb61e3bea6102fd77f24b3d"
+    },
+    "texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty": {
+      "bytes": 325,
+      "mode": "0o644",
+      "sha256": "9653b8fae6bba95bec40ffbedd7d6c2b8f3be4a85b8b39580ab3ee6c3590041a"
+    },
+    "texmf-dist/tex/latex/ragged2e/ragged2e.sty": {
+      "bytes": 10085,
+      "mode": "0o644",
+      "sha256": "bbaa95d82bff14cd13fdead40edcdd31d7bd1e84127fe85f6b20dccff474cf4d"
+    },
+    "texmf-dist/tex/latex/refcount/refcount.sty": {
+      "bytes": 9878,
+      "mode": "0o644",
+      "sha256": "1bd5d42025520bef74f8808af99cf3f3be7d2e3774b9931bf85c11ba81bb6cab"
+    },
+    "texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty": {
+      "bytes": 9714,
+      "mode": "0o644",
+      "sha256": "7e22b1ca949259c61d3721bca0a56bcccf7e47cfc776027c5863941635c07aa1"
+    },
+    "texmf-dist/tex/latex/seqsplit/seqsplit.sty": {
+      "bytes": 1346,
+      "mode": "0o644",
+      "sha256": "35556c982cf26ae65d9c904cf0ec76f320c42f9fae28de6e466dcefaf13775f7"
+    },
+    "texmf-dist/tex/latex/tex-ini-files/lualatexquotejobname.lua": {
+      "bytes": 1021,
+      "mode": "0o644",
+      "sha256": "f843ebdbbef48e377f022ef8f010e9dbc95e24536ca270d3d26783efa9ea77a0"
+    },
+    "texmf-dist/tex/latex/titlesec/titlesec.sty": {
+      "bytes": 48766,
+      "mode": "0o644",
+      "sha256": "c78182a0719ca00b7fa6cfbc5d8fbb58c341314954413b8d5b016d67a9e17f41"
+    },
+    "texmf-dist/tex/latex/tools/array.sty": {
+      "bytes": 12667,
+      "mode": "0o644",
+      "sha256": "dc2b9a0057f8455ac0f74960618e7af3de9bf08da0e7078ef8dd0570a2924427"
+    },
+    "texmf-dist/tex/latex/tools/calc.sty": {
+      "bytes": 10214,
+      "mode": "0o644",
+      "sha256": "9c9da7f39469dd6ab1cb765cd5ef87dd72792c8eb9426e4619faecd00e9f2345"
+    },
+    "texmf-dist/tex/latex/tools/longtable.sty": {
+      "bytes": 12935,
+      "mode": "0o644",
+      "sha256": "83e32c4a880712340080225b239967442eb7dca5dc22bf0ca85f4ffd52506bd6"
+    },
+    "texmf-dist/tex/latex/unicode-math/unicode-math-luatex.sty": {
+      "bytes": 132734,
+      "mode": "0o644",
+      "sha256": "b901badb8469dc6b004d51e5fd5706f761d000972ade219b57ac01731504a94f"
+    },
+    "texmf-dist/tex/latex/unicode-math/unicode-math-table.tex": {
+      "bytes": 241443,
+      "mode": "0o644",
+      "sha256": "3976ff8f39c84b61055b1cb6851a1b2cfdefa918a2a642c954e6ceafdca7277e"
+    },
+    "texmf-dist/tex/latex/unicode-math/unicode-math.sty": {
+      "bytes": 1474,
+      "mode": "0o644",
+      "sha256": "91388a2e1332388bcf8393d79a9fb67f4bd197f982503297dbf971f5f7cec111"
+    },
+    "texmf-dist/tex/latex/url/url.sty": {
+      "bytes": 12796,
+      "mode": "0o644",
+      "sha256": "2373f56849ac606473e77053e5c1d14c92aba312b3f684e02a130eaf36f2de47"
+    },
+    "texmf-dist/tex/latex/xcolor/xcolor.sty": {
+      "bytes": 55487,
+      "mode": "0o644",
+      "sha256": "6d66da8f16088689c2f4995b4e920703cc94faade57911ed7aabd32b04367824"
+    },
+    "texmf-dist/tex/latex/xurl/xurl.sty": {
+      "bytes": 4675,
+      "mode": "0o644",
+      "sha256": "5cf09de8dd52b5e77a12145d4987ab4df75a304174d224aa9562eed3dd141ef3"
+    },
+    "texmf-dist/tex/lualatex/lualatex-math/lualatex-math.lua": {
+      "bytes": 1313,
+      "mode": "0o644",
+      "sha256": "5b9ef1ab7eea2544accb2653c45839540ed8761d384ca00aa806293018654ea5"
+    },
+    "texmf-dist/tex/lualatex/lualatex-math/lualatex-math.sty": {
+      "bytes": 8657,
+      "mode": "0o644",
+      "sha256": "5054a75bee5ac0800110168a4df57a089969b14f883d161a1e83726021d6511d"
+    },
+    "texmf-dist/tex/luatex/lua-uni-algos/lua-uni-case.lua": {
+      "bytes": 1921,
+      "mode": "0o644",
+      "sha256": "00333067f0fb5a161be811dbeaf3213674ad4d8c1c548bb2060a58872994406b"
+    },
+    "texmf-dist/tex/luatex/lua-uni-algos/lua-uni-normalize.lua": {
+      "bytes": 21269,
+      "mode": "0o644",
+      "sha256": "d00169176c60d90fe3efa0700ce5bf680b77c8c863124e2222427f5f704660bb"
+    },
+    "texmf-dist/tex/luatex/lua-uni-algos/lua-uni-parse.lua": {
+      "bytes": 2115,
+      "mode": "0o644",
+      "sha256": "a4eaafbf8b791b11e89b6382224bfdde8cc2048c3980e89e92fd3bc77f45bb50"
+    },
+    "texmf-dist/tex/luatex/lualibs/lualibs-basic-merged.lua": {
+      "bytes": 131460,
+      "mode": "0o644",
+      "sha256": "a7970784ab066597d5003ac0e35cecae64784a0e3056aed034ed22397e580c59"
+    },
+    "texmf-dist/tex/luatex/lualibs/lualibs-basic.lua": {
+      "bytes": 2685,
+      "mode": "0o644",
+      "sha256": "937cf2975b322e3b2dd342ddd93e722a6b51c08d196e0af5bbed07b95219510c"
+    },
+    "texmf-dist/tex/luatex/lualibs/lualibs-compat.lua": {
+      "bytes": 603,
+      "mode": "0o644",
+      "sha256": "93c0a38d03278e68fb2aa3f7a1cea090555ddb981225a5771530e678d28301ba"
+    },
+    "texmf-dist/tex/luatex/lualibs/lualibs-extended-merged.lua": {
+      "bytes": 140360,
+      "mode": "0o644",
+      "sha256": "ada22ed59f683cfc3a645830201f77c2a3d4d06aaca2924297cef7192b0a9e13"
+    },
+    "texmf-dist/tex/luatex/lualibs/lualibs-extended.lua": {
+      "bytes": 5000,
+      "mode": "0o644",
+      "sha256": "805bebd2d9063fd3103e98e764b3ed4eb3d3368d22c8fa2e15375a59d3ae07b1"
+    },
+    "texmf-dist/tex/luatex/lualibs/lualibs.lua": {
+      "bytes": 3780,
+      "mode": "0o644",
+      "sha256": "c64ac1bf3b572279d4ff6d44addfa4873c123759c021bbc23edc562c800adc2e"
+    },
+    "texmf-dist/tex/luatex/luaotfload/fontloader-2023-12-28.lua": {
+      "bytes": 885747,
+      "mode": "0o644",
+      "sha256": "02226780693404d7c80cd363c971082b3f56e27a255d47b17afeb8d97c140ab4"
+    },
+    "texmf-dist/tex/luatex/luaotfload/fontloader-basics-gen.lua": {
+      "bytes": 12788,
+      "mode": "0o644",
+      "sha256": "4edd18bc02449161027855499a96f1e044cb029cf1d62cc95ea958216ab7b430"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-arabic.lua": {
+      "bytes": 5364,
+      "mode": "0o644",
+      "sha256": "8a372ca93e2f1c0988cbb78da7f8032920d16b45fe3cdb1deddeda266524f6c7"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-auxiliary.lua": {
+      "bytes": 34239,
+      "mode": "0o644",
+      "sha256": "7792e3296ac52360fce28085148da0aaae7b13f0edb5d8331dc0afb3333b2b68"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-bcp47.lua": {
+      "bytes": 3674,
+      "mode": "0o644",
+      "sha256": "daa1b200a5580c485aee10037e37ff6d88c23680ae725b7e7d55537523914813"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-case.lua": {
+      "bytes": 16116,
+      "mode": "0o644",
+      "sha256": "8d6028c760e0fa3a251427f991fffcbf5bc1b649dee0e6cc925375f0733d7d1e"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-colors.lua": {
+      "bytes": 18372,
+      "mode": "0o644",
+      "sha256": "294afa9f24416608753573598617b3d0f3999dce309490b3708336de9ce7f732"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-configuration.lua": {
+      "bytes": 34054,
+      "mode": "0o644",
+      "sha256": "82a3f049c80bed0ac9191eb763df17aa35916010769edc7511bda38cebce377c"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-database.lua": {
+      "bytes": 135377,
+      "mode": "0o644",
+      "sha256": "c56756516fac70070c7324bfba1a5b306119d9670a48c78db468aa3cd7f25e02"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-embolden.lua": {
+      "bytes": 1004,
+      "mode": "0o644",
+      "sha256": "49f4f53e8a3dfc7920526fc46fa127b9c01adf530ec25480a2a82832b4a3a62d"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-fallback.lua": {
+      "bytes": 4047,
+      "mode": "0o644",
+      "sha256": "05624b845f1d3b22a054cb4719a4c625c5024693c829970f962032a5e436e025"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-features.lua": {
+      "bytes": 35386,
+      "mode": "0o644",
+      "sha256": "5e5f5d16e6114f1fef47b128389fd3d64af2fb454f54f63edc1e60b094043818"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-glyphlist.lua": {
+      "bytes": 102502,
+      "mode": "0o644",
+      "sha256": "6bbf51574dfd33a1c1a725b6787e10cf28b7f961cf53bee5fd0cf6a5d56a083b"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-harf-define.lua": {
+      "bytes": 19482,
+      "mode": "0o644",
+      "sha256": "cc0b4d3bf0d20a53bf9ae32902bf5f4e463d4eb7a78171532b835edb822e4519"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-harf-plug.lua": {
+      "bytes": 42681,
+      "mode": "0o644",
+      "sha256": "4e6e6a6a7f2e2e73dd3eaf407074b3b7b1e8505ef26d1084b8b8b4dcc32303a2"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-harf-var-cff2.lua": {
+      "bytes": 14126,
+      "mode": "0o644",
+      "sha256": "a46bc373ce84ca3ffb22018274d01bd983e0282beee172b9c1b3f335b6116000"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-harf-var-t2-writer.lua": {
+      "bytes": 4050,
+      "mode": "0o644",
+      "sha256": "6821613f5cfacec8425aa139ce26d5d0d95e573097a416d57f106f603012af22"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-harf-var-ttf.lua": {
+      "bytes": 20523,
+      "mode": "0o644",
+      "sha256": "bf680a695ddb5d07f0b8682b76b59d4f4cc02c20e36cd84f36aad2f779efd930"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-init.lua": {
+      "bytes": 19746,
+      "mode": "0o644",
+      "sha256": "a154aede165711fa2762d2aea27f7027f7ca42ce2cb9b55984aa9126099aec8d"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-letterspace.lua": {
+      "bytes": 20268,
+      "mode": "0o644",
+      "sha256": "151ea7feb8055c0322d02fbcfac53f7c30958fc70a0e7e51ad9cdae60c86c2fe"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-loaders.lua": {
+      "bytes": 10733,
+      "mode": "0o644",
+      "sha256": "3a5df9a1a6b3cf55892adae41658579fff3f2fda9b7c889878d287638066282b"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-log.lua": {
+      "bytes": 11323,
+      "mode": "0o644",
+      "sha256": "ca8082d1c19c4bf35eaa7427d93403648ebb95eb110938a7af7dd7796d70542f"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-main.lua": {
+      "bytes": 275,
+      "mode": "0o644",
+      "sha256": "a288ce8b68e2acbbc18bb67c2f8bdefd6a4dbf692fb68f756f2b4db56c3d0ab2"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-multiscript.lua": {
+      "bytes": 15068,
+      "mode": "0o644",
+      "sha256": "5fb7c1d60e2f5162f3b038c285d2bef7066142055e435c3bc2d24d6ed5529856"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-notdef.lua": {
+      "bytes": 12258,
+      "mode": "0o644",
+      "sha256": "2ca18fce3d20b5d5805a83e269540f3e83cceb51a07cfbfc6abf789ab3028d0a"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-parsers.lua": {
+      "bytes": 30436,
+      "mode": "0o644",
+      "sha256": "e5fa4f278c9cb9f31fc178f597e70b98c3383049b434a8ba63ac60fc7b898d45"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-realpath.lua": {
+      "bytes": 4692,
+      "mode": "0o644",
+      "sha256": "720e7e8ff2c8ffbc8d980f718038a07679e39df176d410f8b86bc0da1e78d559"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-resolvers.lua": {
+      "bytes": 11209,
+      "mode": "0o644",
+      "sha256": "ad19558242b17619af9bb0d239a4eec471c961b0f950ee7b0e2e0843350f4b01"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-scripts.lua": {
+      "bytes": 2506,
+      "mode": "0o644",
+      "sha256": "05098b8dc51eb5c7733096f93c091594766569e1403194c7c2dfae832922d5c7"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-status.lua": {
+      "bytes": 6317,
+      "mode": "0o644",
+      "sha256": "fa6b08b2c2cc304a9bafbd73407c4ecd5f170f755f123a02f8eba01456650d11"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-suppress.lua": {
+      "bytes": 2582,
+      "mode": "0o644",
+      "sha256": "b92156acf13fc8b4d0c3ed3d17f3e82712a8c83a67fa85f74637eb495c477f0b"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-szss.lua": {
+      "bytes": 6309,
+      "mode": "0o644",
+      "sha256": "202ca05e4ccb3d0ee8b9404c57e03b6286ea70e81a8f9d96a9cad49f6e0ff42f"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-tounicode.lua": {
+      "bytes": 7528,
+      "mode": "0o644",
+      "sha256": "84121f5662b4524ddc2eab40a25158e59435c424ec60b8f9f7dcb9bd80be2fd5"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload-unicode.lua": {
+      "bytes": 7917,
+      "mode": "0o644",
+      "sha256": "d97bf876d7d247e5fd9314bc7a5a5c3f51c2d723e902b034fc18b28910121bd5"
+    },
+    "texmf-dist/tex/luatex/luaotfload/luaotfload.lua": {
+      "bytes": 13565,
+      "mode": "0o644",
+      "sha256": "082483849553a7f8b476df4a10e593e3864138412840d7fa818d84781def9d11"
+    },
+    "texmf-var/fonts/map/pdftex/updmap/pdftex_dl14.map": {
+      "bytes": 5467645,
+      "mode": "0o644",
+      "sha256": "9e626e7661728390063e2bc6d3ef3cc7c7bfedd3219ed86dfa34494935ad3bd9"
+    },
+    "texmf-var/web2c/luahbtex/lualatex.fmt": {
+      "bytes": 12255194,
+      "mode": "0o644",
+      "sha256": "e254bc4c8dc1304a4cc099c92ad6e4d81da90805d113069c954da5a69d04bffa"
+    }
+  },
+  "tools": {
+    "bash": {
+      "bytes": 1293840,
+      "mode": "0o555",
+      "sha256": "fde343ee184953c1fa1185abddeaa8be61c6acbebae4eb54db5d6b55b09a5755"
+    },
+    "du": {
+      "bytes": 135360,
+      "mode": "0o755",
+      "sha256": "95c489cf0c0e84cf235ab073500576efc6b681c7d8dcd0936cee4ebaefc15553"
+    },
+    "lualatex": {
+      "bytes": 15041936,
+      "mode": "0o755",
+      "sha256": "8522fe5f3d9e78dc36a1d39236da77757c8584b3b21e9806af4ba7bfc8b54ed3"
+    },
+    "pandoc": {
+      "bytes": 277291920,
+      "mode": "0o555",
+      "sha256": "1662f49c035168d1e608ad9d923df75e4b00ac014d096349b2027ad38f84dd6e"
+    },
+    "ps": {
+      "bytes": 170816,
+      "mode": "0o4755",
+      "sha256": "472992c470606d28f577590decfecd7f4a20f832fd92c671bebc6d44790b5d02"
+    },
+    "python": {
+      "bytes": 52448,
+      "mode": "0o755",
+      "sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+    }
+  }
+}

@@ -130,7 +130,7 @@ EXPECTED_BINDINGS = {
     },
     "third_party_notice": {
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "6e4c22671de954d579c33b86e39f1bcc9e4c347942a9310508ba36c7cfcd8baa",
+        "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7",
     },
 }
 EXPECTED_LICENSE_ARTIFACTS = [

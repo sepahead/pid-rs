@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "9a33867a6d4fbf2a8e7b5385aaf162fc820d74f3ad51e7d73da685630b8202cf",
-        "size_bytes": 298097
+        "sha256": "53d6750449e065d67e78f523f5556ba8407d33d97b729d817b5968063ab1f16f",
+        "size_bytes": 298452
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "4d305c36b4d4df6235c272c42d8c4431ac3ac2bda250907b7695c850b46e6f11",
-        "size_bytes": 84236
+        "sha256": "1ca48d0528b9209a81ee2e86743b4384f31932d9bed87b72a435ee32265efa87",
+        "size_bytes": 84555
       },
       {
         "git_mode": "100644",
@@ -544,8 +544,8 @@
       {
         "git_mode": "100644",
         "path": "THIRD_PARTY_NOTICES.md",
-        "sha256": "6e4c22671de954d579c33b86e39f1bcc9e4c347942a9310508ba36c7cfcd8baa",
-        "size_bytes": 5828
+        "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7",
+        "size_bytes": 8140
       },
       {
         "git_mode": "100644",
@@ -2982,6 +2982,30 @@
         "path": "audit/evidence/methods-summary-v1.json",
         "sha256": "2ae397094bf3eb4a3428a894f49a7ed91dccab306897f31cc400d167b7673287",
         "size_bytes": 79261
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mgw-fixed-world-added-information-2026-09-09.md",
+        "sha256": "01f12cf08104181b88b7d842bf275cfdd68db4d5a087348f0a0c2e667d2a7abf",
+        "size_bytes": 20647
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mgw-fixed-world-added-information-2026-09-09/source-map.json",
+        "sha256": "b579fbbf742c84844519b4ccab85cfb5757a28985308f8496ae5bdacdcc78744",
+        "size_bytes": 22270
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mgw-fixed-world-added-information-2026-09-09/target-report.json",
+        "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14",
+        "size_bytes": 41589
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mgw-fixed-world-publication-2026-09-10.md",
+        "sha256": "e65753ee42ab9079212a4322e5c9f02701b88434265fbb0e97c661a3f1681a97",
+        "size_bytes": 3273
       },
       {
         "git_mode": "100644",
@@ -12585,6 +12609,42 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/figures/mgw-fixed-world/mgw-matched-comparison.pdf",
+        "sha256": "c66f0453eb7c65216d940fbcafe3c2de3864a63b5cda3cb27039e9e3abd95946",
+        "size_bytes": 63453
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/mgw-fixed-world/mgw-matched-comparison.svg",
+        "sha256": "97ae61ea43d0c8c7da7a17edc6c88f10f719f74564e4dce2b0c9470e558c687f",
+        "size_bytes": 4473
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/mgw-fixed-world/observation-maps.pdf",
+        "sha256": "7dd7cc5399171a340f19f371d86816ffd9045f8489b5463b74fc567aae26bce1",
+        "size_bytes": 36291
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/mgw-fixed-world/observation-maps.svg",
+        "sha256": "2556d84470fd706cbd360b82700ab3a69dc1f1d3e4a7afbce90fff65e7716739",
+        "size_bytes": 3808
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/mgw-fixed-world/shared-exclusion-events.pdf",
+        "sha256": "21df701675231780c89f5d56b4455224badba6c8b4bc5e443f55db97b42c5ea7",
+        "size_bytes": 40639
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/figures/mgw-fixed-world/shared-exclusion-events.svg",
+        "sha256": "18ab10ec76da4107b3f9a1d3ebfdf5d19e4762782928020e99fcfa29c70e24bf",
+        "size_bytes": 5906
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/figures/numerical-assurance/figure-assets.json",
         "sha256": "b6e761177f4df83116a70d0b94cd02258ca7b31393af30c6471347a2ccf33fc6",
         "size_bytes": 2052
@@ -12778,7 +12838,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
-        "sha256": "005dc0532c7d893c5cfd91d303f77f20893ab21b78df07c95b09da24b2b40f5f",
+        "sha256": "eaf238a17595c6e63410c1358bfa8c4d57d876ed42176ebfd9dc1664b49b3316",
         "size_bytes": 10199
       },
       {
@@ -12840,6 +12900,48 @@
         "path": "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex",
         "sha256": "6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17",
         "size_bytes": 4234
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/body.expected.tex",
+        "sha256": "e725b0186210a3bacd04d2fc85e9cb29f26d00c029d39738bc20501d7df54b88",
+        "size_bytes": 29078
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/filter.lua",
+        "sha256": "de5cfc61b7a1e3da964173265884df7fbfa56cf39b3e16403d3bf40accd76c32",
+        "size_bytes": 2642
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/GUST-FONT-LICENSE.txt",
+        "sha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73",
+        "size_bytes": 1456
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/MANIFEST-Latin-Modern-Math.txt",
+        "sha256": "1daa729f7922c42ba5ce8da7dfe4ecdc9e5c878ad86217fd6f32c4671505b007",
+        "size_bytes": 2186
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/README-Latin-Modern-Math.txt",
+        "sha256": "e6fdd5fb44b656146fa988d191f58901c09a347d3f4fbaa3b45b24a6ad7ec30b",
+        "size_bytes": 4588
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication-inputs-v1.json",
+        "sha256": "6b98817dc2367eab36c3ba6cb4a1566929f91ceb4d9494bf424470f153804d28",
+        "size_bytes": 76119
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-fixed-world/publication.tex",
+        "sha256": "af1a17dc874708f2e6d678e511c6e3cc78a0cc03b4be8d896303a7758b97a4b2",
+        "size_bytes": 2271
       },
       {
         "git_mode": "100644",
@@ -13038,6 +13140,654 @@
         "path": "audit/formal/lean-ksg-harmonic/v4/PidKsgIntegerHarmonic.lean",
         "sha256": "32b5d5e11aa244cb9683d71281f05b27e8093dd9a4d5e677ad4b1e68ffc76ee4",
         "size_bytes": 12465
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/EVIDENCE.md",
+        "sha256": "c0ec23d0d6fc4e4cc393e33fdda264a525bea196092bb85adf1470cdd6c0dadb",
+        "size_bytes": 9987
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/HISTORICAL_EXECUTION.json",
+        "sha256": "646c4af332c9e0c6b414789c7c94e74210bfc61b9e78f0bacb25841a8a6fec87",
+        "size_bytes": 36430
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/LATER_EXECUTION.json",
+        "sha256": "8cda3ae6a93ff734bf56cc948fdcb84f11bcfb652c10fb2229ef570c994934c0",
+        "size_bytes": 19750
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/PUBLICATION.md",
+        "sha256": "07da1283f817d579884b084cd9bceeecf88a79dec1dbe03e043c2ddeb93a5d81",
+        "size_bytes": 3539
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "ebcb137d87aac64569ac9ec055eb5839e8f252fdf0913490f1efe761956cd4a4",
+        "size_bytes": 20329
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Contract.lean",
+        "sha256": "d5e34836c52bead88f6279d63ea7c4261613ebe5455e3986d2ef333b15490df9",
+        "size_bytes": 4117
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Judge.lean",
+        "sha256": "ac55f846665e3016736b9f9cc0f07e876d639cdafdbda9041829cb07794317bb",
+        "size_bytes": 6067
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/RawTargets.lean",
+        "sha256": "308c379003168dc89fffc3a40cb47923489f573ed79bbd4500b0163f1eb7ed76",
+        "size_bytes": 3238
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/REPLAY.md",
+        "sha256": "d6e015ff8ec8638181e87da9e1105612416300965d56a7705d134cdb86eb02b1",
+        "size_bytes": 6668
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/SOURCE_GRAPH.json",
+        "sha256": "11a229b232d7b605fe5ec5e83b4c5c36d50e7fc7dbd79991cd5e5e45c38fe9f0",
+        "size_bytes": 5686
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-01.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-01.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-02.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-02.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-03.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-03.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-04.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-04.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-05.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-05.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-06.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-06.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-07.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-07.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-08.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-08.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-09.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-09.stdout",
+        "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14",
+        "size_bytes": 41589
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-10.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/later-10.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-01.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-01.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-02.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-02.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-03.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-03.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-04.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-04.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-05.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-05.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-06.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-06.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-07.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-07.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-08.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-08.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-09.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-09.stdout",
+        "sha256": "f01413ae4f951a39d5df3b493b7438b2ac4e4817f59454bfbef593155c6f6b14",
+        "size_bytes": 41589
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-10.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-10.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-11.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-11.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-12.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-12.stdout",
+        "sha256": "9f6d51b11ffe629b13b7cb631a82ff19c2e1220ce084a08da049381a42e4aefe",
+        "size_bytes": 134
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-13.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-13.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-14.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-14.stdout",
+        "sha256": "9f6d51b11ffe629b13b7cb631a82ff19c2e1220ce084a08da049381a42e4aefe",
+        "size_bytes": 134
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-15.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-15.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-16.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-16.stdout",
+        "sha256": "5007dd65c61fe472b31c74c4f0f5ac24ecdc8e9878aa51adcc7746324c1bd65b",
+        "size_bytes": 110
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-17.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/original-17.stdout",
+        "sha256": "18ea4766d8d2326463a5b3b3fb217469fa129609cfdfc23e786e1ea494c2e43f",
+        "size_bytes": 196
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-01.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-01.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-02.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-02.stdout",
+        "sha256": "5007dd65c61fe472b31c74c4f0f5ac24ecdc8e9878aa51adcc7746324c1bd65b",
+        "size_bytes": 110
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-03.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-03.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-04.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-04.stdout",
+        "sha256": "9f6d51b11ffe629b13b7cb631a82ff19c2e1220ce084a08da049381a42e4aefe",
+        "size_bytes": 134
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-05.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-05.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-06.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-06.stdout",
+        "sha256": "dfd34e40bd9338dbed34af75496b3321e3f0b0696d0701f4d4f8c1fef4bcba80",
+        "size_bytes": 141
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-07.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-07.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-08.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-08.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-09.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-09.stdout",
+        "sha256": "a84c47bfab17fe5dedc4fe3e88a80077d2266fb6c19aeb44dde3d46e01d7c941",
+        "size_bytes": 146
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-10.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/evidence/suffix-10.stdout",
+        "sha256": "a4f1d4aa9a8cf72a55a06229d90630b30fd44382ef7b41c5e861af2cee25883b",
+        "size_bytes": 71
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/original-M01/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "98ea1bbfd86794c4d0d48a4568e2dd76e44d441ba70a914ab2eb4ef7a9255bc7",
+        "size_bytes": 20144
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/original-M02/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "d66dcb3fccd278fb3d27b2d5d8c0ed5173a81cef0d1bc01393f391dd1014a8ff",
+        "size_bytes": 20188
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/original-M03/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "d65530a858a8e71057fada0b1172babcacc27cc30e8816a25adaf13f727fb0d6",
+        "size_bytes": 20337
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/original-M04/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "cfd4304567fddbcdb1b26074f7fe9ac1b3e97c2cc136d634e1659cf4cbac1ff1",
+        "size_bytes": 20325
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/suffix-M04/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "38ec2218f10ee4d92c0a8d278648041251ec6e942de9571e1432ffea06fb83d1",
+        "size_bytes": 20360
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/suffix-M05/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "46087d18c46f298f256c28e74bcc104d5fa07bf4ee1bed7da602a58a99903d06",
+        "size_bytes": 20356
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/suffix-M06/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "8870e87aa848cb9202437c709dc02b9c72042e622ee06c9329c3c6454f08b2c2",
+        "size_bytes": 20245
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/suffix-M07/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "44de8fdef650ef4069c7d3bd3e13daf457c174be371db00f46d7d24c5a0a40c0",
+        "size_bytes": 20253
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/suffix-M07/PidMgwFixedWorld/NegativeHelper.lean",
+        "sha256": "a2dc71b076a16c94a8c2c71d298fba0880cb00c16505226ad677a4fc2bebe448",
+        "size_bytes": 240
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/negative/suffix-M08/PidMgwFixedWorld/Candidate.lean",
+        "sha256": "bf85ed15703dbc953048d7b9fb229f000c9264438bef117863b7896abeef9b96",
+        "size_bytes": 20180
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/STATIC_CONTROL_PLAN_V2.json",
+        "sha256": "9a1700e87b31a9fb9466b18efbecaad88629fb62127adfb88666d3e768fe17ec",
+        "size_bytes": 1003
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/judge_report_validation.py",
+        "sha256": "d63b0473e3f1a53322a37aa4ef9f3dde4cb68dd3887553781766c8ec7ae69d28",
+        "size_bytes": 17036
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/observe-installed-post.py",
+        "sha256": "dfef92e5b70d6df432de16ccd8cbd2dda03bc56ae0e586f6521465b840b3ed6c",
+        "size_bytes": 2077
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/observe-installed.py",
+        "sha256": "1ffd9eabcf86430f8c5172e4078dc1402b2612ba129eecca7883382ad31dd432",
+        "size_bytes": 2092
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/prepare.py",
+        "sha256": "511675b8cb3757aac7e94e15a32f2e4e2259a478138b5f64f3e8e300173f64d4",
+        "size_bytes": 10563
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/run-one.py",
+        "sha256": "b9a0e5e6e7cb15f1cc34a8da2486f6c66eef9bca91fa4ab5e1a5004073a04b7e",
+        "size_bytes": 14492
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/runtime.py",
+        "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d",
+        "size_bytes": 27277
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/adapter-v2/static-controls.py",
+        "sha256": "cf4b1c9334f4998ec2c0812f9350a43dcaa148268f2f35137e6d4cfa7ba92fef",
+        "size_bytes": 12040
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/installed-profile-macos-arm64-v1.json.gz",
+        "sha256": "9df95071625c0cb84b526bc5876cb75b0b187ec6dcbd9ce5692f7513708663a4",
+        "size_bytes": 6692890
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/negative/preparation-v1/DISPOSITION.json",
+        "sha256": "21302f813a33f3ca78ce7e47d735e9228e71f15532692ac22e9dd45ea96b50df",
+        "size_bytes": 591
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/negative/preparation-v1/prepare.py",
+        "sha256": "8801192b8c6c61c08809789b2a6e25db501c39ba4f7dd13b88f6b6a5db2f619b",
+        "size_bytes": 10275
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/negative/preparation-v1/run-one.py",
+        "sha256": "8fcfbf1bda2725eeac83fa8749701ccf746d105b6b01b8e0c191508147fddbaa",
+        "size_bytes": 14302
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/static-normal-v2.json",
+        "sha256": "aba918ede9561c5b956da2b32d8f94927434c911e4bd85cec49e45549f6dace3",
+        "size_bytes": 10978
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-mgw-fixed-world/replay-support/static-optimized-v2.json",
+        "sha256": "86bbf8bcc35f9be70b9204c2798924bac653a4267eb4e245f4f9c318031f6331",
+        "size_bytes": 9510
       },
       {
         "git_mode": "100644",
@@ -16215,6 +16965,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/mgw-fixed-world-added-information.pdf",
+        "sha256": "24c16b51c970d9cec8847f923d76f0d7e8a0bd137f54512e028de0e2712ec378",
+        "size_bytes": 231798
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/numerical-assurance.pdf",
         "sha256": "362ac22df6c13db43a3e1fa9a70e23b1cc08ac4d764a0a202e873f67fcbe7e63",
         "size_bytes": 704862
@@ -16276,14 +17032,20 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "efbf2d96096ab15352f61132bc674fe4fc3cb4be894c9c87a62efc4095fc058b",
-        "size_bytes": 277242
+        "sha256": "f3653fcb2081947e6cc157bd022bec09d20ce3b653e8bd08e3f09bfa001086e1",
+        "size_bytes": 279399
       },
       {
         "git_mode": "100755",
         "path": "scripts/build-mathematical-results-guide-pdf.sh",
-        "sha256": "79a638d54ba05a768af2ffae338be87eead5aa0280fba43a5b45b0c0fbd7b5cb",
+        "sha256": "764f1c0ba04ad048080df485ddb9bfa5ac065ce4f21a3f340cd430e6bf169825",
         "size_bytes": 41784
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/build-mgw-fixed-world-pdf.py",
+        "sha256": "539863405f8985891ac34efeb44737fa58e7bdfbae35d5e6cc441078e6cfa76b",
+        "size_bytes": 39695
       },
       {
         "git_mode": "100755",
@@ -16504,7 +17266,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "2cbd13279ad8309995d3a7b59be58e6de25b4ec3d5824b2d42286e66ba634735",
+        "sha256": "a1f2badf83b1669504ae0c26e6c6c45fc1eefb9151ad05aacfb8c8b35e24a8ac",
         "size_bytes": 90915
       },
       {
@@ -16612,14 +17374,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "20899355c5fc3c92a3163e18bfda51d8aca1433a38f053384c0ff4f0e19a05d6",
-        "size_bytes": 47427
+        "sha256": "ad3d52f4f8f042b407296dcc57db3993fb64fdda16e58c731607cff16dd2a91d",
+        "size_bytes": 56114
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "1e4494f7581ab7643102b77b431c21fb413dd6bdb9f4df25cbf5f43b395677cb",
-        "size_bytes": 12098
+        "sha256": "53ce40700affd448b4f2715a1cfbe1e336c1ce158ff709e19364c3bc255d91d7",
+        "size_bytes": 13509
       },
       {
         "git_mode": "100755",
@@ -17068,7 +17830,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "6cf58432ecda36ee5a5e7f8a09c8fabee6d8ffbd56016ac340ae9c14c3b8672b",
+        "sha256": "db274193669f2ec516be034e182ecc242ad5c59e84795874ee9dbbc455e4126d",
         "size_bytes": 136032
       },
       {
@@ -17098,7 +17860,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-figure-assets.py",
-        "sha256": "cbafdc3ef94baf8f523a06b76e4e7e115642715f307c871a4c396784d0d6e8b4",
+        "sha256": "93aa3e199ba9a27d1b0f4708cd568cd464f21f8a9332be8a60678c92feed19fd",
         "size_bytes": 30968
       },
       {
@@ -17328,6 +18090,12 @@
         "path": "scripts/check-methods-summary.py",
         "sha256": "13aa5d72e8a52aeed0decfe9f894d147dcb841bee12050e5a2bd612b513b8bc7",
         "size_bytes": 14827
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-mgw-fixed-world-pdf-self-test.py",
+        "sha256": "449bac7d662f3b0164bea4849e317c7210f0ac8c2935edaed64ed12bec4aaab6",
+        "size_bytes": 22642
       },
       {
         "git_mode": "100755",
@@ -17876,8 +18644,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "cd356d99ffb10319747096d00a81eeb8d7715abf1c699a89342f1727aed13941",
-    "entry_count": 2955
+    "entries_sha256": "3ce232b7c8fb4d1dc81c36fe0ba38aaeed884a89f12596a0d04aabd36417816e",
+    "entry_count": 3083
   },
   "subprojections": [
     {
@@ -17889,23 +18657,23 @@
       ]
     },
     {
-      "entries_sha256": "38371c624340721ff40742c5dea56e07758cc1cb08e60e0c2a46288a8a04e479",
-      "entry_count": 230,
+      "entries_sha256": "598833c3673648610948b48b7af75a92594e82afa5151a4c74691bfab55d506d",
+      "entry_count": 351,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "6afd0cd652f6671666c5ab6393ba9546bab1884eee709b826b3da85a634451a9",
-      "entry_count": 26,
+      "entries_sha256": "3288c51d4162f88a9b98aa5cbaf59d8bbb8bef64d11b919f9844e88009a88fc3",
+      "entry_count": 27,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "fbf7bd28bda18c954dcddf17eaefe8e2959983d9e71ee62b902a1306fb772438",
+      "entries_sha256": "db2a4b9bb0c8a5ad755530f8ccbb13e572aa6bb4dc8d66a7bf13dc2d910cc9cf",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -1,0 +1,25 @@
+{
+  "schema": "pid-rs-mgw-adapter-static-controls-v2",
+  "registered_utc": "2026-09-09T19:08:00.400622+00:00",
+  "deadline_utc": "2026-09-09T19:28:00.400622+00:00",
+  "files": {
+    "static-controls.py": "cf4b1c9334f4998ec2c0812f9350a43dcaa148268f2f35137e6d4cfa7ba92fef",
+    "run-one.py": "b9a0e5e6e7cb15f1cc34a8da2486f6c66eef9bca91fa4ab5e1a5004073a04b7e",
+    "runtime.py": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d",
+    "judge_report_validation.py": "d63b0473e3f1a53322a37aa4ef9f3dde4cb68dd3887553781766c8ec7ae69d28"
+  },
+  "max_invocations": 2,
+  "automatic_retries": 0,
+  "native_lean_children": 0,
+  "expected_normal": {
+    "entry_prefix_cases": 12,
+    "adapter_cases": 16,
+    "report_cases": 43
+  },
+  "expected_optimized": {
+    "entry_prefix_cases": 1,
+    "adapter_cases": 16,
+    "report_cases": 43
+  },
+  "scope": "Synthetic entry prefix/functions/loader/report controls only. Exact predicates exposed during development; no new mathematical selection credit."
+}

@@ -1,0 +1,453 @@
+\textbf{Publication candidate.} The fixed finite-law result has 21 checked Lean targets. A later replay rebuilt every project module from the review export and passed the unchanged judge and a fresh check with the same Lean kernel. The verification scope and retained failures are stated below. A complete public replay system, final publication review and mainline integration remain open.
+
+Three independent fair bits give a small example with a fixed target and a fixed existing source. The target is \(Y=(A,B)\) and the existing source is \(A\). Adding the unrelated bit \(U\) or adding the missing target bit \(B\) gives the same signed Makkeh--Gutknecht--Wibral (MGW) synergy, \(\log(4/3)\). Their additional Shannon information is different: \(I(U;Y\mid A)=0\), while \(I(B;Y\mid A)=\log 2\). The distinction follows from the actual event probabilities and signed atoms. Every logarithm below is natural, so information is in \textbf{nats}.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Equal synergy, different added information. The full signed MGW decomposition distinguishes the candidates; the synergy coordinate alone ties them.}]{mgw-matched-comparison.pdf}
+\caption{Equal synergy, different added information. The full signed MGW decomposition distinguishes the candidates; the synergy coordinate alone ties them.}
+\end{figure}
+
+\par\Needspace{12\baselineskip}
+
+\section{The question behind the example}\label{the-question-behind-the-example}
+
+In the \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08.md\#why-a-positive-synergy-is-not-a-sensor-selection-verdict}{recorded office example}, the later recording has empirical categorical synergy \(0.180249065\) nats and unique CO₂ contribution \(-0.178691053\) nats. Their sum is only \(0.001558012\) nats of conditional MI after the light bin. These displayed numbers are rounded; the \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08/definition-check.json}{integer-event definition check} and \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08/runtime-results.json}{complete Rust output} retain the evidence. They concern four training-fitted bins per source and the original binary occupancy label in UCI's \href{https://doi.org/10.24432/C5X01N}{Occupancy Detection data}.
+
+That cancellation motivates a precise question: with the target and existing source held fixed, can equal MGW synergy accompany different added information? The following exact probability law answers this question. The office measurements do not prove the finite result, and the finite result does not model that office.
+
+\par\Needspace{12\baselineskip}
+
+\section{One world and two observation maps}\label{one-world-and-two-observation-maps}
+
+Take the sample space \(\Omega=\{0,1\}^3\). An outcome \(w=(a,b,u)\) has probability \(1/8\). Thus the eight probabilities sum to one, each coordinate takes either value with probability \(1/2\), and
+
+\[
+P(A=a,B=b,U=u)=\frac18
+=\frac12\,\frac12\,\frac12.
+\]
+
+This explicitly makes \(A,B,U\) mutually independent fair bits. These are assigned probabilities on a finite world, not estimated frequencies from an assumed IID sample.
+
+For either choice of added source \(C\in\{U,B\}\), retain the observation
+
+\[
+\phi_C(w)=\bigl((A(w),C(w)),\,Y(w)\bigr),\qquad Y(w)=(A(w),B(w)).
+\]
+
+The first source is always \(A\) and the target is always the same ordered pair \((A,B)\). Only the added source changes.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2200}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1700}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2400}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2400}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+World \((A,B,U)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Mass
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fixed target \(Y\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sources when \(C=U\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sources when \(C=B\)
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+\((0,0,0)\) & \(1/8\) & \((0,0)\) & \((0,0)\) & \((0,0)\) \\*
+\((0,0,1)\) & \(1/8\) & \((0,0)\) & \((0,1)\) & \((0,0)\) \\*
+\((0,1,0)\) & \(1/8\) & \((0,1)\) & \((0,0)\) & \((0,1)\) \\*
+\((0,1,1)\) & \(1/8\) & \((0,1)\) & \((0,1)\) & \((0,1)\) \\*
+\((1,0,0)\) & \(1/8\) & \((1,0)\) & \((1,0)\) & \((1,0)\) \\*
+\((1,0,1)\) & \(1/8\) & \((1,0)\) & \((1,1)\) & \((1,0)\) \\*
+\((1,1,0)\) & \(1/8\) & \((1,1)\) & \((1,0)\) & \((1,1)\) \\*
+\((1,1,1)\) & \(1/8\) & \((1,1)\) & \((1,1)\) & \((1,1)\) \\*
+\end{longtable}
+}
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={The same eight-world law feeds both observation maps. Target and baseline stay fixed; only the added source and resulting multiplicities change.}]{observation-maps.pdf}
+\caption{The same eight-world law feeds both observation maps. Target and baseline stay fixed; only the added source and resulting multiplicities change.}
+\end{figure}
+
+An observation \(z=((a,c),y)\) receives the mass of every world mapped to it. Define its preimage count and probability by
+
+\[
+n_C(z)=\sum_{w\in\Omega}\mathbf 1\{\phi_C(w)=z\},
+\qquad p_C(z)=\frac{n_C(z)}8.
+\]
+
+Here \(\mathbf 1\{E\}\) equals one when statement \(E\) is true and zero otherwise. For \(C=U\), the source value \(c\) specifies \(u\), while \(y\) specifies \(a,b\). Exactly one world produces \(z\) when the first coordinate of \(y\) equals \(a\); otherwise none does. For \(C=B\), a supported observation must have \(y=(a,c)\), and both values of \(u\) produce it. Hence
+
+\[
+n_U((a,c),y)=\mathbf 1\{y_1=a\},\qquad
+n_B((a,c),y)=2\,\mathbf 1\{y=(a,c)\}.
+\]
+
+The two complete count tables below include all 16 possible observation keys. Divide every entry by eight to obtain the respective probability mass function (PMF). Rows give the source pair; columns give the target \(Y\).
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.3600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sources \((A,U)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((0,0)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((0,1)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((1,0)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((1,1)\)
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+\((0,0)\) & 1 & 1 & 0 & 0 \\*
+\((0,1)\) & 1 & 1 & 0 & 0 \\*
+\((1,0)\) & 0 & 0 & 1 & 1 \\*
+\((1,1)\) & 0 & 0 & 1 & 1 \\*
+\end{longtable}
+}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.3600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Sources \((A,B)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((0,0)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((0,1)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((1,0)\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\((1,1)\)
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+\((0,0)\) & 2 & 0 & 0 & 0 \\*
+\((0,1)\) & 0 & 2 & 0 & 0 \\*
+\((1,0)\) & 0 & 0 & 2 & 0 \\*
+\((1,1)\) & 0 & 0 & 0 & 2 \\*
+\end{longtable}
+}
+
+Both count totals are eight, so both nonnegative PMFs normalize to one. The second table has four supported keys of mass \(2/8\), not four keys of mass \(1/8\): merging observations preserves their multiplicity. Zero-count keys remain in the ambient alphabet but are excluded from supported logarithmic sums.
+
+\par\Needspace{12\baselineskip}
+
+\section{Source matches, the OR event and target restriction}\label{source-matches-the-or-event-and-target-restriction}
+
+Fix any supported observation \(z=((a,c),y)\). On the same world define
+
+\[
+E_A=\{A=a\},\quad E_C=\{C=c\},\quad
+E_{AC}=E_A\cap E_C,\quad E_R=E_A\cup E_C,
+\quad T_y=\{Y=y\}.
+\]
+
+The redundancy event \(E_R\) means \textbf{either source matches}. Its target restriction is \(E_R\cap T_y\): the target must also match. This is the categorical shared-exclusions event in \href{https://arxiv.org/abs/2002.03356v5}{Makkeh, Gutknecht and Wibral, \emph{Introducing a Differentiable Measure of Pointwise Shared Information}, version 5}, published in \href{https://doi.org/10.1103/PhysRevE.103.032149}{Physical Review E 103, 032149}. We use the same event functional with natural logs; multiply a bit-valued result by \(\log 2\) to express it in nats.
+
+Let \(N_E\) count worlds in event \(E\), so \(P(E)=N_E/8\). For either candidate, each source match retains four worlds, their intersection retains two, and the union retains \(4+4-2=6\). Fixing \(Y=(a,b)\) leaves the two possible values of \(U\), so \(N_{T_y}=2\).
+
+When \(C=U\), target matching already fixes \(A\), but fixes neither value of \(U\). Therefore \(E_A\cap T_y\) contains both worlds, while \(E_C\cap T_y\) and \(E_{AC}\cap T_y\) contain one each. The union contains both because \(A\) already matches. When \(C=B\), a supported target fixes both source values; every target-restricted event contains both remaining worlds.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2600}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2900}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2900}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Event
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\(N_E\), either candidate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\(N_{E\cap T_y}\) when \(C=U\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\(N_{E\cap T_y}\) when \(C=B\)
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+\(E_A\) & 4 & 2 & 2 \\*
+\(E_C\) & 4 & 1 & 2 \\*
+\(E_{AC}\) & 2 & 1 & 2 \\*
+\(E_R\) & 6 & 2 & 2 \\*
+\end{longtable}
+}
+
+These counts hold at every supported observation, not only the all-zero example in the diagram. Changing a supported anchor changes the selected bit values but leaves the number of free coordinates unchanged.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={For the supported anchor a=c=0 and y=(0,0), both source unions contain six of the eight worlds. The target hatch selects two worlds, both inside each union. Each cell has probability 1/8.}]{shared-exclusion-events.pdf}
+\caption{For the supported anchor a=c=0 and y=(0,0), both source unions contain six of the eight worlds. The target hatch selects two worlds, both inside each union. Each cell has probability 1/8.}
+\end{figure}
+
+\par\Needspace{12\baselineskip}
+
+\section{From the event counts to cumulative information}\label{from-the-event-counts-to-cumulative-information}
+
+For a source event \(E\), the informative and misinformative cumulative components are
+
+\[
+i_E^+=-\log P(E)=\log\frac8{N_E},\qquad
+i_E^-=\log\frac{P(T_y)}{P(E\cap T_y)}
+=\log\frac2{N_{E\cap T_y}}.
+\]
+
+Their signed net value is
+
+\[
+i_E=i_E^+-i_E^-
+=\log\frac{P(T_y\mid E)}{P(T_y)}
+=\log\frac{8N_{E\cap T_y}}{2N_E}.
+\]
+
+Every denominator and logarithm argument here is positive by the event table. Write \(L=\log 2\) and \(r=\log(4/3)\). Substitution gives the complete cumulative table:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1400}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1650}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1650}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1650}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1650}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Event
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\(i^+\), either candidate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\(i^-\) for \(U\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+\(i^-\) for \(B\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Net \(i\) for \(U\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Net \(i\) for \(B\)
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+\(E_A\) & \(L\) & \(0\) & \(0\) & \(L\) & \(L\) \\*
+\(E_C\) & \(L\) & \(L\) & \(0\) & \(0\) & \(L\) \\*
+\(E_{AC}\) & \(2L\) & \(L\) & \(0\) & \(L\) & \(2L\) \\*
+\(E_R\) & \(r\) & \(0\) & \(0\) & \(r\) & \(r\) \\*
+\end{longtable}
+}
+
+For example, the irrelevant candidate's joint-source net argument is \(8\cdot1/(2\cdot2)=2\), whereas the completing candidate's is \(8\cdot2/(2\cdot2)=4\). Both redundancy arguments are \(8\cdot2/(6\cdot2)=4/3\).
+
+Average each local value with the actual observation probabilities:
+
+\[
+C_E=\sum_{z:p_C(z)>0}p_C(z)\,i_E(z).
+\]
+
+The local values in each column are constant over that candidate's support. The supported weights sum to one, so the same table also gives the averaged cumulative values. This step uses weights \(1/8\) on eight keys for \(U\) and \(2/8\) on four keys for \(B\).
+
+For the individual and joint source events, the conditional-probability formula gives \(C_{E_A}=I(A;Y)\), \(C_{E_C}=I(C;Y)\) and \(C_{E_{AC}}=I(A,C;Y)\). The union average \(C_{E_R}\) is the MGW redundancy.
+
+\par\Needspace{12\baselineskip}
+
+\section{The signed MGW atoms}\label{the-signed-mgw-atoms}
+
+Two-source Möbius inversion turns these four cumulatives into redundancy \(R\), unique baseline information \(U_A\), unique added-source information \(U_C\), and synergy \(S\):
+
+\[
+R=C_{E_R},\qquad U_A=C_{E_A}-C_{E_R},\qquad
+U_C=C_{E_C}-C_{E_R},
+\]
+
+\[
+S=C_{E_{AC}}-C_{E_A}-C_{E_C}+C_{E_R}.
+\]
+
+These equations also follow by forming the pointwise atoms first and then averaging: distribute the finite weighted sum over each addition and subtraction. Thus the calculation is for the actual averaged pointwise MGW atoms.
+
+For \(U\), synergy is \(L-L-0+r=r\). For \(B\), it is \(2L-L-L+r=r\). The complete net decomposition is
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Net atom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Added \(U\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Added \(B\)
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+Redundancy \(R\) & \(r\) & \(r\) \\*
+Unique baseline \(U_A\) & \(L-r=\log(3/2)\) & \(L-r=\log(3/2)\) \\*
+Unique added source \(U_C\) & \(-r\) & \(L-r=\log(3/2)\) \\*
+Synergy \(S\) & \(r\) & \(r\) \\*
+Sum of all four atoms & \(L\) & \(2L\) \\*
+\end{longtable}
+}
+
+In the atom order \((R,U_A,U_C,S)\), applying the same inversion separately to the cumulative components gives informative atoms \((r,L-r,L-r,r)\) for both candidates. The misinformative atoms are \((0,0,L,0)\) for \(U\) and \((0,0,0,0)\) for \(B\). Their componentwise difference is precisely the net table. In particular, the independent candidate has negative unique net information: \((L-r)-L=-r\). Clamping it to zero changes the decomposition and destroys its reconstruction.
+
+\par\Needspace{12\baselineskip}
+
+\section{Direct conditional mutual information}\label{direct-conditional-mutual-information}
+
+CMI is computed independently from the same conditional PMFs. With \(p_C(a,c,y)\) the observation law, let \(p_A\), \(p_{AC}\) and \(p_{AY}\) be its indicated marginals. On positive support,
+
+\[
+I(C;Y\mid A)=\sum_{a,c,y:p_C(a,c,y)>0}
+p_C(a,c,y)\log
+\frac{P(C=c,Y=y\mid A=a)}
+{P(C=c\mid A=a)P(Y=y\mid A=a)}.
+\]
+
+The conditional-probability ratio equals
+
+\[
+\frac{p_C(a,c,y)/p_A(a)}
+{[p_{AC}(a,c)/p_A(a)][p_{AY}(a,y)/p_A(a)]}
+=\frac{p_C(a,c,y)p_A(a)}{p_{AC}(a,c)p_{AY}(a,y)}.
+\]
+
+The source/event counts already give \(p_A(a)=1/2\), \(p_{AC}(a,c)=1/4\) and \(p_{AY}(a,y)=1/4\) at every supported key for either candidate. All conditional probabilities used in this expression are therefore defined. The remaining joint mass is \(1/8\) for \(U\) and \(2/8\) for \(B\):
+
+\[
+\frac{(1/8)(1/2)}{(1/4)(1/4)}=1,
+\qquad
+\frac{(2/8)(1/2)}{(1/4)(1/4)}=2.
+\]
+
+The supported weights sum to one, so
+
+\[
+I(U;Y\mid A)=\log 1=0,\qquad
+I(B;Y\mid A)=\log 2>0.
+\]
+
+This also has a direct reading: after observing \(A\), one fair target bit \(B\) remains unknown. Observing independent \(U\) leaves that uncertainty; observing \(B\) removes it. The signed decomposition agrees: \(U_C+S=-r+r=0\) for \(U\), and \((L-r)+r=L\) for \(B\).
+
+The synergy values tie, while the added-information values differ, even though the target, existing source and underlying world are fixed. Synergy alone therefore does not determine the added Shannon information in this comparison.
+
+\par\Needspace{12\baselineskip}
+
+\section{A testable application question}\label{a-testable-application-question}
+
+For a sensor-selection or training task, ask: \textbf{with a fixed target, baseline sensors, acquisition budget and validation protocol, do candidates ranked by signed MGW synergy also rank well by additional information and held-out prediction loss? Where does the unique term change that ranking?}
+
+A concrete study would specify whether the target is same-time occupancy or a future event, retain the chosen time alignment, fit representations and tune predictors on training data only, and compare baseline versus augmented predictors on declared held-out sessions or environments. Report acquisition cost, signed unique information, synergy, the chosen CMI estimator and a preselected prediction loss. Time dependence, finite counts and distribution change require their own uncertainty and estimator assumptions. The finite example supplies a reason to test these comparisons; it supplies neither a new training algorithm nor a performance guarantee.
+
+A proposed first sensor study would consider two to four declared sources. Two cameras can be separate sources; a camera and an acoustic window can also form a pair. A source's feature map, grouping and target must be stated. Source count alone does not control alphabet size: four labels for each whole source and a binary target give 32 possible joint cells for two sources and 512 for four. Per-coordinate binning of a feature vector can give a much larger alphabet. These are proposed study configurations; the theorem here remains the stated two-source finite-law result.
+
+\par\Needspace{12\baselineskip}
+
+\section{Mathematical and formal scope}\label{mathematical-and-formal-scope}
+
+This result concerns the categorical MGW functional of a known finite PMF. The \href{https://doi.org/10.1103/PhysRevE.110.014115}{continuous shared-exclusions formulation of Ehrlich et al.~(2024)} is a separate quantity and estimator setting. This atomic four-symbol target does not satisfy the full-dimensional absolute-continuity declarations required by pid-rs's current continuous route. Neither continuous PID, mixed support, hyperbolic geometry, population estimator calibration, nor physical placement conclusions follow. See the repository's \href{https://github.com/sepahead/pid-rs/blob/main/METHODS.md}{method distinctions}.
+
+The formalization uses the existing finite count-event and two-source Möbius bridges. It defines the eight-world probability mass, proves its normalization and factorization, pushes that law through the observation maps, and evaluates the resulting event probabilities. The 21 checked targets follow the derivation in order:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.1800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.8200}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Target group
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Checked formal obligation
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+T01--T03 & World normalization, fair marginals and factorization \\*
+T04--T09 & Fixed observation maps, exact preimage counts, totals, nonnegative normalized laws and pushforward equality \\*
+T10--T12 & Source masses, supported event counts and exact net-log arguments \\*
+T13--T16 & Both net cumulative averages and both synergy values \\*
+T17--T19 & Positive conditional denominators, direct CMI ratios and both CMI values \\*
+T20--T21 & Equal synergies and unequal CMIs \\*
+\end{longtable}
+}
+
+The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Contract.lean}{finite probability contract} defines the world, observation maps, pushforward counts, MGW synergy and direct conditional MI. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/RawTargets.lean}{target roster} gives the 21 exact propositions. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Candidate.lean}{proof} proves those propositions; the \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/PidMgwFixedWorld/Judge.lean}{judge} checks declaration kind, full proposition equality, empty universe parameters and transitive axiom use. It admits only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} for these declarations. Neither a theorem-shaped definition nor a proof depending on an additional axiom passes that contract.
+
+The local execution used Lean 4.33.0 and the pinned Mathlib 4.33.0 dependency set. After compilation, a fresh run of the same Lean kernel checked the proof environment. That is a fresh replay, not an independent proof-checker implementation. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/mgw-fixed-world-added-information-2026-09-09/target-report.json}{21-target report} retains the exact names, printed types and axiom sets. Source byte identities and the evidence boundary appear in the \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/mgw-fixed-world-added-information-2026-09-09/source-map.json}{publication source map}.
+
+The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/LATER_EXECUTION.json}{later execution record} adds a separately bounded replay on 9 September 2026. It compiled all nine project modules into a new object directory, produced the same 21-target report byte for byte, and completed the fresh-kernel check in 163.27 seconds. Full observations matched 139,934 pinned installed files before and after execution. This is execution evidence for the unchanged finite proof on one pinned macOS ARM64 installation. It does not upgrade the mathematical statement or establish another platform's runtime. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/EVIDENCE.md}{source and replay guide} identifies the exact adapter, installation profile, synthetic controls and remaining public-execution requirements.
+
+The named targets cover net cumulative averages, both synergy values and direct conditional MI. The other signed atom values and the separate informative/misinformative tables in this paper follow by the displayed finite sums and subtractions; they are not extra named targets in this 21-target roster. Paper-to-formal correspondence remains a reviewed mathematical translation. The report does not mechanically verify every sentence, refine Rust binary64 execution, calibrate an estimator or establish a sensor's practical value.
+
+\par\Needspace{12\baselineskip}
+
+\section{What this work adds and what it does not}\label{what-this-work-adds-and-what-it-does-not}
+
+MGW already gives a signed-cancellation example, RndErr, in \href{https://arxiv.org/html/2002.03356v5\#S6.SS3}{Section VI.3 and Table III of version 5}. The component definitions and the possibility of negative net atoms are published results. This repository contributes the explicit matched construction, its finite probability and event calculations, the scoped formalization, and the teaching figures. Scientific priority for the matched construction has not been established.
+
+The practical contribution is a reproducible check on a proposed objective: equal synergy need not mean equal added Shannon information. A user who needs only added information can use CMI directly. A user studying how the selected MGW measure distributes that information should retain all signed atoms and test their connection to the declared task loss. This result gives no reason to replace a successful task-loss, coverage or information-gain method with synergy alone.
+
+\par\Needspace{12\baselineskip}
+
+\section{Retained unsuccessful routes and limits}\label{retained-unsuccessful-routes-and-limits}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Route or interpretation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Result and reason
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Condition for further work
+\end{minipage} \\*
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endfoot
+Rank these candidates by synergy alone & Both scores are \(\log(4/3)\); their CMIs differ & State a utility for which a synergy score is justified, and test it against CMI and task loss \\*
+Clamp negative unique information & Changes \(-r+r=0\) into \(0+r=r\) and breaks reconstruction & A different mathematical quantity must have its own definition and name \\*
+Ignore merged-world multiplicity & Assigning \(1/8\) to each of four completing observations gives total mass \(1/2\) & Preserve preimage counts or use an independently normalized law \\*
+Treat the atomic target as continuous & Violates the required population-support declaration & Use a separately specified continuous law and the matching functional \\*
+Original wrong-kind control & The compiler's \texttt{defProp} linter stopped the fixture before the intended judge check & A separate control revision reached the judge and was rejected for declaration kind \\*
+Original static-registry control & A decoder rejected two trailing newlines before any mutation case ran & A separate framing revision completed its stated controls; the first result stays failed \\*
+\end{longtable}
+}
+
+The completed successor controls test the specified wrong declaration kind, extra binder, local and imported extra axioms, and a proof containing \texttt{sorry}. Report and registry controls have separate evidence scopes. Their rejection demonstrates the named checks on the supplied mutations; it is not a theorem that all malformed or malicious inputs are rejected.
+
+The eight-world law needs no IID sampling assumption because its probabilities are assigned exactly. Estimating a related quantity from recorded rows requires a separate law, representation, sampling model, estimator and uncertainty analysis. Results for correlated time series, unseen categories, changing sensors, continuous or mixed support, high-dimensional geometry and hyperbolic embeddings remain outside this example. A noisy-copy extension is separate work; it is not included in the 21 fixed-law targets above.

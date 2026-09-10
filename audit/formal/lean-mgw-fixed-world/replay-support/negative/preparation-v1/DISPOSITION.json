@@ -1,0 +1,11 @@
+{
+  "status": "closed preparation failure; no native execution",
+  "cause": "Historical LEAN_PATH included the nonexistent Cli/.lake/build/lib/lean directory. Preparation v1 wrongly required every search-path component to exist.",
+  "actual_launch": "0d15ca/session27938",
+  "actual_completion": "29e722",
+  "exit_code": 1,
+  "output_stage_created": false,
+  "native_children": 0,
+  "continuation": "New preparation v2 preserves absent search-path membership as an explicit fail-closed state. Existing v1 source and controls remain unchanged.",
+  "utc": "2026-09-09T19:07:31.735065+00:00"
+}

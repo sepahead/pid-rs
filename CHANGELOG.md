@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add an archival Markdown/PDF account of the finite MGW matched comparison: the same
+  synergy can accompany different conditional information with target and baseline fixed.
+  Retain the 21-target proof and execution records, add exact-only publication wiring and font
+  notices, and keep public replay-controller and hosted formal qualification open.
+
 - Add a Rust example for recorded UCI office sensors, with training-fitted categorical MGW PID,
   continuous-support refusals, complete numerical output and a derivation from integer event
   counts. Document signed-atom cancellation, predictive comparisons, temporal and support limits,

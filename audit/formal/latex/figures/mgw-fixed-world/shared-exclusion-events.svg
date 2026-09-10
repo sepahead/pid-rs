@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="168mm" height="111mm" viewBox="0 0 1680 1110" role="img" aria-labelledby="title desc">
+  <title id="title">The redundancy event keeps six worlds for either candidate</title>
+  <desc id="desc">Two grids each contain the eight equally likely triples A,B,U. Rows are A,B equal to zero zero, zero one, one zero, one one; columns are U equal to zero or one. For observed a=c=0 and target y=(0,0), the left source union A=0 or U=0 selects six cells: both cells in the first two rows and the first cell in the last two rows. The right union A=0 or B=0 selects both cells in its first three rows. In each grid the diagonal target hatch selects both cells of the first row. Thus both source unions have six worlds, the target has two worlds and their intersection has two worlds. The redundancy log argument is four thirds. Color is supplemented by explicit event labels and a hatch for the target. Exact finite-law illustration; each source union and target restriction is specified by the cell labels.</desc>
+  <defs>
+    <style>
+      text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
+      .title { font-size: 44px; font-weight: 700; fill: #1F3F60; }
+      .label { font-size: 35px; font-weight: 700; }
+      .body { font-size: 31px; }
+      .small { font-size: 28px; }
+      .cell { font-size: 34px; text-anchor: middle; }
+      .draft { font-size: 25px; font-weight: 700; fill: #916400; }
+      .selected { fill: #D2E0E2; stroke: #2C3E50; stroke-width: 2; }
+      .outside { fill: #F7F3E9; stroke: #2C3E50; stroke-width: 2; }
+    </style>
+    <pattern id="target-hatch" patternUnits="userSpaceOnUse" width="18" height="18"><path d="M-4 4 L4 -4 M0 18 L18 0 M14 22 L22 14" fill="none" stroke="#916400" stroke-width="2" opacity="0.65"/></pattern>
+  </defs>
+  <rect width="1680" height="1110" fill="#F7F3E9"/>
+  <rect width="1680" height="26" fill="#1F3F60"/>
+  <text x="70" y="94" class="title">Count the OR event, then restrict the target</text>
+  <text x="70" y="158" class="body">Example supported anchor: a = 0, c = 0, y = (0,0). Each cell is one world of mass 1/8.</text>
+  <text x="100" y="234" class="label">Added source C = U</text>
+  <text x="900" y="234" class="label">Added source C = B</text>
+  <text x="100" y="284" class="body">Source union: A=0 OR U=0</text>
+  <text x="900" y="284" class="body">Source union: A=0 OR B=0</text>
+  <text x="100" y="354" class="small">A,B</text>
+  <text x="370" y="354" class="body" text-anchor="middle">U=0</text>
+  <text x="610" y="354" class="body" text-anchor="middle">U=1</text>
+  <text x="900" y="354" class="small">A,B</text>
+  <text x="1170" y="354" class="body" text-anchor="middle">U=0</text>
+  <text x="1410" y="354" class="body" text-anchor="middle">U=1</text>
+  <g>
+    <rect x="250" y="380" width="240" height="80" class="selected"/><rect x="490" y="380" width="240" height="80" class="selected"/>
+    <rect x="250" y="460" width="240" height="80" class="selected"/><rect x="490" y="460" width="240" height="80" class="selected"/>
+    <rect x="250" y="540" width="240" height="80" class="selected"/><rect x="490" y="540" width="240" height="80" class="outside"/>
+    <rect x="250" y="620" width="240" height="80" class="selected"/><rect x="490" y="620" width="240" height="80" class="outside"/>
+    <rect x="250" y="380" width="480" height="80" fill="url(#target-hatch)" stroke="#916400" stroke-width="4"/>
+    <rect x="1050" y="380" width="240" height="80" class="selected"/><rect x="1290" y="380" width="240" height="80" class="selected"/>
+    <rect x="1050" y="460" width="240" height="80" class="selected"/><rect x="1290" y="460" width="240" height="80" class="selected"/>
+    <rect x="1050" y="540" width="240" height="80" class="selected"/><rect x="1290" y="540" width="240" height="80" class="selected"/>
+    <rect x="1050" y="620" width="240" height="80" class="outside"/><rect x="1290" y="620" width="240" height="80" class="outside"/>
+    <rect x="1050" y="380" width="480" height="80" fill="url(#target-hatch)" stroke="#916400" stroke-width="4"/>
+  </g>
+  <g class="body">
+    <text x="100" y="431">(0,0)</text><text x="100" y="511">(0,1)</text><text x="100" y="591">(1,0)</text><text x="100" y="671">(1,1)</text>
+    <text x="900" y="431">(0,0)</text><text x="900" y="511">(0,1)</text><text x="900" y="591">(1,0)</text><text x="900" y="671">(1,1)</text>
+  </g>
+  <g class="cell">
+    <text x="370" y="432">000</text><text x="610" y="432">001</text><text x="370" y="512">010</text><text x="610" y="512">011</text>
+    <text x="370" y="592">100</text><text x="610" y="592">101</text><text x="370" y="672">110</text><text x="610" y="672">111</text>
+    <text x="1170" y="432">000</text><text x="1410" y="432">001</text><text x="1170" y="512">010</text><text x="1410" y="512">011</text>
+    <text x="1170" y="592">100</text><text x="1410" y="592">101</text><text x="1170" y="672">110</text><text x="1410" y="672">111</text>
+  </g>
+  <text x="100" y="754" class="small">Cell labels give the original triple A,B,U.</text>
+  <rect x="100" y="802" width="56" height="42" class="selected"/>
+  <text x="178" y="834" class="body">Filled cells: source OR event, 6 worlds</text>
+  <rect x="900" y="802" width="56" height="42" fill="url(#target-hatch)" stroke="#916400" stroke-width="3"/>
+  <text x="978" y="834" class="body">Hatch: target Y=(0,0), 2 worlds</text>
+  <text x="100" y="909" class="label">Both panels: source = 6, target = 2, source AND target = 2.</text>
+  <text x="100" y="971" class="body">Redundancy = log[(8 × 2) / (6 × 2)] = log(4/3) nats.</text>
+  <text x="100" y="1033" class="small">The full derivation also counts the two individual-source events and their intersection.</text>
+  <text x="100" y="1080" class="small">Changing a supported anchor changes the selected bit values, not these counts.</text>
+</svg>
