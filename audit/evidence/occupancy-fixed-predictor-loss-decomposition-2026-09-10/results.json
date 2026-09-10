@@ -1,0 +1,95 @@
+{
+  "input_sha256": "15798710c848225b45276134fa26ae5c04f9ffb0535f2bea23e33a4e19cd3487",
+  "logarithms": "natural",
+  "numerical_comparison_tolerance_nats": 1e-12,
+  "probabilities": "exact Fraction ratios until logarithmic evaluation",
+  "recordings": {
+    "datatest.txt": {
+      "augmented_light_co2": {
+        "conditional_entropy_nats": 0.07831828903885693,
+        "conditional_kl_nats": 0.011425754885516124,
+        "log_loss_nats": 0.08974404392437241,
+        "loss_identity_residual_nats": -6.47051856539349e-16,
+        "minimum_predictive_probability_on_evaluation_support": "5/6116"
+      },
+      "baseline_light": {
+        "conditional_entropy_nats": 0.08702812839632022,
+        "conditional_kl_nats": 0.010744807377913815,
+        "log_loss_nats": 0.09777293577423427,
+        "loss_identity_residual_nats": 2.2724877535296173e-16,
+        "minimum_predictive_probability_on_evaluation_support": "12/6337"
+      },
+      "comparison_residuals_nats": {
+        "augmented_entropy_kl_identity": -6.47051856539349e-16,
+        "augmented_public_log_loss": -4.163336342344337e-16,
+        "baseline_entropy_kl_identity": 2.2724877535296173e-16,
+        "baseline_public_log_loss": 3.608224830031759e-16,
+        "direct_cmi_public": -4.0939474033052647e-16,
+        "gain_cmi_kl_identity": 1.1796119636642288e-15,
+        "gain_direct_vs_loss_difference": -2.3071822230491534e-16
+      },
+      "direct_cmi_nats": 0.008709839357462758,
+      "direct_log_loss_gain_nats": 0.008028891849861627,
+      "historical_loss_comparisons": "both recorded evaluation losses compared",
+      "rows": 2665
+    },
+    "datatest2.txt": {
+      "augmented_light_co2": {
+        "conditional_entropy_nats": 0.031525474140927566,
+        "conditional_kl_nats": 0.01923654505075222,
+        "log_loss_nats": 0.050762019191679046,
+        "loss_identity_residual_nats": -7.389922007661198e-16,
+        "minimum_predictive_probability_on_evaluation_support": "5/6116"
+      },
+      "baseline_light": {
+        "conditional_entropy_nats": 0.03308348654532869,
+        "conditional_kl_nats": 0.014359564227401951,
+        "log_loss_nats": 0.04744305077272942,
+        "loss_identity_residual_nats": -1.2160411566597418e-15,
+        "minimum_predictive_probability_on_evaluation_support": "12/6337"
+      },
+      "comparison_residuals_nats": {
+        "augmented_entropy_kl_identity": -7.389922007661198e-16,
+        "augmented_public_log_loss": -4.926614671774132e-16,
+        "baseline_entropy_kl_identity": -1.2160411566597418e-15,
+        "baseline_public_log_loss": 3.469446951953614e-16,
+        "direct_cmi_public": 8.159705550125906e-16,
+        "gain_cmi_kl_identity": -1.5269903397285844e-15,
+        "gain_direct_vs_loss_difference": -2.3288662664988635e-16
+      },
+      "direct_cmi_nats": 0.0015580124044019372,
+      "direct_log_loss_gain_nats": -0.0033189684189498564,
+      "historical_loss_comparisons": "both recorded evaluation losses compared",
+      "rows": 9752
+    },
+    "datatraining.txt": {
+      "augmented_light_co2": {
+        "conditional_entropy_nats": 0.04780438446044025,
+        "conditional_kl_nats": 0.0004411960193104742,
+        "log_loss_nats": 0.04824558047975043,
+        "loss_identity_residual_nats": -2.909456529864851e-16,
+        "minimum_predictive_probability_on_evaluation_support": "5/6116"
+      },
+      "baseline_light": {
+        "conditional_entropy_nats": 0.05275625305284193,
+        "conditional_kl_nats": 0.00012628695724420798,
+        "log_loss_nats": 0.05288254001008476,
+        "loss_identity_residual_nats": -1.3780751713377004e-15,
+        "minimum_predictive_probability_on_evaluation_support": "12/6337"
+      },
+      "comparison_residuals_nats": {
+        "augmented_entropy_kl_identity": -2.909456529864851e-16,
+        "baseline_entropy_kl_identity": -1.3780751713377004e-15,
+        "direct_cmi_public": -1.2923689896027213e-15,
+        "gain_cmi_kl_identity": 7.28583859910259e-17,
+        "gain_direct_vs_loss_difference": -2.1510571102112408e-16
+      },
+      "direct_cmi_nats": 0.004951868592400306,
+      "direct_log_loss_gain_nats": 0.004636959530334113,
+      "historical_loss_comparisons": "unavailable in the preserved training record; no historical loss comparison claimed",
+      "rows": 8143
+    }
+  },
+  "scope": "Descriptive finite empirical-law calculation from preserved counts and the existing train-only add-one predictors; no new learning or population calibration",
+  "tolerance_scope": "fixture comparison threshold, not a proved error bound"
+}

@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Document categorical MGW signed-synergy implications for analysis, learning and sensor
+  acquisition. Derive the distinction between available CMI and attained log-loss gain,
+  reproduce conditional KL discrepancies for three retained occupancy recordings, and
+  preserve the negative result and rejected source. Extend the sensor guide's Markdown/PDF
+  explanation with the existing signed-cancellation figure and explicit follow-up studies.
+
 - Add an archival Markdown/PDF account of the finite MGW matched comparison: the same
   synergy can accompany different conditional information with target and baseline fixed.
   Retain the 21-target proof and execution records, add exact-only publication wiring and font

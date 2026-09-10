@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 SOURCE="$ROOT/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
 PDF="$ROOT/output/pdf/pid-sensor-placement-and-galadriel-guide.pdf"
 BUILDER="$ROOT/scripts/build-pid-sensor-placement-and-galadriel-guide-pdf.sh"
+FIGURE_IMPORT_SELF_TEST="$ROOT/scripts/check-pid-sensor-placement-and-galadriel-guide-figure-import-self-test.py"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 EVIDENCE_RECEIPT="$ROOT/audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.json"
 EVIDENCE_ARCHIVE="$ROOT/audit/evidence/categorical-pid-latency-718447aa-explicit-20260830.tar.gz"
@@ -17,7 +18,7 @@ if [[ $# -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]];
 fi
 
 for command_name in awk cmp find grep mktemp pdffonts pdfinfo pdftoppm pdftotext \
-    python3 rm shasum; do
+    pandoc python3 rm shasum; do
   command -v "$command_name" >/dev/null 2>&1 || {
     echo "$CHECK_NAME failed: missing command: $command_name" >&2
     exit 1
@@ -25,7 +26,7 @@ for command_name in awk cmp find grep mktemp pdffonts pdfinfo pdftoppm pdftotext
 done
 
 for required in "$SOURCE" "$PDF" "$BUILDER" "$TAGPDF_OPENACTION_COMPAT" \
-    "$EVIDENCE_RECEIPT" "$EVIDENCE_ARCHIVE"; do
+    "$FIGURE_IMPORT_SELF_TEST" "$EVIDENCE_RECEIPT" "$EVIDENCE_ARCHIVE"; do
   [[ -f "$required" && ! -L "$required" ]] || {
     echo "$CHECK_NAME failed: required input is absent, nonregular, or symbolic: $required" >&2
     exit 1
@@ -39,6 +40,19 @@ cleanup() {
 trap cleanup EXIT
 
 python3 "$ROOT/scripts/check-markdown-math.py" "$SOURCE"
+
+# Resolve the selected executable and use absent work directories with a canonical parent.
+figure_import_work_root="$(cd "$tmp_root" && pwd -P)"
+figure_import_pandoc="$(python3 -I -B -c \
+  'import pathlib, sys; print(pathlib.Path(sys.argv[1]).resolve(strict=True))' \
+  "$(command -v pandoc)")"
+figure_import_pandoc_sha256="$(shasum -a 256 "$figure_import_pandoc" | awk '{print $1}')"
+python3 -I -B "$FIGURE_IMPORT_SELF_TEST" \
+  --root "$ROOT" --work-dir "$figure_import_work_root/figure-import-normal" \
+  --pandoc "$figure_import_pandoc" --pandoc-sha256 "$figure_import_pandoc_sha256"
+python3 -I -B -O "$FIGURE_IMPORT_SELF_TEST" \
+  --root "$ROOT" --work-dir "$figure_import_work_root/figure-import-optimized" \
+  --pandoc "$figure_import_pandoc" --pandoc-sha256 "$figure_import_pandoc_sha256"
 
 source_digest_record="$tmp_root/source-digests.txt"
 (
@@ -54,6 +68,9 @@ source_digest_record="$tmp_root/source-digests.txt"
       "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/$stem.svg" \
       "audit/formal/latex/figures/pid-sensor-placement-and-galadriel-guide/$stem.pdf"
   done
+  shasum -a 256 \
+    "audit/formal/latex/figures/real-occupancy-sensors/signed-cancellation.svg" \
+    "audit/formal/latex/figures/real-occupancy-sensors/signed-cancellation.pdf"
 ) >"$source_digest_record"
 expected_trailer_id="$(shasum -a 256 "$source_digest_record" | awk '{print toupper(substr($1, 1, 32))}')"
 [[ "$expected_trailer_id" =~ ^[0-9A-F]{32}$ ]] || {
@@ -121,8 +138,8 @@ validate_pdf() {
   local text="$tmp_root/$label.txt"
 
   LC_ALL=C pdfinfo "$candidate" >"$info"
-  grep -Eq '^Pages:[[:space:]]+46$' "$info" || {
-    echo "$CHECK_NAME failed: $label page count is not the reviewed 46 pages" >&2
+  grep -Eq '^Pages:[[:space:]]+49$' "$info" || {
+    echo "$CHECK_NAME failed: $label page count is not the reviewed 49 pages" >&2
     exit 1
   }
   for required_info in \
@@ -193,6 +210,14 @@ validate_pdf() {
         if (family == "" || subsetted != "yes") bad = 1
         family_count[family] += 1
         truetype += 1
+      } else if (NF == 9 && $2 == "Type" && $3 == "1C" &&
+          encoding == "WinAnsi") {
+        family = subset_family($1)
+        if ((family != "SourceSansPro-Bold" && family != "SourceSansPro-Regular") ||
+            subsetted != "yes") bad = 1
+        family_count[family] += 1
+        type1c_family_count[family] += 1
+        type1c += 1
       } else if (NF == 9 && $1 == "[none]" && $2 == "Type" && $3 == "3" &&
           encoding == "Custom") {
         # Type 3 contains its complete CharProcs in the PDF, so Poppler reports
@@ -221,12 +246,16 @@ validate_pdf() {
       expected["LMRoman9-Regular"] = 1
       expected["LatinModernMath-Regular"] = 3
       expected["Menlo-Regular"] = 1
-      expected["SourceSansPro-Regular"] = 1
+      expected["SourceSansPro-Bold"] = 2
+      expected["SourceSansPro-Regular"] = 3
       for (family in expected)
         if (family_count[family] != expected[family]) bad = 1
       for (family in family_count)
         if (!(family in expected)) bad = 1
-      if (rows != 56 || cid_type0c != 20 || truetype != 18 || type3 != 18) bad = 1
+      if (type1c_family_count["SourceSansPro-Bold"] != 1 ||
+          type1c_family_count["SourceSansPro-Regular"] != 1) bad = 1
+      if (rows != 60 || cid_type0c != 22 || truetype != 18 ||
+          type1c != 2 || type3 != 18) bad = 1
       exit bad ? 1 : 0
     }
   ' "$fonts" || {
@@ -301,7 +330,7 @@ def pdf_boolean_is_true(value):
 if not pdf_boolean_is_true(BooleanObject(True)) or pdf_boolean_is_true(BooleanObject(False)):
     fail("pypdf BooleanObject semantics changed")
 
-if len(reader.pages) != 46:
+if len(reader.pages) != 49:
     fail("page count changed")
 trailer_ids = reader.trailer.get("/ID")
 if not isinstance(trailer_ids, ArrayObject) or len(trailer_ids) != 2:
@@ -602,6 +631,11 @@ for page_number, page in enumerate(reader.pages, start=1):
             fail(f"page {page_number} link action is {action_type}")
 
 required_uris = {
+    "https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf",
+    "https://proceedings.mlr.press/v202/covert23a.html",
+    "https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/mgw-fixed-world-added-information-2026-09-09.md",
+    "https://github.com/sepahead/pid-rs/blob/main/audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
     "https://arxiv.org/abs/1004.2515",
     "https://arxiv.org/abs/1404.3146",
     "https://arxiv.org/abs/2311.06373v3",
@@ -692,8 +726,8 @@ LC_ALL=C pdftoppm -r 110 -png "$PDF" "$render_dir/page" >/dev/null 2>"$tmp_root/
   exit 1
 }
 render_count="$(find "$render_dir" -type f -name 'page-*.png' | awk 'END {print NR + 0}')"
-[[ "$render_count" -eq 46 ]] || {
-  echo "$CHECK_NAME failed: rendered page count is $render_count, expected 46" >&2
+[[ "$render_count" -eq 49 ]] || {
+  echo "$CHECK_NAME failed: rendered page count is $render_count, expected 49" >&2
   exit 1
 }
 find "$render_dir" -type f -name 'page-*.png' -size 0 -print -quit | grep -q . && {
@@ -701,5 +735,5 @@ find "$render_dir" -type f -name 'page-*.png' -size 0 -print -quit | grep -q . &
   exit 1
 }
 
-printf 'OK: %s mode=%s relation=%s sha256=%s pages=46 rendered=46\n' \
+printf 'OK: %s mode=%s relation=%s sha256=%s pages=49 rendered=49\n' \
   "$PDF" "$MODE" "$relation" "$(shasum -a 256 "$PDF" | awk '{print $1}')"

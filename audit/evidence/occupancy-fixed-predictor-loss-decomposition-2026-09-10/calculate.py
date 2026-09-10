@@ -1,0 +1,118 @@
+"""Reconstruct fixed office predictors and their finite empirical KL errors.
+
+This is publication tooling. It trains no new model, processes no new rows,
+and gives no population, formal-proof or binary64-error-bound claim.
+"""
+
+from fractions import Fraction
+import hashlib
+import json
+import math
+from pathlib import Path
+import sys
+
+
+INPUT_SHA = "15798710c848225b45276134fa26ae5c04f9ffb0535f2bea23e33a4e19cd3487"
+EXPECTED_ROWS = {"datatraining.txt": 8143, "datatest.txt": 2665, "datatest2.txt": 9752}
+TOLERANCE = 1e-12
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def counts(record, expected_rows):
+    result = {}
+    for row in record["shannon"]["joint_counts"]:
+        key = (row["light_bin"], row["co2_bin"], row["occupancy"])
+        require(all(type(value) is int for value in (*key, row["count"])), "integer count keys required")
+        require(0 <= key[0] < 4 and 0 <= key[1] < 4 and key[2] in (0, 1), "declared alphabet violated")
+        require(row["count"] > 0 and key not in result, "positive unique cells required")
+        result[key] = row["count"]
+    require(sum(result.values()) == record["shannon"]["n"] == expected_rows, "row total differs")
+    return result
+
+
+def marginal(table, indices):
+    result = {}
+    for key, value in table.items():
+        projected = tuple(key[index] for index in indices)
+        result[projected] = result.get(projected, 0) + value
+    return result
+
+
+def log_ratio(value):
+    require(isinstance(value, Fraction) and value > 0, "supported logarithm must be positive")
+    return math.log(value.numerator) - math.log(value.denominator)
+
+
+def evaluate_model(train, current, indices):
+    train_x = marginal(train, indices)
+    train_xy = marginal(train, (*indices, 2))
+    current_x = marginal(current, indices)
+    current_xy = marginal(current, (*indices, 2))
+    total = sum(current.values())
+    loss, entropy, divergence = [], [], []
+    predictions = {}
+    for key, count in sorted(current.items()):
+        x = tuple(key[index] for index in indices)
+        xy = (*x, key[2])
+        p = Fraction(current_xy[xy], current_x[x])
+        q = Fraction(train_xy.get(xy, 0) + 1, train_x.get(x, 0) + 2)
+        require(0 < p <= 1 and 0 < q < 1, "conditional probability domain violated")
+        predictions[key] = q
+        weight = float(Fraction(count, total))
+        loss.append(-weight * log_ratio(q))
+        entropy.append(-weight * log_ratio(p))
+        divergence.append(weight * log_ratio(p / q))
+    values = {"log_loss_nats": math.fsum(loss), "conditional_entropy_nats": math.fsum(entropy), "conditional_kl_nats": math.fsum(divergence)}
+    values["loss_identity_residual_nats"] = values["log_loss_nats"] - values["conditional_entropy_nats"] - values["conditional_kl_nats"]
+    values["minimum_predictive_probability_on_evaluation_support"] = str(min(predictions.values()))
+    return values, predictions
+
+
+def main():
+    require(len(sys.argv) == 2, "supply the pinned descriptive-comparisons JSON")
+    path = Path(sys.argv[1])
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == INPUT_SHA, "input digest differs")
+    records = json.loads(raw)["files"]
+    require(set(records) == set(EXPECTED_ROWS), "recording roster differs")
+    tables = {name: counts(records[name], total) for name, total in EXPECTED_ROWS.items()}
+    train = tables["datatraining.txt"]
+    outputs = {}
+    for name, current in tables.items():
+        baseline, q0 = evaluate_model(train, current, (0,))
+        augmented, q1 = evaluate_model(train, current, (0, 1))
+        n = sum(current.values())
+        a, ac, ay = (marginal(current, indices) for indices in ((0,), (0, 1), (0, 2)))
+        cmi_terms, gain_terms = [], []
+        for key, count in sorted(current.items()):
+            weight = float(Fraction(count, n))
+            cmi_terms.append(weight * log_ratio(Fraction(count * a[(key[0],)], ac[key[:2]] * ay[(key[0], key[2])])))
+            gain_terms.append(weight * log_ratio(q1[key] / q0[key]))
+        cmi, gain = math.fsum(cmi_terms), math.fsum(gain_terms)
+        errors = {
+            "direct_cmi_public": cmi - records[name]["shannon"]["I_co2_target_given_light"],
+            "gain_direct_vs_loss_difference": gain - (baseline["log_loss_nats"] - augmented["log_loss_nats"]),
+            "gain_cmi_kl_identity": gain - (cmi + baseline["conditional_kl_nats"] - augmented["conditional_kl_nats"]),
+            "baseline_entropy_kl_identity": baseline["loss_identity_residual_nats"],
+            "augmented_entropy_kl_identity": augmented["loss_identity_residual_nats"],
+        }
+        if name == "datatraining.txt":
+            require(records[name]["predictive"] == {}, "training historical availability differs")
+            historical_losses = "unavailable in the preserved training record; no historical loss comparison claimed"
+        else:
+            errors["baseline_public_log_loss"] = baseline["log_loss_nats"] - records[name]["predictive"]["light"]["log_loss_nats"]
+            errors["augmented_public_log_loss"] = augmented["log_loss_nats"] - records[name]["predictive"]["pair"]["log_loss_nats"]
+            historical_losses = "both recorded evaluation losses compared"
+        require(all(math.isfinite(value) and abs(value) <= TOLERANCE for value in errors.values()), "finite comparison tolerance exceeded")
+        require(min(cmi, baseline["conditional_kl_nats"], augmented["conditional_kl_nats"]) >= -TOLERANCE, "nonnegative finite quantity exceeded negative tolerance")
+        outputs[name] = {"rows": n, "baseline_light": baseline, "augmented_light_co2": augmented, "direct_cmi_nats": cmi, "direct_log_loss_gain_nats": gain, "historical_loss_comparisons": historical_losses, "comparison_residuals_nats": errors}
+    require(path.read_bytes() == raw, "input changed during calculation")
+    print(json.dumps({"scope": "Descriptive finite empirical-law calculation from preserved counts and the existing train-only add-one predictors; no new learning or population calibration", "input_sha256": INPUT_SHA, "logarithms": "natural", "probabilities": "exact Fraction ratios until logarithmic evaluation", "numerical_comparison_tolerance_nats": TOLERANCE, "tolerance_scope": "fixture comparison threshold, not a proved error bound", "recordings": outputs}, indent=2, sort_keys=True, allow_nan=False))
+
+
+if __name__ == "__main__":
+    main()

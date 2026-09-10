@@ -1,5 +1,5 @@
 {
-  "schema": "pid-rs.pid-sensor-placement-guide-figure-assets.v1",
+  "schema": "pid-rs.pid-sensor-placement-guide-figure-assets.v2",
   "renderer_observation": {
     "command": "rsvg-convert --format=pdf --output=<pdf> <svg>",
     "rsvg_convert": "2.62.3",
@@ -31,5 +31,18 @@
       "pdf_page_points": [1200.0, 787.5]
     }
   ],
-  "claim_boundary": "The manifest binds one observed SVG-to-PDF rendering for each figure. The builder imports the bound PDF bytes and does not rerender the SVG. Hash equality is custody evidence, not semantic equivalence, accessibility conformance, renderer correctness, or mathematical validation."
+  "reused_assets": [
+    {
+      "stem": "signed-cancellation",
+      "svg_repository_path": "audit/formal/latex/figures/real-occupancy-sensors/signed-cancellation.svg",
+      "svg_bytes": 2650,
+      "svg_mode": "0o644",
+      "svg_sha256": "15d07f2c94cb7f82787ee6e78301f896b3a06a023fa8db4906d52b9ecdb8f620",
+      "pdf_repository_path": "audit/formal/latex/figures/real-occupancy-sensors/signed-cancellation.pdf",
+      "pdf_bytes": 42100,
+      "pdf_mode": "0o644",
+      "pdf_sha256": "5ae5a52dedf8fa43f53b74ffdcdcca2d65f4708dc6ff7281db75618711a7f6df"
+    }
+  ],
+  "claim_boundary": "The assets entries retain the three original SVG-to-PDF observations. The reused_assets entry imports exact existing office-example SVG/PDF bytes without a new conversion. The builder imports bound PDF derivatives and does not rerender SVG. Hash equality is custody evidence, not semantic equivalence, accessibility conformance, renderer correctness, mathematical validation, or admission of a changed paper page/font profile."
 }

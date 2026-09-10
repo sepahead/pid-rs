@@ -4,6 +4,13 @@
 local dropped_title = false
 local dropped_subtitle = false
 local last_heading = ""
+local repository_blob_root = "https://github.com/sepahead/pid-rs/blob/main/"
+local repository_links = {
+  ["PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md"] = true,
+  ["audit/evidence/mgw-fixed-world-added-information-2026-09-09.md"] = true,
+  ["audit/evidence/real-occupancy-sensors-example-2026-09-08.md"] = true,
+}
+local reused_cancellation_svg = "audit/formal/latex/figures/real-occupancy-sensors/signed-cancellation.svg"
 
 local function set_widths(element, widths)
   if #element.colspecs ~= #widths then
@@ -46,7 +53,27 @@ function Header(element)
   return element
 end
 
+function Para(element)
+  if FORMAT:match("latex") then
+    local text = pandoc.utils.stringify(element.content):gsub("%s+", " ")
+    if text == "Cancel the redundancy and candidate-MI terms, then subtract the two local MI logarithms under the same joint law:" then
+      -- This short introduction is followed by the three-line CMI display.
+      return {pandoc.RawBlock("latex", "\\Needspace{10\\baselineskip}"), element}
+    end
+  end
+  return element
+end
+
 function Image(element)
+  if FORMAT:match("latex") and element.src == reused_cancellation_svg then
+    local reused_pdf = os.getenv("PID_GUIDE_REUSED_CANCELLATION_PDF")
+    if not reused_pdf or reused_pdf == "" then
+      error("PID_GUIDE_REUSED_CANCELLATION_PDF is required for the exact reused figure")
+    end
+    element.src = reused_pdf
+    element.attributes["width"] = "168mm"
+    return element
+  end
   if FORMAT:match("latex") and element.src:match("%.svg$") then
     local figure_dir = os.getenv("PID_GUIDE_FIGURE_PDF_DIR")
     if not figure_dir or figure_dir == "" then
@@ -57,6 +84,15 @@ function Image(element)
       error("cannot derive figure basename: " .. element.src)
     end
     element.src = figure_dir .. "/" .. basename .. ".pdf"
+  end
+  return element
+end
+
+function Link(element)
+  if FORMAT:match("latex") and repository_links[element.target] then
+    -- Exact known targets only; canonical Markdown remains repository-relative.
+    -- These main URLs are navigation, not immutable provenance identities.
+    element.target = repository_blob_root .. element.target
   end
   return element
 end

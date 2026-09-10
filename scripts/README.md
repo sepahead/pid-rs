@@ -1895,24 +1895,40 @@ evidence.
 
 `build-pid-sensor-placement-and-galadriel-guide-pdf.sh` renders
 `PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md` through Pandoc and LuaLaTeX. The canonical Markdown is
-the claim source. Three handcrafted SVGs and their exact tracked one-page PDF derivatives are bound
-by `figure-assets.json`; the builder validates their hashes and page boxes before and after the
-build and imports the tracked derivatives without invoking a runtime SVG renderer. The manifest
-records one renderer observation. It does not prove SVG/PDF semantic equivalence, accessibility, or
+the claim source. `figure-assets.json` binds three original handcrafted SVG/PDF pairs and separately
+imports the existing occupancy signed-cancellation pair by exact path, mode, size, and digest.
+The builder validates the original pairs' hashes and page boxes and the imported pair's exact
+identity before and after the build. It imports tracked PDF derivatives without invoking an SVG
+renderer. The original renderer observation is retained; exact reuse is not a new rendering
+observation. Neither proves SVG/PDF semantic equivalence, accessibility, or
 mathematical correctness. A source-derived duplicated trailer ID binds the Markdown, projection
 sources, manifest, SVGs, and PDF derivatives. Fixed time, timezone, locale, three LuaLaTeX passes,
 warning checks, embedded-font checks, and a private build directory make same-toolchain output
 reproducible. The builder accepts only an absolute PDF destination in an existing nonsymbolic,
 non-root directory. This is bounded publication hygiene, not authenticity or toolchain attestation.
+For retained build evidence, `PID_GUIDE_BUILD_EVIDENCE_DIR` can name an absent absolute directory
+under an existing canonical parent. The builder creates that actual work directory with mode 0700
+and retains it on success or failure. Unset, the variable preserves ordinary temporary cleanup.
+If a caller selects a private TeX cache, keep it within the declared `TEXMFOUTPUT` boundary;
+do not weaken TeX's output policy to make a cache writable.
 
 `check-pid-sensor-placement-and-galadriel-guide-pdf.sh` validates the retained categorical-latency
 archive and JSON receipt, including its path-safe 17-file inventory and the absence of AppleDouble
 metadata. It rebuilds the guide and checks the expected source-derived trailer ID, tagged structure,
-all 46 A4 page boxes, link actions, primary-source URLs, text sentinels, and every rendered page. Its
-pinned pypdf object gate and exact 56-row font roster require every font to be embedded and
-Unicode-mapped; named CID/TrueType fonts must be subsetted, while the 18 renderer-produced Type 3
+all 49 A4 page boxes, link actions, primary-source URLs, text sentinels, and every rendered page. Its
+pinned pypdf object gate and exact 60-row font roster require every font to be embedded and
+Unicode-mapped. Named CID/TrueType fonts must be subsetted; the two Type 1C rows must be subsetted
+WinAnsi SourceSansPro-Bold and SourceSansPro-Regular, one each. The 18 renderer-produced Type 3
 rows are admitted only as structurally exact, zero-area, nonpainting U+0020 spacing shims on the
 three figure pages.
+Before rebuilding, the leaf runs
+`check-pid-sensor-placement-and-galadriel-guide-figure-import-self-test.py` in normal and optimized
+Python. Each mode tests 19 cases against the actual pinned asset-validation body and two cases
+against the actual pinned Pandoc filter: exact PDF substitution and refusal of a missing binding.
+Fresh work directories retain each case during the leaf run. These 21 cases per mode cover the
+selected import contract; they do not replace the complete PDF checks or prove builder behavior,
+mathematics, visual equivalence, or general toolchain isolation. Subprocess timeouts and observed
+stream limits are bounded checks, not hard storage quotas or arbitrary descendant containment.
 Exact mode requires raw byte equality. Cross-toolchain mode first accepts raw equality and
 otherwise requires exact layout-text equality after both files pass the complete page-geometry and
 object checks. That fallback is a bounded text-and-geometry relation; it is not raw PDF equality,

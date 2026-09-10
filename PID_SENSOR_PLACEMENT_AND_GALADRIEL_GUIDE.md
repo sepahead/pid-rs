@@ -2,11 +2,16 @@
 
 ## Current use, proposed research, and evidence gates
 
-**Status date:** 30 August 2026\
+**Document revision:** 10 September 2026\
+**Ecosystem inspection date:** 30 August 2026\
 **Scope:** pid-rs, the inspected Galadriel revision, and a proposed sensor-placement research
 program\
 **Claim status:** current Galadriel use is implemented but bounded; sensor placement is proposed and
 has no implementation or performance claim in pid-rs or Galadriel
+
+Section 8.4 adds the finite signed-synergy comparison, its prediction-loss
+implications, and steps for analysis, learning and acquisition. This revision
+does not extend the dated ecosystem inspection.
 
 This guide answers two different questions:
 
@@ -1475,6 +1480,212 @@ a disjoint pilot. Then reject PID as a placement objective if any selected gate 
 No numerical margin can honestly be inferred from the current synthetic fixture. Calling this list
 "preregistered" before those values and procedures are timestamped would be false.
 
+### 8.4 From signed allocation to prediction and acquisition
+
+Use categorical MGW to analyze its named information allocation. Use prediction
+loss and acquisition cost to judge a sensor decision. The two questions are
+connected by an exact identity, but synergy alone is not the information gained
+from another sensor. The [comparison and decision note](PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md)
+develops the broader derivations and learning alternatives.
+
+**The defining event and the information increment.** Fix a normalized law $P$
+on finite nonempty alphabets for $(H,C,Y)$, where $H$ is the available baseline,
+$C$ the added categorical source and $Y$ the unchanged target. At an anchor
+$(h,c,y)$ with positive joint probability, let $E=\{H=h\}\cup\{C=c\}$.
+Categorical MGW uses the local signed net
+redundancy [[1]](#references)
+
+$$
+\begin{aligned}
+r_P(h,c,y)&=\log\frac{P(E\cap\{Y=y\})}{P(E)P(Y=y)},\\
+\rho&=\sum_{h,c,y:P(h,c,y)>0}P(h,c,y)r_P(h,c,y).
+\end{aligned}
+$$
+
+The union counts its overlap once. Its mass, the target mass and the restricted
+mass are positive at a supported anchor. Zero-probability keys remain part of
+the alphabet but do not contribute a logarithm. All information units here
+are nats. The singleton and joint cumulatives are their ordinary MIs, so the
+two-source inversion gives
+
+$$
+U_C=I(C;Y)-\rho,\qquad
+S=I(H,C;Y)-I(H;Y)-I(C;Y)+\rho.
+$$
+
+Cancel the redundancy and candidate-MI terms, then subtract the two local MI
+logarithms under the same joint law:
+
+$$
+\begin{aligned}
+U_C+S
+&=I(H,C;Y)-I(H;Y)\\
+&=\sum_{h,c,y:P(h,c,y)>0}P(h,c,y)
+\log\frac{P(y\mid h,c)}{P(y\mid h)}\\
+&=I(C;Y\mid H).
+\end{aligned}
+$$
+
+Thus the complete signed sum reconstructs CMI. It does not create additional
+utility beyond CMI. Clamping a negative atom breaks the reconstruction.
+
+**An exact matched-synergy comparison.** Let $A,B,U$ be mutually independent
+fair bits, $H=A$ and $Y=(A,B)$. Compare $C=U$ with $C=B$ on this same eight-outcome
+world. For either candidate, $P(E)=1/2+1/2-1/4=3/4$. A matching target already
+fixes $A=a$, so $P(E,Y=y)=P(Y=y)=1/4$. Every supported local redundancy is
+therefore $r=\log(4/3)$. Put $L=\log2$. The MI triples (baseline, candidate,
+joint) are $(L,0,L)$ and $(L,L,2L)$, respectively; substitution yields:
+
+| Added source | Redundancy $\rho$ | Unique added $U_C$ | Synergy $S$ | Added CMI |
+|---|---:|---:|---:|---:|
+| Independent $U$ | $r$ | $-r$ | $r$ | $0$ |
+| Missing target bit $B$ | $r$ | $L-r$ | $r$ | $L$ |
+
+The independent bit's negative unique term cancels its positive synergy.
+This is a feature of the specified signed allocation, not a sensor-fault score.
+The [exact finite comparison](audit/evidence/mgw-fixed-world-added-information-2026-09-09.md)
+retains its full construction and 21-target Lean evidence. The other atom values
+above follow the displayed algebra; they are not extra named proof targets.
+The canonical comparison note gives the retained noisy-channel obstruction
+and its separate, still-open general Lean obligations.
+
+**Why log loss singles out CMI.** For a supported $h$, let $p_y=P(Y=y\mid h)$
+and let $f_y$ be a normalized predictive PMF, positive wherever $p_y>0$. Expanding
+the logarithm gives the classical proper-score identity [[28]](#references)
+
+$$
+\begin{aligned}
+\sum_{y:p_y>0}p_y[-\log f_y]
+&=-\sum_{y:p_y>0}p_y\log p_y
++\sum_{y:p_y>0}p_y\log\frac{p_y}{f_y}\\
+&=\mathrm H(p)+D_{\rm KL}(p\Vert f).
+\end{aligned}
+$$
+
+The inequality $-\log x\ge1-x$ gives
+$D_{\rm KL}(p\Vert f)\ge1-\sum_{y:p_y>0}f_y\ge0$.
+The true PMF attains equality; predicting zero
+at a positive true mass gives infinite loss. Apply this calculation to frozen
+predictors $f_0(\cdot\mid H)$ and $f_1(\cdot\mid H,C)$, then average. If $D_0$ and $D_1$
+denote their respective expected conditional KL discrepancies, their loss gain is
+
+$$
+\begin{aligned}
+G&=\mathbb E[-\log f_0(Y\mid H)]
+-\mathbb E[-\log f_1(Y\mid H,C)]\\
+&=I(C;Y\mid H)+D_0-D_1.
+\end{aligned}
+$$
+
+Unrestricted Bayes predictors have $D_0=D_1=0$: their minimum risks are
+$\mathrm H(Y\mid H)$ and $\mathrm H(Y\mid H,C)$. Hence their optimal log-loss
+improvement is exactly CMI. Fitted
+models need not attain those risks; a more inaccurate augmented model can
+worsen loss despite positive CMI. The known-law identity requires no IID
+sample. Estimating it from measurements requires a separate sampling argument.
+The CMI acquisition connection is established prior work, with explicit
+prediction, selection and optimization premises [[29]](#references).
+
+**The recorded office result exhibits both distinctions.** The
+[occupancy example](audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
+fits four equal-width bins for light and $\mathrm{CO}_2$ on 8,143 training rows, with the
+original binary occupancy target. In the later 9,752-row recording, the
+empirical signed sum is
+$-0.178691053+0.180249065=0.001558012$ nats: a substantial positive synergy
+nearly cancels against negative unique $\mathrm{CO}_2$ information.
+
+![Later-recording signed MGW terms and their small CMI remainder, on one common linear scale in nats. These are descriptive categorical values.](audit/formal/latex/figures/real-occupancy-sensors/signed-cancellation.svg)
+
+Both probability predictors were fitted on training only. Each bin or bin-pair
+uses $(\mathrm{occupied}+1)/(\mathrm{total}+2)$; an unseen training cell predicts $1/2$. Their later
+recording scores are:
+
+| Fixed predictor | Mean log loss, nats | Binary Brier score |
+|---|---:|---:|
+| Light alone | 0.047443 | 0.011556 |
+| Light and $\mathrm{CO}_2$ | 0.050762 | 0.011683 |
+
+Brier score here averages the squared difference between predicted occupancy
+probability and observed label.
+Lower scores are better. Adding $\mathrm{CO}_2$ corrects four classifications but worsens
+both probability scores. No PID-guided learner or acquisition cost was evaluated. These recordings are
+now exposed development data, not untouched confirmation.
+
+On that same empirical law, adding $\mathrm{CO}_2$ lowers conditional entropy from
+0.033083487 to 0.031525474 nats, while the fitted predictor's conditional KL
+discrepancy rises from 0.014359564 to 0.019236545 nats. The larger model
+discrepancy outweighs the information increment, giving $G\approx-0.003318968$
+nats. This descriptive decomposition uses the retained counts and predictors,
+with no refitting; the [comparison and decision note](PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md)
+gives the calculation and its evidence boundary.
+Only 16 of 32 nominal joint cells are occupied; four have fewer than five rows
+and the minimum positive count is one. Temporal rows are not independent test
+episodes, and empty empirical cells do not establish population zeros.
+
+**Practical steps for analysis, learning and selection.**
+
+1. **Analyze a declared object.** Fix two to four sensor groups, target, alignment,
+   alphabet, training-fitted maps and empirical or population law. Report signed
+   atoms with their informative/misinformative components and directly calculated
+   CMI. For three or four sources retain the full named lattice. Regrouping a
+   baseline tuple as one source defines a new two-source PID; its atoms are not
+   unchanged coordinates of the original lattice.
+2. **Train for the chosen task.** Keep task loss and resource constraints primary.
+   Test any PID feature or regularizer against the same learner with task-only
+   and CMI-assisted inputs, using matched data and tuning budgets. Freeze the
+   baseline representation or constrain its predictive quality; weakening it
+   can increase CMI without improving joint prediction. An atom weight $\beta$ gives
+   $U_C+\beta S=\mathrm{CMI}+(\beta-1)S$. Only $\beta=1$ preserves CMI identically. Hard bin assignments
+   can be constant then jump as parameters move; differentiability of a
+   probability functional does not supply gradients through that operation.
+3. **Select against cost and stopping.** For one passive acquisition with an
+   exact law and unrestricted log-loss predictors, compare
+   $I(C_d;Y\mid H)-\lambda k(d)$ with the stop value zero. Here $k(d)\ge0$ and
+   $\lambda\ge0$ converts cost to loss units. With fitted models, compare their
+   held-out gain $G$ and cost.
+   Other task losses need their own comparison. A fixed set of at most four
+   available packages has at most 16 subsets to evaluate; choosing four camera
+   poses from a large candidate map is a different search space.
+4. **Make sequential scores prospective.** Let $H$ contain the complete available
+   history. Under a fixed passive world, a selector using only $H$ and independent
+   randomness reveals no further target information through its action alone,
+   conditional on $H$.
+   Hidden selection inputs invalidate that premise. Greedy CMI is a one-step
+   rule: two independent bits with an XOR target each have zero information,
+   although the pair determines the target. Joint-subset evaluation or lookahead
+   can therefore be necessary.
+
+Pointwise PID requires the realized target and candidate reading. A deployed
+pre-acquisition gate has neither. It may use a frozen training summary, a
+history-only fitted score, or an average over a frozen coherent predictive joint model;
+it must not read the current label or unrevealed candidate.
+
+To specify the averaging operation, fix one law $P(H,C,Y)$ and its pointwise atoms
+$u_C^P,s^P$. Their sum is the conditional log ratio in the reconstruction above,
+so, for $P(H=h)>0$,
+
+$$
+\mathbb E_P[u_C^P+s^P\mid H=h]=I_P(C;Y\mid H=h).
+$$
+
+Recomputing PID under $P_h=P(\cdot\mid H=h)$ instead makes its baseline source
+constant: its equality event is certain, so redundancy and synergy are zero.
+Its averaged unique added term equals the same conditional MI, with a different
+allocation. For the completing fair-bit sensor, the original-law conditional
+mean synergy is $r$ while recomputed synergy is zero. A prospective model must
+integrate both possible targets and candidate readings, identify which operation
+it uses, and specify treatment of histories outside its modeled support. Its
+estimated scores are not observed exact PID values.
+
+Missingness, selected records and adaptive encodings can change the law being
+analyzed. Physical actions that move a sensor or affect the outcome require an
+observation/transition model; observational CMI alone does not identify causal
+reward. Evaluate learned policies on complete held-out episodes under the
+declared sampling and action model. None of these categorical identities
+establishes estimator calibration, a continuous-PID theorem or a deployment
+benefit. The canonical comparison note retains the fuller derivations,
+counterexamples and formal-status boundaries.
+
 ## 9. Ten grounded use cases
 
 Only the first row is a current sensor-related PID use. The categorical XOR and continuous
@@ -2386,6 +2597,16 @@ against pid-rs commit 718447aa2acc6600a3bdce1d81cda0dba4f4ab3b.
 27. Sundararajan, Dhamdhere, and Agarwal, "The Shapley Taylor Interaction Index," *Proceedings of
     the 37th International Conference on Machine Learning*, PMLR 119, 9259--9268 (2020),
     [primary article](https://proceedings.mlr.press/v119/sundararajan20a.html).
+
+28. Gneiting and Raftery, "Strictly Proper Scoring Rules, Prediction, and Estimation,"
+    *Journal of the American Statistical Association* 102(477), 359–378 (2007),
+    Example 3,
+    [author paper](https://sites.stat.washington.edu/raftery/Research/PDF/Gneiting2007jasa.pdf).
+29. Covert, Qiu, Lu, Kim, White, and Lee, "Learning to Maximize Mutual Information
+    for Dynamic Feature Selection," *Proceedings of the 40th International
+    Conference on Machine Learning*, PMLR 202, 6424–6447 (2023),
+    Propositions 1–2 and Theorem 1,
+    [primary article](https://proceedings.mlr.press/v202/covert23a.html).
 
 ### Inspected ecosystem sources
 

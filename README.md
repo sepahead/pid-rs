@@ -128,6 +128,9 @@ The [comparison with alternative and complementary methods](PID_ALTERNATIVES_AND
 names recent fusion and interaction models alongside MI/CMI, ablation, Shapley–Taylor, Bayesian
 information gain and other PID definitions. It states what added value must be demonstrated and
 when a simpler method should be preferred. No comparative performance advantage is claimed.
+It also derives the limits of synergy-only objectives and documents a count-based occupancy
+example where positive added information coexists with worse fitted-predictor log loss, with
+steps for analysis, learning and acquisition under explicit assumptions.
 
 The separate [Galadriel and sensor-placement guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md)
 and its [rendered PDF](output/pdf/pid-sensor-placement-and-galadriel-guide.pdf) distinguish three
