@@ -1,0 +1,13 @@
+PidMgwTargetCopyCandidate/L2.lean:60:4: error: Type mismatch: After simplification, term
+  hiff
+ has type
+  anchor.2 = key.2 → anchor.1 0 = key.1 0
+but is expected to have type
+  anchor.1 0 = key.1 0 ∧ anchor.2 = key.2 ↔ key ∈ {candidate | anchor.2 = candidate.2}
+PidMgwTargetCopyCandidate/L2.lean:75:4: error: Type mismatch: After simplification, term
+  hiff
+ has type
+  anchor.1 0 = key.1 0 ∧ anchor.2 = key.2 ∨ anchor.1 1 = key.1 1 ∧ anchor.2 = key.2 ↔ anchor.2 = key.2
+but is expected to have type
+  anchor.1 0 = key.1 0 ∧ anchor.2 = key.2 ∨ anchor.1 1 = key.1 1 ∧ anchor.2 = key.2 ↔
+    key ∈ {candidate | anchor.2 = candidate.2}

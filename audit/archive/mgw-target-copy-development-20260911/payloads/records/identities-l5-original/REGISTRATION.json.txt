@@ -1,0 +1,12 @@
+{
+  "schema": "pid-rs-target-copy-identities-proof-registration-v1",
+  "status": "registered-development-proof-attempt",
+  "phase": "P",
+  "driver_sha256": "bd5567f85c58dadeea2b31e9e05185a605157919f5c4beb5b72f41d608a2b0aa",
+  "manifest_sha256": "0d4acfc9151e491ff19ffe8968de3906d0311efe419e98a2677a1c84371532aa",
+  "execution_root": "<ABS_PATH_0093>",
+  "registered_utc": "2026-09-11T01:48:05.083540+00:00",
+  "registered_monotonic_ns": 1237079470703750,
+  "end_utc": "2026-09-11T02:08:05.083540+00:00",
+  "end_monotonic_ns": 1238279470703750
+}

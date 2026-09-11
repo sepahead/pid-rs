@@ -1,0 +1,259 @@
+"""Unexecuted L5 and four identity candidates with a fixed five-target judge."""
+from pathlib import Path
+import datetime as dt
+import hashlib
+import json
+import os
+import re
+import signal
+import stat
+import subprocess
+import sys
+import time
+import types
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent.parent
+CAPTURE = ROOT / ".local/mgw-interior-reference-parentheses-batch-source-root-20260910/run-reference-batch.py"
+CAPTURE_SHA = "95b1c0b04e064ce2d8a89da0bb1cecb7469c024f6cfe7d6c5d009df4bb0ad11d"
+CAP = 8 * 1024**2
+END_NS = None
+REG_KEYS = {"schema", "status", "phase", "driver_sha256", "manifest_sha256",
+            "execution_root", "registered_utc", "registered_monotonic_ns",
+            "end_utc", "end_monotonic_ns"}
+MODULES = ("PidMgwTargetCopyCandidate.L5", "PidMgwTargetCopyCandidate.Identities",
+           "PidMgwTargetCopyJudge.IdentityJudge")
+BINDINGS = (
+    ("PidMgwTargetCopyCandidate.sourceProjection", "PidMgwTargetCopy.SourceProjectionTarget"),
+    ("PidMgwTargetCopyCandidate.localIdentity", "PidMgwTargetCopy.LocalIdentityTarget"),
+    ("PidMgwTargetCopyCandidate.worldLocalIdentity", "PidMgwTargetCopy.WorldLocalIdentityTarget"),
+    ("PidMgwTargetCopyCandidate.averagedIdentity", "PidMgwTargetCopy.AveragedIdentityTarget"),
+    ("PidMgwTargetCopyCandidate.sameSourceLaw", "PidMgwTargetCopy.SameSourceLawTarget"))
+
+
+def need(ok, why):
+    if not ok:
+        raise RuntimeError(why)
+
+
+def same_json(actual, expected, why):
+    need(json.dumps(actual, sort_keys=True, allow_nan=False) ==
+         json.dumps(expected, sort_keys=True, allow_nan=False), why)
+
+
+def load_capture():
+    before = CAPTURE.lstat()
+    need(CAPTURE.resolve(strict=True) == CAPTURE and stat.S_ISREG(before.st_mode)
+         and before.st_size == 15326, "capture source path/size")
+    with CAPTURE.open("rb") as handle:
+        raw = handle.read(15327)
+    need(len(raw) == 15326 and hashlib.sha256(raw).hexdigest() == CAPTURE_SHA,
+         "capture source bytes")
+    module = types.ModuleType("pid_mgw_target_copy_qualification_capture")
+    module.__file__ = str(CAPTURE)
+    exec(compile(raw, str(CAPTURE), "exec"), module.__dict__)
+    return module
+
+
+def output_observation(capture, row, raw):
+    need(b"\0" not in raw and b"\r" not in raw, "binary/non-LF compiler stdout")
+    if row["id"] != "P03":
+        need(raw == b"", "candidate emitted stdout")
+        return {"empty_stdout": True}
+    prefix = b"MGW_TARGET_COPY_JUDGE "
+    need(raw.startswith(prefix) and raw.endswith(b"\n") and raw.count(b"\n") == 1,
+         "not one complete judge record")
+    report = capture.parse(raw[len(prefix):-1])
+    need(type(report) is dict and set(report) == {"schema", "status", "count", "theorems"},
+         "judge report shape")
+    need(report["schema"] == "pid-rs-mgw-target-copy-identities-judge-report-v1" and
+         report["status"] == "type-and-axiom-checks-passed-pending-actual-outcome-and-root-review" and
+         type(report["count"]) is int and report["count"] == 5 and
+         type(report["theorems"]) is list and len(report["theorems"]) == 5, "judge roster")
+    keys = {"candidate_fqn", "target_fqn", "candidate_kind", "proof_value_present",
+            "candidate_universes", "target_universes", "candidate_full_type",
+            "expected_closed_target", "original_target_type", "original_target_value",
+            "full_type_defeq", "candidate_axioms", "target_axioms"}
+    for value, (candidate, target) in zip(report["theorems"], BINDINGS, strict=True):
+        need(type(value) is dict and set(value) == keys and
+             value["candidate_fqn"] == candidate and value["target_fqn"] == target and
+             value["candidate_kind"] == "theorem" and value["proof_value_present"] is True and
+             value["full_type_defeq"] is True, "binding/kind/type/proof result")
+        for key in ("candidate_universes", "target_universes"):
+            levels = value[key]
+            need(type(levels) is list and len(levels) == 2 and
+                 all(type(level) is str and level for level in levels) and len(set(levels)) == 2,
+                 "two distinct universe parameters")
+        for key in ("candidate_axioms", "target_axioms"):
+            axioms = value[key]
+            need(type(axioms) is list and all(type(a) is str for a in axioms) and
+                 axioms == sorted(set(axioms)) and
+                 set(axioms) <= {"propext", "Classical.choice", "Quot.sound"}, "axiom closure")
+        for key in ("candidate_full_type", "expected_closed_target", "original_target_type",
+                    "original_target_value"):
+            need(type(value[key]) is str and value[key].strip() and
+                 "⋯" not in value[key] and "..." not in value[key], "missing/elided declaration")
+    return {"report": report, "root_semantic_review": "pending"}
+
+
+def current_objects(capture, manifest, stage):
+    seeded = {str(stage / name) for name in (
+        "objects/PidMgwTargetCopy/Interface.olean",
+        "objects/PidMgwTargetCopyJudge/JudgeCore.olean",
+        "objects/PidMgwTargetCopyCandidate/L1.olean",
+        "objects/PidMgwTargetCopyCandidate/L2.olean",
+        "objects/PidMgwTargetCopyCandidate/L4.olean",
+        "objects/PidMgwTargetCopy/SourceUnionMassCandidate.olean")}
+    pins = {str(stage / pin["stage_relative"]): pin for pin in manifest["stage_inputs"]
+            if pin["stage_relative"].startswith("objects/")}
+    need(set(pins) == seeded, "exact six seeded import objects")
+    paths = capture.members(stage / "objects")
+    need(paths is not None and seeded <= paths and len(paths - seeded) <= 3,
+         "output membership bound")
+    for path, pin in pins.items():
+        capture.observe(path, dict(pin, path=path))
+    result = {}
+    for path in sorted(paths - seeded):
+        record, _ = capture.observe(path, cap=2 * 1024**3)
+        need(record["bytes"] > 0, "empty output object")
+        result[path] = record
+    need(sum(pin["bytes"] for pin in result.values()) <= 2 * 1024**3,
+         "new-object byte bound")
+    return result
+
+
+def selected_inputs(capture, manifest, phase, state):
+    pins = manifest["fixed_inputs"] + manifest["stage_inputs"]
+    need(len(pins) == 27 and len({pin["path"] for pin in pins}) == 27,
+         "selected-input roster")
+    state["selected_inputs"][phase] = {"status": "running", "checked": []}
+    for pin in pins:
+        record, _ = capture.observe(pin["path"], pin)
+        state["selected_inputs"][phase]["checked"].append(record)
+    state["selected_inputs"][phase]["status"] = "observed-selected-inputs-only"
+
+
+def main():
+    global END_NS, tick, observe, write_json, run_row
+    need(sys.version_info >= (3, 11) and sys.flags.isolated and sys.flags.no_site and
+         sys.flags.ignore_environment and sys.dont_write_bytecode and sys.flags.optimize == 0,
+         "requires Python 3.11+ -I -S -B, without -O")
+    need(len(sys.argv) == 3 and re.fullmatch(r"[0-9a-f]{64}", sys.argv[2]) is not None,
+         "usage: run-proofs.py ABS_REGISTRATION.json REGISTRATION_SHA256")
+    capture = load_capture()
+    tick, observe, write_json = capture.tick, capture.observe, capture.write_json
+    run_row = capture.run_row
+    registration_path = Path(sys.argv[1])
+    need(registration_path.is_absolute(), "absolute registration required")
+    registration_pin, raw = observe(registration_path, capture=True, cap=65536)
+    need(registration_pin["sha256"] == sys.argv[2], "registration hash")
+    reg = capture.parse(raw)
+    need(type(reg) is dict and set(reg) == REG_KEYS and
+         reg["schema"] == "pid-rs-target-copy-identities-proof-registration-v1" and
+         reg["status"] == "registered-development-proof-attempt" and reg["phase"] == "P",
+         "registration role/shape")
+    need(type(reg["registered_monotonic_ns"]) is int and type(reg["end_monotonic_ns"]) is int and
+         all(type(reg[key]) is str for key in REG_KEYS -
+             {"registered_monotonic_ns", "end_monotonic_ns"}), "registration types")
+    start_utc = dt.datetime.fromisoformat(reg["registered_utc"])
+    capture.END_UTC = dt.datetime.fromisoformat(reg["end_utc"])
+    END_NS = capture.END_NS = reg["end_monotonic_ns"]
+    need(0 < reg["registered_monotonic_ns"] <= time.monotonic_ns() and
+         start_utc.utcoffset() == capture.END_UTC.utcoffset() == dt.timedelta(0) and
+         start_utc <= dt.datetime.now(dt.timezone.utc) and
+         END_NS - reg["registered_monotonic_ns"] == 1200 * 10**9 and
+         capture.END_UTC - start_utc == dt.timedelta(seconds=1200), "registration clocks")
+    tick()
+    driver_pin, _ = observe(Path(__file__).absolute())
+    need(driver_pin["sha256"] == reg["driver_sha256"], "driver hash")
+    manifest_pin, raw = observe(HERE / "SOURCE_MANIFEST.json", capture=True)
+    need(manifest_pin["sha256"] == reg["manifest_sha256"], "manifest hash")
+    manifest = capture.parse(raw)
+    need(manifest["schema"] == "pid-rs-target-copy-identities-proof-source-manifest-v1" and
+         manifest["status"] == "source-only-proposal-not-executed" and
+         manifest["baseline_mode"] == "selected-inputs-only-prior-installed-profile-evidence",
+         "manifest role/baseline")
+    need(str(Path(sys.executable).resolve(strict=True)) == manifest["python_executable"],
+         "selected Python executable")
+    stage = ROOT / ".local/mgw-target-copy-l5-fixed-proof-run-root-20260911"
+    need(stage.parent.resolve(strict=True) == stage.parent and
+         str(stage) == reg["execution_root"] == manifest["execution_root"] and
+         not registration_path.is_relative_to(stage), "exclusive execution-root binding")
+    commands = []
+    for index, module in enumerate(MODULES):
+        argv = [manifest["lean_executable"], "-t", "0"]
+        argv += ["-o", str(stage / "objects" / (module.replace(".", "/") + ".olean"))]
+        argv += [module.replace(".", "/") + ".lean"]
+        commands.append(dict(id=f"P{index + 1:02}", module=module, argv=argv,
+                             cwd=str(stage / "work"), expected_exit=0))
+    same_json(manifest["commands"], commands, "three exact commands and typed exits")
+    stage.mkdir(mode=0o700)
+    state = dict(status="running", registration_sha256=sys.argv[2],
+                 driver_sha256=driver_pin["sha256"], manifest_sha256=manifest_pin["sha256"],
+                 baseline_mode=manifest["baseline_mode"], target_proofs=0,
+                 proof_acceptance="pending-actual-outer-return-and-root-proof-review",
+                 started_monotonic_ns=time.monotonic_ns(), requested_rows=[],
+                 captured_proof_prefix=[], selected_inputs={}, objects={}, ledgers={},
+                 proof_outputs={})
+    try:
+        write_json(stage / "REQUEST.json", dict(registration=reg, manifest=manifest))
+        state["ledgers"]["REQUEST.json"], _ = observe(stage / "REQUEST.json")
+        selected_inputs(capture, manifest, "pre", state)
+        for name in ("work/PidMgwTargetCopyCandidate", "work/PidMgwTargetCopy", "work/PidMgwTargetCopyJudge",
+                     "imports/PidMgwTargetCopy", "imports/PidFiniteConvergence",
+                     "imports/PidMgwTargetCopyJudge", "provenance", "objects/PidMgwTargetCopyCandidate",
+                     "objects/PidMgwTargetCopy", "objects/PidMgwTargetCopyJudge", "tmp"):
+            (stage / name).mkdir(parents=True)
+        for pin in manifest["stage_inputs"]:
+            _, data = observe(pin["path"], pin, capture=True)
+            path = stage / capture.relative(pin["stage_relative"])
+            with path.open("xb") as handle:
+                handle.write(data)
+            path.chmod(int(pin["mode"], 8))
+        capture.staged_inputs(manifest, stage)
+        need(current_objects(capture, manifest, stage) == {}, "initial output objects")
+        for row in commands:
+            tick()
+            state["requested_rows"].append(row["id"])
+            result = run_row(row, manifest, stage, sys.argv[2])
+            for suffix in ("request.json", "result.json", "stdout", "stderr"):
+                name = row["id"] + "." + suffix
+                state["ledgers"][name], _ = observe(stage / name)
+            _, stdout = observe(stage / (row["id"] + ".stdout"),
+                                result["streams"]["stdout"], capture=True, cap=CAP)
+            need(result["streams"]["stderr"]["bytes"] == 0, "nonempty compiler stderr")
+            state["proof_outputs"][row["id"]] = output_observation(capture, row, stdout)
+            after = current_objects(capture, manifest, stage)
+            wanted = set(state["objects"])
+            if row["expected_exit"] == 0:
+                wanted.add(row["argv"][4])
+            need(set(after) == wanted and
+                 all(after[path] == pin for path, pin in state["objects"].items()),
+                 "missing/extra object or earlier object drift")
+            state["objects"] = after
+            state["captured_proof_prefix"].append(row["id"])
+        selected_inputs(capture, manifest, "post", state)
+        capture.staged_inputs(manifest, stage)
+        need(current_objects(capture, manifest, stage) == state["objects"] and len(state["objects"]) == 3,
+             "final three-object identity")
+        observe(registration_path, registration_pin)
+        observe(Path(__file__).absolute(), driver_pin)
+        observe(HERE / "SOURCE_MANIFEST.json", manifest_pin)
+        for pin in state["ledgers"].values():
+            observe(pin["path"], pin)
+        tick()
+        state["status"] = "completed-pending-actual-outer-return-and-root-proof-review"
+    except BaseException as error:
+        state.update(status="stopped-unresolved-no-proof-acceptance", failure=repr(error))
+    state["unrequested_rows"] = [row["id"] for row in commands
+                                 if row["id"] not in state["requested_rows"]]
+    state["finished_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()
+    state["finished_monotonic_ns"] = time.monotonic_ns()
+    write_json(stage / "RESULT.json", state)
+    print(json.dumps({key: state[key] for key in ("status", "requested_rows", "captured_proof_prefix", "target_proofs", "unrequested_rows", "finished_utc")}, sort_keys=True), flush=True)
+    tick()
+    return 0 if state["status"].startswith("completed-") else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

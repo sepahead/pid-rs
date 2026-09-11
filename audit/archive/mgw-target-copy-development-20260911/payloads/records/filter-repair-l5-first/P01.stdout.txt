@@ -1,0 +1,47 @@
+PidMgwTargetCopyCandidate/L5.lean:47:4: error: Type mismatch: After simplification, term
+  hrow_filter fun row => row i = anchor.1 i
+ has type
+  finiteEventMass law {key | key.1 i = anchor.1 i} = finiteEventMass (sourceLaw law) {row | row i = anchor.1 i}
+but is expected to have type
+  finiteEventMass law {key | key.1 i = anchor.1 i} = finiteEventMass (sourceLaw law) {row | row i = anchor.1 i}
+PidMgwTargetCopyCandidate/L5.lean:62:17: error: Function expected at
+  hmatch
+but this term has type
+  key ∈ {candidate | ∀ source ∈ {0, 1}, anchor.1 source = candidate.1 source}
+
+Note: Expected a function because this term is being applied to the argument
+  0
+PidMgwTargetCopyCandidate/L5.lean:63:17: error: Function expected at
+  hmatch
+but this term has type
+  key ∈ {candidate | ∀ source ∈ {0, 1}, anchor.1 source = candidate.1 source}
+
+Note: Expected a function because this term is being applied to the argument
+  1
+PidMgwTargetCopyCandidate/L5.lean:64:19: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce
+
+case mpr
+sourceValue : Fin 2 → Type u
+B : Type v
+inst✝³ : (i : Fin 2) → Fintype (sourceValue i)
+inst✝² : Fintype B
+inst✝¹ : (i : Fin 2) → DecidableEq (sourceValue i)
+inst✝ : DecidableEq B
+law : Key sourceValue B → ℝ
+hnonnegative : ∀ (key : Key sourceValue B), 0 ≤ law key
+hrow_filter :
+  ∀ (p : SourceRow sourceValue → Prop),
+    finiteEventMass law {key | p key.1} = finiteEventMass (sourceLaw law) (Finset.filter p Finset.univ)
+hcoordinate :
+  ∀ (anchor : Key sourceValue B) (i : Fin 2),
+    finiteEventMass law (sourceBranchEvent {i} anchor) = coordinateMass (sourceLaw law) i (anchor.1 i)
+anchor : Key sourceValue B
+key : CategoricalKey (Fin 2) sourceValue (Target sourceValue B)
+hrow : key.1 = anchor.1
+⊢ key ∈ {candidate | ∀ source ∈ {0, 1}, anchor.1 source = candidate.1 source}
+PidMgwTargetCopyCandidate/L5.lean:71:8: error: Type mismatch: After simplification, term
+  hrow_filter fun row => row = anchor.1
+ has type
+  finiteEventMass law {key | key.1 = anchor.1} = finiteEventMass (sourceLaw law) {row | row = anchor.1}
+but is expected to have type
+  finiteEventMass law {key | key.1 = anchor.1} = finiteEventMass (sourceLaw law) {row | row = anchor.1}

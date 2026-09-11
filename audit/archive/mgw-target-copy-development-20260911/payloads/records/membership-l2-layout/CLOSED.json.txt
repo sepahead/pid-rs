@@ -1,0 +1,87 @@
+{
+  "status": "failed-L2-elaboration-L1-compiler-prefix-retained",
+  "recorded_utc": "2026-09-10T23:04:20.695953+00:00",
+  "actual_outer": {
+    "tool": "f95cf4",
+    "exit_code": 1
+  },
+  "root_causal_read": "65533d",
+  "cause": "Two target-event membership expressions remained unsimplified in L2",
+  "target_proofs": 0,
+  "L1_compiler_prefix": "exit0 empty streams; no target/axiom judge reached, not accepted as a target proof",
+  "new_objects": [
+    {
+      "bytes": 88640,
+      "mode": "0o644",
+      "path": "<ABS_PATH_0077>",
+      "sha256": "f051072f24ec630db96c279f4c0641251319d70513f67d19931b14d239cd7783"
+    }
+  ],
+  "unrequested": [
+    "P03",
+    "P04",
+    "P05"
+  ],
+  "retained_files": [
+    {
+      "path": "<ABS_PATH_0083>",
+      "bytes": 17024,
+      "mode": "0o644",
+      "sha256": "2f075d36847c79e7a48caecfbc9e1bde54220a3b4d0b1247b127525ecfd3bf9c"
+    },
+    {
+      "path": "<ABS_PATH_0084>",
+      "bytes": 11120,
+      "mode": "0o644",
+      "sha256": "c938495d48680531c6b795ab60a589cf3ec67f4ad6b91fdfc74f78f84cbafd58"
+    },
+    {
+      "path": "<ABS_PATH_0085>",
+      "bytes": 1492,
+      "mode": "0o644",
+      "sha256": "e6f238db85b38ab14216f6c0ecf3eea7bdff18bdc46ce9340ad97482f56495d1"
+    },
+    {
+      "path": "<ABS_PATH_0086>",
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "<ABS_PATH_0087>",
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "<ABS_PATH_0088>",
+      "bytes": 1498,
+      "mode": "0o644",
+      "sha256": "3b72ad5e5b9b3fc7cfa70fe478a0581a95e3ceb3a3cb020a65b58352a8bb52a9"
+    },
+    {
+      "path": "<ABS_PATH_0089>",
+      "bytes": 692,
+      "mode": "0o644",
+      "sha256": "ca47c061c42c4f6ee6ea99691499610dcf99d2b053431264002549c7822c2a06"
+    },
+    {
+      "path": "<ABS_PATH_0090>",
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "<ABS_PATH_0091>",
+      "bytes": 692,
+      "mode": "0o644",
+      "sha256": "1b9dfda73ac55413b6accd512736dd11ab788eda13f176540fad1efd7ddc3d7c"
+    },
+    {
+      "path": "<ABS_PATH_0092>",
+      "bytes": 661,
+      "mode": "0o644",
+      "sha256": "56ae18cf7a681947aa38714f1e58e1d6f409f7293d49e9436f7311d7a91779bb"
+    }
+  ]
+}

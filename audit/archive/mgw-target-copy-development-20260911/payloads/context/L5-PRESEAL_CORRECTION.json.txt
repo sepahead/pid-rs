@@ -1,0 +1,13 @@
+{
+  "after": {
+    "bytes": 4533,
+    "sha256": "0c6cc97d33c5828a954a893b11acb1a9584c4d6e7f867976ccf26cdda9be9d3e"
+  },
+  "before": {
+    "bytes": 4514,
+    "sha256": "73784e513f6c0957f1ea8fb4509d53138751b5e63c91c59527ab0ce673d27a01"
+  },
+  "change": "Explicitly include Finset.filter_eq' in the final joint-row filter simplification.",
+  "reason": "012db8 showed the equality-filter lemmas deliberately lack a global simp attribute. This avoids relying on another ambient simplification to collapse that filter. No elaboration was run or failure observed.",
+  "status": "preseal-source-only-correction-no-execution-failure"
+}

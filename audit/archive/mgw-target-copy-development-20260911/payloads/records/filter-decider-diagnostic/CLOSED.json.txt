@@ -1,0 +1,84 @@
+{
+  "status": "expanded-diagnostic-failure-observed-no-proof-acceptance",
+  "recorded_utc": "2026-09-11T02:04:25.495797+00:00",
+  "actual_outer": {
+    "terminal": "cf809f",
+    "exit_code": 1
+  },
+  "target_proofs": 0,
+  "root_diagnostic_read": "30e0b8 first180lines, showing complete coordinate expected and actual types",
+  "finding": "The two hrow_filter filters use Classical.propDecidable; the expected coordinate filters use the supplied source DecidableEq. Displayed Fintype instances agree. Joint source-event membership also remains unexpanded.",
+  "native": {
+    "argv": [
+      "<ABS_PATH_0003>",
+      "-t",
+      "0",
+      "-o",
+      "<ABS_PATH_0137>",
+      "PidMgwTargetCopyCandidate/L5.lean"
+    ],
+    "cwd": "<ABS_PATH_0138>",
+    "effective_seconds": 120.0,
+    "elapsed_seconds": 2.679019,
+    "expected_process_observation": false,
+    "failure": null,
+    "finished_utc": "2026-09-11T02:03:33.250179+00:00",
+    "id": "P01",
+    "pid": 28378,
+    "registration_sha256": "56496be7ea29a348838e51793035653febe0d12f78b94f41df954bfc8f7114be",
+    "returncode": 1,
+    "started_utc": "2026-09-11T02:03:30.571140+00:00",
+    "streams": {
+      "stderr": {
+        "bytes": 0,
+        "mode": "0o644",
+        "path": "<ABS_PATH_0141>",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 47713,
+        "mode": "0o644",
+        "path": "<ABS_PATH_0142>",
+        "sha256": "63bbdf0dec30d1480a22c1b95f83abe2c05cf6ef624f3c82b707c4d8a4e8fd5b"
+      }
+    }
+  },
+  "retained_files": [
+    {
+      "path": "<ABS_PATH_0143>",
+      "bytes": 708,
+      "mode": "0o644",
+      "sha256": "d6dfc38ba34d7733a73907b0aeb7e6c51efb9d2a6fbbe466115894ac888b7951"
+    },
+    {
+      "path": "<ABS_PATH_0144>",
+      "bytes": 1529,
+      "mode": "0o644",
+      "sha256": "67212aea6d808eb9725cfd9fd3f7518fb932e853e19db942147fc2b848fd17f0"
+    },
+    {
+      "path": "<ABS_PATH_0141>",
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "<ABS_PATH_0142>",
+      "bytes": 47713,
+      "mode": "0o644",
+      "sha256": "63bbdf0dec30d1480a22c1b95f83abe2c05cf6ef624f3c82b707c4d8a4e8fd5b"
+    },
+    {
+      "path": "<ABS_PATH_0145>",
+      "bytes": 17312,
+      "mode": "0o644",
+      "sha256": "1252ef2261605bb84d9924e61615fd9030e16ccd85de3504382543b8eeb566fe"
+    },
+    {
+      "path": "<ABS_PATH_0146>",
+      "bytes": 10691,
+      "mode": "0o644",
+      "sha256": "62fcac311e60d1945fab7b42781104cd1be62557e6a2aa12512565e13c192098"
+    }
+  ]
+}

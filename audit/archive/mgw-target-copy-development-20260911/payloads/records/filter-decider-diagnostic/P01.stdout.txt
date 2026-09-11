@@ -1,0 +1,670 @@
+PidMgwTargetCopyCandidate/L5.lean:48:4: error: Type mismatch: After simplification, term
+  hrow_filter fun (row : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+    @Eq.{u + 1} (sourceValue i) (row i)
+      (@Prod.fst.{u, max u v}
+        ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i)
+ has type
+  @Eq.{1} Real
+    (@PidFiniteConvergence.finiteEventMass.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B) law
+      (@Finset.filter.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+        (fun (key : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          @Eq.{u + 1} (sourceValue i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) key i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+        (fun (a : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          Classical.propDecidable
+            (@Eq.{u + 1} (sourceValue i)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) a i)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i)))
+        (@Finset.univ.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+          (@instFintypeProd.{u, max u v}
+            ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+            (@instFintypeProd.{u, v}
+              (sourceValue
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              B
+              (inst✝³
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              inst✝²)))))
+    (@PidFiniteConvergence.finiteEventMass.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+      (@PidMgwTargetCopy.sourceLaw.{u, v} sourceValue B inst✝³ inst✝² law)
+      (@Finset.filter.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+        (fun (row : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          @Eq.{u + 1} (sourceValue i) (row i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+        (fun (a : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          Classical.propDecidable
+            (@Eq.{u + 1} (sourceValue i) (a i)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i)))
+        (@Finset.univ.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³))))
+but is expected to have type
+  @Eq.{1} Real
+    (@PidFiniteConvergence.finiteEventMass.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B) law
+      (@Finset.filter.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+        (fun (key : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          @Eq.{u + 1} (sourceValue i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) key i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+        (fun (a : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          inst✝¹ i
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) a i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+        (@Finset.univ.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+          (@instFintypeProd.{u, max u v}
+            ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+            (@instFintypeProd.{u, v}
+              (sourceValue
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              B
+              (inst✝³
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              inst✝²)))))
+    (@PidFiniteConvergence.finiteEventMass.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+      (@PidMgwTargetCopy.sourceLaw.{u, v} sourceValue B inst✝³ inst✝² law)
+      (@Finset.filter.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+        (fun (row : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          @Eq.{u + 1} (sourceValue i) (row i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+        (fun (a : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          inst✝¹ i (a i)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+        (@Finset.univ.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³))))
+PidMgwTargetCopyCandidate/L5.lean:63:17: error: Function expected at
+  hmatch
+but this term has type
+  @Membership.mem.{max u v, max u v}
+    (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+      (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+    (Finset.{max u v}
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B)))
+    (@SetLike.instMembership.{max u v, max u v}
+      (Finset.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)))
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+      (@Finset.instSetLike.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B))))
+    (@Finset.filter.{max u v}
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+      (fun
+          (candidate :
+            PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)) =>
+        ∀ (source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+          @Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@SetLike.instMembership.{0, 0}
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+              (@Insert.insert.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Finset.instInsert.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 0)))
+                (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 1)
+                    (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      (nat_lit 1)))))
+              source →
+            @Eq.{u + 1} (sourceValue source)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor source)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) candidate source))
+      (fun
+          (a :
+            PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)) =>
+        Classical.propDecidable
+          (@PidFiniteConvergence.sourceCollectionEquivalent.{0, u, max u v}
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Insert.insert.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@Finset.instInsert.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 0)))
+              (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 1)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 1)))))
+            anchor a))
+      (@Finset.univ.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+        (@instFintypeProd.{u, max u v}
+          ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+          (@instFintypeProd.{u, v}
+            (sourceValue
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            B
+            (inst✝³
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            inst✝²))))
+    key
+
+Note: Expected a function because this term is being applied to the argument
+  0
+PidMgwTargetCopyCandidate/L5.lean:64:17: error: Function expected at
+  hmatch
+but this term has type
+  @Membership.mem.{max u v, max u v}
+    (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+      (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+    (Finset.{max u v}
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B)))
+    (@SetLike.instMembership.{max u v, max u v}
+      (Finset.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)))
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+      (@Finset.instSetLike.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B))))
+    (@Finset.filter.{max u v}
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+      (fun
+          (candidate :
+            PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)) =>
+        ∀ (source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+          @Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@SetLike.instMembership.{0, 0}
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+              (@Insert.insert.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Finset.instInsert.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 0)))
+                (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 1)
+                    (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      (nat_lit 1)))))
+              source →
+            @Eq.{u + 1} (sourceValue source)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor source)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) candidate source))
+      (fun
+          (a :
+            PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)) =>
+        Classical.propDecidable
+          (@PidFiniteConvergence.sourceCollectionEquivalent.{0, u, max u v}
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Insert.insert.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@Finset.instInsert.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 0)))
+              (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 1)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 1)))))
+            anchor a))
+      (@Finset.univ.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+        (@instFintypeProd.{u, max u v}
+          ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+          (@instFintypeProd.{u, v}
+            (sourceValue
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            B
+            (inst✝³
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            inst✝²))))
+    key
+
+Note: Expected a function because this term is being applied to the argument
+  1
+PidMgwTargetCopyCandidate/L5.lean:65:19: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce
+
+case mpr
+sourceValue : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → Type u
+B : Type v
+inst✝³ : (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → Fintype.{u} (sourceValue i)
+inst✝² : Fintype.{v} B
+inst✝¹ : (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → DecidableEq.{u + 1} (sourceValue i)
+inst✝ : DecidableEq.{v + 1} B
+law : PidMgwTargetCopy.Key.{u, v} sourceValue B → Real
+hnonnegative :
+  ∀ (key : PidMgwTargetCopy.Key.{u, v} sourceValue B),
+    @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (law key)
+hrow_filter :
+  ∀ (p : PidMgwTargetCopy.SourceRow.{u} sourceValue → Prop),
+    @Eq.{1} Real
+      (@PidFiniteConvergence.finiteEventMass.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B) law
+        (@Finset.filter.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+          (fun (key : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+            p
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) key))
+          (fun (a : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+            Classical.propDecidable
+              (p
+                (@Prod.fst.{u, max u v}
+                  ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                  (PidMgwTargetCopy.Target.{u, v} sourceValue B) a)))
+          (@Finset.univ.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+            (@instFintypeProd.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+              (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+                (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+              (@instFintypeProd.{u, v}
+                (sourceValue
+                  (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                    (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                      PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+                B
+                (inst✝³
+                  (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                    (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                      PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+                inst✝²)))))
+      (@PidFiniteConvergence.finiteEventMass.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+        (@PidMgwTargetCopy.sourceLaw.{u, v} sourceValue B inst✝³ inst✝² law)
+        (@Finset.filter.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue) p
+          (fun (a : PidMgwTargetCopy.SourceRow.{u} sourceValue) => Classical.propDecidable (p a))
+          (@Finset.univ.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+            (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³))))
+hcoordinate :
+  ∀ (anchor : PidMgwTargetCopy.Key.{u, v} sourceValue B)
+    (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+    @Eq.{1} Real
+      (@PidFiniteConvergence.finiteEventMass.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B) law
+        (@PidFiniteConvergence.sourceBranchEvent.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+          (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³
+          (@instFintypeProd.{u, v}
+            (sourceValue
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            B
+            (inst✝³
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            inst✝²)
+          (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝¹
+          (fun (a b : PidMgwTargetCopy.Target.{u, v} sourceValue B) =>
+            @instDecidableEqProd.{u, v}
+              (sourceValue
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              B
+              (inst✝¹
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              inst✝ a b)
+          (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+            (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) i)
+          anchor))
+      (@PidMgwTargetCopy.coordinateMass.{u} sourceValue inst✝³ inst✝¹
+        (@PidMgwTargetCopy.sourceLaw.{u, v} sourceValue B inst✝³ inst✝² law) i
+        (@Prod.fst.{u, max u v}
+          ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor i))
+anchor : PidMgwTargetCopy.Key.{u, v} sourceValue B
+key :
+  PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+    (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+hrow :
+  @Eq.{u + 1} ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+    (@Prod.fst.{u, max u v}
+      ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+      (PidMgwTargetCopy.Target.{u, v} sourceValue B) key)
+    (@Prod.fst.{u, max u v}
+      ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+      (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor)
+⊢ @Membership.mem.{max u v, max u v}
+    (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+      (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+    (Finset.{max u v}
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B)))
+    (@SetLike.instMembership.{max u v, max u v}
+      (Finset.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)))
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+      (@Finset.instSetLike.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B))))
+    (@Finset.filter.{max u v}
+      (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+      (fun
+          (candidate :
+            PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)) =>
+        ∀ (source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+          @Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@SetLike.instMembership.{0, 0}
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+              (@Insert.insert.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Finset.instInsert.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 0)))
+                (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                  (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 1)
+                    (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      (nat_lit 1)))))
+              source →
+            @Eq.{u + 1} (sourceValue source)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor source)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) candidate source))
+      (fun
+          (a :
+            PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B)) =>
+        Classical.propDecidable
+          (@PidFiniteConvergence.sourceCollectionEquivalent.{0, u, max u v}
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Insert.insert.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@Finset.instInsert.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 0)))
+              (@Singleton.singleton.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@Finset.instSingleton.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 1)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (nat_lit 1)))))
+            anchor a))
+      (@Finset.univ.{max u v}
+        (PidFiniteConvergence.CategoricalKey.{0, u, max u v}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B))
+        (@instFintypeProd.{u, max u v}
+          ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+          (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+          (@instFintypeProd.{u, v}
+            (sourceValue
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            B
+            (inst✝³
+              (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                  PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+            inst✝²))))
+    key
+PidMgwTargetCopyCandidate/L5.lean:72:8: error: Type mismatch: After simplification, term
+  hrow_filter fun (row : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+    @Eq.{u + 1} (PidMgwTargetCopy.SourceRow.{u} sourceValue) row
+      (@Prod.fst.{u, max u v}
+        ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+        (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor)
+ has type
+  @Eq.{1} Real
+    (@PidFiniteConvergence.finiteEventMass.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B) law
+      (@Finset.filter.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+        (fun (key : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          @Eq.{u + 1} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) key)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor))
+        (fun (a : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          Classical.propDecidable
+            (@Eq.{u + 1} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) a)
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor)))
+        (@Finset.univ.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+          (@instFintypeProd.{u, max u v}
+            ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+            (@instFintypeProd.{u, v}
+              (sourceValue
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              B
+              (inst✝³
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              inst✝²)))))
+    (@PidFiniteConvergence.finiteEventMass.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+      (@PidMgwTargetCopy.sourceLaw.{u, v} sourceValue B inst✝³ inst✝² law)
+      (@Finset.filter.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+        (fun (row : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          @Eq.{u + 1} (PidMgwTargetCopy.SourceRow.{u} sourceValue) row
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor))
+        (fun (a : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          Classical.propDecidable
+            (@Eq.{u + 1} (PidMgwTargetCopy.SourceRow.{u} sourceValue) a
+              (@Prod.fst.{u, max u v}
+                ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+                (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor)))
+        (@Finset.univ.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³))))
+but is expected to have type
+  @Eq.{1} Real
+    (@PidFiniteConvergence.finiteEventMass.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B) law
+      (@Finset.filter.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+        (fun (key : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          @Eq.{u + 1}
+            ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) key)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor))
+        (fun (a : PidMgwTargetCopy.Key.{u, v} sourceValue B) =>
+          @Fintype.decidablePiFintype.{u, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            sourceValue inst✝¹ (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) a)
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor))
+        (@Finset.univ.{max u v} (PidMgwTargetCopy.Key.{u, v} sourceValue B)
+          (@instFintypeProd.{u, max u v}
+            ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+            (PidMgwTargetCopy.Target.{u, v} sourceValue B)
+            (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³)
+            (@instFintypeProd.{u, v}
+              (sourceValue
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              B
+              (inst✝³
+                (@OfNat.ofNat.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (nat_lit 0)
+                  (@Fin.instOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    PidMgwTargetCopy.Target._proof_1 (nat_lit 0))))
+              inst✝²)))))
+    (@PidFiniteConvergence.finiteEventMass.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+      (@PidMgwTargetCopy.sourceLaw.{u, v} sourceValue B inst✝³ inst✝² law)
+      (@Finset.filter.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+        (fun (row : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          @Eq.{u + 1} (PidMgwTargetCopy.SourceRow.{u} sourceValue) row
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor))
+        (fun (a : PidMgwTargetCopy.SourceRow.{u} sourceValue) =>
+          @Fintype.decidablePiFintype.{u, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            sourceValue inst✝¹ (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) a
+            (@Prod.fst.{u, max u v}
+              ((source : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → sourceValue source)
+              (PidMgwTargetCopy.Target.{u, v} sourceValue B) anchor))
+        (@Finset.univ.{u} (PidMgwTargetCopy.SourceRow.{u} sourceValue)
+          (@Pi.instFintype.{0, u} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) sourceValue
+            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) inst✝³))))

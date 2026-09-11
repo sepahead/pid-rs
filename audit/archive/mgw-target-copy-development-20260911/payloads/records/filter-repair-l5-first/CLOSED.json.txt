@@ -1,0 +1,90 @@
+{
+  "status": "L5-native-and-outer-failure-preserved-no-proof-acceptance",
+  "recorded_utc": "2026-09-11T02:00:12.711626+00:00",
+  "actual_outer": {
+    "terminal": "db27eb",
+    "exit_code": 1
+  },
+  "root_diagnostic_read": "0e3815",
+  "target_proofs": 0,
+  "native_observation": {
+    "argv": [
+      "<ABS_PATH_0003>",
+      "-t",
+      "0",
+      "-o",
+      "<ABS_PATH_0121>",
+      "PidMgwTargetCopyCandidate/L5.lean"
+    ],
+    "cwd": "<ABS_PATH_0122>",
+    "effective_seconds": 120.0,
+    "elapsed_seconds": 13.160147709,
+    "expected_process_observation": false,
+    "failure": null,
+    "finished_utc": "2026-09-11T01:58:47.198074+00:00",
+    "id": "P01",
+    "pid": 26419,
+    "registration_sha256": "26b83e5e551c0939e63112569f2cb973f143f3e3c34cfb7c1115f95b5d8e64a9",
+    "returncode": 1,
+    "started_utc": "2026-09-11T01:58:34.037900+00:00",
+    "streams": {
+      "stderr": {
+        "bytes": 0,
+        "mode": "0o644",
+        "path": "<ABS_PATH_0125>",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 2279,
+        "mode": "0o644",
+        "path": "<ABS_PATH_0126>",
+        "sha256": "872ca6c6f711205b02d27e1d9852a180ab847a7f1843b90fd8b7f2316f3f010d"
+      }
+    }
+  },
+  "retained_files": [
+    {
+      "path": "<ABS_PATH_0127>",
+      "bytes": 692,
+      "mode": "0o644",
+      "sha256": "e04dfc51a8d89efad4f3d772ffb348299e65c2e1f89925c13693b2c49ff14a95"
+    },
+    {
+      "path": "<ABS_PATH_0128>",
+      "bytes": 1500,
+      "mode": "0o644",
+      "sha256": "ea5fb732f3427a595d26232cdae7cc8eafe9b36a592a97252c99e476c4ed8d53"
+    },
+    {
+      "path": "<ABS_PATH_0125>",
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "<ABS_PATH_0126>",
+      "bytes": 2279,
+      "mode": "0o644",
+      "sha256": "872ca6c6f711205b02d27e1d9852a180ab847a7f1843b90fd8b7f2316f3f010d"
+    },
+    {
+      "path": "<ABS_PATH_0129>",
+      "bytes": 17211,
+      "mode": "0o644",
+      "sha256": "b02f134c7c0a659af89221ee5d99f88f7e2232e6f6f5502cc1601be0ebc84607"
+    },
+    {
+      "path": "<ABS_PATH_0130>",
+      "bytes": 10670,
+      "mode": "0o644",
+      "sha256": "27a5c059780f586c5bf502006fcabbbd1790519d139f44412ab2256cd7c42836"
+    }
+  ],
+  "cause": "The proposed decidability normalization and one unfold did not resolve the four original sites; their cause remains under investigation.",
+  "source_only_review": {
+    "path": "<ABS_PATH_0131>",
+    "bytes": 2404,
+    "mode": "0o644",
+    "sha256": "cb9b45159a445e7365adc8a3b1e8633f0c12a2fa08f08077a1f029968c709ae8"
+  }
+}

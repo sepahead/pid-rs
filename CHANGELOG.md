@@ -9,6 +9,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add a committed-source reproduction command for the finite target-copy MGW PDF. The command
+  binds the Markdown, SVG, reviewed font profile, and same-profile PDF bytes; its scope excludes
+  native dependency hermeticity, independent rendering, and scientific validity.
+
+- Add the typed inert v2 archive for finite target-copy MGW proof-development failures. It binds
+  redacted source, command-record, and stream payloads to raw hashes, preserves the unavailable
+  outer-process observation as unavailable, and includes a fail-closed payload checker.
+
 - Extend the formal-PDF inventory and its hostile self-test to include the finite target-copy MGW
   note. The baseline and missing-source/PDF controls now cover the new standalone artifact.
 
@@ -41,6 +49,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   with vector figures and an exact reproduction check for its declared toolchain.
 
 ### Changed
+
+- Reconcile the finite target-copy publication with its committed Markdown and SVG. Correct the
+  figure title, PDF title and running heads, record exact source and PDF digests, and retain the
+  prior publication bytes in Git history. The updated artifact remains a finite categorical MGW
+  result and does not transfer to continuous shared exclusions, I_min, KSG, or another PID.
 
 - Correct the current Lean toolchain gate's changelog and certified-checker bindings after
   the publication-support correction. Preserve historical replay hashes and the

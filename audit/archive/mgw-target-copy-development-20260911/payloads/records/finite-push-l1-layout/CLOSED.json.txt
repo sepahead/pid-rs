@@ -1,0 +1,73 @@
+{
+  "status": "failed-L1-elaboration-no-proofs",
+  "recorded_utc": "2026-09-10T22:58:44.728152+00:00",
+  "actual_outer": {
+    "tool": "88077d",
+    "exit_code": 1
+  },
+  "root_causal_read": "35c672",
+  "cause": [
+    "congrArg Prod.fst inferred the wrong product domain",
+    "narrow simp left an if True goal and unused simp argument"
+  ],
+  "target_proofs": 0,
+  "new_objects": [],
+  "seeded_objects": [
+    {
+      "path": "<ABS_PATH_0064>",
+      "bytes": 468792,
+      "mode": "0o644",
+      "sha256": "2276c9ffb4b52afdd004b9fb1c37b4d33d6faedbd5aaff550f424b8c2401b4b7"
+    },
+    {
+      "path": "<ABS_PATH_0065>",
+      "bytes": 102648,
+      "mode": "0o644",
+      "sha256": "b8887638214a0d7a973c793bd4a18018706221b5b3cd5fdbd86610f48522215d"
+    }
+  ],
+  "unrequested": [
+    "P02",
+    "P03",
+    "P04",
+    "P05"
+  ],
+  "retained_files": [
+    {
+      "path": "<ABS_PATH_0066>",
+      "bytes": 17074,
+      "mode": "0o644",
+      "sha256": "c5faa129ef874ffa999ff8f25bc00df25dde2a69ed109b4f72feb83d7a6bd36d"
+    },
+    {
+      "path": "<ABS_PATH_0067>",
+      "bytes": 9304,
+      "mode": "0o644",
+      "sha256": "34aea99cf9dcca070e1ce3d398724fb9f481eb72b637f7a1844384925cac7949"
+    },
+    {
+      "path": "<ABS_PATH_0068>",
+      "bytes": 1514,
+      "mode": "0o644",
+      "sha256": "986eb555842027ddcad5144ce3edee65c85e25588aeffc5d31e5a1a690be19ba"
+    },
+    {
+      "path": "<ABS_PATH_0069>",
+      "bytes": 0,
+      "mode": "0o644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "<ABS_PATH_0070>",
+      "bytes": 1008,
+      "mode": "0o644",
+      "sha256": "356e220d3d5699a5dbe6c546a96915392073910ee85d13ea13e728b9406a8723"
+    },
+    {
+      "path": "<ABS_PATH_0071>",
+      "bytes": 700,
+      "mode": "0o644",
+      "sha256": "11c2c5edb010c1b5e46da013071277d6894cb38ee373b9bb9ab20e13b2dbc3b1"
+    }
+  ]
+}

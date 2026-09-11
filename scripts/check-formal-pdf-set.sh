@@ -320,6 +320,25 @@ else
   fi
 fi
 
+# The finite target-copy note has a committed-source builder. Its exact relation is
+# source Markdown/SVG -> same-profile PDF bytes; cross-toolchain equivalence is intentionally
+# refused because no reviewed alternate producer profile exists.
+MGW_TARGET_COPY_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mgw-target-copy.XXXXXX")"
+if [[ "$MODE" == "--exact" ]]; then
+  python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --check --work-dir "$MGW_TARGET_COPY_BUILD_PARENT/build"
+else
+  if python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --cross-toolchain; then
+    echo "formal PDF set: finite target-copy cross-toolchain mode unexpectedly accepted" >&2
+    exit 1
+  else
+    MGW_TARGET_COPY_CROSS_STATUS=$?
+  fi
+  if [[ "$MGW_TARGET_COPY_CROSS_STATUS" -ne 2 ]]; then
+    echo "formal PDF set: finite target-copy refusal returned $MGW_TARGET_COPY_CROSS_STATUS, expected 2" >&2
+    exit 1
+  fi
+fi
+
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else

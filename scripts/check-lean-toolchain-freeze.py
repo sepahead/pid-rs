@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "6fb02ab3e38c71a27c7bbfcbb0a5506bbea87f59a881fc9e39ae47fd492a536a",
-    "CHANGELOG.md": "b51fd8fe40b483987a281c82769ca89831204e1a9ced2fec2edcbd888c9718d4",
+    "CHANGELOG.md": "ec20b4e88694c042dac46eaaa5e23186dd60f3e409c79460ff531390cdd21707",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -704,7 +704,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "a02b22af10e5ed7a3ba78ee0486042b63750e03dd405daaf2ce98f59140050d5"
+        "6468dc3b57c27b2c740a0c5fbfd0c93fdc1da1612e987b7d852e8d31d0ac6f80"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -713,7 +713,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "53ce40700affd448b4f2715a1cfbe1e336c1ce158ff709e19364c3bc255d91d7"
+        "999b01105712764024dff85101969102d82e2712cf62f274be67e7c98e45c14c"
+    ),
+    "scripts/build-finite-target-copy-mgw-pdf.py": (
+        "5208113e63df6f8e8f5cdd65d61eb1aed2f6a359a3eec27effca35206fe9a455"
     ),
     "scripts/check-formal-pdf-style.py": (
         "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"
@@ -782,6 +785,7 @@ EXPECTED_CURRENT_OPERATIONAL_ADDED_PATHS = (
     EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS
     | EXPECTED_CARGO_DENY_PREFLIGHT_OPERATIONAL_PATHS
     | EXPECTED_WORKFLOW_VISUAL_RECEIPT_OPERATIONAL_PATHS
+    | frozenset({"scripts/build-finite-target-copy-mgw-pdf.py"})
 )
 EXPECTED_PENDING_OPERATIONAL_PATHS = tuple(
     relative

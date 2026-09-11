@@ -1,0 +1,3177 @@
+{
+  "schema": "pid-rs-mgw-target-copy-negative-archive-v2",
+  "status": "inert-retrospective-correction",
+  "supersedes_schema": "pid-rs-mgw-target-copy-negative-archive-v1",
+  "public_record": "audit/archive/mgw-target-copy-development-20260911/NEGATIVE_RESULTS.md",
+  "scope": "Six closed development routes and one explicitly unexecuted source preimage; no new theorem or execution acceptance.",
+  "public_preimages_observed_at_commit": "60116c8fa34e0f52cc5c3f44a94ae806a7681a65",
+  "routes": [
+    {
+      "id": "namespace-shadowing-l1-l4",
+      "status": "closed-setup-failure",
+      "historical_run_label": "l1-l4-proof-attempt",
+      "primary_source_artifact": "source-L1-original",
+      "failed_command": "P01",
+      "source_sha256": "16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e",
+      "diagnostic_artifact": "namespace-shadowing-l1-l4-P01.stdout",
+      "diagnostic_sha256": "ac1141dcdc9dd6d8c6289e0968c5c0a9f46b76ffaf0c436b2d101d4051145019",
+      "historical_registration_status": "registered-development-proof-attempt",
+      "historical_registered_utc": "2026-09-10T22:54:16.236877+00:00",
+      "preregistration_credit_from_this_archive": "none",
+      "outer_observation": {
+        "status": "recorded-in-historical-CLOSED",
+        "exit_code": 1
+      },
+      "closed_record_status": "failed-before-proof-elaboration",
+      "batch_result_status": "stopped-unresolved-no-proof-acceptance",
+      "accepted_target_proofs": 0,
+      "requested_commands": [
+        "P01"
+      ],
+      "unrequested_commands": [
+        "P02",
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "commands": [
+        {
+          "id": "P01",
+          "module": "PidMgwTargetCopyCandidate.L1",
+          "native_returncode": 1,
+          "elapsed_seconds": 0.72330125,
+          "expected_process_observation": false,
+          "started_utc": "2026-09-10T22:54:25.633156+00:00",
+          "finished_utc": "2026-09-10T22:54:26.356464+00:00",
+          "diagnostic_error_heading_count": 1,
+          "error_headings": [
+            "PidMgwTargetCopyCandidate/L1.lean:1:0: error: object file '<ABS_PATH_0053>' of module PidMgwTargetCopy.Interface does not exist"
+          ],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "namespace-shadowing-l1-l4-P01.request.json",
+            "result.json": "namespace-shadowing-l1-l4-P01.result.json",
+            "stdout": "namespace-shadowing-l1-l4-P01.stdout",
+            "stderr": "namespace-shadowing-l1-l4-P01.stderr"
+          }
+        }
+      ],
+      "source_to_staged_custody": [
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L1.lean",
+          "source_artifact": "source-L1-original",
+          "raw_bytes": 3463,
+          "raw_sha256": "16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L2.lean",
+          "source_artifact": "source-L2-original",
+          "raw_bytes": 4331,
+          "raw_sha256": "ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopy/SourceUnionMassCandidate.lean",
+          "source_artifact": "source-SourceUnionMassCandidate-support",
+          "raw_bytes": 1101,
+          "raw_sha256": "7b759b30b02926758fe8136feb818b58ca17d42ec0044ef5529bd43e40e0ef38",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L4.lean",
+          "source_artifact": "source-L4-support",
+          "raw_bytes": 3354,
+          "raw_sha256": "c22353a93b07cf8d9dd758e3fb3a36242db89c05a87d0f9cf771db910bf7c73b",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyJudge/Judge.lean",
+          "source_artifact": "source-Judge-support",
+          "raw_bytes": 1980,
+          "raw_sha256": "4dcca9d61edc211065f18eee04f6dc133f15faf2e3cabd3317793538b1e775cb",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        }
+      ],
+      "run_records": {
+        "SOURCE_MANIFEST.json": "namespace-shadowing-l1-l4-SOURCE_MANIFEST.json",
+        "REGISTRATION.json": "namespace-shadowing-l1-l4-REGISTRATION.json",
+        "CLOSED.json": "namespace-shadowing-l1-l4-CLOSED.json",
+        "REQUEST.json": "namespace-shadowing-l1-l4-REQUEST.json",
+        "RESULT.json": "namespace-shadowing-l1-l4-RESULT.json",
+        "driver.py": "namespace-shadowing-l1-l4-driver.py"
+      },
+      "descriptive_record_discrepancies": {
+        "manifest_phase": "Q",
+        "registration_phase": "P",
+        "manifest_native_calls_field": 4,
+        "manifest_command_roster_length": 5,
+        "interpretation": "Preserved descriptive fields; actual requested-command records control the observed census. No record is silently repaired."
+      }
+    },
+    {
+      "id": "finite-push-l1-layout",
+      "status": "closed-elaboration-failure",
+      "historical_run_label": "l1-l4-proof-layout",
+      "primary_source_artifact": "source-L1-original",
+      "failed_command": "P01",
+      "source_sha256": "16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e",
+      "diagnostic_artifact": "finite-push-l1-layout-P01.stdout",
+      "diagnostic_sha256": "356e220d3d5699a5dbe6c546a96915392073910ee85d13ea13e728b9406a8723",
+      "historical_registration_status": "registered-development-proof-attempt",
+      "historical_registered_utc": "2026-09-10T22:57:18.932480+00:00",
+      "preregistration_credit_from_this_archive": "none",
+      "outer_observation": {
+        "status": "recorded-in-historical-CLOSED",
+        "exit_code": 1
+      },
+      "closed_record_status": "failed-L1-elaboration-no-proofs",
+      "batch_result_status": "stopped-unresolved-no-proof-acceptance",
+      "accepted_target_proofs": 0,
+      "requested_commands": [
+        "P01"
+      ],
+      "unrequested_commands": [
+        "P02",
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "commands": [
+        {
+          "id": "P01",
+          "module": "PidMgwTargetCopyCandidate.L1",
+          "native_returncode": 1,
+          "elapsed_seconds": 9.94261825,
+          "expected_process_observation": false,
+          "started_utc": "2026-09-10T22:57:25.803333+00:00",
+          "finished_utc": "2026-09-10T22:57:35.745991+00:00",
+          "diagnostic_error_heading_count": 3,
+          "error_headings": [
+            "PidMgwTargetCopyCandidate/L1.lean:29:30: error: Application type mismatch: The argument",
+            "PidMgwTargetCopyCandidate/L1.lean:42:15: error: unsolved goals",
+            "PidMgwTargetCopyCandidate/L1.lean:42:29: error: This simp argument is unused:"
+          ],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "finite-push-l1-layout-P01.request.json",
+            "result.json": "finite-push-l1-layout-P01.result.json",
+            "stdout": "finite-push-l1-layout-P01.stdout",
+            "stderr": "finite-push-l1-layout-P01.stderr"
+          }
+        }
+      ],
+      "source_to_staged_custody": [
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L1.lean",
+          "source_artifact": "source-L1-original",
+          "raw_bytes": 3463,
+          "raw_sha256": "16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L2.lean",
+          "source_artifact": "source-L2-original",
+          "raw_bytes": 4331,
+          "raw_sha256": "ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopy/SourceUnionMassCandidate.lean",
+          "source_artifact": "source-SourceUnionMassCandidate-support",
+          "raw_bytes": 1101,
+          "raw_sha256": "7b759b30b02926758fe8136feb818b58ca17d42ec0044ef5529bd43e40e0ef38",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L4.lean",
+          "source_artifact": "source-L4-support",
+          "raw_bytes": 3354,
+          "raw_sha256": "c22353a93b07cf8d9dd758e3fb3a36242db89c05a87d0f9cf771db910bf7c73b",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyJudge/Judge.lean",
+          "source_artifact": "source-Judge-support",
+          "raw_bytes": 1980,
+          "raw_sha256": "4dcca9d61edc211065f18eee04f6dc133f15faf2e3cabd3317793538b1e775cb",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        }
+      ],
+      "run_records": {
+        "SOURCE_MANIFEST.json": "finite-push-l1-layout-SOURCE_MANIFEST.json",
+        "REGISTRATION.json": "finite-push-l1-layout-REGISTRATION.json",
+        "CLOSED.json": "finite-push-l1-layout-CLOSED.json",
+        "REQUEST.json": "finite-push-l1-layout-REQUEST.json",
+        "RESULT.json": "finite-push-l1-layout-RESULT.json",
+        "driver.py": "finite-push-l1-layout-driver.py"
+      },
+      "descriptive_record_discrepancies": {
+        "manifest_phase": "Q",
+        "registration_phase": "P",
+        "manifest_native_calls_field": 4,
+        "manifest_command_roster_length": 5,
+        "interpretation": "Preserved descriptive fields; actual requested-command records control the observed census. No record is silently repaired."
+      }
+    },
+    {
+      "id": "membership-l2-layout",
+      "status": "closed-elaboration-failure-with-unaccepted-prefix",
+      "historical_run_label": "l1-fixed-proof",
+      "primary_source_artifact": "source-L2-original",
+      "failed_command": "P02",
+      "source_sha256": "ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904",
+      "diagnostic_artifact": "membership-l2-layout-P02.stdout",
+      "diagnostic_sha256": "56ae18cf7a681947aa38714f1e58e1d6f409f7293d49e9436f7311d7a91779bb",
+      "historical_registration_status": "registered-development-proof-attempt",
+      "historical_registered_utc": "2026-09-10T23:02:19.219099+00:00",
+      "preregistration_credit_from_this_archive": "none",
+      "outer_observation": {
+        "status": "recorded-in-historical-CLOSED",
+        "exit_code": 1
+      },
+      "closed_record_status": "failed-L2-elaboration-L1-compiler-prefix-retained",
+      "batch_result_status": "stopped-unresolved-no-proof-acceptance",
+      "accepted_target_proofs": 0,
+      "requested_commands": [
+        "P01",
+        "P02"
+      ],
+      "unrequested_commands": [
+        "P03",
+        "P04",
+        "P05"
+      ],
+      "commands": [
+        {
+          "id": "P01",
+          "module": "PidMgwTargetCopyCandidate.L1",
+          "native_returncode": 0,
+          "elapsed_seconds": 2.131277,
+          "expected_process_observation": true,
+          "started_utc": "2026-09-10T23:02:27.427671+00:00",
+          "finished_utc": "2026-09-10T23:02:29.558959+00:00",
+          "diagnostic_error_heading_count": 0,
+          "error_headings": [],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "membership-l2-layout-P01.request.json",
+            "result.json": "membership-l2-layout-P01.result.json",
+            "stdout": "membership-l2-layout-P01.stdout",
+            "stderr": "membership-l2-layout-P01.stderr"
+          }
+        },
+        {
+          "id": "P02",
+          "module": "PidMgwTargetCopyCandidate.L2",
+          "native_returncode": 1,
+          "elapsed_seconds": 1.918769375,
+          "expected_process_observation": false,
+          "started_utc": "2026-09-10T23:02:29.560950+00:00",
+          "finished_utc": "2026-09-10T23:02:31.479728+00:00",
+          "diagnostic_error_heading_count": 2,
+          "error_headings": [
+            "PidMgwTargetCopyCandidate/L2.lean:60:4: error: Type mismatch: After simplification, term",
+            "PidMgwTargetCopyCandidate/L2.lean:75:4: error: Type mismatch: After simplification, term"
+          ],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "membership-l2-layout-P02.request.json",
+            "result.json": "membership-l2-layout-P02.result.json",
+            "stdout": "membership-l2-layout-P02.stdout",
+            "stderr": "membership-l2-layout-P02.stderr"
+          }
+        }
+      ],
+      "source_to_staged_custody": [
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L1.lean",
+          "source_artifact": "source-L1-prefix",
+          "raw_bytes": 3475,
+          "raw_sha256": "4624baa2c8c6f7ba8cf0b004824f25a4a6c6710ed2f33613c1d2008a55e1a7e0",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L2.lean",
+          "source_artifact": "source-L2-original",
+          "raw_bytes": 4331,
+          "raw_sha256": "ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopy/SourceUnionMassCandidate.lean",
+          "source_artifact": "source-SourceUnionMassCandidate-support",
+          "raw_bytes": 1101,
+          "raw_sha256": "7b759b30b02926758fe8136feb818b58ca17d42ec0044ef5529bd43e40e0ef38",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L4.lean",
+          "source_artifact": "source-L4-support",
+          "raw_bytes": 3354,
+          "raw_sha256": "c22353a93b07cf8d9dd758e3fb3a36242db89c05a87d0f9cf771db910bf7c73b",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyJudge/Judge.lean",
+          "source_artifact": "source-Judge-support",
+          "raw_bytes": 1980,
+          "raw_sha256": "4dcca9d61edc211065f18eee04f6dc133f15faf2e3cabd3317793538b1e775cb",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        }
+      ],
+      "run_records": {
+        "SOURCE_MANIFEST.json": "membership-l2-layout-SOURCE_MANIFEST.json",
+        "REGISTRATION.json": "membership-l2-layout-REGISTRATION.json",
+        "CLOSED.json": "membership-l2-layout-CLOSED.json",
+        "REQUEST.json": "membership-l2-layout-REQUEST.json",
+        "RESULT.json": "membership-l2-layout-RESULT.json",
+        "driver.py": "membership-l2-layout-driver.py"
+      },
+      "descriptive_record_discrepancies": {
+        "manifest_phase": "Q",
+        "registration_phase": "P",
+        "manifest_native_calls_field": 4,
+        "manifest_command_roster_length": 5,
+        "interpretation": "Preserved descriptive fields; actual requested-command records control the observed census. No record is silently repaired."
+      }
+    },
+    {
+      "id": "identities-l5-original",
+      "status": "closed-native-failure-outer-unavailable",
+      "historical_run_label": "identities-proof",
+      "primary_source_artifact": "source-L5-original",
+      "failed_command": "P01",
+      "source_sha256": "0c6cc97d33c5828a954a893b11acb1a9584c4d6e7f867976ccf26cdda9be9d3e",
+      "diagnostic_artifact": "identities-l5-original-P01.stdout",
+      "diagnostic_sha256": "0dbe0d2d90daf04b2cfa48daef97cdf2be2fc3828540782aadc76c9e788327cc",
+      "historical_registration_status": "registered-development-proof-attempt",
+      "historical_registered_utc": "2026-09-11T01:48:05.083540+00:00",
+      "preregistration_credit_from_this_archive": "none",
+      "outer_observation": {
+        "status": "unavailable",
+        "exit_code": null,
+        "reason": "unavailable: tool reports Unknown process id75480; do not invent exit code"
+      },
+      "closed_record_status": "L5-native-failure-recorded-outer-handle-missing-no-acceptance",
+      "batch_result_status": "stopped-unresolved-no-proof-acceptance",
+      "accepted_target_proofs": 0,
+      "requested_commands": [
+        "P01"
+      ],
+      "unrequested_commands": [
+        "P02",
+        "P03"
+      ],
+      "commands": [
+        {
+          "id": "P01",
+          "module": "PidMgwTargetCopyCandidate.L5",
+          "native_returncode": 1,
+          "elapsed_seconds": 11.7761075,
+          "expected_process_observation": false,
+          "started_utc": "2026-09-11T01:48:15.436082+00:00",
+          "finished_utc": "2026-09-11T01:48:27.212216+00:00",
+          "diagnostic_error_heading_count": 5,
+          "error_headings": [
+            "PidMgwTargetCopyCandidate/L5.lean:47:4: error: Type mismatch: After simplification, term",
+            "PidMgwTargetCopyCandidate/L5.lean:61:17: error: Function expected at",
+            "PidMgwTargetCopyCandidate/L5.lean:62:17: error: Function expected at",
+            "PidMgwTargetCopyCandidate/L5.lean:63:19: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce",
+            "PidMgwTargetCopyCandidate/L5.lean:70:8: error: Type mismatch"
+          ],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "identities-l5-original-P01.request.json",
+            "result.json": "identities-l5-original-P01.result.json",
+            "stdout": "identities-l5-original-P01.stdout",
+            "stderr": "identities-l5-original-P01.stderr"
+          }
+        }
+      ],
+      "source_to_staged_custody": [
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L5.lean",
+          "source_artifact": "source-L5-original",
+          "raw_bytes": 4533,
+          "raw_sha256": "0c6cc97d33c5828a954a893b11acb1a9584c4d6e7f867976ccf26cdda9be9d3e",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/Identities.lean",
+          "source_artifact": "source-Identities-support",
+          "raw_bytes": 4252,
+          "raw_sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyJudge/IdentityJudge.lean",
+          "source_artifact": "source-IdentityJudge-support",
+          "raw_bytes": 2114,
+          "raw_sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        }
+      ],
+      "run_records": {
+        "SOURCE_MANIFEST.json": "identities-l5-original-SOURCE_MANIFEST.json",
+        "REGISTRATION.json": "identities-l5-original-REGISTRATION.json",
+        "CLOSED.json": "identities-l5-original-CLOSED.json",
+        "REQUEST.json": "identities-l5-original-REQUEST.json",
+        "RESULT.json": "identities-l5-original-RESULT.json",
+        "driver.py": "identities-l5-original-driver.py"
+      },
+      "descriptive_record_discrepancies": {
+        "manifest_phase": "Q",
+        "registration_phase": "P",
+        "manifest_native_calls_field": 4,
+        "manifest_command_roster_length": 3,
+        "interpretation": "Preserved descriptive fields; actual requested-command records control the observed census. No record is silently repaired."
+      }
+    },
+    {
+      "id": "filter-repair-l5-first",
+      "status": "closed-elaboration-failure",
+      "historical_run_label": "l5-fixed-proof",
+      "primary_source_artifact": "source-L5-filter-repair",
+      "failed_command": "P01",
+      "source_sha256": "f65384929d3a65ae4f6a4dd241f9fc412753263c6e1598534259af8b95d02b5c",
+      "diagnostic_artifact": "filter-repair-l5-first-P01.stdout",
+      "diagnostic_sha256": "872ca6c6f711205b02d27e1d9852a180ab847a7f1843b90fd8b7f2316f3f010d",
+      "historical_registration_status": "registered-development-proof-attempt",
+      "historical_registered_utc": "2026-09-11T01:58:24.838586+00:00",
+      "preregistration_credit_from_this_archive": "none",
+      "outer_observation": {
+        "status": "recorded-in-historical-CLOSED",
+        "exit_code": 1
+      },
+      "closed_record_status": "L5-native-and-outer-failure-preserved-no-proof-acceptance",
+      "batch_result_status": "stopped-unresolved-no-proof-acceptance",
+      "accepted_target_proofs": 0,
+      "requested_commands": [
+        "P01"
+      ],
+      "unrequested_commands": [
+        "P02",
+        "P03"
+      ],
+      "commands": [
+        {
+          "id": "P01",
+          "module": "PidMgwTargetCopyCandidate.L5",
+          "native_returncode": 1,
+          "elapsed_seconds": 13.160147709,
+          "expected_process_observation": false,
+          "started_utc": "2026-09-11T01:58:34.037900+00:00",
+          "finished_utc": "2026-09-11T01:58:47.198074+00:00",
+          "diagnostic_error_heading_count": 5,
+          "error_headings": [
+            "PidMgwTargetCopyCandidate/L5.lean:47:4: error: Type mismatch: After simplification, term",
+            "PidMgwTargetCopyCandidate/L5.lean:62:17: error: Function expected at",
+            "PidMgwTargetCopyCandidate/L5.lean:63:17: error: Function expected at",
+            "PidMgwTargetCopyCandidate/L5.lean:64:19: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce",
+            "PidMgwTargetCopyCandidate/L5.lean:71:8: error: Type mismatch: After simplification, term"
+          ],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "filter-repair-l5-first-P01.request.json",
+            "result.json": "filter-repair-l5-first-P01.result.json",
+            "stdout": "filter-repair-l5-first-P01.stdout",
+            "stderr": "filter-repair-l5-first-P01.stderr"
+          }
+        }
+      ],
+      "source_to_staged_custody": [
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L5.lean",
+          "source_artifact": "source-L5-filter-repair",
+          "raw_bytes": 4629,
+          "raw_sha256": "f65384929d3a65ae4f6a4dd241f9fc412753263c6e1598534259af8b95d02b5c",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/Identities.lean",
+          "source_artifact": "source-Identities-support",
+          "raw_bytes": 4252,
+          "raw_sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyJudge/IdentityJudge.lean",
+          "source_artifact": "source-IdentityJudge-support",
+          "raw_bytes": 2114,
+          "raw_sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        }
+      ],
+      "run_records": {
+        "SOURCE_MANIFEST.json": "filter-repair-l5-first-SOURCE_MANIFEST.json",
+        "REGISTRATION.json": "filter-repair-l5-first-REGISTRATION.json",
+        "CLOSED.json": "filter-repair-l5-first-CLOSED.json",
+        "REQUEST.json": "filter-repair-l5-first-REQUEST.json",
+        "RESULT.json": "filter-repair-l5-first-RESULT.json",
+        "driver.py": "filter-repair-l5-first-driver.py"
+      },
+      "descriptive_record_discrepancies": {
+        "manifest_phase": "P",
+        "registration_phase": "P",
+        "manifest_native_calls_field": 4,
+        "manifest_command_roster_length": 3,
+        "interpretation": "Preserved descriptive fields; actual requested-command records control the observed census. No record is silently repaired."
+      }
+    },
+    {
+      "id": "filter-decider-diagnostic",
+      "status": "closed-diagnostic-failure",
+      "historical_run_label": "l5-expanded-diagnostic",
+      "primary_source_artifact": "source-L5-expanded-diagnostic",
+      "failed_command": "P01",
+      "source_sha256": "dd02c019faa6a2b0402703f8d325272d6cd2a86cc7479cefd974f27dccc01280",
+      "diagnostic_artifact": "filter-decider-diagnostic-P01.stdout",
+      "diagnostic_sha256": "63bbdf0dec30d1480a22c1b95f83abe2c05cf6ef624f3c82b707c4d8a4e8fd5b",
+      "historical_registration_status": "registered-development-proof-attempt",
+      "historical_registered_utc": "2026-09-11T02:03:22.533639+00:00",
+      "preregistration_credit_from_this_archive": "none",
+      "outer_observation": {
+        "status": "recorded-in-historical-CLOSED",
+        "exit_code": 1
+      },
+      "closed_record_status": "expanded-diagnostic-failure-observed-no-proof-acceptance",
+      "batch_result_status": "stopped-unresolved-no-proof-acceptance",
+      "accepted_target_proofs": 0,
+      "requested_commands": [
+        "P01"
+      ],
+      "unrequested_commands": [
+        "P02",
+        "P03"
+      ],
+      "commands": [
+        {
+          "id": "P01",
+          "module": "PidMgwTargetCopyCandidate.L5",
+          "native_returncode": 1,
+          "elapsed_seconds": 2.679019,
+          "expected_process_observation": false,
+          "started_utc": "2026-09-11T02:03:30.571140+00:00",
+          "finished_utc": "2026-09-11T02:03:33.250179+00:00",
+          "diagnostic_error_heading_count": 5,
+          "error_headings": [
+            "PidMgwTargetCopyCandidate/L5.lean:48:4: error: Type mismatch: After simplification, term",
+            "PidMgwTargetCopyCandidate/L5.lean:63:17: error: Function expected at",
+            "PidMgwTargetCopyCandidate/L5.lean:64:17: error: Function expected at",
+            "PidMgwTargetCopyCandidate/L5.lean:65:19: error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce",
+            "PidMgwTargetCopyCandidate/L5.lean:72:8: error: Type mismatch: After simplification, term"
+          ],
+          "proof_credit": "none; historical compiler observation only",
+          "records": {
+            "request.json": "filter-decider-diagnostic-P01.request.json",
+            "result.json": "filter-decider-diagnostic-P01.result.json",
+            "stdout": "filter-decider-diagnostic-P01.stdout",
+            "stderr": "filter-decider-diagnostic-P01.stderr"
+          }
+        }
+      ],
+      "source_to_staged_custody": [
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/L5.lean",
+          "source_artifact": "source-L5-expanded-diagnostic",
+          "raw_bytes": 4652,
+          "raw_sha256": "dd02c019faa6a2b0402703f8d325272d6cd2a86cc7479cefd974f27dccc01280",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyCandidate/Identities.lean",
+          "source_artifact": "source-Identities-support",
+          "raw_bytes": 4252,
+          "raw_sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        },
+        {
+          "stage_relative": "work/PidMgwTargetCopyJudge/IdentityJudge.lean",
+          "source_artifact": "source-IdentityJudge-support",
+          "raw_bytes": 2114,
+          "raw_sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731",
+          "source_equals_staged": true,
+          "matches_manifest_stage_input": true
+        }
+      ],
+      "run_records": {
+        "SOURCE_MANIFEST.json": "filter-decider-diagnostic-SOURCE_MANIFEST.json",
+        "REGISTRATION.json": "filter-decider-diagnostic-REGISTRATION.json",
+        "CLOSED.json": "filter-decider-diagnostic-CLOSED.json",
+        "REQUEST.json": "filter-decider-diagnostic-REQUEST.json",
+        "RESULT.json": "filter-decider-diagnostic-RESULT.json",
+        "driver.py": "filter-decider-diagnostic-driver.py"
+      },
+      "descriptive_record_discrepancies": {
+        "manifest_phase": "P",
+        "registration_phase": "P",
+        "manifest_native_calls_field": 4,
+        "manifest_command_roster_length": 3,
+        "interpretation": "Preserved descriptive fields; actual requested-command records control the observed census. No record is silently repaired."
+      }
+    }
+  ],
+  "source_only_context": [
+    {
+      "id": "L5-preseal-source-only",
+      "status": "source-only-correction-no-observed-execution-failure",
+      "source_artifact": "source-L5-preseal",
+      "correction_record": "L5-preseal-correction",
+      "superseded_by": "source-L5-original",
+      "native_observation": null,
+      "scope": "Retained because the source-side record explicitly distinguishes a preseal edit from a failed run."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source-L1-original",
+      "path": "payloads/sources/L1-original.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 3463,
+      "raw_sha256": "16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e",
+      "bytes": 3463,
+      "sha256": "16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L2-original",
+      "path": "payloads/sources/L2-original.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 4331,
+      "raw_sha256": "ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904",
+      "bytes": 4331,
+      "sha256": "ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L5-original",
+      "path": "payloads/sources/L5-original.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 4533,
+      "raw_sha256": "0c6cc97d33c5828a954a893b11acb1a9584c4d6e7f867976ccf26cdda9be9d3e",
+      "bytes": 4533,
+      "sha256": "0c6cc97d33c5828a954a893b11acb1a9584c4d6e7f867976ccf26cdda9be9d3e",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L5-filter-repair",
+      "path": "payloads/sources/L5-filter-repair.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 4629,
+      "raw_sha256": "f65384929d3a65ae4f6a4dd241f9fc412753263c6e1598534259af8b95d02b5c",
+      "bytes": 4629,
+      "sha256": "f65384929d3a65ae4f6a4dd241f9fc412753263c6e1598534259af8b95d02b5c",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L5-expanded-diagnostic",
+      "path": "payloads/sources/L5-expanded-diagnostic.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 4652,
+      "raw_sha256": "dd02c019faa6a2b0402703f8d325272d6cd2a86cc7479cefd974f27dccc01280",
+      "bytes": 4652,
+      "sha256": "dd02c019faa6a2b0402703f8d325272d6cd2a86cc7479cefd974f27dccc01280",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L5-preseal",
+      "path": "payloads/sources/L5-preseal.lean.txt",
+      "role": "historical-source-only",
+      "raw_bytes": 4514,
+      "raw_sha256": "73784e513f6c0957f1ea8fb4509d53138751b5e63c91c59527ab0ce673d27a01",
+      "bytes": 4514,
+      "sha256": "73784e513f6c0957f1ea8fb4509d53138751b5e63c91c59527ab0ce673d27a01",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-Interface",
+      "path": "payloads/sources/Interface.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 8939,
+      "raw_sha256": "88030fced19ec58e99d92918a7a6830a53415febb0e46373937a812650e3203d",
+      "bytes": 8939,
+      "sha256": "88030fced19ec58e99d92918a7a6830a53415febb0e46373937a812650e3203d",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-JudgeCore",
+      "path": "payloads/sources/JudgeCore.lean.txt",
+      "role": "historical-Lean-source",
+      "raw_bytes": 4723,
+      "raw_sha256": "396b270bd8a55cc434e79fca6cbb38c0045b841eca2215fc143d47093b77bc4e",
+      "bytes": 4723,
+      "sha256": "396b270bd8a55cc434e79fca6cbb38c0045b841eca2215fc143d47093b77bc4e",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "L5-preseal-correction",
+      "path": "payloads/context/L5-PRESEAL_CORRECTION.json.txt",
+      "role": "source-only-change-no-observed-failure",
+      "raw_bytes": 627,
+      "raw_sha256": "00fe18c8a63ad42b76e3b9f55657bf37e76911940b85d78a0b4f4af0f7444077",
+      "bytes": 627,
+      "sha256": "00fe18c8a63ad42b76e3b9f55657bf37e76911940b85d78a0b4f4af0f7444077",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-SOURCE_MANIFEST.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/SOURCE_MANIFEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 15827,
+      "raw_sha256": "fddca0997b1c95c246e38612a60af5fd209854b0e68ca25eea4516bfc4692d36",
+      "bytes": 8537,
+      "sha256": "a84a852c45894b718dd9ef04a6edefe226b42c176bdf5705fc9b2665feb57a81",
+      "redactions": {
+        "<ABS_PATH_0001>": 1,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0003>": 7,
+        "<ABS_PATH_0004>": 1,
+        "<ABS_PATH_0005>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0018>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0028>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0040>": 1,
+        "<ABS_PATH_0041>": 5,
+        "<ABS_PATH_0042>": 1,
+        "<ABS_PATH_0043>": 1,
+        "<ABS_PATH_0044>": 1,
+        "<ABS_PATH_0045>": 1,
+        "<ABS_PATH_0046>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-REGISTRATION.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/REGISTRATION.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 655,
+      "raw_sha256": "37c07c30770403c1299739b9c839769aa793629b7942dec3bf1628ff296c09af",
+      "bytes": 540,
+      "sha256": "69ced53641f27135b13c40895300f23e219c25190c4d8078d3d20271a1173648",
+      "redactions": {
+        "<ABS_PATH_0001>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-CLOSED.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/CLOSED.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 2231,
+      "raw_sha256": "b8e1d67a5e69f2a9f61c9f988d17ad0f0a690091e4748a090f8d066ebee1a082",
+      "bytes": 1461,
+      "sha256": "8fe769fc1242ce0f8c56f54757c993af8746ff4e0e73b7be6668cfa34b828727",
+      "redactions": {
+        "<ABS_PATH_0047>": 1,
+        "<ABS_PATH_0048>": 1,
+        "<ABS_PATH_0049>": 1,
+        "<ABS_PATH_0050>": 1,
+        "<ABS_PATH_0051>": 1,
+        "<ABS_PATH_0052>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-REQUEST.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/REQUEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 17089,
+      "raw_sha256": "f9f083a21bc68b659c354e26d576cda2260605ac01747da8ad1a1a7ee12fa04f",
+      "bytes": 9684,
+      "sha256": "232d6771dae37fae99f245ef78a82367e8cde7610a0a62f203b6577f8ae0eb60",
+      "redactions": {
+        "<ABS_PATH_0003>": 7,
+        "<ABS_PATH_0040>": 1,
+        "<ABS_PATH_0041>": 5,
+        "<ABS_PATH_0042>": 1,
+        "<ABS_PATH_0043>": 1,
+        "<ABS_PATH_0044>": 1,
+        "<ABS_PATH_0045>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0004>": 1,
+        "<ABS_PATH_0005>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0018>": 1,
+        "<ABS_PATH_0001>": 2,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0046>": 1,
+        "<ABS_PATH_0028>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-RESULT.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/RESULT.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 9305,
+      "raw_sha256": "d7128acf6082a7f4c98a06afc51fe361e80b90706545fe70001d8ccc3619bcd6",
+      "bytes": 5785,
+      "sha256": "f985f1db97044b35b98ebc12c936a88661848157d6c410ffe3ff815fe992aad8",
+      "redactions": {
+        "<ABS_PATH_0047>": 1,
+        "<ABS_PATH_0002>": 1,
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 1,
+        "<ABS_PATH_0021>": 1,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0028>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-driver.py",
+      "path": "payloads/records/namespace-shadowing-l1-l4/driver.py.txt",
+      "role": "inert-historical-driver-source",
+      "raw_bytes": 12855,
+      "raw_sha256": "0adb733e3594bc28b5cbff629aea4f3765b1fac4e1eddeb53bad62da1e07f16e",
+      "bytes": 12855,
+      "sha256": "0adb733e3594bc28b5cbff629aea4f3765b1fac4e1eddeb53bad62da1e07f16e",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-SourceUnionMassCandidate-support",
+      "path": "payloads/sources/SourceUnionMassCandidate-support.lean.txt",
+      "role": "historical-staged-support-source",
+      "raw_bytes": 1101,
+      "raw_sha256": "7b759b30b02926758fe8136feb818b58ca17d42ec0044ef5529bd43e40e0ef38",
+      "bytes": 1101,
+      "sha256": "7b759b30b02926758fe8136feb818b58ca17d42ec0044ef5529bd43e40e0ef38",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L4-support",
+      "path": "payloads/sources/L4-support.lean.txt",
+      "role": "historical-staged-support-source",
+      "raw_bytes": 3354,
+      "raw_sha256": "c22353a93b07cf8d9dd758e3fb3a36242db89c05a87d0f9cf771db910bf7c73b",
+      "bytes": 3354,
+      "sha256": "c22353a93b07cf8d9dd758e3fb3a36242db89c05a87d0f9cf771db910bf7c73b",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-Judge-support",
+      "path": "payloads/sources/Judge-support.lean.txt",
+      "role": "historical-staged-support-source",
+      "raw_bytes": 1980,
+      "raw_sha256": "4dcca9d61edc211065f18eee04f6dc133f15faf2e3cabd3317793538b1e775cb",
+      "bytes": 1980,
+      "sha256": "4dcca9d61edc211065f18eee04f6dc133f15faf2e3cabd3317793538b1e775cb",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-P01.request.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/P01.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 702,
+      "raw_sha256": "afaf550c00417eb97a51e7334e6b77be571777fe9094c0c1bb1c0d8457c9619d",
+      "bytes": 354,
+      "sha256": "8d867dd08547e8831cc2cf8aebefd2b18bc3814069611542e00be0fb31d2e037",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0040>": 1,
+        "<ABS_PATH_0041>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-P01.result.json",
+      "path": "payloads/records/namespace-shadowing-l1-l4/P01.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1517,
+      "raw_sha256": "e52047ed81e948f928531a216225a4e0627b8d94d47606f630b0d8b038cf1e49",
+      "bytes": 917,
+      "sha256": "b58d2abdd0f71dfa2a2cef6f46f7701fcd69cc7d468b2f4679b5a59109348daa",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0040>": 1,
+        "<ABS_PATH_0041>": 1,
+        "<ABS_PATH_0050>": 1,
+        "<ABS_PATH_0051>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-P01.stdout",
+      "path": "payloads/records/namespace-shadowing-l1-l4/P01.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 284,
+      "raw_sha256": "ac1141dcdc9dd6d8c6289e0968c5c0a9f46b76ffaf0c436b2d101d4051145019",
+      "bytes": 128,
+      "sha256": "0ba3c84bf1c92e2d3e051ab1af4d7c8bf0e88db74cfd97442b693dbec0e9d51f",
+      "redactions": {
+        "<ABS_PATH_0053>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "namespace-shadowing-l1-l4-P01.stderr",
+      "path": "payloads/records/namespace-shadowing-l1-l4/P01.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-SOURCE_MANIFEST.json",
+      "path": "payloads/records/finite-push-l1-layout/SOURCE_MANIFEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 15813,
+      "raw_sha256": "30233f5d0096bd7c472f1c46ed3f05ac69ae99622b8dd92c3aeb7e597ae49c57",
+      "bytes": 8537,
+      "sha256": "1406166699abca443a56847f87b701fe1d04e4929046ce6033478e910e257955",
+      "redactions": {
+        "<ABS_PATH_0054>": 1,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0003>": 7,
+        "<ABS_PATH_0055>": 1,
+        "<ABS_PATH_0056>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0057>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0028>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0058>": 1,
+        "<ABS_PATH_0059>": 5,
+        "<ABS_PATH_0060>": 1,
+        "<ABS_PATH_0061>": 1,
+        "<ABS_PATH_0062>": 1,
+        "<ABS_PATH_0063>": 1,
+        "<ABS_PATH_0046>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-REGISTRATION.json",
+      "path": "payloads/records/finite-push-l1-layout/REGISTRATION.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 654,
+      "raw_sha256": "4b9e2a2a6217cf3fd99157f275ca65995959956f413cc9cbdbaf8a0c4561b367",
+      "bytes": 540,
+      "sha256": "3c41e9dc567b20d55d55b7f0c5b98c31df97b2cc7a9838804f52390873ef4520",
+      "redactions": {
+        "<ABS_PATH_0054>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-CLOSED.json",
+      "path": "payloads/records/finite-push-l1-layout/CLOSED.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 2969,
+      "raw_sha256": "b23d6047e64cfb8a6e1d796a0bf811dbb1af7febb51444532a655fa8b1510f5a",
+      "bytes": 1890,
+      "sha256": "e1d0b64f52eddca1f7331330e8e79fe5345d457cb190c6c36531993dc30d61c6",
+      "redactions": {
+        "<ABS_PATH_0064>": 1,
+        "<ABS_PATH_0065>": 1,
+        "<ABS_PATH_0066>": 1,
+        "<ABS_PATH_0067>": 1,
+        "<ABS_PATH_0068>": 1,
+        "<ABS_PATH_0069>": 1,
+        "<ABS_PATH_0070>": 1,
+        "<ABS_PATH_0071>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-REQUEST.json",
+      "path": "payloads/records/finite-push-l1-layout/REQUEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 17074,
+      "raw_sha256": "c5faa129ef874ffa999ff8f25bc00df25dde2a69ed109b4f72feb83d7a6bd36d",
+      "bytes": 9684,
+      "sha256": "95920cadb999d1f8a75ca621afb90c86c00015b5edd6e941e7c44fa5b4053e9d",
+      "redactions": {
+        "<ABS_PATH_0003>": 7,
+        "<ABS_PATH_0058>": 1,
+        "<ABS_PATH_0059>": 5,
+        "<ABS_PATH_0060>": 1,
+        "<ABS_PATH_0061>": 1,
+        "<ABS_PATH_0062>": 1,
+        "<ABS_PATH_0063>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0055>": 1,
+        "<ABS_PATH_0056>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0057>": 1,
+        "<ABS_PATH_0054>": 2,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0046>": 1,
+        "<ABS_PATH_0028>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-RESULT.json",
+      "path": "payloads/records/finite-push-l1-layout/RESULT.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 9304,
+      "raw_sha256": "34aea99cf9dcca070e1ce3d398724fb9f481eb72b637f7a1844384925cac7949",
+      "bytes": 5785,
+      "sha256": "879e02e143e1ae428df1b92de1f61c3b23e73edb7788443e7e2d61869626bb3a",
+      "redactions": {
+        "<ABS_PATH_0066>": 1,
+        "<ABS_PATH_0002>": 1,
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 1,
+        "<ABS_PATH_0021>": 1,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0028>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-driver.py",
+      "path": "payloads/records/finite-push-l1-layout/driver.py.txt",
+      "role": "inert-historical-driver-source",
+      "raw_bytes": 14014,
+      "raw_sha256": "e976c2526daf234ee5451a78c27abd51b93ad51ac9e0384818bd7e6dff3e3df2",
+      "bytes": 14014,
+      "sha256": "e976c2526daf234ee5451a78c27abd51b93ad51ac9e0384818bd7e6dff3e3df2",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-P01.request.json",
+      "path": "payloads/records/finite-push-l1-layout/P01.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 700,
+      "raw_sha256": "11c2c5edb010c1b5e46da013071277d6894cb38ee373b9bb9ab20e13b2dbc3b1",
+      "bytes": 354,
+      "sha256": "af4b93d36a25003e38fa7e38b82deb15e43083db0b209d530adfceb9b6b05c15",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0058>": 1,
+        "<ABS_PATH_0059>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-P01.result.json",
+      "path": "payloads/records/finite-push-l1-layout/P01.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1514,
+      "raw_sha256": "986eb555842027ddcad5144ce3edee65c85e25588aeffc5d31e5a1a690be19ba",
+      "bytes": 918,
+      "sha256": "404d38d7e5eab6359a9ac1d95af89e721d68044f5c2350228978ccabba660dee",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0058>": 1,
+        "<ABS_PATH_0059>": 1,
+        "<ABS_PATH_0069>": 1,
+        "<ABS_PATH_0070>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-P01.stdout",
+      "path": "payloads/records/finite-push-l1-layout/P01.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 1008,
+      "raw_sha256": "356e220d3d5699a5dbe6c546a96915392073910ee85d13ea13e728b9406a8723",
+      "bytes": 1008,
+      "sha256": "356e220d3d5699a5dbe6c546a96915392073910ee85d13ea13e728b9406a8723",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "finite-push-l1-layout-P01.stderr",
+      "path": "payloads/records/finite-push-l1-layout/P01.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-SOURCE_MANIFEST.json",
+      "path": "payloads/records/membership-l2-layout/SOURCE_MANIFEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 15767,
+      "raw_sha256": "08a441e7a99c240ffee00932640d0f11c2ddb8db4e2fd800ce1bf64accfbb6e8",
+      "bytes": 8537,
+      "sha256": "665c96331aa023093343a4cdc5007381d614a732a0be3cca45bde8bea93c667b",
+      "redactions": {
+        "<ABS_PATH_0072>": 1,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0003>": 7,
+        "<ABS_PATH_0073>": 1,
+        "<ABS_PATH_0074>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0075>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0076>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0077>": 1,
+        "<ABS_PATH_0078>": 5,
+        "<ABS_PATH_0079>": 1,
+        "<ABS_PATH_0080>": 1,
+        "<ABS_PATH_0081>": 1,
+        "<ABS_PATH_0082>": 1,
+        "<ABS_PATH_0046>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-REGISTRATION.json",
+      "path": "payloads/records/membership-l2-layout/REGISTRATION.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 650,
+      "raw_sha256": "8c35268ec42c30cca816a5764aa1152dcc470f2096bfc67a1fda427ece6285f6",
+      "bytes": 540,
+      "sha256": "c679df4a01a2e67db3317e21c181063565c51511a284c29cad29fd9edb16bf85",
+      "redactions": {
+        "<ABS_PATH_0072>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-CLOSED.json",
+      "path": "payloads/records/membership-l2-layout/CLOSED.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 3821,
+      "raw_sha256": "cc8e899af851e1f95e989a24ec738171bcbc08ba923472d81dcc0552c8a37d09",
+      "bytes": 2433,
+      "sha256": "3ce95cb303e9bd3998dd198326ffb49797c54d02479e13835f7e7a0ee3f4247a",
+      "redactions": {
+        "<ABS_PATH_0077>": 1,
+        "<ABS_PATH_0083>": 1,
+        "<ABS_PATH_0084>": 1,
+        "<ABS_PATH_0085>": 1,
+        "<ABS_PATH_0086>": 1,
+        "<ABS_PATH_0087>": 1,
+        "<ABS_PATH_0088>": 1,
+        "<ABS_PATH_0089>": 1,
+        "<ABS_PATH_0090>": 1,
+        "<ABS_PATH_0091>": 1,
+        "<ABS_PATH_0092>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-REQUEST.json",
+      "path": "payloads/records/membership-l2-layout/REQUEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 17024,
+      "raw_sha256": "2f075d36847c79e7a48caecfbc9e1bde54220a3b4d0b1247b127525ecfd3bf9c",
+      "bytes": 9684,
+      "sha256": "2b91ebf4c7ea1b598b485ac7603c7921b32ab0c9d8785dcd483714bd7aa09f9e",
+      "redactions": {
+        "<ABS_PATH_0003>": 7,
+        "<ABS_PATH_0077>": 1,
+        "<ABS_PATH_0078>": 5,
+        "<ABS_PATH_0079>": 1,
+        "<ABS_PATH_0080>": 1,
+        "<ABS_PATH_0081>": 1,
+        "<ABS_PATH_0082>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0073>": 1,
+        "<ABS_PATH_0074>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0075>": 1,
+        "<ABS_PATH_0072>": 2,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0046>": 1,
+        "<ABS_PATH_0076>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-RESULT.json",
+      "path": "payloads/records/membership-l2-layout/RESULT.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 11120,
+      "raw_sha256": "c938495d48680531c6b795ab60a589cf3ec67f4ad6b91fdfc74f78f84cbafd58",
+      "bytes": 6794,
+      "sha256": "7c03f202f5c13caf3362f7b1c970510c6ff1787676d717c286e0329c64c24a3c",
+      "redactions": {
+        "<ABS_PATH_0091>": 1,
+        "<ABS_PATH_0085>": 1,
+        "<ABS_PATH_0086>": 1,
+        "<ABS_PATH_0087>": 1,
+        "<ABS_PATH_0083>": 1,
+        "<ABS_PATH_0077>": 2,
+        "<ABS_PATH_0002>": 1,
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 1,
+        "<ABS_PATH_0021>": 1,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0076>": 1,
+        "<ABS_PATH_0029>": 1,
+        "<ABS_PATH_0030>": 1,
+        "<ABS_PATH_0031>": 1,
+        "<ABS_PATH_0032>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-driver.py",
+      "path": "payloads/records/membership-l2-layout/driver.py.txt",
+      "role": "inert-historical-driver-source",
+      "raw_bytes": 14010,
+      "raw_sha256": "606b7a5d73f622e62d4417f071aefcc5ae7fcc61bce80e5c635d187a6cb37a8b",
+      "bytes": 14010,
+      "sha256": "606b7a5d73f622e62d4417f071aefcc5ae7fcc61bce80e5c635d187a6cb37a8b",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-L1-prefix",
+      "path": "payloads/sources/L1-prefix.lean.txt",
+      "role": "historical-staged-support-source",
+      "raw_bytes": 3475,
+      "raw_sha256": "4624baa2c8c6f7ba8cf0b004824f25a4a6c6710ed2f33613c1d2008a55e1a7e0",
+      "bytes": 3475,
+      "sha256": "4624baa2c8c6f7ba8cf0b004824f25a4a6c6710ed2f33613c1d2008a55e1a7e0",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P01.request.json",
+      "path": "payloads/records/membership-l2-layout/P01.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 692,
+      "raw_sha256": "1b9dfda73ac55413b6accd512736dd11ab788eda13f176540fad1efd7ddc3d7c",
+      "bytes": 354,
+      "sha256": "62a299388aa2b76517be02640417ed178ad074fc3d99b041500299f04f5c6f44",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0077>": 1,
+        "<ABS_PATH_0078>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P01.result.json",
+      "path": "payloads/records/membership-l2-layout/P01.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1492,
+      "raw_sha256": "e6f238db85b38ab14216f6c0ecf3eea7bdff18bdc46ce9340ad97482f56495d1",
+      "bytes": 912,
+      "sha256": "f20667d3bd47dd8f19d9317d2d7e3cbe6a696fdd861a0c41e0ee7f2748eb449e",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0077>": 1,
+        "<ABS_PATH_0078>": 1,
+        "<ABS_PATH_0086>": 1,
+        "<ABS_PATH_0087>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P01.stdout",
+      "path": "payloads/records/membership-l2-layout/P01.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P01.stderr",
+      "path": "payloads/records/membership-l2-layout/P01.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P02.request.json",
+      "path": "payloads/records/membership-l2-layout/P02.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 692,
+      "raw_sha256": "ca47c061c42c4f6ee6ea99691499610dcf99d2b053431264002549c7822c2a06",
+      "bytes": 354,
+      "sha256": "802a2ef4099c9503967707b6b7bd491b3bb5893a3034df899f5b32819ed91f61",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0079>": 1,
+        "<ABS_PATH_0078>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P02.result.json",
+      "path": "payloads/records/membership-l2-layout/P02.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1498,
+      "raw_sha256": "3b72ad5e5b9b3fc7cfa70fe478a0581a95e3ceb3a3cb020a65b58352a8bb52a9",
+      "bytes": 918,
+      "sha256": "33fb40ca13feae435b14d9173697a0ad448bc968aa2dbab0e854ef76de00a2ff",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0079>": 1,
+        "<ABS_PATH_0078>": 1,
+        "<ABS_PATH_0090>": 1,
+        "<ABS_PATH_0092>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P02.stdout",
+      "path": "payloads/records/membership-l2-layout/P02.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 661,
+      "raw_sha256": "56ae18cf7a681947aa38714f1e58e1d6f409f7293d49e9436f7311d7a91779bb",
+      "bytes": 661,
+      "sha256": "56ae18cf7a681947aa38714f1e58e1d6f409f7293d49e9436f7311d7a91779bb",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "membership-l2-layout-P02.stderr",
+      "path": "payloads/records/membership-l2-layout/P02.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-SOURCE_MANIFEST.json",
+      "path": "payloads/records/identities-l5-original/SOURCE_MANIFEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 15978,
+      "raw_sha256": "0d4acfc9151e491ff19ffe8968de3906d0311efe419e98a2677a1c84371532aa",
+      "bytes": 8808,
+      "sha256": "f6311247ccfabfd2eaa55594c890570960cb1458bdb3c67270c42507d80edf22",
+      "redactions": {
+        "<ABS_PATH_0093>": 1,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0003>": 5,
+        "<ABS_PATH_0094>": 1,
+        "<ABS_PATH_0095>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0096>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0099>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1,
+        "<ABS_PATH_0106>": 1,
+        "<ABS_PATH_0107>": 3,
+        "<ABS_PATH_0108>": 1,
+        "<ABS_PATH_0109>": 1,
+        "<ABS_PATH_0046>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-REGISTRATION.json",
+      "path": "payloads/records/identities-l5-original/REGISTRATION.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 657,
+      "raw_sha256": "ce7f47087a1705a0c3869c049aa857100b13acb3fd893f982b115cdd226b52a2",
+      "bytes": 545,
+      "sha256": "930f5a9b47c3aa451e44f4818a445afd8b94043c699396ba964aab6aae09026e",
+      "redactions": {
+        "<ABS_PATH_0093>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-CLOSED.json",
+      "path": "payloads/records/identities-l5-original/CLOSED.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 3887,
+      "raw_sha256": "650c3413bd871342bdb9a9991b61bf442dc05d91de24dfa5ffc46a1baa035dda",
+      "bytes": 2547,
+      "sha256": "b5097ecbb8463be7d1b2d00ecd5df59e004c89c6ee4cf018956ffa67835fbc52",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0106>": 1,
+        "<ABS_PATH_0107>": 1,
+        "<ABS_PATH_0110>": 2,
+        "<ABS_PATH_0111>": 2,
+        "<ABS_PATH_0112>": 1,
+        "<ABS_PATH_0113>": 1,
+        "<ABS_PATH_0114>": 1,
+        "<ABS_PATH_0115>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-REQUEST.json",
+      "path": "payloads/records/identities-l5-original/REQUEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 17238,
+      "raw_sha256": "66aa522c30c079cfd337ad824ae001085fdefbbbc904bc5d68d7a893c4775530",
+      "bytes": 9956,
+      "sha256": "b4ee43e7a77c4242da265130f972dbebfa93306fdf3ca8fba92ceb88d787027c",
+      "redactions": {
+        "<ABS_PATH_0003>": 5,
+        "<ABS_PATH_0106>": 1,
+        "<ABS_PATH_0107>": 3,
+        "<ABS_PATH_0108>": 1,
+        "<ABS_PATH_0109>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0094>": 1,
+        "<ABS_PATH_0095>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0096>": 1,
+        "<ABS_PATH_0093>": 2,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0046>": 1,
+        "<ABS_PATH_0099>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-RESULT.json",
+      "path": "payloads/records/identities-l5-original/RESULT.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 10677,
+      "raw_sha256": "8f63cd6d9cd31153f006f39b73c965364130709557e19c951fe3e59a7a7688b4",
+      "bytes": 6557,
+      "sha256": "cefb81cbd5fb1e4dd687943ba8940dd66c76ac4fbf04730c47564ebb54e78761",
+      "redactions": {
+        "<ABS_PATH_0112>": 1,
+        "<ABS_PATH_0002>": 1,
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 1,
+        "<ABS_PATH_0021>": 1,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0099>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-driver.py",
+      "path": "payloads/records/identities-l5-original/driver.py.txt",
+      "role": "inert-historical-driver-source",
+      "raw_bytes": 14266,
+      "raw_sha256": "bd5567f85c58dadeea2b31e9e05185a605157919f5c4beb5b72f41d608a2b0aa",
+      "bytes": 14266,
+      "sha256": "bd5567f85c58dadeea2b31e9e05185a605157919f5c4beb5b72f41d608a2b0aa",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-Identities-support",
+      "path": "payloads/sources/Identities-support.lean.txt",
+      "role": "historical-staged-support-source",
+      "raw_bytes": 4252,
+      "raw_sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2",
+      "bytes": 4252,
+      "sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "source-IdentityJudge-support",
+      "path": "payloads/sources/IdentityJudge-support.lean.txt",
+      "role": "historical-staged-support-source",
+      "raw_bytes": 2114,
+      "raw_sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731",
+      "bytes": 2114,
+      "sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-P01.request.json",
+      "path": "payloads/records/identities-l5-original/P01.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 696,
+      "raw_sha256": "63131f0912555c182484e46c0959ea3614665d940e3eacc5a134cd15489152cc",
+      "bytes": 354,
+      "sha256": "84ce2856eec62a5a2b7e4b247749875ac5d85210a2288132c8e6df1e74ba4d82",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0106>": 1,
+        "<ABS_PATH_0107>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-P01.result.json",
+      "path": "payloads/records/identities-l5-original/P01.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1506,
+      "raw_sha256": "d6da3c252bc9c594fb45e6acb1a698b01d0431fe0a66e78d3df295fcc8654acf",
+      "bytes": 918,
+      "sha256": "78347cf0a7be8c7024a8378bde43a80d13375b81827078b340e4b6cd43390ec0",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0106>": 1,
+        "<ABS_PATH_0107>": 1,
+        "<ABS_PATH_0110>": 1,
+        "<ABS_PATH_0111>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-P01.stdout",
+      "path": "payloads/records/identities-l5-original/P01.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 2250,
+      "raw_sha256": "0dbe0d2d90daf04b2cfa48daef97cdf2be2fc3828540782aadc76c9e788327cc",
+      "bytes": 2250,
+      "sha256": "0dbe0d2d90daf04b2cfa48daef97cdf2be2fc3828540782aadc76c9e788327cc",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "identities-l5-original-P01.stderr",
+      "path": "payloads/records/identities-l5-original/P01.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-SOURCE_MANIFEST.json",
+      "path": "payloads/records/filter-repair-l5-first/SOURCE_MANIFEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 15953,
+      "raw_sha256": "07571f0f79b7fb1dc4458d28b8d423efd09c41d105a60a3bd4b4f7e337612ad7",
+      "bytes": 8808,
+      "sha256": "ef37692de062fa45e7dacee4edfadfd01e7436f4a169211b2f12706af76e4f81",
+      "redactions": {
+        "<ABS_PATH_0116>": 1,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0003>": 5,
+        "<ABS_PATH_0117>": 1,
+        "<ABS_PATH_0118>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0119>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0120>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1,
+        "<ABS_PATH_0121>": 1,
+        "<ABS_PATH_0122>": 3,
+        "<ABS_PATH_0123>": 1,
+        "<ABS_PATH_0124>": 1,
+        "<ABS_PATH_0046>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-REGISTRATION.json",
+      "path": "payloads/records/filter-repair-l5-first/REGISTRATION.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 655,
+      "raw_sha256": "26b83e5e551c0939e63112569f2cb973f143f3e3c34cfb7c1115f95b5d8e64a9",
+      "bytes": 545,
+      "sha256": "109cbb69e0681d3efc52ba5090474b3b9de2122466fe5d6146b859adc9787e05",
+      "redactions": {
+        "<ABS_PATH_0116>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-CLOSED.json",
+      "path": "payloads/records/filter-repair-l5-first/CLOSED.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 4111,
+      "raw_sha256": "9dc1acaee2266a4200cf4090d7c095b72177c52059b092b93a7af79140fb9962",
+      "bytes": 2667,
+      "sha256": "fb07ce5769dd87e69e4210e5be54f364c7261021ecdb9c4e6ad4e6a8617313d5",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0121>": 1,
+        "<ABS_PATH_0122>": 1,
+        "<ABS_PATH_0125>": 2,
+        "<ABS_PATH_0126>": 2,
+        "<ABS_PATH_0127>": 1,
+        "<ABS_PATH_0128>": 1,
+        "<ABS_PATH_0129>": 1,
+        "<ABS_PATH_0130>": 1,
+        "<ABS_PATH_0131>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-REQUEST.json",
+      "path": "payloads/records/filter-repair-l5-first/REQUEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 17211,
+      "raw_sha256": "b02f134c7c0a659af89221ee5d99f88f7e2232e6f6f5502cc1601be0ebc84607",
+      "bytes": 9956,
+      "sha256": "47fcf1672bc4aa8d52015a45959d83e1d901a2290569d43469677019d7f1cbed",
+      "redactions": {
+        "<ABS_PATH_0003>": 5,
+        "<ABS_PATH_0121>": 1,
+        "<ABS_PATH_0122>": 3,
+        "<ABS_PATH_0123>": 1,
+        "<ABS_PATH_0124>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0117>": 1,
+        "<ABS_PATH_0118>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0119>": 1,
+        "<ABS_PATH_0116>": 2,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0046>": 1,
+        "<ABS_PATH_0120>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-RESULT.json",
+      "path": "payloads/records/filter-repair-l5-first/RESULT.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 10670,
+      "raw_sha256": "27a5c059780f586c5bf502006fcabbbd1790519d139f44412ab2256cd7c42836",
+      "bytes": 6557,
+      "sha256": "45d959f6e5f757d8b47d9ffa8d1e88b73df81f32a9df9de151a9ddb0fe0d7800",
+      "redactions": {
+        "<ABS_PATH_0129>": 1,
+        "<ABS_PATH_0002>": 1,
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 1,
+        "<ABS_PATH_0021>": 1,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0120>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-driver.py",
+      "path": "payloads/records/filter-repair-l5-first/driver.py.txt",
+      "role": "inert-historical-driver-source",
+      "raw_bytes": 14264,
+      "raw_sha256": "f6762ab0bc9fef022af838876a8b73761c09fbee171e962f057764685dd444e7",
+      "bytes": 14264,
+      "sha256": "f6762ab0bc9fef022af838876a8b73761c09fbee171e962f057764685dd444e7",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-P01.request.json",
+      "path": "payloads/records/filter-repair-l5-first/P01.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 692,
+      "raw_sha256": "e04dfc51a8d89efad4f3d772ffb348299e65c2e1f89925c13693b2c49ff14a95",
+      "bytes": 354,
+      "sha256": "3019aff8fc6a7ef4d2f9125bdb811c715476ce69ca615b235a74b28eb18660fd",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0121>": 1,
+        "<ABS_PATH_0122>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-P01.result.json",
+      "path": "payloads/records/filter-repair-l5-first/P01.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1500,
+      "raw_sha256": "ea5fb732f3427a595d26232cdae7cc8eafe9b36a592a97252c99e476c4ed8d53",
+      "bytes": 920,
+      "sha256": "08dab17eed259931d01bd444ab70402aca4b45b5a0adc7995465696d080cde3b",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0121>": 1,
+        "<ABS_PATH_0122>": 1,
+        "<ABS_PATH_0125>": 1,
+        "<ABS_PATH_0126>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-P01.stdout",
+      "path": "payloads/records/filter-repair-l5-first/P01.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 2279,
+      "raw_sha256": "872ca6c6f711205b02d27e1d9852a180ab847a7f1843b90fd8b7f2316f3f010d",
+      "bytes": 2279,
+      "sha256": "872ca6c6f711205b02d27e1d9852a180ab847a7f1843b90fd8b7f2316f3f010d",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-repair-l5-first-P01.stderr",
+      "path": "payloads/records/filter-repair-l5-first/P01.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-SOURCE_MANIFEST.json",
+      "path": "payloads/records/filter-decider-diagnostic/SOURCE_MANIFEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 16046,
+      "raw_sha256": "a389dcc8b01790e43005297610377b02801e2f27ab3822fa7d0862e85bac6374",
+      "bytes": 8808,
+      "sha256": "df7f788d70a2e70a3a977103e2498c65a62b5877b837fb8cc3ea8cc06d74717a",
+      "redactions": {
+        "<ABS_PATH_0132>": 1,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0003>": 5,
+        "<ABS_PATH_0133>": 1,
+        "<ABS_PATH_0134>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0135>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0136>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1,
+        "<ABS_PATH_0137>": 1,
+        "<ABS_PATH_0138>": 3,
+        "<ABS_PATH_0139>": 1,
+        "<ABS_PATH_0140>": 1,
+        "<ABS_PATH_0046>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-REGISTRATION.json",
+      "path": "payloads/records/filter-decider-diagnostic/REGISTRATION.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 663,
+      "raw_sha256": "56496be7ea29a348838e51793035653febe0d12f78b94f41df954bfc8f7114be",
+      "bytes": 545,
+      "sha256": "8758a50924ad3522b3f81913fc7d2bae1744c4ca47b071c684fd0802a49d4e29",
+      "redactions": {
+        "<ABS_PATH_0132>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-CLOSED.json",
+      "path": "payloads/records/filter-decider-diagnostic/CLOSED.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 4019,
+      "raw_sha256": "03b2100680bb5ff2008dcef4a76feee1d384e391aa7fc74c1976ec6aa89faff7",
+      "bytes": 2619,
+      "sha256": "1f8f3bbe8711d2b6ebfdf9b2920a564d855f61eaef14a3174cf6cb84f30e9492",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0137>": 1,
+        "<ABS_PATH_0138>": 1,
+        "<ABS_PATH_0141>": 2,
+        "<ABS_PATH_0142>": 2,
+        "<ABS_PATH_0143>": 1,
+        "<ABS_PATH_0144>": 1,
+        "<ABS_PATH_0145>": 1,
+        "<ABS_PATH_0146>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-REQUEST.json",
+      "path": "payloads/records/filter-decider-diagnostic/REQUEST.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 17312,
+      "raw_sha256": "1252ef2261605bb84d9924e61615fd9030e16ccd85de3504382543b8eeb566fe",
+      "bytes": 9956,
+      "sha256": "b420be7071c72347f01a1e9c1ea83acd4c913bd081499da6f9a06a4bb22fc03e",
+      "redactions": {
+        "<ABS_PATH_0003>": 5,
+        "<ABS_PATH_0137>": 1,
+        "<ABS_PATH_0138>": 3,
+        "<ABS_PATH_0139>": 1,
+        "<ABS_PATH_0140>": 1,
+        "<ABS_PATH_0020>": 2,
+        "<ABS_PATH_0133>": 1,
+        "<ABS_PATH_0134>": 1,
+        "<ABS_PATH_0006>": 1,
+        "<ABS_PATH_0007>": 1,
+        "<ABS_PATH_0008>": 1,
+        "<ABS_PATH_0009>": 1,
+        "<ABS_PATH_0010>": 1,
+        "<ABS_PATH_0011>": 1,
+        "<ABS_PATH_0012>": 1,
+        "<ABS_PATH_0013>": 1,
+        "<ABS_PATH_0014>": 1,
+        "<ABS_PATH_0015>": 1,
+        "<ABS_PATH_0016>": 1,
+        "<ABS_PATH_0017>": 1,
+        "<ABS_PATH_0135>": 1,
+        "<ABS_PATH_0132>": 2,
+        "<ABS_PATH_0002>": 2,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0021>": 2,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0046>": 1,
+        "<ABS_PATH_0136>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-RESULT.json",
+      "path": "payloads/records/filter-decider-diagnostic/RESULT.json.txt",
+      "role": "historical-run-record",
+      "raw_bytes": 10691,
+      "raw_sha256": "62fcac311e60d1945fab7b42781104cd1be62557e6a2aa12512565e13c192098",
+      "bytes": 6557,
+      "sha256": "62624b921317e90c7534b725ad84e32dfa4f1ad888251e1258965b0ec7e23206",
+      "redactions": {
+        "<ABS_PATH_0145>": 1,
+        "<ABS_PATH_0002>": 1,
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0019>": 1,
+        "<ABS_PATH_0020>": 1,
+        "<ABS_PATH_0021>": 1,
+        "<ABS_PATH_0022>": 1,
+        "<ABS_PATH_0023>": 1,
+        "<ABS_PATH_0024>": 1,
+        "<ABS_PATH_0025>": 1,
+        "<ABS_PATH_0026>": 1,
+        "<ABS_PATH_0027>": 1,
+        "<ABS_PATH_0097>": 1,
+        "<ABS_PATH_0098>": 1,
+        "<ABS_PATH_0136>": 1,
+        "<ABS_PATH_0100>": 1,
+        "<ABS_PATH_0101>": 1,
+        "<ABS_PATH_0033>": 1,
+        "<ABS_PATH_0034>": 1,
+        "<ABS_PATH_0035>": 1,
+        "<ABS_PATH_0036>": 1,
+        "<ABS_PATH_0037>": 1,
+        "<ABS_PATH_0038>": 1,
+        "<ABS_PATH_0039>": 1,
+        "<ABS_PATH_0102>": 1,
+        "<ABS_PATH_0103>": 1,
+        "<ABS_PATH_0104>": 1,
+        "<ABS_PATH_0105>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-driver.py",
+      "path": "payloads/records/filter-decider-diagnostic/driver.py.txt",
+      "role": "inert-historical-driver-source",
+      "raw_bytes": 14272,
+      "raw_sha256": "15097d3b6d235e6f8980d2620f8085e7a038f146974240ff3c73a2d6c9affa20",
+      "bytes": 14272,
+      "sha256": "15097d3b6d235e6f8980d2620f8085e7a038f146974240ff3c73a2d6c9affa20",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-P01.request.json",
+      "path": "payloads/records/filter-decider-diagnostic/P01.request.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 708,
+      "raw_sha256": "d6dfc38ba34d7733a73907b0aeb7e6c51efb9d2a6fbbe466115894ac888b7951",
+      "bytes": 354,
+      "sha256": "f914c00c6076d58b7895b7f68333e33ae0a36df203c92984e06e203c382673bb",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0137>": 1,
+        "<ABS_PATH_0138>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-P01.result.json",
+      "path": "payloads/records/filter-decider-diagnostic/P01.result.json.txt",
+      "role": "historical-command-record",
+      "raw_bytes": 1529,
+      "raw_sha256": "67212aea6d808eb9725cfd9fd3f7518fb932e853e19db942147fc2b848fd17f0",
+      "bytes": 917,
+      "sha256": "97d96e10a95d4b5136581e1ec854f6b4ccb64d57cfa56cdd5b90eb0f8a9f229f",
+      "redactions": {
+        "<ABS_PATH_0003>": 1,
+        "<ABS_PATH_0137>": 1,
+        "<ABS_PATH_0138>": 1,
+        "<ABS_PATH_0141>": 1,
+        "<ABS_PATH_0142>": 1
+      },
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-P01.stdout",
+      "path": "payloads/records/filter-decider-diagnostic/P01.stdout.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 47713,
+      "raw_sha256": "63bbdf0dec30d1480a22c1b95f83abe2c05cf6ef624f3c82b707c4d8a4e8fd5b",
+      "bytes": 47713,
+      "sha256": "63bbdf0dec30d1480a22c1b95f83abe2c05cf6ef624f3c82b707c4d8a4e8fd5b",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "filter-decider-diagnostic-P01.stderr",
+      "path": "payloads/records/filter-decider-diagnostic/P01.stderr.txt",
+      "role": "complete-historical-stream",
+      "raw_bytes": 0,
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "superseded-v1-MANIFEST.json",
+      "path": "payloads/superseded-v1/MANIFEST.json.txt",
+      "role": "superseded-public-error-preimage-do-not-rely",
+      "raw_bytes": 2164,
+      "raw_sha256": "1a6aafb36ed54c1f734cb9e8abc1d940996e063ba5da6cfd97704161794769f2",
+      "bytes": 2164,
+      "sha256": "1a6aafb36ed54c1f734cb9e8abc1d940996e063ba5da6cfd97704161794769f2",
+      "redactions": {},
+      "mode": "0o644"
+    },
+    {
+      "id": "superseded-v1-NEGATIVE_RESULTS.md",
+      "path": "payloads/superseded-v1/NEGATIVE_RESULTS.md.txt",
+      "role": "superseded-public-error-preimage-do-not-rely",
+      "raw_bytes": 3693,
+      "raw_sha256": "23f33f94f08b58eef3e7b99189ffb1cbf9a644e2c681ed2661b5dcf8e40e80d6",
+      "bytes": 3693,
+      "sha256": "23f33f94f08b58eef3e7b99189ffb1cbf9a644e2c681ed2661b5dcf8e40e80d6",
+      "redactions": {},
+      "mode": "0o644"
+    }
+  ],
+  "redaction_policy": {
+    "transformation": "Only machine-specific absolute path substrings are replaced, byte for byte, by stable ABS_PATH tokens. All other raw content is preserved, including historical mistakes.",
+    "path_tokens": [
+      {
+        "token": "<ABS_PATH_0001>",
+        "raw_path_bytes": 130,
+        "raw_path_sha256": "28dee2a236d15f08b6fd6d69aa403d5408def5e3a894d2762b76751f07dc2dce"
+      },
+      {
+        "token": "<ABS_PATH_0002>",
+        "raw_path_bytes": 96,
+        "raw_path_sha256": "634474ac7d32078e1644cfb20ae4fe03bd675cb7d6b80353adb4de17d0865370"
+      },
+      {
+        "token": "<ABS_PATH_0003>",
+        "raw_path_bytes": 85,
+        "raw_path_sha256": "1ac856e40b5721d9c81b4fe90504bb7ae31d535db8df0f279ef206bebe2a5024"
+      },
+      {
+        "token": "<ABS_PATH_0004>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "0cd1e66e6cb2ee8133608b9dca02367bdd5fe845f45cd61bf143344286dd4d9a"
+      },
+      {
+        "token": "<ABS_PATH_0005>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "e0e290311cfeaa21b3d19512d587d4b0d53a2bce102dd33d626b28317765e4f0"
+      },
+      {
+        "token": "<ABS_PATH_0006>",
+        "raw_path_bytes": 131,
+        "raw_path_sha256": "8d0f0644e42f29d2d13b0f7a272f28c8771621bb94ce7470b1cad1d68cf59ce1"
+      },
+      {
+        "token": "<ABS_PATH_0007>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "bae2ddf55744535acf021bdbd082483d412a36a9402f0520a97f1c02010fa779"
+      },
+      {
+        "token": "<ABS_PATH_0008>",
+        "raw_path_bytes": 140,
+        "raw_path_sha256": "d826574ef9ce91b0a8b9cffbf1deaee2d80474bee8ace1b5eb6bd34e3127128c"
+      },
+      {
+        "token": "<ABS_PATH_0009>",
+        "raw_path_bytes": 135,
+        "raw_path_sha256": "f1ee7893e537788d1e1fede426c1a0505b67b12c4870450a4214a2f1598cdf79"
+      },
+      {
+        "token": "<ABS_PATH_0010>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "e5eac0caf5b4c7260a0e92d6ddb161e286cddc626c031f5da648b8979e596fb7"
+      },
+      {
+        "token": "<ABS_PATH_0011>",
+        "raw_path_bytes": 129,
+        "raw_path_sha256": "67e8c8c782cadcc4a1ea377ddcf5e55b1ab417e13b0df438a0d21a60a8763fa0"
+      },
+      {
+        "token": "<ABS_PATH_0012>",
+        "raw_path_bytes": 126,
+        "raw_path_sha256": "e14e172237c262920604995ef2a4d9f53831d9934944bf16a76eb65f41a20b25"
+      },
+      {
+        "token": "<ABS_PATH_0013>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "31e432e116bd16bdea5df904542e808b2be470d9a9084c53a604db0caa8e475b"
+      },
+      {
+        "token": "<ABS_PATH_0014>",
+        "raw_path_bytes": 127,
+        "raw_path_sha256": "a3afad1d8e1d7467eda11f3f62938e5a6a3e8b7a70463e03ab847385e3aa52e8"
+      },
+      {
+        "token": "<ABS_PATH_0015>",
+        "raw_path_bytes": 76,
+        "raw_path_sha256": "3ad80850574e9c21d90fc947d9dfdc71c6e0df8349e010d2751f457f0363bc24"
+      },
+      {
+        "token": "<ABS_PATH_0016>",
+        "raw_path_bytes": 8,
+        "raw_path_sha256": "33629c0e654360bfd8ab5089302a26e27dce5044d624b22f51fcbc66f1e0d19c"
+      },
+      {
+        "token": "<ABS_PATH_0017>",
+        "raw_path_bytes": 4,
+        "raw_path_sha256": "808dd192d3243666b6f1ad4f9bfeca4877ee059456c40851a93937331b26014c"
+      },
+      {
+        "token": "<ABS_PATH_0018>",
+        "raw_path_bytes": 134,
+        "raw_path_sha256": "910979c476802c34ef685fd66833036f3f69fafff2e0ccf0716e5b7fa18ebc6c"
+      },
+      {
+        "token": "<ABS_PATH_0019>",
+        "raw_path_bytes": 164,
+        "raw_path_sha256": "8d97b0a3d5155f294c4f632a8657bd7f1d9966fb5f7c78a07a09cf6aea788a02"
+      },
+      {
+        "token": "<ABS_PATH_0020>",
+        "raw_path_bytes": 144,
+        "raw_path_sha256": "a4dd587ae4d79bdc9cb21a2f27a3f66042f66b4f9a72232b2b144e1da843e837"
+      },
+      {
+        "token": "<ABS_PATH_0021>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "22b12af6383e323dfa42f3b5568d61db487a968494ba29a67671a7cdcf1781ad"
+      },
+      {
+        "token": "<ABS_PATH_0022>",
+        "raw_path_bytes": 154,
+        "raw_path_sha256": "ecbfd820c0dcc01a9b85852ade3cb57b119a37f7593fe35dc978a45cb6637b13"
+      },
+      {
+        "token": "<ABS_PATH_0023>",
+        "raw_path_bytes": 161,
+        "raw_path_sha256": "304ecc61646ce073df08e2f8af24ba58ca49a21379f49bcb9a4711b65531f146"
+      },
+      {
+        "token": "<ABS_PATH_0024>",
+        "raw_path_bytes": 181,
+        "raw_path_sha256": "f87417e0e15b626ae3315a9c6bc5bfb1ed92c007627a51a4513027d4d82dc83c"
+      },
+      {
+        "token": "<ABS_PATH_0025>",
+        "raw_path_bytes": 173,
+        "raw_path_sha256": "cfb4efe2cffd2c0ea5d32de2f81b1bf63b4113ee2d3a846144fafd41f7c80c84"
+      },
+      {
+        "token": "<ABS_PATH_0026>",
+        "raw_path_bytes": 147,
+        "raw_path_sha256": "7ba8cd37c5e69de6d70ccf688069152df9a142125b646661ed0889ddee14faf9"
+      },
+      {
+        "token": "<ABS_PATH_0027>",
+        "raw_path_bytes": 137,
+        "raw_path_sha256": "e9c3976ffaa36fe11a9be0908c3675ebf0267686fc9bb306777d9defe4feb33d"
+      },
+      {
+        "token": "<ABS_PATH_0028>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "1210a447ee6a3714236c2a30c660b2835a2c96c4d9d331b2875edd8f183b3ccb"
+      },
+      {
+        "token": "<ABS_PATH_0029>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "58f77de9f387b4238bbd28d8c88364136e6689874e61df37496fda7e88a1f09e"
+      },
+      {
+        "token": "<ABS_PATH_0030>",
+        "raw_path_bytes": 178,
+        "raw_path_sha256": "44cbe66c58c36d0ad47e0f0bcdff3c7bb75bcfefd58455860f92f7b974b39c6a"
+      },
+      {
+        "token": "<ABS_PATH_0031>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "8df5018f9e7fe712454afdc33097068ec5b674d2de00654507f11297abf54712"
+      },
+      {
+        "token": "<ABS_PATH_0032>",
+        "raw_path_bytes": 167,
+        "raw_path_sha256": "7ea5fc9656b3099bfdb85bb261018fe49aa10beb90e9e171c2ab281420817348"
+      },
+      {
+        "token": "<ABS_PATH_0033>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "5da9a86d97cb8e971a1cdcb3d007ac8f1572a2f3ddf9089a7560e0df883b434e"
+      },
+      {
+        "token": "<ABS_PATH_0034>",
+        "raw_path_bytes": 179,
+        "raw_path_sha256": "b8705f749e9f458be769e78f9a26e581cac44dd104bb9427631857e67b84e8f4"
+      },
+      {
+        "token": "<ABS_PATH_0035>",
+        "raw_path_bytes": 179,
+        "raw_path_sha256": "f3f7afe64dff0a6e93a95fb29c37f3589a75c52ceb12390b7f117d68ed48f915"
+      },
+      {
+        "token": "<ABS_PATH_0036>",
+        "raw_path_bytes": 181,
+        "raw_path_sha256": "d9d487a7e43f29abee86af403dbd6623a4fa8784f3c971aa2b90fa1d5c4e186d"
+      },
+      {
+        "token": "<ABS_PATH_0037>",
+        "raw_path_bytes": 191,
+        "raw_path_sha256": "6e90b49ac41b997593f95b08fbffd417209e10c02c7b2b82907052859229a03c"
+      },
+      {
+        "token": "<ABS_PATH_0038>",
+        "raw_path_bytes": 191,
+        "raw_path_sha256": "fb4680b71c3ae63dd161514153a0c75d6c188d489d2471f97fe4587efad0b19a"
+      },
+      {
+        "token": "<ABS_PATH_0039>",
+        "raw_path_bytes": 177,
+        "raw_path_sha256": "6e270ccd2e682b01bb87cb43ea89c6a1a6ed4155ed783be6ae52043e1d837f29"
+      },
+      {
+        "token": "<ABS_PATH_0040>",
+        "raw_path_bytes": 173,
+        "raw_path_sha256": "186d7e9b6b9669d4a2a1ae8fcacea0513d9fc654f4bbf9556d89a7e9facc6c6c"
+      },
+      {
+        "token": "<ABS_PATH_0041>",
+        "raw_path_bytes": 135,
+        "raw_path_sha256": "23d8fa7dd8e57d1f44aaf72d5fce1482c926300cd8e577c5edcc9ec346138d1c"
+      },
+      {
+        "token": "<ABS_PATH_0042>",
+        "raw_path_bytes": 173,
+        "raw_path_sha256": "802e04cdb065041a61852405047f52331d20ffbf4308d30dbbf49a0e7ac32e26"
+      },
+      {
+        "token": "<ABS_PATH_0043>",
+        "raw_path_bytes": 186,
+        "raw_path_sha256": "58518e3672a0a72517cc1c3c779e3a828119e1db13391e0a1a2e72264f2dba1d"
+      },
+      {
+        "token": "<ABS_PATH_0044>",
+        "raw_path_bytes": 173,
+        "raw_path_sha256": "e9239579928c2a653db567693854210db267e2fc16ccfef7e4cbc9fa1cb0843e"
+      },
+      {
+        "token": "<ABS_PATH_0045>",
+        "raw_path_bytes": 172,
+        "raw_path_sha256": "e86c233f93387200b668ef8124357b96cef3b1c507fd7485c75c6144fb3750dd"
+      },
+      {
+        "token": "<ABS_PATH_0046>",
+        "raw_path_bytes": 150,
+        "raw_path_sha256": "0bea420f2dab5efb570fb6756b4bd5bc983658a6f96cde8342f03afa5f389eaa"
+      },
+      {
+        "token": "<ABS_PATH_0047>",
+        "raw_path_bytes": 143,
+        "raw_path_sha256": "bbff7c91b38eb19a52479e717d16974b53f55018dbcf175b81c79abbaa5227d2"
+      },
+      {
+        "token": "<ABS_PATH_0048>",
+        "raw_path_bytes": 142,
+        "raw_path_sha256": "f9ca70cdabf982ea9a8be70e4ebdc511cec0a76a486c524a2c4582e237d2e36d"
+      },
+      {
+        "token": "<ABS_PATH_0049>",
+        "raw_path_bytes": 146,
+        "raw_path_sha256": "4be7b67130e33a0a71c3ae054fee3ca04d1915b99e54f945a9ee13a9c4230bc8"
+      },
+      {
+        "token": "<ABS_PATH_0050>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "81bad5f1d334c09a6eb4796369499f625bbbe11c9cbdb5afe31a1ad6d5174265"
+      },
+      {
+        "token": "<ABS_PATH_0051>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "dad6adb1130e76bbd03efe48cc3efd265a223d84eaab3164bc723a4145a2e55e"
+      },
+      {
+        "token": "<ABS_PATH_0052>",
+        "raw_path_bytes": 147,
+        "raw_path_sha256": "8b07d535730cbe902370ef0876d4d8f1ea1439aa329d6d65e95a1ecab3efdec1"
+      },
+      {
+        "token": "<ABS_PATH_0053>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "2bd73f1ddd5ce9f0c01bd4e721b9fc0ae55a19e28ca80d67e26effe2290face9"
+      },
+      {
+        "token": "<ABS_PATH_0054>",
+        "raw_path_bytes": 129,
+        "raw_path_sha256": "08fa6afcb8db6a687b7188a7eb823ede15aa030d8c520df94e7ea103e908675d"
+      },
+      {
+        "token": "<ABS_PATH_0055>",
+        "raw_path_bytes": 137,
+        "raw_path_sha256": "77ba4ad099bd9ea83527f9497a83f4decd5464a80462ed8c77a2520139bffebb"
+      },
+      {
+        "token": "<ABS_PATH_0056>",
+        "raw_path_bytes": 137,
+        "raw_path_sha256": "b0b0f9096960cfa24a1e24a8802aafdceaac454b9f166380cd78edccd1e1e990"
+      },
+      {
+        "token": "<ABS_PATH_0057>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "4cdfe78b65b8f0ce662c9463d9874995ce1a4c2b9ec90d171e5e2d1a62e101d4"
+      },
+      {
+        "token": "<ABS_PATH_0058>",
+        "raw_path_bytes": 172,
+        "raw_path_sha256": "f75a82fd122bf00e6275cbf45647b831b73bb8044510de19fae329c497307cfb"
+      },
+      {
+        "token": "<ABS_PATH_0059>",
+        "raw_path_bytes": 134,
+        "raw_path_sha256": "cd37768567084e466bbaabd5b5185b36cb2db2c99e8f3577b8e111543dd8a0a9"
+      },
+      {
+        "token": "<ABS_PATH_0060>",
+        "raw_path_bytes": 172,
+        "raw_path_sha256": "a092b61e7c6b4d8e5839c94aa002e8e652ddae1fd81063a1bfe3d3c66feaf119"
+      },
+      {
+        "token": "<ABS_PATH_0061>",
+        "raw_path_bytes": 185,
+        "raw_path_sha256": "c8f4832db10eaf6300aab52ad16d600a8a035e902c292b1a6598b9280182a2f1"
+      },
+      {
+        "token": "<ABS_PATH_0062>",
+        "raw_path_bytes": 172,
+        "raw_path_sha256": "6bfc189da68075358834411f331f78018ab96e876942712fcfb6245aa0b442d1"
+      },
+      {
+        "token": "<ABS_PATH_0063>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "a5c5f4f0080ca397dae20b9f8ef3da133c34a775b5044ccc4dbed94b530142bd"
+      },
+      {
+        "token": "<ABS_PATH_0064>",
+        "raw_path_bytes": 175,
+        "raw_path_sha256": "9e429c09becd0b70e227a008a9b3ce192092dcf6e8c5c8832335ec4a451eaf65"
+      },
+      {
+        "token": "<ABS_PATH_0065>",
+        "raw_path_bytes": 170,
+        "raw_path_sha256": "ce616b5966388b677a143316e3f24941b025394b51f9cc53d5270f6347cc8b99"
+      },
+      {
+        "token": "<ABS_PATH_0066>",
+        "raw_path_bytes": 142,
+        "raw_path_sha256": "bad9e3abe084607cd8697ec184525decfe78a9a2d19dff61b51f2c0a1c5639b4"
+      },
+      {
+        "token": "<ABS_PATH_0067>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "46e4167097f227280fc54dd3ef7447b11271a00f2e5866c024d70bf25e31ba75"
+      },
+      {
+        "token": "<ABS_PATH_0068>",
+        "raw_path_bytes": 145,
+        "raw_path_sha256": "8efe4ddf2dc8c1c7b39ef64b7bfd4e52ef12c2fe81c5bd2e36a8dbbab5f21937"
+      },
+      {
+        "token": "<ABS_PATH_0069>",
+        "raw_path_bytes": 140,
+        "raw_path_sha256": "3012d0b9711c7f8ff7168046d0742b6f46977a7ccd16a79b629aedb96bea872c"
+      },
+      {
+        "token": "<ABS_PATH_0070>",
+        "raw_path_bytes": 140,
+        "raw_path_sha256": "4b7c9976e1c68f21f53148704a117aef74e09a5b6f0bc8f421afe2b2467be936"
+      },
+      {
+        "token": "<ABS_PATH_0071>",
+        "raw_path_bytes": 146,
+        "raw_path_sha256": "08c9da5458d73a8424efd78a0bb64c9579b2a37690e57d7ea5ef612fb4618329"
+      },
+      {
+        "token": "<ABS_PATH_0072>",
+        "raw_path_bytes": 125,
+        "raw_path_sha256": "0dc98e3421e8105c63d786601d58673320e3cccdc2740853f9b17bffdeffebbf"
+      },
+      {
+        "token": "<ABS_PATH_0073>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "7e721e912048e3943beb6004f1315eba5132a049f412136dbd9655e4efb27a24"
+      },
+      {
+        "token": "<ABS_PATH_0074>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "43a2feb870643f49c05f96778c0c839b5e27758372616096589ff694d5964d83"
+      },
+      {
+        "token": "<ABS_PATH_0075>",
+        "raw_path_bytes": 129,
+        "raw_path_sha256": "c593241b8d3a7158e16cb470a941a492d45bc9d1aa1414d8ac75da190effaf86"
+      },
+      {
+        "token": "<ABS_PATH_0076>",
+        "raw_path_bytes": 181,
+        "raw_path_sha256": "d2fef33a3fee5c4aff2adc7a32ba26f8994314a743d83929bb5783b193670c13"
+      },
+      {
+        "token": "<ABS_PATH_0077>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "3f64a89ed5660b9c35970386689d7c0b5d841553373bce8f3b2272a5186ded79"
+      },
+      {
+        "token": "<ABS_PATH_0078>",
+        "raw_path_bytes": 130,
+        "raw_path_sha256": "c663f1c96b11c92acc60aecfb0ebffecc2cc1750207f7097f8c37dae743cacaa"
+      },
+      {
+        "token": "<ABS_PATH_0079>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "44c977f0e35be760cdbcd31cfb872e9796be53ac1ede637a762ec44397ad3e9a"
+      },
+      {
+        "token": "<ABS_PATH_0080>",
+        "raw_path_bytes": 181,
+        "raw_path_sha256": "0800dc63dc5bafd349018a0419fe8cece22177a73506512f218bb54158ad7975"
+      },
+      {
+        "token": "<ABS_PATH_0081>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "dfdecc8033cb01d9838de26172384bb92f390ba2b0f347a06b8b11be8c034b55"
+      },
+      {
+        "token": "<ABS_PATH_0082>",
+        "raw_path_bytes": 167,
+        "raw_path_sha256": "5b7a89efb277f8a54a583e1b8f09ec90783f93fc96d9742c6873ce4b48eaa971"
+      },
+      {
+        "token": "<ABS_PATH_0083>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "f418247af4375206b075ff57e4882ef18e97f59dc515ff1d0bd49c7b085ff139"
+      },
+      {
+        "token": "<ABS_PATH_0084>",
+        "raw_path_bytes": 137,
+        "raw_path_sha256": "5822d0ceda73df29c603c9b6a835316f3cb8d3372a5216c1ff9f2f34ff78d607"
+      },
+      {
+        "token": "<ABS_PATH_0085>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "d4c3ac150ebe83aa16202d76cde02ced622dc0aeaedcd44820e7f2bdd6f4fb4b"
+      },
+      {
+        "token": "<ABS_PATH_0086>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "4b67f398b88195322a0eb762d0d2504a016e8c7d6a7fe98a1203c702091f9a63"
+      },
+      {
+        "token": "<ABS_PATH_0087>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "01aa17ef74985dbde38f4b22ae59075c4bea8f33f5c6f83995c30c4107697e42"
+      },
+      {
+        "token": "<ABS_PATH_0088>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "c94eb44b54adb98a89acde7df1991be0fab035b2becc141bc5c3ed4722230fdf"
+      },
+      {
+        "token": "<ABS_PATH_0089>",
+        "raw_path_bytes": 142,
+        "raw_path_sha256": "50ba812a7e36044e80092fe4abd565d2f3f25bf4a396b86aa16a07f7bdbccfaf"
+      },
+      {
+        "token": "<ABS_PATH_0090>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "4b2ad570e30fe0426cb188b14d24979f4e236bf03c67b5d9433741a3e355377d"
+      },
+      {
+        "token": "<ABS_PATH_0091>",
+        "raw_path_bytes": 142,
+        "raw_path_sha256": "9894e247f501bf57d7f6465f712a15a831d3c666f462e96d6a7b8d24dc4bc7db"
+      },
+      {
+        "token": "<ABS_PATH_0092>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "4ccb0d374818cb721bd23617ecb334a34e7a479314bdfa37db2d71bc0d141a96"
+      },
+      {
+        "token": "<ABS_PATH_0093>",
+        "raw_path_bytes": 127,
+        "raw_path_sha256": "cec34872fcc52f1b119727182128051bbdf43b9b7c496c70ad011ced26f0f692"
+      },
+      {
+        "token": "<ABS_PATH_0094>",
+        "raw_path_bytes": 135,
+        "raw_path_sha256": "f4fb0ef8dc86c6437396ef5f4db2434fc1720f9cd44990779bf4b1171ce510c0"
+      },
+      {
+        "token": "<ABS_PATH_0095>",
+        "raw_path_bytes": 135,
+        "raw_path_sha256": "30e1df58be91fec60389f95f25244a13f10a35684befe193c2114fa89daa0871"
+      },
+      {
+        "token": "<ABS_PATH_0096>",
+        "raw_path_bytes": 131,
+        "raw_path_sha256": "dcf80f95c3c470ae01791f98ff7024abdaac9947e08975d793ce39d406259454"
+      },
+      {
+        "token": "<ABS_PATH_0097>",
+        "raw_path_bytes": 160,
+        "raw_path_sha256": "452e103ddfe48fef46b850145fb6c2233a07b5d5763f530b5b5fe42178170df2"
+      },
+      {
+        "token": "<ABS_PATH_0098>",
+        "raw_path_bytes": 145,
+        "raw_path_sha256": "83295cf435e6a354d949e55f6240102b1fd63d45080c609438e233029d3c4523"
+      },
+      {
+        "token": "<ABS_PATH_0099>",
+        "raw_path_bytes": 171,
+        "raw_path_sha256": "9dd3a3269334ab37947e4e2cb4cb6c014bf72f8853ecb5fb83c71123720009bc"
+      },
+      {
+        "token": "<ABS_PATH_0100>",
+        "raw_path_bytes": 180,
+        "raw_path_sha256": "f41bbe2bb53abfc3141a61add8b91f74df8a2a024b1b361e3daa7f7cea0a1045"
+      },
+      {
+        "token": "<ABS_PATH_0101>",
+        "raw_path_bytes": 180,
+        "raw_path_sha256": "a471e46b9eca5e2babd605e5245bc272cd97cf39d97af952fa9bd79467341942"
+      },
+      {
+        "token": "<ABS_PATH_0102>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "9785c84c2ea6ec8a7c4d58bda7255f479a1bb228a980433842c86a7d33bb0b56"
+      },
+      {
+        "token": "<ABS_PATH_0103>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "a3d916d4825c215fda7c0983d1649e0cf16aef300c5d56674b9b348700120520"
+      },
+      {
+        "token": "<ABS_PATH_0104>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "ad8e30025ffa0cbb19da4cecad2e11eb231c933ca9336147f1673c1e6174706c"
+      },
+      {
+        "token": "<ABS_PATH_0105>",
+        "raw_path_bytes": 181,
+        "raw_path_sha256": "62bc85f58dd9f02f9b4ffc9e75c085c636fb189fa2f1950dc5e0da3ccebe80aa"
+      },
+      {
+        "token": "<ABS_PATH_0106>",
+        "raw_path_bytes": 170,
+        "raw_path_sha256": "513c3390f5f14582df8667fc0df116b0560e1352342ba1cb6cea8768bd8cf43a"
+      },
+      {
+        "token": "<ABS_PATH_0107>",
+        "raw_path_bytes": 132,
+        "raw_path_sha256": "aa7b89d61fe27143d8bdc4472c423dfc6ab955215f830dc018e3ed975b126b5a"
+      },
+      {
+        "token": "<ABS_PATH_0108>",
+        "raw_path_bytes": 178,
+        "raw_path_sha256": "f24c8b1ebbfe3237ad3f9752b1450a681c0c56c420caa4c9e2dc1bf8b42c2635"
+      },
+      {
+        "token": "<ABS_PATH_0109>",
+        "raw_path_bytes": 177,
+        "raw_path_sha256": "6ae9a2894b9db5d45bcfa27a3ca6d904d29bd17f663d9fdd3175ce85182a35a6"
+      },
+      {
+        "token": "<ABS_PATH_0110>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "2bfd70c902e19d300987988137b702f1f5ada0c783fe617f2acc9dbee0d73487"
+      },
+      {
+        "token": "<ABS_PATH_0111>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "8fd5a09867ae77bd70526649365a82b8c24214d2653d2afbcd0f0d0e30dff8a6"
+      },
+      {
+        "token": "<ABS_PATH_0112>",
+        "raw_path_bytes": 140,
+        "raw_path_sha256": "cf49dacd86159af2b9a7d222f79266c3f1c5dcb575cd772fdf021fa760aa529d"
+      },
+      {
+        "token": "<ABS_PATH_0113>",
+        "raw_path_bytes": 139,
+        "raw_path_sha256": "88db81bbc2284939ee6481cbbf9e9432c724a24fbae5719c065649e41d5e1bec"
+      },
+      {
+        "token": "<ABS_PATH_0114>",
+        "raw_path_bytes": 143,
+        "raw_path_sha256": "ead79fc120a00edaf2ccf0b0aa02ee5b6c2fa1aa1d7ece681a5cc009ded86063"
+      },
+      {
+        "token": "<ABS_PATH_0115>",
+        "raw_path_bytes": 144,
+        "raw_path_sha256": "f01805f1828a5298eb8d937a6bb5ae225b825f219b25d32e1fcb7ba6c396a00e"
+      },
+      {
+        "token": "<ABS_PATH_0116>",
+        "raw_path_bytes": 125,
+        "raw_path_sha256": "997c8b2dc0520b60e3cb8598827428ab21bb3bd9ff2a224e2c33bfc9a092db7a"
+      },
+      {
+        "token": "<ABS_PATH_0117>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "21c6431f3f9374ae5a03122d0a3e4c0e61ead1dd7d3bd04a7dd816598833bae0"
+      },
+      {
+        "token": "<ABS_PATH_0118>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "e76ca6a58034eb3f285a545c7dc426882ab37a2a13875fe91b2d96c2131e0e58"
+      },
+      {
+        "token": "<ABS_PATH_0119>",
+        "raw_path_bytes": 129,
+        "raw_path_sha256": "bda30f5509cb6915c38f4ad41dda243c1e56a774bdac33fd0f6c7025354d246f"
+      },
+      {
+        "token": "<ABS_PATH_0120>",
+        "raw_path_bytes": 166,
+        "raw_path_sha256": "0b39921187a174e091837f16f361f966f79977eb29cca044e7d796e3c2d75ed2"
+      },
+      {
+        "token": "<ABS_PATH_0121>",
+        "raw_path_bytes": 168,
+        "raw_path_sha256": "e76cbb20e911a6c7bdb3163078b43638c165437a20ffa4612a4a4307dadff7f5"
+      },
+      {
+        "token": "<ABS_PATH_0122>",
+        "raw_path_bytes": 130,
+        "raw_path_sha256": "120a227d447732ee156db1c9ecac7ef523f2458ef85838ff501f16d930c801a1"
+      },
+      {
+        "token": "<ABS_PATH_0123>",
+        "raw_path_bytes": 176,
+        "raw_path_sha256": "c75095671f0bc8a8e9037c97c17865b413bb2d89542b838a475ef3602573f41e"
+      },
+      {
+        "token": "<ABS_PATH_0124>",
+        "raw_path_bytes": 175,
+        "raw_path_sha256": "d813c8e13a6ece2410a37b1f0e6cbb487156241077cfc46779dd0960758907cc"
+      },
+      {
+        "token": "<ABS_PATH_0125>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "db27febb5887ce0441dad44402ee290586adb19cfdcc10b02daaba308a1db63f"
+      },
+      {
+        "token": "<ABS_PATH_0126>",
+        "raw_path_bytes": 136,
+        "raw_path_sha256": "c761d7b8f70e436f6f244c3762c349f0c6bd7f6d2e46ab81c9191e0e34b7a41f"
+      },
+      {
+        "token": "<ABS_PATH_0127>",
+        "raw_path_bytes": 142,
+        "raw_path_sha256": "c432a63f31b1f6d71053758b4aaef876b8349ca44f5c109c24c0a57388831326"
+      },
+      {
+        "token": "<ABS_PATH_0128>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "a1bd80faa5881bbaff038ae29c4c0b8305b3913018119f330fc1a4156dd405a1"
+      },
+      {
+        "token": "<ABS_PATH_0129>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "b456813b3f3d9caff5de4cd0a2dc2fd7d95438ea2c4f17a734b6b64013cd2352"
+      },
+      {
+        "token": "<ABS_PATH_0130>",
+        "raw_path_bytes": 137,
+        "raw_path_sha256": "53dcaca4b2cfff173296b131f8e8d290310ea5f5818eaa490acedd0e47227e7b"
+      },
+      {
+        "token": "<ABS_PATH_0131>",
+        "raw_path_bytes": 139,
+        "raw_path_sha256": "669c31d06a0dc6b11259960961c35ec12579463efc305ed3a770acdd000b45a2"
+      },
+      {
+        "token": "<ABS_PATH_0132>",
+        "raw_path_bytes": 133,
+        "raw_path_sha256": "2fcececb478b5d1adc21be91fb749590f7448cef51ec0a6ca1c58fc24866d60f"
+      },
+      {
+        "token": "<ABS_PATH_0133>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "3098bf7d1bf5f78fe32d8f176ad4eee5445d962f96d9d1de1ae84e0185efe561"
+      },
+      {
+        "token": "<ABS_PATH_0134>",
+        "raw_path_bytes": 141,
+        "raw_path_sha256": "0dbcdad7684fff35e9d9551e31a13dab50999b1cfbc553103bc8e1367e493aa8"
+      },
+      {
+        "token": "<ABS_PATH_0135>",
+        "raw_path_bytes": 137,
+        "raw_path_sha256": "aee1d7724ed5d8d27bc0bff830967e4330e77d2805e59a0d7d583e5801324dff"
+      },
+      {
+        "token": "<ABS_PATH_0136>",
+        "raw_path_bytes": 179,
+        "raw_path_sha256": "407f0deb2a2c98ee02b2a1f4a8a1c7325c0029f03ba4555cc0bbbdd25886ecaf"
+      },
+      {
+        "token": "<ABS_PATH_0137>",
+        "raw_path_bytes": 176,
+        "raw_path_sha256": "24a1e7c7abcaf5378bca86e6494fb2ccd345dc06675d47964de5ded54716d7c9"
+      },
+      {
+        "token": "<ABS_PATH_0138>",
+        "raw_path_bytes": 138,
+        "raw_path_sha256": "7addf9b581c7eb9d49db193d463126eab7a2dff5ec5ea83054acaea63505dd09"
+      },
+      {
+        "token": "<ABS_PATH_0139>",
+        "raw_path_bytes": 184,
+        "raw_path_sha256": "d3da4e10840eba7a679cf1ede6212c5ea1084d75ddd85dc80938a9626bb3d6df"
+      },
+      {
+        "token": "<ABS_PATH_0140>",
+        "raw_path_bytes": 183,
+        "raw_path_sha256": "8c33a85544407cdab03abc71f405a6a8c6364a120e38cb51ecd7a9dbd80d01e7"
+      },
+      {
+        "token": "<ABS_PATH_0141>",
+        "raw_path_bytes": 144,
+        "raw_path_sha256": "811e520fbef41cd6c759b1ce9e4c65b0e6039d077625e4f56d649832bf33439a"
+      },
+      {
+        "token": "<ABS_PATH_0142>",
+        "raw_path_bytes": 144,
+        "raw_path_sha256": "39e78a85046cafce797a93eafc68bb4a0317877e713966ad726d19a566e9f525"
+      },
+      {
+        "token": "<ABS_PATH_0143>",
+        "raw_path_bytes": 150,
+        "raw_path_sha256": "c2489ef9ed4ed816b018e8709f8a7d9733412a8aefc1b6b93435473ed72dc94c"
+      },
+      {
+        "token": "<ABS_PATH_0144>",
+        "raw_path_bytes": 149,
+        "raw_path_sha256": "b693e2f83529972f09fad41e0e33b58993c29030595e143eda3e93e22252b89c"
+      },
+      {
+        "token": "<ABS_PATH_0145>",
+        "raw_path_bytes": 146,
+        "raw_path_sha256": "f74739f5cbdd17cbaa313f34bc2dd7dcd437d1f6a4ccf6753e68c04bacd91d5d"
+      },
+      {
+        "token": "<ABS_PATH_0146>",
+        "raw_path_bytes": 145,
+        "raw_path_sha256": "62e5e250278f4de45e7543e51afae2d01f81889463253d91c9dbd4d079e92c5d"
+      }
+    ],
+    "raw_preimages": "Exact raw copies and token preimages are retained in ignored local custody. This archive makes no off-host durability claim for them.",
+    "public_hash_domain": "bytes/sha256 bind the published projection; raw_bytes/raw_sha256 bind the unredacted original."
+  },
+  "omissions": [
+    "Source-author planning notes and seals are copied into ignored raw custody but omitted from this selected public archive. No complete conversation, prompt, candidate-generation timeline, or independent-first historical review is claimed.",
+    "Native executable files, dynamic libraries, compiled objects, installed Mathlib closure, and upstream review/acceptance dependencies remain outside this archive. Historical source manifests retain their recorded identities. No hermetic replay or loaded-byte custody follows.",
+    "The original identities-proof outer process return is unavailable in CLOSED.json. Its native P01 returncode is 1. Later runs do not fill that gap.",
+    "The complete accepted eleven-target proof acceptance and later same-kernel replay are separate evidence. This archive neither reruns them nor transfers their credit to failed candidates."
+  ],
+  "nonclaims": [
+    "A failed candidate is not a counterexample to the MGW proposition.",
+    "No payload is an accepted source module or a runnable replay route.",
+    "No retroactive preregistration, selection-unbiased, strict-confirmatory, independent-kernel, human-review, Rust-refinement, estimator, or deployment credit.",
+    "Local retained logs are checked for byte and record consistency; they do not authenticate a historical process or prove what it loaded."
+  ]
+}

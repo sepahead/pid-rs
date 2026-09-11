@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "<ABS_PATH_0003>",
+    "-t",
+    "0",
+    "-o",
+    "<ABS_PATH_0137>",
+    "PidMgwTargetCopyCandidate/L5.lean"
+  ],
+  "cwd": "<ABS_PATH_0138>",
+  "effective_seconds": 120.0,
+  "id": "P01",
+  "registration_sha256": "56496be7ea29a348838e51793035653febe0d12f78b94f41df954bfc8f7114be",
+  "started_utc": "2026-09-11T02:03:30.571140+00:00"
+}

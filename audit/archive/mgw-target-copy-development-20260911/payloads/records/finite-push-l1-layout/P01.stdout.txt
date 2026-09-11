@@ -1,0 +1,28 @@
+PidMgwTargetCopyCandidate/L1.lean:29:30: error: Application type mismatch: The argument
+  hequal
+has type
+  observe left = observe right
+but is expected to have type
+  left = right
+in the application
+  congrArg Prod.fst hequal
+PidMgwTargetCopyCandidate/L1.lean:42:15: error: unsolved goals
+sourceValue : Fin 2 → Type u
+B : Type v
+inst✝³ : (i : Fin 2) → Fintype (sourceValue i)
+inst✝² : Fintype B
+inst✝¹ : (i : Fin 2) → DecidableEq (sourceValue i)
+inst✝ : DecidableEq B
+law : World sourceValue B → ℝ
+hlaw : IsFiniteLaw law
+hinjective : Function.Injective observe
+event : Finset (Key sourceValue B)
+world : World sourceValue B
+⊢ (if observe world ∈ event then if True then law world else 0 else 0) = if observe world ∈ event then law world else 0
+PidMgwTargetCopyCandidate/L1.lean:42:29: error: This simp argument is unused:
+  if_pos rfl
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

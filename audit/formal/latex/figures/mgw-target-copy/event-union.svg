@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="810" viewBox="0 0 960 810" role="img" aria-labelledby="title desc">
-  <title id="title">The source union determines target-copy synergy</title>
+  <title id="title">The source joint law determines target-copy synergy</title>
   <desc id="desc">A finite categorical MGW example with target T equal to the first source S₁ together with an arbitrary residual U. Two tables show the same joint source law: diagonal cells have mass three eighths and off-diagonal cells one eighth. The row-or-column union has mass five eighths for a diagonal anchor and seven eighths for an off-diagonal anchor. The corresponding local synergy values are log sixteen fifteenths and log sixteen sevenths. The average uses total diagonal weight three quarters and off-diagonal weight one quarter. A lower panel shows cancellation of the positive full-key and target-event masses from the synergy formula.</desc>
   <style>
     text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
@@ -11,7 +11,7 @@
     .formula { font-size: 24px; font-weight: 600; }
   </style>
   <rect width="960" height="810" fill="#F7F3E9"/>
-  <text x="34" y="43" class="title">The source union determines target-copy synergy</text>
+  <text x="34" y="43" class="title">The source joint law determines target-copy synergy</text>
   <text x="34" y="77" class="label">Categorical MGW · target T = (S₁, U) · arbitrary finite law · nats</text>
   <line x1="34" y1="96" x2="926" y2="96" stroke="#916400" stroke-width="2"/>
   <text x="34" y="126" class="label">At an anchor (x, y): a = P(S₁ = x), c = P(S₂ = y), j = P(S₁ = x, S₂ = y).</text>

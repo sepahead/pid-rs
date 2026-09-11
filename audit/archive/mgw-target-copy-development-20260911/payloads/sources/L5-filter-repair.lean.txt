@@ -1,0 +1,113 @@
+import PidMgwTargetCopy.Interface
+
+/-!
+One unexecuted candidate for the unchanged L5 proposition.
+Only the target's nonnegativity hypothesis is used; no normalization or full support.
+Reference elaboration and independent candidate checking remain separate and pending.
+-/
+
+set_option autoImplicit false
+set_option warningAsError true
+
+open scoped BigOperators
+open PidFiniteConvergence PidMgwTargetCopy
+
+namespace PidMgwTargetCopyCandidate
+
+universe u v
+
+theorem sourceProjection
+    {sourceValue : Fin 2 → Type u} {B : Type v}
+    [∀ i, Fintype (sourceValue i)] [Fintype B]
+    [∀ i, DecidableEq (sourceValue i)] [DecidableEq B] :
+    SourceProjectionTarget (sourceValue := sourceValue) (B := B) := by
+  classical
+  unfold SourceProjectionTarget
+  intro law hnonnegative
+  have hrow_filter (p : SourceRow sourceValue → Prop) :
+      finiteEventMass law
+          (Finset.univ.filter fun key : Key sourceValue B => p key.1) =
+        finiteEventMass (sourceLaw law) (Finset.univ.filter p) := by
+    simp only [finiteEventMass, Finset.sum_filter]
+    rw [Fintype.sum_prod_type]
+    apply Finset.sum_congr rfl
+    intro row _
+    by_cases hp : p row
+    · simp only [hp, if_true, sourceLaw]
+    · simp [hp]
+  have hcoordinate (anchor : Key sourceValue B) (i : Fin 2) :
+      finiteEventMass law (sourceBranchEvent {i} anchor) =
+        coordinateMass (sourceLaw law) i (anchor.1 i) := by
+    have hevent :
+        sourceBranchEvent {i} anchor =
+          Finset.univ.filter fun key : Key sourceValue B => key.1 i = anchor.1 i := by
+      ext key
+      simp [sourceBranchEvent, sourceCollectionEquivalent, eq_comm]
+    rw [hevent]
+    simpa only [coordinateMass, Finset.filter_congr_decidable] using
+      hrow_filter (fun row => row i = anchor.1 i)
+  have hjoint (anchor : Key sourceValue B) :
+      finiteEventMass law (sourceBranchEvent {0, 1} anchor) = sourceLaw law anchor.1 := by
+    have hevent :
+        sourceBranchEvent {0, 1} anchor =
+          Finset.univ.filter fun key : Key sourceValue B => key.1 = anchor.1 := by
+      unfold sourceBranchEvent
+      ext key
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and,
+        sourceCollectionEquivalent]
+      constructor
+      · intro hmatch
+        funext i
+        fin_cases i
+        · exact (hmatch 0 (by simp)).symm
+        · exact (hmatch 1 (by simp)).symm
+      · intro hrow i _
+        exact (congrArg (fun row : SourceRow sourceValue => row i) hrow).symm
+    calc
+      finiteEventMass law (sourceBranchEvent {0, 1} anchor) =
+          finiteEventMass (sourceLaw law)
+            (Finset.univ.filter fun row : SourceRow sourceValue => row = anchor.1) := by
+        rw [hevent]
+        simpa only [Finset.filter_congr_decidable] using
+          hrow_filter (fun row => row = anchor.1)
+      _ = sourceLaw law anchor.1 := by simp [finiteEventMass, Finset.filter_eq']
+  refine ⟨?_, ?_⟩
+  · intro anchor
+    refine ⟨?_, ?_, ?_⟩
+    · simpa [sourceMass, sxPid2SourceEvent, sxPid2Collections, sxSourceEvent] using
+        hcoordinate anchor 0
+    · simpa [sourceMass, sxPid2SourceEvent, sxPid2Collections, sxSourceEvent] using
+        hcoordinate anchor 1
+    · simpa [sourceMass, sxPid2SourceEvent, sxPid2Collections, sxSourceEvent] using
+        hjoint anchor
+  · intro f
+    have hmarginal (row : SourceRow sourceValue) : 0 ≤ sourceLaw law row := by
+      unfold sourceLaw
+      exact Finset.sum_nonneg (fun target _ => hnonnegative (row, target))
+    calc
+      (∑ key ∈ positiveMassSupport law, law key * f key.1) =
+          ∑ key, law key * f key.1 := by
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro key _ hnot
+        have hnot_positive : ¬ 0 < law key := by
+          simpa [positiveMassSupport] using hnot
+        have hzero : law key = 0 :=
+          le_antisymm (le_of_not_gt hnot_positive) (hnonnegative key)
+        simp only [hzero, zero_mul]
+      _ = ∑ row, ∑ target : Target sourceValue B, law (row, target) * f row :=
+        Fintype.sum_prod_type _
+      _ = ∑ row, sourceLaw law row * f row := by
+        apply Finset.sum_congr rfl
+        intro row _
+        simp only [sourceLaw, Finset.sum_mul]
+      _ = ∑ row ∈ positiveMassSupport (sourceLaw law), sourceLaw law row * f row := by
+        symm
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro row _ hnot
+        have hnot_positive : ¬ 0 < sourceLaw law row := by
+          simpa [positiveMassSupport] using hnot
+        have hzero : sourceLaw law row = 0 :=
+          le_antisymm (le_of_not_gt hnot_positive) (hmarginal row)
+        simp only [hzero, zero_mul]
+
+end PidMgwTargetCopyCandidate

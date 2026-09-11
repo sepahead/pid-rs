@@ -1,0 +1,93 @@
+import PidMgwTargetCopy.Interface
+
+/-!
+One unexecuted candidate for the unchanged L1 proposition.
+Reference elaboration and independent candidate checking remain pending.
+-/
+
+set_option autoImplicit false
+set_option warningAsError true
+
+open scoped BigOperators
+open PidFiniteConvergence PidMgwTargetCopy
+
+namespace PidMgwTargetCopyCandidate
+
+universe u v
+
+theorem worldBridge
+    {sourceValue : Fin 2 → Type u} {B : Type v}
+    [∀ i, Fintype (sourceValue i)] [Fintype B]
+    [∀ i, DecidableEq (sourceValue i)] [DecidableEq B] :
+    WorldBridgeTarget (sourceValue := sourceValue) (B := B) := by
+  classical
+  intro law hlaw
+  have hinjective :
+      Function.Injective (observe (sourceValue := sourceValue) (B := B)) := by
+    intro left right hequal
+    apply Prod.ext
+    · exact congrArg (fun key : Key sourceValue B => key.1) hequal
+    · exact congrArg (fun key : Key sourceValue B => key.2.2) hequal
+  have hkeysum (event : Finset (Key sourceValue B)) (world : World sourceValue B) :
+      (∑ key ∈ event, if observe world = key then law world else 0) =
+        if observe world ∈ event then law world else 0 := by
+    calc
+      (∑ key ∈ event, if observe world = key then law world else 0) =
+          if observe world ∈ event then
+            (if observe world = observe world then law world else 0)
+          else 0 := by
+        apply Finset.sum_eq_ite (observe world)
+        intro key _ hne
+        exact if_neg (fun hequal => hne hequal.symm)
+      _ = _ := by simp
+  have hevents (event : Finset (Key sourceValue B)) :
+      finiteEventMass (worldPushforward law) event =
+        ∑ world, if observe world ∈ event then law world else 0 := by
+    change
+      (∑ key ∈ event, ∑ world, if observe world = key then law world else 0) =
+        ∑ world, if observe world ∈ event then law world else 0
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro world _
+    exact hkeysum event world
+  have hat (world : World sourceValue B) :
+      worldPushforward law (observe world) = law world := by
+    unfold worldPushforward
+    calc
+      (∑ other, if observe other = observe world then law other else 0) =
+          (if observe world = observe world then law world else 0) := by
+        apply Finset.sum_eq_single_of_mem world (Finset.mem_univ world)
+        intro other _ hne
+        exact if_neg (fun hequal => hne (hinjective hequal))
+      _ = law world := if_pos rfl
+  have hcopy : CopiesSourceOne (worldPushforward law) := by
+    intro key hnonzero
+    by_contra hmismatch
+    apply hnonzero
+    unfold worldPushforward
+    apply Finset.sum_eq_zero
+    intro world _
+    apply if_neg
+    intro hequal
+    apply hmismatch
+    calc
+      key.2.1 = (observe world).2.1 :=
+        congrArg (fun other : Key sourceValue B => other.2.1) hequal.symm
+      _ = (observe world).1 0 := rfl
+      _ = key.1 0 :=
+        congrArg (fun other : Key sourceValue B => other.1 0) hequal
+  refine ⟨⟨?_, ?_⟩, hcopy, hat, hevents⟩
+  · intro key
+    unfold worldPushforward
+    apply Finset.sum_nonneg
+    intro world _
+    by_cases hequal : observe world = key
+    · simpa only [if_pos hequal] using hlaw.1 world
+    · simp only [if_neg hequal, le_refl]
+  · calc
+      (∑ key, worldPushforward law key) = ∑ world, law world := by
+        simpa only [finiteEventMass, Finset.mem_univ, if_true] using
+          hevents (Finset.univ : Finset (Key sourceValue B))
+      _ = 1 := hlaw.2
+
+end PidMgwTargetCopyCandidate

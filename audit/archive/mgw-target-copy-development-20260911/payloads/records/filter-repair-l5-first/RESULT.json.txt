@@ -1,0 +1,200 @@
+{
+  "baseline_mode": "selected-inputs-only-prior-installed-profile-evidence",
+  "captured_proof_prefix": [],
+  "driver_sha256": "f6762ab0bc9fef022af838876a8b73761c09fbee171e962f057764685dd444e7",
+  "failure": "RuntimeError('unexpected/late/incomplete process observation')",
+  "finished_monotonic_ns": 1237714803139041,
+  "finished_utc": "2026-09-11T01:58:47.198480+00:00",
+  "ledgers": {
+    "REQUEST.json": {
+      "bytes": 17211,
+      "mode": "0o644",
+      "path": "<ABS_PATH_0129>",
+      "sha256": "b02f134c7c0a659af89221ee5d99f88f7e2232e6f6f5502cc1601be0ebc84607"
+    }
+  },
+  "manifest_sha256": "07571f0f79b7fb1dc4458d28b8d423efd09c41d105a60a3bd4b4f7e337612ad7",
+  "objects": {},
+  "proof_acceptance": "pending-actual-outer-return-and-root-proof-review",
+  "proof_outputs": {},
+  "registration_sha256": "26b83e5e551c0939e63112569f2cb973f143f3e3c34cfb7c1115f95b5d8e64a9",
+  "requested_rows": [
+    "P01"
+  ],
+  "selected_inputs": {
+    "pre": {
+      "checked": [
+        {
+          "bytes": 52448,
+          "mode": "0o755",
+          "path": "<ABS_PATH_0002>",
+          "sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf"
+        },
+        {
+          "bytes": 49968,
+          "mode": "0o755",
+          "path": "<ABS_PATH_0003>",
+          "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+        },
+        {
+          "bytes": 8939,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0019>",
+          "sha256": "88030fced19ec58e99d92918a7a6830a53415febb0e46373937a812650e3203d"
+        },
+        {
+          "bytes": 11304,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0020>",
+          "sha256": "ba1edee20bd3f72d249225c48562ff2372feea469ccd10bec07f7956c3ce2253"
+        },
+        {
+          "bytes": 11661,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0021>",
+          "sha256": "c8eb0dc02da29c42dc062add10ab8e1d2550342f6cdb74e2b0794399c68e2fa2"
+        },
+        {
+          "bytes": 21693,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0022>",
+          "sha256": "a47c8724d7b259af51c2e8e66c3f9d2bf715de2d6ff9e6bb248c7f2d81e5feda"
+        },
+        {
+          "bytes": 15326,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0023>",
+          "sha256": "95b1c0b04e064ce2d8a89da0bb1cecb7469c024f6cfe7d6c5d009df4bb0ad11d"
+        },
+        {
+          "bytes": 4723,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0024>",
+          "sha256": "396b270bd8a55cc434e79fca6cbb38c0045b841eca2215fc143d47093b77bc4e"
+        },
+        {
+          "bytes": 10249,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0025>",
+          "sha256": "2accd84b5e8f145b7892cc1dd51c9d984f8a5393cb3eeb3ab40257356514c297"
+        },
+        {
+          "bytes": 27507,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0026>",
+          "sha256": "ece8ea76e63f3e0b8030e670ad0e67499c59866e8ff6ac91fcb1ece10bf90998"
+        },
+        {
+          "bytes": 1362,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0027>",
+          "sha256": "535a5e932b25571bba07b7a421e1107fbb636c7951a5c11c603b2ca044255ca9"
+        },
+        {
+          "bytes": 5082,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0097>",
+          "sha256": "cb24e26d8f998517bfdf7e6362c0536075cb2c769c042d44491a1e4cb88df4b6"
+        },
+        {
+          "bytes": 1065,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0098>",
+          "sha256": "a5062852c2c6020705d42471b06bd8a24269c762866a958227496e8c77912197"
+        },
+        {
+          "bytes": 4629,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0120>",
+          "sha256": "f65384929d3a65ae4f6a4dd241f9fc412753263c6e1598534259af8b95d02b5c"
+        },
+        {
+          "bytes": 4252,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0100>",
+          "sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2"
+        },
+        {
+          "bytes": 2114,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0101>",
+          "sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731"
+        },
+        {
+          "bytes": 102648,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0033>",
+          "sha256": "b8887638214a0d7a973c793bd4a18018706221b5b3cd5fdbd86610f48522215d"
+        },
+        {
+          "bytes": 98304,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0034>",
+          "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+        },
+        {
+          "bytes": 292592,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0035>",
+          "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+        },
+        {
+          "bytes": 278408,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0036>",
+          "sha256": "21f2d273e015f314e476ade098c4acd7f72d6ec8ecc092dd8549dbe71df40a6d"
+        },
+        {
+          "bytes": 605424,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0037>",
+          "sha256": "a41edda116d4b59a5b692740b503e42bacd26582f9733c891d8f732426664b27"
+        },
+        {
+          "bytes": 1459376,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0038>",
+          "sha256": "ef8731a6f28db291d9c28d339a1b1fed680118b8a4b3e11008ea576fd6c3e44e"
+        },
+        {
+          "bytes": 468792,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0039>",
+          "sha256": "2276c9ffb4b52afdd004b9fb1c37b4d33d6faedbd5aaff550f424b8c2401b4b7"
+        },
+        {
+          "bytes": 88640,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0102>",
+          "sha256": "f051072f24ec630db96c279f4c0641251319d70513f67d19931b14d239cd7783"
+        },
+        {
+          "bytes": 124536,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0103>",
+          "sha256": "dda7d5fd268b8cfcf333ba121965927cf4a1dd523b2423d9dc936bb909afae04"
+        },
+        {
+          "bytes": 128008,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0104>",
+          "sha256": "8f86e802aa0a4994275bdbded1984b6a3b6fdb04f1acd3a0950f79309e753677"
+        },
+        {
+          "bytes": 36232,
+          "mode": "0o644",
+          "path": "<ABS_PATH_0105>",
+          "sha256": "9a23d232e7a2921cd3bf922897857c9c05b8c057f2b23b15b96a909bd7852d7a"
+        }
+      ],
+      "status": "observed-selected-inputs-only"
+    }
+  },
+  "started_monotonic_ns": 1237701626088958,
+  "status": "stopped-unresolved-no-proof-acceptance",
+  "target_proofs": 0,
+  "unrequested_rows": [
+    "P02",
+    "P03"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "argv": [
+    "<ABS_PATH_0003>",
+    "-t",
+    "0",
+    "-o",
+    "<ABS_PATH_0040>",
+    "PidMgwTargetCopyCandidate/L1.lean"
+  ],
+  "cwd": "<ABS_PATH_0041>",
+  "effective_seconds": 120.0,
+  "elapsed_seconds": 0.72330125,
+  "expected_process_observation": false,
+  "failure": null,
+  "finished_utc": "2026-09-10T22:54:26.356464+00:00",
+  "id": "P01",
+  "pid": 87225,
+  "registration_sha256": "37c07c30770403c1299739b9c839769aa793629b7942dec3bf1628ff296c09af",
+  "returncode": 1,
+  "started_utc": "2026-09-10T22:54:25.633156+00:00",
+  "streams": {
+    "stderr": {
+      "bytes": 0,
+      "mode": "0o644",
+      "path": "<ABS_PATH_0050>",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 284,
+      "mode": "0o644",
+      "path": "<ABS_PATH_0051>",
+      "sha256": "ac1141dcdc9dd6d8c6289e0968c5c0a9f46b76ffaf0c436b2d101d4051145019"
+    }
+  }
+}

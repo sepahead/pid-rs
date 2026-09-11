@@ -1,0 +1,56 @@
+{
+  "status": "failed-before-proof-elaboration",
+  "recorded_utc": "2026-09-10T22:55:28.308536+00:00",
+  "actual_outer": {
+    "tool": "c57a9c",
+    "exit_code": 1
+  },
+  "root_causal_read": "e6ae45",
+  "cause": "Lean module-prefix search root shadowed the separately staged Interface object",
+  "target_proofs": 0,
+  "objects": [],
+  "unrequested": [
+    "P02",
+    "P03",
+    "P04",
+    "P05"
+  ],
+  "retained_files": [
+    {
+      "path": "<ABS_PATH_0047>",
+      "bytes": 17089,
+      "sha256": "f9f083a21bc68b659c354e26d576cda2260605ac01747da8ad1a1a7ee12fa04f",
+      "mode": "0o644"
+    },
+    {
+      "path": "<ABS_PATH_0048>",
+      "bytes": 9305,
+      "sha256": "d7128acf6082a7f4c98a06afc51fe361e80b90706545fe70001d8ccc3619bcd6",
+      "mode": "0o644"
+    },
+    {
+      "path": "<ABS_PATH_0049>",
+      "bytes": 1517,
+      "sha256": "e52047ed81e948f928531a216225a4e0627b8d94d47606f630b0d8b038cf1e49",
+      "mode": "0o644"
+    },
+    {
+      "path": "<ABS_PATH_0050>",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    {
+      "path": "<ABS_PATH_0051>",
+      "bytes": 284,
+      "sha256": "ac1141dcdc9dd6d8c6289e0968c5c0a9f46b76ffaf0c436b2d101d4051145019",
+      "mode": "0o644"
+    },
+    {
+      "path": "<ABS_PATH_0052>",
+      "bytes": 702,
+      "sha256": "afaf550c00417eb97a51e7334e6b77be571777fe9094c0c1bb1c0d8457c9619d",
+      "mode": "0o644"
+    }
+  ]
+}
