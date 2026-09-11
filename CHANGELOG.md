@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add an inert public negative-results record for the finite target-copy proof development. It
+  distinguishes namespace, finite-push, membership, and decider-alignment failures from false
+  mathematical claims and records the conditions for reconsideration. Raw diagnostics with local
+  paths remain in restricted ignored custody.
+
 - Add the standalone finite target-copy MGW theorem package. It states the exact finite-law
   assumptions, derives the signed local synergy and conditional-entropy bounds, gives three
   worked examples, and links the source graph, 11-target Lean roster, fresh same-kernel replay,

@@ -1,0 +1,16 @@
+{
+  "schema": "pid-rs-mgw-target-copy-negative-archive-v1",
+  "status": "inert-public-projection",
+  "scientific_object": "finite categorical target-copy MGW proof candidates",
+  "public_record": "audit/archive/mgw-target-copy-development-20260911/NEGATIVE_RESULTS.md",
+  "raw_preimages": "retained in restricted ignored local custody; not published",
+  "routes": [
+    {"id":"namespace-shadowing-l1-l4","status":"closed-setup-failure","source_sha256":null,"source_hash_status":"raw candidate hash is retained only in the private custody manifest","scope":"failed before theorem result; no mathematical disproof"},
+    {"id":"finite-push-l1-layout","status":"closed-proof-layout-failure","source_sha256":"16554feada6fedc50011cde4250f1a4e17717849783f0c030fda180f19186e0e","scope":"finite push and injectivity obligation"},
+    {"id":"membership-l2-layout","status":"closed-proof-layout-failure","source_sha256":"ab3ecb3604130573818e662c63ae49004f357988d9052c364072670df4c4e904","scope":"Finset membership versus logical equivalence"},
+    {"id":"identities-l5-original","status":"closed-incomplete-observation","source_sha256":"0c6cc97d33c5828a954a893b11acb1a9584c4d6e7f867976ccf26cdda9be9d3e","diagnostic_sha256":"872ca6c6f711205b02d27e1d9852a180ab847a7f1843b90fd8b7f2316f3f010d","scope":"four identity errors; outer process status incomplete"},
+    {"id":"filter-repair-l5-first","status":"closed-proof-repair-failure","source_sha256":"f65384929d3a65ae4f6a4dd241f9fc412753263c6e1598534259af8b95d02b5c","scope":"first explicit filter repair retained as failed"},
+    {"id":"filter-decider-diagnostic","status":"diagnostic-established","source_sha256":"dd02c019faa6a2b0403f8d325272d6cd2a86cc7479cefd974f27dccc01280","diagnostic_sha256":"63bbdf0dec30d1480a22c1b95f83abe2c05cf6ef624f3c82b707c4d8a4e8fd5b","scope":"Classical.propDecidable versus supplied DecidableEq mismatch"}
+  ],
+  "nonclaims": ["No failed route refutes the MGW proposition.","No raw candidate is accepted by this archive.","No incomplete outer observation is upgraded to a process result.","No negative route establishes independent-kernel, Rust-refinement, estimator, or deployment evidence."]
+}
