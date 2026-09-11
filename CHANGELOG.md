@@ -50,6 +50,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Restore the exact terminal bytes of an archived target-copy Lean interface after a
+  post-validation whitespace edit. Strengthen the archive checker against optimized-mode
+  assertions, duplicate entries, false theorem credit, unsafe paths and altered payloads;
+  add causal tests and CI coverage. Preserve the
+  [failed commit and checker observations](audit/evidence/mgw-target-copy-preservation-correction-2026-09-11.md).
+
 - Reconcile the finite target-copy publication with its committed Markdown and SVG. Correct the
   figure title, PDF title and running heads, record exact source and PDF digests, and retain the
   prior publication bytes in Git history. The updated artifact remains a finite categorical MGW

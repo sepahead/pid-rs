@@ -402,6 +402,17 @@ python3 -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
 python3 -O -I -S -B scripts/check-contextual-rare-tail-counterexample-self-test.py
 ```
 
+`check-mgw-target-copy-negative-archive-v2.py` separately checks the frozen six-route,
+81-payload target-copy archive. It binds manifest bytes, unique paths and identifiers, exact
+integer metadata, source/diagnostic hash associations, and inert regular files. Its self-test
+runs two baselines and 34 causal rejection cases in both Python modes. The
+[correction record](../audit/evidence/mgw-target-copy-preservation-correction-2026-09-11.md)
+retains the post-validation whitespace defect and former false acceptances. This check does
+not validate private raw redactions, historical execution, or mathematical truth. Run both
+`scripts/check-mgw-target-copy-negative-archive-v2.py` and
+`scripts/check-mgw-target-copy-negative-archive-v2-self-test.py` with `python3 -I -S -B` and
+`python3 -O -I -S -B`; CI invokes all four commands.
+
 `check-review-evidence.py` keeps three deliberately bounded artifacts coherent. The canonical
 `assurance-registry.json` covers exactly the 37 release-scope families across definition, exact
 algebra, Rust refinement, floating-point/numerical behavior, and statistical/application validity;

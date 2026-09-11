@@ -53,3 +53,19 @@ must not revive an old candidate lifecycle.
 The accepted fresh replay passed 17 exact source compilations and one same-kernel replay. That
 result gives no credit to a failed candidate and does not make the replay independent-kernel
 verification.
+
+## Preservation correction
+
+Commit `7a25144fef070910547443dd4d03192d99eb1be3` removed a final newline from the inert
+`Interface.lean.txt` after validation. The shortened file failed both the archive digest check
+and the source-state check. The correction restores the original 8,939 bytes and existing
+SHA-256 `88030fced19ec58e99d92918a7a6830a53415febb0e46373937a812650e3203d`; it does not
+change the manifest to accept altered evidence. Exact archived bytes can contain formatting
+that a source-code whitespace check flags. Preserve those bytes and record the exception.
+
+The [preservation correction record](../../evidence/mgw-target-copy-preservation-correction-2026-09-11.md)
+also records distinct false acceptances in the former checker. The current check binds the
+frozen manifest, unique artifact paths and identifiers, exact integer metadata, route-to-artifact
+hashes, inert regular-file modes, and every payload. It runs with its causal controls in both
+Python modes. Raw private redactions, historical execution, and mathematical validity remain
+outside this public check.

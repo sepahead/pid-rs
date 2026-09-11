@@ -196,8 +196,8 @@
       {
         "git_mode": "100644",
         "path": ".github/workflows/ci.yml",
-        "sha256": "6b0b1c01f0195ebffe188af443706f62fa3c48e0420318d68c7d8b25c6ab3ac9",
-        "size_bytes": 100621
+        "sha256": "8e52cdc21dba5f3a6b1917e17dac7a619aa548f050f7e82df7b58edf6909f980",
+        "size_bytes": 101093
       },
       {
         "git_mode": "100644",
@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "ec20b4e88694c042dac46eaaa5e23186dd60f3e409c79460ff531390cdd21707",
-        "size_bytes": 300827
+        "sha256": "93ae7ecc001045576731db8b4c5cc04da4149a99582db59f1cf4d4a24cfe33ff",
+        "size_bytes": 301255
       },
       {
         "git_mode": "100644",
@@ -922,8 +922,8 @@
       {
         "git_mode": "100644",
         "path": "audit/archive/mgw-target-copy-development-20260911/NEGATIVE_RESULTS.md",
-        "sha256": "36d970f6a7a0c3ae5d5c7c2d919d92b52649934a248dc34bf7ddc7fc0afce682",
-        "size_bytes": 4278
+        "sha256": "8aa12754838da0ec86b7c47581623cedaad0ee702f466eb372e4841c1b32c467",
+        "size_bytes": 5362
       },
       {
         "git_mode": "100644",
@@ -3522,6 +3522,12 @@
         "path": "audit/evidence/mgw-synergy-analysis-learning-publication-2026-09-10.md",
         "sha256": "b480adaae78b210ef52a05a4218b2107f0dde2a341ebc6193fddde54088d4e41",
         "size_bytes": 12541
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mgw-target-copy-preservation-correction-2026-09-11.md",
+        "sha256": "02a1f064aaa95db404298ae4105edc558296c4a82f12477be63ff60389d3ceba",
+        "size_bytes": 4786
       },
       {
         "git_mode": "100644",
@@ -17722,8 +17728,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "c9e2b31993c0427deee32056c312dd03636810f371513bc91f05596c8d9ddcb5",
-        "size_bytes": 280814
+        "sha256": "10b3771e82aad573de48e00c50c34a7124f1ad8c4f37b71bca2a4e88676b1bf6",
+        "size_bytes": 281645
       },
       {
         "git_mode": "100644",
@@ -17962,7 +17968,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "6468dc3b57c27b2c740a0c5fbfd0c93fdc1da1612e987b7d852e8d31d0ac6f80",
+        "sha256": "efd1a283fa9d4df1b280fb9c5307d8cee050bde36959131e8cbe303b07158d30",
         "size_bytes": 90915
       },
       {
@@ -18526,7 +18532,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "ccfbc0c53eeda2db47ac2daf7ec110884e4901c685a111b31c00e6e3c8755fb7",
+        "sha256": "5b007e3f5557ff3b2dce6a28228f5dd69aa7d52dabe00fae1b149cd61f0dc349",
         "size_bytes": 136232
       },
       {
@@ -18795,9 +18801,15 @@
       },
       {
         "git_mode": "100644",
+        "path": "scripts/check-mgw-target-copy-negative-archive-v2-self-test.py",
+        "sha256": "1ba85110c524f9ef690b498464c29e64c2770608e6824e3a3850e7a432b8db53",
+        "size_bytes": 9532
+      },
+      {
+        "git_mode": "100644",
         "path": "scripts/check-mgw-target-copy-negative-archive-v2.py",
-        "sha256": "e94811f929b341c7f5d5814c084680e3f565d04857ab049832e30bc7573fe27c",
-        "size_bytes": 1752
+        "sha256": "b1d796902a2458de5e981ce6ac874895cf49afab8ee8d6bd403cc112ea99ede9",
+        "size_bytes": 8618
       },
       {
         "git_mode": "100755",
@@ -19352,8 +19364,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "d31f9a112d268a8529f543e12d8f37d89c87f99023139ddc8ef063c3ff939505",
-    "entry_count": 3201
+    "entries_sha256": "bd2b687d8075660aca93f9e2f1ebdeb345099106244f3af7abac94e74cda7f92",
+    "entry_count": 3203
   },
   "subprojections": [
     {
@@ -19381,7 +19393,7 @@
       ]
     },
     {
-      "entries_sha256": "371a9e96d9bd0758473e90b3689a889c1dad47268e5790b69aff1409d5621cee",
+      "entries_sha256": "c99887d2a8c72cbfc8f1f47726f5575fe76adb36ffa0c165eca5c1c8b0f82955",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

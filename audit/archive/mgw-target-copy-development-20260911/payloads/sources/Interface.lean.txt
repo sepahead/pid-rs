@@ -196,3 +196,4 @@ def AveragedBoundsTarget : Prop :=
     0 ≤ s ∧ s ≤ min (sourceOneGivenTwoEntropy law) (sourceTwoGivenOneEntropy law)
 
 end PidMgwTargetCopy
+
