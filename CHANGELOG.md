@@ -9,6 +9,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Extend the formal-PDF inventory and its hostile self-test to include the finite target-copy MGW
+  note. The baseline and missing-source/PDF controls now cover the new standalone artifact.
+
 - Add an inert public negative-results record for the finite target-copy proof development. It
   distinguishes namespace, finite-push, membership, and decider-alignment failures from false
   mathematical claims and records the conditions for reconsideration. Raw diagnostics with local

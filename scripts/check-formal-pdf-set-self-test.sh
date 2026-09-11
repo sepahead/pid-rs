@@ -62,6 +62,7 @@ LATEX_STANDALONE=(
 )
 MARKDOWN_SOURCES=(
   MATHEMATICAL_RESULTS_GUIDE.md
+  audit/evidence/finite-target-copy-mgw-synergy.md
   audit/evidence/mgw-fixed-world-added-information-2026-09-09.md
   NUMERICAL_ASSURANCE.md
   PID2_REPRESENTED_COORDINATE_ASSURANCE.md
@@ -84,6 +85,7 @@ STANDALONE=(
   ksg-m1a-composite-v6-boundary
   ksg-m1a-composite-v7-boundary
   mathematical-results-guide
+  finite-target-copy-mgw-synergy
   mathematical-problem-solving-workflow
   mgw-fixed-world-added-information
   numerical-assurance
