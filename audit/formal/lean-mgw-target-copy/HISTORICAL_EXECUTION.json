@@ -1,0 +1,49 @@
+{
+  "accepted_target_count": 11,
+  "groups": [
+    {
+      "accepted_targets": 4,
+      "actual_outer_exit_code": 0,
+      "id": "event-and-world",
+      "judge_report": {
+        "bytes": 30265,
+        "path": "audit/formal/lean-mgw-target-copy/evidence/event-and-world.stdout",
+        "sha256": "0521fba724815f4773d5b8de87e559282ef002695e693287fa23e83bcedaae6e"
+      },
+      "original_local_receipt_sha256": "cb24e26d8f998517bfdf7e6362c0536075cb2c769c042d44491a1e4cb88df4b6",
+      "recorded_utc": "2026-09-11T01:43:07.169973+00:00"
+    },
+    {
+      "accepted_targets": 5,
+      "actual_outer_exit_code": 0,
+      "id": "projection-and-identities",
+      "judge_report": {
+        "bytes": 36300,
+        "path": "audit/formal/lean-mgw-target-copy/evidence/projection-and-identities.stdout",
+        "sha256": "60092e8d9e9cbb905f34e76b6317629a7002dd42fce6b611270e7103d54c8e2c"
+      },
+      "original_local_receipt_sha256": "d0096ef1bba8043937090df9301b0548d7869e95ce89e45f09027bb647e85eb7",
+      "recorded_utc": "2026-09-11T06:40:26.498586+00:00"
+    },
+    {
+      "accepted_targets": 2,
+      "actual_outer_exit_code": 0,
+      "id": "bounds",
+      "judge_report": {
+        "bytes": 13315,
+        "path": "audit/formal/lean-mgw-target-copy/evidence/bounds.stdout",
+        "sha256": "4686b469e414cb76eb9108fe59dce3521cb5b81b92dc607622c0eb426b8a9c16"
+      },
+      "original_local_receipt_sha256": "16a7dab2f4520becf216ce844cfe8e0632cebba88a61f02f44b5f206c994a4af",
+      "recorded_utc": "2026-09-11T06:45:31.555219+00:00"
+    }
+  ],
+  "metadata_dispositions": [
+    "The identities source manifest describes four native calls, while its fixed driver and observed execution contain three. The original bytes remain unchanged.",
+    "The bounds author plan names a missing SOURCE_PINS.json. The later executed 31-input source manifest supplied the execution binding; the incomplete author plan remains historical."
+  ],
+  "projection": "Machine-specific paths and full local custody records are omitted; original receipt digests are retained. Judge stdout files are exact copies.",
+  "schema": "pid-rs/mgw-target-copy-historical-execution-v1",
+  "scope": "Original complete target types under the declared imports and allowed axioms. No fresh rebuild, independent kernel implementation, paper correspondence, scientific priority, estimator calibration, Rust refinement, deployment or mainline adoption is established.",
+  "status": "projection of three accepted local proof groups"
+}

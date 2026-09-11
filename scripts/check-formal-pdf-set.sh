@@ -46,6 +46,7 @@ STANDALONE_LATEX_PAPERS=(
 
 STANDALONE_MARKDOWN_PAPERS=(
   "mathematical-results-guide"
+  "finite-target-copy-mgw-synergy"
   "mgw-fixed-world-added-information"
   "numerical-assurance"
   "pid2-represented-coordinate-assurance"
@@ -58,6 +59,7 @@ STANDALONE_MARKDOWN_PAPERS=(
 
 STANDALONE_MARKDOWN_SOURCES=(
   "MATHEMATICAL_RESULTS_GUIDE.md"
+  "audit/evidence/finite-target-copy-mgw-synergy.md"
   "audit/evidence/mgw-fixed-world-added-information-2026-09-09.md"
   "NUMERICAL_ASSURANCE.md"
   "PID2_REPRESENTED_COORDINATE_ASSURANCE.md"

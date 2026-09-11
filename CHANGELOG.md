@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add the standalone finite target-copy MGW theorem package. It states the exact finite-law
+  assumptions, derives the signed local synergy and conditional-entropy bounds, gives three
+  worked examples, and links the source graph, 11-target Lean roster, fresh same-kernel replay,
+  SVG, and rendered PDF. The package records its formal and statistical nonclaims; it does not
+  assert independent-kernel verification, estimator calibration, or sensor-selection value.
+
 - Document categorical MGW signed-synergy implications for analysis, learning and sensor
   acquisition. Derive the distinction between available CMI and attained log-loss gain,
   reproduce conditional KL discrepancies for three retained occupancy recordings, and

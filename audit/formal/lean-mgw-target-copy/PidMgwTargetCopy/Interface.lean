@@ -1,0 +1,199 @@
+import PidFiniteConvergence.TwoSourceMobiusAtomBridge
+
+/-!
+Prospective interface only: no theorem proofs, axioms, admission command, or elaboration result.
+The imported definitions are the existing finite categorical MGW event/cumulative/Mobius objects.
+All named masses below are finite sums of the supplied law, never free algebra parameters.
+-/
+
+set_option autoImplicit false
+set_option warningAsError true
+
+open scoped BigOperators
+open PidFiniteConvergence
+
+namespace PidMgwTargetCopy
+
+universe u v
+
+abbrev SourceRow (sourceValue : Fin 2 → Type u) :=
+  (i : Fin 2) → sourceValue i
+
+abbrev Target (sourceValue : Fin 2 → Type u) (B : Type v) :=
+  sourceValue 0 × B
+
+abbrev Key (sourceValue : Fin 2 → Type u) (B : Type v) :=
+  CategoricalKey (Fin 2) sourceValue (Target sourceValue B)
+
+abbrev World (sourceValue : Fin 2 → Type u) (B : Type v) :=
+  SourceRow sourceValue × B
+
+def observe {sourceValue : Fin 2 → Type u} {B : Type v}
+    (world : World sourceValue B) : Key sourceValue B :=
+  (world.1, (world.1 0, world.2))
+
+def IsFiniteLaw {X : Type*} [Fintype X] (law : X → ℝ) : Prop :=
+  (∀ x, 0 ≤ law x) ∧ (∑ x, law x) = 1
+
+def CopiesSourceOne {sourceValue : Fin 2 → Type u} {B : Type v}
+    (law : Key sourceValue B → ℝ) : Prop :=
+  ∀ key, law key ≠ 0 → key.2.1 = key.1 0
+
+variable {sourceValue : Fin 2 → Type u} {B : Type v}
+variable [∀ i, Fintype (sourceValue i)] [Fintype B]
+variable [∀ i, DecidableEq (sourceValue i)] [DecidableEq B]
+
+noncomputable def worldPushforward
+    (law : World sourceValue B → ℝ) (key : Key sourceValue B) : ℝ :=
+  ∑ world, if observe world = key then law world else 0
+
+noncomputable def sourceMass
+    (law : Key sourceValue B → ℝ) (node : SxPid2Node)
+    (anchor : Key sourceValue B) : ℝ :=
+  finiteEventMass law (sxPid2SourceEvent node anchor)
+
+noncomputable def restrictedMass
+    (law : Key sourceValue B → ℝ) (node : SxPid2Node)
+    (anchor : Key sourceValue B) : ℝ :=
+  finiteEventMass law (sxPid2TargetRestrictedEvent node anchor)
+
+noncomputable def targetMass
+    (law : Key sourceValue B → ℝ) (anchor : Key sourceValue B) : ℝ :=
+  finiteEventMass law (targetBranchEvent anchor)
+
+noncomputable def localFormula
+    (law : Key sourceValue B → ℝ) (anchor : Key sourceValue B) : ℝ :=
+  let a := sourceMass law .sourceOne anchor
+  let c := sourceMass law .sourceTwo anchor
+  let j := sourceMass law .jointSources anchor
+  Real.log (a * c / (j * (a + c - j)))
+
+noncomputable def sourceLaw
+    (law : Key sourceValue B → ℝ) (row : SourceRow sourceValue) : ℝ :=
+  ∑ target : Target sourceValue B, law (row, target)
+
+noncomputable def coordinateMass
+    (law : SourceRow sourceValue → ℝ)
+    (i : Fin 2) (value : sourceValue i) : ℝ :=
+  finiteEventMass law (Finset.univ.filter fun row => row i = value)
+
+noncomputable def rowFormula
+    (law : SourceRow sourceValue → ℝ) (row : SourceRow sourceValue) : ℝ :=
+  let a := coordinateMass law 0 (row 0)
+  let c := coordinateMass law 1 (row 1)
+  let j := law row
+  Real.log (a * c / (j * (a + c - j)))
+
+noncomputable def sourceOneGivenTwoEntropy
+    (law : Key sourceValue B → ℝ) : ℝ :=
+  let marginal := sourceLaw law
+  ∑ row ∈ positiveMassSupport marginal,
+    marginal row * Real.log (coordinateMass marginal 1 (row 1) / marginal row)
+
+noncomputable def sourceTwoGivenOneEntropy
+    (law : Key sourceValue B → ℝ) : ℝ :=
+  let marginal := sourceLaw law
+  ∑ row ∈ positiveMassSupport marginal,
+    marginal row * Real.log (coordinateMass marginal 0 (row 0) / marginal row)
+
+/- Five load-bearing probability/event obligations. These are propositions, not new axioms. -/
+
+/-- L1: canonical finite world → actual categorical law, including event preimages. -/
+def WorldBridgeTarget : Prop :=
+  ∀ law : World sourceValue B → ℝ, IsFiniteLaw law →
+    IsFiniteLaw (worldPushforward law) ∧
+      CopiesSourceOne (worldPushforward law) ∧
+      (∀ world, worldPushforward law (observe world) = law world) ∧
+      (∀ event : Finset (Key sourceValue B),
+        finiteEventMass (worldPushforward law) event =
+          ∑ world, if observe world ∈ event then law world else 0)
+
+/-- L2: mass equalities under actual support consistency; no ambient event inclusion. -/
+def CopyEventMassesTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, CopiesSourceOne law →
+    ∀ anchor : Key sourceValue B, 0 < law anchor →
+      restrictedMass law .sourceOne anchor = targetMass law anchor ∧
+      restrictedMass law .redundancy anchor = targetMass law anchor ∧
+      restrictedMass law .sourceTwo anchor = law anchor ∧
+      restrictedMass law .jointSources anchor = law anchor
+
+/-- L3: real-valued event inclusion-exclusion, with no count approximation. -/
+def SourceUnionMassTarget : Prop :=
+  ∀ (law : Key sourceValue B → ℝ) (anchor : Key sourceValue B),
+    sourceMass law .redundancy anchor + sourceMass law .jointSources anchor =
+      sourceMass law .sourceOne anchor + sourceMass law .sourceTwo anchor
+
+/-- L4: all four existing local net cumulatives, after their positive event masses are proved. -/
+def LocalCumulativesTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, IsFiniteLaw law → CopiesSourceOne law →
+    ∀ anchor : Key sourceValue B, 0 < law anchor →
+      let a := sourceMass law .sourceOne anchor
+      let c := sourceMass law .sourceTwo anchor
+      let j := sourceMass law .jointSources anchor
+      let t := targetMass law anchor
+      localCumulativeNet law .sourceOne anchor = -Real.log a ∧
+        localCumulativeNet law .sourceTwo anchor = Real.log (law anchor / (c * t)) ∧
+        localCumulativeNet law .jointSources anchor = Real.log (law anchor / (j * t)) ∧
+        localCumulativeNet law .redundancy anchor = -Real.log (a + c - j)
+
+/-- L5: actual source-row marginal and finite positive-support regrouping. -/
+def SourceProjectionTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, (∀ key, 0 ≤ law key) →
+    (∀ anchor : Key sourceValue B,
+      sourceMass law .sourceOne anchor =
+          coordinateMass (sourceLaw law) 0 (anchor.1 0) ∧
+        sourceMass law .sourceTwo anchor =
+          coordinateMass (sourceLaw law) 1 (anchor.1 1) ∧
+        sourceMass law .jointSources anchor = sourceLaw law anchor.1) ∧
+    (∀ f : SourceRow sourceValue → ℝ,
+      (∑ anchor ∈ positiveMassSupport law, law anchor * f anchor.1) =
+        ∑ row ∈ positiveMassSupport (sourceLaw law), sourceLaw law row * f row)
+
+/- Main next proof target: the actual imported MGW signed-net synergy atom. -/
+
+def LocalIdentityTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, IsFiniteLaw law → CopiesSourceOne law →
+    ∀ anchor : Key sourceValue B, 0 < law anchor →
+      localAtomComponent law .net .synergy anchor = localFormula law anchor
+
+/-- The same target bound explicitly to a finite-world observation pushforward. -/
+def WorldLocalIdentityTarget : Prop :=
+  ∀ law : World sourceValue B → ℝ, IsFiniteLaw law →
+    ∀ world : World sourceValue B, 0 < law world →
+      localAtomComponent (worldPushforward law) .net .synergy (observe world) =
+        localFormula (worldPushforward law) (observe world)
+
+/-- First useful averaged extension: all dependence on the remaining target coordinate drops out. -/
+def AveragedIdentityTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, IsFiniteLaw law → CopiesSourceOne law →
+    averagedPointwiseAtomComponent law .net .synergy =
+      ∑ row ∈ positiveMassSupport (sourceLaw law),
+        sourceLaw law row * rowFormula (sourceLaw law) row
+
+/-- Same source joint law implies the same average in this target-copy family. -/
+def SameSourceLawTarget : Prop :=
+  ∀ left right : Key sourceValue B → ℝ,
+    IsFiniteLaw left → IsFiniteLaw right →
+    CopiesSourceOne left → CopiesSourceOne right →
+    sourceLaw left = sourceLaw right →
+      averagedPointwiseAtomComponent left .net .synergy =
+        averagedPointwiseAtomComponent right .net .synergy
+
+/-- Secondary local bound, only for this target-copy family and a positive anchor. -/
+def LocalBoundsTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, IsFiniteLaw law → CopiesSourceOne law →
+    ∀ anchor : Key sourceValue B, 0 < law anchor →
+      let s := localAtomComponent law .net .synergy anchor
+      let a := sourceMass law .sourceOne anchor
+      let c := sourceMass law .sourceTwo anchor
+      let j := sourceMass law .jointSources anchor
+      0 ≤ s ∧ s ≤ Real.log (c / j) ∧ s ≤ Real.log (a / j)
+
+/-- Secondary averaged bound with the actual finite conditional-entropy sums in nats. -/
+def AveragedBoundsTarget : Prop :=
+  ∀ law : Key sourceValue B → ℝ, IsFiniteLaw law → CopiesSourceOne law →
+    let s := averagedPointwiseAtomComponent law .net .synergy
+    0 ≤ s ∧ s ≤ min (sourceOneGivenTwoEntropy law) (sourceTwoGivenOneEntropy law)
+
+end PidMgwTargetCopy
+

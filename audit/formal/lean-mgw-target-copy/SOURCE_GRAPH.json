@@ -1,0 +1,297 @@
+{
+  "external_scope": "Recorded package revisions; installed external object bytes remain an assumption for the original local proof runs.",
+  "frozen_source_comments": "Creation-state comments are exact original bytes. Later execution status is separate.",
+  "lean": {
+    "build": "Release",
+    "commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "platform": "arm64-apple-darwin24.6.0",
+    "version": "4.33.0"
+  },
+  "modules_in_compile_order": [
+    {
+      "bytes": 9093,
+      "imports": [
+        "Mathlib.Analysis.SpecialFunctions.Log.NegMulLog"
+      ],
+      "module": "PidFiniteConvergence.Deterministic",
+      "repository_path": "audit/formal/lean/PidFiniteConvergence/Deterministic.lean",
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    {
+      "bytes": 27203,
+      "imports": [
+        "PidFiniteConvergence.Deterministic",
+        "Mathlib.Data.Fintype.Pi"
+      ],
+      "module": "PidFiniteConvergence.SxEventBridge",
+      "repository_path": "audit/formal/lean/PidFiniteConvergence/SxEventBridge.lean",
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    {
+      "bytes": 25943,
+      "imports": [
+        "PidFiniteConvergence.SxEventBridge"
+      ],
+      "module": "PidFiniteConvergence.FractionalCover",
+      "repository_path": "audit/formal/lean/PidFiniteConvergence/FractionalCover.lean",
+      "sha256": "4ea504a565a69f5222c205e01050b750e780ed17cb02558fe08e0c32e2f5718c"
+    },
+    {
+      "bytes": 24105,
+      "imports": [
+        "PidFiniteConvergence.FractionalCover"
+      ],
+      "module": "PidFiniteConvergence.TwoSourceCountEventBridge",
+      "repository_path": "audit/formal/lean/PidFiniteConvergence/TwoSourceCountEventBridge.lean",
+      "sha256": "fa3a1c5450648da4c4768dbd88e261abf1bcd3051f5af4526a63631c83f8648a"
+    },
+    {
+      "bytes": 47567,
+      "imports": [
+        "PidFiniteConvergence.TwoSourceCountEventBridge"
+      ],
+      "module": "PidFiniteConvergence.TwoSourceMobiusAtomBridge",
+      "repository_path": "audit/formal/lean/PidFiniteConvergence/TwoSourceMobiusAtomBridge.lean",
+      "sha256": "bc282ca506f50ac5af661b87b166cc76561a4da308ffe39892ad8df7f2fd875e"
+    },
+    {
+      "bytes": 8939,
+      "imports": [
+        "PidFiniteConvergence.TwoSourceMobiusAtomBridge"
+      ],
+      "module": "PidMgwTargetCopy.Interface",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopy/Interface.lean",
+      "sha256": "88030fced19ec58e99d92918a7a6830a53415febb0e46373937a812650e3203d"
+    },
+    {
+      "bytes": 3475,
+      "imports": [
+        "PidMgwTargetCopy.Interface"
+      ],
+      "module": "PidMgwTargetCopyCandidate.L1",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyCandidate/L1.lean",
+      "sha256": "4624baa2c8c6f7ba8cf0b004824f25a4a6c6710ed2f33613c1d2008a55e1a7e0"
+    },
+    {
+      "bytes": 4569,
+      "imports": [
+        "PidMgwTargetCopy.Interface"
+      ],
+      "module": "PidMgwTargetCopyCandidate.L2",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyCandidate/L2.lean",
+      "sha256": "242a6e2da08335b8be10bb4cfc950fee42a30dec85d810203e31331588f2928e"
+    },
+    {
+      "bytes": 1101,
+      "imports": [
+        "PidMgwTargetCopy.Interface"
+      ],
+      "module": "PidMgwTargetCopy.SourceUnionMassCandidate",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopy/SourceUnionMassCandidate.lean",
+      "sha256": "7b759b30b02926758fe8136feb818b58ca17d42ec0044ef5529bd43e40e0ef38"
+    },
+    {
+      "bytes": 3354,
+      "imports": [
+        "PidMgwTargetCopy.Interface",
+        "PidMgwTargetCopyCandidate.L2",
+        "PidMgwTargetCopy.SourceUnionMassCandidate"
+      ],
+      "module": "PidMgwTargetCopyCandidate.L4",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyCandidate/L4.lean",
+      "sha256": "c22353a93b07cf8d9dd758e3fb3a36242db89c05a87d0f9cf771db910bf7c73b"
+    },
+    {
+      "bytes": 4584,
+      "imports": [
+        "PidMgwTargetCopy.Interface"
+      ],
+      "module": "PidMgwTargetCopyCandidate.L5",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyCandidate/L5.lean",
+      "sha256": "483c9dc5330b0b92567380ddae7b12a4f91ea0f6d84e5ad0db663f100c027429"
+    },
+    {
+      "bytes": 4252,
+      "imports": [
+        "PidMgwTargetCopy.Interface",
+        "PidMgwTargetCopyCandidate.L1",
+        "PidMgwTargetCopyCandidate.L4",
+        "PidMgwTargetCopyCandidate.L5"
+      ],
+      "module": "PidMgwTargetCopyCandidate.Identities",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyCandidate/Identities.lean",
+      "sha256": "d8f1a1e50381354092ea347f237327b6bdfc96f7e506181a5854bed2a6b2d7c2"
+    },
+    {
+      "bytes": 5726,
+      "imports": [
+        "PidMgwTargetCopy.Interface",
+        "PidMgwTargetCopyCandidate.Identities"
+      ],
+      "module": "PidMgwTargetCopyCandidate.Bounds",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyCandidate/Bounds.lean",
+      "sha256": "a69f6889e9b29aa78cbb3df6ac0eda32359093cc7b499fce92d79ab1d1b1d7c6"
+    },
+    {
+      "bytes": 4723,
+      "imports": [
+        "PidMgwTargetCopy.Interface",
+        "Lean",
+        "Lean.Util.CollectAxioms",
+        "Mathlib.Data.List.Defs"
+      ],
+      "module": "PidMgwTargetCopyJudge.JudgeCore",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyJudge/JudgeCore.lean",
+      "sha256": "396b270bd8a55cc434e79fca6cbb38c0045b841eca2215fc143d47093b77bc4e"
+    },
+    {
+      "bytes": 1980,
+      "imports": [
+        "PidMgwTargetCopyJudge.JudgeCore",
+        "PidMgwTargetCopyCandidate.L1",
+        "PidMgwTargetCopyCandidate.L2",
+        "PidMgwTargetCopy.SourceUnionMassCandidate",
+        "PidMgwTargetCopyCandidate.L4"
+      ],
+      "module": "PidMgwTargetCopyJudge.Judge",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyJudge/Judge.lean",
+      "sha256": "4dcca9d61edc211065f18eee04f6dc133f15faf2e3cabd3317793538b1e775cb"
+    },
+    {
+      "bytes": 2114,
+      "imports": [
+        "PidMgwTargetCopyJudge.JudgeCore",
+        "PidMgwTargetCopyCandidate.L5",
+        "PidMgwTargetCopyCandidate.Identities"
+      ],
+      "module": "PidMgwTargetCopyJudge.IdentityJudge",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyJudge/IdentityJudge.lean",
+      "sha256": "f889ddad8f7c48d157d1e39f59d67735ddb18b094f8588d35487648ee3658731"
+    },
+    {
+      "bytes": 1763,
+      "imports": [
+        "PidMgwTargetCopyJudge.JudgeCore",
+        "PidMgwTargetCopyCandidate.Bounds"
+      ],
+      "module": "PidMgwTargetCopyJudge.BoundsJudge",
+      "repository_path": "audit/formal/lean-mgw-target-copy/PidMgwTargetCopyJudge/BoundsJudge.lean",
+      "sha256": "1cc8c210676025f2c68e6f9a3474230eca36c39abc48561386ae2c732135efc5"
+    }
+  ],
+  "packages": {
+    "Cli": {
+      "inherited": true,
+      "input_revision": "v4.33.0",
+      "revision": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "url": "https://github.com/leanprover/lean4-cli"
+    },
+    "LeanSearchClient": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "url": "https://github.com/leanprover-community/LeanSearchClient"
+    },
+    "Qq": {
+      "inherited": true,
+      "input_revision": "master",
+      "revision": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "url": "https://github.com/leanprover-community/quote4"
+    },
+    "aesop": {
+      "inherited": true,
+      "input_revision": "master",
+      "revision": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "url": "https://github.com/leanprover-community/aesop"
+    },
+    "batteries": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "url": "https://github.com/leanprover-community/batteries"
+    },
+    "importGraph": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "url": "https://github.com/leanprover-community/import-graph"
+    },
+    "mathlib": {
+      "inherited": false,
+      "input_revision": "v4.33.0",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "url": "https://github.com/leanprover-community/mathlib4.git"
+    },
+    "plausible": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "url": "https://github.com/leanprover-community/plausible"
+    },
+    "proofwidgets": {
+      "inherited": true,
+      "input_revision": "main",
+      "revision": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "url": "https://github.com/leanprover-community/ProofWidgets4"
+    }
+  },
+  "schema": "pid-rs/mgw-target-copy-source-graph-v1",
+  "status": "exact-source projection; fresh replay pending",
+  "targets": [
+    {
+      "candidate": "PidMgwTargetCopyCandidate.worldBridge",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/event-and-world.stdout",
+      "target": "PidMgwTargetCopy.WorldBridgeTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.copyEventMasses",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/event-and-world.stdout",
+      "target": "PidMgwTargetCopy.CopyEventMassesTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopy.sourceUnionMassTarget_candidate",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/event-and-world.stdout",
+      "target": "PidMgwTargetCopy.SourceUnionMassTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.localCumulatives",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/event-and-world.stdout",
+      "target": "PidMgwTargetCopy.LocalCumulativesTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.sourceProjection",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/projection-and-identities.stdout",
+      "target": "PidMgwTargetCopy.SourceProjectionTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.localIdentity",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/projection-and-identities.stdout",
+      "target": "PidMgwTargetCopy.LocalIdentityTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.worldLocalIdentity",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/projection-and-identities.stdout",
+      "target": "PidMgwTargetCopy.WorldLocalIdentityTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.averagedIdentity",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/projection-and-identities.stdout",
+      "target": "PidMgwTargetCopy.AveragedIdentityTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.sameSourceLaw",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/projection-and-identities.stdout",
+      "target": "PidMgwTargetCopy.SameSourceLawTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.localBounds",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/bounds.stdout",
+      "target": "PidMgwTargetCopy.LocalBoundsTarget"
+    },
+    {
+      "candidate": "PidMgwTargetCopyCandidate.averagedBounds",
+      "report": "audit/formal/lean-mgw-target-copy/evidence/bounds.stdout",
+      "target": "PidMgwTargetCopy.AveragedBoundsTarget"
+    }
+  ]
+}

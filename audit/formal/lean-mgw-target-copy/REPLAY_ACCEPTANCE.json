@@ -1,0 +1,58 @@
+{
+  "schema": "pid-rs-mgw-target-copy-fresh-source-replay-acceptance-v1",
+  "status": "accepted-fresh-source-replay-under-declared-installed-dependencies",
+  "recorded_utc": "2026-09-11T10:35:00Z",
+  "registration": {
+    "path": "private local record retained outside the published tree",
+    "sha256": "0d709778c083ff223d60110e6fc06b92f710b21fef21bbbf1e92ff6d88264043"
+  },
+  "driver": {
+    "path": "private local driver record retained outside the published tree",
+    "sha256": "f9e140af3273fce688e10884b4acb6102912011eb078dc4f93cd9eacc6040801"
+  },
+  "manifest": {
+    "path": "private local manifest record retained outside the published tree",
+    "sha256": "3073730523329d8d0690e229e9f484bb3bc28a6d928e0260b1ea3f69a797114c"
+  },
+  "independent_source_review": {
+    "path": "private local review record retained outside the published tree",
+    "sha256": "ae7cf568b1a1889dabae3b19dd1b42aeacd89457788aa98159d3d3972c427f16"
+  },
+  "result": {
+    "path": "private local result record retained outside the published tree",
+    "sha256": "b3d8b593e1b1135d597c8a6aa796724150c8a6bbc96c03e518f17594e9193eda",
+    "exit_code": 0,
+    "commands": 18,
+    "source_compilations": 17,
+    "fresh_kernel_replays": 1,
+    "matched_historical_judge_targets": 11,
+    "new_target_acceptance": 0,
+    "failed_commands": 0,
+    "nonempty_final_process_groups": 0,
+    "kernel_elapsed_seconds": 163.1163758749608
+  },
+  "objects": {
+    "path": "private local compiled objects retained outside the published tree",
+    "object_count": 17,
+    "total_bytes": 4270912,
+    "sha256_manifest": "recorded-by-RESULT.json object entries"
+  },
+  "scope": [
+    "All 17 exact source modules compiled from the fixed export; all three original judge modules reproduced their exact historical reports for 4, 5 and 2 distinct targets.",
+    "leanchecker --fresh replayed non-unsafe, non-partial constants reachable from the loaded Bounds environment into a fresh environment with the same Lean kernel implementation.",
+    "The source review and exact command result support replay evidence only. Installed external Lean/Mathlib/package objects, dynamic libraries, Python/OS behavior and source-to-binary correspondence remain assumptions.",
+    "No independent kernel implementation, new theorem acceptance, paper correspondence, scientific-priority claim, Rust refinement, estimator calibration, consumer qualification, publication or mainline adoption follows from this receipt.",
+    "Final process-group observations were empty for every command; the inherited monitor does not prove general command-tree containment."
+  ],
+  "root_review": {
+    "checks": [
+      "Read full RESULT.json and all 18 command records.",
+      "Confirmed each command returncode is 0, failure is null, stderr is empty, and remaining_live_group_processes is empty.",
+      "Confirmed INPUTS_PRE.json and INPUTS_POST.json have identical SHA-256 25a028967adde35ba2d33df7d9113cfaa5b2c4ef0d0e5dcb6871130c1429ebfd.",
+      "Rehashed all 17 retained output objects and confirmed no process with the replay stage or Lean executable remains.",
+      "Read the exact LeanChecker.lean and Lean/Replay.lean implementation that defines the same-kernel non-unsafe/non-partial replay boundary.",
+      "Read the independent source-only replay review and retained its process-cleanup limitation."
+    ],
+    "review_class": "root semantic and custody review; no independent kernel or human review claimed"
+  }
+}

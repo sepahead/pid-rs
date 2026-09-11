@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="810" viewBox="0 0 960 810" role="img" aria-labelledby="title desc">
+  <title id="title">The source union determines target-copy synergy</title>
+  <desc id="desc">A finite categorical MGW example with target T equal to the first source S₁ together with an arbitrary residual U. Two tables show the same joint source law: diagonal cells have mass three eighths and off-diagonal cells one eighth. The row-or-column union has mass five eighths for a diagonal anchor and seven eighths for an off-diagonal anchor. The corresponding local synergy values are log sixteen fifteenths and log sixteen sevenths. The average uses total diagonal weight three quarters and off-diagonal weight one quarter. A lower panel shows cancellation of the positive full-key and target-event masses from the synergy formula.</desc>
+  <style>
+    text { font-family: "Source Sans Pro", sans-serif; fill: #2C3E50; }
+    .title { font-size: 28px; font-weight: 600; fill: #1F3F60; }
+    .heading { font-size: 23px; font-weight: 600; fill: #1F6968; }
+    .label { font-size: 21px; }
+    .small { font-size: 19px; }
+    .probability { font-size: 27px; font-weight: 600; }
+    .formula { font-size: 24px; font-weight: 600; }
+  </style>
+  <rect width="960" height="810" fill="#F7F3E9"/>
+  <text x="34" y="43" class="title">The source union determines target-copy synergy</text>
+  <text x="34" y="77" class="label">Categorical MGW · target T = (S₁, U) · arbitrary finite law · nats</text>
+  <line x1="34" y1="96" x2="926" y2="96" stroke="#916400" stroke-width="2"/>
+  <text x="34" y="126" class="label">At an anchor (x, y): a = P(S₁ = x), c = P(S₂ = y), j = P(S₁ = x, S₂ = y).</text>
+  <text x="34" y="156" class="label">The union D = {S₁ = x} OR {S₂ = y} has probability d = a + c − j.</text>
+  <text x="58" y="202" class="heading">Diagonal anchor (0, 0)</text>
+  <text x="525" y="202" class="heading">Off-diagonal anchor (0, 1)</text>
+  <g class="label" text-anchor="middle">
+    <text x="201" y="237">S₂ = 0</text><text x="313" y="237">S₂ = 1</text>
+    <text x="666" y="237">S₂ = 0</text><text x="778" y="237">S₂ = 1</text>
+  </g>
+  <g class="label" text-anchor="end">
+    <text x="117" y="295">S₁ = 0</text><text x="117" y="378">S₁ = 1</text>
+    <text x="582" y="295">S₁ = 0</text><text x="582" y="378">S₁ = 1</text>
+  </g>
+  <g stroke="#1F3F60" stroke-width="1.5">
+    <rect x="145" y="250" width="112" height="83" fill="#D2E0E2"/>
+    <rect x="257" y="250" width="112" height="83" fill="#D2E0E2"/>
+    <rect x="145" y="333" width="112" height="83" fill="#D2E0E2"/>
+    <rect x="257" y="333" width="112" height="83" fill="#FFFFFF"/>
+    <rect x="610" y="250" width="112" height="83" fill="#D2E0E2"/>
+    <rect x="722" y="250" width="112" height="83" fill="#D2E0E2"/>
+    <rect x="610" y="333" width="112" height="83" fill="#FFFFFF"/>
+    <rect x="722" y="333" width="112" height="83" fill="#D2E0E2"/>
+  </g>
+  <rect x="150" y="255" width="102" height="73" fill="none" stroke="#916400" stroke-width="3"/>
+  <rect x="727" y="255" width="102" height="73" fill="none" stroke="#916400" stroke-width="3"/>
+  <g class="probability" text-anchor="middle">
+    <text x="201" y="300">3/8</text><text x="313" y="300">1/8</text>
+    <text x="201" y="383">1/8</text><text x="313" y="383">3/8</text>
+    <text x="666" y="300">3/8</text><text x="778" y="300">1/8</text>
+    <text x="666" y="383">1/8</text><text x="778" y="383">3/8</text>
+  </g>
+  <text x="58" y="453" class="label">a = c = 1/2; j = 3/8; d = 5/8</text>
+  <text x="525" y="453" class="label">a = c = 1/2; j = 1/8; d = 7/8</text>
+  <text x="58" y="490" class="formula">s = ln[(1/4) / ((3/8)(5/8))]</text>
+  <text x="58" y="524" class="formula">  = ln(16/15)</text>
+  <text x="525" y="490" class="formula">s = ln[(1/4) / ((1/8)(7/8))]</text>
+  <text x="525" y="524" class="formula">  = ln(16/7)</text>
+  <rect x="35" y="549" width="20" height="18" fill="#D2E0E2" stroke="#1F3F60"/>
+  <text x="65" y="566" class="small">Union D: shaded cells</text>
+  <rect x="355" y="549" width="20" height="18" fill="none" stroke="#916400" stroke-width="3"/>
+  <text x="386" y="566" class="small">Anchor: inner frame</text>
+  <text x="651" y="566" class="small">Numbers give cell masses.</text>
+  <text x="34" y="602" class="label">Both diagonal cells weigh 3/4 in total; both off-diagonal cells weigh 1/4.</text>
+  <text x="34" y="638" class="formula">Joint-law average: S = (3/4) ln(16/15) + (1/4) ln(16/7).</text>
+  <line x1="34" y1="658" x2="926" y2="658" stroke="#916400" stroke-width="2"/>
+  <text x="34" y="689" class="heading">Why the residual target channel disappears</text>
+  <text x="34" y="720" class="small">At a positive full key, let ρ = P(S₁ = x, S₂ = y, U = u) and τ = P(T = (x, u)).</text>
+  <text x="34" y="756" class="formula">s = ln[ρ/(jτ)] + ln a − ln[ρ/(cτ)] − ln d = ln[ac/(jd)].</text>
+  <text x="34" y="789" class="small">The positive masses ρ and τ cancel. The full joint source law remains essential.</text>
+</svg>
