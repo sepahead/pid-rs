@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "6fb02ab3e38c71a27c7bbfcbb0a5506bbea87f59a881fc9e39ae47fd492a536a",
-    "CHANGELOG.md": "d2e1e7c936f705364912c96cb267020beb1e2dfa8ed3614f089b3e2044c975be",
+    "CHANGELOG.md": "04cfc639fb313886a135d2901cfa44d1219f85d0a82432718dd7793105100e40",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -716,7 +716,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "7b38fd931ac295db89d2c48e6599e0d2f33cb126a186175f0dc781590d28259a"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
-        "c42416b7cd6df19da0ee0f593fecfdb9f78a27a101e7f06ba96d3a53a42a3f58"
+        "d3bb2ccaf0e0d656ac0b7cd662afcb379bdc492988d2f4b658f4d6c7ba3a8bca"
     ),
     "scripts/check-formal-pdf-style.py": (
         "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"

@@ -67,16 +67,15 @@ derivation and its Lean formalization are repository work. This note makes no cl
 identity, bounds, or formalization have novel scientific priority. Source correspondence and
 priority require their own literature adjudication.
 
-**Evidence status.** All eleven original targets have local Lean acceptance under the declared
-imports and axiom policy. The [source graph](../formal/lean-mgw-target-copy/SOURCE_GRAPH.json)
-binds their exact definitions, proofs, and judges. The
-[execution record](../formal/lean-mgw-target-copy/HISTORICAL_EXECUTION.json) separates
-those observations from replay and publication status. The table at the end of this note states
-which conclusions belong to those eleven targets. The additional Shannon consequences and
-worked examples are written derivations; they are not additional exported Lean theorems. The
-[fresh replay acceptance record](../formal/lean-mgw-target-copy/REPLAY_ACCEPTANCE.json) reports
-18 successful commands, including 17 exact source compilations and one same-kernel replay; its
-private driver and result preimages remain outside the published tree.
+**Evidence status.** Eleven targets have local Lean acceptance under the stated imports and
+axiom policy. The [source graph](../formal/lean-mgw-target-copy/SOURCE_GRAPH.json) binds their
+definitions, proofs, and judges; the [execution record](../formal/lean-mgw-target-copy/HISTORICAL_EXECUTION.json)
+preserves those observations. The final table distinguishes these targets from Shannon
+consequences and examples given only as written derivations. A retrospective audit of the
+[replay record](../formal/lean-mgw-target-copy/REPLAY_ACCEPTANCE.json) checked stored outcomes
+for seventeen source compilations and one same-kernel replay. Complete replay acceptance remains
+open: the original full-read claim is retracted, and the audited packet lacks outer-return and
+separate process-ownership transcripts. Private raw records are omitted from the public repository.
 
 ## The finite law and the global copy premise
 

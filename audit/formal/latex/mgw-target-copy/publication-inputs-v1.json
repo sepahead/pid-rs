@@ -1,20 +1,20 @@
 {
   "expected_pdf": {
-    "bytes": 163435,
-    "sha256": "22fafcbdbec1294d7e1569e71528a45075de7e91be10b751138f5da093459ddc"
+    "bytes": 163423,
+    "sha256": "83900c3b1fdbdc7d20145d4d9171e6c800b903dc14fa6ad140403c4d45e8f027"
   },
   "files": {
     "audit/evidence/finite-target-copy-mgw-synergy.md": {
-      "bytes": 21440,
-      "sha256": "fefe6f39d5511d9bf364f458481558e2f794faecb45cdd3260347ecd6de4b272"
+      "bytes": 21432,
+      "sha256": "17e0cda8aaa48d6009abbdc42b1b17c9e105eb3642925c032fe6166672a90acd"
     },
     "audit/formal/latex/figures/mgw-target-copy/event-union.svg": {
       "bytes": 5069,
       "sha256": "280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c"
     },
     "audit/formal/latex/mgw-target-copy/filter.lua": {
-      "bytes": 1347,
-      "sha256": "e9706f626ea5ae8a06343e3b4ebb1b376000649dd29c91b8c0330c46e2a54b4f"
+      "bytes": 1574,
+      "sha256": "8a200d135c053e410c974e5741ad3d6907a887ef1457fdd3328276c0b8bc6bf0"
     },
     "audit/formal/latex/mgw-target-copy/publication.tex": {
       "bytes": 2271,

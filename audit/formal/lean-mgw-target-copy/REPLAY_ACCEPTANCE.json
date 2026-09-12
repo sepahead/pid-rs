@@ -1,58 +1,254 @@
 {
-  "schema": "pid-rs-mgw-target-copy-fresh-source-replay-acceptance-v1",
-  "status": "accepted-fresh-source-replay-under-declared-installed-dependencies",
-  "recorded_utc": "2026-09-11T10:35:00Z",
-  "registration": {
-    "path": "private local record retained outside the published tree",
-    "sha256": "0d709778c083ff223d60110e6fc06b92f710b21fef21bbbf1e92ff6d88264043"
-  },
-  "driver": {
-    "path": "private local driver record retained outside the published tree",
-    "sha256": "f9e140af3273fce688e10884b4acb6102912011eb078dc4f93cd9eacc6040801"
-  },
-  "manifest": {
-    "path": "private local manifest record retained outside the published tree",
-    "sha256": "3073730523329d8d0690e229e9f484bb3bc28a6d928e0260b1ea3f69a797114c"
-  },
-  "independent_source_review": {
-    "path": "private local review record retained outside the published tree",
-    "sha256": "ae7cf568b1a1889dabae3b19dd1b42aeacd89457788aa98159d3d3972c427f16"
-  },
-  "result": {
-    "path": "private local result record retained outside the published tree",
-    "sha256": "b3d8b593e1b1135d597c8a6aa796724150c8a6bbc96c03e518f17594e9193eda",
-    "exit_code": 0,
-    "commands": 18,
-    "source_compilations": 17,
-    "fresh_kernel_replays": 1,
-    "matched_historical_judge_targets": 11,
-    "new_target_acceptance": 0,
-    "failed_commands": 0,
-    "nonempty_final_process_groups": 0,
-    "kernel_elapsed_seconds": 163.1163758749608
-  },
-  "objects": {
-    "path": "private local compiled objects retained outside the published tree",
-    "object_count": 17,
-    "total_bytes": 4270912,
-    "sha256_manifest": "recorded-by-RESULT.json object entries"
-  },
-  "scope": [
-    "All 17 exact source modules compiled from the fixed export; all three original judge modules reproduced their exact historical reports for 4, 5 and 2 distinct targets.",
-    "leanchecker --fresh replayed non-unsafe, non-partial constants reachable from the loaded Bounds environment into a fresh environment with the same Lean kernel implementation.",
-    "The source review and exact command result support replay evidence only. Installed external Lean/Mathlib/package objects, dynamic libraries, Python/OS behavior and source-to-binary correspondence remain assumptions.",
-    "No independent kernel implementation, new theorem acceptance, paper correspondence, scientific-priority claim, Rust refinement, estimator calibration, consumer qualification, publication or mainline adoption follows from this receipt.",
-    "Final process-group observations were empty for every command; the inherited monitor does not prove general command-tree containment."
+  "assumptions": [
+    "Exact retained records and stable filesystem during the retrospective read.",
+    "Installed external Lean, Mathlib and package objects, native libraries, Python and operating-system behavior.",
+    "The selected binary/source correspondence is assumed; file hashes do not establish it."
   ],
-  "root_review": {
-    "checks": [
-      "Read full RESULT.json and all 18 command records.",
-      "Confirmed each command returncode is 0, failure is null, stderr is empty, and remaining_live_group_processes is empty.",
-      "Confirmed INPUTS_PRE.json and INPUTS_POST.json have identical SHA-256 25a028967adde35ba2d33df7d9113cfaa5b2c4ef0d0e5dcb6871130c1429ebfd.",
-      "Rehashed all 17 retained output objects and confirmed no process with the replay stage or Lean executable remains.",
-      "Read the exact LeanChecker.lean and Lean/Replay.lean implementation that defines the same-kernel non-unsafe/non-partial replay boundary.",
-      "Read the independent source-only replay review and retained its process-cleanup limitation."
+  "correction_recorded_utc": "2026-09-12T00:15:31.056104+00:00",
+  "correction_time_scope": "Local observation when this retrospective correction was recorded; not the original replay time, trusted time, or attestation.",
+  "evidence": {
+    "driver": {
+      "availability": "omitted-private-preimage",
+      "bytes": 10121,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "f9e140af3273fce688e10884b4acb6102912011eb078dc4f93cd9eacc6040801"
+    },
+    "local_receipt": {
+      "availability": "omitted-private-preimage",
+      "bytes": 3527,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "7dc65273c938cd56216c2dc8df7735c8bf147e2022e5731d93fcf9ddcbfcf475"
+    },
+    "manifest": {
+      "availability": "omitted-private-preimage",
+      "bytes": 29050,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "3073730523329d8d0690e229e9f484bb3bc28a6d928e0260b1ea3f69a797114c"
+    },
+    "registration": {
+      "availability": "omitted-private-preimage",
+      "bytes": 435,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "0d709778c083ff223d60110e6fc06b92f710b21fef21bbbf1e92ff6d88264043"
+    },
+    "result": {
+      "availability": "omitted-private-preimage",
+      "bytes": 27547,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "b3d8b593e1b1135d597c8a6aa796724150c8a6bbc96c03e518f17594e9193eda"
+    },
+    "retrospective_audit_result": {
+      "availability": "omitted-private-preimage",
+      "bytes": 132655,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "cf4812c37c224ed21e2269e0dfd2ad4fd470c0c87b23a144353290403291ae10"
+    },
+    "retrospective_audit_script": {
+      "availability": "omitted-private-preimage",
+      "bytes": 36822,
+      "retention": "retained locally; not retrievable from the public repository",
+      "sha256": "22643a1a2b0c6288ad6c407d3bfb429dca4aae10379aa8b269d8b8767cb71f9d"
+    },
+    "source_review": {
+      "availability": "repository-file",
+      "bytes": 4160,
+      "path": "audit/formal/lean-mgw-target-copy/INDEPENDENT_REPLAY_REVIEW.md",
+      "sha256": "ae7cf568b1a1889dabae3b19dd1b42aeacd89457788aa98159d3d3972c427f16"
+    }
+  },
+  "historical_target_acceptance": {
+    "availability": "repository-file",
+    "bytes": 2499,
+    "new_target_acceptance": 0,
+    "path": "audit/formal/lean-mgw-target-copy/HISTORICAL_EXECUTION.json",
+    "sha256": "60d34ed1c3ca1025f6acf0bceb141aedca0c5ac9f849589fc3ccc5057abe674f",
+    "targets": 11
+  },
+  "open_operational_evidence": [
+    {
+      "available_evidence": "prior receipt records exit 0; the audited packet has no raw outer transcript",
+      "item": "original outer-process terminal return",
+      "status": "not independently established"
+    },
+    {
+      "available_evidence": "prior receipt claims an inspection; per-command records contain empty final group observations only",
+      "item": "separate contemporaneous post-run process-ownership inspection",
+      "status": "not independently established"
+    },
+    {
+      "available_evidence": "the original displayed result was truncated; retrospective machine checks do not establish that historical review",
+      "item": "original full-file root review",
+      "status": "retracted"
+    }
+  ],
+  "private_observation_custody": {
+    "availability": "omitted-private-preimages",
+    "input_record_hash": "The pre_post_raw hash identifies the omitted raw INPUTS_PRE/POST records, not a public projection.",
+    "object_keys": "The .olean keys identify recorded project objects; they are not repository-relative download paths.",
+    "retention": "Raw per-command records and streams, INPUTS_PRE/POST records, object ledgers and compiled objects remain in local retained storage; they are not retrievable from the public repository."
+  },
+  "retrospective_audit": {
+    "artifact_files_observed": 207,
+    "command_records_checked": 18,
+    "controls": {
+      "negative_controls": 15,
+      "positive_controls": 2,
+      "rejected_controls": [
+        "false-vs-zero",
+        "float-vs-integer",
+        "nested-metadata-float",
+        "array-extra-item",
+        "missing-dict-key",
+        "wrong-hash",
+        "duplicate-top-key",
+        "duplicate-nested-key",
+        "NaN",
+        "Infinity",
+        "negative-Infinity",
+        "overflowing-json-float",
+        "Boolean-integer-field",
+        "unknown-object-field",
+        "parent-path"
+      ]
+    },
+    "historical_target_reports_checked": 11,
+    "identical_output_bytes": true,
+    "modes": [
+      "normal Python",
+      "optimized Python"
     ],
-    "review_class": "root semantic and custody review; no independent kernel or human review claimed"
-  }
+    "new_driver_calls": 0,
+    "new_native_Lean_calls": 0,
+    "project_source_modules_checked": 17,
+    "scope": "Typed and hash-bound correspondence among retained records and currently retained bytes; not independent proof replay or authenticated execution."
+  },
+  "schema": "pid-rs-mgw-target-copy-replay-evidence-v2",
+  "scientific_object": "Finite categorical Makkeh-Gutknecht-Wibral target-copy propositions in SOURCE_GRAPH.json; nats; normalized nonnegative finite laws and stated support premises.",
+  "scope": [
+    "The recorded final command replays non-unsafe, non-partial constants reachable from Bounds with the same Lean kernel implementation.",
+    "The three recorded judge compilations enforce the original full target types and axiom allowlist; leanchecker alone does not enforce that allowlist.",
+    "The source graph and historical acceptance receipts retain their original creation-state text; this record does not rewrite their history.",
+    "No new theorem acceptance, independent kernel/human/institutional review, scientific priority, Rust refinement, estimator calibration, consumer qualification or mainline readiness is established."
+  ],
+  "source_graph": {
+    "availability": "repository-file",
+    "bytes": 11384,
+    "path": "audit/formal/lean-mgw-target-copy/SOURCE_GRAPH.json",
+    "sha256": "317b293f4703de7136b47b3ed24bdf4da5238d99e763d63d8a006742ae565077"
+  },
+  "status": "stored-ledger-integrity-checked; fresh-replay-operational-acceptance-incomplete",
+  "stored_command_observations": {
+    "commands": 18,
+    "kernel_elapsed_seconds": 163.1163758749608,
+    "matching_historical_target_reports": 11,
+    "recorded_final_process_groups_empty": 18,
+    "returncodes_zero": 18,
+    "same_kernel_fresh_replays": 1,
+    "source_compilations": 17,
+    "stderr_streams_empty": 18
+  },
+  "stored_input_observations": {
+    "controls": 4,
+    "current_metadata_equal_to_historical": 44,
+    "identity_field_order": [
+      "device",
+      "inode",
+      "mode",
+      "link_count",
+      "size",
+      "mtime_ns",
+      "ctime_ns"
+    ],
+    "note_was_selected": false,
+    "pre_post_raw": {
+      "bytes": 18919,
+      "sha256": "25a028967adde35ba2d33df7d9113cfaa5b2c4ef0d0e5dcb6871130c1429ebfd"
+    },
+    "selected": 23,
+    "staged": 17,
+    "total": 44
+  },
+  "stored_object_observations": {
+    "count": 17,
+    "final": {
+      "PidFiniteConvergence/Deterministic.olean": {
+        "bytes": 98304,
+        "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+      },
+      "PidFiniteConvergence/FractionalCover.olean": {
+        "bytes": 278408,
+        "sha256": "21f2d273e015f314e476ade098c4acd7f72d6ec8ecc092dd8549dbe71df40a6d"
+      },
+      "PidFiniteConvergence/SxEventBridge.olean": {
+        "bytes": 292592,
+        "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+      },
+      "PidFiniteConvergence/TwoSourceCountEventBridge.olean": {
+        "bytes": 605424,
+        "sha256": "a41edda116d4b59a5b692740b503e42bacd26582f9733c891d8f732426664b27"
+      },
+      "PidFiniteConvergence/TwoSourceMobiusAtomBridge.olean": {
+        "bytes": 1459376,
+        "sha256": "ef8731a6f28db291d9c28d339a1b1fed680118b8a4b3e11008ea576fd6c3e44e"
+      },
+      "PidMgwTargetCopy/Interface.olean": {
+        "bytes": 102648,
+        "sha256": "b8887638214a0d7a973c793bd4a18018706221b5b3cd5fdbd86610f48522215d"
+      },
+      "PidMgwTargetCopy/SourceUnionMassCandidate.olean": {
+        "bytes": 36232,
+        "sha256": "9a23d232e7a2921cd3bf922897857c9c05b8c057f2b23b15b96a909bd7852d7a"
+      },
+      "PidMgwTargetCopyCandidate/Bounds.olean": {
+        "bytes": 200960,
+        "sha256": "582f0d76c1378d2004edf74d1ca8c7490ead859301998c96005562acb9ceaf71"
+      },
+      "PidMgwTargetCopyCandidate/Identities.olean": {
+        "bytes": 205416,
+        "sha256": "1d2c4619886ae956c639db96a193868aa74a43ac9eda08dea8374f8e95f40a70"
+      },
+      "PidMgwTargetCopyCandidate/L1.olean": {
+        "bytes": 88640,
+        "sha256": "f051072f24ec630db96c279f4c0641251319d70513f67d19931b14d239cd7783"
+      },
+      "PidMgwTargetCopyCandidate/L2.olean": {
+        "bytes": 124536,
+        "sha256": "dda7d5fd268b8cfcf333ba121965927cf4a1dd523b2423d9dc936bb909afae04"
+      },
+      "PidMgwTargetCopyCandidate/L4.olean": {
+        "bytes": 128008,
+        "sha256": "8f86e802aa0a4994275bdbded1984b6a3b6fdb04f1acd3a0950f79309e753677"
+      },
+      "PidMgwTargetCopyCandidate/L5.olean": {
+        "bytes": 170480,
+        "sha256": "3d1b7e8a36ed046192bef9fe8e626cbab072fd39879cc1e5e6a8f82131c85f63"
+      },
+      "PidMgwTargetCopyJudge/BoundsJudge.olean": {
+        "bytes": 3552,
+        "sha256": "f2cfda9139c68b02b0e50c79605db75eaada2c1403fb95b50c2d41f5f39bd6f2"
+      },
+      "PidMgwTargetCopyJudge/IdentityJudge.olean": {
+        "bytes": 3672,
+        "sha256": "b75efb8e71577a3dbcd1896c263339ccbdf6dc01bfa2db9faca4e5dc6ab706fc"
+      },
+      "PidMgwTargetCopyJudge/Judge.olean": {
+        "bytes": 3872,
+        "sha256": "64d6ce3ca98d447310f11a4ed55dbc00b24ccd026f4bcd9a3c932676e3bc7058"
+      },
+      "PidMgwTargetCopyJudge/JudgeCore.olean": {
+        "bytes": 468792,
+        "sha256": "2276c9ffb4b52afdd004b9fb1c37b4d33d6faedbd5aaff550f424b8c2401b4b7"
+      }
+    },
+    "objects_17_18_identical_raw": true,
+    "total_bytes": 4270912
+  },
+  "supersedes": {
+    "availability": "repository-file",
+    "bytes": 3458,
+    "disposition": "inert historical receipt; retracted full-read and complete-operational-acceptance claims",
+    "path": "audit/formal/lean-mgw-target-copy/evidence/replay-acceptance-v1.json.txt",
+    "sha256": "4dcfb80f0d9d02e7d255f885d4ac69a4ca224a3889af314f7d7081849eadd61a"
+  },
+  "time_boundary": "The v1 timestamp is retained as historical receipt text. Local clock fields are consistency observations, not trusted time. Absolute per-call monotonic timestamps were not retained."
 }

@@ -4,6 +4,12 @@ function Header(e)
   e.level = e.level - 1
   return {pandoc.RawBlock("latex", "\\par\\Needspace{6\\baselineskip}"), e}
 end
+function Para(e)
+  -- Keep this short introduction with the target-mass display that follows it.
+  if pandoc.utils.stringify(e) == "write" then
+    return {pandoc.RawBlock("latex", "\\Needspace{5\\baselineskip}"), e}
+  end
+end
 function Image(e)
   if not e.src:match("mgw%-target%-copy/event%-union%.svg$") then error("unexpected image") end
   e.src = "event-union.pdf"; e.attributes.width = "100%"; return e

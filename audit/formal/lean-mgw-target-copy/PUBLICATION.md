@@ -8,13 +8,13 @@ exclusions, KSG, or another PID.
 
 ## Inputs and result
 
-The Markdown source is 21,440 bytes. Its SHA-256 is
-`fefe6f39d5511d9bf364f458481558e2f794faecb45cdd3260347ecd6de4b272`. The figure source is the repository-local SVG at
+The Markdown source is 21,432 bytes. Its SHA-256 is
+`17e0cda8aaa48d6009abbdc42b1b17c9e105eb3642925c032fe6166672a90acd`. The figure source is the repository-local SVG at
 [`audit/formal/latex/figures/mgw-target-copy/event-union.svg`](../latex/figures/mgw-target-copy/event-union.svg).
 Its SHA-256 is `280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c`.
 The PDF is [`output/pdf/finite-target-copy-mgw-synergy.pdf`](../../../output/pdf/finite-target-copy-mgw-synergy.pdf).
 The committed PDF is an 11-page A4 document with embedded fonts. Its SHA-256 is
-`22fafcbdbec1294d7e1569e71528a45075de7e91be10b751138f5da093459ddc` and its size is 163,435
+`83900c3b1fdbdc7d20145d4d9171e6c800b903dc14fa6ad140403c4d45e8f027` and its size is 163,423
 bytes. Recompute it with:
 
 ```text
@@ -33,11 +33,16 @@ formula and is not sufficient by itself.
 
 The PDF was generated from the committed Markdown source with Pandoc 3.10.2, the committed
 `audit/formal/latex/mgw-target-copy/filter.lua`, LuaHBTeX from TeX Live 2024, and the repository
-publication style. The build used the reviewed TeX-tree font bytes,
-`SOURCE_DATE_EPOCH=1789084800`, `-no-shell-escape`, and two LuaLaTeX passes. Rendered pages
-were inspected at 150 dpi for all 11 pages, with pages 1, 8, 10 and 11 reviewed at high detail;
-the complete set was also rendered in grayscale and at 300 dpi. Searchable text, A4 geometry,
-font embedding, and the absence of unresolved placeholders were checked with Poppler tools.
+publication style. The build uses the reviewed TeX-tree font bytes,
+`SOURCE_DATE_EPOCH=1789084800`, `-no-shell-escape`, and two LuaLaTeX passes. The predecessor
+was inspected at 150 dpi on all 11 pages, with pages 1, 8, 10 and 11 reviewed at high detail;
+its complete set was also rendered in grayscale and at 300 dpi. The replay-record correction
+changes only page 2 in a same-Poppler 150-dpi comparison. Page 2 was inspected at 150 and
+300 dpi and in grayscale; the other ten page renders match the predecessor exactly.
+The equations, proof table, figure, and source definitions are unchanged. The filter keeps
+the short target-mass introduction with its following display. A compressed-definition trial
+produced ten pages and was rejected by the declared profile; that trial remains retained.
+Searchable text, A4 geometry, embedded fonts, and final build diagnostics were checked.
 The public reproduction command is:
 
 ```text
@@ -55,7 +60,9 @@ cross-reference warnings are resolved by the second pass. Both fresh PDFs must a
 `--check` requires exact equality with the committed PDF. Inputs are rechecked after the builds;
 filesystem stability and the declared installed native runtime remain assumptions.
 
-The controller correction reproduces the already inspected PDF bytes above. Its
+The controller correction at `6f0025795846080ffb78b33d3535e11bf07d1f61` reproduced the
+predecessor PDF. The current source and PDF hashes above identify the subsequent replay-record
+correction. The controller's
 [self-test](../../../scripts/check-finite-target-copy-mgw-pdf-self-test.py) checks input failures,
 existing-directory preservation, diagnostic retention, TeX warning recognition, early
 cross-toolchain refusal, conflicting modes, and eleven aggregate-dispatch mutations. Synthetic
@@ -82,10 +89,12 @@ or evidence of estimator calibration, sensor-selection value, or deployment read
 
 ## Formal correspondence
 
-The exact source graph, target roster, evidence streams, and fresh same-kernel replay record are
+The exact source graph, target roster, evidence streams, and same-kernel replay evidence are
 in this directory. [`SOURCE_GRAPH.json`](SOURCE_GRAPH.json) binds 17 source modules and 11
-target reports. [`REPLAY_ACCEPTANCE.json`](REPLAY_ACCEPTANCE.json) records the 18-command replay
-and its scope. The replay uses the same Lean kernel implementation as the source compilation;
-it is therefore not independent-kernel verification. The written entropy consequences and
+target reports. [`REPLAY_ACCEPTANCE.json`](REPLAY_ACCEPTANCE.json) records the 18-command
+ledger and the remaining operational evidence gaps. The [correction account](../../evidence/mgw-target-copy-replay-correction-2026-09-12.md)
+retracts the unsupported original full-read claim and preserves the exact predecessor. The recorded
+replay uses the same Lean kernel implementation as the source compilation; it is therefore not
+independent-kernel verification. The written entropy consequences and
 worked examples are marked as written derivations in the Markdown and are not silently counted
 as additional Lean exports.

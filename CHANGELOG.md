@@ -50,6 +50,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Correct the target-copy replay receipt and paper's evidence boundary. Preserve the original
+  receipt, distinguish retained command observations from incomplete operational acceptance,
+  and identify private preimages explicitly. The eleven original theorem targets are unchanged.
+
 - Check selected source, executable, font and TeX inputs before rebuilding the target-copy
   PDF. Require two fresh builds, preserve command diagnostics, reject final TeX warnings,
   and require exact committed PDF bytes. Add controller and aggregate-dispatch controls;
