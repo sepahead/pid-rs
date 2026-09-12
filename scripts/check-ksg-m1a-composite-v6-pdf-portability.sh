@@ -564,8 +564,8 @@ def rewritten_figure(source: Path, output: Path, marker: str) -> None:
         fail(f"{marker} positive fixture did not change decoded content bytes")
 
 
-if pypdf.__version__ != "6.15.0":
-    fail(f"requires pypdf 6.15.0, observed {pypdf.__version__!r}")
+if pypdf.__version__ != "6.16.1":
+    fail(f"requires pypdf 6.16.1, observed {pypdf.__version__!r}")
 repo = Path.cwd().resolve()
 if repo in Path(pypdf.__file__).resolve().parents:
     fail("pypdf resolved from inside the repository")

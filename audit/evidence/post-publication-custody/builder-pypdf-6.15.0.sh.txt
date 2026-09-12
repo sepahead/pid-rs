@@ -195,9 +195,9 @@ import pypdf
 from pypdf import PdfReader
 from pypdf.generic import ArrayObject, DictionaryObject, IndirectObject
 
-if pypdf.__version__ != "6.16.1":
+if pypdf.__version__ != "6.15.0":
     raise SystemExit(
-        f"post-publication PDF audit requires pypdf 6.16.1; observed {pypdf.__version__}"
+        f"post-publication PDF audit requires pypdf 6.15.0; observed {pypdf.__version__}"
     )
 
 expected = {

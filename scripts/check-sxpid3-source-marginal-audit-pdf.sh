@@ -64,8 +64,10 @@ for path in \
     exit 1
   fi
 done
-python3 -I -B -c 'import pypdf' >/dev/null 2>&1 || {
-  echo "$CHECK_NAME: pypdf is required for canonical figure-asset validation" >&2
+python3 -I -B -c \
+  'import pypdf, sys; sys.exit(getattr(pypdf, "__version__", None) != sys.argv[1])' \
+  "6.16.1" >/dev/null 2>&1 || {
+  echo "$CHECK_NAME: exact Python package pypdf==6.16.1 is required" >&2
   exit 2
 }
 python3 -I -B "$FIGURE_ASSET_CHECK"

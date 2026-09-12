@@ -4,9 +4,10 @@
 This is a standard-library-only, fail-closed checker.  It validates the record,
 the exact tab-separated remote-heads preimage captured by a direct
 ``git ls-remote --heads`` observation, and the byte identities of the bound
-presentation inputs and derivatives.  It does *not* contact GitHub, inspect a
-local Git registry, authorize deletion, parse PDF semantics, or turn a dated
-observation into a live manifest.  The recorded main OID is the publication
+presentation inputs and derivatives. The original builder is retained as an inert
+preimage; the active builder has a separate current hash binding. It does *not*
+contact GitHub, inspect a local Git registry, authorize deletion, parse PDF semantics,
+or turn a dated observation into a live manifest. The recorded main OID is the publication
 anchor for the observation; a later commit that adds this receipt is expected
 to have a different main OID.
 
@@ -36,6 +37,11 @@ if sys.version_info < (3, 11):
 ROOT = Path(__file__).resolve().parent.parent
 RECORD = ROOT / "audit/evidence/post-publication-custody-2026-09-02.json"
 MANIFEST = ROOT / "audit/evidence/post-publication-remote-heads-2026-09-02.tsv"
+
+# The dated receipt keeps its original builder and parser observations.
+HISTORICAL_BUILDER = ROOT / "audit/evidence/post-publication-custody/builder-pypdf-6.15.0.sh.txt"
+CURRENT_BUILDER = ROOT / "scripts/build-post-publication-custody-pdf.sh"
+EXPECTED_CURRENT_BUILDER_SHA256 = "25af0f6819d299cb8c9f889371258d54a0f6acc6511d2927861893a9f4bb2b2d"
 
 HEX40 = re.compile(r"^[0-9a-f]{40}$")
 REF = re.compile(r"^refs/heads/[A-Za-z0-9._/-]+$")
@@ -567,7 +573,12 @@ def check_snapshot(record: dict[str, Any], manifest_raw: bytes) -> None:
         require(isinstance(item, dict) and item.get("path") == relative, f"presentation artifact path drifted: {name}")
         digest = item.get("sha256")
         require(isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None, f"presentation artifact digest missing: {name}")
-        require(sha256(read_regular(ROOT / relative)) == digest, f"presentation artifact bytes drifted: {name}")
+        artifact_path = HISTORICAL_BUILDER if name == "builder" else ROOT / relative
+        require(sha256(read_regular(artifact_path)) == digest, f"presentation artifact bytes drifted: {name}")
+    require(
+        sha256(read_regular(CURRENT_BUILDER)) == EXPECTED_CURRENT_BUILDER_SHA256,
+        "current presentation builder bytes drifted",
+    )
     require(artifacts["figure_pdf"].get("presentation_derivative") is True, "figure-PDF derivative boundary weakened")
     require(artifacts["receipt_pdf"].get("presentation_derivative") is True, "receipt-PDF derivative boundary weakened")
     require(artifacts["receipt_pdf"].get("pdf_version") == "1.7" and artifacts["receipt_pdf"].get("pages") == 6, "receipt PDF profile drifted")

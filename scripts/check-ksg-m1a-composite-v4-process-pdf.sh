@@ -679,7 +679,7 @@ for value in report_info:
     validate_info(value, report_pages, require_a4=True)
 for value in figure_info:
     validate_info(value, figure_pages, require_a4=False)
-if pypdf.__version__ != "6.15.0":
+if pypdf.__version__ != "6.16.1":
     fail(f"pypdf version changed: {pypdf.__version__!r}")
 pypdf_path = Path(pypdf.__file__).resolve(strict=True)
 if Path.cwd().resolve(strict=True) in pypdf_path.parents:

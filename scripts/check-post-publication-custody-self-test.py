@@ -385,6 +385,40 @@ def exercise_semantic_escalations(
     return len(cases)
 
 
+def exercise_builder_boundaries(record: dict[str, Any], manifest_raw: bytes) -> int:
+    """Historical and current builders must not substitute for each other."""
+    original_reader = CHECKER.read_regular
+    historical = original_reader(CHECKER.HISTORICAL_BUILDER)
+    current = original_reader(CHECKER.CURRENT_BUILDER)
+    require(historical != current, "builder boundary fixtures are identical")
+    cases = (
+        ("historical-corruption", CHECKER.HISTORICAL_BUILDER, historical + b"\n",
+         "presentation artifact bytes drifted: builder"),
+        ("current-as-historical", CHECKER.HISTORICAL_BUILDER, current,
+         "presentation artifact bytes drifted: builder"),
+        ("current-corruption", CHECKER.CURRENT_BUILDER, current + b"\n",
+         "current presentation builder bytes drifted"),
+        ("historical-as-current", CHECKER.CURRENT_BUILDER, historical,
+         "current presentation builder bytes drifted"),
+    )
+    for label, changed_path, replacement, diagnostic in cases:
+        def changed_reader(path: Path) -> bytes:
+            return replacement if path == changed_path else original_reader(path)
+        CHECKER.read_regular = changed_reader
+        try:
+            expect_check_error(label, lambda: CHECKER.check_snapshot(record, manifest_raw), diagnostic)
+        finally:
+            CHECKER.read_regular = original_reader
+    changed = copy.deepcopy(record)
+    changed["presentation_artifacts"]["tool_versions"]["pypdf"] = "6.16.1"
+    expect_check_error(
+        "rewritten-historical-parser", lambda: CHECKER.check_snapshot(changed, manifest_raw),
+        "presentation tool profile drifted",
+    )
+    CHECKER.check_snapshot(record, manifest_raw)
+    return len(cases) + 1
+
+
 def main() -> int:
     controls = exercise_cli_isolation()
     record, record_raw, manifest_raw = load_baseline()
@@ -392,7 +426,8 @@ def main() -> int:
     manifest_rejections = exercise_manifest_parser(manifest_raw)
     bound_rejections = exercise_bound_mutations(record, manifest_raw)
     semantic_rejections = exercise_semantic_escalations(record, manifest_raw)
-    total = parser_rejections + manifest_rejections + bound_rejections + semantic_rejections
+    builder_rejections = exercise_builder_boundaries(record, manifest_raw)
+    total = parser_rejections + manifest_rejections + bound_rejections + semantic_rejections + builder_rejections
     print(
         "OK: post-publication custody hostile suite observed "
         f"{total} fail-closed mutations and {controls} baseline/isolation controls"

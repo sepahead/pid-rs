@@ -315,7 +315,7 @@ def dereference(value):
 def fail(message):
     raise SystemExit(f"PDF object check failed: {message}")
 
-if pypdf.__version__ != "6.15.0":
+if pypdf.__version__ != "6.16.1":
     fail(f"unaudited pypdf version: {pypdf.__version__}")
 
 reader = PdfReader(path, strict=True)

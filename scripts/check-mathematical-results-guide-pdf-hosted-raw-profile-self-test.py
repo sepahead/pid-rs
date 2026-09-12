@@ -35,7 +35,7 @@ STRUCTURE_CHECK = ROOT / "scripts/check-mathematical-results-guide-pdf-structure
 ID_VARIANCE_CHECK = ROOT / "scripts/check-mathematical-results-guide-pdf-id-variance.py"
 
 EXPECTED_CHECKER_SHA256 = (
-    "e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30"
+    "a1fc39a5bef8bc22286321cab8127b96d395cc08657afec88be13697ff70b2e7"
 )
 EXPECTED_HOSTED_FIXTURE_BYTES = 581_296
 EXPECTED_HOSTED_FIXTURE_SHA256 = (
@@ -47,7 +47,7 @@ EXPECTED_STRUCTURE_CHECK_SHA256 = (
 EXPECTED_ID_VARIANCE_CHECK_SHA256 = (
     "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
 )
-EXPECTED_PYPDF_VERSION = "6.15.0"
+EXPECTED_PYPDF_VERSION = "6.16.1"
 ID_PATTERN = re.compile(
     rb"/ID[ \t\r\n]*\[[ \t\r\n]*<([0-9A-Fa-f]{32})>[ \t\r\n]*"
     rb"<([0-9A-Fa-f]{32})>[ \t\r\n]*\]"

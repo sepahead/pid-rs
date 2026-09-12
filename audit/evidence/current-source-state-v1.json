@@ -310,14 +310,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "6fb02ab3e38c71a27c7bbfcbb0a5506bbea87f59a881fc9e39ae47fd492a536a",
+        "sha256": "4472c4a56562e142922215d473cbcd60dfc171045fe884c32de56ace098e1f78",
         "size_bytes": 95718
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "04cfc639fb313886a135d2901cfa44d1219f85d0a82432718dd7793105100e40",
-        "size_bytes": 301907
+        "sha256": "1cfd0b1cbcdaf07335b18432185be91760c0178d70cb587b563995f313798c7a",
+        "size_bytes": 302138
       },
       {
         "git_mode": "100644",
@@ -3585,6 +3585,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/pdf-parser-dependency-update-2026-09-12.md",
+        "sha256": "9b689780b33b78b0141d5368d7cc680f17438099a9663c007b9ca717937d784f",
+        "size_bytes": 3062
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/pid-discovery-verification-durability-blueprint-visual-receipt-2026-09-01.md",
         "sha256": "335263a235fc3faf6edbcea2c0683563e54646454c7720959db31e16dca7acdf",
         "size_bytes": 9045
@@ -3636,6 +3642,12 @@
         "path": "audit/evidence/post-publication-custody-visual-receipt-2026-09-02.md",
         "sha256": "f176cf45a9dd703e490328fdbe8f992e592ec6ddff0fbcef2073aa162bd2fbd4",
         "size_bytes": 4121
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/post-publication-custody/builder-pypdf-6.15.0.sh.txt",
+        "sha256": "5c9e29477fef0d45fcf086a694c3baf72cfc687d87ed1735d244271e236d2cfa",
+        "size_bytes": 10964
       },
       {
         "git_mode": "100644",
@@ -15172,7 +15184,7 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/requirements-pdf.txt",
-        "sha256": "f1f2171ff6481ee900b72df600d8326140d001a1a024977b41386461e2b57d36",
+        "sha256": "90cda7a5c8dadda7ed0b0dbb2ef3767569b970fb7f86847bd866e63600addd49",
         "size_bytes": 93
       },
       {
@@ -17752,8 +17764,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "a4f24a213adfc69de91b67c5715c44793f5ce0c58203a1fb6e026cbcbe11ceab",
-        "size_bytes": 282221
+        "sha256": "3904647e647e4cad369ab08224256fb4db7be9dec5c5ca497444c7631da15ac9",
+        "size_bytes": 282586
       },
       {
         "git_mode": "100644",
@@ -17800,7 +17812,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/build-post-publication-custody-pdf.sh",
-        "sha256": "5c9e29477fef0d45fcf086a694c3baf72cfc687d87ed1735d244271e236d2cfa",
+        "sha256": "25af0f6819d299cb8c9f889371258d54a0f6acc6511d2927861893a9f4bb2b2d",
         "size_bytes": 10964
       },
       {
@@ -17992,7 +18004,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "775da77d32a6582f5f0048a5ce76993d2ffb2916b1ac28f3a458be209bcad0ca",
+        "sha256": "38a414854bdedd490e06ad9cb8abc015ef1ce637d07d0095612a79dbeba817a3",
         "size_bytes": 90915
       },
       {
@@ -18268,7 +18280,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v4-process-pdf.sh",
-        "sha256": "8881f819da0a5ba8e6db31a007aa2465fbac7982de4c662b3d48d477bedfcf83",
+        "sha256": "4342df52c516f19d550831b9b4430131e32779ccc4f219c3c89e2434ce0082df",
         "size_bytes": 47339
       },
       {
@@ -18292,7 +18304,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh",
-        "sha256": "81c7e8efbec07dc7a1c26e0d63075a4bbae6c0125547d6daac70596940beb61c",
+        "sha256": "fbd66bd6ae0dcd20b2ac11d309bb0610cde5c9d5efc97e32437a709ee7195fab",
         "size_bytes": 39726
       },
       {
@@ -18316,7 +18328,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh",
-        "sha256": "087d3fa3ac9467d63423fc2a246216cfcd61e176ceceae3eb9dff7428b141b35",
+        "sha256": "2e233815c51c6fdc842387c9f4f0e2524bc25a0fe97c4eeea49be4a5cdacc3d1",
         "size_bytes": 95273
       },
       {
@@ -18328,7 +18340,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v6-pdf-portability.sh",
-        "sha256": "d4f6416ef9aee5f158e9ab5b5f7909d75e45ccc9e49d77405e92fa0db59431af",
+        "sha256": "dbd56651861360560bc9e576427eb617f846a9ec29a13031f22339d6af24925e",
         "size_bytes": 39346
       },
       {
@@ -18352,7 +18364,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh",
-        "sha256": "cb38f112bf25b807c6688742f22dcc253eef7235f14830e8220b83603c7c2526",
+        "sha256": "1e697d32c07b0f430b9fc7f89c4d43f66d75de549552031e3bfe9ee82ec9f7b8",
         "size_bytes": 111043
       },
       {
@@ -18562,8 +18574,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "d5047d3c8c7456cc35a3b8e9f401d42d5b996fff8aee072c307c84bf6c5987be",
-        "size_bytes": 136232
+        "sha256": "892c095d66e5f7ff49cbd0cc38545d57db26da4240626ca24f5dcd9fd2709b98",
+        "size_bytes": 136973
       },
       {
         "git_mode": "100644",
@@ -18640,19 +18652,19 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-self-test.py",
-        "sha256": "b4bf248f599ccd92298323912990476c5f426228ff56a5f26fe51fbc167141df",
+        "sha256": "f70753c57d67bc18cab8d9b183ece46163dff575d2fd88a3e797fafe9c0ac0e4",
         "size_bytes": 57857
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py",
-        "sha256": "0505f57f88bc35e1f1987b8baefdb73c0ac84e0ef2294f86cd73a37a7d2f20a5",
+        "sha256": "bc87c0eb31dd6dffebd1e4af30f0f66a3f02943acdca770dc7e0ceafdf764791",
         "size_bytes": 58173
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py",
-        "sha256": "875988eadb524ea266e03be47dc71219288a9251c8fa237c155930ad58427fd1",
+        "sha256": "c0c5e89cd2185662eeb778bf9146b5b4a20038d898889fa52808fbea9d97ca77",
         "size_bytes": 37356
       },
       {
@@ -18670,19 +18682,19 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py",
-        "sha256": "3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4",
+        "sha256": "7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305",
         "size_bytes": 59837
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py",
-        "sha256": "bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241",
+        "sha256": "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338",
         "size_bytes": 37355
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile.py",
-        "sha256": "e79b8ac64dcb2db0e84f08dab7aa23bd492c6b44ac82628aac352f061efccb30",
+        "sha256": "a1fc39a5bef8bc22286321cab8127b96d395cc08657afec88be13697ff70b2e7",
         "size_bytes": 37084
       },
       {
@@ -18700,7 +18712,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
-        "sha256": "6179a485fa7c9ed1dc423337369262354dd1939d08762a38d352ab96422cdc02",
+        "sha256": "d85f8a42ecfb418819be10104ab3c62fbc0fe21d9a8eb0103dea9fee81400ac8",
         "size_bytes": 134476
       },
       {
@@ -18748,8 +18760,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "360ab23ce3365f386596536ac913efbb98767e63cffd1d8520f186e3cbc265dd",
-        "size_bytes": 74116
+        "sha256": "3faf2dd93cf02441ee3c4c7d1d275ded967c224974f5d2c559313d9c2f927e3d",
+        "size_bytes": 74217
       },
       {
         "git_mode": "100644",
@@ -18796,7 +18808,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "dd5fee753e9036965f397a1bf5e27f9b80c7ffeeacee4bcac3c067913c30a183",
+        "sha256": "154778c4bb9ad4114477c68610742c2d9e9b93822dd357184dfb5a9edb89a5ba",
         "size_bytes": 266837
       },
       {
@@ -18850,7 +18862,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-numerical-assurance-pdf.sh",
-        "sha256": "937e718eea1272b70013208e09c6f1774dfb348160a889eaf74578d4ad724ee6",
+        "sha256": "47c9aa47114e353feba7dea53577f0e3784f8f1d8219998ac78cbc32396be9f8",
         "size_bytes": 12491
       },
       {
@@ -18862,7 +18874,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-discovery-verification-blueprint-pdf.sh",
-        "sha256": "3e89ecea1ce144c7be2fcfb7d90264fcbb50edec7cc039975dae787d5d7060b0",
+        "sha256": "95c75f3884405442eab8299f05bacee8eead210f711c30a062269bcfc497fb28",
         "size_bytes": 40927
       },
       {
@@ -18886,13 +18898,13 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-pid-sensor-placement-and-galadriel-guide-pdf.sh",
-        "sha256": "a585c23523dbbfcc66a8317ea51c0b7d46fadb00d1a68f226dcdc05746e95b15",
+        "sha256": "f104393c6e960b9af95d70277c2865780485a56260dba872191d713ad72f333e",
         "size_bytes": 32311
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-pid2-represented-coordinate-assurance-pdf.sh",
-        "sha256": "58ef97c46e2af00f09863e4250f4e8a2bd45f61a25e6e09b81ca3818e6d5f81c",
+        "sha256": "721acc283dd0359ec80b393888c33a1365f1a609f68df09b2dea8b34d2c19205",
         "size_bytes": 10871
       },
       {
@@ -18934,14 +18946,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-post-publication-custody-self-test.py",
-        "sha256": "5b267dfe913061e9adb6cfd0727271956a3d1ebfc0de393d1f6d8266e3e3e8be",
-        "size_bytes": 17213
+        "sha256": "43ee61961a1a67865a077e50e2b940a58c11aecd56ac651a2cc5674b8960aba8",
+        "size_bytes": 19036
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-post-publication-custody.py",
-        "sha256": "9d615111da9097a07eb5a0c6c0d5861c6ca51f591341c5868208e5dd45fb13fa",
-        "size_bytes": 41120
+        "sha256": "0f6871f846699af081a2a4d53b45a3f68fded208744371f3184312a530601016",
+        "size_bytes": 41812
       },
       {
         "git_mode": "100644",
@@ -18982,13 +18994,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-publication-links-self-test.py",
-        "sha256": "31d4d2acc3da4284c597b9de52c2788b3d12b4ae573f84c6c721a44bd3430573",
+        "sha256": "4599e3479834d1f9c04709fe823e5acb67e57af6d82b60170466436552c0bf1c",
         "size_bytes": 52064
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-publication-links.py",
-        "sha256": "2ae583c9d81df509b41d9bcb4380735854830f32ec1ae3784b5563d39eb9591b",
+        "sha256": "3c48653f882b1ab4ee159764e9fb10633f3703690f848fadb26b005bbe78e310",
         "size_bytes": 73839
       },
       {
@@ -19162,8 +19174,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-sxpid3-source-marginal-audit-pdf.sh",
-        "sha256": "58a99c9a807e156e877f6cbbc48542656191fe2531cc9469aae73e84640676d5",
-        "size_bytes": 15925
+        "sha256": "ae2daee99ae3ab54d86db3e580e563da916292c24f0c91abc2456fee83a45e9b",
+        "size_bytes": 16000
       },
       {
         "git_mode": "100755",
@@ -19394,8 +19406,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "b98be5c86f29db034a6f06130a7cfcac12b9e034b24ffa0fc8046625fbde39db",
-    "entry_count": 3208
+    "entries_sha256": "3368f890ff46572d1b157a451cccb4d282ee1a68d8ae95a8f3fb28bbc184982e",
+    "entry_count": 3210
   },
   "subprojections": [
     {
@@ -19407,7 +19419,7 @@
       ]
     },
     {
-      "entries_sha256": "c723f8db2cbd25eb025643425896d4ed534dc3b6af1dac4d3d5e654609f26b45",
+      "entries_sha256": "2e8eed36764dc0c35618ee1a8f647a170f8eef37ec2334efabac98ffb3f3b917",
       "entry_count": 377,
       "name": "formal_sources_and_receipts",
       "selectors": [
@@ -19423,7 +19435,7 @@
       ]
     },
     {
-      "entries_sha256": "b2fb48c58f432e47cad9f3b5037a3e34adc0bf245e2f0ac835c691c1c3a06724",
+      "entries_sha256": "7eaf3054a65cda9870dacc5f1be5938d8ba6ceb3a49d6fb00232ab2e73892532",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

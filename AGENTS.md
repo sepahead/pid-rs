@@ -760,7 +760,7 @@ python3 -O -I -B scripts/check-publication-links-self-test.py
 scripts/check-formal-pdf-set.sh                          # all declared formal papers and render contracts
 python3 -I -S -B scripts/check-post-publication-custody.py  # dated mainline/cleanup record
 python3 -O -I -S -B scripts/check-post-publication-custody.py
-python3 -I -S -B scripts/check-post-publication-custody-self-test.py  # 56 hostile mutations + isolation controls
+python3 -I -S -B scripts/check-post-publication-custody-self-test.py  # 61 hostile mutations + isolation controls
 python3 -O -I -S -B scripts/check-post-publication-custody-self-test.py
 scripts/check-post-publication-custody-pdf-self-test.sh  # 2 controls + 31 hostile cases
 scripts/check-post-publication-custody-pdf.sh --exact    # exact-only two-build/PDF-byte gate

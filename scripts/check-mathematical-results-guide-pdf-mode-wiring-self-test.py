@@ -65,7 +65,7 @@ LEGACY_TRAILER_RECEIPT_BASENAME = (
     "mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 )
 EXPECTED_WRAPPER_SHA256 = (
-    "360ab23ce3365f386596536ac913efbb98767e63cffd1d8520f186e3cbc265dd"
+    "3faf2dd93cf02441ee3c4c7d1d275ded967c224974f5d2c559313d9c2f927e3d"
 )
 EXPECTED_CAPTURE_FUNCTION_SHA256 = (
     "a9a7d694fd43cd9888605fc48db5e5dc67bccb59d1a1b9c328de25aff751a088"
@@ -88,8 +88,8 @@ LEGACY_SELF_TEST = ROOT / "scripts" / LEGACY_PORTABILITY_SELF_TEST_BASENAME
 LEGACY_TRAILER_CHECKER = ROOT / "scripts" / LEGACY_TRAILER_CHECK_BASENAME
 LEGACY_TRAILER_SELF_TEST = ROOT / "scripts" / LEGACY_TRAILER_SELF_TEST_BASENAME
 SELECTED_SOURCE_SHA256 = {
-    HOSTED_CHECKER: "bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241",
-    HOSTED_SELF_TEST: "3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4",
+    HOSTED_CHECKER: "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338",
+    HOSTED_SELF_TEST: "7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305",
     LEGACY_ALPHA_CHECKER: "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997",
     LEGACY_ALPHA_SELF_TEST: "07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be",
     LEGACY_CHECKER: "5e59e9fb997098656039db1a60c1e8694a451432618ac2ecd192b402e7a8c319",
@@ -730,10 +730,10 @@ def audit_wrapper(
             "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
         ),
         "HOSTED_RAW_CHECK_SHA256": (
-            "bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241"
+            "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338"
         ),
         "HOSTED_RAW_SELF_TEST_SHA256": (
-            "3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4"
+            "7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305"
         ),
         "HOSTED_RAW_PROFILE_RECEIPT_SHA256": (
             "bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3"
@@ -2770,12 +2770,12 @@ def run_mutation_suite(source: str) -> int:
             "trailer-ID checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_CHECK_SHA256=bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241",
+            "HOSTED_RAW_CHECK_SHA256=c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338",
             "HOSTED_RAW_CHECK_SHA256=" + "0" * 64,
             "hosted checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_SELF_TEST_SHA256=3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4",
+            "HOSTED_RAW_SELF_TEST_SHA256=7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305",
             "HOSTED_RAW_SELF_TEST_SHA256=" + "0" * 64,
             "hosted self-test digest zeroed",
         ),

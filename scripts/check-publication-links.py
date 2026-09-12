@@ -52,7 +52,7 @@ from pypdf.generic import (
 
 
 CHECK_NAME = "publication link portability check"
-EXPECTED_PYPDF_VERSION = "6.15.0"
+EXPECTED_PYPDF_VERSION = "6.16.1"
 EXPECTED_PANDOC_VERSION = "pandoc 3.10.2"
 EXPECTED_PANDOC_API = [1, 23, 1, 2]
 ADMITTED_PANDOC_SHA256 = frozenset(

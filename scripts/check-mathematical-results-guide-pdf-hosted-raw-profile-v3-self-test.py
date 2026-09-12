@@ -35,7 +35,7 @@ STRUCTURE_CHECK = ROOT / "scripts/check-mathematical-results-guide-pdf-structure
 ID_VARIANCE_CHECK = ROOT / "scripts/check-mathematical-results-guide-pdf-id-variance.py"
 
 EXPECTED_CHECKER_SHA256 = (
-    "bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241"
+    "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338"
 )
 EXPECTED_HOSTED_FIXTURE_BYTES = 748_561
 EXPECTED_HOSTED_FIXTURE_SHA256 = (
@@ -47,7 +47,7 @@ EXPECTED_STRUCTURE_CHECK_SHA256 = (
 EXPECTED_ID_VARIANCE_CHECK_SHA256 = (
     "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
 )
-EXPECTED_PYPDF_VERSION = "6.15.0"
+EXPECTED_PYPDF_VERSION = "6.16.1"
 # Independent canonical navigation observations; the target payload was extracted
 # with a separate pypdf census, and the navigation/structure digests are the
 # unchanged current-v3 contract literals. These are not candidate-derived pins.

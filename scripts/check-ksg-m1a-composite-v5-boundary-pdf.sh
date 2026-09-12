@@ -423,8 +423,8 @@ def validate(report: PdfReader, figure: PdfReader, expected_pages: int, figure_p
         raise ValueError("figure Form placement is clipped, off-page, or unexpectedly scaled")
 
 
-if pypdf.__version__ != "6.15.0":
-    fail(f"requires pypdf 6.15.0, observed {pypdf.__version__}")
+if pypdf.__version__ != "6.16.1":
+    fail(f"requires pypdf 6.16.1, observed {pypdf.__version__}")
 repo = Path.cwd().resolve()
 if repo in Path(pypdf.__file__).resolve().parents:
     fail("pypdf resolved from inside the repository")

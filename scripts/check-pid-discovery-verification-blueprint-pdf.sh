@@ -42,7 +42,7 @@ VISUAL_RECEIPT_SOURCE_BYTES=115793
 CHECK_NAME="PID discovery/verification/durability blueprint PDF check"
 MODE="${1:---exact}"
 EXPECTED_PAGES=31
-EXPECTED_PYPDF_VERSION="6.15.0"
+EXPECTED_PYPDF_VERSION="6.16.1"
 
 if [[ "$#" -gt 1 || ( "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ) ]]; then
   echo "usage: $0 [--exact|--cross-toolchain]" >&2

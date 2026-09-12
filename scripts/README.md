@@ -2389,7 +2389,7 @@ assume-unchanged, skip-worktree, or nonregular index states. The Markdown route 
 digest-pinned Pandoc 3.10.2 GFM parser;
 local targets, rendered heading anchors, and canonical `sepahead/pid-rs` `blob/main`, `tree/main`,
 and raw-main URLs resolve against that same staged inventory with exact case. In PDFs, strict
-pypdf 6.15.0 parsing validates the raw, ordered, unique destination name tree before it admits a
+pypdf 6.16.1 parsing validates the raw, ordered, unique destination name tree before it admits a
 name; explicit page destinations, structure destinations reachable below `StructTreeRoot /K`, URI
 actions, and acyclic `/Next` action graphs are typed. Relative/local PDF URIs, GoToR, active
 JavaScript and embedded-file name trees, malformed destination parameters, ambiguous Link/outline
@@ -2398,6 +2398,11 @@ Four controls and 111 hostile mutations exercise the gate in normal and optimize
 root-PDF cases reject both omission from the index and relative/local URI actions; its generated
 repository navigation must use canonical GitHub `blob/main` URLs while the Markdown source keeps
 portable repository-relative links.
+
+Current PDF parsing uses the exact pypdf 6.16.1 wheel pinned in
+`audit/formal/requirements-pdf.txt`. Historical parser observations remain unchanged. The
+[dependency correction](../audit/evidence/pdf-parser-dependency-update-2026-09-12.md) describes
+the retained original custody builder and its separate current binding.
 The result proves deterministic repository-path resolution for the staged snapshot. It does not
 probe time-varying external reachability, and a `main` URL remains mutable navigation rather than
 commit- or digest-bound provenance. The current TeX producer puts an exact `/Limits` pair on each
@@ -3254,8 +3259,8 @@ nonclaims. The checker neither contacts the host nor turns ancestry, a digest, a
 record, or a green workflow into byte identity, authenticity, theorem truth, estimator validity, or
 future cleanup authority. Exact raw and canonical JSON digests make the record closed-world after
 the field-level diagnostics. Its hostile self-test runs normal and optimized isolated Python and
-rejects 56 parser, identity, scope, custody, artifact, and semantic-escalation mutations, including
-unknown certificate fields and contradictory suffixes.
+rejects 61 parser, identity, scope, custody, artifact, and semantic-escalation mutations, including
+unknown certificate fields, contradictory suffixes, and historical/current builder substitution.
 
 `build-post-publication-custody-pdf.sh` derives the six-page human receipt from the canonical
 Markdown, header, Lua filter, and handcrafted state-machine SVG. It stages all inputs, performs two

@@ -50,6 +50,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Update current PDF validation to pypdf 6.16.1 for the published outline, XForm and tree-insertion
+  fixes. Preserve historical parser observations and the original custody PDF builder, and check
+  the active builder separately.
+
 - Correct the target-copy replay receipt and paper's evidence boundary. Preserve the original
   receipt, distinguish retained command observations from incomplete operational acceptance,
   and identify private preimages explicitly. The eleven original theorem targets are unchanged.

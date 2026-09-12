@@ -26,7 +26,7 @@ from pypdf.generic import (
     TextStringObject,
 )
 
-EXPECTED_PYPDF_VERSION = "6.15.0"
+EXPECTED_PYPDF_VERSION = "6.16.1"
 ROOT = Path(__file__).resolve(strict=True).parent.parent
 CHECKER = ROOT / "scripts/check-publication-links.py"
 CHECK_NAME = "publication link portability self-test"

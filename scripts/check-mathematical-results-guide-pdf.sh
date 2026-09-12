@@ -37,8 +37,8 @@ HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pand
 RETAINED_FONT_ALPHA_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
 STRUCTURE_CHECK_SHA256=b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4
 STRUCTURE_SELF_TEST_SHA256=a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea
-HOSTED_RAW_CHECK_SHA256=bb0eb2920de42388f27de2fa99623335e005ce4c53a4776b252064bf31efd241
-HOSTED_RAW_SELF_TEST_SHA256=3dfcefdbbbeb8e65e46977a0ddddf52d718518acec9ca773336701505558fea4
+HOSTED_RAW_CHECK_SHA256=c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338
+HOSTED_RAW_SELF_TEST_SHA256=7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305
 HOSTED_RAW_PROFILE_RECEIPT_SHA256=bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3
 FONT_ALPHA_CHECK_SHA256=5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997
 FONT_ALPHA_SELF_TEST_SHA256=07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be
@@ -106,8 +106,10 @@ for command_name in awk bash cat cmp diff env find grep mktemp pdffonts pdfinfo 
     exit 2
   }
 done
-python3 -I -B -c 'import pypdf' >/dev/null 2>&1 || {
-  echo "$CHECK_NAME: missing Python package: pypdf" >&2
+python3 -I -B -c \
+  'import pypdf, sys; sys.exit(getattr(pypdf, "__version__", None) != sys.argv[1])' \
+  "6.16.1" >/dev/null 2>&1 || {
+  echo "$CHECK_NAME: exact Python package pypdf==6.16.1 is required" >&2
   exit 2
 }
 for path in \
