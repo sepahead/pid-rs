@@ -3117,13 +3117,20 @@ is present without an explicit inventory update, or if any individual PDF gate f
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
 portability relation, except that the root blueprint, dated post-publication custody receipt,
-standalone mean exposition, recorded-sensor document and finite MGW paper deliberately have no
+standalone mean exposition, recorded-sensor document, finite MGW paper and target-copy MGW note deliberately have no
 reviewed cross-toolchain profiles. The aggregate
 requires each route to refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain
 credit; status 0 or any other refusal status fails the aggregate. The aggregate self-test protects
-all five exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
+all six exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
 branches against removal or weakening. It also protects the existing blueprint/custody hostile-suite
-calls and binds the custody record checker in normal and optimized Python and its hostile suite. For the 87-page mathematical
+calls and binds the custody record checker in normal and optimized Python and its hostile suite.
+The target-copy controller has a separate selected-input profile, checked tools and fonts,
+two fresh builds, retained diagnostics, and explicit `--tex-root` selection. Its exact aggregate
+route requires `PID_RS_MGW_TARGET_COPY_TEX_ROOT`. The controller and eleven dispatch mutations
+are checked in both Python modes by `check-finite-target-copy-mgw-pdf-self-test.py`; the actual
+native build is separate. See its [publication record](../audit/formal/lean-mgw-target-copy/PUBLICATION.md)
+for reproduction commands and the retained predecessor limitations.
+For the 87-page mathematical
 workflow, that relation requires strict-UTF-8, terminal-form-feed page partitions; byte-identical
 default Poppler extraction; exact per-page layout-token order after collapsing only ASCII space,
 tab, and line-feed runs, with exactly two admitted complete diagram profiles on each of pages 10

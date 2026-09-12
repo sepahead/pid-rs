@@ -323,9 +323,15 @@ fi
 # The finite target-copy note has a committed-source builder. Its exact relation is
 # source Markdown/SVG -> same-profile PDF bytes; cross-toolchain equivalence is intentionally
 # refused because no reviewed alternate producer profile exists.
-MGW_TARGET_COPY_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mgw-target-copy.XXXXXX")"
+python3 -I -S -B scripts/check-finite-target-copy-mgw-pdf-self-test.py
+python3 -O -I -S -B scripts/check-finite-target-copy-mgw-pdf-self-test.py
 if [[ "$MODE" == "--exact" ]]; then
-  python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --check --work-dir "$MGW_TARGET_COPY_BUILD_PARENT/build"
+  if [[ -z "${PID_RS_MGW_TARGET_COPY_TEX_ROOT:-}" ]]; then
+    echo "formal PDF set: exact target-copy MGW requires PID_RS_MGW_TARGET_COPY_TEX_ROOT" >&2
+    exit 2
+  fi
+  MGW_TARGET_COPY_BUILD_PARENT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-mgw-target-copy.XXXXXX")"
+  python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --check --tex-root "$PID_RS_MGW_TARGET_COPY_TEX_ROOT" --work-dir "$MGW_TARGET_COPY_BUILD_PARENT/build"
 else
   if python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --cross-toolchain; then
     echo "formal PDF set: finite target-copy cross-toolchain mode unexpectedly accepted" >&2
@@ -342,5 +348,5 @@ fi
 if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document and finite MGW paper intentionally have no accepted cross-toolchain relation, and all five status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper and target-copy MGW note intentionally have no accepted cross-toolchain relation, and all six status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

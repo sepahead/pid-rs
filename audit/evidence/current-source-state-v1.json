@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "93ae7ecc001045576731db8b4c5cc04da4149a99582db59f1cf4d4a24cfe33ff",
-        "size_bytes": 301255
+        "sha256": "d2e1e7c936f705364912c96cb267020beb1e2dfa8ed3614f089b3e2044c975be",
+        "size_bytes": 301623
       },
       {
         "git_mode": "100644",
@@ -13509,6 +13509,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-target-copy/publication-inputs-v1.json",
+        "sha256": "6a820e19cd7f2a86ed0fc6cecfbb097f4bdb83e5460bf9395a98d388eba50068",
+        "size_bytes": 44359
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-target-copy/publication.tex",
+        "sha256": "51dfa70720095ee47fb6cb47acfd71755440d739ad2911b6ff0790382ba84ff1",
+        "size_bytes": 2271
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/numerical-assurance/filter.lua",
         "sha256": "f755b6e3ea1a004451e4ad3289bde6aadafbe82faa3e5689855461ca6d3b379c",
         "size_bytes": 3554
@@ -14368,8 +14380,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/lean-mgw-target-copy/PUBLICATION.md",
-        "sha256": "1eb95dc9abaf90542c6e0cbf69ee78ce251bc221e8435bc98865df28a96c0a11",
-        "size_bytes": 3397
+        "sha256": "3abfffc7a2dea4a679a026d79e269f2ddbb99354a1b3f57a49e03647d6369c85",
+        "size_bytes": 6015
       },
       {
         "git_mode": "100644",
@@ -17728,14 +17740,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "10b3771e82aad573de48e00c50c34a7124f1ad8c4f37b71bca2a4e88676b1bf6",
-        "size_bytes": 281645
+        "sha256": "a4f24a213adfc69de91b67c5715c44793f5ce0c58203a1fb6e026cbcbe11ceab",
+        "size_bytes": 282221
       },
       {
         "git_mode": "100644",
         "path": "scripts/build-finite-target-copy-mgw-pdf.py",
-        "sha256": "5208113e63df6f8e8f5cdd65d61eb1aed2f6a359a3eec27effca35206fe9a455",
-        "size_bytes": 5133
+        "sha256": "c42416b7cd6df19da0ee0f593fecfdb9f78a27a101e7f06ba96d3a53a42a3f58",
+        "size_bytes": 11100
       },
       {
         "git_mode": "100755",
@@ -17968,7 +17980,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "efd1a283fa9d4df1b280fb9c5307d8cee050bde36959131e8cbe303b07158d30",
+        "sha256": "775da77d32a6582f5f0048a5ce76993d2ffb2916b1ac28f3a458be209bcad0ca",
         "size_bytes": 90915
       },
       {
@@ -18062,6 +18074,12 @@
         "size_bytes": 13950
       },
       {
+        "git_mode": "100644",
+        "path": "scripts/check-finite-target-copy-mgw-pdf-self-test.py",
+        "sha256": "22d0781037edf5c054f04682fd10028d092213b30bb2d296eeea2d56a2e3c375",
+        "size_bytes": 9676
+      },
+      {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-log-self-test.sh",
         "sha256": "8b15fa3ab89ecfad822fbee66973f6d71b9ec272bdef5c0147201320f689e483",
@@ -18076,14 +18094,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "720dca03db8200a9a9317c49daa363e9d46054a7acbdff93c81f64c98107b79e",
-        "size_bytes": 56198
+        "sha256": "fa21acf33bd06d9ef2a766fe80275fff45a6c01b231435776f1e0c2980931e3f",
+        "size_bytes": 56459
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "999b01105712764024dff85101969102d82e2712cf62f274be67e7c98e45c14c",
-        "size_bytes": 14520
+        "sha256": "7b38fd931ac295db89d2c48e6599e0d2f33cb126a186175f0dc781590d28259a",
+        "size_bytes": 14903
       },
       {
         "git_mode": "100755",
@@ -18532,7 +18550,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "5b007e3f5557ff3b2dce6a28228f5dd69aa7d52dabe00fae1b149cd61f0dc349",
+        "sha256": "c53f1a1671dcfb6e5675adbe7c1a094de1c9a1a1e42f780fefda7d4c17fa785f",
         "size_bytes": 136232
       },
       {
@@ -19364,8 +19382,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "bd2b687d8075660aca93f9e2f1ebdeb345099106244f3af7abac94e74cda7f92",
-    "entry_count": 3203
+    "entries_sha256": "230649a2716edf6e65a8cabd81afd43cd4d87cece12aaaf78799abee3ca2a3e8",
+    "entry_count": 3206
   },
   "subprojections": [
     {
@@ -19377,8 +19395,8 @@
       ]
     },
     {
-      "entries_sha256": "39c2391e65969a20598980f969f7bacd1d593fcfe8d6871ed6ba1ba0a8b639fb",
-      "entry_count": 374,
+      "entries_sha256": "731272703794986bfc63f0a8b1eb99aed3bbf6852c63150ed22cf0783c56dcb7",
+      "entry_count": 376,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
@@ -19393,7 +19411,7 @@
       ]
     },
     {
-      "entries_sha256": "c99887d2a8c72cbfc8f1f47726f5575fe76adb36ffa0c165eca5c1c8b0f82955",
+      "entries_sha256": "efa4be8155875e8d7fc7c7d3ca39fa182ba2c1e30ba9dd777904ad1299934b3d",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -50,6 +50,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Check selected source, executable, font and TeX inputs before rebuilding the target-copy
+  PDF. Require two fresh builds, preserve command diagnostics, reject final TeX warnings,
+  and require exact committed PDF bytes. Add controller and aggregate-dispatch controls;
+  the reproduced PDF is unchanged. Record the predecessor limitations in the publication record.
+
 - Restore the exact terminal bytes of an archived target-copy Lean interface after a
   post-validation whitespace edit. Strengthen the archive checker against optimized-mode
   assertions, duplicate entries, false theorem credit, unsafe paths and altered payloads;

@@ -412,7 +412,7 @@ text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
   echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document and finite MGW paper intentionally have no accepted cross-toolchain relation, and all five status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper and target-copy MGW note intentionally have no accepted cross-toolchain relation, and all six status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -839,7 +839,7 @@ PY
 done <<'CASES'
 exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
 cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
-cross success message cannot omit the fifth refusal	all five status-2 refusals	all four status-2 refusals
+cross success message cannot omit the sixth refusal	all six status-2 refusals	all five status-2 refusals
 CASES
 
 for removed_invocation in \
@@ -1207,4 +1207,7 @@ for markdown_source in "${MARKDOWN_SOURCES[@]}"; do
     "Markdown source is not a direct regular file"
 done
 
-echo "OK: $PASS_COUNT formal-PDF typed-inventory controls passed"
+python3 -I -S -B "$ROOT/scripts/check-finite-target-copy-mgw-pdf-self-test.py"
+python3 -O -I -S -B "$ROOT/scripts/check-finite-target-copy-mgw-pdf-self-test.py"
+
+echo "OK: $PASS_COUNT formal-PDF typed-inventory controls passed; target-copy controller and dispatch controls also passed in both Python modes"

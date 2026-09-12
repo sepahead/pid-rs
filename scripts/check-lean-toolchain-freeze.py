@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "6fb02ab3e38c71a27c7bbfcbb0a5506bbea87f59a881fc9e39ae47fd492a536a",
-    "CHANGELOG.md": "93ae7ecc001045576731db8b4c5cc04da4149a99582db59f1cf4d4a24cfe33ff",
+    "CHANGELOG.md": "d2e1e7c936f705364912c96cb267020beb1e2dfa8ed3614f089b3e2044c975be",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -699,12 +699,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
     ),
-    "scripts/README.md": "10b3771e82aad573de48e00c50c34a7124f1ad8c4f37b71bca2a4e88676b1bf6",
+    "scripts/README.md": "a4f24a213adfc69de91b67c5715c44793f5ce0c58203a1fb6e026cbcbe11ceab",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "efd1a283fa9d4df1b280fb9c5307d8cee050bde36959131e8cbe303b07158d30"
+        "775da77d32a6582f5f0048a5ce76993d2ffb2916b1ac28f3a458be209bcad0ca"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -713,10 +713,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "999b01105712764024dff85101969102d82e2712cf62f274be67e7c98e45c14c"
+        "7b38fd931ac295db89d2c48e6599e0d2f33cb126a186175f0dc781590d28259a"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
-        "5208113e63df6f8e8f5cdd65d61eb1aed2f6a359a3eec27effca35206fe9a455"
+        "c42416b7cd6df19da0ee0f593fecfdb9f78a27a101e7f06ba96d3a53a42a3f58"
     ),
     "scripts/check-formal-pdf-style.py": (
         "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"
