@@ -62,7 +62,7 @@
   <text x="900" y="971" class="small">B: ln(3/2) + ln(4/3) = ln 2</text>
 
   <text x="60" y="1030" class="small">Synergy ties; the full signed decomposition retains the CMI difference.</text>
-  <text x="60" y="1073" class="small">Signed cancellation is published in MGW (RndErr, §VI.C / Table III).</text>
+  <text x="60" y="1073" class="small">Signed cancellation is published in MGW (RndErr, §VI.3 / Table III).</text>
   <text x="60" y="1116" class="small">Matched comparison: priority unestablished; no estimator or deployment claim.</text>
   </g>
 </svg>

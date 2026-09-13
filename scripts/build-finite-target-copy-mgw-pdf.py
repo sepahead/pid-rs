@@ -21,8 +21,8 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = "audit/formal/latex/mgw-target-copy/"
-PROFILE = ASSETS + "publication-inputs-v1.json"
-PROFILE_SHA = "3b7a9384e266a6ebd789d91c5d904012eeba088bcebd748dfea2c00e880cf2d3"
+PROFILE = ASSETS + "publication-inputs-v4.json"
+PROFILE_SHA = "8cc3f3d71fa218539f21b10a07f0e65c0b42c9ff2a8569f33c2b151b4ecf5f46"
 MD = "audit/evidence/finite-target-copy-mgw-synergy.md"
 SVG = "audit/formal/latex/figures/mgw-target-copy/event-union.svg"
 PDF = "output/pdf/finite-target-copy-mgw-synergy.pdf"
@@ -144,7 +144,7 @@ def build(work: Path, sources: dict[str, bytes], fonts: dict[str, bytes],
     font_rows = font_info.decode().splitlines()[2:]
     require(font_rows and all(len(row.split()) >= 5 and row.split()[-5] == "yes"
                               for row in font_rows), "PDF contains an unembedded font")
-    require(re.search(rb"Pages:\s+11\b", info) is not None and b"(A4)" in info,
+    require(re.search(rb"Pages:\s+13\b", info) is not None and b"(A4)" in info,
             "unexpected page count or page size")
     run([tools["pdftotext"], "-layout", str(produced), str(work / "paper.txt")],
         work, env, "pdftotext")

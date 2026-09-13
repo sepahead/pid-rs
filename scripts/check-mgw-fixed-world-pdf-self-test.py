@@ -77,6 +77,8 @@ def main() -> int:
     (work / "execution").mkdir()
     cutoff = time.monotonic_ns() + 900 * 10**9
     rows = []
+    projection_rows = []
+    figure_projection_rows = []
     cases = (
         ("discovery-positive", "discover", "normal", 0, "discovery_requires_artifact_review", 10),
         ("exact-inert-positive", "exact", "normal", 0, "exact_reference_reproduced", 10),
@@ -131,10 +133,93 @@ def main() -> int:
     cases += tuple(("recorder-omit-" + str(index + 1), "discover", "recorder-omit:" + name,
                     1, "recorder omits required local inputs: " + name, 2)
                    for index, name in enumerate(sorted(module.REQUIRED_RECORDED_LOCAL)))
+    cases += (
+        ("citation-archive-repin", "discover", "citation-archive-repin", 1,
+         "finite archive source-map join changed: " + module.MARKDOWN, 0),
+        ("citation-archive-current-repin", "discover", "citation-archive-current-repin", 1,
+         "finite archive source-map join changed: " + module.MARKDOWN, 0),
+        ("citation-archive-roster-omission", "discover", "citation-archive-roster-omission", 1,
+         "publication source roster changed", 0),
+    )
+    cases += (
+        ("figure-svg-archive-repin", "discover", "figure-svg-archive-repin", 1,
+         "finite archive source-map join changed: " + module.MATCHED_SVG, 0),
+        ("figure-svg-archive-current-repin", "discover", "figure-svg-archive-current-repin", 1,
+         "finite archive source-map join changed: " + module.MATCHED_SVG, 0),
+        ("figure-svg-archive-roster-omission", "discover", "figure-svg-archive-roster-omission", 1,
+         "publication source roster changed", 0),
+        ("figure-pdf-archive-repin", "discover", "figure-pdf-archive-repin", 1,
+         "finite archive source-map join changed: " + module.MATCHED_PDF, 0),
+        ("figure-pdf-archive-current-repin", "discover", "figure-pdf-archive-current-repin", 1,
+         "finite archive source-map join changed: " + module.MATCHED_PDF, 0),
+        ("figure-pdf-archive-roster-omission", "discover", "figure-pdf-archive-roster-omission", 1,
+         "publication source roster changed", 0),
+        ("figure-current-svg-repin", "discover", "figure-current-svg-repin", 1,
+         "finite paper matched SVG identity changed", 0),
+        ("figure-current-pdf-repin", "discover", "figure-current-pdf-repin", 1,
+         "finite paper matched PDF identity changed", 0),
+    )
+    archived, current = captured[module.ARCHIVED_MARKDOWN], captured[module.MARKDOWN]
+    projection_cases = (
+        ("citation-projection-positive", archived, current, None),
+        ("citation-projection-missing-anchor",
+         archived.replace(module.OLD_CITATION, b"", 1), current,
+         "historical citation anchor changed"),
+        ("citation-projection-repeated-anchor", archived + module.OLD_CITATION, current,
+         "historical citation anchor changed"),
+        ("citation-projection-label-only", archived,
+         archived.replace(module.OLD_CITATION,
+                          module.OLD_CITATION.replace(b"VI.3", b"VI.C"), 1),
+         "current Markdown is not the exact citation correction"),
+        ("citation-projection-url-only", archived,
+         archived.replace(module.OLD_CITATION,
+                          module.CURRENT_CITATION.replace(b"VI.C", b"VI.3"), 1),
+         "current Markdown is not the exact citation correction"),
+        ("citation-projection-unrelated-change", archived, current + b"\n",
+         "current Markdown is not the exact citation correction"),
+    )
+    archived_svg, current_svg = captured[module.ARCHIVED_MATCHED_SVG], captured[module.MATCHED_SVG]
+    figure_projection_cases = (
+        ("figure-projection-positive", archived_svg, current_svg, None),
+        ("figure-projection-missing-anchor",
+         archived_svg.replace(module.OLD_FIGURE_LABEL, b"", 1), current_svg,
+         "historical figure citation anchor changed"),
+        ("figure-projection-repeated-anchor", archived_svg + module.OLD_FIGURE_LABEL, current_svg,
+         "historical figure citation anchor changed"),
+        ("figure-projection-unchanged", archived_svg, archived_svg,
+         "current SVG is not the exact figure citation correction"),
+        ("figure-projection-unrelated-change", archived_svg, current_svg + b"\n",
+         "current SVG is not the exact figure citation correction"),
+    )
     result = {"status": "failed", "scope": "synthetic command/input controls; no actual PDF or theorem credit",
               "unsafe_link_scope": "byte drift here; semantic action mutations are in the existing publication-link suite",
-              "cases": rows}
+              "cases": rows, "citation_projection_cases": projection_rows,
+              "figure_citation_projection_cases": figure_projection_rows}
     try:
+        for label, old_bytes, current_bytes, expected_failure in projection_cases:
+            require(time.monotonic_ns() < cutoff - 60 * 10**9, "control original deadline exhausted")
+            observed_failure = None
+            try:
+                module.verify_citation_projection(old_bytes, current_bytes)
+            except RuntimeError as error:
+                observed_failure = str(error)
+            require(observed_failure == expected_failure, label + ": noncausal relation outcome")
+            snapshot.verify()
+            projection_rows.append({"case": label, "expected_failure": expected_failure,
+                                    "observed_failure": observed_failure,
+                                    "status": "expected_direct_control_outcome"})
+        for label, old_bytes, current_bytes, expected_failure in figure_projection_cases:
+            require(time.monotonic_ns() < cutoff - 60 * 10**9, "control original deadline exhausted")
+            observed_failure = None
+            try:
+                module.verify_figure_citation_projection(old_bytes, current_bytes)
+            except RuntimeError as error:
+                observed_failure = str(error)
+            require(observed_failure == expected_failure, label + ": noncausal figure relation outcome")
+            snapshot.verify()
+            figure_projection_rows.append({"case": label, "expected_failure": expected_failure,
+                                           "observed_failure": observed_failure,
+                                           "status": "expected_direct_control_outcome"})
         for label, mode, behavior, expected_exit, message, expected_children in cases:
             require(time.monotonic_ns() < cutoff - 60 * 10**9, "control original deadline exhausted")
             fixture = work / label
@@ -227,7 +312,12 @@ def main() -> int:
             replacements = {"finite-markdown-repin": module.MARKDOWN,
                             "finite-body-repin": module.ASSETS + "body.expected.tex",
                             "finite-map-repin": module.SOURCE_MAP,
-                            "finite-graph-repin": module.SOURCE_GRAPH}
+                            "finite-graph-repin": module.SOURCE_GRAPH,
+                            "citation-archive-repin": module.ARCHIVED_MARKDOWN,
+                            "figure-svg-archive-repin": module.ARCHIVED_MATCHED_SVG,
+                            "figure-pdf-archive-repin": module.ARCHIVED_MATCHED_PDF,
+                            "figure-current-svg-repin": module.MATCHED_SVG,
+                            "figure-current-pdf-repin": module.MATCHED_PDF}
             changed = replacements.get(behavior)
             if behavior.startswith("module:"):
                 changed = behavior.removeprefix("module:")
@@ -235,6 +325,21 @@ def main() -> int:
                 path = fixture / changed
                 path.write_bytes(path.read_bytes() + b"\n")
                 profile["files"][changed] = pin(path)
+            if behavior == "citation-archive-current-repin":
+                path = fixture / module.ARCHIVED_MARKDOWN
+                path.write_bytes(captured[module.MARKDOWN])
+                profile["files"][module.ARCHIVED_MARKDOWN] = pin(path)
+            if behavior == "citation-archive-roster-omission":
+                del profile["files"][module.ARCHIVED_MARKDOWN]
+            for prefix, archive_path, current_path in (
+                    ("figure-svg", module.ARCHIVED_MATCHED_SVG, module.MATCHED_SVG),
+                    ("figure-pdf", module.ARCHIVED_MATCHED_PDF, module.MATCHED_PDF)):
+                if behavior == prefix + "-archive-current-repin":
+                    path = fixture / archive_path
+                    path.write_bytes(captured[current_path])
+                    profile["files"][archive_path] = pin(path)
+                if behavior == prefix + "-archive-roster-omission":
+                    del profile["files"][archive_path]
             if behavior == "source-roster-omission":
                 del profile["files"][module.FROZEN_MODULES[0]["repository_path"]]
             manifest = fixture / module.MANIFEST
@@ -330,12 +435,41 @@ def main() -> int:
                 require(reference.read_bytes() == FAKE_PDF, label + ": canonical reference changed")
             if expected_exit == 0:
                 require(not (logs / "stderr.log").read_bytes(), label + ": unexpected outer stderr")
+                bindings = runtime.strict_json(
+                    (fixture / "build-evidence/FINITE_SOURCE_BINDINGS.json").read_bytes())
+                require(bindings["citation_projection"] == {
+                    "status": "exact-single-citation-rewrite",
+                    "original_map_key": module.MARKDOWN,
+                    "archive_path": module.ARCHIVED_MARKDOWN,
+                    "archive_sha256": hashlib.sha256(captured[module.ARCHIVED_MARKDOWN]).hexdigest(),
+                    "current_path": module.MARKDOWN,
+                    "current_sha256": module.EXPECTED_MARKDOWN_SHA},
+                    label + ": citation projection receipt changed")
+                expected_figure_projection = {
+                    "status": "exact-single-svg-label-rewrite",
+                    "scope": "exact SVG source substitution; PDFs independently pinned; "
+                             "no rendering, visual, mathematical or proof acceptance",
+                    "original_svg_map_key": module.MATCHED_SVG,
+                    "archive_svg_path": module.ARCHIVED_MATCHED_SVG,
+                    "archive_svg_sha256": hashlib.sha256(captured[module.ARCHIVED_MATCHED_SVG]).hexdigest(),
+                    "current_svg_path": module.MATCHED_SVG,
+                    "current_svg_sha256": hashlib.sha256(captured[module.MATCHED_SVG]).hexdigest(),
+                    "original_pdf_map_key": module.MATCHED_PDF,
+                    "archive_pdf_path": module.ARCHIVED_MATCHED_PDF,
+                    "archive_pdf_sha256": hashlib.sha256(captured[module.ARCHIVED_MATCHED_PDF]).hexdigest(),
+                    "current_pdf_path": module.MATCHED_PDF,
+                    "current_pdf_sha256": hashlib.sha256(captured[module.MATCHED_PDF]).hexdigest()}
+                received_figure_projection = bindings["figure_citation_projection"]
+                require(received_figure_projection == expected_figure_projection,
+                        label + ": figure citation projection receipt changed")
             snapshot.verify()
             rows.append({"case": label, "actual_outer_exit": observed["returncode"],
                          "primary_child_records": len(child_records), "expected": message,
                          "status": "expected_control_outcome"})
         result["status"] = "finite_synthetic_controls_completed"
-        print("OK: " + str(len(rows)) + " finite MGW publication controls; no native document reproduction")
+        print("OK: " + str(len(rows)) + " finite MGW publication controls and "
+              + str(len(projection_rows)) + " direct Markdown citation controls, "
+              + str(len(figure_projection_rows)) + " direct SVG citation controls; no native document reproduction")
         return 0
     except BaseException as error:
         result["failure"] = repr(error)

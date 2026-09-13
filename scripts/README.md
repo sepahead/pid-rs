@@ -3187,9 +3187,15 @@ A source-proposal profile with a pending reference is intentionally not an exact
 The [finite MGW archive](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) retains the
 21-target fixed-law comparison and its existing execution evidence. Its dedicated
 `build-mgw-fixed-world-pdf.py` binds the paper, all nine formal source dependencies,
-the target report, source map and three unchanged SVG/PDF figure pairs. It does not rerun Lean.
-The exact input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v1.json`.
+the target report, the unchanged archive map and three SVG/PDF figure pairs. It does not rerun
+Lean. The current Markdown and first figure correct the MGW locator to Section VI.C.
+Three explicit inert preimages preserve the archive's original Markdown, SVG and figure PDF;
+the other 114 source-map entries retain direct lookups. Exact source substitutions bind the
+Markdown/SVG correction, while separate artifact hashes bind each figure PDF.
+The current input profile is
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v4.json`; v1–v3 remain historical.
+The selected reference is the reviewed nine-page containing paper. Its publication record
+keeps discovery, reference admission, exact execution and formal qualification separate.
 Discovery produces a candidate and retained diagnostics without admitting it. Exact mode refuses
 a pending reference; after admission it requires the specified finite-paper PDF bytes. Both modes
 with `--check` request two fresh builds. Supply `--tex-root` explicitly and use fresh work;

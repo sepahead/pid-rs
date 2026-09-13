@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the finite MGW v7 paper; discovery is not reference adoption.
+"""Build the citation-corrected finite MGW paper; discovery is not reference adoption.
 
 Uses the existing bounded Runner/Snapshot without proof or preparation hooks.
 Pins the finite source map and nine theorem modules without executing Lean.
@@ -27,6 +27,25 @@ FIGURES = "audit/formal/latex/figures/mgw-fixed-world/"
 EVIDENCE = "audit/evidence/mgw-fixed-world-added-information-2026-09-09/"
 UNIT = "audit/formal/lean-mgw-fixed-world/"
 MARKDOWN = EVIDENCE[:-1] + ".md"
+ARCHIVED_MARKDOWN = EVIDENCE[:-1] + ".citation-preimage-v1.md.txt"
+OLD_CITATION = (
+    b"[Section VI.3 and Table III of version 5]"
+    b"(https://arxiv.org/html/2002.03356v5#S6.SS3)"
+)
+CURRENT_CITATION = (
+    b"[Section VI.C and Table III of version 5]"
+    b"(https://arxiv.org/pdf/2002.03356v5#page=11)"
+)
+MATCHED_SVG = FIGURES + "mgw-matched-comparison.svg"
+MATCHED_PDF = FIGURES + "mgw-matched-comparison.pdf"
+ARCHIVED_MATCHED_SVG = FIGURES + "mgw-matched-comparison.citation-preimage-v1.svg.txt"
+ARCHIVED_MATCHED_PDF = FIGURES + "mgw-matched-comparison.citation-preimage-v1.pdf.bin"
+OLD_FIGURE_LABEL = (
+    b"Signed cancellation is published in MGW (RndErr, \xc2\xa7VI.3 / Table III)."
+)
+CURRENT_FIGURE_LABEL = (
+    b"Signed cancellation is published in MGW (RndErr, \xc2\xa7VI.C / Table III)."
+)
 PDF = "output/pdf/mgw-fixed-world-added-information.pdf"
 JOBNAME = "mgw-fixed-world"
 FIGURE_NAMES = ("observation-maps", "shared-exclusion-events", "mgw-matched-comparison")
@@ -34,15 +53,17 @@ REQUIRED_RECORDED_LOCAL = frozenset({
     "publication.tex", "body.tex", "pid-rs-report-tables.sty",
     "pid-rs-workflow-publication.sty", *(name + ".pdf" for name in FIGURE_NAMES),
 })
-MANIFEST = ASSETS + "publication-inputs-v1.json"
-MANIFEST_SHA = "6b98817dc2367eab36c3ba6cb4a1566929f91ceb4d9494bf424470f153804d28"
+MANIFEST = ASSETS + "publication-inputs-v4.json"
+MANIFEST_SHA = "eadd3f7a30d51abe95351668f1ca95ad317578e8697d43888f1d76db3a49fd6d"
 RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
 RUNTIME_SHA = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
-EXPECTED_PDF_SHA = "24c16b51c970d9cec8847f923d76f0d7e8a0bd137f54512e028de0e2712ec378"
+EXPECTED_PDF_SHA = "b43e0d8902d9c919c6ab13a13c3a7c9d55ea07d3d02af1944edd0600d1801185"
 EXPECTED_PDF_BYTES = 231798
-EXPECTED_PDF_PAGES = 9  # Prior inspected reference; no PDF page parser runs here.
-EXPECTED_MARKDOWN_SHA = "01f12cf08104181b88b7d842bf275cfdd68db4d5a087348f0a0c2e667d2a7abf"
-EXPECTED_BODY_SHA = "e725b0186210a3bacd04d2fc85e9cb29f26d00c029d39738bc20501d7df54b88"
+EXPECTED_PDF_PAGES = 9  # Inspected reference; no PDF page parser runs here.
+EXPECTED_MARKDOWN_SHA = "2407d08a08d55ebd79540d0adbd382b1f5f334ecee0e86dc99b3a163f85a5655"
+EXPECTED_BODY_SHA = "2b62fd6dfca9ac3f3e4a3272f86258e782e42aa6aba60c8dc867b446f62a75b7"
+EXPECTED_MATCHED_SVG_SHA = "dd0f9c8197cda333b27ec14ceec7fba0378db66a576a28ac80aca1d1f76e8288"
+EXPECTED_MATCHED_PDF_SHA = "7aea252a79c2b4a904c1afc84c8ca4b678402f2a68654892b04da250dac3ec1c"
 EXPECTED_MAP_SHA = "b579fbbf742c84844519b4ccab85cfb5757a28985308f8496ae5bdacdcc78744"
 EXPECTED_GRAPH_SHA = "11a229b232d7b605fe5ec5e83b4c5c36d50e7fc7dbd79991cd5e5e45c38fe9f0"
 SOURCE_MAP = EVIDENCE + "source-map.json"
@@ -254,6 +275,7 @@ FROZEN_MODULES = [
     }
 ]
 SOURCE_FILES = ARCHIVE_FILES | frozenset({
+    ARCHIVED_MARKDOWN, ARCHIVED_MATCHED_SVG, ARCHIVED_MATCHED_PDF,
     "METHODS.md",
     "audit/evidence/mgw-fixed-world-added-information-2026-09-09/source-map.json",
     "audit/evidence/real-occupancy-sensors-example-2026-09-08.md",
@@ -373,11 +395,29 @@ def read_pinned(snapshot: object, path: Path, pin: object, label: str) -> bytes:
     return raw
 
 
+def verify_citation_projection(archived: bytes, current: bytes) -> None:
+    """Require only the complete fixed citation replacement in the current paper."""
+    require(archived.count(OLD_CITATION) == 1,
+            "historical citation anchor changed")
+    require(archived.replace(OLD_CITATION, CURRENT_CITATION, 1) == current,
+            "current Markdown is not the exact citation correction")
+
+
+def verify_figure_citation_projection(archived: bytes, current: bytes) -> None:
+    """Require the exact complete figure-label substitution over the entire SVG."""
+    require(archived.count(OLD_FIGURE_LABEL) == 1,
+            "historical figure citation anchor changed")
+    require(archived.replace(OLD_FIGURE_LABEL, CURRENT_FIGURE_LABEL, 1) == current,
+            "current SVG is not the exact figure citation correction")
+
+
 def verify_finite_sources(sources: dict[str, bytes], runtime: ModuleType) -> dict:
     """Join frozen paper/archive/module bytes; this never executes or proves Lean."""
     for path, expected, label in (
         (MARKDOWN, EXPECTED_MARKDOWN_SHA, "Markdown"),
         (ASSETS + "body.expected.tex", EXPECTED_BODY_SHA, "body expectation"),
+        (MATCHED_SVG, EXPECTED_MATCHED_SVG_SHA, "matched SVG"),
+        (MATCHED_PDF, EXPECTED_MATCHED_PDF_SHA, "matched PDF"),
         (SOURCE_MAP, EXPECTED_MAP_SHA, "source map"),
         (SOURCE_GRAPH, EXPECTED_GRAPH_SHA, "source graph"),
     ):
@@ -391,7 +431,16 @@ def verify_finite_sources(sources: dict[str, bytes], runtime: ModuleType) -> dic
                 and type(pin["bytes"]) is int and pin["bytes"] >= 0
                 and type(pin["sha256"]) is str and HEX.fullmatch(pin["sha256"]),
                 "malformed finite source-map pin: " + relative)
-        raw = sources[relative_path(relative)]
+        original = relative_path(relative)
+        if original == MARKDOWN:
+            lookup = ARCHIVED_MARKDOWN
+        elif original == MATCHED_SVG:
+            lookup = ARCHIVED_MATCHED_SVG
+        elif original == MATCHED_PDF:
+            lookup = ARCHIVED_MATCHED_PDF
+        else:
+            lookup = original
+        raw = sources[lookup]
         require(len(raw) == pin["bytes"] and sha(raw) == pin["sha256"],
                 "finite archive source-map join changed: " + relative)
     graph = runtime.strict_json(sources[SOURCE_GRAPH])
@@ -403,10 +452,34 @@ def verify_finite_sources(sources: dict[str, bytes], runtime: ModuleType) -> dic
         raw = sources[relative]
         require(len(raw) == item["bytes"] and sha(raw) == item["sha256"],
                 "finite theorem source changed: " + relative)
-    return {"scope": "exact archival source joins only; no kernel, solver or theorem replay",
+    verify_citation_projection(sources[ARCHIVED_MARKDOWN], sources[MARKDOWN])
+    verify_figure_citation_projection(sources[ARCHIVED_MATCHED_SVG], sources[MATCHED_SVG])
+    return {"scope": "exact archival source joins and fixed Markdown/SVG citation projections only; "
+                     "no kernel, solver, theorem replay or acceptance",
             "source_map_entries": len(ARCHIVE_FILES), "project_modules": len(FROZEN_MODULES),
             "markdown_sha256": EXPECTED_MARKDOWN_SHA, "source_map_sha256": EXPECTED_MAP_SHA,
-            "source_graph_sha256": EXPECTED_GRAPH_SHA}
+            "source_graph_sha256": EXPECTED_GRAPH_SHA,
+            "citation_projection": {
+                "status": "exact-single-citation-rewrite",
+                "original_map_key": MARKDOWN,
+                "archive_path": ARCHIVED_MARKDOWN,
+                "archive_sha256": sha(sources[ARCHIVED_MARKDOWN]),
+                "current_path": MARKDOWN,
+                "current_sha256": EXPECTED_MARKDOWN_SHA},
+            "figure_citation_projection": {
+                "status": "exact-single-svg-label-rewrite",
+                "scope": "exact SVG source substitution; PDFs independently pinned; "
+                         "no rendering, visual, mathematical or proof acceptance",
+                "original_svg_map_key": MATCHED_SVG,
+                "archive_svg_path": ARCHIVED_MATCHED_SVG,
+                "archive_svg_sha256": sha(sources[ARCHIVED_MATCHED_SVG]),
+                "current_svg_path": MATCHED_SVG,
+                "current_svg_sha256": EXPECTED_MATCHED_SVG_SHA,
+                "original_pdf_map_key": MATCHED_PDF,
+                "archive_pdf_path": ARCHIVED_MATCHED_PDF,
+                "archive_pdf_sha256": sha(sources[ARCHIVED_MATCHED_PDF]),
+                "current_pdf_path": MATCHED_PDF,
+                "current_pdf_sha256": EXPECTED_MATCHED_PDF_SHA}}
 
 
 def verify_recorder(build: Path, tex_root: Path, profile: dict, snapshot: object) -> None:

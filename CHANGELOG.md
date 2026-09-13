@@ -59,6 +59,16 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Correct the finite MGW matched-comparison citation to Section VI.C in the paper and first
+  figure. Preserve the original Markdown, SVG and figure PDF under explicit archive paths, keep
+  historical input profiles, and bind the reviewed nine-page paper to exact two-build reproduction.
+  The 21 formal targets and public replay-qualification boundary are unchanged.
+
+- Expand the finite target-copy MGW note with model provenance, explicit PID-definition
+  comparisons, signed-cancellation examples and practical interpretation. Preserve its eleven
+  local Lean targets. Repair table flow and searchable identifiers, and bind the reviewed
+  thirteen-page PDF with exact two-build reproduction under the existing input and warning checks.
+
 - Bind mathematical-workflow PDF builds to two exact private Markdown parser profiles, with a
   57-byte nested-parser collection insertion and an explicitly terminated loader marker. The local
   TeX Live 2024 route passes 430 workflow controls, 23 parser source controls in each Python mode,

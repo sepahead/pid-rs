@@ -1,100 +1,126 @@
 # Publication record for the finite target-copy MGW note
 
-This record describes the presentation artifact for
-[`finite-target-copy-mgw-synergy.md`](../../evidence/finite-target-copy-mgw-synergy.md).
-The document concerns only the finite categorical shared-exclusions construction of
-Makkeh, Gutknecht, and Wibral. It does not transfer results to `I_min`, continuous shared
-exclusions, KSG, or another PID.
+The [standalone note](../../evidence/finite-target-copy-mgw-synergy.md) derives
+finite categorical identities for the shared-exclusions PID of Makkeh,
+Gutknecht, and Wibral (MGW). This revision explains the target-copy model's
+provenance, compares named PID definitions on the copy benchmark, and separates
+signed MGW synergy from additional Shannon information. Its eleven local Lean
+targets are unchanged. Scientific priority for the repository derivations has
+not been established.
 
-## Inputs and result
+## Current source and PDF
 
-The Markdown source is 21,432 bytes. Its SHA-256 is
-`17e0cda8aaa48d6009abbdc42b1b17c9e105eb3642925c032fe6166672a90acd`. The figure source is the repository-local SVG at
-[`audit/formal/latex/figures/mgw-target-copy/event-union.svg`](../latex/figures/mgw-target-copy/event-union.svg).
-Its SHA-256 is `280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c`.
-The PDF is [`output/pdf/finite-target-copy-mgw-synergy.pdf`](../../../output/pdf/finite-target-copy-mgw-synergy.pdf).
-The committed PDF is an 11-page A4 document with embedded fonts. Its SHA-256 is
-`83900c3b1fdbdc7d20145d4d9171e6c800b903dc14fa6ad140403c4d45e8f027` and its size is 163,423
-bytes. Recompute it with:
+| Artifact | Bytes | SHA-256 |
+|---|---:|---|
+| [Markdown](../../evidence/finite-target-copy-mgw-synergy.md) | 33,464 | `63c6adeb1f9078213e323ba895057e0e949315df45bd33d46ae6fb9e69714671` |
+| [13-page A4 PDF](../../../output/pdf/finite-target-copy-mgw-synergy.pdf) | 182,631 | `b22f6b079cdbc28af184d2f88fe9a71a4e689e37804017decc15dd06e46f7a58` |
 
-```text
-sha256sum output/pdf/finite-target-copy-mgw-synergy.pdf
-pdfinfo output/pdf/finite-target-copy-mgw-synergy.pdf
-pdffonts output/pdf/finite-target-copy-mgw-synergy.pdf
-```
+The [SVG](../latex/figures/mgw-target-copy/event-union.svg) is unchanged, with
+SHA-256 `280d19e9b63659ebe9aeaba74e09d11476be729a784c612f0a69679e05d3a22c`.
+Its two source-law grids distinguish the source-match OR event from the anchor
+cell. The formula below them shows why the positive target-event and full-key
+masses cancel. The complete joint source law determines target-copy synergy;
+the union mass alone is insufficient.
 
-The presentation uses the repository-local report palette and restrained vector decoration.
-The SVG gives a worked $2\times2$ source-law example, labels the OR event and anchor, and shows
-the cancellation of the positive full-key and target-event masses. Its title says that the
-complete source joint law determines target-copy synergy; the union mass is one factor of the
-formula and is not sufficient by itself.
+The note distinguishes this categorical construction from Williams–Beer
+`I_min`, Harder–Salge–Polani redundancy, BROJA unique information, and Ehrlich
+and coauthors' continuous shared exclusions. The comparison concerns their
+definitions and stated axioms. It is not an estimator-accuracy ranking.
+The practical discussion compares synergy with conditional mutual information
+and measured prediction loss, using explicit model and sampling assumptions.
 
-## Reproduction boundary
+## Exact reproduction
 
-The PDF was generated from the committed Markdown source with Pandoc 3.10.2, the committed
-`audit/formal/latex/mgw-target-copy/filter.lua`, LuaHBTeX from TeX Live 2024, and the repository
-publication style. The build uses the reviewed TeX-tree font bytes,
-`SOURCE_DATE_EPOCH=1789084800`, `-no-shell-escape`, and two LuaLaTeX passes. The predecessor
-was inspected at 150 dpi on all 11 pages, with pages 1, 8, 10 and 11 reviewed at high detail;
-its complete set was also rendered in grayscale and at 300 dpi. The replay-record correction
-changes only page 2 in a same-Poppler 150-dpi comparison. Page 2 was inspected at 150 and
-300 dpi and in grayscale; the other ten page renders match the predecessor exactly.
-The equations, proof table, figure, and source definitions are unchanged. The filter keeps
-the short target-mass introduction with its following display. A compressed-definition trial
-produced ten pages and was rejected by the declared profile; that trial remains retained.
-Searchable text, A4 geometry, embedded fonts, and final build diagnostics were checked.
-The public reproduction command is:
+Two fresh local builds on 13 September 2026 matched the reviewed PDF byte for
+byte. Both retained text extractions were identical: 46,074 bytes. Each PDF has
+13 A4 pages and 24 embedded font entries with Unicode mappings. Both final TeX
+logs passed the warning, missing-character and box-diagnostic checks.
+First-pass cross-reference warnings were retained and resolved by pass two.
+
+Run the public reproduction command with the selected programs on `PATH`:
 
 ```text
 python3 -I -S -B scripts/build-finite-target-copy-mgw-pdf.py --check --tex-root <selected-tex-live-2024-root> --work-dir <new-build-directory>
 ```
 
-The selected programs must be available on `PATH` and match the executable hashes and versions
-in the [input profile](../latex/mgw-target-copy/publication-inputs-v1.json). The builder checks
-six source files, all declared font and selected TeX-file bytes, and six executable files. It
-uses the repository-local [template](../latex/mgw-target-copy/publication.tex), creates two
-fresh build directories, supplies a restricted child environment, retains each command's
-stdout and stderr, rejects nonzero status and unexpected stderr, and checks the final TeX
-logs for named warning, missing-character, and box-overflow diagnostics. Initial first-pass
-cross-reference warnings are resolved by the second pass. Both fresh PDFs must agree, and
-`--check` requires exact equality with the committed PDF. Inputs are rechecked after the builds;
-filesystem stability and the declared installed native runtime remain assumptions.
+The [v4 input profile](../latex/mgw-target-copy/publication-inputs-v4.json) binds
+six document inputs, six executable files and version strings, 231 selected
+TeX files, sixteen font aliases, the source epoch and the exact reference PDF.
+Its SHA-256 is
+`8cc3f3d71fa218539f21b10a07f0e65c0b42c9ff2a8569f33c2b151b4ecf5f46`.
+The selected tools include Pandoc 3.10.2, LuaHBTeX from TeX Live 2024,
+Poppler 26.06.0 and librsvg 2.62.3. The build retains
+`SOURCE_DATE_EPOCH=1789084800`, disables shell escape, and uses a restricted
+child environment and the repository's report styles.
 
-The controller correction at `6f0025795846080ffb78b33d3535e11bf07d1f61` reproduced the
-predecessor PDF. The current source and PDF hashes above identify the subsequent replay-record
-correction. The controller's
-[self-test](../../../scripts/check-finite-target-copy-mgw-pdf-self-test.py) checks input failures,
-existing-directory preservation, diagnostic retention, TeX warning recognition, early
-cross-toolchain refusal, conflicting modes, and eleven aggregate-dispatch mutations. Synthetic
-controller tests do not replace the native two-build check. The aggregate requires an explicit
-`PID_RS_MGW_TARGET_COPY_TEX_ROOT` in exact mode. Cross-toolchain mode refuses with status 2;
-no alternate producer profile has been reviewed.
+The [builder](../../../scripts/build-finite-target-copy-mgw-pdf.py) creates two
+fresh build directories and runs two LuaLaTeX passes per build. It retains each
+command's output, rejects nonzero status and unexpected stderr, checks final
+diagnostics, fonts, A4 geometry, the exact page count and nonempty extracted
+text, then compares both PDFs with the reference. It rechecks the selected
+source, tool, TeX and profile bytes after both builds. Filesystem stability
+and the declared installed native runtime remain assumptions; these byte
+checks do not establish a complete native-loader environment.
 
-The predecessor controller at `1522faa6bc7f9522c5ed8757f6e94fa24ac953e2` discarded tool
-diagnostics, did not verify the claimed producer/font profile, and reused an existing work
-directory. These were controller limitations, not evidence of a false theorem. During repair,
-an unrestricted search for the word `warning` incorrectly matched the `infwarerr` package's
-description. The corrected diagnostic matcher retains that description as a positive control
-while rejecting actual warning headings. A later source review found that bare PDF-backend
-warnings and `LuaHBTeX warning` headings were missing from the matcher. Both now have rejection
-controls; neither occurred in the retained exact-build logs. The review also found that relative
-`PATH` entries could fail after the child changed directory. Selected executable paths now become
-absolute while retaining their invocation names; a subprocess control covers that case.
-The failed build and all prior controller bytes remain
-preserved; no historical run is relabeled as using the corrected controller.
+The [controller self-test](../../../scripts/check-finite-target-copy-mgw-pdf-self-test.py)
+checks input failures, existing-directory preservation, diagnostic retention,
+warning recognition, early cross-toolchain refusal, conflicting modes and
+eleven aggregate-dispatch mutations. Its synthetic checks and the native
+two-build check have separate scopes. The aggregate requires an explicit
+`PID_RS_MGW_TARGET_COPY_TEX_ROOT` in exact mode. Cross-toolchain mode refuses
+with status 2; no alternate producer profile has been reviewed.
 
-This is a bounded presentation record. It is not a hermetic native-loader trace, an
-independent PDF renderer, a proof replay, an independent Lean kernel, a paper-priority claim,
-or evidence of estimator calibration, sensor-selection value, or deployment readiness.
+## Visual review and retained development results
 
-## Formal correspondence
+All thirteen pages were inspected at 90 dpi. Pages 5, 6, 9, 10, 12 and 13 were
+also inspected at 300 dpi and in 150 dpi grayscale. The figure's shaded union
+and inner anchor frame remain distinguishable without color. The formal map
+starts with its heading on page 12 and continues with a repeated header on
+page 13. All eleven theorem identifiers occur once as complete tokens in raw
+and layout text extraction and in the separate pypdf table-page extraction.
 
-The exact source graph, target roster, evidence streams, and same-kernel replay evidence are
-in this directory. [`SOURCE_GRAPH.json`](SOURCE_GRAPH.json) binds 17 source modules and 11
-target reports. [`REPLAY_ACCEPTANCE.json`](REPLAY_ACCEPTANCE.json) records the 18-command
-ledger and the remaining operational evidence gaps. The [correction account](../../evidence/mgw-target-copy-replay-correction-2026-09-12.md)
-retracts the unsupported original full-read claim and preserves the exact predecessor. The recorded
-replay uses the same Lean kernel implementation as the source compilation; it is therefore not
-independent-kernel verification. The written entropy consequences and
-worked examples are marked as written derivations in the Markdown and are not silently counted
-as additional Lean exports.
+The scoped single-PDF navigation check found no action or destination error.
+It used the retained public navigation inventory and office-document anchor
+inventory. It does not establish external URL availability or replace the
+complete publication-link gate. The PDF is not tagged for accessibility, and
+text extraction does not preserve every two-dimensional mathematical layout.
+The visual and record reviews were model reviews with shared tools and inputs;
+they are not human or institutional review.
+
+The first expanded development output had thirteen pages. Its unchanged
+eleven-page guard rejected it. Visual review then found three layout defects:
+an isolated “while” before its display, a formal-map heading separated from
+the table, and identifiers split inside words. The filter now keeps the short
+introduction with its display, permits complete formal-map rows to continue
+across pages, and preserves inline identifiers. The second development output
+corrected those defects but still failed the retained eleven-page guard.
+Only after reviewing that actual output was a new thirteen-page reference
+selected and checked with two fresh builds. Both earlier development failures
+retain their original outcomes.
+
+The predecessor presentation, source and controller are preserved in repository
+history. Its [v1 profile](../latex/mgw-target-copy/publication-inputs-v1.json)
+remains unchanged. Earlier controller failures included discarded diagnostics,
+unchecked producer inputs, reused work directories, a warning matcher that
+mistook a package description for a warning, omitted PDF-backend warning
+headings, and relative executable paths that failed after a directory change.
+The existing causal controls retain those cases. Raw execution records with
+local paths remain in restricted ignored custody; this record does not claim
+that they form a complete public replay package.
+
+## Formal and statistical scope
+
+[SOURCE_GRAPH.json](SOURCE_GRAPH.json) binds the seventeen source modules and
+eleven target reports. [REPLAY_ACCEPTANCE.json](REPLAY_ACCEPTANCE.json) records
+the eighteen-command ledger and remaining operational evidence gaps. The
+[correction account](../../evidence/mgw-target-copy-replay-correction-2026-09-12.md)
+retracts the unsupported original full-read claim and preserves its preimage.
+The retained replay uses the same Lean kernel implementation as source
+compilation. Written entropy consequences and worked examples are identified
+as written derivations rather than additional Lean exports.
+
+This publication revision adds no proof replay, executable-refinement theorem,
+estimator calibration, sensor-selection guarantee or training result. Its exact
+finite-law formulas do not transfer to another PID, to continuous or hyperbolic
+inputs, or to a sampled population without the corresponding assumptions and
+separate evidence.

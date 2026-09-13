@@ -11,6 +11,12 @@ S_1\in A,\qquad S_2\in C,\qquad U\in B,\qquad T=(S_1,U)\in A\times B,
 $$
 
 where $A$, $C$, and $B$ are finite alphabets. No independence or full-support premise is imposed.
+
+The copy direction is from source one into the first coordinate of the target: observing $T$
+reveals $S_1$ exactly, while observing $S_1$ need not reveal the residual $U$. This is a premise
+about the joint law, not a causal claim about how a sensor or target was made. It also does not
+require the target to copy source two; $U=S_2$ is one special case.
+
 For every positive-mass realization with source values $(x,y)$, define
 
 $$
@@ -76,6 +82,37 @@ consequences and examples given only as written derivations. A retrospective aud
 for seventeen source compilations and one same-kernel replay. Complete replay acceptance remains
 open: the original full-read claim is retracted, and the audited packet lacks outer-return and
 separate process-ownership transcripts. Private raw records are omitted from the public repository.
+
+## Why this setting, and where it comes from
+
+Three objects have different roles here: a probability model, a PID definition, and a derivation.
+The model specifies finite observations and the deterministic coordinate relation $T=(S_1,U)$.
+The MGW paper specifies how shared exclusions define information contributions. Equations
+(1)–(4) are this repository's scoped derivation for that model and functional. Choosing a copy
+model does not define a PID, and citing a PID paper does not establish the repository's proof or
+its application value.
+
+The two-bit copy benchmark uses independent fair inputs and $T=(S_1,S_2)$. Harder, Salge, and
+Polani discuss it in their 2012 preprint, Sections II.C and IV.C.1 and Figure 4, before MGW.
+Their comparison asks whether independent inputs supplying different target coordinates should
+count as redundant. This documents earlier use; it attributes neither invention to Wibral or this
+repository nor first priority to Harder and coauthors.
+[Harder–Salge–Polani, version 3](https://arxiv.org/pdf/1207.2080v3#page=8).
+
+Here the target may contain only the copied source, both sources, or another residual observation.
+The ordinary-world construction below assigns a joint mass $w(x,y,u)$ to possible observations
+and then records the source pair and target. It covers dependent as well as independent worlds;
+the fair bits used later are transparent examples, not a hidden assumption of the theorem.
+A physical measurement fits the theorem only if its declared population or empirical law has the
+stated exact copy relation.
+
+The [recorded office example](real-occupancy-sensors-example-2026-09-08.md#why-a-positive-synergy-is-not-a-sensor-selection-verdict)
+motivated the added-information question. It uses aligned light and CO₂ values from timestamped records,
+four training-fitted bins per source, and the original binary occupancy label. In its later
+recording, positive categorical MGW synergy nearly cancels negative unique CO₂ information.
+Those are descriptive values for the fitted categorical empirical law; they are not a claim that
+the occupancy target copies a light bin. The finite copy examples isolate a possible signed
+cancellation mechanism. They neither model that office nor establish a population sensor ranking.
 
 ## The finite law and the global copy premise
 
@@ -424,6 +461,18 @@ makes that latter comparison: target $(A,B)$, baseline $A$, and additions consis
 an independent bit or $B$. Both additions have the same categorical MGW synergy, but only $B$
 adds target information. The two examples address distinct experimental designs.
 
+| Comparison | Held fixed | Changed | Question isolated |
+|---|---|---|---|
+| Residual-target example above | The complete source law $q$ | $U=0$ versus $U=S_2$ in $T=(S_1,U)$ | Can changing target information leave this synergy unchanged? |
+| Fixed-world companion | The world, target $(A,B)$, and baseline source $A$ | Add the independent bit $U$ or the missing target bit $B$ | Can different candidate sources tie in synergy while adding different information? |
+
+The companion's $A,B,U$ are mutually independent fair bits, with $U$ naming the unrelated
+candidate. They are its own variable names, not an independence assumption on the arbitrary
+residual $U$ in the general theorem. Writing $U_C$ for the chosen candidate's unique atom,
+the already derived pairs $(U_C,S)$ are $(-\log(4/3),\log(4/3))$ and
+$(\log 2-\log(4/3),\log(4/3))$. These signed sums distinguish zero added information from $\log 2$ nats
+while the target remains fixed.
+
 The signed two-source reconstruction explains the cancellation. If $U_2$ is source two's unique
 atom and $R$ is redundancy, then
 
@@ -512,6 +561,44 @@ $q_1$ and $q_2$.
 
 ![The complete source joint law determines target-copy synergy. Shading shows the OR event, and the inner frame marks the anchor cell. The two grids use the same joint law; changing the anchor changes its intersection mass and union mass. The lower calculation shows why positive target masses cancel.](../formal/latex/figures/mgw-target-copy/event-union.svg)
 
+## Comparing definitions on the copy benchmark
+
+A common author or the word “synergy” does not identify a single PID functional. The categorical
+MGW construction and the continuous construction of Ehrlich and coauthors, including Wibral,
+have different definitions and support requirements. Other PIDs make different choices again.
+The already specified independent two-bit copy benchmark makes the difference concrete.
+At the all-zero anchor, $T=(S_1,S_2)$ has four equally likely values. The source-match OR retains
+$(0,0)$, $(0,1)$, and $(1,0)$. Knowing that event raises the target-anchor probability from
+$1/4$ to $1/3$, so MGW redundancy is $\log(4/3)$ despite source independence. Harder's identity
+criterion instead requires redundancy for a copied pair to equal the sources' mutual information,
+which is zero here. The constructions ask different questions about what should count as shared
+information. [Harder, Section III.A](https://arxiv.org/pdf/1207.2080v3#page=3).
+
+The table compares definitions on this benchmark, not estimator accuracy or application rankings.
+
+| Definition | What the comparison establishes |
+|---|---|
+| Categorical MGW shared exclusions | The local source event is the inclusive OR of matching source values. For independent fair sources and their copied pair as target, example 1 gives $S=\log(4/3)$. This is one signed atom under that event definition. [MGW, Section II, equations (1)–(3)](https://arxiv.org/pdf/2002.03356v5#page=2). |
+| Williams–Beer $I_{\min}$ | Redundancy averages the minimum, over sources, of the information specific to each target outcome. It is not the minimum of two averaged MIs. Harder's published copy comparison assigns it positive redundancy even for independent inputs. [Williams–Beer, Section III, equations (2)–(3)](https://arxiv.org/pdf/1004.2515v1#page=2); [Harder, Table I](https://arxiv.org/pdf/1207.2080v3#page=10). |
+| Harder–Salge–Polani $I_{\mathrm{red}}$ | For each outcome of one source, the target's conditional distribution is projected onto convex combinations of target distributions conditioned on outcomes of the other source. The redundancy takes the smaller projected-information value from the two source directions. Its independent-copy example consists of unique information from each input, with zero redundancy and synergy. This matches its additional identity requirement. [Section III.B, equations (6), (8), and (11)–(13)](https://arxiv.org/pdf/1207.2080v3#page=4); [Section III.A](https://arxiv.org/pdf/1207.2080v3#page=3); [Figure 4](https://arxiv.org/pdf/1207.2080v3#page=8). |
+| Bertschinger–Rauh–Olbrich–Jost–Ay (BROJA) | Unique information is defined by minimizing CMI over laws with the same two source–target marginals. Its published identity result assigns zero synergy when the target is the source pair. [Section 3 and Proposition 18](https://arxiv.org/pdf/1311.2852v2#page=14). |
+| Ehrlich and coauthors' continuous shared exclusions | Its density-sum functional and nearest-neighbour estimator have separate support and relative-scale assumptions. They are not evaluated by substituting the finite copy masses into a continuous formula. [Definition 2 and Appendix C](https://arxiv.org/html/2311.06373v3#S2.SS2.SSS1). |
+
+These are different axiomatic choices. In categorical MGW, a net atom is the informative atom
+minus the misinformative atom; nonnegativity of the two components does not imply nonnegativity
+of their difference. Harder's additional copy-identity axiom and a requirement of nonnegative
+net atoms are not assumptions of the MGW derivations in this note. Each comparison must state
+which requirement is being tested.
+[MGW, Section IV.A](https://arxiv.org/pdf/2002.03356v5#page=6).
+
+The finite-law comparisons keep the same Shannon information available from the observations
+while assigning it to different atoms. A study that requires independent target coordinates
+to have zero redundancy should state that requirement before choosing its PID.
+A study that asks about the information carried by a particular source-match disjunction may
+instead use MGW's local event construction. Neither choice alone supplies a sensor-selection
+rule. The continuous row identifies a separate object; no categorical-to-continuous equivalence
+or comparative numerical result is claimed here.
+
 ## The CMI complement and practical use
 
 For this categorical MGW two-source decomposition, the reconstruction identities are
@@ -550,6 +637,32 @@ The synergy atom separates one definition-specific part of the increment; it is 
 itself. A positive $S$ can be exactly cancelled by negative $U_2$. This is the correct signed
 interpretation and is the main safeguard for analysis, training, and sensor selection.
 
+MGW's local description asks how learning the source-match OR changes the probability of the
+observed target. Its informative and misinformative components retain contributions from the
+exclusions. An averaged CMI does not display that event description.
+[MGW, Sections II, IV.A and VI.C](https://arxiv.org/pdf/2002.03356v5#page=11).
+
+Decomposing each joint outcome lets an analyst inspect the observations behind an average, as
+the [four-state OR calculation](#comparing-definitions-on-the-copy-benchmark) illustrates.
+Separate informative and misinformative components retain exclusion contributions that their
+net difference can hide. On the interior of a finite joint-probability simplex, MGW's differentiable
+population quantities provide a basis for gradient-based objectives. These capabilities do not
+establish estimator-gradient accuracy or training gains. The exact-copy qualification below and
+the [boundary cases](#boundary-cases-and-nonclaims) still apply.
+[MGW, Sections IV.A–B](https://arxiv.org/pdf/2002.03356v5#page=6),
+[Section V.E.1](https://arxiv.org/pdf/2002.03356v5#page=9).
+
+A negative net unique atom remains an algebraic contribution in this specific decomposition;
+it does not diagnose a defective sensor, deceptive intent, or a harmful causal effect.
+
+If the question is simply how much additional Shannon information a candidate supplies after a
+baseline, CMI is the direct quantity and no PID is needed. If the question is whether a particular
+system makes better decisions, compare its held-out task loss, with a stated target, prediction
+rule, validation design, and acquisition cost. The office example already reports such a bounded
+comparison: adding CO₂ slightly improves later-recording classification accuracy but worsens its
+probability scores. No PID-trained predictor was evaluated there. These outcomes distinguish
+information, decomposition, and achieved predictive performance.
+
 For analysis, equations (1) and (2) provide an exact reference calculation for a declared finite
 law. They can expose which source cells produce large signed-net synergy and can test a future
 implementation after a separate code-to-formal-object mapping is established. Equation (17)
@@ -564,6 +677,15 @@ failure for every learning method with a fixed target. When the objective is add
 information, compare CMI or the complete signed sum $U_2+S$; for an actual trained predictor, also
 measure held-out task loss. A different atom weighting defines a different objective and needs
 its own benefit evidence.
+
+Differentiability also needs a domain. MGW's Section IV.B establishes it on the interior of the
+finite joint-probability simplex. With a nontrivial copied-source alphabet and the unrestricted
+source–target product alphabet, (5) forces structural zero mass on incompatible coordinates.
+The copy law therefore lies on the boundary of that ambient simplex. The interior result cannot
+be transferred to it without another argument.
+Neither smoothness along a chosen fixed-support parameterization nor useful gradients for a
+trained estimator are proved here. Adding noise or positive mass changes the law and may remove
+the exact-copy premise. [MGW, Section IV.B](https://arxiv.org/pdf/2002.03356v5#page=6).
 
 For sensor selection, the formula can diagnose a proposed source grouping, but it does not include
 acquisition cost, failure cost, latency, coverage, causal effect, or learned-predictor error. A
@@ -622,6 +744,27 @@ shared-exclusions construction, including the OR-of-AND source event, the
 informative/misinformative split, the pointwise functional, the lower-cumulative atom relation,
 and joint-law averaging. This note uses natural logarithms and therefore reports nats; bit-valued
 expressions scale by the positive factor $\log 2$.
+
+Malte Harder, Christoph Salge, and Daniel Polani, “A Bivariate Measure of Redundant Information,”
+[arXiv:1207.2080v3](https://arxiv.org/abs/1207.2080v3) (2012).
+Sections II.C, III.A, and IV.C.1 distinguish the copy benchmark, the identity criterion, and their
+projection-based redundancy. Figure 4 and Table I supply the comparisons used here.
+
+Paul L. Williams and Randall D. Beer, “Nonnegative Decomposition of Multivariate Information,”
+[arXiv:1004.2515v1](https://arxiv.org/abs/1004.2515v1) (2010), Section III, equations (2)–(3).
+This is the defining source for $I_{\min}$, a different redundancy functional.
+
+Nils Bertschinger, Johannes Rauh, Eckehard Olbrich, Jürgen Jost, and Nihat Ay, “Quantifying Unique
+Information,” *Entropy* **16**, 2161–2183 (2014),
+[doi:10.3390/e16042161](https://doi.org/10.3390/e16042161),
+[arXiv:1311.2852v2](https://arxiv.org/abs/1311.2852v2), Section 3 and Proposition 18.
+
+David A. Ehrlich and coauthors, “Partial Information Decomposition for Continuous Variables Based
+on Shared Exclusions: Analytical Formulation and Estimation,” *Physical Review E* **110**, 014115
+(2024), [doi:10.1103/PhysRevE.110.014115](https://doi.org/10.1103/PhysRevE.110.014115),
+[arXiv:2311.06373v3](https://arxiv.org/abs/2311.06373v3), Definition 2 and Appendix C.
+This is a separate continuous functional and estimator; the finite target-copy identities do not
+establish its support admission, estimator calibration, or application value.
 
 Claude E. Shannon, “A Mathematical Theory of Communication,” *Bell System Technical Journal*
 **27**, 379–423 and 623–656 (1948), Section 6, item 5 and its entropy addition rule.
