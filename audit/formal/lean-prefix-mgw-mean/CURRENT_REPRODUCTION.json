@@ -1,0 +1,142 @@
+{
+  "controls": {
+    "actual_native_pdf_producers": 0,
+    "cases": 232,
+    "independent_advisory_verification": {
+      "bytes": 11610,
+      "sha256": "958ab5f2758fff03e6737d4d65ed90e1274fb189fcea53e2ca46dc03e374c84b"
+    },
+    "inert_tool_completions": 544,
+    "inert_tool_starts": 548,
+    "intended_producer_timeouts": 4,
+    "outer_modes": [
+      0,
+      1
+    ],
+    "outer_result": {
+      "bytes": 4049,
+      "sha256": "050c228c95538bfdbf518f56534ce9d20a3ea12b82f5e4ce3e7f88d831e566d2"
+    },
+    "root_verification": {
+      "bytes": 1115,
+      "sha256": "823d3f6a5e216213dfd83524f64cc714c6bb5d8f6128fd195bcb3c71cb7203fd"
+    }
+  },
+  "limits": [
+    "No new theorem, Rust refinement, calibration or application evidence.",
+    "No Linux or alternate-toolchain PDF equivalence.",
+    "No fresh raster review; raw equality retains the earlier visual review scope.",
+    "Original 1800-second outer deadline; bounded sampled group RSS and aggregate disk observations are not hard quotas or atomic process coverage.",
+    "Full repository aggregate and exact-commit hosted results are separate obligations."
+  ],
+  "observed_date": "2026-09-12",
+  "production": {
+    "completed_utc": "2026-09-12T11:49:02.693480+00:00",
+    "direct_builder_commands": 20,
+    "elapsed_seconds": 30.922790208132938,
+    "fresh_pdfs": 4,
+    "inner_results": [
+      {
+        "label": "mean-0",
+        "result_sha256": "53df30de76755486a9570becd7215bd1613af7a6aaa7b8cbfe47855344266f09"
+      },
+      {
+        "label": "mean-1",
+        "result_sha256": "bcff126fefb0e269543daea76a41eb63c50fae4fa61b9b3b36c76bd35379e616"
+      }
+    ],
+    "outer_invocations": 2,
+    "outer_modes": [
+      0,
+      1
+    ],
+    "outer_result": {
+      "bytes": 3990,
+      "sha256": "8fe7ff58af607ef98ab8a5d38e6acd1205c07274eacb4ffe74f4813181435e60"
+    },
+    "pdf": {
+      "bytes": 165475,
+      "pages": 9,
+      "path": "output/pdf/prefix-mgw-mean.pdf",
+      "sha256": "93ff18e21f56e4770b12b7405d57b003bf7839cef5c4207ed98a56cd6f96f58f"
+    },
+    "raw_command_streams_reviewed": 44,
+    "reference_relation": "all_four_raw_byte_identical",
+    "root_verification": {
+      "bytes": 902,
+      "sha256": "e04f82600c69653e21b1643c49fbe88d99d59248de80d0cd8b92c347c5493d08"
+    },
+    "started_utc": "2026-09-12T11:48:31.770243+00:00"
+  },
+  "public_input_bindings": [
+    {
+      "bytes": 4051,
+      "path": "audit/formal/latex/pid-rs-report-tables.sty",
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    {
+      "bytes": 8607,
+      "path": "audit/formal/latex/pid-rs-workflow-publication.sty",
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    {
+      "bytes": 20006,
+      "path": "audit/formal/latex/prefix-mgw-mean/body.expected.md",
+      "sha256": "69a771ed38f22e3164edda147adecb9410f0c0c6425daa040e435fb4572f950a"
+    },
+    {
+      "bytes": 22118,
+      "path": "audit/formal/latex/prefix-mgw-mean/body.expected.tex",
+      "sha256": "ed7dc45e5a466185905bae980ee8f77ef0c270ebeb94dc8ffefc5ad51d21082f"
+    },
+    {
+      "bytes": 1994,
+      "path": "audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex",
+      "sha256": "6e424afa695907ad3042d60fb0a45424375efce76b3d62eb58e7ace75496e6f1"
+    },
+    {
+      "bytes": 2962,
+      "path": "audit/formal/latex/prefix-mgw-mean/publication-inputs-v1.json",
+      "sha256": "6f181dcb87d6398075a568ce0156df17081ea14fe68305f7b267f819c2a59ffa"
+    },
+    {
+      "bytes": 67407,
+      "path": "audit/formal/latex/prefix-mgw-mean/retained-rank.pdf",
+      "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894"
+    },
+    {
+      "bytes": 19968,
+      "path": "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md",
+      "sha256": "d20b5736108f73a4491fe990518482cc2cbd6c9e2b06b61297cdde970114c98f"
+    },
+    {
+      "bytes": 27277,
+      "path": "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py",
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    {
+      "bytes": 4656,
+      "path": "audit/formal/lean-prefix-mgw-mean/retained-rank.svg",
+      "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd"
+    },
+    {
+      "bytes": 165475,
+      "path": "output/pdf/prefix-mgw-mean.pdf",
+      "sha256": "93ff18e21f56e4770b12b7405d57b003bf7839cef5c4207ed98a56cd6f96f58f"
+    },
+    {
+      "bytes": 14269,
+      "path": "scripts/build-prefix-mgw-mean-pdf.py",
+      "sha256": "f21f065eee8fd4a77c373445d858430fc4fd968f2c2b63d983c948d8a1e6fac0"
+    },
+    {
+      "bytes": 2417,
+      "path": "scripts/check-formal-pdf-log.sh",
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  ],
+  "retention": "Raw execution records are retained in local project custody. This projection exposes no private locator and does not claim public raw-receipt retrieval or off-host custody.",
+  "schema": "pid-rs/mean-pdf-current-local-reproduction-v1",
+  "scope": "Corrected nine-page mean paper; no new Lean theorem or hosted replay.",
+  "status": "local_controls_and_exact_pdf_reproduction_verified"
+}

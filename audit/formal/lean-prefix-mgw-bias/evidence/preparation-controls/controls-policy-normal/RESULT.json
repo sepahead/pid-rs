@@ -1,0 +1,365 @@
+{
+  "case_count": 57,
+  "cases": [
+    {
+      "expected_parser_acceptance": true,
+      "name": "record-roster-five-with-two-universe-fiber",
+      "observed_parser_acceptance": true,
+      "rejection": null
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-theorem-1",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-raw_target-2",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-alias_target-3",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-status-4",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-universes-5",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-universes-6",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-axioms-7",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic axiom policy differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-actual_finite_bias-full_elaborated_type-8",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: elaborated type is absent"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-theorem-9",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-raw_target-10",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-alias_target-11",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-status-12",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-universes-13",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-universes-14",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-axioms-15",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic axiom policy differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-fiber_inverse_moment-full_elaborated_type-16",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: elaborated type is absent"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-theorem-17",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-raw_target-18",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-alias_target-19",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-status-20",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-universes-21",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-universes-22",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-axioms-23",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic axiom policy differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-support_moment_bounds-full_elaborated_type-24",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: elaborated type is absent"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-theorem-25",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-raw_target-26",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-alias_target-27",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-status-28",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-universes-29",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-universes-30",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-axioms-31",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic axiom policy differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-projected_support_bias-full_elaborated_type-32",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: elaborated type is absent"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-theorem-33",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-raw_target-34",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-alias_target-35",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-status-36",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-universes-37",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-universes-38",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic universes differ"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-axioms-39",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic axiom policy differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-mass_floor_bias-full_elaborated_type-40",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: elaborated type is absent"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-extra-row",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record count differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-missing-row",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record count differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-reordered",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: semantic record identity differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "record-duplicate-json-key",
+      "observed_parser_acceptance": false,
+      "rejection": "JudgeError: duplicate JSON key: status"
+    },
+    {
+      "expected_parser_acceptance": true,
+      "name": "grammar-only-True-skeleton-semantic-judge-still-required",
+      "observed_parser_acceptance": true,
+      "rejection": null
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-import",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: candidate import roster differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-axiom",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: candidate contains prohibited code"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-sorry",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: candidate contains prohibited code"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-native-decide",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: candidate contains prohibited code"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-meta-command",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: candidate contains prohibited code"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-missing-export",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: public theorem source roster differs"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-public-body",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: public theorem must be a direct private proof alias"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-extra-definition",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: candidate contains prohibited code"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-mode-type-0",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: source policy mode must be Boolean"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-mode-type-1",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: source policy mode must be Boolean"
+    },
+    {
+      "expected_parser_acceptance": false,
+      "name": "source-mode-type-2",
+      "observed_parser_acceptance": false,
+      "rejection": "RuntimeError: source policy modes conflict"
+    }
+  ],
+  "inputs": {
+    "historical-project/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "historical-project/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "new_lean_children": 0,
+  "new_proofs": 0,
+  "policy_sha256": "302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0",
+  "python_optimization": 0,
+  "recorded_utc": "2026-09-08T08:43:15.571991+00:00",
+  "scope": "Synthetic source grammar and JSON parser controls only. No Lean child, theorem type, semantic theorem record, candidate proof or kernel acceptance was produced. The True grammar fixture intentionally demonstrates that the source filter alone does not validate theorem types.",
+  "self_sha256": "8d8c7796054470dabe6472d188121ec84c7dd906a30715c871b22d25a7f8a553",
+  "status": "all_causal_parser_controls_passed"
+}

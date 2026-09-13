@@ -1,0 +1,606 @@
+{
+  "schema": "pid-rs/bias-historical-portable-replay-public-projection-v1",
+  "record_kind": "public_projection_of_retained_private_historical_evidence_not_raw_receipt",
+  "status": "historical_local_portable_replay_and_controls_accepted_with_explicit_limits",
+  "projected_date": "2026-09-12",
+  "historical_result": {
+    "accepted_utc": "2026-09-08T17:15:14.715248+00:00",
+    "scope": "Packaging replay of five previously accepted finite-prefix MGW bias exports with inherited MGW, prefix-probability, and mean target records.",
+    "production_interval_utc": {
+      "started": "2026-09-08T16:40:21.065992+00:00",
+      "supervisor_completed": "2026-09-08T16:58:35.937133+00:00",
+      "outer_process_completed": "2026-09-08T16:58:35.985670+00:00",
+      "registered_deadline": "2026-09-08T18:40:21.065992+00:00",
+      "deadline_is_hard_real_time": false
+    },
+    "positive_replays": 4,
+    "causal_wrong_last_rejections": 1,
+    "new_bias_theorems_proved": 0,
+    "historical_public_integration": false,
+    "historical_hosted_acceptance": false
+  },
+  "current_package_assembly_observation": {
+    "observation_kind": "current_package_relative_hash_and_roster_check_not_execution_receipt",
+    "observation_scope": "2026-09-12 source-correspondence check performed while preparing this historical projection",
+    "observed_date": "2026-09-12",
+    "accepted_input_manifest": {
+      "path": "replay-proposed-v1.json",
+      "bytes": 6390,
+      "sha256": "6783dffce953c0e6dd812658af049770b2e63889807acb34f11c75eb4d577b10",
+      "input_files": 43,
+      "lean_source_modules": 30,
+      "retained_status": "source_only_proposal_not_invoked_or_execution_adopted"
+    },
+    "relative_source_bindings": [
+      {
+        "path": "replay-proposed.py",
+        "bytes": 24746,
+        "sha256": "127ffdc88b8174bdf8ab2b1027510faf4dd6516c6c01e6fea988866825e5868b",
+        "role": "portable replay adapter"
+      },
+      {
+        "path": "sources/PidPrefixMgwBias/Candidate.lean",
+        "bytes": 34113,
+        "sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+        "role": "selected candidate"
+      },
+      {
+        "path": "controls/Candidate.cosmetic.lean",
+        "bytes": 34162,
+        "sha256": "ac65476b7a101d344fff4fe0f4a9370ef7438b83e63d3854883e205c5ee33481",
+        "role": "cosmetic source control"
+      },
+      {
+        "path": "controls/Candidate.wrong-last.lean.txt",
+        "bytes": 34079,
+        "sha256": "cb1d67ad0b21a28ba928b0ec690181c00f1c43a730467d5d6f305c49f1c9f50d",
+        "role": "wrong-last causal control"
+      },
+      {
+        "path": "replay-support/EXPECTED_BIAS_RECORDS.json",
+        "bytes": 2353,
+        "sha256": "60367746bd7ff88176924dd34f60e300166c5c95ffd5a66aede9fd6454728504",
+        "role": "five exact bias target records"
+      },
+      {
+        "path": "replay-support/ACCEPTED_DEPENDENCY_RECORDS.json",
+        "bytes": 10676,
+        "sha256": "74a27f0c5f7be2f19b5d58f074bb319fbb46273754e007f15a880095bd3db54b",
+        "role": "eleven MGW, six prefix-probability, and three mean target records"
+      }
+    ],
+    "all_43_manifest_files_match": true,
+    "all_43_files_byte_identical_to_the_historical_portable_source_layer": true,
+    "accepted_proof_inputs_changed": 0,
+    "candidate_code_imported_or_executed_for_this_observation": false,
+    "lean_or_kernel_run_for_this_observation": false,
+    "native_or_pdf_run_for_this_observation": false,
+    "hosted_run_for_this_observation": false
+  },
+  "historical_attempts": [
+    {
+      "attempt_id": "attempt-001",
+      "private_locator_id": "attempt-001-result",
+      "source": "sources/PidPrefixMgwBias/Candidate.lean",
+      "python_optimization": 0,
+      "action": "check",
+      "registered_utc": "2026-09-08T16:40:21.154940+00:00",
+      "completed_utc": "2026-09-08T16:44:52.944375+00:00",
+      "status": "fresh_semantic_kernel_pass",
+      "receipt_sha256": "251673d7be66a8cb037793ef561da78f358b6ec6cf2f699bb5fadf5259c09b0d",
+      "command_records": 32,
+      "compiler_or_kernel_commands": 31,
+      "tool_version_probes": 1,
+      "fresh_kernel_commands": 1,
+      "semantic_records": {
+        "mgw": 11,
+        "prefix_probability": 6,
+        "mean": 3,
+        "bias": 5
+      },
+      "terminal_condition": "five exact bias records followed by leanchecker --fresh BiasCandidateRoot with integer returncode 0"
+    },
+    {
+      "attempt_id": "attempt-002",
+      "private_locator_id": "attempt-002-result",
+      "source": "sources/PidPrefixMgwBias/Candidate.lean",
+      "python_optimization": 1,
+      "action": "check",
+      "registered_utc": "2026-09-08T16:44:53.040680+00:00",
+      "completed_utc": "2026-09-08T16:49:15.890687+00:00",
+      "status": "fresh_semantic_kernel_pass",
+      "receipt_sha256": "be7c98996b92b60d83e4b13c60407c7f421b1dbc760f99f7e0b1866b9b3d59ee",
+      "command_records": 32,
+      "compiler_or_kernel_commands": 31,
+      "tool_version_probes": 1,
+      "fresh_kernel_commands": 1,
+      "semantic_records": {
+        "mgw": 11,
+        "prefix_probability": 6,
+        "mean": 3,
+        "bias": 5
+      },
+      "terminal_condition": "five exact bias records followed by leanchecker --fresh BiasCandidateRoot with integer returncode 0"
+    },
+    {
+      "attempt_id": "attempt-003",
+      "private_locator_id": "attempt-003-result",
+      "source": "controls/Candidate.cosmetic.lean",
+      "python_optimization": 0,
+      "action": "check",
+      "registered_utc": "2026-09-08T16:49:15.969394+00:00",
+      "completed_utc": "2026-09-08T16:53:36.844513+00:00",
+      "status": "fresh_semantic_kernel_pass",
+      "receipt_sha256": "026e3b1c975126e26c068797ff2f59702559563408fe081656829d349d821fd9",
+      "command_records": 32,
+      "compiler_or_kernel_commands": 31,
+      "tool_version_probes": 1,
+      "fresh_kernel_commands": 1,
+      "semantic_records": {
+        "mgw": 11,
+        "prefix_probability": 6,
+        "mean": 3,
+        "bias": 5
+      },
+      "terminal_condition": "five exact bias records followed by leanchecker --fresh BiasCandidateRoot with integer returncode 0"
+    },
+    {
+      "attempt_id": "attempt-004",
+      "private_locator_id": "attempt-004-result",
+      "source": "controls/Candidate.cosmetic.lean",
+      "python_optimization": 1,
+      "action": "check",
+      "registered_utc": "2026-09-08T16:53:36.940424+00:00",
+      "completed_utc": "2026-09-08T16:57:51.924119+00:00",
+      "status": "fresh_semantic_kernel_pass",
+      "receipt_sha256": "d6a6fbef668c796880aee4ec6add02fc9f715820d5d9ee21a7ab184f85df6bfa",
+      "command_records": 32,
+      "compiler_or_kernel_commands": 31,
+      "tool_version_probes": 1,
+      "fresh_kernel_commands": 1,
+      "semantic_records": {
+        "mgw": 11,
+        "prefix_probability": 6,
+        "mean": 3,
+        "bias": 5
+      },
+      "terminal_condition": "five exact bias records followed by leanchecker --fresh BiasCandidateRoot with integer returncode 0"
+    },
+    {
+      "attempt_id": "attempt-005",
+      "private_locator_id": "attempt-005-result",
+      "source": "sources/PidPrefixMgwBias/Candidate.lean",
+      "executed_mutation": "controls/Candidate.wrong-last.lean.txt",
+      "python_optimization": 0,
+      "action": "wrong-last-target",
+      "registered_utc": "2026-09-08T16:57:51.998062+00:00",
+      "completed_utc": "2026-09-08T16:58:35.910356+00:00",
+      "status": "expected_target_rejection",
+      "receipt_sha256": "4ffa5c37c6aa19ea6a99ae5f695145390760e2745bc3cf6d539b0a112a20b11e",
+      "command_records": 30,
+      "compiler_or_kernel_commands": 29,
+      "tool_version_probes": 1,
+      "fresh_kernel_commands": 0,
+      "semantic_records": {
+        "mgw": 11,
+        "prefix_probability": 6,
+        "mean": 3,
+        "bias_accepted_prefix": 4
+      },
+      "terminal_condition": "bias semantic judge returned integer 1 after four exact records; mass_floor_bias had type True instead of both frozen targets; no root compile or fresh kernel"
+    }
+  ],
+  "historical_command_stream_and_target_observation": {
+    "observation_kind": "projection_summary_derived_from_retained_raw_receipts",
+    "attempts": 5,
+    "command_records": 158,
+    "compiler_or_kernel_commands": 153,
+    "tool_version_probes": 5,
+    "fresh_kernel_commands": 4,
+    "semantic_records_including_negative_prefix": 124,
+    "artifact_records_rehashed": 1379,
+    "input_records_rehashed": 572,
+    "unique_retained_input_paths_rehashed": 356,
+    "lean_version_observation": {
+      "text": "Lean (version 4.33.0, arm64-apple-darwin24.6.0, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+      "stdout_bytes": 106,
+      "stdout_sha256": "328b78e438553509f9760b1f71680473cb11be77077f0ab10ac92cd3e01d37db"
+    },
+    "stable_semantic_stdout": {
+      "mgw_11_records": "3feda996f3c9d84eb2dd8b4f29f1ce46faa57687f80479942625104e9b06caa8",
+      "prefix_probability_6_records": "3973534a927f9d5a913dbdd45485cc4455188c0c72665f0c48ea01a3ca8864ae",
+      "mean_3_records": "d5b1a6407db9b15013d1a8d60226286895fa95241625db512af65988d937d224",
+      "positive_bias_5_records": "bc6478e16ac1e2e853f32abcfd825ba7b54ac21de32de0cea264da53679f59a2",
+      "wrong_last_bias_prefix_and_diagnostic": "bb44cbc34127f012c1924fa37e6cee16e220cd83a3cc6af19961fffb0302b87e"
+    },
+    "all_recorded_stderr_empty": true,
+    "fresh_kernel_stdout_and_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outer_process_returncode": 0,
+    "outer_process_stdout_and_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sampled_process_observations": {
+      "wrapper_sample_counts": [
+        907,
+        1456,
+        1202,
+        1492,
+        173
+      ],
+      "known_process_identities": 5042,
+      "observations_are_atomic": false,
+      "process_attestation": false
+    }
+  },
+  "historical_controls": {
+    "controls_acceptance_sha256": "784079800a4bc66c296808867eb7ea01a5bf9395c60dea34cfa5c8ac305e9afe",
+    "scope": "Finite source-bound synthetic adapter controls, inert supervisor/runtime controls, and retrospective typed/byte closeout; no Lean or theorem execution credit.",
+    "original_results": [
+      {
+        "private_locator_id": "controls-adapter-normal-result",
+        "family": "adapter",
+        "python_optimization": 0,
+        "records": 214,
+        "result_sha256": "c0a6809673c4e260fe52b3e04c77bf8cacea59e99be93ebc9fa986ffd79c33b5"
+      },
+      {
+        "private_locator_id": "controls-adapter-optimized-result",
+        "family": "adapter",
+        "python_optimization": 1,
+        "records": 214,
+        "result_sha256": "761051842f5a4b2e7e1a002fe3ba7fa13d7f2576e5579e9881aa8224ebafb60f"
+      },
+      {
+        "private_locator_id": "controls-supervisor-normal-result",
+        "family": "supervisor",
+        "python_optimization": 0,
+        "records": 24,
+        "result_sha256": "607613ab09a83152f95d0f11a224b7fa6ef7d857f087cc2ee5ef5d6f85d8098e"
+      },
+      {
+        "private_locator_id": "controls-supervisor-optimized-result",
+        "family": "supervisor",
+        "python_optimization": 1,
+        "records": 24,
+        "result_sha256": "b4fb2fa7dfb259b06649c07d085563ccb88547b25021130a7df0ee19ff3042e1"
+      }
+    ],
+    "closeout": {
+      "normal_and_optimized_baseline_outputs_byte_identical": true,
+      "baseline_stdout_bytes_per_mode": 22995671,
+      "baseline_stdout_sha256": "8807c0de7dedc795c0e4a466f94390399f3eef8bb63c94b4816692024ea1320f",
+      "retained_artifact_entries_rehashed": 63010,
+      "strict_records_rehashed": 7936,
+      "normal_and_optimized_finite_control_outputs_byte_identical": true,
+      "finite_control_stdout_bytes_per_mode": 5683,
+      "finite_control_stdout_sha256": "b3138d051346c7a69b4e09390a33eccbfcaf455514dec4e8fd9deff11e95b012",
+      "cases_per_mode": 40,
+      "expected_rejections_per_mode": 36,
+      "expected_acceptances_per_mode": 4,
+      "decoded_in_memory_integration_faults_per_mode": 6,
+      "actual_read_only_baselines_per_mode": 1
+    },
+    "historical_per_supervisor_returncode_gap": {
+      "status": "unrepaired",
+      "original_owner_receipts": 4,
+      "original_owner_receipts_with_terminal_observed": 4,
+      "original_owner_receipts_with_returncode_field": 0,
+      "later_aggregate_stop_record_claims_all_four_returncodes_zero": true,
+      "later_closeout_owner_receipts_have_their_own_returncodes": true,
+      "interpretation": "Neither later layer retroactively supplies a per-supervisor returncode field in the four original owner receipts."
+    }
+  },
+  "preserved_negative_evidence": [
+    {
+      "kind": "causal_wrong_last_target_rejection",
+      "private_locator_ids": [
+        "attempt-005-result",
+        "attempt-005-negative-stdout"
+      ],
+      "status": "load_bearing_and_retained"
+    },
+    {
+      "kind": "original_control_owner_returncode_gap",
+      "private_locator_ids": [
+        "controls-original-owner-o01",
+        "controls-original-owner-o02",
+        "controls-original-owner-o03",
+        "controls-original-owner-o04",
+        "controls-original-stopped"
+      ],
+      "status": "unrepaired_and_retained"
+    },
+    {
+      "kind": "two_root_review_inspection_mistakes",
+      "private_locator_ids": [
+        "controls-original-review-o01"
+      ],
+      "status": "an unmatched-parenthesis command launched no child; an initial search had incomplete scope; corrected read-only inspection did not rerun the harness"
+    },
+    {
+      "kind": "supervisor_control_failure_cases",
+      "private_locator_ids": [
+        "controls-original-review-o03",
+        "controls-original-review-o04"
+      ],
+      "status": "expected finite failure cases retained"
+    },
+    {
+      "kind": "rejected_final_snapshot_assumption",
+      "private_locator_ids": [
+        "independent-review-strict-observations"
+      ],
+      "status": "five findings retained as a rejected review assumption; terminal observed_survivors fields are the source-backed post-wait observations"
+    }
+  ],
+  "relation_to_existing_package_history": {
+    "RUN_INDEX.json": "The existing ten-run original proof-campaign index remains unchanged. This later portable packaging replay does not renumber, replace, or reclassify those runs.",
+    "RESULTS.md": "The original proof-campaign account remains unchanged.",
+    "replay-proposed-v1.json": "The exact 43-input source manifest remains unchanged; this separate record projects a later historical local execution and acceptance.",
+    "proof_credit": "No proof input changes and zero new theorem credit."
+  },
+  "private_evidence_custody": {
+    "availability": "retained_outside_the_public_package",
+    "public_raw_receipt_copies": 0,
+    "public_path_disclosure": "opaque_locator_ids_only",
+    "access_boundary": "The object bindings include raw receipts, manifests, observations, and review dispositions. The public package alone cannot open or independently rehash them. Comparison requires separately authorized access to the retained private custody set. Hashes identify bytes; they do not authenticate who created them.",
+    "object_bindings": [
+      {
+        "locator_id": "production-final-manifest",
+        "bytes": 355291,
+        "sha256": "d63bd9cb3b49a11f0f4aa8600726cf46039a1d8b393361d002e60bf24dbc93df",
+        "role": "manifest for 1,537 frozen production members"
+      },
+      {
+        "locator_id": "stage-registration",
+        "bytes": 696,
+        "sha256": "285aa5c44ace8ed64299688904209d3e567713866696550b45111e48670dd1ca",
+        "role": "finite five-wrapper production registration"
+      },
+      {
+        "locator_id": "stage-attempt-ledger",
+        "bytes": 121209,
+        "sha256": "103cfa63ca4f39dc945af0e0140538d4e4e738f10ae1144bc8604873bb4b790c",
+        "role": "five attempts and 158 registered command children"
+      },
+      {
+        "locator_id": "attempt-001-result",
+        "bytes": 167123,
+        "sha256": "251673d7be66a8cb037793ef561da78f358b6ec6cf2f699bb5fadf5259c09b0d",
+        "role": "selected normal positive receipt"
+      },
+      {
+        "locator_id": "attempt-002-result",
+        "bytes": 167278,
+        "sha256": "be7c98996b92b60d83e4b13c60407c7f421b1dbc760f99f7e0b1866b9b3d59ee",
+        "role": "selected optimized positive receipt"
+      },
+      {
+        "locator_id": "attempt-003-result",
+        "bytes": 167273,
+        "sha256": "026e3b1c975126e26c068797ff2f59702559563408fe081656829d349d821fd9",
+        "role": "cosmetic normal positive receipt"
+      },
+      {
+        "locator_id": "attempt-004-result",
+        "bytes": 167278,
+        "sha256": "d6a6fbef668c796880aee4ec6add02fc9f715820d5d9ee21a7ab184f85df6bfa",
+        "role": "cosmetic optimized positive receipt"
+      },
+      {
+        "locator_id": "attempt-005-result",
+        "bytes": 161916,
+        "sha256": "4ffa5c37c6aa19ea6a99ae5f695145390760e2745bc3cf6d539b0a112a20b11e",
+        "role": "wrong-last causal rejection receipt"
+      },
+      {
+        "locator_id": "attempt-005-negative-stdout",
+        "bytes": 2627,
+        "sha256": "bb44cbc34127f012c1924fa37e6cee16e220cd83a3cc6af19961fffb0302b87e",
+        "role": "complete wrong-last target diagnostic"
+      },
+      {
+        "locator_id": "production-supervisor-result",
+        "bytes": 229239,
+        "sha256": "c33ba56cf9827881ff6ceea11a1714bedea65cfe43cd92ff640e48407ce5d6d3",
+        "role": "complete five-wrapper supervisor receipt"
+      },
+      {
+        "locator_id": "production-owner-result",
+        "bytes": 1499,
+        "sha256": "5548f68af0f94b6cefb94a6cc44593b73c4d300eba61fddab05df9fefb37dede",
+        "role": "outer terminal/clock/stream receipt"
+      },
+      {
+        "locator_id": "adoption-acceptance",
+        "bytes": 1451,
+        "sha256": "4edda32094e6b2a93084a57793faef8392bb73f4944005bb8e18ccfdf07c4426",
+        "role": "historical root acceptance disposition"
+      },
+      {
+        "locator_id": "adoption-review",
+        "bytes": 2290,
+        "sha256": "f7d18e1dde64dd8c72ae27a0c869f12c3e1186e8cfd07a5c66d02a1fbc2723db",
+        "role": "historical root acceptance rationale and limits"
+      },
+      {
+        "locator_id": "adoption-byte-observation",
+        "bytes": 4029,
+        "sha256": "eafe9b5b04c03b65f0e76484bb7165484b4641c4027ac8ad3f998b21bd2b9c56",
+        "role": "root artifact/input observation"
+      },
+      {
+        "locator_id": "adoption-receipt-observation",
+        "bytes": 3035,
+        "sha256": "a7bde3d129b0a9f1cdd11eeb9aa1649b60d08d4911efde9fb7e75cadae2a6abe",
+        "role": "root command/target receipt observation"
+      },
+      {
+        "locator_id": "adoption-process-observation",
+        "bytes": 4508,
+        "sha256": "c209a493ef8f48f20218404eea98c044e218b16f0df532f6e8702762b144f344",
+        "role": "root sampled lifecycle observation"
+      },
+      {
+        "locator_id": "adoption-final-manifest",
+        "bytes": 1076,
+        "sha256": "f6d5dece855145a46ae27cebed370cb9640986154d38d642fc66f4942f3b45e1",
+        "role": "historical adoption-object manifest"
+      },
+      {
+        "locator_id": "independent-review-final-manifest",
+        "bytes": 1948,
+        "sha256": "3effe3eed7ccef3e7138b130abddc8f4d0192da139d2691107f949290fa423f9",
+        "role": "manifest for eleven independent review records"
+      },
+      {
+        "locator_id": "independent-review-strict-observations",
+        "bytes": 8159,
+        "sha256": "1ec0769be18f79ff71270562fbc422d73ff0a1652b2b3f1e20ec0368148dd000",
+        "role": "includes five rejected final-snapshot assumptions"
+      },
+      {
+        "locator_id": "controls-acceptance",
+        "bytes": 4707,
+        "sha256": "784079800a4bc66c296808867eb7ea01a5bf9395c60dea34cfa5c8ac305e9afe",
+        "role": "historical finite control disposition and returncode gap"
+      },
+      {
+        "locator_id": "controls-closeout-final-manifest",
+        "bytes": 3263,
+        "sha256": "e7edf0408cadab6cd152f2042353779f96b7c76f53c9fcd475e86363415c7785",
+        "role": "manifest for 23 closeout members"
+      },
+      {
+        "locator_id": "controls-closeout-baseline-normal",
+        "bytes": 22995671,
+        "sha256": "8807c0de7dedc795c0e4a466f94390399f3eef8bb63c94b4816692024ea1320f",
+        "role": "normal retrospective byte/typed baseline"
+      },
+      {
+        "locator_id": "controls-closeout-finite-normal",
+        "bytes": 5683,
+        "sha256": "b3138d051346c7a69b4e09390a33eccbfcaf455514dec4e8fd9deff11e95b012",
+        "role": "normal finite closeout controls"
+      },
+      {
+        "locator_id": "controls-adapter-normal-result",
+        "bytes": 87443,
+        "sha256": "c0a6809673c4e260fe52b3e04c77bf8cacea59e99be93ebc9fa986ffd79c33b5",
+        "role": "214 normal adapter-control records"
+      },
+      {
+        "locator_id": "controls-adapter-optimized-result",
+        "bytes": 87443,
+        "sha256": "761051842f5a4b2e7e1a002fe3ba7fa13d7f2576e5579e9881aa8224ebafb60f",
+        "role": "214 optimized adapter-control records"
+      },
+      {
+        "locator_id": "controls-supervisor-normal-result",
+        "bytes": 4787,
+        "sha256": "607613ab09a83152f95d0f11a224b7fa6ef7d857f087cc2ee5ef5d6f85d8098e",
+        "role": "24 normal supervisor-control records"
+      },
+      {
+        "locator_id": "controls-supervisor-optimized-result",
+        "bytes": 4787,
+        "sha256": "b4fb2fa7dfb259b06649c07d085563ccb88547b25021130a7df0ee19ff3042e1",
+        "role": "24 optimized supervisor-control records"
+      },
+      {
+        "locator_id": "controls-original-owner-o01",
+        "bytes": 83,
+        "sha256": "b9a1a7e3eda754da2f12a1f0f3140fc607fea96df1f386a833f24c25429e98b8",
+        "role": "original adapter-normal terminal observation without returncode"
+      },
+      {
+        "locator_id": "controls-original-owner-o02",
+        "bytes": 83,
+        "sha256": "e5ecb25c749cdd3686056e27bf2ba5b1d6716cb339ddb9fbc283b421e27b03ec",
+        "role": "original adapter-optimized terminal observation without returncode"
+      },
+      {
+        "locator_id": "controls-original-owner-o03",
+        "bytes": 83,
+        "sha256": "e5ecb25c749cdd3686056e27bf2ba5b1d6716cb339ddb9fbc283b421e27b03ec",
+        "role": "original supervisor-normal terminal observation without returncode"
+      },
+      {
+        "locator_id": "controls-original-owner-o04",
+        "bytes": 83,
+        "sha256": "e5ecb25c749cdd3686056e27bf2ba5b1d6716cb339ddb9fbc283b421e27b03ec",
+        "role": "original supervisor-optimized terminal observation without returncode"
+      },
+      {
+        "locator_id": "controls-original-review-o01",
+        "bytes": 709,
+        "sha256": "8fe388da46448ee9749f209936bdcc26240472f24a1b1fddf5c81157007bc23e",
+        "role": "retains two root-review inspection mistakes"
+      },
+      {
+        "locator_id": "controls-original-review-o03",
+        "bytes": 29909,
+        "sha256": "e54ba8799242f52ffff7dcd139936f71f3f0e91ce984a942ed9f7c7b8254aa2d",
+        "role": "normal supervisor-control failure-case review"
+      },
+      {
+        "locator_id": "controls-original-review-o04",
+        "bytes": 6183,
+        "sha256": "4a8797410e3b71ab91eeab36c9f5f99becdf5af216b96b2f57cb6a293e1351a8",
+        "role": "optimized supervisor-control failure-case review"
+      },
+      {
+        "locator_id": "controls-original-stopped",
+        "bytes": 314,
+        "sha256": "08ec01abf843fb7810c243cc42ff0a9f22f0d3b42e0f5d9e3031456ddff54148",
+        "role": "later aggregate stop record; not per-owner returncode repair"
+      }
+    ],
+    "typed_omissions": [
+      {
+        "class": "raw_manifests_receipts_commands_and_streams",
+        "public_state": "omitted_except_for_hash_size_role_and_scoped_projection",
+        "private_state": "retained",
+        "consequence": "The public record is not a replayable or independently auditable raw receipt set."
+      },
+      {
+        "class": "absolute_paths_cwds_argv_install_locations_and_environment",
+        "public_state": "omitted",
+        "private_state": "retained_in_raw_receipts",
+        "consequence": "Machine-specific execution routing is intentionally unavailable from this package."
+      },
+      {
+        "class": "pids_process_start_labels_process_maps_and_filesystem_identity_vectors",
+        "public_state": "omitted",
+        "private_state": "retained_in_raw_receipts",
+        "consequence": "The projection supplies no process or filesystem attestation."
+      },
+      {
+        "class": "compiled_olean_objects_tool_binaries_and_complete_dependency_installations",
+        "public_state": "omitted",
+        "private_state": "retained_where_identified_by_the_historical_manifests",
+        "consequence": "The package is not a relocated executable replay and does not establish source-to-prebuilt-dependency authenticity."
+      },
+      {
+        "class": "full_synthetic_and_inert_control_artifact_trees",
+        "public_state": "omitted",
+        "private_state": "retained_and_bound_by_the_closeout_observation",
+        "consequence": "Control counts and hashes are projected; the public package cannot inspect each control case."
+      },
+      {
+        "class": "private_review_working_records",
+        "public_state": "omitted_except_for_manifest_and_load_bearing_failure_hashes",
+        "private_state": "retained",
+        "consequence": "The public projection records the review boundary without presenting private review prose as raw execution evidence."
+      }
+    ]
+  },
+  "limits_and_nonclaims": [
+    "This is a projection of a completed historical local result, not a new run or a raw receipt.",
+    "The 2026-09-12 source-correspondence observation and preparation of this historical projection performed no Lean, kernel, adapter, control, native, PDF, production, or hosted command.",
+    "The controls provide no theorem or proof-execution credit.",
+    "Captured source pins and separate fresh kernels do not establish authenticity of every imported prebuilt dependency object.",
+    "The historical original-control per-supervisor returncode gap remains unrepaired.",
+    "Sampled process observations are non-atomic and are not process attestation or a hard real-time guarantee.",
+    "The finite selected/cosmetic and wrong-last matrix is not exhaustive fault coverage, general runtime correctness, or cross-platform reproduction.",
+    "No scientific novelty, estimator calibration, statistical validity, Rust refinement, deployment value, current public-source admission, native acceptance, or hosted acceptance follows from this record."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "utc": "2026-09-08T12:37:57.982829+00:00",
+  "prior_sha256": "25860598887a3c2f2ac1a68dc320f2f2d6ac05de01b3febb4616a3c18ae0371c",
+  "correction": "The first ad hoc reader incorrectly required section*. names for subsection headings. Actual expected prefixes are section*. and subsection*. by level. Its -2pt box threshold also flagged four font-metric bounding boxes: the actual heading ink begins below each destination. Original findings remain preserved; no immutable checker or PDF altered.",
+  "name_prefixes_match_levels": true,
+  "actual_ink_observations": [
+    {
+      "page": 2,
+      "heading": "2. Events, atoms and supported averages",
+      "font_bbox_upper_offset_pt": -2.13750899999998,
+      "destination_y_pt": 70.86599999999999,
+      "actual_lapis_ink_top_px": 97,
+      "actual_lapis_ink_top_pt": 73.51578947368421,
+      "destination_precedes_observed_ink_pt": 2.6497894736842227,
+      "scope": "Normal95dpi pixel observation in title word-box neighborhood; no PDF change."
+    },
+    {
+      "page": 6,
+      "heading": "5. Scalar logarithmic tails and atom tails",
+      "font_bbox_upper_offset_pt": -2.13750899999998,
+      "destination_y_pt": 70.86599999999999,
+      "actual_lapis_ink_top_px": 97,
+      "actual_lapis_ink_top_pt": 73.51578947368421,
+      "destination_precedes_observed_ink_pt": 2.6497894736842227,
+      "scope": "Normal95dpi pixel observation in title word-box neighborhood; no PDF change."
+    },
+    {
+      "page": 10,
+      "heading": "7. Four hand derivations that explain the limits",
+      "font_bbox_upper_offset_pt": -2.13750899999998,
+      "destination_y_pt": 70.86599999999999,
+      "actual_lapis_ink_top_px": 97,
+      "actual_lapis_ink_top_pt": 73.51578947368421,
+      "destination_precedes_observed_ink_pt": 2.6497894736842227,
+      "scope": "Normal95dpi pixel observation in title word-box neighborhood; no PDF change."
+    },
+    {
+      "page": 14,
+      "heading": "9. Scope, edge cases and proof status",
+      "font_bbox_upper_offset_pt": -2.13750899999998,
+      "destination_y_pt": 70.86599999999999,
+      "actual_lapis_ink_top_px": 97,
+      "actual_lapis_ink_top_pt": 73.51578947368421,
+      "destination_precedes_observed_ink_pt": 2.6497894736842227,
+      "scope": "Normal95dpi pixel observation in title word-box neighborhood; no PDF change."
+    }
+  ],
+  "all_30_distinct_and_correct_page": true,
+  "all_30_left_margins_exact": true,
+  "remaining_navigation_issue": false
+}

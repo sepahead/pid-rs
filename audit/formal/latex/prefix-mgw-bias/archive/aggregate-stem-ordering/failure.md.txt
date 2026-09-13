@@ -1,0 +1,32 @@
+# Aggregate control failure: filename and stem ordering
+
+The first actual current aggregate self-test returned 1 on 12 September 2026 at 12:10:40 UTC,
+before its baseline inventory was accepted. It is closed and must not be retried in place.
+`aggregate-controls-01/PLAN.json`, `RESULT.json`, `stdout`, `stderr` and copied inputs retain
+the exact command, original deadline, source identities, exit and diagnostic. No PDF or proof ran.
+The 0.975-second failure was not a timeout. All copied and donor inputs remained unchanged.
+
+The diagnostic was `rendered PDF inventory differs from the declared standalone-paper set`.
+A subsequent read-only roster comparison found 26 expected, 26 fixture and 26 actual PDF stems,
+with no extra or missing member. The gate sorts full paths before removing `.pdf`, but sorts
+expected stems directly. In the C locale, the hyphen in `prefix-mgw-bias-summary.pdf` precedes
+the dot in `prefix-mgw-bias.pdf`; removing suffixes after sorting does not restore stem order.
+The new full/summary pair exposes this inherited assumption. Source-only checks missed it.
+
+The successor will normalize validated actual PDF stems before comparing them with expected
+stems. The baseline full/summary fixture is a direct regression case. Retain direct-regular checks,
+exact membership, every prior hostile case, and all production registration constraints. This
+correction grants no native-PDF, formal or scientific acceptance.
+
+Alternatives considered: (1) leave the failed proposal unadopted, which blocks complete publication;
+(2) rename the papers, which changes public identities without fixing comparison semantics;
+(3) omit the summary, which loses required coverage; (4) compare counts only, which accepts wrong
+sets; (5) compare unsorted arrays, which depends on enumeration; (6) sort expected stems after
+adding suffixes, which couples semantic comparison to filename punctuation; (7) use Bash mapfile,
+which excludes the current Bash 3.2 route; (8) add a new Python inventory implementation, which
+expands this correction's dependency surface; (9) use set comparison without existing type checks,
+which weakens the contract; (10) sort the already validated actual stems with the existing C-locale
+sort. Route 10 preserves the current inventory meaning with a bounded portable change.
+
+The original author source snapshot and first execution root remain unchanged. A new reviewed
+source identity and new bounded operational attempt are required before another complete run.

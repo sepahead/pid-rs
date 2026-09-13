@@ -25,9 +25,11 @@ case "$TMP_PARENT" in
 esac
 TEST_ROOT="$(mktemp -d "$TMP_PARENT/pid-rs-workflow-pdf-self-test.XXXXXX")"
 TEST_ROOT="$(cd "$TEST_ROOT" && pwd -P)"
-TEST_HOME="$TEST_ROOT/home"
-mkdir -m 0700 "$TEST_HOME"
-export HOME="$TEST_HOME"
+TEST_XDG_CONFIG="$TEST_ROOT/xdg-config"
+TEST_XDG_CACHE="$TEST_ROOT/xdg-cache"
+mkdir -m 0700 "$TEST_XDG_CONFIG" "$TEST_XDG_CACHE"
+export XDG_CONFIG_HOME="$TEST_XDG_CONFIG"
+export XDG_CACHE_HOME="$TEST_XDG_CACHE"
 
 cleanup() {
   local status=$?
@@ -74,13 +76,13 @@ EXPECTED_PREDECESSOR_CONTROL_COUNT=218
 EXPECTED_C3_BOUNDED_PROBE_COUNT=37
 EXPECTED_C3_ENTRY_WRAPPER_COUNT=17
 EXPECTED_C3_RUNTIME_MAP_COUNT=7
-EXPECTED_C3_FLS_MAP_PATH_COUNT=8
+EXPECTED_C3_FLS_MAP_PATH_COUNT=10
 EXPECTED_C3_EXECUTABLE_CUSTODY_COUNT=3
 EXPECTED_C3_FORMAT_CUSTODY_COUNT=47
 EXPECTED_C8_TEXT_PORTABILITY_COUNT=71
 EXPECTED_PYTHON_BYTECODE_COUNT=12
 EXPECTED_VISUAL_RECEIPT_HOSTILE_COUNT=24
-EXPECTED_TOTAL_CONTROL_COUNT=428
+EXPECTED_TOTAL_CONTROL_COUNT=430
 # This suite never compiles the 87-page report.  Its locally observed slowest focused PDF-parser
 # control completes in about 16 seconds; the common wrapper's three-minute decision deadline
 # retains more than 11x observed slack for hosted runners.  Publication, readiness, cleanup,
@@ -1942,6 +1944,8 @@ copy_manifest_fixture() {
   local paths=(
     "scripts/check-mathematical-workflow-pdf.sh"
     "scripts/check-mathematical-workflow-pdf-self-test.sh"
+    "scripts/prepare-mathematical-workflow-markdown-parser.py"
+    "scripts/prepare-mathematical-workflow-markdown-parser-self-test.py"
     "scripts/sync-mathematical-workflow-tex.py"
     "scripts/sync-mathematical-workflow-tex-self-test.py"
     "scripts/check-citation-edge-countermodel.py"
@@ -1957,6 +1961,8 @@ copy_manifest_fixture() {
     "audit/formal/latex/mathematical-problem-solving-workflow.tex"
     "audit/formal/latex/pid-rs-report-tables.sty"
     "audit/formal/latex/pid-rs-workflow-publication.sty"
+    "audit/formal/latex/pid-rs-markdown-gc-loader.lua"
+    "audit/formal/workflow-markdown-parser-profiles.json"
     "audit/formal/requirements-pdf.txt"
     "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.svg"
     "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf"
@@ -2966,9 +2972,13 @@ FORMAT_FIXTURE="$TEST_ROOT/format-source-fixture"
 FORMAT_SYSVAR="$FORMAT_FIXTURE/texmf-sysvar"
 FORMAT_SOURCE="$FORMAT_SYSVAR/web2c/luahbtex/lualatex.fmt"
 FORMAT_OUTSIDE="$FORMAT_FIXTURE/outside/lualatex.fmt"
+FORMAT_XDG_CONFIG="$FORMAT_FIXTURE/xdg-config"
+FORMAT_XDG_CACHE="$FORMAT_FIXTURE/xdg-cache"
 mkdir -p \
   "$FORMAT_SYSVAR/web2c/luahbtex" \
-  "$FORMAT_FIXTURE/outside"
+  "$FORMAT_FIXTURE/outside" \
+  "$FORMAT_XDG_CONFIG" \
+  "$FORMAT_XDG_CACHE"
 printf 'exact captured LuaLaTeX format fixture\n' >"$FORMAT_SOURCE"
 printf 'wrong generated format leaf\n' >"$FORMAT_SYSVAR/web2c/luahbtex/xelatex.fmt"
 printf 'outside generated format root\n' >"$FORMAT_OUTSIDE"
@@ -3001,14 +3011,16 @@ run_private_format_lookup() {
   local search_path
   local selected_path
   search_path="$(env -i \
-    "HOME=$FORMAT_FIXTURE" \
+    "XDG_CONFIG_HOME=$FORMAT_XDG_CONFIG" \
+    "XDG_CACHE_HOME=$FORMAT_XDG_CACHE" \
     "TEXFORMATS=$texformats_value" \
     "$KPSEWHICH_COMMAND" \
       --engine=luahbtex \
       --progname=lualatex \
       --show-path=fmt)" || return $?
   selected_path="$(env -i \
-    "HOME=$FORMAT_FIXTURE" \
+    "XDG_CONFIG_HOME=$FORMAT_XDG_CONFIG" \
+    "XDG_CACHE_HOME=$FORMAT_XDG_CACHE" \
     "TEXFORMATS=$texformats_value" \
     "$KPSEWHICH_COMMAND" \
       --engine=luahbtex \
@@ -3062,8 +3074,8 @@ for literal in required_once:
 if text.count('if os.listdir(root_descriptor) != [path.name]:') != 2:
     fail("sealed one-file root inventory is not checked before and after replay")
 expected_counts = {
-    "--engine=luahbtex": 5,
-    "--progname=lualatex": 5,
+    "--engine=luahbtex": 6,
+    "--progname=lualatex": 6,
     "--show-path=fmt": 2,
     'TEXFORMATS=$FORMAT_ROOT': 2,
     "verify_captured_format_exact": 4,
@@ -3251,7 +3263,7 @@ expect_accept \
 
 case_file="$TEST_ROOT/format-engine-selector-removed.sh"
 cp "$CHECKER" "$case_file"
-mutate_occurrence "$case_file" '--engine=luahbtex' '--engine=hostile' 1
+mutate_occurrence "$case_file" '--engine=luahbtex' '--engine=hostile' 2
 expect_reject \
   "format source custody rejects removal of the exact LuaHBTeX engine selector" \
   "format-custody source invariant drifted" \
@@ -3590,7 +3602,7 @@ import sys
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 required_once = (
     'ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"',
-    'python3 -I -S -B - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<\'PY\'',
+    '  python3 -I -S -B - \\\n    "$entry_wrapper" \\\n',
     r'    "\\pdfextension mapfile {}\n"',
     'pid_rs_existing_find_map = luatexbase.callback_descriptions("find_map_file")',
     "for _ in pid_rs_pairs(pid_rs_existing_find_map) do",
@@ -3603,6 +3615,8 @@ required_once = (
     "pid-rs deny font-map lookup",
     "pid-rs deny category-2 font-map events",
     r'    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"',
+    'pid_rs_markdown_gc_loader = assert(loadfile(',
+    '    "  pid_rs_markdown_gc_loader({\\n"',
     r'f"\\input{{{source_path}}}\n"',
     'flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC',
     'if not stat.S_ISREG(after.st_mode) or after.st_nlink != 1:',
@@ -3610,6 +3624,7 @@ required_once = (
     '-jobname="$REPORT_STEM" \\\n',
     '          "$entry_wrapper"\n',
     "grep -Fxc -- 'PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source'",
+    'grep -Fxc -- "PID-RS-MARKDOWN-GC=$PARSER_PROFILE_ID"',
     "def is_forbidden_tex_map_path(path: Path) -> bool:",
     'folded_parts[index : index + 2] == ("fonts", "map")',
     "for path in raw_input_paths:\n            if is_forbidden_tex_map_path(path):",
@@ -3617,6 +3632,7 @@ required_once = (
     "loaded a forbidden raw ",
     "loaded a forbidden resolved ",
     "expected_entry_wrapper = (run_dir / entry_wrapper_name).resolve()",
+    "expected_parser_module = (run_dir / parser_module_name).resolve()",
 )
 for literal in required_once:
     if text.count(literal) != 1:
@@ -3630,12 +3646,13 @@ ordered = (
     "pid-rs deny font-map lookup",
     "pid-rs deny category-2 font-map events",
     r'    "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"',
+    "pid_rs_markdown_gc_loader = assert(loadfile(",
     r'f"\\input{{{source_path}}}\n"',
 )
 positions = [text.index(literal) for literal in ordered]
 if positions != sorted(positions):
     raise SystemExit("map-file-free entry-wrapper operations are out of order")
-writer = text.index('python3 -I -S -B - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE"')
+writer = text.index('  python3 -I -S -B - \\\n    "$entry_wrapper" \\\n')
 compiler = text.index("        lualatex ", writer)
 jobname = text.index('-jobname="$REPORT_STEM"', compiler)
 entry = text.index('          "$entry_wrapper"', jobname)
@@ -3655,7 +3672,12 @@ ENTRY_FIXTURE="$TEST_ROOT/entry-wrapper-fixture"
 mkdir "$ENTRY_FIXTURE"
 python3 -I -S -B "$ENTRY_WRAPPER_WRITER" \
   "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" \
-  /captured/source/workflow.tex
+  /captured/source/workflow.tex \
+  /captured/source/pid-rs-markdown-gc-loader.lua \
+  /captured/private/pid-rs-markdown-gc.lua \
+  123 \
+  fixture-markdown-profile \
+  1.2.3-fixture
 python3 -I -S -B - "$ENTRY_FIXTURE/pid-rs-map-file-free-entry.tex" <<'PY'
 from pathlib import Path
 import stat
@@ -3697,6 +3719,15 @@ expected = (
     '    "pid-rs deny category-2 font-map events")\n'
     "}\n"
     "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"
+    "\\directlua{\n"
+    "  local pid_rs_markdown_gc_loader = assert(loadfile([[/captured/source/pid-rs-markdown-gc-loader.lua]]))\n"
+    "  pid_rs_markdown_gc_loader({\n"
+    "    module_path = [[/captured/private/pid-rs-markdown-gc.lua]],\n"
+    "    module_bytes = 123,\n"
+    "    profile_id = [[fixture-markdown-profile]],\n"
+    "    metadata_version = [[1.2.3-fixture]],\n"
+    "  })\n"
+    "}\n"
     "\\input{/captured/source/workflow.tex}\n"
 ).encode("utf-8")
 observed = path.read_bytes()
@@ -3894,8 +3925,17 @@ fi
 make_runtime_map_probe() {
   local fixture_root="$1"
   local mode="$2"
+  local runtime_parser_bytes
   mkdir "$fixture_root"
   cp "$MAP_SOURCE" "$fixture_root/evil.data"
+  cp "$ROOT/audit/formal/latex/pid-rs-markdown-gc-loader.lua" \
+    "$fixture_root/pid-rs-markdown-gc-loader.lua"
+  printf '%s\n' \
+    'return { metadata = { version = "runtime-control" } }' \
+    >"$fixture_root/pid-rs-markdown-gc.lua"
+  runtime_parser_bytes="$(python3 -I -S -B -c \
+    'from pathlib import Path; import sys; print(len(Path(sys.argv[1]).read_bytes()))' \
+    "$fixture_root/pid-rs-markdown-gc.lua")"
   case "$mode" in
     tex-mapfile)
       printf '%s\n' \
@@ -3956,7 +3996,12 @@ make_runtime_map_probe() {
   esac
   python3 -I -S -B "$ENTRY_WRAPPER_WRITER" \
     "$fixture_root/pid-rs-map-file-free-entry.tex" \
-    "$fixture_root/source.tex"
+    "$fixture_root/source.tex" \
+    "$fixture_root/pid-rs-markdown-gc-loader.lua" \
+    "$fixture_root/pid-rs-markdown-gc.lua" \
+    "$runtime_parser_bytes" \
+    runtime-map-control \
+    runtime-control
   (
     cd "$fixture_root"
     lualatex \
@@ -4029,12 +4074,15 @@ make_fls_closure_fixture() {
   printf 'source\n' >"$fixture_root/snapshot/source.tex"
   printf 'shared style\n' >"$fixture_root/snapshot/shared.sty"
   printf 'publication style\n' >"$fixture_root/snapshot/publication.sty"
+  printf 'parser loader\n' >"$fixture_root/snapshot/pid-rs-markdown-gc-loader.lua"
   printf 'system input\n' >"$fixture_root/texmf/tex/system.sty"
+  printf 'ambient Markdown source\n' >"$fixture_root/texmf/tex/markdown.lua"
   printf 'captured format\n' >"$fixture_root/format/lualatex.fmt"
   printf 'figure\n' >"$fixture_root/figures/figure.pdf"
   for run_dir in "$fixture_root/run-a" "$fixture_root/run-b"; do
     printf '2\n' >"$run_dir/pass-count.txt"
     printf 'captured wrapper\n' >"$run_dir/pid-rs-map-file-free-entry.tex"
+    printf 'private parser\n' >"$run_dir/pid-rs-markdown-gc.lua"
     printf 'generated input\n' >"$run_dir/generated.aux"
     printf 'pdf output\n' >"$run_dir/mathematical-problem-solving-workflow.pdf"
     {
@@ -4042,10 +4090,12 @@ make_fls_closure_fixture() {
       printf 'INPUT %s\n' "$fixture_root/snapshot/source.tex"
       printf 'INPUT %s\n' "$fixture_root/snapshot/shared.sty"
       printf 'INPUT %s\n' "$fixture_root/snapshot/publication.sty"
+      printf 'INPUT %s\n' "$fixture_root/snapshot/pid-rs-markdown-gc-loader.lua"
       printf 'INPUT %s\n' "$fixture_root/texmf/tex/system.sty"
       printf 'INPUT %s\n' "$fixture_root/format/lualatex.fmt"
       printf 'INPUT %s\n' "$fixture_root/figures/figure.pdf"
       printf 'INPUT %s\n' "$run_dir/pid-rs-map-file-free-entry.tex"
+      printf 'INPUT %s\n' "$run_dir/pid-rs-markdown-gc.lua"
       printf 'INPUT %s\n' "$run_dir/generated.aux"
       if [[ -n "$extra_input" ]]; then
         printf 'INPUT %s\n' "$extra_input"
@@ -4074,6 +4124,11 @@ run_fls_closure_validator() {
     "$fixture_root/figures" \
     "$fixture_root/closure" \
     pid-rs-map-file-free-entry.tex \
+    "$fixture_root/snapshot/pid-rs-markdown-gc-loader.lua" \
+    "$fixture_root/texmf/tex/markdown.lua" \
+    pid-rs-markdown-gc.lua \
+    15 \
+    a84988a332bca8a54b91aed4bfaf025795220be77da5415518db95ffe3f27055 \
     figure
 }
 
@@ -4081,7 +4136,22 @@ C3_ACTIVE_FAMILY="fls-map-path"
 case_dir="$(mktemp -d "$TEST_ROOT/fls-map-file-free.XXXXXX")"
 make_fls_closure_fixture "$case_dir"
 expect_accept \
-  "FLS closure accepts a bounded fixture with its exact entry and no font-map file path evidence" \
+  "FLS closure accepts exact entry, loader, private parser, and no font-map file path evidence" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-ambient-markdown-bypass.XXXXXX")"
+make_fls_closure_fixture "$case_dir" "$case_dir/texmf/tex/markdown.lua"
+expect_reject \
+  "FLS closure rejects loading the ambient Markdown module beside the private preload" \
+  "bypassed the private Markdown module preload" \
+  run_fls_closure_validator "$case_dir"
+
+case_dir="$(mktemp -d "$TEST_ROOT/fls-private-markdown-drift.XXXXXX")"
+make_fls_closure_fixture "$case_dir"
+printf 'changed private parser\n' >"$case_dir/run-a/pid-rs-markdown-gc.lua"
+expect_reject \
+  "FLS closure rejects private Markdown parser bytes outside the selected postimage" \
+  "private Markdown parser receipt drifted" \
   run_fls_closure_validator "$case_dir"
 
 case_dir="$(mktemp -d "$TEST_ROOT/fls-renamed-map-boundary.XXXXXX")"
@@ -5367,8 +5437,8 @@ pattern = re.compile(
     r'(?P<flags>(?: -[A-Za-z]+)+)'
 )
 launches = list(pattern.finditer(text))
-if len(launches) != 36:
-    fail("production Python launch inventory differs from 36")
+if len(launches) != 42:
+    fail("production Python launch inventory differs from 42")
 optimized = 0
 for launch in launches:
     flags = launch["flags"].split()
@@ -5377,7 +5447,7 @@ for launch in launches:
     if flags not in (["-I", "-S", "-B"], ["-O", "-I", "-S", "-B"]):
         fail("production Python flags lack exact isolated no-bytecode custody")
     optimized += flags[0] == "-O"
-if optimized != 2:
+if optimized != 3:
     fail("normal/optimized production launch partition differs")
 required_consumers = (
     ('python3 -I -S -B', 'check-citation-edge-countermodel.py'),
@@ -5391,6 +5461,9 @@ required_consumers = (
 for prefix, filename in required_consumers:
     if text.count(f'{prefix} "$SNAPSHOT_ROOT/scripts/{filename}"') != 1:
         fail(f"captured consumer launch differs: {filename}")
+for prefix in ("python3 -I -S -B", "python3 -O -I -S -B"):
+    if text.count(f'{prefix} "$SNAPSHOT_ROOT/$PARSER_PREPARER_SELF_TEST"') != 1:
+        fail("captured Markdown parser source-control launch differs")
 for argument, expected_script in ((sys.argv[2], "CHECKER"), (sys.argv[3], "COMPARATOR")):
     tree = ast.parse(Path(argument).read_text(encoding="utf-8"))
     vectors = []

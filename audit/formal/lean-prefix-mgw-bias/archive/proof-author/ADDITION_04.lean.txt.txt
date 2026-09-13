@@ -1,0 +1,139 @@
+private lemma actual_block_average {I : Type u} {X : I → Type v} {T : Type w}
+    [Fintype I] [Nonempty I] [∀ i, Fintype (X i)] [Fintype T]
+    [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+    (p : Key I X T → ℝ) (hp : Law p) (alpha : Node I) (h : ℕ) :
+    actualBlockMean p alpha h = supportedAverage p (fun z =>
+      positiveMeanPartial p z alpha h - negativeMeanPartial p z alpha h) := by
+  classical
+  have he := (PidPrefixMgwMeanCandidate.finite_block_expectation I X T p alpha h hp).2.2.2
+  rw [actualBlockMean, he]
+  unfold supportedAverage
+  apply Finset.sum_congr rfl
+  intro z _hz
+  by_cases hz : 0 < p z
+  · simp only [hz, if_true, positiveMeanPartial, negativeMeanPartial,
+      positiveMeanIncrement, negativeMeanIncrement, Finset.sum_sub_distrib]
+  · simp only [hz, if_false, mul_zero]
+
+private lemma proof_actual_bias : actual_finite_bias_target.{u,v,w} := by
+  intro I X T _ _ _ _ _ _ _ p hp
+  classical
+  obtain ⟨plus, minus, hzero, hsup, _hInt, _hlim⟩ :=
+    PidPrefixMgwMeanCandidate.prefix_expectations_to_mgw_mean I X T p hp
+  have hpair : SupportedInversePair p plus minus :=
+    ⟨hzero, fun z hz => ⟨(hsup z hz).1, (hsup z hz).2.1,
+      (hsup z hz).2.2.1, (hsup z hz).2.2.2.1⟩⟩
+  have htail : ∀ z, 0 < p z → ∀ (alpha : Node I) (h : ℕ),
+      0 ≤ plus z alpha - positiveMeanPartial p z alpha h ∧
+      plus z alpha - positiveMeanPartial p z alpha h ≤ logRemainder (sourceMass p z alpha) h ∧
+      0 ≤ minus z alpha - negativeMeanPartial p z alpha h ∧
+      minus z alpha - negativeMeanPartial p z alpha h ≤
+        logRemainder (restrictedMass p z alpha) h - logRemainder (targetMass p z) h := by
+    intro z hz alpha h
+    have hd := anchor_domains p hp z hz alpha
+    have hq : 0 < restrictedMass p z alpha := hz.trans_le hd.1
+    have ha : 0 < sourceMass p z alpha := hq.trans_le hd.2.1
+    have hv : 0 < targetMass p z := hq.trans_le hd.2.2.1
+    have hq1 : restrictedMass p z alpha ≤ 1 := hd.2.1.trans hd.2.2.2.1
+    have hs := (hsup z hz).2.2.2.2 alpha
+    have hsplus : HasSum (positiveMeanIncrement p z alpha) (plus z alpha) :=
+      hs.2.1.congr_fun (fun n =>
+        (PidPrefixProbabilityCandidate.positive_increment_expectation I X T p z alpha n hp).symm)
+    have hsminus : HasSum (negativeMeanIncrement p z alpha) (minus z alpha) :=
+      hs.2.2.congr_fun (fun n =>
+        (PidPrefixProbabilityCandidate.negative_increment_expectation I X T p z alpha n hp hv).symm)
+    have hb (n) := raw_envelopes I X T p z alpha n hp hz
+    have hpt := dominated_tail _ _ _ _ hsplus (log_hasSum _ ha hd.2.2.2.1)
+      (fun n => (hb n).1) (fun n => (hb n).2.1) h
+    have hnegseries : HasSum (fun n : ℕ =>
+        ((1 - restrictedMass p z alpha) ^ (n + 1) - (1 - targetMass p z) ^ (n + 1)) /
+          ((n : ℝ) + 1)) (-Real.log (restrictedMass p z alpha) - -Real.log (targetMass p z)) := by
+      simpa only [sub_div] using
+        (log_hasSum _ hq hq1).sub (log_hasSum _ hv hd.2.2.2.2)
+    have hmt := dominated_tail _ _ _ _ hsminus hnegseries
+      (fun n => (hb n).2.2.1) (fun n => (hb n).2.2.2) h
+    have he : (-Real.log (restrictedMass p z alpha) - -Real.log (targetMass p z)) -
+        ∑ n ∈ Finset.range h,
+          ((1 - restrictedMass p z alpha) ^ (n + 1) - (1 - targetMass p z) ^ (n + 1)) /
+            ((n : ℝ) + 1) =
+        logRemainder (restrictedMass p z alpha) h - logRemainder (targetMass p z) h := by
+      simp only [logRemainder, sub_div, Finset.sum_sub_distrib]
+      ring
+    rw [he] at hmt
+    exact ⟨hpt.1, hpt.2, hmt.1, hmt.2⟩
+  refine ⟨plus, minus, hpair, htail, ?_⟩
+  intro alpha h
+  have he := actual_block_average p hp alpha h
+  have hbias : jointAtomMean p plus minus alpha - actualBlockMean p alpha h =
+      supportedAverage p (fun z => plus z alpha - positiveMeanPartial p z alpha h) -
+        supportedAverage p (fun z => minus z alpha - negativeMeanPartial p z alpha h) := by
+    rw [he, jointAtomMean, ← average_eq_sum p _ hp.1, ← average_sub, ← average_sub]
+    congr 1
+    funext z
+    ring
+  have hp0 : 0 ≤ supportedAverage p (fun z => plus z alpha - positiveMeanPartial p z alpha h) := by
+    rw [← average_const p hp 0]
+    exact average_mono p _ _ (fun z hz => (htail z hz alpha h).1)
+  have hm0 : 0 ≤ supportedAverage p (fun z => minus z alpha - negativeMeanPartial p z alpha h) := by
+    rw [← average_const p hp 0]
+    exact average_mono p _ _ (fun z hz => (htail z hz alpha h).2.2.1)
+  have hpB : supportedAverage p (fun z => plus z alpha - positiveMeanPartial p z alpha h) ≤
+      positiveEnvelope p alpha h := average_mono p _ _ (fun z hz => (htail z hz alpha h).2.1)
+  have hmB : supportedAverage p (fun z => minus z alpha - negativeMeanPartial p z alpha h) ≤
+      negativeEnvelope p alpha h := average_mono p _ _ (fun z hz => (htail z hz alpha h).2.2.2)
+  have hlow : -negativeEnvelope p alpha h ≤
+      jointAtomMean p plus minus alpha - actualBlockMean p alpha h := by rw [hbias]; linarith
+  have hupp : jointAtomMean p plus minus alpha - actualBlockMean p alpha h ≤
+      positiveEnvelope p alpha h := by rw [hbias]; linarith
+  have habs : |jointAtomMean p plus minus alpha - actualBlockMean p alpha h| ≤
+      max (positiveEnvelope p alpha h) (negativeEnvelope p alpha h) := abs_le.mpr
+        ⟨(neg_le_neg (le_max_right _ _)).trans hlow, hupp.trans (le_max_left _ _)⟩
+  have hpq : positiveEnvelope p alpha h ≤
+      supportedAverage p (fun z => logRemainder (restrictedMass p z alpha) h) := by
+    apply average_mono
+    intro z hz
+    have hd := anchor_domains p hp z hz alpha
+    have hr := (remainder_difference _ _ (hz.trans_le hd.1) hd.2.1 hd.2.2.2.1 h).1
+    linarith
+  have hmq : negativeEnvelope p alpha h ≤
+      supportedAverage p (fun z => logRemainder (restrictedMass p z alpha) h) := by
+    apply average_mono
+    intro z hz
+    have hd := anchor_domains p hp z hz alpha
+    have hr := (remainder_basic _ ((hz.trans_le hd.1).trans_le hd.2.2.1) hd.2.2.2.2 h).1
+    linarith
+  have habsq := habs.trans (max_le hpq hmq)
+  have hqs : supportedAverage p (fun z => logRemainder (restrictedMass p z alpha) h) ≤
+      querySurprisal p alpha := by
+    apply average_mono
+    intro z hz
+    have hd := anchor_domains p hp z hz alpha
+    exact (remainder_basic _ (hz.trans_le hd.1) (hd.2.1.trans hd.2.2.2.1) h).2.1
+  have hqi : supportedAverage p (fun z => logRemainder (restrictedMass p z alpha) h) ≤
+      (queryMoment p alpha - 1) / ((h : ℝ) + 1) := by
+    calc
+      _ ≤ supportedAverage p (fun z => (1 / restrictedMass p z alpha - 1) / ((h : ℝ) + 1)) := by
+        apply average_mono
+        intro z hz
+        have hd := anchor_domains p hp z hz alpha
+        exact (remainder_basic _ (hz.trans_le hd.1) (hd.2.1.trans hd.2.2.2.1) h).2.2.2
+      _ = _ := by rw [average_div, average_sub, average_const p hp]; rfl
+  have hpi : positiveEnvelope p alpha h ≤ (sourceMoment p alpha - 1) / ((h : ℝ) + 1) := by
+    calc
+      _ ≤ supportedAverage p (fun z => (1 / sourceMass p z alpha - 1) / ((h : ℝ) + 1)) := by
+        apply average_mono
+        intro z hz
+        have hd := anchor_domains p hp z hz alpha
+        exact (remainder_basic _ ((hz.trans_le hd.1).trans_le hd.2.1) hd.2.2.2.1 h).2.2.2
+      _ = _ := by rw [average_div, average_sub, average_const p hp]; rfl
+  have hmi : negativeEnvelope p alpha h ≤ (queryMoment p alpha - targetMoment p) / ((h : ℝ) + 1) := by
+    calc
+      _ ≤ supportedAverage p (fun z =>
+          (1 / restrictedMass p z alpha - 1 / targetMass p z) / ((h : ℝ) + 1)) := by
+        apply average_mono
+        intro z hz
+        have hd := anchor_domains p hp z hz alpha
+        exact (remainder_difference _ _ (hz.trans_le hd.1) hd.2.2.1 hd.2.2.2.2 h).2.2
+      _ = _ := by rw [average_div, average_sub]; rfl
+  exact ⟨he, hlow, hupp, habs, habsq, le_min (habsq.trans hqs) (habsq.trans hqi),
+    (neg_le_neg hmi).trans hlow, hupp.trans hpi⟩

@@ -1,0 +1,185 @@
+{
+  "archive": {
+    "bytes": 430080,
+    "directories": 12,
+    "files": 17,
+    "format": "ustar",
+    "members": {
+      "SOURCE_MANIFEST.json": {
+        "bytes": 2565,
+        "mode": 420,
+        "sha256": "7d26cdfa12a210984c0ba5c3ece147127e8295b5f6c7c5121ddeb87d97c2a3ed",
+        "type": "file"
+      },
+      "inputs": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/INERT_FIXTURES.json": {
+        "bytes": 2866,
+        "mode": 420,
+        "sha256": "11f4b3d030df197144b9036cba7bd62ec7de7685fba20db64868dd7fb3b74f84",
+        "type": "file"
+      },
+      "inputs/real-profile": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/body.pandoc.raw.tex": {
+        "bytes": 22055,
+        "mode": 420,
+        "sha256": "3686402842cbb3a8078afdc9b44a592a75b3b18a35f89f82e731996d2882b317",
+        "type": "file"
+      },
+      "inputs/real-profile/build-prefix-mgw-mean-pdf.py": {
+        "bytes": 14269,
+        "mode": 420,
+        "sha256": "f21f065eee8fd4a77c373445d858430fc4fd968f2c2b63d983c948d8a1e6fac0",
+        "type": "file"
+      },
+      "inputs/real-profile/publication-inputs-v1.json": {
+        "bytes": 2962,
+        "mode": 420,
+        "sha256": "6f181dcb87d6398075a568ce0156df17081ea14fe68305f7b267f819c2a59ffa",
+        "type": "file"
+      },
+      "inputs/real-profile/tree": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/audit": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/audit/formal": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/audit/formal/latex": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/pid-rs-report-tables.sty": {
+        "bytes": 4051,
+        "mode": 420,
+        "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/pid-rs-workflow-publication.sty": {
+        "bytes": 8607,
+        "mode": 420,
+        "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/body.expected.md": {
+        "bytes": 20006,
+        "mode": 420,
+        "sha256": "69a771ed38f22e3164edda147adecb9410f0c0c6425daa040e435fb4572f950a",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/body.expected.tex": {
+        "bytes": 22118,
+        "mode": 420,
+        "sha256": "ed7dc45e5a466185905bae980ee8f77ef0c270ebeb94dc8ffefc5ad51d21082f",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/prefix-mgw-mean.tex": {
+        "bytes": 1994,
+        "mode": 420,
+        "sha256": "6e424afa695907ad3042d60fb0a45424375efce76b3d62eb58e7ace75496e6f1",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/latex/prefix-mgw-mean/retained-rank.pdf": {
+        "bytes": 67407,
+        "mode": 420,
+        "sha256": "c1b3c18fddc2e37719226f0894a9a8c378b757dd5d614787fb0d0ab318f6f894",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/lean-prefix-mgw-mean": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md": {
+        "bytes": 19968,
+        "mode": 420,
+        "sha256": "d20b5736108f73a4491fe990518482cc2cbd6c9e2b06b61297cdde970114c98f",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/audit/formal/lean-prefix-mgw-mean/retained-rank.svg": {
+        "bytes": 4656,
+        "mode": 420,
+        "sha256": "36ba7f8c6979e069fa5b2f0cb1a2bc5449397628c8ad3051c10a1d7de82162cd",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/output": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/output/pdf": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/output/pdf/prefix-mgw-mean.pdf": {
+        "bytes": 165475,
+        "mode": 420,
+        "sha256": "93ff18e21f56e4770b12b7405d57b003bf7839cef5c4207ed98a56cd6f96f58f",
+        "type": "file"
+      },
+      "inputs/real-profile/tree/scripts": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "inputs/real-profile/tree/scripts/check-formal-pdf-log.sh": {
+        "bytes": 2417,
+        "mode": 420,
+        "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da",
+        "type": "file"
+      },
+      "proposal": {
+        "bytes": 0,
+        "mode": 493,
+        "type": "directory"
+      },
+      "proposal/inert-pdf-tool.py": {
+        "bytes": 5156,
+        "mode": 420,
+        "sha256": "6c09c75512853563b6bb7fa0c470283bc9e6f12cda617028ca36f3521bdabd31",
+        "type": "file"
+      },
+      "proposal/mean-pdf-builder-controls.py": {
+        "bytes": 35195,
+        "mode": 420,
+        "sha256": "637c6f02becb2bfcb00d32bf9110a363d5a72aa233c639fdd34071e7e2311586",
+        "type": "file"
+      }
+    },
+    "path": "mean-pdf-builder-controls-v3.tar",
+    "sha256": "ed2235a3fc33fcd5cf7c88c4ef57bfb5bef909845dee9b1d5bfb64ae78f61a1b"
+  },
+  "boundary": "All v2 distribution and acceptance bytes remain historical under their original names. This v3 archive is source-only and has no actual control, PDF, theorem, public-integration or hosted acceptance.",
+  "case_executions_per_outer": 116,
+  "cases_per_inner_mode": 58,
+  "planned_two_outer_case_executions": 232,
+  "planned_two_outer_inert_tool_starts": 548,
+  "predecessor_archive_sha256": "c989642bb7ef421cc995f2feb7b6a69f91010ff10210d555bc393fca294eb31b",
+  "predecessor_distribution_sha256": "a819bafec0f731a1198f75c6cdb2be8711d24d2074728a55733c4808ef12ab29",
+  "schema": "pid-rs/mean-pdf-builder-controls-distribution-v3",
+  "source_files": 16,
+  "source_manifest_sha256": "7d26cdfa12a210984c0ba5c3ece147127e8295b5f6c7c5121ddeb87d97c2a3ed",
+  "status": "source_proposal_actual_controls_pending"
+}

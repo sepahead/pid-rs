@@ -1,0 +1,367 @@
+#!/usr/bin/env python3
+"""Finite inert controls for the bias PDF builder's new source/data boundaries.
+
+No PDF producer, PDF parser, Lean, package installer or external child is run.
+The unchanged runtime's child-supervision controls are separate historical evidence.
+"""
+from __future__ import annotations
+
+import argparse
+from contextlib import redirect_stderr, redirect_stdout
+import copy
+import datetime as dt
+import hashlib
+import io
+import json
+import logging
+from pathlib import Path
+import sys
+from types import ModuleType, SimpleNamespace
+import warnings
+
+BUILDER = "scripts/build-prefix-mgw-bias-pdf.py"
+BUILDER_SHA256 = 'b28ed90a4ef89a29dace55ff51c76a72fe84894510613d299474fa68c08b0131'
+ASSETS = "audit/formal/latex/prefix-mgw-bias/"
+CASE_ROSTER_SHA256 = 'f410d7a591f6c04e2fa7f0ebb5aafc02b4e462d0252142c03a1866be4828b3ac'
+
+
+def require(ok, message):
+    if not ok:
+        raise RuntimeError(message)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def write(path, value):
+    with path.open("x") as stream:
+        json.dump(value, stream, indent=2, sort_keys=True, allow_nan=False)
+        stream.write("\n")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).absolute().parents[1])
+    parser.add_argument("--registration", type=Path, required=True)
+    parser.add_argument("--registration-sha256", required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    require(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode
+            and sys.flags.optimize in (0, 1), "controls require -I -S -B, optionally -O")
+    root = args.root.absolute()
+    require(root == root.resolve(strict=True), "control root is not canonical")
+    source = (root / BUILDER).read_bytes()
+    require(sha(source) == BUILDER_SHA256, "builder source changed")
+    b = ModuleType("bias_pdf_builder_under_control")
+    b.__file__ = str(root / BUILDER)
+    exec(compile(source, b.__file__, "exec", dont_inherit=True,
+                 optimize=sys.flags.optimize), b.__dict__)
+    runtime = b.load_runtime(root)
+    actual_builder_now = b.now
+    reg_raw = b.read_direct(args.registration.absolute())
+    require(sha(reg_raw) == args.registration_sha256, "control registration changed")
+    reg = runtime.strict_json(reg_raw)
+    actual_now = dt.datetime.now(dt.timezone.utc)
+    required = {"schema", "status", "registered_utc", "deadline_utc", "optimization",
+                "root", "output", "builder_sha256", "self_test_sha256",
+                "roster_sha256", "maximum_cases", "python_sha256"}
+    require(type(reg) is dict and set(reg) == required
+            and reg["schema"] == "pid-rs/prefix-mgw-bias-pdf-controls-v1"
+            and reg["status"] == "reviewed_source_ready_for_inert_controls",
+            "control registration fields/status differ")
+    start, deadline = b.date(reg["registered_utc"]), b.date(reg["deadline_utc"])
+    require(start <= actual_now < deadline and (deadline - start).total_seconds() <= 1200,
+            "control registration deadline differs")
+    require(type(reg["optimization"]) is int and reg["optimization"] == sys.flags.optimize
+            and reg["root"] == str(root) and reg["output"] == str(args.output.absolute())
+            and reg["builder_sha256"] == BUILDER_SHA256
+            and reg["self_test_sha256"] == sha(b.read_direct(Path(__file__).absolute()))
+            and reg["python_sha256"] == sha(b.read_direct(Path(sys.executable).resolve(strict=True)))
+            and reg["roster_sha256"] == CASE_ROSTER_SHA256,
+            "control registration source/command binding differs")
+    roster_raw = b.read_direct(root / ASSETS / "controls/roster-v4.json")
+    require(sha(roster_raw) == CASE_ROSTER_SHA256, "control roster changed")
+    roster = runtime.strict_json(roster_raw)["cases"]
+    require(type(reg["maximum_cases"]) is int and reg["maximum_cases"] == len(roster),
+            "control case budget differs")
+    out = args.output.absolute()
+    b.direct_directory(out.parent)
+    require(not out.exists() and not out.is_symlink(), "control output exists")
+    out.mkdir(mode=0o700)
+    result = {"status": "failed", "cases": [], "external_child_starts": 0,
+              "pdf_productions": 0, "proof_executions": 0,
+              "scope": "Finite inert source/data controls only; no actual PDF reproduction."}
+    cases = []
+
+    def add(name, function, rejection=None):
+        cases.append((name, function, rejection))
+
+    def unchanged(function):
+        function()
+
+    try:
+        manifest_raw = b.read_direct(root / b.MANIFEST)
+        require(sha(manifest_raw) == b.MANIFEST_SHA256, "control publication manifest changed")
+        manifest = runtime.strict_json(manifest_raw)
+        inputs = {}
+        for path, entry in manifest["files"].items():
+            data = b.read_direct(root / path)
+            b.check_entry(data, entry, path)
+            inputs[path] = data
+        profile = runtime.strict_json(inputs[ASSETS + "native-tools-v1.json"])
+        nav = runtime.strict_json(inputs[ASSETS + "navigation-v1.json"])
+        bbox = inputs[ASSETS + "controls/full.words.xhtml.txt"]
+        layout = inputs[ASSETS + "controls/full.layout.txt"].decode().split("\f")
+        if layout and not layout[-1].strip():
+            layout.pop()
+        # The control uses the retained Poppler text for both data inputs. Actual
+        # production must obtain its separate pinned pypdf and Poppler observations.
+        rows = [{key: value for key, value in row.items()
+                 if key in {"title", "level", "destination_name", "destination_page",
+                            "destination_x", "destination_y_from_top"}} for row in nav["headings"]]
+        baseline = lambda: b.check_navigation(rows, nav, bbox, layout, layout)
+        add("bytes-positive", lambda: b.check_entry(b"abc", {"bytes": 3, "sha256": sha(b"abc")}, "fixture"))
+        add("bytes-content-negative", lambda: b.check_entry(b"abd", {"bytes": 3, "sha256": sha(b"abc")}, "fixture"), "pinned bytes changed")
+        add("bytes-size-negative", lambda: b.check_entry(b"abc", {"bytes": 4, "sha256": sha(b"abc")}, "fixture"), "pinned bytes changed")
+        add("bytes-bool-size-negative", lambda: b.check_entry(b"x", {"bytes": True, "sha256": sha(b"x")}, "fixture"), "pinned bytes changed")
+        add("blocked-full-reference-rejected",
+            lambda: b.check_entry(inputs[ASSETS + "controls/blocked-full-04.pdf"],
+                                  manifest["outputs"]["full"], "navigation-blocked reference"),
+            "pinned bytes changed")
+        add("relative-path-positive", lambda: b.relative_path("audit/formal/latex/a.tex"))
+        for index, value in enumerate(("", "/absolute", "../outside", "a/../b", "a//b", "a\\b", "a/./b")):
+            add("relative-path-negative-" + str(index), lambda value=value: b.relative_path(value), "source path")
+        for kind in ("full", "summary"):
+            raw = inputs[ASSETS + kind + ".pandoc.expected.tex"]
+            expected = inputs[ASSETS + kind + ".expected.tex"]
+            add("derived-tex-positive-" + kind,
+                lambda raw=raw, expected=expected, kind=kind:
+                require(b.derive_tex(raw, kind) == expected, "derived TeX did not match fixture"))
+        full = inputs[ASSETS + "full.pandoc.expected.tex"]
+        summary = inputs[ASSETS + "summary.pandoc.expected.tex"]
+        spacing = rb"\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}"
+        require(summary.count(spacing) == 1, "summary spacing control anchor changed")
+        add("derived-tex-summary-spacing-missing",
+            lambda: b.derive_tex(summary.replace(spacing, b""), "summary"),
+            "summary paragraph-spacing boundary changed")
+        add("derived-tex-summary-spacing-duplicate",
+            lambda: b.derive_tex(summary + b"\n" + spacing, "summary"),
+            "summary paragraph-spacing boundary changed")
+        add("derived-tex-float-boundary", lambda: b.derive_tex(full.replace(b"microtype,ragged2e", b"microtype,ragged3e"), "full"), "float package boundary")
+        for index, marker in enumerate((b"Consequently, at the chosen", b"The accepted mean bridge proves", b"A zero fiber contains only")):
+            add("derived-tex-introducer-" + str(index),
+                lambda marker=marker: b.derive_tex(full.replace(marker, b"changed-boundary", 1), "full"),
+                "page-flow introducer")
+        add("derived-tex-figure-count", lambda: b.derive_tex(full + b"\n\\begin{figure}", "full"), "figure inventory")
+        add("derived-tex-package-order", lambda: b.derive_tex(full.replace(b"hyperref,xurl,bookmark", b"hyperref,xurl"), "full"), "package-order boundary")
+        tokens = (r"actual\_finite\_bias", r"fiber\_inverse\_moment", r"support\_moment\_bounds",
+                  r"projected\_support\_bias", r"mass\_floor\_bias", "Classical.choice", "Quot.sound", "propext")
+        for index, token in enumerate(tokens):
+            add("derived-tex-identifier-" + str(index),
+                lambda token=token: b.derive_tex(full + ("\n\\texttt{" + token + "}").encode(), "full"),
+                "protected identifier occurrence")
+        for index, name in enumerate(sorted(path for path in manifest["canonical"] if path.endswith(".svg"))):
+            raw = inputs[manifest["canonical"][name]]
+            expected = inputs[ASSETS + "render-svg/" + Path(name).name]
+            add("derived-svg-positive-" + str(index),
+                lambda raw=raw, expected=expected: require(b.derive_svg(raw) == expected, "SVG derivative differs"))
+        add("derived-svg-nested-text", lambda: b.derive_svg(b'<svg xmlns="http://www.w3.org/2000/svg"><text><tspan>x</tspan></text></svg>'), "simple original SVG text")
+        add("navigation-positive", baseline)
+        for index in range(30):
+            changed = copy.deepcopy(rows)
+            changed[index]["destination_page"] = changed[index]["destination_page"] % 14 + 1
+            add("navigation-page-" + str(index).zfill(2),
+                lambda changed=changed: b.check_navigation(changed, nav, bbox, layout, layout),
+                "heading identity/page changed")
+            changed = copy.deepcopy(rows)
+            changed[index]["destination_y_from_top"] += 24
+            add("navigation-coordinate-" + str(index).zfill(2),
+                lambda changed=changed: b.check_navigation(changed, nav, bbox, layout, layout),
+                "heading destination coordinate changed")
+        changed = copy.deepcopy(rows)
+        changed[1]["destination_name"] = changed[0]["destination_name"]
+        add("navigation-duplicate", lambda: b.check_navigation(changed, nav, bbox, layout, layout), "heading destinations are not distinct")
+        add("navigation-missing", lambda: b.check_navigation(rows[:-1], nav, bbox, layout, layout), "outline count changed")
+        nonfinite = copy.deepcopy(rows)
+        nonfinite[0]["destination_x"] = float("nan")
+        add("navigation-nonfinite", lambda: b.check_navigation(nonfinite, nav, bbox, layout, layout), "heading destination coordinate changed")
+        bad_bbox = bbox.replace(b'xMin="70.866000"', b'xMin="72.866000"')
+        add("navigation-visible-coordinate", lambda: b.check_navigation(rows, nav, bad_bbox, layout, layout), "visible heading coordinate changed")
+        for index, identifier in enumerate(nav["identifiers"]):
+            split = [page.replace(identifier["token"], "BROKEN_IDENTIFIER") for page in layout]
+            add("identifier-pypdf-" + str(index),
+                lambda split=split: b.check_navigation(rows, nav, bbox, split, layout),
+                "protected identifier is split, missing or duplicated")
+            add("identifier-poppler-" + str(index),
+                lambda split=split: b.check_navigation(rows, nav, bbox, layout, split),
+                "protected identifier is split, missing or duplicated")
+        fixed_now = dt.datetime(2026, 9, 8, 12, tzinfo=dt.timezone.utc)
+        b.now = lambda: fixed_now
+        command = SimpleNamespace(kind="full", root=Path("/reviewed"), work_dir=Path("/fresh"), output=None)
+        valid = {
+            "schema": "pid-rs/prefix-mgw-bias-pdf-execution-v1",
+            "status": "reviewed_source_ready_for_exact_production", "kind": "full",
+            "root": "/reviewed", "work_dir": "/fresh", "output": None,
+            "optimization": sys.flags.optimize, "registered_utc": "2026-09-08T11:59:00+00:00",
+            "deadline_utc": "2026-09-08T12:30:00+00:00",
+            "stage_started_utc": "2026-09-08T11:59:00+00:00",
+            "stage_deadline_utc": "2026-09-08T13:20:00+00:00",
+            "maximum_builds": 2, "maximum_commands": 44,
+            "manifest_sha256": "manifest", "builder_sha256": "builder",
+            "tool_selectors": {name: "/admitted/" + name for name in b.TOOLS},
+            "reader_directory": "/reader",
+        }
+        check_reg = lambda value: b.admit_registration(value, command, profile, "manifest", "builder")
+        add("registration-positive", lambda: check_reg(valid))
+        for case_index, (key, value, reason) in enumerate((
+            ("kind", "summary", "command binding"), ("status", "pending", "not admitted"),
+            ("maximum_builds", 1, "production budget"), ("maximum_commands", 43, "production budget"),
+            ("maximum_builds", True, "production budget"), ("builder_sha256", "other", "source digest"),
+            ("manifest_sha256", "other", "source digest"), ("root", "/other", "command binding"),
+            ("deadline_utc", "2026-09-08T11:59:30+00:00", "chronology or deadline"),
+            ("stage_deadline_utc", "2026-09-08T14:00:00+00:00", "duration exceeds"),
+            ("registered_utc", "2026-09-08T12:01:00+00:00", "chronology or deadline"),
+            ("optimization", 1 - sys.flags.optimize, "optimization differs"),
+        )):
+            changed_reg = copy.deepcopy(valid)
+            changed_reg[key] = value
+            add("registration-negative-" + str(case_index).zfill(2) + "-" + key,
+                lambda changed_reg=changed_reg: check_reg(changed_reg), reason)
+
+        def cross(kind):
+            old = sys.argv
+            stderr, stdout = io.StringIO(), io.StringIO()
+            try:
+                sys.argv = ["builder", "--kind", kind, "--cross-toolchain"]
+                with redirect_stderr(stderr), redirect_stdout(stdout):
+                    code = b.main()
+                require(code == 2 and stdout.getvalue() == ""
+                        and stderr.getvalue() == "Bias publication: no reviewed cross-toolchain relation; status 2 refusal.\n",
+                        "cross refusal differs")
+            finally:
+                sys.argv = old
+
+        add("cross-refusal-full", lambda: cross("full"))
+        add("cross-refusal-summary", lambda: cross("summary"))
+
+        def reader_warning():
+            with b.reader_diagnostics():
+                warnings.warn("inert reader warning")
+
+        def reader_log():
+            with b.reader_diagnostics():
+                logging.getLogger("pypdf").warning("inert reader warning")
+
+        add("reader-warning", reader_warning, "reader emitted a diagnostic")
+        add("reader-logging", reader_log, "reader emitted a diagnostic")
+        def final_result_case(expire):
+            case = out / ("final-result-expiry" if expire else "final-result-positive")
+            case.mkdir()
+            target = case / "RESULT.json"
+            clock = [fixed_now]
+            limit = fixed_now + dt.timedelta(seconds=1)
+            original_record, original_now = b.record, b.now
+            events = []
+
+            def writer(path, value):
+                original_record(path, value)
+                events.append({"name": path.name, "raw": b.read_direct(path)})
+                if expire and path == target:
+                    clock[0] = limit
+
+            b.record, b.now = writer, lambda: clock[0]
+            try:
+                try:
+                    b.record_final_result(target,
+                                          {"status": "inert_successful_precursor", "new_proofs": 0},
+                                          limit)
+                except RuntimeError as error:
+                    require(expire and str(error) ==
+                            "final result persistence exceeded its registered deadline",
+                            "final writer rejected for an unrelated reason")
+                    preserved = case / "RESULT.before-late-finalization.json"
+                    require([event["name"] for event in events] ==
+                            ["RESULT.json", "RESULT.failed-finalization.json"]
+                            and b.read_direct(preserved) == events[0]["raw"],
+                            "final writer did not preserve its successful precursor")
+                    failed = runtime.strict_json(b.read_direct(target))
+                    require(failed["status"] == "failed"
+                            and failed["deadline_exhausted_during_finalization"] is True
+                            and failed["result_write_completed_utc"] == limit.isoformat()
+                            and failed["before_late_finalization_sha256"] == sha(events[0]["raw"])
+                            and b.read_direct(target) == events[1]["raw"],
+                            "final writer did not retain the targeted late disposition")
+                    original_record(case / "OBSERVATION.json", {
+                        "scope": "inert final writer only; no production precursor",
+                        "first_result_sha256": sha(events[0]["raw"]),
+                        "failed_result_sha256": sha(events[1]["raw"]),
+                        "clock_after_first_write": clock[0].isoformat(),
+                        "deadline_utc": limit.isoformat(), "targeted_rejection": str(error),
+                    })
+                    raise
+                require(not expire and [event["name"] for event in events] == ["RESULT.json"]
+                        and runtime.strict_json(b.read_direct(target))["status"] ==
+                        "inert_successful_precursor"
+                        and not (case / "RESULT.before-late-finalization.json").exists(),
+                        "final writer positive control differs")
+            finally:
+                b.record, b.now = original_record, original_now
+
+        add("final-result-write-positive", lambda: final_result_case(False))
+        add("final-result-write-expiry", lambda: final_result_case(True),
+            "final result persistence exceeded its registered deadline")
+        uri_action = {"/Type": "/Action", "/S": "/URI",
+                      "/URI": "https://arxiv.org/abs/2002.03356v5"}
+
+        def uri_positive():
+            require(b.read_https_uri_action(uri_action) == uri_action["/URI"],
+                    "URI action positive result differs")
+
+        add("uri-action-positive", uri_positive)
+        for name, value in (
+            ("uri-action-missing-type", {k: v for k, v in uri_action.items() if k != "/Type"}),
+            ("uri-action-wrong-type", {**uri_action, "/Type": "/Other"}),
+            ("uri-action-extra-key", {**uri_action, "/Next": {}}),
+            ("uri-action-wrong-scheme", {**uri_action, "/URI": "http://example.invalid/"}),
+            ("uri-action-nonstring-uri", {**uri_action, "/URI": 0}),
+        ):
+            add(name, lambda value=value: b.read_https_uri_action(value), "PDF URI action changed")
+        require([name for name, _, _ in cases] == roster, "actual case roster differs")
+        for name, function, rejection in cases:
+            require(dt.datetime.now(dt.timezone.utc) < deadline, "control deadline exhausted")
+            observed = None
+            try:
+                unchanged(function)
+            except (RuntimeError, ValueError, KeyError, TypeError) as error:
+                observed = str(error)
+            matched = observed is None if rejection is None else observed is not None and rejection in observed
+            row = {"name": name, "expected_rejection": rejection, "observed": observed, "matched": matched}
+            result["cases"].append(row)
+            write(out / (str(len(result["cases"])).zfill(3) + ".json"), row)
+            require(matched, "control outcome mismatch: " + name)
+        require((root / BUILDER).read_bytes() == source, "builder changed during controls")
+        require(all(b.read_direct(root / path) == raw for path, raw in inputs.items())
+                and b.read_direct(root / b.MANIFEST) == manifest_raw
+                and b.read_direct(root / ASSETS / "controls/roster-v4.json") == roster_raw
+                and sha(b.read_direct(Path(__file__).absolute())) == reg["self_test_sha256"],
+                "control input/source changed during controls")
+        require(dt.datetime.now(dt.timezone.utc) < deadline, "control finalization deadline exhausted")
+        result.update(status="all_registered_inert_controls_matched", count=len(cases))
+    except BaseException as error:
+        result["failure"] = repr(error)
+        raise
+    finally:
+        result["completed_utc"] = dt.datetime.now(dt.timezone.utc).isoformat()
+        b.now = actual_builder_now
+        b.record_final_result(out / "RESULT.json", result, deadline)
+    print("OK: " + str(len(cases)) + " registered bias PDF source/data controls matched")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
+        print("Bias PDF inert controls failed: " + str(error), file=sys.stderr)
+        raise SystemExit(1)

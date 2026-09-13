@@ -1,0 +1,1 @@
+The first shell redirection failed before candidate bytes were written because the adopted campaign did not create candidate/. The follow-up hash also failed with FileNotFoundError. No Lean command, wrapper, development slot or mathematical result was produced. Created the authorized candidate parent directory; no frozen file was touched.

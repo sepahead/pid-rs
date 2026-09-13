@@ -68,6 +68,8 @@ MARKDOWN_SOURCES=(
   PID2_REPRESENTED_COORDINATE_ASSURANCE.md
   PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
   audit/evidence/post-publication-custody-2026-09-02.md
+  audit/formal/lean-prefix-mgw-bias/EXPOSITION.md
+  audit/formal/lean-prefix-mgw-bias/SUMMARY.md
   audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md
   audit/evidence/real-occupancy-sensors-example-2026-09-08.md
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
@@ -92,6 +94,8 @@ STANDALONE=(
   pid2-represented-coordinate-assurance
   pid-sensor-placement-and-galadriel-guide
   post-publication-custody-2026-09-02
+  prefix-mgw-bias
+  prefix-mgw-bias-summary
   prefix-mgw-mean
   recorded-office-sensors
   support-change-tolerant-averaged-sxpid-continuity
@@ -105,7 +109,8 @@ make_fixture() {
   local stem
   mkdir -p "$fixture/scripts" "$fixture/audit/evidence" \
     "$fixture/audit/formal/latex" "$fixture/output/pdf" \
-    "$fixture/audit/formal/lean-prefix-mgw-mean"
+    "$fixture/audit/formal/lean-prefix-mgw-mean" \
+    "$fixture/audit/formal/lean-prefix-mgw-bias"
   cp "$PRODUCTION_GATE" "$fixture/scripts/check-formal-pdf-set.sh"
   chmod 0755 "$fixture/scripts/check-formal-pdf-set.sh"
   for stem in "${LATEX_STANDALONE[@]}"; do
@@ -200,6 +205,12 @@ required = (
     'FORMAL_TMP_ROOT="$(CDPATH=\'\' cd -- "$FORMAL_TMP_ROOT_INPUT" && pwd -P)"',
     'export TMPDIR="$FORMAL_TMP_ROOT"',
     'WORKFLOW_GATE_TMPDIR="$FORMAL_TMP_ROOT"',
+    'WORKFLOW_GATE_XDG_ROOT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-formal-workflow-xdg.XXXXXX")"',
+    'WORKFLOW_GATE_XDG_CONFIG="$WORKFLOW_GATE_XDG_ROOT/config"',
+    'WORKFLOW_GATE_XDG_CACHE="$WORKFLOW_GATE_XDG_ROOT/cache"',
+    'mkdir -m 0700 -- "$WORKFLOW_GATE_XDG_CONFIG" "$WORKFLOW_GATE_XDG_CACHE"',
+    '"XDG_CONFIG_HOME=$WORKFLOW_GATE_XDG_CONFIG"',
+    '"XDG_CACHE_HOME=$WORKFLOW_GATE_XDG_CACHE"',
 )
 for literal in required:
     if text.count(literal) != 1:
@@ -207,6 +218,9 @@ for literal in required:
 positions = [text.index(literal) for literal in required]
 if positions != sorted(positions):
     raise SystemExit("temporary-root custody operations are out of order")
+for forbidden in ("WORKFLOW_GATE_HOME", "PID_RS_PDF_GATE_HOME", '"HOME='):
+    if forbidden in text:
+        raise SystemExit(f"workflow environment reassigns HOME: {forbidden!r}")
 PY
 }
 
@@ -223,6 +237,8 @@ required = (
     'local status="$1"',
     'local cleanup_failed=0',
     'rm -f -- "$WORKFLOW_GATE_STDERR" || cleanup_failed=1',
+    'case "${WORKFLOW_GATE_XDG_ROOT:-}" in',
+    'formal PDF set: refusing to remove unexpected workflow XDG root',
     'if [[ "$status" -eq 0 && "$cleanup_failed" -ne 0 ]]; then\n    status=1\n  fi\n  exit "$status"\n}',
     'trap \'cleanup_workflow_gate_stderr "$?"\' EXIT',
     'trap \'cleanup_workflow_gate_stderr 130\' INT',
@@ -234,7 +250,8 @@ required = (
     'cat "$WORKFLOW_GATE_STDERR" >&2',
     'formal PDF set: workflow gate emitted a diagnostic despite status zero',
     'exit "$WORKFLOW_GATE_STATUS"',
-    'rm -f -- "$WORKFLOW_GATE_STDERR"\nWORKFLOW_GATE_STDERR=""\ntrap - EXIT INT TERM',
+    'rm -f -- "$WORKFLOW_GATE_STDERR"\nWORKFLOW_GATE_STDERR=""',
+    'rm -rf -- "$WORKFLOW_GATE_XDG_ROOT"\nWORKFLOW_GATE_XDG_ROOT=""\ntrap - EXIT INT TERM',
 )
 for literal in required:
     if text.count(literal) != 1:
@@ -270,11 +287,14 @@ lines = text.splitlines()
 for literal in required:
     if lines.count(literal) != 1:
         raise SystemExit(f"publication-link gate invocation drifted: {literal!r}")
-required_block = inventory_exit + "\n" + "\n".join(required) + "\n"
+early_bias_end = '  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"\nfi\n\n'
+required_block = early_bias_end + "\n".join(required) + "\n"
 if text.count(required_block) != 1:
     raise SystemExit(
         "publication-link gates are not one exact contiguous post-inventory block"
     )
+if text.index(inventory_exit) > text.index(required_block):
+    raise SystemExit("publication-link inventory boundary drifted")
 PY
 }
 
@@ -402,6 +422,238 @@ if text.count(expected) != 1:
 PY
 }
 
+validate_bias_gate_wiring() {
+  python3 -I -S - "$1" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+bindings = '''# Exact bias controls and reproduction consume actual pre-reviewed external registrations.
+# Inventory and unsupported cross requests never require or manufacture them.
+if [[ "$MODE" == "--exact" ]]; then
+  : "${PID_RS_BIAS_PYTHON:?formal PDF set: exact bias work requires its pinned Python selector}"
+  : "${PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION:?formal PDF set: normal bias-control registration is required}"
+  : "${PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256:?formal PDF set: normal bias-control registration hash is required}"
+  : "${PID_RS_BIAS_CONTROL_NORMAL_OUTPUT:?formal PDF set: normal bias-control output is required}"
+  : "${PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION:?formal PDF set: optimized bias-control registration is required}"
+  : "${PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256:?formal PDF set: optimized bias-control registration hash is required}"
+  : "${PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT:?formal PDF set: optimized bias-control output is required}"
+  : "${PID_RS_BIAS_FULL_REGISTRATION:?formal PDF set: full bias registration is required}"
+  : "${PID_RS_BIAS_FULL_REGISTRATION_SHA256:?formal PDF set: full bias registration hash is required}"
+  : "${PID_RS_BIAS_FULL_WORK_DIR:?formal PDF set: full bias work directory is required}"
+  : "${PID_RS_BIAS_SUMMARY_REGISTRATION:?formal PDF set: summary bias registration is required}"
+  : "${PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256:?formal PDF set: summary bias registration hash is required}"
+  : "${PID_RS_BIAS_SUMMARY_WORK_DIR:?formal PDF set: summary bias work directory is required}"
+fi
+'''
+inventory = '''if [[ "$MODE" == "--inventory-only" ]]; then
+  echo "OK: standalone-paper, renderer-fragment, and PDF inventories are exact and direct-regular"
+  exit 0
+fi
+'''
+early = '''# Keep the finite registration clocks causal: run fresh inert bias controls and both exact bias
+# reproductions before the older, longer aggregate gates.  These controls start no PDF/parser/proof
+# child; the following builder calls retain their separate production meaning.
+if [[ "$MODE" == "--exact" ]]; then
+  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py --root "$ROOT" --registration "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256" --output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT"
+  "$PID_RS_BIAS_PYTHON" -O -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py --root "$ROOT" --registration "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256" --output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT"
+  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind full --exact --check --registration "$PID_RS_BIAS_FULL_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_FULL_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_FULL_WORK_DIR"
+  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"
+fi
+'''
+cross = '''# No alternate producer profile relates either bias PDF to a Linux/cross-toolchain build.
+# Exact controls and reproduction already ran at the early finite-registration boundary above.
+if [[ "$MODE" == "--cross-toolchain" ]]; then
+  for BIAS_KIND in full summary; do
+    if python3 -I -S -B scripts/build-prefix-mgw-bias-pdf.py --kind "$BIAS_KIND" --cross-toolchain; then
+      echo "formal PDF set: $BIAS_KIND bias cross-toolchain mode unexpectedly accepted" >&2
+      exit 1
+    else
+      BIAS_CROSS_STATUS=$?
+    fi
+    if [[ "$BIAS_CROSS_STATUS" -ne 2 ]]; then
+      echo "formal PDF set: $BIAS_KIND bias refusal returned $BIAS_CROSS_STATUS, expected 2" >&2
+      exit 1
+    fi
+  done
+fi
+'''
+for name, block in (("bindings", bindings), ("inventory", inventory),
+                    ("early exact work", early), ("cross refusal", cross)):
+    if text.count(block) != 1:
+        raise SystemExit(f"bias exact/registration/refusal wiring drifted: {name}")
+positions = [text.index(bindings), text.index(inventory), text.index(early),
+             text.index('python3 -I -B scripts/check-publication-links.py'),
+             text.index('# The new mean exposition admits exact reviewed bytes only; retain fresh build evidence.'),
+             text.index(cross)]
+if positions != sorted(positions):
+    raise SystemExit("bias exact/registration/refusal wiring drifted: order")
+if text.count(inventory + "\n" + early) != 1:
+    raise SystemExit("bias exact/registration/refusal wiring drifted: early boundary")
+PY
+}
+
+make_bias_registration_probe() {
+  python3 -I -S - "$PRODUCTION_GATE" "$1" <<'PY'
+from pathlib import Path
+import sys
+
+text = Path(sys.argv[1]).read_text(encoding="utf-8")
+start = '# Exact bias controls and reproduction consume actual pre-reviewed external registrations.\n'
+end = 'if [[ "$MODE" == "--inventory-only" ]]; then\n'
+if text.count(start) != 1 or text.count(end) != 1:
+    raise SystemExit("bias registration probe anchors drifted")
+block = text[text.index(start):text.index(end)]
+Path(sys.argv[2]).write_text('#!/usr/bin/env bash\nset -euo pipefail\nMODE="$1"\n' + block,
+                           encoding="utf-8", newline="\n")
+PY
+}
+
+run_bias_registration_probe() {
+  local probe="$1"
+  local mode="$2"
+  local omitted="$3"
+  local expected_status="$4"
+  local expected_diagnostic="$5"
+  local binding
+  local status
+  local environment=("PATH=$PATH")
+  if [[ "$omitted" != "ALL" ]]; then
+    for binding in PID_RS_BIAS_PYTHON \
+        PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION \
+        PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256 \
+        PID_RS_BIAS_CONTROL_NORMAL_OUTPUT \
+        PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION \
+        PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256 \
+        PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT \
+        PID_RS_BIAS_FULL_REGISTRATION PID_RS_BIAS_FULL_REGISTRATION_SHA256 \
+        PID_RS_BIAS_FULL_WORK_DIR PID_RS_BIAS_SUMMARY_REGISTRATION \
+        PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256 PID_RS_BIAS_SUMMARY_WORK_DIR; do
+      if [[ "$binding" != "$omitted" ]]; then
+        environment+=("$binding=INERT_BINDING_NEVER_EXECUTED")
+      fi
+    done
+  fi
+  local stdout="$TEST_ROOT/bias-registration-$PASS_COUNT.stdout"
+  local stderr="$TEST_ROOT/bias-registration-$PASS_COUNT.stderr"
+  if /usr/bin/env -i "${environment[@]}" bash --noprofile --norc "$probe" "$mode" \
+      >"$stdout" 2>"$stderr"; then
+    status=0
+  else
+    status=$?
+  fi
+  if [[ "$status" -ne "$expected_status" || -s "$stdout" ]]; then
+    cat "$stdout" "$stderr" >&2
+    echo "$CHECK_NAME: bias registration probe returned $status, expected $expected_status" >&2
+    return 1
+  fi
+  if [[ "$expected_status" -eq 0 ]]; then
+    if [[ -s "$stderr" ]]; then
+      cat "$stderr" >&2
+      return 1
+    fi
+  elif ! grep -Fq "$expected_diagnostic" "$stderr"; then
+    cat "$stderr" >&2
+    echo "$CHECK_NAME: bias registration probe failed for a noncausal reason" >&2
+    return 1
+  fi
+  pass "bias registration presence mode=$mode omitted=$omitted"
+}
+
+make_bias_dispatch_probe() {
+  python3 -I -S - "$PRODUCTION_GATE" "$1" <<'PY'
+from pathlib import Path
+import sys
+
+source = Path(sys.argv[1]).read_text(encoding="utf-8")
+start = "# Keep the finite registration clocks causal: run fresh inert bias controls and both exact bias\n"
+end = '  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"\nfi\n'
+if source.count(start) != 1 or source.count(end) != 1:
+    raise SystemExit("bias dispatch probe anchors drifted")
+begin = source.index(start)
+finish = source.index(end, begin) + len(end)
+block = source[begin:finish]
+probe = f'''#!/usr/bin/env bash
+set -euo pipefail
+MODE="$1"
+ROOT="$2"
+{block}'''
+Path(sys.argv[2]).write_text(probe, encoding="utf-8", newline="\n")
+PY
+  chmod 0755 "$1"
+}
+
+run_bias_dispatch_probe() {
+  local probe="$1"
+  local mode="$2"
+  local probe_root="$TEST_ROOT/bias-dispatch-${mode#--}"
+  local fake_python="$probe_root/fake-bias-python"
+  local calls="$probe_root/calls.tsv"
+  local stdout="$probe_root/stdout"
+  local stderr="$probe_root/stderr"
+  local status
+  local environment=("PATH=$PATH")
+  mkdir -p "$probe_root"
+  : >"$calls"
+  cat >"$fake_python" <<'FAKE'
+#!/usr/bin/env bash
+set -euo pipefail
+{
+  printf 'call'
+  printf '\t%s' "$@"
+  printf '\n'
+} >>"$PID_RS_BIAS_CALL_LOG"
+FAKE
+  chmod 0755 "$fake_python"
+  if [[ "$mode" == "--exact" ]]; then
+    environment+=(
+      "PID_RS_BIAS_CALL_LOG=$calls"
+      "PID_RS_BIAS_PYTHON=$fake_python"
+      "PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION=NORMAL_REGISTRATION"
+      "PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256=NORMAL_REGISTRATION_SHA256"
+      "PID_RS_BIAS_CONTROL_NORMAL_OUTPUT=NORMAL_OUTPUT"
+      "PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION=OPTIMIZED_REGISTRATION"
+      "PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256=OPTIMIZED_REGISTRATION_SHA256"
+      "PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT=OPTIMIZED_OUTPUT"
+      "PID_RS_BIAS_FULL_REGISTRATION=FULL_REGISTRATION"
+      "PID_RS_BIAS_FULL_REGISTRATION_SHA256=FULL_REGISTRATION_SHA256"
+      "PID_RS_BIAS_FULL_WORK_DIR=FULL_WORK_DIR"
+      "PID_RS_BIAS_SUMMARY_REGISTRATION=SUMMARY_REGISTRATION"
+      "PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256=SUMMARY_REGISTRATION_SHA256"
+      "PID_RS_BIAS_SUMMARY_WORK_DIR=SUMMARY_WORK_DIR"
+    )
+  fi
+  if /usr/bin/env -i "${environment[@]}" bash --noprofile --norc \
+      "$probe" "$mode" PROBE_ROOT >"$stdout" 2>"$stderr"; then
+    status=0
+  else
+    status=$?
+  fi
+  if [[ "$status" -ne 0 || -s "$stdout" || -s "$stderr" ]]; then
+    cat "$stdout" "$stderr" >&2
+    echo "$CHECK_NAME: bias dispatch probe mode=$mode returned $status" >&2
+    return 1
+  fi
+  python3 -I -S - "$calls" "$mode" <<'PY'
+from pathlib import Path
+import sys
+
+actual = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+mode = sys.argv[2]
+expected = []
+if mode == "--exact":
+    expected = [
+        "call\t-I\t-S\t-B\tscripts/check-prefix-mgw-bias-pdf-self-test.py\t--root\tPROBE_ROOT\t--registration\tNORMAL_REGISTRATION\t--registration-sha256\tNORMAL_REGISTRATION_SHA256\t--output\tNORMAL_OUTPUT",
+        "call\t-O\t-I\t-S\t-B\tscripts/check-prefix-mgw-bias-pdf-self-test.py\t--root\tPROBE_ROOT\t--registration\tOPTIMIZED_REGISTRATION\t--registration-sha256\tOPTIMIZED_REGISTRATION_SHA256\t--output\tOPTIMIZED_OUTPUT",
+        "call\t-I\t-S\t-B\tscripts/build-prefix-mgw-bias-pdf.py\t--root\tPROBE_ROOT\t--kind\tfull\t--exact\t--check\t--registration\tFULL_REGISTRATION\t--registration-sha256\tFULL_REGISTRATION_SHA256\t--work-dir\tFULL_WORK_DIR",
+        "call\t-I\t-S\t-B\tscripts/build-prefix-mgw-bias-pdf.py\t--root\tPROBE_ROOT\t--kind\tsummary\t--exact\t--check\t--registration\tSUMMARY_REGISTRATION\t--registration-sha256\tSUMMARY_REGISTRATION_SHA256\t--work-dir\tSUMMARY_WORK_DIR",
+    ]
+if actual != expected:
+    raise SystemExit(f"bias dispatch mode {mode} differs: {actual!r}")
+PY
+  pass "bias early dispatch mode=$mode has the exact private-call boundary"
+}
+
 validate_terminal_success_contract() {
   python3 -I -S - "$1" <<'PY'
 from pathlib import Path
@@ -410,9 +662,9 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper has a warning-free same-toolchain result; current bias inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper and target-copy MGW note intentionally have no accepted cross-toolchain relation, and all six status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper and bias summary intentionally have no accepted cross-toolchain relation, and all eight status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -837,9 +1089,10 @@ PY
   fi
   pass "$label"
 done <<'CASES'
+exact success message cannot omit current bias controls	current bias inert source/data controls passed in normal and optimized Python; 	
 exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
 cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
-cross success message cannot omit the sixth refusal	all six status-2 refusals	all five status-2 refusals
+cross success message cannot omit the eighth refusal	all eight status-2 refusals	all seven status-2 refusals
 CASES
 
 for removed_invocation in \
@@ -1049,6 +1302,126 @@ finite MGW control modes cannot share one work directory	python3 -O -I -S -B scr
 finite MGW normal controls cannot be skipped by a false prefix	python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"	false && python3 -I -S -B scripts/check-mgw-fixed-world-pdf-self-test.py --work-dir "$MGW_FIXED_WORLD_CONTROL_PARENT/normal"
 MGW_FIXED_WORLD_CASES
 
+if ! validate_bias_gate_wiring "$PRODUCTION_GATE" >"$TEST_ROOT/bias-production.stdout" 2>"$TEST_ROOT/bias-production.stderr"; then
+  cat "$TEST_ROOT/bias-production.stderr" >&2
+  exit 1
+fi
+pass "fresh bias controls, early exact invocations, external bindings and status-two refusals are wired"
+
+while IFS=$'\t' read -r label before after; do
+  case_file="$TEST_ROOT/bias-gate-$PASS_COUNT.sh"
+  cp "$PRODUCTION_GATE" "$case_file"
+  python3 -I -S - "$case_file" "$before" "$after" <<'PY'
+from pathlib import Path
+import sys
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+before, after = (value.replace(r"\n", "\n") for value in sys.argv[2:])
+if text.count(before) != 1:
+    raise SystemExit("bias mutation anchor drifted")
+path.write_text(text.replace(before, after, 1), encoding="utf-8", newline="\n")
+PY
+  if validate_bias_gate_wiring "$case_file" >"$TEST_ROOT/bias-$PASS_COUNT.stdout" 2>"$TEST_ROOT/bias-$PASS_COUNT.stderr"; then
+    echo "$CHECK_NAME: bias wiring mutation accepted: $label" >&2
+    exit 1
+  fi
+  if ! grep -Fq "bias exact/registration/refusal wiring drifted" "$TEST_ROOT/bias-$PASS_COUNT.stderr"; then
+    cat "$TEST_ROOT/bias-$PASS_COUNT.stderr" >&2
+    exit 1
+  fi
+  pass "$label"
+done <<'BIAS_CASES'
+normal bias controls cannot be removed	"$PID_RS_BIAS_PYTHON" -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py --root "$ROOT" --registration "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256" --output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT"	:
+normal bias-control failure cannot be swallowed	--output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT"	--output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT" || true
+optimized bias controls cannot be removed	"$PID_RS_BIAS_PYTHON" -O -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py --root "$ROOT" --registration "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256" --output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT"	:
+optimized bias-control failure cannot be swallowed	--output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT"	--output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT" || true
+optimized bias controls cannot lose optimization	"$PID_RS_BIAS_PYTHON" -O -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py	"$PID_RS_BIAS_PYTHON" -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py
+normal controls cannot use optimized registration	--registration "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION"	--registration "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION"
+normal controls cannot use optimized registration hash	--registration-sha256 "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256"	--registration-sha256 "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256"
+normal controls cannot use optimized output	--output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT"	--output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT"
+optimized controls cannot use normal registration	--registration "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION"	--registration "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION"
+optimized controls cannot use normal registration hash	--registration-sha256 "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256"	--registration-sha256 "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256"
+optimized controls cannot use normal output	--output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT"	--output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT"
+fresh bias controls cannot run in cross mode	# child; the following builder calls retain their separate production meaning.\nif [[ "$MODE" == "--exact" ]]; then	# child; the following builder calls retain their separate production meaning.\nif [[ "$MODE" == "--cross-toolchain" ]]; then
+fresh bias controls cannot run in inventory mode	# child; the following builder calls retain their separate production meaning.\nif [[ "$MODE" == "--exact" ]]; then	# child; the following builder calls retain their separate production meaning.\nif [[ "$MODE" == "--inventory-only" ]]; then
+private bias guards cannot run in cross mode	# Inventory and unsupported cross requests never require or manufacture them.\nif [[ "$MODE" == "--exact" ]]; then	# Inventory and unsupported cross requests never require or manufacture them.\nif [[ "$MODE" == "--cross-toolchain" ]]; then
+private bias guards cannot run in inventory mode	# Inventory and unsupported cross requests never require or manufacture them.\nif [[ "$MODE" == "--exact" ]]; then	# Inventory and unsupported cross requests never require or manufacture them.\nif [[ "$MODE" == "--inventory-only" ]]; then
+full bias repetition cannot be removed	--kind full --exact --check --registration	--kind full --exact --registration
+summary bias repetition cannot be removed	--kind summary --exact --check --registration	--kind summary --exact --registration
+full bias cannot request unsupported cross mode	--kind full --exact --check	--kind full --cross-toolchain --check
+summary bias cannot request unsupported cross mode	--kind summary --exact --check	--kind summary --cross-toolchain --check
+full bias registration hash cannot be omitted	--registration-sha256 "$PID_RS_BIAS_FULL_REGISTRATION_SHA256"	
+summary bias registration hash cannot be omitted	--registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256"	
+full bias failure cannot be ignored	--work-dir "$PID_RS_BIAS_FULL_WORK_DIR"	--work-dir "$PID_RS_BIAS_FULL_WORK_DIR" || true
+summary bias failure cannot be ignored	--work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"	--work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR" || true
+full bias registration cannot be replaced by summary registration	--registration "$PID_RS_BIAS_FULL_REGISTRATION"	--registration "$PID_RS_BIAS_SUMMARY_REGISTRATION"
+both bias kinds need an unsupported-profile probe	for BIAS_KIND in full summary; do	for BIAS_KIND in full; do
+bias cross success cannot be accepted	if python3 -I -S -B scripts/build-prefix-mgw-bias-pdf.py --kind "$BIAS_KIND" --cross-toolchain; then	if ! python3 -I -S -B scripts/build-prefix-mgw-bias-pdf.py --kind "$BIAS_KIND" --cross-toolchain; then
+bias refusal must require status two	if [[ "$BIAS_CROSS_STATUS" -ne 2 ]]; then	if [[ "$BIAS_CROSS_STATUS" -ne 1 ]]; then
+full bias registration must be required before other gates	  : "${PID_RS_BIAS_FULL_REGISTRATION:?formal PDF set: full bias registration is required}"	  :
+summary bias work directory must be required before other gates	  : "${PID_RS_BIAS_SUMMARY_WORK_DIR:?formal PDF set: summary bias work directory is required}"	  :
+BIAS_CASES
+
+case_file="$TEST_ROOT/bias-gate-moved-after-long-gates.sh"
+cp "$PRODUCTION_GATE" "$case_file"
+python3 -I -S - "$case_file" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+start = "# Keep the finite registration clocks causal: run fresh inert bias controls and both exact bias\n"
+end = '  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"\nfi\n\n'
+cross = "# No alternate producer profile relates either bias PDF to a Linux/cross-toolchain build.\n"
+if text.count(start) != 1 or text.count(end) != 1 or text.count(cross) != 1:
+    raise SystemExit("bias late-placement mutation anchors drifted")
+begin = text.index(start)
+finish = text.index(end, begin) + len(end)
+block = text[begin:finish]
+text = text[:begin] + text[finish:]
+text = text.replace(cross, block + cross, 1)
+path.write_text(text, encoding="utf-8", newline="\n")
+PY
+if validate_bias_gate_wiring "$case_file" >"$TEST_ROOT/bias-moved.stdout" 2>"$TEST_ROOT/bias-moved.stderr"; then
+  echo "$CHECK_NAME: bias controls/builds moved after long gates were accepted" >&2
+  exit 1
+fi
+if ! grep -Fq "bias exact/registration/refusal wiring drifted" "$TEST_ROOT/bias-moved.stderr"; then
+  cat "$TEST_ROOT/bias-moved.stderr" >&2
+  echo "$CHECK_NAME: late bias work failed for a noncausal reason" >&2
+  exit 1
+fi
+pass "fresh bias controls and exact builds cannot move after the long aggregate gates"
+
+bias_registration_probe="$TEST_ROOT/bias-registration-probe.sh"
+make_bias_registration_probe "$bias_registration_probe"
+run_bias_registration_probe "$bias_registration_probe" --exact NONE 0 ""
+run_bias_registration_probe "$bias_registration_probe" --inventory-only ALL 0 ""
+run_bias_registration_probe "$bias_registration_probe" --cross-toolchain ALL 0 ""
+while IFS=$'\t' read -r omitted diagnostic; do
+  run_bias_registration_probe "$bias_registration_probe" --exact "$omitted" 1 "$diagnostic"
+done <<'BIAS_BINDING_CASES'
+PID_RS_BIAS_PYTHON	exact bias work requires its pinned Python selector
+PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION	normal bias-control registration is required
+PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256	normal bias-control registration hash is required
+PID_RS_BIAS_CONTROL_NORMAL_OUTPUT	normal bias-control output is required
+PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION	optimized bias-control registration is required
+PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256	optimized bias-control registration hash is required
+PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT	optimized bias-control output is required
+PID_RS_BIAS_FULL_REGISTRATION	full bias registration is required
+PID_RS_BIAS_FULL_REGISTRATION_SHA256	full bias registration hash is required
+PID_RS_BIAS_FULL_WORK_DIR	full bias work directory is required
+PID_RS_BIAS_SUMMARY_REGISTRATION	summary bias registration is required
+PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256	summary bias registration hash is required
+PID_RS_BIAS_SUMMARY_WORK_DIR	summary bias work directory is required
+BIAS_BINDING_CASES
+
+bias_dispatch_probe="$TEST_ROOT/bias-dispatch-probe.sh"
+make_bias_dispatch_probe "$bias_dispatch_probe"
+run_bias_dispatch_probe "$bias_dispatch_probe" --exact
+run_bias_dispatch_probe "$bias_dispatch_probe" --inventory-only
+run_bias_dispatch_probe "$bias_dispatch_probe" --cross-toolchain
+
 case_file="$TEST_ROOT/temporary-root-cdpath-bypass.sh"
 cp "$PRODUCTION_GATE" "$case_file"
 python3 -I -S - "$case_file" <<'PY'
@@ -1170,6 +1543,14 @@ make_fixture "$fixture"
 mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed-finite-mgw.pdf"
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
+
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary; do
+  fixture="$TEST_ROOT/missing-$bias_stem-pdf"
+  make_fixture "$fixture"
+  mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"
+  expect_failure "missing $bias_stem PDF is rejected" "$fixture" \
+    "rendered PDF inventory differs"
+done
 
 fixture="$TEST_ROOT/extra-pdf"
 make_fixture "$fixture"

@@ -1,0 +1,4 @@
+historical-campaign/attempts/002-development-0/src/PidPrefixMgwBias/Candidate.lean:73:31: error: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+historical-campaign/attempts/002-development-0/src/PidPrefixMgwBias/Candidate.lean:212:33: error: failed to prove positivity/nonnegativity/nonzeroness

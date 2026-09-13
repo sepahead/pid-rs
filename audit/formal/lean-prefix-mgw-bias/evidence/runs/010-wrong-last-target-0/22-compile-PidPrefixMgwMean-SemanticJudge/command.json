@@ -1,0 +1,33 @@
+{
+  "command": [
+    "reviewed-lean-4.33.0/bin/lean",
+    "-t",
+    "0",
+    "-M",
+    "4096",
+    "-o",
+    "historical-campaign/attempts/010-wrong-last-target-0/build/PidPrefixMgwMean/SemanticJudge.olean",
+    "historical-campaign/attempts/010-wrong-last-target-0/src/PidPrefixMgwMean/SemanticJudge.lean"
+  ],
+  "cwd": "historical-campaign/attempts/010-wrong-last-target-0/src",
+  "elapsed_seconds": 2.0573729999596253,
+  "execution_error": null,
+  "failure": null,
+  "label": "compile-PidPrefixMgwMean-SemanticJudge",
+  "limits": {
+    "observed_group_rss_bytes": 4294967296,
+    "rss_limit_is_hard_os_cap": false,
+    "rss_sample_interval_seconds": 0.1,
+    "seconds": 600,
+    "stderr_bytes": 4194304,
+    "stdout_bytes": 4194304
+  },
+  "peak_observed_group_rss_bytes": 2999795712,
+  "remaining_live_group_processes": [],
+  "retained_stderr_bytes": 0,
+  "retained_stdout_bytes": 1309,
+  "returncode": 0,
+  "started_utc": "2026-09-08T09:44:26.300204+00:00",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_sha256": "d5b1a6407db9b15013d1a8d60226286895fa95241625db512af65988d937d224"
+}

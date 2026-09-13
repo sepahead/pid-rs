@@ -1,0 +1,50 @@
+{
+  "attempts": [
+    {
+      "candidate_sha256": "edab43857e99efaf66c613be63ea64a513b38fd4feeaebe50b313172d3a0237f",
+      "kind": "development",
+      "mode": 0,
+      "output": "attempts/001-development-0",
+      "prospective_compiler_kernel_children": 1,
+      "registered_utc": "2026-09-08T09:00:54.386252+00:00",
+      "slot_kind": "development"
+    },
+    {
+      "candidate_sha256": "37877b702c04de87c60b335246989340a5c8c4a4705361fcdfb91cff199463ca",
+      "kind": "development",
+      "mode": 0,
+      "output": "attempts/002-development-0",
+      "prospective_compiler_kernel_children": 1,
+      "registered_utc": "2026-09-08T09:03:26.662008+00:00",
+      "slot_kind": "development"
+    },
+    {
+      "candidate_sha256": "be47c839769f2ee23a7ca07a3af3bb002b7891ea8409272bb0716952256fb76e",
+      "kind": "development",
+      "mode": 0,
+      "output": "attempts/003-development-0",
+      "prospective_compiler_kernel_children": 1,
+      "registered_utc": "2026-09-08T09:06:40.306044+00:00",
+      "slot_kind": "development"
+    },
+    {
+      "candidate_sha256": "f119ebc1153b761b24a404186d86bb1cb06c68f153794ed27003ea55d5378f8e",
+      "kind": "development",
+      "mode": 0,
+      "output": "attempts/004-development-0",
+      "prospective_compiler_kernel_children": 1,
+      "registered_utc": "2026-09-08T09:09:31.467391+00:00",
+      "slot_kind": "development"
+    },
+    {
+      "candidate_sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+      "kind": "development",
+      "mode": 0,
+      "output": "attempts/005-development-0",
+      "prospective_compiler_kernel_children": 1,
+      "registered_utc": "2026-09-08T09:11:16.750297+00:00",
+      "slot_kind": "development"
+    }
+  ],
+  "campaign_sha256": "98dc4b973657786c30e27d1ed52c3cb2b87ba87a468620cad16c2c475d83a636"
+}

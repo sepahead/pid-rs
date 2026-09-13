@@ -1,0 +1,9 @@
+# Current replay boundary
+
+This candidate contains the portable binding source, its exact 43-input manifest, bounded control source, and embedded fixture inputs. Those bytes make the proposed replay route inspectable inside the bias package. They do not by themselves transfer any historical execution result or establish a current run.
+
+The accepted manifest is `replay-proposed-v1.json`, SHA-256 `6783dffce953c0e6dd812658af049770b2e63889807acb34f11c75eb4d577b10`. Its status and scope remain unchanged. The assembly verified its 43 file hashes without importing or executing the adapter. The corrected `EXPOSITION.md` and `SUMMARY.md` are outside that proof-input closure.
+
+The [historical portable replay account](HISTORICAL_PORTABLE_REPLAY.md) and its [typed projection](HISTORICAL_PORTABLE_REPLAY.json) now record the later local replay and finite controls. Four selected/cosmetic normal/optimized replays passed the semantic and fresh-kernel checks; one wrong-last mutation was rejected. These are historical results with zero new theorem credit. Raw private receipts remain separately retained. The projection preserves their hashes, clocks, failures and access limits, including the missing individual return-code fields in four original control-owner records.
+
+The source assembly and historical projection did not run Lean, a kernel, the adapter or a producer. They establish no current replay. PDF reproduction has a separate input and execution boundary outside this package. Public integration, hosted execution and current repository source-state admission remain open.

@@ -103,8 +103,24 @@ trap 'cleanup 143' TERM
 
 FIRST="$BUILD_ROOT/first.pdf"
 SECOND="$BUILD_ROOT/second.pdf"
-TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$FIRST" >"$BUILD_ROOT/first.stdout" 2>"$BUILD_ROOT/first.stderr"
-TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$SECOND" >"$BUILD_ROOT/second.stdout" 2>"$BUILD_ROOT/second.stderr"
+TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$FIRST" >"$BUILD_ROOT/first.stdout" 2>"$BUILD_ROOT/first.stderr" || {
+  builder_status=$?
+  echo "$CHECK_NAME: first build stdout follows" >&2 || true
+  cat "$BUILD_ROOT/first.stdout" >&2 || true
+  echo "$CHECK_NAME: first build stderr follows" >&2 || true
+  cat "$BUILD_ROOT/first.stderr" >&2 || true
+  echo "$CHECK_NAME: first build failed with status $builder_status" >&2 || true
+  exit "$builder_status"
+}
+TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$SECOND" >"$BUILD_ROOT/second.stdout" 2>"$BUILD_ROOT/second.stderr" || {
+  builder_status=$?
+  echo "$CHECK_NAME: second build stdout follows" >&2 || true
+  cat "$BUILD_ROOT/second.stdout" >&2 || true
+  echo "$CHECK_NAME: second build stderr follows" >&2 || true
+  cat "$BUILD_ROOT/second.stderr" >&2 || true
+  echo "$CHECK_NAME: second build failed with status $builder_status" >&2 || true
+  exit "$builder_status"
+}
 if [[ -s "$BUILD_ROOT/first.stderr" || -s "$BUILD_ROOT/second.stderr" ]]; then
   cat "$BUILD_ROOT/first.stderr" "$BUILD_ROOT/second.stderr" >&2
   echo "$CHECK_NAME: builder emitted stderr" >&2

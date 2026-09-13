@@ -1,0 +1,55 @@
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:301:2: error: unsolved goals
+case neg
+K : Type u
+inst✝ : Fintype K
+p f : K → ℝ
+hp : ∀ (z : K), 0 ≤ p z
+z : K
+_hz : z ∈ Finset.univ
+hz : ¬0 < p z
+he : p z = 0
+⊢ (if 0 < 0 then 0 else 0) = 0
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:302:15: error: This simp argument is unused:
+  hz
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [if_false, he, zero_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:302:19: error: This simp argument is unused:
+  if_false
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [hz, he, zero_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:380:14: error: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hzero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:404:47: error: Application type mismatch: The argument
+  hz
+has type
+  ¬0 < p z
+but is expected to have type
+  ?m.48 < ?m.47
+in the application
+  ne_of_gt hz
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:410:67: error: unsolved goals
+I : Type u
+X : I → Type v
+T : Type w
+inst✝⁵ : Fintype I
+inst✝⁴ : (i : I) → Fintype (X i)
+inst✝³ : Fintype T
+inst✝² : DecidableEq I
+inst✝¹ : (i : I) → DecidableEq (X i)
+inst✝ : DecidableEq T
+p : Key I X T → ℝ
+z x : Key I X T
+_hx : x ∈ Finset.univ
+⊢ (if z.2 = x.2 then p x else 0) = if z.2 = x.2 then p x else 0
+historical-campaign/attempts/003-development-0/src/PidPrefixMgwBias/Candidate.lean:474:13: error: `simp` made no progress

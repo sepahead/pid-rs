@@ -1,0 +1,706 @@
+{
+  "boundary": "This is an exact-artifact navigation contract, not generic typography or accessibility acceptance.",
+  "coordinate_policy": "Compare every named PDF destination and matched visible heading box with the exact reviewed per-heading tuple; do not apply a generic sign threshold to font-metric boxes. Distinct section*. and subsection*. prefixes follow the actual heading level.",
+  "discovery_artifact_adoption_sha256": "71e05f6d04969e57e84679e88c2b4a89f1311828b640c937afc0937b0000315b",
+  "heading_count": 30,
+  "headings": [
+    {
+      "destination_name": "section*.1",
+      "destination_page": 1,
+      "destination_x": 70.866,
+      "destination_y_from_top": 424.671,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "1. The data and the question",
+      "upper_offset": 7.768490999999983,
+      "visible_matches": [
+        {
+          "page": 1,
+          "text": "1. The data and the question",
+          "x_min": 70.866,
+          "y_max": 452.86848,
+          "y_min": 432.439491
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.2",
+      "destination_page": 2,
+      "destination_x": 70.866,
+      "destination_y_from_top": 114.53099999999995,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "2. Events, atoms and supported averages",
+      "upper_offset": 6.231491000000048,
+      "visible_matches": [
+        {
+          "page": 2,
+          "text": "2. Events, atoms and supported averages",
+          "x_min": 70.866,
+          "y_max": 141.19148,
+          "y_min": 120.762491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.3",
+      "destination_page": 2,
+      "destination_x": 70.866,
+      "destination_y_from_top": 174.077,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "A node has an OR between collections and an AND within each",
+      "upper_offset": 3.7539060000000006,
+      "visible_matches": [
+        {
+          "page": 2,
+          "text": "A node has an OR between collections and an AND within each",
+          "x_min": 70.866,
+          "y_max": 194.855068,
+          "y_min": 177.830906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.5",
+      "destination_page": 2,
+      "destination_x": 70.866,
+      "destination_y_from_top": 494.98699999999997,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Lower cumulatives identify the atom families",
+      "upper_offset": 6.821906000000013,
+      "visible_matches": [
+        {
+          "page": 2,
+          "text": "Lower cumulatives identify the atom families",
+          "x_min": 70.866,
+          "y_max": 518.833068,
+          "y_min": 501.808906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.9",
+      "destination_page": 3,
+      "destination_x": 70.866,
+      "destination_y_from_top": 308.476,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "3. The actual finite-row statistic",
+      "upper_offset": 6.231491000000005,
+      "visible_matches": [
+        {
+          "page": 3,
+          "text": "3. The actual finite-row statistic",
+          "x_min": 70.866,
+          "y_max": 335.13648,
+          "y_min": 314.707491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.10",
+      "destination_page": 3,
+      "destination_x": 70.866,
+      "destination_y_from_top": 368.022,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "A prefix records joined mismatch patterns",
+      "upper_offset": 3.753906000000029,
+      "visible_matches": [
+        {
+          "page": 3,
+          "text": "A prefix records joined mismatch patterns",
+          "x_min": 70.866,
+          "y_max": 388.800068,
+          "y_min": 371.775906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.13",
+      "destination_page": 4,
+      "destination_x": 70.866,
+      "destination_y_from_top": 124.80700000000002,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "A fresh anchor and a fixed horizon define the experiment",
+      "upper_offset": 4.619905999999986,
+      "visible_matches": [
+        {
+          "page": 4,
+          "text": "A fresh anchor and a fixed horizon define the experiment",
+          "x_min": 70.866,
+          "y_max": 146.451068,
+          "y_min": 129.426906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.17",
+      "destination_page": 4,
+      "destination_x": 70.866,
+      "destination_y_from_top": 490.621,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "4. Why the increment envelopes are valid",
+      "upper_offset": 6.1554910000000405,
+      "visible_matches": [
+        {
+          "page": 4,
+          "text": "4. Why the increment envelopes are valid",
+          "x_min": 70.866,
+          "y_max": 517.20548,
+          "y_min": 496.776491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.18",
+      "destination_page": 4,
+      "destination_x": 70.866,
+      "destination_y_from_top": 550.016,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Nonnegative join coordinates give the positive envelope",
+      "upper_offset": 3.6789059999999836,
+      "visible_matches": [
+        {
+          "page": 4,
+          "text": "Nonnegative join coordinates give the positive envelope",
+          "x_min": 70.866,
+          "y_max": 570.719068,
+          "y_min": 553.694906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.21",
+      "destination_page": 5,
+      "destination_x": 70.866,
+      "destination_y_from_top": 302.909,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Conditioning and the binomial identity give the negative envelope",
+      "upper_offset": 4.694906000000003,
+      "visible_matches": [
+        {
+          "page": 5,
+          "text": "Conditioning and the binomial identity give the negative envelope",
+          "x_min": 70.866,
+          "y_max": 324.628068,
+          "y_min": 307.603906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.24",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 114.53099999999995,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "5. Scalar logarithmic tails and atom tails",
+      "upper_offset": 6.231491000000048,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "5. Scalar logarithmic tails and atom tails",
+          "x_min": 70.866,
+          "y_max": 141.19148,
+          "y_min": 120.762491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.25",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 174.077,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "A nonnegative tail has two useful envelopes",
+      "upper_offset": 3.7539060000000006,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "A nonnegative tail has two useful envelopes",
+          "x_min": 70.866,
+          "y_max": 194.855068,
+          "y_min": 177.830906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.28",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 458.642,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "The difference must be bounded before summing",
+      "upper_offset": 6.821906000000013,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "The difference must be bounded before summing",
+          "x_min": 70.866,
+          "y_max": 482.488068,
+          "y_min": 465.463906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.30",
+      "destination_page": 7,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Actual component series identify the endpoints",
+      "upper_offset": -1.2830939999999913,
+      "visible_matches": [
+        {
+          "page": 7,
+          "text": "Actual component series identify the endpoints",
+          "x_min": 70.866,
+          "y_max": 86.607068,
+          "y_min": 69.582906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.33",
+      "destination_page": 7,
+      "destination_x": 70.866,
+      "destination_y_from_top": 521.547,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "6. Five finite-bias conclusions",
+      "upper_offset": 6.362490999999977,
+      "visible_matches": [
+        {
+          "page": 7,
+          "text": "6. Five finite-bias conclusions",
+          "x_min": 70.866,
+          "y_max": 548.33848,
+          "y_min": 527.909491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.34",
+      "destination_page": 7,
+      "destination_x": 70.866,
+      "destination_y_from_top": 581.2239999999999,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "The actual expectation and its signed error",
+      "upper_offset": 3.753906000000029,
+      "visible_matches": [
+        {
+          "page": 7,
+          "text": "The actual expectation and its signed error",
+          "x_min": 70.866,
+          "y_max": 602.002068,
+          "y_min": 584.977906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.40",
+      "destination_page": 8,
+      "destination_x": 70.866,
+      "destination_y_from_top": 649.683,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "A partition identity and support-moment inequalities",
+      "upper_offset": 4.213905999999952,
+      "visible_matches": [
+        {
+          "page": 8,
+          "text": "A partition identity and support-moment inequalities",
+          "x_min": 70.866,
+          "y_max": 670.921068,
+          "y_min": 653.896906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.43",
+      "destination_page": 9,
+      "destination_x": 70.866,
+      "destination_y_from_top": 435.122,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Projected-support and population-floor bounds",
+      "upper_offset": 4.70590599999997,
+      "visible_matches": [
+        {
+          "page": 9,
+          "text": "Projected-support and population-floor bounds",
+          "x_min": 70.866,
+          "y_max": 456.852068,
+          "y_min": 439.827906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.47",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "7. Four hand derivations that explain the limits",
+      "upper_offset": -2.13750899999998,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "7. Four hand derivations that explain the limits",
+          "x_min": 70.866,
+          "y_max": 89.15748,
+          "y_min": 68.728491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.48",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 178.41999999999996,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Copying source: a nonzero tail with an exact interpretation",
+      "upper_offset": 4.705906000000027,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "Copying source: a nonzero tail with an exact interpretation",
+          "x_min": 70.866,
+          "y_max": 200.150068,
+          "y_min": 183.125906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.49",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 361.292,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Constant sources: exact cancellation despite a large query moment",
+      "upper_offset": 4.824905999999999,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "Constant sources: exact cancellation despite a large query moment",
+          "x_min": 70.866,
+          "y_max": 383.141068,
+          "y_min": 366.116906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.50",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 530.047,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Overlapping queries: an inverse moment need not be an integer",
+      "upper_offset": 4.704905999999937,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "Overlapping queries: an inverse moment need not be an integer",
+          "x_min": 70.866,
+          "y_max": 551.776068,
+          "y_min": 534.751906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.52",
+      "destination_page": 11,
+      "destination_x": 70.866,
+      "destination_y_from_top": 388.29499999999996,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Independence at horizon one: a positive finite mean when the atom is zero",
+      "upper_offset": 6.941906000000017,
+      "visible_matches": [
+        {
+          "page": 11,
+          "text": "Independence at horizon one: a positive finite mean when the atom is zero",
+          "x_min": 70.866,
+          "y_max": 412.261068,
+          "y_min": 395.236906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.54",
+      "destination_page": 12,
+      "destination_x": 70.866,
+      "destination_y_from_top": 388.733,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "8. How to use a bound without changing its assumptions",
+      "upper_offset": 8.47849100000002,
+      "visible_matches": [
+        {
+          "page": 12,
+          "text": "8. How to use a bound without changing its assumptions",
+          "x_min": 70.866,
+          "y_max": 417.64048,
+          "y_min": 397.211491
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.55",
+      "destination_page": 12,
+      "destination_x": 70.866,
+      "destination_y_from_top": 450.526,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Plan a sufficient fixed horizon",
+      "upper_offset": 3.753905999999972,
+      "visible_matches": [
+        {
+          "page": 12,
+          "text": "Plan a sufficient fixed horizon",
+          "x_min": 70.866,
+          "y_max": 471.304068,
+          "y_min": 454.279906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.57",
+      "destination_page": 13,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Population support is different from observed occupancy",
+      "upper_offset": -1.2830939999999913,
+      "visible_matches": [
+        {
+          "page": 13,
+          "text": "Population support is different from observed occupancy",
+          "x_min": 70.866,
+          "y_max": 86.607068,
+          "y_min": 69.582906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.58",
+      "destination_page": 13,
+      "destination_x": 70.866,
+      "destination_y_from_top": 235.23000000000002,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Projection can reduce alphabet growth, with limits",
+      "upper_offset": 4.82490599999997,
+      "visible_matches": [
+        {
+          "page": 13,
+          "text": "Projection can reduce alphabet growth, with limits",
+          "x_min": 70.866,
+          "y_max": 257.079068,
+          "y_min": 240.054906
+        }
+      ]
+    },
+    {
+      "destination_name": "subsection*.59",
+      "destination_page": 13,
+      "destination_x": 70.866,
+      "destination_y_from_top": 405.83299999999997,
+      "left_offset": 0.0,
+      "level": 1,
+      "page_matches": true,
+      "title": "Binning and fitted transformations change what is being estimated",
+      "upper_offset": 4.693906000000027,
+      "visible_matches": [
+        {
+          "page": 13,
+          "text": "Binning and fitted transformations change what is being estimated",
+          "x_min": 70.866,
+          "y_max": 427.551068,
+          "y_min": 410.526906
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.60",
+      "destination_page": 14,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "9. Scope, edge cases and proof status",
+      "upper_offset": -2.13750899999998,
+      "visible_matches": [
+        {
+          "page": 14,
+          "text": "9. Scope, edge cases and proof status",
+          "x_min": 70.866,
+          "y_max": 89.15748,
+          "y_min": 68.728491
+        }
+      ]
+    },
+    {
+      "destination_name": "section*.61",
+      "destination_page": 14,
+      "destination_x": 70.866,
+      "destination_y_from_top": 439.171,
+      "left_offset": 0.0,
+      "level": 0,
+      "page_matches": true,
+      "title": "10. Primary and formal references",
+      "upper_offset": 8.358491000000015,
+      "visible_matches": [
+        {
+          "page": 14,
+          "text": "10. Primary and formal references",
+          "x_min": 70.866,
+          "y_max": 467.95848,
+          "y_min": 447.529491
+        }
+      ]
+    }
+  ],
+  "historical_reader_correction_sha256": "aacb832a935845d9265866172ba81d8eca68fe7a050fc836785d0132dc47632f",
+  "identifiers": [
+    {
+      "expected_count": 2,
+      "literal_count": 2,
+      "poppler_pages": [
+        8,
+        9
+      ],
+      "pypdf_pages": [
+        8,
+        9
+      ],
+      "token": "actual_finite_bias"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        9
+      ],
+      "pypdf_pages": [
+        9
+      ],
+      "token": "fiber_inverse_moment"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        9
+      ],
+      "pypdf_pages": [
+        9
+      ],
+      "token": "support_moment_bounds"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        9
+      ],
+      "pypdf_pages": [
+        9
+      ],
+      "token": "projected_support_bias"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        9
+      ],
+      "pypdf_pages": [
+        9
+      ],
+      "token": "mass_floor_bias"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        14
+      ],
+      "pypdf_pages": [
+        14
+      ],
+      "token": "Classical.choice"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        14
+      ],
+      "pypdf_pages": [
+        14
+      ],
+      "token": "Quot.sound"
+    },
+    {
+      "expected_count": 1,
+      "literal_count": 1,
+      "poppler_pages": [
+        14
+      ],
+      "pypdf_pages": [
+        14
+      ],
+      "token": "propext"
+    }
+  ],
+  "numeric_tolerance_pt": 1e-05,
+  "pages": 14,
+  "pdf_sha256": "d84ef0523047f5ea6fd7852711d309aab033018bf2276cd109232e2bc9bdd91a",
+  "schema": "pid-rs/prefix-mgw-bias-pdf-navigation-v1",
+  "source_observation_sha256": "7befe04a27533832b5aadf425e35d6b7a373c2506eaf1919aee25f37895f6b7f"
+}

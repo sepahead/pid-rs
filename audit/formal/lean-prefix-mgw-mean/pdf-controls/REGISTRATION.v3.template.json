@@ -1,0 +1,15 @@
+{
+  "builder_sha256": "f21f065eee8fd4a77c373445d858430fc4fd968f2c2b63d983c948d8a1e6fac0",
+  "deadline_utc": null,
+  "harness_optimization": null,
+  "new_PDF_productions": 0,
+  "planned_cases": 116,
+  "registered_utc": null,
+  "schema": "pid-rs/mean-pdf-builder-controls-execution-v1",
+  "source_manifest_sha256": "7d26cdfa12a210984c0ba5c3ece147127e8295b5f6c7c5121ddeb87d97c2a3ed",
+  "status": "UNRESOLVED_replace_only_after_source_review_and_actual_registration",
+  "tool_sha256": {
+    "python": null,
+    "shell": null
+  }
+}

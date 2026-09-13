@@ -1,0 +1,137 @@
+"""Actual complete-entrypoint controls, no Lean or candidate execution. Synthetic parser fixtures are not proofs."""
+from __future__ import annotations
+import argparse, copy, datetime, hashlib, json, sys
+from types import ModuleType
+from pathlib import Path
+LANE = Path(__file__).resolve().parent
+
+def digest(raw): return hashlib.sha256(raw).hexdigest()
+def canon(value): return (json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + '\n').encode()
+def require(ok, message):
+    if not ok: raise RuntimeError(message)
+def write(path, raw): path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(raw)
+def now(): return datetime.datetime.now(datetime.timezone.utc)
+def load_module(name, path, expected):
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected: raise RuntimeError('module bytes differ: ' + str(path))
+    module = ModuleType(name); module.__file__ = str(path)
+    exec(compile(raw, str(path), 'exec', dont_inherit=True, optimize=sys.flags.optimize), module.__dict__)
+    return module
+
+def main():
+    require(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and sys.flags.optimize in (0, 1), 'requires -I -S -B optionally -O')
+    parser = argparse.ArgumentParser(description=__doc__); parser.add_argument('--output', required=True, type=Path); args = parser.parse_args()
+    runtime = load_module('exact_control_runtime', LANE / 'runtime.py', 'bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d')
+    output = args.output.absolute(); require(output.parent == LANE and not output.exists(), 'fresh direct lane output required'); output.mkdir()
+    package_raw = (LANE / 'PACKAGE.json').read_bytes(); package = json.loads(package_raw)
+    original = {name: (LANE / name).read_bytes() for name in package}
+    for name, raw in original.items(): require(digest(raw) == package[name], 'package drift before controls: ' + name)
+    original['PACKAGE.json'] = package_raw
+    for name in ['CONTROL_FROZEN.json', 'CONTROL_REGISTRATION.json']: original[name] = (LANE / name).read_bytes()
+    registration = json.loads(original['CONTROL_REGISTRATION.json']); deadline = datetime.datetime.fromisoformat(registration['deadline_utc'])
+    cases = []
+    names = ['actual_finite_bias', 'fiber_inverse_moment', 'support_moment_bounds', 'projected_support_bias', 'mass_floor_bias']
+    records = [{'theorem': 'PidPrefixMgwBiasCandidate.' + name, 'raw_target': 'PidPrefixMgwBiasRawTargets.' + name,
+                'alias_target': 'PidPrefixMgwBiasAliasTargets.' + name, 'universes': ['u', 'v'] if name == names[1] else ['u', 'v', 'w'],
+                'full_elaborated_type': 'SYNTHETIC PARSER FIXTURE ONLY; NOT A THEOREM',
+                'axioms': ['Classical.choice', 'Quot.sound', 'propext'], 'status': 'accepted'} for name in names]
+    def lines(rs): return b''.join(b'PREFIX_MGW_BIAS_JUDGE_RESULT ' + json.dumps(x, separators=(',', ':')).encode() + b'\n' for x in rs)
+    def case(name, *, change=None, command=None, expected=1, diagnostic='', rs=None, record_bytes=None):
+        require(now() < deadline, 'original operational deadline exhausted')
+        directory = output / (str(len(cases)).zfill(2) + '-' + name); lane = directory / 'lane'; lane.mkdir(parents=True)
+        for path, raw in original.items(): write(lane / path, raw)
+        if change: change(lane)
+        command = list(command or ['preflight'])
+        if rs is not None or record_bytes is not None:
+            fixture = lane / 'SYNTHETIC_RECORD_FIXTURE.jsonl'; write(fixture, record_bytes if record_bytes is not None else lines(rs))
+            command = ['parse-records', '--records', str(fixture)]
+        argv = [sys.executable, '-I', '-S', '-B'] + (['-O'] if sys.flags.optimize else []) + [str(lane / 'campaign.py')] + command
+        inputs = {str(p.relative_to(lane)): {'bytes': p.stat().st_size, 'sha256': digest(p.read_bytes())}
+                  for p in lane.rglob('*') if p.is_file()}
+        write(directory / 'REGISTERED.json', canon({'name': name, 'registered_utc': now().isoformat(), 'deadline_utc': deadline.isoformat(),
+                                                 'command': argv, 'expected_returncode': expected, 'expected_diagnostic': diagnostic, 'inputs': inputs}))
+        runner = runtime.Runner(directory, {'PATH': '/usr/bin:/bin', 'LANG': 'C.UTF-8', 'LC_ALL': 'C.UTF-8'}, preparation=False)
+        try:
+            runner.run(argv, lane, 'whole-entrypoint', timeout=min(120, max(0.01, (deadline-now()).total_seconds())), allow_stdout=True)
+        except runtime.JudgeError:
+            pass  # Only the retained exact expected terminal status below can pass a case.
+        require(len(runner.commands) == 1, 'whole-entrypoint wrapper did not retain exactly one child')
+        child = runner.commands[0]
+        require(child['failure'] is None and child['remaining_live_group_processes'] == [], 'whole-entrypoint operational failure')
+        code = child['returncode']
+        stdout = (directory / '00-whole-entrypoint/stdout.log').read_bytes()
+        stderr = (directory / '00-whole-entrypoint/stderr.log').read_bytes()
+        observed = (stdout + stderr).decode(errors='replace')
+        require(code == expected and diagnostic in observed, 'unexpected whole-entrypoint outcome: ' + name + ': ' + observed[-2000:])
+        require(not (lane / 'ATTEMPT_LEDGER.json').exists() and not (lane / 'candidate').exists() and not (lane / 'attempts').exists(),
+                'operational control crossed candidate/attempt boundary: ' + name)
+        for receipt in (lane / 'entrypoints').glob('*/RESULT.json'):
+            body = json.loads(receipt.read_bytes()); require(body.get('commands') == [] and body.get('new_bias_proofs') == 0, 'operational dispatch launched a child')
+        for path, item in inputs.items(): require(digest((lane / path).read_bytes()) == item['sha256'], 'case input drift during invocation')
+        record = {'name': name, 'returncode': code, 'expected_returncode': expected, 'diagnostic': diagnostic,
+                  'stdout_sha256': digest(stdout), 'stderr_sha256': digest(stderr), 'new_lean_children': 0, 'candidate_access': 'no candidate or attempt existed'}
+        cases.append(record); write(directory / 'RESULT.json', canon(record))
+    def edit_json(lane, name, fn):
+        body = json.loads((lane / name).read_bytes()); fn(body); write(lane / name, canon(body))
+    def control_task(lane, fn): edit_json(lane, 'CONTROL_REGISTRATION.json', fn)
+    def live(lane, adoption=None, controls=None):
+        freeze = json.loads((lane / 'CONTROL_FROZEN.json').read_bytes()); freeze['status'] = 'adopted_after_actual_controls_before_candidate'
+        if adoption is not None: write(lane / 'PREPARATION_ADOPTION.json', canon(adoption)); freeze['wrapper_sha256']['PREPARATION_ADOPTION.json'] = digest(canon(adoption))
+        if controls is not None: write(lane / 'OPERATIONAL_CONTROL_ACCEPTANCE.json', canon(controls)); freeze['wrapper_sha256']['OPERATIONAL_CONTROL_ACCEPTANCE.json'] = digest(canon(controls))
+        write(lane / 'FROZEN.json', canon(freeze)); start = datetime.datetime.fromisoformat(registration['registered_utc'])
+        write(lane / 'CAMPAIGN.json', canon({'schema': 'pid-rs/prefix-mgw-bias-campaign-v1', 'registered_utc': start.isoformat(),
+              'deadline_utc': (start + datetime.timedelta(minutes=720)).isoformat(), 'project_root': registration['project_root'],
+              'freeze_sha256': digest(canon(freeze)), 'max_development_attempts': 80, 'max_full_attempts': 8,
+              'max_concurrent_wrappers': 1, 'candidate_write_scope': 'candidate/Candidate.lean'}))
+    valid_adoption = {'status': 'five_exact_bias_types_adopted_not_proved', 'contract_sha256': package['sources/PidPrefixMgwBias/Contract.lean'],
+                      'raw_targets_sha256': package['sources/PidPrefixMgwBias/RawTargets.lean'], 'alias_targets_sha256': package['sources/PidPrefixMgwBias/AliasTargets.lean'], 'new_bias_proofs': 0}
+    live_command = ['development', '--candidate-sha256', '0' * 64]
+    case('positive-preflight', expected=0, diagnostic='preflight_pass_no_candidate_no_compiler')
+    case('positive-heterogeneous-universes', rs=records, expected=0, diagnostic='record_schema_pass_no_proof')
+    case('invalid-dispatch', command=['accepted'], expected=2, diagnostic='invalid choice')
+    case('operational-candidate-hash-forbidden', command=['preflight', '--candidate-sha256', '0'*64], expected=2, diagnostic='operational dispatch forbids candidate hash')
+    case('live-hash-required', command=['full'], expected=2, diagnostic='live dispatch requires')
+    case('records-argument-dispatch', command=['preflight', '--records', 'missing'], expected=2, diagnostic='--records belongs only')
+    case('missing-operational-freeze', change=lambda p: (p/'CONTROL_FROZEN.json').unlink(), diagnostic='CONTROL_FROZEN.json')
+    case('pending-freeze', change=lambda p: edit_json(p,'CONTROL_FROZEN.json',lambda x:x.update(status='pending')), diagnostic='freeze is not admitted')
+    case('freeze-hash-drift', change=lambda p: control_task(p,lambda x:x.update(freeze_sha256='0'*64)), diagnostic='stage freeze differs')
+    case('runtime-hash-drift', change=lambda p: write(p/'runtime.py', original['runtime.py']+b'\n'), diagnostic='module bytes differ')
+    case('policy-hash-drift', change=lambda p: write(p/'policy.py', original['policy.py']+b'\n'), diagnostic='wrapper drift: policy.py')
+    case('contract-hash-drift', change=lambda p: write(p/'sources/PidPrefixMgwBias/Contract.lean', original['sources/PidPrefixMgwBias/Contract.lean']+b'\n'), diagnostic='wrapper drift: sources/PidPrefixMgwBias/Contract.lean')
+    case('graph-hash-drift', change=lambda p: write(p/'SOURCE_GRAPH.json', original['SOURCE_GRAPH.json']+b'\n'), diagnostic='wrapper drift: SOURCE_GRAPH.json')
+    case('object-hash-drift', change=lambda p: write(p/'seed-objects/PidPrefixMgwBias/Contract.olean', original['seed-objects/PidPrefixMgwBias/Contract.olean']+b'\n'), diagnostic='wrapper drift: seed-objects/PidPrefixMgwBias/Contract.olean')
+    case('stop-record', change=lambda p: write(p/'STOP_RECORD.json',b'{}\n'), diagnostic='campaign is stopped')
+    case('future-clock', change=lambda p: control_task(p,lambda x:x.update(registered_utc='2099-01-01T00:00:00+00:00',deadline_utc='2099-01-01T00:35:00+00:00')), diagnostic='registered clock invalid or exhausted')
+    case('expired-clock', change=lambda p: control_task(p,lambda x:x.update(registered_utc='2000-01-01T00:00:00+00:00',deadline_utc='2000-01-01T00:35:00+00:00')), diagnostic='registered clock invalid or exhausted')
+    case('live-missing-freeze-before-candidate', command=live_command, diagnostic='FROZEN.json')
+    case('live-missing-adoption-pins-before-candidate', change=lambda p:live(p), command=live_command, diagnostic='required live prerequisite pins absent')
+    case('live-pending-type-adoption', change=lambda p:live(p,{'status':'pending'}, {'status':'pending'}), command=live_command, diagnostic='bias type preparation lacks root adoption')
+    bad = copy.deepcopy(valid_adoption); bad['new_bias_proofs'] = False
+    case('live-boolean-proof-count', change=lambda p:live(p,bad,{'status':'pending'}), command=live_command, diagnostic='bias type preparation lacks root adoption')
+    case('live-pending-operational-adoption', change=lambda p:live(p,valid_adoption,{'status':'pending'}), command=live_command, diagnostic='completed operational controls lack root adoption')
+    bad_controls = {'status':'adopted_completed_operational_controls','package_sha256':digest(package_raw),'new_bias_proofs':False}
+    case('live-boolean-operational-proof-count', change=lambda p:live(p,valid_adoption,bad_controls), command=live_command, diagnostic='completed operational controls lack root adoption')
+    for index, values, label in [(1,['u','v','w'],'fiber-three-universes'),(0,['u','v'],'main-two-universes'),(4,['u',True,'w'],'Boolean-universe'),(2,['u','u','w'],'duplicate-universe')]:
+        changed=copy.deepcopy(records);changed[index]['universes']=values
+        case(label,rs=changed,diagnostic='semantic universes differ')
+    case('missing-record',rs=records[:-1],diagnostic='semantic record count differs')
+    case('extra-record',rs=records+[records[0]],diagnostic='semantic record count differs')
+    case('reordered-records',rs=list(reversed(records)),diagnostic='semantic record identity differs')
+    changed=copy.deepcopy(records);changed[-1]['axioms']=['sorryAx']
+    case('prohibited-axiom-record',rs=changed,diagnostic='semantic axiom policy differs')
+    changed=copy.deepcopy(records);changed[0]['full_elaborated_type']=True
+    case('Boolean-type-record',rs=changed,diagnostic='elaborated type is absent')
+    case('duplicate-JSON-key',record_bytes=lines(records).replace(b'"status":"accepted"',b'"status":"accepted","status":"accepted"',1),diagnostic='duplicate')
+    case('nonfinite-JSON',record_bytes=lines(records).replace(b'"status":"accepted"',b'"status":NaN',1),diagnostic='nonfinite')
+    case('wrong-record-prefix',record_bytes=lines(records).replace(b'PREFIX_MGW_BIAS_JUDGE_RESULT',b'WRONG_RESULT',1),diagnostic='semantic record prefix differs')
+    require(len(cases)==35,'whole-entrypoint case count differs')
+    for name, raw in original.items(): require((LANE/name).read_bytes()==raw,'source lane changed during controls')
+    require(now()<deadline,'operational stage expired during final custody')
+    artifacts={str(path.relative_to(output)):{'bytes':path.stat().st_size,'sha256':digest(path.read_bytes())}
+               for path in sorted(output.rglob('*')) if path.is_file()}
+    require(now()<deadline,'operational stage expired during artifact custody')
+    result={'status':'all_whole_entrypoint_controls_passed','python_optimization':sys.flags.optimize,'package_sha256':digest(package_raw),
+            'self_sha256':digest(Path(__file__).read_bytes()),'case_count':len(cases),'cases':cases,'new_lean_children':0,'new_proofs':0,
+            'completed_utc':now().isoformat(),'artifacts':artifacts,'scope':'Complete campaign.py subprocesses; candidate-free admissions and synthetic record parsing only. Not proof acceptance.'}
+    write(output/'RESULT.json',canon(result));print(canon(result).decode(),end='')
+if __name__=='__main__': main()

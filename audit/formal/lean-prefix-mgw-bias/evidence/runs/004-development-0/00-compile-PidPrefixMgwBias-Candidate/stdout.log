@@ -1,0 +1,8 @@
+historical-campaign/attempts/004-development-0/src/PidPrefixMgwBias/Candidate.lean:646:4: error: Application type mismatch: The argument
+  LE.le.trans (neg_le_neg hmi) hlow
+has type
+  -((queryMoment p alpha - targetMoment p) / (↑h + 1)) ≤ jointAtomMean p plus minus alpha - actualBlockMean p alpha h
+but is expected to have type
+  -(queryMoment p alpha - targetMoment p) / (↑h + 1) ≤ jointAtomMean p plus minus alpha - actualBlockMean p alpha h
+in the application
+  And.intro (LE.le.trans (neg_le_neg hmi) hlow)

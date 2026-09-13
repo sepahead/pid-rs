@@ -34,6 +34,12 @@ PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
 REPORT_STEM="mathematical-problem-solving-workflow"
 ENTRY_WRAPPER_NAME="pid-rs-map-file-free-entry.tex"
+PARSER_PREPARER="scripts/prepare-mathematical-workflow-markdown-parser.py"
+PARSER_PREPARER_SELF_TEST="scripts/prepare-mathematical-workflow-markdown-parser-self-test.py"
+PARSER_PROFILES="audit/formal/workflow-markdown-parser-profiles.json"
+PARSER_LOADER="audit/formal/latex/pid-rs-markdown-gc-loader.lua"
+PARSER_MODULE_NAME="pid-rs-markdown-gc.lua"
+PARSER_RECEIPT_NAME="pid-rs-markdown-gc-receipt.tsv"
 SOURCE_DATE_EPOCH_VALUE="1786752000"
 RENDER_DPI=120
 HIGH_RESOLUTION_DPI=300
@@ -622,6 +628,8 @@ fi
 manifest_paths=(
   "scripts/check-mathematical-workflow-pdf.sh"
   "scripts/check-mathematical-workflow-pdf-self-test.sh"
+  "$PARSER_PREPARER"
+  "$PARSER_PREPARER_SELF_TEST"
   "scripts/sync-mathematical-workflow-tex.py"
   "scripts/check-citation-edge-countermodel.py"
   "scripts/check-citation-edge-countermodel-self-test.py"
@@ -631,6 +639,8 @@ manifest_paths=(
   "$MARKDOWN"
   "$SHARED_STYLE"
   "$PUBLICATION_STYLE"
+  "$PARSER_PROFILES"
+  "$PARSER_LOADER"
   "audit/formal/requirements-pdf.txt"
   "scripts/check-formal-pdf-log.sh"
   "scripts/check-formal-pdf-log-self-test.sh"
@@ -948,10 +958,11 @@ for path in entries:
 root.chmod(0o555)
 PY
   verify_snapshot_readonly
-  mkdir -p "$BUILD_ROOT/bootstrap-home"
+  mkdir -p "$BUILD_ROOT/bootstrap-xdg-config" "$BUILD_ROOT/bootstrap-xdg-cache"
   exec "$ENV_EXECUTABLE" -i \
     "${CLEAN_BASE_ENV[@]}" \
-    "HOME=$BUILD_ROOT/bootstrap-home" \
+    "XDG_CONFIG_HOME=$BUILD_ROOT/bootstrap-xdg-config" \
+    "XDG_CACHE_HOME=$BUILD_ROOT/bootstrap-xdg-cache" \
     "TMPDIR=$BUILD_ROOT/tmp" \
     "PYTHONDONTWRITEBYTECODE=1" \
     "SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH_VALUE" \
@@ -2272,6 +2283,8 @@ python3 -I -S -B "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py
   >/dev/null 2>&1
 python3 -O -I -S -B "$SNAPSHOT_ROOT/scripts/compare-formal-pdf-renders-self-test.py" \
   >/dev/null 2>&1
+python3 -I -S -B "$SNAPSHOT_ROOT/$PARSER_PREPARER_SELF_TEST" >/dev/null 2>&1
+python3 -O -I -S -B "$SNAPSHOT_ROOT/$PARSER_PREPARER_SELF_TEST" >/dev/null 2>&1
 bash "$SNAPSHOT_ROOT/scripts/check-formal-pdf-log-self-test.sh" >/dev/null
 if [[ "$MODE" != "--refresh" ]]; then
   # The checker self-test contains accepted controls bound to the committed PDF, rendering
@@ -2281,7 +2294,6 @@ if [[ "$MODE" != "--refresh" ]]; then
   bash "$SNAPSHOT_ROOT/scripts/check-mathematical-workflow-pdf-self-test.sh" >/dev/null
 fi
 
-PDF_BUILD_HOME="$BUILD_ROOT/home"
 PDF_XDG_CONFIG="$BUILD_ROOT/xdg-config"
 PDF_XDG_CACHE="$BUILD_ROOT/xdg-cache"
 PDF_TEXMF_HOME="$BUILD_ROOT/texmf-home"
@@ -2295,7 +2307,6 @@ EMPTY_FONT_ROOT="$BUILD_ROOT/empty-fonts"
 FONT_CACHE="$BUILD_ROOT/font-cache"
 FONT_CONFIG="$BUILD_ROOT/fontconfig.conf"
 mkdir -p \
-  "$PDF_BUILD_HOME" \
   "$PDF_XDG_CONFIG" \
   "$PDF_XDG_CACHE" \
   "$PDF_TEXMF_HOME" \
@@ -2315,7 +2326,6 @@ cat >"$PDF_XDG_CONFIG/luaotfload/luaotfload.conf" <<'EOF'
   location-precedence = texmf
 EOF
 TEX_ENVIRONMENT=(
-  "HOME=$PDF_BUILD_HOME"
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG"
   "XDG_CACHE_HOME=$PDF_XDG_CACHE"
   "TEXMFHOME=$PDF_TEXMF_HOME"
@@ -2992,19 +3002,16 @@ adjudicate_texmfdebian_query() {
 
 TEXMFDIST_ROOT="$(env -i \
   "${CLEAN_BASE_ENV[@]}" \
-  "HOME=$PDF_BUILD_HOME" \
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
   "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
   kpsewhich -var-value=TEXMFDIST)"
 TEXMFROOT_ROOT="$(env -i \
   "${CLEAN_BASE_ENV[@]}" \
-  "HOME=$PDF_BUILD_HOME" \
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
   "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
   kpsewhich -var-value=TEXMFROOT)"
 TEXMFSYSVAR_ROOT="$(env -i \
   "${CLEAN_BASE_ENV[@]}" \
-  "HOME=$PDF_BUILD_HOME" \
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
   "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
   kpsewhich -var-value=TEXMFSYSVAR)"
@@ -3014,7 +3021,6 @@ TEXMFDEBIAN_ROOT=""
 # installations define the variable and must return its exact root after the same normalization.
 if texmf_debian_query="$(env -i \
   "${CLEAN_BASE_ENV[@]}" \
-  "HOME=$PDF_BUILD_HOME" \
   "XDG_CONFIG_HOME=$PDF_XDG_CONFIG" \
   "XDG_CACHE_HOME=$PDF_XDG_CACHE" \
   kpsewhich -var-value=TEXMFDEBIAN)"; then
@@ -3054,6 +3060,85 @@ if [[ -n "$TEXMFDEBIAN_ROOT" ]]; then
     exit 2
   fi
 fi
+
+if ! MARKDOWN_MODULE_QUERY="$(env -i \
+  "${CLEAN_BASE_ENV[@]}" \
+  "${TEX_ENVIRONMENT[@]}" \
+  kpsewhich \
+    --engine=luahbtex \
+    --progname=lualatex \
+    --must-exist \
+    markdown.lua)"; then
+  echo "$CHECK_NAME: required Markdown Lua module is unavailable" >&2
+  exit 2
+fi
+MARKDOWN_MODULE_PATH="$(python3 -I -S -B -c \
+  'import os, sys; print(os.path.realpath(sys.argv[1]))' "$MARKDOWN_MODULE_QUERY")"
+require_safe_path "$MARKDOWN_MODULE_PATH" "Markdown Lua module"
+if [[ "$MARKDOWN_MODULE_QUERY" != "$MARKDOWN_MODULE_PATH" \
+    || ! -f "$MARKDOWN_MODULE_PATH" || -L "$MARKDOWN_MODULE_PATH" \
+    || "$MARKDOWN_MODULE_PATH" != "$TEXMFROOT_ROOT"/* ]]; then
+  echo "$CHECK_NAME: Markdown Lua module is not a direct file beneath the TeX installation root" >&2
+  exit 2
+fi
+if ! PARSER_IDENTITY="$(python3 -I -S -B \
+  "$SNAPSHOT_ROOT/$PARSER_PREPARER" \
+  identify \
+  --profiles "$SNAPSHOT_ROOT/$PARSER_PROFILES" \
+  --source "$MARKDOWN_MODULE_PATH")"; then
+  echo "$CHECK_NAME: installed Markdown Lua module is outside the reviewed profiles" >&2
+  exit 2
+fi
+IFS=$'\t' read -r \
+  PARSER_PROFILE_ID \
+  PARSER_METADATA_VERSION \
+  PARSER_PREIMAGE_BYTES \
+  PARSER_PREIMAGE_SHA256 \
+  PARSER_POSTIMAGE_BYTES \
+  PARSER_POSTIMAGE_SHA256 \
+  PARSER_IDENTITY_EXTRA <<<"$PARSER_IDENTITY"
+if [[ -n "$PARSER_IDENTITY_EXTRA" \
+    || "$PARSER_IDENTITY" != "$PARSER_PROFILE_ID"$'\t'"$PARSER_METADATA_VERSION"$'\t'"$PARSER_PREIMAGE_BYTES"$'\t'"$PARSER_PREIMAGE_SHA256"$'\t'"$PARSER_POSTIMAGE_BYTES"$'\t'"$PARSER_POSTIMAGE_SHA256" \
+    || ! "$PARSER_PROFILE_ID" =~ ^[a-z0-9][a-z0-9._-]{0,79}$ \
+    || ! "$PARSER_METADATA_VERSION" =~ ^[0-9A-Za-z][0-9A-Za-z.+_-]{0,79}$ \
+    || ! "$PARSER_PREIMAGE_BYTES" =~ ^[1-9][0-9]*$ \
+    || ! "$PARSER_PREIMAGE_SHA256" =~ ^[0-9a-f]{64}$ \
+    || ! "$PARSER_POSTIMAGE_BYTES" =~ ^[1-9][0-9]*$ \
+    || ! "$PARSER_POSTIMAGE_SHA256" =~ ^[0-9a-f]{64}$ ]]; then
+  echo "$CHECK_NAME: Markdown parser profile identity is malformed" >&2
+  exit 2
+fi
+readonly \
+  MARKDOWN_MODULE_PATH \
+  PARSER_IDENTITY \
+  PARSER_PROFILE_ID \
+  PARSER_METADATA_VERSION \
+  PARSER_PREIMAGE_BYTES \
+  PARSER_PREIMAGE_SHA256 \
+  PARSER_POSTIMAGE_BYTES \
+  PARSER_POSTIMAGE_SHA256
+
+verify_parser_transform() {
+  local module_path="$1"
+  local receipt_path="$2"
+  local observed_identity=""
+  if ! observed_identity="$(python3 -I -S -B \
+    "$SNAPSHOT_ROOT/$PARSER_PREPARER" \
+    verify-transform \
+    --profiles "$SNAPSHOT_ROOT/$PARSER_PROFILES" \
+    --source "$MARKDOWN_MODULE_PATH" \
+    --output "$module_path" \
+    --receipt "$receipt_path" \
+    --profile-id "$PARSER_PROFILE_ID")"; then
+    echo "$CHECK_NAME: private Markdown parser transform replay failed" >&2
+    return 1
+  fi
+  if [[ "$observed_identity" != "$PARSER_IDENTITY" ]]; then
+    echo "$CHECK_NAME: private Markdown parser transform identity drifted" >&2
+    return 1
+  fi
+}
+
 if ! FORMAT_QUERY="$(env -i \
   "${CLEAN_BASE_ENV[@]}" \
   "${TEX_ENVIRONMENT[@]}" \
@@ -3449,7 +3534,8 @@ render_pdf_page_set() {
   mkdir -p "$output_directory"
   if ! env -i \
     "${CLEAN_BASE_ENV[@]}" \
-    "HOME=$BUILD_ROOT/pdf-tools-home" \
+    "XDG_CONFIG_HOME=$BUILD_ROOT/pdf-tools-xdg-config" \
+    "XDG_CACHE_HOME=$BUILD_ROOT/pdf-tools-xdg-cache" \
     "TMPDIR=$BUILD_ROOT/tmp" \
     pdftoppm "${mode_arguments[@]}" -r "$RENDER_DPI" \
       "$pdf" "$output_directory/page" \
@@ -3509,7 +3595,8 @@ extract_report_text() {
   local stderr="$BUILD_ROOT/$label.pdftotext.stderr"
   if ! env -i \
     "${CLEAN_BASE_ENV[@]}" \
-    "HOME=$BUILD_ROOT/pdf-tools-home" \
+    "XDG_CONFIG_HOME=$BUILD_ROOT/pdf-tools-xdg-config" \
+    "XDG_CACHE_HOME=$BUILD_ROOT/pdf-tools-xdg-cache" \
     "TMPDIR=$BUILD_ROOT/tmp" \
     "${projection_command[@]}" "$pdf" "$output" \
       >"$stdout" 2>"$stderr"; then
@@ -3533,7 +3620,11 @@ extract_report_text() {
 
 PAIR_ROOT="$BUILD_ROOT/figure-pairs"
 REPORT_FIGURE_DIR="$BUILD_ROOT/report-figures"
-mkdir -p "$PAIR_ROOT" "$REPORT_FIGURE_DIR" "$BUILD_ROOT/pdf-tools-home"
+mkdir -p \
+  "$PAIR_ROOT" \
+  "$REPORT_FIGURE_DIR" \
+  "$BUILD_ROOT/pdf-tools-xdg-config" \
+  "$BUILD_ROOT/pdf-tools-xdg-cache"
 for stem in "${FIGURE_STEMS[@]}"; do
   svg="$SNAPSHOT_ROOT/$FIGURE_DIR/$stem.svg"
   committed_figure="$SNAPSHOT_ROOT/$FIGURE_DIR/$stem.pdf"
@@ -3622,7 +3713,6 @@ chmod 0555 "$REPORT_FIGURE_DIR"
 build_report() {
   local run_name="$1"
   local run_dir="$BUILD_ROOT/$run_name"
-  local run_home="$run_dir/home"
   local run_xdg_config="$run_dir/xdg-config"
   local run_xdg_cache="$run_dir/xdg-cache"
   local run_texmf_home="$run_dir/texmf-home"
@@ -3635,6 +3725,9 @@ build_report() {
   local run_tmp="$run_dir/tmp"
   local pass_dir="$run_dir/passes"
   local entry_wrapper="$run_dir/$ENTRY_WRAPPER_NAME"
+  local parser_module="$run_dir/$PARSER_MODULE_NAME"
+  local parser_receipt="$run_dir/$PARSER_RECEIPT_NAME"
+  local parser_transform_identity=""
   local pass_number=1
   local previous_state=""
   local current_state=""
@@ -3643,7 +3736,6 @@ build_report() {
   local run_format_query=""
   mkdir -p \
     "$run_dir" \
-    "$run_home" \
     "$run_xdg_config/luaotfload" \
     "$run_xdg_cache" \
     "$run_texmf_home" \
@@ -3654,11 +3746,35 @@ build_report() {
     "$run_empty_fonts" \
     "$run_tmp" \
     "$pass_dir"
-  python3 -I -S -B - "$entry_wrapper" "$SNAPSHOT_ROOT/$SOURCE" <<'PY'
+  if ! parser_transform_identity="$(python3 -I -S -B \
+    "$SNAPSHOT_ROOT/$PARSER_PREPARER" \
+    transform \
+    --profiles "$SNAPSHOT_ROOT/$PARSER_PROFILES" \
+    --source "$MARKDOWN_MODULE_PATH" \
+    --output "$parser_module" \
+    --receipt "$parser_receipt" \
+    --profile-id "$PARSER_PROFILE_ID")"; then
+    echo "$CHECK_NAME: could not create the private Markdown parser for $run_name" >&2
+    exit 1
+  fi
+  if [[ "$parser_transform_identity" != "$PARSER_IDENTITY" ]] \
+      || ! verify_parser_transform "$parser_module" "$parser_receipt"; then
+    echo "$CHECK_NAME: private Markdown parser transform differs in $run_name" >&2
+    exit 1
+  fi
+  python3 -I -S -B - \
+    "$entry_wrapper" \
+    "$SNAPSHOT_ROOT/$SOURCE" \
+    "$SNAPSHOT_ROOT/$PARSER_LOADER" \
+    "$parser_module" \
+    "$PARSER_POSTIMAGE_BYTES" \
+    "$PARSER_PROFILE_ID" \
+    "$PARSER_METADATA_VERSION" <<'PY'
 from __future__ import annotations
 
 import os
 from pathlib import Path
+import re
 import stat
 import sys
 
@@ -3670,10 +3786,34 @@ def fail(detail: str) -> None:
 
 path = Path(sys.argv[1])
 source_path = sys.argv[2]
-if not path.is_absolute() or not source_path.startswith("/"):
+loader_path = sys.argv[3]
+module_path = sys.argv[4]
+module_bytes_raw = sys.argv[5]
+profile_id = sys.argv[6]
+metadata_version = sys.argv[7]
+if not path.is_absolute() or not all(
+    value.startswith("/") for value in (source_path, loader_path, module_path)
+):
     fail("received a non-absolute path")
 if any(character in source_path for character in "{}\r\n"):
     fail("received a source path unsafe for a braced TeX input")
+if not module_bytes_raw.isdigit() or int(module_bytes_raw) < 1:
+    fail("received an invalid private-module length")
+if re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,79}", profile_id) is None:
+    fail("received an invalid parser profile ID")
+if re.fullmatch(r"[0-9A-Za-z][0-9A-Za-z.+_-]{0,79}", metadata_version) is None:
+    fail("received an invalid parser metadata version")
+
+
+def lua_long_literal(value: str) -> str:
+    if any(character in value for character in "\x00\r\n"):
+        fail("received a value unsafe for a Lua string")
+    for equals_count in range(17):
+        equals = "=" * equals_count
+        closing = "]" + equals + "]"
+        if closing not in value:
+            return "[" + equals + "[" + value + closing
+    fail("could not delimit a bounded Lua string")
 
 # The first explicit wrapper operation disables LuaTeX's default pdfTeX map after the selected format
 # has loaded.  Format initialization and any engine-supplied pre-wrapper token source are outside
@@ -3716,6 +3856,25 @@ wrapper = (
     '    "pid-rs deny category-2 font-map events")\n'
     "}\n"
     "\\typeout{PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source}\n"
+    "\\directlua{\n"
+    "  local pid_rs_markdown_gc_loader = assert(loadfile("
+    + lua_long_literal(loader_path)
+    + "))\n"
+    "  pid_rs_markdown_gc_loader({\n"
+    "    module_path = "
+    + lua_long_literal(module_path)
+    + ",\n"
+    "    module_bytes = "
+    + module_bytes_raw
+    + ",\n"
+    "    profile_id = "
+    + lua_long_literal(profile_id)
+    + ",\n"
+    "    metadata_version = "
+    + lua_long_literal(metadata_version)
+    + ",\n"
+    "  })\n"
+    "}\n"
     f"\\input{{{source_path}}}\n"
 ).encode("utf-8")
 
@@ -3780,7 +3939,6 @@ EOF
 </fontconfig>
 EOF
   local run_environment=(
-    "HOME=$run_home"
     "TMPDIR=$run_tmp"
     "XDG_CONFIG_HOME=$run_xdg_config"
     "XDG_CACHE_HOME=$run_xdg_cache"
@@ -3856,6 +4014,10 @@ EOF
       "$FORMAT_PATH" "$FORMAT_BYTES" "$FORMAT_SHA256"; then
       exit 1
     fi
+    if ! verify_parser_transform "$parser_module" "$parser_receipt"; then
+      echo "$CHECK_NAME: private Markdown parser changed before $run_name pass $pass_number" >&2
+      exit 1
+    fi
     if ! (
       cd "$run_dir"
       env -i \
@@ -3897,6 +4059,11 @@ EOF
     if [[ "$(grep -Fxc -- 'PID-RS-DEFAULT-PDFTEX-MAP=disabled-before-source' \
         "$pass_dir/pass-$pass_number.log")" -ne 1 ]]; then
       echo "$CHECK_NAME: $run_name pass $pass_number lacks one exact pre-source map sentinel" >&2
+      exit 1
+    fi
+    if [[ "$(grep -Fxc -- "PID-RS-MARKDOWN-GC=$PARSER_PROFILE_ID" \
+        "$pass_dir/pass-$pass_number.log")" -ne 1 ]]; then
+      echo "$CHECK_NAME: $run_name pass $pass_number lacks one exact parser-profile sentinel" >&2
       exit 1
     fi
     current_state="$(python3 -I -S -B - "$run_dir" "$REPORT_STEM" <<'PY'
@@ -3948,11 +4115,29 @@ PY
     echo "$CHECK_NAME: $run_name did not reach warning-free bounded fixed-point convergence" >&2
     exit 1
   fi
+  if ! verify_parser_transform "$parser_module" "$parser_receipt"; then
+    echo "$CHECK_NAME: private Markdown parser changed after $run_name convergence" >&2
+    exit 1
+  fi
   printf '%s\n' "$pass_number" >"$run_dir/pass-count.txt"
 }
 
 build_report "build-a"
 build_report "build-b"
+for run_name in build-a build-b; do
+  if ! verify_parser_transform \
+    "$BUILD_ROOT/$run_name/$PARSER_MODULE_NAME" \
+    "$BUILD_ROOT/$run_name/$PARSER_RECEIPT_NAME"; then
+    echo "$CHECK_NAME: private Markdown parser changed after both report builds" >&2
+    exit 1
+  fi
+done
+if ! cmp -s \
+  "$BUILD_ROOT/build-a/$PARSER_MODULE_NAME" \
+  "$BUILD_ROOT/build-b/$PARSER_MODULE_NAME"; then
+  echo "$CHECK_NAME: isolated builds did not receive identical private Markdown parser bytes" >&2
+  exit 1
+fi
 if ! verify_captured_format_exact \
   "$FORMAT_PATH" "$FORMAT_BYTES" "$FORMAT_SHA256"; then
   exit 1
@@ -3985,6 +4170,11 @@ python3 -I -S -B - \
   "$REPORT_FIGURE_DIR" \
   "$BUILD_ROOT/fls-closures" \
   "$ENTRY_WRAPPER_NAME" \
+  "$SNAPSHOT_ROOT/$PARSER_LOADER" \
+  "$MARKDOWN_MODULE_PATH" \
+  "$PARSER_MODULE_NAME" \
+  "$PARSER_POSTIMAGE_BYTES" \
+  "$PARSER_POSTIMAGE_SHA256" \
   "${FIGURE_STEMS[@]}" <<'PY'
 from __future__ import annotations
 
@@ -4014,7 +4204,12 @@ publication_style = Path(sys.argv[12]).resolve()
 figure_dir = Path(sys.argv[13]).resolve()
 closure_root = Path(sys.argv[14])
 entry_wrapper_name = sys.argv[15]
-stems = sys.argv[16:]
+parser_loader = Path(sys.argv[16]).resolve()
+markdown_module_source = Path(sys.argv[17]).resolve()
+parser_module_name = sys.argv[18]
+parser_module_bytes_raw = sys.argv[19]
+parser_module_sha256 = sys.argv[20]
+stems = sys.argv[21:]
 if not format_bytes_raw.isdigit() or int(format_bytes_raw) < 1:
     fail("captured format size receipt is invalid")
 format_bytes = int(format_bytes_raw)
@@ -4024,6 +4219,15 @@ if len(format_sha256) != 64 or any(
     fail("captured format digest receipt is invalid")
 if format_path.name != "lualatex.fmt":
     fail("captured format path is not the exact expected leaf")
+if parser_module_name != "pid-rs-markdown-gc.lua":
+    fail("private Markdown parser leaf differs")
+if not parser_module_bytes_raw.isdigit() or int(parser_module_bytes_raw) < 1:
+    fail("private Markdown parser size receipt is invalid")
+parser_module_bytes = int(parser_module_bytes_raw)
+if len(parser_module_sha256) != 64 or any(
+    character not in "0123456789abcdef" for character in parser_module_sha256
+):
+    fail("private Markdown parser digest receipt is invalid")
 closure_root.mkdir(parents=True, exist_ok=False)
 
 
@@ -4110,6 +4314,12 @@ for run_dir in run_directories:
                     f"TeX map-path input: {path}"
                 )
         resolved_inputs = {path.resolve() for path in raw_input_paths}
+        if markdown_module_source in resolved_inputs or any(
+            path.name == "markdown.lua" for path in resolved_inputs
+        ):
+            fail(
+                f"{run_dir.name} pass {pass_number} bypassed the private Markdown module preload"
+            )
         resolved_format_inputs = {
             path for path in resolved_inputs if path.name.casefold().endswith(".fmt")
         }
@@ -4124,11 +4334,14 @@ for run_dir in run_directories:
                     f"TeX map-path input: {path}"
                 )
         expected_entry_wrapper = (run_dir / entry_wrapper_name).resolve()
+        expected_parser_module = (run_dir / parser_module_name).resolve()
         expected_inputs = {
             source_path,
             shared_style,
             publication_style,
             expected_entry_wrapper,
+            expected_parser_module,
+            parser_loader,
             format_path,
         }
         expected_inputs.update((figure_dir / f"{stem}.pdf").resolve() for stem in stems)
@@ -4187,6 +4400,13 @@ for run_dir in run_directories:
             if path == format_path and (size, digest) != (format_bytes, format_sha256):
                 fail(
                     f"{run_dir.name} pass {pass_number} captured format receipt drifted"
+                )
+            if path == expected_parser_module and (size, digest) != (
+                parser_module_bytes,
+                parser_module_sha256,
+            ):
+                fail(
+                    f"{run_dir.name} pass {pass_number} private Markdown parser receipt drifted"
                 )
             aggregate_size += size
             if aggregate_size > 256 * 1024 * 1024:
@@ -6497,9 +6717,9 @@ RECEIPT_DIGEST="$(sha256_file "$GENERATED_RECEIPT")"
 EXECUTABLE_MANIFEST_DIGEST="$(sha256_file "$BUILD_ROOT/executables.before.tsv")"
 PYPDF_MANIFEST_DIGEST="$(sha256_file "$BUILD_ROOT/pypdf.before.tsv")"
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and $EXPECTED_PAGES-page dual-render receipt are exact ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
+  echo "OK: workflow PDF, four SVG/PDF pairs, two isolated report builds, and $EXPECTED_PAGES-page dual-render receipt are exact ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256; Markdown parser $PARSER_PROFILE_ID preimage $PARSER_PREIMAGE_BYTES bytes sha256 $PARSER_PREIMAGE_SHA256; private parser $PARSER_POSTIMAGE_BYTES bytes sha256 $PARSER_POSTIMAGE_SHA256)"
 elif [[ "$MODE" == "--cross-toolchain" ]]; then
-  echo "OK: workflow PDF and four SVG/PDF pairs passed their bounded cross-toolchain gates; the report has exact default Poppler extraction bytes, exact per-page layout token counts and ordered prose with only the two complete reviewed diagram profiles on each of pages 10 and 12, and bounded same-renderer color/grayscale pixels across $EXPECTED_PAGES pages ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256)"
+  echo "OK: workflow PDF and four SVG/PDF pairs passed their bounded cross-toolchain gates; the report has exact default Poppler extraction bytes, exact per-page layout token counts and ordered prose with only the two complete reviewed diagram profiles on each of pages 10 and 12, and bounded same-renderer color/grayscale pixels across $EXPECTED_PAGES pages ($DIGEST; receipt $RECEIPT_DIGEST; executable manifest $EXECUTABLE_MANIFEST_DIGEST; pypdf manifest $PYPDF_MANIFEST_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256; Markdown parser $PARSER_PROFILE_ID preimage $PARSER_PREIMAGE_BYTES bytes sha256 $PARSER_PREIMAGE_SHA256; private parser $PARSER_POSTIMAGE_BYTES bytes sha256 $PARSER_POSTIMAGE_SHA256)"
 else
-  echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; a new scoped visual-review receipt must now be bound before --exact can pass"
+  echo "UPDATED: the workflow PDF, rendering receipt, and four source-bound figure PDFs were individually atomically renamed and read back after two isolated $EXPECTED_PAGES-page builds ($DIGEST; receipt $RECEIPT_DIGEST; format source $FORMAT_QUERY; format snapshot $FORMAT_BYTES bytes sha256 $FORMAT_SHA256; Markdown parser $PARSER_PROFILE_ID preimage $PARSER_PREIMAGE_BYTES bytes sha256 $PARSER_PREIMAGE_SHA256; private parser $PARSER_POSTIMAGE_BYTES bytes sha256 $PARSER_POSTIMAGE_SHA256); ordinary failure rolls back completed replacements whose installed nodes remain unchanged, while a detected concurrent replacement is preserved and makes the transition fail with retained recovery state; a crash between the six renames can leave a fail-closed mismatch; a new scoped visual-review receipt must now be bound before --exact can pass"
 fi

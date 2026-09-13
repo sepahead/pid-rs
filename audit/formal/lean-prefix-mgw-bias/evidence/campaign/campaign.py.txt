@@ -1,0 +1,372 @@
+"""Bounded five-target bias runner. Operational modes never inspect a candidate."""
+from __future__ import annotations
+import argparse, datetime, fcntl, hashlib, json, os, re, stat, sys
+from pathlib import Path
+from types import ModuleType
+LANE = Path(__file__).resolve().parent
+RUNTIME_SHA = 'bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d'
+CONTRACT_SHA = '89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45'
+RAW_SHA = '4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a'
+ALIAS_SHA = 'af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570'
+POLICY_SHA = '302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0'
+ENV_SHA = '0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94'
+MEAN_SHA = '5b90925ff33db838e3bd33b2301b8172c77f5168e3532841f266ba51ef8493ea'
+PREP_SHA = '74a8e6e0fad542e18ed754b142374e5af8774621201334e536d03e61dc501750'
+LIVE = ('development', 'full', 'wrong-last-target')
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+def load_module(name, path, expected):
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise RuntimeError('module bytes differ: ' + str(path))
+    module = ModuleType(name)
+    module.__file__ = str(path)
+    exec(compile(raw, str(path), 'exec', dont_inherit=True, optimize=sys.flags.optimize), module.__dict__)
+    return module
+
+def same(a, b):
+    if type(a) is not type(b): return False
+    if type(a) is dict: return set(a) == set(b) and all(same(a[k], b[k]) for k in a)
+    if type(a) is list: return len(a) == len(b) and all(same(x, y) for x, y in zip(a, b))
+    return a == b
+
+def relative(name):
+    p = Path(name)
+    if type(name) is not str or p.is_absolute() or '..' in p.parts or str(p) != name:
+        raise RuntimeError('unsafe frozen relative path')
+    return p
+
+def check_clock(j, task, minutes):
+    started = datetime.datetime.fromisoformat(task['registered_utc'])
+    deadline = datetime.datetime.fromisoformat(task['deadline_utc'])
+    j.require(started.tzinfo is not None and deadline.tzinfo is not None
+              and deadline - started == datetime.timedelta(minutes=minutes)
+              and started <= utc() < deadline, 'registered clock invalid or exhausted')
+    j.require(not (LANE / 'STOP_RECORD.json').exists(), 'campaign is stopped')
+    return deadline
+
+def admission(j, snapshot, args):
+    live = args.kind in LIVE
+    if live:
+        j.require(not (LANE / 'SYNTHETIC_CONTROL_ONLY.json').exists(), 'synthetic control lane cannot run live')
+    freeze_raw = snapshot.read(LANE / ('FROZEN.json' if live else 'CONTROL_FROZEN.json'))
+    freeze = j.strict_json(freeze_raw)
+    j.require(freeze.get('schema') == 'pid-rs/prefix-mgw-bias-runner-freeze-v1'
+              and freeze.get('status') == ('adopted_after_actual_controls_before_candidate' if live
+                                          else 'frozen_for_operational_controls_only')
+              and freeze.get('candidate_exists') is False, 'freeze is not admitted for this dispatch')
+    task_raw = snapshot.read(LANE / ('CAMPAIGN.json' if live else 'CONTROL_REGISTRATION.json'))
+    task = j.strict_json(task_raw)
+    j.require(task.get('schema') == ('pid-rs/prefix-mgw-bias-campaign-v1' if live
+                                    else 'pid-rs/prefix-mgw-bias-operational-stage-v1'), 'stage schema differs')
+    j.require(task.get('freeze_sha256') == j.digest(freeze_raw), 'stage freeze differs')
+    deadline = check_clock(j, task, 720 if live else 35)
+    pins = freeze.get('wrapper_sha256')
+    j.require(type(pins) is dict, 'wrapper pins absent')
+    package = j.strict_json(snapshot.read(LANE / 'PACKAGE.json'))
+    j.require(type(package) is dict and set(package) <= set(pins), 'required source pins absent')
+    if live:
+        j.require({'PREPARATION_ADOPTION.json', 'OPERATIONAL_CONTROL_ACCEPTANCE.json'} <= set(pins),
+                  'required live prerequisite pins absent')
+    for name, expected in pins.items():
+        raw = snapshot.read(LANE / relative(name))
+        j.require(type(expected) is str and j.digest(raw) == expected, 'wrapper drift: ' + name)
+    for name, expected in package.items():
+        j.require(pins[name] == expected, 'package pin differs: ' + name)
+    for name, expected in [('runtime.py', RUNTIME_SHA), ('policy.py', POLICY_SHA),
+                           ('sources/PidPrefixMgwBias/Contract.lean', CONTRACT_SHA),
+                           ('sources/PidPrefixMgwBias/RawTargets.lean', RAW_SHA),
+                           ('sources/PidPrefixMgwBias/AliasTargets.lean', ALIAS_SHA),
+                           ('HISTORICAL_ENVIRONMENT.json', ENV_SHA),
+                           ('HISTORICAL_MEAN_RESULT.json', MEAN_SHA),
+                           ('TYPE_PREPARATION_RESULT.json', PREP_SHA)]:
+        j.require(pins.get(name) == expected, 'fixed reviewed pin differs: ' + name)
+    # These prerequisites are checked before candidate metadata, bytes, or attempt registration.
+    if live:
+        adoption = j.strict_json(snapshot.read(LANE / 'PREPARATION_ADOPTION.json'))
+        j.require(adoption.get('status') == 'five_exact_bias_types_adopted_not_proved'
+                  and adoption.get('contract_sha256') == CONTRACT_SHA
+                  and adoption.get('raw_targets_sha256') == RAW_SHA
+                  and adoption.get('alias_targets_sha256') == ALIAS_SHA
+                  and type(adoption.get('new_bias_proofs')) is int and adoption['new_bias_proofs'] == 0,
+                  'bias type preparation lacks root adoption')
+        controls = j.strict_json(snapshot.read(LANE / 'OPERATIONAL_CONTROL_ACCEPTANCE.json'))
+        j.require(controls.get('status') == 'adopted_completed_operational_controls'
+                  and type(controls.get('new_bias_proofs')) is int and controls['new_bias_proofs'] == 0
+                  and controls.get('package_sha256') == j.digest(snapshot.read(LANE / 'PACKAGE.json')),
+                  'completed operational controls lack root adoption')
+        roster = j.strict_json(snapshot.read(LANE / 'CONTROL_ROSTER.json'))['families']
+        j.require(set(roster) == {'entrypoint','policy','instrumented','closure'}, 'control family roster differs')
+        expected_receipts = {'controls-' + family + '-' + label + '/RESULT.json'
+                             for family in roster for label in ('normal', 'optimized')}
+        j.require(type(controls.get('receipts')) is list and len(controls['receipts']) == 8
+                  and {x['path'] for x in controls['receipts']} == expected_receipts
+                  and expected_receipts <= set(pins), 'operational receipt roster or pins differ')
+        for record in controls['receipts']:
+            body = snapshot.read(LANE / relative(record['path']))
+            j.require(j.digest(body) == record['sha256'] == pins[record['path']], 'operational receipt drift')
+            receipt = j.strict_json(body)
+            mode = 1 if '-optimized/' in record['path'] else 0
+            family = next(name for name in roster if record['path'].startswith('controls-' + name + '-'))
+            spec = roster[family]
+            j.require(type(receipt.get('python_optimization')) is int and receipt['python_optimization'] == mode,
+                      'operational receipt mode differs')
+            for field in ('new_lean_children', 'new_proofs'):
+                j.require(type(receipt.get(field)) is int and receipt[field] == 0, 'operational receipt proof count differs')
+            j.require(receipt.get('status') == spec['status'] and type(receipt.get('case_count')) is int
+                      and type(spec['count']) is int and receipt['case_count'] == spec['count']
+                      and type(receipt.get('cases')) is list and len(receipt['cases']) == spec['count']
+                      and receipt.get('self_sha256') == pins[spec['source']], 'operational control receipt incomplete')
+            if family == 'policy':
+                j.require(receipt.get('policy_sha256') == POLICY_SHA, 'policy control receipt source differs')
+            else:
+                j.require(receipt.get('package_sha256') == j.digest(snapshot.read(LANE / 'PACKAGE.json')),
+                          'operational control package differs')
+        j.require(set(controls['modes']) == {0, 1} and len(controls['modes']) == 2
+                  and all(type(x) is int for x in controls['modes']), 'operational modes differ')
+        for field, expected in [('max_development_attempts', 80), ('max_full_attempts', 8),
+                                ('max_concurrent_wrappers', 1)]:
+            j.require(type(task.get(field)) is int and task[field] == expected, 'fixed campaign bound differs: ' + field)
+        j.require(task.get('candidate_write_scope') == 'candidate/Candidate.lean', 'candidate write scope differs')
+    root = Path(task['project_root'])
+    j.require(root.is_absolute() and root.resolve(strict=True) == root, 'project root is not canonical')
+    graph = j.strict_json(snapshot.read(LANE / 'SOURCE_GRAPH.json'))
+    bindings = j.strict_json(snapshot.read(LANE / 'MODULE_BINDINGS.json'))
+    modules = bindings['pairs']
+    expected_modules = graph['dependencies'] + graph['trusted_types']
+    j.require([x['module'] for x in modules] == expected_modules and len(set(expected_modules)) == 27,
+              'source/object graph differs')
+    j.require(all(type(graph.get(x)) is int for x in ('full_children', 'wrong_final_children', 'development_children')),
+              'graph child bounds must be integers')
+    j.require(graph['full_children'] == len(expected_modules) + 4 == 31
+              and graph['wrong_final_children'] == len(expected_modules) + 2 == 29
+              and graph['development_children'] == 1, 'graph child bounds differ')
+    for binding in modules:
+        for part in ('source', 'olean'):
+            item = binding[part]
+            raw = snapshot.read(LANE / relative(item['path']))
+            j.require(type(item['bytes']) is int and len(raw) == item['bytes'] and j.digest(raw) == item['sha256'], 'bound module bytes differ')
+    old = j.strict_json(snapshot.read(LANE / 'HISTORICAL_MEAN_RESULT.json'))
+    prep = j.strict_json(snapshot.read(LANE / 'TYPE_PREPARATION_RESULT.json'))
+    j.require(old.get('status') == 'fresh_semantic_kernel_pass', 'accepted mean receipt is not a full pass')
+    j.require(prep.get('status') == 'diagnostic_type_preparation_pass_no_proofs', 'bias type preparation is not a pass')
+    for binding in modules:
+        receipt = old if binding['role'] == 'historical_dependency' else prep
+        for part, prefix, suffix in [('source', 'src/', '.lean'), ('olean', 'build/', '.olean')]:
+            item = binding[part]
+            prior = receipt['artifacts'][prefix + binding['module'] + suffix]
+            j.require(type(prior) is dict and type(prior['bytes']) is int and prior['bytes'] == item['bytes'] and prior['sha256'] == item['sha256'],
+                      'historical source/object receipt binding differs')
+    accepted = j.strict_json(snapshot.read(LANE / 'ACCEPTED_DEPENDENCY_RECORDS.json'))
+    j.require(same(accepted, {'mgw': old['accepted_mgw_dependency_records'],
+                             'prefix': old['accepted_prefix_dependency_records'],
+                             'mean': old['semantic_records']}), 'accepted dependency record correspondence differs')
+    observed = j.strict_json(snapshot.read(LANE / 'HISTORICAL_ENVIRONMENT.json'))
+    # Exact environment is historical; no fresh dependency replay is inferred here.
+    historical_env = old['inputs'].get(str(root / '.local/sx-prefix-mgw-mean-type-preparation-20260906/runs/full-normal-01/environment.json'))
+    j.require(type(historical_env) is dict and historical_env['sha256'] == ENV_SHA,
+              'accepted mean environment binding differs')
+    policy = load_module('frozen_bias_policy', LANE / 'policy.py', POLICY_SHA)
+    policies = {family: load_module('accepted_' + family + '_policy', LANE / (family + '-policy.py'),
+                                    pins[family + '-policy.py']) for family in ('mgw', 'prefix', 'mean')}
+    j.verify_source_pins(root, snapshot)
+    helper, base = j.load_helpers(root, snapshot)
+    base.check_toolchain(); base.check_lakefile(); base.check_manifest()
+    git = base.find_git()
+    j.require(Path(base.run_git(git, root, ['rev-parse', '--show-toplevel'], 'root check').strip()) == root,
+              'repository root differs')
+    base.check_dependency_checkouts(git)
+    for name, expected in observed['tools'].items():
+        j.require(j.digest(snapshot.read(Path(name))) == expected, 'reviewed tool bytes differ')
+    snapshot.verify()
+    return freeze, task, task_raw, deadline, graph, observed, policy, policies, accepted, base
+
+def main():
+    if not (sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and sys.flags.optimize in (0, 1)):
+        raise SystemExit('requires Python -I -S -B, optionally -O')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('kind', choices=('preflight', 'parse-records', *LIVE))
+    parser.add_argument('--candidate-sha256')
+    parser.add_argument('--records')
+    args = parser.parse_args()
+    if args.kind in LIVE and not args.candidate_sha256: parser.error('live dispatch requires --candidate-sha256')
+    if args.kind not in LIVE and args.candidate_sha256: parser.error('operational dispatch forbids candidate hash')
+    if (args.kind == 'parse-records') != bool(args.records): parser.error('--records belongs only to parse-records')
+    j = load_module('bias_frozen_runtime', LANE / 'runtime.py', RUNTIME_SHA)
+    output = LANE / 'entrypoints' / (utc().strftime('%Y%m%dT%H%M%S%f') + '-' + str(os.getpid()))
+    output.mkdir(parents=True, exist_ok=False)
+    result = {'status': 'failed', 'dispatch': args.kind, 'new_bias_proofs': 0}
+    snapshot, runner, deadline = j.Snapshot(), None, None
+    lock = None
+    try:
+        lock = (LANE / 'EXECUTION.lock').open('a+')
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        freeze, task, task_raw, deadline, graph, observed, policy, policies, accepted, base = admission(j, snapshot, args)
+        if args.kind not in LIVE:
+            if args.kind == 'parse-records':
+                records = policy.semantic_records(snapshot.read(Path(args.records)), j.strict_json)
+                result['parser_records'] = records
+                result['status'] = 'record_schema_pass_no_proof'
+            else:
+                result['status'] = 'preflight_pass_no_candidate_no_compiler'
+        else:
+            result, output, runner = attempt(j, snapshot, args, result, output, freeze, task, task_raw,
+                                             deadline, graph, observed, policy, policies, accepted, base)
+    except BaseException as error:
+        result.update(status='failed', failure=str(error))
+    finally:
+        output = Path(result.pop('_attempt_output', str(output)))
+        runner = result.pop('_runner', runner)
+        result['commands'] = [] if runner is None else runner.commands
+        result['inputs'] = snapshot.manifest()
+        try:
+            snapshot.save(output)
+            snapshot.verify()
+            j.require(not (LANE / 'STOP_RECORD.json').exists(), 'campaign stopped during evidence preservation')
+            if deadline is not None: j.require(utc() < deadline, 'stage expired during evidence preservation')
+        except BaseException as error:
+            result.update(status='failed', final_custody_failure=str(error))
+        artifacts = {}
+        try:
+            for path in sorted(output.rglob('*')):
+                if path.is_dir(): continue
+                j.require(stat.S_ISREG(path.lstat().st_mode), 'nonregular retained artifact')
+                raw = path.read_bytes()
+                artifacts[str(path.relative_to(output))] = {'bytes': len(raw), 'sha256': j.digest(raw)}
+        except BaseException as error:
+            result.update(status='failed', artifact_failure=str(error))
+        result['artifacts'] = artifacts
+        try:
+            snapshot.verify()
+            j.require(not (LANE / 'STOP_RECORD.json').exists(), 'campaign stopped after artifact capture')
+            if deadline is not None: j.require(utc() < deadline, 'stage expired after artifact capture')
+        except BaseException as error:
+            result.update(status='failed', final_custody_failure=str(error))
+        result['completed_utc'] = utc().isoformat()
+        (output / 'RESULT.json').write_bytes(j.canonical(result))
+        print(j.canonical({'status': result['status'], 'output': str(output), 'failure': result.get('failure')}).decode(), end='')
+        if lock is not None: lock.close()
+    return 1 if result['status'] == 'failed' else 0
+
+def attempt(j, snapshot, args, result, output, freeze, task, task_raw, deadline, graph, observed, policy, policies, accepted, base):
+    candidate = LANE / 'candidate/Candidate.lean'
+    ledger_path = LANE / 'ATTEMPT_LEDGER.json'
+    ledger_before = j.Snapshot().read(ledger_path) if ledger_path.exists() else j.canonical({'campaign_sha256': j.digest(task_raw), 'attempts': []})
+    ledger = j.strict_json(ledger_before)
+    j.require(ledger['campaign_sha256'] == j.digest(task_raw), 'campaign ledger identity differs')
+    slot = 'development' if args.kind == 'development' else 'full'
+    j.require(sum(x['slot_kind'] == slot for x in ledger['attempts']) < task['max_' + slot + '_attempts'], 'attempt limit exhausted')
+    output = LANE / 'attempts' / (str(len(ledger['attempts']) + 1).zfill(3) + '-' + args.kind + '-' + str(sys.flags.optimize))
+    output.mkdir(parents=True, exist_ok=False)
+    result['_attempt_output'] = str(output)
+    entry = {'registered_utc': utc().isoformat(), 'kind': args.kind, 'slot_kind': slot, 'mode': sys.flags.optimize,
+             'candidate_sha256': args.candidate_sha256, 'output': str(output.relative_to(LANE)),
+             'prospective_compiler_kernel_children': graph['development_children' if args.kind == 'development' else
+                                                          'wrong_final_children' if args.kind == 'wrong-last-target' else 'full_children']}
+    result['registered'] = entry
+    (output / 'LEDGER.before.json').write_bytes(ledger_before)
+    (output / 'REGISTERED.json').write_bytes(j.canonical(entry))
+    ledger['attempts'].append(entry)
+    temporary = LANE / 'ATTEMPT_LEDGER.next.json'
+    with temporary.open('xb') as stream:
+        stream.write(j.canonical(ledger)); stream.flush(); os.fsync(stream.fileno())
+    temporary.replace(ledger_path)
+    snapshot.read(ledger_path)
+    # Preserve output and runner ownership even if any later operation raises.
+    result['_attempt_output'] = str(output)
+    source_stat = candidate.lstat()
+    j.require(stat.S_ISREG(source_stat.st_mode) and source_stat.st_size <= 2 * 1024**2, 'candidate source shape or byte budget differs')
+    source = snapshot.read(candidate)
+    (output / 'Candidate.original.lean').write_bytes(source)
+    result['captured_sha256'] = j.digest(source)
+    j.check_candidate_hash(source, args.candidate_sha256)
+    policy.candidate_policy(source, base, candidate, development_helpers=args.kind == 'development')
+    previous_records = None
+    if args.kind == 'wrong-last-target':
+        for previous in ledger['attempts'][:-1]:
+            if previous['kind'] != 'full' or previous['candidate_sha256'] != j.digest(source): continue
+            directory = LANE / previous['output']
+            prior = j.strict_json(snapshot.read(directory / 'RESULT.json'))
+            if prior['status'] == 'fresh_semantic_kernel_pass' and same(prior['registered'], previous):
+                j.require(snapshot.read(directory / 'Candidate.original.lean') == source, 'prior original bytes differ')
+                previous_records = prior['semantic_records']
+                result['prior_full_pass'] = {'path': str(directory / 'RESULT.json'), 'sha256': j.digest(snapshot.read(directory / 'RESULT.json'))}
+                break
+        j.require(previous_records is not None, 'negative control requires a prior full pass of identical bytes')
+        text = source.decode(); masked = base.mask_lean_comments_and_strings(text, candidate)
+        markers = list(re.finditer(r'(?m)^[ \t]*theorem[ \t]+mass_floor_bias\b', masked))
+        j.require(len(markers) == 1, 'negative-control final theorem marker differs')
+        source = (text[:markers[0].start()] + 'theorem mass_floor_bias : True := by trivial\n\nend PidPrefixMgwBiasCandidate\n').encode()
+        policy.candidate_policy(source, base, output / 'Candidate.control.lean', final_control=True)
+    (output / 'Candidate.executed.lean').write_bytes(source)
+    result['executed_sha256'] = j.digest(source)
+    (output / 'EXECUTION_INPUT.json').write_bytes(j.canonical({'registered': entry, 'executed_sha256': j.digest(source)}))
+    lean = next(Path(x) for x in observed['tools'] if x.endswith('/bin/lean'))
+    checker = next(Path(x) for x in observed['tools'] if x.endswith('/bin/leanchecker'))
+    src, build = output / 'src', output / 'build'
+    src.mkdir(); build.mkdir()
+    modules = graph['dependencies'] + graph['trusted_types']
+    for module in modules:
+        target = src / (module + '.lean'); target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(snapshot.read(LANE / ('sources/' + module + '.lean'))); snapshot.read(target)
+        if args.kind == 'development':
+            obj = build / (module + '.olean'); obj.parent.mkdir(parents=True, exist_ok=True)
+            obj.write_bytes(snapshot.read(LANE / ('seed-objects/' + module + '.olean'))); snapshot.read(obj)
+    for module, raw in [(graph['candidate'], source), (graph['semantic_judge'], snapshot.read(LANE / 'SemanticJudge.lean.in')),
+                         (graph['root'], snapshot.read(LANE / 'BiasCandidateRoot.lean.in'))]:
+        target = src / (module + '.lean'); target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(raw); snapshot.read(target)
+    environment = {'PATH': str(lean.parent) + ':/usr/bin:/bin', 'LANG': 'C.UTF-8', 'LC_ALL': 'C.UTF-8',
+                   'LEAN_PATH': str(build) + os.pathsep + os.pathsep.join(observed['lean_search_path'].split(os.pathsep)[1:]),
+                   'LEAN_SRC_PATH': str(src)}
+    runner = j.Runner(output, environment, preparation=False)
+    result['_runner'] = runner
+    sequence = ([] if args.kind == 'development' else modules) + [graph['candidate']]
+    if args.kind != 'development': sequence += [graph['semantic_judge']]
+    def run(command, label, allow_stdout=False):
+        snapshot.verify(); j.require(not (LANE / 'STOP_RECORD.json').exists(), 'campaign stopped before child')
+        remaining = (deadline - utc()).total_seconds()
+        j.require(remaining > 0 and len(runner.commands) < entry['prospective_compiler_kernel_children'], 'clock or graph child bound exhausted')
+        return runner.run(command, src, label, timeout=min(600, remaining), allow_stdout=allow_stdout)
+    for module in sequence:
+        target = build / (module + '.olean'); target.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            stdout = run([str(lean), '-t', '0', '-M', '4096', '-o', str(target), str(src / (module + '.lean'))],
+                         'compile-' + module.replace('/', '-'), module.endswith('SemanticJudge') or args.kind == 'development')
+        except j.JudgeError:
+            if args.kind != 'wrong-last-target' or module != graph['semantic_judge']: raise
+            last = runner.commands[-1]
+            log = output / (str(len(runner.commands)-1).zfill(2) + '-' + last['label']) / 'stdout.log'
+            text = log.read_text()
+            j.require(last['failure'] is None and type(last['returncode']) is int and last['returncode'] != 0
+                      and last['retained_stderr_bytes'] == 0 and not last['remaining_live_group_processes']
+                      and 'mass_floor_bias' in text
+                      and 'type mismatch' in text.lower(), 'wrong-final did not reach exact target type rejection')
+            lines = [line for line in text.splitlines() if line.startswith('PREFIX_MGW_BIAS_JUDGE_RESULT ')]
+            j.require(len(lines) == 4, 'wrong-final must preserve exactly four accepted prefix records')
+            parsed = [j.strict_json(line.split(' ', 1)[1].encode()) for line in lines]
+            j.require(same(parsed, previous_records[:4]), 'wrong-final preceding four records differ')
+            j.require(len(runner.commands) == entry['prospective_compiler_kernel_children'], 'wrong-final graph count differs')
+            result.update(status='expected_target_rejection', preserved_semantic_records=parsed)
+            return result, output, runner
+        snapshot.read(target)
+        if module == graph['semantic_judge']:
+            result['semantic_records'] = policy.semantic_records(stdout, j.strict_json)
+        for family, judge in [('mgw', 'PidMgwBridge/SemanticJudge'), ('prefix', 'PidPrefixProbability/SemanticJudge'), ('mean', 'PidPrefixMgwMean/SemanticJudge')]:
+            if module == judge:
+                records = policies[family].semantic_records(stdout, j.strict_json)
+                j.require(same(records, accepted[family]), 'accepted ' + family + ' dependency records differ')
+                result['accepted_' + family + '_dependency_records'] = records
+    j.require(args.kind != 'wrong-last-target', 'wrong final target was accepted')
+    if args.kind == 'full':
+        root_object = build / (graph['root'] + '.olean')
+        run([str(lean), '-t', '0', '-M', '4096', '-o', str(root_object), str(src / (graph['root'] + '.lean'))], 'compile-root')
+        snapshot.read(root_object)
+        run([str(checker), '--fresh', graph['root']], 'fresh-kernel')
+    j.require(len(runner.commands) == entry['prospective_compiler_kernel_children'], 'completed graph child count differs')
+    result['status'] = 'fresh_semantic_kernel_pass' if args.kind == 'full' else 'development_compile_pass'
+    return result, output, runner
+
+if __name__ == '__main__':
+    raise SystemExit(main())

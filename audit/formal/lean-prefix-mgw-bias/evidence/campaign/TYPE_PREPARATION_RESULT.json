@@ -1,0 +1,1331 @@
+{
+  "artifacts": {
+    "00-compile-TypeJudge/command.json": {
+      "bytes": 1429,
+      "sha256": "721b3751741c5ab9764c70b2aa8b662d5879cd1878e24bbb09222ab3c2e346b6"
+    },
+    "00-compile-TypeJudge/registered.json": {
+      "bytes": 4259,
+      "sha256": "3ad33fb302e11e4d8433c634df6171402286fd07b5801775a7ce4825c4364bcb"
+    },
+    "00-compile-TypeJudge/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "00-compile-TypeJudge/stdout.log": {
+      "bytes": 95709,
+      "sha256": "4d926028feba7cb19c158b0c2906b96e6d2452e8697cbfb03f1da604b7ae1eec"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "build/PidPrefixMgwBias/AliasTargets.olean": {
+      "bytes": 6552,
+      "sha256": "d0c1d61c29f1374c3fe8c17a891184062489e51bb2bec8f3a8932c9c8930d1f5"
+    },
+    "build/PidPrefixMgwBias/Contract.olean": {
+      "bytes": 153040,
+      "sha256": "fc7c6fa3df444b4545324e2e3589705c03f8005fca0c2011aef6337dd021c2a6"
+    },
+    "build/PidPrefixMgwBias/PreparationControls.olean": {
+      "bytes": 149000,
+      "sha256": "b2067fdba9d2d0aea65111570e917706f3d7df95b3a42dabf67c9a8f4f934122"
+    },
+    "build/PidPrefixMgwBias/PreparationRoot.olean": {
+      "bytes": 1608,
+      "sha256": "5ec95005dc853629b7fdefe5cba96eda7dff4a0faa202f103748aa2a162aa526"
+    },
+    "build/PidPrefixMgwBias/RawTargets.olean": {
+      "bytes": 84728,
+      "sha256": "ec67182c58db69c2ed518eff0c8ae645604cb5d61f3109c2c5bcf9724526652f"
+    },
+    "build/PidPrefixMgwBias/TypeJudge.olean": {
+      "bytes": 213392,
+      "sha256": "2e54ba0e4d949009280dec48010ea7c120c5b0e09176710043678fba532b7f03"
+    },
+    "build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482048,
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "build/PidPrefixMgwMean/SemanticJudge.olean": {
+      "bytes": 95616,
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "build/PrefixMgwMeanCandidateRoot.olean": {
+      "bytes": 1784,
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "environment.json": {
+      "bytes": 3764,
+      "sha256": "100695855cfe928cca935c1e8a3e1a1f4b44262c5598fa3e5b255486d4ee4255"
+    },
+    "input-bytes/03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "input-bytes/04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "input-bytes/08062c9fc9b70003c592d015ac8ff10ceac648a153c5008651112754c3e07e61": {
+      "bytes": 1030,
+      "sha256": "08062c9fc9b70003c592d015ac8ff10ceac648a153c5008651112754c3e07e61"
+    },
+    "input-bytes/0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "input-bytes/0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94": {
+      "bytes": 21519,
+      "sha256": "0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94"
+    },
+    "input-bytes/100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "input-bytes/17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "input-bytes/1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "input-bytes/1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "input-bytes/1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0": {
+      "bytes": 1784,
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "input-bytes/2211eb1a8ab0f467ee5ba5b32e978a51ab26f5b9d18989ea7979cb8162d17abf": {
+      "bytes": 16149,
+      "sha256": "2211eb1a8ab0f467ee5ba5b32e978a51ab26f5b9d18989ea7979cb8162d17abf"
+    },
+    "input-bytes/224000607302fb8a1c77bf9ea79a588c80ceff4ff17385f549ef3becebbadc4d": {
+      "bytes": 1167,
+      "sha256": "224000607302fb8a1c77bf9ea79a588c80ceff4ff17385f549ef3becebbadc4d"
+    },
+    "input-bytes/24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "input-bytes/257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "input-bytes/26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "input-bytes/297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    },
+    "input-bytes/2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "input-bytes/2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "input-bytes/2e54ba0e4d949009280dec48010ea7c120c5b0e09176710043678fba532b7f03": {
+      "bytes": 213392,
+      "sha256": "2e54ba0e4d949009280dec48010ea7c120c5b0e09176710043678fba532b7f03"
+    },
+    "input-bytes/301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "input-bytes/302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "input-bytes/302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0": {
+      "bytes": 6806,
+      "sha256": "302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0"
+    },
+    "input-bytes/3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "input-bytes/3a29820f07839c80f4ebe09dcc3745e476fc140f6865229d2aee08bf15a551a2": {
+      "bytes": 2608,
+      "sha256": "3a29820f07839c80f4ebe09dcc3745e476fc140f6865229d2aee08bf15a551a2"
+    },
+    "input-bytes/3c0c000fd49a658148cd64c5fd195bb7524ccff45d4e9f429ffcc49e2f15ddf6": {
+      "bytes": 16045,
+      "sha256": "3c0c000fd49a658148cd64c5fd195bb7524ccff45d4e9f429ffcc49e2f15ddf6"
+    },
+    "input-bytes/3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "input-bytes/3e2d94af4bad62f06903e534bdbb215b329c56bf59eb288dc01bb7683a13f3e2": {
+      "bytes": 200943,
+      "sha256": "3e2d94af4bad62f06903e534bdbb215b329c56bf59eb288dc01bb7683a13f3e2"
+    },
+    "input-bytes/3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "input-bytes/416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "input-bytes/4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "input-bytes/4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a": {
+      "bytes": 8095,
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    "input-bytes/4fb5e63a6e515f36b0f8aa87d6c34d2337cf2d9e1e2183151cfc143a8dd3bf25": {
+      "bytes": 511,
+      "sha256": "4fb5e63a6e515f36b0f8aa87d6c34d2337cf2d9e1e2183151cfc143a8dd3bf25"
+    },
+    "input-bytes/51388c57e8448021b79b82440309521cb81decd51bc66e52bc8f7dbe5f597ec2": {
+      "bytes": 3372,
+      "sha256": "51388c57e8448021b79b82440309521cb81decd51bc66e52bc8f7dbe5f597ec2"
+    },
+    "input-bytes/52c336d5d9934e4eb511f47364e0acc36cddb4309b9a607919bf49440faceb43": {
+      "bytes": 1323,
+      "sha256": "52c336d5d9934e4eb511f47364e0acc36cddb4309b9a607919bf49440faceb43"
+    },
+    "input-bytes/544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "input-bytes/55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "input-bytes/569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "input-bytes/5b90925ff33db838e3bd33b2301b8172c77f5168e3532841f266ba51ef8493ea": {
+      "bytes": 159278,
+      "sha256": "5b90925ff33db838e3bd33b2301b8172c77f5168e3532841f266ba51ef8493ea"
+    },
+    "input-bytes/5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "input-bytes/5ec95005dc853629b7fdefe5cba96eda7dff4a0faa202f103748aa2a162aa526": {
+      "bytes": 1608,
+      "sha256": "5ec95005dc853629b7fdefe5cba96eda7dff4a0faa202f103748aa2a162aa526"
+    },
+    "input-bytes/6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "input-bytes/6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "input-bytes/71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "input-bytes/7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "input-bytes/847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "input-bytes/89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45": {
+      "bytes": 13165,
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    "input-bytes/8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "input-bytes/8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "input-bytes/9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "input-bytes/97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "input-bytes/9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "input-bytes/a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "input-bytes/a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "input-bytes/a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "input-bytes/af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570": {
+      "bytes": 666,
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    "input-bytes/afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "input-bytes/b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "input-bytes/b2067fdba9d2d0aea65111570e917706f3d7df95b3a42dabf67c9a8f4f934122": {
+      "bytes": 149000,
+      "sha256": "b2067fdba9d2d0aea65111570e917706f3d7df95b3a42dabf67c9a8f4f934122"
+    },
+    "input-bytes/b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "input-bytes/b73405e220f78159ac15ae1fc76f228d509ac7fffceaaabd55277801b4ba063d": {
+      "bytes": 14333,
+      "sha256": "b73405e220f78159ac15ae1fc76f228d509ac7fffceaaabd55277801b4ba063d"
+    },
+    "input-bytes/b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "input-bytes/bb6407ced49ed55a0d8dc652cea51b2a9fc4aa881f12f07d0e21e79b8efddf32": {
+      "bytes": 975,
+      "sha256": "bb6407ced49ed55a0d8dc652cea51b2a9fc4aa881f12f07d0e21e79b8efddf32"
+    },
+    "input-bytes/bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "input-bytes/bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8": {
+      "bytes": 95616,
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "input-bytes/c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "input-bytes/c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "input-bytes/cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "input-bytes/d0c1d61c29f1374c3fe8c17a891184062489e51bb2bec8f3a8932c9c8930d1f5": {
+      "bytes": 6552,
+      "sha256": "d0c1d61c29f1374c3fe8c17a891184062489e51bb2bec8f3a8932c9c8930d1f5"
+    },
+    "input-bytes/d18a7ce8ac338f438b4206af4c3c10b8e2997d8d747d6c686e1954b8e317ad90": {
+      "bytes": 1430,
+      "sha256": "d18a7ce8ac338f438b4206af4c3c10b8e2997d8d747d6c686e1954b8e317ad90"
+    },
+    "input-bytes/d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "input-bytes/d58de8dc439832c5900651bdd4ed62b422e75900afeb502bfb0417a9fddaa7be": {
+      "bytes": 1573,
+      "sha256": "d58de8dc439832c5900651bdd4ed62b422e75900afeb502bfb0417a9fddaa7be"
+    },
+    "input-bytes/d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "input-bytes/d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "input-bytes/dd7456c02b88cfad89f402620d2c6c4b10fbff2e37a687adc45cbb9379e8a600": {
+      "bytes": 1091,
+      "sha256": "dd7456c02b88cfad89f402620d2c6c4b10fbff2e37a687adc45cbb9379e8a600"
+    },
+    "input-bytes/deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "input-bytes/e2688a8acae6454482fbeb32d9ec194cb034f74ac008d3867457525b19aa170d": {
+      "bytes": 2978,
+      "sha256": "e2688a8acae6454482fbeb32d9ec194cb034f74ac008d3867457525b19aa170d"
+    },
+    "input-bytes/e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "input-bytes/e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "input-bytes/eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "input-bytes/eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec": {
+      "bytes": 1482048,
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "input-bytes/ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "input-bytes/ec67182c58db69c2ed518eff0c8ae645604cb5d61f3109c2c5bcf9724526652f": {
+      "bytes": 84728,
+      "sha256": "ec67182c58db69c2ed518eff0c8ae645604cb5d61f3109c2c5bcf9724526652f"
+    },
+    "input-bytes/ecd70eddb2d63c9e27386d6a6b9152c4622693b2f30b36eeeb323950c29d70fd": {
+      "bytes": 3276,
+      "sha256": "ecd70eddb2d63c9e27386d6a6b9152c4622693b2f30b36eeeb323950c29d70fd"
+    },
+    "input-bytes/fc7c6fa3df444b4545324e2e3589705c03f8005fca0c2011aef6337dd021c2a6": {
+      "bytes": 153040,
+      "sha256": "fc7c6fa3df444b4545324e2e3589705c03f8005fca0c2011aef6337dd021c2a6"
+    },
+    "input-bytes/fc945a9f610d2fa927ea8a23eed4b656b2a97d487b3f8da83388a8e2c320495f": {
+      "bytes": 78,
+      "sha256": "fc945a9f610d2fa927ea8a23eed4b656b2a97d487b3f8da83388a8e2c320495f"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "src/PidPrefixMgwBias/AliasTargets.lean": {
+      "bytes": 666,
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    "src/PidPrefixMgwBias/Contract.lean": {
+      "bytes": 13165,
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    "src/PidPrefixMgwBias/PreparationControls.lean": {
+      "bytes": 16045,
+      "sha256": "3c0c000fd49a658148cd64c5fd195bb7524ccff45d4e9f429ffcc49e2f15ddf6"
+    },
+    "src/PidPrefixMgwBias/PreparationRoot.lean": {
+      "bytes": 78,
+      "sha256": "fc945a9f610d2fa927ea8a23eed4b656b2a97d487b3f8da83388a8e2c320495f"
+    },
+    "src/PidPrefixMgwBias/RawTargets.lean": {
+      "bytes": 8095,
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    "src/PidPrefixMgwBias/TypeJudge.lean": {
+      "bytes": 2978,
+      "sha256": "e2688a8acae6454482fbeb32d9ec194cb034f74ac008d3867457525b19aa170d"
+    },
+    "src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "reviewed-lean-4.33.0/bin/lean",
+        "-t",
+        "0",
+        "-M",
+        "4096",
+        "-o",
+        "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/TypeJudge.olean",
+        "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/TypeJudge.lean"
+      ],
+      "cwd": "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src",
+      "elapsed_seconds": 2.7349574170075357,
+      "execution_error": null,
+      "failure": null,
+      "label": "compile-TypeJudge",
+      "limits": {
+        "observed_group_rss_bytes": 4294967296,
+        "rss_limit_is_hard_os_cap": false,
+        "rss_sample_interval_seconds": 0.1,
+        "seconds": 120,
+        "stderr_bytes": 4194304,
+        "stdout_bytes": 4194304
+      },
+      "peak_observed_group_rss_bytes": 2976858112,
+      "remaining_live_group_processes": [],
+      "retained_stderr_bytes": 0,
+      "retained_stdout_bytes": 95709,
+      "returncode": 0,
+      "started_utc": "2026-09-08T06:43:12.987903+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "4d926028feba7cb19c158b0c2906b96e6d2452e8697cbfb03f1da604b7ae1eec"
+    }
+  ],
+  "completed_utc": "2026-09-08T06:43:15.781127+00:00",
+  "control_records": [],
+  "inputs": {
+    "reviewed-lean-4.33.0/bin/lean": {
+      "bytes": 49968,
+      "sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554"
+    },
+    "reviewed-lean-4.33.0/bin/leanchecker": {
+      "bytes": 78128,
+      "sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/CONTROL_ROSTER.json": {
+      "bytes": 1091,
+      "sha256": "dd7456c02b88cfad89f402620d2c6c4b10fbff2e37a687adc45cbb9379e8a600"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/DEPENDENCY_BINDINGS.json": {
+      "bytes": 16149,
+      "sha256": "2211eb1a8ab0f467ee5ba5b32e978a51ab26f5b9d18989ea7979cb8162d17abf"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/HISTORICAL_ENVIRONMENT_CROSSCHECK.json": {
+      "bytes": 1167,
+      "sha256": "224000607302fb8a1c77bf9ea79a588c80ceff4ff17385f549ef3becebbadc4d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/PREPARATION_CORRECTION_01.json": {
+      "bytes": 1323,
+      "sha256": "52c336d5d9934e4eb511f47364e0acc36cddb4309b9a607919bf49440faceb43"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/PREPARATION_CRITERIA.md": {
+      "bytes": 3276,
+      "sha256": "ecd70eddb2d63c9e27386d6a6b9152c4622693b2f30b36eeeb323950c29d70fd"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/RAW_VIEW_CONSTRUCTION.md": {
+      "bytes": 975,
+      "sha256": "bb6407ced49ed55a0d8dc652cea51b2a9fc4aa881f12f07d0e21e79b8efddf32"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/REGISTRATION.json": {
+      "bytes": 1573,
+      "sha256": "d58de8dc439832c5900651bdd4ed62b422e75900afeb502bfb0417a9fddaa7be"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/SOURCE_CORRESPONDENCE.json": {
+      "bytes": 511,
+      "sha256": "4fb5e63a6e515f36b0f8aa87d6c34d2337cf2d9e1e2183151cfc143a8dd3bf25"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/SemanticJudge.lean.in": {
+      "bytes": 3372,
+      "sha256": "51388c57e8448021b79b82440309521cb81decd51bc66e52bc8f7dbe5f597ec2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/TARGET_ROSTER.json": {
+      "bytes": 1030,
+      "sha256": "08062c9fc9b70003c592d015ac8ff10ceac648a153c5008651112754c3e07e61"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/VERSION_PROBE.json": {
+      "bytes": 1430,
+      "sha256": "d18a7ce8ac338f438b4206af4c3c10b8e2997d8d747d6c686e1954b8e317ad90"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482048,
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixMgwMean/SemanticJudge.olean": {
+      "bytes": 95616,
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/build/PrefixMgwMeanCandidateRoot.olean": {
+      "bytes": 1784,
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/historical-dependencies/src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/policy.py": {
+      "bytes": 6806,
+      "sha256": "302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/preimages/previous-environment.json": {
+      "bytes": 21519,
+      "sha256": "0f06dab4ca0280d30aacae1546a724f2053170e45090e9da8446e896d0eb7d94"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/prep-driver.py": {
+      "bytes": 14333,
+      "sha256": "b73405e220f78159ac15ae1fc76f228d509ac7fffceaaabd55277801b4ba063d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/revisions/r02.json": {
+      "bytes": 2608,
+      "sha256": "3a29820f07839c80f4ebe09dcc3745e476fc140f6865229d2aee08bf15a551a2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/RESULT.json": {
+      "bytes": 200943,
+      "sha256": "3e2d94af4bad62f06903e534bdbb215b329c56bf59eb288dc01bb7683a13f3e2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/build/PidPrefixMgwBias/AliasTargets.olean": {
+      "bytes": 6552,
+      "sha256": "d0c1d61c29f1374c3fe8c17a891184062489e51bb2bec8f3a8932c9c8930d1f5"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/build/PidPrefixMgwBias/Contract.olean": {
+      "bytes": 153040,
+      "sha256": "fc7c6fa3df444b4545324e2e3589705c03f8005fca0c2011aef6337dd021c2a6"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/build/PidPrefixMgwBias/PreparationControls.olean": {
+      "bytes": 149000,
+      "sha256": "b2067fdba9d2d0aea65111570e917706f3d7df95b3a42dabf67c9a8f4f934122"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/build/PidPrefixMgwBias/PreparationRoot.olean": {
+      "bytes": 1608,
+      "sha256": "5ec95005dc853629b7fdefe5cba96eda7dff4a0faa202f103748aa2a162aa526"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/build/PidPrefixMgwBias/RawTargets.olean": {
+      "bytes": 84728,
+      "sha256": "ec67182c58db69c2ed518eff0c8ae645604cb5d61f3109c2c5bcf9724526652f"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/src/PidPrefixMgwBias/AliasTargets.lean": {
+      "bytes": 666,
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/src/PidPrefixMgwBias/Contract.lean": {
+      "bytes": 13165,
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/src/PidPrefixMgwBias/PreparationControls.lean": {
+      "bytes": 16045,
+      "sha256": "3c0c000fd49a658148cd64c5fd195bb7524ccff45d4e9f429ffcc49e2f15ddf6"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/src/PidPrefixMgwBias/PreparationRoot.lean": {
+      "bytes": 78,
+      "sha256": "fc945a9f610d2fa927ea8a23eed4b656b2a97d487b3f8da83388a8e2c320495f"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r01/src/PidPrefixMgwBias/RawTargets.lean": {
+      "bytes": 8095,
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/MgwBridgeDepsV1/JoinLog/Contract.olean": {
+      "bytes": 60008,
+      "sha256": "d9bf3c8e1ae15a9e685342fcb0fbbfb35e08ea96e12c5fedf3ca2e29f49b6bbd"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/MgwBridgeDepsV1/JoinLog/Proofs.olean": {
+      "bytes": 573576,
+      "sha256": "a038947dd5101259e75d81f3931f0ca22da4ab29635f5c876d39d2bf1eabd3d2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/MgwBridgeDepsV1/SxDnf/Contract.olean": {
+      "bytes": 199552,
+      "sha256": "416bf299ba9adecef55b1c215824fa3b97f11c9f908ee5fff1162a41287775eb"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/MgwBridgeDepsV1/SxDnf/JudgeCore.olean": {
+      "bytes": 420976,
+      "sha256": "eac8b8d24c5f81d4cded8b577e944fd3daae4a45246dfd14cddd50147eb2f533"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/MgwBridgeDepsV1/SxDnf/Proofs.olean": {
+      "bytes": 261984,
+      "sha256": "55c5434dd2056f65a3b0a3790001333d3d778bb49c90b3c6ac08007b8a068372"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidFiniteConvergence/Deterministic.olean": {
+      "bytes": 98304,
+      "sha256": "3900b3316d90a1df1a5439c245c7f8292fe11d1b2fe09d2d9f7ee784ce93a7e9"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidFiniteConvergence/SxEventBridge.olean": {
+      "bytes": 292592,
+      "sha256": "301e4cfedff56cad3bbc28925c99e35af5ef9bacb894614c32f1c9b582a8e9e1"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidMgwBridge/AliasTargets.olean": {
+      "bytes": 10952,
+      "sha256": "afab7cb538b259193847b0b9fd087b8eb98e2e32fcac62e3b85e0ad200530938"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidMgwBridge/Candidate.olean": {
+      "bytes": 963440,
+      "sha256": "1971be8dc962be8ff7adb8cb8da74d45d782629bd95b9a4d70dee9cb41d17cdf"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidMgwBridge/Contract.olean": {
+      "bytes": 126464,
+      "sha256": "24f5ce79c02c7f45d29405add8e3574c893115a2c3de96b85fc8d196c1708ff8"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidMgwBridge/JudgeCore.olean": {
+      "bytes": 92232,
+      "sha256": "b11b593d02f2eb28c2cbb98627138c9beeb0c9d3837d9f98c4143a2cbf95ac0e"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidMgwBridge/RawTargets.olean": {
+      "bytes": 68424,
+      "sha256": "d93508788e89095c68f3f18503dd71c6084b363d3b74725f6dc05b3fba66a207"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidMgwBridge/SemanticJudge.olean": {
+      "bytes": 3088,
+      "sha256": "b86903af22ccf8adb0159f7ab0d14e73be0d4d72ec762b02732a03fe5ff655a0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/AliasTargets.olean": {
+      "bytes": 6552,
+      "sha256": "d0c1d61c29f1374c3fe8c17a891184062489e51bb2bec8f3a8932c9c8930d1f5"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/Contract.olean": {
+      "bytes": 153040,
+      "sha256": "fc7c6fa3df444b4545324e2e3589705c03f8005fca0c2011aef6337dd021c2a6"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/PreparationControls.olean": {
+      "bytes": 149000,
+      "sha256": "b2067fdba9d2d0aea65111570e917706f3d7df95b3a42dabf67c9a8f4f934122"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/PreparationRoot.olean": {
+      "bytes": 1608,
+      "sha256": "5ec95005dc853629b7fdefe5cba96eda7dff4a0faa202f103748aa2a162aa526"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/RawTargets.olean": {
+      "bytes": 84728,
+      "sha256": "ec67182c58db69c2ed518eff0c8ae645604cb5d61f3109c2c5bcf9724526652f"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwBias/TypeJudge.olean": {
+      "bytes": 213392,
+      "sha256": "2e54ba0e4d949009280dec48010ea7c120c5b0e09176710043678fba532b7f03"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwMean/AliasTargets.olean": {
+      "bytes": 5872,
+      "sha256": "8a8ca1534c91adb8f0ba39a21ca201c8ece1a4b93cf8949859287af96bc5ded5"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwMean/Candidate.olean": {
+      "bytes": 1482048,
+      "sha256": "eaf00cae49103b862a9f90d8836d548af6cf43b4953e92e0bab35016b8bc5fec"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwMean/Contract.olean": {
+      "bytes": 60160,
+      "sha256": "d1cd5a2606b15a1a18ffe5e0206a1beb6d91f88f843ff810ba61ecf8debc2f4a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwMean/RawTargets.olean": {
+      "bytes": 65016,
+      "sha256": "71193ee1dc1fd470a470060920ee3ecae087e92b44cc8cf2387d0f491ecbcdc2"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixMgwMean/SemanticJudge.olean": {
+      "bytes": 95616,
+      "sha256": "bdeb02456ad335a278a92eac1163ac31b7afd0d4faa23db9de09f0a5a98e83b8"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixProbability/AliasTargets.olean": {
+      "bytes": 7136,
+      "sha256": "8be54b4b16f6884a0891fba8df6eec7f9562bb66d07bedd3674c3e70479e14c1"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixProbability/Candidate.olean": {
+      "bytes": 1070496,
+      "sha256": "7133b1848c0cead9b354d2087f9b84dd734cee64ab933ca695b14df553b85dc4"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixProbability/Contract.olean": {
+      "bytes": 122808,
+      "sha256": "26b10c5d2d278335ba60e730f51cc15be7d964da1658b3efbcb8bf24ca8406f9"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixProbability/RawTargets.olean": {
+      "bytes": 66104,
+      "sha256": "2d9e04aa0633f3f40e54d1e02cb22a12874ee64512d45e6b41dfa0589e1385ca"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PidPrefixProbability/SemanticJudge.olean": {
+      "bytes": 95640,
+      "sha256": "0ca753a83abe87a7acf28253b17434bf1df3bbacbe3827093977b2319ecb9d8e"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/build/PrefixMgwMeanCandidateRoot.olean": {
+      "bytes": 1784,
+      "sha256": "1ef698216f793f7da6e19ac081709287584367456be6746689fbe77e7b1f4fe0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/MgwBridgeDepsV1/JoinLog/Contract.lean": {
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/MgwBridgeDepsV1/JoinLog/Proofs.lean": {
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/MgwBridgeDepsV1/SxDnf/Contract.lean": {
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/MgwBridgeDepsV1/SxDnf/JudgeCore.lean": {
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/MgwBridgeDepsV1/SxDnf/Proofs.lean": {
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidFiniteConvergence/Deterministic.lean": {
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidFiniteConvergence/SxEventBridge.lean": {
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidMgwBridge/AliasTargets.lean": {
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidMgwBridge/Candidate.lean": {
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidMgwBridge/Contract.lean": {
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidMgwBridge/JudgeCore.lean": {
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidMgwBridge/RawTargets.lean": {
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidMgwBridge/SemanticJudge.lean": {
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/AliasTargets.lean": {
+      "bytes": 666,
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/Contract.lean": {
+      "bytes": 13165,
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/PreparationControls.lean": {
+      "bytes": 16045,
+      "sha256": "3c0c000fd49a658148cd64c5fd195bb7524ccff45d4e9f429ffcc49e2f15ddf6"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/PreparationRoot.lean": {
+      "bytes": 78,
+      "sha256": "fc945a9f610d2fa927ea8a23eed4b656b2a97d487b3f8da83388a8e2c320495f"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/RawTargets.lean": {
+      "bytes": 8095,
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwBias/TypeJudge.lean": {
+      "bytes": 2978,
+      "sha256": "e2688a8acae6454482fbeb32d9ec194cb034f74ac008d3867457525b19aa170d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwMean/AliasTargets.lean": {
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwMean/Candidate.lean": {
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwMean/Contract.lean": {
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwMean/RawTargets.lean": {
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixMgwMean/SemanticJudge.lean": {
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixProbability/AliasTargets.lean": {
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixProbability/Candidate.lean": {
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixProbability/Contract.lean": {
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixProbability/RawTargets.lean": {
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PidPrefixProbability/SemanticJudge.lean": {
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runs/r02-admission-bound/src/PrefixMgwMeanCandidateRoot.lean": {
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/runtime.py": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/sources/PidPrefixMgwBias/AliasTargets.lean": {
+      "bytes": 666,
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/sources/PidPrefixMgwBias/Contract.lean": {
+      "bytes": 13165,
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/sources/PidPrefixMgwBias/PreparationControls.lean": {
+      "bytes": 16045,
+      "sha256": "3c0c000fd49a658148cd64c5fd195bb7524ccff45d4e9f429ffcc49e2f15ddf6"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/sources/PidPrefixMgwBias/PreparationRoot.lean": {
+      "bytes": 78,
+      "sha256": "fc945a9f610d2fa927ea8a23eed4b656b2a97d487b3f8da83388a8e2c320495f"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/sources/PidPrefixMgwBias/RawTargets.lean": {
+      "bytes": 8095,
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    "historical-project/.local/sx-mean-bias-type-preparation-20260908/sources/PidPrefixMgwBias/TypeJudge.lean": {
+      "bytes": 2978,
+      "sha256": "e2688a8acae6454482fbeb32d9ec194cb034f74ac008d3867457525b19aa170d"
+    },
+    "historical-project/.local/sx-mean-proof-campaign-v2-20260908/attempts/017-full-0/RESULT.json": {
+      "bytes": 159278,
+      "sha256": "5b90925ff33db838e3bd33b2301b8172c77f5168e3532841f266ba51ef8493ea"
+    },
+    "historical-project/audit/formal/lean/lake-manifest.json": {
+      "bytes": 3144,
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    },
+    "historical-project/audit/formal/lean/lakefile.toml": {
+      "bytes": 243,
+      "sha256": "ec5def1f5f0aa36218f767993c144a1b76ed9b77d6a429028dd5bb8f857354e0"
+    },
+    "historical-project/audit/formal/lean/lean-toolchain": {
+      "bytes": 25,
+      "sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b"
+    },
+    "historical-project/scripts/check-lean-finite-convergence.py": {
+      "bytes": 58665,
+      "sha256": "3ea61295232a03b08522a10257f82865038e760fe47eda34b7f470d2f8f268a0"
+    },
+    "historical-project/scripts/check-lean-sxpid3-informative-invariance.py": {
+      "bytes": 17039,
+      "sha256": "297c92b7d00272167c4be36c33fb17fb57d8f4958f3ce89615e4200bd30205fc"
+    }
+  },
+  "new_kernel_count": 0,
+  "new_proof_count": 0,
+  "revision_sha256": "3a29820f07839c80f4ebe09dcc3745e476fc140f6865229d2aee08bf15a551a2",
+  "run": "r02-admission-bound",
+  "scope": "Historical accepted dependencies imported diagnostically; no new probability proof, candidate acceptance or kernel replay",
+  "status": "diagnostic_type_preparation_pass_no_proofs",
+  "type_records": [
+    {
+      "alias_target": "PidPrefixMgwBiasAliasTargets.actual_finite_bias",
+      "definition_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "∀ (I : Type u) (X : I → Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I]\n  [inst_2 : (i : I) → Fintype.{v} (X i)] [inst_3 : Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I]\n  [inst_5 : (i : I) → DecidableEq.{v + 1} (X i)] [inst_6 : DecidableEq.{w + 1} T]\n  (p : PidMgwBridgeContract.Key.{u, v, w} I X T → Real),\n  And\n      (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (p z))\n      (@Eq.{1} Real\n        (@PidMgwBridgeContract.total.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n          (@instFintypeProd.{max u v, w} ((source : I) → X source) T (@Pi.instFintype.{u, v} I X inst_4 inst inst_2)\n            inst_3)\n          p)\n        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →\n    @Exists.{max (max (u + 1) (v + 1)) (w + 1)}\n      (PidMgwBridgeContract.Key.{u, v, w} I X T → PidMgwBridgeContract.Node.{u} I → Real)\n      fun (plus : PidMgwBridgeContract.Key.{u, v, w} I X T → PidMgwBridgeContract.Node.{u} I → Real) =>\n      @Exists.{max (max (u + 1) (v + 1)) (w + 1)}\n        (PidMgwBridgeContract.Key.{u, v, w} I X T → PidMgwBridgeContract.Node.{u} I → Real)\n        fun (minus : PidMgwBridgeContract.Key.{u, v, w} I X T → PidMgwBridgeContract.Node.{u} I → Real) =>\n        And\n          (And\n            (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n              @Eq.{1} Real (p z) (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) →\n                And\n                  (@Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) (plus z)\n                    (@OfNat.ofNat.{u} (PidMgwBridgeContract.Node.{u} I → Real) (nat_lit 0)\n                      (@Zero.toOfNat0.{u} (PidMgwBridgeContract.Node.{u} I → Real)\n                        (@Pi.instZero.{u, 0} (PidMgwBridgeContract.Node.{u} I)\n                          (fun (a : PidMgwBridgeContract.Node.{u} I) => Real)\n                          fun (i : PidMgwBridgeContract.Node.{u} I) => Real.instZero))))\n                  (@Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) (minus z)\n                    (@OfNat.ofNat.{u} (PidMgwBridgeContract.Node.{u} I → Real) (nat_lit 0)\n                      (@Zero.toOfNat0.{u} (PidMgwBridgeContract.Node.{u} I → Real)\n                        (@Pi.instZero.{u, 0} (PidMgwBridgeContract.Node.{u} I)\n                          (fun (a : PidMgwBridgeContract.Node.{u} I) => Real)\n                          fun (i : PidMgwBridgeContract.Node.{u} I) => Real.instZero)))))\n            (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n                  (p z) →\n                And\n                  (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                    @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst (plus z) beta)\n                      (@Neg.neg.{0} Real Real.instNeg\n                        (Real.log\n                          (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z\n                            beta))))\n                  (And\n                    (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                      @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst (minus z) beta)\n                        (Real.log\n                          (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                            (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                            (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p\n                              z)\n                            (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                              inst_6 p z beta))))\n                    (And\n                      (∀ (other : PidMgwBridgeContract.Node.{u} I → Real),\n                        (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                            @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst other beta)\n                              (@Neg.neg.{0} Real Real.instNeg\n                                (Real.log\n                                  (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                    inst_6 p z beta)))) →\n                          @Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) other (plus z))\n                      (∀ (other : PidMgwBridgeContract.Node.{u} I → Real),\n                        (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                            @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst other beta)\n                              (Real.log\n                                (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                                  (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                    inst_6 p z)\n                                  (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                    inst_6 p z beta)))) →\n                          @Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) other (minus z))))))\n          (And\n            (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n                  (p z) →\n                ∀ (alpha : PidMgwBridgeContract.Node.{u} I) (h : Nat),\n                  And\n                    (@LE.le.{0} Real Real.instLE\n                      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n                      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                        (@PidPrefixMgwBiasSource.positiveMeanPartial.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 p\n                          z alpha h)))\n                    (And\n                      (@LE.le.{0} Real Real.instLE\n                        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                          (@PidPrefixMgwBiasSource.positiveMeanPartial.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                            p z alpha h))\n                        (PidPrefixMgwBiasSource.logRemainder\n                          (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z\n                            alpha)\n                          h))\n                      (And\n                        (@LE.le.{0} Real Real.instLE\n                          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (minus z alpha)\n                            (@PidPrefixMgwBiasSource.negativeMeanPartial.{u, v, w} I X T inst inst_2 inst_3 inst_4\n                              inst_5 inst_6 p z alpha h)))\n                        (@LE.le.{0} Real Real.instLE\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (minus z alpha)\n                            (@PidPrefixMgwBiasSource.negativeMeanPartial.{u, v, w} I X T inst inst_2 inst_3 inst_4\n                              inst_5 inst_6 p z alpha h))\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                            (PidPrefixMgwBiasSource.logRemainder\n                              (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                inst_6 p z alpha)\n                              h)\n                            (PidPrefixMgwBiasSource.logRemainder\n                              (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                                p z)\n                              h))))))\n            (∀ (alpha : PidMgwBridgeContract.Node.{u} I) (h : Nat),\n              And\n                (@Eq.{1} Real\n                  (@MeasureTheory.integral.{max (max u v) w, 0}\n                    (Fin\n                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                      PidMgwBridgeContract.Key.{u, v, w} I X T)\n                    Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                    (@MeasurableSpace.pi.{0, max (max u v) w}\n                      (Fin\n                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                      (fun\n                          (a :\n                            Fin\n                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                        PidMgwBridgeContract.Key.{u, v, w} I X T)\n                      fun\n                        (a :\n                          Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                      @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                    (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                    fun\n                      (block :\n                        Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                          PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                    @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                      block)\n                  (@PidPrefixMgwBiasSource.supportedAverage.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                    (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                      (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                    p fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                    @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                      (@PidPrefixMgwBiasSource.positiveMeanPartial.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 p z\n                        alpha h)\n                      (@PidPrefixMgwBiasSource.negativeMeanPartial.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                        inst_6 p z alpha h)))\n                (And\n                  (@LE.le.{0} Real Real.instLE\n                    (@Neg.neg.{0} Real Real.instNeg\n                      (@PidPrefixMgwBiasSource.negativeEnvelope.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                        p alpha h))\n                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                      (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                        Real.instAddCommMonoid\n                        (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                        fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                        @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                            (minus z alpha)))\n                      (@MeasureTheory.integral.{max (max u v) w, 0}\n                        (Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                          PidMgwBridgeContract.Key.{u, v, w} I X T)\n                        Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                        (@MeasurableSpace.pi.{0, max (max u v) w}\n                          (Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                          (fun\n                              (a :\n                                Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                            PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          fun\n                            (a :\n                              Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                          @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                        (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                        fun\n                          (block :\n                            Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                              PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                        @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                          block)))\n                  (And\n                    (@LE.le.{0} Real Real.instLE\n                      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                        (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                          Real.instAddCommMonoid\n                          (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                            (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                              (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                          fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                          @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                              (minus z alpha)))\n                        (@MeasureTheory.integral.{max (max u v) w, 0}\n                          (Fin\n                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                            PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                          (@MeasurableSpace.pi.{0, max (max u v) w}\n                            (Fin\n                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                            (fun\n                                (a :\n                                  Fin\n                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                              PidMgwBridgeContract.Key.{u, v, w} I X T)\n                            fun\n                              (a :\n                                Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                            @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                          (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                          fun\n                            (block :\n                              Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                          @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                            block))\n                      (@PidPrefixMgwBiasSource.positiveEnvelope.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                        p alpha h))\n                    (And\n                      (@LE.le.{0} Real Real.instLE\n                        (@abs.{0} Real Real.lattice Real.instAddGroup\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                            (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                              Real.instAddCommMonoid\n                              (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                  (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                              fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                              @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                                  (minus z alpha)))\n                            (@MeasureTheory.integral.{max (max u v) w, 0}\n                              (Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                PidMgwBridgeContract.Key.{u, v, w} I X T)\n                              Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                              (@MeasurableSpace.pi.{0, max (max u v) w}\n                                (Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                (fun\n                                    (a :\n                                      Fin\n                                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                  PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                fun\n                                  (a :\n                                    Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                              (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                              fun\n                                (block :\n                                  Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                    PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                              @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6\n                                alpha h block)))\n                        (@Max.max.{0} Real Real.instMax\n                          (@PidPrefixMgwBiasSource.positiveEnvelope.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                            inst_6 p alpha h)\n                          (@PidPrefixMgwBiasSource.negativeEnvelope.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                            inst_6 p alpha h)))\n                      (And\n                        (@LE.le.{0} Real Real.instLE\n                          (@abs.{0} Real Real.lattice Real.instAddGroup\n                            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                              (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                                Real.instAddCommMonoid\n                                (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                  (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                    (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                                fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                                    (minus z alpha)))\n                              (@MeasureTheory.integral.{max (max u v) w, 0}\n                                (Fin\n                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                  PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                                (@MeasurableSpace.pi.{0, max (max u v) w}\n                                  (Fin\n                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                  (fun\n                                      (a :\n                                        Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                    PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                  fun\n                                    (a :\n                                      Fin\n                                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                  @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                                (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                fun\n                                  (block :\n                                    Fin\n                                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                      PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6\n                                  alpha h block)))\n                          (@PidPrefixMgwBiasSource.supportedAverage.{max (max u v) w}\n                            (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                            (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                              (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                            p fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                            PidPrefixMgwBiasSource.logRemainder\n                              (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                inst_6 p z alpha)\n                              h))\n                        (And\n                          (@LE.le.{0} Real Real.instLE\n                            (@abs.{0} Real Real.lattice Real.instAddGroup\n                              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                                  Real.instAddCommMonoid\n                                  (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                    (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                      (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                                  fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                  @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                      (plus z alpha) (minus z alpha)))\n                                (@MeasureTheory.integral.{max (max u v) w, 0}\n                                  (Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                    PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                  Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                                  (@MeasurableSpace.pi.{0, max (max u v) w}\n                                    (Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                    (fun\n                                        (a :\n                                          Fin\n                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                      PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                    fun\n                                      (a :\n                                        Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                    @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                                  (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                  fun\n                                    (block :\n                                      Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                        PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                  @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6\n                                    alpha h block)))\n                            (@Min.min.{0} Real Real.instMin\n                              (@PidPrefixMgwBiasSource.querySurprisal.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                inst_6 p alpha)\n                              (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                  (@PidPrefixMgwBiasSource.queryMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                    inst_6 p alpha)\n                                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))\n                                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                                  (@Nat.cast.{0} Real Real.instNatCast h)\n                                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))))\n                          (And\n                            (@LE.le.{0} Real Real.instLE\n                              (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                                (@Neg.neg.{0} Real Real.instNeg\n                                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                    (@PidPrefixMgwBiasSource.queryMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4\n                                      inst_5 inst_6 p alpha)\n                                    (@PidPrefixMgwBiasSource.targetMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4\n                                      inst_5 inst_6 p)))\n                                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                                  (@Nat.cast.{0} Real Real.instNatCast h)\n                                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))\n                              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                                  Real.instAddCommMonoid\n                                  (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                    (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                      (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                                  fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                  @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                      (plus z alpha) (minus z alpha)))\n                                (@MeasureTheory.integral.{max (max u v) w, 0}\n                                  (Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                    PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                  Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                                  (@MeasurableSpace.pi.{0, max (max u v) w}\n                                    (Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                    (fun\n                                        (a :\n                                          Fin\n                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                      PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                    fun\n                                      (a :\n                                        Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                    @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                                  (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                  fun\n                                    (block :\n                                      Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                        PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                  @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6\n                                    alpha h block)))\n                            (@LE.le.{0} Real Real.instLE\n                              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                                  Real.instAddCommMonoid\n                                  (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                    (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                      (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                                  fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                  @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                      (plus z alpha) (minus z alpha)))\n                                (@MeasureTheory.integral.{max (max u v) w, 0}\n                                  (Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                    PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                  Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                                  (@MeasurableSpace.pi.{0, max (max u v) w}\n                                    (Fin\n                                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                    (fun\n                                        (a :\n                                          Fin\n                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                      PidMgwBridgeContract.Key.{u, v, w} I X T)\n                                    fun\n                                      (a :\n                                        Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                                    @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                                  (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                                  fun\n                                    (block :\n                                      Fin\n                                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                                        PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                                  @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6\n                                    alpha h block))\n                              (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                                  (@PidPrefixMgwBiasSource.sourceMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                    inst_6 p alpha)\n                                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))\n                                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                                  (@Nat.cast.{0} Real Real.instNatCast h)\n                                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))))))))))",
+      "raw_target": "PidPrefixMgwBiasRawTargets.actual_finite_bias",
+      "status": "types_agree_not_proved",
+      "target": "actual_finite_bias",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwBiasAliasTargets.fiber_inverse_moment",
+      "definition_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "∀ (K : Type u) (Q : Type v) [inst : Fintype.{u} K] [inst_1 : Fintype.{v} Q] (p : K → Real) (f : K → Q),\n  And\n      (∀ (z : K),\n        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (p z))\n      (@Eq.{1} Real (@PidMgwBridgeContract.total.{u} K inst p)\n        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →\n    @Eq.{1} Real\n      (@PidPrefixMgwBiasSource.inverseMoment.{u} K inst p fun (z : K) =>\n        @PidPrefixMgwBiasSource.fiberMass.{u, v} K Q inst p f (f z))\n      (@Nat.cast.{0} Real Real.instNatCast\n        (@PidPrefixMgwBiasSource.positiveSupportCard.{v} Q inst_1\n          (@PidPrefixMgwBiasSource.fiberMass.{u, v} K Q inst p f)))",
+      "raw_target": "PidPrefixMgwBiasRawTargets.fiber_inverse_moment",
+      "status": "types_agree_not_proved",
+      "target": "fiber_inverse_moment",
+      "universes": [
+        "u",
+        "v"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwBiasAliasTargets.support_moment_bounds",
+      "definition_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "∀ (I : Type u) (X : I → Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I]\n  [inst_2 : (i : I) → Fintype.{v} (X i)] [inst_3 : Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I]\n  [inst_5 : (i : I) → DecidableEq.{v + 1} (X i)] [inst_6 : DecidableEq.{w + 1} T]\n  (p : PidMgwBridgeContract.Key.{u, v, w} I X T → Real) (alpha : PidMgwBridgeContract.Node.{u} I),\n  And\n      (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (p z))\n      (@Eq.{1} Real\n        (@PidMgwBridgeContract.total.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n          (@instFintypeProd.{max u v, w} ((source : I) → X source) T (@Pi.instFintype.{u, v} I X inst_4 inst inst_2)\n            inst_3)\n          p)\n        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →\n    And\n      (@LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))\n        (@PidPrefixMgwBiasSource.sourceMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p alpha))\n      (And\n        (@LE.le.{0} Real Real.instLE\n          (@PidPrefixMgwBiasSource.sourceMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p alpha)\n          (@PidPrefixMgwBiasSource.queryMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p alpha))\n        (And\n          (@Eq.{1} Real (@PidPrefixMgwBiasSource.targetMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p)\n            (@Nat.cast.{0} Real Real.instNatCast\n              (@PidPrefixMgwBiasSource.positiveSupportCard.{w} T inst_3\n                (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, w} (PidMgwBridgeContract.Key.{u, v, w} I X T) T\n                  (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                    (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                  p fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                  @Prod.snd.{max u v, w} ((source : I) → X source) T z))))\n          (And\n            (@LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))\n              (@PidPrefixMgwBiasSource.targetMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p))\n            (And\n              (@LE.le.{0} Real Real.instLE\n                (@PidPrefixMgwBiasSource.targetMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p)\n                (@PidPrefixMgwBiasSource.queryMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p alpha))\n              (And\n                (@LE.le.{0} Real Real.instLE\n                  (@PidPrefixMgwBiasSource.queryMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p alpha)\n                  (@Nat.cast.{0} Real Real.instNatCast\n                    (@PidPrefixMgwBiasSource.positiveSupportCard.{max (max u v) w}\n                      (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                      (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                        (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                      p)))\n                (∀ (C : Finset.{u} I),\n                  @Membership.mem.{u, u} (Finset.{u} I) (Finset.{u} (Finset.{u} I))\n                      (@SetLike.instMembership.{u, u} (Finset.{u} (Finset.{u} I)) (Finset.{u} I)\n                        (@Finset.instSetLike.{u} (Finset.{u} I)))\n                      (@Subtype.val.{u + 1} (Finset.{u} (Finset.{u} I))\n                        (fun (family : Finset.{u} (Finset.{u} I)) => @PidMgwBridgeContract.Valid.{u} I family) alpha)\n                      C →\n                    And\n                      (@LE.le.{0} Real Real.instLE\n                        (@PidPrefixMgwBiasSource.sourceMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p\n                          alpha)\n                        (@Nat.cast.{0} Real Real.instNatCast\n                          (@PidPrefixMgwBiasSource.positiveSupportCard.{max u v}\n                            (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C)\n                            (@Pi.instFintype.{u, v}\n                              (@Subtype.{u + 1} I fun (i : I) =>\n                                @Membership.mem.{u, u} I (Finset.{u} I)\n                                  (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                              (fun\n                                  (i :\n                                    @Subtype.{u + 1} I fun (i : I) =>\n                                      @Membership.mem.{u, u} I (Finset.{u} I)\n                                        (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                        i) =>\n                                X\n                                  (@Subtype.val.{u + 1} I\n                                    (fun (i : I) =>\n                                      @Membership.mem.{u, u} I (Finset.{u} I)\n                                        (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                        i)\n                                    i))\n                              (fun\n                                  (a b :\n                                    @Subtype.{u + 1} I fun (i : I) =>\n                                      @Membership.mem.{u, u} I (Finset.{u} I)\n                                        (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                        i) =>\n                                @Subtype.instDecidableEq.{u + 1} I\n                                  (@Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C)\n                                  inst_4 a b)\n                              (@Finset.Subtype.fintype.{u} I C)\n                              fun\n                                (a :\n                                  @Subtype.{u + 1} I fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                      i) =>\n                              inst_2\n                                (@Subtype.val.{u + 1} I\n                                  (fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                  a))\n                            (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, max u v}\n                              (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                              (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C)\n                              (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                              p (@PidPrefixMgwBiasSource.sourceProjection.{u, v, w} I X T C)))))\n                      (@LE.le.{0} Real Real.instLE\n                        (@PidPrefixMgwBiasSource.queryMoment.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p\n                          alpha)\n                        (@Nat.cast.{0} Real Real.instNatCast\n                          (@PidPrefixMgwBiasSource.positiveSupportCard.{max (max u v) w}\n                            (Prod.{max v u, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T)\n                            (@instFintypeProd.{max u v, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T\n                              (@Pi.instFintype.{u, v}\n                                (@Subtype.{u + 1} I fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                (fun\n                                    (i :\n                                      @Subtype.{u + 1} I fun (i : I) =>\n                                        @Membership.mem.{u, u} I (Finset.{u} I)\n                                          (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I))\n                                          C i) =>\n                                  X\n                                    (@Subtype.val.{u + 1} I\n                                      (fun (i : I) =>\n                                        @Membership.mem.{u, u} I (Finset.{u} I)\n                                          (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I))\n                                          C i)\n                                      i))\n                                (fun\n                                    (a b :\n                                      @Subtype.{u + 1} I fun (i : I) =>\n                                        @Membership.mem.{u, u} I (Finset.{u} I)\n                                          (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I))\n                                          C i) =>\n                                  @Subtype.instDecidableEq.{u + 1} I\n                                    (@Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C)\n                                    inst_4 a b)\n                                (@Finset.Subtype.fintype.{u} I C)\n                                fun\n                                  (a :\n                                    @Subtype.{u + 1} I fun (i : I) =>\n                                      @Membership.mem.{u, u} I (Finset.{u} I)\n                                        (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                        i) =>\n                                inst_2\n                                  (@Subtype.val.{u + 1} I\n                                    (fun (i : I) =>\n                                      @Membership.mem.{u, u} I (Finset.{u} I)\n                                        (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                        i)\n                                    a))\n                              inst_3)\n                            (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, max (max u v) w}\n                              (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                              (Prod.{max v u, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T)\n                              (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                                (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                              p (@PidPrefixMgwBiasSource.jointProjection.{u, v, w} I X T C)))))))))))",
+      "raw_target": "PidPrefixMgwBiasRawTargets.support_moment_bounds",
+      "status": "types_agree_not_proved",
+      "target": "support_moment_bounds",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwBiasAliasTargets.projected_support_bias",
+      "definition_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "∀ (I : Type u) (X : I → Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I]\n  [inst_2 : (i : I) → Fintype.{v} (X i)] [inst_3 : Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I]\n  [inst_5 : (i : I) → DecidableEq.{v + 1} (X i)] [inst_6 : DecidableEq.{w + 1} T]\n  (p : PidMgwBridgeContract.Key.{u, v, w} I X T → Real)\n  (plus minus : PidMgwBridgeContract.Key.{u, v, w} I X T → PidMgwBridgeContract.Node.{u} I → Real)\n  (alpha : PidMgwBridgeContract.Node.{u} I) (C : Finset.{u} I),\n  And\n      (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (p z))\n      (@Eq.{1} Real\n        (@PidMgwBridgeContract.total.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n          (@instFintypeProd.{max u v, w} ((source : I) → X source) T (@Pi.instFintype.{u, v} I X inst_4 inst inst_2)\n            inst_3)\n          p)\n        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →\n    And\n        (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n          @Eq.{1} Real (p z) (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) →\n            And\n              (@Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) (plus z)\n                (@OfNat.ofNat.{u} (PidMgwBridgeContract.Node.{u} I → Real) (nat_lit 0)\n                  (@Zero.toOfNat0.{u} (PidMgwBridgeContract.Node.{u} I → Real)\n                    (@Pi.instZero.{u, 0} (PidMgwBridgeContract.Node.{u} I)\n                      (fun (a : PidMgwBridgeContract.Node.{u} I) => Real) fun (i : PidMgwBridgeContract.Node.{u} I) =>\n                      Real.instZero))))\n              (@Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) (minus z)\n                (@OfNat.ofNat.{u} (PidMgwBridgeContract.Node.{u} I → Real) (nat_lit 0)\n                  (@Zero.toOfNat0.{u} (PidMgwBridgeContract.Node.{u} I → Real)\n                    (@Pi.instZero.{u, 0} (PidMgwBridgeContract.Node.{u} I)\n                      (fun (a : PidMgwBridgeContract.Node.{u} I) => Real) fun (i : PidMgwBridgeContract.Node.{u} I) =>\n                      Real.instZero)))))\n        (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n              (p z) →\n            And\n              (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst (plus z) beta)\n                  (@Neg.neg.{0} Real Real.instNeg\n                    (Real.log\n                      (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z\n                        beta))))\n              (And\n                (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                  @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst (minus z) beta)\n                    (Real.log\n                      (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                        (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                        (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z)\n                        (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p\n                          z beta))))\n                (And\n                  (∀ (other : PidMgwBridgeContract.Node.{u} I → Real),\n                    (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                        @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst other beta)\n                          (@Neg.neg.{0} Real Real.instNeg\n                            (Real.log\n                              (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                                p z beta)))) →\n                      @Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) other (plus z))\n                  (∀ (other : PidMgwBridgeContract.Node.{u} I → Real),\n                    (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                        @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst other beta)\n                          (Real.log\n                            (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                              (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                                p z)\n                              (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                inst_6 p z beta)))) →\n                      @Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) other (minus z))))) →\n      @Membership.mem.{u, u} (Finset.{u} I) (Finset.{u} (Finset.{u} I))\n          (@SetLike.instMembership.{u, u} (Finset.{u} (Finset.{u} I)) (Finset.{u} I)\n            (@Finset.instSetLike.{u} (Finset.{u} I)))\n          (@Subtype.val.{u + 1} (Finset.{u} (Finset.{u} I))\n            (fun (family : Finset.{u} (Finset.{u} I)) => @PidMgwBridgeContract.Valid.{u} I family) alpha)\n          C →\n        ∀ (h : Nat),\n          And\n            (@LE.le.{0} Real Real.instLE\n              (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                (@Neg.neg.{0} Real Real.instNeg\n                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                    (@Nat.cast.{0} Real Real.instNatCast\n                      (@PidPrefixMgwBiasSource.positiveSupportCard.{max (max u v) w}\n                        (Prod.{max v u, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T)\n                        (@instFintypeProd.{max u v, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T\n                          (@Pi.instFintype.{u, v}\n                            (@Subtype.{u + 1} I fun (i : I) =>\n                              @Membership.mem.{u, u} I (Finset.{u} I)\n                                (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                            (fun\n                                (i :\n                                  @Subtype.{u + 1} I fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                      i) =>\n                              X\n                                (@Subtype.val.{u + 1} I\n                                  (fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                  i))\n                            (fun\n                                (a b :\n                                  @Subtype.{u + 1} I fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                      i) =>\n                              @Subtype.instDecidableEq.{u + 1} I\n                                (@Membership.mem.{u, u} I (Finset.{u} I)\n                                  (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C)\n                                inst_4 a b)\n                            (@Finset.Subtype.fintype.{u} I C)\n                            fun\n                              (a :\n                                @Subtype.{u + 1} I fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                    i) =>\n                            inst_2\n                              (@Subtype.val.{u + 1} I\n                                (fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                a))\n                          inst_3)\n                        (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, max (max u v) w}\n                          (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          (Prod.{max v u, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T)\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                          p (@PidPrefixMgwBiasSource.jointProjection.{u, v, w} I X T C))))\n                    (@Nat.cast.{0} Real Real.instNatCast\n                      (@PidPrefixMgwBiasSource.positiveSupportCard.{w} T inst_3\n                        (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, w}\n                          (PidMgwBridgeContract.Key.{u, v, w} I X T) T\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                          p fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                          @Prod.snd.{max u v, w} ((source : I) → X source) T z)))))\n                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                  (@Nat.cast.{0} Real Real.instNatCast h)\n                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))\n              (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real Real.instAddCommMonoid\n                  (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                    (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                      (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                  fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                  @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                      (minus z alpha)))\n                (@MeasureTheory.integral.{max (max u v) w, 0}\n                  (Fin\n                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                    PidMgwBridgeContract.Key.{u, v, w} I X T)\n                  Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                  (@MeasurableSpace.pi.{0, max (max u v) w}\n                    (Fin\n                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                    (fun\n                        (a :\n                          Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                      PidMgwBridgeContract.Key.{u, v, w} I X T)\n                    fun\n                      (a :\n                        Fin\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                    @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                  (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                  fun\n                    (block :\n                      Fin\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                        PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                  @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                    block)))\n            (And\n              (@LE.le.{0} Real Real.instLE\n                (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                  (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                    Real.instAddCommMonoid\n                    (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                      (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                        (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                    fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                    @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                        (minus z alpha)))\n                  (@MeasureTheory.integral.{max (max u v) w, 0}\n                    (Fin\n                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                      PidMgwBridgeContract.Key.{u, v, w} I X T)\n                    Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                    (@MeasurableSpace.pi.{0, max (max u v) w}\n                      (Fin\n                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                      (fun\n                          (a :\n                            Fin\n                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                        PidMgwBridgeContract.Key.{u, v, w} I X T)\n                      fun\n                        (a :\n                          Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                      @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                    (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                    fun\n                      (block :\n                        Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                          PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                    @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                      block))\n                (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                    (@Nat.cast.{0} Real Real.instNatCast\n                      (@PidPrefixMgwBiasSource.positiveSupportCard.{max u v}\n                        (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C)\n                        (@Pi.instFintype.{u, v}\n                          (@Subtype.{u + 1} I fun (i : I) =>\n                            @Membership.mem.{u, u} I (Finset.{u} I)\n                              (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                          (fun\n                              (i :\n                                @Subtype.{u + 1} I fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                    i) =>\n                            X\n                              (@Subtype.val.{u + 1} I\n                                (fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                i))\n                          (fun\n                              (a b :\n                                @Subtype.{u + 1} I fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                    i) =>\n                            @Subtype.instDecidableEq.{u + 1} I\n                              (@Membership.mem.{u, u} I (Finset.{u} I)\n                                (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C)\n                              inst_4 a b)\n                          (@Finset.Subtype.fintype.{u} I C)\n                          fun\n                            (a :\n                              @Subtype.{u + 1} I fun (i : I) =>\n                                @Membership.mem.{u, u} I (Finset.{u} I)\n                                  (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i) =>\n                          inst_2\n                            (@Subtype.val.{u + 1} I\n                              (fun (i : I) =>\n                                @Membership.mem.{u, u} I (Finset.{u} I)\n                                  (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                              a))\n                        (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, max u v}\n                          (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C)\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                          p (@PidPrefixMgwBiasSource.sourceProjection.{u, v, w} I X T C))))\n                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))\n                  (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                    (@Nat.cast.{0} Real Real.instNatCast h)\n                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))\n              (@LE.le.{0} Real Real.instLE\n                (@abs.{0} Real Real.lattice Real.instAddGroup\n                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                    (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                      Real.instAddCommMonoid\n                      (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                        (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                          (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                      fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                      @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                          (minus z alpha)))\n                    (@MeasureTheory.integral.{max (max u v) w, 0}\n                      (Fin\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                        PidMgwBridgeContract.Key.{u, v, w} I X T)\n                      Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                      (@MeasurableSpace.pi.{0, max (max u v) w}\n                        (Fin\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                        (fun\n                            (a :\n                              Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                          PidMgwBridgeContract.Key.{u, v, w} I X T)\n                        fun\n                          (a :\n                            Fin\n                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                        @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                      (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                      fun\n                        (block :\n                          Fin\n                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                            PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                      @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                        block)))\n                (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                    (@Nat.cast.{0} Real Real.instNatCast\n                      (@PidPrefixMgwBiasSource.positiveSupportCard.{max (max u v) w}\n                        (Prod.{max v u, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T)\n                        (@instFintypeProd.{max u v, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T\n                          (@Pi.instFintype.{u, v}\n                            (@Subtype.{u + 1} I fun (i : I) =>\n                              @Membership.mem.{u, u} I (Finset.{u} I)\n                                (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                            (fun\n                                (i :\n                                  @Subtype.{u + 1} I fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                      i) =>\n                              X\n                                (@Subtype.val.{u + 1} I\n                                  (fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                  i))\n                            (fun\n                                (a b :\n                                  @Subtype.{u + 1} I fun (i : I) =>\n                                    @Membership.mem.{u, u} I (Finset.{u} I)\n                                      (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                      i) =>\n                              @Subtype.instDecidableEq.{u + 1} I\n                                (@Membership.mem.{u, u} I (Finset.{u} I)\n                                  (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C)\n                                inst_4 a b)\n                            (@Finset.Subtype.fintype.{u} I C)\n                            fun\n                              (a :\n                                @Subtype.{u + 1} I fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C\n                                    i) =>\n                            inst_2\n                              (@Subtype.val.{u + 1} I\n                                (fun (i : I) =>\n                                  @Membership.mem.{u, u} I (Finset.{u} I)\n                                    (@SetLike.instMembership.{u, u} (Finset.{u} I) I (@Finset.instSetLike.{u} I)) C i)\n                                a))\n                          inst_3)\n                        (@PidPrefixMgwBiasSource.fiberMass.{max (max u v) w, max (max u v) w}\n                          (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          (Prod.{max v u, w} (@PidPrefixMgwBiasSource.CollectionValue.{u, v} I X C) T)\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3)\n                          p (@PidPrefixMgwBiasSource.jointProjection.{u, v, w} I X T C))))\n                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))\n                  (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                    (@Nat.cast.{0} Real Real.instNatCast h)\n                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))))",
+      "raw_target": "PidPrefixMgwBiasRawTargets.projected_support_bias",
+      "status": "types_agree_not_proved",
+      "target": "projected_support_bias",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwBiasAliasTargets.mass_floor_bias",
+      "definition_axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "∀ (I : Type u) (X : I → Type v) (T : Type w) [inst : Fintype.{u} I] [Nonempty.{u + 1} I]\n  [inst_2 : (i : I) → Fintype.{v} (X i)] [inst_3 : Fintype.{w} T] [inst_4 : DecidableEq.{u + 1} I]\n  [inst_5 : (i : I) → DecidableEq.{v + 1} (X i)] [inst_6 : DecidableEq.{w + 1} T]\n  (p : PidMgwBridgeContract.Key.{u, v, w} I X T → Real)\n  (plus minus : PidMgwBridgeContract.Key.{u, v, w} I X T → PidMgwBridgeContract.Node.{u} I → Real)\n  (alpha : PidMgwBridgeContract.Node.{u} I) (eta : Real),\n  And\n      (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (p z))\n      (@Eq.{1} Real\n        (@PidMgwBridgeContract.total.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n          (@instFintypeProd.{max u v, w} ((source : I) → X source) T (@Pi.instFintype.{u, v} I X inst_4 inst inst_2)\n            inst_3)\n          p)\n        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →\n    And\n        (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n          @Eq.{1} Real (p z) (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) →\n            And\n              (@Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) (plus z)\n                (@OfNat.ofNat.{u} (PidMgwBridgeContract.Node.{u} I → Real) (nat_lit 0)\n                  (@Zero.toOfNat0.{u} (PidMgwBridgeContract.Node.{u} I → Real)\n                    (@Pi.instZero.{u, 0} (PidMgwBridgeContract.Node.{u} I)\n                      (fun (a : PidMgwBridgeContract.Node.{u} I) => Real) fun (i : PidMgwBridgeContract.Node.{u} I) =>\n                      Real.instZero))))\n              (@Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) (minus z)\n                (@OfNat.ofNat.{u} (PidMgwBridgeContract.Node.{u} I → Real) (nat_lit 0)\n                  (@Zero.toOfNat0.{u} (PidMgwBridgeContract.Node.{u} I → Real)\n                    (@Pi.instZero.{u, 0} (PidMgwBridgeContract.Node.{u} I)\n                      (fun (a : PidMgwBridgeContract.Node.{u} I) => Real) fun (i : PidMgwBridgeContract.Node.{u} I) =>\n                      Real.instZero)))))\n        (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n              (p z) →\n            And\n              (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst (plus z) beta)\n                  (@Neg.neg.{0} Real Real.instNeg\n                    (Real.log\n                      (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z\n                        beta))))\n              (And\n                (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                  @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst (minus z) beta)\n                    (Real.log\n                      (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                        (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                        (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z)\n                        (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p\n                          z beta))))\n                (And\n                  (∀ (other : PidMgwBridgeContract.Node.{u} I → Real),\n                    (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                        @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst other beta)\n                          (@Neg.neg.{0} Real Real.instNeg\n                            (Real.log\n                              (@PidMgwBridgeContract.sourceMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                                p z beta)))) →\n                      @Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) other (plus z))\n                  (∀ (other : PidMgwBridgeContract.Node.{u} I → Real),\n                    (∀ (beta : PidMgwBridgeContract.Node.{u} I),\n                        @Eq.{1} Real (@PidMgwBridgeContract.cumulative.{u} I inst other beta)\n                          (Real.log\n                            (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                              (@PidMgwBridgeContract.targetMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6\n                                p z)\n                              (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5\n                                inst_6 p z beta)))) →\n                      @Eq.{u + 1} (PidMgwBridgeContract.Node.{u} I → Real) other (minus z))))) →\n      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) eta →\n        @LE.le.{0} Real Real.instLE eta (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →\n          (∀ (z : PidMgwBridgeContract.Key.{u, v, w} I X T),\n              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))\n                  (p z) →\n                @LE.le.{0} Real Real.instLE eta\n                  (@PidMgwBridgeContract.restrictedMass.{u, v, w} I X T inst inst_2 inst_3 inst_4 inst_5 inst_6 p z\n                    alpha)) →\n            ∀ (h : Nat),\n              And\n                (@LE.le.{0} Real Real.instLE\n                  (@abs.{0} Real Real.lattice Real.instAddGroup\n                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                      (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                        Real.instAddCommMonoid\n                        (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                        fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                        @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                            (minus z alpha)))\n                      (@MeasureTheory.integral.{max (max u v) w, 0}\n                        (Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                          PidMgwBridgeContract.Key.{u, v, w} I X T)\n                        Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                        (@MeasurableSpace.pi.{0, max (max u v) w}\n                          (Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                          (fun\n                              (a :\n                                Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                            PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          fun\n                            (a :\n                              Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                          @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                        (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                        fun\n                          (block :\n                            Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                              PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                        @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                          block)))\n                  (PidPrefixMgwBiasSource.logRemainder eta h))\n                (@LE.le.{0} Real Real.instLE\n                  (@abs.{0} Real Real.lattice Real.instAddGroup\n                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                      (@Finset.sum.{max (max u v) w, 0} (PidMgwBridgeContract.Key.{u, v, w} I X T) Real\n                        Real.instAddCommMonoid\n                        (@Finset.univ.{max (max u v) w} (PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          (@instFintypeProd.{max u v, w} ((source : I) → X source) T\n                            (@Pi.instFintype.{u, v} I X inst_4 inst inst_2) inst_3))\n                        fun (z : PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                        @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (p z)\n                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (plus z alpha)\n                            (minus z alpha)))\n                      (@MeasureTheory.integral.{max (max u v) w, 0}\n                        (Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                          PidMgwBridgeContract.Key.{u, v, w} I X T)\n                        Real Real.normedAddCommGroup (@NormedField.toNormedSpace.{0} Real Real.normedField)\n                        (@MeasurableSpace.pi.{0, max (max u v) w}\n                          (Fin\n                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                          (fun\n                              (a :\n                                Fin\n                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                            PidMgwBridgeContract.Key.{u, v, w} I X T)\n                          fun\n                            (a :\n                              Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>\n                          @PidPrefixProbabilityContract.keyMeasurable.{u, v, w} I X T)\n                        (@PidPrefixProbabilityContract.rowLaw.{u, v, w} I X T inst inst_2 inst_3 inst_4 p\n                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                        fun\n                          (block :\n                            Fin\n                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →\n                              PidMgwBridgeContract.Key.{u, v, w} I X T) =>\n                        @PidPrefixProbabilityContract.blockStatistic.{u, v, w} I X T inst inst_4 inst_5 inst_6 alpha h\n                          block)))\n                  (@HDiv.hDiv.{0, 0, 0} Real Real Real\n                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))\n                    (@HPow.hPow.{0, 0, 0} Real Nat Real\n                      (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))\n                      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)\n                        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) eta)\n                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) h\n                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))\n                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)\n                      (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)\n                        (@Nat.cast.{0} Real Real.instNatCast h)\n                        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))\n                      eta)))",
+      "raw_target": "PidPrefixMgwBiasRawTargets.mass_floor_bias",
+      "status": "types_agree_not_proved",
+      "target": "mass_floor_bias",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    }
+  ]
+}

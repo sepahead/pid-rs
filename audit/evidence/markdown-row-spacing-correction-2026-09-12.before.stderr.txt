@@ -1,0 +1,5 @@
+audit/formal/lean-prefix-mgw-bias/EXPOSITION.md:390: use GitHub math delimiters instead of '\\['
+audit/formal/lean-prefix-mgw-bias/EXPOSITION.md:441: use GitHub math delimiters instead of '\\['
+audit/formal/lean-prefix-mgw-bias/archive/predecessor-package-2026-09-08/EXPOSITION.md:386: use GitHub math delimiters instead of '\\['
+audit/formal/lean-prefix-mgw-bias/archive/predecessor-package-2026-09-08/EXPOSITION.md:437: use GitHub math delimiters instead of '\\['
+Markdown math check failed with 4 finding(s)

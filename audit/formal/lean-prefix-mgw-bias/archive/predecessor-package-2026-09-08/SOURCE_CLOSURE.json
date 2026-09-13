@@ -1,0 +1,278 @@
+{
+  "schema": "pid-rs/bias-source-closure-v1",
+  "source_only": true,
+  "dependencies_and_types": 27,
+  "complete_compiler_modules": 30,
+  "modules": [
+    {
+      "order": 0,
+      "module": "PidFiniteConvergence/Deterministic",
+      "path": "sources/PidFiniteConvergence/Deterministic.lean",
+      "bytes": 9093,
+      "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidFiniteConvergence/Deterministic.lean"
+    },
+    {
+      "order": 1,
+      "module": "PidFiniteConvergence/SxEventBridge",
+      "path": "sources/PidFiniteConvergence/SxEventBridge.lean",
+      "bytes": 27203,
+      "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidFiniteConvergence/SxEventBridge.lean"
+    },
+    {
+      "order": 2,
+      "module": "MgwBridgeDepsV1/SxDnf/Contract",
+      "path": "sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+      "bytes": 12861,
+      "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/SxDnf/Contract.lean"
+    },
+    {
+      "order": 3,
+      "module": "MgwBridgeDepsV1/JoinLog/Contract",
+      "path": "sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+      "bytes": 3873,
+      "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/JoinLog/Contract.lean"
+    },
+    {
+      "order": 4,
+      "module": "MgwBridgeDepsV1/SxDnf/JudgeCore",
+      "path": "sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+      "bytes": 3492,
+      "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean"
+    },
+    {
+      "order": 5,
+      "module": "MgwBridgeDepsV1/SxDnf/Proofs",
+      "path": "sources/MgwBridgeDepsV1/SxDnf/Proofs.lean",
+      "bytes": 10294,
+      "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean"
+    },
+    {
+      "order": 6,
+      "module": "MgwBridgeDepsV1/JoinLog/Proofs",
+      "path": "sources/MgwBridgeDepsV1/JoinLog/Proofs.lean",
+      "bytes": 15705,
+      "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean"
+    },
+    {
+      "order": 7,
+      "module": "PidMgwBridge/Contract",
+      "path": "sources/PidMgwBridge/Contract.lean",
+      "bytes": 11737,
+      "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidMgwBridge/Contract.lean"
+    },
+    {
+      "order": 8,
+      "module": "PidMgwBridge/RawTargets",
+      "path": "sources/PidMgwBridge/RawTargets.lean",
+      "bytes": 7481,
+      "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidMgwBridge/RawTargets.lean"
+    },
+    {
+      "order": 9,
+      "module": "PidMgwBridge/AliasTargets",
+      "path": "sources/PidMgwBridge/AliasTargets.lean",
+      "bytes": 1458,
+      "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidMgwBridge/AliasTargets.lean"
+    },
+    {
+      "order": 10,
+      "module": "PidMgwBridge/JudgeCore",
+      "path": "sources/PidMgwBridge/JudgeCore.lean",
+      "bytes": 1165,
+      "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidMgwBridge/JudgeCore.lean"
+    },
+    {
+      "order": 11,
+      "module": "PidMgwBridge/Candidate",
+      "path": "sources/PidMgwBridge/Candidate.lean",
+      "bytes": 26432,
+      "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidMgwBridge/Candidate.lean"
+    },
+    {
+      "order": 12,
+      "module": "PidMgwBridge/SemanticJudge",
+      "path": "sources/PidMgwBridge/SemanticJudge.lean",
+      "bytes": 5851,
+      "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidMgwBridge/SemanticJudge.lean"
+    },
+    {
+      "order": 13,
+      "module": "PidPrefixProbability/Contract",
+      "path": "sources/PidPrefixProbability/Contract.lean",
+      "bytes": 7101,
+      "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixProbability/Contract.lean"
+    },
+    {
+      "order": 14,
+      "module": "PidPrefixProbability/RawTargets",
+      "path": "sources/PidPrefixProbability/RawTargets.lean",
+      "bytes": 4337,
+      "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixProbability/RawTargets.lean"
+    },
+    {
+      "order": 15,
+      "module": "PidPrefixProbability/AliasTargets",
+      "path": "sources/PidPrefixProbability/AliasTargets.lean",
+      "bytes": 839,
+      "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixProbability/AliasTargets.lean"
+    },
+    {
+      "order": 16,
+      "module": "PidPrefixProbability/Candidate",
+      "path": "sources/PidPrefixProbability/Candidate.lean",
+      "bytes": 20207,
+      "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixProbability/Candidate.lean"
+    },
+    {
+      "order": 17,
+      "module": "PidPrefixProbability/SemanticJudge",
+      "path": "sources/PidPrefixProbability/SemanticJudge.lean",
+      "bytes": 4219,
+      "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixProbability/SemanticJudge.lean"
+    },
+    {
+      "order": 18,
+      "module": "PidPrefixMgwMean/Contract",
+      "path": "sources/PidPrefixMgwMean/Contract.lean",
+      "bytes": 4277,
+      "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixMgwMean/Contract.lean"
+    },
+    {
+      "order": 19,
+      "module": "PidPrefixMgwMean/RawTargets",
+      "path": "sources/PidPrefixMgwMean/RawTargets.lean",
+      "bytes": 4716,
+      "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixMgwMean/RawTargets.lean"
+    },
+    {
+      "order": 20,
+      "module": "PidPrefixMgwMean/AliasTargets",
+      "path": "sources/PidPrefixMgwMean/AliasTargets.lean",
+      "bytes": 605,
+      "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixMgwMean/AliasTargets.lean"
+    },
+    {
+      "order": 21,
+      "module": "PidPrefixMgwMean/Candidate",
+      "path": "sources/PidPrefixMgwMean/Candidate.lean",
+      "bytes": 40511,
+      "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixMgwMean/Candidate.lean"
+    },
+    {
+      "order": 22,
+      "module": "PidPrefixMgwMean/SemanticJudge",
+      "path": "sources/PidPrefixMgwMean/SemanticJudge.lean",
+      "bytes": 2658,
+      "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PidPrefixMgwMean/SemanticJudge.lean"
+    },
+    {
+      "order": 23,
+      "module": "PrefixMgwMeanCandidateRoot",
+      "path": "sources/PrefixMgwMeanCandidateRoot.lean",
+      "bytes": 114,
+      "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20",
+      "role": "inherited_dependency",
+      "mean_public_correspondence": "../lean-prefix-mgw-mean/sources/PrefixMgwMeanCandidateRoot.lean"
+    },
+    {
+      "order": 24,
+      "module": "PidPrefixMgwBias/Contract",
+      "path": "sources/PidPrefixMgwBias/Contract.lean",
+      "bytes": 13165,
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45",
+      "role": "bias_type",
+      "mean_public_correspondence": null
+    },
+    {
+      "order": 25,
+      "module": "PidPrefixMgwBias/RawTargets",
+      "path": "sources/PidPrefixMgwBias/RawTargets.lean",
+      "bytes": 8095,
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a",
+      "role": "bias_type",
+      "mean_public_correspondence": null
+    },
+    {
+      "order": 26,
+      "module": "PidPrefixMgwBias/AliasTargets",
+      "path": "sources/PidPrefixMgwBias/AliasTargets.lean",
+      "bytes": 666,
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570",
+      "role": "bias_type",
+      "mean_public_correspondence": null
+    },
+    {
+      "order": 27,
+      "module": "PidPrefixMgwBias/Candidate",
+      "path": "sources/PidPrefixMgwBias/Candidate.lean",
+      "bytes": 34113,
+      "sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+      "role": "selected_candidate",
+      "mean_public_correspondence": null
+    },
+    {
+      "order": 28,
+      "module": "PidPrefixMgwBias/SemanticJudge",
+      "path": "sources/PidPrefixMgwBias/SemanticJudge.lean",
+      "bytes": 3372,
+      "sha256": "51388c57e8448021b79b82440309521cb81decd51bc66e52bc8f7dbe5f597ec2",
+      "role": "accepted_semantic_judge",
+      "mean_public_correspondence": null
+    },
+    {
+      "order": 29,
+      "module": "BiasCandidateRoot",
+      "path": "sources/BiasCandidateRoot.lean",
+      "bytes": 72,
+      "sha256": "3207764a12236a5c3f147239677566654dd8567969dff3356a39ab1ed3e3eece",
+      "role": "accepted_kernel_root",
+      "mean_public_correspondence": null
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "deadline_utc": "2026-09-08T09:17:09.278740+00:00",
+  "freeze_sha256": "1521624c73bb19367b6039873dd1b33455ce9290dfddb61dd1f08dfd5b80359f",
+  "new_bias_proofs": 0,
+  "project_root": "historical-project",
+  "registered_utc": "2026-09-08T08:42:09.278740+00:00",
+  "schema": "pid-rs/prefix-mgw-bias-operational-stage-v1"
+}

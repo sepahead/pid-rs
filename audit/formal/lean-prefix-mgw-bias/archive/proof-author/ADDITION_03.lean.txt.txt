@@ -1,0 +1,212 @@
+private lemma average_eq_sum {K : Type u} [Fintype K] (p f : K → ℝ)
+    (hp : ∀ z, 0 ≤ p z) : supportedAverage p f = ∑ z, p z * f z := by
+  classical
+  unfold supportedAverage
+  apply Finset.sum_congr rfl
+  intro z _hz
+  by_cases hz : 0 < p z
+  · simp only [hz, if_true]
+  · have he : p z = 0 := le_antisymm (le_of_not_gt hz) (hp z)
+    simp only [hz, if_false, he, zero_mul]
+
+private lemma average_mono {K : Type u} [Fintype K] (p f g : K → ℝ)
+    (hfg : ∀ z, 0 < p z → f z ≤ g z) : supportedAverage p f ≤ supportedAverage p g := by
+  classical
+  unfold supportedAverage
+  apply Finset.sum_le_sum
+  intro z _hz
+  by_cases hz : 0 < p z
+  · simp only [hz, if_true]
+    exact mul_le_mul_of_nonneg_left (hfg z hz) hz.le
+  · simp only [hz, if_false, le_refl]
+
+private lemma average_const {K : Type u} [Fintype K] (p : K → ℝ) (hp : Law p) (c : ℝ) :
+    supportedAverage p (fun _ => c) = c := by
+  rw [average_eq_sum p _ hp.1, ← Finset.sum_mul]
+  change total p * c = c
+  rw [hp.2, one_mul]
+
+private lemma average_sub {K : Type u} [Fintype K] (p f g : K → ℝ) :
+    supportedAverage p (fun z => f z - g z) = supportedAverage p f - supportedAverage p g := by
+  classical
+  unfold supportedAverage
+  rw [← Finset.sum_sub_distrib]
+  apply Finset.sum_congr rfl
+  intro z _hz
+  by_cases hz : 0 < p z <;> simp [hz, mul_sub]
+
+private lemma average_div {K : Type u} [Fintype K] (p f : K → ℝ) (c : ℝ) :
+    supportedAverage p (fun z => f z / c) = supportedAverage p f / c := by
+  classical
+  unfold supportedAverage
+  rw [Finset.sum_div]
+  apply Finset.sum_congr rfl
+  intro z _hz
+  by_cases hz : 0 < p z <;> simp [hz, mul_div_assoc]
+
+private lemma fiber_nonneg {K : Type u} {Q : Type v} [Fintype K]
+    (p : K → ℝ) (hp : ∀ z, 0 ≤ p z) (f : K → Q) (y : Q) : 0 ≤ fiberMass p f y := by
+  classical
+  unfold fiberMass
+  exact Finset.sum_nonneg (fun z _ => by split_ifs <;> first | exact hp z | exact le_rfl)
+
+private lemma fiber_anchor_le {K : Type u} {Q : Type v} [Fintype K]
+    (p : K → ℝ) (hp : ∀ z, 0 ≤ p z) (f : K → Q) (z : K) :
+    p z ≤ fiberMass p f (f z) := by
+  classical
+  unfold fiberMass
+  have hs := Finset.single_le_sum (s := Finset.univ)
+    (f := fun x => if f x = f z then p x else 0)
+    (fun x _ => by split_ifs <;> first | exact hp x | exact le_rfl) (Finset.mem_univ z)
+  simpa only [if_true] using hs
+
+private lemma proof_fiber_inverse : fiber_inverse_moment_target.{u,v} := by
+  intro K Q _ _ p f hp
+  classical
+  rw [inverseMoment, average_eq_sum p _ hp.1]
+  calc
+    _ = ∑ z, ∑ y : Q, if f z = y then p z / fiberMass p f y else 0 := by
+      apply Finset.sum_congr rfl
+      intro z _hz
+      simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true, mul_one_div]
+    _ = ∑ y : Q, ∑ z, if f z = y then p z / fiberMass p f y else 0 := Finset.sum_comm
+    _ = ∑ y : Q, fiberMass p f y / fiberMass p f y := by
+      apply Finset.sum_congr rfl
+      intro y _hy
+      unfold fiberMass
+      rw [Finset.sum_div]
+      apply Finset.sum_congr rfl
+      intro z _hz
+      by_cases hz : f z = y <;> simp [hz]
+    _ = ∑ y : Q, if 0 < fiberMass p f y then (1 : ℝ) else 0 := by
+      apply Finset.sum_congr rfl
+      intro y _hy
+      by_cases hy : 0 < fiberMass p f y
+      · simp [hy, ne_of_gt hy]
+      · have hzero : fiberMass p f y = 0 :=
+          le_antisymm (le_of_not_gt hy) (fiber_nonneg p hp.1 f y)
+        simp [hy, hzero]
+    _ = _ := by simp only [Finset.sum_boole, positiveSupportCard]
+
+private lemma inverse_antitone {K : Type u} [Fintype K] (p q r : K → ℝ)
+    (hq : ∀ z, 0 < p z → 0 < q z) (hqr : ∀ z, 0 < p z → q z ≤ r z) :
+    inverseMoment p r ≤ inverseMoment p q := by
+  apply average_mono
+  intro z hz
+  exact one_div_le_one_div_of_le (hq z hz) (hqr z hz)
+
+private lemma inverse_lower {K : Type u} [Fintype K] (p q : K → ℝ) (hp : Law p)
+    (hq : ∀ z, 0 < p z → 0 < q z ∧ q z ≤ 1) : 1 ≤ inverseMoment p q := by
+  rw [← average_const p hp 1]
+  apply average_mono
+  intro z hz
+  exact (le_div_iff₀ (hq z hz).1).mpr (by simpa using (hq z hz).2)
+
+private lemma inverse_self {K : Type u} [Fintype K] (p : K → ℝ) :
+    inverseMoment p p = (positiveSupportCard p : ℝ) := by
+  classical
+  unfold inverseMoment supportedAverage positiveSupportCard
+  rw [← Finset.sum_boole]
+  apply Finset.sum_congr rfl
+  intro z _hz
+  by_cases hz : 0 < p z <;> simp [hz, ne_of_gt hz]
+
+private lemma target_fiber {I : Type u} {X : I → Type v} {T : Type w}
+    [Fintype I] [∀ i, Fintype (X i)] [Fintype T]
+    [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+    (p : Key I X T → ℝ) (z : Key I X T) :
+    targetMass p z = fiberMass p (fun x : Key I X T => x.2) z.2 := by
+  classical
+  unfold targetMass PidFiniteConvergence.finiteEventMass PidFiniteConvergence.targetBranchEvent
+    PidFiniteConvergence.targetEquivalent fiberMass
+  rw [Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro x _hx
+  simp only [eq_comm]
+
+private lemma source_fiber {I : Type u} {X : I → Type v} {T : Type w}
+    [Fintype I] [∀ i, Fintype (X i)] [Fintype T]
+    [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+    (p : Key I X T → ℝ) (z : Key I X T) (C : Finset I) :
+    fiberMass p (sourceProjection (X := X) (T := T) C) (sourceProjection C z) =
+      PidFiniteConvergence.finiteEventMass p (PidFiniteConvergence.sourceBranchEvent C z) := by
+  classical
+  unfold fiberMass PidFiniteConvergence.finiteEventMass PidFiniteConvergence.sourceBranchEvent
+  rw [Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro x _hx
+  have he : sourceProjection C x = sourceProjection C z ↔
+      PidFiniteConvergence.sourceCollectionEquivalent C z x := by
+    constructor
+    · intro h i hi
+      exact (congrFun h ⟨i, hi⟩).symm
+    · intro h
+      funext i
+      exact (h i.val i.property).symm
+  simp only [he]
+
+private lemma joint_fiber {I : Type u} {X : I → Type v} {T : Type w}
+    [Fintype I] [∀ i, Fintype (X i)] [Fintype T]
+    [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+    (p : Key I X T → ℝ) (z : Key I X T) (C : Finset I) :
+    fiberMass p (jointProjection (X := X) (T := T) C) (jointProjection C z) =
+      PidFiniteConvergence.finiteEventMass p (PidFiniteConvergence.sourceTargetBranchEvent C z) := by
+  classical
+  unfold fiberMass PidFiniteConvergence.finiteEventMass PidFiniteConvergence.sourceTargetBranchEvent
+  rw [Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro x _hx
+  have he : jointProjection C x = jointProjection C z ↔
+      PidFiniteConvergence.sourceTargetCollectionEquivalent C z x := by
+    change (sourceProjection C x, x.2) = (sourceProjection C z, z.2) ↔ _
+    rw [Prod.mk.injEq]
+    constructor
+    · rintro ⟨hs, ht⟩
+      exact ⟨fun i hi => (congrFun hs ⟨i, hi⟩).symm, ht.symm⟩
+    · rintro ⟨hs, ht⟩
+      exact ⟨funext (fun i => (hs i.val i.property).symm), ht.symm⟩
+  simp only [he]
+
+private lemma proof_support_moments : support_moment_bounds_target.{u,v,w} := by
+  intro I X T _ _ _ _ _ _ _ p alpha hp
+  classical
+  have hd (z) (hz : 0 < p z) := anchor_domains p hp z hz alpha
+  have hq (z) (hz : 0 < p z) : 0 < restrictedMass p z alpha := hz.trans_le (hd z hz).1
+  have hs : 1 ≤ sourceMoment p alpha := inverse_lower p _ hp (fun z hz =>
+    ⟨(hq z hz).trans_le (hd z hz).2.1, (hd z hz).2.2.2.1⟩)
+  have ht : 1 ≤ targetMoment p := inverse_lower p _ hp (fun z hz =>
+    ⟨(hq z hz).trans_le (hd z hz).2.2.1, (hd z hz).2.2.2.2⟩)
+  have htf : targetMoment p =
+      (positiveSupportCard (fiberMass p (fun z : Key I X T => z.2)) : ℝ) := by
+    unfold targetMoment
+    simp_rw [target_fiber]
+    exact proof_fiber_inverse (Key I X T) T p (fun z => z.2) hp
+  refine ⟨hs, inverse_antitone p _ _ hq (fun z hz => (hd z hz).2.1), htf,
+    ht, inverse_antitone p _ _ hq (fun z hz => (hd z hz).2.2.1), ?_, ?_⟩
+  · rw [← inverse_self p]
+    exact inverse_antitone p p _ (fun _ hz => hz) (fun z hz => (hd z hz).1)
+  · intro C hC
+    have hsf : sourceMoment p alpha ≤
+        inverseMoment p (fun z => fiberMass p (sourceProjection (X := X) (T := T) C)
+          (sourceProjection C z)) := by
+      apply inverse_antitone
+      · intro z hz
+        exact hz.trans_le (fiber_anchor_le p hp.1 _ z)
+      · intro z _hz
+        rw [source_fiber]
+        exact Finset.sum_le_sum_of_subset_of_nonneg
+          (Finset.subset_biUnion_of_mem (fun D => PidFiniteConvergence.sourceBranchEvent D z) hC)
+          (fun x _ _ => hp.1 x)
+    have hqf : queryMoment p alpha ≤
+        inverseMoment p (fun z => fiberMass p (jointProjection (X := X) (T := T) C)
+          (jointProjection C z)) := by
+      apply inverse_antitone
+      · intro z hz
+        exact hz.trans_le (fiber_anchor_le p hp.1 _ z)
+      · intro z _hz
+        rw [joint_fiber]
+        exact Finset.sum_le_sum_of_subset_of_nonneg
+          (Finset.subset_biUnion_of_mem (fun D => PidFiniteConvergence.sourceTargetBranchEvent D z) hC)
+          (fun x _ _ => hp.1 x)
+    rw [proof_fiber_inverse (Key I X T) _ p _ hp] at hsf hqf
+    exact ⟨hsf, hqf⟩

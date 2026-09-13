@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "archive_path": "build-prefix-mgw-bias-pdf.py.txt",
+      "bytes": 38011,
+      "former_repository_path": "scripts/build-prefix-mgw-bias-pdf.py",
+      "sha256": "b28ed90a4ef89a29dace55ff51c76a72fe84894510613d299474fa68c08b0131"
+    },
+    {
+      "archive_path": "check-prefix-mgw-bias-pdf-self-test.py.txt",
+      "bytes": 21701,
+      "former_repository_path": "scripts/check-prefix-mgw-bias-pdf-self-test.py",
+      "sha256": "3757ce3be5e20b95a64c5b3f87b7b957edcadde1e96607a434943fb500d780bf"
+    },
+    {
+      "archive_path": "PUBLICATION.md.before.txt",
+      "bytes": 11928,
+      "former_repository_path": "audit/formal/latex/prefix-mgw-bias/PUBLICATION.md",
+      "sha256": "fdde37fa777beeadf13e963fa87dd5f5944750058d8d57a908b5b64bdfda73a7"
+    },
+    {
+      "archive_path": "NEGATIVE_HISTORY.md.before.txt",
+      "bytes": 3514,
+      "former_repository_path": "audit/formal/latex/prefix-mgw-bias/NEGATIVE_HISTORY.md",
+      "sha256": "fa3d8f10e0488ee23be8b43c830f27c75b82fe4d8f9ba9734c104b6273c15dad"
+    }
+  ],
+  "schema": "pid-rs/historical-publication-source-archive-v1",
+  "scope": "Exact historical bytes; not current executable sources or current evidence claims."
+}

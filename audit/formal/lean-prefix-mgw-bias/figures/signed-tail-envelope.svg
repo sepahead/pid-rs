@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="92mm" viewBox="0 0 1600 920" role="img" aria-labelledby="tail-title tail-desc">
+<title id="tail-title">The signed error is a difference of two omitted nonnegative components</title>
+<desc id="tail-desc">The omitted informative mean component has a supported population average between zero and U, where U is the average of the logarithmic remainder at source-query mass a. The omitted misinformative component is between zero and L, where L is the average of the remainder at joint-query mass q minus the remainder at target mass v. Their signed difference e equals the population atom minus the finite block expectation, so minus L is at most e and e is at most U. The absolute error is at most the maximum of U and L, which is at most the average remainder at q. This is a symbolic interval, not to scale and not a confidence interval.</desc>
+<defs><style>
+.title{font-family:'Source Sans Pro',sans-serif;font-size:41px;font-weight:700;fill:#1F3F60}
+.eyebrow{font-family:'Source Sans Pro',sans-serif;font-size:25px;font-weight:700;letter-spacing:2px;fill:#596A73}
+.label{font-family:'Source Sans Pro',sans-serif;font-size:32px;font-weight:600;fill:#2C3E50}
+.body{font-family:'Source Sans Pro',sans-serif;font-size:31px;fill:#2C3E50}
+.math{font-family:'Source Sans Pro',sans-serif;font-size:38px;fill:#1F3F60}
+.note{font-family:'Source Sans Pro',sans-serif;font-size:28px;fill:#596A73}
+</style></defs>
+<rect width="1600" height="920" fill="#F7F3E9"/>
+<text x="60" y="50" class="eyebrow">FINITE CATEGORICAL MGW · MEAN TRUNCATION ERROR</text>
+<path d="M60 80 H1540" stroke="#D2E0E2" stroke-width="2"/>
+<path d="M60 80 H330" stroke="#B28218" stroke-width="6"/>
+<text x="60" y="144" class="title">Subtract the omitted components before bounding</text>
+<text x="60" y="195" class="body">Both omitted components are nonnegative. Their difference can have either sign.</text>
+<rect x="60" y="242" width="720" height="224" rx="12" fill="#D2E0E2"/>
+<rect x="820" y="242" width="720" height="224" rx="12" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+<text x="92" y="291" class="label">Informative component</text>
+<text x="92" y="348" class="math">0 ≤ Eₚ⁺[π⁺ − Pₕ] ≤ Uₕ</text>
+<text x="92" y="411" class="body">Uₕ = Eₚ⁺[Rₕ(a)]</text>
+<text x="852" y="291" class="label">Misinformative component</text>
+<text x="852" y="348" class="math">0 ≤ Eₚ⁺[π⁻ − Nₕ] ≤ Lₕ</text>
+<text x="852" y="411" class="body">Lₕ = Eₚ⁺[Rₕ(q) − Rₕ(v)]</text>
+<text x="60" y="527" class="math">eₕ = θ − E[Bₕ] = Eₚ⁺[π⁺ − Pₕ] − Eₚ⁺[π⁻ − Nₕ]</text>
+<path d="M180 612 H1420" stroke="#1F3F60" stroke-width="5"/>
+<path d="M180 590 V634 M800 590 V634 M1420 590 V634" stroke="#1F3F60" stroke-width="3"/>
+<text x="180" y="680" class="math" text-anchor="middle">−Lₕ</text>
+<text x="800" y="680" class="math" text-anchor="middle">0</text>
+<text x="1420" y="680" class="math" text-anchor="middle">Uₕ</text>
+<text x="800" y="734" class="note" text-anchor="middle">Symbolic interval: −Lₕ ≤ eₕ ≤ Uₕ. Not to scale.</text>
+<path d="M60 774 H1540" stroke="#D2E0E2" stroke-width="2"/>
+<text x="60" y="826" class="math">|eₕ| ≤ max(Uₕ, Lₕ) ≤ Eₚ⁺[Rₕ(q)]</text>
+<text x="60" y="876" class="note">Population expectation bound; not a band around an observed block statistic.</text>
+</svg>

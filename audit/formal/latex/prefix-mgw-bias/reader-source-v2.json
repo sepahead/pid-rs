@@ -1,0 +1,239 @@
+{
+  "boundary": "Source byte selection only for pypdf 6.16.1. Copy these 58 pinned regular files into a fresh private package before import; never load installed bytecode. Wheel-to-install correspondence and exact-PDF compatibility remain separate evidence. No dependency installation, signature, authenticity or general PDF-parser safety claim.",
+  "files": {
+    "__init__.py": {
+      "bytes": 1283,
+      "sha256": "612ff566b4378c13c7b1180cb2da89ac0b6cde5500a63fe530e30ae6a88b1b9c"
+    },
+    "_cmap.py": {
+      "bytes": 15310,
+      "sha256": "c3aba1048bff313709534cc161644a484128b02859b5d0352399f7a6eb2986e9"
+    },
+    "_codecs/__init__.py": {
+      "bytes": 1510,
+      "sha256": "bd56ce01215af54c771e42b4228dd415aba640fe0970d2f1f63341353351d980"
+    },
+    "_codecs/_codecs.py": {
+      "bytes": 10717,
+      "sha256": "f377c8779e1713e6916f798d8bfa75a2526d67375487df07b3159708e193b512"
+    },
+    "_codecs/adobe_glyphs.py": {
+      "bytes": 577665,
+      "sha256": "69ac4e46ea50409ee46cb0c76e35a280b67aa60f06f7fe5ea832a2349c72923e"
+    },
+    "_codecs/core_font_metrics.py": {
+      "bytes": 114968,
+      "sha256": "14b3d66d3678871790597820d63a397b8a972821642846397bce54d9b2c533a9"
+    },
+    "_codecs/pdfdoc.py": {
+      "bytes": 4269,
+      "sha256": "c5f4af30562cbf1b9a490d14bbdbd90ca681d16bbce61d6e0a20758bdac07145"
+    },
+    "_codecs/std.py": {
+      "bytes": 2630,
+      "sha256": "0f240cb84a40184a52f6ecb58d67f87278fe92a4a13ce0228f9b08ed0d580fc1"
+    },
+    "_codecs/symbol.py": {
+      "bytes": 4642,
+      "sha256": "08fe958d172c72b9bcca6007f74c6977155a7a5c22e8c49bd536f5c0d0e1d359"
+    },
+    "_codecs/zapfding.py": {
+      "bytes": 4655,
+      "sha256": "e39a9c635d716c1c2da21ebfb7467fef33631bbfaa238d752d14155d828faf65"
+    },
+    "_crypt_providers/__init__.py": {
+      "bytes": 2770,
+      "sha256": "c5441b160310bca31a38e4f7454756ddb4bc7d94a147c3c13b3eab7ac7f05855"
+    },
+    "_crypt_providers/_base.py": {
+      "bytes": 1735,
+      "sha256": "34505711d85bae0f64d353d57cd37f93b94401897606481720e8b9a1f53ff91f"
+    },
+    "_crypt_providers/_cryptography.py": {
+      "bytes": 5265,
+      "sha256": "7c884d347d9ab10a89af0d05ed063ad4d97551e24012bf51700a35b74f8280d0"
+    },
+    "_crypt_providers/_fallback.py": {
+      "bytes": 3382,
+      "sha256": "81772ba3f2bbab82180cbe57195471a059978d75cc6ba4e57830f0c56c828f81"
+    },
+    "_crypt_providers/_pycryptodome.py": {
+      "bytes": 4020,
+      "sha256": "c57e05b5af101c7133b44fbf60793ebc9b66054d71295c01f7dff2b10e939ce2"
+    },
+    "_doc_common.py": {
+      "bytes": 58116,
+      "sha256": "bf4aea0dd89b697f36ab3d863c88c5afe6164bd3e773c3432c5dcef439ff50ec"
+    },
+    "_encryption.py": {
+      "bytes": 53649,
+      "sha256": "c39c927e0c1d9faace5c06f244603027421c50787db847535f780090eb01e0a7"
+    },
+    "_font.py": {
+      "bytes": 39353,
+      "sha256": "b7fbae03281eaec1b2be7bdbda210b3e138ae2674885e2189f7a272e85a578cf"
+    },
+    "_page.py": {
+      "bytes": 100325,
+      "sha256": "954e26bbb0067fe22dba9b514797d7fcf068942fb2a511e1ec44e4ff8deba0f6"
+    },
+    "_page_labels.py": {
+      "bytes": 9929,
+      "sha256": "73c88437378b64d1d7b56a0019c6c7250426bbbc5016347705549e48e6d0f8cd"
+    },
+    "_protocols.py": {
+      "bytes": 2232,
+      "sha256": "4ebaf097ce3da31aac99971433e0977a1a9d57c3783c00b1d9a029f4696be594"
+    },
+    "_reader.py": {
+      "bytes": 67611,
+      "sha256": "0dbed224a6e50f80e13a08b9ea7e02b0785961f08af1d9c15117a1a23d91bd17"
+    },
+    "_text_extraction/__init__.py": {
+      "bytes": 8555,
+      "sha256": "ae6cc9160e3ac1845021b0e40c45da4e281c6b1da0c84dfed6fdcc990c462d07"
+    },
+    "_text_extraction/_layout_mode/__init__.py": {
+      "bytes": 340,
+      "sha256": "454408c22530ce778db5c9639d533a8e445a7a6ea980fee6383dbe3019ada6fc"
+    },
+    "_text_extraction/_layout_mode/_fixed_width_page.py": {
+      "bytes": 17319,
+      "sha256": "29da3013d094aaaefc44c655ed9c149c393b33e0292cb37521fd29d8830f1fb0"
+    },
+    "_text_extraction/_layout_mode/_text_state_manager.py": {
+      "bytes": 7517,
+      "sha256": "681fed2b85f6687313c6ba327cdac67c579a7b974a9e2d3bdcc0d1eda95d2792"
+    },
+    "_text_extraction/_layout_mode/_text_state_params.py": {
+      "bytes": 6525,
+      "sha256": "b6175011bedecf6411071c3c6b39d4d64c407a9ca95ea35d87f9e26ac56998cc"
+    },
+    "_text_extraction/_text_extractor.py": {
+      "bytes": 14965,
+      "sha256": "f1c2e675fb87df395d575fb1d9c9c51f3a5bf2f7efbe286a7132d8434ca65220"
+    },
+    "_utils.py": {
+      "bytes": 22955,
+      "sha256": "c0a0c2167624e57cadbc71890457666abffcb719229f69d653436edc44b371a5"
+    },
+    "_version.py": {
+      "bytes": 23,
+      "sha256": "9ec727b5ea6a27daa4289e40204b7262c5f61290760c853f88b751e37dd5eba4"
+    },
+    "_writer.py": {
+      "bytes": 136048,
+      "sha256": "f997a76da26c83fdb795e0eaccb22f7271c4bd666f1b0f620ca095c3a284e470"
+    },
+    "actions/__init__.py": {
+      "bytes": 391,
+      "sha256": "d8bdd81ef60846bab097640490991e4b63bd6b521eb0356ed696e24854299518"
+    },
+    "actions/_actions.py": {
+      "bytes": 6521,
+      "sha256": "9c3a8f2d641d07b11482570fbf1e6c7cd8e61b2e8547193d539b27968b264b6d"
+    },
+    "annotations/__init__.py": {
+      "bytes": 990,
+      "sha256": "7f693ffa3027dfd082076ecac50fdef771a29e7ce40076d49e749e1899758f21"
+    },
+    "annotations/_base.py": {
+      "bytes": 961,
+      "sha256": "608453cd3764aa3f035164939b2d1fae47d3af88e87b91d41b344e5287f8a08a"
+    },
+    "annotations/_markup_annotations.py": {
+      "bytes": 11862,
+      "sha256": "b162a1181086ed7f688c0bc4691304a093fe7d8e8572b94574e9ad79f219066d"
+    },
+    "annotations/_non_markup_annotations.py": {
+      "bytes": 3656,
+      "sha256": "58a598b5ed8e89b646dcc1fb05fdbaa133a90b2c86ae43cb62715d275a2c46b6"
+    },
+    "constants.py": {
+      "bytes": 24159,
+      "sha256": "2b5d70b5d871abf4d18347ed17db31f0e80156bd8b84715dfd69ddc412453023"
+    },
+    "errors.py": {
+      "bytes": 1947,
+      "sha256": "070d56f61c4eb03830ab053a628436974f89894c93aba979423542afe5b81850"
+    },
+    "filters.py": {
+      "bytes": 32785,
+      "sha256": "802ff20ded08690600d344ba803a81f5ec1c2d7967c92daa307d6485377738e7"
+    },
+    "generic/__init__.py": {
+      "bytes": 3468,
+      "sha256": "56ba9d61fb5010278f0d4dab5d532012a45a60547ccce57f7ef260a35f71feec"
+    },
+    "generic/_appearance_stream.py": {
+      "bytes": 37004,
+      "sha256": "721b8fe4b36a99428777ab9ff0097eb846a365b509b0a35ea21344f35aec609e"
+    },
+    "generic/_base.py": {
+      "bytes": 33427,
+      "sha256": "fc0f0da8724db79f4aca861dc0dcc097ae48b54956cdc3dcc3d6b3b6ea02008d"
+    },
+    "generic/_data_structures.py": {
+      "bytes": 69684,
+      "sha256": "a505df4d8fdcc5d769e2deb38a952da5f61575dc2bcbee563037f6110d3ab5e6"
+    },
+    "generic/_files.py": {
+      "bytes": 16789,
+      "sha256": "60ad8eb43d7d94fef181489e38a372a92c595ab7cc7b3c5bc789876949422449"
+    },
+    "generic/_fit.py": {
+      "bytes": 5515,
+      "sha256": "23085e8d08c8abbe75bc98d519a58d7bdb895fc1f35d0d97a699ad2e123e34ea"
+    },
+    "generic/_image_inline.py": {
+      "bytes": 15148,
+      "sha256": "bd651e8394a2d573ac07771c487a32d74c505d87c283efbfbd56a9ef5b1e7955"
+    },
+    "generic/_image_xobject.py": {
+      "bytes": 27878,
+      "sha256": "973c38f28261a4ba271cdc0c01ae4870b47a4efd3d24f0dab81d3643bcc1a078"
+    },
+    "generic/_link.py": {
+      "bytes": 6207,
+      "sha256": "90835ae593a2a461f163f616fdf231178cf44d134a970c388d161a1822d34116"
+    },
+    "generic/_outline.py": {
+      "bytes": 1094,
+      "sha256": "3c4b924f86fe2a6010203009d05872c4dec036626376c59a4ddc4aa3b862ab78"
+    },
+    "generic/_rectangle.py": {
+      "bytes": 3924,
+      "sha256": "87a0c33fd7e0b6b332186d5aa2e679d67f57274275dddc6186a6a727148134d5"
+    },
+    "generic/_utils.py": {
+      "bytes": 7514,
+      "sha256": "9f6b0397cb815d820f1e65e3d85ce8cfdd5639314da33974b0068cf708024fe4"
+    },
+    "generic/_viewerpref.py": {
+      "bytes": 6835,
+      "sha256": "cbdd8a1d8de2cbd15a8ee068b3dec4d6c3e4f6e9f3246f9493654277b89261e6"
+    },
+    "pagerange.py": {
+      "bytes": 7536,
+      "sha256": "f21c863ac102f786a261e2a8aae9004ab1391590edc7c5eb25015a0fe2e9dc2d"
+    },
+    "papersizes.py": {
+      "bytes": 1413,
+      "sha256": "e93cf9b1f34dff724e51aa58f3753e95a928867a57600d2148440d98e54b14bf"
+    },
+    "py.typed": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "types.py": {
+      "bytes": 1915,
+      "sha256": "b09ef01f393b111fc227b90ffacf2ef5ac459e40979c5a6bf27cdc8f50314dab"
+    },
+    "xmp.py": {
+      "bytes": 31655,
+      "sha256": "9819355cc76413ca326d26e8d80d4aa7d91534250fbaa74ed404d91385882104"
+    }
+  },
+  "schema": "pid-rs/prefix-mgw-bias-pypdf-source-v2",
+  "version": "6.16.1"
+}

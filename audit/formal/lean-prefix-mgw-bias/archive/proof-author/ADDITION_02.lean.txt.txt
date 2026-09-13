@@ -1,0 +1,102 @@
+private lemma power_cumulative {L : Type u} [Fintype L] [SemilatticeSup L]
+    [DecidableEq L] [DecidableLE L] (weight : L → ℝ) (n : ℕ) (a : L) :
+    PidJoinLogContract.cumulative (PidJoinLogContract.joinPower weight n) a =
+      PidJoinLogContract.cumulative weight a ^ (n + 1) := by
+  induction n with
+  | zero => simp [PidJoinLogContract.joinPower]
+  | succ n ih =>
+    rw [PidJoinLogContract.joinPower, PidJoinLogCandidate.join_convolution_cumulative L, ih]
+    simp only [pow_succ]
+
+private lemma join_envelope {L : Type u} [Fintype L] [SemilatticeSup L]
+    [DecidableEq L] [DecidableLE L] (weight : L → ℝ)
+    (hw : ∀ a, 0 ≤ weight a) (n : ℕ) (a : L) :
+    0 ≤ PidJoinLogContract.joinPower weight n a ∧
+      PidJoinLogContract.joinPower weight n a ≤
+        PidJoinLogContract.cumulative weight a ^ (n + 1) := by
+  have hn := PidJoinLogCandidate.join_power_nonnegative L weight hw n
+  refine ⟨hn a, ?_⟩
+  rw [← power_cumulative]
+  unfold PidJoinLogContract.cumulative
+  have hs := Finset.single_le_sum
+    (s := Finset.univ) (f := fun x => if x ≤ a then PidJoinLogContract.joinPower weight n x else 0)
+    (fun x _ => by split_ifs <;> positivity) (Finset.mem_univ a)
+  simpa only [le_refl, if_true] using hs
+
+private lemma cumulative_model {I : Type u} [Fintype I] [DecidableEq I]
+    (sigma : SemilatticeSup (Node I)) (hsigma : ExactOps sigma)
+    (r : Node I → ℝ) (a : Node I) :
+    cumulative r a = @PidJoinLogContract.cumulative (Node I) (nodeFintype I)
+      sigma.toLE (Classical.decRel sigma.le) r a := by
+  classical
+  unfold cumulative PidJoinLogContract.cumulative
+  apply Finset.sum_congr rfl
+  intro x _hx
+  simp only [hsigma.1 x a]
+
+private lemma word_envelope : word_coordinate_envelope_target.{u,v,w} := by
+  intro I X T _ _ _ _ _ _ _ p z alpha n hp
+  classical
+  obtain ⟨sigma, hsigma⟩ := (PidMgwBridgeCandidate.actual_join_lub I).2
+  have hw := (PidMgwBridgeCandidate.generator_nonnegative_and_total I X T p z hp.1).1
+  have he := @join_envelope (Node I) (nodeFintype I) sigma
+    (Classical.decEq (Node I)) (Classical.decRel sigma.le) (weights p z) hw n alpha
+  rw [← PidPrefixMgwMeanCandidate.word_coefficient_join_power I X T p z alpha n sigma hsigma,
+    ← cumulative_model sigma hsigma,
+    PidMgwBridgeCandidate.generator_lower_cumulative I X T p z alpha, hp.2] at he
+  exact he
+
+private lemma anchor_domains {I : Type u} {X : I → Type v} {T : Type w}
+    [Fintype I] [Nonempty I] [∀ i, Fintype (X i)] [Fintype T]
+    [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+    (p : Key I X T → ℝ) (hp : Law p) (z : Key I X T) (hz : 0 < p z) (alpha : Node I) :
+    p z ≤ restrictedMass p z alpha ∧
+    restrictedMass p z alpha ≤ sourceMass p z alpha ∧
+    restrictedMass p z alpha ≤ targetMass p z ∧
+    sourceMass p z alpha ≤ 1 ∧ targetMass p z ≤ 1 := by
+  classical
+  have hd := PidMgwBridgeCandidate.supported_anchor_domains I X T p z hp hz
+  refine ⟨?_, ?_, ?_, (hd.2.2.2.2.2.2.2.2.2.2.2.2 alpha).2.1, hd.2.2.2.1⟩
+  · exact Finset.single_le_sum (fun x _ => hp.1 x)
+      (PidFiniteConvergence.sx_target_restricted_event_anchor_mem alpha.property.1 z)
+  · unfold restrictedMass sourceMass PidFiniteConvergence.finiteEventMass
+    rw [PidFiniteConvergence.sx_target_restricted_event_eq_inter]
+    exact Finset.sum_le_sum_of_subset_of_nonneg Finset.inter_subset_left
+      (fun x _ _ => hp.1 x)
+  · unfold restrictedMass targetMass PidFiniteConvergence.finiteEventMass
+    rw [PidFiniteConvergence.sx_target_restricted_event_eq_inter]
+    exact Finset.sum_le_sum_of_subset_of_nonneg Finset.inter_subset_right
+      (fun x _ _ => hp.1 x)
+
+private lemma raw_envelopes : raw_increment_envelopes_target.{u,v,w} := by
+  intro I X T _ _ _ _ _ _ _ p z alpha n hp hz
+  classical
+  have hd := anchor_domains p hp z hz alpha
+  have hq : 0 < restrictedMass p z alpha := hz.trans_le hd.1
+  have hv : 0 < targetMass p z := hq.trans_le hd.2.2.1
+  have hw := word_envelope I X T p z alpha n hp
+  have hc := PidMgwBridgeCandidate.target_conditioning_mass I X T p z hp hv
+  have hcs : sourceMass (conditioned p z) z alpha =
+      restrictedMass p z alpha / targetMass p z := by
+    unfold sourceMass
+    rw [hc.2]
+    rw [← PidFiniteConvergence.sx_target_restricted_event_eq_inter]
+    rfl
+  have hcw (k : ℕ) := word_envelope I X T (conditioned p z) z alpha k hc.1
+  have hcw' (k : ℕ) : wordCoefficient (conditioned p z) z alpha (k + 1) ≤
+      (1 - restrictedMass p z alpha / targetMass p z) ^ (k + 1) := by
+    simpa only [hcs] using (hcw k).2
+  refine ⟨div_nonneg hw.1 (by positivity),
+    div_le_div_of_nonneg_right hw.2 (by positivity), ?_, ?_⟩
+  · unfold negativeMeanIncrement
+    exact Finset.sum_nonneg (fun k _ => div_nonneg
+      (mul_nonneg (mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hv.le _))
+        (pow_nonneg (sub_nonneg.mpr hd.2.2.2.2) _)) (hcw k).1) (by positivity))
+  · unfold negativeMeanIncrement
+    rw [← mean_binomial_thinning (restrictedMass p z alpha) (targetMass p z) (ne_of_gt hv) n]
+    apply Finset.sum_le_sum
+    intro k _hk
+    apply div_le_div_of_nonneg_right _ (by positivity)
+    apply mul_le_mul_of_nonneg_left (hcw' k)
+    exact mul_nonneg (mul_nonneg (Nat.cast_nonneg _) (pow_nonneg hv.le _))
+      (pow_nonneg (sub_nonneg.mpr hd.2.2.2.2) _)

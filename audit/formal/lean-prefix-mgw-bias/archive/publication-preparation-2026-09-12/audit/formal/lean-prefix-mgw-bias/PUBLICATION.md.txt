@@ -1,0 +1,9 @@
+# Current finite-prefix MGW bias package candidate
+
+Read the corrected [full exposition](EXPOSITION.md), corrected [one-page source summary](SUMMARY.md), and exact [theorem-to-proof map](THEOREM_MAP.md). [RESULTS.md](RESULTS.md) is the unchanged account of the original accepted campaign. The current [source correspondence](SOURCE_CORRESPONDENCE.md) separates those historical records from this assembly's editorial and portable-source additions.
+
+The [historical portable replay](HISTORICAL_PORTABLE_REPLAY.md) records the later source-preserving replay, its causal negative and finite controls. Its private evidence and unresolved receipt limitation are explicit. It adds no theorem and does not replace the original campaign record.
+
+The mathematical object is the fixed-horizon expectation of a fresh-anchor IID complete-row experiment for a finite categorical MGW shared-information atom. Dependence within a row is allowed. Quantities are in nats. Population support counts and a justified population mass floor are premises where stated; observed occupancy or minimum sample frequency does not replace them.
+
+This private candidate includes no PDF and records no current PDF production, rendered review, hosted result, or repository adoption. It adds no proof family, empirical validation, estimator-calibration result, confidence or variance guarantee, dependent-row result, implementation validation, or scientific-priority claim. The current [package status](PACKAGE_STATUS.json) and [replay note](REPLAY.current.md) enumerate the open operational edges.

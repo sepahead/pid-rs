@@ -130,8 +130,8 @@ required_lines = (
     'trap \'cleanup 129\' HUP',
     'trap \'cleanup 130\' INT',
     'trap \'cleanup 143\' TERM',
-    'TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$FIRST" >"$BUILD_ROOT/first.stdout" 2>"$BUILD_ROOT/first.stderr"',
-    'TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$SECOND" >"$BUILD_ROOT/second.stdout" 2>"$BUILD_ROOT/second.stderr"',
+    'TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$FIRST" >"$BUILD_ROOT/first.stdout" 2>"$BUILD_ROOT/first.stderr" || {',
+    'TMPDIR="$BUILD_ROOT" bash --noprofile --norc "$BUILDER" "$SECOND" >"$BUILD_ROOT/second.stdout" 2>"$BUILD_ROOT/second.stderr" || {',
     'if [[ -s "$BUILD_ROOT/first.stderr" || -s "$BUILD_ROOT/second.stderr" ]]; then',
     'cmp -s "$FIRST" "$SECOND" || {',
     'cmp -s "$FIRST" "$COMMITTED" || {',
@@ -257,6 +257,15 @@ cp "$ROOT/expected-builder-output.pdf" "$1"
 case "${FIXTURE_BUILDER_MODE:-copy}" in
   copy) ;;
   stderr) echo "fixture builder diagnostic on stderr" >&2 ;;
+  first-failure|second-failure)
+    case "$FIXTURE_BUILDER_MODE:${1##*/}" in
+      first-failure:first.pdf|second-failure:second.pdf)
+        echo "fixture failure stdout for ${1##*/}"
+        echo "fixture failure stderr for ${1##*/}" >&2
+        exit 43
+        ;;
+    esac
+    ;;
   second-drift)
     if [[ "${1##*/}" == "second.pdf" ]]; then
       printf '\n%% fixture second-build drift\n' >>"$1"
@@ -526,6 +535,36 @@ expect_failure "$fixture" --exact 1 "builder emitted stderr" \
   "builder stderr is fatal and failure cleanup removes checker scratch" \
   FIXTURE_BUILDER_MODE=stderr
 
+for failed_build in first second; do
+  fixture="$TEST_ROOT/builder-$failed_build-failure"
+  make_fixture "$fixture"
+  expect_failure "$fixture" --exact 43 "$failed_build build failed with status 43" \
+    "$failed_build producer failure preserves status and removes scratch" \
+    "FIXTURE_BUILDER_MODE=$failed_build-failure"
+  for channel in stdout stderr; do
+    if ! grep -Fxq "fixture failure $channel for $failed_build.pdf" "$fixture/failure.stderr" \
+        || ! grep -Fxq "post-publication custody PDF check: $failed_build build $channel follows" "$fixture/failure.stderr"; then
+      echo "$CHECK_NAME: lost $failed_build producer $channel diagnostic" >&2
+      exit 1
+    fi
+  done
+  if [[ "$failed_build" == first ]]; then
+    expected_invocations=1
+  else
+    expected_invocations=2
+  fi
+  if [[ "$(awk 'END { print NR }' "$fixture/builder-invocations.log")" != "$expected_invocations" ]] \
+      || grep -Fq 'OK: custody receipt is a reproducible' "$fixture/failure.stdout"; then
+    echo "$CHECK_NAME: $failed_build producer failure continued to later acceptance" >&2
+    exit 1
+  fi
+  if ! grep -Fxq 'first.pdf' "$fixture/builder-invocations.log" \
+      || { [[ "$failed_build" == second ]] && ! grep -Fxq 'second.pdf' "$fixture/builder-invocations.log"; }; then
+    echo "$CHECK_NAME: wrong producer invocation sequence for $failed_build failure" >&2
+    exit 1
+  fi
+done
+
 fixture="$TEST_ROOT/two-build-drift"
 make_fixture "$fixture"
 expect_failure "$fixture" --exact 1 "two isolated same-toolchain builds differ" \
@@ -570,8 +609,8 @@ pass "filesystem root is refused as a temporary cleanup domain"
 
 EXPECTED_CONTRACTS=19
 EXPECTED_POSITIVES=2
-EXPECTED_HOSTILES=31
-EXPECTED_TOTAL=33
+EXPECTED_HOSTILES=33
+EXPECTED_TOTAL=35
 if [[ "$CONTRACT_COUNT" -ne "$EXPECTED_CONTRACTS" \
     || "$POSITIVE_COUNT" -ne "$EXPECTED_POSITIVES" \
     || "$HOSTILE_COUNT" -ne "$EXPECTED_HOSTILES" \

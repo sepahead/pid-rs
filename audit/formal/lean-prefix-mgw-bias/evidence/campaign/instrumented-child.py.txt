@@ -1,0 +1,149 @@
+"""Hash-bound trace instrumentation of complete bias entrypoints; no external execution.
+Only the explicit synthetic-lane guard, external preflight, tool Runner and named
+causal clock/custody injections are instrumented. Policies/parsers remain real.
+"""
+from __future__ import annotations
+import copy, datetime as dt, hashlib, json, runpy, sys
+from pathlib import Path
+CAMPAIGN_SHA = 'caf100e31637053df8a321d1d6c584bb009e99fe1e9e489fa31dfe936d545b0e'
+CLOSURE_SHA = 'a1e091dda563e78af647fa92fc5f64a7cee757be089a0e8d93db377ee92794c7'
+
+def canonical(value): return (json.dumps(value,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+def digest(raw): return hashlib.sha256(raw).hexdigest()
+def require(ok,message):
+    if not ok: raise RuntimeError(message)
+
+def main():
+    job_path=Path(sys.argv[1]).resolve(strict=True);job=json.loads(job_path.read_bytes())
+    lane=Path(job['lane']).resolve(strict=True);target=Path(job['target']).resolve(strict=True)
+    scope=Path(job['scope']).resolve(strict=True)
+    require(job_path.is_relative_to(scope) and lane.is_relative_to(scope) and target.parent==lane,'fixture is outside the scoped job')
+    expected=CAMPAIGN_SHA if target.name=='campaign.py' else CLOSURE_SHA
+    require(target.name in ('campaign.py','close-campaign.py') and digest(target.read_bytes())==expected,'instrumented entrypoint source hash differs')
+    marker=lane/'SYNTHETIC_CONTROL_ONLY.json';marker_raw=marker.read_bytes()
+    require(digest(marker_raw)==job['marker_sha256'] and json.loads(marker_raw).get('status')=='INERT_SYNTHETIC_NOT_LIVE_ADOPTION','synthetic marker differs')
+    report={'status':'instrumentation_pending','scope':'Synthetic interface routing only; no Lean child and zero proof credit',
+            'target_sha256':expected,'python_optimization':sys.flags.optimize,'events':[],'patched_interfaces':[],
+            'external_process_attempts':[],'new_proofs':0,'new_lean_children':0}
+    case=job['case'];state={'offset':dt.timedelta(0),'injected':False,'candidate_reads':0,'guard_bypasses':0}
+    def event(kind,**values):report['events'].append({'event':kind,**values})
+    def utc():return dt.datetime.now(dt.timezone.utc)+state['offset']
+    def audit(name,args):
+        if name in {'subprocess.Popen','os.system','os.posix_spawn','os.posix_spawnp','os.exec','os.fork','os.forkpty','pty.spawn'}:
+            report['external_process_attempts'].append(name);raise RuntimeError('CONTROL DENIES EXTERNAL EXECUTION: '+name)
+        if name=='open' and args and isinstance(args[0],str) and args[0].endswith('/candidate/Candidate.lean'):
+            require(Path(args[0]).absolute().is_relative_to(lane),'control attempted a real external candidate read')
+    sys.addaudithook(audit)
+    def permit_fixture(actual):
+        def checked(condition,message):
+            if message=='synthetic control lane cannot run live' and case!='unpatched-live-refusal':
+                require(condition is False and marker.read_bytes()==marker_raw,'instrumentation fixture guard identity changed')
+                state['guard_bypasses']+=1;event('synthetic-guard-instrumented');return
+            return actual(condition,message)
+        return checked
+    def patch_runtime(j):
+        if case=='unpatched-live-refusal':return
+        j.require=permit_fixture(j.require)
+        report['patched_interfaces']+=['runtime.require: exact synthetic marker guard only','runtime.Runner: explicit fake object/stream transport','runtime.load_helpers: delegate then external preflight instrumentation','campaign.utc: real time plus named causal offset']
+        actual_helpers=j.load_helpers
+        def helpers(root,snapshot):
+            helper,base=actual_helpers(root,snapshot)
+            for name in ('check_toolchain','check_lakefile','check_manifest','find_git','run_git','check_dependency_checkouts'):
+                def call(*args,_name=name,**kwargs):
+                    event('external-preflight-instrumented',name=_name)
+                    if case=='preflight-error' and _name=='check_manifest':raise RuntimeError('synthetic preflight failure')
+                    return '/INERT/git' if _name=='find_git' else str(root)+'\n' if _name=='run_git' else None
+                setattr(base,name,call)
+            return helper,base
+        j.load_helpers=helpers
+        actual_read,actual_save=j.Snapshot.read,j.Snapshot.save
+        def read(snapshot,path):
+            raw=actual_read(snapshot,path)
+            if Path(path)==lane/'candidate/Candidate.lean':state['candidate_reads']+=1;event('actual-candidate-snapshot-read',sha256=digest(raw))
+            return raw
+        def save(snapshot,output):
+            actual_save(snapshot,output)
+            if case=='final-save-error':raise RuntimeError('synthetic preservation failure')
+            if case=='final-stop':(lane/'STOP_RECORD.json').write_bytes(canonical({'synthetic':True}))
+            if case=='final-expiry':state['offset']=dt.timedelta(hours=13)
+            if case=='final-input-drift':
+                path=lane/'candidate/Candidate.lean';path.write_bytes(path.read_bytes()+b'\n-- synthetic drift\n')
+        j.Snapshot.read=read;j.Snapshot.save=save
+        report['patched_interfaces']+=['Snapshot.read: delegate and observe exact inert candidate','Snapshot.save: delegate then named causal injection']
+        deps=json.loads((lane/'ACCEPTED_DEPENDENCY_RECORDS.json').read_bytes());bias=json.loads((lane/'SYNTHETIC_BIAS_RECORDS.json').read_bytes())
+        def encode(values,prefix):return b''.join(prefix.encode()+json.dumps(v,sort_keys=True).encode()+b'\n' for v in values)
+        streams={
+            'compile-PidMgwBridge-SemanticJudge':encode(deps['mgw'],'MGW_BRIDGE_JUDGE_RESULT '),
+            'compile-PidPrefixProbability-SemanticJudge':encode(deps['prefix'],'PREFIX_PROBABILITY_JUDGE_RESULT '),
+            'compile-PidPrefixMgwMean-SemanticJudge':encode(deps['mean'],'PREFIX_MGW_MEAN_JUDGE_RESULT '),
+            'compile-PidPrefixMgwBias-SemanticJudge':encode(bias,'PREFIX_MGW_BIAS_JUDGE_RESULT ')}
+        class InertRunner:
+            def __init__(self,output,environment,*,preparation=False):
+                self.output,self.environment,self.commands=output,environment,[];event('fake-runner-created',preparation=preparation)
+            def run(self,command,cwd,label,*,timeout,allow_stdout=False):
+                require(type(timeout) in (int,float) and 0<timeout<=600,'invalid real caller timeout')
+                event('fake-tool-call',command=command,label=label,timeout=timeout,allow_stdout=allow_stdout)
+                directory=self.output/(str(len(self.commands)).zfill(2)+'-'+label);directory.mkdir()
+                registration=j.register_child(command,cwd,directory,False)
+                (directory/'registered.json').write_bytes(canonical(registration))
+                raw=streams.get(label,b'');failure,error,code,stderr=None,None,0,b''
+                dispatch={'dispatch-six-as-mean':('compile-PidPrefixMgwMean-SemanticJudge','compile-PidPrefixProbability-SemanticJudge'),
+                          'dispatch-eleven-as-prefix':('compile-PidPrefixProbability-SemanticJudge','compile-PidMgwBridge-SemanticJudge'),
+                          'dispatch-three-as-mgw':('compile-PidMgwBridge-SemanticJudge','compile-PidPrefixMgwMean-SemanticJudge')}
+                if case in dispatch and label==dispatch[case][0]:raw=streams[dispatch[case][1]]
+                if case=='mean-type-drift' and label=='compile-PidPrefixMgwMean-SemanticJudge':
+                    values=copy.deepcopy(deps['mean']);values[0]['full_elaborated_type']+=' INERT DRIFT';raw=encode(values,'PREFIX_MGW_MEAN_JUDGE_RESULT ')
+                if case=='fiber-universe-drift' and label=='compile-PidPrefixMgwBias-SemanticJudge':
+                    values=copy.deepcopy(bias);values[1]['universes']=['u','v','w'];raw=encode(values,'PREFIX_MGW_BIAS_JUDGE_RESULT ')
+                if case=='compiler-operational-failure' and not self.commands:failure,code='synthetic_timeout',None
+                if case=='kernel-failure' and label=='fresh-kernel':code=1
+                wrong=job['argv'][0]=='wrong-last-target' and label=='compile-PidPrefixMgwBias-SemanticJudge'
+                if wrong and case!='wrong-final-accepted':
+                    raw=encode(bias[:4],'PREFIX_MGW_BIAS_JUDGE_RESULT ')+b'type mismatch PidPrefixMgwBiasCandidate.mass_floor_bias\n';code=1
+                    if case=='wrong-final-operational':failure='synthetic_timeout'
+                    if case=='wrong-final-stderr':stderr=b'INERT stderr\n'
+                    if case=='wrong-final-boolean-code':code=True
+                    if case=='wrong-final-missing-marker':raw=raw.replace(b'mass_floor_bias',b'other_target')
+                    if case=='wrong-final-missing-record':raw=raw.split(b'\n',1)[1]
+                    if case=='wrong-final-record-drift':
+                        changed=copy.deepcopy(bias[:4]);changed[0]['full_elaborated_type']+=' INERT DRIFT'
+                        raw=encode(changed,'PREFIX_MGW_BIAS_JUDGE_RESULT ')+b'type mismatch mass_floor_bias\n'
+                if code==0 and '-o' in command:Path(command[command.index('-o')+1]).write_bytes(b'INERT SYNTHETIC CONTROL; NOT AN OLEAN\n')
+                (directory/'stdout.log').write_bytes(raw);(directory/'stderr.log').write_bytes(stderr)
+                record={'command':command,'cwd':str(cwd),'label':label,'started_utc':dt.datetime.now(dt.timezone.utc).isoformat(),
+                        'elapsed_seconds':0.001,'returncode':code,'failure':failure,'execution_error':error,
+                        'limits':{'seconds':timeout,'observed_group_rss_bytes':4*1024**3,'rss_sample_interval_seconds':0.1,'rss_limit_is_hard_os_cap':False,'stdout_bytes':4*1024**2,'stderr_bytes':4*1024**2},
+                        'peak_observed_group_rss_bytes':0,'remaining_live_group_processes':[],
+                        'stdout_sha256':digest(raw),'stderr_sha256':digest(stderr),'retained_stdout_bytes':len(raw),'retained_stderr_bytes':len(stderr)}
+                self.commands.append(record);(directory/'command.json').write_bytes(canonical(record))
+                if len(self.commands)==1:
+                    if case=='stop-between-children':(lane/'STOP_RECORD.json').write_bytes(canonical({'synthetic':True}))
+                    if case=='expiry-between-children':state['offset']=dt.timedelta(hours=13)
+                    if case=='candidate-drift-after-capture':
+                        path=lane/'candidate/Candidate.lean';path.write_bytes(path.read_bytes()+b'\n-- INERT drift\n')
+                if failure is not None or code!=0 or stderr:raise j.JudgeError('synthetic tool rejection')
+                return raw
+        j.Runner=InertRunner
+    def trace(frame,event_kind,value):
+        if frame.f_code.co_filename==str(target):
+            if event_kind=='call' and frame.f_code.co_name=='main':
+                if target.name=='campaign.py':frame.f_globals['utc']=utc
+                else:
+                    frame.f_globals['require']=permit_fixture(frame.f_globals['require'])
+                    report['patched_interfaces'].append('closure.require: exact synthetic marker guard only')
+            if target.name=='campaign.py' and event_kind=='return' and frame.f_code.co_name=='load_module' and frame.f_locals.get('name')=='bias_frozen_runtime' and value is not None:
+                patch_runtime(value)
+        return trace
+    code=1
+    try:
+        sys.argv=[str(target)]+job['argv'];sys.settrace(trace);runpy.run_path(str(target),run_name='__main__');code=0
+    except SystemExit as error:code=error.code if type(error.code) is int else 1
+    except BaseException as error:report['error']=str(error)
+    finally:
+        sys.settrace(None)
+        if case=='post-result-nonzero' and code==0:
+            code=1;report['causal_injection']='post-result nonzero exit; positive retained result must not qualify'
+        report.update(status='instrumented_entrypoint_completed',returncode=code,guard_bypasses=state['guard_bypasses'],candidate_snapshot_reads=state['candidate_reads'],completed_utc=dt.datetime.now(dt.timezone.utc).isoformat())
+        if case!='incomplete-driver':(job_path.parent/'DRIVER_RESULT.json').write_bytes(canonical(report))
+    return code
+if __name__=='__main__':raise SystemExit(main())

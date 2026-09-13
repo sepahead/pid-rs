@@ -1,0 +1,34 @@
+{
+  "families": {
+    "closure": {
+      "count": 35,
+      "scope": "complete strict closure with one guard-only instrumentation and inert retained baseline",
+      "source": "closure-controls.py",
+      "status": "all_strict_closure_controls_passed"
+    },
+    "entrypoint": {
+      "count": 35,
+      "scope": "unchanged exact admission/parser controls; does not enter attempt",
+      "source": "whole-entrypoint-controls.py",
+      "status": "all_whole_entrypoint_controls_passed"
+    },
+    "instrumented": {
+      "count": 35,
+      "scope": "actual complete attempt entrypoint with exact source-bound audited synthetic interfaces",
+      "source": "instrumented-controls.py",
+      "status": "all_instrumented_attempt_controls_passed"
+    },
+    "policy": {
+      "count": 57,
+      "scope": "unchanged exact lexical/record parser controls",
+      "source": "policy-selftest.py",
+      "status": "all_causal_parser_controls_passed"
+    }
+  },
+  "new_proof_credit_from_all_controls": 0,
+  "python_modes": [
+    0,
+    1
+  ],
+  "schema": "pid-rs/bias-runner-causal-control-roster-v2"
+}

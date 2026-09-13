@@ -1,0 +1,81 @@
+{
+  "schema": "pid-rs/bias-predecessor-package-historical-root-v1",
+  "status": "exact_predecessor_records_preserved_not_current_validation",
+  "former_package_root": "audit/formal/lean-prefix-mgw-bias",
+  "interpretation": "Relative paths in the archived PACKAGE_MANIFEST.json and SOURCE_PUBLIC_MAP.json are interpreted against the former package root, not this nested archive directory.",
+  "predecessor": {
+    "file_count_including_manifest": 1207,
+    "byte_count_including_manifest": 29647037,
+    "package_manifest_sha256": "0a26c5ef0ea190ca03f680c493b6ef70d09240b8195bc1beda3e187f7abc5af4",
+    "source_public_map_sha256": "dcda074a55fb0e41280bf1d064cdb5a0b24f311a5c5ad85a7a66f87a14b098dd"
+  },
+  "archived_exact_preimages": [
+    {
+      "former_root_path": "EDITORIAL_DELTA.json",
+      "archived_path": "archive/predecessor-package-2026-09-08/EDITORIAL_DELTA.json",
+      "bytes": 1244,
+      "sha256": "9fc0484ebe378c563e45bb303dc35c1fb1e8a9c48b3acd37b5550660f2aad506"
+    },
+    {
+      "former_root_path": "EXPOSITION.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/EXPOSITION.md",
+      "bytes": 29151,
+      "sha256": "38faca36d2b1abfd29e3dd14177975b4c9ddfde56cc66d799c27344e6ea02e82"
+    },
+    {
+      "former_root_path": "PACKAGE_MANIFEST.json",
+      "archived_path": "archive/predecessor-package-2026-09-08/PACKAGE_MANIFEST.json",
+      "bytes": 249225,
+      "sha256": "0a26c5ef0ea190ca03f680c493b6ef70d09240b8195bc1beda3e187f7abc5af4"
+    },
+    {
+      "former_root_path": "PACKAGE_STATUS.json",
+      "archived_path": "archive/predecessor-package-2026-09-08/PACKAGE_STATUS.json",
+      "bytes": 1043,
+      "sha256": "6334fdabe4297f787551929902853fdfdd1a52fdfb4d769546255f4df7d29de9"
+    },
+    {
+      "former_root_path": "REPLAY_OBLIGATIONS.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/REPLAY_OBLIGATIONS.md",
+      "bytes": 3466,
+      "sha256": "18c215c1b67f4988b157414a36cd40d986f7acfd70c9f0d4f8423c49f8064d2f"
+    },
+    {
+      "former_root_path": "RESULTS.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/RESULTS.md",
+      "bytes": 6588,
+      "sha256": "6cf118398bd7ea0b87c47dd144ae8816aee05a27d509027e5613be9d4b753cde"
+    },
+    {
+      "former_root_path": "SOURCE_CORRESPONDENCE.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/SOURCE_CORRESPONDENCE.md",
+      "bytes": 8100,
+      "sha256": "de580052739cf345b5cead2fcb9e18c867d952aac78a34afe59564b93a508764"
+    },
+    {
+      "former_root_path": "SOURCE_PUBLIC_MAP.json",
+      "archived_path": "archive/predecessor-package-2026-09-08/SOURCE_PUBLIC_MAP.json",
+      "bytes": 1844868,
+      "sha256": "dcda074a55fb0e41280bf1d064cdb5a0b24f311a5c5ad85a7a66f87a14b098dd"
+    },
+    {
+      "former_root_path": "SUMMARY.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/SUMMARY.md",
+      "bytes": 3023,
+      "sha256": "042ee927a38176a397aea87e80e180ca82479942951a426c21c7ea63355f4e68"
+    },
+    {
+      "former_root_path": "THEOREM_MAP.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/THEOREM_MAP.md",
+      "bytes": 11247,
+      "sha256": "f94c87006c7905cabde21748b5c8a54f42d1f99971895c9d6e06ddd1a48653d4"
+    },
+    {
+      "former_root_path": "archive/STATUS.md",
+      "archived_path": "archive/predecessor-package-2026-09-08/archive/STATUS.md",
+      "bytes": 1767,
+      "sha256": "4ff7521ebf4573e2003bd6fe0dcb1dfb315eaf14b3028bbde5c8c2b792aeb2c8"
+    }
+  ],
+  "credit_boundary": "Archival custody supplies no new proof, replay, production, hosted, or publication credit."
+}

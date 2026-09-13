@@ -1,0 +1,29 @@
+{
+  "builder_sha256": "b28ed90a4ef89a29dace55ff51c76a72fe84894510613d299474fa68c08b0131",
+  "deadline_utc": "REPLACE_WITH_FIXED_UTC_WITHIN_45_MINUTES",
+  "kind": "summary",
+  "manifest_sha256": "dd04a548aa0a067b88ee0f79529e1b77e8f004a92be65f1bbb1901956779f96d",
+  "maximum_builds": 2,
+  "maximum_commands": 38,
+  "optimization": 0,
+  "output": null,
+  "reader_directory": "REPLACE_WITH_CANONICAL_PINNED_PYPDF_SOURCE_DIRECTORY",
+  "registered_utc": "REPLACE_WITH_ACTUAL_UTC",
+  "root": "REPLACE_WITH_CANONICAL_ASSEMBLED_ROOT",
+  "schema": "pid-rs/prefix-mgw-bias-pdf-execution-v1",
+  "stage_deadline_utc": "REPLACE_WITH_FIXED_STAGE_UTC_WITHIN_90_MINUTES",
+  "stage_started_utc": "REPLACE_WITH_ACTUAL_STAGE_UTC",
+  "status": "UNRESOLVED_SOURCE_REVIEW_AND_CONTROLS",
+  "tool_selectors": {
+    "bash": "REPLACE_WITH_ABSOLUTE_REVIEWED_bash_SELECTOR",
+    "fc-cache": "REPLACE_WITH_ABSOLUTE_REVIEWED_fc-cache_SELECTOR",
+    "kpsewhich": "REPLACE_WITH_ABSOLUTE_REVIEWED_kpsewhich_SELECTOR",
+    "lualatex": "REPLACE_WITH_ABSOLUTE_REVIEWED_lualatex_SELECTOR",
+    "pandoc": "REPLACE_WITH_ABSOLUTE_REVIEWED_pandoc_SELECTOR",
+    "pdffonts": "REPLACE_WITH_ABSOLUTE_REVIEWED_pdffonts_SELECTOR",
+    "pdfinfo": "REPLACE_WITH_ABSOLUTE_REVIEWED_pdfinfo_SELECTOR",
+    "pdftotext": "REPLACE_WITH_ABSOLUTE_REVIEWED_pdftotext_SELECTOR",
+    "rsvg-convert": "REPLACE_WITH_ABSOLUTE_REVIEWED_rsvg-convert_SELECTOR"
+  },
+  "work_dir": "REPLACE_WITH_NEW_CANONICAL_WORK_DIRECTORY"
+}

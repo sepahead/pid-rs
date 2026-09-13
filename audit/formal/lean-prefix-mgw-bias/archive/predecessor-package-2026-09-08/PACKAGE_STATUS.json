@@ -1,0 +1,22 @@
+{
+  "schema": "pid-rs/bias-public-source-status-v1",
+  "status": "source_and_historical_evidence_proposal",
+  "prepared_utc": "2026-09-08T11:18:36.752479+00:00",
+  "accepted_local_families": 5,
+  "new_families_from_packaging": 0,
+  "accepted_candidate_sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+  "accepted_contract_sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45",
+  "original_acceptance_raw_sha256": "e46380b7a2b38cf4969c1996a5256ae7e6bacc4397458bdec9dec41dcadba698",
+  "proof_source_graph_modules": 30,
+  "dependency_and_type_modules_before_candidate": 27,
+  "original_attempts": 10,
+  "relocated_replay": "not_executed",
+  "public_replay_engine": "not_supplied",
+  "new_controls": "not_executed",
+  "pdf_production": "not_executed",
+  "public_mainline_adoption": "root_owned_pending",
+  "documentation": "SOURCE_CORRESPONDENCE.md",
+  "future_execution_plan": "REPLAY_OBLIGATIONS.md",
+  "raw_public_identity_map": "SOURCE_PUBLIC_MAP.json",
+  "omissions": "OMITTED_INPUTS.json"
+}

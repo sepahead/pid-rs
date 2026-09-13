@@ -1,0 +1,34 @@
+{
+  "targets": [
+    {
+      "name": "actual_finite_bias",
+      "raw": "PidPrefixMgwBiasRawTargets.actual_finite_bias",
+      "alias": "PidPrefixMgwBiasAliasTargets.actual_finite_bias",
+      "universes": 3
+    },
+    {
+      "name": "fiber_inverse_moment",
+      "raw": "PidPrefixMgwBiasRawTargets.fiber_inverse_moment",
+      "alias": "PidPrefixMgwBiasAliasTargets.fiber_inverse_moment",
+      "universes": 2
+    },
+    {
+      "name": "support_moment_bounds",
+      "raw": "PidPrefixMgwBiasRawTargets.support_moment_bounds",
+      "alias": "PidPrefixMgwBiasAliasTargets.support_moment_bounds",
+      "universes": 3
+    },
+    {
+      "name": "projected_support_bias",
+      "raw": "PidPrefixMgwBiasRawTargets.projected_support_bias",
+      "alias": "PidPrefixMgwBiasAliasTargets.projected_support_bias",
+      "universes": 3
+    },
+    {
+      "name": "mass_floor_bias",
+      "raw": "PidPrefixMgwBiasRawTargets.mass_floor_bias",
+      "alias": "PidPrefixMgwBiasAliasTargets.mass_floor_bias",
+      "universes": 3
+    }
+  ]
+}

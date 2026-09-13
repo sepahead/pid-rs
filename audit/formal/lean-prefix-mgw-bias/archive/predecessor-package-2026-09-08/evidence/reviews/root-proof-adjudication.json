@@ -1,0 +1,36 @@
+{
+  "adjudicated_utc": "2026-09-08T09:54:26.481815+00:00",
+  "status": "root_accepts_five_exact_local_bias_families",
+  "acceptance_sha256": "e46380b7a2b38cf4969c1996a5256ae7e6bacc4397458bdec9dec41dcadba698",
+  "selected_sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+  "independent_initial_critique_sha256": "7d0b0aa4d3917f2e2d25e590f7f4241cd8095b0bc3b3d5c73710299e4bf0e9d3",
+  "source_review": "Root read all720 candidate lines, full Contract, author proof map/exposition and entire independently sealed mathematical critique; no mathematical mismatch found.",
+  "execution_review": "Root read all four actual semantic/kernel results,31 clean child outcomes each, actual wrong-final29-child rejection with first4records, exact source substitution, and rehashed all corresponding1480artifacts. Strict closure also examined all5development attempts and retained failures.",
+  "families": [
+    "actual_finite_bias",
+    "fiber_inverse_moment",
+    "support_moment_bounds",
+    "projected_support_bias",
+    "mass_floor_bias"
+  ],
+  "new_families": 5,
+  "extra_families_from_dependencies_repeats_controls": 0,
+  "use": "Sufficient fixed-horizon bounds for truncation bias of this specific native complete-row iid finite-categorical MGW prefix atom statistic, using population query moments, true projection supports or a justified query-mass floor.",
+  "nonclaims": [
+    "scientific priority",
+    "realized-sample confidence interval",
+    "variance or MSE guarantee",
+    "finite unbiasedness",
+    "adaptive or stopped/censored law",
+    "Rust/Python refinement",
+    "continuous or hyperbolic PID transfer",
+    "application or SOTA advantage",
+    "public/mainline integration"
+  ],
+  "remaining": [
+    "Final independent-review metadata seal/recheck",
+    "standalone mathematical/publication source and examples",
+    "portable distribution/replay and hosted evidence",
+    "coherent small public milestone and mainline integration"
+  ]
+}

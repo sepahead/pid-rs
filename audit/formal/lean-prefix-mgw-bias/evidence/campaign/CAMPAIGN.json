@@ -1,0 +1,11 @@
+{
+  "candidate_write_scope": "candidate/Candidate.lean",
+  "deadline_utc": "2026-09-08T20:50:22.612393+00:00",
+  "freeze_sha256": "94af15133cc6f79c5dc536512ce32e51cebff2b8ef61dd3296bd9dbf7b5c7fb3",
+  "max_concurrent_wrappers": 1,
+  "max_development_attempts": 80,
+  "max_full_attempts": 8,
+  "project_root": "historical-project",
+  "registered_utc": "2026-09-08T08:50:22.612393+00:00",
+  "schema": "pid-rs/prefix-mgw-bias-campaign-v1"
+}

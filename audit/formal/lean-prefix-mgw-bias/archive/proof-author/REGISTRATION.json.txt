@@ -1,0 +1,19 @@
+{
+  "schema": "pid-rs/bias-author-registration-v1",
+  "registered_utc": "2026-09-08T08:54:31.240558+00:00",
+  "campaign_start_utc": "2026-09-08T08:50:22.612393+00:00",
+  "deadline_utc": "2026-09-08T20:50:22.612393+00:00",
+  "campaign_freeze_sha256": "94af15133cc6f79c5dc536512ce32e51cebff2b8ef61dd3296bd9dbf7b5c7fb3",
+  "owner": "bias_probability_proof_author",
+  "write_scope": [
+    "historical-campaign/candidate/Candidate.lean",
+    "historical-project/.local/sx-mean-bias-proof-author-20260908"
+  ],
+  "no_public_or_git_writes": true,
+  "execution_route": "campaign.py development --candidate-sha256 <actual> only",
+  "max_campaign_development_attempts": 80,
+  "max_campaign_full_attempts": 8,
+  "max_concurrent_wrappers": 1,
+  "actual_candidate_exists_at_registration": false,
+  "head_observed": "866894190dcfda1f181d9a51a5779c69c44dda65"
+}

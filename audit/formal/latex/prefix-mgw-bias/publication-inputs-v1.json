@@ -1,0 +1,174 @@
+{
+  "boundary": "Exactly ten canonical and twenty-seven total current inputs. Accepted 43-member bias and 48-member mean proof replay manifests are unchanged. Root has separately admitted the corrected 14-page full and one-page summary discovery references. Successor builder controls, strict reproduction, public integration and hosted evidence remain separate and unperformed.",
+  "canonical": {
+    "EXPOSITION.md": "audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+    "SUMMARY.md": "audit/formal/lean-prefix-mgw-bias/SUMMARY.md",
+    "check-formal-pdf-log.sh": "scripts/check-formal-pdf-log.sh",
+    "figures/independence-horizon-one.svg": "audit/formal/lean-prefix-mgw-bias/figures/independence-horizon-one.svg",
+    "figures/overlapping-query-moment.svg": "audit/formal/lean-prefix-mgw-bias/figures/overlapping-query-moment.svg",
+    "figures/signed-tail-envelope.svg": "audit/formal/lean-prefix-mgw-bias/figures/signed-tail-envelope.svg",
+    "layout/pid-rs-report-tables.sty": "audit/formal/latex/pid-rs-report-tables.sty",
+    "layout/pid-rs-workflow-publication.sty": "audit/formal/latex/pid-rs-workflow-publication.sty",
+    "layout/publication-filter.lua": "audit/formal/latex/prefix-mgw-bias/layout/publication-filter.lua",
+    "layout/report.latex": "audit/formal/latex/prefix-mgw-bias/layout/report.latex"
+  },
+  "cross_toolchain_relation": "none; explicit status 2 refusal before any new work",
+  "discovery_artifact_adoption_sha256": "71e05f6d04969e57e84679e88c2b4a89f1311828b640c937afc0937b0000315b",
+  "files": {
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/latex/prefix-mgw-bias/controls/blocked-full-04.pdf": {
+      "bytes": 370299,
+      "sha256": "7c7ba1579f74b19f79250e1cc7b02fdf5afd69d8a343cd2591f1e54eae153bd9"
+    },
+    "audit/formal/latex/prefix-mgw-bias/controls/full.layout.txt": {
+      "bytes": 45717,
+      "sha256": "0379e887ac233fabfbbdcd7039370028fba75cd081faa0053709a8855b4e5228"
+    },
+    "audit/formal/latex/prefix-mgw-bias/controls/full.words.xhtml.txt": {
+      "bytes": 519943,
+      "sha256": "803f6188daa5842a6c9e797e8b261731aedcbf6314fd80ed4a3f7adaea7e9382"
+    },
+    "audit/formal/latex/prefix-mgw-bias/controls/roster-v4.json": {
+      "bytes": 5367,
+      "sha256": "f410d7a591f6c04e2fa7f0ebb5aafc02b4e462d0252142c03a1866be4828b3ac"
+    },
+    "audit/formal/latex/prefix-mgw-bias/full.expected.tex": {
+      "bytes": 36159,
+      "sha256": "93acf2389748642c59c7fd65458b405e76a974a43f66237285a06d6c1edc483c"
+    },
+    "audit/formal/latex/prefix-mgw-bias/full.pandoc.expected.tex": {
+      "bytes": 36000,
+      "sha256": "b7e6889478234eb4488fed5a18701ee303129191da0f4bea911571d16ec98a6b"
+    },
+    "audit/formal/latex/prefix-mgw-bias/layout/publication-filter.lua": {
+      "bytes": 1492,
+      "sha256": "0c524ca512ae341329ab8300ba7755f5f0b01ebc127d378f60cd4dbe1ddafffa"
+    },
+    "audit/formal/latex/prefix-mgw-bias/layout/report.latex": {
+      "bytes": 2071,
+      "sha256": "31ea6b0508d7d5e9dba8a5d0bf6afa47aef1ebfcad522792f3576e9878145326"
+    },
+    "audit/formal/latex/prefix-mgw-bias/native-tools-v1.json": {
+      "bytes": 4992,
+      "sha256": "915e84b9c4b08d5e880b4e28b7d5ff8bc49750bcf6649d2f916de8aa34a60d09"
+    },
+    "audit/formal/latex/prefix-mgw-bias/navigation-v1.json": {
+      "bytes": 19753,
+      "sha256": "a750b7ddb93f0d3dfb6df46e358a87d15c83d6325645686f3af074707474136b"
+    },
+    "audit/formal/latex/prefix-mgw-bias/reader-source-v1.json": {
+      "bytes": 8536,
+      "sha256": "a336da17771c47c3ad1c47169abae8da0bae630427368de19fa1a51974b413db"
+    },
+    "audit/formal/latex/prefix-mgw-bias/render-svg/independence-horizon-one.svg": {
+      "bytes": 4428,
+      "sha256": "0bfd6ae24bbeff2f4d4005c0a69abd4475d93dc7338f55a0cd4da2f25369952e"
+    },
+    "audit/formal/latex/prefix-mgw-bias/render-svg/overlapping-query-moment.svg": {
+      "bytes": 4274,
+      "sha256": "e660d8a84c3967095286e1ac21c1affcf8f0399bb52de62a33698073ba53308c"
+    },
+    "audit/formal/latex/prefix-mgw-bias/render-svg/signed-tail-envelope.svg": {
+      "bytes": 5501,
+      "sha256": "427a402e148ae17f4865c30945a6cf3656fcf0ba9eca767329f564628a1a5823"
+    },
+    "audit/formal/latex/prefix-mgw-bias/summary.expected.tex": {
+      "bytes": 5182,
+      "sha256": "671a1f6ac871015dd8b025c348f197844dc36c9a61cf65dfb97acff54b4f295a"
+    },
+    "audit/formal/latex/prefix-mgw-bias/summary.pandoc.expected.tex": {
+      "bytes": 5176,
+      "sha256": "54040364895c7cba711ef22c098685cc57cd442e3aed16d3ac12fe89802ca6fe"
+    },
+    "audit/formal/lean-prefix-mgw-bias/EXPOSITION.md": {
+      "bytes": 30333,
+      "sha256": "466768a02a892cbe7453f4e5fb7af09afdd6f529ab6b571c063a04d2a5932784"
+    },
+    "audit/formal/lean-prefix-mgw-bias/SUMMARY.md": {
+      "bytes": 2883,
+      "sha256": "8daf2f4c10710d8eb83aa585db296d0732557590d1e9cfd1a2c501ed8eb40414"
+    },
+    "audit/formal/lean-prefix-mgw-bias/figures/independence-horizon-one.svg": {
+      "bytes": 3973,
+      "sha256": "e95bf61f33fe5986fd51d79c84de438daba0c3400891a000c2fde016f97c481c"
+    },
+    "audit/formal/lean-prefix-mgw-bias/figures/overlapping-query-moment.svg": {
+      "bytes": 4161,
+      "sha256": "5f0af0a1132df0c6401b02c3ffc6fb39ddf11a633b6d620d3909844fea265f7e"
+    },
+    "audit/formal/lean-prefix-mgw-bias/figures/signed-tail-envelope.svg": {
+      "bytes": 3468,
+      "sha256": "3f638444bab4d95679bc52ddc5a4e5fe1e5367d494d05f588d4a11739a162a89"
+    },
+    "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "output/pdf/prefix-mgw-bias-summary.pdf": {
+      "bytes": 35706,
+      "sha256": "6d8cd31d068312c58ffaa15ff263fed4468e4384826d7d1bcff259c1808cc9d4"
+    },
+    "output/pdf/prefix-mgw-bias.pdf": {
+      "bytes": 373350,
+      "sha256": "d84ef0523047f5ea6fd7852711d309aab033018bf2276cd109232e2bc9bdd91a"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "historical_closed_production_manifest_sha256": "db6cef1c85fa58353b40b56da146d1b0165a3fe458592d2826ec8a09b69e3232",
+  "historical_corrected_private_producer_sha256": "5ab99a50b09f4d804373906041fc146ab48e9a1b320acf00ace701c642b6be77",
+  "historical_predecessor_package_manifest_sha256": "0a26c5ef0ea190ca03f680c493b6ef70d09240b8195bc1beda3e187f7abc5af4",
+  "outputs": {
+    "full": {
+      "bytes": 373350,
+      "https_uris": [
+        "https://arxiv.org/abs/2002.03356v5",
+        "https://doi.org/10.1103/PhysRevE.103.032149",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md",
+        "https://dlmf.nist.gov/4.6.E1",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md",
+        "https://arxiv.org/abs/2002.03356v5",
+        "https://doi.org/10.1103/PhysRevE.103.032149",
+        "https://doi.org/10.1103/PhysRevE.103.032149",
+        "https://dlmf.nist.gov/4.6.E1",
+        "https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean",
+        "https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/Log/Deriv.lean",
+        "https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecificLimits/Basic.lean",
+        "https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Algebra/InfiniteSum/NatInt.lean",
+        "https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Nat/Choose/Basic.lean",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/formal/accepted_Contract.lean",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/formal/accepted_Candidate.lean"
+      ],
+      "pages": 14,
+      "path": "output/pdf/prefix-mgw-bias.pdf",
+      "sha256": "d84ef0523047f5ea6fd7852711d309aab033018bf2276cd109232e2bc9bdd91a",
+      "status": "root-admitted corrected discovery reference; new portable builder repetition pending"
+    },
+    "summary": {
+      "bytes": 35706,
+      "https_uris": [
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+        "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md",
+        "https://arxiv.org/abs/2002.03356v5"
+      ],
+      "pages": 1,
+      "path": "output/pdf/prefix-mgw-bias-summary.pdf",
+      "sha256": "6d8cd31d068312c58ffaa15ff263fed4468e4384826d7d1bcff259c1808cc9d4",
+      "status": "root-admitted corrected discovery reference; new portable builder repetition pending"
+    }
+  },
+  "predecessor_publication_manifest_sha256": "d53780eb7c39ccb9eee7a98c655519c3efa9a213a28157a03436c4a605c32770",
+  "schema": "pid-rs/prefix-mgw-bias-publication-inputs-v1",
+  "status": "source_proposal_controls_and_actual_repetition_pending"
+}

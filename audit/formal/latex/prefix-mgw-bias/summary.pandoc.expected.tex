@@ -1,0 +1,83 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox}
+\usepackage{hyperref,xurl,bookmark}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pdfextension catalog { /Lang (en) }
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PidPrimary,
+  urlcolor=PidSecondary,
+  citecolor=PidSecondary,
+  pdftitle={What the finite-horizon bias bounds tell you},
+  pdfauthor={pid-rs contributors},
+  pdfsubject={Finite categorical MGW prefix bias under a complete-row iid law},
+  pdfdisplaydoctitle=true
+}
+\PidSetRunningHeads{Categorical shared exclusions}{Finite-horizon bias bounds}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight}
+\pretocmd{\section}{\par\Needspace{12\baselineskip}}{}{\PackageError{pid-bias-layout}{Section spacing patch failed}{Inspect the document class and section command.}}
+\pretocmd{\subsection}{\par\Needspace{7\baselineskip}}{}{\PackageError{pid-bias-layout}{Subsection spacing patch failed}{Inspect the document class and subsection command.}}
+\title{\PidReportTitle{What the finite-horizon bias bounds tell you}{Categorical MGW shared exclusions · five exact formal families}}
+\author{pid-rs contributors}
+\date{8 September 2026}
+\begin{document}
+\PidMakeTitle
+For a \textbf{fixed finite categorical MGW atom}, a \textbf{fixed raw horizon} \(h\) and \textbf{iid complete source-and-target rows}, five locally accepted Lean statements bound mean truncation error. Within-row dependence is allowed. Each block uses a fresh anchor and \(h\) further rows from the same law. Information is in nats.
+
+Let \(p(z)\) be the complete-row population PMF, \(\theta\) the atom and \(B_h\) the \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{Section 3 prefix statistic}. Define \(e_h=\theta-\mathbb E[B_h]\), opposite in sign to conventional bias. At each anchor with \(p(z)>0\), let \(a_z=P(\text{source query})\), \(v_z=P(\text{target match})\) and \(q_z=P(\text{query and target match})\). The query ORs source collections and ANDs matches within each collection.
+
+The supported population moments \(K_a=\sum_{z:p(z)>0}p(z)/a_z\), \(K_q=\sum_{z:p(z)>0}p(z)/q_z\) and \(K_T=\sum_{z:p(z)>0}p(z)/v_z\) give
+
+\[
+-\frac{K_q-K_T}{h+1}\le e_h\le\frac{K_a-1}{h+1},
+\qquad
+|e_h|\le\frac{K_q-1}{h+1}.
+\]
+
+For \textbf{any member collection} \(C\) of the chosen node, let \(K_C\) and \(K_{CT}\) be the positive population support counts of its source projection and source-target projection. Then
+
+\[
+-\frac{K_{CT}-K_T}{h+1}\le e_h\le\frac{K_C-1}{h+1},
+\qquad
+|e_h|\le\frac{K_{CT}-1}{h+1}.
+\]
+
+A justified population floor \(q_z\ge\eta\) for \textbf{every} anchor with \(p(z)>0\), with \(0<\eta\le1\), gives the potentially faster bound
+
+\[
+|e_h|\le\frac{(1-\eta)^{h+1}}{(h+1)\eta}.
+\]
+
+These are \textbf{sufficient fixed-horizon planning bounds} for known population inputs. Small source-target projections may improve the support bound. Observed category counts or minimum observed frequencies cannot replace population support counts or floors without further evidence.
+
+The bounds can be conservative: constant sources have zero signed error even with large \(K_q\). Overlapping queries need not be projection fibers: \(K_q=4/3\) is possible. For one fair source independent of a fair target, \(\mathbb E[B_1]=1/4\) while \(\theta=0\). A positive short-prefix mean alone does not show population information.
+
+The bounds control \textbf{mean truncation error}. Sampling variation, confidence coverage, stopping, implementation accuracy and utility remain open. Binning changes the estimand to the resulting categorical law. Same-sample fitting, serial dependence, continuous PID and hyperbolic PID need separate arguments. For prediction or a one-source relation, consider direct task loss or MI.
+
+See the \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{derivation and four worked examples}, \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md}{theorem map}, and defining \href{https://arxiv.org/abs/2002.03356v5}{MGW v5 paper}. Local formal acceptance is separate from public integration and hosted replay. No novelty or superiority is claimed.
+\end{document}

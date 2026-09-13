@@ -1,0 +1,66 @@
+historical-campaign/attempts/001-development-0/src/PidPrefixMgwBias/Candidate.lean:17:32: error: linarith failed to find a contradiction
+case e'_3
+f : ℕ → ℝ
+s : ℝ
+hf : HasSum f s
+h : ℕ
+ht : Summable fun n => f (n + h)
+he : ∑ i ∈ Finset.range h, f i + ∑' (i : ℕ), f (i + h) = s
+⊢ False
+failed
+historical-campaign/attempts/001-development-0/src/PidPrefixMgwBias/Candidate.lean:37:4: error: Tactic `apply` failed: could not unify the conclusion of `@funext`
+  ?f = ?g
+with the goal
+  Real.instAddCommMonoid =
+    CommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toAddCommMonoid
+
+Note: The full type of `@funext` is
+  ∀ {α : Sort ?u.78} {β : α → Sort ?u.77} {f g : (x : α) → β x}, (∀ (x : α), f x = g x) → f = g
+
+case e'_3
+q : ℝ
+hq : 0 < q
+hq1 : q ≤ 1
+h : ℕ
+hg : HasSum (fun i => (1 - q) ^ (h + 1) * (1 - q) ^ i) ((1 - q) ^ (h + 1) * (1 - (1 - q))⁻¹)
+⊢ Real.instAddCommMonoid =
+    CommRing.toNonUnitalCommRing.toNonUnitalNonAssocCommRing.toNonUnitalNonAssocSemiring.toAddCommMonoid
+historical-campaign/attempts/001-development-0/src/PidPrefixMgwBias/Candidate.lean:39:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  1 - (1 - q)
+in the target expression
+  (fun n => (1 - q) ^ (n + h + 1)) = fun i => (1 - q) ^ (h + 1) * (1 - q) ^ i
+
+case e'_5
+q : ℝ
+hq : 0 < q
+hq1 : q ≤ 1
+h : ℕ
+hg : HasSum (fun i => (1 - q) ^ (h + 1) * (1 - q) ^ i) ((1 - q) ^ (h + 1) * (1 - (1 - q))⁻¹)
+⊢ (fun n => (1 - q) ^ (n + h + 1)) = fun i => (1 - q) ^ (h + 1) * (1 - q) ^ i
+historical-campaign/attempts/001-development-0/src/PidPrefixMgwBias/Candidate.lean:33:75: error: unsolved goals
+case e'_6
+q : ℝ
+hq : 0 < q
+hq1 : q ≤ 1
+h : ℕ
+hg : HasSum (fun i => (1 - q) ^ (h + 1) * (1 - q) ^ i) ((1 - q) ^ (h + 1) * (1 - (1 - q))⁻¹)
+⊢ (1 - q) ^ (h + 1) / q = (1 - q) ^ (h + 1) * (1 - (1 - q))⁻¹
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+historical-campaign/attempts/001-development-0/src/PidPrefixMgwBias/Candidate.lean:61:77: error: unsolved goals
+q : ℝ
+hq : 0 < q
+hq1 : q ≤ 1
+h : ℕ
+hr : HasSum (fun n => (1 - q) ^ (n + h + 1) / (↑(n + h) + 1)) (logRemainder q h)
+hnon : 0 ≤ logRemainder q h
+hlog : logRemainder q h ≤ -Real.log q
+hg : HasSum (fun i => (1 - q) ^ (i + h + 1) / (↑h + 1)) ((1 - q) ^ (h + 1) / q / (↑h + 1))
+hbound : logRemainder q h ≤ (1 - q) ^ (h + 1) / q / (↑h + 1)
+⊢ -(q * (q + q * ↑h)⁻¹ * (1 - q) ^ h) + (q + q * ↑h)⁻¹ * (1 - q) ^ h =
+    -(q * q⁻¹ * (1 + ↑h)⁻¹ * (1 - q) ^ h) + q⁻¹ * (1 + ↑h)⁻¹ * (1 - q) ^ h
+historical-campaign/attempts/001-development-0/src/PidPrefixMgwBias/Candidate.lean:73:28: error: No goals to be solved

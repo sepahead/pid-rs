@@ -1,0 +1,129 @@
+import PidPrefixMgwBias.Contract
+set_option autoImplicit false
+set_option warningAsError true
+open scoped BigOperators ENNReal Topology
+open MeasureTheory
+open PidPrefixMgwBiasSource
+open PidMgwBridgeContract
+open PidPrefixProbabilityContract
+universe u v w
+namespace PidPrefixMgwBiasCandidate
+
+private lemma shifted_hasSum (f : ℕ → ℝ) (s : ℝ) (hf : HasSum f s) (h : ℕ) :
+    HasSum (fun n => f (n + h)) (s - ∑ n ∈ Finset.range h, f n) := by
+  have ht := (summable_nat_add_iff h).mpr hf.summable
+  have he := hf.summable.sum_add_tsum_nat_add h
+  rw [hf.tsum_eq] at he
+  convert ht.hasSum using 1 <;> linarith
+
+private lemma log_hasSum (q : ℝ) (hq : 0 < q) (hq1 : q ≤ 1) :
+    HasSum (fun n : ℕ => (1 - q) ^ (n + 1) / ((n : ℝ) + 1)) (-Real.log q) := by
+  have hsmall : |1 - q| < 1 := by
+    rw [abs_of_nonneg (sub_nonneg.mpr hq1)]
+    linarith
+  simpa only [show 1 - (1 - q) = q by ring] using
+    Real.hasSum_pow_div_log_of_abs_lt_one hsmall
+
+private lemma remainder_hasSum (q : ℝ) (hq : 0 < q) (hq1 : q ≤ 1) (h : ℕ) :
+    HasSum (fun n : ℕ =>
+      (1 - q) ^ (n + h + 1) / (((n + h : ℕ) : ℝ) + 1)) (logRemainder q h) := by
+  exact shifted_hasSum _ _ (log_hasSum q hq hq1) h
+
+private lemma geometric_tail_hasSum (q : ℝ) (hq : 0 < q) (hq1 : q ≤ 1) (h : ℕ) :
+    HasSum (fun n : ℕ => (1 - q) ^ (n + h + 1)) ((1 - q) ^ (h + 1) / q) := by
+  have hg := (hasSum_geometric_of_lt_one (sub_nonneg.mpr hq1)
+    (show 1 - q < 1 by linarith)).mul_left ((1 - q) ^ (h + 1))
+  convert hg using 1
+  · funext n
+    rw [show n + h + 1 = (h + 1) + n by omega, pow_add]
+  · rw [show 1 - (1 - q) = q by ring]
+    ring
+
+private lemma remainder_basic (q : ℝ) (hq : 0 < q) (hq1 : q ≤ 1) (h : ℕ) :
+    0 ≤ logRemainder q h ∧ logRemainder q h ≤ -Real.log q ∧
+    logRemainder q h ≤ (1 - q) ^ (h + 1) / (((h : ℝ) + 1) * q) ∧
+    logRemainder q h ≤ (1 / q - 1) / ((h : ℝ) + 1) := by
+  have hr := remainder_hasSum q hq hq1 h
+  have hnon : 0 ≤ logRemainder q h := hr.nonneg (fun n => by positivity)
+  have hlog : logRemainder q h ≤ -Real.log q := by
+    unfold logRemainder
+    have hh : 0 ≤ ∑ n ∈ Finset.range h, (1 - q) ^ (n + 1) / ((n : ℝ) + 1) :=
+      Finset.sum_nonneg (fun n _ => by positivity)
+    linarith
+  have hg := (geometric_tail_hasSum q hq hq1 h).div_const ((h : ℝ) + 1)
+  have hbound : logRemainder q h ≤
+      ((1 - q) ^ (h + 1) / q) / ((h : ℝ) + 1) := by
+    apply hasSum_le _ hr hg
+    intro n
+    apply div_le_div_of_nonneg_left (pow_nonneg (sub_nonneg.mpr hq1) _) (by positivity)
+    push_cast
+    linarith [show (0 : ℝ) ≤ n by positivity]
+  have hgeom : logRemainder q h ≤ (1 - q) ^ (h + 1) / (((h : ℝ) + 1) * q) := by
+    convert hbound using 1 <;> ring
+  have hpow : (1 - q) ^ (h + 1) ≤ 1 - q := by
+    calc
+      _ = (1 - q) ^ h * (1 - q) := pow_succ _ _
+      _ ≤ 1 * (1 - q) := mul_le_mul_of_nonneg_right
+        (pow_le_one₀ (sub_nonneg.mpr hq1) (by linarith)) (sub_nonneg.mpr hq1)
+      _ = _ := one_mul _
+  refine ⟨hnon, hlog, hgeom, hgeom.trans ?_⟩
+  calc
+    _ ≤ (1 - q) / (((h : ℝ) + 1) * q) :=
+      div_le_div_of_nonneg_right hpow (by positivity)
+    _ = _ := by field_simp; ring
+
+private lemma remainder_difference (q v : ℝ) (hq : 0 < q) (hqv : q ≤ v)
+    (hv1 : v ≤ 1) (h : ℕ) :
+    0 ≤ logRemainder q h - logRemainder v h ∧
+    logRemainder q h - logRemainder v h ≤
+      ((1 - q) ^ (h + 1) / q - (1 - v) ^ (h + 1) / v) / ((h : ℝ) + 1) ∧
+    logRemainder q h - logRemainder v h ≤
+      (1 / q - 1 / v) / ((h : ℝ) + 1) := by
+  have hv : 0 < v := hq.trans_le hqv
+  have hq1 : q ≤ 1 := hqv.trans hv1
+  have hp (n : ℕ) : 0 ≤ (1 - q) ^ n - (1 - v) ^ n :=
+    sub_nonneg.mpr (pow_le_pow_left₀ (sub_nonneg.mpr hv1) (by linarith) n)
+  have hr : HasSum (fun n : ℕ =>
+      ((1 - q) ^ (n + h + 1) - (1 - v) ^ (n + h + 1)) /
+        (((n + h : ℕ) : ℝ) + 1)) (logRemainder q h - logRemainder v h) := by
+    simpa only [sub_div] using
+      (remainder_hasSum q hq hq1 h).sub (remainder_hasSum v hv hv1 h)
+  have hg := (geometric_tail_hasSum q hq hq1 h).sub
+    (geometric_tail_hasSum v hv hv1 h)
+  have hb : logRemainder q h - logRemainder v h ≤
+      ((1 - q) ^ (h + 1) / q - (1 - v) ^ (h + 1) / v) / ((h : ℝ) + 1) := by
+    apply hasSum_le _ hr (hg.div_const ((h : ℝ) + 1))
+    intro n
+    apply div_le_div_of_nonneg_left (hp _) (by positivity)
+    push_cast
+    linarith [show (0 : ℝ) ≤ n by positivity]
+  have hfull := (geometric_tail_hasSum q hq hq1 0).sub
+    (geometric_tail_hasSum v hv hv1 0)
+  have ht := shifted_hasSum _ _ hfull h
+  have hvalue : (1 - q) ^ (h + 1) / q - (1 - v) ^ (h + 1) / v =
+      ((1 - q) ^ (0 + 1) / q - (1 - v) ^ (0 + 1) / v) -
+        ∑ n ∈ Finset.range h, ((1 - q) ^ (n + 0 + 1) - (1 - v) ^ (n + 0 + 1)) := by
+    apply hg.unique
+    simpa only [Nat.add_zero] using ht
+  have hfin : 0 ≤ ∑ n ∈ Finset.range h,
+      ((1 - q) ^ (n + 0 + 1) - (1 - v) ^ (n + 0 + 1)) :=
+    Finset.sum_nonneg (fun n _ => hp _)
+  have he : (1 - q) ^ (0 + 1) / q - (1 - v) ^ (0 + 1) / v = 1 / q - 1 / v := by
+    simp only [zero_add, pow_one]
+    field_simp
+    ring
+  refine ⟨hr.nonneg (fun n => div_nonneg (hp _) (by positivity)), hb, hb.trans ?_⟩
+  apply div_le_div_of_nonneg_right _ (by positivity)
+  rw [hvalue, he]
+  linarith
+
+private lemma dominated_tail (f g : ℕ → ℝ) (s t : ℝ)
+    (hf : HasSum f s) (hg : HasSum g t)
+    (hf0 : ∀ n, 0 ≤ f n) (hfg : ∀ n, f n ≤ g n) (h : ℕ) :
+    0 ≤ s - ∑ n ∈ Finset.range h, f n ∧
+      s - ∑ n ∈ Finset.range h, f n ≤ t - ∑ n ∈ Finset.range h, g n := by
+  have hft := shifted_hasSum f s hf h
+  have hgt := shifted_hasSum g t hg h
+  exact ⟨hft.nonneg (fun n => hf0 _), hasSum_le (fun n => hfg _) hft hgt⟩
+
+end PidPrefixMgwBiasCandidate

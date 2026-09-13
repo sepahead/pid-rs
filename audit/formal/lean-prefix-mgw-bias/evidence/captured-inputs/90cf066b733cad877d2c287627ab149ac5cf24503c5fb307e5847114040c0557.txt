@@ -1,0 +1,152 @@
+"""Causal controls of the complete strict closure entrypoint over one inert, hash-retained baseline.
+No validators are replaced. Only the production synthetic-lane denial is instrumented.
+"""
+from __future__ import annotations
+import argparse, hashlib, json, sys
+from pathlib import Path
+from types import ModuleType
+LANE=Path(__file__).resolve().parent
+CASES=[('positive-baseline',''),('unpatched-live-refusal','synthetic control lane cannot run live'),
+ ('attempt-count-float','attempt.prospective_compiler_kernel_children'),('attempt-mode-bool','attempt.mode'),
+ ('result-status-bool','attempt status differs'),('result-proof-count-bool','result.new_bias_proofs'),
+ ('positive-code-bool','command.returncode'),('positive-code-float','command.returncode'),('negative-code-bool','command.returncode'),
+ ('stderr-count-bool','command.retained_stderr_bytes'),('stdout-count-float','command.retained_stdout_bytes'),('rss-count-float','command.peak_observed_group_rss_bytes'),
+ ('elapsed-bool','command.elapsed_seconds'),('elapsed-nonfinite','command.elapsed_seconds'),('timeout-bool','limits.seconds'),('stream-limit-float','limits.stdout_bytes'),
+ ('rss-hard-cap-int','RSS policy differs'),('artifact-size-float','artifact.bytes'),('input-size-bool','input.bytes'),('identity-bool','input.identity'),
+ ('command-json-summary-drift','command summary differs'),('argv-drift','command graph/argv/cwd differs'),('cwd-drift','command graph/argv/cwd differs'),
+ ('registration-preparation-int','child registration binding differs'),('registration-source-hash-drift','child source-input binding differs'),
+ ('coherent-artifact-stream-drift','command stream binding differs'),('wrong-marker-coherent-drift','wrong-final causal stream differs'),
+ ('wrong-prefix-coherent-drift','wrong-final preserved stream differs'),('wrong-prior-hash-drift','wrong-final prior causal receipt differs'),
+ ('failed-stdout-delete','retained artifact roster differs'),('failed-stdout-change','retained artifact drift'),
+ ('failed-input-delete','retained artifact roster differs'),('development-stdout-delete','retained artifact roster differs'),
+ ('development-input-change','retained artifact drift'),('failed-input-hidden-delete','input-bytes')]
+
+def require(ok,message):
+    if not ok:raise RuntimeError(message)
+def digest(raw):return hashlib.sha256(raw).hexdigest()
+def canonical(value):return (json.dumps(value,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+def load_helpers():
+    package=json.loads((LANE/'PACKAGE.json').read_bytes());path=LANE/'instrumented-controls.py';raw=path.read_bytes()
+    require(digest(raw)==package['instrumented-controls.py'],'specific fixture helper source differs')
+    module=ModuleType('exact_bias_control_fixture');module.__file__=str(path)
+    exec(compile(raw,str(path),'exec',dont_inherit=True,optimize=sys.flags.optimize),module.__dict__);return module
+
+def main():
+    require(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and sys.flags.optimize in (0,1),'requires -I -S -B optionally -O')
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',required=True,type=Path);args=parser.parse_args()
+    output=args.output.absolute();require(output.parent==LANE and not output.exists(),'fresh direct control output required');output.mkdir()
+    helper=load_helpers();ctx=helper.context(output);lane=helper.create_matrix(ctx,output/'baseline')
+    require((lane/'SYNTHETIC_CONTROL_ONLY.json').exists(),'refusing mutation of non-synthetic evidence')
+    baseline={str(path.relative_to(lane)):path.read_bytes() for path in lane.rglob('*') if path.is_file()}
+    buffers=output/'input-bytes';buffers.mkdir()
+    for raw in baseline.values():
+        path=buffers/digest(raw)
+        if not path.exists():path.write_bytes(raw)
+    (output/'BASELINE.json').write_bytes(canonical({name:{'sha256':digest(raw),'bytes':len(raw)} for name,raw in sorted(baseline.items())}))
+    ledger=json.loads(baseline['ATTEMPT_LEDGER.json']);entries=ledger['attempts']
+    result_names=[entry['output']+'/RESULT.json' for entry in entries]
+    failed=next(name for name in result_names if json.loads(baseline[name])['status']=='failed')
+    development=next(name for name in result_names if json.loads(baseline[name])['status']=='development_compile_pass')
+    positive=next(name for name in result_names if json.loads(baseline[name])['status']=='fresh_semantic_kernel_pass')
+    negative=next(name for name in result_names if json.loads(baseline[name])['status']=='expected_target_rejection')
+    cases=[]
+    def edit_result(name,fn):
+        path=lane/name;body=json.loads(path.read_bytes());fn(body);path.write_bytes(canonical(body))
+    def artifact_result(result_name,relative,body):
+        directory=(lane/result_name).parent;path=directory/relative;path.write_bytes(body)
+        edit_result(result_name,lambda result:result['artifacts'].__setitem__(relative,{'bytes':len(body),'sha256':digest(body)}))
+    def child_file(result_name,index,filename):
+        result=json.loads((lane/result_name).read_bytes());command=result['commands'][index]
+        position=index if index>=0 else len(result['commands'])+index
+        return str(position).zfill(2)+'-'+command['label']+'/'+filename
+    def coherent_stream(result_name,fn):
+        body=json.loads((lane/result_name).read_bytes());index=len(body['commands'])-1;command=body['commands'][index]
+        stream=child_file(result_name,index,'stdout.log');raw=fn(((lane/result_name).parent/stream).read_bytes())
+        artifact_result(result_name,stream,raw)
+        def summary(result):result['commands'][index].update(stdout_sha256=digest(raw),retained_stdout_bytes=len(raw))
+        edit_result(result_name,summary)
+        command=json.loads((lane/result_name).read_bytes())['commands'][index]
+        artifact_result(result_name,child_file(result_name,index,'command.json'),canonical(command))
+    for index,(name,diagnostic) in enumerate(CASES):
+        require(helper.utc()<ctx['deadline'],'original operational deadline exhausted')
+        directory=output/('case-'+str(index).zfill(2)+'-'+name);directory.mkdir()
+        # Restore only this marked, inert fixture; every prior changed byte is archived below.
+        for path in sorted(lane.rglob('*'),reverse=True):
+            if path.is_file() and str(path.relative_to(lane)) not in baseline:path.unlink()
+        for relative,raw in baseline.items():helper.write(lane/relative,raw)
+        if name=='attempt-count-float':
+            body=json.loads((lane/'ATTEMPT_LEDGER.json').read_bytes());body['attempts'][2]['prospective_compiler_kernel_children']=31.0;helper.write(lane/'ATTEMPT_LEDGER.json',canonical(body))
+        elif name=='attempt-mode-bool':
+            body=json.loads((lane/'ATTEMPT_LEDGER.json').read_bytes());body['attempts'][0]['mode']=False;helper.write(lane/'ATTEMPT_LEDGER.json',canonical(body))
+        elif name=='result-status-bool':edit_result(positive,lambda body:body.update(status=True))
+        elif name=='result-proof-count-bool':edit_result(positive,lambda body:body.update(new_bias_proofs=False))
+        elif name in ('positive-code-bool','positive-code-float','negative-code-bool'):
+            selected=negative if name.startswith('negative') else positive;position=-1 if selected==negative else 0
+            value=True if selected==negative else 0.0 if name.endswith('float') else False
+            edit_result(selected,lambda body:body['commands'][position].update(returncode=value))
+        elif name in ('stderr-count-bool','stdout-count-float','rss-count-float','elapsed-bool','timeout-bool','stream-limit-float','rss-hard-cap-int'):
+            def change(body):
+                command=body['commands'][0]
+                if name=='stderr-count-bool':command['retained_stderr_bytes']=False
+                elif name=='stdout-count-float':command['retained_stdout_bytes']=0.0
+                elif name=='rss-count-float':command['peak_observed_group_rss_bytes']=0.0
+                elif name=='elapsed-bool':command['elapsed_seconds']=False
+                elif name=='timeout-bool':command['limits']['seconds']=True
+                elif name=='stream-limit-float':command['limits']['stdout_bytes']=float(4*1024**2)
+                else:command['limits']['rss_limit_is_hard_os_cap']=0
+            edit_result(positive,change)
+        elif name=='elapsed-nonfinite':
+            path=lane/positive;raw=path.read_bytes();changed=raw.replace(b'"elapsed_seconds": 0.001',b'"elapsed_seconds": 1e309',1);require(changed!=raw,'nonfinite mutation ineffective');path.write_bytes(changed)
+        elif name=='artifact-size-float':
+            edit_result(positive,lambda body:body['artifacts'][next(iter(body['artifacts']))].update(bytes=float(body['artifacts'][next(iter(body['artifacts']))]['bytes'])))
+        elif name=='input-size-bool':edit_result(positive,lambda body:body['inputs'][next(iter(body['inputs']))].update(bytes=False))
+        elif name=='identity-bool':edit_result(positive,lambda body:body['inputs'][next(iter(body['inputs']))]['identity'].__setitem__(0,False))
+        elif name=='command-json-summary-drift':
+            relative=child_file(positive,0,'command.json');body=json.loads(((lane/positive).parent/relative).read_bytes());body['elapsed_seconds']=0.002;artifact_result(positive,relative,canonical(body))
+        elif name=='argv-drift':edit_result(positive,lambda body:body['commands'][0]['command'].__setitem__(3,'-X'))
+        elif name=='cwd-drift':edit_result(positive,lambda body:body['commands'][0].update(cwd='/INERT/wrong-cwd'))
+        elif name in ('registration-preparation-int','registration-source-hash-drift'):
+            relative=child_file(positive,0,'registered.json');body=json.loads(((lane/positive).parent/relative).read_bytes())
+            if name=='registration-preparation-int':body['preparation']=0
+            else:body['source_inputs'][next(iter(body['source_inputs']))]='0'*64
+            artifact_result(positive,relative,canonical(body))
+        elif name=='coherent-artifact-stream-drift':
+            relative=child_file(positive,0,'stdout.log');artifact_result(positive,relative,b'INERT extra stream bytes\n')
+        elif name=='wrong-marker-coherent-drift':coherent_stream(negative,lambda raw:raw.replace(b'mass_floor_bias',b'other_target'))
+        elif name=='wrong-prefix-coherent-drift':coherent_stream(negative,lambda raw:raw.replace(b'INERT SYNTHETIC PARSER FIXTURE',b'INERT ALTERED PARSER FIXTURE',1))
+        elif name=='wrong-prior-hash-drift':edit_result(negative,lambda body:body['prior_full_pass'].update(sha256='0'*64))
+        elif name in ('failed-stdout-delete','failed-stdout-change','development-stdout-delete'):
+            selected=development if name.startswith('development') else failed;relative=child_file(selected,0,'stdout.log');path=(lane/selected).parent/relative
+            if name.endswith('change'):path.write_bytes(path.read_bytes()+b'INERT changed failed output\n')
+            else:path.unlink()
+        elif name in ('failed-input-delete','development-input-change','failed-input-hidden-delete'):
+            selected=development if name.startswith('development') else failed;body=json.loads((lane/selected).read_bytes());record=next(iter(body['inputs'].values()));relative='input-bytes/'+record['sha256'];path=(lane/selected).parent/relative
+            if name.endswith('change'):path.write_bytes(path.read_bytes()+b'INERT changed saved input\n')
+            else:
+                path.unlink()
+                if name=='failed-input-hidden-delete':edit_result(selected,lambda result:result['artifacts'].pop(relative))
+        changed={}
+        for relative,raw in baseline.items():
+            path=lane/relative
+            if not path.exists():changed[relative]={'deleted':True,'before_sha256':digest(raw)}
+            elif path.read_bytes()!=raw:
+                actual=path.read_bytes();(buffers/digest(actual)).write_bytes(actual);changed[relative]={'before_sha256':digest(raw),'after_sha256':digest(actual),'bytes':len(actual)}
+        if name not in ('positive-baseline','unpatched-live-refusal'):require(changed,'mutation did not change a source byte')
+        (directory/'MUTATION.json').write_bytes(canonical(changed))
+        driver,_=helper.invoke(ctx,lane,output,directory/'invocation',name,'',target='close-campaign.py')
+        expected=0 if name=='positive-baseline' else 1
+        require(type(driver['returncode']) is int and driver['returncode']==expected,'strict closure control result differs: '+name)
+        require(diagnostic in driver.get('error',''),'strict closure causal diagnostic differs: '+name+': '+driver.get('error',''))
+        if name=='positive-baseline':
+            receipt=json.loads((lane/'ACCEPTANCE.json').read_bytes());require(receipt['new_bias_families']==5 and len(receipt['examined_attempts'])==7,'positive inert closure did not examine all seven attempts')
+        else:require(not (lane/'ACCEPTANCE.json').exists() and not (lane/'STOP_RECORD.json').exists(),'rejected synthetic closure wrote acceptance')
+        for artifact in ('ACCEPTANCE.json','STOP_RECORD.json'):
+            if (lane/artifact).exists():(directory/('SYNTHETIC_'+artifact)).write_bytes((lane/artifact).read_bytes())
+        cases.append({'name':name,'expected_returncode':expected,'actual_returncode':driver['returncode'],'diagnostic':diagnostic,'mutated_files':changed,
+                      'driver_sha256':digest((directory/'invocation/DRIVER_RESULT.json').read_bytes()),'new_proofs':0})
+    # Restore the reusable inert baseline after retaining every mutation and result.
+    for path in sorted(lane.rglob('*'),reverse=True):
+        if path.is_file() and str(path.relative_to(lane)) not in baseline:path.unlink()
+    for relative,raw in baseline.items():helper.write(lane/relative,raw)
+    helper.finish(ctx,output,'all_strict_closure_controls_passed',cases)
+if __name__=='__main__':main()

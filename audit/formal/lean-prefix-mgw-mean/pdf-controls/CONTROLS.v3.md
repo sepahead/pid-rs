@@ -1,0 +1,24 @@
+# Corrected mean PDF builder control source
+
+The [v3 archive](mean-pdf-builder-controls-v3.tar) is the corrected successor to the [v2 distribution and its preserved history](CONTROLS.md). Its [inventory](DISTRIBUTION.v3.json) contains the current builder, current ten-input publication corpus, admitted raw Pandoc reference, inert toy data and the existing control harness and inert tool. There are sixteen source members plus the source manifest. Fixture links inside the archive are test inputs, not publication navigation.
+
+All 56 predecessor case names retain their order and causal requirements. Two additional cases remove or duplicate the mean's relative bias-companion link and require `bias-companion-link boundary changed` after exactly two successful inert version probes. The existing title, verification-link and figure-link negatives remain distinct. The historically named `TeX-pagebreak-anchor` case now requires `page-flow boundary changed`: its malformed section heading must fail even though the builder no longer inserts forced breaks. The positive corpus has one companion link and the corrected expected Markdown and TeX.
+
+Each outer harness invocation runs 58 cases in both inner Python modes, for 116 case executions. Two outer modes require 232 case executions and 548 inert tool starts, with 544 completed inert tools. The four deliberately timed-out Pandoc producers account for the difference; each must retain the existing three-start/two-completion causal timeout evidence. Both actual outer modes passed these counts on 12 September 2026; the [current reproduction record](../CURRENT_REPRODUCTION.md) separates this inert evidence from the four later exact PDF builds. The inert tool, 12-second case timeout, two-second Pandoc-only mutation, four-second inert delay, one-MiB stream cap, process-group cleanup and original stage checks are unchanged. No real Pandoc, TeX, PDF reader, Lean or Rust execution occurs in these controls.
+
+Verify the archive digest and every declared type, safe relative path, mode, byte count and hash in the distribution before extracting into an exclusively created canonical ignored directory. The inventory permits seventeen regular files and twelve directories, with no links, duplicate names, absolute paths or traversal components. Preserve the old v2 archive and both old acceptance records under their original names. The old global-timeout failure and late source closure remain failures; this source revision does not change their clocks or credit.
+
+Use the [v3 registration template](REGISTRATION.v3.template.json). Root must admit the exact source and register an actual fixed stage of at most 35 minutes. Both outer registrations retain its original deadline. Resolve a direct single-link Python executable and `/bin/sh`, record their actual hashes, set integer `harness_optimization` to the actual mode, and change the unresolved status only after source admission. The selected pinned Python must run both outer and inner interpreters. Hash each completed registration; never infer approval or a fresh clock from a template.
+
+```text
+python3 -I -S -B <fresh-materialized-source>/proposal/mean-pdf-builder-controls.py \
+  --registration <absolute-normal-registration.json> \
+  --registration-sha256 <actual-normal-registration-sha256> \
+  --output <fresh-canonical-ignored-stage>/normal
+python3 -O -I -S -B <fresh-materialized-source>/proposal/mean-pdf-builder-controls.py \
+  --registration <absolute-optimized-registration.json> \
+  --registration-sha256 <actual-optimized-registration-sha256> \
+  --output <fresh-canonical-ignored-stage>/optimized
+```
+
+The owner must retain and inspect actual outer exits, every case and causal diagnostic, raw streams, source pre/post hashes, deadlines and cleanup evidence. An outer timeout or unrelated setup failure cannot replace an intended negative result. Stop on the first failure; preserve partial output without retrying the closed attempt. Actual corrected-reference reproduction uses the public builder separately after these controls pass. Neither an inert match nor identical reference bytes supplies theorem, calibration, deployment, public-integration or hosted credit.

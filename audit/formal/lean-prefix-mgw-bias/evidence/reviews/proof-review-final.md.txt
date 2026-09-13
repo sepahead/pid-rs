@@ -1,0 +1,73 @@
+# Final mathematical source review of the five bias targets
+
+No mathematical source blocker was found in the fixed 720-line candidate `c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45`. Its 36 private lemmas support exactly the five frozen public theorem types, with only the stated assumptions. The author exposition and proof map agree with the independently sealed derivation. The candidate needs no source correction on this review. Actual Lean/kernel results, required replay/control matrix, custody closure and acceptance remain root-owned; this reviewer executed none of them.
+
+The independent-first critique was sealed 09:31:48.522044Z, hash `7d0b0aa4d3917f2e2d25e590f7f4241cd8095b0bc3b3d5c73710299e4bf0e9d3`, before direct author notes. Its full derivation and three explanatory hand examples remain in INITIAL_MATH_CRITIQUE.md. Ten routes and fifty scoped hostile lenses were frozen 09:20:12 before candidate-body reading. Registration 09:18:03 and original 10:03:03 deadline are unchanged.
+
+## What the source establishes if formally accepted
+
+For a finite nonnegative normalized PMF p on complete source-and-target keys, a valid nonempty antichain alpha, and a supported anchor z, set a_z=P(source-union query), v_z=P(target match), q_z=P(query and target match). The source proves p(z)<=q_z<=a_z<=1 and q_z<=v_z<=1. These are event inclusions, with no independence between coordinates within a row. The native statistic uses a fresh anchor plus h independent complete rows under the specified product law; iid is part of that model, not a property inferred from observations.
+
+Let theta be the population informative-minus-misinformative inverse coordinate averaged over p, let B_h be the exact prefix block statistic, and define e_h=theta-E[B_h]. Conventional statistical bias is the opposite sign. With R_h(q)=sum(j>h)(1-q)^j/j, the main theorem gives supported component-tail inequalities and
+
+-E_p[R_h(q)-R_h(v)] <= e_h <= E_p[R_h(a)],
+|e_h| <= max(E_p[R_h(a)],E_p[R_h(q)-R_h(v)]) <= E_p[R_h(q)],
+|e_h| <= min(H_q,(K_q-1)/(h+1)),
+-(K_q-K_T)/(h+1) <= e_h <= (K_a-1)/(h+1),
+
+where K_a=E_p[1/a],K_q=E_p[1/q],K_T=E_p[1/v],H_q=E_p[-log q], all on positive population support and in nats.
+
+The fiber identity counts positive fibers of an actual finite map: E_p[1/p_f(f(Z))]=positiveSupportCard(p_f). It does not turn arbitrary overlapping query events into a partition. The support theorem gives 1<=K_a,K_T<=K_q<=positiveSupportCard(p),K_T equal to target support cardinality, and K_a<=K_C,K_q<=K_CT for every member collection C in alpha. The projected theorem therefore gives
+
+-(K_CT-K_T)/(h+1) <= e_h <= (K_C-1)/(h+1),
+|e_h| <= (K_CT-1)/(h+1).
+
+The mass-floor theorem assumes 0<eta<=1 and eta<=q_z on every supported anchor, and gives |e_h|<=R_h(eta)<=(1-eta)^(h+1)/((h+1)eta). Both corollaries apply to every supplied SupportedInversePair by actual uniqueness, including the zero-family off-support convention.
+
+## Proof checks that support the conclusion
+
+| Candidate lines | Independent source assessment |
+| --- | --- |
+|12–118|Logarithmic/geometric HasSum and shifts have exact powers and denominators. Difference tails are compared termwise with nonnegative numerators, then against their full geometric difference; no subtraction of unrelated upper bounds.|
+|120–187|Tail domination uses actual summable component series. The binomial identity preserves choose(n,k), target factorv^(k+1), raw failure factor(1-v)^(n-k), denominatork+1 and the omitted zero-hit term.|
+|190–291|A nonnegative join-power coordinate is bounded by its cumulative, not by an invalid sign-preserving inversion argument. Exact word/join semantics transfer the bound. Conditioning uses the existing single-row law only after v>0, not a terminal/stopping-law theorem.|
+|293–506|Support averaging handles zero weights and mass-one constants exactly. Fiber regrouping handles zero fibers; source/joint projection equivalence and union containment give reciprocal inequalities.|
+|508–646|The accepted native finite_block_expectation equality and actual component-integral HasSum values supply the endpoint. Omitted components are nonnegative; their signed difference yields the asymmetric interval and max bound. Each '-1' uses supported weights summing to one.|
+|648–703|Actual inverse uniqueness transfers bounds to arbitrary supplied families. Projected constants and the restricted-mass floor are used with correct directions and denominators.|
+|705–718|Five direct private-proof aliases match the frozen order/types. Fiber has two universe parameters; the other four have three.|
+
+All complete Contract/Raw/Alias types and the entire candidate were read. The generic join envelope requires no total-mass<1 assumption; convergence is obtained only where the accepted supported series justify it. The generic fiber identity actually requires only nonnegative weights, so its frozen Law p premise is stronger than necessary, harmlessly. No target strengthening is requested. The separately named finite_horizon_increment_bounds_target proposition is bypassed by shifted infinite tails and is not a sixth public theorem.
+
+The exact sole candidate import is PidPrefixMgwBias.Contract. SemanticJudge/JudgeCore inspect actual theorem kind, full raw/alias types under universe renaming, exact export roster and transitive allowed axioms Classical.choice, Quot.sound, propext. Source reading found no sorry, replacement axiom, hidden theorem receiver, native_decide, unsafe or effectful declaration. This observation does not replace actual semantic/kernel checking or validate arbitrary hostile host behavior.
+
+## Edge examples and use limits
+
+The three examples sealed independently before author notes are hand derivations from definitions, not experiments or extra formal exports:
+
+- Constant source, uniform m-valued target: K_a=1,K_q=K_T=m but both statistic and atom are zero at every horizon. LargeK_q supplies no necessary sample-complexity lower bound; signed moment cancellation captures exact zero.
+- Two independent fair source bits, singleton target,alpha={{1},{2}}: union mass3/4 givesK_q=4/3. Overlapping query events are not projection fibers; their inverse moment need not be an integer. Constant target makes the actual signed statistic cancel.
+- Independent fair one-source/target bits,h=1: positive mean increment1/2 and negative mean increment1/4 giveE[B_1]=1/4 while the population MI atom is0. Thus e_1=-1/4, demonstrating finite bias under independence.
+
+The boundary checks coverh=0,q=1,q=v,v=1,eta=1 and off-support zero weights. Empty complete-key carriers cannot satisfyLaw p; unused alphabet values remain allowed. No zero-probability logarithm or inverse receives scientific meaning merely because Lean totalizes the real operations.
+
+Known population moments or justified support bounds can select a sufficient fixed horizon: for example h+1>=(K_CT-1)/epsilon suffices for the projected absolute bias bound at positive epsilon. A justified mass floor can give a faster-decaying sufficient envelope. These are statements about E[B_h], not deterministic bands around an observed B_h. Population projection support cannot be replaced by the number of observed categories without separate statistical evidence. Choosing horizons or queries adaptively from the same data needs its own argument.
+
+Variance, MSE, block counts, concentration/coverage, stopping or censoring, regeneration, finite-precision Rust/Python refinement, correlated-row validity, continuous/hyperbolic transfer and downstream utility remain separate. No performance, novelty, general PID ranking or deployment claim follows. The existing paper-to-formal MGW correspondence is inherited as a scope boundary; no new paper-verification claim was made here.
+
+## Author comparison and preserved failures
+
+EXPOSITION.md faithfully explains the native measure, the error-sign convention, retained target rank, termwise difference bound, population-support distinction and missing sampling guarantees. Its copying-source example has exact error R_h(1/2), and the stated h=1 geometric bound1/4 is correct. No exposition correction is required by this review. The additional independent overlap and independence examples can clarify scope if root chooses to use them.
+
+FINAL_PROOF_MAP correctly maps all 36 private/five public declarations. The three copied binomial declaration bodies match the accepted mean source; comparison ignores only trailing blank separators between declarations, and exact hashes are in FINAL_INPUT_RECEIPT.json. This reuse is explicit mathematical source reuse, not evidence of another independent proof.
+
+The author preserves an initial missing-parent write failure, four unsuccessful development candidates and one unsubmitted scalar intermediate. I read the retained four failure stdout logs after the independent seal. They document instance/conversion and denominator-elaboration problems; linter/nonnegative-hypothesis issues; zero-branch/fiber-decision/eta-expansion mistakes; and the final neg_div syntactic mismatch. These are real retained elaboration failures, not observed mathematical countermodels. The later development pass does not relabel them or provide campaign acceptance.
+
+Rejected reasoning routes also remain explicit. Cumulative nonnegativity alone cannot imply coordinate nonnegativity: on a two-element chain, coordinates1 and-1/2 have nonnegative lower cumulatives1 and1/2. LikewiseA<=U,B<=V alone cannot boundA-B byU-V: A=U=1,B=0,V=2 refutes that inference. The candidate avoids both logical traps by supplying nonnegative join coordinates and nonnegative difference-series terms. These are hand algebra counterexamples to invalid proof inferences, not new Lean exports.
+
+## Byte custody and independence
+
+The fixed candidate is preserved in this review under reviewed-input-bytes/c945... . Its 34113 bytes match both author Candidate.final.lean.txt and root's selected attempt006 source. Root's later cosmetic transformation of the live payload is outside the review input. At final custody inspection all 81 frozen package members,27 source/object pairs and36 author-manifest members match; the19 specifically reviewed mathematical/type/judge/runtime files also matched at initial seal.
+
+This is one same-model advisory mathematical source review. The required handoff disclosed the author's broad route and root cautions before the criteria freeze; that exposure is recorded. Root reported completed normal/optimized work after the complete candidate/proof-chain reading but before initial sealing. No root run receipt or semantic/kernel outcome was used as mathematical evidence. Author notes and historical development failure logs were read only after the independent seal. Root later agreed with the critique; agreement is not proof.
+
+The initial rg search missed ignored .local sources; reissuing it with explicit hidden/no-ignore flags corrected the search. No candidate or accepted source was edited, no old review lane was written, and no Lean/control/kernel/runner/public/Git operation was executed by this reviewer. All mathematical and operational acceptance responsibility remains attached to the exact root-owned campaign evidence.

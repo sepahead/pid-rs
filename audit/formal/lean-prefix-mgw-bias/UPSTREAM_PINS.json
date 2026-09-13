@@ -1,0 +1,76 @@
+{
+  "schema": "pid-rs/bias-upstream-source-pins-v1",
+  "origin": "Original accepted campaign historical environment and captured toolchain input bytes",
+  "lean_identity": {
+    "build": "Release",
+    "commit": "d8b18978322de05a8f3dba51ef03cf5461676c17",
+    "version": "4.33.0"
+  },
+  "package_pins": {
+    "Cli": [
+      "https://github.com/leanprover/lean4-cli",
+      "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "v4.33.0",
+      true
+    ],
+    "LeanSearchClient": [
+      "https://github.com/leanprover-community/LeanSearchClient",
+      "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "main",
+      true
+    ],
+    "Qq": [
+      "https://github.com/leanprover-community/quote4",
+      "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "master",
+      true
+    ],
+    "aesop": [
+      "https://github.com/leanprover-community/aesop",
+      "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "master",
+      true
+    ],
+    "batteries": [
+      "https://github.com/leanprover-community/batteries",
+      "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "main",
+      true
+    ],
+    "importGraph": [
+      "https://github.com/leanprover-community/import-graph",
+      "16f02aa7642864af59f1ff0e384a015994db9118",
+      "main",
+      true
+    ],
+    "mathlib": [
+      "https://github.com/leanprover-community/mathlib4.git",
+      "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "v4.33.0",
+      false
+    ],
+    "plausible": [
+      "https://github.com/leanprover-community/plausible",
+      "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "main",
+      true
+    ],
+    "proofwidgets": [
+      "https://github.com/leanprover-community/ProofWidgets4",
+      "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "main",
+      true
+    ]
+  },
+  "historical_tool_hashes": {
+    "lean": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+    "leanchecker": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880"
+  },
+  "toolchain_capture_paths": [
+    "toolchain/lean-toolchain",
+    "toolchain/lakefile.toml",
+    "toolchain/lake-manifest.json"
+  ],
+  "tool_installations_and_caches_supplied": false,
+  "new_execution_or_authentication": false
+}

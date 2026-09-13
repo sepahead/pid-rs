@@ -1,0 +1,54 @@
+# Future root execution commands
+
+This successor is source-only and unexecuted. First register the root-owned bounded execution task and inspect the exact source successor. Keep both sealed source packets immutable. Use a fresh direct child of the integration checkout's `.local`; the exact old policy script relies on that location. The deployment helper copies the package and registers the separate 35-minute operational interval before any control invocation. It creates no mathematical candidate.
+
+```sh
+bias_source="$PWD/.local/sx-mean-bias-proof-runner-repair-source-20260908"
+bias_stage="$PWD/.local/sx-mean-bias-proof-campaign-v2-20260908"
+python3 -I -S -B "$bias_source/prepare.py" stage-controls --project-root "$PWD" --output "$bias_stage"
+python3 -I -S -B "$bias_stage/whole-entrypoint-controls.py" --output "$bias_stage/controls-entrypoint-normal"
+python3 -I -S -B -O "$bias_stage/whole-entrypoint-controls.py" --output "$bias_stage/controls-entrypoint-optimized"
+python3 -I -S -B "$bias_stage/policy-selftest.py" --policy-sha256 302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0 --output "$bias_stage/controls-policy-normal"
+python3 -I -S -B -O "$bias_stage/policy-selftest.py" --policy-sha256 302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0 --output "$bias_stage/controls-policy-optimized"
+python3 -I -S -B "$bias_stage/instrumented-controls.py" --output "$bias_stage/controls-instrumented-normal"
+python3 -I -S -B -O "$bias_stage/instrumented-controls.py" --output "$bias_stage/controls-instrumented-optimized"
+python3 -I -S -B "$bias_stage/closure-controls.py" --output "$bias_stage/controls-closure-normal"
+python3 -I -S -B -O "$bias_stage/closure-controls.py" --output "$bias_stage/controls-closure-optimized"
+```
+
+The new control programs spawn only the bounded Python instrumentation driver. Inside that driver an audit hook denies external processes. All fixture candidates and fake objects stay inside explicitly marked inert control subdirectories and cannot satisfy production live admission. Root should inspect actual registrations, driver interface lists, audit records, streams, graph records and causal diagnostics, not only summary counts. Run the old policy controls under the root operational clock as well; their unchanged script does not enforce that clock itself. If the original registered stage expires or a control fails, retain that evidence and use a separately reviewed successor; never reset its clock or fabricate completed receipts.
+
+After all eight actual receipts have passed and root has reviewed the evidence, author `ROOT_REVIEW.input.json` in the execution lane with this shape and the actual package digest:
+
+```json
+{
+  "status": "root_adopts_exact_source_runner_and_five_types_after_actual_controls",
+  "package_sha256": "ACTUAL_STAGED_PACKAGE_SHA256",
+  "review": "Root's concrete source and actual control evidence assessment."
+}
+```
+
+Then, before the operational deadline:
+
+```sh
+python3 -I -S -B "$bias_stage/prepare.py" adopt --lane "$bias_stage" --review "$bias_stage/ROOT_REVIEW.input.json"
+```
+
+Adoption checks exact typed case counts and all eight actual receipt identities, rehashes the non-policy control artifacts, and registers the unchanged separate live 720-minute interval. The source-only task does not authorize executing this step or accessing a real candidate.
+
+Only after that actual root adoption and a separately authorized proof stage may root write `candidate/Candidate.lean`. With `bias_digest` set to its exact current SHA-256, the live commands are:
+
+```sh
+python3 -I -S -B "$bias_stage/campaign.py" development --candidate-sha256 "$bias_digest"
+python3 -I -S -B "$bias_stage/campaign.py" full --candidate-sha256 "$bias_digest"
+python3 -I -S -B -O "$bias_stage/campaign.py" full --candidate-sha256 "$bias_digest"
+python3 -I -S -B "$bias_stage/campaign.py" wrong-last-target --candidate-sha256 "$bias_digest"
+```
+
+Preserve selected bytes. Construct exactly the cosmetic prefix/suffix in `SELECTION_RULE.json`, update the digest and perform both full modes on cosmetic bytes. The actual wrong-final command must use the selected original; its final declaration is replaced by the runner. After reviewing all actual evidence, close with:
+
+```sh
+python3 -I -S -B "$bias_stage/close-campaign.py" --lane "$bias_stage"
+```
+
+Closure checks every failed/development attempt's artifacts and saved inputs as well as all positive/negative evidence. It binds each command summary to the actual command and registration files, source inputs, streams, copied trusted sources, exact graph, prior full receipt and final-target causal stream. Four actual fresh full kernel passes and the actual wrong-final remain required. Synthetic controls, type preparation and historical dependency replay do not add new bias proof families.

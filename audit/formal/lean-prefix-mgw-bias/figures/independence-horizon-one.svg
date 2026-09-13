@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="90mm" viewBox="0 0 1600 900" role="img" aria-labelledby="ind-title ind-desc">
+<title id="ind-title">The horizon-one statistic has positive mean under independence</title>
+<desc id="ind-desc">One fair binary source and a fair binary target are independent. Conditional on anchor 00, fresh rows 00, 01, 10 and 11 each have probability one quarter. Their positive increments are zero, zero, one and one; their negative increments are zero, zero, one and zero. Their signed block values are therefore zero, zero, zero and one. The block expectation is one quarter, but the population mutual-information atom is zero. The error theta minus the expectation is minus one quarter. This is an exact hand derivation from the finite definitions, not an empirical experiment or a hypothesis-test false-positive rate.</desc>
+<defs><style>
+.title{font-family:'Source Sans Pro',sans-serif;font-size:42px;font-weight:700;fill:#1F3F60}
+.eyebrow{font-family:'Source Sans Pro',sans-serif;font-size:25px;font-weight:700;letter-spacing:2px;fill:#596A73}
+.label{font-family:'Source Sans Pro',sans-serif;font-size:31px;font-weight:600;fill:#2C3E50;text-anchor:middle}
+.body{font-family:'Source Sans Pro',sans-serif;font-size:31px;fill:#2C3E50}
+.cell{font-family:'Source Sans Pro',sans-serif;font-size:37px;fill:#1F3F60;text-anchor:middle}
+.math{font-family:'Source Sans Pro',sans-serif;font-size:36px;fill:#1F3F60}
+.note{font-family:'Source Sans Pro',sans-serif;font-size:28px;fill:#596A73}
+</style></defs>
+<rect width="1600" height="900" fill="#F7F3E9"/>
+<text x="60" y="50" class="eyebrow">HAND DERIVATION · ONE SOURCE · RAW HORIZON h = 1</text>
+<path d="M60 80 H1540" stroke="#D2E0E2" stroke-width="2"/>
+<path d="M60 80 H330" stroke="#B28218" stroke-width="6"/>
+<text x="60" y="144" class="title">A positive finite mean can occur under independence</text>
+<text x="60" y="195" class="body">Independent fair source and target bits. Fix anchor (S₀, T₀) = (0, 0).</text>
+<rect x="60" y="237" width="1480" height="89" rx="8" fill="#D2E0E2"/>
+<text x="210" y="290" class="label">Fresh row</text>
+<text x="500" y="290" class="label">Probability</text>
+<text x="790" y="273" class="label">Positive</text><text x="790" y="310" class="label">A₁</text>
+<text x="1080" y="273" class="label">Negative</text><text x="1080" y="310" class="label">D₁</text>
+<text x="1370" y="273" class="label">Signed</text><text x="1370" y="310" class="label">B₁ = A₁ − D₁</text>
+<g stroke="#D2E0E2" stroke-width="2"><path d="M60 427 H1540 M60 527 H1540 M60 627 H1540"/></g>
+<rect x="60" y="628" width="1480" height="99" fill="#D2E0E2"/>
+<text x="210" y="390" class="cell">(0, 0)</text><text x="500" y="390" class="cell">1/4</text><text x="790" y="390" class="cell">0</text><text x="1080" y="390" class="cell">0</text><text x="1370" y="390" class="cell">0</text>
+<text x="210" y="490" class="cell">(0, 1)</text><text x="500" y="490" class="cell">1/4</text><text x="790" y="490" class="cell">0</text><text x="1080" y="490" class="cell">0</text><text x="1370" y="490" class="cell">0</text>
+<text x="210" y="590" class="cell">(1, 0)</text><text x="500" y="590" class="cell">1/4</text><text x="790" y="590" class="cell">1</text><text x="1080" y="590" class="cell">1</text><text x="1370" y="590" class="cell">0</text>
+<text x="210" y="690" class="cell">(1, 1)</text><text x="500" y="690" class="cell">1/4</text><text x="790" y="690" class="cell">1</text><text x="1080" y="690" class="cell">0</text><text x="1370" y="690" class="cell">1</text>
+<text x="60" y="789" class="math">E[B₁] = 1/4, while θ = I(S; T) = 0. Thus e₁ = −1/4.</text>
+<text x="60" y="847" class="note">Symmetry gives the same mean at every anchor. No sampling experiment was run.</text>
+<text x="60" y="887" class="note">This is a positive finite mean, not a calculated hypothesis-test false-positive rate.</text>
+</svg>

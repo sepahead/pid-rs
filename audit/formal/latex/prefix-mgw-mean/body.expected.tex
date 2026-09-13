@@ -1,6 +1,6 @@
 This note explains the finite-row expectation bridge for the categorical shared-exclusions PID of Makkeh, Gutknecht and Wibral (MGW). The three exact targets were accepted locally on 8 September 2026 after the complete semantic and fresh-kernel matrix. The portable replay was also accepted locally after four complete proof replays and the required rejection of an altered final theorem. Hosted replay and mainline publication remain separate. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md}{verification record} separates those statuses.
 
-The practical question is precise: can a statistic that observes complete categorical rows, rather than a supplied probability table, have an expectation that approaches a specified MGW atom? The three accepted theorems answer that question for a particular prefix statistic. They do not yet give a usable sample-size rule. A short prefix can have the wrong sign even when the true atom is zero or negative.
+The practical question is precise: can a statistic that observes complete categorical rows, rather than a supplied probability table, have an expectation that approaches a specified MGW atom? The three accepted theorems answer that question for a particular prefix statistic. These three theorems alone do not give a finite-horizon planning bound. A short prefix can have the wrong sign even when the true atom is zero or negative.
 
 MGW defines the information functional. The prefix experiment and its expectation bridge are project constructions. No claim of scientific priority or superiority follows from their presence in this repository. The defining source is Makkeh, Gutknecht and Wibral, \emph{Introducing a differentiable measure of pointwise shared information}, \href{https://arxiv.org/abs/2002.03356v5}{arXiv:2002.03356v5}, \href{https://doi.org/10.1103/PhysRevE.103.032149}{Physical Review E 103, 032149}. This note uses natural logarithms and nats; the paper also presents formulas in bits.
 
@@ -14,6 +14,8 @@ z=((s_i)_{i\in I},t)\in\mathcal K
 \]
 
 Let \(p:\mathcal K\to[0,1]\) satisfy \(\sum_zp(z)=1\). Distinct rows in the experiment are independent draws from this same law. Sources and target within one row may have any dependence permitted by \(p\). No Gaussian prior, density, distance metric or independence between sensors is assumed.
+
+For an event \(A\subseteq\mathcal K\), \(P(A)=\sum_{x\in A}p(x)\). Write \(x_i\) for source \(i\)'s coordinate and \(t_x\) for the target coordinate. The target random variable is \(T(x)=t_x\) under this law.
 
 For example, a row can contain fixed categorical outputs from an acoustic sensor and a thermal sensor, together with a labeled environmental event. Each source is the entire declared sensor output. A source can have many internal features. Grouping those features into sources is part of the question; changing the grouping changes the PID lattice.
 
@@ -45,7 +47,13 @@ For a function \(f\) on the nodes, define its lower cumulative sum by
 (\mathcal Zf)(\beta)=\sum_{\alpha\preceq\beta}f(\alpha).
 \]
 
-The full finite node set is used in this sum. Restricting it to a few selected nodes generally changes the inverse problem.
+The full finite node set is used in this sum. Restricting it to a few selected nodes generally changes the inverse problem. To recover \(f\) from a prescribed cumulative \(g=\mathcal Zf\), process lower nodes first and use
+
+\[
+f(\beta)=g(\beta)-\sum_{\alpha\prec\beta}f(\alpha),
+\]
+
+where \(\alpha\prec\beta\) means \(\alpha\preceq\beta\) and \(\alpha\ne\beta\). This finite recursion gives both existence and uniqueness; it is the lower-cumulative, or Möbius, inversion used below.
 
 Fix a supported anchor, meaning \(p(z)>0\), and write
 
@@ -91,7 +99,7 @@ F_{z,\alpha}(x_1,\ldots,x_j)
 G_z(x_1,\ldots,x_j)=\alpha.
 \]
 
-Set this event to false for an empty list or any list containing an empty mismatch set. Thus a complete source match makes the event false without requiring a join of invalid nodes.
+Set this event to false for an empty list or any list containing an empty mismatch set. Thus a complete source match makes the event false without requiring a join of invalid nodes. The indicator \(\mathbf1\{F\}\) equals one when \(F\) holds and zero otherwise.
 
 The positive increment at raw time \(j\ge1\) is
 
@@ -154,7 +162,7 @@ c_j^z=\underbrace{w_r^z*\cdots*w_r^z}_{j\text{ factors}}.
 
 The formal \texttt{joinPower\ w\ n} has \(n+1\) factors, so the exact statement uses \texttt{wordCoefficient\ ...\ (n+1)}. Removing that shift changes the theorem.
 
-To prove the identity, first sum the coefficient over all nodes below \(\beta\). A valid repeated join lies below \(\beta\) exactly when each row is outside \(E_\beta(z)\). Finite distributivity therefore gives
+To prove the identity, first sum the coefficient over all nodes below \(\beta\). For one row with nonempty \(M_z(x)\), its singleton family lies below \(\beta\) exactly when every collection \(C\in\beta\) contains an index in \(M_z(x)\). This says that every collection has a mismatch, which is precisely \(x\notin E_\beta(z)\). A join lies below \(\beta\) exactly when every joined factor does. If a row has empty mismatch set, it belongs to \(E_\beta(z)\) and contributes to neither side. Hence a valid repeated join lies below \(\beta\) exactly when each row is outside \(E_\beta(z)\). Finite distributivity therefore gives
 
 \[
 \mathcal Zc_j^z(\beta)
@@ -166,7 +174,7 @@ The cumulative of join convolution is the product of the cumulatives, so the rep
 
 \PidMeanSection{5. Expectations under the actual row law}\label{expectations-under-the-actual-row-law}
 
-The formal row law is the finite product of the categorical measure \(\sum_xp(x)\delta_x\). Thus a word \((x_1,\ldots,x_j)\) has mass \(\prod_\ell p(x_\ell)\). Every real-valued function on this finite space is integrable. These facts are conclusions of the preceding finite-probability proofs, not assumptions about an integral supplied to this theorem.
+The formal row law is the finite product of the categorical measure \(\sum_xp(x)\delta_x\), where \(\delta_x\) places unit mass at \(x\). Thus a word \((x_1,\ldots,x_j)\) has mass \(\prod_\ell p(x_\ell)\). Every real-valued function on this finite space is integrable. These facts are conclusions of the preceding finite-probability proofs, not assumptions about an integral supplied to this theorem.
 
 For every anchor \(z\), define the finite-row expectations
 
@@ -175,7 +183,7 @@ u_j^z(\alpha)=E[A_j^{z,\alpha}],\qquad
 d_j^z(\alpha)=E[B_j^{z,\alpha}].
 \]
 
-At a supported anchor, the positive formula and the coefficient identity give
+With weights \(r=p\), finite expectation gives \(u_j^z(\alpha)=c_j^z(\alpha)/j\): multiply each increment by its word mass and sum over the words. At a supported anchor, the coefficient identity therefore gives
 
 \[
 \mathcal Zu_j^z(\beta)=\frac{(1-a_\beta)^j}{j}.
@@ -190,7 +198,7 @@ v^{k+1}(1-v)^{j-1-k}
 \frac{(1-q_\beta/v)^{k+1}}{k+1}.
 \]
 
-Here \(1-q_\beta/v\) is the conditional probability of source-event exclusion given the anchor target. The retained-rank denominator stays inside the sum.
+There are \(\binom{j-1}{k}\) choices of the previous matching positions. For any such pattern with positive probability, the retained rows are independent draws from the row law conditioned on \(T=t_z\); zero-probability patterns contribute zero. Thus \(1-q_\beta/v\) is their source-event exclusion probability. The retained-rank denominator stays inside the sum.
 
 The identity
 
@@ -235,7 +243,7 @@ Applying it to the two cumulative expectations gives
 \sum_{j=1}^{\infty}\mathcal Zd_j^z(\beta)=\log(v/q_\beta).
 \]
 
-These are exactly the lower cumulatives that define the two MGW inverses. To pass from cumulative series to atom series, use induction on the finite partial order. At node \(\beta\), split the cumulative into its own coordinate and the finitely many strictly lower coordinates. The induction hypothesis supplies a \texttt{HasSum} result for each lower coordinate. Subtract their finite sum from the cumulative \texttt{HasSum} result. The remaining series has the required coordinate total.
+These are exactly the lower cumulatives that define the two MGW inverses. To pass from cumulative series to atom series, use induction on the finite partial order. At node \(\beta\), split the cumulative into its own coordinate and the finitely many strictly lower coordinates. The induction hypothesis supplies a \texttt{HasSum} result for each lower coordinate: its series converges to the stated value. Subtract their finite sum from the cumulative \texttt{HasSum} result. The remaining series has the required coordinate total.
 
 This step proves the series statements themselves. It does not assume coordinate summability or exchange an unjustified signed infinite double sum. It yields
 
@@ -253,7 +261,6 @@ Choose the unique inverses on supported anchors and extend both by zero elsewher
 
 The expectation at each \(h\) uses its specified finite product space. This conclusion is a limit of expectations. It is not an almost-sure statement on a common infinite sample space, and it does not by itself prove consistency for a chosen sequence of empirical block averages.
 
-\clearpage
 \PidMeanSection{7. A sensor with no target information can give a positive short-prefix mean}\label{a-sensor-with-no-target-information-can-give-a-positive-short-prefix-mean}
 
 Let a binary sensor output \(S\) and a binary target \(T\) be independent and fair. The four complete rows \((0,0),(0,1),(1,0),(1,1)\) each have probability \(1/4\). There is one PID node. Fix anchor \((0,0)\). The one-draw contributions are:
@@ -285,7 +292,6 @@ One contribution is \((1/2)(1/4)/1=1/8\): the first row misses the target, and t
 
 These exact symbolic examples explain two required safeguards: preserve retained rank, and do not label a finite horizon as unbiased. They are exposition calculations; a separate executable fixture or specialized formal theorem must be named before claiming that either example itself has been executed or formally specialized.
 
-\clearpage
 \PidMeanSection{8. Edge cases and permitted interpretations}\label{edge-cases-and-permitted-interpretations}
 
 {\def\LTcaptype{none} % do not increment counter
@@ -322,9 +328,9 @@ High-dimensional or hyperbolic representation & The categorical theorem uses equ
 
 The bridge supplies a missing connection between a concrete row experiment and a named population PID functional. Finite reconstruction algebra alone cannot establish that connection. Here the finite law, integrals, target-conditioned retained rank, genuine series convergence, inverse identification and joint-law averaging all have explicit roles.
 
-For a sensor study, this is a foundation for an estimator design, not a recommendation to deploy the prefix statistic. Before use, the implementation needs a refinement argument, numerical and resource contracts, a bias bound, a sampling-error bound and tests against appropriate alternatives. Direct held-out task loss, MI/CMI, fixed-model and retrained ablation, failure utility and coverage can answer useful sensor questions with fewer assumptions. MGW is relevant when its particular redundant/unique/synergistic allocation answers a question those summaries leave open.
+For a sensor study, this is a foundation for an estimator design, not a recommendation to deploy the prefix statistic. Before use, the implementation still needs a refinement argument, numerical and resource contracts, a sampling-error bound and tests against appropriate alternatives. Direct held-out task loss, MI/CMI, fixed-model and retrained ablation, failure utility and coverage can answer useful sensor questions with fewer assumptions. MGW is relevant when its particular redundant/unique/synergistic allocation answers a question those summaries leave open.
 
-The next proposed mathematical route bounds the omitted positive and negative tails through the overlap probability \(q_\alpha(z)\). That route remains a separate theorem obligation. Likewise, a Boolean truth-table representation of node joins remains a separate computational refinement obligation. Neither follows merely because the expectation bridge passes.
+The locally accepted \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{finite-horizon bias companion} bounds the omitted positive and negative tails through the overlap probability \(q_\alpha(z)\). It gives supported-population moment, projection-support and mass-floor bounds under their stated assumptions. These control mean truncation error; they do not establish sampling-error calibration or refinement to the Rust implementation. A Boolean truth-table representation of node joins remains a separate computational refinement obligation.
 
 The formal correspondence is:
 

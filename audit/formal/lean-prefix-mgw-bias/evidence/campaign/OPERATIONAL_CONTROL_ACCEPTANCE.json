@@ -1,0 +1,44 @@
+{
+  "modes": [
+    0,
+    1
+  ],
+  "new_bias_proofs": 0,
+  "package_sha256": "a5430b91fb0e1953cf9b367058217275b171d363c8ab7cc30524db7f84aa598e",
+  "receipts": [
+    {
+      "path": "controls-closure-normal/RESULT.json",
+      "sha256": "8684275006501eb05e6edb62fec50cd843a3b529aa5ea6aec2f0f74f0636efee"
+    },
+    {
+      "path": "controls-entrypoint-normal/RESULT.json",
+      "sha256": "09ecd798ebc80f07a0b1df8938b1bd2584b1311c1a1cebee4a84ad4a7dd6a2c3"
+    },
+    {
+      "path": "controls-instrumented-normal/RESULT.json",
+      "sha256": "c50585630e681db48c699103d18f8d0c18f41fc1b73cddb5ac28677d94816fca"
+    },
+    {
+      "path": "controls-policy-normal/RESULT.json",
+      "sha256": "9fd56138393b970be2683872bbaeb6b1f945a5e102fd2ae4f223a33cbdea553a"
+    },
+    {
+      "path": "controls-closure-optimized/RESULT.json",
+      "sha256": "3db123d7d2417ea5ed239c3dacd4489678f422f53c248df7d79b6589bf431be6"
+    },
+    {
+      "path": "controls-entrypoint-optimized/RESULT.json",
+      "sha256": "76eb16955a30a0b3fed95b978e16548267d67b38faa0cf268a4fd9904d95da8d"
+    },
+    {
+      "path": "controls-instrumented-optimized/RESULT.json",
+      "sha256": "dac27b7aea8ec61182db833d8d1c0c666bd73d59da9e0e9406d96b2a4d282c2f"
+    },
+    {
+      "path": "controls-policy-optimized/RESULT.json",
+      "sha256": "d2e0d23d693a33673787f5554eed07c713858e9755ea59e6473792bb03911195"
+    }
+  ],
+  "root_review_sha256": "13b7abdf637b55d6712a5c0e1fe99c2408a6acb9ed0760dc638ec684c00ec166",
+  "status": "adopted_completed_operational_controls"
+}

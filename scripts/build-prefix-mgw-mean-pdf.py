@@ -18,11 +18,11 @@ import subprocess
 import sys
 
 MANIFEST = "audit/formal/latex/prefix-mgw-mean/publication-inputs-v1.json"
-MANIFEST_SHA = 'e85c572d7221a5a46c1200e9e0dde12f73d50def5a0b5dd5bbaf5e4bd97fe09f'
+MANIFEST_SHA = '6f181dcb87d6398075a568ce0156df17081ea14fe68305f7b267f819c2a59ffa'
 UNIT = "audit/formal/lean-prefix-mgw-mean/"
 ASSETS = "audit/formal/latex/prefix-mgw-mean/"
 TITLE = "# From categorical exclusion events to MGW atom expectations\n\n"
-PDF_SHA = 'e6950ccb21747578b20a244d00de9d09de3ca6810006422224ccfee2469f0c0d'
+PDF_SHA = '93ff18e21f56e4770b12b7405d57b003bf7839cef5c4207ed98a56cd6f96f58f'
 
 
 def require(ok: bool, message: str) -> None:
@@ -95,7 +95,10 @@ def transform_markdown(raw: bytes) -> bytes:
     new = "](https://github.com/sepahead/pid-rs/blob/main/audit/evidence/prefix-mgw-mean-formal-verification-2026-09-08/RESULTS.md)"
     require(text.count(old) == 1, "verification-link boundary changed")
     require(text.count("](retained-rank.svg)") == 1, "figure-link boundary changed")
-    return text.replace(old, new).replace("](retained-rank.svg)", "](retained-rank.pdf)").encode()
+    companion = "](../lean-prefix-mgw-bias/EXPOSITION.md)"
+    published_companion = "](https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md)"
+    require(text.count(companion) == 1, "bias-companion-link boundary changed")
+    return text.replace(old, new).replace(companion, published_companion).replace("](retained-rank.svg)", "](retained-rank.pdf)").encode()
 
 
 def transform_latex(raw: bytes) -> bytes:
@@ -107,8 +110,7 @@ def transform_latex(raw: bytes) -> bytes:
         "8. Edge cases and permitted interpretations",
     ):
         needle = "\\PidMeanSection{" + heading + "}"
-        require(text.count(needle) == 1, "page-break boundary changed")
-        text = text.replace(needle, "\\clearpage\n" + needle)
+        require(text.count(needle) == 1, "page-flow boundary changed")
     return text.encode()
 
 

@@ -1,0 +1,86 @@
+[
+  {
+    "alias_target": "PidPrefixMgwBiasAliasTargets.actual_finite_bias",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "full_elaborated_type": "PidPrefixMgwBiasSource.actual_finite_bias_target.{u, v, w}",
+    "raw_target": "PidPrefixMgwBiasRawTargets.actual_finite_bias",
+    "status": "accepted",
+    "theorem": "PidPrefixMgwBiasCandidate.actual_finite_bias",
+    "universes": [
+      "u",
+      "v",
+      "w"
+    ]
+  },
+  {
+    "alias_target": "PidPrefixMgwBiasAliasTargets.fiber_inverse_moment",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "full_elaborated_type": "PidPrefixMgwBiasSource.fiber_inverse_moment_target.{u, v}",
+    "raw_target": "PidPrefixMgwBiasRawTargets.fiber_inverse_moment",
+    "status": "accepted",
+    "theorem": "PidPrefixMgwBiasCandidate.fiber_inverse_moment",
+    "universes": [
+      "u",
+      "v"
+    ]
+  },
+  {
+    "alias_target": "PidPrefixMgwBiasAliasTargets.support_moment_bounds",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "full_elaborated_type": "PidPrefixMgwBiasSource.support_moment_bounds_target.{u, v, w}",
+    "raw_target": "PidPrefixMgwBiasRawTargets.support_moment_bounds",
+    "status": "accepted",
+    "theorem": "PidPrefixMgwBiasCandidate.support_moment_bounds",
+    "universes": [
+      "u",
+      "v",
+      "w"
+    ]
+  },
+  {
+    "alias_target": "PidPrefixMgwBiasAliasTargets.projected_support_bias",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "full_elaborated_type": "PidPrefixMgwBiasSource.projected_support_bias_target.{u, v, w}",
+    "raw_target": "PidPrefixMgwBiasRawTargets.projected_support_bias",
+    "status": "accepted",
+    "theorem": "PidPrefixMgwBiasCandidate.projected_support_bias",
+    "universes": [
+      "u",
+      "v",
+      "w"
+    ]
+  },
+  {
+    "alias_target": "PidPrefixMgwBiasAliasTargets.mass_floor_bias",
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "full_elaborated_type": "PidPrefixMgwBiasSource.mass_floor_bias_target.{u, v, w}",
+    "raw_target": "PidPrefixMgwBiasRawTargets.mass_floor_bias",
+    "status": "accepted",
+    "theorem": "PidPrefixMgwBiasCandidate.mass_floor_bias",
+    "universes": [
+      "u",
+      "v",
+      "w"
+    ]
+  }
+]

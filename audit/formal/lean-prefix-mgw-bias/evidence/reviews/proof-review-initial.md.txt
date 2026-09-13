@@ -1,0 +1,71 @@
+# Independent-first mathematical source critique
+
+I found no mathematical source blocker in the exact720-line candidate `c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45` for the five frozen targets. The proof chain discharges its needed positivity and normalization hypotheses and links the bounds to the actual finite-iid block integral. This is source review, not an independently executed Lean/kernel validation or root acceptance. The fixed candidate and exact theorem types remain unchanged.
+
+The complete candidate has36 private lemmas and five final public aliases. Contract/Raw/Alias types were read before the candidate, and ten routes/fifty deduplicated hostile lenses were frozen before the candidate body. The19 reviewed dependency/type/judge/runtime files match their frozen PACKAGE pins. A byte-identical candidate review preimage was saved09:24:47, before root's message about completed normal/optimized runs and forthcoming cosmetic work. The selected attempt006 source also matches that preimage. No author derivation, exposition or proof map has been read yet.
+
+## Independent derivation and source trace
+
+Write a_z=sourceMass, q_z=restrictedMass, v_z=targetMass at a supported anchor z. The event definitions and nonnegative law give p(z)<=q_z<=a_z<=1 and q_z<=v_z<=1, hence all three masses are positive on support. These relations are actual event containments, not an independence factorization. Source lines238–258 reestablish the relevant containments; the conditional law in lines263–277 is used only after0<v_z has been proved.
+
+For nonnegative join-convolution weights, a coordinate is one nonnegative summand of its lower cumulative sum. Cumulative convolution multiplies; induction gives cumulative(joinPower_n)(alpha)=cumulative(weight)(alpha)^(n+1). The accepted word/join identity and generator cumulative then give0<=wordCoefficient(p,z,alpha,n+1)<=(1-a_z)^(n+1). Lines190–236 use this coordinate inclusion, not a sign-preserving Möbius-inversion claim. This generic finite coordinate envelope needs nonnegative weights; no unnecessary total-mass<1 condition is imposed there.
+
+The negative mean increment preserves raw time n, choose(n,k), target factor v_z^(k+1), failure factor(1-v_z)^(n-k), and retained-rank denominator k+1. Conditional source mass is q_z/v_z. Lines129–187 establish the exact polynomial identity
+
+sum(k=0..n) choose(n,k)*v^(k+1)*(1-v)^(n-k)*(1-q/v)^(k+1)/(k+1)
+= ((1-q)^(n+1)-(1-v)^(n+1))/(n+1).
+
+The missing zero-hit binomial term is exactly the subtracted(1-v)^(n+1). Divisions by v use v!=0. Multiplying the conditional word envelope by nonnegative binomial factors gives the raw negative envelope in260–291. This does not replace retained rank by raw length or silently use a stopped-law estimator.
+
+For0<q<=1, the logarithmic series and shifted HasSum define R(q,h)=sum(n>=h)(1-q)^(n+1)/(n+1). Lines12–74 derive its positivity, logarithmic bound, geometric bound and inverse-moment bound. Forq<=v, each difference(1-q)^r-(1-v)^r is nonnegative. Lines75–118 compare these differences termwise before summing:
+
+0<=R(q,h)-R(v,h)
+<= [(1-q)^(h+1)/q-(1-v)^(h+1)/v]/(h+1)
+<= (1/q-1/v)/(h+1).
+
+The last inequality follows because the shifted geometric difference is the full geometric difference minus a nonnegative finite initial sum. The source never subtracts two unrelated upper bounds. It handlesq=1,v=1,q=v andh=0 without dividing by a zero probability.
+
+The accepted mean theorem provides unique supported inverse families and HasSum limits of the actual positive/negative increment integrals. Lines525–570 convert those integrals using the exact accepted six-theorem probability bridge, then use shifted summable tails and the new termwise envelopes. Convergence, nonnegative omitted components and truncation errors are conclusions; they are not received as extra hypotheses of actual_finite_bias.
+
+The native finite expectation is the integral of blockStatistic over rowLaw p(h+1). rowLaw is explicitly a product of complete-key measures: a fresh anchor plus h independent complete draws, with arbitrary dependence among coordinates within a draw. Lines508–523 apply the actual accepted finite_block_expectation equality. They do not substitute a project-defined scalar mean for this integral. Zero-mass anchors are removed by support gating; logarithms/inverses at off-support values carry no scientific interpretation.
+
+Let P_h and M_h be the supported averages of the omitted informative and misinformative components. Lines574–597 give bias=population atom minus native finite mean=P_h-M_h, with0<=P_h<=positiveEnvelope and0<=M_h<=negativeEnvelope. Thus-minus negativeEnvelope<=bias<=positiveEnvelope and absolute bias<=max(envelopes). No claim that the signed PID atom itself is nonnegative is made.
+
+Becauseq_z<=a_z andR(v_z,h)>=0, both envelopes are bounded by the common supported query remainder. Supported weights sum1 under Law p, giving the exact '-1' constants. Lines598–646 yield
+
+|bias|<=min(E_support[-log q_z], (K_q-1)/(h+1)),
+-(K_q-K_t)/(h+1)<=bias<=(K_a-1)/(h+1).
+
+The K_t subtraction comes from the nonnegative difference-tail bound, not a second independent approximation. The population-minus-finite sign convention is consistent through both corollaries.
+
+## Fiber, projection and arbitrary inverse pairs
+
+Lines339–381 regroup the finite sum p(z)/fiberMass(f(z)) by codomain fiber. Every positive fiber contributes one, every zero fiber contributes zero, so the result counts positive fibers. Nonnegative masses prevent a positive atom from lying in a zero fiber. The exact identity in fact needs only nonnegativity; the frozen Law p premise is stronger than necessary for this one lemma, which is harmless and not a reason to change the target.
+
+The target marginal is exactly a projection fiber. A member collection C in alpha supplies source and source-target fibers contained in the corresponding source-union and restricted-union events. Reciprocal antitonicity and the generic fiber identity yield the projected cardinality bounds. The source does not claim a union query moment is generally a partition cardinality. Lines464–506 preserve1<=K_a,K_t<=K_q<=positiveSupportCard(p), withK_t equal to actual target support cardinality.
+
+The projected and mass-floor targets apply to every SupportedInversePair, not only existential witnesses chosen in actual_finite_bias. Lines648–663 use the supplied uniqueness clauses on support and prescribed zero values off support to equate arbitrary pairs globally. Lines665–703 then transport the exact signed/absolute bounds. The mass floor is on supported actual restricted mass q_z, not conditioned q_z/v_z; monotonicity of R supplies the floor bound.
+
+## Independent boundary and scope checks
+
+1. h=0: blockStatistic is an empty increment sum and its native mean is zero. R(q,0)=-log q; all tail formulas retain their correct first exponent/denominator. No finite unbiasedness follows.
+2. q=1: containment forcesa=v=1; coordinate envelopes, logarithmic remainders and both omitted components are zero. Ifq=v<1, only the negative tail envelope is zero. Ifv=1, thinning leaves only thek=n term, including the correct0^0 convention for the failure factor.
+3. Constant source, target uniform onm>=2 values, one source and its only valid node: a=1,q=v=1/m,K_a=1,K_q=K_t=m. Every mismatch generator is zero, so both finite statistic and population atom are zero for everyh. The signed moment bounds also give exact zero. Arbitrarily largeK_q is therefore no necessary sample-complexity lower bound; its standalone absolute bound can be loose.
+4. Two independent fair source bits, singleton target, alpha={{1},{2}}: each source-union query has mass3/4, soK_q=K_a=4/3 whileK_t=1 and each single-coordinate projected support has size2. Different query events overlap without being identical fibers. This gives a concrete noninteger query moment; constant target also makes the signed statistic/atom cancel to zero.
+5. One independent fair source bit and fair target bit, h=1: a=v=1/2,q=1/4. The sole informative increment has mean1/2 and the misinformative increment has mean1/4, so the finite block mean is1/4 while the population one-source MI atom is0. Bias(population minus finite)=-1/4. This is a hand-derived example of finite bias under independence, not a numerical test or a new formal export.
+
+These examples were derived from definitions on paper during review; no example program, test or compiler was executed. They falsify overstatements, not the stated theorems.
+
+## What the result could be used for, and what remains missing
+
+If root's exact formal matrix and custody review succeed, these statements support deterministic horizon planning for the bias of this specific fixed-horizon prefix MGW atom statistic under a declared finite iid law. Known population query moments, declared projection supports or a justified supported mass floor can supply sufficient bias envelopes. They also explain why query overlap and informative/misinformative cancellation matter.
+
+The result is not a guarantee about a realized sample error. It supplies no variance/MSE bound, confidence coverage, concentration theorem, adaptive horizon or data-selected query justification, budget-censored/stopped-law unbiasedness, regeneration theorem, Rust/Python refinement, empirical-occupancy support certificate, continuous/hyperbolic transfer, scientific novelty or deployment validation. A population support bound is not established by observing that many categories; a single empirical statistic is not its expectation. Actual data must satisfy the specified iid complete-row model.
+
+The scalar/join/raw envelope helpers are private implementation lemmas. The separately named finite_horizon_increment_bounds_target proposition in the Contract is not exported by this candidate; the proof bypasses it via dominated infinite tails. Do not count it as a sixth accepted public theorem.
+
+## Independence and next step
+
+This is one same-model advisory mathematical reviewer. Earlier operational reviews, exact type exposure and the required handoff's author-route summary were disclosed before criteria freeze. Root's message about completed normal/optimized runs arrived only after the full720-line source and dependency proof chain had been read; no run receipt, semantic record outcome or author proof notes were used as evidence here. Actual kernel checking remains root-owned and distinct from this source critique.
+
+No mathematical repair is requested for the fixed five targets. Continue with author-note comparison and final scoped lens/input review, preserving this initial critique under the original10:03:03Z deadline. The initial ignored-directory rg search returned no results because ignore rules applied; a repeated read-only search with explicit hidden/no-ignore flags found the intended dependencies. That search issue supplied no scientific negative evidence.

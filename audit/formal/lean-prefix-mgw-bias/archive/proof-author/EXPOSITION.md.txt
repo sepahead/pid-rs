@@ -1,0 +1,130 @@
+# Finite-horizon error of categorical shared-exclusions prefix means
+
+This note explains the five authored Lean propositions for the adopted finite categorical MGW bias contract. At this note's seal, the complete candidate passed the frozen development compiler. Independent proof-body review, fresh dependency compilation, semantic checking, and fresh kernel acceptance remain root-owned obligations. This is a project derivation about a specified statistic; it is not a claim of scientific novelty or an executable Rust/Python estimator implementation.
+
+The defining PID line is the finite categorical construction of Makkeh, Gutknecht and Wibral, *Introducing a differentiable measure of pointwise shared information*, arXiv:2002.03356v5 / *Physical Review E* 103, 032149. Exact paper-to-formal correspondence remains governed by the inherited MGW source record. The prefix statistic, its native probability law and its accepted mean bridge are the project-defined objects named in the frozen source graph. They must not be transferred to another PID by notation alone.
+
+## What question this answers
+
+A finite prefix can be cheaper to evaluate than an infinite series, but a limiting mean theorem does not say how far its expectation is from the target at a chosen horizon. These bounds quantify that truncation error for the actual complete-row iid statistic. They can support a principled choice of horizon when the population law, an appropriate support bound, or a positive query-mass floor is known. They do not give sampling error bars, choose the number of repeated blocks, or establish that PID helps a downstream decision. If the task concerns a single event probability or a single source-target relation, a scalar log-tail bound or ordinary MI may be sufficient. The PID-specific result matters when the intended question explicitly concerns a named atom for a specified source grouping and target.
+
+## Data, event, estimand and statistic
+
+Let I be a finite nonempty source-index set, let X_i and T have finite categorical alphabets, and let K=(product_i X_i) times T be the complete-key alphabet. A population PMF p on K satisfies p(z)>=0 and sum_z p(z)=1. Draw Z_0,Z_1,...,Z_h independently from that same complete-row law. Coordinates within any Z_j may depend arbitrarily. Z_0 is the fresh anchor. All information quantities below use natural logarithms and are in nats.
+
+A node alpha is a nonempty inclusion-antichain of nonempty source collections C subset I. For anchor z, E_alpha(z) is the OR over C in alpha of the event that every coordinate in C matches z. The target event is V(z)={T=z_T}. Define
+
+    a_z=P(E_alpha(z)),   v_z=P(V(z)),   q_z=P(E_alpha(z) AND V(z)).
+
+For every supported anchor p(z)>0, event inclusion proves
+
+    0<p(z)<=q_z<=a_z<=1,    q_z<=v_z<=1.
+
+Write pi_plus(z,alpha) and pi_minus(z,alpha) for the unique informative and misinformative MGW atom families. Their lower cumulative sums at any node beta are -log a_(z,beta) and log(v_z/q_(z,beta)), respectively. They are assigned zero at zero-mass anchors. The signed joint-law atom is
+
+    theta_alpha=sum_z p(z)[pi_plus(z,alpha)-pi_minus(z,alpha)].
+
+The prefix event J_alpha(z;rows) is one exactly when rows is nonempty, every row has at least one source mismatch with z, and the redundancy-order join of those rows' singleton mismatch families is alpha; otherwise it is zero. At raw time j>=1, the positive increment is J_alpha(z;Z_1,...,Z_j)/j. For the negative increment, retain among those j rows only rows with T=z_T. If the current row Z_j is retained, use J_alpha on that retained list divided by its retained length; otherwise use zero. The current-row condition matters: it prevents a retained prefix from being counted repeatedly while no target match arrives.
+
+B_h is the sum from raw times j=1 through h of positive minus negative increments, using Z_0 as anchor. Its expectation is the native integral under the complete finite product measure p^(h+1), not a surrogate average introduced to make the theorem true. The error sign in this note is
+
+    e_h=theta_alpha-E[B_h].
+
+The usual statistical bias E[B_h]-theta_alpha is -e_h.
+
+## Why logarithmic remainders appear
+
+For 0<x<=1 and integer h>=0, define
+
+    R_h(x)=-log x-sum_(j=1)^h (1-x)^j/j
+          =sum_(j=h+1)^infinity (1-x)^j/j.
+
+The equality follows from the logarithm series, including x=1. Its terms are nonnegative. Hence
+
+    0<=R_h(x)<=-log x,
+    R_h(x)<=(1-x)^(h+1)/[(h+1)x]<=(1/x-1)/(h+1).
+
+The first tail bound replaces 1/j by 1/(h+1), then sums a geometric series. The second uses (1-x)^(h+1)<=1-x.
+
+When 0<q<=v<=1, each power difference (1-q)^j-(1-v)^j is nonnegative. Apply the denominator bound to that difference before summing:
+
+    0<=R_h(q)-R_h(v)
+      <=[(1-q)^(h+1)/q-(1-v)^(h+1)/v]/(h+1)
+      <=(1/q-1/v)/(h+1).
+
+The last step uses the full positive-power geometric difference minus its nonnegative finite prefix. Subtracting independent upper bounds on R_h(q) and R_h(v) would be invalid and is not used.
+
+## From increments to actual atom error
+
+Let P_h(z,alpha) and N_h(z,alpha) be the sums of the positive and negative increment expectations through raw time h. The accepted word/join theorem identifies each positive coefficient with a nonnegative join-convolution coordinate. One coordinate is at most its lower cumulative sum, and that cumulative is (1-a_z)^j. This gives the positive increment envelope (1-a_z)^j/j.
+
+For the negative increment, condition on the target match; v_z>0 makes this a normalized law. At raw time j=n+1, exactly k of the n previous rows plus the current row may be retained. The retained-rank mean contains
+
+    choose(n,k) v_z^(k+1)(1-v_z)^(n-k)
+      times [conditional word coefficient of length k+1]/(k+1).
+
+All factors used for the bound are nonnegative. The conditional coordinate envelope is (1-q_z/v_z)^(k+1). The identity choose(n,k)/(k+1)=choose(n+1,k+1)/(n+1), followed by the binomial theorem, sums the envelope exactly to
+
+    [(1-q_z)^j-(1-v_z)^j]/j.
+
+The accepted component series have sums pi_plus and pi_minus. Shift those actual series by h and apply the increment envelopes termwise. This proves
+
+    0<=pi_plus-P_h<=R_h(a_z),
+    0<=pi_minus-N_h<=R_h(q_z)-R_h(v_z).
+
+The actual finite-product expectation is sum_z p(z)[P_h-N_h]. Therefore, with supported population expectation denoted E_p,
+
+    -E_p[R_h(q)-R_h(v)] <= e_h <= E_p[R_h(a)].
+
+Both envelopes are nonnegative. The absolute error is at most their maximum, and each envelope is at most E_p[R_h(q)]. No positive and negative atom components are silently clamped.
+
+Define the inverse moments and query surprisal
+
+    K_a=E_p[1/a],   K_q=E_p[1/q],   K_T=E_p[1/v],   H_q=E_p[-log q].
+
+All averages omit zero-mass anchors. Applying the scalar bounds gives the actual-finite-bias conclusions
+
+    -(K_q-K_T)/(h+1) <= e_h <= (K_a-1)/(h+1),
+    |e_h|<=min{H_q,(K_q-1)/(h+1)}.
+
+The constants 1 come from the supported weights summing exactly to one. These inequalities concern the expectation of B_h; one observed B_h need not fall inside them.
+
+## What support counts can and cannot replace
+
+For any finite projection f:K->Q, put p_f(y)=sum_(z:f(z)=y) p(z). A positive fiber contributes
+
+    sum_(z:f(z)=y) p(z)/p_f(y)=1.
+
+A zero fiber contains only zero-mass keys. Summing over fibers proves
+
+    E_p[1/p_f(f(Z))] = #{y:p_f(y)>0}.
+
+This is a population partition identity. It is not an identity involving the number of categories seen in a sample. Source-union events generally do not form a partition, so their moments K_a and K_q are not themselves declared support cardinalities.
+
+For each member collection C in alpha, let K_C be the positive population support count of X_C, let K_CT count the support of (X_C,T), and let K_T count the target support. Event inclusion and inverse monotonicity prove
+
+    1<=K_a<=K_q<=#{z:p(z)>0},    1<=K_T<=K_q,
+    K_a<=K_C,    K_q<=K_CT.
+
+Thus each chosen collection gives the projected-support conclusions
+
+    -(K_CT-K_T)/(h+1) <= e_h <= (K_C-1)/(h+1),
+    |e_h| <= (K_CT-1)/(h+1).
+
+Known exhaustive alphabet or structural support bounds can make these usable without knowing every mass. An observed occupancy count can be smaller than the true support; substituting it is not justified by this theorem. The formal theorem handles supplied MGW inverse families by proving their equality to the existential families using actual uniqueness on supported anchors and zero-family equality elsewhere.
+
+## A population mass floor
+
+If a known eta satisfies 0<eta<=1 and eta<=q_z at every supported anchor, monotonicity gives
+
+    |e_h|<=R_h(eta)<=(1-eta)^(h+1)/[(h+1)eta].
+
+This can decay much faster with h than a support-only envelope. The assumption is about the population query events. Estimating eta from observed frequencies requires additional statistical evidence. The theorem supplies no such inference or coverage result.
+
+## Examples and limits
+
+For one binary source that exactly copies an equiprobable binary target, a=v=q=1/2 for both supported anchors. The single atom is ordinary MI, theta=log 2, and every negative increment is zero. Its error is exactly R_h(1/2). At h=1, e_1=log 2-1/2, bounded by the geometric value 1/4. This is an explanatory hand specialization of the definitions, not an additional separately checked Lean export or an empirical experiment.
+
+For constant sources and an arbitrary finite target distribution, a=1 and q=v. Both remainder envelopes are zero, so B_h and its atom target are zero for every h. Nevertheless K_q=K_T may be large. This shows why a query inverse-moment bound is sufficient and may be conservative; it is not necessary sample complexity. Rare query events can similarly dominate a worst-case or inverse-moment envelope even when their practical contribution is smaller.
+
+At h=0, the statistic is zero and the entire logarithm remains. When q=1, a=v=1 and all tails vanish. When only v=1, only the target remainder vanishes automatically. Zero-mass anchors contribute nothing. No eta=0, random stopping, terminal-hit reuse, dependent-row law, mixed/continuous support, cross-PID transfer, finite unbiasedness, confidence coverage, executable finite-precision refinement, deployment advantage, or state-of-the-art ranking is established. Variance, total data use, computational cost and downstream utility remain separate questions.

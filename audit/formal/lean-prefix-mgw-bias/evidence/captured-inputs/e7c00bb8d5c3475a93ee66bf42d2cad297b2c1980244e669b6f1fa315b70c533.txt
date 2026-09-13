@@ -1,0 +1,8 @@
+{
+  "alias_targets_sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570",
+  "contract_sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45",
+  "new_bias_proofs": 0,
+  "raw_targets_sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a",
+  "root_review_sha256": "13b7abdf637b55d6712a5c0e1fe99c2408a6acb9ed0760dc638ec684c00ec166",
+  "status": "five_exact_bias_types_adopted_not_proved"
+}

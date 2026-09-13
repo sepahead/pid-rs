@@ -52,6 +52,8 @@ STANDALONE_MARKDOWN_PAPERS=(
   "pid2-represented-coordinate-assurance"
   "pid-sensor-placement-and-galadriel-guide"
   "post-publication-custody-2026-09-02"
+  "prefix-mgw-bias"
+  "prefix-mgw-bias-summary"
   "prefix-mgw-mean"
   "recorded-office-sensors"
   "sxpid3-source-marginal-and-bounded-audit"
@@ -65,6 +67,8 @@ STANDALONE_MARKDOWN_SOURCES=(
   "PID2_REPRESENTED_COORDINATE_ASSURANCE.md"
   "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md"
   "audit/evidence/post-publication-custody-2026-09-02.md"
+  "audit/formal/lean-prefix-mgw-bias/EXPOSITION.md"
+  "audit/formal/lean-prefix-mgw-bias/SUMMARY.md"
   "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md"
   "audit/evidence/real-occupancy-sensors-example-2026-09-08.md"
   "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md"
@@ -100,6 +104,14 @@ while IFS= read -r path; do
   actual_pdf+=("$(basename "$path" .pdf)")
 done < <(find output/pdf -maxdepth 1 -name '*.pdf' -print | LC_ALL=C sort)
 
+# Removing a suffix can change lexicographic order: bias-summary.pdf sorts before
+# bias.pdf, while the stem bias sorts before bias-summary. Compare sorted stems.
+sorted_actual_pdf=()
+while IFS= read -r stem; do
+  sorted_actual_pdf+=("$stem")
+done < <(printf '%s\n' "${actual_pdf[@]}" | LC_ALL=C sort)
+actual_pdf=("${sorted_actual_pdf[@]}")
+
 expected_pdf=()
 while IFS= read -r stem; do
   expected_pdf+=("$stem")
@@ -125,9 +137,37 @@ if [[ "${actual_pdf[*]}" != "${expected_pdf[*]}" ]]; then
   exit 1
 fi
 
+# Exact bias controls and reproduction consume actual pre-reviewed external registrations.
+# Inventory and unsupported cross requests never require or manufacture them.
+if [[ "$MODE" == "--exact" ]]; then
+  : "${PID_RS_BIAS_PYTHON:?formal PDF set: exact bias work requires its pinned Python selector}"
+  : "${PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION:?formal PDF set: normal bias-control registration is required}"
+  : "${PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256:?formal PDF set: normal bias-control registration hash is required}"
+  : "${PID_RS_BIAS_CONTROL_NORMAL_OUTPUT:?formal PDF set: normal bias-control output is required}"
+  : "${PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION:?formal PDF set: optimized bias-control registration is required}"
+  : "${PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256:?formal PDF set: optimized bias-control registration hash is required}"
+  : "${PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT:?formal PDF set: optimized bias-control output is required}"
+  : "${PID_RS_BIAS_FULL_REGISTRATION:?formal PDF set: full bias registration is required}"
+  : "${PID_RS_BIAS_FULL_REGISTRATION_SHA256:?formal PDF set: full bias registration hash is required}"
+  : "${PID_RS_BIAS_FULL_WORK_DIR:?formal PDF set: full bias work directory is required}"
+  : "${PID_RS_BIAS_SUMMARY_REGISTRATION:?formal PDF set: summary bias registration is required}"
+  : "${PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256:?formal PDF set: summary bias registration hash is required}"
+  : "${PID_RS_BIAS_SUMMARY_WORK_DIR:?formal PDF set: summary bias work directory is required}"
+fi
+
 if [[ "$MODE" == "--inventory-only" ]]; then
   echo "OK: standalone-paper, renderer-fragment, and PDF inventories are exact and direct-regular"
   exit 0
+fi
+
+# Keep the finite registration clocks causal: run fresh inert bias controls and both exact bias
+# reproductions before the older, longer aggregate gates.  These controls start no PDF/parser/proof
+# child; the following builder calls retain their separate production meaning.
+if [[ "$MODE" == "--exact" ]]; then
+  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py --root "$ROOT" --registration "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_CONTROL_NORMAL_REGISTRATION_SHA256" --output "$PID_RS_BIAS_CONTROL_NORMAL_OUTPUT"
+  "$PID_RS_BIAS_PYTHON" -O -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py --root "$ROOT" --registration "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_CONTROL_OPTIMIZED_REGISTRATION_SHA256" --output "$PID_RS_BIAS_CONTROL_OPTIMIZED_OUTPUT"
+  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind full --exact --check --registration "$PID_RS_BIAS_FULL_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_FULL_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_FULL_WORK_DIR"
+  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"
 fi
 
 python3 -I -B scripts/check-publication-links.py
@@ -144,6 +184,22 @@ scripts/check-formal-pdf-log-self-test.sh
 python3 -I -S scripts/compare-formal-pdf-renders-self-test.py
 python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py
 scripts/check-mathematical-workflow-pdf-self-test.sh
+python3 -I -S -B scripts/prepare-mathematical-workflow-markdown-parser-self-test.py \
+  --handoff \
+  scripts/check-mathematical-workflow-pdf.sh \
+  scripts/check-mathematical-workflow-pdf-self-test.sh \
+  scripts/check-formal-pdf-set.sh \
+  scripts/check-formal-pdf-set-self-test.sh \
+  .github/workflows/ci.yml \
+  justfile
+python3 -O -I -S -B scripts/prepare-mathematical-workflow-markdown-parser-self-test.py \
+  --handoff \
+  scripts/check-mathematical-workflow-pdf.sh \
+  scripts/check-mathematical-workflow-pdf-self-test.sh \
+  scripts/check-formal-pdf-set.sh \
+  scripts/check-formal-pdf-set-self-test.sh \
+  .github/workflows/ci.yml \
+  justfile
 scripts/check-pid-discovery-verification-blueprint-pdf-self-test.sh
 
 # The root blueprint has an exact committed-byte relation only.  Cross-toolchain acceptance would
@@ -196,8 +252,11 @@ scripts/check-ksg-m1a-composite-v6-pdf-portability.sh "$MODE"
 scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh "$MODE"
 scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh "$MODE"
 WORKFLOW_GATE_PATH="${PID_RS_PDF_GATE_PATH:-/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin}"
-WORKFLOW_GATE_HOME="${PID_RS_PDF_GATE_HOME:-/nonexistent}"
 WORKFLOW_GATE_TMPDIR="$FORMAL_TMP_ROOT"
+WORKFLOW_GATE_XDG_ROOT="$(mktemp -d "$FORMAL_TMP_ROOT/pid-rs-formal-workflow-xdg.XXXXXX")"
+WORKFLOW_GATE_XDG_CONFIG="$WORKFLOW_GATE_XDG_ROOT/config"
+WORKFLOW_GATE_XDG_CACHE="$WORKFLOW_GATE_XDG_ROOT/cache"
+mkdir -m 0700 -- "$WORKFLOW_GATE_XDG_CONFIG" "$WORKFLOW_GATE_XDG_CACHE"
 WORKFLOW_GATE_STDERR="$(mktemp "$FORMAL_TMP_ROOT/pid-rs-formal-workflow-stderr.XXXXXX")"
 cleanup_workflow_gate_stderr() {
   local status="$1"
@@ -213,6 +272,16 @@ cleanup_workflow_gate_stderr() {
       cleanup_failed=1
       ;;
   esac
+  case "${WORKFLOW_GATE_XDG_ROOT:-}" in
+    "$FORMAL_TMP_ROOT"/pid-rs-formal-workflow-xdg.*)
+      rm -rf -- "$WORKFLOW_GATE_XDG_ROOT" || cleanup_failed=1
+      ;;
+    "") ;;
+    *)
+      echo "formal PDF set: refusing to remove unexpected workflow XDG root" >&2
+      cleanup_failed=1
+      ;;
+  esac
   if [[ "$status" -eq 0 && "$cleanup_failed" -ne 0 ]]; then
     status=1
   fi
@@ -223,8 +292,9 @@ trap 'cleanup_workflow_gate_stderr 130' INT
 trap 'cleanup_workflow_gate_stderr 143' TERM
 if /usr/bin/env -i \
   "PATH=$WORKFLOW_GATE_PATH" \
-  "HOME=$WORKFLOW_GATE_HOME" \
   "TMPDIR=$WORKFLOW_GATE_TMPDIR" \
+  "XDG_CONFIG_HOME=$WORKFLOW_GATE_XDG_CONFIG" \
+  "XDG_CACHE_HOME=$WORKFLOW_GATE_XDG_CACHE" \
   LC_ALL=C \
   LANG=C \
   TZ=UTC \
@@ -245,6 +315,8 @@ if [[ "$WORKFLOW_GATE_STATUS" -ne 0 || -s "$WORKFLOW_GATE_STDERR" ]]; then
 fi
 rm -f -- "$WORKFLOW_GATE_STDERR"
 WORKFLOW_GATE_STDERR=""
+rm -rf -- "$WORKFLOW_GATE_XDG_ROOT"
+WORKFLOW_GATE_XDG_ROOT=""
 trap - EXIT INT TERM
 scripts/check-support-change-tolerant-sxpid-pdf.sh "$MODE"
 scripts/check-mathematical-results-guide-pdf.sh "$MODE"
@@ -345,8 +417,25 @@ else
   fi
 fi
 
+# No alternate producer profile relates either bias PDF to a Linux/cross-toolchain build.
+# Exact controls and reproduction already ran at the early finite-registration boundary above.
+if [[ "$MODE" == "--cross-toolchain" ]]; then
+  for BIAS_KIND in full summary; do
+    if python3 -I -S -B scripts/build-prefix-mgw-bias-pdf.py --kind "$BIAS_KIND" --cross-toolchain; then
+      echo "formal PDF set: $BIAS_KIND bias cross-toolchain mode unexpectedly accepted" >&2
+      exit 1
+    else
+      BIAS_CROSS_STATUS=$?
+    fi
+    if [[ "$BIAS_CROSS_STATUS" -ne 2 ]]; then
+      echo "formal PDF set: $BIAS_KIND bias refusal returned $BIAS_CROSS_STATUS, expected 2" >&2
+      exit 1
+    fi
+  done
+fi
+
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper has a warning-free same-toolchain result; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper has a warning-free same-toolchain result; current bias inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper and target-copy MGW note intentionally have no accepted cross-toolchain relation, and all six status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper and bias summary intentionally have no accepted cross-toolchain relation, and all eight status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

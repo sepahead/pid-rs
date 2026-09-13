@@ -9,6 +9,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add the finite-prefix categorical MGW bias package, its five locally accepted theorem families,
+  complete proof map, standalone paper and one-page summary. Preserve source correspondence,
+  unsuccessful approaches and historical replay limitations. These bounds concern approximation
+  error under stated population assumptions; they add no confidence guarantee or runtime estimator.
+
+- Record current local reproduction of the corrected mean, full bias and summary PDFs: twelve
+  exact builds after the respective inert controls. Bind the current bias reader source and add
+  both bias artifacts to the aggregate without displacing newer sensor and MGW papers.
+
 - Add a committed-source reproduction command for the finite target-copy MGW PDF. The command
   binds the Markdown, SVG, reviewed font profile, and same-profile PDF bytes; its scope excludes
   native dependency hermeticity, independent rendering, and scientific validity.
@@ -49,6 +58,37 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   with vector figures and an exact reproduction check for its declared toolchain.
 
 ### Changed
+
+- Bind mathematical-workflow PDF builds to two exact private Markdown parser profiles, with a
+  57-byte nested-parser collection insertion and an explicitly terminated loader marker. The local
+  TeX Live 2024 route passes 430 workflow controls, 23 parser source controls in each Python mode,
+  and two four-pass builds matching the committed 87-page PDF, four SVG/PDF pairs, and dual-render
+  receipt under unchanged publication predicates. Retain both earlier exact-gate failures and the
+  diagnostic cache failure; the paired marker diagnostic cannot reconstruct the deleted full pass
+  log. The separate hosted direct-toolchain proposal selects direct pinned `lake` and `lean` while
+  preserving the descriptor wrapper's routing scrub and explicit XDG, TeX, font and temporary
+  roots. Separate 30-control handoff runs in both Python modes and local shell syntax pass;
+  Linux runtime, the full aggregate, hosted checks and mainline publication require separate evidence.
+  Record the [aggregate temporary-root failure](audit/evidence/workflow-pdf-aggregate-temp-root-failure-2026-09-13.md)
+  and the source-isolation condition needed for a fresh execution. Preserve the separate
+  [sampled memory-limit failure](audit/evidence/workflow-pdf-aggregate-resource-failure-2026-09-13.md)
+  and its prospective resource conditions.
+
+- Preserve both captured streams and the original exit status when either custody PDF build
+  fails. Test both failure positions and retain the
+  [cache-path diagnosis and failed routes](audit/evidence/custody-pdf-build-diagnostics-2026-09-12.md).
+
+- Restore 40 exact public files at the relative paths used by archived bias guides. Preserve
+  the 48 link diagnostics, original guides, manifests and proof inputs in the
+  [link-context record](audit/formal/lean-prefix-mgw-bias/archive/predecessor-package-2026-09-08/LINK_CONTEXT.md).
+
+- Correct Markdown legacy-delimiter recognition inside display math so that valid TeX row spacing
+  passes. Preserve true-delimiter rejection and the unchanged mathematical sources; record the
+  [four false positives and causal checks](audit/evidence/markdown-row-spacing-correction-2026-09-12.md).
+
+- Correct formal-PDF inventory ordering for a paper and its summary. Compare validated sorted
+  stems and retain the failed baseline. Run registered bias controls and builds before longer
+  aggregate checks so that existing work does not consume their original registration windows.
 
 - Update current PDF validation to pypdf 6.16.1 for the published outline, XForm and tree-insertion
   fixes. Preserve historical parser observations and the original custody PDF builder, and check

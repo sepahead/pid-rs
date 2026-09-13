@@ -1,0 +1,118 @@
+"""Deploy a source-frozen operational lane, or root-adopt it after actual controls.
+No Lean process is launched and no candidate is read or written by this utility.
+"""
+from __future__ import annotations
+import argparse, datetime, fcntl, hashlib, json, sys
+from pathlib import Path
+SOURCE = Path(__file__).resolve().parent
+
+def digest(raw): return hashlib.sha256(raw).hexdigest()
+def canonical(value): return (json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + '\n').encode()
+def require(ok, message):
+    if not ok: raise RuntimeError(message)
+def strict(raw):
+    def pairs(xs):
+        result = {}
+        for key, value in xs:
+            require(key not in result, 'duplicate JSON key'); result[key] = value
+        return result
+    return json.loads(raw, object_pairs_hook=pairs, parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+def read(path):
+    require(path == path.resolve(strict=True) and path.is_file() and path.stat().st_nlink == 1, 'noncanonical or nonregular input')
+    return path.read_bytes()
+def put(path, body):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open('xb') as stream: stream.write(body)
+def now(): return datetime.datetime.now(datetime.timezone.utc)
+
+def main():
+    require(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and sys.flags.optimize in (0, 1), 'requires -I -S -B optionally -O')
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest='kind', required=True)
+    stage = commands.add_parser('stage-controls'); stage.add_argument('--output', required=True, type=Path); stage.add_argument('--project-root', required=True, type=Path)
+    adopt = commands.add_parser('adopt'); adopt.add_argument('--lane', required=True, type=Path); adopt.add_argument('--review', required=True, type=Path)
+    args = parser.parse_args()
+    if args.kind == 'stage-controls':
+        root = args.project_root.absolute(); out = args.output.absolute()
+        require(root.resolve(strict=True) == root and out.parent == root / '.local' and not out.exists(), 'fresh direct ignored integration lane required')
+        package_raw = read(SOURCE / 'PACKAGE.json'); package = strict(package_raw)
+        captured = {}
+        for name, expected in package.items():
+            require(not Path(name).is_absolute() and '..' not in Path(name).parts, 'unsafe package path')
+            raw = read(SOURCE / name); require(digest(raw) == expected, 'source package drift: ' + name); captured[name] = raw
+        out.mkdir()
+        for name, raw in captured.items(): put(out / name, raw)
+        put(out / 'PACKAGE.json', package_raw)
+        freeze = {'schema': 'pid-rs/prefix-mgw-bias-runner-freeze-v1', 'status': 'frozen_for_operational_controls_only', 'candidate_exists': False,
+                  'wrapper_sha256': {**package, 'PACKAGE.json': digest(package_raw)}}
+        freeze_raw = canonical(freeze); put(out / 'CONTROL_FROZEN.json', freeze_raw)
+        start = now()
+        registration = {'schema': 'pid-rs/prefix-mgw-bias-operational-stage-v1', 'registered_utc': start.isoformat(),
+                        'deadline_utc': (start + datetime.timedelta(minutes=35)).isoformat(), 'project_root': str(root),
+                        'freeze_sha256': digest(freeze_raw), 'new_bias_proofs': 0}
+        put(out / 'CONTROL_REGISTRATION.json', canonical(registration))
+        print(canonical({'status': 'operational_stage_registered_no_candidate', 'lane': str(out), 'registration': registration}).decode(), end='')
+        return
+    lane = args.lane.absolute()
+    lock = (lane / 'EXECUTION.lock').open('a+')
+    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    review_raw = read(args.review.absolute()); review = strict(review_raw)
+    package_raw = read(lane / 'PACKAGE.json'); package = strict(package_raw)
+    require(review.get('status') == 'root_adopts_exact_source_runner_and_five_types_after_actual_controls'
+            and review.get('package_sha256') == digest(package_raw), 'root review does not adopt exact package')
+    require(not (lane / 'candidate').exists() and not (lane / 'FROZEN.json').exists()
+            and not (lane / 'CAMPAIGN.json').exists() and not (lane / 'STOP_RECORD.json').exists(), 'lane not fresh for live adoption')
+    for name, expected in package.items(): require(digest(read(lane / name)) == expected, 'package changed after controls')
+    control_registration = strict(read(lane / 'CONTROL_REGISTRATION.json'))
+    require(now() < datetime.datetime.fromisoformat(control_registration['deadline_utc']), 'operational stage expired before adoption')
+    receipts = []
+    roster = strict(read(lane / 'CONTROL_ROSTER.json'))['families']
+    require(set(roster) == {'entrypoint','policy','instrumented','closure'}, 'control family roster differs')
+    for mode, label in [(0, 'normal'), (1, 'optimized')]:
+        for family, spec in roster.items():
+            name = 'controls-' + family + '-' + label + '/RESULT.json'
+            raw = read(lane / name); result = strict(raw)
+            require(type(result.get('python_optimization')) is int and result['python_optimization'] == mode, 'control optimization differs')
+            require(result.get('status') == spec['status'] and type(result.get('case_count')) is int
+                    and type(spec['count']) is int and result['case_count'] == spec['count']
+                    and type(result.get('cases')) is list and len(result['cases']) == spec['count']
+                    and result.get('self_sha256') == package[spec['source']], 'exact control family incomplete')
+            for field in ('new_lean_children','new_proofs'):
+                require(type(result.get(field)) is int and result[field] == 0, 'control count must be the integer zero')
+            if family == 'policy': require(result.get('policy_sha256') == package['policy.py'], 'policy bytes differ')
+            else:
+                require(result.get('package_sha256') == digest(package_raw), 'control package differs')
+                require(type(result.get('artifacts')) is dict, 'control artifact roster absent')
+                for artifact, record in result['artifacts'].items():
+                    require(type(artifact) is str and not Path(artifact).is_absolute() and '..' not in Path(artifact).parts, 'unsafe control artifact path')
+                    require(type(record) is dict and set(record) == {'bytes','sha256'} and type(record['bytes']) is int
+                            and record['bytes'] >= 0 and type(record['sha256']) is str, 'control artifact metadata types differ')
+                    body = read((lane / name).parent / artifact)
+                    require(len(body) == record['bytes'] and digest(body) == record['sha256'], 'control artifact drift')
+            receipts.append({'path': name, 'sha256': digest(raw)})
+    require(now() < datetime.datetime.fromisoformat(control_registration['deadline_utc'])
+            and not (lane / 'candidate').exists() and not (lane / 'STOP_RECORD.json').exists(),
+            'operational deadline or pre-candidate condition changed during adoption custody')
+    adoption = {'status': 'five_exact_bias_types_adopted_not_proved', 'contract_sha256': package['sources/PidPrefixMgwBias/Contract.lean'],
+                'raw_targets_sha256': package['sources/PidPrefixMgwBias/RawTargets.lean'], 'alias_targets_sha256': package['sources/PidPrefixMgwBias/AliasTargets.lean'],
+                'new_bias_proofs': 0, 'root_review_sha256': digest(review_raw)}
+    put(lane / 'ROOT_REVIEW.json', review_raw)
+    put(lane / 'PREPARATION_ADOPTION.json', canonical(adoption))
+    controls = {'status': 'adopted_completed_operational_controls', 'package_sha256': digest(package_raw), 'modes': [0, 1],
+                'receipts': receipts, 'new_bias_proofs': 0, 'root_review_sha256': digest(review_raw)}
+    put(lane / 'OPERATIONAL_CONTROL_ACCEPTANCE.json', canonical(controls))
+    pins = {**package, 'PACKAGE.json': digest(package_raw)}
+    for name in ['ROOT_REVIEW.json', 'PREPARATION_ADOPTION.json', 'OPERATIONAL_CONTROL_ACCEPTANCE.json', 'CONTROL_FROZEN.json', 'CONTROL_REGISTRATION.json'] + [x['path'] for x in receipts]:
+        pins[name] = digest(read(lane / name))
+    freeze = {'schema': 'pid-rs/prefix-mgw-bias-runner-freeze-v1', 'status': 'adopted_after_actual_controls_before_candidate',
+              'candidate_exists': False, 'wrapper_sha256': pins}
+    frozen = canonical(freeze); put(lane / 'FROZEN.json', frozen)
+    start = now()
+    campaign = {'schema': 'pid-rs/prefix-mgw-bias-campaign-v1', 'registered_utc': start.isoformat(),
+                'deadline_utc': (start + datetime.timedelta(minutes=720)).isoformat(), 'project_root': control_registration['project_root'],
+                'freeze_sha256': digest(frozen), 'max_development_attempts': 80, 'max_full_attempts': 8,
+                'max_concurrent_wrappers': 1, 'candidate_write_scope': 'candidate/Candidate.lean'}
+    put(lane / 'CAMPAIGN.json', canonical(campaign))
+    print(canonical({'status': 'root_adopted_frozen_live_stage_no_candidate', 'freeze_sha256': digest(frozen), 'campaign': campaign}).decode(), end='')
+
+if __name__ == '__main__': main()

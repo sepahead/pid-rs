@@ -1,0 +1,30 @@
+# Bias PDF inert control contract
+
+The [self-test](../../../../../scripts/check-prefix-mgw-bias-pdf-self-test.py) uses the [158-case roster](roster-v5.json). It preserves the order and causal requirements of all [141 predecessor cases](roster-v4.json) and adds seventeen reader-chain cases. Both current outer runs passed on 12 September 2026: [local evidence](../CURRENT_REPRODUCTION.json). Run each new admitted revision once in normal isolated Python and once with optimization, in a fresh registered stage of at most twenty minutes. Both registrations use that stage's original deadline. No source change or automatic retry is allowed inside a failed attempt. The [v2 registration template](registration-v2.template.json) is unresolved until an owner has reviewed the exact source and filled actual aware UTC times, canonical paths, source hashes, the exact 6.16.1 reader source directory, and optimization.
+
+The controls check byte/type/path admission, both exact TeX derivatives, SVG derivation, full-only package-order and identifier repairs, registration scope/clock/budgets, early cross refusal and reader diagnostics. The reader additions call the same production helper predicates used by the builder. They cover one exact v2 profile/manifest/58-source/copy positive; exact v1 native-profile substitution; separate native reader-path and digest drift; reader-manifest field, schema, real-v1 version and roster-count drift; missing, extra, byte-changed, symbolic and multiply-linked listed sources; a real-v1 file-hash mismatch; version and origin guard failures; and a preloaded top-level `pypdf` refusal. Each case must reach its named diagnostic. The summary positive requires the exact corrected derivative; the two new negatives remove or duplicate its original paragraph-spacing marker and require the specific spacing-boundary diagnostic. Each of the thirty heading locations has a wrong-page and a same-page wrong-coordinate mutation. Missing/duplicate/nonfinite anchors, changed visible boxes and all eight identifiers in each data channel also fail. The sixty coordinate/page mutations share one structural failure mechanism; their count is coverage, not independent scientific evidence.
+
+The [blocked full04 PDF](blocked-full-04.pdf) is retained negative evidence. Full04 and full05 matched each other but had fourteen wrong-page bookmarks and additional same-page anchor defects. The control requires the current artifact-byte gate to reject that earlier PDF. It is not an accepted current paper.
+
+The positive navigation fixture uses the retained corrected discovery's real Poppler word boxes and layout text; that layout text is supplied to both inert data channels. Production obtains a separate pypdf extraction and a fresh Poppler extraction. The controls capture and stage the exact 58-file 6.16.1 source directory but do not import pypdf, parse a PDF or run a producer. The version and import-origin negatives use module-shaped objects and retained real version/path data. Positive copied imports of both exact readers have separate evidence in the completed compatibility probe. The top-level preload case matches the producer's guard; it makes no claim about a preloaded `pypdf.*` submodule without the top-level module.
+
+The two actual control runs on 12 September 2026 contain 316 matching cases. The subsequent four producer invocations separately completed eight exact PDF builds, including actual current-reader imports and both extraction paths. The [current reproduction record](../CURRENT_REPRODUCTION.md) keeps these scopes distinct. The inert controls do not exercise every child-supervision failure; the unchanged runtime's earlier controls remain separately scoped historical evidence.
+
+```text
+python3 -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py \
+  --root <canonical-assembled-root> \
+  --registration <fresh-normal-controls.json> \
+  --registration-sha256 <actual-normal-registration-sha256> \
+  --output <fresh-normal-control-output>
+python3 -O -I -S -B scripts/check-prefix-mgw-bias-pdf-self-test.py \
+  --root <canonical-assembled-root> \
+  --registration <fresh-optimized-controls.json> \
+  --registration-sha256 <actual-optimized-registration-sha256> \
+  --output <fresh-optimized-control-output>
+```
+
+Use fresh copies of all declared input files and the exact builder/runtime. Each registration binds the actual Python executable, self-test, builder, roster and canonical 6.16.1 reader source directory. Retain the outer command's complete stdout/stderr and exit status in addition to every per-case record and final result. An unexpected exception or unrelated earlier failure must not count as an intended rejection: each negative case checks the causal diagnostic. The owner reviews every case, result, input digest and timing before recording an actual control acceptance. No module-shaped guard fixture receives positive reader-version or import-origin acceptance. The compatibility result and subsequent actual production have separate evidence in the [current reproduction record](../CURRENT_REPRODUCTION.md). No kernel, theorem, statistical or hosted credit follows from inert controls.
+
+The final-result writer has one on-time positive case and one causal expiry case. Both persist an inert successful precursor; the expiry writer advances the injected clock only after the first RESULT write. The shared helper preserves those exact first-written bytes, replaces this attempt's result with a failed disposition, and raises the targeted deadline error. These are writer controls, not successful production-main-loop or PDF executions. The self-test restores its actual clock before its own final result persistence. Owner-observed outer completion must still precede the original deadline.
+
+Six URI-action cases check the exact three-key dictionary in the reviewed PDFs: `/Type /Action`, `/S /URI`, and an HTTPS string. The positive preserves the URI. Missing or wrong type, an extra key, an HTTP URI, and a nonstring URI must fail with the action diagnostic. These inert cases do not invoke a PDF parser.

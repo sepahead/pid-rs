@@ -1,0 +1,790 @@
+{
+  "utc": "2026-09-08T12:36:50.235962+00:00",
+  "pdf_sha256": "d7b405e9abc99acfca72207aa5ea1a0f2c3ff2fa7228340e1b7ce65c4746e82f",
+  "scope": "Actual parsed outline title/name/page and Poppler word-box coordinate observations; exact literal token extraction in two parsers. Coordinates are checked against a stated heading upper-neighborhood [-2,20]pt and left margin within1pt. Not a generic PDF safety/accessibility theorem.",
+  "rows": [
+    {
+      "title": "1. The data and the question",
+      "level": 0,
+      "destination_name": "section*.1",
+      "destination_page": 1,
+      "destination_x": 70.866,
+      "destination_y_from_top": 426.258,
+      "visible_matches": [
+        {
+          "page": 1,
+          "text": "1. The data and the question",
+          "x_min": 70.866,
+          "y_min": 434.290491,
+          "y_max": 454.71948
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 8.032490999999993
+    },
+    {
+      "title": "2. Events, atoms and supported averages",
+      "level": 0,
+      "destination_name": "section*.2",
+      "destination_page": 2,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "visible_matches": [
+        {
+          "page": 2,
+          "text": "2. Events, atoms and supported averages",
+          "x_min": 70.866,
+          "y_min": 68.728491,
+          "y_max": 89.15748
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": -2.13750899999998
+    },
+    {
+      "title": "A node has an OR between collections and an AND within each",
+      "level": 1,
+      "destination_name": "subsection*.3",
+      "destination_page": 2,
+      "destination_x": 70.866,
+      "destination_y_from_top": 121.94499999999994,
+      "visible_matches": [
+        {
+          "page": 2,
+          "text": "A node has an OR between collections and an AND within each",
+          "x_min": 70.866,
+          "y_min": 125.599906,
+          "y_max": 142.624068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 3.654906000000068
+    },
+    {
+      "title": "Lower cumulatives identify the atom families",
+      "level": 1,
+      "destination_name": "subsection*.5",
+      "destination_page": 2,
+      "destination_x": 70.866,
+      "destination_y_from_top": 440.61699999999996,
+      "visible_matches": [
+        {
+          "page": 2,
+          "text": "Lower cumulatives identify the atom families",
+          "x_min": 70.866,
+          "y_min": 447.339906,
+          "y_max": 464.364068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 6.722906000000023
+    },
+    {
+      "title": "3. The actual finite-row statistic",
+      "level": 0,
+      "destination_name": "section*.9",
+      "destination_page": 3,
+      "destination_x": 70.866,
+      "destination_y_from_top": 240.91499999999996,
+      "visible_matches": [
+        {
+          "page": 3,
+          "text": "3. The actual finite-row statistic",
+          "x_min": 70.866,
+          "y_min": 247.145491,
+          "y_max": 267.57448
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 6.230491000000029
+    },
+    {
+      "title": "A prefix records joined mismatch patterns",
+      "level": 1,
+      "destination_name": "subsection*.10",
+      "destination_page": 3,
+      "destination_x": 70.866,
+      "destination_y_from_top": 300.46000000000004,
+      "visible_matches": [
+        {
+          "page": 3,
+          "text": "A prefix records joined mismatch patterns",
+          "x_min": 70.866,
+          "y_min": 304.213906,
+          "y_max": 321.238068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 3.753905999999972
+    },
+    {
+      "title": "A fresh anchor and a fixed horizon define the experiment",
+      "level": 1,
+      "destination_name": "subsection*.13",
+      "destination_page": 4,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "visible_matches": [
+        {
+          "page": 4,
+          "text": "A fresh anchor and a fixed horizon define the experiment",
+          "x_min": 70.866,
+          "y_min": 69.582906,
+          "y_max": 86.607068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": -1.2830939999999913
+    },
+    {
+      "title": "4. Why the increment envelopes are valid",
+      "level": 0,
+      "destination_name": "section*.17",
+      "destination_page": 4,
+      "destination_x": 70.866,
+      "destination_y_from_top": 373.758,
+      "visible_matches": [
+        {
+          "page": 4,
+          "text": "4. Why the increment envelopes are valid",
+          "x_min": 70.866,
+          "y_min": 379.988491,
+          "y_max": 400.41748
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 6.230491000000029
+    },
+    {
+      "title": "Nonnegative join coordinates give the positive envelope",
+      "level": 1,
+      "destination_name": "subsection*.18",
+      "destination_page": 4,
+      "destination_x": 70.866,
+      "destination_y_from_top": 433.304,
+      "visible_matches": [
+        {
+          "page": 4,
+          "text": "Nonnegative join coordinates give the positive envelope",
+          "x_min": 70.866,
+          "y_min": 437.056906,
+          "y_max": 454.081068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 3.7529060000000527
+    },
+    {
+      "title": "Conditioning and the binomial identity give the negative envelope",
+      "level": 1,
+      "destination_name": "subsection*.21",
+      "destination_page": 5,
+      "destination_x": 70.866,
+      "destination_y_from_top": 177.567,
+      "visible_matches": [
+        {
+          "page": 5,
+          "text": "Conditioning and the binomial identity give the negative envelope",
+          "x_min": 70.866,
+          "y_min": 182.261906,
+          "y_max": 199.286068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.694906000000003
+    },
+    {
+      "title": "5. Scalar logarithmic tails and atom tails",
+      "level": 0,
+      "destination_name": "section*.24",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "5. Scalar logarithmic tails and atom tails",
+          "x_min": 70.866,
+          "y_min": 68.728491,
+          "y_max": 89.15748
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": -2.13750899999998
+    },
+    {
+      "title": "A nonnegative tail has two useful envelopes",
+      "level": 1,
+      "destination_name": "subsection*.25",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 122.043,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "A nonnegative tail has two useful envelopes",
+          "x_min": 70.866,
+          "y_min": 125.796906,
+          "y_max": 142.821068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 3.7539060000000006
+    },
+    {
+      "title": "The difference must be bounded before summing",
+      "level": 1,
+      "destination_name": "subsection*.28",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 406.609,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "The difference must be bounded before summing",
+          "x_min": 70.866,
+          "y_min": 413.430906,
+          "y_max": 430.455068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 6.821906000000013
+    },
+    {
+      "title": "Actual component series identify the endpoints",
+      "level": 1,
+      "destination_name": "subsection*.30",
+      "destination_page": 6,
+      "destination_x": 70.866,
+      "destination_y_from_top": 662.0319999999999,
+      "visible_matches": [
+        {
+          "page": 6,
+          "text": "Actual component series identify the endpoints",
+          "x_min": 70.866,
+          "y_min": 666.203906,
+          "y_max": 683.228068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.171906000000035
+    },
+    {
+      "title": "6. Five finite-bias conclusions",
+      "level": 0,
+      "destination_name": "section*.33",
+      "destination_page": 7,
+      "destination_x": 70.866,
+      "destination_y_from_top": 426.18399999999997,
+      "visible_matches": [
+        {
+          "page": 7,
+          "text": "6. Five finite-bias conclusions",
+          "x_min": 70.866,
+          "y_min": 432.546491,
+          "y_max": 452.97548
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 6.362491000000034
+    },
+    {
+      "title": "The actual expectation and its signed error",
+      "level": 1,
+      "destination_name": "subsection*.34",
+      "destination_page": 7,
+      "destination_x": 70.866,
+      "destination_y_from_top": 485.861,
+      "visible_matches": [
+        {
+          "page": 7,
+          "text": "The actual expectation and its signed error",
+          "x_min": 70.866,
+          "y_min": 489.614906,
+          "y_max": 506.639068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 3.753906000000029
+    },
+    {
+      "title": "A partition identity and support-moment inequalities",
+      "level": 1,
+      "destination_name": "subsection*.40",
+      "destination_page": 8,
+      "destination_x": 70.866,
+      "destination_y_from_top": 596.558,
+      "visible_matches": [
+        {
+          "page": 8,
+          "text": "A partition identity and support-moment inequalities",
+          "x_min": 70.866,
+          "y_min": 600.771906,
+          "y_max": 617.796068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.213905999999952
+    },
+    {
+      "title": "Projected-support and population-floor bounds",
+      "level": 1,
+      "destination_name": "subsection*.43",
+      "destination_page": 9,
+      "destination_x": 70.866,
+      "destination_y_from_top": 383.375,
+      "visible_matches": [
+        {
+          "page": 9,
+          "text": "Projected-support and population-floor bounds",
+          "x_min": 70.866,
+          "y_min": 388.080906,
+          "y_max": 405.105068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.705906000000027
+    },
+    {
+      "title": "7. Four hand derivations that explain the limits",
+      "level": 0,
+      "destination_name": "section*.47",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "7. Four hand derivations that explain the limits",
+          "x_min": 70.866,
+          "y_min": 68.728491,
+          "y_max": 89.15748
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": -2.13750899999998
+    },
+    {
+      "title": "Copying source: a nonzero tail with an exact interpretation",
+      "level": 1,
+      "destination_name": "subsection*.48",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 178.41999999999996,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "Copying source: a nonzero tail with an exact interpretation",
+          "x_min": 70.866,
+          "y_min": 183.125906,
+          "y_max": 200.150068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.705906000000027
+    },
+    {
+      "title": "Constant sources: exact cancellation despite a large query moment",
+      "level": 1,
+      "destination_name": "subsection*.49",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 361.292,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "Constant sources: exact cancellation despite a large query moment",
+          "x_min": 70.866,
+          "y_min": 366.116906,
+          "y_max": 383.141068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.824905999999999
+    },
+    {
+      "title": "Overlapping queries: an inverse moment need not be an integer",
+      "level": 1,
+      "destination_name": "subsection*.50",
+      "destination_page": 10,
+      "destination_x": 70.866,
+      "destination_y_from_top": 530.047,
+      "visible_matches": [
+        {
+          "page": 10,
+          "text": "Overlapping queries: an inverse moment need not be an integer",
+          "x_min": 70.866,
+          "y_min": 534.751906,
+          "y_max": 551.776068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.704905999999937
+    },
+    {
+      "title": "Independence at horizon one: a positive finite mean when the atom is zero",
+      "level": 1,
+      "destination_name": "subsection*.52",
+      "destination_page": 11,
+      "destination_x": 70.866,
+      "destination_y_from_top": 388.29499999999996,
+      "visible_matches": [
+        {
+          "page": 11,
+          "text": "Independence at horizon one: a positive finite mean when the atom is zero",
+          "x_min": 70.866,
+          "y_min": 395.236906,
+          "y_max": 412.261068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 6.941906000000017
+    },
+    {
+      "title": "8. How to use a bound without changing its assumptions",
+      "level": 0,
+      "destination_name": "section*.54",
+      "destination_page": 12,
+      "destination_x": 70.866,
+      "destination_y_from_top": 388.733,
+      "visible_matches": [
+        {
+          "page": 12,
+          "text": "8. How to use a bound without changing its assumptions",
+          "x_min": 70.866,
+          "y_min": 397.211491,
+          "y_max": 417.64048
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 8.47849100000002
+    },
+    {
+      "title": "Plan a sufficient fixed horizon",
+      "level": 1,
+      "destination_name": "subsection*.55",
+      "destination_page": 12,
+      "destination_x": 70.866,
+      "destination_y_from_top": 450.526,
+      "visible_matches": [
+        {
+          "page": 12,
+          "text": "Plan a sufficient fixed horizon",
+          "x_min": 70.866,
+          "y_min": 454.279906,
+          "y_max": 471.304068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 3.753905999999972
+    },
+    {
+      "title": "Population support is different from observed occupancy",
+      "level": 1,
+      "destination_name": "subsection*.57",
+      "destination_page": 13,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "visible_matches": [
+        {
+          "page": 13,
+          "text": "Population support is different from observed occupancy",
+          "x_min": 70.866,
+          "y_min": 69.582906,
+          "y_max": 86.607068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": -1.2830939999999913
+    },
+    {
+      "title": "Projection can reduce alphabet growth, with limits",
+      "level": 1,
+      "destination_name": "subsection*.58",
+      "destination_page": 13,
+      "destination_x": 70.866,
+      "destination_y_from_top": 235.23000000000002,
+      "visible_matches": [
+        {
+          "page": 13,
+          "text": "Projection can reduce alphabet growth, with limits",
+          "x_min": 70.866,
+          "y_min": 240.054906,
+          "y_max": 257.079068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.82490599999997
+    },
+    {
+      "title": "Binning and fitted transformations change what is being estimated",
+      "level": 1,
+      "destination_name": "subsection*.59",
+      "destination_page": 13,
+      "destination_x": 70.866,
+      "destination_y_from_top": 405.83299999999997,
+      "visible_matches": [
+        {
+          "page": 13,
+          "text": "Binning and fitted transformations change what is being estimated",
+          "x_min": 70.866,
+          "y_min": 410.526906,
+          "y_max": 427.551068
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 4.693906000000027
+    },
+    {
+      "title": "9. Scope, edge cases and proof status",
+      "level": 0,
+      "destination_name": "section*.60",
+      "destination_page": 14,
+      "destination_x": 70.866,
+      "destination_y_from_top": 70.86599999999999,
+      "visible_matches": [
+        {
+          "page": 14,
+          "text": "9. Scope, edge cases and proof status",
+          "x_min": 70.866,
+          "y_min": 68.728491,
+          "y_max": 89.15748
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": -2.13750899999998
+    },
+    {
+      "title": "10. Primary and formal references",
+      "level": 0,
+      "destination_name": "section*.61",
+      "destination_page": 14,
+      "destination_x": 70.866,
+      "destination_y_from_top": 439.171,
+      "visible_matches": [
+        {
+          "page": 14,
+          "text": "10. Primary and formal references",
+          "x_min": 70.866,
+          "y_min": 447.529491,
+          "y_max": 467.95848
+        }
+      ],
+      "page_matches": true,
+      "left_offset": 0.0,
+      "upper_offset": 8.358491000000015
+    }
+  ],
+  "identifiers": [
+    {
+      "token": "actual_finite_bias",
+      "pypdf_pages": [
+        8,
+        9
+      ],
+      "poppler_pages": [
+        8,
+        9
+      ],
+      "literal_count": 2,
+      "expected_count": 2
+    },
+    {
+      "token": "fiber_inverse_moment",
+      "pypdf_pages": [
+        9
+      ],
+      "poppler_pages": [
+        9
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    },
+    {
+      "token": "support_moment_bounds",
+      "pypdf_pages": [
+        9
+      ],
+      "poppler_pages": [
+        9
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    },
+    {
+      "token": "projected_support_bias",
+      "pypdf_pages": [
+        9
+      ],
+      "poppler_pages": [
+        9
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    },
+    {
+      "token": "mass_floor_bias",
+      "pypdf_pages": [
+        9
+      ],
+      "poppler_pages": [
+        9
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    },
+    {
+      "token": "Classical.choice",
+      "pypdf_pages": [
+        14
+      ],
+      "poppler_pages": [
+        14
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    },
+    {
+      "token": "Quot.sound",
+      "pypdf_pages": [
+        14
+      ],
+      "poppler_pages": [
+        14
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    },
+    {
+      "token": "propext",
+      "pypdf_pages": [
+        14
+      ],
+      "poppler_pages": [
+        14
+      ],
+      "literal_count": 1,
+      "expected_count": 1
+    }
+  ],
+  "issues": [
+    "heading names are not 30 distinct section anchors",
+    {
+      "heading_coordinate": {
+        "title": "2. Events, atoms and supported averages",
+        "level": 0,
+        "destination_name": "section*.2",
+        "destination_page": 2,
+        "destination_x": 70.866,
+        "destination_y_from_top": 70.86599999999999,
+        "visible_matches": [
+          {
+            "page": 2,
+            "text": "2. Events, atoms and supported averages",
+            "x_min": 70.866,
+            "y_min": 68.728491,
+            "y_max": 89.15748
+          }
+        ],
+        "page_matches": true,
+        "left_offset": 0.0,
+        "upper_offset": -2.13750899999998
+      }
+    },
+    {
+      "heading_coordinate": {
+        "title": "5. Scalar logarithmic tails and atom tails",
+        "level": 0,
+        "destination_name": "section*.24",
+        "destination_page": 6,
+        "destination_x": 70.866,
+        "destination_y_from_top": 70.86599999999999,
+        "visible_matches": [
+          {
+            "page": 6,
+            "text": "5. Scalar logarithmic tails and atom tails",
+            "x_min": 70.866,
+            "y_min": 68.728491,
+            "y_max": 89.15748
+          }
+        ],
+        "page_matches": true,
+        "left_offset": 0.0,
+        "upper_offset": -2.13750899999998
+      }
+    },
+    {
+      "heading_coordinate": {
+        "title": "7. Four hand derivations that explain the limits",
+        "level": 0,
+        "destination_name": "section*.47",
+        "destination_page": 10,
+        "destination_x": 70.866,
+        "destination_y_from_top": 70.86599999999999,
+        "visible_matches": [
+          {
+            "page": 10,
+            "text": "7. Four hand derivations that explain the limits",
+            "x_min": 70.866,
+            "y_min": 68.728491,
+            "y_max": 89.15748
+          }
+        ],
+        "page_matches": true,
+        "left_offset": 0.0,
+        "upper_offset": -2.13750899999998
+      }
+    },
+    {
+      "heading_coordinate": {
+        "title": "9. Scope, edge cases and proof status",
+        "level": 0,
+        "destination_name": "section*.60",
+        "destination_page": 14,
+        "destination_x": 70.866,
+        "destination_y_from_top": 70.86599999999999,
+        "visible_matches": [
+          {
+            "page": 14,
+            "text": "9. Scope, edge cases and proof status",
+            "x_min": 70.866,
+            "y_min": 68.728491,
+            "y_max": 89.15748
+          }
+        ],
+        "page_matches": true,
+        "left_offset": 0.0,
+        "upper_offset": -2.13750899999998
+      }
+    }
+  ]
+}

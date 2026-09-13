@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+"""Causal source-filter/record-parser controls only; no Lean or proof candidate execution."""
+from __future__ import annotations
+import argparse,copy,datetime,hashlib,json,sys
+from pathlib import Path
+from types import ModuleType
+if not (sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and sys.flags.optimize in (0,1)):
+    raise SystemExit('requires -I -S -B, optionally -O')
+LANE=Path(__file__).resolve().parent
+def load(name, path, expected):
+    raw=path.read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=expected:raise RuntimeError('captured runtime digest differs')
+    module=ModuleType(name);module.__file__=str(path)
+    exec(compile(raw,str(path),'exec',dont_inherit=True,optimize=sys.flags.optimize),module.__dict__)
+    return module
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--policy-sha256',required=True)
+    parser.add_argument('--output',required=True,type=Path)
+    args=parser.parse_args()
+    runtime=load('reviewed_control_runtime',LANE/'runtime.py','bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d')
+    policy=load('prospective_bias_source_policy',LANE/'policy.py',args.policy_sha256)
+    snapshot=runtime.Snapshot();helper,base=runtime.load_helpers(LANE.parent.parent,snapshot)
+    output=args.output.absolute();runtime.require(output.is_relative_to(LANE),'output outside lane');output.mkdir(exist_ok=False)
+    names=policy.THEOREMS
+    cases=[]
+    def case(label,operation,accepted):
+        failure=None
+        try:operation()
+        except (RuntimeError,ValueError,TypeError,KeyError) as error:failure=type(error).__name__+': '+str(error)
+        observed=failure is None
+        runtime.require(observed is accepted,'unexpected control outcome: '+label)
+        cases.append({'name':label,'expected_parser_acceptance':accepted,'observed_parser_acceptance':observed,'rejection':failure})
+    records=[{'theorem':'PidPrefixMgwBiasCandidate.'+n,'raw_target':'PidPrefixMgwBiasRawTargets.'+n,'alias_target':'PidPrefixMgwBiasAliasTargets.'+n,'universes':['u','v'] if n=='fiber_inverse_moment' else ['u','v','w'],'full_elaborated_type':'SYNTHETIC PARSER FIXTURE ONLY: not an actual theorem type','axioms':['Classical.choice','Quot.sound','propext'],'status':'accepted'} for n in names]
+    def lines(items):return b''.join(b'PREFIX_MGW_BIAS_JUDGE_RESULT '+json.dumps(x,separators=(',',':')).encode()+b'\n' for x in items)
+    case('record-roster-five-with-two-universe-fiber',lambda:policy.semantic_records(lines(records),runtime.strict_json),True)
+    for index,n in enumerate(names):
+        for field,value in [('theorem','Other.'+n),('raw_target','Other.'+n),('alias_target','Other.'+n),('status',True),('universes',['u','v','w'] if n=='fiber_inverse_moment' else ['u','v']),('universes',[True,'v'] if n=='fiber_inverse_moment' else [True,'v','w']),('axioms',['sorryAx']),('full_elaborated_type',0)]:
+            changed=copy.deepcopy(records);changed[index][field]=value
+            case('record-'+n+'-'+field+'-'+str(len(cases)),lambda changed=changed:policy.semantic_records(lines(changed),runtime.strict_json),False)
+    case('record-extra-row',lambda:policy.semantic_records(lines(records+[records[0]]),runtime.strict_json),False)
+    case('record-missing-row',lambda:policy.semantic_records(lines(records[:-1]),runtime.strict_json),False)
+    case('record-reordered',lambda:policy.semantic_records(lines(list(reversed(records))),runtime.strict_json),False)
+    case('record-duplicate-json-key',lambda:runtime.strict_json(b'{"status":"accepted","status":"accepted"}'),False)
+    header='import PidPrefixMgwBias.Contract\nset_option autoImplicit false\nset_option warningAsError true\nopen PidPrefixMgwBiasSource\nuniverse u v w\nnamespace PidPrefixMgwBiasCandidate\n'
+    helper_source='private theorem fixture_helper : True := by trivial\n'
+    exports=''.join('theorem '+n+' : True := fixture_helper\n' for n in names)
+    source=(header+helper_source+exports+'end PidPrefixMgwBiasCandidate\n').encode()
+    def scan(raw,**options):return policy.candidate_policy(raw,base,output/'in-memory-source-fixture.lean',**options)
+    case('grammar-only-True-skeleton-semantic-judge-still-required',lambda:scan(source),True)
+    for label,before,after in [('import',b'import PidPrefixMgwBias.Contract',b'import Mathlib'),('axiom',b'private theorem fixture_helper : True := by trivial',b'axiom fixture_helper : True'),('sorry',b'by trivial',b'by sorry'),('native-decide',b'by trivial',b'by native_decide'),('meta-command',b'by trivial',b'by run_tac pure ()'),('missing-export',('theorem '+names[-1]+' : True := fixture_helper\n').encode(),b''),('public-body',b': True := fixture_helper',b': True := by trivial'),('extra-definition',helper_source.encode(),helper_source.encode()+b'def surprise : Nat := 0\n')]:
+        altered=source.replace(before,after)
+        runtime.require(altered!=source,'control did not change source: '+label)
+        case('source-'+label,lambda altered=altered:scan(altered),False)
+    bad_modes=[{'final_control':1},{'development_helpers':0},{'final_control':True,'development_helpers':True}]
+    for index,options in enumerate(bad_modes):case('source-mode-type-'+str(index),lambda options=options:scan(source,**options),False)
+    snapshot.verify();snapshot.save(output)
+    result={'status':'all_causal_parser_controls_passed','recorded_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'python_optimization':sys.flags.optimize,'scope':'Synthetic source grammar and JSON parser controls only. No Lean child, theorem type, semantic theorem record, candidate proof or kernel acceptance was produced. The True grammar fixture intentionally demonstrates that the source filter alone does not validate theorem types.','policy_sha256':args.policy_sha256,'self_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'case_count':len(cases),'cases':cases,'new_lean_children':0,'new_proofs':0,'inputs':snapshot.manifest()}
+    (output/'RESULT.json').write_bytes(runtime.canonical(result))
+    print(runtime.canonical({'status':result['status'],'case_count':len(cases),'python_optimization':sys.flags.optimize}).decode(),end='')
+    return 0
+if __name__=='__main__':raise SystemExit(main())

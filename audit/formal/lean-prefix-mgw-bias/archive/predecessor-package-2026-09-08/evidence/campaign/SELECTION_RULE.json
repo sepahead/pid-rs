@@ -1,0 +1,35 @@
+{
+  "schema": "pid-rs/prefix-mgw-bias-selection-v1",
+  "selected": "first chronological full fresh semantic/kernel pass in the immutable attempt ledger",
+  "required_positive_matrix": [
+    {
+      "source": "selected",
+      "python_optimization": 0,
+      "compiler_children": 30,
+      "fresh_kernel_children": 1
+    },
+    {
+      "source": "selected",
+      "python_optimization": 1,
+      "compiler_children": 30,
+      "fresh_kernel_children": 1
+    },
+    {
+      "source": "cosmetic",
+      "python_optimization": 0,
+      "compiler_children": 30,
+      "fresh_kernel_children": 1
+    },
+    {
+      "source": "cosmetic",
+      "python_optimization": 1,
+      "compiler_children": 30,
+      "fresh_kernel_children": 1
+    }
+  ],
+  "cosmetic_prefix": "/- Statement-preserving formatting control. -/\n\n",
+  "cosmetic_suffix": "\n",
+  "negative": "selected original bytes; exact final mass_floor_bias True replacement; preceding four records equal; 29 compiler children and no kernel",
+  "new_families": 5,
+  "repeated_runs_and_controls_are_extra_proofs": false
+}

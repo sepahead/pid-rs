@@ -1,0 +1,52 @@
+{
+  "schema": "pid-rs/bias-current-editorial-observation-v1",
+  "status": "private_source_assembly_observation_no_execution_or_acceptance",
+  "scope": "Exact predecessor/current Markdown byte comparison and proof-input exclusion only.",
+  "active_editorial_sources": [
+    {
+      "path": "EXPOSITION.md",
+      "bytes": 30333,
+      "sha256": "466768a02a892cbe7453f4e5fb7af09afdd6f529ab6b571c063a04d2a5932784",
+      "predecessor_archived_path": "archive/predecessor-package-2026-09-08/EXPOSITION.md",
+      "predecessor_bytes": 29151,
+      "predecessor_sha256": "38faca36d2b1abfd29e3dd14177975b4c9ddfde56cc66d799c27344e6ea02e82"
+    },
+    {
+      "path": "SUMMARY.md",
+      "bytes": 2883,
+      "sha256": "8daf2f4c10710d8eb83aa585db296d0732557590d1e9cfd1a2c501ed8eb40414",
+      "predecessor_archived_path": "archive/predecessor-package-2026-09-08/SUMMARY.md",
+      "predecessor_bytes": 3023,
+      "predecessor_sha256": "042ee927a38176a397aea87e80e180ca82479942951a426c21c7ea63355f4e68"
+    }
+  ],
+  "unchanged_historical_guide": {
+    "path": "THEOREM_MAP.md",
+    "bytes": 11247,
+    "sha256": "f94c87006c7905cabde21748b5c8a54f42d1f99971895c9d6e06ddd1a48653d4"
+  },
+  "source_public_correspondence": {
+    "row_index": 1869,
+    "source_key": "reviewed-publication/SUMMARY.md",
+    "current_public_path": "archive/predecessor-package-2026-09-08/SUMMARY.md",
+    "bytes": 3023,
+    "sha256": "042ee927a38176a397aea87e80e180ca82479942951a426c21c7ea63355f4e68",
+    "corrected_active_summary_is_a_separate_editorial_derivative": true
+  },
+  "accepted_proof_binding": {
+    "manifest_path": "replay-proposed-v1.json",
+    "manifest_sha256": "6783dffce953c0e6dd812658af049770b2e63889807acb34f11c75eb4d577b10",
+    "input_count": 43,
+    "source_module_count": 30,
+    "active_editorial_sources_are_inputs": false
+  },
+  "credit": {
+    "new_theorem_families": 0,
+    "proof_execution": "not_run",
+    "control_execution": "not_run",
+    "pdf_production": "not_run",
+    "hosted_acceptance": false,
+    "public_adoption": false
+  },
+  "interpretation": "Hash equality is a custody observation, not mathematical or operational proof."
+}

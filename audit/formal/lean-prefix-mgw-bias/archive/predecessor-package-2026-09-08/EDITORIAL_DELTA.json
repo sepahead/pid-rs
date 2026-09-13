@@ -1,0 +1,41 @@
+{
+  "schema": "pid-rs/bias-editorial-delta-v1",
+  "scope": "E1 historical Contract comment explanation and E2 two redundant process-sentence removals only",
+  "files": [
+    {
+      "path": "EXPOSITION.md",
+      "original": {
+        "bytes": 29304,
+        "sha256": "b2e1c36e92d5006f6c18a6d3d4b76f2e116ca5b0e67ac7b192617c616d8b1e2c"
+      },
+      "proposed": {
+        "bytes": 29151,
+        "sha256": "38faca36d2b1abfd29e3dd14177975b4c9ddfde56cc66d799c27344e6ea02e82"
+      }
+    },
+    {
+      "path": "THEOREM_MAP.md",
+      "original": {
+        "bytes": 10986,
+        "sha256": "617d27cbf48ded2c39f5822461d908323bca5f6fcb4b0d49126e0d3fdd1d1fe0"
+      },
+      "proposed": {
+        "bytes": 11247,
+        "sha256": "f94c87006c7905cabde21748b5c8a54f42d1f99971895c9d6e06ddd1a48653d4"
+      }
+    }
+  ],
+  "unchanged": [
+    "all equations",
+    "all proof arguments",
+    "all assumptions",
+    "all four hand examples",
+    "SUMMARY.md",
+    "three SVG sources",
+    "four formal inspection copies",
+    "accepted proof/type/judge/root sources"
+  ],
+  "previous_publication_review_sha256": "b03944f84aadca2d181feb3978b06f7fa66812e918e628ff44db289ffeee7df3",
+  "new_source_review_required": true,
+  "new_rendered_acceptance": false
+}

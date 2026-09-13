@@ -68,6 +68,30 @@ def main() -> int:
         r"Use \[x\] here." + "\n",
         r"use GitHub math delimiters instead of '\\['",
     )
+    for suffix, label in (
+        ("[", "open-square"),
+        ("]", "close-square"),
+        ("(", "open-parenthesis"),
+        (")", "close-parenthesis"),
+    ):
+        delimiter = "\\" + suffix
+        message = f"use GitHub math delimiters instead of {delimiter!r}"
+        for slash_count in (1, 3, 5):
+            expect_failure(
+                f"display-legacy-{label}-odd-{slash_count}",
+                "$$\n" + "\\" * slash_count + suffix + "\n$$\n",
+                message,
+            )
+        for slash_count in (2, 4, 6):
+            expect_success(
+                f"display-tex-control-{label}-even-{slash_count}",
+                "$$\n" + "\\" * slash_count + suffix + "\n$$\n",
+            )
+        expect_failure(
+            f"prose-{label}-remains-conservative",
+            "\\\\" + suffix + "\n",
+            message,
+        )
     expect_failure(
         "display-delimiter-placement",
         "Prefix $$\n",
@@ -173,6 +197,17 @@ def main() -> int:
             "| Quantity | Value |\n"
             "| --- | --- |\n"
             r"| Norm | $\lvert x\rvert$ |" + "\n"
+        ),
+    )
+    expect_success(
+        "gathered-display-row-spacing",
+        (
+            "$$\n"
+            r"\begin{gathered}" + "\n"
+            r"\boxed{x \le y},\\[0.35em]" + "\n"
+            r"\boxed{z \le w}." + "\n"
+            r"\end{gathered}" + "\n"
+            "$$\n"
         ),
     )
     expect_success(

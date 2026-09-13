@@ -1,0 +1,189 @@
+"""Specific whole-attempt bias controls with scoped inert candidates and audited instrumentation."""
+from __future__ import annotations
+import argparse, datetime as dt, hashlib, json, os, sys
+from pathlib import Path
+from types import ModuleType
+LANE=Path(__file__).resolve().parent
+CASES=[
+ ('full-positive','full','fresh_semantic_kernel_pass',''),('development-positive','development','development_compile_pass',''),
+ ('wrong-positive','wrong-last-target','expected_target_rejection',''),('helper-prefix-positive','wrong-last-target','expected_target_rejection',''),
+ ('unpatched-live-refusal','full','failed','synthetic control lane cannot run live'),
+ ('candidate-hash-mismatch','full','failed','candidate attempt digest mismatch'),
+ ('candidate-symlink','full','failed','candidate source shape'),('candidate-hardlink','full','failed','single-link'),
+ ('candidate-over-budget','full','failed','byte budget'),('candidate-policy','full','failed','prohibited code'),
+ ('candidate-drift-after-capture','full','failed','input changed'),('stop-between-children','full','failed','stopped'),
+ ('expiry-between-children','full','failed','exhausted'),('preflight-error','full','failed','synthetic preflight failure'),
+ ('compiler-operational-failure','full','failed','synthetic tool rejection'),('kernel-failure','full','failed','synthetic tool rejection'),
+ ('dispatch-six-as-mean','full','failed','record count'),('dispatch-eleven-as-prefix','full','failed','record count'),
+ ('dispatch-three-as-mgw','full','failed','record count'),('mean-type-drift','full','failed','dependency records differ'),
+ ('fiber-universe-drift','full','failed','semantic universes differ'),('final-save-error','full','failed','synthetic preservation failure'),
+ ('final-stop','full','failed','stopped'),('final-expiry','full','failed','expired'),('final-input-drift','full','failed','input changed'),
+ ('wrong-without-prior','wrong-last-target','failed','requires a prior full pass'),
+ ('wrong-final-accepted','wrong-last-target','failed','wrong final target was accepted'),
+ ('wrong-final-operational','wrong-last-target','failed','exact target type rejection'),
+ ('wrong-final-stderr','wrong-last-target','failed','exact target type rejection'),
+ ('wrong-final-boolean-code','wrong-last-target','failed','exact target type rejection'),
+ ('wrong-final-missing-marker','wrong-last-target','failed','exact target type rejection'),
+ ('wrong-final-missing-record','wrong-last-target','failed','exactly four'),
+ ('wrong-final-record-drift','wrong-last-target','failed','preceding four records differ'),
+ ('post-result-nonzero','full','fresh_semantic_kernel_pass','instrumented terminal code differs'),
+ ('incomplete-driver','full','fresh_semantic_kernel_pass','instrumentation driver receipt missing')]
+
+def require(ok,message):
+    if not ok:raise RuntimeError(message)
+def digest(raw):return hashlib.sha256(raw).hexdigest()
+def canonical(value):return (json.dumps(value,sort_keys=True,indent=2,allow_nan=False)+'\n').encode()
+def write(path,raw):path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(raw)
+def utc():return dt.datetime.now(dt.timezone.utc)
+def load(name,path,expected):
+    raw=path.read_bytes();require(digest(raw)==expected,'control module source hash differs')
+    module=ModuleType(name);module.__file__=str(path)
+    exec(compile(raw,str(path),'exec',dont_inherit=True,optimize=sys.flags.optimize),module.__dict__);return module
+
+def context(output):
+    package_raw=(LANE/'PACKAGE.json').read_bytes();package=json.loads(package_raw)
+    original={name:(LANE/name).read_bytes() for name in package}
+    for name,raw in original.items():require(digest(raw)==package[name],'source package drift: '+name)
+    original['PACKAGE.json']=package_raw
+    registration=json.loads((LANE/'CONTROL_REGISTRATION.json').read_bytes())
+    deadline=dt.datetime.fromisoformat(registration['deadline_utc']);require(utc()<deadline,'operational stage expired')
+    runtime=load('exact_instrumentation_supervisor_runtime',LANE/'runtime.py','bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d')
+    return {'package':package,'package_raw':package_raw,'original':original,'registration':registration,'deadline':deadline,'runtime':runtime,'output':output}
+
+def candidate_bytes(helper_prefix=False):
+    helper='mass_floor_bias_helper' if helper_prefix else 'inert_fixture_helper'
+    names=('actual_finite_bias','fiber_inverse_moment','support_moment_bounds','projected_support_bias','mass_floor_bias')
+    return ('/- INERT SYNTHETIC GRAMMAR FIXTURE. NOT A MATHEMATICAL CANDIDATE. -/\nimport PidPrefixMgwBias.Contract\nset_option autoImplicit false\nset_option warningAsError true\nuniverse u v w\nnamespace PidPrefixMgwBiasCandidate\nprivate theorem '+helper+' : True := by trivial\n'+''.join('theorem '+name+' : True := '+helper+'\n' for name in names)+'end PidPrefixMgwBiasCandidate\n').encode()
+
+def fixture(ctx,directory,helper_prefix=False):
+    lane=directory/'lane';lane.mkdir(parents=True)
+    for name,raw in ctx['original'].items():write(lane/name,raw)
+    marker=canonical({'status':'INERT_SYNTHETIC_NOT_LIVE_ADOPTION','scope':'Only source-bound instrumentation may use these fake objects/records. Production entrypoints refuse this marker.'})
+    write(lane/'SYNTHETIC_CONTROL_ONLY.json',marker)
+    names=('actual_finite_bias','fiber_inverse_moment','support_moment_bounds','projected_support_bias','mass_floor_bias')
+    records=[{'theorem':'PidPrefixMgwBiasCandidate.'+name,'raw_target':'PidPrefixMgwBiasRawTargets.'+name,
+              'alias_target':'PidPrefixMgwBiasAliasTargets.'+name,'universes':['u','v'] if name=='fiber_inverse_moment' else ['u','v','w'],
+              'full_elaborated_type':'INERT SYNTHETIC PARSER FIXTURE, NOT A LEAN THEOREM','axioms':['Classical.choice','Quot.sound','propext'],'status':'accepted'} for name in names]
+    write(lane/'SYNTHETIC_BIAS_RECORDS.json',canonical(records));source=candidate_bytes(helper_prefix);write(lane/'candidate/Candidate.lean',source)
+    package=ctx['package'];pins={**package,'PACKAGE.json':digest(ctx['package_raw']),'SYNTHETIC_CONTROL_ONLY.json':digest(marker)}
+    adoption={'status':'five_exact_bias_types_adopted_not_proved','contract_sha256':package['sources/PidPrefixMgwBias/Contract.lean'],
+              'raw_targets_sha256':package['sources/PidPrefixMgwBias/RawTargets.lean'],'alias_targets_sha256':package['sources/PidPrefixMgwBias/AliasTargets.lean'],'new_bias_proofs':0,
+              'evidence':'INERT SYNTHETIC FIXTURE; PRODUCTION SYNTHETIC MARKER PREVENTS LIVE ADOPTION'}
+    write(lane/'PREPARATION_ADOPTION.json',canonical(adoption));pins['PREPARATION_ADOPTION.json']=digest(canonical(adoption))
+    roster=json.loads((lane/'CONTROL_ROSTER.json').read_bytes());receipts=[]
+    for mode,label in [(0,'normal'),(1,'optimized')]:
+        for family,spec in roster['families'].items():
+            name='controls-'+family+'-'+label+'/RESULT.json'
+            body={'status':spec['status'],'python_optimization':mode,'package_sha256':digest(ctx['package_raw']),
+                  'policy_sha256':package['policy.py'],'self_sha256':package[spec['source']],'case_count':spec['count'],
+                  'cases':[{'synthetic':True} for _ in range(spec['count'])],'new_lean_children':0,'new_proofs':0,
+                  'scope':'INERT SYNTHETIC PREREQUISITE, NEVER ACTUAL CONTROL ACCEPTANCE'}
+            raw=canonical(body);write(lane/name,raw);pins[name]=digest(raw);receipts.append({'path':name,'sha256':digest(raw)})
+    controls={'status':'adopted_completed_operational_controls','package_sha256':digest(ctx['package_raw']),'modes':[0,1],'receipts':receipts,'new_bias_proofs':0,
+              'scope':'INERT SYNTHETIC PREREQUISITES WITH PRODUCTION DENIAL MARKER'}
+    write(lane/'OPERATIONAL_CONTROL_ACCEPTANCE.json',canonical(controls));pins['OPERATIONAL_CONTROL_ACCEPTANCE.json']=digest(canonical(controls))
+    frozen={'schema':'pid-rs/prefix-mgw-bias-runner-freeze-v1','status':'adopted_after_actual_controls_before_candidate','candidate_exists':False,'wrapper_sha256':pins}
+    raw=canonical(frozen);write(lane/'FROZEN.json',raw);start=utc()-dt.timedelta(seconds=1)
+    task={'schema':'pid-rs/prefix-mgw-bias-campaign-v1','registered_utc':start.isoformat(),'deadline_utc':(start+dt.timedelta(minutes=720)).isoformat(),
+          'project_root':ctx['registration']['project_root'],'freeze_sha256':digest(raw),'max_development_attempts':80,'max_full_attempts':8,'max_concurrent_wrappers':1,'candidate_write_scope':'candidate/Candidate.lean'}
+    write(lane/'CAMPAIGN.json',canonical(task))
+    return lane,source
+
+def invoke(ctx,lane,scope,call_directory,case,action,mode=None,expected_hash=None,target='campaign.py'):
+    require(utc()<ctx['deadline'],'operational deadline exhausted before instrumented entrypoint')
+    call_directory.mkdir(parents=True,exist_ok=False)
+    if target=='campaign.py':
+        source=(lane/'candidate/Candidate.lean').read_bytes() if expected_hash is None else None
+        argv=[action,'--candidate-sha256',expected_hash or digest(source)]
+    else:argv=['--lane',str(lane)]
+    job={'lane':str(lane),'scope':str(scope),'target':str(lane/target),'case':case,'argv':argv,'marker_sha256':digest((lane/'SYNTHETIC_CONTROL_ONLY.json').read_bytes())}
+    write(call_directory/'JOB.json',canonical(job))
+    flags=sys.flags.optimize if mode is None else mode
+    command=[sys.executable,'-I','-S','-B']+(['-O'] if flags else [])+[str(LANE/'instrumented-child.py'),str(call_directory/'JOB.json')]
+    runner=ctx['runtime'].Runner(call_directory,{'PATH':'/usr/bin:/bin','LANG':'C.UTF-8','LC_ALL':'C.UTF-8'},preparation=False)
+    try:runner.run(command,call_directory,'instrumented-entrypoint',timeout=min(120,(ctx['deadline']-utc()).total_seconds()),allow_stdout=True)
+    except ctx['runtime'].JudgeError:pass
+    require(len(runner.commands)==1,'instrumented supervisor child missing')
+    child=runner.commands[0];require(child['failure'] is None and child['remaining_live_group_processes']==[],'instrumented supervisor operational failure')
+    require((call_directory/'DRIVER_RESULT.json').is_file(),'instrumentation driver receipt missing')
+    driver=json.loads((call_directory/'DRIVER_RESULT.json').read_bytes())
+    require(driver.get('status')=='instrumented_entrypoint_completed' and type(driver.get('external_process_attempts')) is list
+            and driver['external_process_attempts']==[] and type(driver.get('new_lean_children')) is int and driver['new_lean_children']==0
+            and type(driver.get('new_proofs')) is int and driver['new_proofs']==0,'instrumentation attempted external execution or has incomplete typed metadata')
+    expected_status=next((status for name,_,status,_ in CASES if name==case),None) if target=='campaign.py' else None
+    require(target!='campaign.py' or expected_status is not None,'unregistered instrumented campaign case')
+    expected_code=(1 if expected_status=='failed' else 0) if target=='campaign.py' else (0 if case=='positive-baseline' else 1)
+    require(type(driver.get('returncode')) is int and type(child.get('returncode')) is int
+            and driver['returncode']==child['returncode']==expected_code,'instrumented terminal code differs')
+    results=sorted((lane/'attempts').glob('*/RESULT.json')) if (lane/'attempts').exists() else []
+    result=json.loads(results[-1].read_bytes()) if results else None
+    if result is None:
+        early=sorted((lane/'entrypoints').glob('*/RESULT.json'));result=json.loads(early[-1].read_bytes()) if early else None
+    if target=='campaign.py':require(type(result) is dict and result.get('status')==expected_status and result.get('dispatch')==action,'instrumented intended result status differs')
+    return driver,result
+
+def create_matrix(ctx,directory):
+    lane,source=fixture(ctx,directory,True);calls=directory/'calls'
+    # Keep one real instrumented development failure and one diagnostic success.
+    invoke(ctx,lane,directory,calls/'00-failed','compiler-operational-failure','development')
+    invoke(ctx,lane,directory,calls/'01-development','development-positive','development')
+    for mode in (0,1):invoke(ctx,lane,directory,calls/('02-selected-'+str(mode)),'full-positive','full',mode)
+    invoke(ctx,lane,directory,calls/'03-wrong','helper-prefix-positive','wrong-last-target')
+    cosmetic=b'/- Statement-preserving formatting control. -/\n\n'+source+b'\n';write(lane/'candidate/Candidate.lean',cosmetic)
+    for mode in (0,1):invoke(ctx,lane,directory,calls/('04-cosmetic-'+str(mode)),'full-positive','full',mode)
+    return lane
+
+def finish(ctx,output,status,cases):
+    require(utc()<ctx['deadline'],'operational deadline exhausted before control custody')
+    artifacts={str(path.relative_to(output)):{'bytes':path.stat().st_size,'sha256':digest(path.read_bytes())} for path in sorted(output.rglob('*')) if path.is_file()}
+    require(utc()<ctx['deadline'],'operational deadline exhausted during control custody')
+    for name,raw in ctx['original'].items():require((LANE/name).read_bytes()==raw,'control package drift during execution')
+    result={'status':status,'python_optimization':sys.flags.optimize,'package_sha256':digest(ctx['package_raw']),
+            'self_sha256':digest(Path(sys.argv[0]).read_bytes()),'case_count':len(cases),'cases':cases,'new_lean_children':0,'new_proofs':0,
+            'artifacts':artifacts,'completed_utc':utc().isoformat(),'scope':'Whole source-bound instrumented entrypoints with inert synthetic candidates/objects; external execution denied inside driver; zero proof credit.'}
+    write(output/'RESULT.json',canonical(result));print(canonical({'status':status,'case_count':len(cases),'new_proofs':0}).decode(),end='')
+
+def main():
+    require(sys.flags.isolated and sys.flags.no_site and sys.dont_write_bytecode and sys.flags.optimize in (0,1),'requires -I -S -B optionally -O')
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',required=True,type=Path);args=parser.parse_args()
+    output=args.output.absolute();require(output.parent==LANE and not output.exists(),'fresh direct control output required');output.mkdir();ctx=context(output);cases=[]
+    for index,(name,action,status,diagnostic) in enumerate(CASES):
+        directory=output/(str(index).zfill(2)+'-'+name);lane,source=fixture(ctx,directory,name=='helper-prefix-positive')
+        if action=='wrong-last-target' and name!='wrong-without-prior':
+            driver,prior=invoke(ctx,lane,directory,directory/'prior','full-positive','full');require(prior and prior['status']=='fresh_semantic_kernel_pass','synthetic prior route did not pass')
+        candidate=lane/'candidate/Candidate.lean';expected_hash=digest(source)
+        if name=='candidate-hash-mismatch':expected_hash='0'*64
+        if name=='candidate-symlink':candidate.rename(lane/'inert-candidate-source');candidate.symlink_to(lane/'inert-candidate-source')
+        if name=='candidate-hardlink':os.link(candidate,lane/'inert-candidate-hardlink')
+        if name=='candidate-over-budget':write(candidate,b'X'*(2*1024**2+1))
+        if name=='candidate-policy':write(candidate,source.replace(b'by trivial',b'by sorry'));expected_hash=digest(candidate.read_bytes())
+        metadata=candidate.lstat()
+        write(directory/'CANDIDATE_INPUT_METADATA.json',canonical({'mode':metadata.st_mode,'nlink':metadata.st_nlink,'bytes':metadata.st_size,
+              'inode':metadata.st_ino,'symlink_target':str(candidate.readlink()) if candidate.is_symlink() else None,'expected_sha256':expected_hash,
+              'scope':'Actual pre-invocation metadata of the inert fixture only; no real mathematical candidate'}))
+        if name in ('post-result-nonzero','incomplete-driver'):
+            rejection=None
+            try:invoke(ctx,lane,directory,directory/'actual',name,action,expected_hash=expected_hash)
+            except RuntimeError as error:rejection=str(error)
+            require(rejection is not None and diagnostic in rejection,'post-result incomplete evidence was not rejected')
+            actual_results=sorted((lane/'attempts').glob('*/RESULT.json'))
+            actual=json.loads(actual_results[-1].read_bytes())
+            require(actual['status']=='fresh_semantic_kernel_pass' and len(actual['commands'])==31,'post-result control did not retain its positive synthetic graph')
+            cases.append({'name':name,'status':'incomplete_control_evidence_rejected','diagnostic':rejection,
+                          'retained_synthetic_status':actual['status'],'actual_fake_tool_calls':31,'new_proofs':0})
+            continue
+        driver,result=invoke(ctx,lane,directory,directory/'actual',name,action,expected_hash=expected_hash)
+        require(result is not None and result['status']==status,'instrumented route status differs: '+name)
+        require(diagnostic in json.dumps(result),'instrumented causal diagnostic differs: '+name)
+        events=[x for x in driver['events'] if x['event']=='fake-tool-call']
+        if status in ('fresh_semantic_kernel_pass','development_compile_pass','expected_target_rejection'):
+            expected=31 if action=='full' else 1 if action=='development' else 29
+            require(len(events)==expected and len(result['commands'])==expected and driver['candidate_snapshot_reads']>0,'instrumented successful graph/candidate custody differs')
+        if name=='unpatched-live-refusal':require(driver['guard_bypasses']==0 and driver['candidate_snapshot_reads']==0 and not events,'synthetic fixture enabled live access')
+        # Retain the actual link metadata as regular JSON, then materialize only
+        # this inert fixture for the canonical single-link artifact inventory.
+        if candidate.is_symlink():candidate.unlink();write(candidate,source)
+        if (lane/'inert-candidate-hardlink').exists():(lane/'inert-candidate-hardlink').unlink()
+        cases.append({'name':name,'status':status,'diagnostic':diagnostic,'actual_fake_tool_calls':len(events),'external_process_attempts':driver['external_process_attempts'],'driver_sha256':digest((directory/'actual/DRIVER_RESULT.json').read_bytes())})
+    finish(ctx,output,'all_instrumented_attempt_controls_passed',cases)
+if __name__=='__main__':main()

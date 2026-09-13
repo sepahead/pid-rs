@@ -1,0 +1,718 @@
+#!/usr/bin/env python3
+"""Reproduce the reviewed bias full or summary PDF in two fresh native builds.
+
+The unchanged mean publication runtime owns child supervision. This exact-byte
+route adds no proof, statistical, accessibility or cross-platform acceptance.
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter
+from contextlib import contextmanager
+import datetime as dt
+import hashlib
+import importlib
+import io
+import json
+import logging
+import math
+import os
+from pathlib import Path, PurePosixPath
+import stat
+import sys
+from types import ModuleType
+import warnings
+import xml.etree.ElementTree as ET
+from xml.sax.saxutils import escape
+
+ASSETS = "audit/formal/latex/prefix-mgw-bias/"
+MANIFEST = ASSETS + "publication-inputs-v1.json"
+MANIFEST_SHA256 = 'dd04a548aa0a067b88ee0f79529e1b77e8f004a92be65f1bbb1901956779f96d'
+RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
+RUNTIME_SHA256 = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+KINDS = ("full", "summary")
+CANONICAL_NAMES = {
+    "EXPOSITION.md", "SUMMARY.md", "check-formal-pdf-log.sh",
+    "figures/independence-horizon-one.svg", "figures/overlapping-query-moment.svg",
+    "figures/signed-tail-envelope.svg", "layout/pid-rs-report-tables.sty",
+    "layout/pid-rs-workflow-publication.sty", "layout/publication-filter.lua",
+    "layout/report.latex",
+}
+TOOLS = {"pandoc", "lualatex", "rsvg-convert", "kpsewhich", "fc-cache",
+         "bash", "pdfinfo", "pdffonts", "pdftotext"}
+FONT_NAMES = ("SourceSansPro-Regular.otf", "SourceSansPro-Semibold.otf",
+              "SourceSansPro-Bold.otf", "latinmodern-math.otf", "lmroman10-regular.otf")
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise RuntimeError(message)
+
+
+def digest(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
+
+
+def now() -> dt.datetime:
+    return dt.datetime.now(dt.timezone.utc)
+
+
+def record(path: Path, value: object) -> None:
+    with path.open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(value, stream, sort_keys=True, indent=2, allow_nan=False)
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+def direct_directory(path: Path) -> Path:
+    path = path.absolute()
+    require(path == path.resolve(strict=True) and path.is_dir(),
+            "directory is not canonical: " + str(path))
+    require(not any(c in str(path) for c in ("\n", "\r", os.pathsep)),
+            "directory cannot be represented in the admitted search paths")
+    return path
+
+
+def read_direct(path: Path) -> bytes:
+    direct_directory(path.parent)
+    before = path.lstat()
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink == 1,
+            "input is not a direct single-link regular file")
+    descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    identity = lambda v: (v.st_dev, v.st_ino, v.st_mode, v.st_nlink,
+                          v.st_size, v.st_mtime_ns, v.st_ctime_ns)
+    try:
+        require(identity(os.fstat(descriptor)) == identity(before), "input changed on open")
+        with os.fdopen(descriptor, "rb", closefd=False) as stream:
+            raw = stream.read()
+        require(identity(os.fstat(descriptor)) == identity(before)
+                == identity(path.lstat()) and len(raw) == before.st_size,
+                "input changed during read")
+    finally:
+        os.close(descriptor)
+    return raw
+
+
+def record_final_result(path: Path, value: dict, deadline: dt.datetime) -> None:
+    """Observe final persistence before success; outer completion remains owner-owned."""
+    record(path, value)
+    written_at = now()
+    if written_at < deadline:
+        return
+    # Preserve the exact first-written receipt before replacing this attempt's
+    # own result with a failed disposition. No pre-existing output is adopted.
+    original = read_direct(path)
+    preserved = path.with_name(path.stem + ".before-late-finalization" + path.suffix)
+    with preserved.open("xb") as stream:
+        stream.write(original)
+        stream.flush()
+        os.fsync(stream.fileno())
+    value.update(status="failed", deadline_exhausted_during_finalization=True,
+                 result_write_completed_utc=written_at.isoformat(),
+                 before_late_finalization_sha256=digest(original))
+    failed = path.with_name(path.stem + ".failed-finalization" + path.suffix)
+    record(failed, value)
+    os.replace(failed, path)
+    raise RuntimeError("final result persistence exceeded its registered deadline")
+
+
+def relative_path(value: object) -> str:
+    require(type(value) is str and value != "", "source path is absent")
+    path = PurePosixPath(value)
+    require(not path.is_absolute() and ".." not in path.parts
+            and path.as_posix() == value and "\\" not in value,
+            "source path is not a portable relative path")
+    return value
+
+
+def load_runtime(root: Path) -> ModuleType:
+    raw = read_direct(root / RUNTIME)
+    require(digest(raw) == RUNTIME_SHA256, "reviewed runtime changed")
+    module = ModuleType("reviewed_bias_publication_runtime")
+    module.__file__ = str(root / RUNTIME)
+    exec(compile(raw, module.__file__, "exec", dont_inherit=True,
+                 optimize=sys.flags.optimize), module.__dict__)
+    return module
+
+
+def date(value: object) -> dt.datetime:
+    require(type(value) is str, "timestamp is not text")
+    result = dt.datetime.fromisoformat(value)
+    require(result.utcoffset() == dt.timedelta(0), "timestamp is not aware UTC")
+    return result
+
+
+def admit_registration(reg: dict, args: argparse.Namespace, profile: dict,
+                       manifest_sha: str, builder_sha: str) -> dt.datetime:
+    required = {
+        "schema", "status", "kind", "root", "work_dir", "output", "optimization",
+        "registered_utc", "deadline_utc", "stage_started_utc", "stage_deadline_utc",
+        "maximum_builds", "maximum_commands", "manifest_sha256", "builder_sha256",
+        "tool_selectors", "reader_directory",
+    }
+    require(type(reg) is dict and set(reg) == required, "registration fields differ")
+    require(reg["schema"] == "pid-rs/prefix-mgw-bias-pdf-execution-v1"
+            and reg["status"] == "reviewed_source_ready_for_exact_production",
+            "registration is not admitted")
+    require(reg["kind"] == args.kind and reg["root"] == str(args.root)
+            and reg["work_dir"] == str(args.work_dir)
+            and reg["output"] == (None if args.output is None else str(args.output)),
+            "registration command binding differs")
+    require(type(reg["optimization"]) is int and reg["optimization"] == sys.flags.optimize,
+            "registration optimization differs")
+    limit = profile["limits"]
+    require(type(reg["maximum_builds"]) is int and reg["maximum_builds"] == 2
+            and type(reg["maximum_commands"]) is int
+            and reg["maximum_commands"] == limit["maximum_commands_" + args.kind],
+            "registration production budget differs")
+    require(reg["manifest_sha256"] == manifest_sha and reg["builder_sha256"] == builder_sha,
+            "registration source digest differs")
+    require(type(reg["tool_selectors"]) is dict and set(reg["tool_selectors"]) == TOOLS,
+            "tool selector roster differs")
+    start, end = date(reg["registered_utc"]), date(reg["deadline_utc"])
+    outer_start, outer_end = date(reg["stage_started_utc"]), date(reg["stage_deadline_utc"])
+    require(outer_start <= start <= now() < end <= outer_end,
+            "registration chronology or deadline differs")
+    require((end - start).total_seconds() <= limit["invocation_deadline_seconds_maximum"]
+            and (outer_end - outer_start).total_seconds() <= limit["stage_deadline_seconds_maximum"],
+            "registered duration exceeds the fixed limit")
+    return end
+
+
+def check_entry(raw: bytes, expected: dict, label: str) -> None:
+    require(type(expected) is dict and type(expected.get("bytes")) is int
+            and len(raw) == expected["bytes"] and digest(raw) == expected.get("sha256"),
+            "pinned bytes changed: " + label)
+
+
+def derive_svg(raw: bytes) -> bytes:
+    replacements = {
+        "₀": ("0", "sub"), "₁": ("1", "sub"), "₂": ("2", "sub"),
+        "₃": ("3", "sub"), "₄": ("4", "sub"), "₅": ("5", "sub"),
+        "₆": ("6", "sub"), "₇": ("7", "sub"), "₈": ("8", "sub"),
+        "₉": ("9", "sub"), "ₕ": ("h", "sub"), "ₚ": ("p", "sub"),
+        "⁺": ("+", "super"), "⁻": ("−", "super"),
+    }
+    namespace = "http://www.w3.org/2000/svg"
+    ET.register_namespace("", namespace)
+    tree = ET.ElementTree(ET.fromstring(raw))
+    for node in tree.getroot().iter("{" + namespace + "}text"):
+        require(len(node) == 0, "glyph conversion requires simple original SVG text")
+        original, node.text = node.text or "", ""
+        tail_node = None
+        for character in original:
+            if character in replacements:
+                letter, shift = replacements[character]
+                tail_node = ET.SubElement(node, "{" + namespace + "}tspan",
+                                         {"baseline-shift": shift, "font-size": "75%"})
+                tail_node.text = letter
+            elif tail_node is None:
+                node.text += character
+            else:
+                tail_node.tail = (tail_node.tail or "") + character
+    output = io.BytesIO()
+    tree.write(output, encoding="utf-8", xml_declaration=True)
+    return output.getvalue()
+
+
+def derive_tex(raw: bytes, kind: str) -> bytes:
+    require(kind in KINDS, "unknown publication kind")
+    text = raw.decode("utf-8")
+    old = r"\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox}"
+    require(text.count(old) == 1, "float package boundary changed")
+    text = text.replace(old, r"\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,float}")
+    if kind == "summary":
+        old = r"\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}"
+        require(text.count(old) == 1, "summary paragraph-spacing boundary changed")
+        text = text.replace(old, r"\setlength{\parskip}{0.34em plus 0.10em minus 0.06em}")
+    if kind == "full":
+        for introducer in (
+            r"Consequently, at the chosen \(\alpha\),",
+            r"The accepted mean bridge proves the actual component-series identities",
+            r"A zero fiber contains only zero-mass keys, because all \(p(z)\ge0\). It contributes zero. Writing \(Z\sim p\) for a complete row with this PMF, \textbf{\texttt{fiber\_inverse\_moment}} therefore proves",
+        ):
+            require(text.count(introducer) == 1, "page-flow introducer changed")
+            text = text.replace(introducer, r"\Needspace{8\baselineskip}" + "\n" + introducer)
+        require(text.count(r"\begin{figure}") == 3, "figure inventory changed")
+        text = text.replace(r"\begin{figure}", r"\begin{figure}[H]")
+        old = ("\\usepackage{hyperref,xurl,bookmark}\n"
+               "\\usepackage{pid-rs-report-tables}\n"
+               "\\usepackage{pid-rs-workflow-publication}")
+        new = ("\\usepackage{pid-rs-report-tables}\n"
+               "\\usepackage{pid-rs-workflow-publication}\n"
+               "\\usepackage{hyperref,xurl,bookmark}")
+        require(text.count(old) == 1, "reviewed package-order boundary changed")
+        text = text.replace(old, new)
+        for token, count in {
+            r"actual\_finite\_bias": 2, r"fiber\_inverse\_moment": 1,
+            r"support\_moment\_bounds": 1, r"projected\_support\_bias": 1,
+            r"mass\_floor\_bias": 1, "Classical.choice": 1, "Quot.sound": 1, "propext": 1,
+        }.items():
+            old = r"\texttt{" + token + "}"
+            require(text.count(old) == count, "protected identifier occurrence changed: " + token)
+            text = text.replace(old, r"\mbox{" + old + "}")
+    return text.encode("utf-8")
+
+
+def visible_matches(raw: bytes, title: str) -> list[dict]:
+    root = ET.fromstring(raw)
+    pages = root.findall(".//{*}page")
+    require(len(pages) <= 14, "bbox page budget exceeded")
+    wanted, result = title.split(), []
+    for number, page in enumerate(pages, 1):
+        words = page.findall("{*}word")
+        require(len(words) <= 10000, "bbox word budget exceeded")
+        tokens = [word.text or "" for word in words]
+        for index in range(len(tokens) - len(wanted) + 1):
+            if tokens[index:index + len(wanted)] == wanted:
+                match = words[index:index + len(wanted)]
+                result.append({
+                    "page": number, "text": title,
+                    "x_min": min(float(word.attrib["xMin"]) for word in match),
+                    "y_min": min(float(word.attrib["yMin"]) for word in match),
+                    "y_max": max(float(word.attrib["yMax"]) for word in match),
+                })
+    return result
+
+
+def near(actual: object, expected: object, tolerance: float) -> bool:
+    if type(actual) not in (int, float) or type(expected) not in (int, float):
+        return False
+    return math.isfinite(actual) and math.isfinite(expected) and abs(actual - expected) <= tolerance
+
+
+@contextmanager
+def reader_diagnostics():
+    messages = []
+
+    class Handler(logging.Handler):
+        def emit(self, record):
+            if record.levelno >= logging.WARNING:
+                messages.append(record.getMessage())
+
+    logger, handler = logging.getLogger("pypdf"), Handler()
+    logger.addHandler(handler)
+    try:
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            yield
+            require(not caught and not messages, "PDF reader emitted a diagnostic")
+    finally:
+        logger.removeHandler(handler)
+        handler.close()
+
+
+def check_navigation(rows: list[dict], expected: dict, bbox: bytes,
+                     pdf_text: list[str], poppler_text: list[str]) -> None:
+    wanted = expected["headings"]
+    require(len(rows) == len(wanted) == 30, "outline count changed")
+    names = [row["destination_name"] for row in rows]
+    require(len(set(names)) == 30, "heading destinations are not distinct")
+    for actual, reference in zip(rows, wanted, strict=True):
+        for key in ("title", "level", "destination_name", "destination_page"):
+            require(actual[key] == reference[key], "heading identity/page changed: " + key)
+        prefix = "section*." if actual["level"] == 0 else "subsection*."
+        require(actual["destination_name"].startswith(prefix), "heading destination level changed")
+        for key in ("destination_x", "destination_y_from_top"):
+            require(near(actual[key], reference[key], expected["numeric_tolerance_pt"]),
+                    "heading destination coordinate changed: " + key)
+        matches = visible_matches(bbox, actual["title"])
+        require(len(matches) == len(reference["visible_matches"]) == 1,
+                "visible heading is absent or ambiguous")
+        match, old = matches[0], reference["visible_matches"][0]
+        require(match["page"] == old["page"] == actual["destination_page"],
+                "outline does not target its visible heading page")
+        for key in ("x_min", "y_min", "y_max"):
+            require(near(match[key], old[key], expected["numeric_tolerance_pt"]),
+                    "visible heading coordinate changed: " + key)
+    for identifier in expected["identifiers"]:
+        token = identifier["token"]
+        for pages, key in ((pdf_text, "pypdf_pages"), (poppler_text, "poppler_pages")):
+            require([index for index, text in enumerate(pages, 1) if token in text]
+                    == identifier[key]
+                    and sum(text.count(token) for text in pages) == identifier["expected_count"],
+                    "protected identifier is split, missing or duplicated: " + token)
+
+
+def read_https_uri_action(value: dict) -> str:
+    """Read the exact URI-action shape present in the reviewed native PDFs."""
+    require(set(value) == {"/Type", "/S", "/URI"}
+            and value["/Type"] == "/Action" and value["/S"] == "/URI"
+            and isinstance(value["/URI"], str) and value["/URI"].startswith("https://"),
+            "PDF URI action changed")
+    return str(value["/URI"])
+
+
+def pdf_observation(reader_module: ModuleType, raw: bytes, kind: str,
+                    expected: dict, navigation: dict, bbox: bytes, layout: str) -> dict:
+    require(kind in KINDS, "unknown publication kind")
+    require(raw.startswith(b"%PDF-1.7"), "PDF profile changed")
+    with reader_diagnostics():
+        reader = reader_module.PdfReader(io.BytesIO(raw), strict=True)
+        require(not reader.is_encrypted and len(reader.pages) == expected["pages"],
+                "PDF encryption/page count changed")
+        catalog = reader.trailer["/Root"]
+        require(str(catalog.get("/Lang")) == "en", "PDF language changed")
+        for page in reader.pages:
+            require(near(float(page.mediabox.width), 595.276, 0.001)
+                    and near(float(page.mediabox.height), 841.89, 0.001),
+                    "PDF is not the reviewed A4 profile")
+        first_ref = reader.pages[0].indirect_reference
+        opener = catalog.get("/OpenAction")
+        opener = opener.get_object() if opener is not None else None
+        require(opener is not None and set(opener) == {"/S", "/D"}
+                and str(opener["/S"]) == "/GoTo", "PDF opener changed")
+        dest = opener["/D"]
+        require(len(dest) == 2 and str(dest[1]) == "/Fit"
+                and dest[0].idnum == first_ref.idnum
+                and dest[0].generation == first_ref.generation,
+                "PDF opener does not target its own first-page Fit")
+        uris, gotos, seen, objects = [], [], set(), 0
+        forbidden = {"/JS", "/JavaScript", "/AA", "/Launch", "/EmbeddedFiles", "/EF",
+                     "/RichMedia", "/SubmitForm", "/ImportData", "/GoToR", "/XFA"}
+
+        def visit(value: object) -> None:
+            nonlocal objects
+            if isinstance(value, reader_module.generic.IndirectObject):
+                key = ("ref", value.idnum, value.generation)
+                if key in seen:
+                    return
+                seen.add(key)
+                value = value.get_object()
+            if not isinstance(value, (dict, list)):
+                return
+            key = ("object", id(value))
+            if key in seen:
+                return
+            seen.add(key)
+            objects += 1
+            require(objects <= 50000, "PDF object budget exceeded")
+            if isinstance(value, dict):
+                require(not forbidden.intersection(value), "forbidden PDF action/file key")
+                if str(value.get("/S")) == "/URI":
+                    uris.append(read_https_uri_action(value))
+                elif str(value.get("/S")) == "/GoTo":
+                    require(set(value) == {"/S", "/D"}, "PDF GoTo action changed")
+                    if isinstance(value["/D"], str):
+                        gotos.append(str(value["/D"]))
+                    else:
+                        require(value is opener, "unexpected direct GoTo destination")
+                elif "/A" in value:
+                    action = value["/A"].get_object()
+                    require(str(action.get("/S")) in {"/URI", "/GoTo"}, "unsupported PDF action")
+                for child in value.values():
+                    visit(child)
+            else:
+                for child in value:
+                    visit(child)
+
+        visit(catalog)
+        require(Counter(uris) == Counter(expected["https_uris"]), "PDF URI inventory changed")
+        rows = []
+        named = reader.named_destinations
+        outline_seen = set()
+
+        def outline(node: object, level: int) -> None:
+            while node is not None:
+                node = node.get_object()
+                require(id(node) not in outline_seen and len(outline_seen) < 30 and level <= 1,
+                        "outline is cyclic or exceeds its roster")
+                outline_seen.add(id(node))
+                action = node["/A"].get_object()
+                require(str(action["/S"]) == "/GoTo" and isinstance(action["/D"], str),
+                        "outline has no named internal action")
+                name = str(action["/D"])
+                require(name in named, "outline names a missing destination")
+                point = named[name]
+                require(point.typ == "/XYZ", "heading destination kind changed")
+                number = reader.get_destination_page_number(point)
+                require(type(number) is int and 0 <= number < len(reader.pages),
+                        "heading destination has no valid page")
+                rows.append({"title": str(node["/Title"]), "level": level,
+                             "destination_name": name, "destination_page": number + 1,
+                             "destination_x": float(point.left),
+                             "destination_y_from_top": float(reader.pages[number].mediabox.height)
+                             - float(point.top)})
+                if "/First" in node:
+                    outline(node["/First"], level + 1)
+                node = node.get("/Next")
+
+        if "/Outlines" in catalog:
+            outline(catalog["/Outlines"].get("/First"), 0)
+        texts = [page.extract_text() or "" for page in reader.pages]
+        poppler = layout.split("\f")
+        if poppler and not poppler[-1].strip():
+            poppler.pop()
+        require(len(poppler) == len(texts), "Poppler page extraction changed")
+        if kind == "full":
+            check_navigation(rows, navigation, bbox, texts, poppler)
+            require(Counter(gotos) == Counter(row["destination_name"] for row in rows),
+                    "internal GoTo inventory changed")
+        else:
+            require(not rows and not gotos, "summary outline inventory changed")
+    return {"pages": len(texts), "headings": rows, "https_uris": uris,
+            "identifiers_checked": 8 if kind == "full" else 0,
+            "first_page_fit": True, "objects_observed": objects,
+            "scope": "Exact reviewed-artifact structural checks; no generic viewer safety or accessibility claim."}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).absolute().parents[1])
+    parser.add_argument("--kind", choices=KINDS, required=True)
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--exact", action="store_true")
+    modes.add_argument("--cross-toolchain", action="store_true")
+    parser.add_argument("--check", action="store_true", help="required; always two fresh builds")
+    parser.add_argument("--registration", type=Path)
+    parser.add_argument("--registration-sha256")
+    parser.add_argument("--work-dir", type=Path)
+    parser.add_argument("--output", type=Path, help="optional new file; existing files are never overwritten")
+    args = parser.parse_args()
+    if args.cross_toolchain:
+        print("Bias publication: no reviewed cross-toolchain relation; status 2 refusal.", file=sys.stderr)
+        return 2
+    require(sys.version_info >= (3, 11) and sys.flags.isolated and sys.flags.no_site
+            and sys.flags.ignore_environment and sys.dont_write_bytecode
+            and sys.flags.optimize in (0, 1), "requires Python -I -S -B, optionally -O")
+    require(args.check and args.registration is not None and args.work_dir is not None,
+            "exact reproduction requires --check, registration and fresh work directory")
+    args.root = direct_directory(args.root)
+    args.work_dir = args.work_dir.absolute()
+    direct_directory(args.work_dir.parent)
+    require(not args.work_dir.exists() and not args.work_dir.is_symlink(), "work directory exists")
+    if args.output is not None:
+        args.output = args.output.absolute()
+        direct_directory(args.output.parent)
+        require(not args.output.exists() and not args.output.is_symlink(), "output already exists")
+    runtime = load_runtime(args.root)
+    snapshot = runtime.Snapshot()
+    snapshot.read(args.root / RUNTIME)
+    manifest_raw = snapshot.read(args.root / MANIFEST)
+    require(digest(manifest_raw) == MANIFEST_SHA256, "publication manifest changed")
+    manifest = runtime.strict_json(manifest_raw)
+    require(manifest["schema"] == "pid-rs/prefix-mgw-bias-publication-inputs-v1"
+            and set(manifest["canonical"]) == CANONICAL_NAMES, "publication source roster changed")
+    inputs = {}
+    for relative, expected in manifest["files"].items():
+        relative_path(relative)
+        inputs[relative] = snapshot.read(args.root / relative)
+        check_entry(inputs[relative], expected, relative)
+    profile = runtime.strict_json(inputs[ASSETS + "native-tools-v1.json"])
+    require(profile["schema"] == "pid-rs/prefix-mgw-bias-native-tools-v1"
+            and os.uname().sysname == profile["platform"]["system"]
+            and os.uname().machine == profile["platform"]["machine"]
+            and list(sys.version_info[:3]) == profile["python"]["version"],
+            "native producer platform/interpreter profile differs")
+    check_entry(snapshot.read(Path(sys.executable).resolve(strict=True)),
+                profile["python"], "active Python executable")
+    check_entry(snapshot.read(Path("/bin/ps")), profile["process_observer"], "fixed process observer")
+    registration_raw = snapshot.read(args.registration.absolute())
+    require(digest(registration_raw) == args.registration_sha256, "registration changed")
+    reg = runtime.strict_json(registration_raw)
+    builder_sha = digest(snapshot.read(Path(__file__).absolute()))
+    deadline = admit_registration(reg, args, profile, MANIFEST_SHA256, builder_sha)
+    selectors, targets = {}, {}
+    for name in sorted(TOOLS):
+        selector = Path(reg["tool_selectors"][name])
+        require(selector.is_absolute() and selector.name == name, "tool selector name/path differs")
+        target = selector.resolve(strict=True)
+        require(target.name == profile["tools"][name]["expected_target_leaf"],
+                "tool target leaf differs")
+        check_entry(snapshot.read(target), profile["tools"][name], name)
+        selectors[name], targets[name] = str(selector), target
+    reader_source = direct_directory(Path(reg["reader_directory"]))
+    reader_manifest = runtime.strict_json(inputs[ASSETS + "reader-source-v1.json"])
+    actual = {str(path.relative_to(reader_source)) for path in reader_source.rglob("*")
+              if path.is_file() and "__pycache__" not in path.parts and path.suffix != ".pyc"}
+    require(actual == set(reader_manifest["files"]), "reader source inventory differs")
+    reader_bytes = {}
+    for relative, expected in reader_manifest["files"].items():
+        relative_path(relative)
+        reader_bytes[relative] = snapshot.read(reader_source / relative)
+        check_entry(reader_bytes[relative], expected, "reader/" + relative)
+    args.work_dir.mkdir(mode=0o700)
+    result = {"started_utc": now().isoformat(), "status": "failed", "kind": args.kind,
+              "builds": [], "commands": [], "new_proofs": 0,
+              "scope": "Two exact native PDF builds; no cross, scientific or hosted acceptance."}
+    try:
+        reader_copy = args.work_dir / "reader" / "pypdf"
+        reader_copy.mkdir(parents=True)
+        for relative, raw in reader_bytes.items():
+            target = reader_copy / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(raw)
+            snapshot.read(target)
+        require("pypdf" not in sys.modules, "ambient PDF reader was already loaded")
+        sys.path.insert(0, str(reader_copy.parent))
+        reader_module = importlib.import_module("pypdf")
+        require(reader_module.__version__ == reader_manifest["version"], "PDF reader version differs")
+        navigation = runtime.strict_json(inputs[ASSETS + "navigation-v1.json"])
+        expected = manifest["outputs"][args.kind]
+        produced = []
+        for index in (1, 2):
+            require(now() < deadline, "deadline before build")
+            attempt = args.work_dir / ("build-" + str(index))
+            attempt.mkdir()
+            build = attempt / "build"
+            build.mkdir()
+            for leaf in ("home", "tmp", "commands", "fonts", "font-cache", "tex-cache"):
+                (attempt / leaf).mkdir()
+            for relative, source in manifest["canonical"].items():
+                target = build / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(inputs[source])
+            environment = {
+                "PATH": os.defpath, "LC_ALL": "C", "LANG": "C", "TZ": "UTC",
+                "SOURCE_DATE_EPOCH": str(profile["source_date_epoch"]),
+                "HOME": str(attempt / "home"), "TMPDIR": str(attempt / "tmp"),
+                "TEXINPUTS": str(build / "layout") + os.pathsep,
+                "TEXMFVAR": str(attempt / "tex-cache"), "TEXMFCACHE": str(attempt / "tex-cache"),
+                "FONTCONFIG_FILE": str(attempt / "fonts.conf"), "FONTCONFIG_PATH": str(attempt),
+                "PANGOCAIRO_BACKEND": "fc", "OSFONTDIR": str(attempt / "fonts"),
+            }
+            record(attempt / "ENVIRONMENT.json", environment)
+            runner = runtime.Runner(attempt / "commands", environment, preparation=False)
+            result["builds"].append({"index": index, "status": "started"})
+            row = result["builds"][-1]
+
+            def run(name: str, arguments: list[str], label: str) -> bytes:
+                remaining = (deadline - now()).total_seconds()
+                require(remaining > 0 and len(result["commands"]) < reg["maximum_commands"],
+                        "invocation deadline or command budget exhausted")
+                require(Path(selectors[name]).resolve(strict=True) == targets[name],
+                        "tool selector changed before launch")
+                snapshot.read(targets[name])
+                before_count = len(runner.commands)
+                try:
+                    return runner.run([selectors[name], *arguments], build, label,
+                                      timeout=min(300, remaining), allow_stdout=True)
+                finally:
+                    if len(runner.commands) > before_count:
+                        result["commands"].append(runner.commands[-1])
+
+            def format_input(label: str) -> str:
+                found = run("kpsewhich", ["--engine=luahbtex", "--progname=lualatex",
+                            "--must-exist", "--format=fmt", "lualatex.fmt"], label).decode().strip()
+                require(len(found.splitlines()) == 1 and Path(found).is_absolute(),
+                        "format lookup is not one absolute path")
+                check_entry(snapshot.read(Path(found)), profile["format"], "LuaLaTeX format")
+                return found
+
+            for name in ("pandoc", "lualatex", "rsvg-convert"):
+                value = run(name, ["--version"], name + "-version").decode().splitlines()
+                require(value and value[0].strip() == profile["expected_versions"][name],
+                        "producer version differs: " + name)
+            selected_format = format_input("format-before")
+            require(set(profile["fonts"]) == set(FONT_NAMES), "font roster changed")
+            for name in FONT_NAMES:
+                expected_font = profile["fonts"][name]
+                found = run("kpsewhich", ["--must-exist", name], "font-" + name).decode().strip()
+                require(len(found.splitlines()) == 1 and Path(found).is_absolute(),
+                        "font lookup is not one absolute path")
+                raw = snapshot.read(Path(found))
+                check_entry(raw, expected_font, name)
+                (attempt / "fonts" / name).write_bytes(raw)
+            (attempt / "fonts.conf").write_text(
+                '<?xml version="1.0"?>\n<fontconfig><dir>' + escape(str(attempt / "fonts"))
+                + "</dir><cachedir>" + escape(str(attempt / "font-cache"))
+                + "</cachedir><config></config></fontconfig>\n")
+            run("fc-cache", ["-f"], "font-cache")
+            if args.kind == "full":
+                rendered = build / "render-svg"
+                rendered.mkdir()
+                for relative in sorted(name for name in CANONICAL_NAMES if name.endswith(".svg")):
+                    source = manifest["canonical"][relative]
+                    raw = derive_svg(inputs[source])
+                    require(raw == inputs[ASSETS + "render-svg/" + Path(relative).name],
+                            "derived SVG differs")
+                    target = rendered / Path(relative).name
+                    target.write_bytes(raw)
+                    run("rsvg-convert", ["--format=pdf", "--keep-aspect-ratio",
+                        "--output=" + str((build / relative).with_suffix(".pdf")), str(target)],
+                        "svg-" + target.stem)
+            markdown = "EXPOSITION.md" if args.kind == "full" else "SUMMARY.md"
+            run("pandoc", [markdown, "--from=markdown+tex_math_dollars+implicit_figures",
+                "--to=latex", "--standalone", "--wrap=none", "--template=layout/report.latex",
+                "--lua-filter=layout/publication-filter.lua", "--output=report.tex"], "pandoc-report")
+            raw_tex = read_direct(build / "report.tex")
+            require(raw_tex == inputs[ASSETS + args.kind + ".pandoc.expected.tex"],
+                    "Pandoc TeX correspondence differs")
+            (build / "report.pandoc.tex").write_bytes(raw_tex)
+            derived = derive_tex(raw_tex, args.kind)
+            require(derived == inputs[ASSETS + args.kind + ".expected.tex"],
+                    "corrected derived TeX correspondence differs")
+            (build / "report.tex").write_bytes(derived)
+            record(build / "TEX_LAYOUT_DERIVATION.json",
+                   {"pandoc_sha256": digest(raw_tex), "derived_sha256": digest(derived),
+                    "kind": args.kind, "canonical_inputs_changed": False})
+            for number in (1, 2):
+                run("lualatex", ["-no-shell-escape", "-interaction=nonstopmode",
+                    "-halt-on-error", "-file-line-error", "report.tex"], "lualatex-" + str(number))
+            run("bash", [str(build / "check-formal-pdf-log.sh"), str(build / "report.log")],
+                "strict-final-log")
+            pdf = read_direct(build / "report.pdf")
+            check_entry(pdf, expected, "reviewed PDF")
+            require(pdf == inputs[expected["path"]], "PDF differs from reviewed reference bytes")
+            run("pdfinfo", [str(build / "report.pdf")], "pdfinfo")
+            fonts = run("pdffonts", [str(build / "report.pdf")], "pdffonts").decode()
+            rows = fonts.splitlines()[2:]
+            require(rows and "Type 3" not in fonts and "Helvetica" not in fonts
+                    and all(row.split()[-5:-2] == ["yes", "yes", "yes"] for row in rows),
+                    "font embedding/subsetting/Unicode profile differs")
+            run("pdftotext", ["-layout", str(build / "report.pdf"), str(build / "report.layout.txt")],
+                "pdftotext-layout")
+            run("pdftotext", ["-bbox", str(build / "report.pdf"), str(build / "words.xhtml")],
+                "pdftotext-bbox")
+            observation = pdf_observation(reader_module, pdf, args.kind, expected, navigation,
+                                          read_direct(build / "words.xhtml"),
+                                          read_direct(build / "report.layout.txt").decode())
+            record(build / "PDF_STRUCTURE.json", observation)
+            require(format_input("format-after") == selected_format, "format selection changed")
+            require(read_direct(build / "report.pdf") == pdf, "produced PDF changed during checks")
+            snapshot.verify()
+            require(all(Path(selectors[name]).resolve(strict=True) == targets[name] for name in TOOLS),
+                    "tool selectors changed during build")
+            require(now() < deadline, "build finished after deadline")
+            row.update(status="exact_reviewed_pdf_reproduced", bytes=len(pdf), sha256=digest(pdf))
+            produced.append(pdf)
+        require(len(produced) == 2 and produced[0] == produced[1], "fresh PDF repetition differs")
+        require(len(result["commands"]) == reg["maximum_commands"], "actual command roster differs")
+        if args.output is not None:
+            with args.output.open("xb") as stream:
+                stream.write(produced[0])
+                stream.flush()
+                os.fsync(stream.fileno())
+        result.update(status="two_fresh_exact_reviewed_pdfs_reproduced", build_count=2,
+                      pdf_sha256=digest(produced[0]), inputs_and_tools_unchanged=True)
+    except BaseException as error:
+        result["failure"] = repr(error)
+        raise
+    finally:
+        custody_error = None
+        try:
+            snapshot.save(args.work_dir)
+            result["inputs"] = snapshot.manifest()
+        except BaseException as error:
+            custody_error = error
+            result["status"] = "failed"
+            result["custody_failure"] = repr(error)
+        result["completed_utc"] = now().isoformat()
+        late = now() >= deadline
+        if late:
+            result["status"] = "failed"
+            result["deadline_exhausted_during_finalization"] = True
+        record_final_result(args.work_dir / "RESULT.json", result, deadline)
+        require(custody_error is None, "input-custody finalization failed")
+        require(not late, "publication finalization exceeded its registered deadline")
+    print("OK: bias " + args.kind + " PDF reproduced in two fresh exact builds")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as error:
+        print("Bias publication build failed: " + str(error), file=sys.stderr)
+        raise SystemExit(1)

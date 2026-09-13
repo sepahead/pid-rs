@@ -882,9 +882,11 @@ jobs:
           }
           verify_tagpdf_compat_toolchain
           verify_pdfresources_compat_toolchain
-          gate_home="$RUNNER_TEMP/pid-rs-formal-pdf-home"
+          gate_elan_root="$RUNNER_TEMP/pid-rs-formal-pdf-elan"
+          gate_xdg_config="$RUNNER_TEMP/pid-rs-formal-pdf-xdg-config"
+          gate_xdg_cache="$RUNNER_TEMP/pid-rs-formal-pdf-xdg-cache"
           gate_tmp="$RUNNER_TEMP/pid-rs-formal-pdf-tmp"
-          elan_home="$HOME/.elan"
+          hosted_elan_root="$HOME/.elan"
           formal_tool_path="$pythonLocation/bin/luaotfload-tool"
           luaotfload_source="$(/usr/bin/readlink -f /usr/bin/luaotfload-tool)"
           if [[ "$luaotfload_source" != "/usr/share/texlive/texmf-dist/scripts/luaotfload/luaotfload-tool.lua" ]]; then
@@ -913,7 +915,6 @@ jobs:
           trap - EXIT
           /usr/bin/cmp -s "$luaotfload_source" "$formal_tool_path"
           workflow_path="$PID_RS_CI_PANDOC_BIN:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-          formal_pdf_path="$PID_RS_CI_PANDOC_BIN:$elan_home/bin:$pythonLocation/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
           verify_formal_command_selection() {
             local command_name resolved expected
             resolved="$(/usr/bin/env -i "PATH=$formal_pdf_path" /usr/bin/sh -c 'command -v pandoc')"
@@ -921,58 +922,96 @@ jobs:
               echo "sanitized formal-PDF path does not select the hash-pinned Pandoc" >&2
               exit 1
             fi
-            for command_name in elan lake lean; do
-              expected="$elan_home/bin/$command_name"
+            for command_name in lake lean; do
+              expected="$gate_lean_bin/$command_name"
               resolved="$(/usr/bin/env -i "PATH=$formal_pdf_path" \
                 /usr/bin/sh -c 'command -v "$1"' sh "$command_name")"
               if [[ "$resolved" != "$expected" ]]; then
-                echo "sanitized formal-PDF path does not select the Elan $command_name proxy" >&2
+                echo "sanitized formal-PDF path does not select the provisioned direct $command_name" >&2
                 exit 1
               fi
             done
           }
-          verify_formal_command_selection
-          for clean_path in "$gate_home" "$gate_tmp"; do
+          for clean_path in "$gate_elan_root" "$gate_xdg_config" "$gate_xdg_cache" "$gate_tmp"; do
             if [[ -e "$clean_path" || -L "$clean_path" ]]; then
               echo "refusing a pre-existing formal-PDF clean-state path: $clean_path" >&2
               exit 1
             fi
           done
-          /usr/bin/mkdir -m 0700 -- "$gate_home" "$gate_tmp"
+          /usr/bin/mkdir -m 0700 -- \
+            "$gate_xdg_config" "$gate_xdg_cache" "$gate_tmp"
           gate_lean_toolchain="leanprover/lean4:v4.33.0"
           if ! /usr/bin/printf '%s\n' "$gate_lean_toolchain" \
             | /usr/bin/cmp -s - audit/formal/lean/lean-toolchain
           then
-            echo "formal-PDF clean-home Lean toolchain differs from the tracked pin" >&2
+            echo "formal-PDF clean-state Lean toolchain differs from the tracked pin" >&2
             exit 1
           fi
           /usr/bin/env -i \
-            "PATH=$formal_pdf_path" \
-            "HOME=$gate_home" \
+            "PATH=$workflow_path" \
             "TMPDIR=$gate_tmp" \
-            "ELAN_HOME=$gate_home/.elan" \
+            "ELAN_HOME=$gate_elan_root" \
+            "XDG_CONFIG_HOME=$gate_xdg_config" \
+            "XDG_CACHE_HOME=$gate_xdg_cache" \
             LC_ALL=C \
             LANG=C \
             TZ=UTC \
-            "$elan_home/bin/elan" toolchain install "$gate_lean_toolchain"
-          if [[ ! -d "$gate_home/.elan" || -L "$gate_home/.elan" ]]; then
-            echo "formal-PDF clean-home Elan state is not a direct directory" >&2
+            "$hosted_elan_root/bin/elan" toolchain install "$gate_lean_toolchain"
+          if [[ ! -d "$gate_elan_root" || -L "$gate_elan_root" ]]; then
+            echo "formal-PDF clean Elan state is not a direct directory" >&2
             exit 1
           fi
+          # The descriptor wrapper removes ELAN_* before launching Lake. Select the installed
+          # release binaries directly so their toolchain does not depend on a proxy.
+          gate_elan_root="$(/usr/bin/readlink -e -- "$gate_elan_root")"
+          resolve_formal_lean_tool() {
+            /usr/bin/env -i \
+              "PATH=$workflow_path" \
+              "TMPDIR=$gate_tmp" \
+              "ELAN_HOME=$gate_elan_root" \
+              "ELAN_TOOLCHAIN=$gate_lean_toolchain" \
+              "XDG_CONFIG_HOME=$gate_xdg_config" \
+              "XDG_CACHE_HOME=$gate_xdg_cache" \
+              LC_ALL=C \
+              LANG=C \
+              TZ=UTC \
+              "$hosted_elan_root/bin/elan" which "$1"
+          }
+          gate_lake="$(resolve_formal_lean_tool lake)"
+          gate_lean="$(resolve_formal_lean_tool lean)"
+          gate_lean_bin="${gate_lake%/*}"
+          gate_toolchain_root="${gate_lean_bin%/bin}"
+          if [[ "$gate_lake" != "$gate_lean_bin/lake" \
+              || "$gate_lean" != "$gate_lean_bin/lean" \
+              || "$gate_lean_bin" != "$gate_toolchain_root/bin" \
+              || "${gate_toolchain_root%/*}" != "$gate_elan_root/toolchains" \
+              || "$gate_lean_bin" == *:* \
+              || "$gate_lean_bin" == *$'\n'* || "$gate_lean_bin" == *$'\r'* ]]; then
+            echo "formal-PDF Lean tools do not share one installed toolchain bin" >&2
+            exit 1
+          fi
+          for gate_tool in "$gate_lake" "$gate_lean"; do
+            if [[ ! -f "$gate_tool" || ! -x "$gate_tool" || -L "$gate_tool" \
+                || "$(/usr/bin/readlink -e -- "$gate_tool")" != "$gate_tool" ]]; then
+              echo "formal-PDF Lean tool is not a direct canonical executable: $gate_tool" >&2
+              exit 1
+            fi
+          done
+          formal_pdf_path="$gate_lean_bin:$workflow_path"
           verify_pandoc_binary
           verify_tagpdf_compat_toolchain
           verify_pdfresources_compat_toolchain
           verify_formal_command_selection
           exec /usr/bin/env -i \
             "PATH=$formal_pdf_path" \
-            "HOME=$gate_home" \
             "TMPDIR=$gate_tmp" \
-            "ELAN_HOME=$gate_home/.elan" \
+            "ELAN_HOME=$gate_elan_root" \
+            "XDG_CONFIG_HOME=$gate_xdg_config" \
+            "XDG_CACHE_HOME=$gate_xdg_cache" \
             LC_ALL=C \
             LANG=C \
             TZ=UTC \
             "PID_RS_PDF_GATE_PATH=$workflow_path" \
-            "PID_RS_PDF_GATE_HOME=$gate_home" \
             "PID_RS_PDF_GATE_TMPDIR=$gate_tmp" \
             bash --noprofile --norc scripts/check-formal-pdf-set.sh --cross-toolchain
 

@@ -1,0 +1,71 @@
+private lemma pair_unique {I : Type u} {X : I → Type v} {T : Type w}
+    [Fintype I] [∀ i, Fintype (X i)] [Fintype T]
+    [DecidableEq I] [∀ i, DecidableEq (X i)] [DecidableEq T]
+    (p : Key I X T → ℝ) (hp : Law p)
+    (plus minus otherPlus otherMinus : Key I X T → Node I → ℝ)
+    (hpair : SupportedInversePair p plus minus)
+    (hother : SupportedInversePair p otherPlus otherMinus) :
+    plus = otherPlus ∧ minus = otherMinus := by
+  have hzpair (z : Key I X T) : plus z = otherPlus z ∧ minus z = otherMinus z := by
+    by_cases hz : 0 < p z
+    · exact ⟨(hother.2 z hz).2.2.1 (plus z) (hpair.2 z hz).1,
+        (hother.2 z hz).2.2.2 (minus z) (hpair.2 z hz).2.1⟩
+    · have hzero : p z = 0 := le_antisymm (le_of_not_gt hz) (hp.1 z)
+      exact ⟨(hpair.1 z hzero).1.trans (hother.1 z hzero).1.symm,
+        (hpair.1 z hzero).2.trans (hother.1 z hzero).2.symm⟩
+  exact ⟨funext (fun z => (hzpair z).1), funext (fun z => (hzpair z).2)⟩
+
+private lemma proof_projected_bias : projected_support_bias_target.{u,v,w} := by
+  intro I X T _ _ _ _ _ _ _ p plus minus alpha C hp hpair hC h
+  classical
+  obtain ⟨otherPlus, otherMinus, hother, _htail, hb⟩ := proof_actual_bias I X T p hp
+  obtain ⟨rfl, rfl⟩ := pair_unique p hp plus minus otherPlus otherMinus hpair hother
+  rcases proof_support_moments I X T p alpha hp with
+    ⟨_hs1, _hsq, hteq, _ht1, _htq, _hqcard, hproj⟩
+  rcases hproj C hC with ⟨hsC, hqC⟩
+  rcases hb alpha h with ⟨_mean, _low, _upp, _abs, _query, hinverse, hlower, hupper⟩
+  have hd : 0 ≤ (h : ℝ) + 1 := by positivity
+  refine ⟨?_, ?_, ?_⟩
+  · apply le_trans _ hlower
+    apply div_le_div_of_nonneg_right _ hd
+    rw [← hteq]
+    linarith
+  · apply hupper.trans
+    apply div_le_div_of_nonneg_right _ hd
+    linarith
+  · apply (hinverse.trans (min_le_right _ _)).trans
+    apply div_le_div_of_nonneg_right _ hd
+    linarith
+
+private lemma proof_floor_bias : mass_floor_bias_target.{u,v,w} := by
+  intro I X T _ _ _ _ _ _ _ p plus minus alpha eta hp hpair heta heta1 hfloor h
+  classical
+  obtain ⟨otherPlus, otherMinus, hother, _htail, hb⟩ := proof_actual_bias I X T p hp
+  obtain ⟨rfl, rfl⟩ := pair_unique p hp plus minus otherPlus otherMinus hpair hother
+  have hquery := (hb alpha h).2.2.2.2.1
+  have henvelope : supportedAverage p (fun z => logRemainder (restrictedMass p z alpha) h) ≤
+      logRemainder eta h := by
+    rw [← average_const p hp (logRemainder eta h)]
+    apply average_mono
+    intro z hz
+    have hd := anchor_domains p hp z hz alpha
+    have hm := (remainder_difference eta (restrictedMass p z alpha) heta
+      (hfloor z hz) (hd.2.1.trans hd.2.2.2.1) h).1
+    linarith
+  have hbound := hquery.trans henvelope
+  exact ⟨hbound, hbound.trans (remainder_basic eta heta heta1 h).2.2.1⟩
+
+theorem actual_finite_bias : actual_finite_bias_target.{u,v,w} :=
+  proof_actual_bias
+
+theorem fiber_inverse_moment : fiber_inverse_moment_target.{u,v} :=
+  proof_fiber_inverse
+
+theorem support_moment_bounds : support_moment_bounds_target.{u,v,w} :=
+  proof_support_moments
+
+theorem projected_support_bias : projected_support_bias_target.{u,v,w} :=
+  proof_projected_bias
+
+theorem mass_floor_bias : mass_floor_bias_target.{u,v,w} :=
+  proof_floor_bias

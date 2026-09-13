@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="91mm" viewBox="0 0 1600 910" role="img" aria-labelledby="overlap-title overlap-desc">
+<title id="overlap-title">Overlapping query events need not form projection fibers</title>
+<desc id="overlap-desc">Two independent fair source bits have four equally likely pairs, and the target is constant. The node consists of the two singleton collections and accepts either source matching the anchor. At anchor 00 the query contains 00, 01 and 10, excluding 11. At anchor 01 it contains 00, 01 and 11, excluding 10. Each query has mass three quarters. Their inverse query moment is four thirds, which is not an integer support count. Both panels use explicit included or excluded labels as well as shading. Because the target is constant, the positive and negative prefix increments are identical and their signed statistic is zero.</desc>
+<defs><style>
+.title{font-family:'Source Sans Pro',sans-serif;font-size:42px;font-weight:700;fill:#1F3F60}
+.eyebrow{font-family:'Source Sans Pro',sans-serif;font-size:25px;font-weight:700;letter-spacing:2px;fill:#596A73}
+.label{font-family:'Source Sans Pro',sans-serif;font-size:32px;font-weight:600;fill:#2C3E50}
+.body{font-family:'Source Sans Pro',sans-serif;font-size:31px;fill:#2C3E50}
+.key{font-family:'Source Sans Pro',sans-serif;font-size:43px;font-weight:700;fill:#1F3F60;text-anchor:middle}
+.cell{font-family:'Source Sans Pro',sans-serif;font-size:29px;fill:#2C3E50;text-anchor:middle}
+.note{font-family:'Source Sans Pro',sans-serif;font-size:28px;fill:#596A73}
+</style></defs>
+<rect width="1600" height="910" fill="#F7F3E9"/>
+<text x="60" y="50" class="eyebrow">HAND DERIVATION · TWO FAIR SOURCE BITS · CONSTANT TARGET</text>
+<path d="M60 80 H1540" stroke="#D2E0E2" stroke-width="2"/>
+<path d="M60 80 H330" stroke="#B28218" stroke-width="6"/>
+<text x="60" y="144" class="title">A query union is not necessarily a partition</text>
+<text x="60" y="195" class="body">Node {{1}, {2}}: accept either source matching the anchor. Each pair has mass 1/4.</text>
+<text x="430" y="258" class="label" text-anchor="middle">Anchor (0, 0)</text>
+<text x="1170" y="258" class="label" text-anchor="middle">Anchor (0, 1)</text>
+<g stroke="#1F3F60" stroke-width="2">
+<rect x="100" y="295" width="330" height="162" fill="#D2E0E2"/>
+<rect x="430" y="295" width="330" height="162" fill="#D2E0E2"/>
+<rect x="100" y="457" width="330" height="162" fill="#D2E0E2"/>
+<rect x="430" y="457" width="330" height="162" fill="#FFFFFF"/>
+<rect x="840" y="295" width="330" height="162" fill="#D2E0E2"/>
+<rect x="1170" y="295" width="330" height="162" fill="#D2E0E2"/>
+<rect x="840" y="457" width="330" height="162" fill="#FFFFFF"/>
+<rect x="1170" y="457" width="330" height="162" fill="#D2E0E2"/>
+</g>
+<text x="265" y="358" class="key">00</text><text x="265" y="413" class="cell">Included</text>
+<text x="595" y="358" class="key">01</text><text x="595" y="413" class="cell">Included</text>
+<text x="265" y="520" class="key">10</text><text x="265" y="575" class="cell">Included</text>
+<text x="595" y="520" class="key">11</text><text x="595" y="575" class="cell">Excluded</text>
+<text x="1005" y="358" class="key">00</text><text x="1005" y="413" class="cell">Included</text>
+<text x="1335" y="358" class="key">01</text><text x="1335" y="413" class="cell">Included</text>
+<text x="1005" y="520" class="key">10</text><text x="1005" y="575" class="cell">Excluded</text>
+<text x="1335" y="520" class="key">11</text><text x="1335" y="575" class="cell">Included</text>
+<text x="430" y="680" class="label" text-anchor="middle">Query mass q = 3/4</text>
+<text x="1170" y="680" class="label" text-anchor="middle">Query mass q = 3/4</text>
+<path d="M60 727 H1540" stroke="#D2E0E2" stroke-width="2"/>
+<text x="60" y="780" class="label">Every anchor has q = 3/4, so Kq = Eₚ⁺[1/q] = 4/3.</text>
+<text x="60" y="830" class="body">The sets overlap but differ. The inverse moment need not be a support count.</text>
+<text x="60" y="878" class="note">With a constant target, positive and negative increments still cancel on every block.</text>
+</svg>

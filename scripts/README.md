@@ -2197,10 +2197,11 @@ binary with SHA-256 `3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53
 This endpoint observation does not atomically bind the hash to the executable bytes that the
 operating system ran. The closed receipt preserves that causation boundary.
 Exact mode accepts only Pandoc 3.10.2 and remains byte-strict without live cross-profile inputs. The
-hosted workflow separately installs and digest-binds its Pandoc 3.10.2 executable. Its formal-PDF
-`PATH` puts that pinned directory first and the Elan proxy directory second. The workflow resolves
-Pandoc plus the `elan`, `lake`, and `lean` proxies before and after clean-home toolchain setup. The
-hosted guide dispatcher separately performs the bounded per-run `kpsewhich` and format captures
+hosted workflow separately installs and digest-binds its Pandoc 3.10.2 executable. The proposed
+formal-PDF direct-toolchain route described below retains the pinned Pandoc selection check and
+selects direct `lake` and `lean` from the explicitly provisioned installation for the aggregate.
+Its Linux runtime and hosted results remain pending. The hosted guide dispatcher separately
+performs the bounded per-run `kpsewhich` and format captures
 described above; those observations do not authenticate `kpsewhich` across runs.
 
 `check-mathematical-results-guide-builder-self-test.sh` uses an isolated fixture and a fake font
@@ -2619,6 +2620,74 @@ as a hash-checked distribution archive in `audit/formal/requirements-pdf.txt`; C
 pin does not authenticate an arbitrary pre-existing local installation, Python executable, system
 library, TeX distribution, or operating system.
 
+The installed LaTeX Markdown module remains unchanged. For each isolated workflow build,
+`prepare-mathematical-workflow-markdown-parser.py` selects one of two exact `markdown.lua` source
+profiles and applies this exact 57-byte insertion to a private mode-0444 copy:
+
+```lua
+      if not toplevel then collectgarbage("collect") end
+```
+
+The line runs at each non-top-level parser callback entry, immediately before the existing
+strip-indent branch and `lpeg.match(grammar(), str)`. The admitted profiles are TeX Live 2024
+Markdown 3.4.2-0-ga45cf0ed (276,148-byte preimage and 276,205-byte postimage) and Ubuntu Noble
+Markdown 2.23.0-0-g0b22f91 (188,652-byte preimage and 188,709-byte postimage).
+`audit/formal/workflow-markdown-parser-profiles.json` binds their exact SHA-256 values and transform
+receipts. The Ubuntu profile also binds retained package and extraction bytes; that custody is not
+APT authentication or a compatibility result.
+
+The 2,930-byte `audit/formal/latex/pid-rs-markdown-gc-loader.lua` installs the private postimage
+under the logical module name `markdown` before the captured report source runs. After emitting its
+profile marker, it calls `texio.write_nl("log", "")` to separate subsequent log output. The installed
+LuaTeX 1.18 manual source documents `write_nl` as starting the supplied text on a new line and an
+empty string as advancing to the next line. The portable
+[LuaTeX reference manual, section 10.5.2](https://texdoc.org/serve/luatex/0) is an unversioned reader
+link and may serve a newer manual; it is not the identity of the inspected local 1.18 source.
+
+The checker replays the exact profile and private-module receipt before every compiler pass and
+after convergence, requires exactly one complete profile-marker line per pass, compares the two
+build copies, and requires raw and resolved `.fls` input sets to contain the exact loader and private
+module while rejecting any ambient `markdown.lua`. The marker predicate remains exact. The loader
+enables no debug API, tracing, subprocess, or `--luadebug` route.
+
+**Local exact result (13 September 2026):** the marker-termination successor passed the complete
+exact workflow gate with TeX Live 2024 and Markdown 3.4.2. It completed the 430-control workflow
+suite, ran the 23-control parser source suite in ordinary and optimized Python, and produced two
+isolated report builds that converged in four passes each. The result matches the committed
+87-page PDF, all four SVG/PDF pairs, and the dual-render receipt. The exact marker, loader/module FLS, input-closure,
+convergence, page, text, navigation, and raster predicates all remained unchanged. This is local
+execution evidence for the named profile. The Ubuntu profile, full formal-PDF aggregate, hosted
+cross-toolchain run, and mainline publication still require their separate evidence.
+The separate 30-control parser `--handoff` route adds seven handoff controls. Fresh ordinary and
+optimized runs passed against the final integration candidates; they were not part of the exact
+PDF invocation and establish source-control results only.
+
+Two earlier exact attempts remain failures. The first stopped before rendering because its
+source-custody self-test expected five engine/progname selectors where the new legitimate Markdown
+query makes six. The count successor corrected those two counts and the associated format-mutation
+occurrence. Its exact attempt reached build A, pass 1, then failed the parser-profile sentinel
+check. Cleanup deleted that raw pass log, so the historical cause cannot be reconstructed from the
+retained error or inferred from the later successful run.
+
+A separate paired diagnostic imported the real local Markdown module and emitted forced following
+log text immediately after each loader returned. Its first setup failed during Luaotfload
+initialization, before the fixture. An execution-only successor set `TEXMFCACHE` and
+`LUATEX_CACHEDIR` to each case's private `TEXMFVAR`; both fixtures then exited successfully. The
+original loader joined the marker to the following text, while the added empty `write_nl` produced
+exactly one standalone marker and one separate following-text line. Each fixture naturally
+recorded one loader and one private-module FLS input and emitted no PDF. That diagnostic establishes
+the forced-output mechanism for its fixture; it does not recover the deleted full-run log.
+
+The earlier instrumented one-pass diagnostic used parser tracing and `--luadebug` and completed
+under its memory cap. Its different instrumentation and environment make it noncausal. Neither
+that diagnostic nor the passing local exact gate proves general garbage-collection behavior or
+compatibility with other module profiles.
+
+The private collection point changes allocation and garbage-collection timing and could expose
+finalizer or weak-reference behavior. It changes no PID estimand, estimator, theorem, Lean source,
+mathematical source, PDF source, publication threshold, page expectation, or visual predicate; the
+source review does not prove semantic transparency.
+
 The gate compiles inside a disposable directory because the LaTeX Markdown renderer externalizes
 fenced-code intermediates beside the current working directory. It checks that the root Markdown
 is embedded byte-for-byte in the TeX framing and that the only post-Markdown bytes are the reviewed
@@ -2634,7 +2703,7 @@ catch stripped-assertion dependencies; those are two interpreter modes over the 
 twice as many independent cases. The paper gate also replays the captured helpers it relies on.
 
 CI and the direct Just recipe enter Bash through `/usr/bin/env -i`, an explicit admitted executable
-path, fixed locale/time-zone values, controlled home and temporary directories, and
+path, fixed locale/time-zone values, explicit XDG, TeX, font, and temporary directories, and
 `--noprofile --norc`. The aggregate wrapper repeats that clean entry specifically for the workflow
 checker. This removes `BASH_ENV` and other ambient startup variables before the invoked Bash starts;
 it does not authenticate any admitted executable. The checker separately resolves, constrains,
@@ -2809,15 +2878,15 @@ makes Markdown 2.23 and 3.4 agree on the equations and following list items with
 reindenting the mathematics; it does not change the mathematics or relax the cross-toolchain text,
 navigation, or raster predicates.
 
-The direct self-test freezes exactly 322 controls in the partition 203 predecessor, 37
-bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3 transitive-executable-custody,
-and 47 format-custody controls. The format family covers exact query and selected-path
-canonicalization (including Kpathsea's empty-component default expansion), nonempty bounded source
-bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode and inventory, exact
-digest replay, actual compiler-environment consumption, verifier ordering before every compiler
-pass and after both builds, the complete source/size/digest receipt, and case-insensitive
-raw/resolved FLS format sets across direct and aliased paths. These are correlated deterministic
-fault probes, not 322 independent defenses or scientific replications. The liveness
+The retained predecessor direct self-test freezes exactly 322 controls in the partition 203
+predecessor, 37 bounded-probe, 17 entry-wrapper, 7 runtime-map, 8 FLS-map-path, 3
+transitive-executable-custody, and 47 format-custody controls. The format family covers exact query
+and selected-path canonicalization (including Kpathsea's empty-component default expansion),
+nonempty bounded source bytes, descriptor capture/rewalk, exclusive single-link replay, sealed mode
+and inventory, exact digest replay, actual compiler-environment consumption, verifier ordering
+before every compiler pass and after both builds, the complete source/size/digest receipt, and
+case-insensitive raw/resolved FLS format sets across direct and aliased paths. These are correlated
+deterministic fault probes, not 322 independent defenses or scientific replications. The liveness
 mechanism assumes admitted Bash job control, Python, `ps`, same-UID PID/process-group behavior, and
 the suite's private root. It is not pidfd containment or a hard asynchronous preemption theorem;
 deliberate process-group escape, external anchor death, PGID reuse outside the checked transitions,
@@ -2842,22 +2911,26 @@ corroboration only when its exact self-test and production-checker digests, invo
 and process-group observations are retained; it remains correlated with the same sources, host,
 toolchain, validators, and fixtures.
 
-The same hosted entry gives the aggregate gate a newly created `HOME`. The Lean evidence wrappers
-deliberately discard inherited `ELAN_*` routing before invoking the selected `lake` proxy, so an
-unprovisioned clean home causes Elan to download the tracked toolchain and emit informational
-stderr inside the otherwise silent version probe. That outcome is rejected; the proof checker is
-not relaxed to admit bootstrap output. CI requires both clean-state paths to be absent, creates them
-without `mkdir -p`, requires the literal toolchain request to equal the exact bytes of
-`audit/formal/lean/lean-toolchain`, installs that release explicitly into the clean home's `.elan`
-state with the already hash-pinned Elan launcher and isolated `TMPDIR`, rejects a symbolic-link
-`.elan`, and only then enters the evidence lane. The Elan proxy directory is first in the outer
-path so a runner-image `lake` cannot shadow it; the selected `python3` and normalized TeX script
-still resolve from the next, already first-ranked `setup-python` directory. `HOME` and `ELAN_HOME`
-name the same isolated state. The later checker still
-validates the reported Lean version and source commit and still requires its own version probe to
-have empty stderr. This makes bootstrap a visible setup premise; it does not authenticate the Lean
-archive, Elan's download service, the runner, or the selected kernel, and it does not turn a
-same-kernel replay into independent formal evidence.
+An earlier unprovisioned clean-home diagnostic triggered Elan bootstrap output, which the silent
+version probe rejected. That observed failure is separate from the later CI source finding: the
+descriptor wrapper removes inherited `ELAN_*` routing, so selecting an Elan proxy does not establish
+use of the freshly provisioned explicit state. Default-state fallback may occur in that route; it
+has not been observed for the unexecuted candidate. The proof checker's version and empty-stderr
+predicates remain unchanged.
+
+**Hosted direct-toolchain proposal (source and local shell syntax checked; Linux runtime pending):**
+CI would use the hash-pinned Elan launcher and exact tracked toolchain request to resolve the
+installed direct `lake` and `lean` executables while fresh explicit Elan state is active. It would
+require both canonical executable leaves to share one `toolchains/<component>/bin` directory below
+that state, place that directory first only in the final aggregate path, and recheck both command
+selections. The descriptor wrapper continues to remove inherited `ELAN_*`, `LEAN_*`, and `LAKE_*`
+routing; all proof-wrapper bytes, the separate workflow-checker path, and admitted roots are
+unchanged. The final extracted CI shell block passed local Bash syntax parsing alongside the
+separate handoff controls, with registered inputs unchanged before and after. The syntax check
+executed no body command. Linux installation, direct-tool selection, aggregate, hosted, and
+publication results remain pending. The route does not
+authenticate the Lean archive, Elan's service, the runner, or the selected kernel, or make a
+same-kernel replay independent formal evidence.
 
 Install the hash-pinned dependency into a Python installation under one of the checker's admitted
 roots, then run the following canonical commands. CI's pinned `setup-python` installation lives
@@ -2877,7 +2950,7 @@ python3 -O -I -S scripts/compare-formal-pdf-renders-self-test.py
 scripts/check-mathematical-workflow-pdf-self-test.sh
 /usr/bin/env -i \
   PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/Library/TeX/texbin:/usr/bin:/bin:/usr/sbin:/sbin" \
-  HOME=/nonexistent TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC \
+  TMPDIR=/tmp LC_ALL=C LANG=C TZ=UTC \
   bash --noprofile --norc scripts/check-mathematical-workflow-pdf.sh
 ```
 
@@ -2943,11 +3016,11 @@ toolchain, or turn correlated checks of the same bytes into independent evidence
 The [September 5 split visual receipt](../audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md)
 binds all 87 pages in color and grayscale at 120 dpi, 24 color spots at 300 dpi, and the four
 figure pages in grayscale at 300 dpi. It preserves late observations and reconstructed timing;
-it does not claim sole-root or independent complete review. The current self-test retains 357
-controls outside the text-portability family, including 24 visual negatives, four split-review
-controls, four machine-scope controls and 12 Python-bytecode controls. Its 71 text-portability
-controls bring the declared total to 428. Compact fixtures use independent literal diagram sequences
-from retained real extractions;
+it does not claim sole-root or independent complete review. The corresponding predecessor self-test
+retains 357 controls outside the text-portability family, including 24 visual negatives, four
+split-review controls, four machine-scope controls and 12 Python-bytecode controls. Its 71
+text-portability controls bring the declared total to 428. Compact fixtures use independent literal
+diagram sequences from retained real extractions;
 synthetic surrounding prose and page partitions keep the controls small. They cover all nine
 ordered pairs of the three observed producer profiles, admitted ASCII whitespace, paired malformed
 labels and bounds, an unlisted permutation of the new page 12 profile, and strict content/order
@@ -3047,9 +3120,32 @@ contains three locally accepted formal results for a project-defined finite-pref
 It adds no Rust/Python estimator or statistical coverage guarantee. Its [current replay guide](../audit/formal/lean-prefix-mgw-mean/REPLAY.current.md)
 separates the unchanged proof adapter, inert controls and actual publication evidence.
 `build-prefix-mgw-mean-pdf.py --exact --check` makes two fresh builds and requires the exact
-reviewed PDF; `--cross-toolchain` refuses with status 2 before building. The [portable PDF controls](../audit/formal/lean-prefix-mgw-mean/pdf-controls/CONTROLS.md)
+reviewed PDF; `--cross-toolchain` refuses with status 2 before building. The [current PDF controls](../audit/formal/lean-prefix-mgw-mean/pdf-controls/CONTROLS.v3.md)
 exercise this whole entrypoint with inert tools and have separate execution receipts. They do not
 produce a new publication PDF or prove a theorem.
+
+The [finite-prefix bias package](../audit/formal/lean-prefix-mgw-bias/PUBLICATION.md) supplies
+five locally accepted finite-categorical MGW bias/support results with their full proof map.
+Its [publication contract](../audit/formal/latex/prefix-mgw-bias/PUBLICATION.md) specifies
+`build-prefix-mgw-bias-pdf.py --kind full|summary --exact --check`, the isolated pinned Python,
+fresh external registration, raw registration hash and work directory. Each call makes two builds;
+the full and summary references have fourteen pages and one page. The current reader profile
+copies and checks the declared pypdf 6.16.1 source before importing it. Retained v1 inputs describe
+the predecessor; they are not the current reader profile.
+
+On 12 September 2026, [mean reproduction](../audit/formal/lean-prefix-mgw-mean/CURRENT_REPRODUCTION.md)
+passed 232 inert control cases and four exact builds; [bias reproduction](../audit/formal/latex/prefix-mgw-bias/CURRENT_REPRODUCTION.md)
+passed 316 inert cases and eight exact builds across full and summary. These local artifact results
+add no theorem, hosted replay, confidence guarantee or Rust refinement. Original proof manifests,
+failed attempts and superseded publication inputs remain preserved.
+
+The exact aggregate requires thirteen externally supplied bias values, listed in the publication
+contract: one Python selector, three values per control mode, and three per producer kind. After
+inventory it runs normal and optimized inert controls, then full and summary production, before
+the longer existing gates. Register truthful original control/production windows immediately
+before launch; no child or aggregate may renew a deadline. Inventory-only and cross-toolchain
+modes require none of those private values. The cross route requires both bias producers to refuse
+with status 2; no Linux reproduction relation is claimed.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
@@ -3122,13 +3218,17 @@ is present without an explicit inventory update, or if any individual PDF gate f
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
 `--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
 portability relation, except that the root blueprint, dated post-publication custody receipt,
-standalone mean exposition, recorded-sensor document, finite MGW paper and target-copy MGW note deliberately have no
+standalone mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note,
+full bias paper and bias summary deliberately have no
 reviewed cross-toolchain profiles. The aggregate
 requires each route to refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain
 credit; status 0 or any other refusal status fails the aggregate. The aggregate self-test protects
-all six exact-only dispatch blocks, their exact-mode calls, cross-mode probes and status-2
+all eight exact-only publication routes, their exact-mode calls, cross-mode probes and status-2
 branches against removal or weakening. It also protects the existing blueprint/custody hostile-suite
 calls and binds the custody record checker in normal and optimized Python and its hostile suite.
+The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
+does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
+and its source preimage remain archived with the bias publication.
 The target-copy controller has a separate selected-input profile, checked tools and fonts,
 two fresh builds, retained diagnostics, and explicit `--tex-root` selection. Its exact aggregate
 route requires `PID_RS_MGW_TARGET_COPY_TEX_ROOT`. The controller and eleven dispatch mutations
@@ -3263,9 +3363,10 @@ rejects 61 parser, identity, scope, custody, artifact, and semantic-escalation m
 unknown certificate fields, contradictory suffixes, and historical/current builder substitution.
 
 `build-post-publication-custody-pdf.sh` derives the six-page human receipt from the canonical
-Markdown, header, Lua filter, and handcrafted state-machine SVG. It stages all inputs, performs two
-isolated same-toolchain builds, validates A4/PDF-1.7/font/text/geometry/action properties before an
-atomic final install, and does not mutate the repository figure during custom-output checks. The
+Markdown, header, Lua filter, and handcrafted state-machine SVG. Each invocation renders a temporary
+PDF figure and builds one receipt PDF in a private directory. It checks the recorded identity fields,
+text bounds, and exact
+HTTPS action set before installing that PDF. A custom output leaves the repository figure unchanged. The
 visual receipt binds all six color and grayscale pages and 20 named lenses. The PDF remains
 untagged, so neither source descriptions nor visual inspection establish PDF/UA conformance.
 The addendum points to the blueprint's named 70-row council record and intentionally presents only
@@ -3273,8 +3374,10 @@ ten grouped custody questions; the grouped prompts are not a replacement lens ro
 
 `check-post-publication-custody-pdf.sh --exact` binds that visual receipt and subject hash, replays
 the machine checker in normal and optimized modes, performs two fresh builds, and requires both
-builds and committed bytes to agree. Its `--cross-toolchain` mode refuses with status 2 because no
-reviewed producer-equivalence profile exists. These are repository-custody and presentation
+builds and committed bytes to agree. It checks the A4, PDF-1.7, font and metadata profile. A failed
+build reports its captured stdout, stderr and exit status before cleanup; the first failure prevents
+a second build. The self-test covers both failure positions. Its `--cross-toolchain` mode refuses
+with status 2 because no reviewed producer-equivalence profile exists. These are repository-custody and presentation
 controls only; they add no mathematical, statistical, estimator, application, release, or
 independent-review credit.
 

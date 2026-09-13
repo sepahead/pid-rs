@@ -1,0 +1,8 @@
+{
+  "schema": "pid-rs/portable-bias-controls-acceptance-v1",
+  "status": "PENDING_NOT_ADOPTED",
+  "manifest_sha256": "REPLACE_WITH_REVIEWED_MANIFEST_SHA256",
+  "adapter_sha256": "REPLACE_WITH_EXACT_ADAPTER_SHA256",
+  "new_bias_theorems_proved": 0,
+  "evidence": "REPLACE_WITH_ACTUAL_CONTROL_RECEIPTS_AND_ROOT_DISPOSITION"
+}

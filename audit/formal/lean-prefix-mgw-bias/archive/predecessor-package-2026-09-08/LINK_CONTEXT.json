@@ -1,0 +1,297 @@
+{
+  "aggregate_stderr": {
+    "bytes": 14864,
+    "distinct_missing_target_count": 40,
+    "outer_argv": {
+      "private_raw_compact_json_sha256": "fdc3499fad1d06a5633050807c2ab46027efede7d79139aa4b214a6ddcc891eb",
+      "private_raw_plan_sha256": "54c2c40512f7f1513bbc91f8bceed0aef6db8a8a044a530d87c5cf4e06eae67c",
+      "projection_scope": "The actual script argument was the canonical absolute checkout path. The public projection removes only the private checkout prefix; the executable, repository-relative script identity, ordering and --exact argument are preserved. The compact JSON digest binds the unredacted argv.",
+      "public_projection": [
+        "/bin/bash",
+        "scripts/check-formal-pdf-set.sh",
+        "--exact"
+      ],
+      "raw_digest_encoding": "UTF-8 JSON array, ensure_ascii=false, separators comma and colon, no trailing newline"
+    },
+    "path": "LINK_FAILURE_20260912.stderr.txt",
+    "referring_markdown": [
+      {
+        "missing_target_occurrences": 5,
+        "path": "EXPOSITION.md"
+      },
+      {
+        "missing_target_occurrences": 2,
+        "path": "REPLAY_OBLIGATIONS.md"
+      },
+      {
+        "missing_target_occurrences": 22,
+        "path": "RESULTS.md"
+      },
+      {
+        "missing_target_occurrences": 13,
+        "path": "SOURCE_CORRESPONDENCE.md"
+      },
+      {
+        "missing_target_occurrences": 4,
+        "path": "THEOREM_MAP.md"
+      },
+      {
+        "missing_target_occurrences": 2,
+        "path": "archive/STATUS.md"
+      }
+    ],
+    "reported_problem_count": 48,
+    "scope": "Exact outer aggregate stderr containing publication-link diagnostics. It is not a separately captured publication-link child stream or a complete aggregate receipt, and it does not establish results for earlier or later commands.",
+    "sha256": "101fe4de2f03f2e5cd99dd0a40ae6314e63aa115d1083cb6ab1b4b05487140f3"
+  },
+  "context_bytes": 2087895,
+  "context_leaf_count": 40,
+  "copies": [
+    {
+      "bytes": 202320,
+      "path": "OMITTED_INPUTS.json",
+      "public_source_path": "../../OMITTED_INPUTS.json",
+      "sha256": "0441311a3136047557b8e67e0ee9a16a65c66f0f215b23fd5e909341f629c653"
+    },
+    {
+      "bytes": 98639,
+      "path": "PROOF_AUTHOR_ARCHIVE_MAP.json",
+      "public_source_path": "../../PROOF_AUTHOR_ARCHIVE_MAP.json",
+      "sha256": "d8f6c5081173ee97b492aa384e64910509d42c9539ebcf83d3a23c0c7c4ae529"
+    },
+    {
+      "bytes": 12638,
+      "path": "RUN_INDEX.json",
+      "public_source_path": "../../RUN_INDEX.json",
+      "sha256": "02c752fc08b23d7c6e5cbd1a75474ca4a4ccc986f41ab69fc9de8f8873d17402"
+    },
+    {
+      "bytes": 11311,
+      "path": "SOURCE_CLOSURE.json",
+      "public_source_path": "../../SOURCE_CLOSURE.json",
+      "sha256": "f4d73575fb67f476308400aa017152057109a70106c7a98888fbc9e5a8183a48"
+    },
+    {
+      "bytes": 2184,
+      "path": "UPSTREAM_PINS.json",
+      "public_source_path": "../../UPSTREAM_PINS.json",
+      "sha256": "4484fd84261debe3cf952106d8232178ac7a154328a0c8e5e1bca54de33d4f7b"
+    },
+    {
+      "bytes": 29304,
+      "path": "archive/publication-preimages/EXPOSITION.md.txt",
+      "public_source_path": "../../archive/publication-preimages/EXPOSITION.md.txt",
+      "sha256": "b2e1c36e92d5006f6c18a6d3d4b76f2e116ca5b0e67ac7b192617c616d8b1e2c"
+    },
+    {
+      "bytes": 548986,
+      "path": "evidence/campaign/ACCEPTANCE.json",
+      "public_source_path": "../../evidence/campaign/ACCEPTANCE.json",
+      "sha256": "3df64070c9cf071e6034f3a554c3ee1bd36eb0eec0cdb9dfeffece48dff8c18e"
+    },
+    {
+      "bytes": 3448,
+      "path": "evidence/campaign/ATTEMPT_LEDGER.json",
+      "public_source_path": "../../evidence/campaign/ATTEMPT_LEDGER.json",
+      "sha256": "7c6c658082d05e77c32a9b0744c30dabce6b3472c29a18524f5947d1b00b716c"
+    },
+    {
+      "bytes": 10726,
+      "path": "evidence/campaign/FROZEN.json",
+      "public_source_path": "../../evidence/campaign/FROZEN.json",
+      "sha256": "94af15133cc6f79c5dc536512ce32e51cebff2b8ef61dd3296bd9dbf7b5c7fb3"
+    },
+    {
+      "bytes": 1530,
+      "path": "evidence/campaign/OPERATIONAL_CONTROL_ACCEPTANCE.json",
+      "public_source_path": "../../evidence/campaign/OPERATIONAL_CONTROL_ACCEPTANCE.json",
+      "sha256": "678da29adad467358458203c2ba247feb3020dcaa5f5ae3fc2b4854df640e7a8"
+    },
+    {
+      "bytes": 1071,
+      "path": "evidence/campaign/SELECTION_RULE.json",
+      "public_source_path": "../../evidence/campaign/SELECTION_RULE.json",
+      "sha256": "7ea58c550e9202e6bd013adef71ff3043073665715c08df6cb10bbd365d3fda1"
+    },
+    {
+      "bytes": 213,
+      "path": "evidence/campaign/STOP_RECORD.json",
+      "public_source_path": "../../evidence/campaign/STOP_RECORD.json",
+      "sha256": "06cf191bd3dff2372bab467fc16a4d1ebbbca2d9f54361680b0a3a22a7f89fe9"
+    },
+    {
+      "bytes": 11211,
+      "path": "evidence/reviews/proof-review-final.md.txt",
+      "public_source_path": "../../evidence/reviews/proof-review-final.md.txt",
+      "sha256": "9acd44a4f2fe054691478b6011dc794d02e22f9bfee020d9a6d2d31b072d86de"
+    },
+    {
+      "bytes": 10944,
+      "path": "evidence/reviews/proof-review-initial.md.txt",
+      "public_source_path": "../../evidence/reviews/proof-review-initial.md.txt",
+      "sha256": "7d0b0aa4d3917f2e2d25e590f7f4241cd8095b0bc3b3d5c73710299e4bf0e9d3"
+    },
+    {
+      "bytes": 6735,
+      "path": "evidence/reviews/publication-review-final.md.txt",
+      "public_source_path": "../../evidence/reviews/publication-review-final.md.txt",
+      "sha256": "b03944f84aadca2d181feb3978b06f7fa66812e918e628ff44db289ffeee7df3"
+    },
+    {
+      "bytes": 11735,
+      "path": "evidence/reviews/publication-review-initial.md.txt",
+      "public_source_path": "../../evidence/reviews/publication-review-initial.md.txt",
+      "sha256": "d262c121f422e9fa5faad3f45668c274ffbe5deab40a74148068b101fccc0d50"
+    },
+    {
+      "bytes": 1977,
+      "path": "evidence/reviews/root-proof-adjudication.json",
+      "public_source_path": "../../evidence/reviews/root-proof-adjudication.json",
+      "sha256": "3ca661e708e78e5a7f1b860dfacb26a1bd762c8c2166c1a9c5d9d3c9e2dd342d"
+    },
+    {
+      "bytes": 63893,
+      "path": "evidence/runs/001-development-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/001-development-0/RESULT.json",
+      "sha256": "6bacdbde797d5e6b401ea0a1382970c4c912b0f82c2b197961b3b4292cf4ce1f"
+    },
+    {
+      "bytes": 63897,
+      "path": "evidence/runs/002-development-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/002-development-0/RESULT.json",
+      "sha256": "c830896c31af4af36cbcceb4e8dcd35d3902c5bcb8b08dc0208c017e3eeb8040"
+    },
+    {
+      "bytes": 63901,
+      "path": "evidence/runs/003-development-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/003-development-0/RESULT.json",
+      "sha256": "e189c8bde34bd6c5ca89b8172e090ff6cacc93d64e8991980b58b9bd31451509"
+    },
+    {
+      "bytes": 63900,
+      "path": "evidence/runs/004-development-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/004-development-0/RESULT.json",
+      "sha256": "3af6ad32c06e155620d17c229e3e8574e4d9bf960c6b81b62ff54088e730b635"
+    },
+    {
+      "bytes": 64411,
+      "path": "evidence/runs/005-development-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/005-development-0/RESULT.json",
+      "sha256": "794f24e4d2dfc660223d1ec4b3d6a387feba740e04b8645dbaf3c9ba59ef402c"
+    },
+    {
+      "bytes": 135166,
+      "path": "evidence/runs/006-full-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/006-full-0/RESULT.json",
+      "sha256": "1ce8d0256321bd9cff8965123a04f0d50d0d7b46494e9d6b838a5a32b4b873eb"
+    },
+    {
+      "bytes": 135163,
+      "path": "evidence/runs/007-full-1/RESULT.json",
+      "public_source_path": "../../evidence/runs/007-full-1/RESULT.json",
+      "sha256": "810581b199cef002b752af92256192344473ce809ddf91d9da29dc14ad48e711"
+    },
+    {
+      "bytes": 135169,
+      "path": "evidence/runs/008-full-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/008-full-0/RESULT.json",
+      "sha256": "18dd97153288c6320374c089272beba54c8dca06abe64cfb3e8b14be97a33e55"
+    },
+    {
+      "bytes": 135164,
+      "path": "evidence/runs/009-full-1/RESULT.json",
+      "public_source_path": "../../evidence/runs/009-full-1/RESULT.json",
+      "sha256": "41addeeeddc36aa944b61897211d0e27ca68da0770f279275a142e71b31f6945"
+    },
+    {
+      "bytes": 2348,
+      "path": "evidence/runs/010-wrong-last-target-0/28-compile-PidPrefixMgwBias-SemanticJudge/stdout.log",
+      "public_source_path": "../../evidence/runs/010-wrong-last-target-0/28-compile-PidPrefixMgwBias-SemanticJudge/stdout.log",
+      "sha256": "123a3d2649a46d265be13b0e1b90ead0b415d955683a89ca0cbb3c456cee0c70"
+    },
+    {
+      "bytes": 133087,
+      "path": "evidence/runs/010-wrong-last-target-0/RESULT.json",
+      "public_source_path": "../../evidence/runs/010-wrong-last-target-0/RESULT.json",
+      "sha256": "4d4961f45003361682fafd722539979a741322e5defc76c98589d43b71571001"
+    },
+    {
+      "bytes": 3973,
+      "path": "figures/independence-horizon-one.svg",
+      "public_source_path": "../../figures/independence-horizon-one.svg",
+      "sha256": "e95bf61f33fe5986fd51d79c84de438daba0c3400891a000c2fde016f97c481c"
+    },
+    {
+      "bytes": 4161,
+      "path": "figures/overlapping-query-moment.svg",
+      "public_source_path": "../../figures/overlapping-query-moment.svg",
+      "sha256": "5f0af0a1132df0c6401b02c3ffc6fb39ddf11a633b6d620d3909844fea265f7e"
+    },
+    {
+      "bytes": 3468,
+      "path": "figures/signed-tail-envelope.svg",
+      "public_source_path": "../../figures/signed-tail-envelope.svg",
+      "sha256": "3f638444bab4d95679bc52ddc5a4e5fe1e5367d494d05f588d4a11739a162a89"
+    },
+    {
+      "bytes": 666,
+      "path": "formal/accepted_AliasTargets.lean",
+      "public_source_path": "../../formal/accepted_AliasTargets.lean",
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    {
+      "bytes": 34113,
+      "path": "formal/accepted_Candidate.lean",
+      "public_source_path": "../../formal/accepted_Candidate.lean",
+      "sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45"
+    },
+    {
+      "bytes": 13165,
+      "path": "formal/accepted_Contract.lean",
+      "public_source_path": "../../formal/accepted_Contract.lean",
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    {
+      "bytes": 8095,
+      "path": "formal/accepted_RawTargets.lean",
+      "public_source_path": "../../formal/accepted_RawTargets.lean",
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    {
+      "bytes": 666,
+      "path": "sources/PidPrefixMgwBias/AliasTargets.lean",
+      "public_source_path": "../../sources/PidPrefixMgwBias/AliasTargets.lean",
+      "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570"
+    },
+    {
+      "bytes": 34113,
+      "path": "sources/PidPrefixMgwBias/Candidate.lean",
+      "public_source_path": "../../sources/PidPrefixMgwBias/Candidate.lean",
+      "sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45"
+    },
+    {
+      "bytes": 13165,
+      "path": "sources/PidPrefixMgwBias/Contract.lean",
+      "public_source_path": "../../sources/PidPrefixMgwBias/Contract.lean",
+      "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45"
+    },
+    {
+      "bytes": 8095,
+      "path": "sources/PidPrefixMgwBias/RawTargets.lean",
+      "public_source_path": "../../sources/PidPrefixMgwBias/RawTargets.lean",
+      "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a"
+    },
+    {
+      "bytes": 3144,
+      "path": "toolchain/lake-manifest.json",
+      "public_source_path": "../../toolchain/lake-manifest.json",
+      "sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af"
+    }
+  ],
+  "current_source_public_map_sha256": "88661c66327358e5960eb7b1ab2712c2da7853c28593ac9b74695a4cb56e9bde",
+  "historical_manifest_sha256": "0a26c5ef0ea190ca03f680c493b6ef70d09240b8195bc1beda3e187f7abc5af4",
+  "original_missing_reference_occurrences": 48,
+  "schema": "pid-rs/historical-markdown-link-context-v2",
+  "scope": "Forty existing public leaves copied at the relative paths used by preserved predecessor Markdown. This is not the complete old package or a new proof/replay acceptance.",
+  "status": "exact_historical_context_copies"
+}

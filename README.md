@@ -71,6 +71,7 @@ you interpret an estimate.
 | Choose a method or API | [Methods summary](METHODS_SUMMARY.md), [full catalog](METHODS.md) | Defining sources, repository compositions, input domains, feature gates, and limitations |
 | Study the mathematics | [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) | Nine result families with motivation, formulas, assumptions, evidence, cost, and complete proof links |
 | Study finite-prefix MGW means | [Standalone mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md), [PDF](output/pdf/prefix-mgw-mean.pdf) | Three separately verified formal results for a project-defined categorical statistic; no new estimator API or finite-sample coverage claim |
+| Bound finite-prefix MGW approximation error | [Bias overview](audit/formal/lean-prefix-mgw-bias/SUMMARY.md), [summary PDF](output/pdf/prefix-mgw-bias-summary.pdf), [full proof guide](audit/formal/lean-prefix-mgw-bias/EXPOSITION.md) | Five locally verified bias/support result families for finite categorical laws and IID complete rows; sampling uncertainty remains separate |
 | Study finite MGW comparisons | [Archival finite example](audit/formal/lean-mgw-fixed-world/PUBLICATION.md), [PDF](output/pdf/mgw-fixed-world-added-information.pdf) | Equal synergy with different added information under a fixed target and baseline; retained 21-target evidence, with public replay qualification open |
 | Check a claim | [Assurance registry](audit/evidence/assurance-registry.json), [known limitations](KNOWN_LIMITATIONS.md) | Scoped evidence and open obligations; follow each claim's current decision |
 | Assess an application | [Ecosystem capabilities](ECOSYSTEM_CAPABILITIES.md), [sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) | Physical inputs, alphabets, targets, simpler comparators, resource limits, and qualification gaps |
@@ -118,6 +119,14 @@ convergence for a specified prefix statistic. A worked independent-binary exampl
 positive short-prefix mean need not indicate dependence. Its three locally accepted exports use a
 separate replay package; they add no Rust/Python estimator or confidence guarantee and do not
 change the frozen aggregate Lean baseline or the guide's nine-family inventory.
+
+The [finite-prefix bias companion](audit/formal/lean-prefix-mgw-bias/PUBLICATION.md) bounds the
+difference between a population MGW atom and the expectation of that prefix statistic. The
+bounds show how a finite horizon can distort an atom before sampling error is considered. Their
+support and probability-floor premises concern the population; observed sample occupancy does
+not establish them. The [five-result theorem map](audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md)
+links each bound to its quantified statement and complete proof. This separate package supplies
+no confidence interval, continuous-PID transfer, or Rust estimator implementation.
 
 The [publication checker guide](scripts/README.md) records the exact profile, commands and
 historical replay boundaries. Earlier v1, v2 and Pandoc 3.1.3 observations remain available there;

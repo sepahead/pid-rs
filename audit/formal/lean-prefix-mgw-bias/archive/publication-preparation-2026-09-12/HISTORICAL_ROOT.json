@@ -1,0 +1,61 @@
+{
+  "files": [
+    {
+      "bytes": 3400,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-mean/PUBLICATION.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-mean/PUBLICATION.md.txt",
+      "sha256": "4acbb59731382e4ebae367ac1528d362beed663461ff47cd98a7bdb31f7c3d52"
+    },
+    {
+      "bytes": 4055,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-mean/pdf-controls/CONTROLS.v3.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-mean/pdf-controls/CONTROLS.v3.md.txt",
+      "sha256": "7493ba4ecb24d3a818d5c59b662b285b22c49e9a92e25e6d715778a3bc51938f"
+    },
+    {
+      "bytes": 11702,
+      "former_repository_path": "audit/formal/latex/prefix-mgw-bias/PUBLICATION.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/latex/prefix-mgw-bias/PUBLICATION.md.txt",
+      "sha256": "8af32d5a9bea24d9e833e14f0ac51a0649e891863d7529c43e85ff436a696c41"
+    },
+    {
+      "bytes": 1566,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-bias/PUBLICATION.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-bias/PUBLICATION.md.txt",
+      "sha256": "fbbdd6b38ecdc5562c0268d2ca5d5d775afd18a3c4ac78e8ffedcc7550ee903d"
+    },
+    {
+      "bytes": 2898,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-bias/PACKAGE_STATUS.json",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-bias/PACKAGE_STATUS.json.txt",
+      "sha256": "022d8e5a00b4685398cb8f14afe6d86f0ca05f3e08d3ba3345dce3d860977fcf"
+    },
+    {
+      "bytes": 1584,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-bias/REPLAY.current.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-bias/REPLAY.current.md.txt",
+      "sha256": "1ab165d4a3bd1facb8a48217f70c582ce8756fbef3f9f058e12cfe26efda414a"
+    },
+    {
+      "bytes": 2794,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-bias/SOURCE_CORRESPONDENCE.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-bias/SOURCE_CORRESPONDENCE.md.txt",
+      "sha256": "8d007c735209fdee4961559c58d531da6a49f8a6160e582f3661adf09a2b49c7"
+    },
+    {
+      "bytes": 11247,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md.txt",
+      "sha256": "f94c87006c7905cabde21748b5c8a54f42d1f99971895c9d6e06ddd1a48653d4"
+    },
+    {
+      "bytes": 267010,
+      "former_repository_path": "audit/formal/lean-prefix-mgw-bias/PACKAGE_MANIFEST.json",
+      "path": "archive/publication-preparation-2026-09-12/audit/formal/lean-prefix-mgw-bias/PACKAGE_MANIFEST.json.txt",
+      "sha256": "02736404f9a5d7716c29644eb9e1ffacfc0ff573f29069a54fed862fe2ae3c03"
+    }
+  ],
+  "path_interpretation": "Former paths are repository-relative. Archived bytes keep their original internal paths and timestamps; they do not validate the archive as a standalone root.",
+  "schema": "pid-rs/publication-preparation-preimages-v1",
+  "status": "historical_inert_preimages_not_current_instructions"
+}

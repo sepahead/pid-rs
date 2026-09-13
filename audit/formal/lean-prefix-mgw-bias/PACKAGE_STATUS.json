@@ -1,0 +1,28 @@
+{
+  "accepted_proof_inputs_changed": 0,
+  "accepted_proof_manifest_sha256": "6783dffce953c0e6dd812658af049770b2e63889807acb34f11c75eb4d577b10",
+  "current_local_pdf_evidence": "../latex/prefix-mgw-bias/CURRENT_REPRODUCTION.json",
+  "formal_families": 5,
+  "historical_local_replay": "HISTORICAL_PORTABLE_REPLAY.json",
+  "new_formal_families_from_publication": 0,
+  "observed_date": "2026-09-12",
+  "open": [
+    "hosted proof replay",
+    "Rust and binary64 correspondence",
+    "sampling confidence guarantees",
+    "dependent-row inference",
+    "application comparisons"
+  ],
+  "preparation_history": "archive/publication-preparation-2026-09-12/HISTORICAL_ROOT.json",
+  "repository_acceptance": "Resolve exact commit, hosted checks and mainline reachability separately; this source record does not attest to its containing commit.",
+  "schema": "pid-rs/bias-local-evidence-status-v2",
+  "scope": "Finite categorical MGW finite-prefix mean bias; nats; assumptions in THEOREM_MAP.md.",
+  "source_public_map": {
+    "changed_row_count": 1,
+    "changed_row_index": 1869,
+    "path": "SOURCE_PUBLIC_MAP.json",
+    "row_count": 1923,
+    "sha256": "88661c66327358e5960eb7b1ab2712c2da7853c28593ac9b74695a4cb56e9bde"
+  },
+  "status": "local_formal_and_pdf_evidence_recorded"
+}

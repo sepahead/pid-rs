@@ -210,6 +210,29 @@ def _is_escaped(line: str, position: int) -> bool:
     return slash_count % 2 == 1
 
 
+def contains_legacy_delimiter(
+    line: str,
+    delimiter: str,
+    *,
+    display_math: bool,
+) -> bool:
+    r"""Return whether a legacy delimiter token occurs in this source line.
+
+    Within an already open dollar-delimited display, TeX consumes an even run
+    of backslashes in pairs. In particular, ``\\[0.35em]`` is the ``\\``
+    row-break command with an optional spacing argument, not a nested ``\[``
+    display delimiter. Outside that known TeX-math context, retain the
+    conservative source-level rejection because Markdown escaping happens
+    before the rendered page reaches MathJax.
+    """
+    position = line.find(delimiter)
+    while position >= 0:
+        if not display_math or not _is_escaped(line, position):
+            return True
+        position = line.find(delimiter, position + len(delimiter))
+    return False
+
+
 def is_rustdoc_included_readme(path: Path) -> bool:
     """Return whether rustdoc includes this Markdown file as crate documentation."""
     normalized = path.as_posix()
@@ -363,7 +386,11 @@ def inspect(path: Path) -> list[Finding]:
                 )
             )
         for delimiter in LEGACY_DELIMITERS:
-            if delimiter in prose:
+            if contains_legacy_delimiter(
+                prose,
+                delimiter,
+                display_math=display_open_line is not None,
+            ):
                 findings.append(
                     Finding(
                         path,

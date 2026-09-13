@@ -1,0 +1,23 @@
+{
+  "profiles": [
+    {
+      "id": "texlive-2024-markdown-3.4.2-a45cf0ed",
+      "metadata_version": "3.4.2-0-ga45cf0ed",
+      "postimage_bytes": 276205,
+      "postimage_sha256": "16e0acdf0bdee428f200decf13209b584da518fc9b3472a7a7ef9d2195b18c42",
+      "preimage_bytes": 276148,
+      "preimage_sha256": "ae204b5b363a499c81e7aa6a3494eec40903a3d5a38cf95cfd04f0c037bd3837",
+      "source": "TeX Live 2024 local distribution; exact installed module captured 2026-09-13"
+    },
+    {
+      "id": "ubuntu-noble-markdown-2.23.0-g0b22f91",
+      "metadata_version": "2.23.0-0-g0b22f91",
+      "postimage_bytes": 188709,
+      "postimage_sha256": "a2e9f3be8e21ece5890b41da65439349980556b3d9cb77a67d7fe2fb762d4c01",
+      "preimage_bytes": 188652,
+      "preimage_sha256": "2ac1dd75563ef09081477053231a1d472ab1230302759475dfe0a2a61337b5d3",
+      "source": "Ubuntu Noble texlive-latex-extra 2023.20240207-1 all; archive SHA-256 db88906dc6c7d814edbb878041d75e389c6d898b76fa5dc2efe71abb9da5f0fd"
+    }
+  ],
+  "schema": "pid-rs/workflow-markdown-parser-profiles-v1"
+}

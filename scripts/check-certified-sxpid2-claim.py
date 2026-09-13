@@ -56,9 +56,9 @@ EXPECTED_JUST_RELEASE_AUDIT_LINE_SHA256 = (
 )
 EXPECTED_EXECUTION_CONTAINER_SHA256 = {
     ".github/workflows/ci.yml": (
-        "8e52cdc21dba5f3a6b1917e17dac7a619aa548f050f7e82df7b58edf6909f980"
+        "386bf0284ffb78eae5528a8cec327b136af492473698b6a5b9754e8372e3305b"
     ),
-    "justfile": ("e14e9ba9bdcbe79c16c8047f9d0b978943bde72fd4fe67303c5c0857461abdcc"),
+    "justfile": ("5eef6bbb7d4f0d4ecb42af5f302da20b6943b6db2ced093c07db290708d02032"),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
     ),
@@ -171,7 +171,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "3904647e647e4cad369ab08224256fb4db7be9dec5c5ca497444c7631da15ac9"
+        "aeb6d3fc2835e9552589d4f665f5b421ef1b09f9da0ff9353d101a362e19d13c"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
@@ -210,7 +210,7 @@ EXPECTED_LEAN_EVIDENCE_RAW_SHA256 = {
 }
 EXPECTED_SUPPORT_GATE_SHA256 = {
     "scripts/check-formal-pdf-set.sh": (
-        "7b38fd931ac295db89d2c48e6599e0d2f33cb126a186175f0dc781590d28259a"
+        "dc5b7e7ca0bd3adbe348e63815f39b5e61a7edc8955f50e5ec849852285bf0e9"
     ),
 }
 EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {

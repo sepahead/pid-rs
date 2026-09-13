@@ -1,0 +1,39 @@
+{
+  "dependencies": [
+    "PidFiniteConvergence/Deterministic",
+    "PidFiniteConvergence/SxEventBridge",
+    "MgwBridgeDepsV1/SxDnf/Contract",
+    "MgwBridgeDepsV1/JoinLog/Contract",
+    "MgwBridgeDepsV1/SxDnf/JudgeCore",
+    "MgwBridgeDepsV1/SxDnf/Proofs",
+    "MgwBridgeDepsV1/JoinLog/Proofs",
+    "PidMgwBridge/Contract",
+    "PidMgwBridge/RawTargets",
+    "PidMgwBridge/AliasTargets",
+    "PidMgwBridge/JudgeCore",
+    "PidMgwBridge/Candidate",
+    "PidMgwBridge/SemanticJudge",
+    "PidPrefixProbability/Contract",
+    "PidPrefixProbability/RawTargets",
+    "PidPrefixProbability/AliasTargets",
+    "PidPrefixProbability/Candidate",
+    "PidPrefixProbability/SemanticJudge",
+    "PidPrefixMgwMean/Contract",
+    "PidPrefixMgwMean/RawTargets",
+    "PidPrefixMgwMean/AliasTargets",
+    "PidPrefixMgwMean/Candidate",
+    "PidPrefixMgwMean/SemanticJudge",
+    "PrefixMgwMeanCandidateRoot"
+  ],
+  "trusted_types": [
+    "PidPrefixMgwBias/Contract",
+    "PidPrefixMgwBias/RawTargets",
+    "PidPrefixMgwBias/AliasTargets"
+  ],
+  "candidate": "PidPrefixMgwBias/Candidate",
+  "semantic_judge": "PidPrefixMgwBias/SemanticJudge",
+  "root": "BiasCandidateRoot",
+  "development_children": 1,
+  "full_children": 31,
+  "wrong_final_children": 29
+}

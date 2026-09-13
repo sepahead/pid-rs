@@ -1,0 +1,78 @@
+{
+  "schema": "pid-rs/bias-current-package-assembly-observation-v1",
+  "status": "private_current_package_candidate_not_adopted",
+  "scope": "Source-only assembly within audit/formal/lean-prefix-mgw-bias.",
+  "predecessor": {
+    "file_count": 1207,
+    "byte_count": 29647037,
+    "package_manifest_sha256": "0a26c5ef0ea190ca03f680c493b6ef70d09240b8195bc1beda3e187f7abc5af4",
+    "source_public_map_sha256": "dcda074a55fb0e41280bf1d064cdb5a0b24f311a5c5ad85a7a66f87a14b098dd"
+  },
+  "portable_source_layer": {
+    "file_count": 106,
+    "byte_identical_collisions": 30,
+    "additions": 76,
+    "differing_collisions": 0,
+    "accepted_manifest_sha256": "6783dffce953c0e6dd812658af049770b2e63889807acb34f11c75eb4d577b10",
+    "accepted_manifest_inputs": 43
+  },
+  "corrected_editorial_layer": {
+    "applied_paths": [
+      "EXPOSITION.md",
+      "SUMMARY.md"
+    ],
+    "observation_path": "EDITORIAL_DELTA.json",
+    "observation_sha256": "a6a36836479615e8643f29814f1286d81810a0cd8e21a4adb9c123ffed390355"
+  },
+  "current_source_public_map": {
+    "path": "SOURCE_PUBLIC_MAP.json",
+    "sha256": "88661c66327358e5960eb7b1ab2712c2da7853c28593ac9b74695a4cb56e9bde",
+    "row_count": 1923,
+    "changed_row_count": 1,
+    "changed_row_index": 1869
+  },
+  "historical_archive": {
+    "root": "archive/predecessor-package-2026-09-08",
+    "exact_preimage_count": 11,
+    "interpretation_record": "archive/predecessor-package-2026-09-08/HISTORICAL_ROOT.json",
+    "interpretation_record_sha256": "caa8de13b5c52fc6960dbfb27821e0de7c1f7017754ae7c943401b0d38c8ae9c"
+  },
+  "proof_and_execution_boundary": {
+    "accepted_local_families_recorded_by_predecessor": 5,
+    "new_families_from_assembly": 0,
+    "accepted_proof_inputs_changed": 0,
+    "candidate_code_imported_or_executed": false,
+    "lean_or_kernel_run": false,
+    "pdf_or_production_run": false,
+    "hosted_acceptance": false,
+    "public_adoption": false
+  },
+  "later_private_replay_evidence_projection": {
+    "status": "historical_projection_included_not_a_current_execution_receipt",
+    "record": {
+      "path": "HISTORICAL_PORTABLE_REPLAY.json",
+      "bytes": 26548,
+      "sha256": "659f11de755e11406279ece4c851369d07f7ce5212af7c233d52bfcd0666a84d"
+    },
+    "guide": {
+      "path": "HISTORICAL_PORTABLE_REPLAY.md",
+      "bytes": 6049,
+      "sha256": "cdd82bd2fa75446e79beacc58cefda834b84d31a6fe468d2a2fd021a5581d534"
+    },
+    "raw_private_receipts_copied": 0,
+    "new_theorem_credit": 0,
+    "original_control_owner_returncode_gap": "unrepaired"
+  },
+  "excluded_repository_scopes": [
+    "repository scripts outside this package",
+    "output/pdf",
+    "audit/formal/lean-prefix-mgw-mean",
+    "PDF parser requirements and manifests"
+  ],
+  "navigation": {
+    "publication": "PUBLICATION.md",
+    "replay": "REPLAY.current.md",
+    "correspondence": "SOURCE_CORRESPONDENCE.md",
+    "archive": "archive/STATUS.md"
+  }
+}

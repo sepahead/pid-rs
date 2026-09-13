@@ -1,0 +1,853 @@
+ PID-RS TECHNICAL REPORT SERIES
+
+
+
+
+Finite-horizon bias bounds for categorical
+shared-exclusions atoms
+Exact truncation error, population support and limits of use
+
+pid-rs contributors                                                               8 September 2026
+
+
+
+
+A limiting mean theorem does not tell us how long a finite experiment must run before its
+expectation is close to its target. This report supplies that missing finite-horizon statement for a
+specified categorical shared-exclusions statistic. The five exact Lean propositions were accepted
+locally on 8 September 2026. They bound the truncation error of its actual finite-product
+expectation. They do not provide a confidence interval around an observed statistic.
+The information functional is the finite categorical shared-exclusions PID of Makkeh, Gutknecht
+and Wibral (MGW), fixed to arXiv:2002.03356v5, published as Physical Review E 103, 032149.
+The prefix experiment and the bounds below are project constructions. All information quantities
+use natural logarithms and nats. No scientific novelty, estimator ranking or deployment advantage
+is claimed. The theorem-to-proof map identifies the exact formal sources and their separate
+evidence boundaries.
+
+
+1. The data and the question
+
+
+Let 𝐼 be a finite, nonempty source-index set. Source 𝑖 takes values in a finite alphabet 𝒳𝑖 , and
+the target takes values in a finite alphabet 𝒯. A complete row is
+
+
+                              𝑧 = ((𝑠𝑖 )𝑖∈𝐼 , 𝑡) ∈ 𝒦 = (∏ 𝒳𝑖 ) × 𝒯.
+                                                       𝑖∈𝐼
+
+A population probability mass function 𝑝 ∶ 𝒦 → [0, 1] satisfies ∑𝑧 𝑝(𝑧) = 1. The experiment
+draws complete rows independently from this same law. Source coordinates and target within a
+row may depend arbitrarily. Independence of rows is a model assumption; distinct recorded
+values do not establish it.
+For an event 𝐴 ⊆ 𝒦, 𝑃 (𝐴) = ∑𝑥∈𝐴 𝑝(𝑥). Write 𝑥𝑖 for source 𝑖’s coordinate and 𝑡𝑥 for the target
+coordinate.
+For a benign laboratory example, a row might contain fixed categorical outputs from acoustic
+and thermal instruments, together with a labeled machine operating mode. A source is the
+entire declared instrument output, potentially a tuple of features. The scientific question, source
+grouping and target must be fixed before applying the result. A source-pair atom may help
+describe a chosen information decomposition; it does not by itself say where to place an instrument
+or how to operate a machine.
+If the question concerns one source and one target, ordinary mutual information may suffice. If it
+concerns prediction or detection, held-out task loss and explicit utility can be more direct. The
+
+
+                                                 1
+Categorical shared exclusions                                                             Finite-horizon bias bounds
+
+
+
+reason to use the result here is narrower: the intended estimand is already a particular MGW
+atom, and one needs to control the error from truncating its specified prefix construction.
+
+
+2. Events, atoms and supported averages
+
+
+A node has an OR between collections and an AND within each
+
+A node 𝛼 is a nonempty inclusion-antichain of nonempty subsets of 𝐼. No distinct member
+collections contain one another. At an anchor 𝑧, define
+
+           𝐸𝛼 (𝑧) = ⋃ {𝑥 ∈ 𝒦 ∶ 𝑥𝑖 = 𝑧𝑖 for every 𝑖 ∈ 𝐶},                 𝑉 (𝑧) = {𝑥 ∈ 𝒦 ∶ 𝑡𝑥 = 𝑡𝑧 }.
+                      𝐶∈𝛼
+
+Thus {{1}, {2}} accepts a match of either source, whereas {{1, 2}} requires both sources to
+match. These are different events.
+Write
+
+                    𝑎𝑧 = 𝑃 (𝐸𝛼 (𝑧)),        𝑣𝑧 = 𝑃 (𝑉 (𝑧)),          𝑞𝑧 = 𝑃 (𝐸𝛼 (𝑧) ∩ 𝑉 (𝑧)).
+
+We use these symbols for a fixed node 𝛼; when another node 𝛽 is needed, write 𝑎𝑧,𝛽 and 𝑞𝑧,𝛽 . For
+a supported anchor, meaning 𝑝(𝑧) > 0, the anchor belongs to all three events. Event inclusion
+gives
+
+                                  0 < 𝑝(𝑧) ≤ 𝑞𝑧 ≤ 𝑎𝑧 ≤ 1,           𝑞𝑧 ≤ 𝑣𝑧 ≤ 1.                                (1)
+
+No independence between the events is used. These inequalities justify the logarithms and
+divisions below.
+
+
+Lower cumulatives identify the atom families
+
+The redundancy order on nodes is
+
+                                𝛼⪯𝛽       ⟺      ∀𝐵 ∈ 𝛽 ∃𝐴 ∈ 𝛼 with 𝐴 ⊆ 𝐵.
+
+For a function 𝑓 on the full finite node set, define its lower cumulative by
+
+                                             (𝒵𝑓)(𝛽) = ∑ 𝑓(𝛼).
+                                                              𝛼⪯𝛽
+
+The informative and misinformative atom families 𝜋𝑧+ and 𝜋𝑧− are the unique solutions of
+
+                                                                                  𝑣𝑧
+                                𝒵𝜋𝑧+ (𝛽) = − log 𝑎𝑧,𝛽 ,         𝒵𝜋𝑧− (𝛽) = log        .                         (2)
+                                                                                 𝑞𝑧,𝛽
+
+Finite lower-cumulative inversion is unique: after ordering the nodes consistently with ⪯, its
+matrix is triangular with diagonal entries one. The accepted MGW bridge identifies these
+particular inverses with the informative and misinformative construction. Restricting the
+cumulative sum to a few selected nodes would generally define a different inverse problem.
+
+
+                                                          2
+Categorical shared exclusions                                                                   Finite-horizon bias bounds
+
+
+
+The signed local atom is 𝜋𝑧 (𝛼) = 𝜋𝑧+ (𝛼) − 𝜋𝑧− (𝛼), and the population atom is
+
+                                               𝜃𝛼 = ∑ 𝑝(𝑧)𝜋𝑧 (𝛼).                                                     (3)
+                                                         𝑧∶𝑝(𝑧)>0
+
+Its lower cumulative is the local shared information log(𝑞𝑧,𝛽 /(𝑎𝑧,𝛽 𝑣𝑧 )) averaged over the complete
+joint law. A cumulative quantity is generally not one atom. Signed atoms may be negative and
+are never clamped here.
+For convenience define
+
+                                              𝔼+
+                                               𝑝 [𝑓] = ∑ 𝑝(𝑧)𝑓(𝑧).                                                    (4)
+                                                           𝑧∶𝑝(𝑧)>0
+
+The superscript means “sum over positive population support,” not “take a positive part.”
+Its weights sum exactly to one. The formal construction sets both inverse families to zero at
+zero-mass anchors; no logarithm or inverse there receives a scientific interpretation.
+
+
+3. The actual finite-row statistic
+
+
+A prefix records joined mismatch patterns
+
+For a fresh row 𝑥 and anchor 𝑧, let
+
+                                             𝑀𝑧 (𝑥) = {𝑖 ∈ 𝐼 ∶ 𝑥𝑖 ≠ 𝑧𝑖 }.
+
+When this set is nonempty, its singleton family {{𝑖} ∶ 𝑖 ∈ 𝑀𝑧 (𝑥)} is a valid node. The join of
+two nodes is formed by taking all unions of one collection from each node and retaining the
+inclusion-minimal unions. It is the least upper bound for ⪯.
+For a nonempty list 𝑥1 , … , 𝑥𝑗 with all mismatch sets nonempty, let 𝐺𝑧 (𝑥1 , … , 𝑥𝑗 ) be the repeated
+join of those singleton families. Let
+
+                                   𝐹𝑧,𝛼 (𝑥1 , … , 𝑥𝑗 )     ⟺        𝐺𝑧 (𝑥1 , … , 𝑥𝑗 ) = 𝛼.
+
+Set 𝐹 to false for an empty list or a list containing an empty mismatch set. Thus a complete
+source match makes the prefix event false without requiring a join of invalid nodes. The indicator
+1{𝐹 } equals one when 𝐹 holds and zero otherwise.
+For raw time 𝑗 ≥ 1, define the positive increment
+
+                                                                1{𝐹𝑧,𝛼 (𝑥1 , … , 𝑥𝑗 )}
+                                      𝐴𝑧,𝛼
+                                       𝑗 (𝑥1 , … , 𝑥𝑗 ) =                              .                              (5)
+                                                                         𝑗
+
+For the negative increment, retain from the same prefix only rows whose target matches 𝑡𝑧 , in
+their original order. Call that list 𝑅𝑗 and its length 𝑁𝑗 . Define
+
+                                                           1{𝐹𝑧,𝛼 (𝑅𝑗 )}/𝑁𝑗 ,      𝑡𝑥𝑗 = 𝑡𝑧 ,
+                                𝐷𝑗𝑧,𝛼 (𝑥1 , … , 𝑥𝑗 ) = {                                                              (6)
+                                                           0,                      𝑡𝑥𝑗 ≠ 𝑡𝑧 .
+
+
+
+                                                                3
+Categorical shared exclusions                                                                     Finite-horizon bias bounds
+
+
+
+The first case has 𝑁𝑗 ≥ 1 because the current row is retained. The denominator is retained
+target rank, not raw time. The current-target condition prevents an unchanged retained prefix
+from being counted again while no new target match arrives.
+
+
+A fresh anchor and a fixed horizon define the experiment
+
+Let 𝑍0 , 𝑍1 , … , 𝑍ℎ be independent rows with PMF 𝑝. The anchor is 𝑍0 , and the remaining ℎ
+rows form the prefix. The block statistic is
+
+                                        ℎ
+                                                                                                                        (7)
+                                                 𝑍 ,𝛼                            𝑍 ,𝛼
+                          𝐵ℎ (𝛼) = ∑ (𝐴𝑗 0 (𝑍1 , … , 𝑍𝑗 ) − 𝐷𝑗 0 (𝑍1 , … , 𝑍𝑗 )) .
+                                        𝑗=1
+
+The companion mean exposition writes this same block as 𝑌ℎ , this report’s negative increment
+𝐷𝑗 as 𝐵𝑗 , and 𝜃𝛼 as Π(𝛼).
+At ℎ = 0, the block is zero. Let 𝜇𝑝 give mass 𝑝(𝑧) to each complete row. For the fixed node 𝛼,
+write 𝐵ℎ (𝑧0 , … , 𝑧ℎ ) for the realized block value. Its expectation is
+
+                                                                             ℎ
+                                                                                                                        (8)
+                                              ⊗(ℎ+1)
+                    𝔼[𝐵ℎ ] = ∫ 𝐵ℎ 𝑑𝜇𝑝                  =      ∑           (∏ 𝑝(𝑧𝑟 )) 𝐵ℎ (𝑧0 , … , 𝑧ℎ ),
+                                                           𝑧0 ,…,𝑧ℎ ∈𝒦      𝑟=0
+
+The sum ranges over all possible blocks, weighted by their product probabilities. The finite
+alphabet makes this integral finite.
+We bound
+
+                                                   𝑒ℎ = 𝜃𝛼 − 𝔼[𝐵ℎ ].                                                    (9)
+
+Conventional statistical bias is 𝔼[𝐵ℎ ] − 𝜃𝛼 = −𝑒ℎ . Keeping the sign explicit is essential when
+interpreting the asymmetric bounds.
+
+
+4. Why the increment envelopes are valid
+
+
+Nonnegative join coordinates give the positive envelope
+
+For real weights 𝑟 on complete keys and 𝑗 ≥ 1, define the finite word coefficient
+
+                                                              𝑗
+                          𝑐𝑗𝑟,𝑧 (𝛼) =          ∑           (∏ 𝑟(𝑥ℓ )) 1{𝐹𝑧,𝛼 (𝑥1 , … , 𝑥𝑗 )}.                          (10)
+                                        (𝑥1 ,…,𝑥𝑗 )∈𝒦𝑗       ℓ=1
+
+
+The accepted mean bridge identifies this coefficient with the 𝑗-fold join convolution of the
+single-row mismatch-node weights. For node functions 𝑓, 𝑔, that convolution is
+
+                                              (𝑓 ∗ 𝑔)(𝛾) = ∑ 𝑓(𝛽)𝑔(𝛿).
+                                                                  𝛽∨𝛿=𝛾
+
+The finite coefficient identity itself allows signed 𝑟. Here 𝑟 = 𝑝 ≥ 0, so every convolution
+coordinate is nonnegative. A coordinate is at most its lower cumulative sum because that sum
+contains the coordinate and only nonnegative other terms.
+
+
+                                                                  4
+Categorical shared exclusions                                                                 Finite-horizon bias bounds
+
+
+
+For one row with nonempty 𝑀𝑧 (𝑥), the singleton mismatch family lies below 𝛽 exactly when every
+collection 𝐶 ∈ 𝛽 contains a mismatching index. Equivalently, no collection matches completely,
+so 𝑥 ∉ 𝐸𝛽 (𝑧). The least-upper-bound property extends this equivalence to every factor in the
+repeated join. An empty mismatch set contributes to neither side: the prefix event is false and
+that row belongs to 𝐸𝛽 (𝑧). Thus a repeated mismatch join lies below 𝛽 exactly when every row
+lies outside 𝐸𝛽 (𝑧). Finite distributivity gives
+
+                                              𝒵𝑐𝑗𝑝,𝑧 (𝛽) = (1 − 𝑎𝑧,𝛽 )𝑗 .
+
+Consequently, at the chosen 𝛼,
+
+                                                                               (1 − 𝑎𝑧 )𝑗
+                          0 ≤ 𝑐𝑗𝑝,𝑧 (𝛼) ≤ (1 − 𝑎𝑧 )𝑗 ,         0 ≤ 𝔼[𝐴𝑧,𝛼
+                                                                      𝑗 ]≤                .                        (11)
+                                                                                   𝑗
+
+This reasoning uses nonnegative coordinates, not an invalid inference that nonnegative cumula-
+tives always have nonnegative inverses.
+
+
+Conditioning and the binomial identity give the negative envelope
+
+For a supported anchor, 𝑣𝑧 > 0. The conditional complete-row PMF is
+
+                                                        𝑝(𝑥)1{𝑡𝑥 = 𝑡𝑧 }
+                                            𝑝𝑧𝑇 (𝑥) =                   .
+                                                              𝑣𝑧
+
+It is normalized and nonnegative, and its source-event mass is 𝑞𝑧 /𝑣𝑧 . The accepted raw-time
+expectation formula, at 𝑗 = 𝑛 + 1, is
+
+                                            𝑛                      𝑝𝑇
+                                                                    𝑧 ,𝑧
+                                               𝑛 𝑘+1             𝑐       (𝛼)
+                                   𝑧,𝛼
+                                𝔼[𝐷𝑛+1 ] = ∑ ( )𝑣𝑧 (1 − 𝑣𝑧 ) 𝑛−𝑘   𝑘+1
+                                                                             .                                     (12)
+                                           𝑘=0
+                                               𝑘                   𝑘+1
+
+Here the current row is a target match, and 𝑘 of the previous 𝑛 rows match. There are (𝑛𝑘)
+choices of their positions. For any such pattern with positive probability, the retained values
+are independent with PMF 𝑝𝑧𝑇 ; zero-probability patterns contribute zero. This accounts for the
+power 𝑣𝑧𝑘+1 and retained-rank denominator 𝑘 + 1. Within-row dependence remains inside 𝑝𝑧𝑇 .
+Apply (11) to the conditional law. All prefactors in (12) are nonnegative. Since
+
+                                                                             (𝑛𝑘)  (𝑛+1)
+                         𝑣𝑧𝑘+1 (1 − 𝑞𝑧 /𝑣𝑧 )𝑘+1 = (𝑣𝑧 − 𝑞𝑧 )𝑘+1 ,                 = 𝑘+1 ,
+                                                                            𝑘+1    𝑛+1
+the binomial theorem yields
+
+                                 𝑛
+                                    𝑛 (𝑣 − 𝑞𝑧 )𝑘+1 (1 − 𝑣𝑧 )𝑛−𝑘
+                                ∑( ) 𝑧
+                                𝑘=0
+                                    𝑘          𝑘+1
+                                         ((𝑣𝑧 − 𝑞𝑧 ) + (1 − 𝑣𝑧 ))𝑛+1 − (1 − 𝑣𝑧 )𝑛+1
+                                     =                                              .
+                                                           𝑛+1
+Therefore
+
+                                                        (1 − 𝑞𝑧 )𝑗 − (1 − 𝑣𝑧 )𝑗
+                                     0 ≤ 𝔼[𝐷𝑗𝑧,𝛼 ] ≤                            .                                  (13)
+                                                                   𝑗
+
+
+                                                           5
+Categorical shared exclusions                                                       Finite-horizon bias bounds
+
+
+
+The omitted binomial term is exactly the zero-retained-row term. The raw horizon remains ℎ;
+no stopping-time or retained-time experiment has replaced it.
+
+
+5. Scalar logarithmic tails and atom tails
+
+
+A nonnegative tail has two useful envelopes
+
+For 0 < 𝑥 ≤ 1 and integer ℎ ≥ 0, put
+
+                                                    ℎ              ∞
+                                                       (1 − 𝑥)𝑗        (1 − 𝑥)𝑗
+                                𝑅ℎ (𝑥) = − log 𝑥 − ∑            = ∑             .                        (14)
+                                                   𝑗=1
+                                                           𝑗     𝑗=ℎ+1
+                                                                           𝑗
+
+The equality is the classical logarithm power series with its finite prefix removed. The pinned
+proof uses Mathlib’s real logarithm-series and geometric-series theorems; the classical identity
+also appears in NIST DLMF, equation 4.6.1.
+Every term is nonnegative. Dropping the finite prefix, and separately replacing 1/𝑗 by 1/(ℎ + 1)
+inside the tail, gives
+
+                                            0 ≤ 𝑅ℎ (𝑥) ≤ − log 𝑥,
+                                                  (1 − 𝑥)ℎ+1   1/𝑥 − 1                                   (15)
+                                       𝑅ℎ (𝑥) ≤              ≤         .
+                                                   (ℎ + 1)𝑥     ℎ+1
+
+The geometric series supplies the first fraction, and (1 − 𝑥)ℎ+1 ≤ 1 − 𝑥 supplies the second. These
+statements include 𝑥 = 1.
+
+
+The difference must be bounded before summing
+
+When 0 < 𝑞 ≤ 𝑣 ≤ 1, the numerator (1 − 𝑞)𝑗 − (1 − 𝑣)𝑗 is nonnegative for every 𝑗. Thus
+
+                                       0 ≤ 𝑅ℎ (𝑞) − 𝑅ℎ (𝑣)
+                                          (1 − 𝑞)ℎ+1 /𝑞 − (1 − 𝑣)ℎ+1 /𝑣
+                                        ≤                                                                (16)
+                                                      ℎ+1
+                                          1/𝑞 − 1/𝑣
+                                        ≤           .
+                                            ℎ+1
+For the last inequality, the geometric tail difference equals
+
+                       ∞                                     ℎ
+                                                        1 1
+                      ∑ [(1 − 𝑞)𝑗 − (1 − 𝑣)𝑗 ] =         − − ∑ [(1 − 𝑞)𝑗 − (1 − 𝑣)𝑗 ].
+                     𝑗=ℎ+1
+                                                        𝑞 𝑣 𝑗=1
+
+The finite sum on the right is nonnegative. This is the required comparison. Subtracting
+unrelated upper bounds on 𝑅ℎ (𝑞) and 𝑅ℎ (𝑣) would not justify (16).
+
+
+
+
+                                                         6
+Categorical shared exclusions                                                              Finite-horizon bias bounds
+
+
+
+Actual component series identify the endpoints
+
+For a fixed supported anchor, define
+
+                                             ℎ                               ℎ
+                           𝑃ℎ (𝑧, 𝛼) = ∑ 𝔼[𝐴𝑧,𝛼
+                                            𝑗 ],                𝑁ℎ (𝑧, 𝛼) = ∑ 𝔼[𝐷𝑗𝑧,𝛼 ].
+                                            𝑗=1                             𝑗=1
+
+The accepted mean bridge proves the actual component-series identities
+
+                                ∞                               ∞
+                                ∑ 𝔼[𝐴𝑧,𝛼    +
+                                     𝑗 ] = 𝜋𝑧 (𝛼),              ∑ 𝔼[𝐷𝑗𝑧,𝛼 ] = 𝜋𝑧− (𝛼).                          (17)
+                                𝑗=1                             𝑗=1
+
+For every node 𝛽, the exact cumulative forms underlying (11)–(13) are
+
+                                                        (1 − 𝑎𝑧,𝛽 )𝑗
+                                      𝒵(𝔼[𝐴𝑧,⋅
+                                           𝑗 ])(𝛽) =                 ,
+                                                             𝑗
+                                                        (1 − 𝑞𝑧,𝛽 )𝑗 − (1 − 𝑣𝑧 )𝑗
+                                      𝒵(𝔼[𝐷𝑗𝑧,⋅ ])(𝛽) =                           .
+                                                                     𝑗
+
+The first is the word cumulative identity divided by 𝑗. For the second, finite lower-cumulative
+summation commutes with the binomial sum in (12); the same binomial calculation then gives
+equality. Nonnegative coordinates are bounded by these summable cumulatives, so their series
+are summable. Summing the cumulatives over 𝑗 gives − log 𝑎𝑧,𝛽 and log(𝑣𝑧 /𝑞𝑧,𝛽 ). The unique
+finite lower-cumulative inverse identifies the endpoints with (2).
+Shift those summable series by ℎ and apply (11) and (13) termwise. Equations (14) and (17) give
+
+                                  0 ≤ 𝜋𝑧+ (𝛼) − 𝑃ℎ (𝑧, 𝛼) ≤ 𝑅ℎ (𝑎𝑧 ),
+                                                                                                                (18)
+                                  0 ≤ 𝜋𝑧− (𝛼) − 𝑁ℎ (𝑧, 𝛼) ≤ 𝑅ℎ (𝑞𝑧 ) − 𝑅ℎ (𝑣𝑧 ).
+
+This argument works directly with shifted infinite tails. The separately proposed finite-horizon
+increment-difference statement is not an additional public theorem.
+
+
+6. Five finite-bias conclusions
+
+
+The actual expectation and its signed error
+
+The accepted native finite-block identity is
+
+                                                  𝔼[𝐵ℎ ] = 𝔼+
+                                                            𝑝 [𝑃ℎ − 𝑁ℎ ].                                       (19)
+
+Subtract (19) from (3) before bounding. Define
+
+                                𝑈ℎ = 𝔼 +
+                                       𝑝 [𝑅ℎ (𝑎)],         𝐿ℎ = 𝔼+
+                                                                 𝑝 [𝑅ℎ (𝑞) − 𝑅ℎ (𝑣)].
+
+Both are nonnegative, and (18) proves
+
+                         −𝐿ℎ ≤ 𝑒ℎ ≤ 𝑈ℎ ,               |𝑒ℎ | ≤ max{𝑈ℎ , 𝐿ℎ } ≤ 𝔼+
+                                                                                𝑝 [𝑅ℎ (𝑞)].                     (20)
+
+
+                                                            7
+Categorical shared exclusions                                                                           Finite-horizon bias bounds
+
+
+
+For the last comparison, 𝑞 ≤ 𝑎 makes 𝑅ℎ (𝑎) ≤ 𝑅ℎ (𝑞), and 𝑅ℎ (𝑣) ≥ 0 makes 𝑅ℎ (𝑞) − 𝑅ℎ (𝑣) ≤
+𝑅ℎ (𝑞). Using the maximum retains the signed component structure; adding the two component
+envelopes would discard it.
+
+    FINITE CATEGORICAL MGW · MEAN TRUNCATION ERROR
+
+
+    Subtract the omitted components before bounding
+    Both omitted components are nonnegative. Their difference can have either sign.
+
+
+      Informative component                                             Misinformative component
+      0 ≤ Ep+[π+ − Ph] ≤ Uh                                             0 ≤ Ep+[π− − Nh] ≤ Lh
+      Uh = Ep+[Rh(a)]                                                   Lh = Ep+[Rh(q) − Rh(v)]
+
+
+    eh = θ − E[Bh] = Ep+[π+ − Ph] − Ep+[π− − Nh]
+
+
+
+           −Lh                                                    0                                                Uh
+                                            Symbolic interval: −Lh ≤ eh ≤ Uh. Not to scale.
+
+
+    |eh| ≤ max(Uh, Lh) ≤ Ep+[Rh(q)]
+    Population expectation bound; not a band around an observed block statistic.
+
+
+Figure 1: The two omitted nonnegative components produce an asymmetric signed error interval. The
+diagram is symbolic, not to scale.
+
+
+Define the supported inverse moments and query surprisal
+
+                  𝐾𝑎 = 𝔼 +
+                         𝑝 [1/𝑎],         𝐾𝑞 = 𝔼+
+                                                𝑝 [1/𝑞],           𝐾𝑇 = 𝔼+
+                                                                         𝑝 [1/𝑣],                   𝑝 [− log 𝑞].
+                                                                                              𝐻𝑞 = 𝔼+                        (21)
+
+Averaging (15)–(16) gives
+
+                                                  𝐾𝑞 − 𝐾 𝑇       𝐾 −1
+                                              −            ≤ 𝑒ℎ ≤ 𝑎   ,
+                                                   ℎ+1            ℎ+1
+                                                                                                                             (22)
+                                                                 𝐾𝑞 − 1
+                                               |𝑒ℎ | ≤ min {𝐻𝑞 ,        } .
+                                                                 ℎ+1
+
+Each constant 1 is 𝔼+
+                    𝑝 [1], using the normalized population law. Equations (18)–(22), together with
+existence and uniqueness of the supported inverse families and (19), form actual_finite_bias.
+
+
+A partition identity and support-moment inequalities
+
+For any finite map 𝑓 ∶ 𝒦 → 𝒬, define its fiber mass
+
+                                𝑝𝑓 (𝑦) =      ∑ 𝑝(𝑧),                 𝐾𝑓 = #{𝑦 ∶ 𝑝𝑓 (𝑦) > 0}.
+                                           𝑧∶𝑓(𝑧)=𝑦
+
+Group supported terms by their fibers. A positive fiber contributes
+
+
+
+                                                                  8
+Categorical shared exclusions                                                       Finite-horizon bias bounds
+
+
+
+
+                                                       𝑝(𝑧)
+                                               ∑            = 1.
+                                                      𝑝 (𝑦)
+                                              𝑧∶𝑓(𝑧)=𝑦 𝑓
+
+A zero fiber contains only zero-mass keys, because all 𝑝(𝑧) ≥ 0. It contributes zero. Writing
+𝑍 ∼ 𝑝 for a complete row with this PMF, fiber_inverse_moment therefore proves
+
+                                                       1
+                                           𝔼+
+                                            𝑝 [             ] = 𝐾𝑓 .                                     (23)
+                                                  𝑝𝑓 (𝑓(𝑍))
+
+This is a finite population partition identity. Overlapping source-union queries are generally not
+fibers of one map, so 𝐾𝑎 and 𝐾𝑞 are not asserted to be integer support counts.
+Let 𝐾full = #{𝑧 ∶ 𝑝(𝑧) > 0}. For each collection 𝐶 ∈ 𝛼, let 𝐾𝐶 count positive fibers of the source
+projection 𝑧 ↦ (𝑠𝑖 )𝑖∈𝐶 , and let 𝐾𝐶𝑇 count positive fibers of the joint projection 𝑧 ↦ ((𝑠𝑖 )𝑖∈𝐶 , 𝑡).
+The symbol 𝐾𝑇 in (21) equals the target’s positive support count by (23).
+For a supported anchor, its 𝐶-matching fiber is contained in 𝐸𝛼 (𝑧); its joint 𝐶, 𝑇 fiber is contained
+in 𝐸𝛼 (𝑧) ∩ 𝑉 (𝑧). Smaller positive denominators have larger reciprocals. Using (1), (23), and
+𝑝(𝑧) ≤ 𝑞𝑧 , support_moment_bounds proves
+
+                                1 ≤ 𝐾𝑎 ≤ 𝐾𝑞 ≤ 𝐾full ,          1 ≤ 𝐾𝑇 ≤ 𝐾 𝑞 ,
+                                                                                                         (24)
+                                 𝐾𝑎 ≤ 𝐾 𝐶 ,         𝐾𝑞 ≤ 𝐾𝐶𝑇           (𝐶 ∈ 𝛼).
+
+The inequality 𝐾𝑞 ≤ 𝐾full also follows directly by summing 𝑝(𝑧)/𝑞𝑧 ≤ 1 over supported keys.
+These bounds apply to each member collection, so one may use a justified favorable collection
+rather than the complete-key cardinality.
+
+
+Projected-support and population-floor bounds
+
+Substitute (24) into (22). For every 𝐶 ∈ 𝛼, projected_support_bias gives
+
+                                         𝐾𝐶𝑇 − 𝐾𝑇       𝐾 −1
+                                     −            ≤ 𝑒ℎ ≤ 𝐶   ,
+                                          ℎ+1            ℎ+1
+                                                                                                         (25)
+                                                     𝐾 −1
+                                              |𝑒ℎ | ≤ 𝐶𝑇  .
+                                                      ℎ+1
+
+For a different kind of information about the law, suppose a population floor satisfies
+
+                            0 < 𝜂 ≤ 1,       𝜂 ≤ 𝑞𝑧    for every 𝑧 with 𝑝(𝑧) > 0.                        (26)
+
+Then 𝑅ℎ (𝑞𝑧 ) ≤ 𝑅ℎ (𝜂). Supported weights sum to one, so mass_floor_bias gives
+
+                                                            (1 − 𝜂)ℎ+1
+                                         |𝑒ℎ | ≤ 𝑅ℎ (𝜂) ≤              .                                 (27)
+                                                             (ℎ + 1)𝜂
+
+The final two exports apply to any supplied supported inverse pair satisfying (2) and
+the zero-family convention. The proof uses uniqueness to identify that pair with the families
+constructed in actual_finite_bias. It does not add a hidden assumption that the desired
+bounds already hold for the supplied pair.
+
+
+
+                                                        9
+Categorical shared exclusions                                                     Finite-horizon bias bounds
+
+
+
+7. Four hand derivations that explain the limits
+
+
+These are exact hand specializations of the stated definitions, not empirical experiments or
+additional Lean exports. The accepted evidence consists of the five universal formal statements
+and their specified dependency closure.
+
+
+Copying source: a nonzero tail with an exact interpretation
+
+Take one fair binary source that exactly copies its target: 𝑃 (𝑆 = 𝑇 = 0) = 𝑃 (𝑆 = 𝑇 = 1) = 1/2.
+There is one node. At either supported anchor, 𝑎 = 𝑣 = 𝑞 = 1/2. A positive prefix of length 𝑗
+succeeds precisely when all 𝑗 sources differ from the anchor, with probability 2−𝑗 . Conditional
+on a target match, the source also matches, so every negative increment is zero. Thus
+
+                                                            ℎ
+                                                               2−𝑗
+                     𝜃 = 𝐼(𝑆; 𝑇 ) = log 2,         𝔼[𝐵ℎ ] = ∑      ,   𝑒ℎ = 𝑅ℎ (1/2).
+                                                           𝑗=1
+                                                                𝑗
+
+At ℎ = 1, 𝑒1 = log 2 − 1/2, and the geometric bound is 1/4. This is ordinary MI in the one-source
+special case; it does not require PID to pose the question.
+
+
+Constant sources: exact cancellation despite a large query moment
+
+Let every source be constant and let the target be uniform on 𝑚 ≥ 1 values. Then 𝑎 = 1 and
+𝑞 = 𝑣 = 1/𝑚, giving
+
+                                       𝐾𝑎 = 1,        𝐾𝑞 = 𝐾𝑇 = 𝑚.
+
+Every fresh row has an empty source mismatch set, so both increments are zero on every block.
+Both inverse families are zero, hence 𝜃 = 𝐵ℎ = 𝑒ℎ = 0 for every ℎ. The signed interval in (22) is
+exactly zero, while the absolute envelope (𝐾𝑞 − 1)/(ℎ + 1) can be large. Therefore 𝐾𝑞 is not a
+necessary sample-complexity lower bound.
+
+
+Overlapping queries: an inverse moment need not be an integer
+
+Take two independent fair source bits and a singleton target. For 𝛼 = {{1}, {2}}, a query accepts
+a match of either bit. At every anchor,
+
+                           𝑎 = 𝑞 = 1 − 14 = 34 ,      𝐾𝑎 = 𝐾𝑞 = 43 ,    𝐾𝑇 = 1.
+
+For example, the query at anchor (0, 0) accepts 00, 01, 10, while the query at (0, 1) accepts
+00, 01, 11. The sets overlap without being identical. They are not a partition, and 4/3 cannot be
+a support cardinality. Each singleton collection still gives the valid bound 𝐾𝑞 ≤ 𝐾𝐶𝑇 = 2.
+Because the target is constant, every row is retained and 𝑁𝑗 = 𝑗. The positive and negative
+increments are identical on every block; the signed statistic and signed atom cancel exactly.
+Noninteger inverse moments and zero signed bias are compatible.
+
+
+
+
+                                                      10
+Categorical shared exclusions                                                                              Finite-horizon bias bounds
+
+
+
+    HAND DERIVATION · TWO FAIR SOURCE BITS · CONSTANT TARGET
+
+
+    A query union is not necessarily a partition
+    Node {{1}, {2}}: accept either source matching the anchor. Each pair has mass 1/4.
+
+                            Anchor (0, 0)                                                      Anchor (0, 1)
+
+
+                    00                           01                                  00                          01
+                 Included                     Included                            Included                     Included
+
+
+                    10                           11                                  10                          11
+                 Included                     Excluded                            Excluded                     Included
+
+
+                         Query mass q = 3/4                                                 Query mass q = 3/4
+
+
+    Every anchor has q = 3/4, so Kq = Ep+[1/q] = 4/3.
+    The sets overlap but differ. The inverse moment need not be a support count.
+    With a constant target, positive and negative increments still cancel on every block.
+
+
+Figure 2: Two overlapping query events on four equally likely source pairs. Each has mass three quarters,
+but their memberships differ.
+
+
+
+Independence at horizon one: a positive finite mean when the atom is zero
+
+Take one fair binary source independent of a fair binary target. The four complete keys have
+probability 1/4. At an anchor, 𝑎 = 𝑣 = 1/2 and 𝑞 = 1/4. At ℎ = 1,
+
+                     𝔼[𝐴1 ] = 𝑃 (𝑆1 ≠ 𝑆0 ) = 12 ,                𝔼[𝐷1 ] = 𝑃 (𝑆1 ≠ 𝑆0 , 𝑇1 = 𝑇0 ) = 14 .
+
+Therefore
+
+                                   𝔼[𝐵1 ] = 14 ,          𝜃 = 𝐼(𝑆; 𝑇 ) = 0,                 𝑒1 = − 14 .
+
+Condition on anchor (0, 0). Only fresh row (1, 1) produces signed value one; the other three rows
+produce zero, as the figure shows. Symmetry gives the same conditional mean at every anchor.
+This is a positive finite-horizon mean under independence, not a calculated hypothesis-test
+false-positive rate. A positive short-prefix result cannot by itself establish nonzero population
+information.
+
+
+
+
+                                                                   11
+Categorical shared exclusions                                                                          Finite-horizon bias bounds
+
+
+
+    HAND DERIVATION · ONE SOURCE · RAW HORIZON h = 1
+
+
+    A positive finite mean can occur under independence
+    Independent fair source and target bits. Fix anchor (S0, T0) = (0, 0).
+
+                                                               Positive                     Negative        Signed
+           Fresh row                Probability
+                                                                 A1                           D1          B1 = A1 − D1
+
+             (0, 0)                     1/4                        0                           0               0
+
+             (0, 1)                     1/4                        0                           0               0
+
+             (1, 0)                     1/4                        1                           1               0
+
+             (1, 1)                     1/4                        1                           0               1
+
+    E[B1] = 1/4, while θ = I(S; T) = 0. Thus e1 = −1/4.
+    Symmetry gives the same mean at every anchor. No sampling experiment was run.
+    This is a positive finite mean, not a calculated hypothesis-test false-positive rate.
+
+Figure 3: A one-draw hand calculation under independent fair source and target bits. Only one of four
+equally likely draws has signed value one.
+
+
+
+
+8. How to use a bound without changing its assumptions
+
+
+Plan a sufficient fixed horizon
+
+Suppose the intended population atom, source grouping and node are fixed. If a justified 𝐶 ∈ 𝛼
+and its population support count 𝐾𝐶𝑇 are available, then for a positive tolerance 𝜀,
+
+                                                        𝐾𝐶𝑇 − 1
+                                           ℎ+1≥                           ⟹        |𝑒ℎ | ≤ 𝜀.                               (28)
+                                                          𝜀
+This is an algebraic consequence of (25), not another separately exported theorem. A justified
+mass floor can instead use (27), whose sufficient envelope may decrease much faster with ℎ.
+Known moments can use the more informative signed interval (22).
+The budget in (28) controls mean truncation error. One block requires ℎ + 1 complete iid
+rows, including its fresh anchor. Averaging repeated blocks adds a sampling problem: these
+bounds alone do not specify how many blocks are needed or the probability that their sample
+mean is close to 𝜃. They also give no runtime, memory or finite-precision guarantee for an
+implementation.
+A horizon or node selected from the same evaluation rows is no longer automatically the fixed
+experiment in (7)–(8). Its validity needs a separate selection argument. This statement does
+not address optional stopping, censoring, reuse of a terminal hit, overlapping time windows or
+serially dependent rows.
+
+
+
+
+                                                                    12
+Categorical shared exclusions                                                Finite-horizon bias bounds
+
+
+
+Population support is different from observed occupancy
+
+The counts 𝐾𝐶 , 𝐾𝐶𝑇 , 𝐾𝑇 refer to positive population fibers. A finite sample may miss possible
+categories. Replacing population support with the number of categories observed so far can
+shrink the bound without justification. Exhaustive alphabet or structural support bounds can be
+valid conservative inputs; empirical estimates of support or a mass floor need their own statistical
+guarantees.
+An instrument specification that limits one source to 𝑟 categorical states and the target to 𝑠
+states supplies 𝐾𝐶𝑇 ≤ 𝑟𝑠, even if some pairs are impossible. Stronger knowledge of possible
+pairs can improve this. Recording fewer than 𝑟𝑠 pairs does not, by itself, prove that stronger
+population restriction.
+
+
+Projection can reduce alphabet growth, with limits
+
+For a laboratory system with many categorical sensor outputs, the complete-key alphabet can
+grow as a product of alphabet sizes. A member collection 𝐶 can have a much smaller joint
+alphabet with the target. Inequality (24) uses that projection to control a query involving the
+entire node; it does not require pretending that the other sources were never part of the atom.
+This advantage is about categorical support cardinality. It is not a theorem about Euclidean
+intrinsic dimension, nearest-neighbor error or immunity to a large source lattice. If every useful
+collection has large joint support, or the only justified mass floor is tiny, the bounds may be too
+conservative for practical planning. The constant-source example shows that a large bound need
+not reflect the actual signed error.
+
+
+Binning and fitted transformations change what is being estimated
+
+A fixed deterministic transformation applied separately to each iid row preserves the iid structure.
+If its outputs are categorical, the theorem concerns the resulting categorical law and its MGW
+atom. Binning an analog instrument therefore changes the estimand to the declared binned
+variables; refining the bins changes that estimand and may enlarge the support constants.
+For a transformation learned from an independent training sample, one may condition on the
+realized transformation and examine whether the evaluation experiment and bound inputs satisfy
+the fixed-law assumptions. An unconditional bound needs the corresponding conditional bounds
+to be integrated or controlled uniformly. This is a model argument, not a newly formalized
+training theorem here.
+Fitting bins, projections, source groupings or targets on the same evaluation rows can couple
+those rows and alter the selected estimand. Separate fold-wise arguments may be possible with
+sample splitting or cross-fitting, but these five exports do not supply them automatically. A
+shuffled time series is also not thereby established to be iid.
+
+
+
+
+                                                 13
+Categorical shared exclusions                                                 Finite-horizon bias bounds
+
+
+
+9. Scope, edge cases and proof status
+
+
+All formulas include ℎ = 0, where the entire logarithmic tail remains. If 𝑞𝑧 = 1, then 𝑎𝑧 = 𝑣𝑧 = 1,
+so both tails vanish. If 𝑞𝑧 = 𝑣𝑧 , the negative remainder difference vanishes; if only 𝑣𝑧 = 1, only
+the target remainder vanishes automatically. The population-floor theorem permits 𝜂 = 1, which
+forces 𝑞𝑧 = 1 at supported anchors. It does not permit 𝜂 = 0. An empty complete-key carrier
+cannot support a normalized law; unused alphabet values are allowed and contribute zero mass.
+The five accepted declarations refer to finite exact real mathematics under their native probability
+model. The semantic checks bound them to both their raw quantified types and their alias
+types, and fresh kernel runs checked the selected dependency closure with the permitted axioms
+Classical.choice, Quot.sound and propext. Repeated and cosmetic runs add no new theorem
+families. The detailed proof map separates formal evidence, source interpretation, development
+failures and publication status.
+The result supplies no finite unbiasedness, variance, MSE, confidence coverage, stopping-law,
+regeneration, Rust/Python refinement, cross-platform numerical equality or application quali-
+fication theorem. It does not transfer to Ehrlich’s continuous shared exclusions, another PID
+functional or a hyperbolic estimator. Finite categorical equality events, exact finite sums and a
+declared iid row law are the ingredients of this proof; a distance metric or embedding does not
+replace them.
+For sensor-data analysis, these bounds can inform an offline investigation of a fixed categorical
+information question. They do not establish placement, fusion, alerting or real-time superiority
+over MI/CMI, task loss, ablations or explicit utility. Those comparisons require separate data
+and decision criteria.
+
+
+10. Primary and formal references
+
+
+   1. A. Makkeh, A. J. Gutknecht and M. Wibral, Introducing a differentiable measure of
+      pointwise shared information, arXiv:2002.03356v5, 30 March 2021; Physical Review E 103,
+      032149. Defining categorical MGW source; not a source for a claimed prefix-estimator
+      priority result.
+   2. NIST Digital Library of Mathematical Functions, §4.6(i), equation 4.6.1. Classical logarithm
+      power series. Equations (15)–(16) are the explicit positive-series derivations above.
+   3. Mathlib, pinned commit db584cd6d46c92f209a44c0f1c829460d327499d (v4.33.0): real
+      logarithm series, geometric series, natural-number series and tails, and binomial coefficients.
+      The proof uses these mathematical libraries, not numerical simulation.
+   4. The exact theorem-to-proof map and its preserved contract and selected proof source
+      identify this project’s formal objects. These source projections aid inspection; they are not
+      a standalone replay package.
+
+
+
+
+                                                 14
+

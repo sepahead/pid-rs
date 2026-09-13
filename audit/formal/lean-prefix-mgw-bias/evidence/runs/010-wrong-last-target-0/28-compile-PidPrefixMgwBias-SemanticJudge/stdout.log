@@ -1,0 +1,17 @@
+historical-campaign/attempts/010-wrong-last-target-0/src/PidPrefixMgwBias/SemanticJudge.lean:32:56: error: Type mismatch
+  PidPrefixMgwBiasCandidate.mass_floor_bias
+has type
+  True
+but is expected to have type
+  PidPrefixMgwBiasRawTargets.mass_floor_bias
+historical-campaign/attempts/010-wrong-last-target-0/src/PidPrefixMgwBias/SemanticJudge.lean:33:58: error: Type mismatch
+  PidPrefixMgwBiasCandidate.mass_floor_bias
+has type
+  True
+but is expected to have type
+  PidPrefixMgwBiasAliasTargets.mass_floor_bias
+PREFIX_MGW_BIAS_JUDGE_RESULT {"alias_target":"PidPrefixMgwBiasAliasTargets.actual_finite_bias","axioms":["Classical.choice","Quot.sound","propext"],"full_elaborated_type":"PidPrefixMgwBiasSource.actual_finite_bias_target.{u, v, w}","raw_target":"PidPrefixMgwBiasRawTargets.actual_finite_bias","status":"accepted","theorem":"PidPrefixMgwBiasCandidate.actual_finite_bias","universes":["u","v","w"]}
+PREFIX_MGW_BIAS_JUDGE_RESULT {"alias_target":"PidPrefixMgwBiasAliasTargets.fiber_inverse_moment","axioms":["Classical.choice","Quot.sound","propext"],"full_elaborated_type":"PidPrefixMgwBiasSource.fiber_inverse_moment_target.{u, v}","raw_target":"PidPrefixMgwBiasRawTargets.fiber_inverse_moment","status":"accepted","theorem":"PidPrefixMgwBiasCandidate.fiber_inverse_moment","universes":["u","v"]}
+PREFIX_MGW_BIAS_JUDGE_RESULT {"alias_target":"PidPrefixMgwBiasAliasTargets.support_moment_bounds","axioms":["Classical.choice","Quot.sound","propext"],"full_elaborated_type":"PidPrefixMgwBiasSource.support_moment_bounds_target.{u, v, w}","raw_target":"PidPrefixMgwBiasRawTargets.support_moment_bounds","status":"accepted","theorem":"PidPrefixMgwBiasCandidate.support_moment_bounds","universes":["u","v","w"]}
+PREFIX_MGW_BIAS_JUDGE_RESULT {"alias_target":"PidPrefixMgwBiasAliasTargets.projected_support_bias","axioms":["Classical.choice","Quot.sound","propext"],"full_elaborated_type":"PidPrefixMgwBiasSource.projected_support_bias_target.{u, v, w}","raw_target":"PidPrefixMgwBiasRawTargets.projected_support_bias","status":"accepted","theorem":"PidPrefixMgwBiasCandidate.projected_support_bias","universes":["u","v","w"]}
+historical-campaign/attempts/010-wrong-last-target-0/src/PidPrefixMgwBias/SemanticJudge.lean:35:0: error: DNF_JUDGE_TARGET_TYPE: PidPrefixMgwBiasCandidate.mass_floor_bias does not have the complete receiver-free target

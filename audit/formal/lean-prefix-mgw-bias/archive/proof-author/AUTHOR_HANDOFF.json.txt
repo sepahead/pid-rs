@@ -1,0 +1,76 @@
+{
+  "schema": "pid-rs/bias-author-handoff-v1",
+  "recorded_utc": "2026-09-08T09:17:07.034665+00:00",
+  "status": "five_export_development_pass_ready_for_root_review_no_campaign_acceptance",
+  "campaign_start_utc": "2026-09-08T08:50:22.612393+00:00",
+  "campaign_deadline_utc": "2026-09-08T20:50:22.612393+00:00",
+  "candidate_sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+  "candidate_bytes": 34113,
+  "development_attempts_by_author": 5,
+  "full_attempts_by_author": 0,
+  "no_further_candidate_edits_pending_root": true,
+  "public_or_git_writes_by_author": false,
+  "attempts": [
+    {
+      "attempt": "001-development-0",
+      "status": "failed",
+      "candidate_sha256": "edab43857e99efaf66c613be63ea64a513b38fd4feeaebe50b313172d3a0237f",
+      "receipt_sha256": "a6bc051f31c0e86944a8fa419a23917596643a44f3dea1f9422465501ef7744a",
+      "completed_utc": "2026-09-08T09:01:06.817883+00:00",
+      "compiler_returncode": 1,
+      "reported_elapsed_seconds": 12.33473195892293,
+      "peak_observed_group_rss_bytes": 2667888640,
+      "remaining_live_group_processes": [],
+      "new_bias_proofs": 0
+    },
+    {
+      "attempt": "002-development-0",
+      "status": "failed",
+      "candidate_sha256": "37877b702c04de87c60b335246989340a5c8c4a4705361fcdfb91cff199463ca",
+      "receipt_sha256": "beea99ac5b663e6e2328fe9333e4b79f7378281e84729e8b8cb57e55f36f6d45",
+      "completed_utc": "2026-09-08T09:03:29.211851+00:00",
+      "compiler_returncode": 1,
+      "reported_elapsed_seconds": 2.448897875030525,
+      "peak_observed_group_rss_bytes": 2686615552,
+      "remaining_live_group_processes": [],
+      "new_bias_proofs": 0
+    },
+    {
+      "attempt": "003-development-0",
+      "status": "failed",
+      "candidate_sha256": "be47c839769f2ee23a7ca07a3af3bb002b7891ea8409272bb0716952256fb76e",
+      "receipt_sha256": "a0846e10d966a3074ff9a440f02b41ba4c02f46e7c786887dd4052b7d03cf0fc",
+      "completed_utc": "2026-09-08T09:06:43.229299+00:00",
+      "compiler_returncode": 1,
+      "reported_elapsed_seconds": 2.803829666925594,
+      "peak_observed_group_rss_bytes": 2720923648,
+      "remaining_live_group_processes": [],
+      "new_bias_proofs": 0
+    },
+    {
+      "attempt": "004-development-0",
+      "status": "failed",
+      "candidate_sha256": "f119ebc1153b761b24a404186d86bb1cb06c68f153794ed27003ea55d5378f8e",
+      "receipt_sha256": "aab931f77ba13655a2b8a67816fba510cb10b057340bd1c452f245662f6be876",
+      "completed_utc": "2026-09-08T09:09:34.076926+00:00",
+      "compiler_returncode": 1,
+      "reported_elapsed_seconds": 2.514439458027482,
+      "peak_observed_group_rss_bytes": 2738077696,
+      "remaining_live_group_processes": [],
+      "new_bias_proofs": 0
+    },
+    {
+      "attempt": "005-development-0",
+      "status": "development_compile_pass",
+      "candidate_sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+      "receipt_sha256": "e1644b128178b0ba63eaf56f4d53ff7a80a17f1235acd211649b9c6ad20f7503",
+      "completed_utc": "2026-09-08T09:11:29.437856+00:00",
+      "compiler_returncode": 0,
+      "reported_elapsed_seconds": 12.584352707955986,
+      "peak_observed_group_rss_bytes": 2774597632,
+      "remaining_live_group_processes": [],
+      "new_bias_proofs": 0
+    }
+  ],
+  "scope": "Proof source and author derivation only. Five-export development compilation does not accept the campaign. Root owns independent critique and every full/negative/kernel decision."
+}

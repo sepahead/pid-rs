@@ -1,0 +1,64 @@
+{
+  "reviewed_utc": "2026-09-08T12:08:52.982927+00:00",
+  "preserved_initial_probe_sha256": "9b362b7d8433594419b79441de180cb44783d1c0faf180e43aae78aeb22c65a4",
+  "finding": "Initial broad key diagnostic rejected any OpenAction. Exact actual actions are local GoTo first-page Fit navigation with only S and D keys. They do not contain script, external file or submission actions. The initial diagnostic is retained; no production or immutable gate was weakened.",
+  "rows": [
+    {
+      "attempt": "attempt-04-full",
+      "pdf_sha256": "7c7ba1579f74b19f79250e1cc7b02fdf5afd69d8a343cd2591f1e54eae153bd9",
+      "exact_first_page_fit_action": true,
+      "keys": [
+        "/D",
+        "/S"
+      ],
+      "page_reference": [
+        6,
+        0
+      ],
+      "other_issues": []
+    },
+    {
+      "attempt": "attempt-05-full",
+      "pdf_sha256": "7c7ba1579f74b19f79250e1cc7b02fdf5afd69d8a343cd2591f1e54eae153bd9",
+      "exact_first_page_fit_action": true,
+      "keys": [
+        "/D",
+        "/S"
+      ],
+      "page_reference": [
+        6,
+        0
+      ],
+      "other_issues": []
+    },
+    {
+      "attempt": "attempt-03-summary",
+      "pdf_sha256": "180d5e0df604b15c7114560af604c377603bf5a0530c31beb0de047e06df581f",
+      "exact_first_page_fit_action": true,
+      "keys": [
+        "/D",
+        "/S"
+      ],
+      "page_reference": [
+        6,
+        0
+      ],
+      "other_issues": []
+    },
+    {
+      "attempt": "attempt-06-summary",
+      "pdf_sha256": "180d5e0df604b15c7114560af604c377603bf5a0530c31beb0de047e06df581f",
+      "exact_first_page_fit_action": true,
+      "keys": [
+        "/D",
+        "/S"
+      ],
+      "page_reference": [
+        6,
+        0
+      ],
+      "other_issues": []
+    }
+  ],
+  "scope": "Exact current PDF action interpretation only; not generic PDF safety or future artifact acceptance."
+}

@@ -1,0 +1,132 @@
+{
+  "binding_scope": "Exact primary executable bytes, isolated pypdf 6.16.1 source reader, five explicit font inputs, selected LuaLaTeX format, ten canonical document inputs and expected derived/PDF bytes. Complete dynamic-library or TeX-distribution closure and hermetic execution are not claimed. Exact raw PDF comparison remains mandatory. Interpreter, process observer and format pins are prospective source-review observations, not invented historical production captures.",
+  "cross_toolchain_relation": "none; status 2 refusal before registration, work-directory creation or tool launch",
+  "expected_versions": {
+    "lualatex": "This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)",
+    "pandoc": "pandoc 3.10.2",
+    "rsvg-convert": "rsvg-convert version 2.62.3"
+  },
+  "fonts": {
+    "SourceSansPro-Bold.otf": {
+      "bytes": 298076,
+      "sha256": "daccddbe3dd60fe10f6e8a785eda187925da6b611141024dffa43626998dfc7c"
+    },
+    "SourceSansPro-Regular.otf": {
+      "bytes": 293200,
+      "sha256": "7134d229b15cdd0827376d8a24f6f531f616eb1b3fecd16e1cf8a86d0bf6bc51"
+    },
+    "SourceSansPro-Semibold.otf": {
+      "bytes": 295952,
+      "sha256": "aa53ed4fc17334a0c2ee8412c1e4e728bfb732a96b119164f7354343dad8f2f2"
+    },
+    "latinmodern-math.otf": {
+      "bytes": 733736,
+      "sha256": "6075562b771f8b82f0c179e363389684f2dd09de30038269e2628e504bd7be0f"
+    },
+    "lmroman10-regular.otf": {
+      "bytes": 111536,
+      "sha256": "1aa18cfefa58132c52ce5de70db1fd1154201c19cd2b2cdaffba4906a33e6852"
+    }
+  },
+  "format": {
+    "bytes": 12255194,
+    "lookup_name": "lualatex.fmt",
+    "sha256": "e254bc4c8dc1304a4cc099c92ad6e4d81da90805d113069c954da5a69d04bffa"
+  },
+  "limits": {
+    "builds_per_invocation": 2,
+    "invocation_deadline_seconds_maximum": 2700,
+    "latex_passes_per_build": 2,
+    "maximum_commands_full": 44,
+    "maximum_commands_summary": 38,
+    "observed_group_rss_bytes": 4294967296,
+    "output_stream_bytes_each": 4194304,
+    "stage_deadline_seconds_maximum": 5400,
+    "tool_timeout_seconds": 300
+  },
+  "platform": {
+    "machine": "arm64",
+    "system": "Darwin"
+  },
+  "process_observer": {
+    "bytes": 170816,
+    "fixed_runtime_selector": "/bin/ps",
+    "sha256": "472992c470606d28f577590decfecd7f4a20f832fd92c671bebc6d44790b5d02"
+  },
+  "python": {
+    "bytes": 52448,
+    "isolation": "-I -S -B; optimization 0 or 1",
+    "sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+    "version": [
+      3,
+      14,
+      6
+    ]
+  },
+  "reader_source": "audit/formal/latex/prefix-mgw-bias/reader-source-v2.json",
+  "reader_source_sha256": "5a0474ea26892b04b6ff1c931096ee115bdfdf68adc5945644a849bea064a378",
+  "runtime": {
+    "bytes": 27277,
+    "path": "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py",
+    "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+  },
+  "schema": "pid-rs/prefix-mgw-bias-native-tools-v2",
+  "source_date_epoch": 1788825600,
+  "status": "source_proposal_current_reader_actual_public_repetition_pending",
+  "tools": {
+    "bash": {
+      "bytes": 1293840,
+      "expected_selector_leaf": "bash",
+      "expected_target_leaf": "bash",
+      "sha256": "fde343ee184953c1fa1185abddeaa8be61c6acbebae4eb54db5d6b55b09a5755"
+    },
+    "fc-cache": {
+      "bytes": 54224,
+      "expected_selector_leaf": "fc-cache",
+      "expected_target_leaf": "fc-cache",
+      "sha256": "0af6d13d5a38f49b9370276a8a92a5fd5b19bdd50df0232c4249d5b2ec99a1d7"
+    },
+    "kpsewhich": {
+      "bytes": 272528,
+      "expected_selector_leaf": "kpsewhich",
+      "expected_target_leaf": "kpsewhich",
+      "sha256": "2bfdfe25ecfc01a92587ecb8761736063d7f3ee3d8a867d80b777ecc90024559"
+    },
+    "lualatex": {
+      "bytes": 15041936,
+      "expected_selector_leaf": "lualatex",
+      "expected_target_leaf": "luahbtex",
+      "sha256": "8522fe5f3d9e78dc36a1d39236da77757c8584b3b21e9806af4ba7bfc8b54ed3"
+    },
+    "pandoc": {
+      "bytes": 277291920,
+      "expected_selector_leaf": "pandoc",
+      "expected_target_leaf": "pandoc",
+      "sha256": "1662f49c035168d1e608ad9d923df75e4b00ac014d096349b2027ad38f84dd6e"
+    },
+    "pdffonts": {
+      "bytes": 53848,
+      "expected_selector_leaf": "pdffonts",
+      "expected_target_leaf": "pdffonts",
+      "sha256": "09bac53ccfd92f65c58e52716766c31e41ea9867acfccfa1ba2538c2188e4198"
+    },
+    "pdfinfo": {
+      "bytes": 112952,
+      "expected_selector_leaf": "pdfinfo",
+      "expected_target_leaf": "pdfinfo",
+      "sha256": "fb3efce3511f41cdaba07b433676d3603d80a10e35d61c99830e1a2d1a44bb66"
+    },
+    "pdftotext": {
+      "bytes": 110856,
+      "expected_selector_leaf": "pdftotext",
+      "expected_target_leaf": "pdftotext",
+      "sha256": "81aa90ed17f1da12588ea396971f999a8aa352a228b76e9d53cadf9da47ae66c"
+    },
+    "rsvg-convert": {
+      "bytes": 6314880,
+      "expected_selector_leaf": "rsvg-convert",
+      "expected_target_leaf": "rsvg-convert",
+      "sha256": "1f66144269c9a97479c6d5135f62ec430a96baa5b0b6b380a2c2f7486b310678"
+    }
+  }
+}

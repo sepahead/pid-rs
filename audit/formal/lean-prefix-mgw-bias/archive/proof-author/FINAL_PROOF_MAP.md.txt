@@ -1,0 +1,41 @@
+# Finite categorical prefix bias: authored candidate
+
+Candidate `../sx-mean-bias-proof-campaign-v2-20260908/candidate/Candidate.lean` is 720 lines and 34,113 bytes, SHA-256 `c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45`. It is unchanged after the development pass. Five public direct-private-proof aliases occur at lines 705, 708, 711, 714, and 717, in the adopted order. The fiber identity has two universe parameters; the other four have three. There are 36 private helper/proof declarations; those are not additional accepted families.
+
+At author handoff, only development attempt 005 passed. Its receipt is `../sx-mean-bias-proof-campaign-v2-20260908/attempts/005-development-0/RESULT.json`, SHA-256 `e1644b128178b0ba63eaf56f4d53ff7a80a17f1235acd211649b9c6ad20f7503`. The child ran from 09:11:16.781798 UTC for 12.584353 reported seconds, exited integer zero, and retained empty stdout/stderr. Sampled peak group RSS was 2,774,597,632 bytes; this is an observed sample, not a hard OS memory guarantee or performance benchmark. No live group process remained in the receipt. The runner still reports zero new accepted bias proofs: development alone does not accept these five families. Root owns all fresh full-source compilation, semantic records, fresh kernel, cosmetic normal/optimized matrix, wrong-final rejection, and final adjudication.
+
+The original 08:50:22.612393--20:50:22.612393 UTC campaign remains unchanged. The author used five of the total 80 development slots and zero of the eight full slots. No direct Lean/test invocation, policy/type/dependency modification, public edit, Git change, full attempt, or wrong-final attempt was performed by this author. The first shell redirection failed before writing a candidate because the candidate parent directory did not yet exist; its separate record grants no execution or proof credit.
+
+## Proof dependencies by mathematical role
+
+| Candidate lines | Role and exact dependency |
+|---|---|
+| 12--119 | Shifted `HasSum`, classical logarithm series, geometric tail, scalar nonnegative remainder, scalar difference bound. The difference proof bounds nonnegative power differences termwise, then identifies the geometric tail difference as its full series minus a nonnegative finite prefix. |
+| 120--127 | General domination of shifted series tails. This avoids introducing an unnecessary finite-horizon limit lemma as a public result. |
+| 130--188 | Three binomial algebra lemmas copied bytewise from the accepted mean candidate's corresponding source block, with provenance comment, and recompiled within this new candidate. They are not hidden imported assumptions. |
+| 190--236 | Nonnegative join-convolution coordinate bounded by its lower cumulative; cumulative powers; accepted actual word/join correspondence; actual redundancy-order conversion. |
+| 238--291 | Direct native event inclusions, anchor lower bound, conditional-law proof from v>0, and raw-time positive/negative increment envelopes. The retained-target conditional envelope is multiplied by nonnegative binomial factors before exact summation. |
+| 293--337 | Supported averaging, monotonicity, constant mass-one identity, subtraction and scalar division. These identities justify each inverse-moment '-1'. |
+| 339--381 | Nonnegative fiber mass, anchor domination, and exact finite partition identity. Zero fibers and zero anchor terms are handled before any scientific use of an inverse. |
+| 383--506 | Inverse monotonicity, lower bounds, full-key support bound, exact target/source/joint projection correspondence, and each member-collection support bound. Source-union/query moments are compared with partition counts; no false equality to a union support count is asserted. |
+| 508--523 | Accepted native block expectation rewritten as the supported average of the new positive/negative partial mean definitions. |
+| 525--646 | Accepted mean theorem constructs an actual supported unique MGW inverse pair. Its actual component integral `HasSum`s are rewritten by the accepted prefix expectation identities. Tail domination gives supported coordinate bounds. Finite averaging gives signed bias first, then max-envelope, query-envelope, surprisal, inverse-moment and signed inverse bounds. |
+| 648--663 | Pointwise uniqueness on positive anchors plus zero-family equality on zero anchors identifies any two supplied supported inverse pairs. |
+| 665--703 | This uniqueness transports the existential actual-bias result to arbitrary supplied inverse pairs. Moment inequalities yield projected support bounds; population mass floor and remainder monotonicity yield geometric floor bounds. |
+| 705--718 | Exactly the adopted five public theorem aliases, with no other public declaration. |
+
+The sources of the accepted MGW, prefix-probability and mean definitions remain part of the same closure; this proof does not erase their source-correspondence or implementation boundaries. The candidate uses imported theorem statements as typed lemmas, not historical green reports as mathematical premises. Real scalar analysis uses the pinned Mathlib logarithm and geometric-series theorems under 0<q<=1. The main proof assumes no desired bias conclusion, new axiom, stopping theorem, empirical support estimate, finite unbiasedness, independence within a row, or estimator calibration.
+
+## Development failures and their disposition
+
+| Attempt | Candidate SHA | Outcome and correction |
+|---|---|---|
+| 001 | `edab43857e99efaf66c613be63ea64a513b38fd4feeaebe50b313172d3a0237f` | Failed elaboration: `convert` exposed two definitionally mismatched additive-monoid instance expressions, a scalar denominator rewrite was unfinished, and a closing tactic ran after goal completion. Replaced broad conversion by explicit value equality/`HasSum.congr_fun`, and used exact division rewrites. No mathematical counterexample. |
+| 002 | `37877b702c04de87c60b335246989340a5c8c4a4705361fcdfb91cff199463ca` | Failed: unused tactic linter and a positivity tactic unable to extract a function-valued nonnegativity lemma. Removed the unused tactic and supplied that hypothesis explicitly. No mathematical counterexample. |
+| 003 | `be47c839769f2ee23a7ca07a3af3bb002b7891ea8409272bb0716952256fb76e` | Failed: zero-case simplification/unused arguments; positive-proof construction erroneously attempted in both branches of a proof script; fiber equality decision simplification; missing eta expansion of targetMass in a function position. Repaired proof scripts without changing statements. No mathematical counterexample. |
+| 004 | `f119ebc1153b761b24a404186d86bb1cb06c68f153794ed27003ea55d5378f8e` | Failed only at final signed lower-bound elaboration: `-(A/d)` versus `(-A)/d`. Rewrote by `neg_div`. No mathematical counterexample. |
+| 005 | `c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45` | Development compiler pass, all five public aliases present. Candidate held unchanged for root review. No campaign acceptance inherited. |
+
+Every prior attempt remains in the campaign's immutable attempt directory with source, object if produced, command, streams, saved inputs and artifact map. The author's preimages also preserve each candidate edit, including one scalar-only intermediate revision not submitted to the runner. Snippet files retain the staged proof additions. Old failures stay failures; the final compiler success is not relabeled as a pass of earlier candidates. Reopen any mathematical route if a reviewer identifies a source/type mismatch; no such mismatch was found in the author's completed derivation.
+
+The initial author derivation compares twelve substantive routes, including no action and the scalar non-PID route, and lists 57 named hostile author lenses. It was sealed before root feedback. Root separately supplied a critique emphasizing signed-tail subtraction, conditional Law, mass-one constants, true projection fibers and uniqueness transport. It was advisory and shared the same source system. A fresh independent critique of the actual proof bodies and root direct inspection are pending at this author handoff.
