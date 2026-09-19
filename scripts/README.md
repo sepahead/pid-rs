@@ -3174,7 +3174,10 @@ with status 2; no Linux reproduction relation is claimed.
 
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
-`audit/formal/latex/real-occupancy-sensors/publication-inputs-v1.json`. Discovery derives the
+`audit/formal/latex/real-occupancy-sensors/publication-inputs-v2.json`; v1 remains historical. The
+v2 successor changes only the captured `METHODS.md` identity and preserves the admitted output
+references and all other input pins. Profile selection supplies no new execution or visual-review
+credit; any successor execution needs its own retained record. Discovery derives the
 pinned TeX body and retains raw commands/streams; it does not adopt its PDF. Exact mode refuses
 until the profile has an admitted reference, then compares fresh raw PDF bytes with that reference.
 `--check` makes two fresh builds. Supply a canonical TeX Live root explicitly; there is no `HOME`
@@ -3218,7 +3221,11 @@ Three explicit inert preimages preserve the archive's original Markdown, SVG and
 the other 114 source-map entries retain direct lookups. Exact source substitutions bind the
 Markdown/SVG correction, while separate artifact hashes bind each figure PDF.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v4.json`; v1–v3 remain historical.
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v5.json`; v1–v4 remain historical.
+The v5 successor changes only the captured `METHODS.md` identity. It preserves the selected PDF,
+TeX and figure references and every other input pin; predecessor observations do not establish
+execution or native-input custody under v5. Each successor execution needs its own exact checks
+and retained record.
 The selected reference is the reviewed nine-page containing paper. Its publication record
 keeps discovery, reference admission, exact execution and formal qualification separate.
 Discovery produces a candidate and retained diagnostics without admitting it. Exact mode refuses

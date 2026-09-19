@@ -14,19 +14,23 @@
 //! 5. `benjamini_hochberg` matches hand-computed step-up q-values, clamps to 1, and rejects
 //!    missing/non-finite or out-of-range p-values instead of emitting sentinel q-values.
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 
 use pid_core::experimental::mixed_dimension_pid3::Pid3Config;
 use pid_core::experimental::pipelines::{
-    benjamini_hochberg, benjamini_yekutieli, permutation_pid3, permutation_pid3_with,
-    permutation_pid3_with_tail, permutation_rows_pvalue as permutation_rows_pvalue_impl,
+    benjamini_hochberg, benjamini_yekutieli, permutation_pid3,
+    permutation_pid3_under_null_with_budget, permutation_pid3_under_null_with_cancellation,
+    permutation_pid3_with, permutation_pid3_with_tail,
+    permutation_rows_pvalue as permutation_rows_pvalue_impl,
+    permutation_rows_pvalue_under_null_with_budget,
+    permutation_rows_pvalue_under_null_with_cancellation,
     permutation_rows_pvalue_with as permutation_rows_pvalue_with_impl,
     permutation_rows_pvalue_with_tail as permutation_rows_pvalue_with_tail_impl,
-    PermutationAlgorithmRevision, PermutationCalibration, PermutationFamily,
-    PermutationNullAssumption, PermutationReplicateStatus, PermutationScheme, PermutationTail,
-    RowPermutationStat, StatisticCallbackDeclaration,
+    PermutationAlgorithmRevision, PermutationCalibration, PermutationFamily, PermutationNull,
+    PermutationNullAssumption, PermutationPid3Result, PermutationReplicateStatus,
+    PermutationScheme, PermutationTail, RowPermutationStat, StatisticCallbackDeclaration,
 };
-use pid_core::{MatOwned, MatRef, ResourceEstimate};
+use pid_core::{CancellationToken, MatOwned, MatRef, PidError, ResourceBudget, ResourceEstimate};
 
 mod common;
 use common::Rng64;
@@ -125,6 +129,358 @@ fn complete_values(result: &RowPermutationStat) -> Vec<Vec<u64>> {
 
 fn family(id: u64, size: usize) -> PermutationFamily {
     PermutationFamily::new(id, size).unwrap()
+}
+
+#[test]
+fn row_permutation_rejects_changed_scheme_before_statistic() {
+    let x = col((0..24).map(|i| i as f64).collect());
+    let calls = Cell::new(0);
+    let mut null = PermutationNull::new(
+        PermutationScheme::FullShuffle,
+        PermutationTail::Upper,
+        42,
+        family(7, 1),
+    )
+    .unwrap();
+    null.scheme = PermutationScheme::CircularShift { min_shift: 3 };
+
+    let result = permutation_rows_pvalue_under_null_with_budget(
+        &[x.as_ref()],
+        0,
+        2,
+        null,
+        ResourceBudget::default(),
+        callback(),
+        |_| {
+            calls.set(calls.get() + 1);
+            Ok(1.0)
+        },
+    );
+
+    assert!(
+        matches!(
+            result,
+            Err(PidError::InvalidConfig {
+                context: "permutation_rows_pvalue",
+                message: "permutation null assumption and calibration must match its scheme",
+            })
+        ),
+        "inconsistent null must be rejected before evaluation: {result:?}; calls={}",
+        calls.get()
+    );
+    assert_eq!(calls.get(), 0);
+}
+
+fn null_metadata_cases() -> [(
+    PermutationScheme,
+    PermutationNullAssumption,
+    PermutationCalibration,
+); 3] {
+    [
+        (
+            PermutationScheme::FullShuffle,
+            PermutationNullAssumption::ExchangeableRows,
+            PermutationCalibration::MonteCarloPValue,
+        ),
+        (
+            PermutationScheme::BlockShuffle { block_size: 4 },
+            PermutationNullAssumption::ExchangeableBlocks { block_size: 4 },
+            PermutationCalibration::MonteCarloPValue,
+        ),
+        (
+            PermutationScheme::CircularShift { min_shift: 2 },
+            PermutationNullAssumption::WeaklyStationarySeries { minimum_shift: 2 },
+            PermutationCalibration::ApproximateSurrogateScore,
+        ),
+    ]
+}
+
+fn inconsistent_nulls() -> Vec<PermutationNull> {
+    let mut cases = Vec::new();
+    for (scheme, expected_assumption, expected_calibration) in null_metadata_cases() {
+        for assumption in [
+            PermutationNullAssumption::ExchangeableRows,
+            PermutationNullAssumption::ExchangeableBlocks { block_size: 4 },
+            PermutationNullAssumption::ExchangeableBlocks { block_size: 6 },
+            PermutationNullAssumption::WeaklyStationarySeries { minimum_shift: 2 },
+            PermutationNullAssumption::WeaklyStationarySeries { minimum_shift: 3 },
+        ] {
+            for calibration in [
+                PermutationCalibration::MonteCarloPValue,
+                PermutationCalibration::ApproximateSurrogateScore,
+            ] {
+                if (assumption, calibration) == (expected_assumption, expected_calibration) {
+                    continue;
+                }
+                let mut null =
+                    PermutationNull::new(scheme, PermutationTail::Lower, 42, family(7, 18))
+                        .unwrap();
+                null.assumption = assumption;
+                null.calibration = calibration;
+                cases.push(null);
+            }
+        }
+    }
+    for (initial_scheme, changed_scheme) in [
+        (
+            PermutationScheme::BlockShuffle { block_size: 4 },
+            PermutationScheme::BlockShuffle { block_size: 6 },
+        ),
+        (
+            PermutationScheme::CircularShift { min_shift: 2 },
+            PermutationScheme::CircularShift { min_shift: 3 },
+        ),
+    ] {
+        let mut null =
+            PermutationNull::new(initial_scheme, PermutationTail::Lower, 42, family(7, 18))
+                .unwrap();
+        null.scheme = changed_scheme;
+        cases.push(null);
+    }
+    cases
+}
+
+fn assert_inconsistent_null_error<T: std::fmt::Debug>(
+    result: pid_core::PidResult<T>,
+    operation: &str,
+    null: PermutationNull,
+) {
+    assert!(
+        matches!(
+            result,
+            Err(PidError::InvalidConfig {
+                context,
+                message: "permutation null assumption and calibration must match its scheme",
+            }) if context == operation
+        ),
+        "inconsistent null {null:?} must fail before resource or statistic work: {result:?}"
+    );
+}
+
+#[test]
+fn row_permutation_rejects_inconsistent_null_metadata_before_budget_and_callback() {
+    let x = col((0..24).map(|i| i as f64).collect());
+    let mut budget = ResourceBudget::default();
+    budget.max_bytes = 0;
+    for null in inconsistent_nulls() {
+        for with_cancellation in [false, true] {
+            let cancellation = CancellationToken::new();
+            let calls = Cell::new(0);
+            let stat = |_: &[MatRef<'_>]| {
+                calls.set(calls.get() + 1);
+                Ok(1.0)
+            };
+            let result = if with_cancellation {
+                permutation_rows_pvalue_under_null_with_cancellation(
+                    &[x.as_ref()],
+                    0,
+                    2,
+                    null,
+                    budget,
+                    callback(),
+                    &cancellation,
+                    stat,
+                )
+            } else {
+                permutation_rows_pvalue_under_null_with_budget(
+                    &[x.as_ref()],
+                    0,
+                    2,
+                    null,
+                    budget,
+                    callback(),
+                    stat,
+                )
+            };
+            assert_inconsistent_null_error(result, "permutation_rows_pvalue", null);
+            assert_eq!(calls.get(), 0);
+        }
+    }
+}
+
+#[test]
+fn pid3_permutation_rejects_inconsistent_null_metadata_before_budget_and_estimation() {
+    // These values must never reach the research estimator. The zero budget and default
+    // non-runnable PID config are later-stage sentinels, not a declared population model.
+    let x = col((0..24).map(|i| i as f64).collect());
+    let mut budget = ResourceBudget::default();
+    budget.max_bytes = 0;
+    for null in inconsistent_nulls() {
+        for with_cancellation in [false, true] {
+            let cancellation = CancellationToken::new();
+            let result = if with_cancellation {
+                permutation_pid3_under_null_with_cancellation(
+                    x.as_ref(),
+                    x.as_ref(),
+                    x.as_ref(),
+                    x.as_ref(),
+                    &Pid3Config::default(),
+                    2,
+                    0,
+                    null,
+                    budget,
+                    &cancellation,
+                )
+            } else {
+                permutation_pid3_under_null_with_budget(
+                    x.as_ref(),
+                    x.as_ref(),
+                    x.as_ref(),
+                    x.as_ref(),
+                    &Pid3Config::default(),
+                    2,
+                    0,
+                    null,
+                    budget,
+                )
+            };
+            assert_inconsistent_null_error(result, "permutation_pid3", null);
+        }
+    }
+}
+
+#[test]
+fn coherent_row_nulls_preserve_metadata_and_seeded_results() {
+    let x = col((0..24).map(|i| i as f64).collect());
+    let y = col((0..24).map(|i| (i * i) as f64).collect());
+    let mats = [x.as_ref(), y.as_ref()];
+    for (scheme, assumption, calibration) in null_metadata_cases() {
+        let null = PermutationNull::new(scheme, PermutationTail::Lower, 42, family(7, 18)).unwrap();
+        assert_eq!(
+            (null.assumption, null.calibration),
+            (assumption, calibration)
+        );
+        let expected = permutation_rows_pvalue_with_tail(
+            &mats,
+            0,
+            7,
+            42,
+            scheme,
+            PermutationTail::Lower,
+            alignment_stat,
+        )
+        .unwrap();
+        for with_cancellation in [false, true] {
+            let cancellation = CancellationToken::new();
+            let result = if with_cancellation {
+                permutation_rows_pvalue_under_null_with_cancellation(
+                    &mats,
+                    0,
+                    7,
+                    null,
+                    ResourceBudget::default(),
+                    callback(),
+                    &cancellation,
+                    alignment_stat,
+                )
+            } else {
+                permutation_rows_pvalue_under_null_with_budget(
+                    &mats,
+                    0,
+                    7,
+                    null,
+                    ResourceBudget::default(),
+                    callback(),
+                    alignment_stat,
+                )
+            }
+            .unwrap();
+            assert_eq!(result.null, null);
+            assert_eq!(result.observed.to_bits(), expected.observed.to_bits());
+            assert_eq!(
+                result.tail_fraction.map(f64::to_bits),
+                expected.tail_fraction.map(f64::to_bits)
+            );
+            assert_eq!(complete_values(&result), complete_values(&expected));
+            assert_eq!(result.n_valid, 7);
+        }
+    }
+}
+
+fn pid3_atom_bits(result: &PermutationPid3Result) -> Vec<(u64, Option<u64>, usize)> {
+    result
+        .atoms
+        .iter()
+        .map(|atom| {
+            (
+                atom.observed.to_bits(),
+                atom.tail_fraction.map(f64::to_bits),
+                atom.n_valid,
+            )
+        })
+        .collect()
+}
+
+#[test]
+fn coherent_pid3_nulls_preserve_metadata_and_seeded_results() {
+    let mut rng = Rng64::new(0xBEEF);
+    let n = 60;
+    let v = col((0..n).map(|_| rng.normal()).collect());
+    let l = col((0..n).map(|_| rng.normal()).collect());
+    let d = col((0..n).map(|_| rng.normal()).collect());
+    let a = col((0..n)
+        .map(|i| v.as_ref().row(i)[0] + 0.5 * rng.normal())
+        .collect());
+    let cfg = Pid3Config {
+        experimental_allow_mixed_dimension_lattice: true,
+        ..Pid3Config::assume_regular_full_dimensional()
+    };
+    for (scheme, assumption, calibration) in null_metadata_cases() {
+        let null = PermutationNull::new(scheme, PermutationTail::Lower, 42, family(7, 18)).unwrap();
+        assert_eq!(
+            (null.assumption, null.calibration),
+            (assumption, calibration)
+        );
+        let expected = permutation_pid3_with_tail(
+            v.as_ref(),
+            l.as_ref(),
+            d.as_ref(),
+            a.as_ref(),
+            &cfg,
+            2,
+            0,
+            42,
+            scheme,
+            PermutationTail::Lower,
+        )
+        .unwrap();
+        for with_cancellation in [false, true] {
+            let cancellation = CancellationToken::new();
+            let result = if with_cancellation {
+                permutation_pid3_under_null_with_cancellation(
+                    v.as_ref(),
+                    l.as_ref(),
+                    d.as_ref(),
+                    a.as_ref(),
+                    &cfg,
+                    2,
+                    0,
+                    null,
+                    ResourceBudget::default(),
+                    &cancellation,
+                )
+            } else {
+                permutation_pid3_under_null_with_budget(
+                    v.as_ref(),
+                    l.as_ref(),
+                    d.as_ref(),
+                    a.as_ref(),
+                    &cfg,
+                    2,
+                    0,
+                    null,
+                    ResourceBudget::default(),
+                )
+            }
+            .unwrap();
+            assert_eq!(result.null, null);
+            assert_eq!(pid3_atom_bits(&result), pid3_atom_bits(&expected));
+            assert!(result
+                .atoms
+                .iter()
+                .all(|atom| atom.n_valid == 2 && atom.tail_fraction.is_some()));
+        }
+    }
 }
 
 fn capture_block_orders(n: usize, block_size: usize, n_perm: usize, seed: u64) -> Vec<Vec<usize>> {

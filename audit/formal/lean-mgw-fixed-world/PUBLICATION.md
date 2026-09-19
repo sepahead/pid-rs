@@ -80,11 +80,19 @@ This was a citation defect, not a mathematical counterexample or a proof failure
 The corrected containing paper has nine A4 pages and is 231,798 bytes, SHA-256
 `b43e0d8902d9c919c6ab13a13c3a7c9d55ea07d3d02af1944edd0600d1801185`.
 Two actual discovery builds produced these bytes. Both reproduced the unchanged
-29,078-byte Pandoc body. The selected
-[v4 input profile](../latex/mgw-fixed-world/publication-inputs-v4.json) binds this
+29,078-byte Pandoc body. The historical
+[v4 input profile](../latex/mgw-fixed-world/publication-inputs-v4.json) bound this
 observed reference; its SHA-256 is
 `eadd3f7a30d51abe95351668f1ca95ad317578e8697d43888f1d76db3a49fd6d`.
 The v1–v3 profiles preserve their historical observations and reference states.
+
+The current [v5 input profile](../latex/mgw-fixed-world/publication-inputs-v5.json)
+changes only the captured `METHODS.md` identity for the permutation-null metadata correction.
+The selected PDF, TeX and figure references and every other input pin are unchanged. This
+profile selection supplies no new build, native-input recheck or visual-review evidence. The
+artifact and execution observations retained below remain scoped to v4 and its predecessors;
+they do not establish a v5 execution. Any successor execution requires its own separately
+retained exact-reference checks.
 
 All nine pages were reviewed at normal size. Pages 1 and 9 were also reviewed
 at high resolution and in grayscale. The paper has 20 embedded font subsets

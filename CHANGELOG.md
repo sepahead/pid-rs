@@ -2016,6 +2016,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Reject permutation-null records whose assumption or calibration disagrees with the selected
+  scheme, including stale block sizes and minimum shifts, before row callbacks or PID3 estimation.
+  Valid declarations retain their seeded results and public API; restricted circular shifts remain
+  surrogate scores, and metadata consistency does not establish statistical calibration.
+
 - Preserved exact M1a commit `cb3f58f0b190454cb3f1090de8798261ec78f194` hosted CI run
   `31686107959` as negative evidence after its deterministic certified-SxPID2 full-workflow digest
   failure exposed the stale workflow pin. A separate bounded local audit exposed two independently

@@ -660,10 +660,11 @@ exchangeability assumptions. Restricted circular shifts are approximate surrogat
 exact randomization p-values. Random-origin circular-grid kNN subsample percentile ranges are sensitivity
 diagnostics, not calibrated confidence intervals for the full-sample estimate. BH requires its
 dependence conditions; BY is more conservative but still assumes valid input p-values.
-Typed declarations and complete failure retention prevent silent reinterpretation, but they do not
-establish the caller's sampling assumptions or calibrate a generic statistic. Cooperative
-cancellation returns no partial estimate and does not make an intrinsically expensive procedure
-cheap.
+Permutation execution checks the declared assumption and calibration against the selected
+transform, including its block size or minimum shift, before evaluating the observed statistic.
+These checks and complete failure retention do not establish the caller's sampling assumptions or
+calibrate a generic statistic. Cooperative cancellation returns no partial estimate and does not
+make an intrinsically expensive procedure cheap.
 
 The cited moving-block, permutation, add-one p-value, and BH/BY procedures remain distinct from
 pid-rs's project-defined typed assumption records, scheduling, failure-retention, and report

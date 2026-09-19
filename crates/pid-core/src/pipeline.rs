@@ -8,7 +8,9 @@
 //! **PROJECT-DEFINED CONTRACT.** Typed permutation-null declarations bind the row transform,
 //! exchangeability or stationarity assertion, tail, seed, calibration claim, and predeclared
 //! testing family. The component transformations are standard; the combined contract is pid-rs
-//! workflow design.
+//! workflow design. Execution rejects assumptions or calibration labels inconsistent with the
+//! selected transform, including block/shift scales, before evaluating the observed statistic.
+//! This consistency check does not establish that the declared sampling assumptions hold.
 //!
 //! Method catalog: testing.permutation-contracts
 //!
@@ -646,6 +648,19 @@ pub enum PermutationAlgorithmRevision {
 }
 
 /// Versioned, typed permutation/surrogate null specification and provenance.
+///
+/// The public fields may be edited, but permutation entry points require `assumption` and
+/// `calibration` to match the pair implied by `scheme`, including its block size or minimum shift.
+///
+/// | Scheme | Required assumption | Required calibration |
+/// |---|---|---|
+/// | `FullShuffle` | `ExchangeableRows` | `MonteCarloPValue` |
+/// | `BlockShuffle { block_size: b }` | `ExchangeableBlocks { block_size: b }` | `MonteCarloPValue` |
+/// | `CircularShift { min_shift: m }` | `WeaklyStationarySeries { minimum_shift: m }` | `ApproximateSurrogateScore` |
+///
+/// Inconsistent records return [`PidError::InvalidConfig`] before the observed statistic is
+/// evaluated. Construct a new record with [`Self::new`] when changing the transformation scheme.
+/// A coherent declaration does not establish exchangeability or stationarity of the supplied data.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct PermutationNull {
@@ -692,6 +707,19 @@ impl PermutationNull {
             algorithm_revision: PermutationAlgorithmRevision::SeededRowTransformV1,
             family,
         })
+    }
+
+    fn validate(&self, context: &'static str, n: usize) -> PidResult<()> {
+        self.family.validate(context)?;
+        validate_permutation_scheme(context, self.scheme, n)?;
+        let expected = Self::new(self.scheme, self.tail, self.seed, self.family)?;
+        if self.assumption != expected.assumption || self.calibration != expected.calibration {
+            return Err(PidError::InvalidConfig {
+                context,
+                message: "permutation null assumption and calibration must match its scheme",
+            });
+        }
+        Ok(())
     }
 }
 
@@ -1154,6 +1182,13 @@ pub fn permutation_pid3_with_tail_and_budget(
 }
 
 /// PID3 permutation/surrogate report under a fully typed null specification.
+///
+/// # Errors
+///
+/// Returns [`PidError::InvalidConfig`] before PID evaluation if the null's assumption or
+/// calibration disagrees with its scheme (including block/shift scales), its family is empty, or
+/// its scheme is invalid for the row count. The PID3 estimator's own support and configuration
+/// requirements also apply.
 #[expect(
     clippy::too_many_arguments,
     reason = "the explicit matrices, null, source, count, and budget are scientific provenance"
@@ -1214,8 +1249,7 @@ pub fn permutation_pid3_under_null_with_cancellation(
             message: "n_perm must be > 0",
         });
     }
-    null.family.validate("permutation_pid3")?;
-    validate_permutation_scheme("permutation_pid3", null.scheme, n)?;
+    null.validate("permutation_pid3", n)?;
     budget.check(
         "permutation_pid3",
         permutation_pid3_resource_estimate(v, l, d, a, pid_cfg, n_perm, budget.max_threads)?,
@@ -3471,6 +3505,12 @@ where
 }
 
 /// Scalar row permutation/surrogate report under a fully typed null specification.
+///
+/// # Errors
+///
+/// Returns [`PidError::InvalidConfig`] before calling `stat` if the null's assumption or calibration
+/// disagrees with its scheme (including block/shift scales), its family is empty, or its scheme is
+/// invalid for the row count. Input, resource, and observed-statistic errors are also returned.
 pub fn permutation_rows_pvalue_under_null_with_budget<F>(
     mats: &[MatRef<'_>],
     shuffled_index: usize,
@@ -3548,8 +3588,7 @@ where
             message: "n_perm must be > 0",
         });
     }
-    null.family.validate("permutation_rows_pvalue")?;
-    validate_permutation_scheme("permutation_rows_pvalue", null.scheme, n)?;
+    null.validate("permutation_rows_pvalue", n)?;
     budget.check(
         "permutation_rows_pvalue",
         permutation_rows_pvalue_resource_estimate(mats, shuffled_index, n_perm, callback)?,
