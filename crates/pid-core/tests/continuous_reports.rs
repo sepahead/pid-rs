@@ -6,7 +6,32 @@ use pid_core::experimental::continuous::{
     Pid2CrossFitFold, Pid2Provenance, Pid2ReportWarning,
 };
 use pid_core::stable::continuous::{KsgConfig, KsgProvenance};
-use pid_core::MatRef;
+use pid_core::{MatRef, ResourceEstimate};
+
+fn assert_complete_report_work(
+    aggregate: ResourceEstimate,
+    constituents: &[ResourceEstimate],
+    copied_elements: u128,
+) {
+    assert_eq!(
+        aggregate.pairwise_distances,
+        constituents
+            .iter()
+            .map(|item| item.pairwise_distances)
+            .sum()
+    );
+    assert_eq!(
+        aggregate.operations_hint,
+        constituents
+            .iter()
+            .map(|item| item.operations_hint)
+            .sum::<u128>()
+            + copied_elements
+    );
+    assert!(
+        aggregate.estimated_bytes >= constituents.iter().map(|item| item.estimated_bytes).sum()
+    );
+}
 
 fn continuous_data(n: usize, offset: f64) -> (Vec<f64>, Vec<f64>, Vec<f64>, Vec<f64>) {
     let mut x = Vec::with_capacity(n);
@@ -52,6 +77,16 @@ fn co_information_reports_retain_every_constituent_and_serialize() {
     assert_eq!(pair.x_target_report.n_samples, n);
     assert_eq!(pair.y_target_report.n_samples, n);
     assert_eq!(pair.joint_xy_target_report.n_samples, n);
+    assert_complete_report_work(
+        pair.resource_estimate,
+        &[
+            pair.x_target_report.resource_estimate,
+            pair.y_target_report.resource_estimate,
+            pair.joint_xy_target_report.resource_estimate,
+        ],
+        2 * n as u128,
+    );
+    assert_eq!(pair.resource_estimate.pairwise_distances, 12 * 36 * 35 / 2);
     assert!(pair.co_information_nats.is_finite());
     assert!(pair
         .warnings
@@ -63,6 +98,24 @@ fn co_information_reports_retain_every_constituent_and_serialize() {
     assert!(triplet.co_information_nats.is_finite());
     assert_eq!(triplet.signed_terms_nats.len(), 7);
     assert_eq!(triplet.joint_xyz_target_report.n_samples, n);
+    assert_complete_report_work(
+        triplet.resource_estimate,
+        &[
+            triplet.x_target_report.resource_estimate,
+            triplet.y_target_report.resource_estimate,
+            triplet.z_target_report.resource_estimate,
+            triplet.joint_xy_target_report.resource_estimate,
+            triplet.joint_xz_target_report.resource_estimate,
+            triplet.joint_yz_target_report.resource_estimate,
+            triplet.joint_xyz_target_report.resource_estimate,
+        ],
+        // XY, XZ, YZ, a second XY, then XYZ are copied for the joint reports.
+        11 * n as u128,
+    );
+    assert_eq!(
+        triplet.resource_estimate.pairwise_distances,
+        28 * 36 * 35 / 2
+    );
     let triplet_json = serde_json::to_string(&triplet).unwrap();
     assert!(!triplet_json.contains("NaN"));
 }

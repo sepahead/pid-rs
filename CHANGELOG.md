@@ -2023,6 +2023,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Make complete PID2 and co-information resource preflight include the support diagnostics of
+  every KSG report that will execute. Share the ordinary report calculation without allocating
+  concatenated sources before the budget check. Retain the lighter scalar calculation and
+  numerical results. See the [defect and regression record](audit/evidence/continuous-report-resource-composition-2026-09-19.md).
+
 - Reject permutation-null records whose assumption or calibration disagrees with the selected
   scheme, including stale block sizes and minimum shifts, before row callbacks or PID3 estimation.
   Valid declarations retain their seeded results and public API; restricted circular shifts remain

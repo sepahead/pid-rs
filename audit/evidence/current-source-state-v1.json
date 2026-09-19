@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "e79daffe2e5fc9f49cf5d5f172cd431b1ad4c8a114ed4d48a24096b6f78e7241",
-        "size_bytes": 308111
+        "sha256": "7115a6cf00ae723b42b103471c50843f72699a086de0173659f79becd51a824a",
+        "size_bytes": 308521
       },
       {
         "git_mode": "100644",
@@ -1878,6 +1878,12 @@
         "path": "audit/evidence/contextual-rare-tail-counterexample-v1.json",
         "sha256": "7c8b0dc372cbbe1f9844887750a5726965c5115ba5f61e1a8ee2f47b4a673795",
         "size_bytes": 2869
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/continuous-report-resource-composition-2026-09-19.md",
+        "sha256": "1e99d3f98a8cfb549d23a37aa79baa915b3c26e2f6f704107a46a0d97c47b10b",
+        "size_bytes": 5295
       },
       {
         "git_mode": "100644",
@@ -25918,8 +25924,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/ksg.rs",
-        "sha256": "27dfb6e510364ab716c78e29bcafdd0a7a8447a3c63f23589df370851ac28872",
-        "size_bytes": 122561
+        "sha256": "f1af05b0791490d5770a20764bb48e083d3515ac8a6db5b3fbd91cc2770f6024",
+        "size_bytes": 125511
       },
       {
         "git_mode": "100644",
@@ -26026,8 +26032,8 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/src/support.rs",
-        "sha256": "447607e28f78ca80f7a84b58e15157fa51998fc3d40ca1c06354c378dfbd09ea",
-        "size_bytes": 41451
+        "sha256": "b9fc8ab87bb3f38c97237940d6da1369e70f2223bf175a10ee2708afcb5f48fe",
+        "size_bytes": 42317
       },
       {
         "git_mode": "100644",
@@ -26044,14 +26050,14 @@
       {
         "git_mode": "100644",
         "path": "crates/pid-core/tests/continuous_reports.rs",
-        "sha256": "711195e25cb6e96186e2e7b7faa5cae6ff1c496b2b3b9b13f641bf4e6d163dc3",
-        "size_bytes": 6656
+        "sha256": "2bc127f682a217fa75766adaee8d1487d64ae41f8b38bd65f096b41b3c0e5ec1",
+        "size_bytes": 8375
       },
       {
         "git_mode": "100644",
         "path": "crates/pid-core/tests/continuous_resource_contracts.rs",
-        "sha256": "d8ea684de9b67ab28d3303a781573b0fc20d5dd9ed5e6ddecd6dae58877e9485",
-        "size_bytes": 4877
+        "sha256": "32ed967a5e11165a9c969c95d7ef46fb46105948b0c9368bd18dbdc57f6b98a4",
+        "size_bytes": 7110
       },
       {
         "git_mode": "100644",
@@ -27712,7 +27718,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "35675635083e66697c21940a294fbe85fe099d89987055984dad29cbe42bfe35",
+        "sha256": "c4df917dc17dfab992d2374f421b2ae708c878a12fb03f2c7fe464153f76facf",
         "size_bytes": 136973
       },
       {
@@ -28574,8 +28580,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "b6b6951e830c2735d271004d5122d9560066ef53c56d5b3267b0ba99c0e2a400",
-    "entry_count": 4738
+    "entries_sha256": "28ae80710dbfc1ca033cf39a4f06d5fbdec45f47600e539a2a1108f30e63c64c",
+    "entry_count": 4739
   },
   "subprojections": [
     {
@@ -28603,7 +28609,7 @@
       ]
     },
     {
-      "entries_sha256": "acc4d8fba9fc0d1e0e48e1cf52c99bc706c7702bbd1ea5a22216b5bd2e1f9b1d",
+      "entries_sha256": "2b7607ee0f11200971b557ae3c8d2eade7f2c5ea61f94d221ba52e764ae2d6ef",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

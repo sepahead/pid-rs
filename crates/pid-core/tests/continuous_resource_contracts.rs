@@ -4,8 +4,8 @@ use pid_core::experimental::continuous::raw_scalars::co_information_pairwise_wit
 #[cfg(feature = "experimental-heuristics")]
 use pid_core::experimental::continuous::IsxConfig;
 use pid_core::experimental::continuous::{
-    incomplete_pid3_diagnostic_with_budget, incomplete_pid3_resource_estimate,
-    pid2_isx_with_budget, Pid2Config, Pid3Config,
+    incomplete_pid3_diagnostic_with_budget, incomplete_pid3_resource_estimate, pid2_isx_report,
+    pid2_isx_report_with_budget, pid2_isx_with_budget, Pid2Config, Pid2Provenance, Pid3Config,
 };
 use pid_core::{MatRef, PidError, ResourceBudget};
 
@@ -159,4 +159,61 @@ fn heuristic_isx_inherits_default_resource_preflight() {
     )
     .unwrap_err();
     assert!(matches!(error, PidError::ResourceLimitExceeded { .. }));
+}
+
+#[test]
+fn pid2_report_budget_covers_the_constituent_report_routes() {
+    let (a, b, _, t) = inputs();
+    let source1 = MatRef::new(&a, 8, 1).unwrap();
+    let source2 = MatRef::new(&b, 8, 1).unwrap();
+    let target = MatRef::new(&t, 8, 1).unwrap();
+    let config = Pid2Config::assume_regular_full_dimensional();
+    let provenance = Pid2Provenance::new(
+        "fixed source 1 coordinates",
+        "fixed source 2 coordinates",
+        "fixed target coordinates",
+        "deterministic resource-contract fixture; no observation noise added",
+    )
+    .unwrap()
+    .with_sampling_model_and_splits(
+        "deterministic test rows; no population-validity or calibration claim",
+        None,
+        None,
+    )
+    .unwrap();
+    let report = pid2_isx_report(source1, source2, target, &config, &provenance).unwrap();
+    let constituent_work = report.mi_s1_t_report.resource_estimate.pairwise_distances
+        + report.mi_s2_t_report.resource_estimate.pairwise_distances
+        + report.mi_s1s2_t_report.resource_estimate.pairwise_distances
+        + report
+            .redundancy_isx_report
+            .resource_estimate
+            .pairwise_distances;
+    assert_eq!(constituent_work, 13 * 28);
+
+    // Every constituent fits this limit separately; the composed report must still reject it.
+    let budget = ResourceBudget::new(u64::MAX, 363, u128::MAX, 1).unwrap();
+    let error = pid2_isx_report_with_budget(source1, source2, target, &config, &provenance, budget)
+        .unwrap_err();
+    assert!(matches!(
+        error,
+        PidError::ResourceLimitExceeded {
+            operation: "pid2_isx_report",
+            resource: "pairwise_distances",
+            requested: 364,
+            limit: 363,
+        }
+    ));
+    assert_eq!(
+        report.resource_estimate.pairwise_distances,
+        constituent_work
+    );
+    let exact_budget = ResourceBudget::new(u64::MAX, 364, u128::MAX, 1).unwrap();
+    let accepted =
+        pid2_isx_report_with_budget(source1, source2, target, &config, &provenance, exact_budget)
+            .unwrap();
+    assert_eq!(
+        accepted.resource_estimate.pairwise_distances,
+        constituent_work
+    );
 }

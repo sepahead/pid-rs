@@ -1477,11 +1477,26 @@ fn ksg_resource_estimate_with_coordinate_work_factor(
     y: MatRef<'_>,
     coordinate_work_factor: u128,
 ) -> PidResult<ResourceEstimate> {
+    ksg_resource_estimate_for_dimensions_with_coordinate_work_factor(
+        x.nrows(),
+        y.nrows(),
+        x.ncols(),
+        y.ncols(),
+        coordinate_work_factor,
+    )
+}
+
+fn ksg_resource_estimate_for_dimensions_with_coordinate_work_factor(
+    n_samples: usize,
+    y_samples: usize,
+    x_dimensions: usize,
+    y_dimensions: usize,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     const OPERATION: &str = "ksg_mi_report";
-    let n = x.nrows() as u128;
-    let dimensions = x
-        .ncols()
-        .checked_add(y.ncols())
+    let n = n_samples as u128;
+    let dimensions = x_dimensions
+        .checked_add(y_dimensions)
         .ok_or(PidError::SizeOverflow {
             operation: OPERATION,
         })? as u128;
@@ -1494,10 +1509,10 @@ fn ksg_resource_estimate_with_coordinate_work_factor(
     let tree_build_operations = n
         .checked_mul(dimensions.max(1))
         .and_then(|value| {
-            value.checked_mul(if x.nrows() <= 1 {
+            value.checked_mul(if n_samples <= 1 {
                 1
             } else {
-                (usize::BITS - (x.nrows() - 1).leading_zeros()) as u128
+                (usize::BITS - (n_samples - 1).leading_zeros()) as u128
             })
         })
         .and_then(|value| value.checked_mul(3))
@@ -1522,19 +1537,22 @@ fn ksg_resource_estimate_with_coordinate_work_factor(
         .ok_or(PidError::SizeOverflow {
             operation: OPERATION,
         })?;
-    let x_support = crate::support::continuous_diagnostics_resource_estimate(
-        &[x],
-        true,
+    let x_support = crate::support::continuous_diagnostics_resource_estimate_for_dimensions(
+        n_samples,
+        x_dimensions as u128,
+        Some(x_dimensions),
         coordinate_work_factor,
     )?;
-    let y_support = crate::support::continuous_diagnostics_resource_estimate(
-        &[y],
-        true,
+    let y_support = crate::support::continuous_diagnostics_resource_estimate_for_dimensions(
+        y_samples,
+        y_dimensions as u128,
+        Some(y_dimensions),
         coordinate_work_factor,
     )?;
-    let joint_support = crate::support::continuous_diagnostics_resource_estimate(
-        &[x, y],
-        false,
+    let joint_support = crate::support::continuous_diagnostics_resource_estimate_for_dimensions(
+        n_samples,
+        dimensions,
+        None,
         coordinate_work_factor,
     )?;
     let support_peak_bytes = x_support
@@ -1588,6 +1606,24 @@ fn ksg_resource_estimate_for_threads_with_coordinate_work_factor(
     max_threads: usize,
     coordinate_work_factor: u128,
 ) -> PidResult<ResourceEstimate> {
+    ksg_resource_estimate_for_dimensions_and_threads_with_coordinate_work_factor(
+        x.nrows(),
+        y.nrows(),
+        x.ncols(),
+        y.ncols(),
+        max_threads,
+        coordinate_work_factor,
+    )
+}
+
+fn ksg_resource_estimate_for_dimensions_and_threads_with_coordinate_work_factor(
+    n_samples: usize,
+    y_samples: usize,
+    x_dimensions: usize,
+    y_dimensions: usize,
+    max_threads: usize,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
     if max_threads == 0 {
         return Err(PidError::ResourceLimitExceeded {
             operation: "ksg_mi_report",
@@ -1596,14 +1632,19 @@ fn ksg_resource_estimate_for_threads_with_coordinate_work_factor(
             limit: 0,
         });
     }
-    let mut estimate =
-        ksg_resource_estimate_with_coordinate_work_factor(x, y, coordinate_work_factor)?;
+    let mut estimate = ksg_resource_estimate_for_dimensions_with_coordinate_work_factor(
+        n_samples,
+        y_samples,
+        x_dimensions,
+        y_dimensions,
+        coordinate_work_factor,
+    )?;
     #[cfg(feature = "parallel")]
     let additional_scratch = {
-        let active_threads = max_threads.min(x.nrows()).max(1) as u128;
+        let active_threads = max_threads.min(n_samples).max(1) as u128;
         let scratch = active_threads
             .saturating_sub(1)
-            .checked_mul(x.nrows() as u128)
+            .checked_mul(n_samples as u128)
             .and_then(|value| value.checked_mul(std::mem::size_of::<DistPair>() as u128))
             .ok_or(PidError::SizeOverflow {
                 operation: "ksg_mi_report",
@@ -1756,13 +1797,18 @@ pub(crate) fn ksg_xblocks_report_resource_estimate(
             message: "x_blocks must be nonempty",
         });
     }
-    let dimensions = x_blocks.iter().try_fold(y.ncols(), |total, block| {
+    let x_dimensions = x_blocks.iter().try_fold(0usize, |total, block| {
         total
             .checked_add(block.ncols())
             .ok_or(PidError::SizeOverflow {
                 operation: OPERATION,
             })
     })?;
+    let dimensions = x_dimensions
+        .checked_add(y.ncols())
+        .ok_or(PidError::SizeOverflow {
+            operation: OPERATION,
+        })?;
     let split_identity_bytes = provenance
         .training_split_id()
         .into_iter()
@@ -1775,7 +1821,14 @@ pub(crate) fn ksg_xblocks_report_resource_estimate(
                 })
         })?;
     add_ksg_report_retained(
-        ksg_xblocks_resource_estimate(x_blocks, y, max_threads)?,
+        ksg_resource_estimate_for_dimensions_and_threads_with_coordinate_work_factor(
+            y.nrows(),
+            y.nrows(),
+            x_dimensions,
+            y.ncols(),
+            max_threads,
+            1,
+        )?,
         y.nrows(),
         dimensions,
         provenance.heap_bytes()?,
@@ -3260,5 +3313,38 @@ mod kdtree_parity_tests {
             "n={n}: brute {t_brute:?} vs kd-tree {t_tree:?} ({:.1}x)",
             t_brute.as_secs_f64() / t_tree.as_secs_f64()
         );
+    }
+}
+
+#[cfg(all(test, feature = "experimental-continuous"))]
+mod report_block_preflight_tests {
+    use super::*;
+
+    #[test]
+    fn source_blocks_match_explicit_concatenation_report_preflight() {
+        let provenance =
+            KsgProvenance::new("fixed coordinates", "declared observation model", None).unwrap();
+        for (n, source_dims, target_dims) in [(8, 1, 1), (17, 2, 3), (5, 4, 2)] {
+            // Preflight consumes only matrix shapes; no estimator is run on these zero fixtures.
+            let source = vec![0.0; n * source_dims];
+            let joined = vec![0.0; n * source_dims * 2];
+            let target = vec![0.0; n * target_dims];
+            let source = MatRef::new(&source, n, source_dims).unwrap();
+            let joined = MatRef::new(&joined, n, source_dims * 2).unwrap();
+            let target = MatRef::new(&target, n, target_dims).unwrap();
+            for max_threads in [1, 3] {
+                assert_eq!(
+                    ksg_xblocks_report_resource_estimate(
+                        &[source, source],
+                        target,
+                        &provenance,
+                        max_threads,
+                    )
+                    .unwrap(),
+                    ksg_report_resource_estimate(joined, target, &provenance, max_threads).unwrap(),
+                    "n={n}, source_dims={source_dims}, target_dims={target_dims}, threads={max_threads}",
+                );
+            }
+        }
     }
 }

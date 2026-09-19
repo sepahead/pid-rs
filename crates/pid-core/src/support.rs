@@ -472,7 +472,23 @@ pub(crate) fn continuous_diagnostics_resource_estimate(
                 operation: "continuous support diagnostics",
             })
     })?;
-    let n = first.nrows() as u128;
+    continuous_diagnostics_resource_estimate_for_dimensions(
+        first.nrows(),
+        dimensions,
+        include_cardinality.then_some(first.ncols()),
+        coordinate_work_factor,
+    )
+}
+
+// Keep shape-only report preflight equivalent to an explicitly concatenated matrix without
+// allocating that matrix before its enclosing report has checked the aggregate budget.
+pub(crate) fn continuous_diagnostics_resource_estimate_for_dimensions(
+    n_samples: usize,
+    dimensions: u128,
+    cardinality_dimensions: Option<usize>,
+    coordinate_work_factor: u128,
+) -> PidResult<ResourceEstimate> {
+    let n = n_samples as u128;
     let pairs = n
         .checked_mul(n.saturating_sub(1))
         .and_then(|value| value.checked_div(2))
@@ -485,17 +501,17 @@ pub(crate) fn continuous_diagnostics_resource_estimate(
         .ok_or(PidError::SizeOverflow {
             operation: "continuous support diagnostics",
         })?;
-    let cardinality = if include_cardinality {
-        Some(continuous_cardinality_resource_estimate(*first)?)
-    } else {
-        None
-    };
+    let cardinality = cardinality_dimensions
+        .map(|dimensions| {
+            continuous_cardinality_resource_estimate_for_dimensions(n_samples, dimensions)
+        })
+        .transpose()?;
     let cardinality_bytes = cardinality.map_or(0, |estimate| estimate.estimated_bytes);
     let cardinality_operations = cardinality.map_or(0, |estimate| estimate.operations_hint);
-    let log_n = if first.nrows() <= 1 {
+    let log_n = if n_samples <= 1 {
         1u128
     } else {
-        (usize::BITS - (first.nrows() - 1).leading_zeros()) as u128
+        (usize::BITS - (n_samples - 1).leading_zeros()) as u128
     };
     let shell_operations = pairs
         .checked_mul(2)
@@ -528,8 +544,15 @@ pub(crate) fn continuous_diagnostics_resource_estimate(
 }
 
 fn continuous_cardinality_resource_estimate(input: MatRef<'_>) -> PidResult<ResourceEstimate> {
-    let n = input.nrows() as u128;
-    let dimensions = input.ncols() as u128;
+    continuous_cardinality_resource_estimate_for_dimensions(input.nrows(), input.ncols())
+}
+
+fn continuous_cardinality_resource_estimate_for_dimensions(
+    n_samples: usize,
+    dimensions: usize,
+) -> PidResult<ResourceEstimate> {
+    let n = n_samples as u128;
+    let dimensions = dimensions as u128;
     let coordinates = n.checked_mul(dimensions).ok_or(PidError::SizeOverflow {
         operation: "continuous support cardinalities",
     })?;
@@ -549,10 +572,10 @@ fn continuous_cardinality_resource_estimate(input: MatRef<'_>) -> PidResult<Reso
         .ok_or(PidError::SizeOverflow {
             operation: "continuous support cardinalities",
         })?;
-    let log_n = if input.nrows() <= 1 {
+    let log_n = if n_samples <= 1 {
         1u128
     } else {
-        (usize::BITS - (input.nrows() - 1).leading_zeros()) as u128
+        (usize::BITS - (n_samples - 1).leading_zeros()) as u128
     };
     // Sorting row keys compares up to d coordinates; sorting every coordinate column adds a
     // second n*d*log(n) term. One further linear pass reports adjacent observed spacings.
