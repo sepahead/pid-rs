@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "af6412688ebde2dae830358774ab90778d7edde8799ecb7e86ebbfafa2b27c3b",
-        "size_bytes": 306838
+        "sha256": "30ea0878d14c470041ade30740c7aa8ebb759311280e8cb6c76a4dc1bad6e440",
+        "size_bytes": 307183
       },
       {
         "git_mode": "100644",
@@ -2790,6 +2790,12 @@
         "path": "audit/evidence/gpt-5-6-pro-full-pid-first-principles-audit-prompt.md",
         "sha256": "2fa89b7f38855f9db0fca5a7f29008ce27c63e7da9ee2d95081782d65c2bb5e9",
         "size_bytes": 46681
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/gradient-publication-ci-dependency-correction-2026-09-19.md",
+        "sha256": "a1104635612bf98f330538a2148ccdb861f672651901b2e5aea73600dc724b78",
+        "size_bytes": 3366
       },
       {
         "git_mode": "100644",
@@ -27058,7 +27064,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "6d2e9e51d85bf0eb5d04ec6104e2a308a7a93675d6f61aea2cf6b3816fc843e1",
+        "sha256": "92da1e8bace0d5e44e3cf44df879e7a44b295e73b9b9dc624c59f7d4b3f4d21b",
         "size_bytes": 90915
       },
       {
@@ -27628,7 +27634,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "030a33d32257451dcee6f351bb481adef52f3b1bad35cc7584210e8272dc9071",
+        "sha256": "33f7fed1c4159b50c7cfc6df8fedbf8bf12395a3ea6716bbb5611aa81d62a2b8",
         "size_bytes": 136973
       },
       {
@@ -28490,8 +28496,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "20fe5eb00750678cc046bf410c1f994ab20d6a246d4c2ade492aa5cccc182e67",
-    "entry_count": 4724
+    "entries_sha256": "2f71872b9178b418c1f3ccdc2bee373d4ae10a58d8ad3b80679772061c39e047",
+    "entry_count": 4725
   },
   "subprojections": [
     {
@@ -28519,7 +28525,7 @@
       ]
     },
     {
-      "entries_sha256": "a3801e6303d47aea765880bf5a09197bd0574a8bf61863fcef723e1eac6ce862",
+      "entries_sha256": "d056dca6ed10130e5b20b6d0282f2519702cd3a3e864a562277e65cfad368b82",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -65,6 +65,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Correct the two current certified-SxPID2 publication dependency bindings after the gradient
+  publication. Preserve the failed hosted run and historical evidence in the
+  [dependency correction record](audit/evidence/gradient-publication-ci-dependency-correction-2026-09-19.md).
+  Keep the full-byte guards and mathematical checks unchanged.
+
 - Correct GitHub math rendering in the finite-prefix gradient and support-change notes and their
   reader maps. Define the short overview's path derivative, score and harmonic sum. Preserve the
   version-1 publication inputs and dated reproduction records; select a version-2 source profile
