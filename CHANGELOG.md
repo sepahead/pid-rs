@@ -9,6 +9,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add the finite-prefix categorical MGW gradient derivation and eleven-target proof map, with
+  explicit whole-row sampling, common-support, score and target-tangent assumptions. Include a
+  separate support-change MI counterexample and its failed quadratic route. Publish both detailed
+  Markdown/PDF companions and the explanatory score SVG; distinguish formal, handwritten and
+  application evidence.
+
 - Add the finite-prefix categorical MGW bias package, its five locally accepted theorem families,
   complete proof map, standalone paper and one-page summary. Preserve source correspondence,
   unsuccessful approaches and historical replay limitations. These bounds concern approximation
@@ -58,6 +64,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   with vector figures and an exact reproduction check for its declared toolchain.
 
 ### Changed
+
+- Correct GitHub math rendering in the finite-prefix gradient and support-change notes and their
+  reader maps. Define the short overview's path derivative, score and harmonic sum. Preserve the
+  version-1 publication inputs and dated reproduction records; select a version-2 source profile
+  with the observed TeX spelling changes. Both papers reproduce exactly in normal and optimized
+  Python; their reviewed PDF bytes are unchanged.
 
 - Correct the finite MGW matched-comparison citation to Section VI.C in the paper and first
   figure. Preserve the original Markdown, SVG and figure PDF under explicit archive paths, keep

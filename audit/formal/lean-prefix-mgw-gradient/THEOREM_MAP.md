@@ -1,0 +1,127 @@
+# Finite-prefix MGW derivatives: theorem and proof map
+
+**Status: eleven families accepted locally on 14 September 2026.** This map identifies the
+eleven frozen targets and the selected proof source. The [local evidence projection](LOCAL_FORMAL_ACCEPTANCE.json) records the four successful
+normal/optimized selected/cosmetic variants and the expected wrong-final-target rejection. The [complete derivation](../../research/finite-prefix-mgw-gradient/EXPOSITION.md)
+defines the laws, proves the mathematical steps, and gives worked examples and limitations.
+
+The information object is the categorical shared-exclusions construction of Makkeh, Gutknecht
+and Wibral, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5),
+[Physical Review E 103, 032149](https://doi.org/10.1103/PhysRevE.103.032149).
+The finite-prefix statistic and its derivative bounds are project derivations. The score-function
+identity is established mathematics; its finite-law use here does not claim a new general gradient
+method. No scientific-priority claim is made. No continuous Ehrlich, other PID, or hyperbolic
+result follows from these finite categorical propositions.
+
+## Exact mathematical object
+
+A row contains a value from each fixed finite source alphabet and a fixed finite target alphabet.
+The source-index set is finite and nonempty. A law assigns nonnegative masses that sum to one.
+Source events use AND within each source collection and OR between collections. A node belongs
+to the complete native redundancy poset. No truncated lattice replaces it.
+
+The local derivative contract specifies a scalar parameter, an open neighborhood with normalized
+laws and common positive joint support, a derivative of every cell mass at the base point, and
+$|d_z|\le Lp_z$, with $L\ge0$. The score is $d_z/p_z$ on positive support and zero elsewhere.
+The atom-bias theorem also requires zero target-fiber tangent and supported inverse identities
+on a neighborhood. It proves differentiability of the resulting atom; differentiability of
+arbitrary supplied inverse representatives is not an extra premise.
+
+The prefix experiment draws $h+1$ IID **complete rows**, including a random anchor. Source and
+target coordinates within a row may depend on each other. Its statistic has signed arrival
+increments and retained target-rank denominators. The score sum includes the anchor. Information
+uses nats; first derivatives use nats per scalar parameter unit and squared derivatives use the
+square of that unit.
+
+## Eleven quantified targets
+
+Each public name below is in `PidPrefixMgwGradientCandidate`. The [contract](sources/PidPrefixMgwGradient/Contract.lean),
+[raw quantified targets](sources/PidPrefixMgwGradient/RawTargets.lean),
+[alias targets](sources/PidPrefixMgwGradient/AliasTargets.lean), and
+[selected candidate](sources/PidPrefixMgwGradient/Candidate.lean) retain their exact bytes.
+The Contract and frozen package headers describe their earlier preparation state. Those historical
+comments are not the current acceptance record and have not been edited inside the frozen inputs.
+
+| Export | Quantified conclusion and additional premises | Derivation | Private proof starts at line |
+| --- | --- | --- | ---: |
+| `full_inverse_row` | Every valid native node has a unique complete inverse row; coefficients outside its lower set vanish | Section 5, equations (10)--(12) | 676 |
+| `scalar_remainder_calculus` | Actual logarithmic remainder derivative for every positive argument; difference bound for $0<q\le a\le1$; power envelope including endpoints | Section 3, equations (5)--(7) | 843 |
+| `native_cumulative_increments` | Actual positive and retained-rank negative prefix integrals equal their event-mass formulas, at every supported anchor and horizon | Section 4, equations (8)--(9) | 1052 |
+| `actual_atom_remainder` | The cumulative atom-minus-prefix-mean remainder is the stated supported average; any complete inverse row recovers the actual atom remainder | Sections 4--5, equations (9)--(12) | 1108 |
+| `finite_block_score_derivative` | The mass tangent sums to zero, the one-row score has mean zero, and the actual finite-prefix mean has the full-row score derivative | Section 7, equations (18)--(19) | 118 |
+| `actual_atom_score_bias` | Under zero target-fiber tangent and local supported inverse identities, the atom derivative exists and differs from the prefix derivative by at most $2LC_\alpha(p)/(h+1)$ | Section 6, equations (13)--(17) | 1737 |
+| `finite_latent_pushforward` | Any fixed finite map preserves the local law/tangent contract, maps the actual product measure to the image product measure, and gives the fiber-averaged image score | Section 9, equation (21) | 1365 |
+| `finite_latent_score_derivative` | The latent score statistic is integrable; its expectation equals the image score expectation and the derivative of the actual image-prefix mean | Section 9, equation (22) | 1388 |
+| `finite_encoder_score` | A fixed finite base law and conditional encoder laws with a common score bound give the product law/tangent contract; fixed base mass cancels from supported scores | Section 9, encoder calculation | 170 |
+| `score_second_moment` | The native score square and score-statistic square are integrable; $E[G_h^2]\le(h+1)H_h^2E[s^2]$ and $E[s^2]\le L^2$ | Section 8, equation (20) | 402 |
+| `latent_score_second_moment` | The same two integrability conclusions and second-moment bounds hold on the actual IID latent-row law | Section 9, latent moment calculation | 498 |
+
+The universe-parameter counts in this order are 1, 0, 3, 3, 3, 3, 4, 4, 3, 3, and 4. The
+eleven public declarations at lines 1740--1782 are direct aliases of the private proofs. Helper
+lemmas are proof steps, not additional accepted scientific result families.
+
+## How the proof reaches probability statements
+
+The formal random law is not an arbitrary real-valued placeholder. `keyMeasure` and
+`latentMeasure` are finite weighted sums of Dirac measures. `rowLaw` and `latentRowLaw` use
+`Measure.pi`. Expectations are Lebesgue integrals with those measures. The inherited finite-law
+theorems identify the integrals with the appropriate weighted sums; the new proof then
+differentiates those finite sums and transfers the result back to the actual integrals.
+
+| Proof step | Selected-source declarations and lines | What prevents an invalid shortcut |
+| --- | --- | --- |
+| Normalization and scores | `tangent_law_at` through `tangent_weighted_score_square`, 14--95 | Normalization holds on a neighborhood; zero-mass cells have zero tangent before division |
+| Product differentiation | `finite_product_score_derivative`, 96; `proof_finite_block_score_derivative`, 118 | Every row factor is differentiated, including row zero |
+| Encoder law | `encoder_law`, 151; `proof_finite_encoder_score`, 170 | Finite intersections give a common neighborhood; fixed base weights cancel only on support |
+| IID second moment | `moment_iid_factor` through `moment_weighted_statistic`, 231--395 | Off-diagonal score products vanish by product-law factorization and zero mean; statistic and score are not assumed independent |
+| Actual latent measures | `moment_weighted_integral`, 428; `moment_latent_law_measure`, 443; `moment_latent_product_law`, 467 | Measure identities and integrability are proved before replacing integrals with finite sums |
+| Complete inverse row | `invrow_generic_exists`, 530; `invrow_generic_unique`, 633; native transfer, 664--712 | Existence, lower-set support, and uniqueness use the full finite order |
+| Scalar tail calculus | `scalarFrag_*`, 713--858 | Actual logarithmic tails and finite derivatives supply the bounds; no differentiation of a function-value inequality |
+| Native event correspondence | `corrFrag_*`, 859--1157 | Join events, final target arrival, retained rank, and binomial thinning give the actual cumulative integrals |
+| Finite image laws | `latentFrag_*`, 1158--1433 | Fiber sums preserve positivity, derivatives, and product-map measures; image scores are conditional averages |
+| Derivative of supported averages | `scoreBias_event_derivative`, 1434; `scoreBias_supported_derivative`, 1454 | Common support justifies the fixed finite sum locally |
+| Constant 2 in the stated bound | `scoreBias_kernel_bound`, 1477; `scoreBias_anchor_bound`, 1496 | The reciprocal-source terms cancel between two valid upper bounds |
+| Target terms | `scoreBias_target_fiber`, 1559; `scoreBias_target_weight_zero`, 1572 | Both target contributions vanish under the same zero-fiber-tangent premise |
+| Actual atom derivative | `scoreBias_cumulative_derivative`, 1595; `scoreBias_from_exact_remainder`, 1699 | The exact remainder and full inverse row identify the atom before the derivative bound is transferred |
+
+The paper gives a finite-calculus proof of the scalar difference inequality. The Lean proof also
+uses a logarithmic-series tail argument. These are two presentations of the same quantified
+inequality, not evidence of independent review or two new results. Reused mean, bias, event,
+and finite-probability lemmas remain dependencies rather than new gradient contributions.
+
+## Trust and correspondence boundaries
+
+The selected candidate has 1,784 lines and 79,446 bytes, SHA-256
+`b260d3acdf451594f8b9aa557479b7ba34e9759f870a5298e76cfc76f62eadf9`.
+The frozen 47-input proof manifest has SHA-256
+`4b4fda1e2fdfabc9823e32a53b220c2a16781ed6bb186fefa17b49cae4a5a22d`.
+It excludes the candidate deliberately; candidate selection is a separate later binding.
+The [public source inventory](PUBLIC_SOURCE_INVENTORY.json) includes both exact objects.
+
+The semantic judge checks theorem declarations, the full export roster, raw and alias type
+equality under universe renaming, and transitive axioms. Permitted axioms are `Classical.choice`,
+`Quot.sound`, and `propext`; no `sorryAx` is permitted. A separate fresh kernel pass checks the
+compiled proof terms. The pinned baseline is Lean 4.33.0 and Mathlib commit
+`db584cd6d46c92f209a44c0f1c829460d327499d`. This does not authenticate the host or tool binaries.
+
+| Correspondence edge | Scope and remaining obligation |
+| --- | --- |
+| MGW paper to finite event/atom definitions | Uses the existing exact-v5 mean and bias correspondence; no new independent paper verification is claimed |
+| Exposition to quantified targets | Root source review maps the eleven families above; the kernel alone does not prove that an English statement is an accurate description |
+| Formal targets to proof terms | Accepted locally under the declared fixed semantic and fresh-kernel checks; hosted replay remains separate |
+| Exact real-valued construction to executable algorithm | No Rust or Python gradient estimator is supplied |
+| Executable algorithm to finite precision | No numerical refinement or stability result is supplied |
+| Finite-law experiment to sampled sensor populations | Population support, row sampling, encoder access, and label provenance require a separate data contract |
+| Objective derivative to useful learning | Requires comparison with direct differentiation, task loss, MI/CMI, and ablation on a declared task |
+
+Equation (23), the independent-block mean-squared-error consequence, is a handwritten corollary
+outside the eleven formal families. The worked anchor-score omission and dependent-row examples
+are handwritten specializations. The [support-change MI cusp](../../research/support-change-mi-cusp/EXPOSITION.md)
+is a separate handwritten counterexample whose formal verification remains open. Neither the
+moment bound nor the map theorem proves a variance ordering, confidence coverage, optional-stopping
+validity, absence of target leakage, or deployment value.
+
+Empty complete-row alphabets cannot satisfy a normalized law. Horizon zero, unused labels,
+events of mass one, arbitrary within-row dependence, and noninjective or nonsurjective latent
+maps are included within the stated targets. Changing alphabets, parameter-dependent maps,
+correlated rows, or entering support needs its own argument.

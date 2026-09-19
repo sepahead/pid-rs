@@ -1,0 +1,297 @@
+{
+  "aggregate_publication_gate": {
+    "accepted_utc": "2026-09-19T11:06:46.486243+00:00",
+    "outer_terminal": {
+      "bytes": 609644,
+      "sha256": "1fba69ff152fc8f8f34d555d8cd322b15b3214b5b3bc15bbf909ada5c8263ab9"
+    },
+    "result": {
+      "bytes": 2154,
+      "sha256": "0e91245f46c00d6882c0d889f5006b7e892e914f46cf3d65d9089524194c2daf"
+    },
+    "retained_inventory": {
+      "bytes": 23460543,
+      "sha256": "a55abe5971d803ba6c51e9bf3f47f6865e06ed6e17f02b7d3829d1ce32af3fe2"
+    },
+    "root_acceptance": {
+      "bytes": 4655,
+      "sha256": "1691ae70d6a360c40e704ab75db4d99adadd067f2f891872074df619d232331e"
+    },
+    "scope": "The complete exact aggregate passed on the recorded source snapshot before these status-only metadata edits. Root verified the 48,887-entry retained inventory and rehashed its 4,005,437,767 regular-file bytes. It checked all eight registrations, 318 native streams and current source/index/HEAD identity. Links were inspected without following them. Final source/link checks and exact-commit hosted/mainline evidence remain separate.",
+    "status": "root-accepted-complete-exact-publication-aggregate"
+  },
+  "changed_input_paths": [
+    "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+    "audit/research/support-change-mi-cusp/EXPOSITION.md"
+  ],
+  "current_exact_reproduction": {
+    "accepted_utc": "2026-09-19T10:24:06.663319+00:00",
+    "all_calls_match_selected_v2_references": true,
+    "builder": {
+      "bytes": 40233,
+      "path": "scripts/build-mgw-derivative-notes-pdf.py",
+      "sha256": "0851f73a1d30ff2efa21af2419806b97c16e170a27e6f9a6c266312da8675372"
+    },
+    "calls": [
+      {
+        "commands": 40,
+        "kind": "gradient",
+        "optimization": 0,
+        "receipt": {
+          "bytes": 149846,
+          "sha256": "0264430908b37649cad9ac6866af4f4e4d1e15ce58b624148435e021ba279111"
+        }
+      },
+      {
+        "commands": 36,
+        "kind": "cusp",
+        "optimization": 0,
+        "receipt": {
+          "bytes": 128067,
+          "sha256": "27064b64dbb4b0acd291b3507df035b08503958a1d35631a92a96f18822b39c0"
+        }
+      },
+      {
+        "commands": 40,
+        "kind": "gradient",
+        "optimization": 1,
+        "receipt": {
+          "bytes": 150248,
+          "sha256": "98a86f15a8588965f4f542d1e706ada947c2ba03c39faadfb2bb537c849dee3d"
+        }
+      },
+      {
+        "commands": 36,
+        "kind": "cusp",
+        "optimization": 1,
+        "receipt": {
+          "bytes": 128447,
+          "sha256": "ffe38cd593d3e472d86daf38f5e65faffa9a44a715cb9294169cb121fedbf3f7"
+        }
+      }
+    ],
+    "fresh_pdf_builds": 8,
+    "native_commands": 152,
+    "pdf_bytes_equal_reviewed_v1_artifacts": true,
+    "root_acceptance": {
+      "bytes": 3024,
+      "sha256": "b8609b74f789b4c62d880d4efa732b5e815cbc32fdb9e8840437a68271c0193b"
+    },
+    "scope": "Current v2 source-to-exact-reference local reproduction; no new Lean theorem, generic calibration, scientific priority, hosted/mainline or consumer acceptance.",
+    "source_index_HEAD_unchanged_during_execution": true,
+    "status": "accepted-locally",
+    "visual_disposition": "All eight produced PDFs equal their exact previously reviewed final artifact bytes. Existing artifact visual review remains applicable; no new visual inspection or larger visual claim is asserted."
+  },
+  "derivative_controls": {
+    "cases_per_mode": 95,
+    "optimization_modes": [
+      0,
+      1
+    ],
+    "root_acceptance": {
+      "bytes": 792,
+      "sha256": "cca31b86ed0b9ba557396444b2ec4ed2dd869198c8c7e2ff68245a86419c331d"
+    },
+    "status": "accepted-locally"
+  },
+  "inert_preimages": [
+    {
+      "bytes": 31963,
+      "original_path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient-exposition.md.txt",
+      "sha256": "853d82ba16852441391993065afd1e37420e46943ce13799248de624c76f8388"
+    },
+    {
+      "bytes": 10392,
+      "original_path": "audit/research/support-change-mi-cusp/EXPOSITION.md",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/cusp-exposition.md.txt",
+      "sha256": "84b9a97d590537ed9717ef8dc682b2abef98b575232b4ff8f83f1b7e1a2b5c01"
+    },
+    {
+      "bytes": 3068,
+      "original_path": "audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient-overview.md.txt",
+      "sha256": "ed25fcc816b0b7b5db7629c1fdbafcd82566349e9959767c0ff7d6f27fefd5fa"
+    },
+    {
+      "bytes": 12014,
+      "original_path": "audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient-theorem-map.md.txt",
+      "sha256": "a780c1499995d9e808abb51c0ff4a69f88d26b4f6199ea842dc8376ea1327115"
+    },
+    {
+      "bytes": 40233,
+      "original_path": "scripts/build-mgw-derivative-notes-pdf.py",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/builder.py.txt",
+      "sha256": "afb76de375820ec3cd9845bad5a4c5dccf0ccb1ca38d172109b304303c5fbb4f"
+    },
+    {
+      "bytes": 25628,
+      "original_path": "scripts/check-mgw-derivative-notes-pdf-self-test.py",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/self-test.py.txt",
+      "sha256": "d108d5a2ee38646424ae6c818dc89720b29dcff053eb5222ba0a2244aba061ad"
+    },
+    {
+      "bytes": 36820,
+      "original_path": "audit/formal/latex/mgw-derivative-notes/gradient.expected.tex",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient.expected.tex.txt",
+      "sha256": "3bb45f12d3f6e77aa03aab1e10c36d0d3284939451e05d337ee118c362030af8"
+    },
+    {
+      "bytes": 13276,
+      "original_path": "audit/formal/latex/mgw-derivative-notes/cusp.expected.tex",
+      "preserved_path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/cusp.expected.tex.txt",
+      "sha256": "bc308ff0983f68b2d1e5f3d8e3bb2aac1a81d35e230bd38e7327da9a5fc8cad2"
+    }
+  ],
+  "native_preflight": {
+    "admission_sha256": "b8eab6de0610bfac3cd957412ad5ac66bccb9f8a623d80944fb00cb33fce4e33",
+    "commands": 6,
+    "comparisons": {
+      "cusp": {
+        "actual_tex": {
+          "bytes": 13270,
+          "sha256": "721e21cfca8303f93dd108dc696748e57c2b0e6555aaac19eb8b37473d500141"
+        },
+        "ast_equal_after_two_declared_math_spelling_substitutions": true,
+        "tex_has_only_declared_operator_substitution": true
+      },
+      "gradient": {
+        "actual_tex": {
+          "bytes": 36814,
+          "sha256": "0f402c02fb571d2b17e810aa33008852f55956b47fe2f0fdfaf30e2cdd407003"
+        },
+        "ast_equal_after_two_declared_math_spelling_substitutions": true,
+        "tex_has_only_declared_operator_substitution": true
+      }
+    },
+    "finished_utc": "2026-09-19T10:07:31.784809+00:00",
+    "pandoc_sha256": "1662f49c035168d1e608ad9d923df75e4b00ac014d096349b2027ad38f84dd6e",
+    "result_sha256": "631b587701b676ad1b2daa243d7a713dd02efa0415d5dd84c200d6670dd2e156",
+    "scope": "Four actual old/new Markdown AST calls and two successor TeX calls; no PDF or proof execution",
+    "started_utc": "2026-09-19T10:07:30.953269+00:00"
+  },
+  "nonclaims": [
+    "mathematical change",
+    "new theorem acceptance",
+    "output equality from source inspection",
+    "hosted or mainline publication",
+    "application validity"
+  ],
+  "output_status_scope": "reviewed-reference binds corrected-source TeX and retained PDF, observation and figure targets; four complete current-v2 exact checks reproduced those references",
+  "outputs_equal_predecessor_profile": false,
+  "pending": [
+    "final source-state and staged publication-link checks",
+    "exact-commit hosted and mainline evidence"
+  ],
+  "predecessor_input_profile": {
+    "bytes": 20960,
+    "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v1.json",
+    "sha256": "80bbf7ab8f53f94e8c6d6cafa4103c650dcd4dd25ae998f0d88515a119160db8"
+  },
+  "preserved_predecessor_observation": "audit/formal/latex/mgw-derivative-notes/PUBLICATION_OBSERVATION.json",
+  "profile_schema_unchanged": "pid-rs/mgw-derivative-note-inputs-v1",
+  "recorded_utc": "2026-09-19T11:08:11.150774+00:00",
+  "retained_failure": {
+    "counts": {
+      "audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md": 19,
+      "audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md": 14,
+      "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md": 333,
+      "audit/research/support-change-mi-cusp/EXPOSITION.md": 124
+    },
+    "findings": 490,
+    "gate": "scripts/check-markdown-math.py",
+    "raw_custody": "Exact stderr remains in ignored local custody; no host-specific locator is published here.",
+    "status": "failed",
+    "stderr_bytes": 56529,
+    "stderr_sha256": "ddc35fa3a157770faa90e0e2f6322d696507fa9d91d901b34a83a798c443a1ac"
+  },
+  "schema": "pid-rs/derivative-markdown-math-successor-v1",
+  "source_adopted_utc": "2026-09-19T10:09:32.168451+00:00",
+  "source_gates": {
+    "root_acceptance": {
+      "bytes": 2810,
+      "sha256": "c3b44a30c7e03ccaa6c7b6c40ea3e8aa022d2ef01a9504b5aa90d79ba0a1fead"
+    },
+    "scope": "Markdown checks and controls, derivative dispatch controls and whitespace, before this status-only update.",
+    "status": "accepted-locally"
+  },
+  "status": "current-v2-local-exact-reproduction-accepted",
+  "successor_input_profile": {
+    "bytes": 20960,
+    "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json",
+    "sha256": "e3b04e6847a4ec310f654abd0b10641846614a38bc3440a248b0f4ff6ce863fd"
+  },
+  "syntax_authorities": {
+    "dollar_delimiters": {
+      "accessed_utc": "2026-09-19",
+      "scope": "Documents inline single-dollar and display double-dollar syntax; does not prove all commands universally supported or prohibited.",
+      "title": "Writing mathematical expressions \u2014 GitHub Docs",
+      "url": "https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions"
+    },
+    "operator_command_substitutions": {
+      "path": "scripts/check-markdown-math.py",
+      "scope": "Existing repository linter rule forbids operatorname and recommends mathrm or a built-in operator; this correction does not infer a universal GitHub prohibition."
+    }
+  },
+  "syntax_changes": [
+    {
+      "actual_renderer_equivalence": "Pinned Pandoc AST differs only by the declared operator spelling; complete exact checks in normal and optimized Python reproduced the selected PDF bytes.",
+      "base": "staged manuscript/source",
+      "base_sha256": "853d82ba16852441391993065afd1e37420e46943ce13799248de624c76f8388",
+      "display_pairs": 39,
+      "inline_pairs": 194,
+      "only_declared_lexical_changes": true,
+      "operator_replacements": {
+        "Var": 1,
+        "sgn": 0
+      },
+      "path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
+    },
+    {
+      "actual_renderer_equivalence": "Pinned Pandoc AST differs only by the declared operator spelling; complete exact checks in normal and optimized Python reproduced the selected PDF bytes.",
+      "base": "staged manuscript/source",
+      "base_sha256": "84b9a97d590537ed9717ef8dc682b2abef98b575232b4ff8f83f1b7e1a2b5c01",
+      "display_pairs": 14,
+      "inline_pairs": 49,
+      "only_declared_lexical_changes": true,
+      "operator_replacements": {
+        "Var": 0,
+        "sgn": 1
+      },
+      "path": "audit/research/support-change-mi-cusp/EXPOSITION.md"
+    },
+    {
+      "actual_renderer_equivalence": "not_executed",
+      "base": "previously reviewed overview definitions",
+      "base_sha256": "776be6e13998a7331ccc4c8374dd0421b471e55d7b7d7c813dc5c9ead346d66a",
+      "display_pairs": 1,
+      "inline_pairs": 14,
+      "only_declared_lexical_changes": true,
+      "operator_replacements": {
+        "Var": 0,
+        "sgn": 0
+      },
+      "path": "audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md"
+    },
+    {
+      "actual_renderer_equivalence": "not_executed",
+      "base": "staged manuscript/source",
+      "base_sha256": "a780c1499995d9e808abb51c0ff4a69f88d26b4f6199ea842dc8376ea1327115",
+      "display_pairs": 0,
+      "inline_pairs": 8,
+      "only_declared_lexical_changes": true,
+      "operator_replacements": {
+        "Var": 0,
+        "sgn": 0
+      },
+      "path": "audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md"
+    }
+  ],
+  "unchanged_output_fields": [
+    "pdf",
+    "observation",
+    "figure_pdf"
+  ],
+  "unchanged_profile_input_count": 9
+}

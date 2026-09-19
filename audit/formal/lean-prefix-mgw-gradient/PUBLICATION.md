@@ -1,0 +1,52 @@
+# Finite-prefix MGW gradient results
+
+The [complete paper](../../research/finite-prefix-mgw-gradient/EXPOSITION.md) and
+[PDF](../../../output/pdf/finite-prefix-mgw-gradient.pdf) explain how a finite stochastic
+experiment can estimate the derivative of a categorical MGW prefix mean, and how that derivative
+differs from the derivative of the population atom. The [theorem map](THEOREM_MAP.md) connects
+eleven locally accepted formal families to their exact statements and complete proof steps.
+
+Write $j(t)=J_\alpha(p_t)$ for the atom value along the scalar parameter path.
+The main conditional result is
+
+$$
+\left|j'(t_0)-E[G_h]\right|
+\le \frac{2L}{h+1}\sum_\beta |c_\alpha(\beta)|
+       \sum_{z:p_{t_0}(z)>0}\frac{p_{t_0}(z)}{q_{z,\beta}}.
+$$
+
+Here $J_\alpha$ is the specified categorical MGW atom, $c_\alpha$ is its complete inverse
+row, and $q_{z,\beta}$ is the probability of the source event and anchor target together.
+The finite-prefix score statistic $G_h$ uses every score in an IID block of $h+1$ complete
+rows, including the random anchor. Here $h$ is a nonnegative integer and
+$p_z=p_{t_0}(z)$. The law has fixed finite alphabets and common positive support on an open
+parameter neighborhood. At the base point, the cell tangents
+$d_z=\left.\frac{d}{dt}p_t(z)\right|_{t=t_0}$ satisfy $|d_z|\le Lp_z$;
+every target-fiber tangent is zero. The supported inverse identities must
+hold locally. The paper defines all events, scores, units and edge cases before deriving the bound.
+
+Define the cell score by $s(z)=d_z/p_z$ on positive support and zero elsewhere.
+Let $H_h=\sum_{j=1}^h1/j$, with $H_0=0$.
+The separate second-moment result is $E[G_h^2]\le(h+1)H_h^2E[s^2]\le(h+1)H_h^2L^2$.
+Finite latent maps and fixed-base finite encoders can make a sampled score available without
+enumerating the induced image PMF. The bound quantifies a particular approximation problem;
+it does not prove that increasing synergy improves a task. A small known PMF can often be
+differentiated directly. An application study must compare cost, approximation bias, sampling
+variation and held-out task results.
+
+The [local evidence projection](LOCAL_FORMAL_ACCEPTANCE.json) records four positive semantic and
+fresh-kernel variants and one expected wrong-target rejection. It is a portable account of the
+local observation, not a raw execution receipt, hosted replay, or permanent archive. The
+[replay guide](REPLAY.md) states the dependency and custody limits. The proof sources are exact;
+their preparation-era comments remain historical and do not replace the current evidence record.
+
+The [support-change MI cusp](../../research/support-change-mi-cusp/EXPOSITION.md) and its
+[PDF](../../../output/pdf/support-change-mi-cusp.pdf) are a separate handwritten negative result.
+All cell tangents can vanish while information has opposing one-sided derivatives. The failed
+quadratic construction is retained. Formalizing that explicit path remains open.
+
+The defining PID is Makkeh, Gutknecht and Wibral's categorical shared-exclusions construction,
+[arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5). The prefix derivative bounds are project
+derivations. The score identity itself is classical and is cited in the paper. No scientific
+priority, continuous-PID transfer, finite-precision implementation, calibration, or useful
+training result is claimed.

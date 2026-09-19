@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,float}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pdfextension catalog { /Lang (en) }
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PidPrimary,
+  urlcolor=PidSecondary,
+  citecolor=PidSecondary,
+  pdftitle={$title-meta$},
+  pdfauthor={pid-rs contributors},
+  pdfsubject={$subject$},
+  pdfdisplaydoctitle=true
+}
+\PidSetRunningHeads{Categorical shared exclusions}{$runninghead$}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight}
+\pretocmd{\section}{\par\Needspace{12\baselineskip}}{}{\PackageError{mgw-note-layout}{Section spacing patch failed}{Inspect the declared article layout.}}
+\pretocmd{\subsection}{\par\Needspace{7\baselineskip}}{}{\PackageError{mgw-note-layout}{Subsection spacing patch failed}{Inspect the declared article layout.}}
+\title{\PidReportTitle{$title$}{$subtitle$}}
+\author{}
+\date{}
+\begin{document}
+\PidMakeTitle
+$body$
+\end{document}

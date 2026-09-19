@@ -1,0 +1,37 @@
+{
+  "namespace": "PidPrefixMgwGradientCandidate",
+  "target_names": [
+    "full_inverse_row",
+    "scalar_remainder_calculus",
+    "native_cumulative_increments",
+    "actual_atom_remainder",
+    "finite_block_score_derivative",
+    "actual_atom_score_bias",
+    "finite_latent_pushforward",
+    "finite_latent_score_derivative",
+    "finite_encoder_score",
+    "score_second_moment",
+    "latent_score_second_moment"
+  ],
+  "universe_counts": [
+    1,
+    0,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    3,
+    3,
+    4
+  ],
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "status": "eleven target views accepted; candidate absent; no gradient proof accepted",
+  "target_view_completion_sha256": "97a2aaa466aeab9afd512f91335d0285d100daa19fce62c51a441acfac71ed2f",
+  "no_new_family": "J13 target derivative omission only; lens45 conditional variance ordering outside roster"
+}

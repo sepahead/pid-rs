@@ -72,6 +72,8 @@ you interpret an estimate.
 | Study the mathematics | [Mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) | Nine result families with motivation, formulas, assumptions, evidence, cost, and complete proof links |
 | Study finite-prefix MGW means | [Standalone mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md), [PDF](output/pdf/prefix-mgw-mean.pdf) | Three separately verified formal results for a project-defined categorical statistic; no new estimator API or finite-sample coverage claim |
 | Bound finite-prefix MGW approximation error | [Bias overview](audit/formal/lean-prefix-mgw-bias/SUMMARY.md), [summary PDF](output/pdf/prefix-mgw-bias-summary.pdf), [full proof guide](audit/formal/lean-prefix-mgw-bias/EXPOSITION.md) | Five locally verified bias/support result families for finite categorical laws and IID complete rows; sampling uncertainty remains separate |
+| Differentiate finite-prefix MGW means | [Gradient overview](audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md), [complete paper](audit/research/finite-prefix-mgw-gradient/EXPOSITION.md), [PDF](output/pdf/finite-prefix-mgw-gradient.pdf) | Eleven locally verified families for the full-row score, derivative bias, finite encoders and IID second moments; useful training remains to test |
+| Check a derivative argument at changing support | [MI cusp derivation](audit/research/support-change-mi-cusp/EXPOSITION.md), [PDF](output/pdf/support-change-mi-cusp.pdf) | A handwritten counterexample: zero cell tangents do not imply a zero information derivative; explicit-path formal verification remains open |
 | Study finite MGW comparisons | [Finite comparison and derivation](audit/formal/lean-mgw-fixed-world/PUBLICATION.md), [PDF](output/pdf/mgw-fixed-world-added-information.pdf) | Equal synergy with different added information under a fixed target and baseline; corrected citation and preserved 21-target evidence, with public replay qualification open |
 | Understand target-copy models | [Standalone note](audit/evidence/finite-target-copy-mgw-synergy.md), [PDF](output/pdf/finite-target-copy-mgw-synergy.pdf) | Exact categorical MGW identities, named-PID comparisons and signed cancellation; eleven local Lean targets, with complete replay qualification open |
 | Check a claim | [Assurance registry](audit/evidence/assurance-registry.json), [known limitations](KNOWN_LIMITATIONS.md) | Scoped evidence and open obligations; follow each claim's current decision |
@@ -128,6 +130,19 @@ support and probability-floor premises concern the population; observed sample o
 not establish them. The [five-result theorem map](audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md)
 links each bound to its quantified statement and complete proof. This separate package supplies
 no confidence interval, continuous-PID transfer, or Rust estimator implementation.
+
+The [finite-prefix gradient paper](audit/research/finite-prefix-mgw-gradient/EXPOSITION.md) and
+[PDF](output/pdf/finite-prefix-mgw-gradient.pdf) derive the difference between a categorical MGW
+atom derivative and a sampled prefix derivative. Its [eleven-target proof map](audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md)
+separates the full-row score identity, derivative-bias bound, finite encoder mapping and IID second
+moments. The intended use is a finite stochastic encoder with an evaluable score; practical value
+still needs comparison with direct differentiation and task-based evaluation.
+
+The separate [support-change note](audit/research/support-change-mi-cusp/EXPOSITION.md) and
+[PDF](output/pdf/support-change-mi-cusp.pdf) explain a negative result: every cell probability can
+have zero derivative while mutual information has opposing one-sided derivatives. The complete
+hand calculation retains the failed quadratic attempt. Its formalization is open. It shows why
+support assumptions cannot be omitted from derivative-based learning arguments.
 
 The [publication checker guide](scripts/README.md) records the exact profile, commands and
 historical replay boundaries. Earlier v1, v2 and Pandoc 3.1.3 observations remain available there;

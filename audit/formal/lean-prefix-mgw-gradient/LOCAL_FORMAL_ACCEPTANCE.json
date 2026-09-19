@@ -1,0 +1,308 @@
+{
+  "accepted_utc": "2026-09-14T10:55:23.769176+00:00",
+  "alias_targets_sha256": "261d3ce7b2da3432885e1069a9d88bbeb8c19f838b6982ccb11cd4d8d93672ac",
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "assumptions": "LocalLawTangent requires common positive support and normalized laws on an open neighborhood, finite cell derivatives and |dp| <= L p at base point. Main atom-bias target also requires zero target-fiber tangent, eventual supported inverse pair and full inverse row. Complete rows are IID, including the anchor; within-row dependence is allowed. Latent maps and base/encoder input maps are fixed.",
+  "candidate_sha256": "b260d3acdf451594f8b9aa557479b7ba34e9759f870a5298e76cfc76f62eadf9",
+  "contract_sha256": "620f9476fd5249f804eb43becc1b699ef696dea4377fcb3f4fcdd12921e694ce",
+  "correspondence_review": "Root read all 1784 candidate lines, complete Contract and raw targets, handwritten derivation and exact-source independent-first semantic map. Actual Measure.pi, integrability, image measures, support restrictions and derivative statements were inspected. Same-system critiques are advisory; no completed new second candidate review is claimed.",
+  "earlier_stages": "Stages01,02,03 and development remain closed with original failures; no retroactive adoption or clock reset.",
+  "families": 11,
+  "frozen_manifest_sha256": "4b4fda1e2fdfabc9823e32a53b220c2a16781ed6bb186fefa17b49cae4a5a22d",
+  "independent_source_map_readback_sha256": "47911d23f836c6d1d5f5c01152ce015f6ef21ed4d3dfb03482ce2fff571297ef",
+  "matrix_readback_sha256": "12aebfad332e697cafabe3af0a76cdd2ce6256a710170e6a24af4b4006a79295",
+  "not_established": [
+    "scientific priority",
+    "MSE corollary formalization",
+    "worked-example formal specializations",
+    "support-change cusp formalization",
+    "variance ordering",
+    "confidence or sequential calibration",
+    "continuous/hyperbolic/other PID transfer",
+    "executable Rust/Python gradient estimator",
+    "binary64 refinement",
+    "training benefit or consumer readiness",
+    "hosted formal replay",
+    "main publication or permanent archive"
+  ],
+  "object": "Finite categorical MGW v5; fixed finite native antichain poset and alphabets; actual finite product measures and Lebesgue integrals; nats; scalar local derivatives.",
+  "operational_acceptance_sha256": "f1d2c17832f2bb39f9c8a5dcf849a840b03fa1b63345136204551cf7733b1bf0",
+  "positive_variants": 4,
+  "raw_custody": "Original sources, process records, streams, installed tables and failed predecessors are retained locally; ignored local handoff gives exact locators. Off-host raw archival custody remains open.",
+  "raw_local_acceptance_sha256": "b4ec70d42cef423e24b674465b6288bd008c09168f427abd65cf3dfedacf83dc",
+  "raw_targets_sha256": "3080c2d2722e492d968ddc6c8b11d5529950a3ea9a4d492dc8af3fb5be8de215",
+  "runs": [
+    {
+      "action": "check",
+      "artifact_bindings_rehashed": 333,
+      "attempt": 1,
+      "input_bindings_rehashed": 140,
+      "kernel_seconds": 206.77934820810333,
+      "native_commands": 38,
+      "optimization": 0,
+      "receipt_sha256": "9f15e1499c6f1fa3c61278effdcda31011a12df6ecc060a63848f626b1d66e28",
+      "semantic_records": 11,
+      "source": "selected",
+      "status": "fresh_semantic_kernel_pass"
+    },
+    {
+      "action": "check",
+      "artifact_bindings_rehashed": 335,
+      "attempt": 2,
+      "input_bindings_rehashed": 142,
+      "kernel_seconds": 204.97705958294682,
+      "native_commands": 38,
+      "optimization": 1,
+      "receipt_sha256": "b8982403ea69f664f62e93003b1ce68e64a4eb0b8e0f0fc1c79e3f1112e79631",
+      "semantic_records": 11,
+      "source": "selected",
+      "status": "fresh_semantic_kernel_pass"
+    },
+    {
+      "action": "check",
+      "artifact_bindings_rehashed": 335,
+      "attempt": 3,
+      "input_bindings_rehashed": 142,
+      "kernel_seconds": 205.3216247500386,
+      "native_commands": 38,
+      "optimization": 0,
+      "receipt_sha256": "a173e56010abc315ede9ca2b44182b348fbad651698c4153dcece20fdfea5c55",
+      "semantic_records": 11,
+      "source": "cosmetic",
+      "status": "fresh_semantic_kernel_pass"
+    },
+    {
+      "action": "check",
+      "artifact_bindings_rehashed": 335,
+      "attempt": 4,
+      "input_bindings_rehashed": 142,
+      "kernel_seconds": 200.25854691700079,
+      "native_commands": 38,
+      "optimization": 1,
+      "receipt_sha256": "0c3759ca1fb778fd29cbe8999ae8d63d237b54466d09663e8cdaa12b2cdb9df4",
+      "semantic_records": 11,
+      "source": "cosmetic",
+      "status": "fresh_semantic_kernel_pass"
+    },
+    {
+      "action": "wrong-last-target",
+      "artifact_bindings_rehashed": 323,
+      "attempt": 5,
+      "input_bindings_rehashed": 140,
+      "kernel_seconds": null,
+      "native_commands": 36,
+      "optimization": 0,
+      "receipt_sha256": "5a38f7461d9b2fce1a59fad8edee583da8cd1d702446657e0905723fe17f60c0",
+      "semantic_records": 10,
+      "source": "selected",
+      "status": "expected_target_rejection"
+    }
+  ],
+  "schema": "pid-rs/gradient-local-formal-acceptance-v1",
+  "scope": "Typed public projection of local acceptance, not the raw original receipt or current hosted execution.",
+  "semantic_records": [
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.full_inverse_row",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.full_inverse_row_target.{u}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.full_inverse_row",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.full_inverse_row",
+      "universes": [
+        "u"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.scalar_remainder_calculus",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.scalar_remainder_calculus_target",
+      "raw_target": "PidPrefixMgwGradientRawTargets.scalar_remainder_calculus",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.scalar_remainder_calculus",
+      "universes": []
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.native_cumulative_increments",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.native_cumulative_increments_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.native_cumulative_increments",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.native_cumulative_increments",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.actual_atom_remainder",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.actual_atom_remainder_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.actual_atom_remainder",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.actual_atom_remainder",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.finite_block_score_derivative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.finite_block_score_derivative_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.finite_block_score_derivative",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.finite_block_score_derivative",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.actual_atom_score_bias",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.actual_atom_score_bias_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.actual_atom_score_bias",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.actual_atom_score_bias",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.finite_latent_pushforward",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.finite_latent_pushforward_target.{u, v, w, x}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.finite_latent_pushforward",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.finite_latent_pushforward",
+      "universes": [
+        "u",
+        "v",
+        "w",
+        "x"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.finite_latent_score_derivative",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.finite_latent_score_derivative_target.{u, v, w, x}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.finite_latent_score_derivative",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.finite_latent_score_derivative",
+      "universes": [
+        "u",
+        "v",
+        "w",
+        "x"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.finite_encoder_score",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.finite_encoder_score_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.finite_encoder_score",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.finite_encoder_score",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.score_second_moment",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.score_second_moment_target.{u, v, w}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.score_second_moment",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.score_second_moment",
+      "universes": [
+        "u",
+        "v",
+        "w"
+      ]
+    },
+    {
+      "alias_target": "PidPrefixMgwGradientAliasTargets.latent_score_second_moment",
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "full_elaborated_type": "PidPrefixMgwGradientContract.latent_score_second_moment_target.{u, v, w, x}",
+      "raw_target": "PidPrefixMgwGradientRawTargets.latent_score_second_moment",
+      "status": "accepted",
+      "theorem": "PidPrefixMgwGradientCandidate.latent_score_second_moment",
+      "universes": [
+        "u",
+        "v",
+        "w",
+        "x"
+      ]
+    }
+  ],
+  "status": "accepted-locally-under-declared-proof-contract",
+  "theorem_names": [
+    "PidPrefixMgwGradientCandidate.full_inverse_row",
+    "PidPrefixMgwGradientCandidate.scalar_remainder_calculus",
+    "PidPrefixMgwGradientCandidate.native_cumulative_increments",
+    "PidPrefixMgwGradientCandidate.actual_atom_remainder",
+    "PidPrefixMgwGradientCandidate.finite_block_score_derivative",
+    "PidPrefixMgwGradientCandidate.actual_atom_score_bias",
+    "PidPrefixMgwGradientCandidate.finite_latent_pushforward",
+    "PidPrefixMgwGradientCandidate.finite_latent_score_derivative",
+    "PidPrefixMgwGradientCandidate.finite_encoder_score",
+    "PidPrefixMgwGradientCandidate.score_second_moment",
+    "PidPrefixMgwGradientCandidate.latent_score_second_moment"
+  ],
+  "wrong_final_target_rejections": 1
+}

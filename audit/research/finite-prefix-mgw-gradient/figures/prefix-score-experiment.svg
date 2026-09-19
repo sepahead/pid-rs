@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="160mm" height="126mm" viewBox="0 0 1600 1260" role="img" aria-labelledby="score-title score-desc">
+<title id="score-title">The complete-row prefix score and its separate full-atom derivative gap</title>
+<desc id="score-desc">For h at least one, draw a random anchor and h independent complete comparison rows. B_h is the actual signed arrival-increment statistic, using mismatch joins and retained target ranks. Multiply it by the sum of every row score, including the anchor. Its expectation is the derivative of the finite-prefix mean. The full-atom derivative is a different quantity. Their gap bound additionally assumes common positive support, bounded relative cell tangents, and zero target-fiber tangents. The figure explains the finite categorical construction; it is not a sampled result or an additional proof.</desc>
+<defs>
+<style>
+.title{font-family:'Source Sans Pro',sans-serif;font-size:42px;font-weight:700;fill:#1F3F60}
+.label{font-family:'Source Sans Pro',sans-serif;font-size:36px;font-weight:600;fill:#1F6968}
+.body{font-family:'Source Sans Pro',sans-serif;font-size:34px;fill:#2C3E50}
+.math{font-family:'Source Sans Pro',sans-serif;font-size:39px;fill:#1F3F60}
+.note{font-family:'Source Sans Pro',sans-serif;font-size:32px;fill:#2C3E50}
+.center{text-anchor:middle}
+.flow{fill:none;stroke:#2C3E50;stroke-width:3}
+</style>
+<marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#2C3E50"/></marker>
+</defs>
+<rect width="1600" height="1260" fill="#F7F3E9"/>
+<path d="M60 58 H1540" stroke="#D2E0E2" stroke-width="2"/>
+<path d="M60 58 H340" stroke="#B28218" stroke-width="6"/>
+<text x="60" y="112" class="title">Differentiate the whole random block</text>
+<text x="60" y="155" class="body">h ≥ 1: one random anchor and h IID complete comparison rows from p<tspan baseline-shift="sub" font-size="75%">t</tspan>.</text>
+<rect x="70" y="190" width="440" height="114" rx="12" fill="#D2E0E2" stroke="#1F3F60" stroke-width="2"/>
+<text x="290" y="236" class="label center">Z<tspan baseline-shift="sub" font-size="75%">0</tspan>: random anchor</text>
+<text x="290" y="280" class="body center">all sources and the target</text>
+<rect x="570" y="190" width="960" height="114" rx="12" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+<text x="1050" y="236" class="label center">Z<tspan baseline-shift="sub" font-size="75%">1</tspan>, …, Z<tspan baseline-shift="sub" font-size="75%">h</tspan>: h comparison rows</text>
+<text x="1050" y="280" class="body center">each row also contains all sources and the target</text>
+<path d="M290 304 V330 H1200 M1050 304 V330 M1200 330 V370" class="flow" marker-end="url(#arrow)"/>
+<path d="M400 330 V370" class="flow" marker-end="url(#arrow)"/>
+<rect x="70" y="375" width="660" height="220" rx="12" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+<text x="400" y="420" class="label center">Actual prefix statistic</text>
+<text x="400" y="474" class="math center">B<tspan baseline-shift="sub" font-size="75%">h</tspan> = ∑<tspan baseline-shift="sub" font-size="75%">j=1,…,h</tspan> (A<tspan baseline-shift="sub" font-size="75%">j</tspan> − D<tspan baseline-shift="sub" font-size="75%">j</tspan>)</text>
+<text x="105" y="524" class="body">Mismatch joins select each arrival.</text>
+<text x="105" y="565" class="body">D<tspan baseline-shift="sub" font-size="75%">j</tspan> uses retained target rank.</text>
+<rect x="870" y="375" width="660" height="220" rx="12" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
+<text x="1200" y="420" class="label center">Whole-block score</text>
+<text x="1200" y="474" class="math center">s(Z<tspan baseline-shift="sub" font-size="75%">0</tspan>) + s(Z<tspan baseline-shift="sub" font-size="75%">1</tspan>) + … + s(Z<tspan baseline-shift="sub" font-size="75%">h</tspan>)</text>
+<path d="M930 495 V506 H1048 V495" fill="none" stroke="#916400" stroke-width="3"/>
+<text x="1200" y="550" class="body center">The anchor score is included.</text>
+<path d="M400 595 V633 H776 M1200 595 V633 H824" class="flow" marker-end="url(#arrow)"/>
+<circle cx="800" cy="633" r="24" fill="#D2E0E2" stroke="#2C3E50" stroke-width="2"/>
+<text x="800" y="646" class="math center">×</text>
+<path d="M800 657 V685" class="flow" marker-end="url(#arrow)"/>
+<rect x="270" y="690" width="1060" height="99" rx="12" fill="#D2E0E2"/>
+<text x="800" y="734" class="math center">G<tspan baseline-shift="sub" font-size="75%">h</tspan> = B<tspan baseline-shift="sub" font-size="75%">h</tspan> × the sum of all h + 1 scores</text>
+<text x="800" y="774" class="body center">Differentiate the finite product law, then take the finite expectation.</text>
+<path d="M570 789 V837" class="flow" marker-end="url(#arrow)"/>
+<rect x="70" y="843" width="660" height="117" rx="12" fill="#FFFFFF" stroke="#1F3F60" stroke-width="2"/>
+<text x="400" y="885" class="label center">Finite-prefix mean derivative</text>
+<text x="400" y="936" class="math center">E[G<tspan baseline-shift="sub" font-size="75%">h</tspan>] = μ′<tspan baseline-shift="sub" font-size="75%">h</tspan></text>
+<rect x="970" y="843" width="560" height="117" rx="12" fill="#FFFFFF" stroke="#1F3F60" stroke-width="2"/>
+<text x="1250" y="885" class="label center">Full-atom derivative</text>
+<text x="1250" y="936" class="math center">j′ = dJ<tspan baseline-shift="sub" font-size="75%">α</tspan>(p<tspan baseline-shift="sub" font-size="75%">t</tspan>)/dt at t<tspan baseline-shift="sub" font-size="75%">0</tspan></text>
+<path d="M745 905 H955" fill="none" stroke="#916400" stroke-width="3" stroke-dasharray="8 7"/>
+<text x="850" y="878" class="note center">compare</text>
+<rect x="70" y="995" width="1460" height="106" rx="12" fill="#D2E0E2"/>
+<text x="800" y="1040" class="math center">Derivative gap: |j′ − μ′<tspan baseline-shift="sub" font-size="75%">h</tspan>| ≤ 2 L C<tspan baseline-shift="sub" font-size="75%">α</tspan>(p)/(h + 1)</text>
+<text x="800" y="1081" class="note center">C<tspan baseline-shift="sub" font-size="75%">α</tspan> uses the full-order Möbius row and inverse-event moments (Section 6).</text>
+<text x="70" y="1141" class="body">Gap assumptions: common positive support and |d<tspan baseline-shift="sub" font-size="75%">z</tspan>| ≤ Lp<tspan baseline-shift="sub" font-size="75%">z</tspan>.</text>
+<text x="70" y="1181" class="body">Target-fiber tangents sum to zero. On positive support, s(z) = d<tspan baseline-shift="sub" font-size="75%">z</tspan>/p<tspan baseline-shift="sub" font-size="75%">z</tspan>.</text>
+<text x="70" y="1230" class="note">Within-row dependence is allowed. No executed learning result.</text>
+</svg>

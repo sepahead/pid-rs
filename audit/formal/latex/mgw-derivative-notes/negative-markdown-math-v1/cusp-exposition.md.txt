@@ -1,0 +1,169 @@
+# Zero cell tangents with a support-changing mutual-information cusp
+
+To study how a categorical information objective changes, it is tempting to differentiate its cell probabilities and substitute those tangents into a score formula. At a boundary of the probability simplex, a newly appearing cell can contribute a first-order entropy change even when its probability has zero derivative. This dossier constructs that failure explicitly. It explains why the [finite-prefix MGW derivative result](../finite-prefix-mgw-gradient/EXPOSITION.md) keeps common positive support, and why a function-value continuity or bias bound cannot simply be differentiated.
+
+**Status: retrospective handwritten negative example, without accepted Lean or executed-fixture evidence.** The argument below is complete mathematical text for review. It is not an accepted new formal theorem, a discovery-priority claim, or a counterexample to the common-support result. The failed quadratic attempt is retained because it shows which scale was too small to produce the intended obstruction.
+
+## 1. The stronger inference being tested
+
+Consider fixed finite alphabets and a normalized law \(p_t\) defined on an open interval about zero. Suppose every cell has derivative \(d_z=0\) at zero and the target marginal is fixed. Then the local relative-tangent inequality
+
+\[
+|d_z|\le Lp_0(z)
+\]
+
+holds with \(L=0\). Do these facts alone force the corresponding information objective to be differentiable at zero?
+
+They do not. The missing condition in this example is control of support changes. A common positive support is one sufficient condition used by the finite-sum/logarithm argument. The example does not say it is necessary for every information path: Section 5 gives a support-changing path whose information derivative does exist.
+
+Using one source makes the issue transparent. For one finite categorical source and one target, the MGW signed atom reduces to ordinary mutual information. There is one node, so no Möbius-row ambiguity or competing PID functional is needed. All logarithms are natural, and information is measured in nats.
+
+## 2. Construct the law and check every probability assumption
+
+Let source \(X\) and target \(Y\) both have alphabet \(\{0,1\}\). On the open interval \(|t|<e^{-2}\), define
+
+\[
+\varepsilon(0)=0,\qquad
+\varepsilon(t)=\frac{|t|}{\log(1/|t|)}\quad(t\ne0).
+\]
+
+Write \(r=|t|\) and \(\ell=\log(1/r)\) for nonzero \(t\). Then \(\ell>2\) and \(0<\varepsilon=r/\ell<1\). Define the four-cell joint law
+
+\[
+\begin{array}{c|cc}
+&Y=0&Y=1\\ \hline
+X=0&(1-\varepsilon)/2&\varepsilon/2\\
+X=1&\varepsilon/2&(1-\varepsilon)/2
+\end{array}. \tag{1}
+\]
+
+Every cell is nonnegative, and the four probabilities sum to one. Each row and column sum is \(1/2\), so both marginals are fixed fair distributions for the entire interval. Sources and target are not claimed independent; at \(t=0\) they agree perfectly.
+
+For \(t\ne0\),
+
+\[
+\frac{\varepsilon(t)-\varepsilon(0)}{t}
+=\frac{\operatorname{sgn}(t)}{\log(1/|t|)}
+\longrightarrow0.
+\]
+
+Thus \(\varepsilon'(0)=0\). Differentiating the four affine functions of \(\varepsilon\) in (1) gives \(d_z=0\) for every cell. The normalization tangent and every target-fiber tangent are zero. In particular, the score bound at the base point holds with \(L=0\), including the zero-probability cells.
+
+Exactly one premise of the main derivative result has been removed: common positive joint support. At zero the support is \(\{00,11\}\). At every nonzero parameter it contains all four cells.
+
+## 3. Compute the information objective from the finite PMF
+
+Because both marginals are fair, the mutual information is
+
+\[
+J(t)=I_{p_t}(X;Y)
+=\sum_{x,y:p_t(x,y)>0}p_t(x,y)\log(4p_t(x,y)).
+\]
+
+Grouping the two diagonal and two off-diagonal cells gives
+
+\[
+\begin{aligned}
+J(t)
+&=(1-\varepsilon)\log(2(1-\varepsilon))
+  +\varepsilon\log(2\varepsilon)\\
+&=\log2-H_{\mathrm{bin}}(\varepsilon), \\
+H_{\mathrm{bin}}(u)
+&=-u\log u-(1-u)\log(1-u).
+\end{aligned} \tag{2}
+\]
+
+At \(u=0\), the continuous convention \(u\log u=0\) agrees with summing only supported cells. In particular, \(J(0)=\log2\). No logarithm of a zero-mass cell is evaluated as an ordinary real logarithm.
+
+For one source the source event is equality of that source. Thus its mass is \(p_X(x)\), its target-restricted mass is \(p_{XY}(x,y)\), and the signed local MGW cumulative is \(\log[p_{XY}(x,y)/(p_X(x)p_Y(y))]\). Averaging gives (2), and the single node's cumulative is its atom. This supplies the explicit MI-to-one-source-MGW correspondence used here.
+
+## 4. Show the cusp, with both one-sided derivatives
+
+The chosen scale has a simple purpose: its new probability is \(o(r)\), but its logarithmic multiplier is of order \(\ell\). Their product can therefore be first order in \(r\). Indeed,
+
+\[
+-\varepsilon\log\varepsilon
+=-\frac r\ell\log\!\left(\frac r\ell\right)
+=r\left(1+\frac{\log\ell}{\ell}\right). \tag{3}
+\]
+
+Since \(\log\ell/\ell\to0\), the ratio of (3) to \(r\) tends to one.
+
+For the other entropy term, integrate \(1/(1-u)\) between zero and \(\varepsilon\):
+
+\[
+\varepsilon\le-\log(1-\varepsilon)
+\le\frac{\varepsilon}{1-\varepsilon}.
+\]
+
+Multiplying by \(1-\varepsilon\) gives
+
+\[
+0\le-(1-\varepsilon)\log(1-\varepsilon)\le\varepsilon.
+\]
+
+After division by \(r\), its upper bound is \(\varepsilon/r=1/\ell\to0\). Combining the two terms,
+
+\[
+\frac{H_{\mathrm{bin}}(\varepsilon(t))}{|t|}\longrightarrow1,
+\qquad
+J(t)-J(0)=-|t|(1+o(1)). \tag{4}
+\]
+
+Consequently
+
+\[
+\lim_{t\downarrow0}\frac{J(t)-J(0)}t=-1,\qquad
+\lim_{t\uparrow0}\frac{J(t)-J(0)}t=+1. \tag{5}
+\]
+
+The ordinary derivative at zero does not exist. Every cell derivative is nevertheless zero, the law is normalized on an open interval, both marginals are fixed, and the local relative-score bound has \(L=0\). This is the exact stronger inference rejected by the example.
+
+## 5. Retain the failed quadratic attempt
+
+The first attempted witness used \(\varepsilon(t)=t^2\) in the same PMF. It creates the same support change and also makes all cell derivatives zero. It fails to create a cusp in the information value.
+
+Put \(r=|t|\). The first entropy term is
+
+\[
+-t^2\log(t^2)=2r^2\log(1/r).
+\]
+
+Dividing by \(r\) gives \(2r\log(1/r)\to0\). The remaining entropy term lies between zero and \(r^2\), so its ratio to \(r\) also tends to zero. Therefore
+
+\[
+H_{\mathrm{bin}}(t^2)=o(|t|),\qquad
+\frac{J(t)-J(0)}t\longrightarrow0.
+\]
+
+The information derivative exists and equals zero. This failed attempt matters in two ways. A support change alone does not force nondifferentiability, and an algebraic scale such as \(t^2\) can suppress the logarithmic singularity strongly enough. The later \(|t|/\log(1/|t|)\) scale was chosen to retain a first-order entropy effect while still making the probability tangent vanish. Neither calculation is an executed control or a formal acceptance record.
+
+## 6. Consequences for the finite-prefix derivative
+
+For any fixed finite horizon, the expectation of a fixed block statistic is a finite polynomial in the four cell probabilities:
+
+\[
+\mu_h(t)=
+\sum_{z_0,\ldots,z_h}
+B_h(z_0,\ldots,z_h)\prod_{r=0}^h p_t(z_r).
+\]
+
+Since all cell derivatives at zero vanish, finite product differentiation gives \(\mu'_h(0)=0\) for every fixed \(h\), even on the cusp path. The MGW/MI limit objective has no derivative there. Thus the existence of finite-horizon derivatives and convergence of their underlying means cannot justify interchanging the limit and derivative.
+
+The pointwise score defined from \(p_0,d\) is zero on supported cells and set to zero off support. It correctly reports the zero derivative of each fixed finite-prefix mean. It does not recover the opposing one-sided derivatives of an objective with no ordinary derivative.
+
+The [support-change continuity result](../../../SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md) concerns function values under a declared distance between finite laws. Continuity is compatible with (4); it does not imply differentiability. No conflict with that result is asserted.
+
+For learning or sensitivity analysis, the implication is limited but concrete: examining only a base-point probability tangent can miss first-order entropy effects from entering support. One must either verify a suitable support/regularity condition, analyze one-sided or nonsmooth behavior separately, or retain a finite-horizon objective with its own interpretation. This example selects none of those as an empirically superior optimization method and provides no performance evidence.
+
+## 7. Boundary and next justified action
+
+The negative result concerns one explicit finite-alphabet path and one stronger derivative inference. It does not establish necessity of common support for every law path, necessity of zero target tangent for the \(2L\) bound, a defect in MGW's definition, a continuous-estimator result, or an application advantage. The common-support result has its own formal statement and evidence; this support-changing path violates its support premise.
+
+The next mathematical action is to bind this exact PMF, domain, extension at zero, one-source correspondence and one-sided limits in a separately reviewed counterexample statement. A future formal or numerical artifact must preserve the quadratic failed attempt and distinguish itself from this handwritten record. The summary and outline should link to this dossier with the label “hand-derived negative example; formal verification open.” No existing claim decision is closed by this text.
+
+## References
+
+1. A. Makkeh, A. J. Gutknecht and M. Wibral, *Introducing a differentiable measure of pointwise shared information*, [arXiv:2002.03356v5](https://arxiv.org/abs/2002.03356v5); [Physical Review E 103, 032149](https://doi.org/10.1103/PhysRevE.103.032149). The finite one-source reduction is derived explicitly in Section 3.
+2. The canonical [mean bridge](../../formal/lean-prefix-mgw-mean/EXPOSITION.current.md) and [finite-bias exposition](../../formal/lean-prefix-mgw-bias/EXPOSITION.md) define the finite-prefix experiment. The derivative distinction here does not alter their accepted propositions.
+3. The [finite-prefix derivative dossier](../finite-prefix-mgw-gradient/EXPOSITION.md) states the separate common-support, local-score and target-tangent result. Its proof status and exact target roster are recorded there; they do not formalize this cusp.

@@ -1,0 +1,229 @@
+{
+  "aggregate_publication_gate": {
+    "status": "pending"
+  },
+  "corrected_exact_reproduction": {
+    "accepted_utc": "2026-09-15T06:06:22.548736+00:00",
+    "builder": {
+      "bytes": 40233,
+      "path": "scripts/build-mgw-derivative-notes-pdf.py",
+      "sha256": "afb76de375820ec3cd9845bad5a4c5dccf0ccb1ca38d172109b304303c5fbb4f"
+    },
+    "calls": [
+      {
+        "commands": 40,
+        "kind": "gradient",
+        "label": "gradient-normal",
+        "optimization": 0,
+        "outer_terminal": {
+          "bytes": 6780,
+          "sha256": "51fdbef116363e6c3ffe5eba8651c0314c06c085000359ac6e7faa0e9c1a50b4"
+        },
+        "receipt": {
+          "bytes": 148938,
+          "sha256": "3df18f5fc263baa752247b27b6c7a745b4d7261f611ca2b2879fe9620a7695e9"
+        }
+      },
+      {
+        "commands": 36,
+        "kind": "cusp",
+        "label": "cusp-normal",
+        "optimization": 0,
+        "outer_terminal": {
+          "bytes": 4185,
+          "sha256": "4ccc2a4b2ec6bf7ec2a90254295ec9f0487a12ba58010af202d7e866be67919a"
+        },
+        "receipt": {
+          "bytes": 127223,
+          "sha256": "ff31e09626a360a966f35c8a2ac0661f718bcf26a7aaf6c651e343b85a9818d5"
+        }
+      },
+      {
+        "commands": 40,
+        "kind": "gradient",
+        "label": "gradient-optimized",
+        "optimization": 1,
+        "outer_terminal": {
+          "bytes": 4705,
+          "sha256": "7109d9f68c8df5c39d2958cbd1268426816247a64aae6968348e7b10db009d6c"
+        },
+        "receipt": {
+          "bytes": 149350,
+          "sha256": "341e81b9d9d3e339dc6ffe0a879d81b61916d4fa8c06ddac2cbbbdb1604de3ae"
+        }
+      },
+      {
+        "commands": 36,
+        "kind": "cusp",
+        "label": "cusp-optimized",
+        "optimization": 1,
+        "outer_terminal": {
+          "bytes": 5308,
+          "sha256": "655d72a6ab52871a44da120601233f3c1bac258007050575d42a90543b12c14b"
+        },
+        "receipt": {
+          "bytes": 127596,
+          "sha256": "0432501317f656a857109e0f52059cf2ff75102bc306c4f6baba5a448b2f7a04"
+        }
+      }
+    ],
+    "fresh_pdf_builds": 8,
+    "native_commands": 152,
+    "root_readback": {
+      "bytes": 2430,
+      "sha256": "43d1dcd918f51e7091c1b7775c51197ce68c29c08fbf89fad35f846f8f0b4ca5"
+    },
+    "scope": "Root joined complete frozen input closure, actual152nativecommands/streams and four outer terminals, eight fresh PDFs/TeX/observations against selected references. No mathematical/hosted/archive/application transfer.",
+    "status": "accepted-locally"
+  },
+  "custody": {
+    "archive": "No permanent archival deposit is claimed.",
+    "raw": "Retained locally with original inputs, outputs, process observations and failed stages. Machine-specific locators remain in the ignored session handoff.",
+    "remote_main": "Not yet advanced for this publication. Record the exact Git object and hosted event separately."
+  },
+  "failed_exact_attempt": {
+    "complete_stage_inventory": {
+      "bytes": 56698,
+      "sha256": "c8a177942b1e403d8eee9dbff0cd8a36c4c66dc85b88a05190715772f4db4981"
+    },
+    "failure_record": {
+      "bytes": 997,
+      "sha256": "7b43dfb91468b7acafb8ef8295c2ac70c209fab35434ad1a5be64dc51f2a0663"
+    },
+    "final": {
+      "bytes": 322,
+      "sha256": "3b09fa7dafa77afae9e8dbd2e27373000f0eed7f91e1028593fca212e7710fbb"
+    },
+    "native_calls_issued": 19,
+    "reason": "In-memory destination names used TextStringObject rather than native JSON strings; selected PDF and serialized observation matched.",
+    "retained_portable_witness": "audit/formal/latex/mgw-derivative-notes/negative-observation-equality-v1/text-projection-witness.json",
+    "status": "closed-failed"
+  },
+  "hosted_evidence": {
+    "hosted_proof_replay": "not established by this record",
+    "status": "pending-for-publication-commit"
+  },
+  "input_manifest": {
+    "bytes": 20960,
+    "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v1.json",
+    "sha256": "80bbf7ab8f53f94e8c6d6cafa4103c650dcd4dd25ae998f0d88515a119160db8"
+  },
+  "local_formal_status": {
+    "families": 11,
+    "map": "audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md",
+    "projection": "audit/formal/lean-prefix-mgw-gradient/LOCAL_FORMAL_ACCEPTANCE.json",
+    "scope": "Separate local semantic and fresh-kernel acceptance; PDF checks establish no theorem."
+  },
+  "not_established": [
+    "scientific priority",
+    "continuous or hyperbolic PID transfer",
+    "Rust/Python gradient implementation",
+    "finite-precision refinement",
+    "estimator calibration",
+    "useful learning or sensor deployment"
+  ],
+  "recorded_utc": "2026-09-15T05:43:32.660549+00:00",
+  "schema": "pid-rs/derivative-publication-observation-v1",
+  "scientific_sources": {
+    "cusp": "audit/research/support-change-mi-cusp/EXPOSITION.md",
+    "gradient": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
+  },
+  "scope": "Portable account of observed publication checks. This file is not a raw execution receipt, independent review, permanent archive or mathematical certificate.",
+  "selected": {
+    "cusp": {
+      "pages": 5,
+      "pdf": {
+        "bytes": 67767,
+        "path": "output/pdf/support-change-mi-cusp.pdf",
+        "sha256": "44cc734b45e1e95d2609fcbad2610107e5576d1d82e3b203c3514ff2af0ec3d8"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 13276,
+        "path": "audit/formal/latex/mgw-derivative-notes/cusp.expected.tex",
+        "sha256": "bc308ff0983f68b2d1e5f3d8e3bb2aac1a81d35e230bd38e7327da9a5fc8cad2"
+      }
+    },
+    "gradient": {
+      "figure_pdf": {
+        "bytes": 83822,
+        "path": "audit/formal/latex/mgw-derivative-notes/figures/prefix-score-experiment.pdf",
+        "sha256": "e9b43a09c7c1d375577bfccc24bf89c174c7566c1f4f578509f911181d19df24"
+      },
+      "pages": 13,
+      "pdf": {
+        "bytes": 212487,
+        "path": "output/pdf/finite-prefix-mgw-gradient.pdf",
+        "sha256": "2099b6082dc3039b805d623f51f2043bf70d690e2589dc2f978dc7db54d66ba9"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 36820,
+        "path": "audit/formal/latex/mgw-derivative-notes/gradient.expected.tex",
+        "sha256": "3bb45f12d3f6e77aa03aab1e10c36d0d3284939451e05d337ee118c362030af8"
+      }
+    }
+  },
+  "status": "selected-references-and-local-exact-reproduction-accepted",
+  "visual_review": {
+    "all_final_pages_at_normal_size": {
+      "cusp": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "gradient": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "current_detail_pages_at_300_dpi": {
+      "cusp": [
+        3
+      ],
+      "gradient": [
+        9,
+        13
+      ]
+    },
+    "grayscale_pages": {
+      "cusp": [
+        2
+      ],
+      "gradient": [
+        9
+      ]
+    },
+    "native_render_calls_in_retained_readback": 8,
+    "raw_render_readback": {
+      "bytes": 15725,
+      "sha256": "40df7b6a36ad625ded6accc08fd82924d04fa37a280a03a1052bd4dffb41e7ef"
+    },
+    "review_class": "root same-system visual inspection",
+    "review_record": {
+      "bytes": 4975,
+      "sha256": "e2e5d4e6c6edbbb3019cd427d93dfe7b41cbe5c654838269ad5cb36b7455e6ae"
+    },
+    "reviewed_utc": "2026-09-14T15:13:23.844457+00:00",
+    "twenty_lens_review": "All named lenses and their limits are recorded in the retained review. No physical printing, assistive technology, PDF/UA or universal viewer-safety certification.",
+    "unchanged_prior_detail_pages_at_300_dpi": {
+      "gradient": [
+        7,
+        8
+      ]
+    }
+  }
+}

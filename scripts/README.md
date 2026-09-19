@@ -3115,6 +3115,31 @@ they encode the same finite countermodel and therefore are not independent mathe
 Neither formalizes motivic homotopy, validates the cited theorem, establishes the imported-arrow
 correspondence, or proves a PID claim.
 
+The [gradient and support-change publications](../audit/formal/latex/mgw-derivative-notes/PUBLICATION.md)
+use `build-mgw-derivative-notes-pdf.py --kind gradient|cusp` with the
+[version-2 source profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json).
+It selects GitHub dollar math delimiters and upright operator names in the two manuscripts.
+The [version-1 profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v1.json) and
+its dated reproduction record remain historical. Four complete current-v2 checks, covering both
+notes in normal and optimized Python, reproduced the selected TeX, PDFs, observations and gradient
+figure. Every PDF matched its previously reviewed bytes. The
+[current record](../audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.json) separates
+that local reproduction from aggregate, final source-state and hosted/mainline evidence.
+Exact mode makes two fresh builds and compares those reviewed output bytes and observations. Discovery retains new
+outputs for review; it cannot adopt a reference. Both kinds refuse unsupported cross-toolchain
+requests with status 2 before reading an execution registration or launching a producer.
+
+The 95 inert builder controls run in normal and optimized Python. They include an in-memory
+reader substitute that exercises the actual observer and its conversion to JSON text. The aggregate
+also exercises, in both Python modes,
+79 inert dispatch cases: all 29 required fields are checked before registered work; missing and
+empty values must start zero calls. The suite checks original deadline forwarding, all eight
+failure positions, and status 2 for each cross refusal. Its retained old-position control exposes
+four consumed bias calls. The control substitutes execute no PDF builder, parser, renderer
+or prover. Exact aggregate runs require the `PID_RS_DERIVATIVE_*` inputs listed in the publication
+contract; inventory-only and cross mode require none of them. All new registration-bound work
+runs before the older long PDF gates. No PDF check proves a mathematical or application claim.
+
 The separate [categorical MGW mean package](../audit/formal/lean-prefix-mgw-mean/PUBLICATION.md)
 contains three locally accepted formal results for a project-defined finite-prefix statistic.
 It adds no Rust/Python estimator or statistical coverage guarantee. Its [current replay guide](../audit/formal/lean-prefix-mgw-mean/REPLAY.current.md)

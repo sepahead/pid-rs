@@ -5,7 +5,7 @@ ROOT="$(CDPATH='' cd -- "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 PRODUCTION_GATE="$ROOT/scripts/check-formal-pdf-set.sh"
 CHECK_NAME="formal PDF typed-inventory self-test"
 
-for command_name in bash basename cat chmod cp find grep ln mkdir mktemp mv python3 rm sort; do
+for command_name in bash basename cat chmod cp dirname find grep ln mkdir mktemp mv python3 rm sort; do
   if ! command -v "$command_name" >/dev/null 2>&1; then
     echo "$CHECK_NAME: missing command: $command_name" >&2
     exit 2
@@ -15,6 +15,9 @@ if [[ ! -f "$PRODUCTION_GATE" || -L "$PRODUCTION_GATE" ]]; then
   echo "$CHECK_NAME: production gate is absent or symbolic" >&2
   exit 2
 fi
+
+python3 -I -S -B "$ROOT/scripts/check-mgw-derivative-pdf-dispatch-self-test.py"
+python3 -O -I -S -B "$ROOT/scripts/check-mgw-derivative-pdf-dispatch-self-test.py"
 
 TMP_ROOT_INPUT="${TMPDIR:-/tmp}"
 if [[ ! -d "$TMP_ROOT_INPUT" ]]; then
@@ -63,6 +66,8 @@ LATEX_STANDALONE=(
 MARKDOWN_SOURCES=(
   MATHEMATICAL_RESULTS_GUIDE.md
   audit/evidence/finite-target-copy-mgw-synergy.md
+  audit/research/finite-prefix-mgw-gradient/EXPOSITION.md
+  audit/research/support-change-mi-cusp/EXPOSITION.md
   audit/evidence/mgw-fixed-world-added-information-2026-09-09.md
   NUMERICAL_ASSURANCE.md
   PID2_REPRESENTED_COORDINATE_ASSURANCE.md
@@ -88,6 +93,8 @@ STANDALONE=(
   ksg-m1a-composite-v7-boundary
   mathematical-results-guide
   finite-target-copy-mgw-synergy
+  finite-prefix-mgw-gradient
+  support-change-mi-cusp
   mathematical-problem-solving-workflow
   mgw-fixed-world-added-information
   numerical-assurance
@@ -118,6 +125,7 @@ make_fixture() {
   done
   local markdown_source
   for markdown_source in "${MARKDOWN_SOURCES[@]}"; do
+    mkdir -p "$(dirname "$fixture/$markdown_source")"
     cp "$ROOT/$markdown_source" "$fixture/$markdown_source"
   done
   for stem in "${STANDALONE[@]}"; do
@@ -288,7 +296,7 @@ for literal in required:
     if lines.count(literal) != 1:
         raise SystemExit(f"publication-link gate invocation drifted: {literal!r}")
 early_bias_end = '  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"\nfi\n\n'
-required_block = early_bias_end + "\n".join(required) + "\n"
+required_block = "# END DERIVATIVE EXACT DISPATCH\n\n" + "\n".join(required) + "\n"
 if text.count(required_block) != 1:
     raise SystemExit(
         "publication-link gates are not one exact contiguous post-inventory block"
@@ -662,9 +670,9 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper has a warning-free same-toolchain result; current bias inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper has a warning-free same-toolchain result; current bias and derivative-note inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper and bias summary intentionally have no accepted cross-toolchain relation, and all eight status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and support-change cusp intentionally have no accepted cross-toolchain relation, and all ten status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -1059,6 +1067,9 @@ fi
 pass "terminal success messages distinguish profiled and exact-only papers"
 
 while IFS=$'\t' read -r label before after; do
+  if [[ "$after" == '<DELETE>' ]]; then
+    after=''
+  fi
   case_file="$TEST_ROOT/terminal-success-$PASS_COUNT.sh"
   cp "$PRODUCTION_GATE" "$case_file"
   python3 -I -S - "$case_file" "$before" "$after" <<'PY'
@@ -1089,10 +1100,10 @@ PY
   fi
   pass "$label"
 done <<'CASES'
-exact success message cannot omit current bias controls	current bias inert source/data controls passed in normal and optimized Python; 	
+exact success message cannot omit current bias controls	current bias and derivative-note inert source/data controls passed in normal and optimized Python; 	<DELETE>
 exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
 cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
-cross success message cannot omit the eighth refusal	all eight status-2 refusals	all seven status-2 refusals
+cross success message cannot omit the eighth refusal	all ten status-2 refusals	all seven status-2 refusals
 CASES
 
 for removed_invocation in \
@@ -1544,7 +1555,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

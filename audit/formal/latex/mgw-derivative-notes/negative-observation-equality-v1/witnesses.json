@@ -1,0 +1,27 @@
+{
+  "cases": [
+    {
+      "actual": {
+        "pages": 13
+      },
+      "old_python_equality": true,
+      "rebound_expected": {
+        "pages": 13.0
+      },
+      "required_typed_equality": false
+    },
+    {
+      "actual": {
+        "first_page_fit": true
+      },
+      "old_python_equality": true,
+      "rebound_expected": {
+        "first_page_fit": 1
+      },
+      "required_typed_equality": false
+    }
+  ],
+  "original_builder_sha256": "bd7178dc3ac8a02df69b7a1847e0b6c48e5fd3e4bae6ee0bb6b28129cff80b9b",
+  "schema": "pid-rs/derivative-observation-coercion-witness-v1",
+  "scope": "Inert historical rejected comparison, not current acceptance evidence. Raw PDF and TeX bindings remain separate."
+}

@@ -1,0 +1,25 @@
+{
+  "actual_type": "pypdf.generic._base.TextStringObject",
+  "builder_sha256": "950fe74723942b2b04d73083cc62512e82ab8cb5613aafa249acd328d5bff071",
+  "failed_result": {
+    "bytes": 91862,
+    "sha256": "eac4ad621c951f4dc5c25053ab2246d8c4f3abaa188c469f33b62bc52b62ac9c"
+  },
+  "mismatch_count": 63,
+  "native_calls_issued": 19,
+  "only_field": "named_destinations",
+  "pdf": {
+    "bytes": 212487,
+    "sha256": "2099b6082dc3039b805d623f51f2043bf70d690e2589dc2f978dc7db54d66ba9"
+  },
+  "raw_value_equality": true,
+  "required_json_type": "str",
+  "schema": "pid-rs/derivative-text-projection-witness-v1",
+  "scope": "Observed in-memory representation mismatch; successful raw PDF production but failed exact acceptance. No mathematical change.",
+  "stage_status": "closed_failed",
+  "strict_typed_equality": false,
+  "type_diagnostic": {
+    "bytes": 10961,
+    "sha256": "f46f56cb1758e442338507c77ecad9450f82d0c3a4d511321a4bf1821632b918"
+  }
+}

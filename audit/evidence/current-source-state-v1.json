@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "68fedbd2e5e8e1622947d55d2d20b3a8d2c938173932404d792c14e890f32423",
-        "size_bytes": 305995
+        "sha256": "af6412688ebde2dae830358774ab90778d7edde8799ecb7e86ebbfafa2b27c3b",
+        "size_bytes": 306838
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "3318883614fdfb3bc98cc613f3fa7e1970dd5e2ae772deb4cb7b2e629a605af8",
-        "size_bytes": 86189
+        "sha256": "b6b5035b068ad1ea3cfbf009b4a4d718e8594404fed424088b54bf86ed3f0a1f",
+        "size_bytes": 87961
       },
       {
         "git_mode": "100644",
@@ -13527,6 +13527,168 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.json",
+        "sha256": "b5f9b864f4d478ec8f61b74f878b58f8001e3e2ab873114f53be81b73f2bf12e",
+        "size_bytes": 12656
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.md",
+        "sha256": "ca0bcf7cdf1a72033b29df8b3d582ed2c5792066c4a1ecc9816929864c383453",
+        "size_bytes": 4231
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/OBSERVATION_EQUALITY_CORRECTION.md",
+        "sha256": "a9295d4570091912fd72c54b4c043545773f18b5ffc8ff4dd6d6227cfbae53cb",
+        "size_bytes": 4258
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/PUBLICATION.md",
+        "sha256": "2072fff490d86b1a2495e01107c362436a4655b55b14b036f8533d08e51f9998",
+        "size_bytes": 14071
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/PUBLICATION_OBSERVATION.json",
+        "sha256": "58e3b0dc2c8dda37fce2b90af76bfa7596d9384490bd2bd215a84d6633b8ddca",
+        "size_bytes": 7636
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/controls/roster-v1.json",
+        "sha256": "fb61bb0110e9aa3a5d9969f160826031f67c1e2c7f26eaba1adff09605bccd38",
+        "size_bytes": 3220
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/cusp.expected.tex",
+        "sha256": "721e21cfca8303f93dd108dc696748e57c2b0e6555aaac19eb8b37473d500141",
+        "size_bytes": 13270
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/figures/prefix-score-experiment.pdf",
+        "sha256": "e9b43a09c7c1d375577bfccc24bf89c174c7566c1f4f578509f911181d19df24",
+        "size_bytes": 83822
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/gradient.expected.tex",
+        "sha256": "0f402c02fb571d2b17e810aa33008852f55956b47fe2f0fdfaf30e2cdd407003",
+        "size_bytes": 36814
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/layout/publication-filter.lua",
+        "sha256": "739978e86af8ba521aba7b9586db174d490ebf28561376779b4c9cfa67baf25b",
+        "size_bytes": 4224
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/layout/report.latex",
+        "sha256": "bd2d8f3488b314c7b50fec97346b326b6398073d1769821b8b5e60ebd0de9ece",
+        "size_bytes": 1922
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/DISPOSITION.md",
+        "sha256": "a5488cb6f0e233eef84d880dcc415fcf1d774621b60950ba23f05c2c5980e5be",
+        "size_bytes": 1233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/builder.py.txt",
+        "sha256": "afb76de375820ec3cd9845bad5a4c5dccf0ccb1ca38d172109b304303c5fbb4f",
+        "size_bytes": 40233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/cusp-exposition.md.txt",
+        "sha256": "84b9a97d590537ed9717ef8dc682b2abef98b575232b4ff8f83f1b7e1a2b5c01",
+        "size_bytes": 10392
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/cusp.expected.tex.txt",
+        "sha256": "bc308ff0983f68b2d1e5f3d8e3bb2aac1a81d35e230bd38e7327da9a5fc8cad2",
+        "size_bytes": 13276
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient-exposition.md.txt",
+        "sha256": "853d82ba16852441391993065afd1e37420e46943ce13799248de624c76f8388",
+        "size_bytes": 31963
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient-overview.md.txt",
+        "sha256": "ed25fcc816b0b7b5db7629c1fdbafcd82566349e9959767c0ff7d6f27fefd5fa",
+        "size_bytes": 3068
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient-theorem-map.md.txt",
+        "sha256": "a780c1499995d9e808abb51c0ff4a69f88d26b4f6199ea842dc8376ea1327115",
+        "size_bytes": 12014
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/gradient.expected.tex.txt",
+        "sha256": "3bb45f12d3f6e77aa03aab1e10c36d0d3284939451e05d337ee118c362030af8",
+        "size_bytes": 36820
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-markdown-math-v1/self-test.py.txt",
+        "sha256": "d108d5a2ee38646424ae6c818dc89720b29dcff053eb5222ba0a2244aba061ad",
+        "size_bytes": 25628
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-observation-equality-v1/aggregate-before-preflight.sh.txt",
+        "sha256": "acb67d0c95e67b7f42f7e9eb9c6a0604885dd4119dcb9c0c92969f2db07f3432",
+        "size_bytes": 25111
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-observation-equality-v1/builder-before-correction.py.txt",
+        "sha256": "bd7178dc3ac8a02df69b7a1847e0b6c48e5fd3e4bae6ee0bb6b28129cff80b9b",
+        "size_bytes": 38793
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-observation-equality-v1/builder-before-text-projection.py.txt",
+        "sha256": "950fe74723942b2b04d73083cc62512e82ab8cb5613aafa249acd328d5bff071",
+        "size_bytes": 39815
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-observation-equality-v1/text-projection-witness.json",
+        "sha256": "f6b509b1f3ecf9462e9afd478c16610c6e808c4bbb85e930441c5855866a708d",
+        "size_bytes": 944
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/negative-observation-equality-v1/witnesses.json",
+        "sha256": "347c235c6f83ab031b9a5a06e1caaf456193e60da4938293954956c8025fd036",
+        "size_bytes": 712
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v1.json",
+        "sha256": "80bbf7ab8f53f94e8c6d6cafa4103c650dcd4dd25ae998f0d88515a119160db8",
+        "size_bytes": 20960
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json",
+        "sha256": "e3b04e6847a4ec310f654abd0b10641846614a38bc3440a248b0f4ff6ce863fd",
+        "size_bytes": 20960
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mgw-fixed-world/body.expected.tex",
         "sha256": "2b62fd6dfca9ac3f3e4a3272f86258e782e42aa6aba60c8dc867b446f62a75b7",
         "size_bytes": 29078
@@ -22977,6 +23139,342 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/LOCAL_FORMAL_ACCEPTANCE.json",
+        "sha256": "eeda04220118d393c5b5283aa55c6e80cf1c821453c7158a9e0043d46e844768",
+        "size_bytes": 11964
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md",
+        "sha256": "0ed51426c57dfa3cbb2fe3455672eae08316d93791b17e3cfcf8c358f41bb410",
+        "size_bytes": 3349
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/PUBLIC_SOURCE_INVENTORY.json",
+        "sha256": "4fb0e5f7cdf028db0c40dfbf375c0503e7dccbebff2d27553ccf7172115fb8e9",
+        "size_bytes": 8441
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/REPLAY.md",
+        "sha256": "5ef8c22fd9048626f9a0bf1bc24334d69edc86d2d82c036d317540539e9bbe1b",
+        "size_bytes": 5104
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/SOURCE_GRAPH.json",
+        "sha256": "bd11c7de695e0597f9b8f72be4a00eb91d6a7eed617ad3bf68388b6bed682fdc",
+        "size_bytes": 11626
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/TARGET_ROSTER.json",
+        "sha256": "3fb67ca4e08e13cb99bd74544f3400066f4114fe76ff0534dca0a3f3f7aef5a0",
+        "size_bytes": 915
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md",
+        "sha256": "d7e8698cd0558fa3d6242ab8a7f5af2b18fc0cce9641c4148c861ce8fbc70a9f",
+        "size_bytes": 11998
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/controls/Candidate.cosmetic.lean",
+        "sha256": "862174b5a5b1de7c3bc3f493364b1ecd1c07952c42e0afaa669b068ba55bf33c",
+        "size_bytes": 79503
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/controls/Candidate.wrong-last.lean.txt",
+        "sha256": "8e756c394b00536e76ddd0fba8b2c6b126caaf9fe06ec349092a69920ec0efc1",
+        "size_bytes": 79347
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/gradient-proof-package-v1.json",
+        "sha256": "4b4fda1e2fdfabc9823e32a53b220c2a16781ed6bb186fefa17b49cae4a5a22d",
+        "size_bytes": 6909
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/preparation/NEW_IMPORT_SOURCE_PINS.json",
+        "sha256": "6ff73eb92a68893ea31ba2d4229b4de846001e7428fe8b71f25ac5549179b1f6",
+        "size_bytes": 166
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-gradient.py",
+        "sha256": "527f32e696eb89999d3e596d19dcf289af35f9dae9eec2477d9d93dc1957ed04",
+        "size_bytes": 30092
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/ACCEPTED_DEPENDENCY_RECORDS.json",
+        "sha256": "74a27f0c5f7be2f19b5d58f074bb319fbb46273754e007f15a880095bd3db54b",
+        "size_bytes": 10676
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/EXPECTED_BIAS_RECORDS.json",
+        "sha256": "60367746bd7ff88176924dd34f60e300166c5c95ffd5a66aede9fd6454728504",
+        "size_bytes": 2353
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/bias-policy.py",
+        "sha256": "302eaca873017290be85f3c8d194035ff07e35fe74681dc96acacfae75542dc0",
+        "size_bytes": 6806
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/mean-policy.py",
+        "sha256": "af6689eee7a9ac14488b2a65f571ea8a7a2975bd0f5341108533e2434c1bbc8c",
+        "size_bytes": 6761
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/mgw-policy.py",
+        "sha256": "a3eb4071041f2c1d5da56420789c58b681f8289c20d44cce22ede62f03e10261",
+        "size_bytes": 4926
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/policy.py",
+        "sha256": "3182d41c3006d891405300edb58cd5239ba7dfaff9d392693c8fc73829337f8b",
+        "size_bytes": 7211
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/prefix-policy.py",
+        "sha256": "8cb0eec8c8c1b51e7f9cbe5d399311bce8ca159f9fcc98f7413d5076f92dbd36",
+        "size_bytes": 4769
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/replay-support/runtime.py",
+        "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d",
+        "size_bytes": 27277
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/BiasCandidateRoot.lean",
+        "sha256": "3207764a12236a5c3f147239677566654dd8567969dff3356a39ab1ed3e3eece",
+        "size_bytes": 72
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/GradientCandidateRoot.lean",
+        "sha256": "f5eb95674a93aca8c267cd65b14d0e6811d859753dfdd6e0ef4b169eba3b589c",
+        "size_bytes": 67
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Contract.lean",
+        "sha256": "100aabed35ab534e90306797f31003e0e2ae4c8f826687fc71f7731473129383",
+        "size_bytes": 3873
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/JoinLog/Proofs.lean",
+        "sha256": "a43d99a15947db5641cfb69bcf8a634d1c651ff5ad2ddea33630a36d5113360b",
+        "size_bytes": 15705
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Contract.lean",
+        "sha256": "569bf11314d02ff599309bfcfa0d80109bf0f121032d5d665e8519513219a5c0",
+        "size_bytes": 12861
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/JudgeCore.lean",
+        "sha256": "c9e4c1fbd2a90cff637fba4823cf0bb76352a4770ce83c6d43cf7700a401d390",
+        "size_bytes": 3492
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/MgwBridgeDepsV1/SxDnf/Proofs.lean",
+        "sha256": "04cc028cc9a7321b96445345a55e44c5bbda62b7697819e31726a880265f0eda",
+        "size_bytes": 10294
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/Deterministic.lean",
+        "sha256": "e9dbd7c5b4578aabf92b76c0b8b684db4c1c1038dcdb033239b0076685c41610",
+        "size_bytes": 9093
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidFiniteConvergence/SxEventBridge.lean",
+        "sha256": "cfedf974c73e11e56041013a47797462100f4b896235d6c4185c9ca0a232d77e",
+        "size_bytes": 27203
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/AliasTargets.lean",
+        "sha256": "97965cb5cf266bb6b63369b31baf9ee6437e5d0a25d768f5a48cff6e9122e8cc",
+        "size_bytes": 1458
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Candidate.lean",
+        "sha256": "a4eb24978708267394d27b4c4127e40243061c7a2b0790a28bb6bd8411f69453",
+        "size_bytes": 26432
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/Contract.lean",
+        "sha256": "3d48d2305c96f1670e64548932536caaa44d2bab7803876efcb5188ec9f5b642",
+        "size_bytes": 11737
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/JudgeCore.lean",
+        "sha256": "6fb1af591c5a47194e68a6580e207cff1fcc909b25d5171d86645f26dc18df5d",
+        "size_bytes": 1165
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/RawTargets.lean",
+        "sha256": "5da9cec6c7616e9bfbeb3c819d5ebe47f7647c49cfe675d87e3cf755f319e64d",
+        "size_bytes": 7481
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidMgwBridge/SemanticJudge.lean",
+        "sha256": "9c799049c3a3cea03333081bee33598d149fe15180e57800d9d4487a4612f612",
+        "size_bytes": 5851
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwBias/AliasTargets.lean",
+        "sha256": "af0718c6c88e08998d3d53755b053a27698ec3b5186d74fb763ceb840c854570",
+        "size_bytes": 666
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwBias/Candidate.lean",
+        "sha256": "c945862f2bb64825ad5b754cd6fcd4f32da02c0377f13074d9192b6568e3fb45",
+        "size_bytes": 34113
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwBias/Contract.lean",
+        "sha256": "89d61c3fe0d1e63280329ec8877d94e9e292e32cddf63b95d674a71bcf713c45",
+        "size_bytes": 13165
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwBias/RawTargets.lean",
+        "sha256": "4f18d3b54e59562c6c5a3e114c5897be38088abc21565cae46d806250d554a2a",
+        "size_bytes": 8095
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwBias/SemanticJudge.lean",
+        "sha256": "51388c57e8448021b79b82440309521cb81decd51bc66e52bc8f7dbe5f597ec2",
+        "size_bytes": 3372
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwGradient/AliasTargets.lean",
+        "sha256": "261d3ce7b2da3432885e1069a9d88bbeb8c19f838b6982ccb11cd4d8d93672ac",
+        "size_bytes": 1512
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwGradient/Candidate.lean",
+        "sha256": "b260d3acdf451594f8b9aa557479b7ba34e9759f870a5298e76cfc76f62eadf9",
+        "size_bytes": 79446
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwGradient/Contract.lean",
+        "sha256": "620f9476fd5249f804eb43becc1b699ef696dea4377fcb3f4fcdd12921e694ce",
+        "size_bytes": 14354
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwGradient/RawTargets.lean",
+        "sha256": "3080c2d2722e492d968ddc6c8b11d5529950a3ea9a4d492dc8af3fb5be8de215",
+        "size_bytes": 17084
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwGradient/SemanticJudge.lean",
+        "sha256": "178680c794f2b541785e8907d165f1a986bdfbb19d79c0d8c2bd01dd15bfedb3",
+        "size_bytes": 7308
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwMean/AliasTargets.lean",
+        "sha256": "544956563da19f0705953301fa8b3b7815c4a5f1c4b559ecbba8ac6bb75b37ef",
+        "size_bytes": 605
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwMean/Candidate.lean",
+        "sha256": "17fc2d8fce5ad0ba28cc8348e9348911c393e6eb00515c8139fbd27b85331b6a",
+        "size_bytes": 40511
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwMean/Contract.lean",
+        "sha256": "b5a2e6599e16f251cee6cfe13569eca459d1d5e4f276596bdc9e30e9be95b70a",
+        "size_bytes": 4277
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwMean/RawTargets.lean",
+        "sha256": "4461c2242b6c2de34b9bb968adf2da9182c10691dd5f33c0984f1356618a8bdc",
+        "size_bytes": 4716
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixMgwMean/SemanticJudge.lean",
+        "sha256": "deeee9a22a4211a2e366d80d1087aea5311d1eae3d9d54a67e9fdf85f130a1df",
+        "size_bytes": 2658
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/AliasTargets.lean",
+        "sha256": "c2ab71f3a534f34ef23210196bade94f4a3559216f1009f7d3a741e92b368b64",
+        "size_bytes": 839
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Candidate.lean",
+        "sha256": "2e0e56e5921f07601169d7bf18f8bc672a4bf386838275540364d002e3e43323",
+        "size_bytes": 20207
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/Contract.lean",
+        "sha256": "9316943ac8867e4012aba6cfe9a3bb69bdf6b7904e352d92e0774fbc9f1ad57a",
+        "size_bytes": 7101
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/RawTargets.lean",
+        "sha256": "847348d072da9e18592c345ff59b957a7be8c970774c1c7b36a0fd92545d8701",
+        "size_bytes": 4337
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PidPrefixProbability/SemanticJudge.lean",
+        "sha256": "03b79b412bd74af5a328ce4ecb82811b072bf00c1c6dfdb93701d4697786d98a",
+        "size_bytes": 4219
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/lean-prefix-mgw-gradient/sources/PrefixMgwMeanCandidateRoot.lean",
+        "sha256": "e80e6166113b6586a2906b9191002456fec78c85df5e920fe6d21296f1b0fb20",
+        "size_bytes": 114
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/lean-prefix-mgw-mean/CONTROLS_ACCEPTANCE.template.json",
         "sha256": "ef436681af295e17904284ad8933030857dae06819cf9917a24817a7f6495b3e",
         "size_bytes": 324
@@ -23742,6 +24240,24 @@
         "path": "audit/formal/z3/pid3-source-permutation.smt2",
         "sha256": "002ecceec04a3a6d3fc36321aaa7c8ada8b8064389d035a1ffc7ba32b0137cad",
         "size_bytes": 10179
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+        "sha256": "f1734c2efb89cb6b03cf384552a73ce84e5cfa7772971750ea6382d7cc5fc7b2",
+        "size_bytes": 31569
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/finite-prefix-mgw-gradient/figures/prefix-score-experiment.svg",
+        "sha256": "005ccacd2abac02eb6b7ff3cadd0d1c607e64dc76ad491506eca57b1f5de82de",
+        "size_bytes": 6743
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/support-change-mi-cusp/EXPOSITION.md",
+        "sha256": "04a040676eddff849da8040c9c2bc2cc445ae625a45c1ad7510835ec290e0832",
+        "size_bytes": 10288
       },
       {
         "git_mode": "100644",
@@ -26121,6 +26637,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/finite-prefix-mgw-gradient.pdf",
+        "sha256": "2099b6082dc3039b805d623f51f2043bf70d690e2589dc2f978dc7db54d66ba9",
+        "size_bytes": 212487
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/finite-target-copy-mgw-synergy.pdf",
         "sha256": "b22f6b079cdbc28af184d2f88fe9a71a4e689e37804017decc15dd06e46f7a58",
         "size_bytes": 182631
@@ -26253,6 +26775,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/support-change-mi-cusp.pdf",
+        "sha256": "44cc734b45e1e95d2609fcbad2610107e5576d1d82e3b203c3514ff2af0ec3d8",
+        "size_bytes": 67767
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf",
         "sha256": "d2b3227444a0a610169b609ff5e7f3ecc930d5289ac7ff3a5504bf1a0f185d51",
         "size_bytes": 356007
@@ -26278,8 +26806,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "87daed8e93d635b5cf0a9b4d2cb2567ffa02835e2864e3ebb3faa6435d0ec99d",
-        "size_bytes": 290919
+        "sha256": "bf7b33f204ad5576680cd1112991ebc23f340d42dfff80b7b046288f3ed5cc35",
+        "size_bytes": 293028
       },
       {
         "git_mode": "100644",
@@ -26292,6 +26820,12 @@
         "path": "scripts/build-mathematical-results-guide-pdf.sh",
         "sha256": "764f1c0ba04ad048080df485ddb9bfa5ac065ce4f21a3f340cd430e6bf169825",
         "size_bytes": 41784
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/build-mgw-derivative-notes-pdf.py",
+        "sha256": "0851f73a1d30ff2efa21af2419806b97c16e170a27e6f9a6c266312da8675372",
+        "size_bytes": 40233
       },
       {
         "git_mode": "100755",
@@ -26638,14 +27172,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "b64dd880438eda4c29ca8f9de0fa7741ad606dfda03611753cbd0447766d2eb4",
-        "size_bytes": 79853
+        "sha256": "cbaeb2d0bf3b5778f55de2fcb579c23db169e920244131aaaee6f79b2de8b1e0",
+        "size_bytes": 80457
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "dc5b7e7ca0bd3adbe348e63815f39b5e61a7edc8955f50e5ec849852285bf0e9",
-        "size_bytes": 20481
+        "sha256": "322c2a7b879b630e1b74d81eb2959cfa7ceced55a7c1520a290b6046da44b3bd",
+        "size_bytes": 25287
       },
       {
         "git_mode": "100755",
@@ -27094,7 +27628,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "c38f9413f98963168fd67fdb5d2e912b993607d20607717385078f8b9556f7a3",
+        "sha256": "030a33d32257451dcee6f351bb481adef52f3b1bad35cc7584210e8272dc9071",
         "size_bytes": 136973
       },
       {
@@ -27354,6 +27888,18 @@
         "path": "scripts/check-methods-summary.py",
         "sha256": "13aa5d72e8a52aeed0decfe9f894d147dcb841bee12050e5a2bd612b513b8bc7",
         "size_bytes": 14827
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mgw-derivative-notes-pdf-self-test.py",
+        "sha256": "a20b17d22f3fc9b7fd8e8d5c484f33b568911938bebf0f2e3e6581ce454f0fe8",
+        "size_bytes": 25628
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mgw-derivative-pdf-dispatch-self-test.py",
+        "sha256": "5fedcdbde50a14ea2903b181c9a7b973ee8bf29a9b20b54a16a42e235d53f67a",
+        "size_bytes": 12141
       },
       {
         "git_mode": "100755",
@@ -27944,8 +28490,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "3e62de180445c1a481d4a6a543f6b029be9eb0e1aed1ce548a5ff13f7c7ec807",
-    "entry_count": 4633
+    "entries_sha256": "20fe5eb00750678cc046bf410c1f994ab20d6a246d4c2ade492aa5cccc182e67",
+    "entry_count": 4724
   },
   "subprojections": [
     {
@@ -27957,23 +28503,23 @@
       ]
     },
     {
-      "entries_sha256": "812bb5b22a626f4d331aa364c9819dd2c6ce4f882083c3477d7466561f0ad313",
-      "entry_count": 1788,
+      "entries_sha256": "418bfa0f4ea8b1e0da35cd9c002480c162a5f4b794c66a1b98a054d235cddb63",
+      "entry_count": 1871,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "0f9f37f5ce5c9b13eee193bea985abd778fb585141ae47abcd28ca2b5d350eec",
-      "entry_count": 30,
+      "entries_sha256": "841050f1a2b4393ecc7449f671477efa66c73c77ba0f14cf2adddbfc2c708e25",
+      "entry_count": 32,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "70feee7c338be4e3d70a4d714ba8b4abe04fe1d1051cd47c09e068ae498d18fb",
+      "entries_sha256": "a3801e6303d47aea765880bf5a09197bd0574a8bf61863fcef723e1eac6ce862",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

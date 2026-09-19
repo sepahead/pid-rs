@@ -1,0 +1,516 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec,unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox,float}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pdfextension catalog { /Lang (en) }
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PidPrimary,
+  urlcolor=PidSecondary,
+  citecolor=PidSecondary,
+  pdftitle={Finite-prefix MGW derivatives: a score identity{,} truncation bound and second moment},
+  pdfauthor={pid-rs contributors},
+  pdfsubject={Finite categorical MGW derivative bias and second-moment bounds},
+  pdfdisplaydoctitle=true
+}
+\PidSetRunningHeads{Categorical shared exclusions}{Finite-prefix derivatives}
+\PidWorkflowConfigureSections
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight}
+\pretocmd{\section}{\par\Needspace{12\baselineskip}}{}{\PackageError{mgw-note-layout}{Section spacing patch failed}{Inspect the declared article layout.}}
+\pretocmd{\subsection}{\par\Needspace{7\baselineskip}}{}{\PackageError{mgw-note-layout}{Subsection spacing patch failed}{Inspect the declared article layout.}}
+\title{\PidReportTitle{Finite-prefix MGW derivatives: a score identity, truncation bound and second moment}{Finite categorical laws, complete derivations and explicit proof scope}}
+\author{}
+\date{}
+\begin{document}
+\PidMakeTitle
+A finite-prefix mean can approach an information objective without its derivative being a reliable guide to changing that objective. This matters if a finite stochastic encoder changes a chosen categorical source representation: a mean truncation bound alone cannot justify using the prefix experiment's derivative for that change. Direct differentiation of a small known PMF remains a strong simpler route. The sampled-score route considered here is motivated by a finite induced PMF that has not been enumerated, while the encoder's sampled score is evaluable.
+
+\textbf{Status: eleven theorem families accepted locally with Lean and a separate fresh kernel check.} The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md}{theorem map} connects each target to the complete proof source and the derivation below. The finite-prefix \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md}{mean bridge} and \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{bias paper} remain the canonical documents for the previously accepted mean and mean-bias results. A bound on function values cannot simply be differentiated.
+
+The main project result is a conditional derivative-bias bound for the actual MGW atom, together with an exact finite-prefix score identity and a separate second-moment bound. The derivation uses common positive support, a bounded local score, and a zero target-marginal tangent for the derivative-bias bound. The examples explain why the assumptions and the anchor score matter. None demonstrates practical learning value.
+
+The defining information functional is Makkeh, Gutknecht and Wibral's categorical shared-exclusions PID, \href{https://arxiv.org/abs/2002.03356v5}{arXiv:2002.03356v5}, \href{https://doi.org/10.1103/PhysRevE.103.032149}{Physical Review E 103, 032149}. The prefix statistic, derivative bound and reporting arrangement are project constructions. The score identity is existing mathematics; see Schulman, Heess, Weber and Abbeel, \href{https://proceedings.neurips.cc/paper/2015/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf}{Gradient Estimation Using Stochastic Computation Graphs}, Section 2.1, equations (1)--(4). Section 7 supplies the finite-law derivation and its exact assumptions here. Nothing claims scientific priority, a new general gradient method, an implementation, or an advantage over direct differentiation, MI, task loss or another objective.
+
+\section{Reading map and evidence boundary}\label{reading-map-and-evidence-boundary}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Part
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Question answered
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Current evidence
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1--2 & Which law, atom and finite experiment? & Explicit definitions tied to the existing mean/bias objects \\
+3--5 & How does the atom remainder arise from scalar tails and the complete node order? & Finite derivation; exact targets in the theorem map \\
+6 & Why does the derivative bound contain the constant 2? & Cancellation under the stated tangent assumptions \\
+7--8 & What does the full-row score estimate, and what second moment is bounded? & Finite-product and IID probability calculations \\
+9 & What survives finite latent and encoder mappings? & Finite pushforward calculation \\
+10 & What do the examples falsify or fail to falsify? & Retrospective hand calculations, not executed formal controls \\
+11--12 & What can be inferred about cost and proof status? & Conditional planning consequences and a separate formal boundary \\
+\end{longtable}
+}
+
+The separate \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md}{support-change MI cusp dossier} contains the complete negative example and the failed quadratic attempt. It shows why zero cell derivatives alone do not guarantee information differentiability. It does not refute the common-support result below.
+
+\section{1. Fixed objects and local assumptions}\label{fixed-objects-and-local-assumptions}
+
+Let \(I\) be a finite nonempty source-index set. Source \(i\) has a fixed finite alphabet \(\mathcal X_i\), and the target has a fixed finite alphabet \(\mathcal Y\). A complete row is
+
+\[
+z=((x_i)_{i\in I},y_z)\in\mathcal K
+=\left(\prod_{i\in I}\mathcal X_i\right)\times\mathcal Y.
+\]
+
+An open interval about \(t_0\) carries nonnegative normalized PMFs \(p_t\) on this same alphabet. Their positive joint support \(\mathcal S=\{z:p_t(z)>0\}\) is constant on that interval. Write \(p_z=p_{t_0}(z)\) and assume every coordinate has derivative \(d_z\) at \(t_0\), with
+
+\[
+|d_z|\le Lp_z,\qquad L\ge0. \tag{1}
+\]
+
+The derivative bound is required at \(t_0\) only. No derivative bound at neighboring parameters is being silently added. Since normalization holds on a neighborhood, finite differentiation gives \(\sum_zd_z=0\). Equation (1) makes \(d_z=0\) outside \(\mathcal S\).
+
+A node is a nonempty inclusion-antichain of nonempty subsets of \(I\). Let \(\mathcal N\) be the entire finite node set, with native redundancy order
+
+\[
+\gamma\preceq\beta
+\iff\forall B\in\beta\ \exists A\in\gamma:\ A\subseteq B.
+\]
+
+At a supported anchor \(z\), the source event for node \(\beta\) is
+
+\[
+E_\beta(z)=\bigcup_{C\in\beta}
+ \{x\in\mathcal K:x_i=z_i\text{ for all }i\in C\}.
+\]
+
+There is an OR between collections and an AND within each collection. Define the target fiber \(V(z)=\{x:y_x=y_z\}\), and at each parameter set
+
+\[
+a_{z,\beta}(t)=P_t(E_\beta(z)),\quad
+q_{z,\beta}(t)=P_t(E_\beta(z)\cap V(z)),\quad
+v_z(t)=P_t(V(z)).
+\]
+
+At a supported anchor,
+
+\[
+0<p_z\le q_{z,\beta}\le a_{z,\beta}\le1,
+\qquad q_{z,\beta}\le v_z\le1. \tag{2}
+\]
+
+The fixed event sets have derivatives obtained by summing \(d\). Thus \(|a'_{z,\beta}|\le La_{z,\beta}\) and \(|q'_{z,\beta}|\le Lq_{z,\beta}\).
+
+For the bound in Section 6, also assume the \textbf{target marginal has zero tangent}:
+
+\[
+\sum_{z:y_z=y}d_z=0\quad\text{for every }y\in\mathcal Y. \tag{3}
+\]
+
+This is a derivative condition at \(t_0\), weaker than fixing the target law on the whole interval. Sections 7 and 8 do not need (3).
+
+For \(f:\mathcal N\to\mathbb R\), let \((\mathcal Zf)(\beta)=\sum_{\gamma\preceq\beta}f(\gamma)\). The informative and misinformative local atoms are the unique full-node inverse families with cumulatives \(-\log a_{z,\beta}\) and \(\log(v_z/q_{z,\beta})\). Their difference is the signed local atom. Its population average at the fixed node \(\alpha\) is \(J_\alpha(p)\). The supported inverse identities are assumed to hold on a neighborhood of \(t_0\); arbitrary supplied functions without these identities do not define this atom. Every logarithm uses nats, and derivatives use nats per unit of the declared scalar parameter.
+
+\subsection{A concrete candidate investigation}\label{a-concrete-candidate-investigation}
+
+One intended setting is the \href{https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md\#9-ten-grounded-use-cases}{proposed microphone/visual complementarity study} under occlusion. It asks about grouped observations and target labels established by a reference separate from the sensors being evaluated. Here the mathematical question is narrower: can an evaluable finite encoder score track a specified MGW atom's derivative? That would not establish lower detection error or recovery of an object hidden by a building. Multiple-object tracking or association would require a separate target and data contract. The \href{https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md}{comparison note} explains why increased synergy alone need not improve prediction, so task loss, CMI and ablation remain comparators. The laboratory table below is an illustrative finite-law model, not an acquired sensor dataset.
+
+Consider a frozen empirical table of complete laboratory records. Each record contains two to four predeclared source groups, for example acoustic measurements, vibration measurements, temperature readings and electrical-current measurements, plus a fixed operating-mode label as target. One record represents one declared observation window. The source group is the whole selected instrument output; its number of internal features does not determine the number of PID sources.
+
+Let \(u\) index the finite table, with fixed nonnegative weights \(b(u)\) summing to one. A finite stochastic encoder produces a tuple of categorical codes \(c=(c_1,\ldots,c_k)\) from a declared input projection \(\iota(u)\), with evaluable probability \(q_t(c\mid\iota(u))\) and score \(\partial_t\log q_t(c\mid\iota(u))\). The law of the categorical PID row is the image of \(b(u)q_t(c\mid\iota(u))\) under \((u,c)\mapsto(c_1,\ldots,c_k,y_u)\). Its marginal PMF is determined in principle, but summing it explicitly may be inconvenient or costly. Section 9 explains why a sampled latent score can access the derivative of its finite-prefix mean without first enumerating that PMF.
+
+This particular mapping keeps the target law fixed: summing the normalized encoder over \(c\) gives \(P_t(Y=y)=\sum_{u:y_u=y}b(u)\), independent of \(t\). Common encoder support and the local score bound still require justification. The mathematics accepts an arbitrary input map; a declaration alone does not establish that target labels or unavailable future information were excluded from it. If a code mixes several instrument groups, its source interpretation changes accordingly; preserving one instrument per source requires the corresponding encoder input restrictions.
+
+Drawing table indices and encoder codes independently with replacement gives the stated conditional empirical-law experiment. Correlated windows in the original collection do not become independent population trajectories. Changing frame versus episode weights changes \(b\) and hence the objective. High-dimensional raw features do not turn the resulting categorical theorem into a continuous Ehrlich or general sensor-array guarantee. Direct PMF differentiation, ordinary MI for a one-source question, and held-out task loss for prediction remain essential comparators. There is no implementation, benchmark or demonstrated application improvement in this dossier.
+
+\section{2. The actual finite-prefix experiment}\label{the-actual-finite-prefix-experiment}
+
+Fix a raw horizon \(h\in\mathbb N\), put \(m=h+1\), and draw \(Z_0,\ldots,Z_h\) IID as \textbf{complete rows} from \(p\). Row zero is a fresh random anchor. Source coordinates and the target within one row need not be independent.
+
+For anchor \(z\) and row \(x\), let \(M_z(x)=\{i:x_i\ne z_i\}\). A nonempty mismatch set defines the node of its singleton members. Join nodes by taking unions of one collection from each node and retaining the inclusion-minimal unions. This is the least upper bound for \(\preceq\).
+
+For a nonempty list \(x_1,\ldots,x_j\), let \(F_{z,\alpha}(x_1,\ldots,x_j)\) mean that every mismatch set is nonempty and their repeated join equals \(\alpha\). Set \(F\) false for an empty list or a list with an empty mismatch set. At raw time \(j\ge1\), the positive increment is
+
+\[
+A_j^{z,\alpha}=\frac{\mathbf1\{F_{z,\alpha}(x_1,\ldots,x_j)\}}j.
+\]
+
+Let \(R_j\) retain, in order, only prefix rows whose target equals \(y_z\), and let \(N_j\) be its length. The negative increment is
+
+\[
+D_j^{z,\alpha}=
+\begin{cases}
+\mathbf1\{F_{z,\alpha}(R_j)\}/N_j,&y_{x_j}=y_z,\\
+0,&y_{x_j}\ne y_z.
+\end{cases}
+\]
+
+The first case has \(N_j\ge1\). Its denominator is retained target rank, and the final-arrival condition prevents recounting a retained prefix while no new target match arrives. Define
+
+\[
+B_h(\alpha,Z_0,\ldots,Z_h)=\sum_{j=1}^h(A_j^{Z_0,\alpha}-D_j^{Z_0,\alpha}),
+\qquad \mu_h(\alpha,p)=E_p[B_h]. \tag{4}
+\]
+
+The random block \(B_h\) uses the notation of the canonical bias exposition. Its mean is \(\mu_h(\alpha,p)=E_p[B_h]\) under the actual finite-product law.
+
+\section{3. Finite scalar calculus}\label{finite-scalar-calculus}
+
+For \(x>0\), define
+
+\[
+P_h(x)=\sum_{j=1}^h\frac{(1-x)^j}{j},\qquad
+R_h(x)=-\log x-P_h(x).
+\]
+
+Differentiate the finite polynomial and logarithm:
+
+\[
+R'_h(x)=-\frac1x+\sum_{j=0}^{h-1}(1-x)^j
+=-\frac{(1-x)^h}{x}. \tag{5}
+\]
+
+The last equality follows by multiplying the finite geometric sum by \(x\). No infinite-series derivative exchange occurs. The identity holds for all \(x>0\), although the following bounds use \(x\le1\).
+
+For \(0\le x\le1\), each of the \(m\) terms \((1-x)^j\), \(0\le j\le h\), is at least \((1-x)^h\). Consequently
+
+\[
+m x(1-x)^h\le x\sum_{j=0}^h(1-x)^j
+=1-(1-x)^{h+1}\le1. \tag{6}
+\]
+
+This includes \(x=0\), \(x=1\) and \(h=0\), with exponent-zero power equal to one. For \(0<q\le a\le1\), (5) gives \(R_h(q)\ge R_h(a)\). The auxiliary function \(F(x)=R_h(x)-1/(mx)\) has
+
+\[
+F'(x)=\frac{1-mx(1-x)^h}{mx^2}\ge0
+\]
+
+on \([q,a]\). Monotonicity therefore gives
+
+\[
+0\le R_h(q)-R_h(a)\le\frac{1/q-1/a}{m}. \tag{7}
+\]
+
+For \(q=a\) both differences vanish. This proves the scalar inequality without accessing a predecessor's private formal helper name.
+
+\section{4. From native increments to the exact cumulative remainder}\label{from-native-increments-to-the-exact-cumulative-remainder}
+
+Fix a supported anchor \(z\) and node \(\beta\), and abbreviate their masses by \(a,q,v\). Summing a positive native prefix increment over nodes below \(\beta\) gives \(1/j\) precisely when every one of the \(j\) rows is outside \(E_\beta(z)\). This is the mismatch/join event correspondence. IID rows give positive cumulative expectation \((1-a)^j/j\).
+
+For a negative increment, the last row must match the target. If exactly \(k\) of the first \(j-1\) rows match it, all \(k+1\) retained rows must avoid the source event. Thus the negative cumulative expectation is
+
+\[
+\sum_{k=0}^{j-1}\binom{j-1}{k}
+ \frac{(v-q)^{k+1}(1-v)^{j-1-k}}{k+1}.
+\]
+
+Use \(\binom{j-1}k/(k+1)=\binom j{k+1}/j\), substitute \(r=k+1\), then restore and subtract the \(r=0\) binomial term. Since \((v-q)+(1-v)=1-q\), the expression equals
+
+\[
+\frac{(1-q)^j-(1-v)^j}{j}. \tag{8}
+\]
+
+Summing over \(1\le j\le h\), averaging the anchor, and subtracting from the signed MGW cumulative \(-\log a+\log q-\log v\) gives
+
+\[
+(\mathcal Z(J-\mu_h))(\beta)=D_\beta(p)
+=\sum_{z\in\mathcal S}p_z
+ [R_h(a_{z,\beta})-R_h(q_{z,\beta})+R_h(v_z)]. \tag{9}
+\]
+
+Equation (9) is a cumulative identity. It is not yet the remainder for the individual atom at \(\alpha\).
+
+\section{5. Construct the whole inverse row}\label{construct-the-whole-inverse-row}
+
+Fix \(\alpha\). On the complete finite node poset, define \(c_\alpha\) by descending recursion:
+
+\[
+c_\alpha(\delta)=\mathbf1\{\delta=\alpha\}
+-\sum_{\beta\succ\delta}c_\alpha(\beta).
+\]
+
+The recursion is finite because strict successors are handled first. It implies
+
+\[
+\sum_{\beta\succeq\delta}c_\alpha(\beta)=\mathbf1\{\delta=\alpha\}. \tag{10}
+\]
+
+If \(\delta\not\preceq\alpha\), every strict successor of \(\delta\) is also not below \(\alpha\). Descending induction therefore makes \(c_\alpha(\delta)=0\). For any \(f:\mathcal N\to\mathbb R\), reorder finite sums:
+
+\[
+\sum_\beta c_\alpha(\beta)(\mathcal Zf)(\beta)
+=\sum_\delta f(\delta)\sum_{\beta\succeq\delta}c_\alpha(\beta)
+=f(\alpha). \tag{11}
+\]
+
+Conversely, applying (11) to each point-basis function forces (10) and the descending recursion, proving uniqueness. The row is fixed by the full node order, not by the probability law. Applying it to (9) gives the actual atom identity
+
+\[
+J_\alpha(p)-\mu_h(\alpha,p)=\sum_\beta c_\alpha(\beta)D_\beta(p). \tag{12}
+\]
+
+The same sum may be written over \(\beta\preceq\alpha\) because the other coefficients vanish. It must not be replaced by \(D_\alpha\), nor by an inverse calculated on an arbitrary truncated node set.
+
+\section{\texorpdfstring{6. Differentiate and obtain the \(2L\) bound}{6. Differentiate and obtain the 2L bound}}\label{differentiate-and-obtain-the-2l-bound}
+
+Common positive support fixes the anchor sum near \(t_0\), and (2) keeps the arguments of the supported logarithms positive. Differentiate (9), before dropping any term:
+
+\[
+\begin{aligned}
+D'_\beta={}&\sum_{z\in\mathcal S}d_z[R_h(a_z)-R_h(q_z)+R_h(v_z)]\\
+&+\sum_{z\in\mathcal S}p_z
+[R'_h(a_z)a'_z-R'_h(q_z)q'_z+R'_h(v_z)v'_z].
+\end{aligned} \tag{13}
+\]
+
+Equation (3) removes two contributions. First, \(v'_z=0\). Second, group the anchor target term by target value:
+
+\[
+\sum_{z\in\mathcal S}d_zR_h(v_z)
+=\sum_{y:v_y>0}R_h(v_y)\sum_{z:y_z=y}d_z=0.
+\]
+
+Off-support derivatives vanish, so the fiber regrouping is valid. Using (5), the surviving derivative is
+
+\[
+D'_\beta=\sum_{z\in\mathcal S}d_z[R_h(a_z)-R_h(q_z)]
++\sum_{z\in\mathcal S}p_z
+\left[-\frac{(1-a_z)^h a'_z}{a_z}
++\frac{(1-q_z)^h q'_z}{q_z}\right]. \tag{14}
+\]
+
+Equations (1) and (7) bound the absolute value of the first sum by
+
+\[
+\frac Lm\sum_{z\in\mathcal S}p_z(1/q_z-1/a_z). \tag{15}
+\]
+
+The event derivative bounds and (6) bound the second sum by
+
+\[
+L\sum_{z\in\mathcal S}p_z[(1-a_z)^h+(1-q_z)^h]
+\le\frac Lm\sum_{z\in\mathcal S}p_z(1/a_z+1/q_z). \tag{16}
+\]
+
+Adding these nonnegative upper bounds cancels their reciprocal-\(a\) contributions. Define
+
+\[
+Q_\beta(p)=\sum_{z\in\mathcal S}\frac{p_z}{q_{z,\beta}},
+\qquad C_\alpha(p)=\sum_\beta|c_\alpha(\beta)|Q_\beta(p).
+\]
+
+Then \(|D'_\beta|\le2LQ_\beta/m\). Let \(j'=\frac d{dt}J_\alpha(p_t)|_{t_0}\) and \(\mu'_h=\frac d{dt}\mu_h(\alpha,p_t)|_{t_0}\). Differentiating the finite fixed-row identity (12) yields the result
+
+\[
+\boxed{|j'-\mu'_h|\le
+\frac{2L}{h+1}C_\alpha(p).} \tag{17}
+\]
+
+The left side is the absolute difference of the two scalar derivatives, not the derivative of an absolute value.
+
+The supported inverse equations identify any supplied atom families locally with the fixed-row logarithmic expression, so no independent differentiability assumption on arbitrary plus/minus representatives is used. The target-tangent condition is sufficient for this argument. Its necessity for the numerical constant \(2L\) without that condition remains open. A coarser termwise absolute-bound route can be valid but gives a weaker constant; it is retained as an alternative, not rewritten as the sharper argument.
+
+\section{7. Score identity for the whole block}\label{score-identity-for-the-whole-block}
+
+Define \(s(z)=d_z/p_z\) on \(\mathcal S\) and zero elsewhere. Then \(p_zs(z)=d_z\) for all cells. For each finite block,
+
+\[
+\frac d{dt}\prod_{r=0}^h p_t(z_r)\Big|_{t_0}
+=\sum_{r=0}^h d_{z_r}\prod_{j\ne r}p_{z_j}
+=\left(\prod_{r=0}^h p_{z_r}\right)\sum_{r=0}^hs(z_r). \tag{18}
+\]
+
+For an all-supported block, divide directly. If some cell has zero mass, its derivative is also zero: every product term on the middle side vanishes, as does the right side. This handles unused labels without dividing by zero.
+
+Since (4) is a finite expectation of a parameter-independent statistic, finite termwise differentiation gives
+
+\[
+G_h=B_h(\alpha,Z_0,\ldots,Z_h)\sum_{r=0}^hs(Z_r),
+\qquad \mu'_h=E_p[G_h]. \tag{19}
+\]
+
+The anchor score \(r=0\) is required. Equation (19) is unbiasedness for the derivative of the finite-prefix mean. Bias relative to \(J'_\alpha\) is the distinct bound (17). Normalization gives \(E_p[s]=0\), and (1) gives \(E_p[s^2]\le L^2\).
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={The actual complete-row prefix score experiment, with its separate full-atom derivative gap.}]{figures/prefix-score-experiment.pdf}}
+\caption{The actual complete-row prefix score experiment, with its separate full-atom derivative gap.}
+\end{figure}
+
+The diagram illustrates \(h\ge1\). The random anchor contributes a score just as each comparison row does. Its \(B_h\) is the signed arrival-increment statistic in Section 2, including the retained-target-rank denominators. The fixed Möbius row belongs to the full-atom comparison constant \(C_\alpha(p)\). The gap bound additionally uses common positive support, the local score bound and zero target-fiber tangents; the finite-product score identity does not require that last condition. At \(h=0\), \(B_0=G_0=0\), while the score sum still contains the anchor.
+
+In the empirical-table setting, IID sampling is conditional on the chosen table and encoder law. Section 9 supplies the justification for using an evaluable latent encoder score when the induced marginal score is not directly available. For the declared scalar parameter \(t\), derivatives use nats per unit of \(t\). The illustration adds no numerical experiment, accepted formal proof or learning guarantee.
+
+\section{8. Second moment under IID complete rows}\label{second-moment-under-iid-complete-rows}
+
+Let \(H_h=\sum_{j=1}^h1/j\), with \(H_0=0\). The positive increments sum to a value in \([0,H_h]\). Each negative arrival uses a successive retained rank; its nonzero contributions form a subset of \(1,1/2,\ldots,1/N_h\). Their sum is also in \([0,H_h]\). Therefore the signed difference satisfies \(|B_h|\le H_h\), rather than requiring a \(2H_h\) bound.
+
+Write \(S_h=\sum_{r=0}^hs(Z_r)\). Because complete rows are IID and their scores have mean zero,
+
+\[
+\begin{aligned}
+E_p[G_h^2]&\le H_h^2E_p[S_h^2]\\
+&=H_h^2\left[\sum_rE_p[s(Z_r)^2]
++2\sum_{r<j}E_p[s(Z_r)s(Z_j)]\right]\\
+&=(h+1)H_h^2E_p[s^2]\le(h+1)H_h^2L^2.
+\end{aligned} \tag{20}
+\]
+
+The statistic and its score sum are generally dependent. No factorization of \(E[B_h^2S_h^2]\) into separate expectations was used. Finite alphabets supply the stated integrability. Variance is at most this second moment, but no confidence coverage, optional-stopping, dependent-row or calibration theorem is included.
+
+At \(h=0\), \(B_0=\mu_0=G_0=H_0=0\); the score sum still contains the anchor. The atom derivative need not vanish, so (17) remains a tail bound. If an event has probability one, its derivative is zero because its complement has zero mass and zero tangent. Supported log terms never use zero event mass. An empty complete-row alphabet cannot carry a normalized PMF.
+
+\section{9. Finite latent laws and encoders}\label{finite-latent-laws-and-encoders}
+
+Let \(W\) be a finite latent alphabet and \(\phi:W\to\mathcal K\) a fixed map. Suppose \(\rho_t\) satisfies the same normalized-law, common-support and local score assumptions. Define
+
+\[
+p_t(z)=\sum_{w:\phi(w)=z}\rho_t(w),\qquad
+d_z=\sum_{w:\phi(w)=z}d_\rho(w).
+\]
+
+Finite regrouping proves normalization. A fiber has positive image mass exactly when it contains a positive latent cell, so common latent support gives common image support. Differentiate the finite fiber sum and use the triangle inequality to obtain \(|d_z|\le Lp_z\).
+
+For a supported image cell,
+
+\[
+s_p(z)=\frac{\sum_{w:\phi(w)=z}\rho(w)s_\rho(w)}{p_z}. \tag{21}
+\]
+
+Latent and image scores need not agree pointwise. The measure pushforward gives mass \(p_z\) to each image cell. Distributing finite products over fiber sums shows that mapping an IID latent block gives the actual IID image block law, including the empty-product case.
+
+For a block statistic evaluated on the images, regroup the finite latent derivative sum:
+
+\[
+\begin{aligned}
+&\sum_{w_0,\ldots,w_h}B_h(\phi(w_0),\ldots,\phi(w_h))
+ \sum_r d_\rho(w_r)\prod_{j\ne r}\rho(w_j)\\
+&\quad=\sum_{z_0,\ldots,z_h}B_h(z_0,\ldots,z_h)
+ \sum_r d_{z_r}\prod_{j\ne r}p_{z_j}.
+\end{aligned} \tag{22}
+\]
+
+Thus the latent score-gradient mean equals the image score-gradient mean and \(\mu'_h\). Repeating Section 8 on IID latent rows gives the analogous second moment with \(E_\rho[s_\rho^2]\le L^2\). No variance ordering between the two estimators is asserted or accepted here.
+
+For a finite encoder, fix a base law \(b(u)\), an input map \(\iota(u)\), and conditional laws \(q_t(c\mid\iota(u))\), each satisfying the same local contract with the same \(L\). Finiteness lets us intersect their neighborhoods. The latent law
+
+\[
+\rho_t(u,c)=b(u)q_t(c\mid\iota(u))
+\]
+
+is normalized with common support. Its derivative is \(b(u)\dot q(c\mid\iota(u))\), and its supported score is \(\dot q/q\), because the fixed base mass cancels. This can make the sampled latent score accessible without enumerating an induced marginal PMF. It does not establish a useful numerical \(L\) or \(C_\alpha\), appropriate feature access, absence of target leakage, or deployment validity. Applying (17) additionally requires the induced target-tangent condition; an arbitrary map \(\phi\) does not guarantee it.
+
+Sampling with replacement from a frozen empirical table gives an IID experiment conditional on that empirical law. It does not turn correlated data collection into IID population sampling. Different table weighting rules define different base laws and therefore different objectives.
+
+\section{10. Worked checks and retained unsuccessful attacks}\label{worked-checks-and-retained-unsuccessful-attacks}
+
+\subsection{The anchor score cannot be omitted}\label{the-anchor-score-cannot-be-omitted}
+
+Take one binary source and one binary target, with
+
+\[
+p_\theta(00)=p_\theta(11)=\theta/2,\qquad
+p_\theta(01)=p_\theta(10)=(1-\theta)/2,\quad0<\theta<1.
+\]
+
+The target is fixed fair and support is full. At \(h=1\), the native statistic is \(\mathbf1\{X_0\ne X_1,\ Y_0\ne Y_1\}\). Its mean is
+
+\[
+\mu_1=\frac{\theta^2+(1-\theta)^2}{2},\qquad \mu'_1=2\theta-1.
+\]
+
+Row symmetry assigns half the derivative to each score: \(E[B_1s(Z_1)]=\theta-1/2\). At \(\theta=3/4\), omitting the anchor yields \(1/4\) instead of \(1/2\). A valid local score bound is \(L=4\).
+
+\subsection{Equal row marginals do not supply the IID second moment}\label{equal-row-marginals-do-not-supply-the-iid-second-moment}
+
+On that same law, couple \(Z_1\) to the complement of both bits of \(Z_0\). Both marginals remain \(p_\theta\), but \(B_1=1\) and \(s(Z_1)=s(Z_0)\). Hence \(E[G_1^2]=4E[s^2]\), whereas the sharp IID bound in (20) has \(2E[s^2]\). At \(\theta=3/4\), \(E[s^2]=1/\theta+1/(1-\theta)=16/3\). This falsifies the sharp IID-based step outside its premise. It does not, at these numbers, falsify the looser \(2L^2=32\) envelope: \(64/3<32\).
+
+The first attempted coupling \(Z_1=Z_0\) makes \(B_1=0\). It fails to falsify the native-statistic inequality and is retained as an unsuccessful attack.
+
+\subsection{Support changes require a separate argument}\label{support-changes-require-a-separate-argument}
+
+The \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md}{standalone cusp dossier} gives a differentiable finite-law path with all cell tangents zero and fixed fair target, while its one-source MI has right derivative \(-1\) and left derivative \(+1\). The new-cell mass is \(|t|/\log(1/|t|)\). The earlier \(t^2\) choice gives a zero derivative and fails as a counterexample. Both calculations are retained there in full. This rejects dropping common support without a replacement assumption; it does not establish that common support is necessary for every differentiable information path.
+
+\subsection{Target-term cancellation and invalid normalization}\label{target-term-cancellation-and-invalid-normalization}
+
+For constant sources, \(a=1\) and \(q=v\), so the exact remainder in (9) is identically zero even when the target changes. Dropping only one target derivative term in (13) can create a false nonzero expression. This catches an algebraic omission; it is not a counterexample proving (3) necessary for (17).
+
+The attempted path \(p_t=(1+t)p\) has nonzero total tangent and apparent constant score one, but is normalized only at one parameter. It violates the neighborhood-law premise. Deriving mean-zero score from normalization at one point alone is invalid.
+
+\section{11. Bias, second moment and computational cost}\label{bias-second-moment-and-computational-cost}
+
+The derivative-bias envelope decreases as \(1/(h+1)\) when the law and its constants are fixed. The second-moment envelope grows as order \(h(\log h)^2\). These are upper bounds, not a statement that observed bias decreases monotonically or that actual variance increases monotonically. The two moments are not interchangeable.
+
+As an additional \textbf{handwritten planning consequence outside the eleven formal target families}, suppose \(R\ge1\) independent complete blocks give score values \(G_h^{(1)},\ldots,G_h^{(R)}\), and average them into \(\overline G_h\). Then
+
+\[
+E[(\overline G_h-j')^2]
+=\frac{\mathrm{Var}(G_h)}R+(E[G_h]-j')^2
+\le\frac{(h+1)H_h^2L^2}{R}
++\left(\frac{2LC_\alpha(p)}{h+1}\right)^2. \tag{23}
+\]
+
+The equality follows by expanding around \(E[G_h]\); the cross term has expectation zero, and independent blocks divide variance by \(R\). Equation (23) inherits all premises of (17) and (20) plus independent block replication. It is not a confidence interval or a rule for choosing \(h\) from the same evaluation data. Each block consumes \(h+1\) complete rows; at fixed row budget increasing \(h\) also reduces the available number of disjoint blocks.
+
+The constants can dominate. From (2), \(Q_\beta\le|\mathcal S|\). A member collection's source-target fiber is contained in the query-target event, so the \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{support-moment argument in the bias paper} also gives \(Q_\beta\le K_{CY}\), its positive population projection support count. Consequently a coarse bound is \(C_\alpha\le\|c_\alpha\|_1|\mathcal S|\); a large source lattice or large support can make it unhelpful. Observed occupancy and minimum observed frequencies cannot replace these population inputs automatically.
+
+If a small PMF and its derivative are known, direct finite-PMF differentiation may be simpler and more accurate. A sampled score route is worth investigating only when its stated objective is needed and its computation, approximation error and sampling variability compare favorably under an explicit evaluation. No such comparison is reported here. One-source problems already use MI; prediction can often be evaluated directly by task loss. No continuous Ehrlich, hyperbolic, vector-gradient, online-learning or application-advantage result follows.
+
+\section{12. Formal scope and next evaluation}\label{formal-scope-and-next-evaluation}
+
+The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md}{eleven-family theorem map} identifies the frozen quantified statements, all source definitions, complete selected proof, permitted axioms, and the correspondence to Sections 3--9. The targets include actual finite product measures, integrability, probability pushforwards, and derivatives. Four selected/cosmetic normal/optimized variants passed the eleven semantic checks and fresh kernel verification. A final wrong-theorem substitution was rejected. Complete before/after dependency checks and raw evidence review closed the local replay on 14 September 2026. Hosted formal replay and application validation remain separate.
+
+The next application question is whether sampled encoder scores offer useful computational cost and error against direct differentiation on a small known PMF. Such a study must separately measure finite-horizon bias, sampling variation, runtime, and the task value of changing the chosen MGW atom. A fixed empirical table and independently sampled encoder randomness supply a controlled first experiment; they do not establish population sensor performance. No such comparison is reported here. Equation (23), the worked examples, and the separate support-change cusp are outside the eleven formal families.
+
+The target-preparation representation mismatch and the interrupted verification routes remain in the evidence history. They are operational failures, not counterexamples to the mathematical result. Their records must not be erased by a later successful replay. No relaxed target comparison is used.
+
+\section{References and provenance}\label{references-and-provenance}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A. Makkeh, A. J. Gutknecht and M. Wibral, \emph{Introducing a differentiable measure of pointwise shared information}, \href{https://arxiv.org/abs/2002.03356v5}{arXiv:2002.03356v5}; \href{https://doi.org/10.1103/PhysRevE.103.032149}{Physical Review E 103, 032149}. Defines the categorical information construction, not a claimed priority result for this prefix derivative result.
+\item
+  The existing \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md}{mean bridge exposition}, \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/SOURCE_CORRESPONDENCE.md}{source correspondence}, and \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/PUBLICATION.md}{publication/evidence guide} identify the actual finite-prefix statistic and its accepted mean results.
+\item
+  The existing \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{bias exposition} and \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md}{theorem map} identify the scalar remainders, actual law, support moments and separately accepted five-family formal result. Their classical logarithm and finite-binomial references are retained there. Sections 3--9 give this derivative argument directly with finite calculus and finite sums.
+\item
+  The \href{https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md}{support-change cusp dossier} is an exploratory hand-derived negative example. Its explicit cusp path remains outside the gradient theorem roster; no accepted Lean specialization or numerical benchmark is supplied for it.
+\item
+  J. Schulman, N. Heess, T. Weber and P. Abbeel, \href{https://proceedings.neurips.cc/paper/2015/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf}{Gradient Estimation Using Stochastic Computation Graphs}, NIPS 2015, Section 2.1, equations (1)--(4). This is a primary reference for the reused score-function identity and its distinction from pathwise differentiation. Section 7 derives the identity here under explicit finite-law and common-support assumptions.
+\end{enumerate}
+\end{document}
