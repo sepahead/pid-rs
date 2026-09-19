@@ -21,7 +21,7 @@ import warnings
 from xml.sax.saxutils import escape
 
 ASSETS = "audit/formal/latex/mgw-derivative-notes/"
-MANIFEST = ASSETS + "publication-inputs-v2.json"
+MANIFEST = ASSETS + "publication-inputs-v3.json"
 RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
 RUNTIME_SHA256 = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
 NATIVE = "audit/formal/latex/prefix-mgw-bias/native-tools-v2.json"

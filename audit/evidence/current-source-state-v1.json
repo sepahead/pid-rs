@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "7115a6cf00ae723b42b103471c50843f72699a086de0173659f79becd51a824a",
-        "size_bytes": 308521
+        "sha256": "45fce86a20f1a5351db887659ad0b7bee073bfc17c53016a4a3d1fa380e506a7",
+        "size_bytes": 308709
       },
       {
         "git_mode": "100644",
@@ -13605,6 +13605,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/ANCHOR_BRACKET_CORRECTION.json",
+        "sha256": "9d27cf20717cb99f38de12a74d2624dbffade3b9c0d5f994ef57e4f9a15d772a",
+        "size_bytes": 3218
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.json",
         "sha256": "b5f9b864f4d478ec8f61b74f878b58f8001e3e2ab873114f53be81b73f2bf12e",
         "size_bytes": 12656
@@ -13624,8 +13630,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/PUBLICATION.md",
-        "sha256": "2072fff490d86b1a2495e01107c362436a4655b55b14b036f8533d08e51f9998",
-        "size_bytes": 14071
+        "sha256": "7f0b16672f134971ea84ee9414038672f78440db072c447485f5e3813f9168cb",
+        "size_bytes": 14619
       },
       {
         "git_mode": "100644",
@@ -13648,8 +13654,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/figures/prefix-score-experiment.pdf",
-        "sha256": "e9b43a09c7c1d375577bfccc24bf89c174c7566c1f4f578509f911181d19df24",
-        "size_bytes": 83822
+        "sha256": "9daeea6f98f9f86515eecafa095a108fa3525e32210dd3ee793dd2601c0c74e6",
+        "size_bytes": 83827
       },
       {
         "git_mode": "100644",
@@ -13763,6 +13769,12 @@
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json",
         "sha256": "e3b04e6847a4ec310f654abd0b10641846614a38bc3440a248b0f4ff6ce863fd",
+        "size_bytes": 20960
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v3.json",
+        "sha256": "e38a1f38643a062acebab4740d3859f9830dfc2ba2bccd230190788d5db5e84a",
         "size_bytes": 20960
       },
       {
@@ -24340,8 +24352,8 @@
       {
         "git_mode": "100644",
         "path": "audit/research/finite-prefix-mgw-gradient/figures/prefix-score-experiment.svg",
-        "sha256": "005ccacd2abac02eb6b7ff3cadd0d1c607e64dc76ad491506eca57b1f5de82de",
-        "size_bytes": 6743
+        "sha256": "fdb0e6449fc4da7fc50b8f4275d1e77d44b729a95ed3d6638c9c2b134137e9f7",
+        "size_bytes": 6744
       },
       {
         "git_mode": "100644",
@@ -26728,8 +26740,8 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/finite-prefix-mgw-gradient.pdf",
-        "sha256": "2099b6082dc3039b805d623f51f2043bf70d690e2589dc2f978dc7db54d66ba9",
-        "size_bytes": 212487
+        "sha256": "7fe9dc76bce48217a16819c152c7709752ad840b8f9d808ca79068209522d0e0",
+        "size_bytes": 212494
       },
       {
         "git_mode": "100644",
@@ -26896,8 +26908,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "690fa2a7e6e8fc897789ee0406001af79f7dcdf6c33bfc2a5dca5b5421d880a2",
-        "size_bytes": 293620
+        "sha256": "a6cba0ad3ca7ce14fdb68712320727d4361226c96bef8e09b6b673e6107deb97",
+        "size_bytes": 293680
       },
       {
         "git_mode": "100644",
@@ -26914,7 +26926,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/build-mgw-derivative-notes-pdf.py",
-        "sha256": "0851f73a1d30ff2efa21af2419806b97c16e170a27e6f9a6c266312da8675372",
+        "sha256": "b56f223847c40422daf302a77a572cc38e9d74e491d71b0ffef110f16985e4a4",
         "size_bytes": 40233
       },
       {
@@ -27148,7 +27160,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "a9beaa3baba51902ea3b3137245387c970be15da874725d90a5ff634147d6741",
+        "sha256": "95d76d5b46378215b4ce99e3b0dd965c6b50a5d65ba77c2130bebefa74c6ea92",
         "size_bytes": 90915
       },
       {
@@ -27718,7 +27730,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "c4df917dc17dfab992d2374f421b2ae708c878a12fb03f2c7fe464153f76facf",
+        "sha256": "e08a3f8df7c01ea5e0be87a1a4b1b25876ef6e6974b134d75b8aceac4ecc7ee6",
         "size_bytes": 136973
       },
       {
@@ -27982,7 +27994,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mgw-derivative-notes-pdf-self-test.py",
-        "sha256": "a20b17d22f3fc9b7fd8e8d5c484f33b568911938bebf0f2e3e6581ce454f0fe8",
+        "sha256": "8ad7dd46f6111ede0ae50e0bab0fe9a57d2f0cf9896a804503a9eae0a7b7d631",
         "size_bytes": 25628
       },
       {
@@ -28580,8 +28592,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "28ae80710dbfc1ca033cf39a4f06d5fbdec45f47600e539a2a1108f30e63c64c",
-    "entry_count": 4739
+    "entries_sha256": "a547513538c566f30d9936643ce0da6b87898e38a3530d02e0c7129f84729f76",
+    "entry_count": 4741
   },
   "subprojections": [
     {
@@ -28593,15 +28605,15 @@
       ]
     },
     {
-      "entries_sha256": "2e6b6ec2ebb460711fd377ed8bc10955c06e58953dbddd58d27d6281426b1b50",
-      "entry_count": 1873,
+      "entries_sha256": "694287ecfc27dc18e944b26e9685eb55f88401d5fa36f5769e8f4b7b8f4abd39",
+      "entry_count": 1875,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "841050f1a2b4393ecc7449f671477efa66c73c77ba0f14cf2adddbfc2c708e25",
+      "entries_sha256": "f2a4819fb7a79a0d6d5a20b1653be778131617eeac9c7a4b5d89a16ba3747c81",
       "entry_count": 32,
       "name": "generated_pdf_set",
       "selectors": [
@@ -28609,7 +28621,7 @@
       ]
     },
     {
-      "entries_sha256": "2b7607ee0f11200971b557ae3c8d2eade7f2c5ea61f94d221ba52e764ae2d6ef",
+      "entries_sha256": "19269773160d88f036481a7d8a8c0005f8141ca3a58ffb81000c64c57029ef49",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

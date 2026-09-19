@@ -35,7 +35,7 @@
 <rect x="870" y="375" width="660" height="220" rx="12" fill="#FFFFFF" stroke="#1F6968" stroke-width="2"/>
 <text x="1200" y="420" class="label center">Whole-block score</text>
 <text x="1200" y="474" class="math center">s(Z<tspan baseline-shift="sub" font-size="75%">0</tspan>) + s(Z<tspan baseline-shift="sub" font-size="75%">1</tspan>) + … + s(Z<tspan baseline-shift="sub" font-size="75%">h</tspan>)</text>
-<path d="M930 495 V506 H1048 V495" fill="none" stroke="#916400" stroke-width="3"/>
+<path d="M1012 495 V506 H1093 V495" fill="none" stroke="#916400" stroke-width="3"/>
 <text x="1200" y="550" class="body center">The anchor score is included.</text>
 <path d="M400 595 V633 H776 M1200 595 V633 H824" class="flow" marker-end="url(#arrow)"/>
 <circle cx="800" cy="633" r="24" fill="#D2E0E2" stroke="#2C3E50" stroke-width="2"/>

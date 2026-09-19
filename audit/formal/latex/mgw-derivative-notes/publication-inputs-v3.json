@@ -1,0 +1,610 @@
+{
+  "files": {
+    "audit/formal/latex/mgw-derivative-notes/layout/publication-filter.lua": {
+      "bytes": 4224,
+      "sha256": "739978e86af8ba521aba7b9586db174d490ebf28561376779b4c9cfa67baf25b"
+    },
+    "audit/formal/latex/mgw-derivative-notes/layout/report.latex": {
+      "bytes": 1922,
+      "sha256": "bd2d8f3488b314c7b50fec97346b326b6398073d1769821b8b5e60ebd0de9ece"
+    },
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/latex/prefix-mgw-bias/native-tools-v2.json": {
+      "bytes": 5013,
+      "sha256": "7295bafe18f6f6b275f27b8de3b4e30b44c5a81974d5b2326f0ea49a9fed1aa4"
+    },
+    "audit/formal/latex/prefix-mgw-bias/reader-source-v2.json": {
+      "bytes": 8668,
+      "sha256": "5a0474ea26892b04b6ff1c931096ee115bdfdf68adc5945644a849bea064a378"
+    },
+    "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md": {
+      "bytes": 31569,
+      "sha256": "f1734c2efb89cb6b03cf384552a73ce84e5cfa7772971750ea6382d7cc5fc7b2"
+    },
+    "audit/research/finite-prefix-mgw-gradient/figures/prefix-score-experiment.svg": {
+      "bytes": 6744,
+      "sha256": "fdb0e6449fc4da7fc50b8f4275d1e77d44b729a95ed3d6638c9c2b134137e9f7"
+    },
+    "audit/research/support-change-mi-cusp/EXPOSITION.md": {
+      "bytes": 10288,
+      "sha256": "04a040676eddff849da8040c9c2bc2cc445ae625a45c1ad7510835ec290e0832"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "outputs": {
+    "cusp": {
+      "figure_pdf": null,
+      "observation": {
+        "first_page_fit": true,
+        "font_rows": [
+          "XBNNGL+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     16  0",
+          "QGPLBV+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     17  0",
+          "DRSCCK+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     18  0",
+          "JZWWPC+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     19  0",
+          "NTVPXS+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     21  0",
+          "LRAETU+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     22  0",
+          "VKGSRQ+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     30  0",
+          "GBBUVM+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     33  0",
+          "CURESZ+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     63  0"
+        ],
+        "geometry": [
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ]
+        ],
+        "gotos": [
+          "section*.1",
+          "section*.10",
+          "section*.11",
+          "section*.12",
+          "section*.13",
+          "section*.2",
+          "section*.4",
+          "section*.6"
+        ],
+        "headings": [
+          {
+            "level": 0,
+            "name": "section*.1",
+            "page": 1,
+            "title": "1. The stronger inference being tested",
+            "x": 70.866,
+            "y": 411.683
+          },
+          {
+            "level": 0,
+            "name": "section*.2",
+            "page": 2,
+            "title": "2. Construct the law and check every probability assumption",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.4",
+            "page": 2,
+            "title": "3. Compute the information objective from the finite PMF",
+            "x": 70.866,
+            "y": 354.787
+          },
+          {
+            "level": 0,
+            "name": "section*.6",
+            "page": 3,
+            "title": "4. Show the cusp, with both one-sided derivatives",
+            "x": 70.866,
+            "y": 727.49
+          },
+          {
+            "level": 0,
+            "name": "section*.10",
+            "page": 3,
+            "title": "5. Retain the failed quadratic attempt",
+            "x": 70.866,
+            "y": 263.352
+          },
+          {
+            "level": 0,
+            "name": "section*.11",
+            "page": 4,
+            "title": "6. Consequences for the finite-prefix derivative",
+            "x": 70.866,
+            "y": 642.178
+          },
+          {
+            "level": 0,
+            "name": "section*.12",
+            "page": 4,
+            "title": "7. Boundary and next justified action",
+            "x": 70.866,
+            "y": 247.538
+          },
+          {
+            "level": 0,
+            "name": "section*.13",
+            "page": 5,
+            "title": "References",
+            "x": 70.866,
+            "y": 713.821
+          }
+        ],
+        "https_uris": [
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
+        ],
+        "named_destinations": [
+          "AMS.3",
+          "AMS.5",
+          "AMS.7",
+          "AMS.8",
+          "AMS.9",
+          "Doc-Start",
+          "Item.1",
+          "Item.2",
+          "Item.3",
+          "page.1",
+          "page.2",
+          "page.3",
+          "page.4",
+          "page.5",
+          "section*.1",
+          "section*.10",
+          "section*.11",
+          "section*.12",
+          "section*.13",
+          "section*.2",
+          "section*.4",
+          "section*.6"
+        ],
+        "pages": 5,
+        "poppler_bbox_sha256": "159cf621c36bf2f09f4fb35aaa628b6ccb7d232d4c78614d82fe2cfb4f751464",
+        "poppler_layout_sha256": "421e80e5c4a6cd786454f1e4a79cd974e6e99a48e77982c33c57443e8e5ebec0",
+        "pypdf_text_sha256": [
+          "705e54e9cdf41f65515f92990e60a5d058ed1e7e93fc307afdc4fdff9f0d8370",
+          "283e0bafa3b702bba978199c3e339accd523c5836ead36ff07b841a2d10a84f7",
+          "e4592bdf306a2089848b5cd7cfd7e473317605887604905864644e46aac87157",
+          "b5ea6e235fe6acbab3a8779b5b5270a249f9c3361bf5f99f01722fb7aae04b16",
+          "6750025d187f9ec418e6f2210b393b90ae43d56974aae00e8d437c6c2799efa1"
+        ],
+        "root_keys": [
+          "/Lang",
+          "/Names",
+          "/OpenAction",
+          "/Outlines",
+          "/PageMode",
+          "/Pages",
+          "/Type",
+          "/ViewerPreferences"
+        ]
+      },
+      "pdf": {
+        "bytes": 67767,
+        "sha256": "44cc734b45e1e95d2609fcbad2610107e5576d1d82e3b203c3514ff2af0ec3d8"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 13270,
+        "sha256": "721e21cfca8303f93dd108dc696748e57c2b0e6555aaac19eb8b37473d500141"
+      }
+    },
+    "gradient": {
+      "figure_pdf": {
+        "bytes": 83827,
+        "sha256": "9daeea6f98f9f86515eecafa095a108fa3525e32210dd3ee793dd2601c0c74e6"
+      },
+      "observation": {
+        "first_page_fit": true,
+        "font_rows": [
+          "OFURXT+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     21  0",
+          "QARRPH+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     22  0",
+          "QWERRC+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     23  0",
+          "VNGUOM+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     24  0",
+          "PIZTFK+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     36  0",
+          "XOVSCV+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     37  0",
+          "FXAFAS+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     38  0",
+          "VDMVCL+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     49  0",
+          "VPMJCR+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     57  0",
+          "UDNOUO+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    103  0",
+          "AQGYCO+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    104  0",
+          "COQGDB+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    105  0",
+          "MPEXYL+SourceSansPro-Semibold        Type 1C           WinAnsi          yes yes yes    106  0",
+          "CURESZ+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes    173  0"
+        ],
+        "geometry": [
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ]
+        ],
+        "gotos": [
+          "section*.1",
+          "section*.13",
+          "section*.16",
+          "section*.2",
+          "section*.20",
+          "section*.26",
+          "section*.30",
+          "section*.32",
+          "section*.35",
+          "section*.40",
+          "section*.42",
+          "section*.43",
+          "section*.7",
+          "section*.9",
+          "subsection*.36",
+          "subsection*.37",
+          "subsection*.38",
+          "subsection*.39",
+          "subsection*.6"
+        ],
+        "headings": [
+          {
+            "level": 0,
+            "name": "section*.1",
+            "page": 2,
+            "title": "Reading map and evidence boundary",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.2",
+            "page": 2,
+            "title": "1. Fixed objects and local assumptions",
+            "x": 70.866,
+            "y": 434.91
+          },
+          {
+            "level": 1,
+            "name": "subsection*.6",
+            "page": 3,
+            "title": "A concrete candidate investigation",
+            "x": 70.866,
+            "y": 367.432
+          },
+          {
+            "level": 0,
+            "name": "section*.7",
+            "page": 4,
+            "title": "2. The actual finite-prefix experiment",
+            "x": 70.866,
+            "y": 527.332
+          },
+          {
+            "level": 0,
+            "name": "section*.9",
+            "page": 5,
+            "title": "3. Finite scalar calculus",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.13",
+            "page": 5,
+            "title": "4. From native increments to the exact cumulative remainder",
+            "x": 70.866,
+            "y": 285.445
+          },
+          {
+            "level": 0,
+            "name": "section*.16",
+            "page": 6,
+            "title": "5. Construct the whole inverse row",
+            "x": 70.866,
+            "y": 581.376
+          },
+          {
+            "level": 0,
+            "name": "section*.20",
+            "page": 7,
+            "title": "6. Differentiate and obtain the 2L bound",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.26",
+            "page": 8,
+            "title": "7. Score identity for the whole block",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.30",
+            "page": 8,
+            "title": "8. Second moment under IID complete rows",
+            "x": 70.866,
+            "y": 289.049
+          },
+          {
+            "level": 0,
+            "name": "section*.32",
+            "page": 10,
+            "title": "9. Finite latent laws and encoders",
+            "x": 70.866,
+            "y": 640.839
+          },
+          {
+            "level": 0,
+            "name": "section*.35",
+            "page": 11,
+            "title": "10. Worked checks and retained unsuccessful attacks",
+            "x": 70.866,
+            "y": 667.926
+          },
+          {
+            "level": 1,
+            "name": "subsection*.36",
+            "page": 11,
+            "title": "The anchor score cannot be omitted",
+            "x": 70.866,
+            "y": 608.38
+          },
+          {
+            "level": 1,
+            "name": "subsection*.37",
+            "page": 11,
+            "title": "Equal row marginals do not supply the IID second moment",
+            "x": 70.866,
+            "y": 402.733
+          },
+          {
+            "level": 1,
+            "name": "subsection*.38",
+            "page": 11,
+            "title": "Support changes require a separate argument",
+            "x": 70.866,
+            "y": 259.85
+          },
+          {
+            "level": 1,
+            "name": "subsection*.39",
+            "page": 12,
+            "title": "Target-term cancellation and invalid normalization",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.40",
+            "page": 12,
+            "title": "11. Bias, second moment and computational cost",
+            "x": 70.866,
+            "y": 630.486
+          },
+          {
+            "level": 0,
+            "name": "section*.42",
+            "page": 13,
+            "title": "12. Formal scope and next evaluation",
+            "x": 70.866,
+            "y": 771.024
+          },
+          {
+            "level": 0,
+            "name": "section*.43",
+            "page": 13,
+            "title": "References and provenance",
+            "x": 70.866,
+            "y": 448.603
+          }
+        ],
+        "https_uris": [
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md#9-ten-grounded-use-cases",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/PUBLICATION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/SOURCE_CORRESPONDENCE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md",
+          "https://proceedings.neurips.cc/paper/2015/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf",
+          "https://proceedings.neurips.cc/paper/2015/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf",
+          "https://proceedings.neurips.cc/paper/2015/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf",
+          "https://proceedings.neurips.cc/paper/2015/file/de03beffeed9da5f3639a621bcab5dd4-Paper.pdf"
+        ],
+        "named_destinations": [
+          "AMS.10",
+          "AMS.11",
+          "AMS.12",
+          "AMS.14",
+          "AMS.15",
+          "AMS.17",
+          "AMS.18",
+          "AMS.19",
+          "AMS.21",
+          "AMS.22",
+          "AMS.23",
+          "AMS.24",
+          "AMS.25",
+          "AMS.27",
+          "AMS.28",
+          "AMS.3",
+          "AMS.31",
+          "AMS.33",
+          "AMS.34",
+          "AMS.4",
+          "AMS.41",
+          "AMS.5",
+          "AMS.8",
+          "Doc-Start",
+          "Item.1",
+          "Item.2",
+          "Item.3",
+          "Item.4",
+          "Item.5",
+          "figure.caption.29",
+          "none.1",
+          "page.1",
+          "page.10",
+          "page.11",
+          "page.12",
+          "page.13",
+          "page.2",
+          "page.3",
+          "page.4",
+          "page.5",
+          "page.6",
+          "page.7",
+          "page.8",
+          "page.9",
+          "section*.1",
+          "section*.13",
+          "section*.16",
+          "section*.2",
+          "section*.20",
+          "section*.26",
+          "section*.30",
+          "section*.32",
+          "section*.35",
+          "section*.40",
+          "section*.42",
+          "section*.43",
+          "section*.7",
+          "section*.9",
+          "subsection*.36",
+          "subsection*.37",
+          "subsection*.38",
+          "subsection*.39",
+          "subsection*.6"
+        ],
+        "pages": 13,
+        "poppler_bbox_sha256": "6dab9aa857feec5a6da6e280d8f20cb7461646d9852a8cfe8b0488fc8cb7cbd3",
+        "poppler_layout_sha256": "ed5f3b61aad3aaf690c408eaf8d5a9a632077a72baef07483efc7fc013c2dfaa",
+        "pypdf_text_sha256": [
+          "c0fb239ff39ab29f5e69e5db6ce4dc4fa59c4f4ff1be6d633e7e742eb708fa0b",
+          "cb10dd63b9ac7edd97a779eda4b0a228921896a8c81eeed051fc4c1aa8f503b5",
+          "9355b96ba6af9add097c8b38eba523c5b6a4f51726ccc7e96dc7169f18d6aea3",
+          "96365353543e7d575a3cf4f9829767982cf0d3e211dd10541ca90b9b45f2e08d",
+          "7abfb70d94efe1a0a031bef0e50ce593ed072af584589f666ccaa171c1421950",
+          "3d4301b4a75cb358041f0c2f282dbcf5349e06639aee0b418137fedd3bc23a2a",
+          "94fd5fc111946106e0f668e8cc9846a5bc4047239a0e7e1675e14df6a0cda866",
+          "13587a80b49583d7a398115edd98beb5e7cc4747a8ab906c31f22b0591bf27d7",
+          "f6071bae44d0f416cdfa3aca2fe4296fb948ea251d273f5a67c4c0587ab378b8",
+          "84e12b9551772aa40b731eec6b3d103ffa376d6af6fcf7808f34c8f0a49bb841",
+          "9bfaeff49784e2b3126f8e318783dede4bbcad80c6d93e5886e107ad448a9c77",
+          "6f7ff5e3c40843b29c2272a1002398743c05c71e9fb8c8759f61dab3dc338d78",
+          "7410856ad233ab31c79c3c6521551df94e09bd350ebd8025b6cd2770e07a1ec4"
+        ],
+        "root_keys": [
+          "/Lang",
+          "/Names",
+          "/OpenAction",
+          "/Outlines",
+          "/PageMode",
+          "/Pages",
+          "/Type",
+          "/ViewerPreferences"
+        ]
+      },
+      "pdf": {
+        "bytes": 212494,
+        "sha256": "7fe9dc76bce48217a16819c152c7709752ad840b8f9d808ca79068209522d0e0"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 36814,
+        "sha256": "0f402c02fb571d2b17e810aa33008852f55956b47fe2f0fdfaf30e2cdd407003"
+      }
+    }
+  },
+  "schema": "pid-rs/mgw-derivative-note-inputs-v1"
+}

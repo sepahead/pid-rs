@@ -2023,6 +2023,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Align the finite-prefix MGW gradient diagram's bracket with the anchor score and republish
+  its PDF through an appended v3 profile. Preserve v1/v2 evidence and the mathematical scope.
+
 - Make complete PID2 and co-information resource preflight include the support diagnostics of
   every KSG report that will execute. Share the ordinary report calculation without allocating
   concatenated sources before the budget check. Retain the lighter scalar calculation and

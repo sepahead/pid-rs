@@ -3117,14 +3117,15 @@ correspondence, or proves a PID claim.
 
 The [gradient and support-change publications](../audit/formal/latex/mgw-derivative-notes/PUBLICATION.md)
 use `build-mgw-derivative-notes-pdf.py --kind gradient|cusp` with the
-[version-2 source profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json).
-It selects GitHub dollar math delimiters and upright operator names in the two manuscripts.
+[version-3 source profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v3.json).
+It corrects only the gradient figure's anchor-score bracket; manuscript equations, assumptions
+and theorem scope are unchanged. The
+[bracket correction record](../audit/formal/latex/mgw-derivative-notes/ANCHOR_BRACKET_CORRECTION.json)
+separates discovery and visual review from exact reproduction and publication.
 The [version-1 profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v1.json) and
-its dated reproduction record remain historical. Four complete current-v2 checks, covering both
-notes in normal and optimized Python, reproduced the selected TeX, PDFs, observations and gradient
-figure. Every PDF matched its previously reviewed bytes. The
-[current record](../audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.json) separates
-that local reproduction from aggregate, final source-state and hosted/mainline evidence.
+[version-2 profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json) remain
+historical. The [v2 record](../audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.json)
+retains its four normal/optimized exact checks and Markdown math-syntax correction.
 Exact mode makes two fresh builds and compares those reviewed output bytes and observations. Discovery retains new
 outputs for review; it cannot adopt a reference. Both kinds refuse unsupported cross-toolchain
 requests with status 2 before reading an execution registration or launching a producer.

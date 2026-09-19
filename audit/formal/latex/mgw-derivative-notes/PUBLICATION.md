@@ -6,18 +6,23 @@ The gradient paper has eleven locally accepted formal theorem families; the cusp
 remains open. The [theorem map](../../lean-prefix-mgw-gradient/THEOREM_MAP.md) defines that boundary.
 This document describes artifact production, which adds no mathematical acceptance.
 
-The [version-2 input profile](publication-inputs-v2.json) binds eleven source files and the
+The [version-3 input profile](publication-inputs-v3.json) binds eleven source files and the
 13-page [gradient PDF](../../../../output/pdf/finite-prefix-mgw-gradient.pdf) and 5-page
-[cusp PDF](../../../../output/pdf/support-change-mi-cusp.pdf). It changes the two manuscript inputs
-and two generated TeX references for the Markdown math-syntax repair; the schema remains version 1.
-Four complete exact checks, covering both notes in normal and optimized Python, reproduced the
-selected TeX, PDFs, observations and gradient figure. All eight PDF builds matched the previously
-reviewed artifact bytes. The [current record](MARKDOWN_MATH_CORRECTION.json) separates this local
-v2 reproduction from the full aggregate, final source-state and hosted/mainline evidence.
+[cusp PDF](../../../../output/pdf/support-change-mi-cusp.pdf). It corrects the gradient diagram's
+bronze bracket to mark only the anchor score. The manuscript, diagram text, expected TeX and cusp
+references are unchanged. The [bracket correction record](ANCHOR_BRACKET_CORRECTION.json) separates
+native discovery and visual review from later exact checks, aggregate checks and publication.
+The correction changes no equation, assumption, theorem scope or application claim.
+
+The [version-2 profile](publication-inputs-v2.json) remains unchanged historical evidence for the
+Markdown math-syntax repair. Four complete exact checks, covering both notes in normal and
+optimized Python, reproduced its TeX, PDFs, observations and gradient figure; all eight PDF builds
+matched the previously reviewed bytes. The [v2 record](MARKDOWN_MATH_CORRECTION.json) retains that
+local reproduction and its separate aggregate, source-state and hosted/mainline boundaries.
 
 The [version-1 profile](publication-inputs-v1.json) and its dated
 [observation record](PUBLICATION_OBSERVATION.json) remain unchanged historical evidence, including
-the visual review of the identical PDF artifacts. The [rendering correction](MARKDOWN_MATH_CORRECTION.md)
+the visual review of those historical PDF artifacts. The [rendering correction](MARKDOWN_MATH_CORRECTION.md)
 retains the failed predecessor and explains the source and TeX changes. No estimator, benchmark
 or application result follows from the adapter.
 
@@ -174,12 +179,14 @@ Run normal and optimized controls only after independent source review and actua
 A literal filter check does not prove Pandoc executes that filter correctly.
 
 Every new publication surface requires the existing twenty-lens visual review and actual normal-size
-inspection of all changed pages plus a declared high-risk subset at high resolution. Root inspected
-all current pages, dense mathematics, the diagram's small labels and the final references. Actual
+inspection of all changed pages plus a declared high-risk subset at high resolution. The initial publication review covered
+all then-current pages, dense mathematics, the diagram's small labels and the final references. Actual
 grayscale renders supplement the color review. An earlier candidate retained a stale figure label
 and a two-line final page; its corrected successor preserves every mathematical step and citation.
-The [historical artifact and visual-review record](PUBLICATION_OBSERVATION.json) binds those
-identical PDFs; the [current v2 record](MARKDOWN_MATH_CORRECTION.json) binds their new reproduction.
+The [historical artifact and visual-review record](PUBLICATION_OBSERVATION.json) binds that
+earlier review; the [v2 record](MARKDOWN_MATH_CORRECTION.json) binds its later reproduction.
+The [bracket correction record](ANCHOR_BRACKET_CORRECTION.json) separately identifies the changed
+v3 artifacts and their actual page and figure review.
 
 Unsupported cross-toolchain calls return status 2 before registration reads, work creation, parser
 loading or native launch. This is explicit refusal, not hosted reproduction. The aggregate

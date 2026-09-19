@@ -1,0 +1,75 @@
+{
+  "date": "2026-09-19",
+  "native_discovery": {
+    "both_builds_byte_equal": true,
+    "builds": 2,
+    "complete_pdf_observation_unchanged": true,
+    "completed_utc": "2026-09-19T17:27:32.395235+00:00",
+    "figure_pdf": {
+      "bytes": 83827,
+      "sha256": "9daeea6f98f9f86515eecafa095a108fa3525e32210dd3ee793dd2601c0c74e6"
+    },
+    "native_returncodes_all_zero": true,
+    "native_stderr_empty": true,
+    "original_deadline_utc": "2026-09-19T17:56:55.983755+00:00",
+    "outer_wrapper_diagnostic": "CPython emitted a SyntaxWarning for return in finally before the private wrapper entered main. No warning-free wrapper claim. Native production and its retained records passed.",
+    "pdf": {
+      "bytes": 212494,
+      "sha256": "7fe9dc76bce48217a16819c152c7709752ad840b8f9d808ca79068209522d0e0"
+    },
+    "producer_commands": 40,
+    "review_render_commands": 3,
+    "started_utc": "2026-09-19T17:26:55.983755+00:00",
+    "tex": {
+      "bytes": 36814,
+      "sha256": "0f402c02fb571d2b17e810aa33008852f55956b47fe2f0fdfaf30e2cdd407003"
+    },
+    "tex_unchanged": true
+  },
+  "profiles": {
+    "current": {
+      "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v3.json",
+      "sha256": "e38a1f38643a062acebab4740d3859f9830dfc2ba2bccd230190788d5db5e84a"
+    },
+    "previous": {
+      "path": "audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json",
+      "preserved": true,
+      "sha256": "e3b04e6847a4ec310f654abd0b10641846614a38bc3440a248b0f4ff6ce863fd"
+    }
+  },
+  "publication_boundary": "This dated record accepts reviewed discovery bytes as references. Final exact/hostile/aggregate checks, committed-source identity and hosted/mainline evidence are separate obligations; this record grants none of them.",
+  "schema": "pid-rs/mgw-derivative-anchor-bracket-correction-v1",
+  "scientific_credit": {
+    "new_calibration_or_application_claims": false,
+    "new_theorems": 0
+  },
+  "scope": "Explanatory bracket placement in the categorical MGW finite-prefix gradient figure. Mathematical definitions, assumptions, formulas, proof sources and theorem status are unchanged.",
+  "source": {
+    "after_sha256": "fdb0e6449fc4da7fc50b8f4275d1e77d44b729a95ed3d6638c9c2b134137e9f7",
+    "all_other_svg_bytes_unchanged": true,
+    "before_sha256": "005ccacd2abac02eb6b7ff3cadd0d1c607e64dc76ad491506eca57b1f5de82de",
+    "new_path": "M1012 495 V506 H1093 V495",
+    "old_path": "M930 495 V506 H1048 V495",
+    "path": "audit/research/finite-prefix-mgw-gradient/figures/prefix-score-experiment.svg"
+  },
+  "visual_review": {
+    "finding": "The bracket groups s(Z0), stops before the following plus, and does not collide with text. Nearby formulas, assumptions, connectors and caption remain legible.",
+    "limits": "Bounded actual-image review with shared source/tool infrastructure; not independent human or institutional review and not a mathematical proof.",
+    "root_detail_dpi": 300,
+    "root_detail_pages": [
+      9
+    ],
+    "root_normal_dpi": 120,
+    "root_normal_pages": [
+      8,
+      9,
+      10
+    ],
+    "separate_model_review": [
+      "normal page 9",
+      "detail page 9",
+      "standalone figure"
+    ],
+    "standalone_figure_dpi": 240
+  }
+}
