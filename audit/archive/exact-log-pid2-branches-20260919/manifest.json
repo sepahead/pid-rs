@@ -1,0 +1,2039 @@
+{
+  "archive_only_nonclaims": [
+    "No archived program, old instruction, native theorem checker, build or publication generator was executed.",
+    "No scientific novelty, full proof verification, calibration, authenticity, implementation equivalence or current hosted success follows from this archive.",
+    "The exact-log certificate/event algebra and continuous PID2 represented-coordinate behavior are different scientific objects.",
+    "This archive excludes the separate rejected exact-log verifier-draft branch, Galadriel, and uncommitted or ignored worktree bytes.",
+    "No branch deletion or remote mutation was performed or authorized by the receipt."
+  ],
+  "bundle": {
+    "advertised_heads": {
+      "refs/heads/sepahead/exact-log-hostile-v1": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "refs/heads/sepahead/pid2-rev4-assurance-v1": "caf8c7be3e2249df8e959c8940632fd22ed09923"
+    },
+    "bytes": 279915,
+    "format": "Git bundle v2 / SHA-1 Git objects",
+    "git_blob_oid": "e4bbac54ecffe0b5d37ea79e17c8956db8fb1182",
+    "git_mode": "100644",
+    "original_pack_entries": 97,
+    "path": "exact-log-pid2-history-from-855605a.bundle",
+    "prerequisites": [
+      "855605a2a2098fa82fccb07521bae5cc382fa747"
+    ],
+    "raw_object_bytes": 7109992,
+    "sha256": "bc5de3094b2d291a344ec9065f75da2bd588b7d3a587cf80b2de4eab29448b08",
+    "thin_delta_base_count": 47,
+    "thin_delta_base_oids": [
+      "018153e64ab3e1db6d170b57c5f9bbef35258c8d",
+      "01f2a088ad6350b3f2c699c3085cb0e68ae6f4d6",
+      "033a15b4018d755bb660155c6cbe75e54c2fe884",
+      "03df11dd8c300174a51d5c52bbfd4659d26ab53e",
+      "0625050dd7a0a2a94fe4c386e0e78781a2c1958a",
+      "066e72276762b7d142467444fc40ddcc6cf3bc1d",
+      "0c9fd5c10612df505086c670364a88338ed14403",
+      "0e18f4fc31a6c4bc8f40f5545c983548f7c4069e",
+      "15383d376d31ba940c7c395e37f601b7399578f1",
+      "1bb2cdb538d7fafeb46a32677f3ff99636875e01",
+      "1d2533ac2732a5ba35fb52d38d558b4c5e1f1609",
+      "2046237b9d1ea5ccfbe2465f640b204855fc6949",
+      "28cfa238bae8ae64ed6945afa0135d1e9ea50f41",
+      "3794b4c960ed3efdcd5bd7347d73e292fef81ff3",
+      "3b9e5c211532b65112c97cdc108f5446e9764613",
+      "3d7303ee7656c27d6fd771c055304960908ff1ba",
+      "43ef963a2420b7662d0ba4c7d6aed8bf734b5bed",
+      "4b67b2070a382f1fb509c74d7488542350f26788",
+      "4d61a6aa623cea1dae4ff018e3b4864426d76fb3",
+      "4d98337c450ce6f8900b33c3ac7088981263314f",
+      "4f046ee0e43adc47137681f0742144495ee63a66",
+      "65179a4ce173ea40e117a0acf9d531df3b127402",
+      "6598e7d8f790397eaae4a1fd01b8b500ce5f0427",
+      "6c561f7ccf947a5f465bfe75533e5e68bd8ef853",
+      "6cbdd921dc5e94a47f660ba137b7cbbeb0fe5f02",
+      "70628ec0bad09c8fff1052602b3dd18fc4a46ad8",
+      "762010199e942b801fdab6cb44bf60d4de4b06ac",
+      "773ea6d4efe7117c12f1593c143dfa3397d74f23",
+      "860fd1cdd092eb29bf09d76b966a96cf5db41118",
+      "8731542f2a1d3d3c11d1a21ede0f8b45ca43aef6",
+      "97f31c4e10a8e6ace2b1fdf7a2da1c0d992be302",
+      "a4359a495e562f1877a87c61b27fa493e039ad0b",
+      "ae1889a53bcc9062c82514f89ff12d34f97b16d6",
+      "b9071f99b6a1c0124c820f015e09d3cb4da3e832",
+      "c26d8411f4d8b7971ba66fc939a831c605b5d526",
+      "c8d93a403a9aa4706e2f5f8e45e4cc8651565bb8",
+      "cbf10a7ff58559b825a7f3345275fc8e773b90f2",
+      "cc6e241346aed323ddc25a82a9d8cee4731203fd",
+      "ced91b787fb1870d4ee3892221aaeaae675ceee3",
+      "df8d106889b57fcc9bc90795875d24514ec80e3e",
+      "e16990c0d66e7780efc9e3fc7cbd8eab417fce0d",
+      "e2250829f5bdd7cac1697b66ed931e2ac10eff60",
+      "e256d38a4ab1abe650e468756154360813f05e8d",
+      "e4883f2eb6571991dbc25109363689378ee0ca3a",
+      "eb9a9040959ce2e56e8c1c8f0a0d5e99a38442ae",
+      "fbadc9f17d7b305061f93e23552ce7ae6bc20952",
+      "ff73c11604f11a4301c9ae74f52bfac70d9394e4"
+    ],
+    "thin_delta_bases_all_reachable_from_prerequisite": true
+  },
+  "changed_file_version_dispositions": [
+    {
+      "branch_role": "pid2-parent",
+      "bytes": 269147,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "c3d15a2dd59117309f5da9f2b9feadff18316340",
+      "main959_path_blob": "069b4a8c55b2b31395551581ea15aea948c79cec",
+      "origin_commit": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "path": "CHANGELOG.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "2a399a33b244cab8cdc3d6a07fa61a81aeaf9a6b812861f5bc31b982cf7d8fdd"
+    },
+    {
+      "branch_role": "pid2-parent",
+      "bytes": 251360,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "41470ff422c3861e9a6902e01a4d5b5bb6bd595d",
+      "main959_path_blob": "605ebe3f1567d3848a19dd3b14952f96555f66f5",
+      "origin_commit": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "path": "audit/evidence/current-source-state-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical self-excluding source projection; no current acceptance, authenticity or calibration credit",
+      "sha256": "512b675126a31ea2bbdc1c71f149f221c5b8779c283e4e3a8ec611eee46e8e08"
+    },
+    {
+      "branch_role": "pid2-parent",
+      "bytes": 193183,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "6d26ff84a67f24eb409bf3f81f6affe0de524ff4",
+      "main959_path_blob": "6d26ff84a67f24eb409bf3f81f6affe0de524ff4",
+      "origin_commit": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "path": "crates/pid-core/src/bin/exp0.rs",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "represented-coordinate implementation or behavior test has exact main-history successor; no generic statistical validation follows",
+      "sha256": "b839bf15602b4ffcd68f201f547cf48c7e4648400600afa9721cfb391d09e0ec"
+    },
+    {
+      "branch_role": "pid2-parent",
+      "bytes": 79304,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "7975b3236d2263413273024e26d8417d109b3620",
+      "main959_path_blob": "27191a590afbe2be788b8ad9a55d20eebea5d586",
+      "origin_commit": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "path": "crates/pid-core/src/pid2.rs",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "represented-coordinate implementation or behavior test has exact main-history successor; no generic statistical validation follows",
+      "sha256": "d9fe89db5fcabd1b2666be5581726b18c8bf465b71d7ebc21e3fe3089007e147"
+    },
+    {
+      "branch_role": "pid2-parent",
+      "bytes": 17690,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "0fec10dec35de7c6bfe8dec455cf3325d87c665d",
+      "main959_path_blob": "0fec10dec35de7c6bfe8dec455cf3325d87c665d",
+      "origin_commit": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "path": "crates/pid-core/tests/pid2.rs",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "represented-coordinate implementation or behavior test has exact main-history successor; no generic statistical validation follows",
+      "sha256": "967a26dac7633841ac14670e5f4d3362e0a4cfcf35beed72ef264d8b9d5b70bf"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 88979,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "88529e48c64715c6b6e85f633d9c9e751999646e",
+      "main959_path_blob": "d5ccc51930903957d9329c73571274ec0a7a07a9",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": ".github/workflows/ci.yml",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "609244393a75d3a8c12cae7da99dbafddb5e56416827a665da94cb1e829145e5"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 83741,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "574876709709335706b5585ec051448e660241a1",
+      "main959_path_blob": "18e5996237b6aeada50c3d662f5b173a2e716814",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "AGENTS.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "c4421e317525cb80df8f97b56ccf0f93610634e3eae7e7c23914be669a08bfb7"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 270340,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "efc256713712cc47e2429ea3f41716b2692fa6df",
+      "main959_path_blob": "069b4a8c55b2b31395551581ea15aea948c79cec",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "CHANGELOG.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "3a547285dc3129c9b347aa8280d84f5e95b5f3caee14b8d0abc17ba60ccfa4ab"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 65091,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "d5eba26a06973cefba97d57f9091b6e063a782a8",
+      "main959_path_blob": "9d00dba1a2ce57f9dc933569e41e716bcf0182ed",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "ECOSYSTEM_CAPABILITIES.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "66d2e2cf0ecbd4c2c88639f1c59fdc5ec2d4b379b34337aa6e87a653f7306713"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 536235,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "33affce73b556b7f272ad9735e620b0f19c546bd",
+      "main959_path_blob": "2a32ac067189735ad8390347132873a630bbe921",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "METHODS.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "295134e4ce43e3e3161c36919c2fbaad4826babaaad760fc26cfea10ccb2fcb3"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 43433,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "7b3f305828896ef61a13fe48a8648e9990678813",
+      "main959_path_blob": "67a4689da0e00b041d9e570b7d7b3a5f9358e691",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "METHODS_SUMMARY.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "4d2b1514d0f5ef7eaf37046e2b0444e9fb7c4c3555c5c696667a8bdabc9b01a9"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 40413,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "f8a27a781c04003051faeba69dbca84f54e6acb4",
+      "main959_path_blob": "64fcf5ceca74bef4753afa873dbf2397e9a2d362",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "NUMERICAL_ASSURANCE.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "earlier assurance/publication bytes retained; current qualifications and publication custody govern, with PID and proof scopes kept separate",
+      "sha256": "5dad623d291397fbc9927682e65c935ffe42b5ade0bb985ff0be0f94b7299bbd"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 36065,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "208e0ac47bde326b905272536a94ea2ce23704a9",
+      "main959_path_blob": "b1e3ddd60ae93e9047b5e8838ca559ae8ff18cee",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "PID2_REPRESENTED_COORDINATE_ASSURANCE.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "earlier assurance/publication bytes retained; current qualifications and publication custody govern, with PID and proof scopes kept separate",
+      "sha256": "0acb8931aa212a264fc8bf515eafe27ba138ab2ccad4e3bc1613c798fea0803d"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 27700,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "37b2e97f2aaa178aed4dbe6e49a1dbffe11188cb",
+      "main959_path_blob": "4e984fdaa3061c1b1cabc9901ba644dbd0da4082",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "a8a6b26a3c220c14f24afbc2c78599cdb5badfa33f85376698abfe927ff86119"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 252289,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "600a49b5948d057ce6f081128f4a273581ba8a27",
+      "main959_path_blob": "605ebe3f1567d3848a19dd3b14952f96555f66f5",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "audit/evidence/current-source-state-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical self-excluding source projection; no current acceptance, authenticity or calibration credit",
+      "sha256": "926360458f7257978bfe4ffd9b1db59d23eb772cb3305854fa5158493d80c503"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 39016,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "8d6fbf6d06c28944c1af60f05fb8c856ad9a7727",
+      "main959_path_blob": "831890e38be1afccfdf7be871e871110b768344c",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "5267b04583146065a508b6c8f08edb7323320a1c9f062636458eab26d035f6f6"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 78069,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "c484091c47d10f4b47dadd4b1d13a3c89147c0ca",
+      "main959_path_blob": "cf6f64602d59662b913347d6307d7576971e02ee",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "audit/evidence/methods-summary-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "1aec3a9ff1e93a2b9876893a85a3df480865f7dabc0fd0d614b4f9e31e47d015"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 53711,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "8188f3837c25137cc808817154c7e6d64eaa7d9c",
+      "main959_path_blob": "62a5424e61d768774287db88a5a32e17c17f7129",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "3d55065898ad7e4a1ed1eb88dd21e0c6b4bbed9b60613f42aa7ed9a3fa68e617"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 2844,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "40cd1b6a290cd2c50f63f9f8fea3d50e53b93e04",
+      "main959_path_blob": "40cd1b6a290cd2c50f63f9f8fea3d50e53b93e04",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "audit/evidence/pid2-rev4-m1-hosted-run-33328609493-negative.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "retained negative hosted receipt: cancelled run, operational hash mismatch, later steps skipped; not theorem failure or full hosted pass",
+      "sha256": "337b0ee0bcf3a88f789c76a13844ab19a29ec037c1c6e9758cc23f23dfbd532b"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 1453,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "fd0e1b4bf35906af1d6f7fe07fa63ae67860770c",
+      "main959_path_blob": "d1b158d064e987ff430abe706491d1a7de3c26b4",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "crates/pid-core/identity/software-identity-reference-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical software-identity reference; no source/binary authenticity or compatibility claim",
+      "sha256": "a14b26ae006a8afe20650e07e4694a420f0e0b16f03d2e4c24444717d0a2bc89"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 33614,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "6303423dd5f3723f4c81aa18cddbea918cb41a6f",
+      "main959_path_blob": "6303423dd5f3723f4c81aa18cddbea918cb41a6f",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "crates/pid-python/tests/test_experimental_migration.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "represented-coordinate implementation or behavior test has exact main-history successor; no generic statistical validation follows",
+      "sha256": "c2c6c422d33a2e10ee38a6d37d081b146a31af079a3062720d552f8a26e95f12"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 71752,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "ed0aa83f7d01aa7373802c8bfb144830c1f10d1f",
+      "main959_path_blob": "aab6b25ba9f79a7a8fd9351677bbcbdd546c962b",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "ecosystem-capabilities.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "05128328a4c29e6ccf9dd780a4a12076e870c88dafbd5a2672ff6f8b7e45074a"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 50583,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "26fda624ba1e897e8c7479d93be38b419e802205",
+      "main959_path_blob": "2ab29ef4f05e9452470b3aa2bf4b7377774b06f5",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "justfile",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "cf10248315d17fd440136a385e0e59bc00762a0bf0e379eccf541dd6eb9092b9"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 440578,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "3a75efc7fd57885f2bf95885f72751704ef67838",
+      "main959_path_blob": "9226907a735c76c5a6c2cc8e5cc44d287ed7d2e2",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "method-catalog.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "9beff46f04cda0cd19789da6730d4a9038883587064ef4392afa586bc636d63f"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 229385,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "95b63b4e5e5267966defe2d9ffddbc5aa6eb6585",
+      "main959_path_blob": "bf29661f6ebe4d684210ec5ee495de0ecaf3d233",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/README.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "c65ae2814eaa0224ab2b50b7d676aa55cbeef1e1229fa521ab52a9946fafeae3"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 72358,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "855e5406e8b9ea7225e3b0d20708484e9c1c5c2b",
+      "main959_path_blob": "d9b0c150e4af03d2205fd9b2489030fb7feca927",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/check-ecosystem-capabilities.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "43eff1877d5b87bd443cef54f09f721f7e96aa71a10163d7525fa3196657f8b3"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 120874,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "8b135e2279529ae0d48eb5208837fc9c99f7cac2",
+      "main959_path_blob": "e39e1fc7bd168e1f411988970dc85c847ec51ad1",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/check-lean-toolchain-freeze.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "73cd5f82da8d32424dd738bac877e7e2b50aa9f7f59eaaae8db8f7d501000fd7"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 72809,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "1ec2fc91bbf54806fd24db3bca27076830d0286c",
+      "main959_path_blob": "112f333c5f121f94cd8bfcd79204d1efc7a9f4c5",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/check-method-catalog.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "1febade37a6cb5d2ba44122a5582a3fbdc5ede948bed7c118893cb06f15054da"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 13591,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "9b9815248a6462821b93fed7658cb5ee55cfaecb",
+      "main959_path_blob": "9b9815248a6462821b93fed7658cb5ee55cfaecb",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/check-pid2-represented-coordinate-v4-self-test.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "b5c913e80866b5b20abc8d46b84db1cdaf18d8f1ba0aebaf1684b10fec84bfb5"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 38853,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "552fb6e9d5a9d575b571b7bd45fe5f46df02da08",
+      "main959_path_blob": "119646f1c56b36020860f2be5447d9727f088683",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/check-pid2-represented-coordinate-v4.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "e91cb77f295be4d75a5575078aa08767c49179b0b59de3e35ca07628f6c06c2c"
+    },
+    {
+      "branch_role": "pid2",
+      "bytes": 3638,
+      "exact_same_path_main_history_successor": "b15d40dded69c4a6c8be1de99713bf3e1f552439",
+      "git_blob": "ce5e920f1038229d9550bfd646ff44bcaab5e61b",
+      "main959_path_blob": "ce5e920f1038229d9550bfd646ff44bcaab5e61b",
+      "origin_commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "path": "scripts/check-z3-pid2-algebra-self-test.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "af38b8285202cc8274f690160aecc4e0fa67fe1f0fd5b217fb18f680e0a17db2"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 88700,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "28dffffb78dee929a964bba305e45767b07c9f00",
+      "main959_path_blob": "d5ccc51930903957d9329c73571274ec0a7a07a9",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": ".github/workflows/ci.yml",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "1df7691ff9e398d48e9ab449ef05325f79686ce63bffa7293c508900ffde9d61"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 82994,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "85bca8eac4bc0261b7d073f0487d3ed54f93e48a",
+      "main959_path_blob": "18e5996237b6aeada50c3d662f5b173a2e716814",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "AGENTS.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "116e4c53e034ba8d1b379b4907c46664bb40fe77380e97f16a5565f1a21e694b"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 270068,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "2e9bd15d85c58a4d7368238f7f2d45118d60adc7",
+      "main959_path_blob": "069b4a8c55b2b31395551581ea15aea948c79cec",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "CHANGELOG.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "c2d841dbc55fca4018fc659ee67ea762bc47ff409b97742131c25b83b8a681ee"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 65091,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "f1f2678582376498212ecd4a167863668384e28b",
+      "main959_path_blob": "9d00dba1a2ce57f9dc933569e41e716bcf0182ed",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "ECOSYSTEM_CAPABILITIES.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "b139b64cf1ed344e1b71d76ccee6212bbf8368563edbe5d2f9bae552b8721c06"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 535012,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "49c537e1e1cd5b791e86e3c5ee679ea0a66d5a2b",
+      "main959_path_blob": "2a32ac067189735ad8390347132873a630bbe921",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "METHODS.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "efc7b396fe1af5e2984aa7800ab62dfe0d8c6fecb74880275bac3119a5a87952"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 43433,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "ee564faa8013c6ba777c5c58d66b5c20e96dcd70",
+      "main959_path_blob": "67a4689da0e00b041d9e570b7d7b3a5f9358e691",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "METHODS_SUMMARY.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "915c5c43656401d304c9b6c4d673829f18ac1e3fed8e319d038d7b0af7a39f20"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 27700,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "f85f2d649eeb81d638301ccb66db7d9a931e2ffa",
+      "main959_path_blob": "4e984fdaa3061c1b1cabc9901ba644dbd0da4082",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "d8454e8918bc8bab4ed4ae55de6258b8327c2cf0378d34304cef40c9823dc08b"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 113077,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "b2d6069620e2a60eab9b7321117797a2e4b3c942",
+      "main959_path_blob": "1bb2cdb538d7fafeb46a32677f3ff99636875e01",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/evidence/completion-run-ledger-2026-07-25.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical corrected account retained; current ledger receives dated supersession notice without erasing prior draft",
+      "sha256": "c9faadaf113fab33abc8dc0e80e49e4ad791a04c4f6156245d77349afee8c617"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 252098,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "aa5b78b7f27c44d12841f4f5788c99c3e1a69cbf",
+      "main959_path_blob": "605ebe3f1567d3848a19dd3b14952f96555f66f5",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/evidence/current-source-state-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical self-excluding source projection; no current acceptance, authenticity or calibration credit",
+      "sha256": "0d03992cea88a3b15a7efcd756776f4821d371fe2638f91aa8d267946b3b735b"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 38986,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "9d47f1b3bb80aa5b7122bf4272e908ab35006e83",
+      "main959_path_blob": "831890e38be1afccfdf7be871e871110b768344c",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "c44e0b666718a49bb8a0c7ae22fc2be886a9fdb1ffb8937249a36675e0487828"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 78069,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "35067794505f940756096f773e5942df2558bed3",
+      "main959_path_blob": "cf6f64602d59662b913347d6307d7576971e02ee",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/evidence/methods-summary-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "38c0a698a25d735ce0810c1c7e508cce24f9fcf80055b4c5280518085db92f4c"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 53711,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "3805c6a5ba9789f6bbd91467f623b41977e566c7",
+      "main959_path_blob": "62a5424e61d768774287db88a5a32e17c17f7129",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "9b80032f6a0fbc75fef87815ee7973d9bff184c94b4380f5e89dd890d3b8bd81"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 5278,
+      "exact_same_path_main_history_successor": "e82e83166868031adaef4bf01c4f1355718fab61",
+      "git_blob": "0614436e26371c83970fc3cec4d13db21f8f6c3b",
+      "main959_path_blob": "5503ed8db2cffefc9bb5d0b61afda2f979cbfcb8",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/evidence/sxpid2-exact-log-product-hostile-4.33.0.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical bounded hostile result; semantic rejections, policy checks, accepted scope probes and accepted limitation remain separate",
+      "sha256": "c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 40352,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "efd8d43c780a88b44b04608a846d5b1109eb265f",
+      "main959_path_blob": "295b079c8ba3d3d452cfcc443182404cbf62f6ff",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "earlier assurance/publication bytes retained; current qualifications and publication custody govern, with PID and proof scopes kept separate",
+      "sha256": "d070f083d19a3b148cf541bb1f68bd561053a2cfc5871430bd048933ee8892c7"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 44623,
+      "exact_same_path_main_history_successor": "e82e83166868031adaef4bf01c4f1355718fab61",
+      "git_blob": "054bb7d18a4545f917231a818aa659c5c6900498",
+      "main959_path_blob": "860c48dfb850423ebc56a4c02e3acda3bac3f286",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "earlier assurance/publication bytes retained; current qualifications and publication custody govern, with PID and proof scopes kept separate",
+      "sha256": "6404cd25d5a42e28c24cfe7b412b0cdcf5723f018b59cce62b6f9c6f475f4dfe"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 11541,
+      "exact_same_path_main_history_successor": "e82e83166868031adaef4bf01c4f1355718fab61",
+      "git_blob": "a25f4fb80f953fe1e9d35beae60a485ef06df514",
+      "main959_path_blob": "a25f4fb80f953fe1e9d35beae60a485ef06df514",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "retained negative lexer/inventory finding; archived production rewrite rejected; generic Lean algebra not refuted",
+      "sha256": "646639199233515b72bf81b8f2843a781ae985abfde3cd1e77aa24691840c3e0"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 1453,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "963d2dbeca4144b34075af61a6dc3691df02c156",
+      "main959_path_blob": "d1b158d064e987ff430abe706491d1a7de3c26b4",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "crates/pid-core/identity/software-identity-reference-v1.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical software-identity reference; no source/binary authenticity or compatibility claim",
+      "sha256": "d6c34a4bbb354a970e56456f2433f1b189a873c2106487fe13d4415d65ebe63b"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 71752,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "66f7fcfea564a32d11b44a851bc0f0717d341ffd",
+      "main959_path_blob": "aab6b25ba9f79a7a8fd9351677bbcbdd546c962b",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "ecosystem-capabilities.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "4f7dd51bba7f7136ab6db90c792ebccb650e2892368d3de41b21c749903af3a7"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 50292,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "da71739554fc9082eba991ef0874580db6bdbee7",
+      "main959_path_blob": "2ab29ef4f05e9452470b3aa2bf4b7377774b06f5",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "justfile",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "1aaa8c2be28d908ee55c82690fd668a85ace7dc045c3356b22bc265576a378b7"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 439548,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "64d80e17cb20a88dfdb9d9033b1802a682d5232c",
+      "main959_path_blob": "9226907a735c76c5a6c2cc8e5cc44d287ed7d2e2",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "method-catalog.json",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical narrative/catalog/projection retained; no automatic current scientific or execution credit",
+      "sha256": "5c826dfe4e6a8ff14128f9dba41d67ea032c776d1f44e347d9ac6e6dfc3d8ab7"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 371423,
+      "exact_same_path_main_history_successor": "e82e83166868031adaef4bf01c4f1355718fab61",
+      "git_blob": "b7caf169ba0e5f634f0ebfbea4d124a3dd2b00c1",
+      "main959_path_blob": "57bfd83184f3dd7a160d2e2bef5dce195a843bf4",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "output/pdf/exact-log-product-sxpid2-assurance.pdf",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "earlier assurance/publication bytes retained; current qualifications and publication custody govern, with PID and proof scopes kept separate",
+      "sha256": "0eea7f2ff8c7f2538e5bd1b73ab447205d4b9d368fccf941f4a40dc7f1877474"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 229758,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "4d7233362a51d758a5cac0907539ca19554f644c",
+      "main959_path_blob": "bf29661f6ebe4d684210ec5ee495de0ecaf3d233",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/README.md",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "superseded operational instructions retained as inert history; current instructions and terminal claim boundaries govern",
+      "sha256": "69984b44b35cca425ed0ec965b72dde11e966b71e4802dfc1a6817f36f80b904"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 129662,
+      "exact_same_path_main_history_successor": "e82e83166868031adaef4bf01c4f1355718fab61",
+      "git_blob": "3995cd775219f20dfedaee3b6942c2858bda8649",
+      "main959_path_blob": "ee29155f4cbe9e7c5200c42923b2d2a28deb0329",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/check-certified-sxpid2-claim-self-test.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "d546a2c9910e42b54d1c12b844abf2ec7cf9a2dd0dd2d98549746c1d81a43a6b"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 89600,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "b669e8293310b308ede6634448952fec251196f0",
+      "main959_path_blob": "d3119773f1234500234fda4af593117af0feefa5",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/check-certified-sxpid2-claim.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "79472ca5a14104205cea2da04d935c91fa6ebafa15c27230e38b1300e78c1ee9"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 72358,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "98f3b2b67db791d102e0cb71b5e8bad5fbd398f5",
+      "main959_path_blob": "d9b0c150e4af03d2205fd9b2489030fb7feca927",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/check-ecosystem-capabilities.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "cf54c3e5798297aa7b497ff95ba274edc1cc6f3bdb480dad212d380f74b5fa70"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 31592,
+      "exact_same_path_main_history_successor": "e82e83166868031adaef4bf01c4f1355718fab61",
+      "git_blob": "0b47db9664b6ccc1bc764f5ecdb4b3ad18d5261a",
+      "main959_path_blob": "958962ba0b0fa1b8c4986b2607f67b93dfbd188b",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/check-lean-exact-log-product-self-test.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "9aa7ec6ec1636dcfe3fe8e5667747c4a1e762dae07768f34daa19d3db7dc593c"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 120874,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "ca1b911198db67723014e9f3a36a12a4f8073a00",
+      "main959_path_blob": "e39e1fc7bd168e1f411988970dc85c847ec51ad1",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/check-lean-toolchain-freeze.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "83094930cc3df64e57d23d38349632083fbcb5e961f6a783fe5537e66cb7e785"
+    },
+    {
+      "branch_role": "exact-log",
+      "bytes": 72809,
+      "exact_same_path_main_history_successor": null,
+      "git_blob": "6fc1a2d54ffe6bc6cff053a0275e3e8032fc2c0e",
+      "main959_path_blob": "112f333c5f121f94cd8bfcd79204d1efc7a9f4c5",
+      "origin_commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "path": "scripts/check-method-catalog.py",
+      "preservation": "exact object in this bundle",
+      "scientific_status": "historical checker/control bytes; do not execute or restore obsolete pins/workflows; exact-byte successor does not prove checker correctness",
+      "sha256": "df8e245e70077e5af0f9911742bfb483268b1cb3ca2746da53159031c803af98"
+    }
+  ],
+  "created_utc": "2026-09-19T14:57:14.441623+00:00",
+  "durable_publication": {
+    "access": "Already-public repository history; the original repository access rules apply.",
+    "containing_commit": "A separate publication receipt must bind the exact remote-main commit containing this path.",
+    "exact_remote_blob_retrieval": "Not covered by this dated local-recovery receipt. A separate record must verify the published Git blob, byte length and SHA-256 and repeat fresh recovery.",
+    "license": "Original repository and per-file licenses unchanged; archiving grants no new license.",
+    "repository_path": "audit/archive/exact-log-pid2-branches-20260919/exact-log-pid2-history-from-855605a.bundle",
+    "required_anchor": "commit reachable from observed remote main",
+    "retention": "remote-main Git history under repository retention/no-rewrite assumptions; not permanent scholarly storage"
+  },
+  "failed_attempts": [
+    {
+      "exit_code": -15,
+      "kind": "stopped redundant full-history network fetch",
+      "reason": "Stopped owned process after observing slow transfer of already-local main history; preserved raw streams and partial pack. Restart used exact local-main bootstrap and fetched only the three authorized remote refs. No failed attempt is counted as success."
+    }
+  ],
+  "native_recovery": {
+    "after_object_count": 8792,
+    "all201_prior_reconstructed_objects_exact_fetched_and_recovered": true,
+    "all59_changed_versions_and_three_commit_trees_exact": true,
+    "before_all75_non_main_objects_missing": true,
+    "before_object_set_exact_main959": true,
+    "commands": [
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "fetch",
+          "--no-tags",
+          "--no-recurse-submodules",
+          "https://github.com/sepahead/pid-rs.git",
+          "refs/heads/main:refs/heads/main",
+          "refs/heads/sepahead/exact-log-hostile-v1:refs/heads/sepahead/exact-log-hostile-v1",
+          "refs/heads/sepahead/pid2-rev4-assurance-v1:refs/heads/sepahead/pid2-rev4-assurance-v1"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:48:23.186756+00:00",
+        "label": "108-fetch-authorized-remote-delta",
+        "started_utc": "2026-09-19T14:47:58.553761+00:00",
+        "stderr_bytes": 212,
+        "stderr_path_redacted_display": "From https://github.com/sepahead/pid-rs\n * [new branch]      sepahead/exact-log-hostile-v1 -> sepahead/exact-log-hostile-v1\n * [new branch]      sepahead/pid2-rev4-assurance-v1 -> sepahead/pid2-rev4-assurance-v1\n",
+        "stderr_sha256": "a046aba6d87bc5cd85e3dfad658c7ceb25c3ee439093a47dc3ef436cf96f725a",
+        "stdin_sha256": null,
+        "stdout_bytes": 0,
+        "stdout_path_redacted_display": "",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stop_condition": null,
+        "timeout_seconds": 720
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "fsck",
+          "--full",
+          "--strict",
+          "--no-reflogs"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:48:24.412154+00:00",
+        "label": "110-private-fetch-fsck",
+        "started_utc": "2026-09-19T14:48:23.391250+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 0,
+        "stdout_path_redacted_display": "",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "cat-file",
+          "--batch"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:39.913500+00:00",
+        "label": "200-fetched-all-prior-objects",
+        "started_utc": "2026-09-19T14:49:39.707412+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": "2d1a3d6d4ee7a78401e26e3d26bc14b9f5eaf3aa9c04b7f1b95cd27e34d46d9b",
+        "stdout_bytes": 7169257,
+        "stdout_sha256": "23d618b624faa0d23df088904bd2ef3ee7db1a1f78d976d82cda8cfa91c44ab5",
+        "stop_condition": null,
+        "timeout_seconds": 45
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "rev-list",
+          "--objects",
+          "--no-object-names",
+          "refs/heads/sepahead/exact-log-hostile-v1",
+          "refs/heads/sepahead/pid2-rev4-assurance-v1",
+          "^855605a2a2098fa82fccb07521bae5cc382fa747"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:40.131951+00:00",
+        "label": "201-native-branch-object-delta",
+        "started_utc": "2026-09-19T14:49:39.924867+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 3977,
+        "stdout_path_redacted_display": "80443f9f2fa66452237013c9881cfaeeb984e5c1\ncaf8c7be3e2249df8e959c8940632fd22ed09923\n03c0980f256c2a66b3d64bff1686a8d116d76138\n6ffb0a5f7f3318b75611e5dea2a79566ce870685\n90c84b4007611eb6b851b16f70eda1a9cc8fb09c\n52a1ff42d7a203d92f153dc6d9507f8019e72f55\n28dffffb78dee929a964bba305e45767b07c9f00\n85bca8eac4bc0261b7d073f0487d3ed54f93e48a\n2e9bd15d85c58a4d7368238f7f2d45118d60adc7\nf1f2678582376498212ecd4a167863668384e28b\n49c537e1e1cd5b791e86e3c5ee679ea0a66d5a2b\nee564faa8013c6ba777c5c58d66b5c20e96dcd70\nf85f2d649eeb81d638301ccb66db7d9a931e2ffa\naa1e06226c6f8161e798a27d07cf1a194ab94d74\nd8ece897b9936c6e3c18297162f3dc37c9217749\nb2d6069620e2a60eab9b7321117797a2e4b3c942\naa5b78b7f27c44d12841f4f5788c99c3e1a69cbf\n9d47f1b3bb80aa5b7122bf4272e908ab35006e83\n35067794505f940756096f773e5942df2558bed3\n3805c6a5ba9789f6bbd91467f623b41977e566c7\n0614436e26371c83970fc3cec4d13db21f8f6c3b\na9c6d3c40f69d6d7ea6c7589354e19e68adcd040\nefd8d43c780a88b44b04608a846d5b1109eb265f\n9801959ae6cc0174ac0f91758553601c8749e1bf\n054bb7d18a4545f917231a818aa659c5c6900498\nc181278b1b282e2be7c738706e886754c9c7be01\naf75dd451b0b19f4c38762a560100d2ac18d2b83\nb8f495f86e51c2885c1a880975782376ba14935b\na25f4fb80f953fe1e9d35beae60a485ef06df514\n59e759328a354de65316e9367a9ebb309eb84275\n3045674c1d4deb031e19fde43e684e796df31913\n207bf69ba6d948cd4af6722f51cdd759a8e42358\n963d2dbeca4144b34075af61a6dc3691df02c156\n66f7fcfea564a32d11b44a851bc0f0717d341ffd\nda71739554fc9082eba991ef0874580db6bdbee7\n64d80e17cb20a88dfdb9d9033b1802a682d5232c\ne437d7c3d457a8451efd1f1ae370d7b18f8b82f2\n645153676c637a9ab3a42e9e27a556ce252c47e3\nb7caf169ba0e5f634f0ebfbea4d124a3dd2b00c1\n955c0b82c4f72c5557e54f857f95c5f4dbd37937\n4d7233362a51d758a5cac0907539ca19554f644c\n3995cd775219f20dfedaee3b6942c2858bda8649\nb669e8293310b308ede6634448952fec251196f0\n98f3b2b67db791d102e0cb71b5e8bad5fbd398f5\n0b47db9664b6ccc1bc764f5ecdb4b3ad18d5261a\nca1b911198db67723014e9f3a36a12a4f8073a00\n6fc1a2d54ffe6bc6cff053a0275e3e8032fc2c0e\n18ef5e9907d9ab0c30bb43bd383023b73586b8fa\n56b6f38d3b07ac119c3ca5e28135db45d5c503d6\n6608bcf0c217b8906ab40f4aca8f8cd248f1efe2\n88529e48c64715c6b6e85f633d9c9e751999646e\n574876709709335706b5585ec051448e660241a1\nefc256713712cc47e2429ea3f41716b2692fa6df\nd5eba26a06973cefba97d57f9091b6e063a782a8\n33affce73b556b7f272ad9735e620b0f19c546bd\n7b3f305828896ef61a13fe48a8648e9990678813\nf8a27a781c04003051faeba69dbca84f54e6acb4\n208e0ac47bde326b905272536a94ea2ce23704a9\n37b2e97f2aaa178aed4dbe6e49a1dbffe11188cb\n3c76ae4b391da24be43488eea9d71898c498c038\nf6b6b7c9a1607644f0465efe4760d2ecb03932fc\n600a49b5948d057ce6f081128f4a273581ba8a27\n8d6fbf6d06c28944c1af60f05fb8c856ad9a7727\nc484091c47d10f4b47dadd4b1d13a3c89147c0ca\n8188f3837c25137cc808817154c7e6d64eaa7d9c\n40cd1b6a290cd2c50f63f9f8fea3d50e53b93e04\nd16416741206220c2344e0b6839d8756e540a3e9\n8b7fae1236113433e741215b48f6c7afb6fd1d2c\n1c13d35a0aa49848df4e09d4506b1c921f7378e9\nfd0e1b4bf35906af1d6f7fe07fa63ae67860770c\n8b71d64c5ce4fa3793d797af229b4fe507ad6e73\ne95bdea9bf8e88f7f8528a18a214f75641893e73\n6d26ff84a67f24eb409bf3f81f6affe0de524ff4\n7975b3236d2263413273024e26d8417d109b3620\n433938ab6f2b747b2e38bdc0640c1c8b35efe0e9\n0fec10dec35de7c6bfe8dec455cf3325d87c665d\n22ac733b81d14b886fac05653f0486d22d16974b\n35940afa0fbcb8b37dd7bedab1081888b5f8bb19\n6303423dd5f3723f4c81aa18cddbea918cb41a6f\ned0aa83f7d01aa7373802c8bfb144830c1f10d1f\n26fda624ba1e897e8c7479d93be38b419e802205\n3a75efc7fd57885f2bf95885f72751704ef67838\n65b37322b6fc65cb3c0a3586024bd19580403e62\n95b63b4e5e5267966defe2d9ffddbc5aa6eb6585\n855e5406e8b9ea7225e3b0d20708484e9c1c5c2b\n8b135e2279529ae0d48eb5208837fc9c99f7cac2\n1ec2fc91bbf54806fd24db3bca27076830d0286c\n9b9815248a6462821b93fed7658cb5ee55cfaecb\n552fb6e9d5a9d575b571b7bd45fe5f46df02da08\nce5e920f1038229d9550bfd646ff44bcaab5e61b\ne314ffe54e9ffbbe638537d65772af6327861c54\nc3d15a2dd59117309f5da9f2b9feadff18316340\nf57cf2744e36739601729db06192ad2539784ddf\n5a83efca691850380c33e3b5ca9335aacc9152ed\n41470ff422c3861e9a6902e01a4d5b5bb6bd595d\n9ff6438265a532d27695031bfe9f1d28abf9020a\nb61b39ecd7846c5c8a9455a28411cee9dfb4fa69\n",
+        "stdout_sha256": "18e9fdccda3ca8c30eecfffa497f4ad63168462b2042444af769e0b049380e4e",
+        "stop_condition": null,
+        "timeout_seconds": 45
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "bundle",
+          "create",
+          "<private-lane>/exact-log-pid2-history-from-855605a.bundle",
+          "refs/heads/sepahead/exact-log-hostile-v1",
+          "refs/heads/sepahead/pid2-rev4-assurance-v1",
+          "^855605a2a2098fa82fccb07521bae5cc382fa747"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:41.166708+00:00",
+        "label": "204-create-two-branch-incremental-bundle",
+        "started_utc": "2026-09-19T14:49:40.960370+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 0,
+        "stdout_path_redacted_display": "",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "bundle",
+          "list-heads",
+          "<private-lane>/exact-log-pid2-history-from-855605a.bundle"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:41.372843+00:00",
+        "label": "205-list-bundle-heads",
+        "started_utc": "2026-09-19T14:49:41.167178+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 166,
+        "stdout_path_redacted_display": "80443f9f2fa66452237013c9881cfaeeb984e5c1 refs/heads/sepahead/exact-log-hostile-v1\ncaf8c7be3e2249df8e959c8940632fd22ed09923 refs/heads/sepahead/pid2-rev4-assurance-v1\n",
+        "stdout_sha256": "6b5b195586a475ada94e0aef0db8629b4df1a89e194436a657ea2009f38733e2",
+        "stop_condition": null,
+        "timeout_seconds": 45
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "bundle",
+          "verify",
+          "<private-lane>/exact-log-pid2-history-from-855605a.bundle"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:41.575393+00:00",
+        "label": "206-verify-bundle-in-fetch-repo",
+        "started_utc": "2026-09-19T14:49:41.373202+00:00",
+        "stderr_bytes": 166,
+        "stderr_path_redacted_display": "<private-lane>/exact-log-pid2-history-from-855605a.bundle is okay\n",
+        "stderr_sha256": "641b5331c00c8f9e7fe16e093e95e81035454e850e2c930a8b8f4d993fc1620f",
+        "stdin_sha256": null,
+        "stdout_bytes": 314,
+        "stdout_path_redacted_display": "The bundle contains these 2 refs:\n80443f9f2fa66452237013c9881cfaeeb984e5c1 refs/heads/sepahead/exact-log-hostile-v1\ncaf8c7be3e2249df8e959c8940632fd22ed09923 refs/heads/sepahead/pid2-rev4-assurance-v1\nThe bundle requires this ref:\n855605a2a2098fa82fccb07521bae5cc382fa747 \nThe bundle uses this hash algorithm: sha1\n",
+        "stdout_sha256": "95bae033f32a7f87f0880e782fd0e13009a817ec57eb8c3647830d0423fd9aff",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "index-pack",
+          "--stdin",
+          "--fix-thin",
+          "--strict"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:41.787554+00:00",
+        "label": "207-native-index-original-pack",
+        "started_utc": "2026-09-19T14:49:41.576003+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": "0a95d575e4763a9f73fa95f6f7df46fb352a8199ccb0c485735a5610c686a62b",
+        "stdout_bytes": 46,
+        "stdout_path_redacted_display": "pack\t3281dbf025834862d06fc0af9cdb933a7fefc0ee\n",
+        "stdout_sha256": "f3af449c5c1ede24f02b576b76ecab46e9a6a8ba6f34da1a20b6f20d17f26f61",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/seeded-fetched.git",
+          "verify-pack",
+          "-v",
+          "<private-lane>/seeded-fetched.git/objects/pack/pack-3281dbf025834862d06fc0af9cdb933a7fefc0ee.idx"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:49:41.994137+00:00",
+        "label": "208-native-verify-pack-index",
+        "started_utc": "2026-09-19T14:49:41.788041+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 12833,
+        "stdout_path_redacted_display": "80443f9f2fa66452237013c9881cfaeeb984e5c1 commit 262 180 12\ncaf8c7be3e2249df8e959c8940632fd22ed09923 commit 272 188 192\n03c0980f256c2a66b3d64bff1686a8d116d76138 commit 263 183 380\n6ffb0a5f7f3318b75611e5dea2a79566ce870685 tree   419 452 563 1 0c9fd5c10612df505086c670364a88338ed14403\n90c84b4007611eb6b851b16f70eda1a9cc8fb09c tree   27 58 1015 1 773ea6d4efe7117c12f1593c143dfa3397d74f23\n52a1ff42d7a203d92f153dc6d9507f8019e72f55 tree   46 79 1073 1 70628ec0bad09c8fff1052602b3dd18fc4a46ad8\n28dffffb78dee929a964bba305e45767b07c9f00 blob   66 76 1152 1 033a15b4018d755bb660155c6cbe75e54c2fe884\n85bca8eac4bc0261b7d073f0487d3ed54f93e48a blob   199 172 1228 1 2046237b9d1ea5ccfbe2465f640b204855fc6949\n2e9bd15d85c58a4d7368238f7f2d45118d60adc7 blob   1485 872 1400 1 4f046ee0e43adc47137681f0742144495ee63a66\nf1f2678582376498212ecd4a167863668384e28b blob   79 107 2272 1 97f31c4e10a8e6ace2b1fdf7a2da1c0d992be302\n49c537e1e1cd5b791e86e3c5ee679ea0a66d5a2b blob   1474 924 2379 1 cbf10a7ff58559b825a7f3345275fc8e773b90f2\nee564faa8013c6ba777c5c58d66b5c20e96dcd70 blob   98 128 3303 1 4b67b2070a382f1fb509c74d7488542350f26788\nf85f2d649eeb81d638301ccb66db7d9a931e2ffa blob   79 105 3431 1 df8d106889b57fcc9bc90795875d24514ec80e3e\naa1e06226c6f8161e798a27d07cf1a194ab94d74 tree   63 94 3536 1 15383d376d31ba940c7c395e37f601b7399578f1\nd8ece897b9936c6e3c18297162f3dc37c9217749 tree   215 248 3630 1 3794b4c960ed3efdcd5bd7347d73e292fef81ff3\nb2d6069620e2a60eab9b7321117797a2e4b3c942 blob   2895 1535 3878 1 1bb2cdb538d7fafeb46a32677f3ff99636875e01\naa5b78b7f27c44d12841f4f5788c99c3e1a69cbf blob   2838 1972 5413 1 b9071f99b6a1c0124c820f015e09d3cb4da3e832\n9d47f1b3bb80aa5b7122bf4272e908ab35006e83 blob   230 211 7385 1 ae1889a53bcc9062c82514f89ff12d34f97b16d6\n35067794505f940756096f773e5942df2558bed3 blob   113 144 7596 1 e16990c0d66e7780efc9e3fc7cbd8eab417fce0d\n3805c6a5ba9789f6bbd91467f623b41977e566c7 blob   157 126 7740 1 fbadc9f17d7b305061f93e23552ce7ae6bc20952\n0614436e26371c83970fc3cec4d13db21f8f6c3b blob   5278 2161 7866\na9c6d3c40f69d6d7ea6c7589354e19e68adcd040 tree   55 88 10027 1 ced91b787fb1870d4ee3892221aaeaae675ceee3\nefd8d43c780a88b44b04608a846d5b1109eb265f blob   18675 7533 10115 1 018153e64ab3e1db6d170b57c5f9bbef35258c8d\n9801959ae6cc0174ac0f91758553601c8749e1bf tree   32 63 17648 1 e256d38a4ab1abe650e468756154360813f05e8d\n054bb7d18a4545f917231a818aa659c5c6900498 blob   17454 7039 17711 1 eb9a9040959ce2e56e8c1c8f0a0d5e99a38442ae\nc181278b1b282e2be7c738706e886754c9c7be01 tree   30 61 24750 1 cc6e241346aed323ddc25a82a9d8cee4731203fd\naf75dd451b0b19f4c38762a560100d2ac18d2b83 tree   32 63 24811 1 6cbdd921dc5e94a47f660ba137b7cbbeb0fe5f02\nb8f495f86e51c2885c1a880975782376ba14935b tree   76 107 24874 1 6598e7d8f790397eaae4a1fd01b8b500ce5f0427\na25f4fb80f953fe1e9d35beae60a485ef06df514 blob   11541 4802 24981\n59e759328a354de65316e9367a9ebb309eb84275 tree   109 105 29783\n3045674c1d4deb031e19fde43e684e796df31913 tree   32 63 29888 1 28cfa238bae8ae64ed6945afa0135d1e9ea50f41\n207bf69ba6d948cd4af6722f51cdd759a8e42358 tree   63 74 29951\n963d2dbeca4144b34075af61a6dc3691df02c156 blob   77 101 30025 1 e4883f2eb6571991dbc25109363689378ee0ca3a\n66f7fcfea564a32d11b44a851bc0f0717d341ffd blob   87 117 30126 1 4d61a6aa623cea1dae4ff018e3b4864426d76fb3\nda71739554fc9082eba991ef0874580db6bdbee7 blob   98 98 30243 1 0625050dd7a0a2a94fe4c386e0e78781a2c1958a\n64d80e17cb20a88dfdb9d9033b1802a682d5232c blob   1108 736 30341 1 e2250829f5bdd7cac1697b66ed931e2ac10eff60\ne437d7c3d457a8451efd1f1ae370d7b18f8b82f2 tree   30 39 31077\n645153676c637a9ab3a42e9e27a556ce252c47e3 tree   32 65 31116 1 c8d93a403a9aa4706e2f5f8e45e4cc8651565bb8\nb7caf169ba0e5f634f0ebfbea4d124a3dd2b00c1 blob   185360 185258 31181 1 01f2a088ad6350b3f2c699c3085cb0e68ae6f4d6\n955c0b82c4f72c5557e54f857f95c5f4dbd37937 tree   219 252 216439 1 0e18f4fc31a6c4bc8f40f5545c983548f7c4069e\n4d7233362a51d758a5cac0907539ca19554f644c blob   2078 1236 216691 1 65179a4ce173ea40e117a0acf9d531df3b127402\n3995cd775219f20dfedaee3b6942c2858bda8649 blob   5837 2508 217927 1 066e72276762b7d142467444fc40ddcc6cf3bc1d\nb669e8293310b308ede6634448952fec251196f0 blob   6171 2540 220435 1 a4359a495e562f1877a87c61b27fa493e039ad0b\n98f3b2b67db791d102e0cb71b5e8bad5fbd398f5 blob   88 118 222975 1 43ef963a2420b7662d0ba4c7d6aed8bf734b5bed\n0b47db9664b6ccc1bc764f5ecdb4b3ad18d5261a blob   31592 7441 223093\nca1b911198db67723014e9f3a36a12a4f8073a00 blob   525 397 230534 1 762010199e942b801fdab6cb44bf60d4de4b06ac\n6fc1a2d54ffe6bc6cff053a0275e3e8032fc2c0e blob   83 111 230931 1 860fd1cdd092eb29bf09d76b966a96cf5db41118\n18ef5e9907d9ab0c30bb43bd383023b73586b8fa tree   441 474 231042 1 0c9fd5c10612df505086c670364a88338ed14403\n56b6f38d3b07ac119c3ca5e28135db45d5c503d6 tree   27 60 231516 1 773ea6d4efe7117c12f1593c143dfa3397d74f23\n6608bcf0c217b8906ab40f4aca8f8cd248f1efe2 tree   46 77 231576 1 70628ec0bad09c8fff1052602b3dd18fc4a46ad8\n88529e48c64715c6b6e85f633d9c9e751999646e blob   226 142 231653 1 033a15b4018d755bb660155c6cbe75e54c2fe884\n574876709709335706b5585ec051448e660241a1 blob   924 618 231795 1 2046237b9d1ea5ccfbe2465f640b204855fc6949\nefc256713712cc47e2429ea3f41716b2692fa6df blob   1753 1021 232413 1 4f046ee0e43adc47137681f0742144495ee63a66\nd5eba26a06973cefba97d57f9091b6e063a782a8 blob   77 104 233434 1 97f31c4e10a8e6ace2b1fdf7a2da1c0d992be302\n33affce73b556b7f272ad9735e620b0f19c546bd blob   2799 1572 233538 1 cbf10a7ff58559b825a7f3345275fc8e773b90f2\n7b3f305828896ef61a13fe48a8648e9990678813 blob   83 110 235110 1 4b67b2070a382f1fb509c74d7488542350f26788\nf8a27a781c04003051faeba69dbca84f54e6acb4 blob   1393 857 235220 1 3d7303ee7656c27d6fd771c055304960908ff1ba\n208e0ac47bde326b905272536a94ea2ce23704a9 blob   36065 13705 236077\n37b2e97f2aaa178aed4dbe6e49a1dbffe11188cb blob   77 102 249782 1 df8d106889b57fcc9bc90795875d24514ec80e3e\n3c76ae4b391da24be43488eea9d71898c498c038 tree   30 63 249884 1 15383d376d31ba940c7c395e37f601b7399578f1\nf6b6b7c9a1607644f0465efe4760d2ecb03932fc tree   203 234 249947 1 3794b4c960ed3efdcd5bd7347d73e292fef81ff3\n600a49b5948d057ce6f081128f4a273581ba8a27 blob   2659 1882 250181 1 b9071f99b6a1c0124c820f015e09d3cb4da3e832\n8d6fbf6d06c28944c1af60f05fb8c856ad9a7727 blob   238 220 252063 1 ae1889a53bcc9062c82514f89ff12d34f97b16d6\nc484091c47d10f4b47dadd4b1d13a3c89147c0ca blob   112 145 252283 1 e16990c0d66e7780efc9e3fc7cbd8eab417fce0d\n8188f3837c25137cc808817154c7e6d64eaa7d9c blob   155 126 252428 1 fbadc9f17d7b305061f93e23552ce7ae6bc20952\n40cd1b6a290cd2c50f63f9f8fea3d50e53b93e04 blob   2844 1468 252554\nd16416741206220c2344e0b6839d8756e540a3e9 tree   109 105 254022\n8b7fae1236113433e741215b48f6c7afb6fd1d2c tree   90 117 254127 1 28cfa238bae8ae64ed6945afa0135d1e9ea50f41\n1c13d35a0aa49848df4e09d4506b1c921f7378e9 tree   63 73 254244\nfd0e1b4bf35906af1d6f7fe07fa63ae67860770c blob   75 99 254317 1 e4883f2eb6571991dbc25109363689378ee0ca3a\n8b71d64c5ce4fa3793d797af229b4fe507ad6e73 tree   65 95 254416 1 ff73c11604f11a4301c9ae74f52bfac70d9394e4\ne95bdea9bf8e88f7f8528a18a214f75641893e73 tree   35 46 254511\n6d26ff84a67f24eb409bf3f81f6affe0de524ff4 blob   1003 691 254557 1 4d98337c450ce6f8900b33c3ac7088981263314f\n7975b3236d2263413273024e26d8417d109b3620 blob   13434 3581 255248 1 1d2533ac2732a5ba35fb52d38d558b4c5e1f1609\n433938ab6f2b747b2e38bdc0640c1c8b35efe0e9 tree   33 66 258829 1 8731542f2a1d3d3c11d1a21ede0f8b45ca43aef6\n0fec10dec35de7c6bfe8dec455cf3325d87c665d blob   1551 504 258895 1 6c561f7ccf947a5f465bfe75533e5e68bd8ef853\n22ac733b81d14b886fac05653f0486d22d16974b tree   28 59 259399 1 03df11dd8c300174a51d5c52bbfd4659d26ab53e\n35940afa0fbcb8b37dd7bedab1081888b5f8bb19 tree   96 97 259458\n6303423dd5f3723f4c81aa18cddbea918cb41a6f blob   4236 1485 259555 1 3b9e5c211532b65112c97cdc108f5446e9764613\ned0aa83f7d01aa7373802c8bfb144830c1f10d1f blob   86 116 261040 1 4d61a6aa623cea1dae4ff018e3b4864426d76fb3\n26fda624ba1e897e8c7479d93be38b419e802205 blob   309 206 261156 1 0625050dd7a0a2a94fe4c386e0e78781a2c1958a\n3a75efc7fd57885f2bf95885f72751704ef67838 blob   2304 1412 261362 1 e2250829f5bdd7cac1697b66ed931e2ac10eff60\n65b37322b6fc65cb3c0a3586024bd19580403e62 tree   291 298 262774 1 0e18f4fc31a6c4bc8f40f5545c983548f7c4069e\n95b63b4e5e5267966defe2d9ffddbc5aa6eb6585 blob   1712 1036 263072 1 65179a4ce173ea40e117a0acf9d531df3b127402\n855e5406e8b9ea7225e3b0d20708484e9c1c5c2b blob   87 117 264108 1 43ef963a2420b7662d0ba4c7d6aed8bf734b5bed\n8b135e2279529ae0d48eb5208837fc9c99f7cac2 blob   381 312 264225 1 762010199e942b801fdab6cb44bf60d4de4b06ac\n1ec2fc91bbf54806fd24db3bca27076830d0286c blob   83 110 264537 1 860fd1cdd092eb29bf09d76b966a96cf5db41118\n9b9815248a6462821b93fed7658cb5ee55cfaecb blob   13591 3847 264647\n552fb6e9d5a9d575b571b7bd45fe5f46df02da08 blob   38853 9489 268494\nce5e920f1038229d9550bfd646ff44bcaab5e61b blob   1522 754 277983 1 c26d8411f4d8b7971ba66fc939a831c605b5d526\ne314ffe54e9ffbbe638537d65772af6327861c54 tree   84 117 278737 1 0c9fd5c10612df505086c670364a88338ed14403\nc3d15a2dd59117309f5da9f2b9feadff18316340 blob   30 41 278854 2 efc256713712cc47e2429ea3f41716b2692fa6df\nf57cf2744e36739601729db06192ad2539784ddf tree   30 63 278895 1 15383d376d31ba940c7c395e37f601b7399578f1\n5a83efca691850380c33e3b5ca9335aacc9152ed tree   37 68 278958 1 3794b4c960ed3efdcd5bd7347d73e292fef81ff3\n41470ff422c3861e9a6902e01a4d5b5bb6bd595d blob   499 417 279026 1 b9071f99b6a1c0124c820f015e09d3cb4da3e832\n9ff6438265a532d27695031bfe9f1d28abf9020a tree   109 106 279443\nb61b39ecd7846c5c8a9455a28411cee9dfb4fa69 tree   60 91 279549 1 28cfa238bae8ae64ed6945afa0135d1e9ea50f41\n0c9fd5c10612df505086c670364a88338ed14403 tree   2810 2160 279640\n773ea6d4efe7117c12f1593c143dfa3397d74f23 tree   171 170 281800\n70628ec0bad09c8fff1052602b3dd18fc4a46ad8 tree   675 452 281970\n033a15b4018d755bb660155c6cbe75e54c2fe884 blob   88455 19184 282422\n2046237b9d1ea5ccfbe2465f640b204855fc6949 blob   82673 34182 301606\n4f046ee0e43adc47137681f0742144495ee63a66 blob   268584 116097 335788\n97f31c4e10a8e6ace2b1fdf7a2da1c0d992be302 blob   65091 15308 451885\ncbf10a7ff58559b825a7f3345275fc8e773b90f2 blob   533476 126811 467193\n4b67b2070a382f1fb509c74d7488542350f26788 blob   43433 9606 594004\ndf8d106889b57fcc9bc90795875d24514ec80e3e blob   27700 8753 603610\n15383d376d31ba940c7c395e37f601b7399578f1 tree   285 278 612363\n3794b4c960ed3efdcd5bd7347d73e292fef81ff3 tree   15656 6986 612641\n1bb2cdb538d7fafeb46a32677f3ff99636875e01 blob   111323 35691 619627\nb9071f99b6a1c0124c820f015e09d3cb4da3e832 blob   251360 67535 655318\nae1889a53bcc9062c82514f89ff12d34f97b16d6 blob   38986 8074 722853\ne16990c0d66e7780efc9e3fc7cbd8eab417fce0d blob   78069 12087 730927\nfbadc9f17d7b305061f93e23552ce7ae6bc20952 blob   53711 10925 743014\nced91b787fb1870d4ee3892221aaeaae675ceee3 tree   668 581 753939\n018153e64ab3e1db6d170b57c5f9bbef35258c8d blob   21568 9348 754520\ne256d38a4ab1abe650e468756154360813f05e8d tree   1433 1023 763868\neb9a9040959ce2e56e8c1c8f0a0d5e99a38442ae blob   26836 11149 764891\ncc6e241346aed323ddc25a82a9d8cee4731203fd tree   325 257 776040\n6cbdd921dc5e94a47f660ba137b7cbbeb0fe5f02 tree   832 618 776297\n6598e7d8f790397eaae4a1fd01b8b500ce5f0427 tree   177 124 776915\n28cfa238bae8ae64ed6945afa0135d1e9ea50f41 tree   402 366 777039\ne4883f2eb6571991dbc25109363689378ee0ca3a blob   1453 578 777405\n4d61a6aa623cea1dae4ff018e3b4864426d76fb3 blob   71752 14127 777983\n0625050dd7a0a2a94fe4c386e0e78781a2c1958a blob   50074 9822 792110\ne2250829f5bdd7cac1697b66ed931e2ac10eff60 blob   438158 98468 801932\nc8d93a403a9aa4706e2f5f8e45e4cc8651565bb8 tree   1447 941 900400\n01f2a088ad6350b3f2c699c3085cb0e68ae6f4d6 blob   343553 336062 901341\n0e18f4fc31a6c4bc8f40f5545c983548f7c4069e tree   15197 7306 1237403\n65179a4ce173ea40e117a0acf9d531df3b127402 blob   227470 92068 1244709\n066e72276762b7d142467444fc40ddcc6cf3bc1d blob   119822 25002 1336777\na4359a495e562f1877a87c61b27fa493e039ad0b blob   82193 23270 1361779\n43ef963a2420b7662d0ba4c7d6aed8bf734b5bed blob   72358 19767 1385049\n762010199e942b801fdab6cb44bf60d4de4b06ac blob   120874 37879 1404816\n860fd1cdd092eb29bf09d76b966a96cf5db41118 blob   72809 20064 1442695\n3d7303ee7656c27d6fd771c055304960908ff1ba blob   39024 17485 1462759\nff73c11604f11a4301c9ae74f52bfac70d9394e4 tree   1286 1057 1480244\n4d98337c450ce6f8900b33c3ac7088981263314f blob   191402 49961 1481301\n1d2533ac2732a5ba35fb52d38d558b4c5e1f1609 blob   61738 16865 1531262\n8731542f2a1d3d3c11d1a21ede0f8b45ca43aef6 tree   2034 1494 1548127\n6c561f7ccf947a5f465bfe75533e5e68bd8ef853 blob   16434 4609 1549621\n03df11dd8c300174a51d5c52bbfd4659d26ab53e tree   385 348 1554230\n3b9e5c211532b65112c97cdc108f5446e9764613 blob   29464 7372 1554578\nc26d8411f4d8b7971ba66fc939a831c605b5d526 blob   2032 916 1561950\nnon delta: 65 objects\nchain length = 1: 78 objects\nchain length = 2: 1 object\n<private-lane>/seeded-fetched.git/objects/pack/pack-3281dbf025834862d06fc0af9cdb933a7fefc0ee.pack: ok\n",
+        "stdout_sha256": "322698e28700f5f8c8bdea2de55bf58c41a7e64104982f58f8dc5a6def37ba3c",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "bundle",
+          "verify",
+          "<private-lane>/retrieved-container/exact-log-pid2-history-from-855605a.bundle"
+        ],
+        "exit_code": 1,
+        "finished_utc": "2026-09-19T14:51:38.792802+00:00",
+        "label": "301-negative-empty-repo-prerequisite",
+        "started_utc": "2026-09-19T14:51:38.590214+00:00",
+        "stderr_bytes": 101,
+        "stderr_path_redacted_display": "error: Repository lacks these prerequisite commits:\nerror: 855605a2a2098fa82fccb07521bae5cc382fa747 \n",
+        "stderr_sha256": "f50c0f89b3aa223732ebc5f01bab67c059d2873acc922238665b539e6d515cf2",
+        "stdin_sha256": null,
+        "stdout_bytes": 0,
+        "stdout_path_redacted_display": "",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stop_condition": null,
+        "timeout_seconds": 45
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "cat-file",
+          "--batch-all-objects",
+          "--batch-check=%(objectname) %(objecttype) %(objectsize)"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:39.817674+00:00",
+        "label": "304-main-only-complete-object-inventory",
+        "started_utc": "2026-09-19T14:51:39.611557+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 446053,
+        "stdout_sha256": "93127e10a3d2246f834130e5dc99975533149082dda9b697315c80b633607d16",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "cat-file",
+          "--batch-check"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:40.026258+00:00",
+        "label": "305-non-main-object-missing-precheck",
+        "started_utc": "2026-09-19T14:51:39.820937+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": "1e82287d07338b3a1f4fcb87f5d6fb2807be3c8c132b8d8285e86ad6f265fe14",
+        "stdout_bytes": 3675,
+        "stdout_path_redacted_display": "1ec2fc91bbf54806fd24db3bca27076830d0286c missing\n208e0ac47bde326b905272536a94ea2ce23704a9 missing\n26fda624ba1e897e8c7479d93be38b419e802205 missing\n28dffffb78dee929a964bba305e45767b07c9f00 missing\n2e9bd15d85c58a4d7368238f7f2d45118d60adc7 missing\n33affce73b556b7f272ad9735e620b0f19c546bd missing\n35067794505f940756096f773e5942df2558bed3 missing\n37b2e97f2aaa178aed4dbe6e49a1dbffe11188cb missing\n3805c6a5ba9789f6bbd91467f623b41977e566c7 missing\n3a75efc7fd57885f2bf95885f72751704ef67838 missing\n41470ff422c3861e9a6902e01a4d5b5bb6bd595d missing\n49c537e1e1cd5b791e86e3c5ee679ea0a66d5a2b missing\n4d7233362a51d758a5cac0907539ca19554f644c missing\n574876709709335706b5585ec051448e660241a1 missing\n600a49b5948d057ce6f081128f4a273581ba8a27 missing\n64d80e17cb20a88dfdb9d9033b1802a682d5232c missing\n66f7fcfea564a32d11b44a851bc0f0717d341ffd missing\n6fc1a2d54ffe6bc6cff053a0275e3e8032fc2c0e missing\n7b3f305828896ef61a13fe48a8648e9990678813 missing\n8188f3837c25137cc808817154c7e6d64eaa7d9c missing\n855e5406e8b9ea7225e3b0d20708484e9c1c5c2b missing\n85bca8eac4bc0261b7d073f0487d3ed54f93e48a missing\n88529e48c64715c6b6e85f633d9c9e751999646e missing\n8b135e2279529ae0d48eb5208837fc9c99f7cac2 missing\n8d6fbf6d06c28944c1af60f05fb8c856ad9a7727 missing\n95b63b4e5e5267966defe2d9ffddbc5aa6eb6585 missing\n963d2dbeca4144b34075af61a6dc3691df02c156 missing\n98f3b2b67db791d102e0cb71b5e8bad5fbd398f5 missing\n9d47f1b3bb80aa5b7122bf4272e908ab35006e83 missing\naa5b78b7f27c44d12841f4f5788c99c3e1a69cbf missing\nb2d6069620e2a60eab9b7321117797a2e4b3c942 missing\nb669e8293310b308ede6634448952fec251196f0 missing\nc3d15a2dd59117309f5da9f2b9feadff18316340 missing\nc484091c47d10f4b47dadd4b1d13a3c89147c0ca missing\nca1b911198db67723014e9f3a36a12a4f8073a00 missing\nd5eba26a06973cefba97d57f9091b6e063a782a8 missing\nda71739554fc9082eba991ef0874580db6bdbee7 missing\ned0aa83f7d01aa7373802c8bfb144830c1f10d1f missing\nee564faa8013c6ba777c5c58d66b5c20e96dcd70 missing\nefc256713712cc47e2429ea3f41716b2692fa6df missing\nefd8d43c780a88b44b04608a846d5b1109eb265f missing\nf1f2678582376498212ecd4a167863668384e28b missing\nf85f2d649eeb81d638301ccb66db7d9a931e2ffa missing\nf8a27a781c04003051faeba69dbca84f54e6acb4 missing\nfd0e1b4bf35906af1d6f7fe07fa63ae67860770c missing\n18ef5e9907d9ab0c30bb43bd383023b73586b8fa missing\n1c13d35a0aa49848df4e09d4506b1c921f7378e9 missing\n207bf69ba6d948cd4af6722f51cdd759a8e42358 missing\n3045674c1d4deb031e19fde43e684e796df31913 missing\n3c76ae4b391da24be43488eea9d71898c498c038 missing\n52a1ff42d7a203d92f153dc6d9507f8019e72f55 missing\n56b6f38d3b07ac119c3ca5e28135db45d5c503d6 missing\n59e759328a354de65316e9367a9ebb309eb84275 missing\n5a83efca691850380c33e3b5ca9335aacc9152ed missing\n645153676c637a9ab3a42e9e27a556ce252c47e3 missing\n65b37322b6fc65cb3c0a3586024bd19580403e62 missing\n6608bcf0c217b8906ab40f4aca8f8cd248f1efe2 missing\n6ffb0a5f7f3318b75611e5dea2a79566ce870685 missing\n8b7fae1236113433e741215b48f6c7afb6fd1d2c missing\n90c84b4007611eb6b851b16f70eda1a9cc8fb09c missing\n955c0b82c4f72c5557e54f857f95c5f4dbd37937 missing\n9801959ae6cc0174ac0f91758553601c8749e1bf missing\n9ff6438265a532d27695031bfe9f1d28abf9020a missing\na9c6d3c40f69d6d7ea6c7589354e19e68adcd040 missing\naa1e06226c6f8161e798a27d07cf1a194ab94d74 missing\nc181278b1b282e2be7c738706e886754c9c7be01 missing\nd16416741206220c2344e0b6839d8756e540a3e9 missing\nd8ece897b9936c6e3c18297162f3dc37c9217749 missing\ne314ffe54e9ffbbe638537d65772af6327861c54 missing\ne437d7c3d457a8451efd1f1ae370d7b18f8b82f2 missing\nf57cf2744e36739601729db06192ad2539784ddf missing\nf6b6b7c9a1607644f0465efe4760d2ecb03932fc missing\n03c0980f256c2a66b3d64bff1686a8d116d76138 missing\n80443f9f2fa66452237013c9881cfaeeb984e5c1 missing\ncaf8c7be3e2249df8e959c8940632fd22ed09923 missing\n",
+        "stdout_sha256": "204ed8bb8dcc3758bba5002379b07220b8bde54ff73963bf1f2b9ffa231e7628",
+        "stop_condition": null,
+        "timeout_seconds": 45
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "bundle",
+          "verify",
+          "<private-lane>/retrieved-container/exact-log-pid2-history-from-855605a.bundle"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:40.233640+00:00",
+        "label": "306-verify-retrieved-bundle-on-main",
+        "started_utc": "2026-09-19T14:51:40.026738+00:00",
+        "stderr_bytes": 186,
+        "stderr_path_redacted_display": "<private-lane>/retrieved-container/exact-log-pid2-history-from-855605a.bundle is okay\n",
+        "stderr_sha256": "07b611c93e0b3d2edffbadada1a4aae334f85ec9b1d43cd11043a51a1c1a8863",
+        "stdin_sha256": null,
+        "stdout_bytes": 314,
+        "stdout_path_redacted_display": "The bundle contains these 2 refs:\n80443f9f2fa66452237013c9881cfaeeb984e5c1 refs/heads/sepahead/exact-log-hostile-v1\ncaf8c7be3e2249df8e959c8940632fd22ed09923 refs/heads/sepahead/pid2-rev4-assurance-v1\nThe bundle requires this ref:\n855605a2a2098fa82fccb07521bae5cc382fa747 \nThe bundle uses this hash algorithm: sha1\n",
+        "stdout_sha256": "95bae033f32a7f87f0880e782fd0e13009a817ec57eb8c3647830d0423fd9aff",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "fetch",
+          "--no-tags",
+          "--no-recurse-submodules",
+          "<private-lane>/retrieved-container/exact-log-pid2-history-from-855605a.bundle",
+          "refs/heads/sepahead/exact-log-hostile-v1:refs/heads/recovered/exact-log-hostile-v1",
+          "refs/heads/sepahead/pid2-rev4-assurance-v1:refs/heads/recovered/pid2-rev4-assurance-v1"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:40.438165+00:00",
+        "label": "307-recover-exact-branch-histories",
+        "started_utc": "2026-09-19T14:51:40.233951+00:00",
+        "stderr_bytes": 357,
+        "stderr_path_redacted_display": "From <private-lane>/retrieved-container/exact-log-pid2-history-from-855605a.bundle\n * [new branch]      sepahead/exact-log-hostile-v1 -> recovered/exact-log-hostile-v1\n * [new branch]      sepahead/pid2-rev4-assurance-v1 -> recovered/pid2-rev4-assurance-v1\n",
+        "stderr_sha256": "d7fca0b09ecdd6c4991eaf7e9e0e8b5c973dc03b3a352ecc885a9cc1f0244ff2",
+        "stdin_sha256": null,
+        "stdout_bytes": 0,
+        "stdout_path_redacted_display": "",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "fsck",
+          "--full",
+          "--strict",
+          "--no-reflogs"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:41.660043+00:00",
+        "label": "309-recovery-native-fsck",
+        "started_utc": "2026-09-19T14:51:40.641051+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 0,
+        "stdout_path_redacted_display": "",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "cat-file",
+          "--batch-all-objects",
+          "--batch-check=%(objectname) %(objecttype) %(objectsize)"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:41.865525+00:00",
+        "label": "310-recovered-complete-object-inventory",
+        "started_utc": "2026-09-19T14:51:41.660405+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": null,
+        "stdout_bytes": 449924,
+        "stdout_sha256": "e103827685ad394e735fd97da7b0534342c97add25df32198458cec34df9b886",
+        "stop_condition": null,
+        "timeout_seconds": 180
+      },
+      {
+        "argv_with_local_paths_replaced": [
+          "git",
+          "--no-replace-objects",
+          "-c",
+          "core.hooksPath=/dev/null",
+          "-c",
+          "credential.interactive=never",
+          "-c",
+          "gc.auto=0",
+          "-c",
+          "maintenance.auto=false",
+          "-c",
+          "fetch.writeCommitGraph=false",
+          "--git-dir=<private-lane>/recovered-main-only.git",
+          "cat-file",
+          "--batch"
+        ],
+        "exit_code": 0,
+        "finished_utc": "2026-09-19T14:51:42.075040+00:00",
+        "label": "311-recovered-all-prior-raw-objects",
+        "started_utc": "2026-09-19T14:51:41.867795+00:00",
+        "stderr_bytes": 0,
+        "stderr_path_redacted_display": "",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdin_sha256": "2d1a3d6d4ee7a78401e26e3d26bc14b9f5eaf3aa9c04b7f1b95cd27e34d46d9b",
+        "stdout_bytes": 7169257,
+        "stdout_sha256": "23d618b624faa0d23df088904bd2ef3ee7db1a1f78d976d82cda8cfa91c44ab5",
+        "stop_condition": null,
+        "timeout_seconds": 45
+      }
+    ],
+    "empty_repository_missing_prerequisite_exit": 1,
+    "finished_utc": "2026-09-19T14:51:42.911789+00:00",
+    "full_strict_fsck_exit": 0,
+    "git_executable_sha256": "5f0351f649aa1321345229d5256fc8043517778b134a3b4571ecdc3818f124b2",
+    "git_version": "git version 2.55.0",
+    "main_only_before_object_count": 8717,
+    "new_objects": 75,
+    "no_alternates_shallow_or_hardlinked_objects": true,
+    "output_boundary": "Small path-redacted displays and exact raw stream digests are a bounded public projection; complete original captures remain in the private audit. The bundle and prerequisite history provide the exact historical payload recovery route.",
+    "retrieval_scope": "fresh same-host bare repository and copied container; no off-host or published-main retrieval yet"
+  },
+  "object_roster": [
+    {
+      "bytes": 263,
+      "kind": "commit",
+      "oid": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "sha256": "8f0aed773cf08a9d1e35f15f71c1f2e030b1091209b65f895dcd81ca5abd05ab"
+    },
+    {
+      "bytes": 44623,
+      "kind": "blob",
+      "oid": "054bb7d18a4545f917231a818aa659c5c6900498",
+      "sha256": "6404cd25d5a42e28c24cfe7b412b0cdcf5723f018b59cce62b6f9c6f475f4dfe"
+    },
+    {
+      "bytes": 5278,
+      "kind": "blob",
+      "oid": "0614436e26371c83970fc3cec4d13db21f8f6c3b",
+      "sha256": "c072e3b53fda135a92ae4905c0ea638c65999ac820d0a1ad1f961eaf51dba2ad"
+    },
+    {
+      "bytes": 31592,
+      "kind": "blob",
+      "oid": "0b47db9664b6ccc1bc764f5ecdb4b3ad18d5261a",
+      "sha256": "9aa7ec6ec1636dcfe3fe8e5667747c4a1e762dae07768f34daa19d3db7dc593c"
+    },
+    {
+      "bytes": 17690,
+      "kind": "blob",
+      "oid": "0fec10dec35de7c6bfe8dec455cf3325d87c665d",
+      "sha256": "967a26dac7633841ac14670e5f4d3362e0a4cfcf35beed72ef264d8b9d5b70bf"
+    },
+    {
+      "bytes": 2878,
+      "kind": "tree",
+      "oid": "18ef5e9907d9ab0c30bb43bd383023b73586b8fa",
+      "sha256": "c1c04591880536008b8d29100814da9b9708137c84d271ca180055a9b92c932f"
+    },
+    {
+      "bytes": 63,
+      "kind": "tree",
+      "oid": "1c13d35a0aa49848df4e09d4506b1c921f7378e9",
+      "sha256": "547f332a8e93904048e6a33b3811300d4f565edb8aac3bb8576159c0a3b220b1"
+    },
+    {
+      "bytes": 72809,
+      "kind": "blob",
+      "oid": "1ec2fc91bbf54806fd24db3bca27076830d0286c",
+      "sha256": "1febade37a6cb5d2ba44122a5582a3fbdc5ede948bed7c118893cb06f15054da"
+    },
+    {
+      "bytes": 63,
+      "kind": "tree",
+      "oid": "207bf69ba6d948cd4af6722f51cdd759a8e42358",
+      "sha256": "8007eedeac45d9a9b7ea02181748bfa7233150fd6ab6e8a86ca792335b9298ba"
+    },
+    {
+      "bytes": 36065,
+      "kind": "blob",
+      "oid": "208e0ac47bde326b905272536a94ea2ce23704a9",
+      "sha256": "0acb8931aa212a264fc8bf515eafe27ba138ab2ccad4e3bc1613c798fea0803d"
+    },
+    {
+      "bytes": 385,
+      "kind": "tree",
+      "oid": "22ac733b81d14b886fac05653f0486d22d16974b",
+      "sha256": "5337ec225e4351798bcbfff3fa6c13849fe732339b39df457aac9821ea4fa21f"
+    },
+    {
+      "bytes": 50583,
+      "kind": "blob",
+      "oid": "26fda624ba1e897e8c7479d93be38b419e802205",
+      "sha256": "cf10248315d17fd440136a385e0e59bc00762a0bf0e379eccf541dd6eb9092b9"
+    },
+    {
+      "bytes": 88700,
+      "kind": "blob",
+      "oid": "28dffffb78dee929a964bba305e45767b07c9f00",
+      "sha256": "1df7691ff9e398d48e9ab449ef05325f79686ce63bffa7293c508900ffde9d61"
+    },
+    {
+      "bytes": 270068,
+      "kind": "blob",
+      "oid": "2e9bd15d85c58a4d7368238f7f2d45118d60adc7",
+      "sha256": "c2d841dbc55fca4018fc659ee67ea762bc47ff409b97742131c25b83b8a681ee"
+    },
+    {
+      "bytes": 402,
+      "kind": "tree",
+      "oid": "3045674c1d4deb031e19fde43e684e796df31913",
+      "sha256": "0176b5c8206a6fabe0af61f71abd342f43963f69cade49495cb499df8114c5d6"
+    },
+    {
+      "bytes": 536235,
+      "kind": "blob",
+      "oid": "33affce73b556b7f272ad9735e620b0f19c546bd",
+      "sha256": "295134e4ce43e3e3161c36919c2fbaad4826babaaad760fc26cfea10ccb2fcb3"
+    },
+    {
+      "bytes": 78069,
+      "kind": "blob",
+      "oid": "35067794505f940756096f773e5942df2558bed3",
+      "sha256": "38c0a698a25d735ce0810c1c7e508cce24f9fcf80055b4c5280518085db92f4c"
+    },
+    {
+      "bytes": 96,
+      "kind": "tree",
+      "oid": "35940afa0fbcb8b37dd7bedab1081888b5f8bb19",
+      "sha256": "23071afa3937d99a2409ceffee343be3172bdae6bb6c553537fb6bc15b381363"
+    },
+    {
+      "bytes": 27700,
+      "kind": "blob",
+      "oid": "37b2e97f2aaa178aed4dbe6e49a1dbffe11188cb",
+      "sha256": "a8a6b26a3c220c14f24afbc2c78599cdb5badfa33f85376698abfe927ff86119"
+    },
+    {
+      "bytes": 53711,
+      "kind": "blob",
+      "oid": "3805c6a5ba9789f6bbd91467f623b41977e566c7",
+      "sha256": "9b80032f6a0fbc75fef87815ee7973d9bff184c94b4380f5e89dd890d3b8bd81"
+    },
+    {
+      "bytes": 129662,
+      "kind": "blob",
+      "oid": "3995cd775219f20dfedaee3b6942c2858bda8649",
+      "sha256": "d546a2c9910e42b54d1c12b844abf2ec7cf9a2dd0dd2d98549746c1d81a43a6b"
+    },
+    {
+      "bytes": 440578,
+      "kind": "blob",
+      "oid": "3a75efc7fd57885f2bf95885f72751704ef67838",
+      "sha256": "9beff46f04cda0cd19789da6730d4a9038883587064ef4392afa586bc636d63f"
+    },
+    {
+      "bytes": 285,
+      "kind": "tree",
+      "oid": "3c76ae4b391da24be43488eea9d71898c498c038",
+      "sha256": "648f0cfad31754faa566aefdcca7e0560af80c3fe826f7c2078f7e713cd99624"
+    },
+    {
+      "bytes": 2844,
+      "kind": "blob",
+      "oid": "40cd1b6a290cd2c50f63f9f8fea3d50e53b93e04",
+      "sha256": "337b0ee0bcf3a88f789c76a13844ab19a29ec037c1c6e9758cc23f23dfbd532b"
+    },
+    {
+      "bytes": 251360,
+      "kind": "blob",
+      "oid": "41470ff422c3861e9a6902e01a4d5b5bb6bd595d",
+      "sha256": "512b675126a31ea2bbdc1c71f149f221c5b8779c283e4e3a8ec611eee46e8e08"
+    },
+    {
+      "bytes": 2034,
+      "kind": "tree",
+      "oid": "433938ab6f2b747b2e38bdc0640c1c8b35efe0e9",
+      "sha256": "9cb3207dfc187cbb5df285c755aa735d4c85c62137adfd041cea66ef8295718a"
+    },
+    {
+      "bytes": 535012,
+      "kind": "blob",
+      "oid": "49c537e1e1cd5b791e86e3c5ee679ea0a66d5a2b",
+      "sha256": "efc7b396fe1af5e2984aa7800ab62dfe0d8c6fecb74880275bac3119a5a87952"
+    },
+    {
+      "bytes": 229758,
+      "kind": "blob",
+      "oid": "4d7233362a51d758a5cac0907539ca19554f644c",
+      "sha256": "69984b44b35cca425ed0ec965b72dde11e966b71e4802dfc1a6817f36f80b904"
+    },
+    {
+      "bytes": 675,
+      "kind": "tree",
+      "oid": "52a1ff42d7a203d92f153dc6d9507f8019e72f55",
+      "sha256": "233a4b1b312700e2a694fec87375c95093cd0d657fa6e5c25145c0b19439c4f9"
+    },
+    {
+      "bytes": 38853,
+      "kind": "blob",
+      "oid": "552fb6e9d5a9d575b571b7bd45fe5f46df02da08",
+      "sha256": "e91cb77f295be4d75a5575078aa08767c49179b0b59de3e35ca07628f6c06c2c"
+    },
+    {
+      "bytes": 171,
+      "kind": "tree",
+      "oid": "56b6f38d3b07ac119c3ca5e28135db45d5c503d6",
+      "sha256": "cbd160dcb3295960972f6a23ab1a330dc71e49e4ad649471f92b05c51b5b1a80"
+    },
+    {
+      "bytes": 83741,
+      "kind": "blob",
+      "oid": "574876709709335706b5585ec051448e660241a1",
+      "sha256": "c4421e317525cb80df8f97b56ccf0f93610634e3eae7e7c23914be669a08bfb7"
+    },
+    {
+      "bytes": 109,
+      "kind": "tree",
+      "oid": "59e759328a354de65316e9367a9ebb309eb84275",
+      "sha256": "43a3c502095cb486e6d769b712d6da2ff41605b89edb3a80820be9823d42a7e2"
+    },
+    {
+      "bytes": 15656,
+      "kind": "tree",
+      "oid": "5a83efca691850380c33e3b5ca9335aacc9152ed",
+      "sha256": "57c277cb632b2b9b4e0e99078012ede0c8bebe4c17ff47ec343cf1b41206bc0c"
+    },
+    {
+      "bytes": 252289,
+      "kind": "blob",
+      "oid": "600a49b5948d057ce6f081128f4a273581ba8a27",
+      "sha256": "926360458f7257978bfe4ffd9b1db59d23eb772cb3305854fa5158493d80c503"
+    },
+    {
+      "bytes": 33614,
+      "kind": "blob",
+      "oid": "6303423dd5f3723f4c81aa18cddbea918cb41a6f",
+      "sha256": "c2c6c422d33a2e10ee38a6d37d081b146a31af079a3062720d552f8a26e95f12"
+    },
+    {
+      "bytes": 1447,
+      "kind": "tree",
+      "oid": "645153676c637a9ab3a42e9e27a556ce252c47e3",
+      "sha256": "cc02f91cdf35139d8f2e0465073a89a7ae476f18d8213535c58f58cce84d23ff"
+    },
+    {
+      "bytes": 439548,
+      "kind": "blob",
+      "oid": "64d80e17cb20a88dfdb9d9033b1802a682d5232c",
+      "sha256": "5c826dfe4e6a8ff14128f9dba41d67ea032c776d1f44e347d9ac6e6dfc3d8ab7"
+    },
+    {
+      "bytes": 15341,
+      "kind": "tree",
+      "oid": "65b37322b6fc65cb3c0a3586024bd19580403e62",
+      "sha256": "e5249166b75ca972ccf4f3df2823ed5a445a47aa7a9909f2a8b36a08b1cf5ac8"
+    },
+    {
+      "bytes": 675,
+      "kind": "tree",
+      "oid": "6608bcf0c217b8906ab40f4aca8f8cd248f1efe2",
+      "sha256": "6e0d6204866dfd1577bcdcb0e530758a8bbec44e8377cbc73e7e24398e1316c1"
+    },
+    {
+      "bytes": 71752,
+      "kind": "blob",
+      "oid": "66f7fcfea564a32d11b44a851bc0f0717d341ffd",
+      "sha256": "4f7dd51bba7f7136ab6db90c792ebccb650e2892368d3de41b21c749903af3a7"
+    },
+    {
+      "bytes": 193183,
+      "kind": "blob",
+      "oid": "6d26ff84a67f24eb409bf3f81f6affe0de524ff4",
+      "sha256": "b839bf15602b4ffcd68f201f547cf48c7e4648400600afa9721cfb391d09e0ec"
+    },
+    {
+      "bytes": 72809,
+      "kind": "blob",
+      "oid": "6fc1a2d54ffe6bc6cff053a0275e3e8032fc2c0e",
+      "sha256": "df8e245e70077e5af0f9911742bfb483268b1cb3ca2746da53159031c803af98"
+    },
+    {
+      "bytes": 2810,
+      "kind": "tree",
+      "oid": "6ffb0a5f7f3318b75611e5dea2a79566ce870685",
+      "sha256": "b5c938983566dbd9bb69f7a363a7b14ba909df478193029d630758e3587f5088"
+    },
+    {
+      "bytes": 79304,
+      "kind": "blob",
+      "oid": "7975b3236d2263413273024e26d8417d109b3620",
+      "sha256": "d9fe89db5fcabd1b2666be5581726b18c8bf465b71d7ebc21e3fe3089007e147"
+    },
+    {
+      "bytes": 43433,
+      "kind": "blob",
+      "oid": "7b3f305828896ef61a13fe48a8648e9990678813",
+      "sha256": "4d2b1514d0f5ef7eaf37046e2b0444e9fb7c4c3555c5c696667a8bdabc9b01a9"
+    },
+    {
+      "bytes": 262,
+      "kind": "commit",
+      "oid": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "sha256": "c6ad3822423c4b3eb2fd1921a6bd35fa990eb30aff0bef1509d81d3dbc23f445"
+    },
+    {
+      "bytes": 53711,
+      "kind": "blob",
+      "oid": "8188f3837c25137cc808817154c7e6d64eaa7d9c",
+      "sha256": "3d55065898ad7e4a1ed1eb88dd21e0c6b4bbed9b60613f42aa7ed9a3fa68e617"
+    },
+    {
+      "bytes": 72358,
+      "kind": "blob",
+      "oid": "855e5406e8b9ea7225e3b0d20708484e9c1c5c2b",
+      "sha256": "43eff1877d5b87bd443cef54f09f721f7e96aa71a10163d7525fa3196657f8b3"
+    },
+    {
+      "bytes": 82994,
+      "kind": "blob",
+      "oid": "85bca8eac4bc0261b7d073f0487d3ed54f93e48a",
+      "sha256": "116e4c53e034ba8d1b379b4907c46664bb40fe77380e97f16a5565f1a21e694b"
+    },
+    {
+      "bytes": 88979,
+      "kind": "blob",
+      "oid": "88529e48c64715c6b6e85f633d9c9e751999646e",
+      "sha256": "609244393a75d3a8c12cae7da99dbafddb5e56416827a665da94cb1e829145e5"
+    },
+    {
+      "bytes": 120874,
+      "kind": "blob",
+      "oid": "8b135e2279529ae0d48eb5208837fc9c99f7cac2",
+      "sha256": "73cd5f82da8d32424dd738bac877e7e2b50aa9f7f59eaaae8db8f7d501000fd7"
+    },
+    {
+      "bytes": 1286,
+      "kind": "tree",
+      "oid": "8b71d64c5ce4fa3793d797af229b4fe507ad6e73",
+      "sha256": "20f9266f4100faf5268ebdd7392011d67987cbc8e3b26e14c04c16b60ece3d2f"
+    },
+    {
+      "bytes": 402,
+      "kind": "tree",
+      "oid": "8b7fae1236113433e741215b48f6c7afb6fd1d2c",
+      "sha256": "22dc389021bf731cd822da5e5c3a3550183a81bac5d0dc7b904a0d64270789a4"
+    },
+    {
+      "bytes": 39016,
+      "kind": "blob",
+      "oid": "8d6fbf6d06c28944c1af60f05fb8c856ad9a7727",
+      "sha256": "5267b04583146065a508b6c8f08edb7323320a1c9f062636458eab26d035f6f6"
+    },
+    {
+      "bytes": 171,
+      "kind": "tree",
+      "oid": "90c84b4007611eb6b851b16f70eda1a9cc8fb09c",
+      "sha256": "2e7e635984a63dd4b5f7135b216068f1147a529c0360894222fac66bab69f868"
+    },
+    {
+      "bytes": 15266,
+      "kind": "tree",
+      "oid": "955c0b82c4f72c5557e54f857f95c5f4dbd37937",
+      "sha256": "c9e7bd0926ab681d48e6798bef92492cbe2198520ea73a1936572f6eab2b969e"
+    },
+    {
+      "bytes": 229385,
+      "kind": "blob",
+      "oid": "95b63b4e5e5267966defe2d9ffddbc5aa6eb6585",
+      "sha256": "c65ae2814eaa0224ab2b50b7d676aa55cbeef1e1229fa521ab52a9946fafeae3"
+    },
+    {
+      "bytes": 1453,
+      "kind": "blob",
+      "oid": "963d2dbeca4144b34075af61a6dc3691df02c156",
+      "sha256": "d6c34a4bbb354a970e56456f2433f1b189a873c2106487fe13d4415d65ebe63b"
+    },
+    {
+      "bytes": 1433,
+      "kind": "tree",
+      "oid": "9801959ae6cc0174ac0f91758553601c8749e1bf",
+      "sha256": "15b1d7b04fcc36b59d857103662de86465b4c58741d82c3f2e35a3a12d8b6a0c"
+    },
+    {
+      "bytes": 72358,
+      "kind": "blob",
+      "oid": "98f3b2b67db791d102e0cb71b5e8bad5fbd398f5",
+      "sha256": "cf54c3e5798297aa7b497ff95ba274edc1cc6f3bdb480dad212d380f74b5fa70"
+    },
+    {
+      "bytes": 13591,
+      "kind": "blob",
+      "oid": "9b9815248a6462821b93fed7658cb5ee55cfaecb",
+      "sha256": "b5c913e80866b5b20abc8d46b84db1cdaf18d8f1ba0aebaf1684b10fec84bfb5"
+    },
+    {
+      "bytes": 38986,
+      "kind": "blob",
+      "oid": "9d47f1b3bb80aa5b7122bf4272e908ab35006e83",
+      "sha256": "c44e0b666718a49bb8a0c7ae22fc2be886a9fdb1ffb8937249a36675e0487828"
+    },
+    {
+      "bytes": 109,
+      "kind": "tree",
+      "oid": "9ff6438265a532d27695031bfe9f1d28abf9020a",
+      "sha256": "d720fa92567f2de92bc8a0111263cdabe184f1fc45cc1e6a4e2625e665dfa364"
+    },
+    {
+      "bytes": 11541,
+      "kind": "blob",
+      "oid": "a25f4fb80f953fe1e9d35beae60a485ef06df514",
+      "sha256": "646639199233515b72bf81b8f2843a781ae985abfde3cd1e77aa24691840c3e0"
+    },
+    {
+      "bytes": 668,
+      "kind": "tree",
+      "oid": "a9c6d3c40f69d6d7ea6c7589354e19e68adcd040",
+      "sha256": "7aa899ae9ec631dce04e6bd56a6962a4b56f44e95a41a1230a886fc63c6daf03"
+    },
+    {
+      "bytes": 285,
+      "kind": "tree",
+      "oid": "aa1e06226c6f8161e798a27d07cf1a194ab94d74",
+      "sha256": "c27304b55581c9986ff6404db4caa4a1bed6776c34adf9ea289aff029c5d4224"
+    },
+    {
+      "bytes": 252098,
+      "kind": "blob",
+      "oid": "aa5b78b7f27c44d12841f4f5788c99c3e1a69cbf",
+      "sha256": "0d03992cea88a3b15a7efcd756776f4821d371fe2638f91aa8d267946b3b735b"
+    },
+    {
+      "bytes": 832,
+      "kind": "tree",
+      "oid": "af75dd451b0b19f4c38762a560100d2ac18d2b83",
+      "sha256": "29825b13aef5ff26ad95e2ab25b1713f62a4c90c2578bc551dad5166bea532b7"
+    },
+    {
+      "bytes": 113077,
+      "kind": "blob",
+      "oid": "b2d6069620e2a60eab9b7321117797a2e4b3c942",
+      "sha256": "c9faadaf113fab33abc8dc0e80e49e4ad791a04c4f6156245d77349afee8c617"
+    },
+    {
+      "bytes": 402,
+      "kind": "tree",
+      "oid": "b61b39ecd7846c5c8a9455a28411cee9dfb4fa69",
+      "sha256": "72f9e2b1134e36bc35ca2621ac3ff8cf79e70ac1d0c1c9b0cbbc4ccc74751f03"
+    },
+    {
+      "bytes": 89600,
+      "kind": "blob",
+      "oid": "b669e8293310b308ede6634448952fec251196f0",
+      "sha256": "79472ca5a14104205cea2da04d935c91fa6ebafa15c27230e38b1300e78c1ee9"
+    },
+    {
+      "bytes": 371423,
+      "kind": "blob",
+      "oid": "b7caf169ba0e5f634f0ebfbea4d124a3dd2b00c1",
+      "sha256": "0eea7f2ff8c7f2538e5bd1b73ab447205d4b9d368fccf941f4a40dc7f1877474"
+    },
+    {
+      "bytes": 246,
+      "kind": "tree",
+      "oid": "b8f495f86e51c2885c1a880975782376ba14935b",
+      "sha256": "bd0170e2254169dd4dffb10d4d10bcfc23e084120581ce09ba84ab61e7eeb232"
+    },
+    {
+      "bytes": 325,
+      "kind": "tree",
+      "oid": "c181278b1b282e2be7c738706e886754c9c7be01",
+      "sha256": "6090367fed08929fd298e2cc1183d475dda20e85af4e8e5463c55a2d74e88735"
+    },
+    {
+      "bytes": 269147,
+      "kind": "blob",
+      "oid": "c3d15a2dd59117309f5da9f2b9feadff18316340",
+      "sha256": "2a399a33b244cab8cdc3d6a07fa61a81aeaf9a6b812861f5bc31b982cf7d8fdd"
+    },
+    {
+      "bytes": 78069,
+      "kind": "blob",
+      "oid": "c484091c47d10f4b47dadd4b1d13a3c89147c0ca",
+      "sha256": "1aec3a9ff1e93a2b9876893a85a3df480865f7dabc0fd0d614b4f9e31e47d015"
+    },
+    {
+      "bytes": 120874,
+      "kind": "blob",
+      "oid": "ca1b911198db67723014e9f3a36a12a4f8073a00",
+      "sha256": "83094930cc3df64e57d23d38349632083fbcb5e961f6a783fe5537e66cb7e785"
+    },
+    {
+      "bytes": 272,
+      "kind": "commit",
+      "oid": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "sha256": "7aa6cf75e733d9397e0c856aae61491e4f80a6be5f02b76e0480148b05e6d044"
+    },
+    {
+      "bytes": 3638,
+      "kind": "blob",
+      "oid": "ce5e920f1038229d9550bfd646ff44bcaab5e61b",
+      "sha256": "af38b8285202cc8274f690160aecc4e0fa67fe1f0fd5b217fb18f680e0a17db2"
+    },
+    {
+      "bytes": 109,
+      "kind": "tree",
+      "oid": "d16416741206220c2344e0b6839d8756e540a3e9",
+      "sha256": "8a84ce63f8f09f57373056f14bb5aae6b9eec3b0847d8df97fd1544e977075d9"
+    },
+    {
+      "bytes": 65091,
+      "kind": "blob",
+      "oid": "d5eba26a06973cefba97d57f9091b6e063a782a8",
+      "sha256": "66d2e2cf0ecbd4c2c88639f1c59fdc5ec2d4b379b34337aa6e87a653f7306713"
+    },
+    {
+      "bytes": 15728,
+      "kind": "tree",
+      "oid": "d8ece897b9936c6e3c18297162f3dc37c9217749",
+      "sha256": "3ebd47937b94f62860d0a7f02fcece32ff98d92d910f606eb2e4d96d1393ec03"
+    },
+    {
+      "bytes": 50292,
+      "kind": "blob",
+      "oid": "da71739554fc9082eba991ef0874580db6bdbee7",
+      "sha256": "1aaa8c2be28d908ee55c82690fd668a85ace7dc045c3356b22bc265576a378b7"
+    },
+    {
+      "bytes": 2810,
+      "kind": "tree",
+      "oid": "e314ffe54e9ffbbe638537d65772af6327861c54",
+      "sha256": "662db8ddfad03e8b4a8052d9c01c4b64973ee524f541a77105aa0d948479e6cd"
+    },
+    {
+      "bytes": 30,
+      "kind": "tree",
+      "oid": "e437d7c3d457a8451efd1f1ae370d7b18f8b82f2",
+      "sha256": "280d3dc0b634b89cc17ee0ccdbd5d5909233fabaf2217107f3b8e9e7b3ce2b13"
+    },
+    {
+      "bytes": 35,
+      "kind": "tree",
+      "oid": "e95bdea9bf8e88f7f8528a18a214f75641893e73",
+      "sha256": "7ca83c69e111e5ecff9a40e0844539f06aa3015b14685f851062f4a8b5e7af45"
+    },
+    {
+      "bytes": 71752,
+      "kind": "blob",
+      "oid": "ed0aa83f7d01aa7373802c8bfb144830c1f10d1f",
+      "sha256": "05128328a4c29e6ccf9dd780a4a12076e870c88dafbd5a2672ff6f8b7e45074a"
+    },
+    {
+      "bytes": 43433,
+      "kind": "blob",
+      "oid": "ee564faa8013c6ba777c5c58d66b5c20e96dcd70",
+      "sha256": "915c5c43656401d304c9b6c4d673829f18ac1e3fed8e319d038d7b0af7a39f20"
+    },
+    {
+      "bytes": 270340,
+      "kind": "blob",
+      "oid": "efc256713712cc47e2429ea3f41716b2692fa6df",
+      "sha256": "3a547285dc3129c9b347aa8280d84f5e95b5f3caee14b8d0abc17ba60ccfa4ab"
+    },
+    {
+      "bytes": 40352,
+      "kind": "blob",
+      "oid": "efd8d43c780a88b44b04608a846d5b1109eb265f",
+      "sha256": "d070f083d19a3b148cf541bb1f68bd561053a2cfc5871430bd048933ee8892c7"
+    },
+    {
+      "bytes": 65091,
+      "kind": "blob",
+      "oid": "f1f2678582376498212ecd4a167863668384e28b",
+      "sha256": "b139b64cf1ed344e1b71d76ccee6212bbf8368563edbe5d2f9bae552b8721c06"
+    },
+    {
+      "bytes": 285,
+      "kind": "tree",
+      "oid": "f57cf2744e36739601729db06192ad2539784ddf",
+      "sha256": "57212a070b4ad3b2b943b9f8d5774383499877299b17c6bba4f8943fd02b5b5b"
+    },
+    {
+      "bytes": 15731,
+      "kind": "tree",
+      "oid": "f6b6b7c9a1607644f0465efe4760d2ecb03932fc",
+      "sha256": "e8352eba31afe54fbb56a62a5dc545cd852f30dc4e6e88dc5374e50c328828ef"
+    },
+    {
+      "bytes": 27700,
+      "kind": "blob",
+      "oid": "f85f2d649eeb81d638301ccb66db7d9a931e2ffa",
+      "sha256": "d8454e8918bc8bab4ed4ae55de6258b8327c2cf0378d34304cef40c9823dc08b"
+    },
+    {
+      "bytes": 40413,
+      "kind": "blob",
+      "oid": "f8a27a781c04003051faeba69dbca84f54e6acb4",
+      "sha256": "5dad623d291397fbc9927682e65c935ffe42b5ade0bb985ff0be0f94b7299bbd"
+    },
+    {
+      "bytes": 1453,
+      "kind": "blob",
+      "oid": "fd0e1b4bf35906af1d6f7fe07fa63ae67860770c",
+      "sha256": "a14b26ae006a8afe20650e07e4694a420f0e0b16f03d2e4c24444717d0a2bc89"
+    }
+  ],
+  "original_unique_commits": [
+    {
+      "author_offset": "+0200",
+      "both_git_digests_verified": true,
+      "commit": "03c0980f256c2a66b3d64bff1686a8d116d76138",
+      "commit_bytes": 263,
+      "commit_sha256": "8f0aed773cf08a9d1e35f15f71c1f2e030b1091209b65f895dcd81ca5abd05ab",
+      "committer_offset": "+0200",
+      "files": 1039,
+      "label": "pid2-parent",
+      "parents": [
+        "855605a2a2098fa82fccb07521bae5cc382fa747"
+      ],
+      "tree": "e314ffe54e9ffbbe638537d65772af6327861c54"
+    },
+    {
+      "author_offset": "+0200",
+      "both_git_digests_verified": true,
+      "commit": "caf8c7be3e2249df8e959c8940632fd22ed09923",
+      "commit_bytes": 272,
+      "commit_sha256": "7aa6cf75e733d9397e0c856aae61491e4f80a6be5f02b76e0480148b05e6d044",
+      "committer_offset": "+0200",
+      "files": 1043,
+      "label": "pid2",
+      "parents": [
+        "03c0980f256c2a66b3d64bff1686a8d116d76138"
+      ],
+      "tree": "18ef5e9907d9ab0c30bb43bd383023b73586b8fa"
+    },
+    {
+      "author_offset": "+0200",
+      "both_git_digests_verified": true,
+      "commit": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "commit_bytes": 262,
+      "commit_sha256": "c6ad3822423c4b3eb2fd1921a6bd35fa990eb30aff0bef1509d81d3dbc23f445",
+      "committer_offset": "+0200",
+      "files": 1042,
+      "label": "exact-log",
+      "parents": [
+        "855605a2a2098fa82fccb07521bae5cc382fa747"
+      ],
+      "tree": "6ffb0a5f7f3318b75611e5dea2a79566ce870685"
+    }
+  ],
+  "purpose": "Preserve exact historical bytes and useful negative evidence while allowing later retirement of two superseded remote branch names.",
+  "remote_observation": {
+    "main": "959d91e38e5007d9c0f5d0f775ef2cce913680a0",
+    "observed_utc": "2026-09-19T14:47:56.707607+00:00",
+    "refs": {
+      "refs/heads/sepahead/exact-log-hostile-v1": "80443f9f2fa66452237013c9881cfaeeb984e5c1",
+      "refs/heads/sepahead/pid2-rev4-assurance-v1": "caf8c7be3e2249df8e959c8940632fd22ed09923"
+    },
+    "url": "https://github.com/sepahead/pid-rs.git"
+  },
+  "schema": "pid-rs/exact-log-pid2-branch-archive-v1",
+  "status": "historical_archive_with_local_recovery_evidence",
+  "successor_accounting": {
+    "all59_blobs_in_bundle": true,
+    "exact_same_path_main_history_successors": 14,
+    "only75_objects_new_relative_to_main959": true,
+    "other_historical_versions_preserved": 45,
+    "versions": 59
+  }
+}

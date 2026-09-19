@@ -1,0 +1,388 @@
+{
+  "format": "pid-rs/inert-git-recovery/v1",
+  "archive_id": "python-verifier-custody-m0-recovery-20260919",
+  "authority": "inert historical content recovery only; acceptance and deletion are separate",
+  "current_authority": false,
+  "original_ref": "refs/heads/sepahead/python-custody-m0-v1",
+  "tip": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d",
+  "tree": "74030de0ec545e29fd35429dfc2c889f676dfc8d",
+  "prerequisite": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+  "prerequisite_ancestor_of": "959d91e38e5007d9c0f5d0f775ef2cce913680a0",
+  "bundle": {
+    "path": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d.bundle",
+    "bytes": 895902,
+    "sha256": "d9bf6f964ed404554ad227583e6b4ea6027b7028cee239e5892f40ccabeaebb6",
+    "format": "Git bundle v2 with SHA-1 pack v2",
+    "construction": "136 exact raw objects assembled into a standard pack; accepted by native Git index-pack, verify-pack, bundle verify and fresh fetch",
+    "objects": 136,
+    "blob_objects": 25,
+    "tree_objects": 110,
+    "commit_objects": 1
+  },
+  "disposition": {
+    "path": "DISPOSITION.md",
+    "bytes": 2619,
+    "sha256": "b3ec7679d8fd6f08f6d30e94d7f6a94d4f06860d9caf7ebabb5ada919a923a04"
+  },
+  "changed_paths": [
+    {
+      "path": "AGENTS.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "65f4e176ca2a341509ad36471b1bd0ceaac0558c",
+      "bytes": 84452,
+      "sha256": "b79201d9aa0e66bfd097998fb99a1bccfac8aeb42ef21fe7419ebbb0bdb30ac0",
+      "parent_blob_oid": "2046237b9d1ea5ccfbe2465f640b204855fc6949",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "CHANGELOG.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "649fc48269d3b7100f39c3fd4230bac6c7eb59df",
+      "bytes": 269987,
+      "sha256": "3e336dafc6fe9f86db3879075365ad0cc23e1164f2c15bce172ec52ab874e796",
+      "parent_blob_oid": "d64416afd2c52fb841c129ab23f82bc732440cc6",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "ECOSYSTEM_CAPABILITIES.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "56517376261f296763fcb30ffac56e81957a9b79",
+      "bytes": 65091,
+      "sha256": "5885b9b9ef7090f1b4cd3033ecb9a76242834e01c5ca9a21a36b6439630fc1bb",
+      "parent_blob_oid": "97f31c4e10a8e6ace2b1fdf7a2da1c0d992be302",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "METHODS.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "3b1e3c9fcd33b7854b423c68552488a66a672069",
+      "bytes": 537904,
+      "sha256": "1e7c5a7512ece3a258a597d803ebd503a513323fd24586b0f1af26e99f712b73",
+      "parent_blob_oid": "cbf10a7ff58559b825a7f3345275fc8e773b90f2",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "METHODS_SUMMARY.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "59763eb7589aa06c3d9563a3cc11e95a77ca498b",
+      "bytes": 43919,
+      "sha256": "f1caf61be23df933d1257c5b9d0270197ae838c8f87af5f516fc72b4d6875c69",
+      "parent_blob_oid": "4b67b2070a382f1fb509c74d7488542350f26788",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "PID_MATHEMATICAL_AUDIT_PROTOCOL.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "627b3b5bcb287eaad9bd9540a193f93bd5760da9",
+      "bytes": 27700,
+      "sha256": "46cb48603515c670c1f361c8bdef3ba5c8ceded74d68bcce61ce77f7459ef1fe",
+      "parent_blob_oid": "df8d106889b57fcc9bc90795875d24514ec80e3e",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "360a8995bd8889184e179390771ab1d4f793b1c5",
+      "bytes": 78625,
+      "sha256": "48236695d8b554ea08c55eb2a049007993461dd489443ed4497dd4ae2e0092a5",
+      "parent_blob_oid": "78726c9a10ea07a13ff26287c413f04650b48dc9",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/evidence/current-source-state-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "0f098849425a7c4574ae3d1201df33c6e87a54db",
+      "bytes": 253015,
+      "sha256": "25e4dd6327dae54110d005c77a379877645f01a87ea39585659523c5cd84e31d",
+      "parent_blob_oid": "d043269d9bad2305d0fd2ebbd4d6d60152a74567",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "a7a554353743411d18293dc1b4c05ac7aff20c4e",
+      "bytes": 39417,
+      "sha256": "a8f25459fe2c0829df1595ea067bd8c5a6d36fd05985c4cc79d867d93355bff0",
+      "parent_blob_oid": "ae1889a53bcc9062c82514f89ff12d34f97b16d6",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/evidence/methods-summary-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "90d28396cd6fc1264b108aab12362a868ec92614",
+      "bytes": 78961,
+      "sha256": "969919255eb42f69cbadcee05e8024a25e56a09821d894af670fdf80b603c2a2",
+      "parent_blob_oid": "e16990c0d66e7780efc9e3fc7cbd8eab417fce0d",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/evidence/pid-mathematical-audit-protocol-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "b25a701858a7c7dcf11973aa371ded9aa39cc2b6",
+      "bytes": 53711,
+      "sha256": "8d626e9b3fa27995d812a0895b5744a2ab7d7d4c259ed2ebaa8424c1137edd62",
+      "parent_blob_oid": "fbadc9f17d7b305061f93e23552ce7ae6bc20952",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/python-verifier-custody/DESIGN_RECORD.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "195957e348da8693be42af195d2937395fe0eb92",
+      "bytes": 13521,
+      "sha256": "cb746945bb08a4d81f2589d196c2b25027c9616c6478245be5a774740f8a9e04",
+      "parent_blob_oid": null,
+      "disposition": "retain inert exact source/design",
+      "readable_successor": "audit/archive/python-verifier-custody-m0-20260830/payload/design-record.md.txt"
+    },
+    {
+      "path": "audit/python-verifier-custody/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "2b04ea9d375851c8d9db27612b18d0c4741e2738",
+      "bytes": 30366,
+      "sha256": "606979db778f8feb088414324b0c2a20f35ce19540db6e919381137eff7745f7",
+      "parent_blob_oid": null,
+      "disposition": "retain inert exact source/design",
+      "readable_successor": "audit/archive/python-verifier-custody-m0-20260830/payload/documentation.md.txt"
+    },
+    {
+      "path": "audit/python-verifier-custody/registry-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "a7a101bff380e64f18fcba2b9cc0bd5b61ee6af9",
+      "bytes": 5473991,
+      "sha256": "ce11224f6fb95246a43dd36c24da57501f3854bf2f667c483f99125d751f016a",
+      "parent_blob_oid": null,
+      "disposition": "retain generated registry preimage; no activation",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/schemas/method-catalog-semantic-authority-v1.schema.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "f8ce14459ce14338d1a890eceed0f5aca48e86a7",
+      "bytes": 8780,
+      "sha256": "e7535e7f83787b228ab973874a8f650a754917c93f3b623d5688ba261513a1d4",
+      "parent_blob_oid": "fdf13e9efbed785c97852c4d72b5c51dc3f0a4dc",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "audit/schemas/python-verifier-custody-registry-v1.schema.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "9b7879e39cc0fcc0da0365c6d607869b084fe79a",
+      "bytes": 27352,
+      "sha256": "b0cfbade21a48512a92fc0e5fa1bf03fee66a040a36380fe244a9b26c25ddd2e",
+      "parent_blob_oid": null,
+      "disposition": "retain inert exact source/design",
+      "readable_successor": "audit/archive/python-verifier-custody-m0-20260830/payload/registry-schema.json.txt"
+    },
+    {
+      "path": "crates/pid-core/identity/software-identity-reference-v1.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "94f988b16175559b5d7cc61fb8cc60ec4f9e3d0d",
+      "bytes": 1453,
+      "sha256": "47b8446d9b49b6d42409965163175674e9de6aa72bd5748cfccff5b5d83eb1e7",
+      "parent_blob_oid": "e4883f2eb6571991dbc25109363689378ee0ca3a",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "ecosystem-capabilities.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "2012f88d83f16c8c17da634fbdf5019d3289df76",
+      "bytes": 71752,
+      "sha256": "76ad5c8ed2d226ba83c828a3c7ea991ff5627f4582a5a1cff80d9580fcc09be7",
+      "parent_blob_oid": "4d61a6aa623cea1dae4ff018e3b4864426d76fb3",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "method-catalog.json",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "6a75dbe8efa83143a171a0eca5f8e66dcce451d6",
+      "bytes": 441823,
+      "sha256": "9e1a5e835e06aa543616c44a61d891510f5ff3b32b710ebdfb74d2e12041c71e",
+      "parent_blob_oid": "e2250829f5bdd7cac1697b66ed931e2ac10eff60",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "scripts/README.md",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "6320b8795b7319ba11f6fa80ce44083d2e8f0678",
+      "bytes": 229539,
+      "sha256": "b2f7b7937ac47a360ca3e23f741b00c594df3fcbbe8917ba46e1bb154c9831ce",
+      "parent_blob_oid": "65179a4ce173ea40e117a0acf9d531df3b127402",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "scripts/check-ecosystem-capabilities.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "e561d981607d9c0f1b778663541bc4d3748a5f66",
+      "bytes": 72358,
+      "sha256": "05ce656a4fbbaecc9697c01b7d3faf44e7db2dad2958d5212e8bef29b5e7d16e",
+      "parent_blob_oid": "43ef963a2420b7662d0ba4c7d6aed8bf734b5bed",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "scripts/check-lean-toolchain-freeze.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "bf249ded4125f3239f206bacae9146aaf04552f5",
+      "bytes": 120874,
+      "sha256": "cd240727acf0afd5ead01139cafacde5835b90afd9388376089e02c108ed793a",
+      "parent_blob_oid": "633163f8b2048289b7eabbed199a20cbd0677faf",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "scripts/check-method-catalog.py",
+      "mode": "100644",
+      "type": "blob",
+      "blob_oid": "33a435c2e78d512fb88379e8da49b1a6565f1e38",
+      "bytes": 72964,
+      "sha256": "6162dad3b4c88f92c7a08841debb2bfa3fc3924d31bf405c06569e785a0fbc50",
+      "parent_blob_oid": "860fd1cdd092eb29bf09d76b966a96cf5db41118",
+      "disposition": "retain historical integration/documentation/pin delta; do not activate",
+      "readable_successor": null
+    },
+    {
+      "path": "scripts/check-python-verifier-custody-inventory-self-test.py",
+      "mode": "100755",
+      "type": "blob",
+      "blob_oid": "2b3cf3f2992a55c65d75290743b23244f7fa6f15",
+      "bytes": 14132,
+      "sha256": "866b704f5790f679e2d1454b2803d36906eadd0ecb7cebcc75a9cf65ced43162",
+      "parent_blob_oid": null,
+      "disposition": "retain inert exact source/design",
+      "readable_successor": "audit/archive/python-verifier-custody-m0-20260830/payload/inventory-checker-self-test.py.txt"
+    },
+    {
+      "path": "scripts/check-python-verifier-custody-inventory.py",
+      "mode": "100755",
+      "type": "blob",
+      "blob_oid": "272b9f451a98c6e4ef89321bf570f625a0d8dc63",
+      "bytes": 56806,
+      "sha256": "0bfb58d68e594329be191f567f33ab50e2965220a9d6a5324d0d42f4f02da4c4",
+      "parent_blob_oid": null,
+      "disposition": "retain inert exact source/design",
+      "readable_successor": "audit/archive/python-verifier-custody-m0-20260830/payload/inventory-checker.py.txt"
+    }
+  ],
+  "five_readable_successors": [
+    {
+      "path": "audit/python-verifier-custody/DESIGN_RECORD.md",
+      "blob_oid": "195957e348da8693be42af195d2937395fe0eb92",
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/design-record.md.txt",
+      "bytes": 13521,
+      "sha256": "cb746945bb08a4d81f2589d196c2b25027c9616c6478245be5a774740f8a9e04",
+      "all_checks_passed": true,
+      "fresh_recovered_object_match": true
+    },
+    {
+      "path": "audit/python-verifier-custody/README.md",
+      "blob_oid": "2b04ea9d375851c8d9db27612b18d0c4741e2738",
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/documentation.md.txt",
+      "bytes": 30366,
+      "sha256": "606979db778f8feb088414324b0c2a20f35ce19540db6e919381137eff7745f7",
+      "all_checks_passed": true,
+      "fresh_recovered_object_match": true
+    },
+    {
+      "path": "audit/schemas/python-verifier-custody-registry-v1.schema.json",
+      "blob_oid": "9b7879e39cc0fcc0da0365c6d607869b084fe79a",
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/registry-schema.json.txt",
+      "bytes": 27352,
+      "sha256": "b0cfbade21a48512a92fc0e5fa1bf03fee66a040a36380fe244a9b26c25ddd2e",
+      "all_checks_passed": true,
+      "fresh_recovered_object_match": true
+    },
+    {
+      "path": "scripts/check-python-verifier-custody-inventory-self-test.py",
+      "blob_oid": "2b3cf3f2992a55c65d75290743b23244f7fa6f15",
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/inventory-checker-self-test.py.txt",
+      "bytes": 14132,
+      "sha256": "866b704f5790f679e2d1454b2803d36906eadd0ecb7cebcc75a9cf65ced43162",
+      "all_checks_passed": true,
+      "fresh_recovered_object_match": true
+    },
+    {
+      "path": "scripts/check-python-verifier-custody-inventory.py",
+      "blob_oid": "272b9f451a98c6e4ef89321bf570f625a0d8dc63",
+      "archive_path": "audit/archive/python-verifier-custody-m0-20260830/payload/inventory-checker.py.txt",
+      "bytes": 56806,
+      "sha256": "0bfb58d68e594329be191f567f33ab50e2965220a9d6a5324d0d42f4f02da4c4",
+      "all_checks_passed": true,
+      "fresh_recovered_object_match": true
+    }
+  ],
+  "recovery": {
+    "finished_utc": "2026-09-19T15:07:55.827152+00:00",
+    "baseline": {
+      "accepted_main_only": "959d91e38e5007d9c0f5d0f775ef2cce913680a0",
+      "only_initial_ref": "refs/heads/accepted-main",
+      "prerequisite_ancestor": true,
+      "tip_absent": true,
+      "registry_absent": true,
+      "full_strict_fsck_passed": true,
+      "alternate_object_database": false
+    },
+    "restored": {
+      "tip": "e16a6915262e8bf2fac1752ff959d9d3733c7a7d",
+      "tree": "74030de0ec545e29fd35429dfc2c889f676dfc8d",
+      "full_leaf_entries": 1046,
+      "changed_blobs_checked": 25,
+      "raw_commit_exact": true,
+      "all_changed_blobs_exact": true,
+      "five_readable_successors_exact": true,
+      "full_strict_fsck_passed": true
+    },
+    "empty_negative": {
+      "bundle_verify_returncode": 1,
+      "bundle_unbundle_returncode": 1,
+      "missing_prerequisite": "eb9c21ae67e7a5cc9279dd7597cc96ed90f062a9",
+      "tip_still_absent": true,
+      "refs_still_empty": true
+    },
+    "native_commands": 44,
+    "expected_native_statuses_accepted": true,
+    "archived_code_executed": false
+  },
+  "limits": [
+    "Prerequisite bundle; no standalone main-history archive",
+    "Content recovery does not establish authenticity, execution custody or scientific validity",
+    "Private recovery does not establish permanent publication or authorize branch deletion"
+  ]
+}

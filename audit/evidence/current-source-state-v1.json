@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "95b85306032b153030dcb7b0b5678312fda283a8778463b1a28fae211aa1a5fe",
-        "size_bytes": 307565
+        "sha256": "e79daffe2e5fc9f49cf5d5f172cd431b1ad4c8a114ed4d48a24096b6f78e7241",
+        "size_bytes": 308111
       },
       {
         "git_mode": "100644",
@@ -840,6 +840,54 @@
         "path": "audit/archive/blueprint-visual-receipt-20260905/receipt-before.md",
         "sha256": "2694575e8e7b3ad3da284de60f6bf5d340804d4987c6be8ebeffe4be3728226b",
         "size_bytes": 10243
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/exact-log-pid2-branches-20260919/disposition.md",
+        "sha256": "f2f5dde5cf025c8c36db54a84e4c2613ca7b97ba4502283e66316e46fc092c4c",
+        "size_bytes": 4373
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/exact-log-pid2-branches-20260919/exact-log-pid2-history-from-855605a.bundle",
+        "sha256": "bc5de3094b2d291a344ec9065f75da2bd588b7d3a587cf80b2de4eab29448b08",
+        "size_bytes": 279915
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/exact-log-pid2-branches-20260919/manifest.json",
+        "sha256": "2504fbe65b15120bbb2c073534af4191db85d415f5e85e742f4a68258b016e73",
+        "size_bytes": 110124
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/exact-log-pid2-branches-20260919/recovery.md",
+        "sha256": "fcd0259890b1ce1a0febce8e777201daff380f8461b71dcc2547691bc0998d05",
+        "size_bytes": 3123
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/galadriel-branch-20260919/disposition.md",
+        "sha256": "d839c7e0ef2f7a6b8444fb11acef012efc78261dc0ff1a7dd8faf875025ec9cc",
+        "size_bytes": 3968
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/galadriel-branch-20260919/galadriel-history-from-718447aa.bundle",
+        "sha256": "dab1653d8b7efbe6d38d6282ce74855d0cbb5adc8fe1763ee8b9c06c32d199c6",
+        "size_bytes": 1114215
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/galadriel-branch-20260919/manifest.json",
+        "sha256": "42b344cdc0c7117f80277074552d4ea92db187776c05250f1d140f20a014a0fd",
+        "size_bytes": 65929
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/galadriel-branch-20260919/recovery.md",
+        "sha256": "dd2c994a61161691675340e95f64cbc88db81bf337ec54cb85db944404ba8a4e",
+        "size_bytes": 2918
       },
       {
         "git_mode": "100644",
@@ -1533,6 +1581,24 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/archive/python-verifier-custody-m0-recovery-20260919/DISPOSITION.md",
+        "sha256": "b3ec7679d8fd6f08f6d30e94d7f6a94d4f06860d9caf7ebabb5ada919a923a04",
+        "size_bytes": 2619
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/python-verifier-custody-m0-recovery-20260919/INDEX.json",
+        "sha256": "f733979a507f9c34bb075b02d5294afc528bac392df0340a83ff00f19a06e737",
+        "size_bytes": 16726
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/python-verifier-custody-m0-recovery-20260919/e16a6915262e8bf2fac1752ff959d9d3733c7a7d.bundle",
+        "sha256": "d9bf6f964ed404554ad227583e6b4ea6027b7028cee239e5892f40ccabeaebb6",
+        "size_bytes": 895902
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/archive/sxpid3-s1-historical-checkers-v1/DISPOSITION.md",
         "sha256": "79a920053461217328687bd8a64ae9bfe06194d81308db1c113e403e95b06172",
         "size_bytes": 2919
@@ -1798,8 +1864,8 @@
       {
         "git_mode": "100644",
         "path": "audit/evidence/completion-run-ledger-2026-07-25.md",
-        "sha256": "65c138ea33af1fd3263a846d3737ba7d8e46559256c8034d0246361b3f75c5d9",
-        "size_bytes": 111323
+        "sha256": "d5e0bf781980f9d307e70090ec01bb2376bee7912944726ae8877d49c4de90e0",
+        "size_bytes": 112282
       },
       {
         "git_mode": "100644",
@@ -27646,7 +27712,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "fa30f50f9202b7857b65b5fbf87064103e8aad3adfff45593972dc34e36645cf",
+        "sha256": "35675635083e66697c21940a294fbe85fe099d89987055984dad29cbe42bfe35",
         "size_bytes": 136973
       },
       {
@@ -28508,8 +28574,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "6af933308f9cd1acd36d734299efba1e2e4014752711b17f08fea624b889283a",
-    "entry_count": 4727
+    "entries_sha256": "b6b6951e830c2735d271004d5122d9560066ef53c56d5b3267b0ba99c0e2a400",
+    "entry_count": 4738
   },
   "subprojections": [
     {
@@ -28537,7 +28603,7 @@
       ]
     },
     {
-      "entries_sha256": "2cd85351ba14751c7284b832c3250e53819e8f451fabbb7a5c00735585e5d975",
+      "entries_sha256": "acc4d8fba9fc0d1e0e48e1cf52c99bc706c7702bbd1ea5a22216b5bd2e1f9b1d",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

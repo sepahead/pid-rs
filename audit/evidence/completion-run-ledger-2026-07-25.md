@@ -353,6 +353,17 @@ whole public result is exactly source-permutation invariant.
 
 ## Exact-log checker adequacy implementation checkpoint
 
+> **Superseded draft account (notice dated 2026-09-19).** The checkpoint below describes a
+> checker rewrite rejected on 2026-08-30. Its comment/string masker, declaration-inventory claim,
+> and “10 mutations, decoy” replay are historical draft results, not current acceptance evidence.
+> The retained production checker uses its conservative raw-token rule. The replacement harness
+> distinguishes nine semantic rejections, six raw-policy/digest controls, two accepted scope
+> probes, and one accepted checker-custody limitation. See the
+> [exact-log checker adjudication](../../claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md)
+> and the [versioned hostile receipt](sxpid2-exact-log-product-hostile-4.33.0.json).
+> The lexical counterexample does not invalidate the seven generic Lean algebra theorems;
+> those theorems do not establish concrete event extraction, Rust/binary64 refinement, or sampling validity.
+
 State: source/self-test/CI wiring implemented; full claim/catalog/paper binding and final-tree replay
 remain open.
 

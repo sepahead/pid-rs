@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Preserve four historical branches in three compact Git archives with per-version dispositions
+  and verified local recovery: [exact-log and PID2](audit/archive/exact-log-pid2-branches-20260919/disposition.md),
+  [Python custody](audit/archive/python-verifier-custody-m0-recovery-20260919/DISPOSITION.md), and
+  [the Galadriel guide](audit/archive/galadriel-branch-20260919/disposition.md). Retain failed
+  approaches and source-state records. Correct the old exact-log checker account with a
+  supersession notice; keep its original evidence.
+
 - Add the finite-prefix categorical MGW gradient derivation and eleven-target proof map, with
   explicit whole-row sampling, common-support, score and target-tangent assumptions. Include a
   separate support-change MI counterexample and its failed quadratic route. Publish both detailed
