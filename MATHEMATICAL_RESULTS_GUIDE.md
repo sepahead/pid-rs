@@ -1,9 +1,9 @@
 # Mathematical results guide
 
-This guide gives a self-contained map of the principal mathematical results and assurance work in
-pid-rs. Each result card identifies the mathematical object and its assumptions. Each card also
-gives the central formula, evidence, cost, use, strongest nonclaim, and complete proof or
-publication artifact.
+This guide maps nine foundational result families and six companion packages in pid-rs.
+Each result card identifies the mathematical object and its assumptions. Each card also gives
+the central formula, evidence, cost, use, strongest nonclaim, and complete proof or publication
+artifact. Section 2 separates the two inventories. Section 7 explains the companion results.
 
 > **Non-authoritative guide.** Scope-specific files govern each type of statement:
 >
@@ -21,13 +21,13 @@ The repository assigns authority by scope. The narrow SxPID3 factorization/bound
 integrated stable validation entry. The separate full SxPID3 certificate specification remains
 proposed and unsupported. Neither status changes the other.
 
+## 1. Reading conventions and semantic firewall
+
 In this guide, “New in pid-rs” means repository implementation, rederivation, theorem composition,
 counterexample, diagnostic, or assurance work. The phrase is **not** a scientific-priority claim.
 All information quantities below use natural logarithms and are in **nats**. The MGW paper uses
 bits. Multiplication by the positive factor $\log 2$ converts its values to nats without changing
 signs or equalities.
-
-## 1. Reading conventions and semantic firewall
 
 ### Evidence labels
 
@@ -97,6 +97,22 @@ application validity, scientific novelty, or complete formal verification.
 | 7. Binary64/quantizer assurance | Implemented measure-specific arithmetic/diagnostics **[R,B,E]**.<br> Bounded nonfindings and policy rejections **[B,E,O]**. No estimator or full refinement **[O]** | [`NUMERICAL_ASSURANCE.md`](NUMERICAL_ASSURANCE.md) · [PDF](output/pdf/numerical-assurance.pdf) |
 | 8. KSG integer-harmonic arithmetic | Exact/formal/bounded core scoped GO **[P,R,X,B,E]**.<br> Repository/publication integration **NO-GO [O]** | [`claim-v4.md`](claims/KSG-INTEGER-HARMONIC-001/claim-v4.md) · [`integration-disposition-v4.md`](claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md) |
 | 9. Common-radius manifold small-ball bridge | Ehrlich analytic object **[P]**. Conditional population lemma **[R]** and boundary counterexamples **[X]**. Manifold estimator and manifold PID implementation remain open **[O]** | This guide, Section 6.1 below |
+
+### Companion result packages
+
+The nine families above form the foundational map used by the existing figure. Six later
+packages add results about finite categorical MGW prefixes, derivatives and interpretation.
+Section 7 gives their formulas and limits. Their local formal records, handwritten arguments,
+publication checks and open replay obligations remain separate.
+
+| Package | Useful result and current evidence | Standalone source and PDF |
+|---|---|---|
+| Prefix mean | Actual finite-row expectation approaches the specified MGW atom. Three locally accepted Lean targets **[R]**. Hosted proof replay open **[O]** | [Mean exposition](audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md) · [PDF](output/pdf/prefix-mgw-mean.pdf) |
+| Prefix bias | Explicit finite-horizon error bounds under population premises. Five locally accepted Lean targets **[R]**. Coverage remains open **[O]** | [Bias paper](audit/formal/lean-prefix-mgw-bias/EXPOSITION.md) · [PDF](output/pdf/prefix-mgw-bias.pdf) |
+| Prefix gradient | Full-row score identity, derivative error and second moments. Eleven locally accepted Lean targets **[R]**. Useful training remains unproved **[O]** | [Gradient paper](audit/research/finite-prefix-mgw-gradient/EXPOSITION.md) · [PDF](output/pdf/finite-prefix-mgw-gradient.pdf) |
+| Support-change cusp | Zero cell tangents can coexist with opposing MI derivatives. Handwritten negative example **[R,X]**. Formalization open **[O]** | [Cusp argument](audit/research/support-change-mi-cusp/EXPOSITION.md) · [PDF](output/pdf/support-change-mi-cusp.pdf) |
+| Target-copy synergy | Exact identity, same-source-law invariance and entropy bounds. Eleven locally accepted Lean targets **[R]**. Complete replay acceptance open **[O]** | [Target-copy note](audit/evidence/finite-target-copy-mgw-synergy.md) · [PDF](output/pdf/finite-target-copy-mgw-synergy.pdf) |
+| Fixed-world comparison | Equal synergy can accompany different added Shannon information. Twenty-one locally checked Lean targets **[R,X]**. Public replay remains open **[O]** | [Fixed-world note](audit/evidence/mgw-fixed-world-added-information-2026-09-09.md) · [PDF](output/pdf/mgw-fixed-world-added-information.pdf) |
 
 ## 3. Categorical-Sx theory
 
@@ -611,8 +627,13 @@ canonical Markdown. It adds no claim or evidence beyond the source and its cited
 Repository/publication integration remains **NO-GO**. Final `decision-v4.md` and
 `evidence-matrix-v4.md` are absent.
 
-The later composite-v12 qualification route is terminal. Its exact C12 commit is
-`01466e88b0550333c2718f1716289e9642e30dc6`. At that commit, $Q_{12}$ is false, $R_{12}$ is
+The later composite-v12 qualification route is terminal. Its exact C12 commit is:
+
+```text
+01466e88b0550333c2718f1716289e9642e30dc6
+```
+
+At that commit, $Q_{12}$ is false, $R_{12}$ is
 permanently unissued, and $L_{12}$ is `not_adjudicated`. That terminalizes only the specified v12 route. It
 does not invalidate the scoped revision-4 mathematics or silently authorize a future lifecycle.
 
@@ -1062,7 +1083,7 @@ the joint information. If that allocation changes no scientific or engineering c
 calculation is unnecessary.
 
 The detailed current-versus-proposed Galadriel and sensor-placement analysis is in
-[`PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md`](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md). It keeps
+[the sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md). It keeps
 the current record-only studies separate from proposed placement research. It compares PID with
 task loss, joint MI, conditional MI, ablation, coverage, and established placement objectives.
 
@@ -1123,3 +1144,204 @@ The guide uses these primary sources:
 
 The linked detailed reports give equation-level provenance. Each report marks the precise point
 where each source stops applying.
+
+## 7. Companion results for finite categorical MGW questions
+
+These packages use the paper-defined categorical MGW functional. Their prefix constructions,
+bounds, matched examples and formalizations are repository work. The score identity used below
+is classical. No package establishes scientific priority, a continuous-PID transfer or an
+application advantage. All logarithms are natural.
+
+A local Lean result proves its exact target under the recorded definitions, imports and axiom
+policy. It does not certify every sentence in a publication or close a hosted replay obligation.
+
+### 7.1 A row experiment whose mean approaches an MGW atom
+
+Fix finite alphabets, a nonempty finite source set and a normalized joint law $p$. Fix a node
+$\alpha$ in the complete redundancy lattice. Let $\theta_\alpha$ be its population signed MGW
+atom. For an integer horizon $h\ge0$, draw $h+1$ IID complete source-and-target rows.
+The first is the fresh anchor. Coordinates within each row may depend arbitrarily.
+
+The specified statistic $B_h(\alpha)$ sums signed arrival increments. A positive increment
+checks the joined source-mismatch pattern and divides by raw arrival rank. A join test is false
+if its tested prefix contains a complete source match. A negative increment
+checks the target-matching retained prefix and divides by its retained rank. It is counted only
+when the current row matches the anchor target.
+
+The mean paper calls this same statistic $Y_h$. Its accepted expectation bridge gives
+
+$$
+\lim_{h\to\infty}\mathbb E_{p^{\otimes(h+1)}}[B_h(\alpha)]
+=\theta_\alpha.
+$$
+
+**Use and boundary.** This connects a fully specified row experiment to an MGW atom without
+assuming access to a supplied PMF. One block consumes $h+1$ rows and the required mismatch-join
+operations. No implementation cost advantage is established.
+
+The result concerns expectations.
+It does not prove consistency of an observed estimate, a finite-horizon error tolerance or a
+confidence interval. Short-prefix means can have the wrong sign.
+
+**Evidence and next reading.** Three targets have local Lean acceptance and a locally accepted
+portable replay. Hosted proof replay remains open. Read the [current mean exposition](audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md),
+[PDF](output/pdf/prefix-mgw-mean.pdf) and [publication status](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md).
+
+### 7.2 Finite-horizon error before sampling uncertainty
+
+Keep the experiment in Section 7.1 and write
+$e_h=\theta_\alpha-\mathbb E[B_h(\alpha)]$. This is population value minus expected statistic.
+For a supported anchor $z$, let $E_\alpha(z)$ be the node's OR-of-AND source-match event and set
+$q_z=P(E_\alpha(z)\cap\{T=t_z\})$. The positive anchor lies in this event, so $q_z>0$.
+Define $K_q=\sum_{z:p(z)>0}p(z)/q_z$. Then
+
+$$
+|e_h|\le\frac{K_q-1}{h+1}.
+$$
+
+If a justified population floor satisfies $q_z\ge\eta$ at every supported anchor, with
+$0<\eta\le1$, a separate bound is
+
+$$
+|e_h|\le\frac{(1-\eta)^{h+1}}{(h+1)\eta}.
+$$
+
+The paper also gives signed bounds and bounds from positive projection-support counts.
+Overlapping source events need not form a partition, so $K_q$ need not be an integer.
+
+**Use and boundary.** A population model can make these bounds useful for choosing or rejecting
+a prefix horizon before paying its row and computation cost. Sample occupancy and the smallest
+observed frequency do not establish population support or a probability floor. These are
+approximation-error bounds, separate from variation in an observed block or average.
+
+**Evidence and next reading.** Five targets have local Lean acceptance. Hosted proof replay,
+Rust correspondence and finite-sample coverage remain open. Read the [bias paper](audit/formal/lean-prefix-mgw-bias/EXPOSITION.md),
+[PDF](output/pdf/prefix-mgw-bias.pdf), [one-page summary](output/pdf/prefix-mgw-bias-summary.pdf)
+and [theorem map](audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md).
+
+### 7.3 Prefix derivatives and the score of every row
+
+Let $p_t$ be normalized finite laws on fixed alphabets with common positive support on an open
+neighborhood of $t_0$. Each cell has tangent $d_z$ at $t_0$. Write $p=p_{t_0}$ and $p_z=p(z)$. Require
+$|d_z|\le Lp_z$ for $L\ge0$. Set $s(z)=d_z/p_z$ on positive support and zero elsewhere.
+The derivative statistic includes the score of the random anchor:
+
+$$
+G_h=B_h(\alpha)\sum_{r=0}^{h}s(Z_r),\qquad
+\left.\frac{d}{dt}\mathbb E_{p_t^{\otimes(h+1)}}[B_h(\alpha)]\right|_{t=t_0}
+=\mathbb E[G_h].
+$$
+
+For the atom-derivative bound, additionally require every target-fiber tangent to be zero and
+the supported MGW inverse identities to hold locally.
+Let $\mathcal Z_{\mathrm{lat}}$ be the zeta transform on the fixed redundancy lattice.
+Let $c_\alpha$ be the complete inverse row, so
+$\sum_\beta c_\alpha(\beta)(\mathcal Z_{\mathrm{lat}}f)(\beta)=f(\alpha)$ for every node function $f$.
+Set $q_{z,\beta}=P_{p_{t_0}}(E_\beta(z)\cap\{T=t_z\})$ and
+$C_\alpha(p)=\sum_\beta|c_\alpha(\beta)|\sum_{z:p_z>0}p_z/q_{z,\beta}$.
+The atom derivative exists and satisfies
+
+$$
+\left|\left.\frac{d}{dt}\theta_\alpha(p_t)\right|_{t=t_0}
+-\mathbb E[G_h]\right|\le\frac{2LC_\alpha(p)}{h+1}.
+$$
+
+The separate second-moment bound is
+$\mathbb E[G_h^2]\le(h+1)H_h^2\mathbb E[s^2]\le(h+1)H_h^2L^2$,
+where $H_h=\sum_{j=1}^h1/j$ and $H_0=0$. Derivatives use nats per parameter unit.
+
+**Use and boundary.** Finite latent maps and fixed-base encoders can provide a sampled score
+without enumerating the induced image PMF. The cost includes all $h+1$ row scores. Small known
+PMFs may be differentiated directly. A longer prefix lowers the stated derivative-bias bound
+but does not establish lower variance, useful training, confidence coverage or stopping validity.
+
+**Evidence and next reading.** Eleven targets have local Lean acceptance. Hosted replay and any
+Rust/Python implementation remain separate. Read the [gradient paper](audit/research/finite-prefix-mgw-gradient/EXPOSITION.md),
+[PDF](output/pdf/finite-prefix-mgw-gradient.pdf) and [theorem map](audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md).
+The paper's independent-block MSE consequence is handwritten, outside those eleven targets.
+
+### 7.4 A support-changing MI cusp with zero cell tangents
+
+For binary $X,Y$ and $|t|<e^{-2}$, set $\varepsilon(0)=0$ and
+$\varepsilon(t)=|t|/\log(1/|t|)$ for $t\ne0$. Give each diagonal cell probability
+$(1-\varepsilon)/2$ and each off-diagonal cell probability $\varepsilon/2$.
+Both marginals stay fair and every cell tangent at zero is zero. Nevertheless,
+
+$$
+I_{p_t}(X;Y)-I_{p_0}(X;Y)=-|t|(1+o(1)).
+$$
+
+The right derivative is $-1$ and the left derivative is $+1$, in nats per parameter unit.
+There is no ordinary derivative at zero. The joint support changes there, so this example
+violates the common-support premise of Section 7.3. For one source, the signed MGW atom is MI.
+Every fixed finite-prefix mean has derivative zero along this path. Convergence of those means
+does not justify interchanging the limit and derivative.
+
+**Use and boundary.** Checking only base-point cell tangents can miss first-order information
+changes from entering support. This is a four-cell analytic obstruction, with no runtime or
+learning-performance claim. The retained failed choice $\varepsilon(t)=t^2$ has MI derivative
+zero. Support change alone therefore does not force a cusp.
+
+**Evidence and next reading.** This is a handwritten negative example, with no accepted Lean
+formalization or executed-fixture evidence. Read the [full argument](audit/research/support-change-mi-cusp/EXPOSITION.md)
+and [PDF](output/pdf/support-change-mi-cusp.pdf). It does not contradict a function-value
+continuity theorem or show that common support is necessary for every differentiable path.
+
+### 7.5 Target-copy identities and conditional-entropy bounds
+
+Take any normalized finite joint law with $T=(S_1,U)$ throughout its positive support.
+No independence or full-support assumption is needed. At a supported source pair $(x,y)$,
+write $a=P(S_1=x)$, $c=P(S_2=y)$ and $j=P(S_1=x,S_2=y)$. The signed local MGW synergy is
+
+$$
+s(x,y)=\log\frac{ac}{j(a+c-j)}.
+$$
+
+Its average depends on the complete source joint law, even as the residual target channel
+changes within this family. The formal same-law comparison uses one common residual alphabet.
+The local and averaged bounds are
+
+$$
+0\le s(x,y)\le\min\{\log(c/j),\log(a/j)\},\qquad
+0\le S\le\min\{H(S_1\mid S_2),H(S_2\mid S_1)\}.
+$$
+
+The entropy symbols denote the explicit finite positive-support sums in nats. This package does
+not identify them with a separate entropy library. Fixing only source marginals is insufficient.
+
+**Use and boundary.** The identity provides a finite-law diagnostic and a reference for a
+separately mapped implementation. Evaluating it uses the declared source joint law. It does not
+infer target copying from observed samples or turn synergy into added information or task value.
+The source-copy condition must hold at every supported joint key, not only at one anchor.
+
+**Evidence and next reading.** Eleven targets have local Lean acceptance. Complete replay
+acceptance remains open because retained operational evidence is incomplete. Read the
+[target-copy note](audit/evidence/finite-target-copy-mgw-synergy.md), [PDF](output/pdf/finite-target-copy-mgw-synergy.pdf)
+and [replay record](audit/formal/lean-mgw-target-copy/REPLAY_ACCEPTANCE.json).
+
+### 7.6 Equal synergy, different added Shannon information
+
+Let $A,B,U$ be mutually independent fair bits on one eight-outcome world. Keep target
+$Y=(A,B)$ and existing source $A$ fixed. Compare adding $U$ with adding $B$. For categorical
+MGW signed synergy,
+
+$$
+S(A,U;Y)=S(A,B;Y)=\log(4/3),\qquad
+I(U;Y\mid A)=0,\quad I(B;Y\mid A)=\log2.
+$$
+
+These are assigned finite probabilities, without a sampling-IID premise. The full signed PID
+keeps $I(C;Y\mid A)=\mathrm{Unq}_C+S$. The unique atom is $-\log(4/3)$ for $C=U$
+and $\log2-\log(4/3)$ for $C=B$. Thus the synergy coordinate ties candidates whose added
+Shannon information differs.
+
+**Use and boundary.** Synergy alone cannot rank these candidates by added Shannon information.
+CMI answers the declared added-information question. A prediction or
+placement decision still needs its own model, cost and task evaluation. The MGW paper already
+describes cancellation between signed atoms. The matched comparison and formalization do not
+establish a discovery-priority claim or a result for another PID.
+
+**Evidence and next reading.** Twenty-one targets have local Lean checks and a retained replay
+using the same kernel implementation. A reusable public replay and fresh hosted formal
+qualification remain open. Read the [fixed-world note](audit/evidence/mgw-fixed-world-added-information-2026-09-09.md),
+[PDF](output/pdf/mgw-fixed-world-added-information.pdf) and [current publication status](audit/formal/lean-mgw-fixed-world/PUBLICATION.md).

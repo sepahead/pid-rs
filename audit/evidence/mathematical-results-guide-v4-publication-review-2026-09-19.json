@@ -1,0 +1,944 @@
+{
+  "artifacts": [
+    {
+      "bytes": 74009,
+      "repository_path": "MATHEMATICAL_RESULTS_GUIDE.md",
+      "sha256": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b"
+    },
+    {
+      "bytes": 818425,
+      "pages": 28,
+      "repository_path": "output/pdf/mathematical-results-guide.pdf",
+      "sha256": "434fae95216282dc08840a1d492076d5c648d64b01bc1cd939884555b0a615a4"
+    },
+    {
+      "bytes": 5627,
+      "repository_path": "audit/formal/latex/mathematical-results-guide/header.tex",
+      "sha256": "f570010a4e09faa21538e1956e552efd34d7d19ae1776ff6e2f735aa1ddd89d8"
+    }
+  ],
+  "census": {
+    "coverage": "Structural/text/font observations; no PDF/UA or assistive-reader conformance.",
+    "embedded_subset_unicode_font_entries": 27,
+    "objects": 2438,
+    "pages": 28,
+    "parser_diagnostics": [],
+    "sha256": "a19e405a4b73da3fd9ee66804657fdd7960dc6237c6f6696fed7feddc6bc1adf"
+  },
+  "current_main_claim": false,
+  "derived_tex": {
+    "claim": "Exact generated source identities, not a separate publication artifact.",
+    "normalized_sha256": "93b388c285b42189dd254e3d5f5972b0d6cff2e9f28e525a9c56f937fe2a1d42",
+    "raw_sha256": "d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee"
+  },
+  "diagnostics": {
+    "assistive_reader_claim": false,
+    "canonical": {
+      "profile": "canonical-pandoc-3.10.2-texlive-2024-guide-v4",
+      "repository_path": "audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json",
+      "sha256": "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939"
+    },
+    "counts": {
+      "footnotehyper": 1,
+      "microtype": 1,
+      "tagpdf": 46,
+      "total": 48
+    },
+    "linux": {
+      "profile": "linux-pandoc-3.10.2-texlive-2023-debian-guide-v4",
+      "repository_path": "audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json",
+      "sha256": "26ba5c4f6f305fc2d66d52cf19188b18d834a29b2584cbdf28f2d91693f6eda4"
+    },
+    "linux_boundary": "One retained final production PDF from a local translated Linux capture. The frozen builder performs its two-build comparison and then deletes internal artifacts; this review does not independently observe internal equality. Canonical and Linux bytes differ; no GitHub-hosted credit.",
+    "linux_pdf_sha256": "1b1ec340538111b479bbff4bc6f9c686e92ff14a8624a39b4e9e02b0d46a06ce",
+    "matching": "Exact ordered messages, line anchors, normalized-TeX hash and manifest pin; unknown/reference/glyph/layout diagnostics reject. Final build log is checked; this is not generic stdout-only warning coverage.",
+    "pdf_ua_claim": false,
+    "warning_free": false
+  },
+  "guide_version": 4,
+  "historical_preservation": {
+    "artifacts": [
+      {
+        "bytes": 84208,
+        "repository_path": "scripts/check-mathematical-results-guide-pdf-structure.py",
+        "sha256": "50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2"
+      },
+      {
+        "bytes": 84997,
+        "repository_path": "scripts/check-mathematical-results-guide-pdf-structure-v2.py",
+        "sha256": "86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77"
+      },
+      {
+        "bytes": 85043,
+        "repository_path": "scripts/check-mathematical-results-guide-pdf-structure-v3.py",
+        "sha256": "b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4"
+      },
+      {
+        "bytes": 37084,
+        "repository_path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile.py",
+        "sha256": "a1fc39a5bef8bc22286321cab8127b96d395cc08657afec88be13697ff70b2e7"
+      },
+      {
+        "bytes": 37349,
+        "repository_path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2.py",
+        "sha256": "29837b202ad3e5afa59e10f0ef4848b876fb6ef2b6aa3a996f78d7aac2752fcc"
+      },
+      {
+        "bytes": 37355,
+        "repository_path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py",
+        "sha256": "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338"
+      },
+      {
+        "bytes": 7789,
+        "repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v1.json",
+        "sha256": "9ba8e03c5112dacc2da232b8660879d34afa901e9e07862135c40fd6e7d49f8e"
+      },
+      {
+        "bytes": 9913,
+        "repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json",
+        "sha256": "56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8"
+      },
+      {
+        "bytes": 17719,
+        "repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v3.json",
+        "sha256": "bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3"
+      },
+      {
+        "bytes": 581296,
+        "repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw.pdf",
+        "sha256": "408705cbcc2caf2a0d04a766f10a8bbec3cddfe1eca2fa302984181ed54241bd"
+      },
+      {
+        "bytes": 744745,
+        "repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf",
+        "sha256": "b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6"
+      },
+      {
+        "bytes": 748561,
+        "repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf",
+        "sha256": "d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24"
+      }
+    ],
+    "scope": "Existing v1/v2/v3 files were rehashed and retained. This proposal neither replaces nor removes them; old native suites were not rerun here."
+  },
+  "linux_profile": {
+    "checks": 6,
+    "controls_per_mode": 70,
+    "hosted_execution_credit": false,
+    "native_result_sha256": "f7eb7d5667e8975e280c33da4f2e0cbbfdec9b965e33d6b27b8024f80f10dd6a",
+    "receipt_repository_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v4.json",
+    "receipt_sha256": "435de9987d9f2518b4e96d16e8f9eca1793248da4d427ed09283191ced12dc5a"
+  },
+  "local_final_builder": {
+    "bound_snapshot_rows": 151,
+    "builder_repository_path": "scripts/build-mathematical-results-guide-pdf.sh",
+    "builder_sha256": "aebff0b1420780f2fff99bb976dd31df2fba83a515ba388013b5bbc09b34d42f",
+    "completed_utc": "2026-09-19T22:20:13.941980+00:00",
+    "elapsed_seconds": 75.20305933291093,
+    "emitted_pdf_sha256": "434fae95216282dc08840a1d492076d5c648d64b01bc1cd939884555b0a615a4",
+    "exit_code": 0,
+    "inputs_unchanged": true,
+    "limits": "Sampled process/RSS and repeated input observations, not an atomic snapshot. Production cleanup removed internal PDFs, TeX, pass logs and snapshots.",
+    "remaining_observed_group_processes": 0,
+    "root_readback_sha256": "e770a46f99a400be8f96d47f49bb6f520c77c75143ae040104f4b87ccd76a8da",
+    "started_utc": "2026-09-19T22:18:58.603251+00:00",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "b5cccb1d8de32ff0074cb48098564bef82866fc3e84827f3c103f2fee51b1a00"
+  },
+  "nonclaims": [
+    "Published or present on main at this review time",
+    "Complete mathematical re-proof",
+    "Fresh hosted formal or publication qualification",
+    "Estimator calibration or deployment value",
+    "PDF/UA or assistive-reader conformance",
+    "Physical print or grayscale certification",
+    "Atomic filesystem snapshot or generic race immunity"
+  ],
+  "normalizer_successor": {
+    "helper_bytes_unchanged": true,
+    "historical_controls_per_mode": 172,
+    "historical_test_scope": "Pre-correction candidate only; changed-fixture self-test success is not inferred from unchanged helper bytes. Current full publication gates remain separate.",
+    "repository_path": "scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py",
+    "sha256": "73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6"
+  },
+  "palette": {
+    "PidBronze": "#916400",
+    "PidGold": "#DCA520",
+    "PidNavy": "#2C3E50",
+    "PidPale": "#E8F0ED",
+    "PidPaper": "#F7F3E9",
+    "PidSlate": "#647072",
+    "PidTeal": "#1F6968",
+    "PidWarm": "#F2EBDA"
+  },
+  "publication_claim": false,
+  "publication_lenses": [
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Hierarchy",
+      "observation": "Page28 hierarchy coherent; other pages inherit only identical-raster observations."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Typography",
+      "observation": "Changed label/subscript/plus legible at normal/detail sizes."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Grid",
+      "observation": "Page28 margins and equations align."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Spacing and rhythm",
+      "observation": "Only intended inline spacing changes; no observed reflow."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Narrative order",
+      "observation": "Assumptions and evidence paragraphs remain coherent."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Motif provenance",
+      "observation": "No new design-origin audit."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Motif coherence",
+      "observation": "Page28 conventions consistent."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Ornamental restraint",
+      "observation": "Decoration does not obstruct changed content."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Palette identity",
+      "observation": "Appearance retained; no quantitative color test."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Pattern/data-semantic separation",
+      "observation": "No new data encoding."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Color-redundant labels",
+      "observation": "No new color-dependent mathematical meaning."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Grayscale legibility",
+      "observation": "Not tested."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Real-text searchability and logical extraction order",
+      "observation": "Source-specific parser/profile passed; complete reading order and assistive readers untested."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Print fidelity",
+      "observation": "Not tested physically."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "A4/PDF profile and embedded fonts",
+      "observation": "Actual strict profile/font predicates pass; no PDF/UA inference."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Link/action safety",
+      "observation": "Strict active-content/navigation baseline and controls pass normal/O; source-specific scope."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Deterministic reproduction",
+      "observation": "Actual bytes compared; canonical production is recorded separately."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Source/derived-asset separation",
+      "observation": "MD, PDF, profile and rasters separately bound."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Portable repository-local dependencies",
+      "observation": "Machine paths private; arbitrary-platform portability untested."
+    },
+    {
+      "evidence_scope": "Corrected page28 observations plus explicitly inherited identical-raster scope; native evidence identified separately.",
+      "name": "Normal-size plus high-resolution inspection",
+      "observation": "Fresh page28 normal/detail plus earlier page27 detail; 35 equal PNGs inherit prior scope only."
+    }
+  ],
+  "recorded_at_utc": "2026-09-19T22:38:42.117681+00:00",
+  "recorded_date": "2026-09-19",
+  "retained_negative_routes": [
+    {
+      "name": "Additional unknown heading",
+      "native_failure_exit": 1,
+      "result": "Original candidate accepted an extra section; failed probe retained. Complete section-command roster bound in successor."
+    },
+    {
+      "name": "Duplicate crosswalk frame prefix",
+      "native_failure_exit": 1,
+      "result": "First successor accepted duplicate prefix; failing self-test retained. Final source requires one prefix and one suffix."
+    },
+    {
+      "name": "Linux ownership/setup",
+      "native_failure_exit": 1,
+      "result": "PermissionError during directory ownership/chown setup before any build; home/source retained, no completed build. Corrected permission route executed separately; failure receives no build credit."
+    },
+    {
+      "command_started_utc": "2026-09-19T22:09:05.439636+00:00",
+      "correction": "One operatorname{Unq}_C token replaced with mathrm{Unq}_C; same mathematical symbol/claim. New source, generated TeX and PDF identities require their own checks.",
+      "failed_result_not_relabelled": true,
+      "name": "Portable Markdown operator notation",
+      "native_failure_exit": 1,
+      "root_failure_readback_sha256": "781d1b8049e16b3bcbae203a70dcb368c3cd144cb1eb0e0efdb06d1a1f34ae27",
+      "source_line": 1334,
+      "source_path": "MATHEMATICAL_RESULTS_GUIDE.md",
+      "stderr_sha256": "bc345b568ce011e575c6a6d894193743b8e713180e4736a0488a291efa417f62"
+    },
+    {
+      "name": "Predicted corrected TeX fixture",
+      "native_failure_exit": null,
+      "result": "A one-token source prediction differed from actual Pandoc output because its source-derived trailer identifier and wrapping changed. Prediction preserved and superseded by captured source; no native pass claimed for it."
+    }
+  ],
+  "schema": "pid-rs-guide-publication-review-v1",
+  "scientific_scope": {
+    "boundary": "Paper-defined categorical MGW quantities are distinct from repository constructions, bounds, examples and formalizations. A local Lean result proves its exact typed target under recorded definitions, imports and axiom policy; it does not certify all publication prose or close hosted replay. No calibration, continuous-PID transfer, learning benefit or priority claim follows.",
+    "companion_packages": 6,
+    "companions": [
+      {
+        "evidence": "Three locally accepted Lean targets and a locally accepted portable replay.",
+        "limits": "Expectation convergence is not consistency of an observed estimate, finite-horizon accuracy or a confidence interval; hosted proof replay remains open.",
+        "name": "Prefix mean",
+        "pdf": "output/pdf/prefix-mgw-mean.pdf",
+        "purpose": "Connect the specified row experiment to a population signed MGW atom.",
+        "scope": "Nonempty finite source set on finite alphabets; normalized joint law; complete redundancy lattice; h+1 IID complete rows with a fresh anchor; within-row coordinates may depend.",
+        "section": "7.1",
+        "source": "audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md"
+      },
+      {
+        "evidence": "Five locally accepted Lean targets.",
+        "limits": "Sampling variation, finite-sample coverage, Rust correspondence and hosted replay are separate; observed occupancy does not prove a population floor.",
+        "name": "Prefix bias",
+        "pdf": "output/pdf/prefix-mgw-bias.pdf",
+        "purpose": "Choose or reject a finite horizon using explicit approximation-error and cost bounds.",
+        "scope": "The same finite row experiment; supported anchor events; any population floor must be separately justified.",
+        "section": "7.2",
+        "source": "audit/formal/lean-prefix-mgw-bias/EXPOSITION.md"
+      },
+      {
+        "evidence": "Eleven locally accepted Lean targets.",
+        "limits": "Independent-block MSE is a handwritten consequence outside those eleven targets. Hosted replay, implementation, useful training, coverage and stopping validity are not established.",
+        "name": "Prefix gradient",
+        "pdf": "output/pdf/finite-prefix-mgw-gradient.pdf",
+        "purpose": "Relate the score of every row, including the anchor, to derivatives and finite-prefix error.",
+        "scope": "The same h+1 IID complete-row experiment with a fresh anchor; normalized finite laws on common positive support in an open neighborhood and bounded scores. The atom bound additionally requires zero target-fiber tangents and complete supported inverse identities.",
+        "section": "7.3",
+        "source": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
+      },
+      {
+        "evidence": "Handwritten analytic negative example.",
+        "limits": "No accepted Lean formalization or executed-fixture evidence. The failed quadratic path is retained; support change alone does not force a cusp.",
+        "name": "Support-change MI cusp",
+        "pdf": "output/pdf/support-change-mi-cusp.pdf",
+        "purpose": "Show why base-point cell tangents do not justify a derivative-limit interchange when support changes.",
+        "scope": "A declared four-cell binary path; the common-support derivative premise fails.",
+        "section": "7.4",
+        "source": "audit/research/support-change-mi-cusp/EXPOSITION.md"
+      },
+      {
+        "evidence": "Eleven locally accepted Lean targets.",
+        "limits": "Complete replay acceptance remains open because operational evidence is incomplete. Explicit finite entropy sums are not an identification with a separate entropy library, task value, or sample-based target-copy inference.",
+        "name": "Target-copy synergy",
+        "pdf": "output/pdf/finite-target-copy-mgw-synergy.pdf",
+        "purpose": "Provide finite-law identities and conditional-entropy bounds for a declared target-copy family.",
+        "scope": "T=(S1,U) at every supported joint key; complete source joint law; no independence/full-support premise. The formal same-law comparison uses one residual alphabet.",
+        "section": "7.5",
+        "source": "audit/evidence/finite-target-copy-mgw-synergy.md"
+      },
+      {
+        "evidence": "Twenty-one local Lean checks and a retained replay using the same kernel implementation.",
+        "limits": "Reusable public replay and fresh hosted qualification remain open. The comparison is not a prediction/placement benefit, another-PID theorem or scientific-priority claim.",
+        "name": "Fixed-world added information",
+        "pdf": "output/pdf/mgw-fixed-world-added-information.pdf",
+        "purpose": "Show that equal MGW synergy can accompany different added Shannon information in one matched world.",
+        "scope": "Assigned probabilities on an eight-outcome world with mutually independent fair bits; no sampling-IID premise.",
+        "section": "7.6",
+        "source": "audit/evidence/mgw-fixed-world-added-information-2026-09-09.md"
+      }
+    ],
+    "foundational_families": 9,
+    "units": "nats; derivatives use nats per parameter unit"
+  },
+  "scope": "Corrected local candidate source/build/profile review with fresh page28 views and explicitly inherited identical-raster observations; publication and hosted qualification pending.",
+  "status": "reviewed_candidate_publication_pending",
+  "strict_profile": {
+    "boundary": "Source-specific navigation/active-content policy and represented-binary64 numeric semantics; not lexical PDF-real identity, generic malware-free or viewer-safety certification.",
+    "checker_sha256": "0d350c9d76733e287e3efa6e104a9c96446e5304707c73fd0b9ed67f61a87b47",
+    "controls_per_mode": {
+      "name_tree_diagnostics": 4,
+      "object_graph_mutations": 70,
+      "output_path_controls": 4,
+      "raw_parser_mutation": 1
+    },
+    "evidence_basis": "Fresh corrected-candidate normal/optimized positives and baseline plus79controls per mode, not predecessor success transfer.",
+    "local_normal_pass": true,
+    "local_optimized_pass": true,
+    "native_result_sha256": "8240ba8f5f9f6593d241f72c0ff330f2fb2a40e1f1f1c7f5a10b2faa84bd1f76",
+    "navigation_records": 285,
+    "navigation_sha256": "551efb7b3c498bee2a7694e969fc91cedb4522bbf8027594805f1896b5e3c5cf",
+    "self_test_sha256": "278197c735f361aafcbb1b573cbad4fe229e4815d9374840b350a73117ca834e",
+    "structure_sha256": "0e155300d1631f61c6090c5ef2a9fc7a8e67b7a470032eaf4759d9bfa682dc1c",
+    "targets": 75
+  },
+  "superseded_uncommitted_v4": {
+    "canonical_pdf_sha256": "64a8cb89f98f1b1a337e2156ebf7e028eee72c747a67c839dac97940cd562654",
+    "disposition": "Exact prior records retained privately; no old command or successful/failing run is relabelled as corrected-candidate evidence.",
+    "linux_pdf_sha256": "b221f18aa8a8865699f01c2089181a9546d4c7d868b2beb8553cdbd66bea135e",
+    "raw_receipt_sha256": "74bf695a21c0696c75fa818564669630ddc2b59d58de38da3a36a37011dd4643",
+    "review_json_sha256": "cf186db2cbd3f594741b75871056b28b0ed3277b1b19068127d178eb797878ea",
+    "review_md_sha256": "b343649511bd85da1953ab1938de734e897063bf7d4994f9469bb5c1ba51031e"
+  },
+  "visual_review": {
+    "additional_scoped_observation": "Earlier in this interval actual image views covered new page28 normal/detail, old page28 detail, and new page27 detail. Separate exact per-call times were not logged. The two page28 views below were repeated with an observed completion timestamp.",
+    "detail_dpi": 160,
+    "detail_pages": [
+      2,
+      3,
+      4,
+      17,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "findings": [
+      "Upright Unq_C, subscript C and binary plus are legible. No clipping, collision or paragraph/page reflow observed. Surrounding finite-law assumptions and evidence limits remain visible. This is typesetting/context review, not new proof acceptance.",
+      "The unique-information atom and following plus sign have clear spacing.",
+      "Both target-copy bounds and equal-synergy comparison equations are readable and within the text margins.",
+      "No overlap, cutoff, or footer collision was observed on this page.",
+      "Prior page6 long-identifier wrapping observation remains scoped to its identical raster."
+    ],
+    "fresh_successor_view_events": [
+      {
+        "completed_by_utc": "2026-09-19T22:30:29Z",
+        "detail_pages": [
+          28
+        ],
+        "normal_pages": [
+          28
+        ],
+        "receipt_sha256": "87571ea10dd7b2da8c568df670efcb6328d2aa64e52ca1ebe5a2d3fdcda32033",
+        "reviewer_class": "independent model review"
+      },
+      {
+        "detail_pages": [
+          28
+        ],
+        "normal_pages": [
+          28
+        ],
+        "receipt_sha256": "6703ca78d53717cc112c83b1eb73bcd94738b8be5dc835f7e999baac21f7cdba",
+        "recorded_utc": "2026-09-19T22:31:48.494760+00:00",
+        "reviewer_class": "integrating model review"
+      }
+    ],
+    "inherited_identical_raster_views": {
+      "count": 35,
+      "detail_pages": [
+        2,
+        3,
+        4,
+        17,
+        24,
+        25,
+        26,
+        27
+      ],
+      "new_views_claimed": false,
+      "normal_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "prior_pdf_sha256": "64a8cb89f98f1b1a337e2156ebf7e028eee72c747a67c839dac97940cd562654",
+      "prior_review_sha256": "cf186db2cbd3f594741b75871056b28b0ed3277b1b19068127d178eb797878ea",
+      "raster_comparison_sha256": "9bee849deb108573d2ec9a6656fada12cb892828e92dd7a1430819488d756c40"
+    },
+    "limits": "Coverage combines35 identical-raster inherited observations and fresh page28 views. This is not a new all-page inspection or mathematical re-proof. Other pages without detail renders retain96-dpi scope; no human/institutional independence, physical print, grayscale or PDF/UA claim.",
+    "normal_dpi": 96,
+    "normal_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "renders": [
+      {
+        "bytes": 409010,
+        "capture_name": "dense-17.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 17,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "36dceacd0d55549bb1733b61b223161a5569dfaae556f9a9190e90e2e0e39548",
+        "width": 1323
+      },
+      {
+        "bytes": 411586,
+        "capture_name": "dense-2.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 2,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "e40fffad1325fea0b071da53930293f45239cca9f0ba29dad0a440178ad2f25f",
+        "width": 1323
+      },
+      {
+        "bytes": 573437,
+        "capture_name": "dense-24.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 24,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "00bab10b67aa62b46b0eddf5853a13ab073caeb2a0f571e9a3677fdc79cff2bd",
+        "width": 1323
+      },
+      {
+        "bytes": 442250,
+        "capture_name": "dense-25.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 25,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "13a203773c03c48d3d14bedf678403fb26b460845188f4f3afa93de0bfa78846",
+        "width": 1323
+      },
+      {
+        "bytes": 460367,
+        "capture_name": "dense-26.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 26,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "2a5762a4258a6cf9d12ebd48f4a89867bf304ebdffeaef2daa066a0be0962da6",
+        "width": 1323
+      },
+      {
+        "bytes": 477904,
+        "capture_name": "dense-27.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 27,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "dffbcb23c8afccf3881ee2a0d8dc63ad4fb511c11f4cce6ba6b66c7a498192ef",
+        "width": 1323
+      },
+      {
+        "bytes": 454278,
+        "capture_name": "dense-28.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "actual page28 view_image observations",
+        "physical_page": 28,
+        "review_role": "fresh independent and integrating page28 views",
+        "sha256": "8056bf14fb646437336a49b0e70f95cec7895b1a21d8283bb58957868cb7e74a",
+        "width": 1323
+      },
+      {
+        "bytes": 352638,
+        "capture_name": "dense-3.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 3,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "df5173f578861f6c65864fd3a2e654c70ba91073fac7773bfa360c1e38229005",
+        "width": 1323
+      },
+      {
+        "bytes": 292904,
+        "capture_name": "dense-4.png",
+        "dpi": 160,
+        "height": 1871,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 4,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "aac699de4379936ee26abff762bbd78e1d08672850518a48d06d49200627199e",
+        "width": 1323
+      },
+      {
+        "bytes": 59658,
+        "capture_name": "page-01.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 1,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "7e01a69eeec8fb379a9ee29b563ed99e2a9f890423350db2a1e916c22d66f38a",
+        "width": 794
+      },
+      {
+        "bytes": 219506,
+        "capture_name": "page-02.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 2,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "bbfee985db7183ee8811d70bc7715195cb17a05af5b83eb7ab9824b2af74961b",
+        "width": 794
+      },
+      {
+        "bytes": 190270,
+        "capture_name": "page-03.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 3,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "14f035910464c177f4aec540ad14924dcb6aef058a17e1447ebedb8b3e89ae13",
+        "width": 794
+      },
+      {
+        "bytes": 151383,
+        "capture_name": "page-04.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 4,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "c59ef2d083fb08b21dde2777c4eb36c877dcfce892c6bbd9b69a1a4e05da927f",
+        "width": 794
+      },
+      {
+        "bytes": 73588,
+        "capture_name": "page-05.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 5,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "324dd18c319781d76ecfd70bdf7a21f8f3fbef2a11702c199f984ac13198da9e",
+        "width": 794
+      },
+      {
+        "bytes": 176659,
+        "capture_name": "page-06.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 6,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "6c31b0ce74bf11ead1269f4e66c257e7f56ca9a94898e0c83cc66cee4645dca8",
+        "width": 794
+      },
+      {
+        "bytes": 206050,
+        "capture_name": "page-07.png",
+        "dpi": 96,
+        "height": 794,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 7,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "4116acef983e3a9b2085f6162ea8527d265cda2512964c6c1ac8b17cf3af9406",
+        "width": 1123
+      },
+      {
+        "bytes": 130359,
+        "capture_name": "page-08.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 8,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "04392489d04dd9a02fa03bdff5ea128d39ae7474ce1cf74ecca0ae3a3e02e879",
+        "width": 794
+      },
+      {
+        "bytes": 215947,
+        "capture_name": "page-09.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 9,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "23d8a725b26698f3a15584b10cf4002d314eda00f278b611432ae9572503e137",
+        "width": 794
+      },
+      {
+        "bytes": 212487,
+        "capture_name": "page-10.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 10,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "69220e2c43937733c95de2541605f010fcecfe3cf6d20793d5aac39bb70d2de9",
+        "width": 794
+      },
+      {
+        "bytes": 206541,
+        "capture_name": "page-11.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 11,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "8ce1576110582ffab868c3f48392e59fcdf3197623a45abf28e1eba923d84cf8",
+        "width": 794
+      },
+      {
+        "bytes": 217077,
+        "capture_name": "page-12.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 12,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "58f5f90ddc473b29bd3b794886398d427f6bb9a914a18556eb62039c1eec2492",
+        "width": 794
+      },
+      {
+        "bytes": 209389,
+        "capture_name": "page-13.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 13,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "9d602d6d4448d2651438d2cfe563ec4f1bcb95e2e2bc99da732ceca468b075b9",
+        "width": 794
+      },
+      {
+        "bytes": 181224,
+        "capture_name": "page-14.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 14,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "9b0913cb0712bc0c70b6ffb5456e4b29f68a3d8963804c2882297db07a59c08a",
+        "width": 794
+      },
+      {
+        "bytes": 273580,
+        "capture_name": "page-15.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 15,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "8aa115e57f6a24858abbee8fb460f253cb88789ea0a18bc11211bc2ed386e980",
+        "width": 794
+      },
+      {
+        "bytes": 211896,
+        "capture_name": "page-16.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 16,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "15eebb6bddbc5b0e26c2a9c6675b6cfcd640f1efa21c4b97aeef3d18db9fa503",
+        "width": 794
+      },
+      {
+        "bytes": 221256,
+        "capture_name": "page-17.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 17,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "24a32f7366f5a8740dae096b815d70bb77b069942081b4337e188a5568594d65",
+        "width": 794
+      },
+      {
+        "bytes": 300583,
+        "capture_name": "page-18.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 18,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "e24a3beac1a412bf67b4610207adb6ef415a19f2df6e7c3d6adc471859750627",
+        "width": 794
+      },
+      {
+        "bytes": 281842,
+        "capture_name": "page-19.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 19,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "d7810896566871e8771a9129f277dd5def41b525a7bffd1196cd3817e2faabeb",
+        "width": 794
+      },
+      {
+        "bytes": 129233,
+        "capture_name": "page-20.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 20,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "05a5720f5109215190ea71e7ce0638da771c1ab0f766d1a5c10673615cd2dc7e",
+        "width": 794
+      },
+      {
+        "bytes": 201699,
+        "capture_name": "page-21.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 21,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "c8c77fa4d36161dfa7f95adbcfd457493498aa59c04422fcfbb424bfa099a2c3",
+        "width": 794
+      },
+      {
+        "bytes": 169372,
+        "capture_name": "page-22.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 22,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "e26322054156bf25d8c261f52b834cc304f4c058de7d2a9f9c93a9f61e16423a",
+        "width": 794
+      },
+      {
+        "bytes": 310392,
+        "capture_name": "page-23.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 23,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "64878e2687be4e29d8a3c757eecf9ee5cf52b998087995a592437b50e3bb5f86",
+        "width": 794
+      },
+      {
+        "bytes": 314110,
+        "capture_name": "page-24.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 24,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "11ceeafc99756a2cffb478f85c8dc3c8411ddf9ad9b9730e0d6f462879bd3762",
+        "width": 794
+      },
+      {
+        "bytes": 239172,
+        "capture_name": "page-25.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 25,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "e1e9dfa7de27adc97eb7c7749c4e615a2d0fdf93a5dd5c8680319fdd04c7d1d3",
+        "width": 794
+      },
+      {
+        "bytes": 253369,
+        "capture_name": "page-26.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 26,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "912aa7d8c291c6955c999a0009aacc86b5102fd4f81b6cc992621f59bcf7d9f0",
+        "width": 794
+      },
+      {
+        "bytes": 261696,
+        "capture_name": "page-27.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "raster byte equality; no new-view credit",
+        "physical_page": 27,
+        "review_role": "inherited prior scoped view of byte-identical raster",
+        "sha256": "a86aaec1fae83193fbf09548ee261e8ff4a65a2ffcc18791d0c35d8457d7f0c4",
+        "width": 794
+      },
+      {
+        "bytes": 250835,
+        "capture_name": "page-28.png",
+        "dpi": 96,
+        "height": 1123,
+        "observation_basis": "actual page28 view_image observations",
+        "physical_page": 28,
+        "review_role": "fresh independent and integrating page28 views",
+        "sha256": "0f90c9dc1da2ac15c67758e0a2cc632014585cb878aed77b924c408374d915a1",
+        "width": 794
+      }
+    ],
+    "retained_raster_count": 37
+  }
+}

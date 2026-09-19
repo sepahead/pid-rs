@@ -1,0 +1,2431 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\documentclass[
+  11pt,
+  a4paper,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=19mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Latin Modern Roman}
+  \setsansfont[]{Source Sans Pro}
+  \setmonofont[]{Latin Modern Mono Light}
+  \setmathfont[]{Latin Modern Math}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{setspace}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{caption}
+\captionsetup[table]{skip=6pt}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{xcolor}
+\definecolor{PidNavy}{HTML}{2C3E50}
+\definecolor{PidTeal}{HTML}{1F6968}
+\definecolor{PidBronze}{HTML}{916400}
+\definecolor{PidGold}{HTML}{DCA520}
+\definecolor{PidPaper}{HTML}{F7F3E9}
+\definecolor{PidSlate}{HTML}{647072}
+\definecolor{PidPale}{HTML}{E8F0ED}
+\definecolor{PidWarm}{HTML}{F2EBDA}
+
+\pdfvariable minorversion=7
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{fvextra}
+\usepackage{etoolbox}
+\usepackage{needspace}
+\usepackage{seqsplit}
+\usepackage{xurl}
+\usepackage{float}
+\usepackage{pdflscape}
+
+\pagecolor{PidPaper}
+\color{PidNavy}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus .10em minus .07em}
+\setlength{\emergencystretch}{9em}
+\setlist{leftmargin=1.65em,itemsep=.20em,topsep=.30em,parsep=.05em}
+\setlength{\LTpre}{.48em}
+\setlength{\LTpost}{.70em}
+\renewcommand{\arraystretch}{1.16}
+\floatplacement{figure}{H}
+
+\AtBeginEnvironment{longtable}{%
+  \footnotesize\RaggedRight
+  \let\pidoldtexttt\texttt
+  \renewcommand{\texttt}[1]{\pidoldtexttt{\seqsplit{#1}}}%
+}
+\captionsetup{font=small,labelfont={bf,color=PidTeal},textfont={color=PidNavy},skip=7pt}
+
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  breaklines,
+  breakanywhere,
+  commandchars=\\\{\},
+  fontsize=\small,
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{PidBronze}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{PidNavy}\bfseries Mathematical results guide}
+\fancyhead[R]{\footnotesize\color{PidTeal}foundations · companions · explicit scope}
+\fancyfoot[L]{\footnotesize\color{PidSlate}pid-rs project analysis · 19 September 2026}
+\fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+\setlength{\headheight}{22pt}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{PidBronze}\leaders\hrule height \headrulewidth\hfill}}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[L]{\footnotesize\color{PidNavy}\bfseries Mathematical results guide}
+  \fancyhead[R]{\footnotesize\color{PidTeal}foundations · companions · explicit scope}
+  \fancyfoot[L]{\footnotesize\color{PidSlate}pid-rs project analysis · 19 September 2026}
+  \fancyfoot[R]{\footnotesize\color{PidNavy}\thepage}
+  \renewcommand{\headrulewidth}{0.25pt}
+}
+\titleformat{\section}
+  {\Large\bfseries\color{PidNavy}}
+  {\thesection}{0.70em}{}
+  [\vspace{.10em}{\color{PidBronze}\titlerule[.65pt]}\vspace{-.10em}{\color{PidGold}\titlerule[.20pt]}]
+\titleformat{\subsection}{\large\bfseries\color{PidTeal}}{\thesubsection}{0.70em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{PidTeal}}{\thesubsubsection}{0.70em}{}
+\titlespacing*{\section}{0pt}{2.2ex plus .5ex}{1.0ex}
+\titlespacing*{\subsection}{0pt}{1.8ex plus .4ex}{.8ex}
+\titlespacing*{\subsubsection}{0pt}{1.5ex plus .3ex}{.7ex}
+
+\renewenvironment{quote}
+  {\par\vspace{.35em}\noindent{\color{PidBronze}\rule{\linewidth}{.55pt}}%
+   \begin{list}{}{\leftmargin=3.5mm\rightmargin=3.5mm\topsep=.25em}%
+   \item\relax\small\color{PidNavy}}
+  {\end{list}\noindent{\color{PidGold}\rule{\linewidth}{.20pt}}\par\vspace{.35em}}
+
+\makeatletter
+\renewcommand{\maketitle}{%
+  \hypersetup{pageanchor=false}%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \pagecolor{PidPaper}\color{PidNavy}
+    \vspace*{7mm}
+    \noindent\colorbox{PidWarm}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+      \centering\color{PidBronze}\rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}%
+      \rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}%
+      \hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}%
+      \rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}%
+      \hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}%
+      \rule{.08\linewidth}{.7pt}\hspace{.025\linewidth}\rule{.08\linewidth}{.7pt}}}\par
+    \vspace{18mm}
+    {\small\bfseries\color{PidBronze}\MakeUppercase{pid-rs mathematical publication map}\par}
+    \vspace{13mm}
+    \begin{minipage}{0.88\textwidth}
+      \RaggedRight
+      {\fontsize{34}{40}\selectfont\bfseries\color{PidNavy}\@title\par}
+      \vspace{7mm}
+      {\Large\bfseries\color{PidTeal}Theorems, evidence, costs, boundaries, and open obligations\par}
+    \end{minipage}\par
+    \vspace{18mm}
+    \begin{minipage}{0.82\textwidth}
+      \large
+      A scoped guide to nine foundational families and six companion packages. Each card states
+      its mathematical object, assumptions, formula, evidence, cost, use, and strongest nonclaim.
+    \end{minipage}\par
+    \vfill
+    \begin{minipage}{0.86\textwidth}
+      \small\color{PidSlate}
+      The Markdown source is canonical. Scope-specific reports, claim packets, and the method
+      catalog remain authoritative for their stated domains.
+    \end{minipage}\par
+    \vspace{13mm}
+    {\large\color{PidNavy}\@date\par}
+    \vspace{3mm}
+    {\small\color{PidSlate}Canonical source: \texttt{MATHEMATICAL\_RESULTS\_GUIDE.md}\par}
+    \vspace{8mm}
+    \noindent{\color{PidBronze}\rule{\textwidth}{.75pt}}\par
+    \vspace{1.4mm}
+    \noindent{\color{PidGold}\rule{\textwidth}{.20pt}}\par
+  \end{titlepage}
+  \hypersetup{pageanchor=true}%
+  \setcounter{page}{1}%
+  \pagecolor{PidPaper}\color{PidNavy}
+}
+\makeatother
+\input{mathematical-results-guide-tagpdf-openaction-compat.tex}
+\input{mathematical-results-guide-l3pdffile-filespec-f-compat.tex}
+\AtBeginDocument{\input{mathematical-results-guide-hgeneric-uri-contents-compat.tex}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={Mathematical results in pid-rs},
+  pdfauthor={pid-rs project analysis},
+  colorlinks=true,
+  linkcolor={PidTeal},
+  filecolor={Maroon},
+  citecolor={PidTeal},
+  urlcolor={PidBronze},
+  pdfcreator={LaTeX via pandoc}}
+
+\ifXeTeX
+\special{pdf:trailerid [ <cdb115342b56cd0ee8f219f392c9c34a> <cdb115342b56cd0ee8f219f392c9c34a> ]}
+\fi
+\ifPDFTeX
+\pdftrailerid{}
+\pdftrailer{/ID [ <cdb115342b56cd0ee8f219f392c9c34a> <cdb115342b56cd0ee8f219f392c9c34a> ]}
+\fi
+\ifLuaTeX
+\pdfvariable trailerid {[ <cdb115342b56cd0ee8f219f392c9c34a> <cdb115342b56cd0ee8f219f392c9c34a> ]}
+\fi
+
+\title{Mathematical results in pid-rs}
+\author{pid-rs project analysis}
+\date{19 September 2026}
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=PidTeal}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\setstretch{1.055}
+This guide maps nine foundational result families and six companion
+packages in pid-rs. Each result card identifies the mathematical object
+and its assumptions. Each card also gives the central formula, evidence,
+cost, use, strongest nonclaim, and complete proof or publication
+artifact. Section 2 separates the two inventories. Section 7 explains
+the companion results.
+
+\begin{quote}
+\textbf{Non-authoritative guide.} Scope-specific files govern each type
+of statement:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/method-catalog.json}{\texttt{method-catalog.json}}
+  governs method identity, provenance, implementation status, and the
+  public surface.
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/METHODS.md}{\texttt{METHODS.md}}
+  and
+  \href{https://github.com/sepahead/pid-rs/blob/main/METHODS_SUMMARY.md}{\texttt{METHODS\_SUMMARY.md}}
+  provide generated views of the catalog.
+\item
+  The linked active revision index and decision govern the claim
+  lifecycle.
+\item
+  The detailed Markdown and PDF reports govern exact statements.
+\end{itemize}
+
+If this guide conflicts with a scope-specific governing source, the
+governing source takes precedence.
+\end{quote}
+
+The repository assigns authority by scope. The narrow SxPID3
+factorization/bounded audit is an integrated stable validation entry.
+The separate full SxPID3 certificate specification remains proposed and
+unsupported. Neither status changes the other.
+
+\clearpage
+
+\section{1. Reading conventions and semantic
+firewall}\label{1-reading-conventions-and-semantic-firewall}
+
+In this guide, ``New in pid-rs'' means repository implementation,
+rederivation, theorem composition, counterexample, diagnostic, or
+assurance work. The phrase is \textbf{not} a scientific-priority claim.
+All information quantities below use natural logarithms and are in
+\textbf{nats}. The MGW paper uses bits. Multiplication by the positive
+factor \(\log 2\) converts its values to nats without changing signs or
+equalities.
+
+\Needspace{12\baselineskip}
+
+\subsection{Evidence labels}\label{evidence-labels}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1400}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4300}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4300}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Label
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Boundary
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{{[}P{]}} & Published definition or theorem & Does not prove the
+local transcription or code \\
+\textbf{{[}R{]}} & Exact repository proof or rederivation & No
+scientific-priority, runtime, or statistical claim \\
+\textbf{{[}X{]}} & Exact counterexample & Refutes only the stated
+stronger claim \\
+\textbf{{[}B{]}} & Bounded exhaustive/finite-corpus result & No
+conclusion outside its declared domain \\
+\textbf{{[}E{]}} & Executable observation/test & Not a proof of its
+specification or runtime \\
+\textbf{{[}O{]}} & Open obligation or prohibited transfer & Does not
+negate a narrower accepted result \\
+\end{longtable}
+}
+
+A \textbf{functional} takes a probability law as its input. An
+\textbf{estimator} infers a functional from samples. A PID
+\textbf{cumulative} belongs to a lattice node. Möbius inversion produces
+an \textbf{atom} from the cumulatives.
+
+Exact real, exact rational, and represented binary64 statements are
+different types of statements. Formal and executable routes can share
+human statements or transcriptions. Therefore, route counts do not imply
+independence.
+
+\Needspace{12\baselineskip}
+
+\subsection{Five distinct lanes}\label{five-distinct-lanes}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2400}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Lane
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Object in this repository
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Do not conflate it with
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Categorical MGW shared exclusions} & Finite-law event-logical
+PID of \href{https://doi.org/10.1103/PhysRevE.103.032149}{Makkeh,
+Gutknecht, and Wibral (2021)}, implemented for two to four sources &
+Ehrlich continuous Sx, Williams--Beer \(I_{\min}\), or BROJA \\
+\textbf{Continuous Ehrlich shared exclusions} & Distinct continuous
+functional/kNN estimator of
+\href{https://doi.org/10.1103/PhysRevE.110.014115}{Ehrlich et al.
+(2024)}. Experimental here & A categorical theorem or transparent
+quantization of the categorical theorem \\
+\textbf{Williams--Beer \(I_{\min}\)} & Different categorical redundancy
+of \href{https://arxiv.org/abs/1004.2515}{Williams and Beer (2010)} &
+Categorical Sx merely because both use an antichain carrier \\
+\textbf{BROJA} & Bivariate finite-alphabet optimization-based PID
+proposal of \href{https://doi.org/10.3390/e16042161}{Bertschinger et al.
+(2014)}. Comparison boundary only here & Any accepted mapping from Sx or
+\(I_{\min}\). The repository asserts no mapping \\
+\textbf{KSG} & MI estimator of
+\href{https://doi.org/10.1103/PhysRevE.69.066138}{Kraskov, Stögbauer,
+and Grassberger (2004)} & A PID definition or proof of a downstream
+continuous PID \\
+\end{longtable}
+}
+
+\Needspace{150mm}\begin{figure}[H]\centering\includegraphics[width=0.96\linewidth,height=150mm,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf}\caption{Semantic firewall for the five non-interchangeable method lanes.}\label{fig:semantic-firewall}\end{figure}
+
+This guide therefore avoids the blanket phrase ``Wibral PID.'' The
+repository has no accepted result for either of these ideas:
+
+\begin{itemize}
+\tightlist
+\item
+  A target-permutation affine-reflection theorem.
+\item
+  A generic affine reconstruction across different PID definitions.
+\end{itemize}
+
+\Needspace{12\baselineskip}
+
+\subsection{Lattice positions versus audit
+coordinates}\label{lattice-positions-versus-audit-coordinates}
+
+Categorical Sx has 4, 18, and 166 lattice positions for two, three, and
+four sources. Audit registries expand each lattice by two stages
+(cumulative/atom) and three components (informative/misinformative/net):
+
+\[
+24=4\times2\times3,
+\qquad
+108=18\times2\times3.
+\]
+
+Thus, SxPID3 has 18 net atoms. The count 108 is an audit-registry
+coordinate count. The count 166 belongs to SxPID4.
+
+\clearpage\vspace*{\fill}
+
+\pandocbounded{\includegraphics[keepaspectratio,alt={The 108 audit expressions expand, rather than replace, the 18-position SxPID3 lattice.}]{audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf}}
+
+\vspace*{\fill}\clearpage
+
+\clearpage
+
+\section{2. Result map}\label{2-result-map}
+
+\texttt{stable} is a catalog family status. The status does not claim
+estimator consistency, calibration, application validity, scientific
+novelty, or complete formal verification.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2300}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3900}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Family
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Status and evidence
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Detailed source
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1. Foundational categorical-Sx audit & Stable validation. Published
+object \textbf{{[}P{]}}. Repository audit \textbf{{[}R,X,B,E{]}}. Broad
+semantics open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md}{\texttt{FOUNDATIONAL\_SHARED\_EXCLUSIONS\_PID\_AUDIT.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/foundational-shared-exclusions-pid-audit.pdf}{PDF} \\
+2. Finite plug-in convergence & Stable validation. Published limit tools
+\textbf{{[}P{]}}. Repository composition \textbf{{[}R,X,B,E{]}}.
+Floating/runtime bridge open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md}{\texttt{FINITE\_ALPHABET\_PLUGIN\_CONVERGENCE.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-alphabet-plugin-convergence.pdf}{PDF} \\
+3. Support-change averaged-Sx continuity & Stable validation.
+Theorem/counterexamples \textbf{{[}R,X{]}}. Bounded/formal subevidence
+\textbf{{[}B,E{]}}. Full refinement open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md}{\texttt{SUPPORT\_CHANGE\_TOLERANT\_AVERAGED\_SXPID\_CONTINUITY.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf}{PDF} \\
+4. Dependency-color concentration & Stable validation. Published
+inequalities \textbf{{[}P{]}}. Repository composition/Sx bounds
+\textbf{{[}R,X,B,E{]}}. Automatic coloring absent \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md}{\texttt{DEPENDENCY\_COLORED\_SXPID\_CONCENTRATION.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf}{PDF} \\
+5. Exact SxPID2 assurance & Count-to-atom formal scope complete
+\textbf{{[}R{]}}. Product-one counterexample \textbf{{[}X{]}}. Certifier
+conditional \textbf{{[}B,E{]}} with integration open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md}{count-to-atom
+proof} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md}{exact-product
+report} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md}{certifier
+decision v3} \\
+6. SxPID3 factorization/audit & Integrated stable validation: method
+anchor \textbf{{[}P{]}}, factorization \textbf{{[}R{]}}, counterexamples
+\textbf{{[}X{]}}, bounded audit \textbf{{[}B,E{]}},
+correspondence/certificate open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md}{\texttt{SXPID3\_SOURCE\_MARGINAL\_AND\_BOUNDED\_AUDIT.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf}{PDF} \\
+7. Binary64/quantizer assurance & Implemented measure-specific
+arithmetic/diagnostics \textbf{{[}R,B,E{]}}. Bounded nonfindings and
+policy rejections \textbf{{[}B,E,O{]}}. No estimator or full refinement
+\textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/NUMERICAL_ASSURANCE.md}{\texttt{NUMERICAL\_ASSURANCE.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/numerical-assurance.pdf}{PDF} \\
+8. KSG integer-harmonic arithmetic & Exact/formal/bounded core scoped GO
+\textbf{{[}P,R,X,B,E{]}}. Repository/publication integration
+\textbf{NO-GO {[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/claim-v4.md}{\texttt{claim-v4.md}}
+·
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md}{\texttt{integration-disposition-v4.md}} \\
+9. Common-radius manifold small-ball bridge & Ehrlich analytic object
+\textbf{{[}P{]}}. Conditional population lemma \textbf{{[}R{]}} and
+boundary counterexamples \textbf{{[}X{]}}. Manifold estimator and
+manifold PID implementation remain open \textbf{{[}O{]}} & This guide,
+Section 6.1 below \\
+\end{longtable}
+}
+
+\clearpage\begin{landscape}\thispagestyle{fancy}\begin{figure}[H]\centering\includegraphics[width=0.97\linewidth,height=0.82\textheight,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf}\caption{Evidence and publication status map for the nine foundational families. Companion packages are indexed separately.}\label{fig:result-evidence-map}\end{figure}\end{landscape}\clearpage
+
+\Needspace{12\baselineskip}
+
+\subsection{Companion result packages}\label{companion-result-packages}
+
+The nine families above form the foundational map used by the existing
+figure. Six later packages add results about finite categorical MGW
+prefixes, derivatives and interpretation. Section 7 gives their formulas
+and limits. Their local formal records, handwritten arguments,
+publication checks and open replay obligations remain separate.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2400}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3800}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3800}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Package
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Useful result and current evidence
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Standalone source and PDF
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Prefix mean & Actual finite-row expectation approaches the specified MGW
+atom. Three locally accepted Lean targets \textbf{{[}R{]}}. Hosted proof
+replay open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md}{Mean
+exposition} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-mean.pdf}{PDF} \\
+Prefix bias & Explicit finite-horizon error bounds under population
+premises. Five locally accepted Lean targets \textbf{{[}R{]}}. Coverage
+remains open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{Bias
+paper} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-bias.pdf}{PDF} \\
+Prefix gradient & Full-row score identity, derivative error and second
+moments. Eleven locally accepted Lean targets \textbf{{[}R{]}}. Useful
+training remains unproved \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md}{Gradient
+paper} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-prefix-mgw-gradient.pdf}{PDF} \\
+Support-change cusp & Zero cell tangents can coexist with opposing MI
+derivatives. Handwritten negative example \textbf{{[}R,X{]}}.
+Formalization open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md}{Cusp
+argument} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-mi-cusp.pdf}{PDF} \\
+Target-copy synergy & Exact identity, same-source-law invariance and
+entropy bounds. Eleven locally accepted Lean targets \textbf{{[}R{]}}.
+Complete replay acceptance open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-target-copy-mgw-synergy.md}{Target-copy
+note} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-target-copy-mgw-synergy.pdf}{PDF} \\
+Fixed-world comparison & Equal synergy can accompany different added
+Shannon information. Twenty-one locally checked Lean targets
+\textbf{{[}R,X{]}}. Public replay remains open \textbf{{[}O{]}} &
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/mgw-fixed-world-added-information-2026-09-09.md}{Fixed-world
+note} ·
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/mgw-fixed-world-added-information.pdf}{PDF} \\
+\end{longtable}
+}
+
+\clearpage
+
+\section{3. Categorical-Sx theory}\label{3-categorical-sx-theory}
+
+\Needspace{12\baselineskip}
+
+\subsection{3.1 Foundational semantic
+audit}\label{31-foundational-semantic-audit}
+
+\textbf{Scope and formula.} The formula uses a supported finite key
+\(z=(s,t)\) and an antichain \(\alpha\). The symbol \(p\) denotes the
+finite probability law. The symbol \(A_\alpha(s)\) denotes the MGW
+disjunction of matching source events. The cumulative components are:
+
+\[
+c_\alpha^+=-\log p(A_\alpha),\qquad
+c_\alpha^-=\log\frac{p(T=t)}{p(T=t,A_\alpha)},\qquad
+c_\alpha^{\mathrm{net}}=c_\alpha^+-c_\alpha^-.
+\]
+
+The symbols \(c_\alpha^+\), \(c_\alpha^-\), and
+\(c_\alpha^{\mathrm{net}}\) denote informative, misinformative, and net
+cumulative components, respectively.
+
+\Needspace{8\baselineskip}
+
+The full-lattice atoms are the fixed finite Möbius inverse of these
+cumulatives. \href{https://doi.org/10.1007/BF00531932}{Rota (1964)}
+supplies the classical tool. pid-rs did not invent Möbius inversion.
+
+\textbf{Result and boundary.} The audit separates native Sx properties
+from imported desiderata. The audit retains exact failures of these
+properties:
+
+\begin{itemize}
+\tightlist
+\item
+  Generic identity/local positivity.
+\item
+  Source-target symmetry.
+\item
+  Coarse-graining monotonicity.
+\item
+  Pairwise identifiability.
+\item
+  Descriptor substitution.
+\end{itemize}
+
+Published informative and misinformative component atoms are nonnegative
+on the stated full lattice. The net difference may be negative.
+
+Exact witnesses and a generic Lean descriptor-factorization lemma do not
+prove all laws, Rust refinement, causality, or a unique interpretation.
+\textbf{{[}P,R,X,B,E,O{]}}
+
+\textbf{Cost/use.} The result adds no new estimator. Sampled use
+requires the empirical full joint PMF. Lattice/event cost grows sharply
+from 4 to 18 to 166 nodes.
+
+In neural or sensor work, a negative signed atom does not by itself
+prove harm, suppression, or common deterministic information. A separate
+domain theorem must support any such label.
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/FOUNDATIONAL_SHARED_EXCLUSIONS_PID_AUDIT.md}{\texttt{FOUNDATIONAL\_SHARED\_EXCLUSIONS\_PID\_AUDIT.md}}
+and the corresponding
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/foundational-shared-exclusions-pid-audit.pdf}{PDF}.
+Catalog entry: \texttt{validation.foundational-shared-exclusions-audit}.
+
+\Needspace{12\baselineskip}
+
+\subsection{3.2 Fixed finite-alphabet plug-in
+convergence}\label{32-fixed-finite-alphabet-plug-in-convergence}
+
+\textbf{Assumptions/result.} The result fixes a finite alphabet, a
+lattice, and a law \(P\) with support \(S\). The sequence of laws
+\(Q_n\) must satisfy both conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  \(Q_n(z)\to P(z)\) for every cell.
+\item
+  \(\mathrm{supp}(Q_n)\subseteq S\).
+\end{itemize}
+
+The supports of \(Q_n\) eventually equal \(S\). All supported-key
+categorical-Sx cumulatives/atoms/averages then converge. Separate
+continuity arguments cover the listed \(I_{\min}\) and Shannon
+quantities without equating their definitions.
+
+The premises hold almost surely in either of two cases:
+
+\begin{itemize}
+\tightlist
+\item
+  The rows are i.i.d. with marginal \(P\).
+\item
+  The rows are strictly stationary \textbf{ergodic} with marginal \(P\).
+\end{itemize}
+
+Stationarity alone is insufficient. \textbf{{[}P,R,X{]}}
+
+\Needspace{12\baselineskip}
+
+For i.i.d. rows on \(K\) cells, \(\alpha\) is a failure-probability
+budget with \(0<\alpha<1\). A Hoeffding/spending-sequence composition
+gives the following simultaneous bound for every prefix \(n\) with
+probability at least \(1-\alpha\):
+
+\[
+\lVert\widehat P_n-P\rVert_1
+\le B_n:=K\sqrt{\frac{\log(K\pi^2n^2/(3\alpha))}{2n}}.
+\]
+
+Here, \(\widehat P_n\) is the empirical law of the first \(n\) rows. The
+quantity \(B_n\) is the simultaneous \(L^1\) radius.
+
+A guaranteed support-entry time also needs a known population floor
+\(p_{\min}=\min_{z\in S}P(z)>0\). An empirical minimum cannot reveal an
+unseen rare cell.
+
+The frozen-transform corollary uses the training sigma-field
+\(\mathcal G\). The training artifact and fitted transform generate
+\(\mathcal G\). The corollary requires all these conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  The raw evaluation space is standard Borel.
+\item
+  The failure symbol \(\bot\) is outside the finite output alphabet
+  \(\mathcal Z\).
+\item
+  One map \(Q(\omega,x)\) is measurable from
+  \(\mathcal G\otimes\mathcal B(\mathcal X)\) to
+  \(\mathcal Z\cup\{\bot\}\).
+\item
+  The training sigma-field determines the random choice of \(Q\).
+\item
+  The output alphabet and block structure are finite and fixed.
+\item
+  The map is frozen for every evaluation row and every prefix.
+\item
+  Evaluation rows are conditionally i.i.d. given \(\mathcal G\).
+\item
+  \(\Pr(Q(W_1)\ne\bot\mid\mathcal G)=1\) almost surely.
+\end{itemize}
+
+Here, \(\mathcal B(\mathcal X)\) is the Borel sigma-field on the raw
+evaluation space. The symbol \(W_1\) denotes one raw evaluation row.
+
+Conditional on \(\mathcal G\), the target is the random push-forward law
+\(P_Q(z)=\Pr(Q(W_1)=z\mid\mathcal G)\). It is generally not the
+unconditional mixture law. The theorem applies to the conditional
+functional for almost every training realization.
+
+An i.i.d. raw evaluation sequence independent of the training artifact
+is an important special case. Otherwise, the corollary does not require
+independence from the training artifact after the conditional-i.i.d.
+contract is proved.
+
+This theorem-level statement is broader than the stable fitted-wrapper
+contract. The stable fitted-quantized APIs require the training artifact
+to be independent of the raw evaluation sequence. This guide does not
+relax that cataloged API condition.
+
+\textbf{Evidence/cost/use.} Lean covers a deterministic core. Lean does
+not cover the stochastic theorem, complete higher-source semantics,
+Rust, or floating point. The bound can be conservative.
+
+This result gives a consistency route for an empirical plug-in
+estimator. The result is not a new estimator or calibration theorem. The
+corollary covers a held-out quantizer application only when all
+frozen-transform conditions hold. Quantization changes the estimand.
+\textbf{{[}R,B,E,O{]}}
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/FINITE_ALPHABET_PLUGIN_CONVERGENCE.md}{\texttt{FINITE\_ALPHABET\_PLUGIN\_CONVERGENCE.md}}
+and the corresponding
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-alphabet-plugin-convergence.pdf}{PDF}.
+Catalog entry: \texttt{validation.finite-alphabet-plugin-convergence}.
+
+\Needspace{12\baselineskip}
+
+\subsection{3.3 Support-change-tolerant averaged-Sx
+continuity}\label{33-support-change-tolerant-averaged-sx-continuity}
+
+\textbf{Assumptions/result.} The result fixes three objects:
+
+\begin{itemize}
+\tightlist
+\item
+  One complete finite alphabet of size \(K\).
+\item
+  The source-event family.
+\item
+  The full Möbius lattice.
+\end{itemize}
+
+Laws \(p,q\) may create/delete support inside that alphabet. The
+definitions are \(\eta=\frac12\lVert p-q\rVert_1\),
+\(r_z=\min(p_z,q_z)\), \(a=p-r\), and \(b=q-r\). The result also uses
+\(E_\vee=\max(E(a),E(b))\) and \(E_\Sigma=E(a)+E(b)\), where
+\(E(d)=-\sum_{d_z>0}d_z\log d_z\).
+
+The quantity \(\eta\) is the total variation distance. The vector \(r\)
+contains the shared cellwise mass. The vectors \(a\) and \(b\) contain
+the two residual masses. The function \(E\) is the displayed
+residual-mass sum.
+
+The function is \(g_J(\eta)=(1-\eta)\log(1+J\eta/(1-\eta))\) on
+\(0<\eta<1\). Its endpoint values are \(g_J(0)=g_J(1)=0\). The other
+definitions are \(W_\alpha=\sum_\beta|M_{\alpha\beta}|g_{J_\beta}\) and
+\(s_\alpha=\sum_\beta M_{\alpha\beta}\).
+
+Here, \(M_{\alpha\beta}\) is a coefficient of the fixed Möbius inverse.
+The branch count is \(J_\beta=|\beta|\). The quantity \(s_\alpha\) is a
+row sum of that inverse. The atom bounds are:
+
+\[
+|\Delta\Pi_\alpha^+|\le E_\vee+W_\alpha,\quad
+|\Delta\Pi_\alpha^-|\le E_\vee+W_\alpha+|s_\alpha|g_1,\quad
+|\Delta\Pi_\alpha^{\mathrm{net}}|\le E_\Sigma+2W_\alpha+|s_\alpha|g_1.
+\]
+
+For \(\eta>0\) (which implies \(K\ge2\)),
+\(E_\vee\le\eta\log((K-1)/\eta)\) and
+\(E_\Sigma\le\eta\log(\lfloor K^2/4\rfloor/\eta^2)\). Both envelopes
+take the value zero at \(\eta=0\).
+
+The exact functions above are not all monotone on \([0,1]\). Suppose a
+statistical result gives only \(\eta\le\varepsilon\). Direct
+substitution of \(\varepsilon\) into the exact formulas is invalid
+without a monotonicity proof.
+
+\Needspace{13\baselineskip}
+
+For \(K\ge2\), the monotone upper envelopes are:
+
+\[
+\bar e_K^\vee(\varepsilon)
+=\varepsilon\left[1+\log\frac{K-1}{\varepsilon}\right],
+\qquad
+\bar e_K^\Sigma(\varepsilon)
+=\varepsilon\left[2+\log\frac{\lfloor K^2/4\rfloor}{\varepsilon^2}\right].
+\]
+
+Both barred envelopes take the value zero at \(\varepsilon=0\). For
+\(0\le\eta\le\varepsilon\le1\), the valid replacements satisfy:
+
+\[
+E_\vee\le\bar e_K^\vee(\varepsilon),
+\qquad
+E_\Sigma\le\bar e_K^\Sigma(\varepsilon),
+\qquad
+g_J(\eta)\le J\eta\le J\varepsilon.
+\]
+
+These monotone replacements can feed the atom bounds.
+
+\textbf{Evidence/boundary.} The repository proves the residual/load
+decomposition. Fixed-system witnesses establish a lower limit for one
+specified family of bounds. This family uses one common leading
+coefficient and covers the retained witnesses. Such a family needs a
+coefficient of at least 1 for components and 2 for net atoms.
+
+The result does not include any of these theorems:
+
+\begin{itemize}
+\tightlist
+\item
+  A global linear theorem.
+\item
+  A pointwise disappearing-key theorem.
+\item
+  An alphabet-free theorem.
+\item
+  An active-face Fannes theorem.
+\item
+  A truncated-lattice theorem.
+\end{itemize}
+
+Lean covers subclaims. Lean does not cover the complete probability/Rust
+bridge. \textbf{{[}R,X,B,E,O{]}}
+
+\textbf{Cost/use.} The result adds neither an estimator nor a confidence
+interval. A separately justified law-distance radius can feed the
+deterministic modulus through the barred replacements above. Fixed
+lattice coefficients are precomputable.
+
+The result applies when rare cells enter/leave while the alphabet and
+quantizer remain fixed.
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md}{\texttt{SUPPORT\_CHANGE\_TOLERANT\_AVERAGED\_SXPID\_CONTINUITY.md}}
+and the corresponding
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf}{PDF}.
+Catalog entry:
+\texttt{validation.support-change-tolerant-averaged-sxpid-continuity}.
+
+\Needspace{22\baselineskip}
+
+\section{4. Sampling and exact finite-table
+assurance}\label{4-sampling-and-exact-finite-table-assurance}
+
+\Needspace{12\baselineskip}
+
+\subsection{4.1 Dependency-color
+concentration}\label{41-dependency-color-concentration}
+
+\textbf{Assumptions/result.} Fix an integer \(n\ge1\). Complete rows
+\(Z_i=(S_{1i},\ldots,S_{mi},T_i)\) for \(1\le i\le n\) share one law
+\(P\) on a \(K\)-cell alphabet with \(K\ge2\). The design must declare a
+coloring \(\kappa\) before outcomes are observed. The set of color
+labels is finite or countable. Rows must be jointly mutually independent
+\textbf{within} each color.
+
+Dependence across colors may be arbitrary. Dependence among coordinates
+within each complete row is unrestricted.
+
+None of these weaker conditions is sufficient:
+
+\begin{itemize}
+\tightlist
+\item
+  Pairwise independence.
+\item
+  Zero covariance.
+\item
+  Adaptive colors.
+\item
+  An unspecified mixing label.
+\end{itemize}
+
+The class load \(n_{a,n}\) counts the first \(n\) rows that have color
+\(a\). The following bound holds for every \(\varepsilon>0\). The sums
+run over occupied colors:
+
+\[
+V_n=\left(\sum_a\sqrt{n_{a,n}}\right)^2,
+\qquad
+\Pr(\lVert\widehat P_n-P\rVert_1\ge\varepsilon)
+\le\min\left\{1,(2^K-2)e^{-n^2\varepsilon^2/(2V_n)}\right\}.
+\]
+
+\(V_n\) is Janson\textquotesingle s cover-specific factor. The factor is
+not an estimated effective sample size. The derivation uses
+\href{https://doi.org/10.1080/01621459.1963.10500830}{Hoeffding},
+\href{https://doi.org/10.1002/rsa.20008}{Janson}, and
+\href{https://shiftleft.com/mirrors/www.hpl.hp.com/techreports/2003/HPL-2003-97R1.pdf}{Weissman
+et al}. Repository work supplies prefix/drift and Sx-specific
+compositions.
+
+A separate common-support local theorem uses laws \(p\) and \(q\) on the
+same fixed complete finite alphabet. It has both law conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\mathrm{supp}(q)\subseteq\mathrm{supp}(p)\).
+\item
+  \(\delta=\lVert q-p\rVert_1<2p_{\min}\).
+\end{itemize}
+
+Here, \(p_{\min}=\min_{z\in\mathrm{supp}(p)}p(z)>0\).
+
+The local theorem uses a supported realization \(z=(s_1,\ldots,s_m,t)\).
+It also uses a nonempty antichain \(\alpha\) of nonempty source subsets.
+For each component \(u\in\{+,-,\mathrm{sx}\}\), the theorem states:
+
+\[
+\left|c_\alpha^u(z;q)-c_\alpha^u(z;p)\right|
+\le\Lambda,
+\qquad
+\Lambda=\log\frac{p_{\min}}{p_{\min}-\delta/2}.
+\]
+
+The label \(\mathrm{sx}\) denotes the net cumulative component. Thus,
+\(\Lambda\) bounds the absolute between-law change, not the cumulative
+value. \textbf{{[}P,R,X{]}}
+
+\textbf{Evidence/cost/use.} Lean checks deterministic algebra. Lean does
+not check whether a scientific design satisfies independence. Computing
+\(V_n\) is cheap. However, \(2^K-2\) can make the bound vacuous, and
+validation of the dependence premise can be difficult. pid-rs supplies
+no public automatic color estimator.
+
+A fixed-width transformation of i.i.d. innovations can satisfy the
+premise. The coloring must be predeclared, and same-color windows must
+use disjoint innovations. Arbitrary rolling data does not satisfy the
+premise merely because a transformation has fixed width.
+\textbf{{[}B,E,O{]}}
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/DEPENDENCY_COLORED_SXPID_CONCENTRATION.md}{\texttt{DEPENDENCY\_COLORED\_SXPID\_CONCENTRATION.md}}
+and the corresponding
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf}{PDF}.
+Catalog entry: \texttt{validation.dependency-color-sxpid-concentration}.
+
+\Needspace{12\baselineskip}
+
+\subsection{4.2 Exact two-source categorical-Sx
+assurance}\label{42-exact-two-source-categorical-sx-assurance}
+
+\textbf{Assumptions/result.} Exactly two finite categorical sources and
+a finite target have natural counts \(c_z\) with \(n=\sum_zc_z>0\). The
+conditions allow zero cells. The conditions prohibit smoothing. For
+every cumulative or atom coordinate, exact event counts give a positive
+rational \(R\) with
+
+\[
+V=\frac1n\log R,
+\qquad
+V=0\iff R=1,
+\qquad
+\mathrm{sign}(V)=\mathrm{sign}(R-1).
+\]
+
+\Needspace{9\baselineskip}
+
+The assurance covers the 24 coordinates \(4\times2\times3\). A retained
+counterexample shows that a nonempty term map may still have product
+one. \textbf{{[}R,X{]}}
+
+\textbf{Exact-product preflight.} A canonical expression has positive
+rational bases \(x_j\) and rational coefficients \(q_j\) with
+\(nq_j\in\mathbb Z\). Its denominator-cleared product and conservative
+projection are:
+
+\[
+R=\prod_j x_j^{nq_j},
+\qquad
+B=\sum_j |nq_j|\left(
+\mathrm{bits}(\mathrm{num}\,x_j)
++\mathrm{bits}(\mathrm{den}\,x_j)
+\right).
+\]
+
+Here, \(\mathrm{num}\) and \(\mathrm{den}\) give the numerator and
+denominator. The function \(\mathrm{bits}\) gives the integer bit
+length.
+
+\textbf{Status 1: count-to-atom bridge.} The Lean bridge is complete
+only in its supplied-count, fixed-two-source scope. It does not prove
+paper correspondence, component nonnegativity, decoding, Rust/binary64,
+sampling, or higher sources.
+
+\textbf{Status 2: exact-product path.} One expression has at most 256
+terms. Each absolute cleared exponent is at most 16,384. Per-expression
+projected bits satisfy \(B\le262{,}144\). The aggregate projection is at
+most 1,048,576. A rejection means \texttt{unavailable} and never
+supplies a sign.
+
+\textbf{Status 3: conditional certifier.} Certifier revision 3 gives
+conditional assurance for accepted interval reports. It gives an exact
+sign or zero only when status is \texttt{compared}. Integration and
+independent custody remain open. The intervals are not confidence
+intervals. \textbf{{[}R,B,E,O{]}}
+
+\textbf{Cost/use.} Big rational products can grow quickly. Therefore,
+the exact-product path is an offline oracle/escalation path for small
+empirical tables or near cancellation. The exact-product path is not a
+population estimator.
+
+\textbf{Read next: count-to-atom proof.} See
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md}{\texttt{TWO\_SOURCE\_SXPID\_COUNT\_ATOM\_BRIDGE.md}}
+and its
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/two-source-sxpid-count-atom-bridge.pdf}{PDF}.
+
+\textbf{Read next: exact-product report.} See
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md}{\texttt{EXACT\_LOG\_PRODUCT\_SXPID2\_ASSURANCE.md}}
+and its
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/exact-log-product-sxpid2-assurance.pdf}{PDF}.
+
+\textbf{Read next: lifecycle decisions.} See the
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-COUNT-ATOM-BRIDGE-001/decision-v2.md}{\texttt{count-bridge\ decision\ v2}}
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID2-001/decision-v3.md}{\texttt{certifier\ decision\ v3}}.
+
+\clearpage
+
+\section{5. Higher-source, numerical, and continuous-estimator
+assurance}\label{5-higher-source-numerical-and-continuous-estimator-assurance}
+
+\Needspace{12\baselineskip}
+
+\subsection{5.1 SxPID3 source-marginal factorization and bounded
+audit}\label{51-sxpid3-source-marginal-factorization-and-bounded-audit}
+
+\textbf{Factorization.} The factorization assumes:
+
+\begin{itemize}
+\tightlist
+\item
+  Finite source/target alphabets.
+\item
+  One supplied source-only shared-exclusions event family
+  \textbf{intended to transcribe MGW}.
+\item
+  For every supported source state \(s\), the supplied event is anchored
+  by \(s\in E_\alpha(s)\). This makes its probability strictly positive,
+  so the logarithm is defined.
+\item
+  Natural-log units.
+\item
+  When two laws are compared: the same source alphabet, the same
+  supplied event family, and the same logarithm base.
+\item
+  When transformed coordinates are compared: one literally fixed finite
+  transform on both sides.
+\end{itemize}
+
+``Source marginal'' means the joint law \(P_S\) of \((S_1,S_2,S_3)\).
+The term does not mean three separate marginals. The set \(E_\alpha(s)\)
+is the supplied source-only shared-exclusions event for key \(s\) and
+node \(\alpha\). For supported source keys, the informative cumulative
+is:
+
+\[
+I_\alpha^+(P)=\sum_{s:P_S(s)>0}P_S(s)\left[-\log\sum_{s'\in E_\alpha(s)}P_S(s')\right]=G_\alpha(P_S).
+\]
+
+Hence, equal complete source marginals give equal informative
+cumulatives. Applying one fixed linear transform to equal cumulatives
+gives equal transformed coordinates. Equal complete source marginals
+need \textbf{not} preserve misinformative/net components. Exact
+counterexamples also show that equal separate one-source marginals do
+not determine the informative vector.
+
+On one common finite source-\/-target alphabet, marginalization
+contracts total variation:
+
+\[
+d_{\mathrm{TV}}(P_S,Q_S)\le d_{\mathrm{TV}}(P_{S,T},Q_{S,T}).
+\]
+
+Therefore, a continuity bound for the informative block may use the
+complete-source-marginal radius instead of the joint-law radius. This is
+a semantic sharpening because the smaller object is sufficient. The
+inequality need not be strict for a particular pair of laws. It does not
+sharpen the misinformative or signed-net blocks, and it is deterministic
+rather than a permutation calibration. \textbf{{[}P,R,X{]}}
+
+\textbf{Bounded audit.} The exact domain has:
+
+\begin{itemize}
+\tightlist
+\item
+  Three ordered binary sources.
+\item
+  One binary target.
+\item
+  Every labeled 16-cell count table with \(1\le N\le5\).
+\end{itemize}
+
+\[
+\sum_{N=1}^{5}\binom{N+15}{15}=20{,}348,
+\qquad
+20{,}348\times108=2{,}197{,}584.
+\]
+
+\Needspace{10\baselineskip}
+
+The audit evaluates 2,197,584 products per route. Under a source-bound
+execution receipt, two routes emit the same route-neutral v2
+expression-stream SHA-256. The routes also emit the same six-block
+sign/zero census. The routes use disjoint implementations under shared
+semantics. Therefore, the routes are not independent proofs. Both routes
+retain the human transcription and host/runtime premises.
+\textbf{{[}B,E,O{]}}
+
+\textbf{Revision-5 semantic bridge.} A fresh owner-controlled
+acquisition replay reproduced the exact MGW v5 PDF, source archive, and
+unique \texttt{apstemplate.tex} member identities. Ten source anchors
+now state the paper meaning, local analogue, preserved assumptions,
+changed conventions, prohibited inference, and evidence still required.
+From three source bits, the executable bridge regenerates all 18
+antichains. It also regenerates all 324 order/zeta entries, of which 129
+are true. It computes the exact two-sided integer Möbius inverse, which
+has 65 nonzero coefficients.
+
+The bridge covers 144 event cases, 288 event/target cases, and all six
+source-label automorphisms.
+
+A separate hash-bound compatibility edge checks the regenerated carrier,
+zeta, and Möbius objects against the frozen conventions and prior route
+registries. The edge does not import either route\textquotesingle s
+computation. This is owner-controlled semantic and registry-drift
+evidence, not independent source review, machine interpretation of
+prose, a formal proof, parser or Rust refinement, or logical
+independence. \textbf{{[}P,B,E,O{]}}
+
+\textbf{Status/cost/use.} The catalog marks the narrow entry
+\texttt{validation.sxpid3-source-marginal-bounded-audit} as integrated
+and stable. Paper-to-local correspondence now has a recorded
+owner-controlled partial result. Independent acquisition/review and
+concrete formal correspondence remain open. These additional obligations
+also remain open:
+
+\begin{itemize}
+\tightlist
+\item
+  Concrete carrier/order proofs in the required formal systems.
+\item
+  Nonzero-log enclosure.
+\item
+  Compiled-Rust/binary64 refinement.
+\item
+  Larger domains.
+\item
+  Population validity.
+\item
+  External review.
+\end{itemize}
+
+The result adds no estimator. Cached source-event masses let target-only
+reallocations reuse the informative block. A surrogate test still needs
+exchangeability. The exact audit is expensive. Big-integer size depends
+on the input.
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md}{\texttt{SXPID3\_SOURCE\_MARGINAL\_AND\_BOUNDED\_AUDIT.md}}
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf}{PDF}.
+The separate full-certificate
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md}{\texttt{evidence-adjudication\ index}}
+and current
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md}{\texttt{decision\ record\ 3}}
+accept three scoped sub-results. They keep the complete target
+proposed/open, with Programs A-\/-E at zero of five closed.
+
+The detailed
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md}{\texttt{source-correspondence\ map}}
+retains the per-anchor transfer ledger. The historical
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/revision-index.md}{\texttt{revision\ index}}
+and first
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/SX-CERTIFIED-AVERAGED-PID3-001/decision.md}{\texttt{proposed\ decision}}
+remain preserved evidence. The complete-target status neither downgrades
+nor strengthens the integrated narrow result.
+
+\Needspace{12\baselineskip}
+
+\subsection{5.2 Represented-binary64 and quantizer
+assurance}\label{52-represented-binary64-and-quantizer-assurance}
+
+\textbf{Result.} Every finite binary64 number is an integer multiple of
+\(2^{-1074}\). On supported 32-bit and 64-bit targets, each positive or
+negative magnitude array has \(L=34\) fixed limbs. Thus, one accumulator
+has 68 limb slots in its two magnitude arrays. For finite operands, the
+reducer returns:
+
+\[
+\mathrm{reduce}(x_1,\ldots,x_n)
+=\mathrm{RN}_{\mathrm{even}}\left(\sum_i x_i\right).
+\]
+
+The operator \(\mathrm{RN}_{\mathrm{even}}\) rounds to nearest in
+binary64 and breaks ties to even. The inner sum is exact for the
+\textbf{already represented} operands. The measure-specific call sites
+are:
+
+\begin{itemize}
+\tightlist
+\item
+  Final averaging of represented categorical-Sx informative and
+  misinformative components. The net component remains their derived
+  difference.
+\item
+  The four-operand Williams--Beer \(I_{\min}\) PID2 synergy.
+\item
+  Represented continuous-PID2 synergy plus its three reconstruction
+  checks.
+\end{itemize}
+
+The reducer does not make probabilities, logarithms, or estimates exact.
+The reducer transfers no semantics between those PID families. The
+reducer rejects a non-finite input. The reducer also rejects an
+accepted-operand count beyond \texttt{usize::MAX}.
+
+Exact cancellation returns positive zero. Categorical SxPID averaging
+and checked continuous PID2 explicitly reject a finite-input exact sum
+that rounds beyond the finite binary64 range. Categorical \(I_{\min}\)
+PID2 has no separate post-reduction infinity branch. Its admitted four
+finite operands and mathematical range make such an overflow unreachable
+under that call-site contract. These are different assurance arguments.
+\textbf{{[}R,B,E{]}}
+
+The equal-width quantizer now constructs finite monotone edges across
+extreme ranges. The quantizer reports nominal and finite-map-reachable
+joint cardinalities as \texttt{Option\textless{}u128\textgreater{}}
+values. The quantizer reports the observed joint cardinality as
+\texttt{usize}. An optional numeric value is present only when the
+relevant product fits in \texttt{u128}. \texttt{None} denotes overflow
+of that optional product. Map reachability is not population support.
+
+Bounded investigations did not justify these changes:
+
+\begin{itemize}
+\tightlist
+\item
+  Changing pointwise Sx Möbius reduction.
+\item
+  Changing three-source \(I_{\min}\) reduction.
+\end{itemize}
+
+These are bounded executable nonfindings, not counterexamples.
+\textbf{{[}B,E,O{]}}
+
+The repository also rejected an order-dependent fast mode as
+policy-incompatible. \textbf{{[}O{]}}
+
+\textbf{Cost/use.} For \(n\) operands, reduction is \(O(nL)\) with fixed
+\(L=34\). The resource envelope charges at most \(2L\) limb visits per
+accepted add and \(4L\) visits for finalization. Two Sx component
+accumulators per lattice node require about:
+
+\begin{itemize}
+\tightlist
+\item
+  4,416 bytes for two sources.
+\item
+  19,872 bytes for three sources.
+\item
+  183,264 bytes for four sources.
+\end{itemize}
+
+These amounts exclude other structures. Suitable uses include
+reproducible channel ordering, exact reachability diagnostics, and
+resource preflight. The assurance is not a portable latency or
+estimator-error theorem.
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/NUMERICAL_ASSURANCE.md}{\texttt{NUMERICAL\_ASSURANCE.md}}
+gives every arithmetic derivation, call-site boundary, retained witness,
+rejected transfer, resource bound, and application example. The checked
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/numerical-assurance.pdf}{PDF}
+is the human-readable projection of that canonical Markdown. It adds no
+claim or evidence beyond the source and its cited artifacts.
+
+\Needspace{12\baselineskip}
+
+\subsection{5.3 KSG positive-integer harmonic
+arithmetic}\label{53-ksg-positive-integer-harmonic-arithmetic}
+
+\textbf{Status and theorem.} Revision 4 is active. Its
+exact/formal/bounded core has scoped GO results. Repository/publication
+integration remains \textbf{NO-GO}. Final \texttt{decision-v4.md} and
+\texttt{evidence-matrix-v4.md} are absent.
+
+The later composite-v12 qualification route is terminal. Its exact C12
+commit is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{01466e88b0550333c2718f1716289e9642e30dc6}
+\end{Highlighting}
+\end{Shaded}
+
+At that commit, \(Q_{12}\) is false, \(R_{12}\) is permanently unissued,
+and \(L_{12}\) is \texttt{not\_adjudicated}. That terminalizes only the
+specified v12 route. It does not invalidate the scoped revision-4
+mathematics or silently authorize a future lifecycle.
+
+The symbol \(\psi\) denotes the digamma function, and \(\gamma\) denotes
+the Euler--Mascheroni constant. For every positive integer \(m\),
+\href{https://dlmf.nist.gov/5.4.E14}{NIST DLMF Equation 5.4.14} gives
+\(\psi(m)=H_{m-1}-\gamma\). Here, \(H_0=0\) and \(H_j=\sum_{r=1}^j1/r\)
+for \(j\ge1\). The variables \(x\) and \(y\) are positive-integer
+digamma arguments from the inventoried estimator mappings.
+
+The theorem has these conditions:
+
+\begin{itemize}
+\tightlist
+\item
+  \(n\ge2\).
+\item
+  \(1\le k<n\).
+\item
+  \(k\le x,y\le n\).
+\item
+  Coefficient pattern \((+1,+1,-1,-1)\).
+\item
+  The published positive-integer identity is supplied as a typed premise
+  at all four arguments.
+\end{itemize}
+
+Under these conditions, the arithmetic term satisfies:
+
+\[
+T=\psi(k)+\psi(n)-\psi(x)-\psi(y)
+=H_{k-1}+H_{n-1}-H_{x-1}-H_{y-1},
+\qquad
+-D\le T\le D.
+\]
+
+Here, \(D=H_{n-1}-H_{k-1}\). The bound is sharp on the rectangular
+arithmetic domain. Neighbor geometry need not fully realize that domain.
+A stronger \(x+y\le n+k\) route remains an unpromoted conditional source
+lemma. \textbf{{[}P,R,O{]}}
+
+\textbf{Evidence/boundary.} The packet has 19 scoped Lean theorems and 4
+conditional Z3 obligations. The packet also has bounded 8,198-row
+modular/enclosure/compiled evidence. Routes share the analytic premise
+and human statement choices.
+
+A rejected prime has exact-nonzero zero-residue collisions. Thus,
+modular zero is not exact zero in general. Selected primes provide
+redundant fault diversity, not independent proofs.
+
+Nothing here proves:
+
+\begin{itemize}
+\tightlist
+\item
+  Rust refinement.
+\item
+  Neighbor geometry.
+\item
+  KSG consistency.
+\item
+  Ehrlich validity.
+\item
+  PID atoms. \textbf{{[}X,B,E,O{]}}
+\end{itemize}
+
+\textbf{Cost/use.} A shifted harmonic table costs \(O(n)\) setup/storage
+and gives \(O(1)\) eligible local terms. The table is a strong
+arithmetic regression oracle. The table is not a new estimator, speed
+guarantee, support theorem, or calibration result.
+
+\textbf{Read next.}
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/revision-index.md}{\texttt{revision-index.md}},
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/claim-v4.md}{\texttt{claim-v4.md}},
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md}{\texttt{formal-assurance-v4.md}},
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md}{\texttt{integration-disposition-v4.md}}.
+The current route boundary is the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md}{composite-v12
+terminal record}. The existing \texttt{ksg-m1a-composite-*} PDFs are
+process/boundary packets, not a self-contained math paper.
+
+\clearpage
+
+\section{6. Estimator choice, global nonclaims, and further
+reading}\label{6-estimator-choice-global-nonclaims-and-further-reading}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3200}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Data/question
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+First route
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Still required
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Supplied finite PMF/counts & Direct categorical functional. Exact
+assurance within its scope & Correct method/event encoding \\
+I.i.d. categorical sample & Empirical plug-in plus finite-alphabet
+result & Fixed law, support/sample-size and UQ arguments \\
+Explicit dependence coloring & Dependency-color bound & Predeclared
+valid within-color mutual independence \\
+Nearby finite laws with support changes & Averaged-Sx modulus & Same
+alphabet/event/lattice and a justified law-distance radius \\
+Continuous sample & Report-first KSG or experimental Ehrlich surface &
+Support, geometry, bias/calibration, dependence, and UQ \\
+Near-zero empirical SxPID2 value & Bounded exact-product escalation &
+Two-source supplied-count scope and conditional statuses \\
+\end{longtable}
+}
+
+\Needspace{12\baselineskip}
+
+\subsection{6.1 Wibral-line roadmap for high dimension and non-Euclidean
+geometry}\label{61-wibral-line-roadmap-for-high-dimension-and-non-euclidean-geometry}
+
+This roadmap uses ``Wibral line'' narrowly. It includes the categorical
+shared-exclusions functional of Makkeh, Gutknecht, and Wibral. It
+includes the measure-theoretic discrete/continuous/mixed construction of
+Schick-Poland and colleagues. It also includes the continuous analytic
+and nearest-neighbour construction of Ehrlich and colleagues. A generic
+MI estimator, projection, geometry diagnostic, or Lorentz embedding is
+not itself an extension of shared exclusions.
+
+That boundary matters in pid-rs. The repository has useful hyperbolic
+and high-dimensional infrastructure. It does not yet have a hyperbolic
+shared-exclusions functional or estimator. Calling the existing Lorentz
+KSG route ``hyperbolic PID'' would conflate a prerequisite MI
+calculation with the missing redundancy term and lattice decomposition.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Finite categorical MGW SxPID.} Stable empirical-PMF APIs cover
+  two through four sources. Population claims still need fixed laws,
+  meaningful alphabets, dependence handling, and UQ. This is the best
+  current route for offline categorical studies.
+\item
+  \textbf{Fitted-quantized categorical MGW SxPID.} A fitted quantizer
+  feeds the paper-defined categorical functional. The estimand is the
+  frozen quantized law. Use requires separate fitting data and justified
+  bin semantics.
+\item
+  \textbf{Euclidean continuous Ehrlich SxPID.} Two-source PID is
+  experimental, and mixed-dimensional PID3 is research-only. Use needs
+  declared regular support, finite information, a justified gauge,
+  calibration, and dependence-aware UQ. Restrict it to low-dimensional
+  offline analysis.
+\item
+  \textbf{Frozen projection or screening.} PCA, hash, PLS, and hierarchy
+  tools can reduce work. The result is PID of transformed variables.
+  Supervised selection needs an outer holdout or cross-fitting. This
+  route does not recover the original high-dimensional estimand.
+\item
+  \textbf{Lorentz KSG MI.} Typed distance, diagnostics, and pairwise
+  reports are research-only. Even MI still needs a population manifold
+  model and a consistency theorem. No redundancy is computed. Raw sensor
+  values do not become hyperbolic by declaration.
+\item
+  \textbf{Hyperbolic shared exclusions.} No implementation exists. The
+  conditional lemma below settles one population limit only. Estimator
+  consistency, the grouped product-source MI route, and the
+  shared-exclusions kernel remain research tasks. No current Galadriel
+  or CREBAIN use depends on them.
+\item
+  \textbf{General mixed support.} No estimator is implemented. The
+  Schick-Poland construction still needs tractable conditional-kernel
+  and Radon-\/-Nikodým estimation. This gap matters when variables mix
+  atoms and continua. It is not deployment-ready.
+\end{itemize}
+
+The continuous Ehrlich construction explains why a metric substitution
+is insufficient. Its nearest-neighbour estimator changes the KSG search
+region from a conjunction to a union of source neighbourhoods
+intersected with the target neighbourhood. The derivation relies on
+compatible local scales and shrinking neighbourhoods whose volume terms
+have the required cancellation. Replacing the maximum norm with Lorentz
+distance does not by itself supply those facts. They must be derived for
+the declared manifold and its reference measures.
+
+There is a second obstruction even if the one-variable Lorentz geometry
+is correct. A bivariate PID requires the three measure-independent terms
+\(I(S_1;T)\), \(I(S_2;T)\), and \(I((S_1,S_2);T)\) as well as a
+shared-exclusions redundancy. The joint source \((S_1,S_2)\) lies on a
+product space. Concatenating two Lorentz-coordinate vectors does not
+generally produce a point on a larger hyperboloid.
+
+The public hyperbolic MI report accepts two Lorentz blocks at curvature
+\(-1\). The blocks can have different intrinsic dimensions. The joint
+neighbourhood uses the maximum of the two geodesic distances. This
+pairwise route therefore already uses a product-manifold neighbourhood.
+
+The public API lacks a grouped source \((S_1,S_2)\) against a third
+target block. That composition is needed for \(I((S_1,S_2);T)\). It also
+lacks a general combination of different geometric model families. The
+internal grouped-source routine accepts only the ordinary Chebyshev
+configuration.
+
+A manifold PID route still needs the grouped-source and
+shared-exclusions kernels. It must declare product reference measures,
+compatible source scales, shell conventions, and tie rules. These
+conditions are needed to relate all four inputs to the same law and
+gauge. \textbf{{[}O{]}}
+
+\subsubsection{A proved population-level transfer, and why it stops
+there}\label{a-proved-population-level-transfer-and-why-it-stops-there}
+
+\textbf{Status.} The following result is a repository-derived
+conditional lemma, catalogued as project-defined \textbf{{[}R{]}}. It
+proves that a common-geodesic-radius event ratio converges to an
+expression with the algebraic form of Ehrlich et al.\textquotesingle s
+bivariate analytic formula. The expression is evaluated with declared
+Riemannian-volume densities. Ehrlich et al. define the analytic formula
+and relative precision, but they do not prove this manifold small-ball
+lemma. It is not a new PID functional, an estimator, or a
+scientific-priority claim.
+
+Let \(d,q\geq1\). Let \(M=\mathbb H^d_{-1}\) have Riemannian volume
+\(\mu\). Both sources take values in the same measured space \(M\). Let
+the target take values in a \(q\)-dimensional Riemannian manifold \(N\)
+with volume \(\nu\). At a fixed point \((t,s_1,s_2)\), define
+
+\[
+E_{i,r}=\{S_i\in B_M(s_i,r)\},\qquad
+C_r=\{T\in B_N(t,r)\},\qquad
+A_r=E_{1,r}\cup E_{2,r}.
+\]
+
+These events are subsets of the underlying sample space. Their
+intersection means that the source conditions hold on the same draw. The
+figure shows separate source-coordinate copies of \(M\). It does not
+show disjoint sample-space events, and it does not assume source
+independence.
+
+Assume the joint law of \((T,S_1,S_2)\) is absolutely continuous with
+respect to \(\nu\otimes\mu\otimes\mu\). Its displayed marginals are then
+absolutely continuous with respect to the corresponding marginal product
+measures. Require the laws to admit the following density versions at
+the fixed point:
+
+\begin{itemize}
+\tightlist
+\item
+  Each \(f_{S_i}\) is continuous at \(s_i\).
+\item
+  \(f_T\) is continuous at \(t\).
+\item
+  Each \(f_{T,S_i}\) is continuous at \((t,s_i)\).
+\item
+  A version of \(f_{S_1,S_2}\) is essentially bounded on a neighbourhood
+  of \((s_1,s_2)\).
+\item
+  A version of \(f_{T,S_1,S_2}\) is essentially bounded on a
+  neighbourhood of \((t,s_1,s_2)\).
+\item
+  \(f_T(t)\) and both density sums in the following ratio are strictly
+  positive.
+\end{itemize}
+
+Selected continuous versions matter because changing a density on a null
+set can change its value at one point. Continuity of the last two
+densities is a stronger sufficient condition. Under these assumptions,
+the common-radius limit exists in nats:
+
+\[
+\boxed{
+\lim_{r\downarrow0}\log
+\frac{\Pr(C_r\cap A_r)}{\Pr(C_r)\Pr(A_r)}
+=\log
+\frac{f_{T,S_1}(t,s_1)+f_{T,S_2}(t,s_2)}
+{f_T(t)\,[f_{S_1}(s_1)+f_{S_2}(s_2)]}}
+\]
+
+The right side has the bivariate local analytic form that Ehrlich et al.
+define. Here it is evaluated with Riemannian-volume densities and a
+repository-declared common-radius gauge. Their Definition 2 uses
+\(\log_2\) and reports bits. pid-rs uses \(\ln\) and reports nats. Their
+Definitions 1-\/-2 and Equations 7-\/-8 identify finite density and
+relative source precision as substantive premises. \textbf{{[}P,R{]}}
+
+\textbf{Proof.} Hyperbolic homogeneity makes equal-radius source balls
+have the same volume:
+
+\[
+v_r=\mu(B_M(s_1,r))=\mu(B_M(s_2,r)),\qquad
+w_r=\nu(B_N(t,r)).
+\]
+
+Continuity and averaging over the shrinking balls give
+
+\[
+\begin{aligned}
+\Pr(E_{i,r})&=v_r[f_{S_i}(s_i)+o(1)],\\
+\Pr(C_r)&=w_r[f_T(t)+o(1)],\\
+\Pr(C_r\cap E_{i,r})&=w_rv_r[f_{T,S_i}(t,s_i)+o(1)].
+\end{aligned}
+\]
+
+Local essential boundedness supplies finite constants \(K_{12}\) and
+\(K_{T12}\) for all small balls. It therefore controls the two overlap
+terms:
+
+\[
+\begin{aligned}
+\Pr(E_{1,r}\cap E_{2,r})&\leq K_{12}v_r^2=O(v_r^2)=o(v_r),\\
+\Pr(C_r\cap E_{1,r}\cap E_{2,r})&\leq K_{T12}w_rv_r^2
+=O(w_rv_r^2)=o(w_rv_r).
+\end{aligned}
+\]
+
+The proof needs only the two displayed little-\(o\) overlap conditions.
+Local essential boundedness is a convenient sufficient condition, not a
+necessary one.
+
+Exact inclusion-\/-exclusion now gives
+
+\[
+\begin{aligned}
+\Pr(A_r)
+&=v_r[f_{S_1}(s_1)+f_{S_2}(s_2)+o(1)],\\
+\Pr(C_r\cap A_r)
+&=w_rv_r[f_{T,S_1}(t,s_1)+f_{T,S_2}(t,s_2)+o(1)].
+\end{aligned}
+\]
+
+The factors \(w_rv_r\) cancel in the probability ratio. Positivity makes
+its logarithm defined for all sufficiently small \(r\). Continuity of
+\(\log\) proves the boxed limit.
+
+Here \(v_r\asymp r^d\) and \(w_r\asymp r^q\). The discarded overlap
+terms are \(O(r^{2d})\) and \(O(r^{q+2d})\). Positivity makes the
+retained union scales \(\Theta(r^d)\) and \(\Theta(r^{q+d})\). The
+target dimension can differ because \(w_r\) cancels.
+
+\Needspace{155mm}\begin{figure}[H]\centering\includegraphics[width=\linewidth,height=155mm,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf}\caption{The two sources use separate coordinates of the same measured space \(M\). Each event \(E_{i,r}\) is the preimage under \(S_i\) of a radius-\(r\) ball with volume \(v_r\). The displayed overlap conditions give leading terms with a common factor \(w_rv_r\). Inclusion--exclusion and cancellation give the conditional population limit. A nonzero first-order source overlap changes the union denominator. The result is a conditional population lemma, not a finite-sample estimator theorem.}\label{fig:common-radius-small-ball-bridge}\end{figure}
+
+\textbf{Why the displayed smooth marginals do not suffice.} Smooth
+displayed densities and boundedness of the full density do not force a
+lower-order source overlap. The following absolutely-continuous
+counterexample breaks that shortcut \textbf{{[}X{]}}.
+
+Set \(N=\mathbb R\). Use a geodesic coordinate \(x\) on \(\mathbb H^1\).
+Its Riemannian arclength is Lebesgue measure \(dx\), and
+\(B(0,r)=(-r,r)\). Test the lemma at \((t,s_1,s_2)=(0,0,0)\).
+
+Choose smooth probability densities \(g_0,g_1\) on \(\mathbb R\) with
+disjoint supports and \(g_0(0)>0\). Thus, \(g_1\) vanishes on a
+neighbourhood of zero. Draw a component label \(Z\) with
+\(\Pr(Z=0)=\alpha\in(0,1)\).
+
+In both components, let \(U_i=|S_i|\) be uniform on \((0,1)\). Draw two
+fair signs independently of each other and of \((U_1,U_2)\), and use
+them to form \(S_1,S_2\). Each source is therefore uniform on \((-1,1)\)
+with density \(1/2\). Conditional on \(Z\), draw \(T\) independently of
+the sources with density \(g_Z\).
+
+\Needspace{16\baselineskip}
+
+When \(Z=0\), draw \(U_1,U_2\) independently. When \(Z=1\), couple
+\((U_1,U_2)\) with the modern positive-parameter Clayton form at a fixed
+parameter \(\theta>0\). It is used here as an ordinary copula, with no
+survival-time semantics. This form is equivalent to a reparameterization
+of Clayton\textquotesingle s 1978 survival-association model:
+
+\[
+\begin{aligned}
+C_\theta(u,v)&=(u^{-\theta}+v^{-\theta}-1)^{-1/\theta},\\
+c_\theta(u,v)&=(1+\theta)(uv)^{-1-\theta}
+(u^{-\theta}+v^{-\theta}-1)^{-2-1/\theta},\\
+\int_\varepsilon^1\!\int_\varepsilon^1 c_\theta(u,v)\,du\,dv
+&=1-2\varepsilon+C_\theta(\varepsilon,\varepsilon)\longrightarrow1.
+\end{aligned}
+\]
+
+The limit verifies normalization despite the density\textquotesingle s
+corner singularity. With axes assigned arbitrarily, the signed mixture
+has the following Lebesgue density almost everywhere:
+
+\[
+f_{T,S_1,S_2}(t,x,y)=
+\frac{\alpha}{4}g_0(t)\mathbf 1_{\{|x|,|y|<1\}}
++\frac{1-\alpha}{4}g_1(t)c_\theta(|x|,|y|)
+\mathbf 1_{\{0<|x|,|y|<1\}}.
+\]
+
+The construction is therefore absolutely continuous. On a sufficiently
+small neighbourhood of the tested triple, \(g_1\) vanishes and the full
+density is \(\alpha g_0(t)/4\). Hence that density is locally bounded.
+The relevant marginals are
+
+\[
+\begin{aligned}
+f_{S_1,S_2}(x,y)
+&=\tfrac{\alpha}{4}\mathbf 1_{\{|x|,|y|<1\}}
++\tfrac{1-\alpha}{4}c_\theta(|x|,|y|)
+\mathbf 1_{\{0<|x|,|y|<1\}},\\
+f_T(t)&=\alpha g_0(t)+(1-\alpha)g_1(t),\\
+f_{T,S_i}(t,x)&=\tfrac12[\alpha g_0(t)+(1-\alpha)g_1(t)]
+\mathbf 1_{\{|x|<1\}}.
+\end{aligned}
+\]
+
+These formulas make the one-source, target, and target-source density
+versions continuous at the tested points. The copula density is
+continuous on \((0,1)^2\). Its diagonal blow-up therefore persists on
+positive-measure open sets in every neighbourhood. Thus, the pair
+density is essentially unbounded near the origin because
+
+\[
+c_\theta(r,r)\sim(1+\theta)2^{-2-1/\theta}r^{-1},\qquad
+C_\theta(r,r)\sim\lambda r,\quad \lambda=2^{-1/\theta}>0.
+\]
+
+At the origin, \(f_T=\alpha g_0\), \(f_{S_i}=1/2\), and
+\(f_{T,S_i}=\alpha g_0/2\). The boxed right-side ratio therefore equals
+one. For \(0<r<1\), put \(G_0(r)=\int_{-r}^{r}g_0(u)\,du\). For all
+sufficiently small \(r\), the disjoint target supports give
+
+\[
+\begin{aligned}
+\Pr(A_r)&=2r-\alpha r^2-(1-\alpha)C_\theta(r,r),\\
+\Pr(C_r)&=\alpha G_0(r),\\
+\Pr(C_r\cap A_r)&=\alpha G_0(r)(2r-r^2).
+\end{aligned}
+\]
+
+Substitution and cancellation now give
+
+\[
+\frac{\Pr(C_r\cap A_r)}{\Pr(C_r)\Pr(A_r)}
+\longrightarrow \frac{2}{2-(1-\alpha)\lambda}>1.
+\]
+
+Thus, the other displayed smoothness assumptions plus full-density
+boundedness do not imply a lower-order source overlap. The example does
+not prove that pair local boundedness is necessary. It proves that some
+replacement condition must control the overlap. A singular graph
+\(S_2=\Phi(S_1)\) gives a simpler failure, but absolute continuity
+already suffices here.
+
+\Needspace{22\baselineskip}
+
+\textbf{Gauge and dimension boundary.} Suppose the two source-ball
+volumes obey \(v_i(r)/a(r)\to\lambda_i\in(0,\infty)\). Also assume
+\(\Pr(E_{1,r}\cap E_{2,r})=o(a(r))\) and
+\(\Pr(C_r\cap E_{1,r}\cap E_{2,r})=o(w_r a(r))\). The unlogged limit
+then becomes
+
+\[
+\frac{\lambda_1f_{T,S_1}+\lambda_2f_{T,S_2}}
+{f_T(\lambda_1f_{S_1}+\lambda_2f_{S_2})}.
+\]
+
+Radii \(a_1r,a_2r\) in dimension \(d\) produce weights \(a_1^d,a_2^d\).
+If \(d_1<d_2\) and both branch-one coefficients are positive, branch one
+dominates. If either coefficient vanishes, continuity alone does not
+determine which branch dominates or its replacement rate. Densities with
+different units cannot be added without a declared reference and scaling
+rule. Equal numeric source radii are therefore a gauge choice.
+
+Hyperbolic curvature affects higher-order ball-volume terms, not the
+boxed leading identity. The proof extends to same-dimensional smooth
+Riemannian source spaces with matched leading ball scales. This fact
+narrows the result: curvature is not the mechanism that creates shared
+exclusions.
+
+\textbf{Strict nonclaims.} The lemma proves no adaptive-kNN consistency,
+bias, variance, calibration, global expectation interchange, PID-atom
+property, mixed-support result, or software refinement. It does not
+authorize a Chebyshev-to-geodesic metric substitution. The source-union
+operation \(\min(d_1,d_2)\) is not itself a metric, so a generic
+metric-kNN theorem does not transfer. \textbf{{[}O{]}}
+
+The proof uses classical inclusion-\/-exclusion and standard hyperbolic
+homogeneity. Ratcliffe gives the latter geometry. Ehrlich et al. supply
+the analytic shared-exclusions formula and relative precision in their
+Euclidean density setting. They do not supply this manifold-domain
+theorem. The Riemannian-volume gauge and conditional bridge are
+repository work. The repository-derived contribution, catalogued as
+project-defined, includes the assumption ledger and counterexamples.
+
+The current Lorentz KSG code also has a concrete performance boundary.
+Its exact kd-tree path is available only for Chebyshev geometry. Lorentz
+queries therefore use the brute-force path, and the resource model
+retains quadratic worst-case pairwise work in sample count. A correct
+future index could improve speed only if it preserves the same neighbour
+and shell semantics. It would not prove estimator consistency.
+
+\subsubsection{Ranked research program}\label{ranked-research-program}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Keep the deployable baseline finite and low arity.} Use
+  categorical MGW SxPID on frozen, source-meaningful alphabets. Fit any
+  quantizer on disjoint training data and report the changed estimand.
+  This is the most credible current ecosystem path.
+\item
+  \textbf{Strengthen the low-dimensional continuous Wibral path first.}
+  Add analytic and simulated calibration families for the existing
+  Ehrlich estimator, with source exchange, gauge, neighbourhood-shell,
+  strong-dependence, and sample-size trajectories. A negative or
+  abstaining result is acceptable. This work directly tests the
+  estimator already used by pid-rs.
+\item
+  \textbf{Extend the proved population bridge before an estimator.} The
+  lemma above settles one local common-radius limit. It does not settle
+  random kNN radii, shell counts, bias, or global integration. Prove
+  those obligations for a declared manifold model before deriving an
+  estimator.
+\item
+  \textbf{Treat intrinsic dimension as a diagnostic, not a replacement
+  exponent.} The existing Levina-\/-Bickel trajectory can reveal scale
+  instability. It cannot authorize substituting an estimated dimension
+  into the Ehrlich formula. A future intrinsic-manifold estimator must
+  prove which marginal, joint, and disjunctive dimensions enter each
+  branch and how their estimation error propagates.
+\item
+  \textbf{Keep mixed support separate.} The Schick-Poland paper supplies
+  measure-theoretic direction but states that a tractable estimator
+  remains open. Barà and colleagues give a narrower
+  discrete-target/continuous-source estimator based on the
+  Williams-\/-Beer minimum over specific information. It is not the
+  MGW/Ehrlich shared-exclusions redundancy. That method is a useful
+  comparator, not evidence that the general Wibral construction or a
+  hyperbolic version has been implemented.
+\item
+  \textbf{Do not import a generic high-dimensional MI correction
+  unchanged.} Gao, Ver Steeg, and Galstyan show a strong-dependence
+  limitation of kNN MI and propose a local-nonuniformity correction.
+  Their correction is not a shared-exclusions estimator. Any transfer
+  would have to rederive the correction for the target-intersected union
+  regions and prove that PID reconstruction uses compatible MI and
+  redundancy estimands.
+\end{enumerate}
+
+The highest-value new-math target is therefore not ``use a hyperbolic
+metric.'' It is a consistency theorem for the target-intersected
+source-union estimator on a declared manifold model. The theorem must
+cover random radii, shell conventions, bias, and global integration. The
+best near-term engineering target is different. Make low-dimensional
+categorical or Ehrlich analyses reproducible, held out, resource
+bounded, and fast enough for offline ecosystem studies.
+
+\subsubsection{What would count as a sound new
+estimator}\label{what-would-count-as-a-sound-new-estimator}
+
+A candidate must pass all of the following gates before it enters a
+stable or ecosystem-facing surface:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Estimand identity:} state the pointwise and averaged
+  functional, units, source gauge, reference measures, and lattice
+  coordinates. State whether the result is categorical, continuous,
+  manifold, or mixed-support SxPID.
+\item
+  \textbf{Population premises:} state row dependence, support, density,
+  dimension, curvature, injectivity, finite-information, and tie
+  assumptions. A sample diagnostic cannot prove them.
+\item
+  \textbf{Estimator argument:} derive every neighbourhood and count,
+  prove the required limiting volume relations, and give bias, variance,
+  or consistency conditions. A correct distance formula is not this
+  argument.
+\item
+  \textbf{Algebraic correspondence:} show that redundancy and all MI
+  terms refer to the same law and gauge. The declared Möbius
+  reconstruction identities must hold without clamping.
+\item
+  \textbf{Independent controls:} include analytic laws, source
+  permutations, nulls, near-deterministic stress, mixed-dimension
+  counterexamples, and an oracle that does not read production answers.
+\item
+  \textbf{High-dimensional comparison:} compare against the unprojected
+  abstention, a frozen projection, categorical/quantized MGW, joint MI
+  or conditional MI, and direct held-out task loss. Equal information
+  access and compute budgets are required.
+\item
+  \textbf{Resource and latency evidence:} record sample/source/dimension
+  scaling, peak memory, cancellation, exact backend, and
+  deployment-hardware benchmarks. A single fast fixture is not a
+  complexity result.
+\item
+  \textbf{Application utility:} preregister the decision that the PID
+  allocation can change and compare it with simpler baselines. If joint
+  MI, conditional MI, ablation, or task loss answers the question, PID
+  must remain an explanatory audit rather than a forced objective.
+\end{enumerate}
+
+\subsubsection{Concrete ecosystem
+meaning}\label{concrete-ecosystem-meaning}
+
+For a sensor study, one row can contain frozen categorical camera,
+microphone, radar, and optional thermal states. The same row can contain
+a source-disjoint target label. The MGW output allocates target
+information among redundancy, source-specific terms, and joint-only
+terms under its own event semantics. It does not estimate detection
+range, choose map coordinates, prove causal necessity, or authorize a
+control action.
+
+The practical calculation should normally be offline. Two or three
+modality banks keep the lattice small. Four sources already require 166
+lattice positions. Five sources are unsupported. Grouping multiple
+cameras or microphones into one source can make the calculation feasible
+only when that group has a fixed scientific meaning. Grouping changes
+the source variables and therefore changes the PID question.
+
+PID has a legitimate extra role when the full symmetric allocation
+matters. Fair XOR is the standard warning: individual pairwise MI can
+vanish while joint target information is positive. Joint MI or
+conditional MI can already detect that dependence. MGW SxPID adds a
+measure-specific allocation of the joint information. If that allocation
+changes no scientific or engineering conclusion, the PID calculation is
+unnecessary.
+
+The detailed current-versus-proposed Galadriel and sensor-placement
+analysis is in
+\href{https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md}{the
+sensor and Galadriel guide}. It keeps the current record-only studies
+separate from proposed placement research. It compares PID with task
+loss, joint MI, conditional MI, ablation, coverage, and established
+placement objectives.
+
+The following boundaries apply across all results:
+
+\begin{itemize}
+\tightlist
+\item
+  Bounded agreement stays bounded.
+\item
+  Oracles must not read answer tables.
+\item
+  Oracles must not import the implementation result as truth.
+\item
+  Oracles must not weaken tolerances to pass.
+\item
+  Oracles must not convert ``unavailable'' into a sign.
+\item
+  The result boundaries prohibit clamping negative net atoms and exact
+  zeros.
+\item
+  Quantization or added noise changes the estimand.
+\item
+  Shared names, citations, lattices, and software dependencies do not
+  transfer semantics.
+\item
+  No result supplies causal meaning, consumer authorization, or formal
+  verification of all pid-rs.
+\end{itemize}
+
+Every use example above is illustrative. No use example qualifies an
+application.
+
+These sources describe process and durable evidence:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md}{\texttt{MATHEMATICAL\_PROBLEM\_SOLVING\_WORKFLOW.md}}
+  and the corresponding
+  \href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/mathematical-problem-solving-workflow.pdf}{PDF}.
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/PID_MATHEMATICAL_AUDIT_PROTOCOL.md}{\texttt{PID\_MATHEMATICAL\_AUDIT\_PROTOCOL.md}}.
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md}{\texttt{PID\_DISCOVERY\_VERIFICATION\_AND\_DURABILITY\_BLUEPRINT.md}}.
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/FORMAL_TOOL_ADOPTION_AUDIT.md}{\texttt{FORMAL\_TOOL\_ADOPTION\_AUDIT.md}}.
+\item
+  \href{https://github.com/sepahead/pid-rs/blob/main/KNOWN_LIMITATIONS.md}{\texttt{KNOWN\_LIMITATIONS.md}}.
+\end{itemize}
+
+These workflows preserve evidence. The workflows do not raise a theorem
+beyond its assumptions.
+
+The guide uses these primary sources:
+
+\begin{itemize}
+\tightlist
+\item
+  The MGW categorical-Sx paper.
+\item
+  The
+  \href{https://doi.org/10.1098/rspa.2021.0110}{part-whole/formal-logic
+  account}.
+\item
+  The \href{https://arxiv.org/html/2311.06373v3}{Ehrlich continuous-Sx
+  paper}, especially Definitions 1-\/-2 and Equations 7-\/-8 for the
+  analytic formula and source gauge.
+\item
+  The \href{https://arxiv.org/abs/2106.12393v2}{Schick-Poland et al.
+  measure-theoretic construction}.
+\item
+  The \href{https://doi.org/10.1103/58bg-5n9s}{Barà et al. restricted
+  mixed-variable estimator}, which uses Williams-\/-Beer
+  minimum-specific-information redundancy rather than shared exclusions.
+\item
+  Williams--Beer \(I_{\min}\).
+\item
+  \href{https://doi.org/10.3390/e16042161}{Bertschinger et al. (2014)}
+  on bivariate finite-alphabet unique information.
+\item
+  KSG.
+\item
+  \href{https://proceedings.mlr.press/v38/gao15.html}{Gao, Ver Steeg,
+  and Galstyan} on strong-dependence limits and local nonuniformity
+  correction for generic kNN MI.
+\item
+  \href{https://proceedings.mlr.press/v80/nickel18a.html}{Nickel and
+  Kiela} for Lorentz-model geometry, not for shared exclusions or PID.
+\item
+  \href{https://doi.org/10.1007/978-0-387-47322-2}{Ratcliffe} for
+  standard hyperbolic geometry, not for shared exclusions or PID.
+\item
+  \href{https://doi.org/10.1093/biomet/65.1.141}{Clayton (1978)} for the
+  original survival-association model behind the reparameterized copula
+  family used only in the pair-regularity counterexample, not for shared
+  exclusions or PID.
+\item
+  \href{https://papers.nips.cc/paper_files/paper/2004/hash/74934548253bcab8490ebd74afed7031-Abstract.html}{Levina
+  and Bickel} for the intrinsic-dimension diagnostic basis.
+\item
+  \href{https://dlmf.nist.gov/5.4.E14}{NIST DLMF Equation 5.4.14}.
+\item
+  \href{https://doi.org/10.1007/BF00531932}{Rota\textquotesingle s
+  Möbius theory}.
+\item
+  \href{https://doi.org/10.1080/01621459.1963.10500830}{Hoeffding}.
+\item
+  \href{https://doi.org/10.1002/rsa.20008}{Janson}.
+\item
+  \href{https://shiftleft.com/mirrors/www.hpl.hp.com/techreports/2003/HPL-2003-97R1.pdf}{Weissman
+  et al}.
+\end{itemize}
+
+The linked detailed reports give equation-level provenance. Each report
+marks the precise point where each source stops applying.
+
+\clearpage
+
+\section{7. Companion results for finite categorical MGW
+questions}\label{7-companion-results-for-finite-categorical-mgw-questions}
+
+These packages use the paper-defined categorical MGW functional. Their
+prefix constructions, bounds, matched examples and formalizations are
+repository work. The score identity used below is classical. No package
+establishes scientific priority, a continuous-PID transfer or an
+application advantage. All logarithms are natural.
+
+A local Lean result proves its exact target under the recorded
+definitions, imports and axiom policy. It does not certify every
+sentence in a publication or close a hosted replay obligation.
+
+\Needspace{12\baselineskip}
+
+\subsection{7.1 A row experiment whose mean approaches an MGW
+atom}\label{71-a-row-experiment-whose-mean-approaches-an-mgw-atom}
+
+Fix finite alphabets, a nonempty finite source set and a normalized
+joint law \(p\). Fix a node \(\alpha\) in the complete redundancy
+lattice. Let \(\theta_\alpha\) be its population signed MGW atom. For an
+integer horizon \(h\ge0\), draw \(h+1\) IID complete source-and-target
+rows. The first is the fresh anchor. Coordinates within each row may
+depend arbitrarily.
+
+The specified statistic \(B_h(\alpha)\) sums signed arrival increments.
+A positive increment checks the joined source-mismatch pattern and
+divides by raw arrival rank. A join test is false if its tested prefix
+contains a complete source match. A negative increment checks the
+target-matching retained prefix and divides by its retained rank. It is
+counted only when the current row matches the anchor target.
+
+The mean paper calls this same statistic \(Y_h\). Its accepted
+expectation bridge gives
+
+\[
+\lim_{h\to\infty}\mathbb E_{p^{\otimes(h+1)}}[B_h(\alpha)]
+=\theta_\alpha.
+\]
+
+\textbf{Use and boundary.} This connects a fully specified row
+experiment to an MGW atom without assuming access to a supplied PMF. One
+block consumes \(h+1\) rows and the required mismatch-join operations.
+No implementation cost advantage is established.
+
+The result concerns expectations. It does not prove consistency of an
+observed estimate, a finite-horizon error tolerance or a confidence
+interval. Short-prefix means can have the wrong sign.
+
+\textbf{Evidence and next reading.} Three targets have local Lean
+acceptance and a locally accepted portable replay. Hosted proof replay
+remains open. Read the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md}{current
+mean exposition},
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-mean.pdf}{PDF}
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/PUBLICATION.md}{publication
+status}.
+
+\Needspace{12\baselineskip}
+
+\subsection{7.2 Finite-horizon error before sampling
+uncertainty}\label{72-finite-horizon-error-before-sampling-uncertainty}
+
+Keep the experiment in Section 7.1 and write
+\(e_h=\theta_\alpha-\mathbb E[B_h(\alpha)]\). This is population value
+minus expected statistic. For a supported anchor \(z\), let
+\(E_\alpha(z)\) be the node\textquotesingle s OR-of-AND source-match
+event and set \(q_z=P(E_\alpha(z)\cap\{T=t_z\})\). The positive anchor
+lies in this event, so \(q_z>0\). Define
+\(K_q=\sum_{z:p(z)>0}p(z)/q_z\). Then
+
+\[
+|e_h|\le\frac{K_q-1}{h+1}.
+\]
+
+If a justified population floor satisfies \(q_z\ge\eta\) at every
+supported anchor, with \(0<\eta\le1\), a separate bound is
+
+\[
+|e_h|\le\frac{(1-\eta)^{h+1}}{(h+1)\eta}.
+\]
+
+The paper also gives signed bounds and bounds from positive
+projection-support counts. Overlapping source events need not form a
+partition, so \(K_q\) need not be an integer.
+
+\textbf{Use and boundary.} A population model can make these bounds
+useful for choosing or rejecting a prefix horizon before paying its row
+and computation cost. Sample occupancy and the smallest observed
+frequency do not establish population support or a probability floor.
+These are approximation-error bounds, separate from variation in an
+observed block or average.
+
+\textbf{Evidence and next reading.} Five targets have local Lean
+acceptance. Hosted proof replay, Rust correspondence and finite-sample
+coverage remain open. Read the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md}{bias
+paper},
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-bias.pdf}{PDF},
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-bias-summary.pdf}{one-page
+summary} and
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md}{theorem
+map}.
+
+\Needspace{12\baselineskip}
+
+\subsection{7.3 Prefix derivatives and the score of every
+row}\label{73-prefix-derivatives-and-the-score-of-every-row}
+
+Let \(p_t\) be normalized finite laws on fixed alphabets with common
+positive support on an open neighborhood of \(t_0\). Each cell has
+tangent \(d_z\) at \(t_0\). Write \(p=p_{t_0}\) and \(p_z=p(z)\).
+Require \(|d_z|\le Lp_z\) for \(L\ge0\). Set \(s(z)=d_z/p_z\) on
+positive support and zero elsewhere. The derivative statistic includes
+the score of the random anchor:
+
+\[
+G_h=B_h(\alpha)\sum_{r=0}^{h}s(Z_r),\qquad
+\left.\frac{d}{dt}\mathbb E_{p_t^{\otimes(h+1)}}[B_h(\alpha)]\right|_{t=t_0}
+=\mathbb E[G_h].
+\]
+
+For the atom-derivative bound, additionally require every target-fiber
+tangent to be zero and the supported MGW inverse identities to hold
+locally. Let \(\mathcal Z_{\mathrm{lat}}\) be the zeta transform on the
+fixed redundancy lattice. Let \(c_\alpha\) be the complete inverse row,
+so
+\(\sum_\beta c_\alpha(\beta)(\mathcal Z_{\mathrm{lat}}f)(\beta)=f(\alpha)\)
+for every node function \(f\). Set
+\(q_{z,\beta}=P_{p_{t_0}}(E_\beta(z)\cap\{T=t_z\})\) and
+\(C_\alpha(p)=\sum_\beta|c_\alpha(\beta)|\sum_{z:p_z>0}p_z/q_{z,\beta}\).
+The atom derivative exists and satisfies
+
+\[
+\left|\left.\frac{d}{dt}\theta_\alpha(p_t)\right|_{t=t_0}
+-\mathbb E[G_h]\right|\le\frac{2LC_\alpha(p)}{h+1}.
+\]
+
+The separate second-moment bound is
+\(\mathbb E[G_h^2]\le(h+1)H_h^2\mathbb E[s^2]\le(h+1)H_h^2L^2\), where
+\(H_h=\sum_{j=1}^h1/j\) and \(H_0=0\). Derivatives use nats per
+parameter unit.
+
+\textbf{Use and boundary.} Finite latent maps and fixed-base encoders
+can provide a sampled score without enumerating the induced image PMF.
+The cost includes all \(h+1\) row scores. Small known PMFs may be
+differentiated directly. A longer prefix lowers the stated
+derivative-bias bound but does not establish lower variance, useful
+training, confidence coverage or stopping validity.
+
+\textbf{Evidence and next reading.} Eleven targets have local Lean
+acceptance. Hosted replay and any Rust/Python implementation remain
+separate. Read the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md}{gradient
+paper},
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-prefix-mgw-gradient.pdf}{PDF}
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md}{theorem
+map}. The paper\textquotesingle s independent-block MSE consequence is
+handwritten, outside those eleven targets.
+
+\Needspace{12\baselineskip}
+
+\subsection{7.4 A support-changing MI cusp with zero cell
+tangents}\label{74-a-support-changing-mi-cusp-with-zero-cell-tangents}
+
+For binary \(X,Y\) and \(|t|<e^{-2}\), set \(\varepsilon(0)=0\) and
+\(\varepsilon(t)=|t|/\log(1/|t|)\) for \(t\ne0\). Give each diagonal
+cell probability \((1-\varepsilon)/2\) and each off-diagonal cell
+probability \(\varepsilon/2\). Both marginals stay fair and every cell
+tangent at zero is zero. Nevertheless,
+
+\[
+I_{p_t}(X;Y)-I_{p_0}(X;Y)=-|t|(1+o(1)).
+\]
+
+The right derivative is \(-1\) and the left derivative is \(+1\), in
+nats per parameter unit. There is no ordinary derivative at zero. The
+joint support changes there, so this example violates the common-support
+premise of Section 7.3. For one source, the signed MGW atom is MI. Every
+fixed finite-prefix mean has derivative zero along this path.
+Convergence of those means does not justify interchanging the limit and
+derivative.
+
+\textbf{Use and boundary.} Checking only base-point cell tangents can
+miss first-order information changes from entering support. This is a
+four-cell analytic obstruction, with no runtime or learning-performance
+claim. The retained failed choice \(\varepsilon(t)=t^2\) has MI
+derivative zero. Support change alone therefore does not force a cusp.
+
+\textbf{Evidence and next reading.} This is a handwritten negative
+example, with no accepted Lean formalization or executed-fixture
+evidence. Read the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md}{full
+argument} and
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-mi-cusp.pdf}{PDF}.
+It does not contradict a function-value continuity theorem or show that
+common support is necessary for every differentiable path.
+
+\Needspace{12\baselineskip}
+
+\subsection{7.5 Target-copy identities and conditional-entropy
+bounds}\label{75-target-copy-identities-and-conditional-entropy-bounds}
+
+Take any normalized finite joint law with \(T=(S_1,U)\) throughout its
+positive support. No independence or full-support assumption is needed.
+At a supported source pair \((x,y)\), write \(a=P(S_1=x)\),
+\(c=P(S_2=y)\) and \(j=P(S_1=x,S_2=y)\). The signed local MGW synergy is
+
+\[
+s(x,y)=\log\frac{ac}{j(a+c-j)}.
+\]
+
+Its average depends on the complete source joint law, even as the
+residual target channel changes within this family. The formal same-law
+comparison uses one common residual alphabet. The local and averaged
+bounds are
+
+\[
+0\le s(x,y)\le\min\{\log(c/j),\log(a/j)\},\qquad
+0\le S\le\min\{H(S_1\mid S_2),H(S_2\mid S_1)\}.
+\]
+
+The entropy symbols denote the explicit finite positive-support sums in
+nats. This package does not identify them with a separate entropy
+library. Fixing only source marginals is insufficient.
+
+\textbf{Use and boundary.} The identity provides a finite-law diagnostic
+and a reference for a separately mapped implementation. Evaluating it
+uses the declared source joint law. It does not infer target copying
+from observed samples or turn synergy into added information or task
+value. The source-copy condition must hold at every supported joint key,
+not only at one anchor.
+
+\textbf{Evidence and next reading.} Eleven targets have local Lean
+acceptance. Complete replay acceptance remains open because retained
+operational evidence is incomplete. Read the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-target-copy-mgw-synergy.md}{target-copy
+note},
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-target-copy-mgw-synergy.pdf}{PDF}
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-target-copy/REPLAY_ACCEPTANCE.json}{replay
+record}.
+
+\Needspace{12\baselineskip}
+
+\subsection{7.6 Equal synergy, different added Shannon
+information}\label{76-equal-synergy-different-added-shannon-information}
+
+Let \(A,B,U\) be mutually independent fair bits on one eight-outcome
+world. Keep target \(Y=(A,B)\) and existing source \(A\) fixed. Compare
+adding \(U\) with adding \(B\). For categorical MGW signed synergy,
+
+\[
+S(A,U;Y)=S(A,B;Y)=\log(4/3),\qquad
+I(U;Y\mid A)=0,\quad I(B;Y\mid A)=\log2.
+\]
+
+These are assigned finite probabilities, without a sampling-IID premise.
+The full signed PID keeps \(I(C;Y\mid A)=\mathrm{Unq}_C+S\). The unique
+atom is \(-\log(4/3)\) for \(C=U\) and \(\log2-\log(4/3)\) for \(C=B\).
+Thus the synergy coordinate ties candidates whose added Shannon
+information differs.
+
+\textbf{Use and boundary.} Synergy alone cannot rank these candidates by
+added Shannon information. CMI answers the declared added-information
+question. A prediction or placement decision still needs its own model,
+cost and task evaluation. The MGW paper already describes cancellation
+between signed atoms. The matched comparison and formalization do not
+establish a discovery-priority claim or a result for another PID.
+
+\textbf{Evidence and next reading.} Twenty-one targets have local Lean
+checks and a retained replay using the same kernel implementation. A
+reusable public replay and fresh hosted formal qualification remain
+open. Read the
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/evidence/mgw-fixed-world-added-information-2026-09-09.md}{fixed-world
+note},
+\href{https://github.com/sepahead/pid-rs/blob/main/output/pdf/mgw-fixed-world-added-information.pdf}{PDF}
+and
+\href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/PUBLICATION.md}{current
+publication status}.
+
+\end{document}

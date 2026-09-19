@@ -29,15 +29,15 @@ WRAPPER = ROOT / "scripts/check-mathematical-results-guide-pdf.sh"
 GUIDE_BUILDER = ROOT / "scripts/build-mathematical-results-guide-pdf.sh"
 SXPID3_WRAPPER = ROOT / "scripts/check-sxpid3-source-marginal-audit-pdf.sh"
 SXPID3_BUILDER = ROOT / "scripts/build-sxpid3-source-marginal-audit-pdf.sh"
-HOSTED_BASENAME = "check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py"
+HOSTED_BASENAME = "check-mathematical-results-guide-pdf-hosted-raw-profile-v4.py"
 HOSTED_SELF_TEST_BASENAME = (
-    "check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py"
+    "check-mathematical-results-guide-pdf-hosted-raw-profile-v4-self-test.py"
 )
 HOSTED_FIXTURE_BASENAME = (
-    "mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf"
+    "mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf"
 )
 HOSTED_RECEIPT_BASENAME = (
-    "mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v3.json"
+    "mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v4.json"
 )
 ALPHA_BASENAME = "check-mathematical-results-guide-pdf-font-alpha-equivalence.py"
 ALPHA_SELF_TEST_BASENAME = (
@@ -65,7 +65,7 @@ LEGACY_TRAILER_RECEIPT_BASENAME = (
     "mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 )
 EXPECTED_WRAPPER_SHA256 = (
-    "3faf2dd93cf02441ee3c4c7d1d275ded967c224974f5d2c559313d9c2f927e3d"
+    "93e5af3b820535b104a4a17e8f9381c71dd5e5760c95f54abb4dbe06f774100e"
 )
 EXPECTED_CAPTURE_FUNCTION_SHA256 = (
     "a9a7d694fd43cd9888605fc48db5e5dc67bccb59d1a1b9c328de25aff751a088"
@@ -88,8 +88,8 @@ LEGACY_SELF_TEST = ROOT / "scripts" / LEGACY_PORTABILITY_SELF_TEST_BASENAME
 LEGACY_TRAILER_CHECKER = ROOT / "scripts" / LEGACY_TRAILER_CHECK_BASENAME
 LEGACY_TRAILER_SELF_TEST = ROOT / "scripts" / LEGACY_TRAILER_SELF_TEST_BASENAME
 SELECTED_SOURCE_SHA256 = {
-    HOSTED_CHECKER: "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338",
-    HOSTED_SELF_TEST: "7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305",
+    HOSTED_CHECKER: "7791914449814bf203635ff8734055df19301c72ffcf283a14ce4adc991d80bd",
+    HOSTED_SELF_TEST: "164ba0007b9947e41958623b1baa0a5975d2a865b597a7a9a438db496a92e9c6",
     LEGACY_ALPHA_CHECKER: "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997",
     LEGACY_ALPHA_SELF_TEST: "07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be",
     LEGACY_CHECKER: "5e59e9fb997098656039db1a60c1e8694a451432618ac2ecd192b402e7a8c319",
@@ -657,10 +657,10 @@ def audit_wrapper(
         require_region_digest(source, EXPECTED_WRAPPER_SHA256, "complete wrapper")
     exact_assignments = {
         "HOSTED_RAW_CHECK": (
-            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py"'
+            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4.py"'
         ),
         "HOSTED_RAW_SELF_TEST": (
-            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py"'
+            '"$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4-self-test.py"'
         ),
         "FONT_ALPHA_CHECK": (
             '"$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"'
@@ -689,7 +689,7 @@ def audit_wrapper(
         "LEGACY_TRAILER_ID_OBSERVATION_RECEIPT": (
             '"$ROOT/audit/evidence/' + LEGACY_TRAILER_RECEIPT_BASENAME + '"'
         ),
-        "HOSTED_PROFILE_ID": "hosted-pandoc-3.10.2-ubuntu-24.04-raw-v3-bound",
+        "HOSTED_PROFILE_ID": "hosted-pandoc-3.10.2-ubuntu-24.04-raw-v4-bound",
         "HOSTED_PANDOC_VERSION": "'pandoc 3.10.2'",
         "HOSTED_PANDOC_SHA256": (
             "867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce"
@@ -721,22 +721,22 @@ def audit_wrapper(
         "LEGACY_FORMAT_BYTES": "''",
         "LEGACY_FORMAT_SHA256": "''",
         "STRUCTURE_CHECK_SHA256": (
-            "b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4"
+            "0d350c9d76733e287e3efa6e104a9c96446e5304707c73fd0b9ed67f61a87b47"
         ),
         "STRUCTURE_SELF_TEST_SHA256": (
-            "a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea"
+            "278197c735f361aafcbb1b573cbad4fe229e4815d9374840b350a73117ca834e"
         ),
         "ID_VARIANCE_CHECK_SHA256": (
             "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
         ),
         "HOSTED_RAW_CHECK_SHA256": (
-            "c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338"
+            "7791914449814bf203635ff8734055df19301c72ffcf283a14ce4adc991d80bd"
         ),
         "HOSTED_RAW_SELF_TEST_SHA256": (
-            "7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305"
+            "164ba0007b9947e41958623b1baa0a5975d2a865b597a7a9a438db496a92e9c6"
         ),
         "HOSTED_RAW_PROFILE_RECEIPT_SHA256": (
-            "bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3"
+            "435de9987d9f2518b4e96d16e8f9eca1793248da4d427ed09283191ced12dc5a"
         ),
         "FONT_ALPHA_CHECK_SHA256": (
             "5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997"
@@ -763,6 +763,58 @@ def audit_wrapper(
             "cd5602bb28dce0780c4bac5f70097e496d2afe9141a8210f249332b5e6d93596"
         ),
     }
+    exact_assignments.update({
+        "PANDOC_TEX_NORMALIZER_SHA256": (
+            '73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6'
+        ),
+        "PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256": (
+            'e8086352e03eecf698c6619d170df3c02aca6ab0f926a055a6f6688ff7bb90bb'
+        ),
+        "DIAGNOSTICS_CHECK": (
+            '"$ROOT/scripts/check-mathematical-results-guide-diagnostics.py"'
+        ),
+        "DIAGNOSTICS_SELF_TEST": (
+            '"$ROOT/scripts/check-mathematical-results-guide-diagnostics-self-test.py"'
+        ),
+        "DIAGNOSTICS_CHECK_SHA256": (
+            'b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6'
+        ),
+        "DIAGNOSTICS_SELF_TEST_SHA256": (
+            'a6e31745c49c77bb012ea6cf48dd27f6409cf403b0dab891bfaf2f37809501d0'
+        ),
+        "NORMALIZER_RAW_FIXTURE": (
+            '"$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input.tex"'
+        ),
+        "NORMALIZER_RAW_FIXTURE_SHA256": (
+            'd17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee'
+        ),
+        "CANONICAL_DIAGNOSTICS": (
+            '"$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"'
+        ),
+        "CANONICAL_DIAGNOSTICS_SHA256": (
+            'a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939'
+        ),
+        "PANDOC_TEX_NORMALIZER": (
+            '"$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"'
+        ),
+        "PANDOC_TEX_NORMALIZER_SELF_TEST": (
+            '"$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4-self-test.py"'
+        ),
+    })
+    for diagnostic_command in (
+        'python3 -I -S -B "$DIAGNOSTICS_SELF_TEST" --helper "$DIAGNOSTICS_CHECK" \\\n  --raw-tex "$NORMALIZER_RAW_FIXTURE" --manifest "$CANONICAL_DIAGNOSTICS"\n',
+        'python3 -O -I -S -B "$DIAGNOSTICS_SELF_TEST" --helper "$DIAGNOSTICS_CHECK" \\\n  --raw-tex "$NORMALIZER_RAW_FIXTURE" --manifest "$CANONICAL_DIAGNOSTICS"\n',
+    ):
+        require_count(source, diagnostic_command, 1, "bound diagnostics self-test invocation")
+    for diagnostic_guard in (
+        'require_gate_digest "$PANDOC_TEX_NORMALIZER" "$PANDOC_TEX_NORMALIZER_SHA256" "v4 canonical normalizer"',
+        'require_gate_digest "$PANDOC_TEX_NORMALIZER_SELF_TEST" "$PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256" "v4 normalizer self-test"',
+        'require_gate_digest "$DIAGNOSTICS_CHECK" "$DIAGNOSTICS_CHECK_SHA256" "scoped diagnostics checker"',
+        'require_gate_digest "$DIAGNOSTICS_SELF_TEST" "$DIAGNOSTICS_SELF_TEST_SHA256" "scoped diagnostics self-test"',
+        'require_gate_digest "$NORMALIZER_RAW_FIXTURE" "$NORMALIZER_RAW_FIXTURE_SHA256" "normalizer raw TeX fixture"',
+        'require_gate_digest "$CANONICAL_DIAGNOSTICS" "$CANONICAL_DIAGNOSTICS_SHA256" "canonical diagnostic manifest"',
+    ):
+        require_count(source, diagnostic_guard, 2, "startup and post-control source binding")
     for name, expected in exact_assignments.items():
         observed = extract_assignment(source, name)
         if observed != expected:
@@ -795,7 +847,7 @@ def audit_wrapper(
             )
 
     required_once = (
-        ('if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "220" ]]; then', "current v3 navigation inventory"),
+        ('if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "285" ]]; then', "current v4 navigation inventory"),
         ('MODE="${1:---exact}"', "MODE assignment"),
         (
             'if (( $# > 1 )) || [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then',
@@ -1143,7 +1195,7 @@ def audit_wrapper(
         "mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json",
     ):
         if historical_binding in source:
-            raise WiringError("current hosted-v3 route contains a historical v2 binding")
+            raise WiringError("current hosted-v4 route contains a historical v2 binding")
     if "BUILT" in prebuild_dispatch:
         raise WiringError("pre-build selector inspects a candidate")
     hosted_prebuild = extract_unique(
@@ -1228,7 +1280,7 @@ def audit_wrapper(
         '    validate_pdf built "$BUILT" strict\n'
         "    ;;\n"
         '  --cross-toolchain:"$HOSTED_PROFILE_ID")\n'
-        "    # The v3 checker raw-binds one retained 24-page candidate and unchanged strict manifests.\n"
+        "    # The v4 checker raw-binds one retained 28-page candidate and bound strict manifests.\n"
         '    validate_pdf built "$BUILT" hosted-raw-and-strict\n'
         "    ;;\n"
         '  --cross-toolchain:"$LEGACY_PROFILE_ID")\n'
@@ -2730,10 +2782,19 @@ def expect_mutation_rejected(source: str, old: str, new: str, label: str) -> Non
 
 def run_mutation_suite(source: str) -> int:
     mutations = (
-        ('if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "220" ]]; then', 'if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "217" ]]; then', "stale v2 navigation count"),
-        ('check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py', 'check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py', 'historical v2 checker cannot supply current-v3 admission'),
-        ('mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf', 'mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf', 'historical v2 fixture cannot supply current-v3 admission'),
-        ('mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v3.json', 'mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json', 'historical v2 receipt cannot supply current-v3 admission'),
+        (
+            'if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "285" ]]; then',
+            'if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "217" ]]; then',
+            'stale v2 navigation count',
+        ),
+        (
+            'if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "285" ]]; then',
+            'if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d \' \')" != "220" ]]; then',
+            'stale v3 navigation count',
+        ),
+        ('check-mathematical-results-guide-pdf-hosted-raw-profile-v4.py', 'check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay.py', 'historical v2 checker cannot supply current-v4 admission'),
+        ('mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf', 'mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf', 'historical v2 fixture cannot supply current-v4 admission'),
+        ('mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v4.json', 'mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json', 'historical v2 receipt cannot supply current-v4 admission'),
         (
             'if (( $# > 1 )) || [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then',
             'if [[ "$MODE" != "--exact" && "$MODE" != "--cross-toolchain" ]]; then',
@@ -2755,12 +2816,12 @@ def run_mutation_suite(source: str) -> int:
             "hosted renderer digest zeroed",
         ),
         (
-            "STRUCTURE_CHECK_SHA256=b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4",
+            "STRUCTURE_CHECK_SHA256=0d350c9d76733e287e3efa6e104a9c96446e5304707c73fd0b9ed67f61a87b47",
             "STRUCTURE_CHECK_SHA256=" + "0" * 64,
             "structure checker digest zeroed",
         ),
         (
-            "STRUCTURE_SELF_TEST_SHA256=a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea",
+            "STRUCTURE_SELF_TEST_SHA256=278197c735f361aafcbb1b573cbad4fe229e4815d9374840b350a73117ca834e",
             "STRUCTURE_SELF_TEST_SHA256=" + "0" * 64,
             "structure checker self-test digest zeroed",
         ),
@@ -2770,17 +2831,17 @@ def run_mutation_suite(source: str) -> int:
             "trailer-ID checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_CHECK_SHA256=c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338",
+            "HOSTED_RAW_CHECK_SHA256=7791914449814bf203635ff8734055df19301c72ffcf283a14ce4adc991d80bd",
             "HOSTED_RAW_CHECK_SHA256=" + "0" * 64,
             "hosted checker digest zeroed",
         ),
         (
-            "HOSTED_RAW_SELF_TEST_SHA256=7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305",
+            "HOSTED_RAW_SELF_TEST_SHA256=164ba0007b9947e41958623b1baa0a5975d2a865b597a7a9a438db496a92e9c6",
             "HOSTED_RAW_SELF_TEST_SHA256=" + "0" * 64,
             "hosted self-test digest zeroed",
         ),
         (
-            "HOSTED_RAW_PROFILE_RECEIPT_SHA256=bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3",
+            "HOSTED_RAW_PROFILE_RECEIPT_SHA256=435de9987d9f2518b4e96d16e8f9eca1793248da4d427ed09283191ced12dc5a",
             "HOSTED_RAW_PROFILE_RECEIPT_SHA256=" + "0" * 64,
             "hosted provenance receipt digest zeroed",
         ),
@@ -3049,6 +3110,48 @@ def run_mutation_suite(source: str) -> int:
             "raw exact comparison removed",
         ),
     )
+    mutations += (
+        (
+            'python3 -I -S -B "$DIAGNOSTICS_SELF_TEST" --helper "$DIAGNOSTICS_CHECK" \\\n  --raw-tex "$NORMALIZER_RAW_FIXTURE" --manifest "$CANONICAL_DIAGNOSTICS"\n',
+            '',
+            'diagnostics control removed 0',
+        ),
+        (
+            'python3 -O -I -S -B "$DIAGNOSTICS_SELF_TEST" --helper "$DIAGNOSTICS_CHECK" \\\n  --raw-tex "$NORMALIZER_RAW_FIXTURE" --manifest "$CANONICAL_DIAGNOSTICS"\n',
+            '',
+            'diagnostics control removed 1',
+        ),
+        (
+            'PANDOC_TEX_NORMALIZER_SHA256=73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6',
+            'PANDOC_TEX_NORMALIZER_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
+            'PANDOC_TEX_NORMALIZER_SHA256 zeroed',
+        ),
+        (
+            'PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256=e8086352e03eecf698c6619d170df3c02aca6ab0f926a055a6f6688ff7bb90bb',
+            'PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
+            'PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256 zeroed',
+        ),
+        (
+            'DIAGNOSTICS_CHECK_SHA256=b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6',
+            'DIAGNOSTICS_CHECK_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
+            'DIAGNOSTICS_CHECK_SHA256 zeroed',
+        ),
+        (
+            'DIAGNOSTICS_SELF_TEST_SHA256=a6e31745c49c77bb012ea6cf48dd27f6409cf403b0dab891bfaf2f37809501d0',
+            'DIAGNOSTICS_SELF_TEST_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
+            'DIAGNOSTICS_SELF_TEST_SHA256 zeroed',
+        ),
+        (
+            'NORMALIZER_RAW_FIXTURE_SHA256=d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee',
+            'NORMALIZER_RAW_FIXTURE_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
+            'NORMALIZER_RAW_FIXTURE_SHA256 zeroed',
+        ),
+        (
+            'CANONICAL_DIAGNOSTICS_SHA256=a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939',
+            'CANONICAL_DIAGNOSTICS_SHA256=0000000000000000000000000000000000000000000000000000000000000000',
+            'CANONICAL_DIAGNOSTICS_SHA256 zeroed',
+        ),
+    )
     for old, new, label in mutations:
         expect_mutation_rejected(source, old, new, label)
     return len(mutations)
@@ -3118,7 +3221,7 @@ def main() -> int:
     )
     print(
         "Boundary: source-extracted producer capture, selection, and dispatch; "
-        "current v3 selects one raw-bound local candidate for separate hosted replay; "
+        "current v4 selects one raw-bound local candidate for separate hosted replay; "
         "the retained v2 packages remain historical, "
         "and exact mode invokes no cross-profile relation."
     )

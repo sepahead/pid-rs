@@ -107,21 +107,22 @@ contributions, and unsupported requests is [`METHODS.md`](METHODS.md). Its machi
 is [`method-catalog.json`](method-catalog.json).
 
 The scoped, reader-facing [mathematical results guide](MATHEMATICAL_RESULTS_GUIDE.md) and its
-[human PDF](output/pdf/mathematical-results-guide.pdf) map nine result families to their exact
-objects, assumptions, formulas, evidence, costs, uses, nonclaims, and governing sources. The guide
+[human PDF](output/pdf/mathematical-results-guide.pdf) map nine foundational result families and six
+companion packages to their exact objects, assumptions, formulas, evidence, costs, uses, nonclaims,
+and governing sources. The guide
 keeps categorical MGW shared exclusions, continuous Ehrlich shared exclusions, Williams–Beer
 $I_{\min}$, BROJA, and KSG in separate semantic lanes. It is a navigation layer, not a replacement
-for the method catalog, claim packets, or detailed proofs. The current 24-page guide uses the v3
+for the method catalog, claim packets, or detailed proofs. The current 28-page guide uses the v4
 structure profile. Its exact-mode check requires a rebuild to match the committed PDF byte for byte.
 The selected Ubuntu 24.04/x86 cross-toolchain route checks a fresh build against the reviewed
-v3 raw profile. Strict structure and navigation checks still apply.
+v4 raw profile. Strict structure and navigation checks still apply.
 
 The separate [categorical MGW mean bridge](audit/formal/lean-prefix-mgw-mean/PUBLICATION.md) and
 [nine-page PDF](output/pdf/prefix-mgw-mean.pdf) give actual finite-law mean identities and
 convergence for a specified prefix statistic. A worked independent-binary example shows why a
 positive short-prefix mean need not indicate dependence. Its three locally accepted exports use a
 separate replay package; they add no Rust/Python estimator or confidence guarantee and do not
-change the frozen aggregate Lean baseline or the guide's nine-family inventory.
+change the frozen aggregate Lean baseline. The guide indexes it as a companion package.
 
 The [finite-prefix bias companion](audit/formal/lean-prefix-mgw-bias/PUBLICATION.md) bounds the
 difference between a population MGW atom and the expectation of that prefix statistic. The

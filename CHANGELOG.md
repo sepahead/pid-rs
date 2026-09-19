@@ -78,6 +78,15 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Extend the mathematical results guide and its PDF with six finite categorical MGW companion
+  packages: prefix mean, bias and gradients, the support-change MI cusp, target-copy identities,
+  and the fixed-world synergy comparison. State the motivation, assumptions, use and exact proof
+  limits for each result, and link the standalone derivations and evidence.
+- Add the guide's 28-page v4 publication profile and scoped diagnostic checks. Repair introductory
+  pagination and long identifiers; retain historical profiles and failed validation routes in the
+  [publication review](audit/evidence/mathematical-results-guide-v4-publication-review-2026-09-19.md).
+  Keep Markdown, PDF, reader indexes and current reproduction checks consistent.
+
 - Correct the two current certified-SxPID2 publication dependency bindings after the gradient
   publication. Preserve the failed hosted run and historical evidence in the
   [dependency correction record](audit/evidence/gradient-publication-ci-dependency-correction-2026-09-19.md).

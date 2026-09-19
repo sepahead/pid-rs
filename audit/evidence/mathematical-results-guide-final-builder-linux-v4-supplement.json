@@ -1,0 +1,259 @@
+{
+  "capture": {
+    "admission_deadline_utc": "2026-09-19T22:43:35.512856+00:00",
+    "admission_sha256": "7c3009ebae15fa61743f062ede11a13aa8637e566503d9be950acb3fcccc0dcc",
+    "admission_started_utc": "2026-09-19T22:23:35.512856+00:00",
+    "builder_uid": 65534,
+    "captured_container_stopped_utc": "2026-09-19T22:26:06.279025335Z",
+    "container_id": "e4945ead2201dfb91eda254cd4e110515fbb1fe72a124c0a65ce147d96bd8b47",
+    "container_result_sha256": "64522a2452476e5d6faf70049d48e34648b281935b30b377b1833653ac3492b3",
+    "execution_class": "translated local linux/amd64 container; not GitHub-hosted execution or native x86 hardware evidence",
+    "fresh_docker_query_during_readback": false,
+    "host_final_result_sha256": "1190f6149adec7679946a46289026e376a60f5815cea11e4f338dfca1e60554f",
+    "image_id_not_registry_authentication": "sha256:99d68036d810885bfed9828ada5f8751e2a363aef473a15838b567f95c695a39",
+    "observed_surviving_processes": [],
+    "outer_completed_utc": "2026-09-19T22:26:06.582050+00:00",
+    "producer_completed_utc": "2026-09-19T22:26:04.768740+00:00",
+    "producer_started_utc": "2026-09-19T22:23:47.064845+00:00",
+    "production_cleanup_record_sha256": "1bbf12b595461de5a4b5ec3985305b3ced21a88a4138f93ef5a5f7bc83361656",
+    "terminal_exit_code": 0
+  },
+  "current_raw_profile": {
+    "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v4.json",
+    "sha256": "435de9987d9f2518b4e96d16e8f9eca1793248da4d427ed09283191ced12dc5a"
+  },
+  "evidence_readback": {
+    "actual_container_configuration_checked": true,
+    "command_scope": "Ten host Docker command records and thirteen container command records, plus two supervisory raw streams; producer descendants are not separately enumerated as commands.",
+    "host_command_result_and_stream_joins_verified": true,
+    "inventory_manifest_sha256": "eea16fa34c901c3aaf9c82164bf27699f0d069f214fac856b31c7acb1d704f2a",
+    "inventory_root_roster_equal": true,
+    "inventory_rows": 185,
+    "observed_utc": "2026-09-19T22:32:17.813184+00:00",
+    "raw_streams_joined": 48,
+    "recorded_commands_joined": 23,
+    "regular_file_bytes_rehashed": 3143797,
+    "regular_files_rehashed": 157,
+    "retained_inventory_is_atomic_snapshot": false
+  },
+  "final_builder": {
+    "actual_invocations": 1,
+    "individual_internal_artifacts_retained": false,
+    "internal_builds_declared_by_executed_source": 2,
+    "internal_byte_equality_inferred": false,
+    "internal_two_build_relation": "Frozen production builder checks exact bytes or its separately pinned strict duplicated-trailer-ID relation before emitting output.",
+    "mode": "--cross-toolchain",
+    "passes_per_internal_build_declared_by_executed_source": 4,
+    "path": "scripts/build-mathematical-results-guide-pdf.sh",
+    "production_temporary_directory_empty_observed": true,
+    "sha256": "aebff0b1420780f2fff99bb976dd31df2fba83a515ba388013b5bbc09b34d42f"
+  },
+  "hosted_replay": {
+    "artifact_id": null,
+    "execution_credit": "none",
+    "job_id": null,
+    "status": "pending",
+    "workflow_run_id": null
+  },
+  "limits": [
+    "Previous uncommitted v4 candidate records and all historical v1/v2/v3 artifacts remain separately preserved.",
+    "Production cleanup removes internal PDFs, TeX, logs and pass snapshots; no independent internal-artifact equality is claimed.",
+    "This receipt joins actual corrected production output to its new separately tested profile; previous candidate successes are not transferred.",
+    "Translated local image identity is not registry authentication or supply-chain attestation; font-supply limitations in the raw receipt remain applicable.",
+    "No generic warning-free, PDF/UA, arbitrary-viewer safety, new mathematical/application or complete-publication acceptance follows."
+  ],
+  "profile_join": {
+    "metadata_normalization_performed": false,
+    "profile_checker_rerun_in_this_readback": false,
+    "raw_fixture_bytes_do_not_identify_a_hosted_run": true,
+    "raw_fixture_equals_actual_corrected_production_output": true,
+    "separate_corrected_profile_checks": 6,
+    "separate_native_result_sha256": "f7eb7d5667e8975e280c33da4f2e0cbbfdec9b965e33d6b27b8024f80f10dd6a",
+    "superseded_fixture_bytes_equal": false
+  },
+  "retained_fixture": {
+    "bytes": 818418,
+    "final_producer_output_byte_equal": true,
+    "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf",
+    "sha256": "1b1ec340538111b479bbff4bc6f9c686e92ff14a8624a39b4e9e02b0d46a06ce"
+  },
+  "schema": "mathematical-results-guide-final-builder-linux-supplement-v1",
+  "scope": "Corrected final production-builder execution and independently joined custody; previous uncommitted v4 records preserved separately.",
+  "source_binding": {
+    "captured_source_files_rehashed": true,
+    "host_frozen_file_count": 114,
+    "host_inner_and_outer_before_after_equal": true,
+    "source_count": 33,
+    "source_files": [
+      {
+        "bytes": 74009,
+        "path": "MATHEMATICAL_RESULTS_GUIDE.md",
+        "sha256": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b"
+      },
+      {
+        "bytes": 5627,
+        "path": "audit/formal/latex/mathematical-results-guide/header.tex",
+        "sha256": "f570010a4e09faa21538e1956e552efd34d7d19ae1776ff6e2f735aa1ddd89d8"
+      },
+      {
+        "bytes": 8764,
+        "path": "audit/formal/latex/mathematical-results-guide/filter.lua",
+        "sha256": "e7512fe022e0fb4c768a3b40f1e90937c829b03bc630a5bba0fa8cb3b39087a8"
+      },
+      {
+        "bytes": 4234,
+        "path": "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex",
+        "sha256": "6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17"
+      },
+      {
+        "bytes": 7231,
+        "path": "audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex",
+        "sha256": "6294db9644cff4d7ded8e2a98415d72cb73fae4f3a55ad705607b39edc391ad5"
+      },
+      {
+        "bytes": 10773,
+        "path": "audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex",
+        "sha256": "a8eb78a26f554117fd5ff9661e617e0348e8e69fce3f63e3ff3c1321b51aa36a"
+      },
+      {
+        "bytes": 31867,
+        "path": "scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py",
+        "sha256": "73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6"
+      },
+      {
+        "bytes": 8446,
+        "path": "scripts/check-mathematical-results-guide-diagnostics.py",
+        "sha256": "b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6"
+      },
+      {
+        "bytes": 18943,
+        "path": "audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json",
+        "sha256": "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939"
+      },
+      {
+        "bytes": 18946,
+        "path": "audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json",
+        "sha256": "26ba5c4f6f305fc2d66d52cf19188b18d834a29b2584cbdf28f2d91693f6eda4"
+      },
+      {
+        "bytes": 2237,
+        "path": "audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt",
+        "sha256": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180"
+      },
+      {
+        "bytes": 10199,
+        "path": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
+        "sha256": "eaf238a17595c6e63410c1358bfa8c4d57d876ed42176ebfd9dc1664b49b3316"
+      },
+      {
+        "bytes": 30968,
+        "path": "scripts/check-mathematical-results-guide-figure-assets.py",
+        "sha256": "93aa3e199ba9a27d1b0f4708cd568cd464f21f8a9332be8a60678c92feed19fd"
+      },
+      {
+        "bytes": 12028,
+        "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
+        "sha256": "9918831ac46a02111b4f8116f9be97cc30e0661eb2d61d2c0d148ed064a104f8"
+      },
+      {
+        "bytes": 44186,
+        "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
+        "sha256": "8c45cc8c490db81f84084054549a7654a272abcdaecd897cf7fc80a0439d6d6a"
+      },
+      {
+        "bytes": 8140,
+        "path": "THIRD_PARTY_NOTICES.md",
+        "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7"
+      },
+      {
+        "bytes": 4529,
+        "path": "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+        "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9"
+      },
+      {
+        "bytes": 1377,
+        "path": "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+        "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050"
+      },
+      {
+        "bytes": 52635,
+        "path": "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt",
+        "sha256": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae"
+      },
+      {
+        "bytes": 11115,
+        "path": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+        "sha256": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
+      },
+      {
+        "bytes": 5064,
+        "path": "scripts/check-mathematical-results-guide-font-roster.py",
+        "sha256": "39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8c849135d8"
+      },
+      {
+        "bytes": 10320,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg",
+        "sha256": "e79ef4f3290f094efc1f786977800f4d4bd8a101760f57ed528c988d6d621042"
+      },
+      {
+        "bytes": 82732,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf",
+        "sha256": "7d873332c3eb890d35457cd66d3dea9574d164d90826c6911e77019d9490dc61"
+      },
+      {
+        "bytes": 12333,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
+        "sha256": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7"
+      },
+      {
+        "bytes": 90737,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
+        "sha256": "154ffaa4342fb85096e7d585a59fc81c565d7205a128902d7ede141541617acc"
+      },
+      {
+        "bytes": 8938,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
+        "sha256": "cac0aca79ed5c2268dbeef4b886e45cb7c4a67dc44d48b0b2daeeaa74a6e17ac"
+      },
+      {
+        "bytes": 84999,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
+        "sha256": "bdd7694af0170f65367098d7feb7e316fd6c1e68d673fd6a433453b9908281ed"
+      },
+      {
+        "bytes": 5368,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+        "sha256": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a"
+      },
+      {
+        "bytes": 77858,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf",
+        "sha256": "6cfa13f06f20b6240abb3b28e4aca60611b410fa88c9eb7a0074f2985bf1aa02"
+      },
+      {
+        "bytes": 5143,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+        "sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061"
+      },
+      {
+        "bytes": 29172,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf",
+        "sha256": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d"
+      },
+      {
+        "bytes": 44208,
+        "path": "scripts/build-mathematical-results-guide-pdf.sh",
+        "sha256": "aebff0b1420780f2fff99bb976dd31df2fba83a515ba388013b5bbc09b34d42f"
+      },
+      {
+        "bytes": 88009,
+        "path": "README.md",
+        "sha256": "e550d4df6b1756a9aff7951b5fe85bca293dc54f59f7f8e09b74d7c40e9fdac4"
+      }
+    ],
+    "source_manifest_sha256": "84324b0be168a4cfa37cc3769a03d23432cd1dc525941f6f8a57b8ec335df999",
+    "source_tool_and_font_before_after_equal": true
+  },
+  "status": "local_final_production_builder_completed_hosted_replay_pending",
+  "superseded_uncommitted_supplement_sha256": "01dc1a4ad306e982312c947d99c2ff2fda0ced8012c547f674ee37e232e3903e"
+}

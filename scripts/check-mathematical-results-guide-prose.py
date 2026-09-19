@@ -192,15 +192,15 @@ COMMON_RADIUS_BRIDGE_SENTINELS = (
 # This source-specific census prevents a parser change from silently shrinking the
 # checked surface. It supplements the limits above; it never replaces them.
 EXPECTED_CENSUS = {
-    "direct_paragraphs": 159,
-    "direct_sentences": 496,
+    "direct_paragraphs": 192,
+    "direct_sentences": 629,
     "list_items": 129,
     "list_sentences": 182,
-    "headings": 23,
-    "tables": 4,
-    "table_cells": 90,
-    "display_math": 28,
-    "fenced_code": 0,
+    "headings": 31,
+    "tables": 5,
+    "table_cells": 111,
+    "display_math": 37,
+    "fenced_code": 1,
     "media": 2,
 }
 

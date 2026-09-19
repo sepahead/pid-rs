@@ -6,7 +6,12 @@ BUILDER="$ROOT/scripts/build-mathematical-results-guide-pdf.sh"
 TAGPDF_OPENACTION_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 HGENERIC_URI_CONTENTS_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex"
 L3PDFFILE_FILESPEC_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex"
-PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
+PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
+DIAGNOSTIC_CHECK="$ROOT/scripts/check-mathematical-results-guide-diagnostics.py"
+CANONICAL_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
+LINUX_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"
+RAW_TEX_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input.tex"
+RAW_TEX_FIXTURE_SHA256=d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee
 PANDOC_TEMPLATE_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
 FIGURE_ASSET_MANIFEST="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
 FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
@@ -32,6 +37,7 @@ REAL_CP="$(command -v cp)"
 REAL_CMP="$(command -v cmp)"
 for source in "$BUILDER" "$TAGPDF_OPENACTION_COMPAT" "$HGENERIC_URI_CONTENTS_COMPAT" \
     "$L3PDFFILE_FILESPEC_COMPAT" "$PANDOC_TEX_NORMALIZER" "$PANDOC_TEMPLATE_LICENSE" \
+    "$DIAGNOSTIC_CHECK" "$CANONICAL_DIAGNOSTICS" "$LINUX_DIAGNOSTICS" "$RAW_TEX_FIXTURE" \
     "$FIGURE_ASSET_MANIFEST" "$FIGURE_ASSET_CHECK" \
     "$OPEN_FONT_REGENERATION" "$OPEN_FONT_REGENERATOR" "$THIRD_PARTY_NOTICE" \
     "$SOURCE_SANS_LICENSE" "$GUST_FONT_LICENSE" "$LATIN_MODERN_MANIFEST" \
@@ -104,7 +110,10 @@ cp "$HGENERIC_URI_CONTENTS_COMPAT" \
 cp "$L3PDFFILE_FILESPEC_COMPAT" \
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex"
 cp "$PANDOC_TEX_NORMALIZER" \
-  "$FIXTURE_REPO/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
+  "$FIXTURE_REPO/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
+cp "$DIAGNOSTIC_CHECK" "$FIXTURE_REPO/scripts/check-mathematical-results-guide-diagnostics.py"
+cp "$CANONICAL_DIAGNOSTICS" "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
+cp "$LINUX_DIAGNOSTICS" "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"
 cp "$PANDOC_TEMPLATE_LICENSE" \
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
 cp "$FIGURE_ASSET_MANIFEST" \
@@ -174,7 +183,10 @@ required_sources=(
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex"
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex"
-  "$FIXTURE_REPO/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
+  "$FIXTURE_REPO/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
+  "$FIXTURE_REPO/scripts/check-mathematical-results-guide-diagnostics.py"
+  "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
+  "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
   "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
   "$FIXTURE_REPO/scripts/check-mathematical-results-guide-figure-assets.py"
@@ -317,7 +329,7 @@ FIXTURE_HEADER="$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/head
 FIXTURE_COMPAT="$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex"
 FIXTURE_URI_COMPAT="$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex"
 FIXTURE_FILESPEC_COMPAT="$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex"
-FIXTURE_PANDOC_TEX_NORMALIZER="$FIXTURE_REPO/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
+FIXTURE_PANDOC_TEX_NORMALIZER="$FIXTURE_REPO/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
 FIXTURE_PANDOC_TEMPLATE_LICENSE="$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
 FIXTURE_FIGURE_MANIFEST="$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
 FIXTURE_FIGURE_CHECK="$FIXTURE_REPO/scripts/check-mathematical-results-guide-figure-assets.py"
@@ -718,10 +730,21 @@ expect_fast_failure \
   "$TEST_ROOT/exact-legacy-writer.pdf" \
   "exact mode requires pandoc 3.10.2"
 expect_argument_failure \
-  "cross mode rejects an unauthenticated legacy executable" \
-  "Pandoc 3.1.3 executable custody changed" \
+  "cross mode rejects the unsupported legacy writer" \
+  "v4 requires pandoc 3.10.2" \
   --cross-toolchain "$TEST_ROOT/cross-unauthenticated-legacy-writer.pdf"
 write_preflight_pandoc
+
+for diagnostic_source in \
+    "$FIXTURE_REPO/scripts/check-mathematical-results-guide-diagnostics.py" \
+    "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json" \
+    "$FIXTURE_REPO/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"; do
+  cp "$diagnostic_source" "$TEST_ROOT/diagnostic-source-before"
+  printf '\n' >>"$diagnostic_source"
+  expect_mutated_source_failure "diagnostic policy digest drift" "diagnostic policy digest changed"
+  cp "$TEST_ROOT/diagnostic-source-before" "$diagnostic_source"
+  assert_sources_unchanged
+done
 
 rm -f -- "$MARKER"
 SAFE_OUTPUT="$TEST_ROOT/safe-output.pdf"
@@ -764,94 +787,70 @@ PAIR_RAW_TEX="$TEST_ROOT/pair-canonical-pandoc.raw.tex"
 cp "$CANONICAL_GUIDE" "$PAIR_CONTROL"
 cp "$CANONICAL_GUIDE" "$PAIR_SHARED"
 printf '%s\n' 'fixture font bytes' >"$PAIR_FONT"
-python3 -I -S -B - "$PANDOC_TEX_NORMALIZER" "$PAIR_RAW_TEX" <<'PY'
-from __future__ import annotations
-
-import ast
-import pathlib
+# The full observed v4 TeX is required: diagnostics bind its normalized bytes.
+if ! printf '%s  %s\n' "$RAW_TEX_FIXTURE_SHA256" "$RAW_TEX_FIXTURE" | shasum -a 256 --check --status; then
+  echo "Mathematical results guide builder self-test failed: raw TeX fixture digest changed" >&2
+  exit 1
+fi
+cp "$RAW_TEX_FIXTURE" "$PAIR_RAW_TEX"
+PAIR_LOG="$TEST_ROOT/pair-canonical-diagnostics.log"
+PAIR_RENDER_STATE="$TEST_ROOT/write-render-state.py"
+python3 -I -S -B - "$CANONICAL_DIAGNOSTICS" "$PAIR_LOG" <<'PYLOG'
+import hashlib
+import json
+from pathlib import Path
 import sys
-
-
-normalizer, output = map(pathlib.Path, sys.argv[1:])
-required = {
-    "EXPECTED_HEADING_IDS",
-    "TABLE_WRAPPER",
-    "LONGTABLE_BEGIN",
-    "LONGTABLE_END",
-    "CANONICAL_TABLE_PREAMBLE",
-    "LONGTABLE_SUPPORT_PROJECTION",
-    "CANONICAL_IMAGE_PREAMBLE",
-    "CANONICAL_CROSSWALK",
-    "CROSSWALK_FRAME_PREFIX",
-    "CROSSWALK_FRAME_SUFFIX",
-    "DOCUMENT_BEGIN",
-    "DOCUMENT_END",
-    "TOP_LEVEL_HEADING_IDS",
-}
-tree = ast.parse(normalizer.read_text(encoding="utf-8"), filename=str(normalizer))
-values: dict[str, object] = {}
-for node in tree.body:
-    if not isinstance(node, ast.Assign) or len(node.targets) != 1:
-        continue
-    target = node.targets[0]
-    if not isinstance(target, ast.Name) or target.id not in required:
-        continue
-    if (
-        isinstance(node.value, ast.Call)
-        and isinstance(node.value.func, ast.Name)
-        and node.value.func.id == "frozenset"
-        and len(node.value.args) == 1
-    ):
-        values[target.id] = frozenset(ast.literal_eval(node.value.args[0]))
-    else:
-        values[target.id] = ast.literal_eval(node.value)
-if set(values) != required:
-    raise SystemExit(f"completed builder fixture lost normalizer constants: {sorted(required - set(values))}")
-
-ids = values["EXPECTED_HEADING_IDS"]
-top_level = values["TOP_LEVEL_HEADING_IDS"]
-parts = [
-    "\\documentclass{article}\n",
-    values["CANONICAL_TABLE_PREAMBLE"],
-    values["LONGTABLE_SUPPORT_PROJECTION"],
-    values["CANONICAL_IMAGE_PREAMBLE"],
-    "\\input{mathematical-results-guide-tagpdf-openaction-compat.tex}\n",
-    "\\input{mathematical-results-guide-l3pdffile-filespec-f-compat.tex}\n",
-    "\\AtBeginDocument{\\input{mathematical-results-guide-hgeneric-uri-contents-compat.tex}}\n",
-    "\\hypersetup{linkcolor=PidTeal}\n",
-    values["DOCUMENT_BEGIN"],
-]
-for index, heading_id in enumerate(ids, start=1):
-    command = "section" if heading_id in top_level else "subsection"
-    parts.append(f"\\{command}{{Synthetic heading {index:02d}}}\\label{{{heading_id}}}\n")
-parts.extend(
-    (
-        "Five distinct lanes\n",
-        "Thus, SxPID3 has 18 net atoms.\n",
-        "The audit evaluates 2,197,584 products per route.\n",
-        "repository/publication integration remains\n",
-    )
-)
-for index in range(1, 5):
-    parts.extend(
-        (
-            values["TABLE_WRAPPER"],
-            values["LONGTABLE_BEGIN"],
-            f"synthetic-{index} & value-{index} \\\\\n",
-            values["LONGTABLE_END"],
-            "}\n",
-        )
-    )
-parts.extend(
-    (
-        values["CROSSWALK_FRAME_PREFIX"],
-        values["CANONICAL_CROSSWALK"],
-        values["CROSSWALK_FRAME_SUFFIX"],
-        values["DOCUMENT_END"],
-    )
-)
-output.write_text("".join(parts), encoding="utf-8", newline="\n")
-PY
+manifest, output = map(Path, sys.argv[1:])
+raw = manifest.read_bytes()
+if hashlib.sha256(raw).hexdigest() != "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939":
+    raise SystemExit("canonical diagnostic fixture digest changed")
+messages = [item["message"] for item in json.loads(raw)["diagnostics"]]
+if len(messages) != 48:
+    raise SystemExit("canonical diagnostic fixture roster changed")
+output.write_text("This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  fixture producer\n\n" + "\n\n".join(messages) + "\n\n", encoding="utf-8")
+PYLOG
+cat >"$PAIR_RENDER_STATE" <<'PYSTATE'
+from pathlib import Path
+import sys
+build, log_fixture = map(Path, sys.argv[1:3])
+mode = sys.argv[3]
+counter = build / "fixture-pass-count.txt"
+number = int(counter.read_text()) + 1 if counter.exists() else 1
+counter.write_text(str(number))
+if number not in (1, 2, 3, 4):
+    raise SystemExit("fake producer exceeded four passes")
+stem = build / "mathematical-results-guide"
+for suffix in ("aux", "toc"):
+    value = "stable fixture " + suffix + "\n"
+    if number == 4 and mode == suffix + "-unstable":
+        value += "changed on final pass\n"
+    stem.with_suffix("." + suffix).write_text(value)
+log = log_fixture.read_text()
+if mode == "diagnostic-unknown":
+    log += "Package invented Warning: unexpected diagnostic.\n\n"
+elif mode == "diagnostic-hbox":
+    log += "Overfull \\hbox (1.0pt too wide) in paragraph at lines 1--2\n"
+elif mode == "diagnostic-missing":
+    first = log.index("Package microtype Warning:")
+    stop = log.index("\n\n", first)
+    log = log[:first] + log[stop + 2:]
+elif mode == "diagnostic-producer":
+    log = log.replace("Version 1.18.0", "Version 0.0.0", 1)
+elif mode == "diagnostic-tex-drift" and number == 4:
+    tex = build.parent / "repository/mathematical-results-guide.tex"
+    tex.write_bytes(tex.read_bytes() + b"\n% injected TeX drift\n")
+elif mode == "diagnostic-helper-drift" and number == 4:
+    helper = build.parent / "repository/scripts/check-mathematical-results-guide-diagnostics.py"
+    helper.write_bytes(helper.read_bytes() + b"\n# injected helper drift\n")
+log_path = stem.with_suffix(".log")
+log_path.write_text(log)
+if mode == "missing-log":
+    log_path.unlink()
+elif mode == "symbolic-aux":
+    aux = stem.with_suffix(".aux")
+    aux.unlink()
+    aux.symlink_to(log_fixture)
+PYSTATE
 python3 -I -B - "$CANONICAL_GUIDE" "$PAIR_ID_VARIANT" \
     "$PAIR_OUTSIDE_VARIANT" "$PAIR_OVERSIZED" <<'PY'
 from __future__ import annotations
@@ -923,7 +922,7 @@ printf '%s\n' '#!/usr/bin/env bash' 'exit 0' >"$FAKE_BIN/fc-cache"
     '  raw-missing-uri-wiring) sed "/^\\\\AtBeginDocument{\\\\input{mathematical-results-guide-hgeneric-uri-contents-compat[.]tex}}$/d" "$output" >"$output.tmp"; mv "$output.tmp" "$output" ;;' \
     '  raw-duplicate-uri-wiring) printf "%s\n" "\\AtBeginDocument{\\input{mathematical-results-guide-hgeneric-uri-contents-compat.tex}}" >>"$output" ;;' \
     '  raw-empty-toccolor) sed "s/^\\\\hypersetup{linkcolor=PidTeal}$/\\\\hypersetup{linkcolor=}/" "$output" >"$output.tmp"; mv "$output.tmp" "$output" ;;' \
-    '  raw-missing-source-sentinel) sed "/^The audit evaluates 2,197,584 products per route[.]$/d" "$output" >"$output.tmp"; mv "$output.tmp" "$output" ;;' \
+    '  raw-missing-source-sentinel) sed "s/The audit evaluates 2,197,584 products per route[.]//" "$output" >"$output.tmp"; mv "$output.tmp" "$output" ;;' \
     'esac'
 } >"$FAKE_BIN/pandoc"
 {
@@ -935,6 +934,8 @@ printf '%s\n' '#!/usr/bin/env bash' 'exit 0' >"$FAKE_BIN/fc-cache"
   printf 'PAIR_OVERSIZED=%q\n' "$PAIR_OVERSIZED"
   printf 'PAIR_SHARED=%q\n' "$PAIR_SHARED"
   printf 'PAIR_EXTRA_LINK=%q\n' "$PAIR_EXTRA_LINK"
+  printf 'PAIR_LOG=%q\n' "$PAIR_LOG"
+  printf 'PAIR_RENDER_STATE=%q\n' "$PAIR_RENDER_STATE"
   printf 'REAL_CP=%q\n' "$REAL_CP"
   printf '%s\n' \
     'mode="$(<"$PAIR_MODE_FILE")"' \
@@ -964,10 +965,10 @@ printf '%s\n' '#!/usr/bin/env bash' 'exit 0' >"$FAKE_BIN/fc-cache"
     '    if [[ "$side" == first ]]; then rm -f "$PAIR_EXTRA_LINK"; ln "$output" "$PAIR_EXTRA_LINK"; fi ;;' \
     '  *) "$REAL_CP" "$artifact" "$output" ;;' \
     'esac' \
-    'printf "%s\n" "clean fixture log" >"$output_directory/mathematical-results-guide.log"'
+    'python3 -I -S -B "$PAIR_RENDER_STATE" "$output_directory" "$PAIR_LOG" "$mode"'
 } >"$FAKE_BIN/lualatex"
 printf '%s\n' '#!/usr/bin/env bash' \
-  'printf "%s\n" "Pages:          16" "Page size:      595.276 x 841.890 pts (A4)" "Tagged:         yes"' \
+  'printf "%s\n" "Pages:          28" "Page size:      595.276 x 841.890 pts (A4)" "Tagged:         yes"' \
   >"$FAKE_BIN/pdfinfo"
 {
   printf '%s\n' '#!/usr/bin/env bash' 'set -euo pipefail'
@@ -1010,7 +1011,7 @@ chmod +x "$FAKE_BIN/kpsewhich" "$FAKE_BIN/fc-cache" "$FAKE_BIN/pandoc" \
 CANONICAL_GUIDE_SHA256="$(shasum -a 256 "$CANONICAL_GUIDE" | awk '{print $1}')"
 PAIR_BASELINE_MANIFEST="$(
   shasum -a 256 "$PAIR_CONTROL" "$PAIR_ID_VARIANT" "$PAIR_OUTSIDE_VARIANT" \
-    "$PAIR_OVERSIZED" "$PAIR_SHARED" "$PAIR_FONT" "$PAIR_RAW_TEX"
+    "$PAIR_OVERSIZED" "$PAIR_SHARED" "$PAIR_FONT" "$PAIR_RAW_TEX" "$PAIR_LOG" "$PAIR_RENDER_STATE"
 )"
 assert_completed_fixture_custody() {
   if ! cmp -s "$BUILDER" "$FIXTURE_BUILDER"; then
@@ -1024,7 +1025,7 @@ assert_completed_fixture_custody() {
   fi
   if [[ "$(
     shasum -a 256 "$PAIR_CONTROL" "$PAIR_ID_VARIANT" "$PAIR_OUTSIDE_VARIANT" \
-      "$PAIR_OVERSIZED" "$PAIR_SHARED" "$PAIR_FONT" "$PAIR_RAW_TEX"
+      "$PAIR_OVERSIZED" "$PAIR_SHARED" "$PAIR_FONT" "$PAIR_RAW_TEX" "$PAIR_LOG" "$PAIR_RENDER_STATE"
   )" != "$PAIR_BASELINE_MANIFEST" ]]; then
     echo "Mathematical results guide builder self-test failed: completed harness fixture bytes changed" >&2
     exit 1
@@ -1120,6 +1121,16 @@ run_completed_builder fail "third-path hard link" --exact first-third-link \
   "repeated-build output custody check failed"
 run_completed_builder fail "oversized build outputs" --exact oversized \
   "repeated-build output custody check failed"
+run_completed_builder fail "fourth-pass aux drift" --exact aux-unstable "final aux state did not stabilize"
+run_completed_builder fail "fourth-pass toc drift" --exact toc-unstable "final toc state did not stabilize"
+run_completed_builder fail "missing per-pass log" --exact missing-log "invalid pass snapshot path"
+run_completed_builder fail "symbolic per-pass aux" --exact symbolic-aux "invalid pass snapshot path"
+run_completed_builder fail "unknown named-package warning" --exact diagnostic-unknown "unreviewed diagnostics or TeX"
+run_completed_builder fail "literal TeX hbox diagnostic" --exact diagnostic-hbox "unreviewed diagnostics or TeX"
+run_completed_builder fail "missing admitted warning" --exact diagnostic-missing "unreviewed diagnostics or TeX"
+run_completed_builder fail "unrecognized producer" --exact diagnostic-producer "unreviewed diagnostic producer"
+run_completed_builder fail "normalized TeX changed during rendering" --exact diagnostic-tex-drift "unreviewed diagnostics or TeX"
+run_completed_builder fail "staged diagnostic helper changed" --exact diagnostic-helper-drift "staged diagnostic checker changed"
 assert_completed_fixture_custody
 
 cp "$FIXTURE_BUILDER" "$TEST_ROOT/builder-before-staged-normalizer-race.sh"

@@ -768,6 +768,9 @@ python3 -I -B scripts/check-mathematical-results-guide-prose.py  # selected edit
 python3 -O -I -B scripts/check-mathematical-results-guide-prose.py
 python3 -I -B scripts/check-mathematical-results-guide-prose-self-test.py  # 59 hostile/control cases
 python3 -O -I -B scripts/check-mathematical-results-guide-prose-self-test.py
+python3 -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-v4-self-test.py  # 172 canonical projection/custody controls
+python3 -O -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-v4-self-test.py
+# Historical Pandoc projection/compatibility self-test.
 python3 -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py  # 4 positive + 214 rejected subprocesses
 python3 -O -I -S -B scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py
 # historical 16-page v1 hosted raw profile: 2 controls + 67 hostiles = 69
@@ -782,7 +785,7 @@ python3 -O -I -B scripts/check-mathematical-results-guide-pandoc-portability-rec
 # producer-profile dispatch; runtime reports the current inventory
 python3 -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
-scripts/check-mathematical-results-guide-builder-self-test.sh  # 69 source/staging/mode/comparison/output cases
+scripts/check-mathematical-results-guide-builder-self-test.sh  # 82 source/staging/mode/diagnostic/comparison/output cases
 scripts/check-mathematical-results-guide-tagpdf-compat-self-test.sh
 scripts/check-mathematical-results-guide-uri-contents-compat-self-test.sh  # 6 controls + 14 hostiles
 scripts/check-mathematical-results-guide-filespec-compat-self-test.sh  # 3 controls + 14 hostiles
@@ -800,17 +803,17 @@ python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py  # 3 controls + 56 hostiles
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py
-python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
-python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v4-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v4-self-test.py
 # Retained 23-page v2 replay only; the fixture argument must be absolute.
 HOSTED_GUIDE_V2_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
 python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
-scripts/check-mathematical-results-guide-pdf.sh --exact  # current 24-page v3; raw repeated-build and rebuilt/committed bytes
-# The selected Ubuntu 24.04/x86 route rebuilds current v3 against its reviewed raw fixture.
-# Exact fixture bytes or the strict trailer-ID relation are required, with strict v3 structure.
-# The v2 fixture came from translated local x86 execution and carries no hosted-execution credit.
-# Retained 16-page v1 packages are also historical replay evidence only.
+scripts/check-mathematical-results-guide-pdf.sh --exact  # current 28-page v4; raw repeated-build and rebuilt/committed bytes
+# The selected Ubuntu 24.04/x86 route rebuilds current v4 against its reviewed raw fixture.
+# Exact fixture bytes or the strict trailer-ID relation are required, with strict v4 structure.
+# Its translated local Linux capture is separate from actual hosted execution.
+# Retained v1/v2/v3 profiles and capture receipts remain historical.
 scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
 scripts/check-numerical-assurance-pdf.sh --exact  # represented-binary64 assurance, 23 pages
 scripts/check-numerical-assurance-pdf.sh --cross-toolchain

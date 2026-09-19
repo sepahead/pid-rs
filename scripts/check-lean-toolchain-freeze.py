@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "4472c4a56562e142922215d473cbcd60dfc171045fe884c32de56ace098e1f78",
-    "CHANGELOG.md": "6772137db3c05fea8c1fc8620fafef9e1500a8abfdb279a76d67f5821896de32",
+    "AGENTS.md": "c8af2e57379d9ff39c8749683054b84d526258d2e24c779b7ae87ea0d595bab1",
+    "CHANGELOG.md": "3834f87267725838e785bf3a64aaccddfb98f4a82cb444aec0bbb5036b9c3366",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -699,12 +699,12 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
         "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
     ),
-    "scripts/README.md": "a6cba0ad3ca7ce14fdb68712320727d4361226c96bef8e09b6b673e6107deb97",
+    "scripts/README.md": "dbde2ce48e86b311278db38f6c288ce3b4d8ce58e3d436183c9ff308983aa5e1",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
         "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "95d76d5b46378215b4ce99e3b0dd965c6b50a5d65ba77c2130bebefa74c6ea92"
+        "c65cb83ac3dbcba74600af919d0337c66f21cb85a9d78930acc4965d77ca3e59"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -713,7 +713,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "322c2a7b879b630e1b74d81eb2959cfa7ceced55a7c1520a290b6046da44b3bd"
+        "80f2547fde4688fc10ce9298f34f463a0da5f0191a8b91aa5d38e3aa8d57236c"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
         "ab1eb022cae6d2a10ebebcab26693afc597bf747d8f6f0490e3cbf8aa8f7e9ac"

@@ -1,0 +1,404 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "const": {
+    "canonical_comparison": {
+      "canonical": {
+        "bytes": 818425,
+        "path": "output/pdf/mathematical-results-guide.pdf",
+        "sha256": "434fae95216282dc08840a1d492076d5c648d64b01bc1cd939884555b0a615a4"
+      },
+      "canonical_and_native_navigation_reports_equal": true,
+      "canonical_and_native_structure_digests_equal": true,
+      "canonical_and_native_target_reports_equal": true,
+      "canonical_strict_result_scope": "Canonical-source measurement and its own full strict controls are separate evidence. This receipt records six Linux raw/strict checks against the exact final strict checker.",
+      "current_v4_structure_passed_normal_and_optimized_on_linux_pdf": true,
+      "new_text_font_table_or_raster_comparison_performed": false,
+      "raw_bytes_equal": false,
+      "raw_metadata_normalization_permitted": false,
+      "strict_trailer_id_nonapplicability_reason": "The canonical PDF is 818425 bytes and this Linux fixture is 818418 bytes; the raw-ID relation is not used between these producers.",
+      "strict_trailer_id_relation_applies": false
+    },
+    "captured_at_utc": "2026-09-19T22:26:04.768740+00:00",
+    "custody_boundaries": [
+      "Historical v1/v2/v3 public profiles remain unchanged. Earlier unpublished v4 source, receipts, executions and failures remain preserved privately; this successor does not relabel them.",
+      "A local container image and its documented font-supply context are not registry authentication, hosted environment identity or supply-chain attestation.",
+      "No metadata, numeric, object-order, compression, text, navigation, structure or font normalization is admitted.",
+      "No internal pass files or duplicate emitted PDFs are invented after production cleanup.",
+      "Raw fixture identity, canonical strict structure and same-toolchain exact mode remain separate predicates.",
+      "No mathematical, scientific, calibration, application, PDF/UA, generic viewer-safety or hosted-execution credit is inferred."
+    ],
+    "hosted_replay": {
+      "artifact_id": null,
+      "execution_credit": "none",
+      "job_id": null,
+      "next_step": "Retain a separate actual hosted Ubuntu cross-gate run for the exact adopted source and output; this local capture does not supply that event.",
+      "status": "pending",
+      "workflow_run_id": null
+    },
+    "producer_observation": {
+      "all_tool_records_before_after_byte_equal": true,
+      "captured_producer_reader_route": [
+        "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+        "/opt/pdf-venv/bin/python3",
+        "6.15.0",
+        "/opt/pdf-venv/lib/python3.12/site-packages/pypdf/__init__.py"
+      ],
+      "diagnostic_boundary": "The successful exact bound production builder includes its declared diagnostic checks. Internal TeX, logs and pass files were removed by production cleanup, so no separate raw-warning-block observation is asserted by this receipt. No warning-free claim.",
+      "execution_class": "Translated local Linux container; not GitHub-hosted execution or native x86 hardware evidence.",
+      "font_records_before_after_byte_equal": true,
+      "observed_binary_and_format_records": [
+        {
+          "bytes": 163344464,
+          "mode": "0o755",
+          "nlink": 1,
+          "path": "/opt/pandoc-3.10.2/bin/pandoc",
+          "sha256": "867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce",
+          "uid": 0
+        },
+        {
+          "bytes": 7033000,
+          "mode": "0o755",
+          "nlink": 1,
+          "path": "/usr/bin/luahbtex",
+          "sha256": "cc74da0d993e503321f9dd65b8cc5ddf103f2620c4bdbc41798841f253c46e02",
+          "uid": 0
+        },
+        {
+          "bytes": 27960,
+          "mode": "0o755",
+          "nlink": 1,
+          "path": "/usr/bin/kpsewhich",
+          "sha256": "e3f241dab416169b9a7c8e0ef719a3cc8568bf51256c7e354811b3963254fcda",
+          "uid": 0
+        },
+        {
+          "bytes": 12231665,
+          "mode": "0o644",
+          "nlink": 1,
+          "path": "/var/lib/texmf/web2c/luahbtex/lualatex.fmt",
+          "sha256": "40d6ce24b45663ff282b2d6586416b11831ddcc6b44528a272fe6f8d2cb7c8c9",
+          "uid": 0
+        }
+      ],
+      "observed_package_versions": {
+        "lmodern": "2.005-1",
+        "poppler-utils": "24.02.0-1ubuntu9.9",
+        "texlive-fonts-recommended": "2023.20240207-1",
+        "texlive-latex-extra": "2023.20240207-1",
+        "texlive-luatex": "2023.20240207-1"
+      },
+      "pandoc_version": "pandoc 3.10.2",
+      "producer_records_before_after_byte_equal": true,
+      "profile_check_parser_version": "6.16.1",
+      "renderer_version": "This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)",
+      "retained_image_font_supply_context": {
+        "description": "The unchanged locally assembled image retains its documented omission of texlive-fonts-extra and three Source Sans Pro OTF face substitutions. This is retained image context, not a fresh complete package-filesystem or font-distribution verification. Hosted CI remains a separate decisive replay.",
+        "historical_v2_receipt_path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v2.json",
+        "historical_v2_receipt_sha256": "56e599a1f879418c8d2cce85f61b0a51cb1210f915462ff4aa6f0af8b2334be8"
+      }
+    },
+    "profile_id": "hosted-pandoc-3.10.2-ubuntu-24.04-raw-v4-bound",
+    "prospective_code_binding": {
+      "acceptance_relation": "Candidate equals retained fixture bytes or differs only in the separately pinned strict duplicated final-trailer ID payloads; both complete current-v4 strict reports enforce canonical navigation and structure manifest digests.",
+      "actual_native_commands": [
+        {
+          "elapsed_seconds": 0.5949842911213636,
+          "label": "linux-strict-normal",
+          "returncode": 0,
+          "started_utc": "2026-09-19T22:30:25.450791+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "178d043146d4d2224438df2d5f71ac471351b5d1bb0fddc146b1be8eb092e15e"
+        },
+        {
+          "elapsed_seconds": 0.588596458081156,
+          "label": "linux-strict-optimized",
+          "returncode": 0,
+          "started_utc": "2026-09-19T22:30:26.050986+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "178d043146d4d2224438df2d5f71ac471351b5d1bb0fddc146b1be8eb092e15e"
+        },
+        {
+          "elapsed_seconds": 1.0749589579645544,
+          "label": "raw-positive-normal",
+          "returncode": 0,
+          "started_utc": "2026-09-19T22:30:26.644668+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "1ef63dac1eaa728920e79104b68ed5e499fdc0b17aa03bb70c35ac20be60296f"
+        },
+        {
+          "elapsed_seconds": 1.0811154588591307,
+          "label": "raw-positive-optimized",
+          "returncode": 0,
+          "started_utc": "2026-09-19T22:30:27.724834+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "1ef63dac1eaa728920e79104b68ed5e499fdc0b17aa03bb70c35ac20be60296f"
+        },
+        {
+          "elapsed_seconds": 12.10700579197146,
+          "label": "raw-self-test-normal",
+          "returncode": 0,
+          "started_utc": "2026-09-19T22:30:28.811840+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "5a16d7a653ed4d4146738b91921b2c34121e6fc908884b3e9c672bce1f492a1e"
+        },
+        {
+          "elapsed_seconds": 12.139845083002001,
+          "label": "raw-self-test-optimized",
+          "returncode": 0,
+          "started_utc": "2026-09-19T22:30:40.925630+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "5a16d7a653ed4d4146738b91921b2c34121e6fc908884b3e9c672bce1f492a1e"
+        }
+      ],
+      "native_inputs_before_after_equal": true,
+      "new_source_execution_status_at_capture": "Six local checker commands passed in normal and optimized isolated Python; each raw self-test retained all 2 controls and 68 hostiles. No hosted credit.",
+      "no_native_survivors_observed": true,
+      "raw_checker": {
+        "bytes": 37424,
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4.py",
+        "sha256": "7791914449814bf203635ff8734055df19301c72ffcf283a14ce4adc991d80bd"
+      },
+      "raw_self_test": {
+        "bytes": 59869,
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4-self-test.py",
+        "sha256": "164ba0007b9947e41958623b1baa0a5975d2a865b597a7a9a438db496a92e9c6"
+      },
+      "same_toolchain_boundary": "Exact mode retains its separate raw-byte comparison and must not read or select this cross-profile fixture, receipt or relation.",
+      "self_test_declared_controls": 2,
+      "self_test_declared_hostiles": 68,
+      "self_test_declared_total": 70,
+      "structure_checker": {
+        "bytes": 86273,
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v4.py",
+        "sha256": "0d350c9d76733e287e3efa6e104a9c96446e5304707c73fd0b9ed67f61a87b47"
+      },
+      "unchanged_id_checker": {
+        "bytes": 11115,
+        "path": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+        "sha256": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
+      }
+    },
+    "repeatability_observations": {
+      "builder_declared_internal_isolated_builds": 2,
+      "evidence_kind": "production_final_output_with_internal_cleanup",
+      "exact_container_stopped_observed": true,
+      "final_capture_result_sha256": "64522a2452476e5d6faf70049d48e34648b281935b30b377b1833653ac3492b3",
+      "host_terminal_result_sha256": "1190f6149adec7679946a46289026e376a60f5815cea11e4f338dfca1e60554f",
+      "independent_internal_build_outputs_retained": false,
+      "independent_internal_pass_log_observation": false,
+      "inherited_outer_status_label_boundary": "Historical adapter labels containing two-build discovery do not establish retention of internal artifacts; the explicit production retention record controls that scope.",
+      "mode": "--cross-toolchain",
+      "outer_builder_invocations": 1,
+      "production_retention_record_sha256": "1bbf12b595461de5a4b5ec3985305b3ced21a88a4138f93ef5a5f7bc83361656",
+      "production_temporary_directory_empty_observed": true,
+      "repeatability_basis": "The bound production builder performs its own two-build byte/final-trailer-ID relation and four-pass aux/toc checks before emitting one final PDF. The retained success stream and exact builder source support that execution claim; this receipt does not claim independent observation of the removed internal PDFs or logs.",
+      "retained_emitted_outputs": 1,
+      "runs": [
+        {
+          "completed_at_utc": "2026-09-19T22:26:04.768740+00:00",
+          "output_bytes": 818418,
+          "output_sha256": "1b1ec340538111b479bbff4bc6f9c686e92ff14a8624a39b4e9e02b0d46a06ce",
+          "returncode": 0,
+          "started_at_utc": "2026-09-19T22:23:47.064845+00:00",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "370d6c22cc61610a44f0c27c07b574cd50bf4b69bd30f1ad08cede5c803584ed",
+          "timed_out": false
+        }
+      ]
+    },
+    "retained_fixture": {
+      "bytes": 818418,
+      "measurement_basis": "All current strict shape, type, link, MCID, active-content and both canonical digest predicates passed on the exact Linux output in normal and optimized Python.",
+      "navigation_payload_bytes": 73406,
+      "navigation_records": 285,
+      "navigation_sha256": "551efb7b3c498bee2a7694e969fc91cedb4522bbf8027594805f1896b5e3c5cf",
+      "pages": 28,
+      "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf",
+      "sha256": "1b1ec340538111b479bbff4bc6f9c686e92ff14a8624a39b4e9e02b0d46a06ce",
+      "structure_records": 2792,
+      "structure_sha256": "0e155300d1631f61c6090c5ef2a9fc7a8e67b7a470032eaf4759d9bfa682dc1c",
+      "target_payload_bytes": 5979,
+      "target_sha256": "181d7810ac7ac05597fe56de9c519fdf05f9c4c8bad778ec6fb6f6402ef2a444",
+      "targets": 75
+    },
+    "schema": "mathematical-results-guide-hosted-raw-profile-receipt-v4",
+    "scope": "Exact corrected 28-page local translated Linux production output, current canonical strict profile and bounded raw relation; hosted execution remains separate.",
+    "source_snapshot": {
+      "builder_source_closure": [
+        {
+          "bytes": 74009,
+          "path": "MATHEMATICAL_RESULTS_GUIDE.md",
+          "sha256": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b"
+        },
+        {
+          "bytes": 5627,
+          "path": "audit/formal/latex/mathematical-results-guide/header.tex",
+          "sha256": "f570010a4e09faa21538e1956e552efd34d7d19ae1776ff6e2f735aa1ddd89d8"
+        },
+        {
+          "bytes": 8764,
+          "path": "audit/formal/latex/mathematical-results-guide/filter.lua",
+          "sha256": "e7512fe022e0fb4c768a3b40f1e90937c829b03bc630a5bba0fa8cb3b39087a8"
+        },
+        {
+          "bytes": 4234,
+          "path": "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex",
+          "sha256": "6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17"
+        },
+        {
+          "bytes": 7231,
+          "path": "audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex",
+          "sha256": "6294db9644cff4d7ded8e2a98415d72cb73fae4f3a55ad705607b39edc391ad5"
+        },
+        {
+          "bytes": 10773,
+          "path": "audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex",
+          "sha256": "a8eb78a26f554117fd5ff9661e617e0348e8e69fce3f63e3ff3c1321b51aa36a"
+        },
+        {
+          "bytes": 31867,
+          "path": "scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py",
+          "sha256": "73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6"
+        },
+        {
+          "bytes": 8446,
+          "path": "scripts/check-mathematical-results-guide-diagnostics.py",
+          "sha256": "b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6"
+        },
+        {
+          "bytes": 18943,
+          "path": "audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json",
+          "sha256": "a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939"
+        },
+        {
+          "bytes": 18946,
+          "path": "audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json",
+          "sha256": "26ba5c4f6f305fc2d66d52cf19188b18d834a29b2584cbdf28f2d91693f6eda4"
+        },
+        {
+          "bytes": 2237,
+          "path": "audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt",
+          "sha256": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180"
+        },
+        {
+          "bytes": 10199,
+          "path": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
+          "sha256": "eaf238a17595c6e63410c1358bfa8c4d57d876ed42176ebfd9dc1664b49b3316"
+        },
+        {
+          "bytes": 30968,
+          "path": "scripts/check-mathematical-results-guide-figure-assets.py",
+          "sha256": "93aa3e199ba9a27d1b0f4708cd568cd464f21f8a9332be8a60678c92feed19fd"
+        },
+        {
+          "bytes": 12028,
+          "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
+          "sha256": "9918831ac46a02111b4f8116f9be97cc30e0661eb2d61d2c0d148ed064a104f8"
+        },
+        {
+          "bytes": 44186,
+          "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
+          "sha256": "8c45cc8c490db81f84084054549a7654a272abcdaecd897cf7fc80a0439d6d6a"
+        },
+        {
+          "bytes": 8140,
+          "path": "THIRD_PARTY_NOTICES.md",
+          "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7"
+        },
+        {
+          "bytes": 4529,
+          "path": "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+          "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9"
+        },
+        {
+          "bytes": 1377,
+          "path": "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+          "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050"
+        },
+        {
+          "bytes": 52635,
+          "path": "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt",
+          "sha256": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae"
+        },
+        {
+          "bytes": 11115,
+          "path": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+          "sha256": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
+        },
+        {
+          "bytes": 5064,
+          "path": "scripts/check-mathematical-results-guide-font-roster.py",
+          "sha256": "39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8c849135d8"
+        },
+        {
+          "bytes": 10320,
+          "path": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg",
+          "sha256": "e79ef4f3290f094efc1f786977800f4d4bd8a101760f57ed528c988d6d621042"
+        },
+        {
+          "bytes": 82732,
+          "path": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf",
+          "sha256": "7d873332c3eb890d35457cd66d3dea9574d164d90826c6911e77019d9490dc61"
+        },
+        {
+          "bytes": 12333,
+          "path": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
+          "sha256": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7"
+        },
+        {
+          "bytes": 90737,
+          "path": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
+          "sha256": "154ffaa4342fb85096e7d585a59fc81c565d7205a128902d7ede141541617acc"
+        },
+        {
+          "bytes": 8938,
+          "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
+          "sha256": "cac0aca79ed5c2268dbeef4b886e45cb7c4a67dc44d48b0b2daeeaa74a6e17ac"
+        },
+        {
+          "bytes": 84999,
+          "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
+          "sha256": "bdd7694af0170f65367098d7feb7e316fd6c1e68d673fd6a433453b9908281ed"
+        },
+        {
+          "bytes": 5368,
+          "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+          "sha256": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a"
+        },
+        {
+          "bytes": 77858,
+          "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf",
+          "sha256": "6cfa13f06f20b6240abb3b28e4aca60611b410fa88c9eb7a0074f2985bf1aa02"
+        },
+        {
+          "bytes": 5143,
+          "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+          "sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061"
+        },
+        {
+          "bytes": 29172,
+          "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf",
+          "sha256": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d"
+        },
+        {
+          "bytes": 44208,
+          "path": "scripts/build-mathematical-results-guide-pdf.sh",
+          "sha256": "aebff0b1420780f2fff99bb976dd31df2fba83a515ba388013b5bbc09b34d42f"
+        },
+        {
+          "bytes": 88009,
+          "path": "README.md",
+          "sha256": "e550d4df6b1756a9aff7951b5fe85bca293dc54f59f7f8e09b74d7c40e9fdac4"
+        }
+      ],
+      "frozen_package_manifest_sha256": "bc44a3cbc889e3d5fb3a2586c71a5489b1230b11fa65984ad029f62d50e47d2f",
+      "source_before_after_equal": true,
+      "source_kind": "Exact frozen corrected production source package executed by the captured builder; all 33 retained file bytes were independently joined to the source manifest.",
+      "source_manifest_sha256": "84324b0be168a4cfa37cc3769a03d23432cd1dc525941f6f8a57b8ec335df999"
+    },
+    "status": "translated_local_production_candidate_retained_hosted_replay_pending"
+  },
+  "description": "Closed receipt for one retained production output and current strict/raw controls. Internal pass artifacts were cleaned; hosted replay remains pending.",
+  "title": "Exact corrected 28-page results-guide translated Linux production receipt v4",
+  "type": "object"
+}

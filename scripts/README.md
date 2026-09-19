@@ -1950,8 +1950,10 @@ calibration, sensor-placement validity, or a real-time qualification.
 isolated Pandoc/LuaLaTeX pipeline. Default `--exact` mode requires two isolated builds to be
 byte-identical. Explicit `--cross-toolchain` mode first attempts raw equality. Only raw comparison
 status 1 can invoke the narrow trailer-ID projection; an operational comparison error is fatal.
-Both modes require warning-free A4 documents with a populated structure tree, embedded Unicode
-fonts, and unchanged canonical inputs. The guide embeds four handcrafted SVG derivatives. Its
+Both modes require A4 documents with a populated structure tree, embedded Unicode fonts,
+unchanged canonical inputs, and the exact reviewed diagnostic manifest. Unrecorded warnings,
+layout errors, missing glyphs, and unresolved references fail the build. The current manifest
+retains 46 tagpdf, one microtype, and one footnotehyper warning; it makes no PDF/UA claim. The guide embeds four handcrafted SVG derivatives. Its
 shared guide/SxPID3 publication manifest binds five source/derivative pairs; the Sx-only
 source-cylinder pair is staged for subset validation but is not embedded in the guide. The build
 imports exact tracked one-page
@@ -1961,20 +1963,22 @@ exact page boxes, CFF resource shapes, admitted open-font names, and the limits 
 The builder's cross mode is a low-level candidate-generation relation. Publication admission comes
 only from the outer guide gate's selected, digest-pinned profile and its independent artifact checks.
 
-`check-mathematical-results-guide-pdf.sh` keeps the same-toolchain route byte-strict. It applies the
-current v3 strict structure checker to both PDFs and then requires raw equality between the rebuilt
-and committed files. The exact branch neither requires nor reads a hosted or legacy cross-profile
-checker, receipt, or fixture. Explicit `--cross-toolchain` mode first captures and selects a closed
-producer tuple. The Pandoc 3.10.2/Ubuntu 24.04 route selects the current v3 raw profile. It binds
-one retained 748,561-byte, 24-page candidate at SHA-256
-`d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24`.
-Two outer builder invocations in one translated local Linux container emitted those same bytes;
-this is local candidate evidence, and actual GitHub-hosted replay remains a separate obligation.
-The retained v1, v2 and legacy profiles remain historical and do not admit the current guide.
+The current 28-page guide adds six companion packages to its nine-family foundation map.
+Its v4 strict profile binds 75 HTTPS targets, 285 navigation records, 80 named destinations,
+26 outline nodes, 147 link annotations and 1,273 structure elements. The v4 local Linux
+raw profile preserves the exact-fixture or strict final-trailer-ID-only relation. Local
+translated-container capture and GitHub-hosted replay remain distinct evidence.
+The exact route requires raw rebuilt-versus-committed equality and does not invoke hosted or legacy cross-profile artifact checks.
+The v1/v2/v3 fixtures, checkers and capture receipts remain historical.
 
-The current `check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py` accepts that exact
+The retained v3 Linux capture contains one 748,561-byte, 24-page candidate at SHA-256
+`d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24`.
+Two outer builder invocations in one translated local Linux container emitted those same bytes.
+This evidence concerns that historical source and producer. It does not admit the current guide.
+
+The retained `check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py` accepts that exact
 fixture or a same-length candidate differing solely in the separately pinned strict duplicated
-final-trailer `/ID` payloads. Both captured byte strings must also pass the unchanged current v3
+final-trailer `/ID` payloads. Both captured byte strings must also pass the unchanged historical v3
 structure checker with its canonical manifest digests, and their complete typed reports must
 agree. The profile admits no other metadata, font, object-order, compression, numeric, text,
 navigation or structure normalization. Canonical and retained Linux PDFs have different raw
@@ -1982,17 +1986,22 @@ metadata and byte lengths, while their default/layout text, font tables and all 
 page images at 120 dpi agree in both color and grayscale. That one renderer/resolution comparison
 is a bounded observation, not a general rendering or accessibility claim.
 
-The new v3 self-test declares 70 cases: two controls plus 13 raw, six identifier, 10 input,
+The retained v3 self-test declares 70 cases: two controls plus 13 raw, six identifier, 10 input,
 16 output, six dependency, 14 source and three stability hostiles. Its source audit rejects a
 floating-point fixture-length literal, and its canonical target, navigation and structure
 expectations are fixed independently of the candidate comparator. Every subprocess case runs
 under normal and optimized isolated Python; the complete suite is also required in both modes
-for direct API controls. The current focused commands are:
+for direct API controls. The historical focused commands are:
 
 ```text
 HOSTED_GUIDE_V3_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf"
 python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py "$HOSTED_GUIDE_V3_FIXTURE"
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py "$HOSTED_GUIDE_V3_FIXTURE"
+```
+
+Current producer-profile routing is checked separately:
+
+```text
 python3 -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py
 ```
@@ -2040,7 +2049,7 @@ The raw candidate must equal the fixture or differ only in the duplicated final-
 payloads accepted by the separately digest-pinned strict ID checker. The retained 744,745-byte v2
 fixture has SHA-256 `b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6` and is a
 CI-matched Ubuntu 24.04/x86 candidate produced under translated local container execution, not a
-hosted capture. Historical replay does not establish current v3 hosted admission.
+hosted capture. Historical replay does not establish current v4 hosted admission.
 The replay self-test retains the same 69-case mutation inventory against that exact fixture and
 recovered structure dependency. Run it with an absolute fixture path:
 
@@ -2114,11 +2123,11 @@ relation is not imported by the SxPID3 paper gate and transfers no PID theorem o
 
 `check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted producer
 capture, selection, and dispatch blocks and binds their exact source anchors. It admits exact and
-cross mode at the public arity guard, then checks that only the producer tuple selects the
-historical v2 or frozen legacy package. The selected hosted route must refuse the current v3 build
-while admission is pending. Exact mode must invoke no cross-profile artifact relation; the
-historical v2 route must remain free of the legacy alpha package; and the legacy v1 route
-must remain free of hosted checker, receipt, and fixture state. The suite also exercises fail-closed
+cross mode at the public arity guard, then checks that only the captured producer tuple selects
+its declared package. The current Ubuntu route selects the bound v4 raw profile. The legacy tuple
+remains unsupported because its format-byte binding is absent. Exact mode invokes no cross-profile
+artifact relation. The hosted route remains separate from the historical legacy alpha package;
+legacy dispatch remains separate from hosted checker, receipt, and fixture state. The suite also exercises fail-closed
 producer and per-run tuple custody. The suite reports its current control and
 hostile inventories at runtime; this guide deliberately does not freeze those evolving counts. This
 is a mode-wiring test, not a renderer replay or a typed-PDF semantic test. Its selected-source scan
@@ -2174,7 +2183,20 @@ wrapper copied existing raw TeX. An earlier unretained Pandoc 3.1.3 attempt also
 credit. It stopped before PDF generation because the table-of-contents color was empty. The
 explicit `toccolor:PidTeal` input and the raw-TeX check close that source-wiring defect.
 
-`normalize-mathematical-results-guide-pandoc-tex.py` is a source-specific compatibility transform.
+`normalize-mathematical-results-guide-pandoc-tex-v4.py` accepts only the canonical Pandoc
+3.10.2 projection. It preserves all input bytes and binds 30 heading IDs, classes and order,
+five complete tables, and one crosswalk page-frame prefix and suffix. Its retained raw-TeX
+fixture is content-bound. The v4 self-test exercises 172 projection and custody controls
+in each Python mode, including additional headings, duplicated page frames and owned-output cleanup.
+The historical normalizer and its compatibility tests remain unchanged.
+
+`check-mathematical-results-guide-diagnostics.py` compares complete warning blocks and source
+anchors with a digest-pinned manifest of the exact generated TeX. Known tagpdf, microtype and
+footnotehyper diagnostics remain visible. Matching this bounded policy does not mean warning-free
+output or PDF/UA conformance. Its self-test binds the retained raw TeX and canonical manifest;
+Linux producer diagnostics have their own profile and receipt.
+
+The historical `normalize-mathematical-results-guide-pandoc-tex.py` is a source-specific compatibility transform.
 It accepts only the audited Pandoc 3.1.3 or 3.10.2 compatibility projection. Pandoc 3.10.2 input
 must remain byte-identical. For Pandoc 3.1.3, the transform removes 17 redundant heading wrappers,
 inserts four captionless-table wrappers and one `none` counter, and replaces one table preamble,
@@ -2205,13 +2227,12 @@ performs the bounded per-run `kpsewhich` and format captures
 described above; those observations do not authenticate `kpsewhich` across runs.
 
 `check-mathematical-results-guide-builder-self-test.sh` uses an isolated fixture and a fake font
-probe. Its 69 cases reject source aliases, symbolic outputs, non-PDF names, nonregular outputs,
+probe. Its 82 cases reject source aliases, symbolic outputs, non-PDF names, nonregular outputs,
 removal, duplication, or digest drift of all three compatibility Works, wrong OpenAction targets,
 normalizer or Pandoc-license drift, asset-manifest/checker drift, trailer-ID-checker drift,
 final-font-checker drift, changed SVG or PDF inputs, and drift in each retained font-license or
 manifest file. Mode cases reject a missing explicit cross output, cross publication to the
-canonical path, an unauthenticated legacy executable, a legacy writer in exact mode, and unknown
-modes.
+canonical path, a legacy writer in either mode, and unknown modes.
 One hostile checker changes an SVG during validation and must fail the post-validation manifest
 comparison. A fake copy command
 substitutes a different tracked derivative only in the staged tree and must fail before rendering.
@@ -2223,6 +2244,9 @@ and the strict trailer-ID relation. Hostiles reject exact-mode relaxation, drift
 payloads, comparison status 2, symbolic or aliased outputs, a third-path hard link, oversized
 outputs, a proprietary final font, a missing canonical-figure face, and staged tools that change
 themselves during TeX normalization, ID input validation, ID projection, or final-font validation.
+The v4 cases additionally bind all three diagnostic-policy source pins, require stable aux/toc
+state through four passes, reject absent or symbolic pass snapshots, and reject unexpected or
+missing warnings, an unknown producer, rendered-TeX drift, and staged diagnostic-checker drift.
 These cases bind mode wiring and custody behavior; they do not authenticate the renderer or prove
 that rendering caused the bytes.
 `check-mathematical-results-guide-tagpdf-compat-self-test.sh` compiles the installed native-absent
@@ -2256,7 +2280,7 @@ GoToR file-specification route. Its LPPL Work adapts latex3/pdfresources commit
 ASCII while preserving `/UF` as UTF-16BE, the decoded relative target, and `/D`. A reviewed native
 route installs no fallback writer and preserves bytes outside the same strictly parsed trailer-ID
 payload; mixed, ancient, unreviewed newer, duplicate, or incomplete API states fail closed. The
-current 24-page guide emits no GoToR action: repository navigation is an HTTPS URI so it works
+current 28-page guide emits no GoToR action: repository navigation is an HTTPS URI so it works
 without a matching checkout layout. This compatibility test preserves bounded historical replay
 coverage; it is not evidence that the current PDF contains or needs a file-specification action.
 The hosted workflow requires the old hgeneric and pdfmanagement sources after installation. It
@@ -2415,29 +2439,29 @@ admission is not a full ISO-conformance claim and is recorded in `KNOWN_LIMITATI
 resolves every internal destination, binds the external HTTPS target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
 font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
-in default `--exact` mode. The selected hosted cross route uses the finite current v3 raw profile
+in default `--exact` mode. The selected hosted cross route uses the finite current v4 raw profile
 and its normal/optimized source controls. Its retained candidate was captured locally; actual
-hosted replay remains a separate obligation. The retained v1, v2 and legacy packages remain
+hosted replay remains a separate obligation. The retained v1, v2, v3 and legacy packages remain
 historical only. The current graph-aware
-`check-mathematical-results-guide-pdf-structure-v3.py` profile binds the 24-page guide. It requires
-57 external HTTPS targets, 220 ordered navigation records, 67 named destinations, 18 outline
-entries, and 107 link annotations: 89 URI and 18 internal GoTo links, with no GoToR. Its 1,069
-structure elements contain 661 marked-content references and 98 object references; all 107 URI or
+`check-mathematical-results-guide-pdf-structure-v4.py` profile binds the 28-page guide. It requires
+75 external HTTPS targets, 285 ordered navigation records, 80 named destinations, 26 outline
+entries, and 147 link annotations: 121 URI and 26 internal GoTo links, with no GoToR. Its 1,273
+structure elements contain 813 marked-content references and 136 object references; all 147 URI or
 internal-GoTo annotations carry `StructParent`, with repeated links permitted to share one of the
-98 declared structure owners. Its 122 ParentTree mappings, 2,278 semantic structure records, and
+136 declared structure owners. Its 164 ParentTree mappings, 2,792 semantic structure records, and
 source-specific navigation and structure digests are exact profile obligations. These counts bind
 this artifact version; they are not general PDF requirements.
 
-The v3 policy allows only the declared raw catalog,
+The v4 policy allows only the declared raw catalog,
 page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
 streams, and typed page-resource dependency closures. It binds strict number classes plus
-represented-binary64 values. The v3 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
+represented-binary64 values. The v4 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
 name-tree diagnostic controls, and four output-path controls. The diagnostic controls distinguish
 a non-array, an empty array, an odd array, and an even but wrong canonical pair count. They improve
 the failure explanation without accepting a second name-tree profile.
-For the canonical guide, it requires all 89 URI annotations to carry a BOM-prefixed UTF-16BE
-`/Contents` value equal to the URI target and all 18 internal GoTo annotations to retain ASCII
+For the canonical guide, it requires all 121 URI annotations to carry a BOM-prefixed UTF-16BE
+`/Contents` value equal to the URI target and all 26 internal GoTo annotations to retain ASCII
 `ref`. All repository targets in the PDF projection are explicit
 `https://github.com/sepahead/pid-rs/blob/main/…` navigation URLs; the Markdown source retains
 repository-relative links for branch and fork portability. URI and internal-GoTo links have
@@ -2447,7 +2471,7 @@ accessibility policy. The old ASCII `(url)` `/Contents` is a legal PDF text
 string; it fails this guide because it neither equals the URI nor meets the guide's source-specific
 UTF-16BE contract. The old UTF-16BE `/F` is not categorically malformed. The historical v1 guide
 adopted the reviewed upstream portable ASCII `/F` plus Unicode `/UF` policy for its GoToR actions.
-The current v3 guide has no GoToR action and therefore has no current `/F` or `/UF`
+The current v4 guide has no GoToR action and therefore has no current `/F` or `/UF`
 file-specification claim.
 For tagpdf before upstream commit `2846db13f8c4cf2e63fdf4984c66b1f064570708`, the dedicated
 LPPL-1.3c-or-later compatibility source supplies that upstream OpenAction update at
@@ -2460,17 +2484,17 @@ hook. Both paths must emit the same `/S /GoTo`, `/D`, and structure-aware `/SD` 
 the structure checker remains the semantic authority and is not widened for older toolchains.
 It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
 same-toolchain comparison separately binds every artifact byte.
-`check-mathematical-results-guide-pdf-structure-v3-self-test.py` rejects 70 object-graph mutations
+`check-mathematical-results-guide-pdf-structure-v4-self-test.py` rejects 70 object-graph mutations
 and one raw-parser mutation covering active content, aliases, type coercions, malformed numbers,
 destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream
 masquerading, changed link geometry, and canonical-but-wrong URI/internal `/Contents` values under
 normal and optimized Python. Historical v1 tests separately retain the `/F` and `/UF` mutation
-controls for that artifact's GoToR actions. Four v3 CLI controls reject input/output aliases,
+controls for that artifact's GoToR actions. Four v4 CLI controls reject input/output aliases,
 hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
 remains unchanged. The frozen v1 cross-toolchain profiles compare extracted text, geometry, target
 sets, and the bounded semantic navigation/structure projection for their 16-page artifact only.
-The current 24-page v3 profile has its own structure checker, raw profile and self-tests. The
-retained v2 fixture and receipt govern historical replay only; the new v3 local capture does not
+The current 28-page v4 profile has its own structure checker, raw profile and self-tests. The
+retained v2 fixture and receipt govern historical replay only; the v4 local capture does not
 supply hosted execution credit.
 These checks
 establish a source-specific, bounded publication-artifact comparison policy. They are not a generic
@@ -3255,16 +3279,18 @@ require their own records. These command descriptions report no new successful e
 Markdown sources, renderer fragments, and PDF basename inventory differ, if an unexpected paper
 is present without an explicit inventory update, or if any individual PDF gate fails. Its default
 `--exact` mode requires byte identity and is therefore a same-toolchain reproducibility check. Its
-`--cross-toolchain` mode rebuilds warning-free PDFs and applies each artifact's declared bounded
-portability relation, except that the root blueprint, dated post-publication custody receipt,
-standalone mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note,
-full bias paper and bias summary deliberately have no
-reviewed cross-toolchain profiles. The aggregate
-requires each route to refuse that request with status 2 and assigns zero source-to-PDF cross-toolchain
-credit; status 0 or any other refusal status fails the aggregate. The aggregate self-test protects
-all eight exact-only publication routes, their exact-mode calls, cross-mode probes and status-2
-branches against removal or weakening. It also protects the existing blueprint/custody hostile-suite
-calls and binds the custody record checker in normal and optimized Python and its hostile suite.
+`--cross-toolchain` mode rebuilds PDFs under each artifact's declared typesetting diagnostics and
+applies each artifact's declared bounded portability relation, except that the root blueprint,
+dated post-publication custody receipt, standalone mean exposition, recorded-sensor document,
+finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and
+support-change cusp deliberately have no reviewed cross-toolchain profiles. The aggregate
+requires each of these ten routes to refuse that request with status 2 and assigns zero
+source-to-PDF cross-toolchain credit; status 0 or any other refusal status fails the aggregate.
+The aggregate self-test directly protects the first eight listed routes, their exact-mode calls,
+cross-mode probes and status-2 branches against removal or weakening. It also invokes
+`check-mgw-derivative-pdf-dispatch-self-test.py` in both Python modes to check the gradient and
+cusp exact dispatch and their two status-2 refusals. The existing blueprint/custody hostile-suite
+calls and custody record checker in normal and optimized Python remain required.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
 and its source preimage remain archived with the bias publication.

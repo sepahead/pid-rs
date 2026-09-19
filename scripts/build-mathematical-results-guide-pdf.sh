@@ -11,14 +11,17 @@ HGENERIC_URI_CONTENTS_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guid
 HGENERIC_URI_CONTENTS_COMPAT_SHA256=6294db9644cff4d7ded8e2a98415d72cb73fae4f3a55ad705607b39edc391ad5
 L3PDFFILE_FILESPEC_COMPAT="$ROOT/audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex"
 L3PDFFILE_FILESPEC_COMPAT_SHA256=a8eb78a26f554117fd5ff9661e617e0348e8e69fce3f63e3ff3c1321b51aa36a
-PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
-PANDOC_TEX_NORMALIZER_SHA256=401271a933917833e7eca8654bd24e23f42fe19dfeab85c28165815bf55554bf
+PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
+PANDOC_TEX_NORMALIZER_SHA256=73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6
+DIAGNOSTIC_CHECK="$ROOT/scripts/check-mathematical-results-guide-diagnostics.py"
+DIAGNOSTIC_CHECK_SHA256=b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6
+CANONICAL_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
+CANONICAL_DIAGNOSTICS_SHA256=a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939
+LINUX_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json"
+LINUX_DIAGNOSTICS_SHA256=26ba5c4f6f305fc2d66d52cf19188b18d834a29b2584cbdf28f2d91693f6eda4
 PANDOC_TEMPLATE_LICENSE="$ROOT/audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
 PANDOC_TEMPLATE_LICENSE_SHA256=cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180
 CANONICAL_PANDOC_VERSION="pandoc 3.10.2"
-LEGACY_PANDOC_VERSION="pandoc 3.1.3"
-LEGACY_PANDOC_EXECUTABLE="/usr/bin/pandoc"
-LEGACY_PANDOC_EXECUTABLE_SHA256=3dd273647f0265cb439f22976d5366a54b071a3783f6fec50838b47fb53d701b
 FIGURE_ASSET_MANIFEST="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json"
 FIGURE_ASSET_MANIFEST_SHA256=eaf238a17595c6e63410c1358bfa8c4d57d876ed42176ebfd9dc1664b49b3316
 FIGURE_ASSET_CHECK="$ROOT/scripts/check-mathematical-results-guide-figure-assets.py"
@@ -42,7 +45,7 @@ FONT_ROSTER_CHECK_SHA256=39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8
 GUIDE_FIGURE_DIRECTORY="$ROOT/audit/formal/latex/figures/mathematical-results-guide"
 CROSSWALK_DIRECTORY="$ROOT/audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit"
 DEFAULT_OUTPUT="$ROOT/output/pdf/mathematical-results-guide.pdf"
-SOURCE_DATE_EPOCH_VALUE=1788393600
+SOURCE_DATE_EPOCH_VALUE=1789776000
 JOB_NAME="mathematical-results-guide"
 MODE="--exact"
 
@@ -76,6 +79,9 @@ required_sources=(
   "$HGENERIC_URI_CONTENTS_COMPAT"
   "$L3PDFFILE_FILESPEC_COMPAT"
   "$PANDOC_TEX_NORMALIZER"
+  "$DIAGNOSTIC_CHECK"
+  "$CANONICAL_DIAGNOSTICS"
+  "$LINUX_DIAGNOSTICS"
   "$PANDOC_TEMPLATE_LICENSE"
   "$FIGURE_ASSET_MANIFEST"
   "$FIGURE_ASSET_CHECK"
@@ -167,24 +173,9 @@ if [[ "$MODE" == "--exact" && "$PANDOC_VERSION_FIRST_LINE" != "$CANONICAL_PANDOC
   echo "Mathematical results guide PDF build failed: exact mode requires $CANONICAL_PANDOC_VERSION" >&2
   exit 1
 fi
-if [[ "$PANDOC_VERSION_FIRST_LINE" != "$CANONICAL_PANDOC_VERSION" \
-    && "$PANDOC_VERSION_FIRST_LINE" != "$LEGACY_PANDOC_VERSION" ]]; then
-  echo "Mathematical results guide PDF build failed: Pandoc version is outside the two audited writer projections" >&2
+if [[ "$PANDOC_VERSION_FIRST_LINE" != "$CANONICAL_PANDOC_VERSION" ]]; then
+  echo "Mathematical results guide PDF build failed: v4 requires $CANONICAL_PANDOC_VERSION" >&2
   exit 1
-fi
-if [[ "$PANDOC_VERSION_FIRST_LINE" == "$LEGACY_PANDOC_VERSION" ]]; then
-  PANDOC_RESOLVED="$(command -v pandoc)"
-  if [[ "$PANDOC_RESOLVED" != "$LEGACY_PANDOC_EXECUTABLE" \
-      || ! -f "$PANDOC_RESOLVED" || -L "$PANDOC_RESOLVED" \
-      || "$(find "$PANDOC_RESOLVED" -type f -links 1 -print)" != "$PANDOC_RESOLVED" ]]; then
-    echo "Mathematical results guide PDF build failed: Pandoc 3.1.3 executable custody changed" >&2
-    exit 1
-  fi
-  if ! printf '%s  %s\n' "$LEGACY_PANDOC_EXECUTABLE_SHA256" "$PANDOC_RESOLVED" \
-      | shasum -a 256 --check --status; then
-    echo "Mathematical results guide PDF build failed: Pandoc 3.1.3 executable digest changed" >&2
-    exit 1
-  fi
 fi
 
 TMP_BASE_INPUT="${PID_RS_PDF_TMPDIR:-${TMPDIR:-/tmp}}"
@@ -293,6 +284,15 @@ if ! printf '%s  %s\n' "$PANDOC_TEX_NORMALIZER_SHA256" "$PANDOC_TEX_NORMALIZER" 
   echo "Mathematical results guide PDF build failed: Pandoc TeX normalizer digest changed" >&2
   exit 1
 fi
+for diagnostic_binding in \
+    "$DIAGNOSTIC_CHECK_SHA256  $DIAGNOSTIC_CHECK" \
+    "$CANONICAL_DIAGNOSTICS_SHA256  $CANONICAL_DIAGNOSTICS" \
+    "$LINUX_DIAGNOSTICS_SHA256  $LINUX_DIAGNOSTICS"; do
+  if ! printf '%s\n' "$diagnostic_binding" | shasum -a 256 --check --status; then
+    echo "Mathematical results guide PDF build failed: diagnostic policy digest changed" >&2
+    exit 1
+  fi
+done
 if ! printf '%s  %s\n' "$PANDOC_TEMPLATE_LICENSE_SHA256" "$PANDOC_TEMPLATE_LICENSE" \
     | shasum -a 256 --check --status; then
   echo "Mathematical results guide PDF build failed: Pandoc template license evidence digest changed" >&2
@@ -394,7 +394,10 @@ build_once() {
   local staged_contract_directory="$staged_root/audit/formal/latex/mathematical-results-guide"
   local staged_license_directory="$staged_contract_directory/font-licenses"
   local staged_checker="$staged_root/scripts/check-mathematical-results-guide-figure-assets.py"
-  local staged_normalizer="$staged_root/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
+  local staged_normalizer="$staged_root/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
+  local staged_diagnostic_check="$staged_root/scripts/check-mathematical-results-guide-diagnostics.py"
+  local staged_canonical_diagnostics="$staged_contract_directory/canonical-diagnostics-v4.json"
+  local staged_linux_diagnostics="$staged_contract_directory/linux-diagnostics-v4.json"
   local staged_pandoc_template_license="$staged_contract_directory/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt"
   local staged_regeneration="$staged_contract_directory/open-font-figure-regeneration-v1.json"
   local staged_regenerator="$staged_root/scripts/regenerate-mathematical-results-guide-open-font-figures.py"
@@ -423,6 +426,9 @@ build_once() {
   cp "$L3PDFFILE_FILESPEC_COMPAT" \
     "$staged_root/mathematical-results-guide-l3pdffile-filespec-f-compat.tex"
   cp "$PANDOC_TEX_NORMALIZER" "$staged_normalizer"
+  cp "$DIAGNOSTIC_CHECK" "$staged_diagnostic_check"
+  cp "$CANONICAL_DIAGNOSTICS" "$staged_canonical_diagnostics"
+  cp "$LINUX_DIAGNOSTICS" "$staged_linux_diagnostics"
   cp "$PANDOC_TEMPLATE_LICENSE" "$staged_pandoc_template_license"
   cp "$FIGURE_ASSET_MANIFEST" "$staged_manifest"
   cp "$FIGURE_ASSET_CHECK" "$staged_checker"
@@ -455,6 +461,9 @@ build_once() {
     "$staged_root/mathematical-results-guide-hgeneric-uri-contents-compat.tex"
     "$staged_root/mathematical-results-guide-l3pdffile-filespec-f-compat.tex"
     "$staged_normalizer"
+    "$staged_diagnostic_check"
+    "$staged_canonical_diagnostics"
+    "$staged_linux_diagnostics"
     "$staged_pandoc_template_license"
     "$staged_manifest"
     "$staged_checker"
@@ -518,7 +527,7 @@ build_once() {
         --include-in-header=mathematical-results-guide-header.tex \
         --metadata=title:'Mathematical results in pid-rs' \
         --metadata=author:'pid-rs project analysis' \
-        --metadata=date:'3 September 2026' \
+        --metadata=date:'19 September 2026' \
         --variable=colorlinks=true --variable=linkcolor:PidTeal \
         --variable=toccolor:PidTeal \
         --variable=urlcolor:PidBronze --variable=citecolor:PidTeal \
@@ -563,11 +572,7 @@ build_once() {
   fi
 
   local expected_normalizer_stdout
-  if [[ "$PANDOC_VERSION_FIRST_LINE" == "$LEGACY_PANDOC_VERSION" ]]; then
-    expected_normalizer_stdout='OK: normalized mathematical-results guide Pandoc TeX (mode=legacy-3.1.3; heading_wrappers_removed=17; table_wrappers_inserted=4; none_counter_inserted=1; table_preamble_replaced=1; image_preamble_replaced=1; crosswalk_projection_replaced=1; byte_identity=no)'
-  else
-    expected_normalizer_stdout='OK: normalized mathematical-results guide Pandoc TeX (mode=canonical; heading_wrappers_removed=0; table_wrappers_inserted=0; none_counter_inserted=0; table_preamble_replaced=0; image_preamble_replaced=0; crosswalk_projection_replaced=0; byte_identity=yes)'
-  fi
+  expected_normalizer_stdout='OK: normalized mathematical-results guide Pandoc TeX (mode=canonical; heading_wrappers_removed=0; table_wrappers_inserted=0; none_counter_inserted=0; table_preamble_replaced=0; image_preamble_replaced=0; crosswalk_projection_replaced=0; byte_identity=yes)'
   if ! printf '%s  %s\n' "$PANDOC_TEX_NORMALIZER_SHA256" "$staged_normalizer" \
       | shasum -a 256 --check --status; then
     echo "Mathematical results guide PDF build failed: staged Pandoc TeX normalizer digest changed" >&2
@@ -631,8 +636,8 @@ build_once() {
     | awk 'BEGIN { print "\\DocumentMetadata{testphase=phase-II,lang=en-US}" } { print }' \
     >"$normalized_tex"
 
-  local pass
-  for pass in 1 2 3; do
+  local pass extension
+  for pass in 1 2 3 4; do
     if ! (
       cd "$staged_root"
       env -i PATH="$PATH" HOME="$home_directory" TMPDIR="$run_root" \
@@ -650,6 +655,24 @@ build_once() {
       echo "Mathematical results guide PDF build failed: LuaLaTeX pass $pass failed" >&2
       exit 1
     fi
+    for extension in aux toc log; do
+      if [[ ! -f "$build_directory/$JOB_NAME.$extension" || -L "$build_directory/$JOB_NAME.$extension" \
+            || -e "$build_directory/pass-$pass.$extension" || -L "$build_directory/pass-$pass.$extension" ]]; then
+        echo "Mathematical results guide PDF build failed: invalid pass snapshot path" >&2
+        exit 1
+      fi
+      if ! cp "$build_directory/$JOB_NAME.$extension" "$build_directory/pass-$pass.$extension" \
+          || ! cmp -s "$build_directory/$JOB_NAME.$extension" "$build_directory/pass-$pass.$extension"; then
+        echo "Mathematical results guide PDF build failed: pass snapshot differs" >&2
+        exit 1
+      fi
+    done
+  done
+  for extension in aux toc; do
+    if ! cmp -s "$build_directory/pass-3.$extension" "$build_directory/pass-4.$extension"; then
+      echo "Mathematical results guide PDF build failed: final $extension state did not stabilize" >&2
+      exit 1
+    fi
   done
 
   local built_pdf="$build_directory/$JOB_NAME.pdf"
@@ -658,8 +681,35 @@ build_once() {
     echo "Mathematical results guide PDF build failed: expected PDF/log absent" >&2
     exit 1
   fi
-  if grep -En '(^| )(LaTeX|Package|Font) Warning:|warning  \(pdf backend\):|Overfull \\[hv]box|Undefined control sequence|Missing character:' "$final_log" >&2; then
-    echo "Mathematical results guide PDF build failed: final pass contains warning or layout error" >&2
+  # These exact package diagnostics were reviewed for this source. Unknown,
+  # reference, glyph, and layout diagnostics still fail. This is not PDF/UA.
+  local diagnostic_manifest diagnostic_sha256 diagnostic_profile producer_line
+  producer_line="$(sed -n '1p' "$final_log")"
+  case "$producer_line" in
+    'This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  '*)
+      diagnostic_manifest="$staged_canonical_diagnostics"
+      diagnostic_sha256="$CANONICAL_DIAGNOSTICS_SHA256"
+      diagnostic_profile=canonical-pandoc-3.10.2-texlive-2024-guide-v4
+      ;;
+    'This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)  '*)
+      diagnostic_manifest="$staged_linux_diagnostics"
+      diagnostic_sha256="$LINUX_DIAGNOSTICS_SHA256"
+      diagnostic_profile=linux-pandoc-3.10.2-texlive-2023-debian-guide-v4
+      ;;
+    *)
+      echo "Mathematical results guide PDF build failed: unreviewed diagnostic producer" >&2
+      exit 1
+      ;;
+  esac
+  if ! printf '%s  %s\n' "$DIAGNOSTIC_CHECK_SHA256" "$staged_diagnostic_check" \
+      | shasum -a 256 --check --status; then
+    echo "Mathematical results guide PDF build failed: staged diagnostic checker changed" >&2
+    exit 1
+  fi
+  if ! python3 -I -S -B "$staged_diagnostic_check" \
+      "$final_log" "$normalized_tex" "$diagnostic_manifest" \
+      "$diagnostic_sha256" "$diagnostic_profile" "$build_directory/diagnostics.json"; then
+    echo "Mathematical results guide PDF build failed: unreviewed diagnostics or TeX" >&2
     exit 1
   fi
   for required_source in "${staged_sources[@]}"; do

@@ -670,9 +670,9 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper has a warning-free same-toolchain result; current bias and derivative-note inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias and derivative-note inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its warning-free bounded gate; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and support-change cusp intentionally have no accepted cross-toolchain relation, and all ten status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and support-change cusp intentionally have no accepted cross-toolchain relation, and all ten status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:

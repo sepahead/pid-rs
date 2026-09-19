@@ -208,7 +208,7 @@ function Table(element)
       element,
       landscape_figure_block(
         "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
-        "Evidence and publication status map for the nine result families.",
+        "Evidence and publication status map for the nine foundational families. Companion packages are indexed separately.",
         "fig:result-evidence-map"
       ),
     }

@@ -325,13 +325,8 @@ def main() -> int:
     cases += 1
 
     reflowed = source.replace(
-        "This guide gives a self-contained map of the principal mathematical results and assurance work in\n"
-        "pid-rs. Each result card identifies the mathematical object and its assumptions. Each card also\n"
-        "gives the central formula, evidence, cost, use, strongest nonclaim, and complete proof or\n"
-        "publication artifact.",
-        "This guide gives a self-contained map of the principal mathematical results and assurance work in pid-rs. "
-        "Each result card identifies the mathematical object and its assumptions. Each card also gives the central "
-        "formula, evidence, cost, use, strongest nonclaim, and complete proof or publication artifact.",
+        'This guide maps nine foundational result families and six companion packages in pid-rs.\nEach result card identifies the mathematical object and its assumptions. Each card also gives\nthe central formula, evidence, cost, use, strongest nonclaim, and complete proof or publication\nartifact. Section 2 separates the two inventories. Section 7 explains the companion results.',
+        'This guide maps nine foundational result families and six companion packages in pid-rs. Each result card identifies the mathematical object and its assumptions. Each card also gives the central formula, evidence, cost, use, strongest nonclaim, and complete proof or publication artifact. Section 2 separates the two inventories. Section 7 explains the companion results.',
         1,
     )
     if reflowed == source:

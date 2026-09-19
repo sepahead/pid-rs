@@ -1,0 +1,436 @@
+{
+  "diagnostics": [
+    {
+      "message": "Package microtype Warning: Unable to apply patch `footnote' on input line 296.",
+      "anchors": [
+        {
+          "line": 296,
+          "text": "\\begin{document}"
+        }
+      ]
+    },
+    {
+      "message": "Package footnotehyper Warning: \n(footnotehyper)    Failed to analyse \\@makefntext into something usable.\n(footnotehyper)    Using as fall-back the article class code.\n(footnotehyper)    You may try to email the author this problematic meaning:\n(footnotehyper)    \\protected\\long macro:#1->\\noindent \\socket_use:nn {tagsuppo\nrt/fntext/mark}{\\socket_use:n {fntext/mark}}\\socket_use:nn {tagsupport/fntext/t\next}{\\socket_use:nn {fntext/text}{#1}}\n(footnotehyper)    together with the document preamble (in particular if\n(footnotehyper)    footnote numbers do not show at bottom of page).",
+      "anchors": []
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 3, /text --> struct 4)\n(tagpdf)                on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 4, /text-unit -->\n(tagpdf)                struct 5) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 9, /text --> struct\n(tagpdf)                10) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 10, /text-unit -->\n(tagpdf)                struct 11) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 9, /text --> struct\n(tagpdf)                12) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 12, /text-unit -->\n(tagpdf)                struct 13) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 15, /text --> struct\n(tagpdf)                16) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 16, /text-unit -->\n(tagpdf)                struct 17) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 19, /text --> struct\n(tagpdf)                20) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 20, /text-unit -->\n(tagpdf)                struct 21) on line 297",
+      "anchors": [
+        {
+          "line": 297,
+          "text": "\\maketitle"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 140, /text --> struct\n(tagpdf)                141) on line 367",
+      "anchors": [
+        {
+          "line": 367,
+          "text": "Label"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 141, /text-unit -->\n(tagpdf)                struct 142) on line 367",
+      "anchors": [
+        {
+          "line": 367,
+          "text": "Label"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 144, /text --> struct\n(tagpdf)                145) on line 369",
+      "anchors": [
+        {
+          "line": 369,
+          "text": "Meaning"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 145, /text-unit -->\n(tagpdf)                struct 146) on line 369",
+      "anchors": [
+        {
+          "line": 369,
+          "text": "Meaning"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 148, /text --> struct\n(tagpdf)                149) on line 371",
+      "anchors": [
+        {
+          "line": 371,
+          "text": "Boundary"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 149, /text-unit -->\n(tagpdf)                struct 150) on line 371",
+      "anchors": [
+        {
+          "line": 371,
+          "text": "Boundary"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 194, /text --> struct\n(tagpdf)                195) on line 413",
+      "anchors": [
+        {
+          "line": 413,
+          "text": "Lane"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 195, /text-unit -->\n(tagpdf)                struct 196) on line 413",
+      "anchors": [
+        {
+          "line": 413,
+          "text": "Lane"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 198, /text --> struct\n(tagpdf)                199) on line 415",
+      "anchors": [
+        {
+          "line": 415,
+          "text": "Object in this repository"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 199, /text-unit -->\n(tagpdf)                struct 200) on line 415",
+      "anchors": [
+        {
+          "line": 415,
+          "text": "Object in this repository"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 202, /text --> struct\n(tagpdf)                203) on line 417",
+      "anchors": [
+        {
+          "line": 417,
+          "text": "Do not conflate it with"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 203, /text-unit -->\n(tagpdf)                struct 204) on line 417",
+      "anchors": [
+        {
+          "line": 417,
+          "text": "Do not conflate it with"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 243, /text --> struct\n(tagpdf)                244) on line 446",
+      "anchors": [
+        {
+          "line": 446,
+          "text": "\\Needspace{150mm}\\begin{figure}[H]\\centering\\includegraphics[width=0.96\\linewidth,height=150mm,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf}\\caption{Semantic firewall for the five non-interchangeable method lanes.}\\label{fig:semantic-firewall}\\end{figure}"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 244, /text-unit -->\n(tagpdf)                struct 245) on line 446",
+      "anchors": [
+        {
+          "line": 446,
+          "text": "\\Needspace{150mm}\\begin{figure}[H]\\centering\\includegraphics[width=0.96\\linewidth,height=150mm,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf}\\caption{Semantic firewall for the five non-interchangeable method lanes.}\\label{fig:semantic-firewall}\\end{figure}"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 267, /text --> struct\n(tagpdf)                268) on line 498",
+      "anchors": [
+        {
+          "line": 498,
+          "text": "Family"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 268, /text-unit -->\n(tagpdf)                struct 269) on line 498",
+      "anchors": [
+        {
+          "line": 498,
+          "text": "Family"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 271, /text --> struct\n(tagpdf)                272) on line 500",
+      "anchors": [
+        {
+          "line": 500,
+          "text": "Status and evidence"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 272, /text-unit -->\n(tagpdf)                struct 273) on line 500",
+      "anchors": [
+        {
+          "line": 500,
+          "text": "Status and evidence"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 275, /text --> struct\n(tagpdf)                276) on line 502",
+      "anchors": [
+        {
+          "line": 502,
+          "text": "Detailed source"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 276, /text-unit -->\n(tagpdf)                struct 277) on line 502",
+      "anchors": [
+        {
+          "line": 502,
+          "text": "Detailed source"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 352, /text --> struct\n(tagpdf)                353) on line 569",
+      "anchors": [
+        {
+          "line": 569,
+          "text": "\\clearpage\\begin{landscape}\\thispagestyle{fancy}\\begin{figure}[H]\\centering\\includegraphics[width=0.97\\linewidth,height=0.82\\textheight,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf}\\caption{Evidence and publication status map for the nine foundational families. Companion packages are indexed separately.}\\label{fig:result-evidence-map}\\end{figure}\\end{landscape}\\clearpage"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 353, /text-unit -->\n(tagpdf)                struct 354) on line 569",
+      "anchors": [
+        {
+          "line": 569,
+          "text": "\\clearpage\\begin{landscape}\\thispagestyle{fancy}\\begin{figure}[H]\\centering\\includegraphics[width=0.97\\linewidth,height=0.82\\textheight,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf}\\caption{Evidence and publication status map for the nine foundational families. Companion packages are indexed separately.}\\label{fig:result-evidence-map}\\end{figure}\\end{landscape}\\clearpage"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 360, /text --> struct\n(tagpdf)                361) on line 588",
+      "anchors": [
+        {
+          "line": 588,
+          "text": "Package"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 361, /text-unit -->\n(tagpdf)                struct 362) on line 588",
+      "anchors": [
+        {
+          "line": 588,
+          "text": "Package"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 364, /text --> struct\n(tagpdf)                365) on line 590",
+      "anchors": [
+        {
+          "line": 590,
+          "text": "Useful result and current evidence"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 365, /text-unit -->\n(tagpdf)                struct 366) on line 590",
+      "anchors": [
+        {
+          "line": 590,
+          "text": "Useful result and current evidence"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 368, /text --> struct\n(tagpdf)                369) on line 592",
+      "anchors": [
+        {
+          "line": 592,
+          "text": "Standalone source and PDF"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 369, /text-unit -->\n(tagpdf)                struct 370) on line 592",
+      "anchors": [
+        {
+          "line": 592,
+          "text": "Standalone source and PDF"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 835, /text --> struct\n(tagpdf)                836) on line 1492",
+      "anchors": [
+        {
+          "line": 1492,
+          "text": "Data/question"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 836, /text-unit -->\n(tagpdf)                struct 837) on line 1492",
+      "anchors": [
+        {
+          "line": 1492,
+          "text": "Data/question"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 839, /text --> struct\n(tagpdf)                840) on line 1494",
+      "anchors": [
+        {
+          "line": 1494,
+          "text": "First route"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 840, /text-unit -->\n(tagpdf)                struct 841) on line 1494",
+      "anchors": [
+        {
+          "line": 1494,
+          "text": "First route"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 843, /text --> struct\n(tagpdf)                844) on line 1496",
+      "anchors": [
+        {
+          "line": 1496,
+          "text": "Still required"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 844, /text-unit -->\n(tagpdf)                struct 845) on line 1496",
+      "anchors": [
+        {
+          "line": 1496,
+          "text": "Still required"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text-unit/user'.\n(tagpdf)                Relation is not allowed (struct 967, /text --> struct\n(tagpdf)                968) on line 1740",
+      "anchors": [
+        {
+          "line": 1740,
+          "text": "\\Needspace{155mm}\\begin{figure}[H]\\centering\\includegraphics[width=\\linewidth,height=155mm,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf}\\caption{The two sources use separate coordinates of the same measured space \\(M\\). Each event \\(E_{i,r}\\) is the preimage under \\(S_i\\) of a radius-\\(r\\) ball with volume \\(v_r\\). The displayed overlap conditions give leading terms with a common factor \\(w_rv_r\\). Inclusion--exclusion and cancellation give the conditional population limit. A nonzero first-order source overlap changes the union denominator. The result is a conditional population lemma, not a finite-sample estimator theorem.}\\label{fig:common-radius-small-ball-bridge}\\end{figure}"
+        }
+      ]
+    },
+    {
+      "message": "Package tagpdf Warning: Parent-Child 'P/' --> 'text/user'.\n(tagpdf)                Relation is not allowed (struct 968, /text-unit -->\n(tagpdf)                struct 969) on line 1740",
+      "anchors": [
+        {
+          "line": 1740,
+          "text": "\\Needspace{155mm}\\begin{figure}[H]\\centering\\includegraphics[width=\\linewidth,height=155mm,keepaspectratio]{audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf}\\caption{The two sources use separate coordinates of the same measured space \\(M\\). Each event \\(E_{i,r}\\) is the preimage under \\(S_i\\) of a radius-\\(r\\) ball with volume \\(v_r\\). The displayed overlap conditions give leading terms with a common factor \\(w_rv_r\\). Inclusion--exclusion and cancellation give the conditional population limit. A nonzero first-order source overlap changes the union denominator. The result is a conditional population lemma, not a finite-sample estimator theorem.}\\label{fig:common-radius-small-ball-bridge}\\end{figure}"
+        }
+      ]
+    }
+  ],
+  "pdf_ua_claim": false,
+  "profile": "linux-pandoc-3.10.2-texlive-2023-debian-guide-v4",
+  "schema": "guide-scoped-diagnostics-v1",
+  "scope": "content-visual-structure-profile-only",
+  "tex_sha256": "93b388c285b42189dd254e3d5f5972b0d6cff2e9f28e525a9c56f937fe2a1d42"
+}

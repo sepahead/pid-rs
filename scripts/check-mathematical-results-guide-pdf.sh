@@ -25,25 +25,35 @@ TRAILER_ID_OBSERVATION_CHECK="$ROOT/scripts/check-mathematical-results-guide-tra
 TRAILER_ID_OBSERVATION_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py"
 TRAILER_ID_OBSERVATION_CHECK_SHA256=e531d58620ff41275b741666a119a1245d5ec2a08fa943fc12a297d56317106f
 TRAILER_ID_OBSERVATION_SELF_TEST_SHA256=9b1d0da3dffc87e9d46a4986b9c54c457c036ff0cd0a0966f08155aad7b5b65b
-STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v3.py"
-STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v3-self-test.py"
-HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3.py"
-HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v3-self-test.py"
+STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v4.py"
+STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v4-self-test.py"
+HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4.py"
+HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4-self-test.py"
 FONT_ALPHA_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"
 FONT_ALPHA_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence-self-test.py"
 MODE_WIRING_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py"
-RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v3.pdf"
-HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v3.json"
+RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf"
+HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v4.json"
 RETAINED_FONT_ALPHA_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
-STRUCTURE_CHECK_SHA256=b46e4a15a3ebb4c6c2f1ce3a194f2790f3287a82b40df0103bdbe4b9fef9f9b4
-STRUCTURE_SELF_TEST_SHA256=a4f17e4dbdc4e589b72d3d35640421c3ae678a0a47d96d22b1990f1a69646cea
-HOSTED_RAW_CHECK_SHA256=c0dfaf85d9e2523aef4fafb13a6b0c68432c6aba9072c376924d3e74812c2338
-HOSTED_RAW_SELF_TEST_SHA256=7d1d5d90b08580a9ecb66692ec5ee81cc0ea5d39d5efb49dfed0a4d252945305
-HOSTED_RAW_PROFILE_RECEIPT_SHA256=bd1cfe614325897c537b4d5f9bcda0928caafaa35a36e6770e1200a99d31dbd3
+STRUCTURE_CHECK_SHA256=0d350c9d76733e287e3efa6e104a9c96446e5304707c73fd0b9ed67f61a87b47
+STRUCTURE_SELF_TEST_SHA256=278197c735f361aafcbb1b573cbad4fe229e4815d9374840b350a73117ca834e
+HOSTED_RAW_CHECK_SHA256=7791914449814bf203635ff8734055df19301c72ffcf283a14ce4adc991d80bd
+HOSTED_RAW_SELF_TEST_SHA256=164ba0007b9947e41958623b1baa0a5975d2a865b597a7a9a438db496a92e9c6
+HOSTED_RAW_PROFILE_RECEIPT_SHA256=435de9987d9f2518b4e96d16e8f9eca1793248da4d427ed09283191ced12dc5a
 FONT_ALPHA_CHECK_SHA256=5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997
 FONT_ALPHA_SELF_TEST_SHA256=07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be
-PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex.py"
-PANDOC_TEX_NORMALIZER_SELF_TEST="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-self-test.py"
+PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
+PANDOC_TEX_NORMALIZER_SELF_TEST="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4-self-test.py"
+PANDOC_TEX_NORMALIZER_SHA256=73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6
+PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256=e8086352e03eecf698c6619d170df3c02aca6ab0f926a055a6f6688ff7bb90bb
+DIAGNOSTICS_CHECK="$ROOT/scripts/check-mathematical-results-guide-diagnostics.py"
+DIAGNOSTICS_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-diagnostics-self-test.py"
+DIAGNOSTICS_CHECK_SHA256=b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6
+DIAGNOSTICS_SELF_TEST_SHA256=a6e31745c49c77bb012ea6cf48dd27f6409cf403b0dab891bfaf2f37809501d0
+NORMALIZER_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-v4-normalizer-input.tex"
+NORMALIZER_RAW_FIXTURE_SHA256=d17cd98eb82ab69cd43e53377a4da1def4dd36d3c2d8bff84a609a9e42a74aee
+CANONICAL_DIAGNOSTICS="$ROOT/audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json"
+CANONICAL_DIAGNOSTICS_SHA256=a4d8dd140b17359d0a8c869ee8f407673bab3ac1aa00a0239ace71950e198939
 PANDOC_PORTABILITY_RECEIPT_CHECK="$ROOT/scripts/check-mathematical-results-guide-pandoc-portability-receipt.py"
 PANDOC_PORTABILITY_RECEIPT_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pandoc-portability-receipt-self-test.py"
 PANDOC_PORTABILITY_RECEIPT_CHECK_SHA256=5e59e9fb997098656039db1a60c1e8694a451432618ac2ecd192b402e7a8c319
@@ -53,7 +63,7 @@ LEGACY_PANDOC_PORTABILITY_RECEIPT_SHA256=7ea2acf89c8a33f5666ab9798a594c24febdad6
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT_SHA256=cd5602bb28dce0780c4bac5f70097e496d2afe9141a8210f249332b5e6d93596
 
-HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v3-bound
+HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v4-bound
 HOSTED_PANDOC_VERSION='pandoc 3.10.2'
 HOSTED_PANDOC_SHA256=867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
 HOSTED_RENDERER_VERSION='This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)'
@@ -251,8 +261,24 @@ require_gate_digest "$STRUCTURE_SELF_TEST" "$STRUCTURE_SELF_TEST_SHA256" \
 require_gate_digest "$ID_VARIANCE_CHECK" "$ID_VARIANCE_CHECK_SHA256" \
   "strict trailer-ID variance checker"
 
+require_gate_digest "$PANDOC_TEX_NORMALIZER" "$PANDOC_TEX_NORMALIZER_SHA256" "v4 canonical normalizer"
+require_gate_digest "$PANDOC_TEX_NORMALIZER_SELF_TEST" "$PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256" "v4 normalizer self-test"
+require_gate_digest "$DIAGNOSTICS_CHECK" "$DIAGNOSTICS_CHECK_SHA256" "scoped diagnostics checker"
+require_gate_digest "$DIAGNOSTICS_SELF_TEST" "$DIAGNOSTICS_SELF_TEST_SHA256" "scoped diagnostics self-test"
+require_gate_digest "$NORMALIZER_RAW_FIXTURE" "$NORMALIZER_RAW_FIXTURE_SHA256" "normalizer raw TeX fixture"
+require_gate_digest "$CANONICAL_DIAGNOSTICS" "$CANONICAL_DIAGNOSTICS_SHA256" "canonical diagnostic manifest"
 python3 -I -S -B "$PANDOC_TEX_NORMALIZER_SELF_TEST"
 python3 -O -I -S -B "$PANDOC_TEX_NORMALIZER_SELF_TEST"
+python3 -I -S -B "$DIAGNOSTICS_SELF_TEST" --helper "$DIAGNOSTICS_CHECK" \
+  --raw-tex "$NORMALIZER_RAW_FIXTURE" --manifest "$CANONICAL_DIAGNOSTICS"
+python3 -O -I -S -B "$DIAGNOSTICS_SELF_TEST" --helper "$DIAGNOSTICS_CHECK" \
+  --raw-tex "$NORMALIZER_RAW_FIXTURE" --manifest "$CANONICAL_DIAGNOSTICS"
+require_gate_digest "$PANDOC_TEX_NORMALIZER" "$PANDOC_TEX_NORMALIZER_SHA256" "v4 canonical normalizer"
+require_gate_digest "$PANDOC_TEX_NORMALIZER_SELF_TEST" "$PANDOC_TEX_NORMALIZER_SELF_TEST_SHA256" "v4 normalizer self-test"
+require_gate_digest "$DIAGNOSTICS_CHECK" "$DIAGNOSTICS_CHECK_SHA256" "scoped diagnostics checker"
+require_gate_digest "$DIAGNOSTICS_SELF_TEST" "$DIAGNOSTICS_SELF_TEST_SHA256" "scoped diagnostics self-test"
+require_gate_digest "$NORMALIZER_RAW_FIXTURE" "$NORMALIZER_RAW_FIXTURE_SHA256" "normalizer raw TeX fixture"
+require_gate_digest "$CANONICAL_DIAGNOSTICS" "$CANONICAL_DIAGNOSTICS_SHA256" "canonical diagnostic manifest"
 bash --noprofile --norc "$BUILDER_SELF_TEST"
 bash --noprofile --norc "$TAGPDF_COMPAT_SELF_TEST"
 bash --noprofile --norc "$URI_CONTENTS_COMPAT_SELF_TEST"
@@ -1525,9 +1551,20 @@ https://github.com/sepahead/pid-rs/blob/main/PID_MATHEMATICAL_AUDIT_PROTOCOL.md
 https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md
 https://github.com/sepahead/pid-rs/blob/main/SUPPORT_CHANGE_TOLERANT_AVERAGED_SXPID_CONTINUITY.md
 https://github.com/sepahead/pid-rs/blob/main/SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
+https://github.com/sepahead/pid-rs/blob/main/audit/evidence/finite-target-copy-mgw-synergy.md
 https://github.com/sepahead/pid-rs/blob/main/audit/evidence/ksg-rev4-m1a-composite-v12-boundary-2026-08-23.md
+https://github.com/sepahead/pid-rs/blob/main/audit/evidence/mgw-fixed-world-added-information-2026-09-09.md
 https://github.com/sepahead/pid-rs/blob/main/audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md
 https://github.com/sepahead/pid-rs/blob/main/audit/formal/TWO_SOURCE_SXPID_COUNT_ATOM_BRIDGE.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-fixed-world/PUBLICATION.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-mgw-target-copy/REPLAY_ACCEPTANCE.json
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/EXPOSITION.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-bias/THEOREM_MAP.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-gradient/THEOREM_MAP.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/EXPOSITION.current.md
+https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-prefix-mgw-mean/PUBLICATION.md
+https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md
+https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md
 https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/claim-v4.md
 https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/formal-assurance-v4.md
 https://github.com/sepahead/pid-rs/blob/main/claims/KSG-INTEGER-HARMONIC-001/integration-disposition-v4.md
@@ -1543,9 +1580,16 @@ https://github.com/sepahead/pid-rs/blob/main/method-catalog.json
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/dependency-colored-sxpid-concentration.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/exact-log-product-sxpid2-assurance.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-alphabet-plugin-convergence.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-prefix-mgw-gradient.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/finite-target-copy-mgw-synergy.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/foundational-shared-exclusions-pid-audit.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/mathematical-problem-solving-workflow.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/mgw-fixed-world-added-information.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/numerical-assurance.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-bias-summary.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-bias.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/prefix-mgw-mean.pdf
+https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-mi-cusp.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/support-change-tolerant-averaged-sxpid-continuity.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf
 https://github.com/sepahead/pid-rs/blob/main/output/pdf/two-source-sxpid-count-atom-bridge.pdf
@@ -1567,7 +1611,7 @@ case "$MODE:$CROSS_PROFILE" in
     validate_pdf built "$BUILT" strict
     ;;
   --cross-toolchain:"$HOSTED_PROFILE_ID")
-    # The v3 checker raw-binds one retained 24-page candidate and unchanged strict manifests.
+    # The v4 checker raw-binds one retained 28-page candidate and bound strict manifests.
     validate_pdf built "$BUILT" hosted-raw-and-strict
     ;;
   --cross-toolchain:"$LEGACY_PROFILE_ID")
@@ -1616,11 +1660,11 @@ if ! cmp -s "$BUILD_ROOT/built.observed-navigation" \
     "$BUILD_ROOT/committed.observed-navigation" >&2 || true
   exit 1
 fi
-if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-urls" | tr -d ' ')" != "57" ]]; then
+if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-urls" | tr -d ' ')" != "75" ]]; then
   echo "$CHECK_NAME: hyperlink target count changed" >&2
   exit 1
 fi
-if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d ' ')" != "220" ]]; then
+if [[ "$(wc -l <"$BUILD_ROOT/committed.observed-navigation" | tr -d ' ')" != "285" ]]; then
   echo "$CHECK_NAME: navigation-record count changed" >&2
   exit 1
 fi
