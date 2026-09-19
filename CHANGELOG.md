@@ -9,6 +9,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Preserve nine historical branches in a compact [Git archive](audit/archive/nine-historical-branches-20260919/disposition.md) with verified local recovery, complete commit history, and explicit defect and successor records. Retain the failed first recovery check. Archived implementations remain inactive.
+
 - Preserve four historical branches in three compact Git archives with per-version dispositions
   and verified local recovery: [exact-log and PID2](audit/archive/exact-log-pid2-branches-20260919/disposition.md),
   [Python custody](audit/archive/python-verifier-custody-m0-recovery-20260919/DISPOSITION.md), and

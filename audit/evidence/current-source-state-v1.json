@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "45fce86a20f1a5351db887659ad0b7bee073bfc17c53016a4a3d1fa380e506a7",
-        "size_bytes": 308709
+        "sha256": "c283feed162a87d4bed7294b52b9a4a6f4981af06e32b3b6ee867881f098d340",
+        "size_bytes": 309017
       },
       {
         "git_mode": "100644",
@@ -1458,6 +1458,30 @@
         "path": "audit/archive/mgw-target-copy-development-20260911/payloads/superseded-v1/NEGATIVE_RESULTS.md.txt",
         "sha256": "23f33f94f08b58eef3e7b99189ffb1cbf9a644e2c681ed2661b5dcf8e40e80d6",
         "size_bytes": 3693
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/nine-historical-branches-20260919/disposition.md",
+        "sha256": "fe20abf7e175d35bb9dfa28538a4e0a72be7e7daee777f17af019dd0da57b971",
+        "size_bytes": 7166
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/nine-historical-branches-20260919/manifest.json",
+        "sha256": "c7891e9e270cc8c79144998f33081cbf413b577f208e89700415a6f85a5315f3",
+        "size_bytes": 93450
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/nine-historical-branches-20260919/nine-historical-branches.bundle",
+        "sha256": "2af43d756dbc5fc1eab97eae57892b47f9af04939b9f601149251be48322e549",
+        "size_bytes": 519628
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/nine-historical-branches-20260919/recovery.md",
+        "sha256": "b9a536841404c734ed60cf74701e7a8225ab6b0da0be4f45b786126de2e6e038",
+        "size_bytes": 5158
       },
       {
         "git_mode": "100644",
@@ -27730,7 +27754,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "e08a3f8df7c01ea5e0be87a1a4b1b25876ef6e6974b134d75b8aceac4ecc7ee6",
+        "sha256": "2765362f03a9b0af027efbe5a55eade13c62e877e4cc3731e488b83783de67b1",
         "size_bytes": 136973
       },
       {
@@ -28592,8 +28616,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "a547513538c566f30d9936643ce0da6b87898e38a3530d02e0c7129f84729f76",
-    "entry_count": 4741
+    "entries_sha256": "3effc380641d0a4daee44fba6beb06007d9ecd5776e1f66a900d534e1d4cb1a5",
+    "entry_count": 4745
   },
   "subprojections": [
     {
@@ -28621,7 +28645,7 @@
       ]
     },
     {
-      "entries_sha256": "19269773160d88f036481a7d8a8c0005f8141ca3a58ffb81000c64c57029ef49",
+      "entries_sha256": "64add83ae1aca6b2323c17d0fe1ed7b8da89113e7702ef67bd735b433ef9d542",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [
