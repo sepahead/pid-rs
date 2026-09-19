@@ -1,0 +1,902 @@
+{
+  "format": "pid-rs/semantic-bridge-history-archive/v1",
+  "status": "historical_archive_with_local_recovery_evidence",
+  "tip": "3960e01dadef70e0dbe6d22aa217b480ab2b1ad0",
+  "tree": "27a89518f34aba3f3005e9e1287189e8e34aa013",
+  "main_seed": "17bec81e88eda6b7113ed6c47eb0b08830b584b6",
+  "exact_tip_tree_main_ancestor": "ab0c6970050e1b87216fbd0846911143a92c3904",
+  "bundle": {
+    "file": "semantic-bridge-3960e01-from-e1a6648.bundle",
+    "bytes": 409720,
+    "sha256": "656d41a059a3b021383b9b94ba9c83d090f56f128666b455e9bd20afa3b6e3f0",
+    "prerequisite": "e1a6648ccace699e41b4ffa48c6acd79209a7418",
+    "advertised_ref": "refs/custody/semantic",
+    "git_blob": "9a96f89584c5ab9ef92ab74967d03f66bbd8a0d8"
+  },
+  "canonical_commits": [
+    {
+      "oid": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+      "bytes": 262,
+      "sha256": "516190bb9b9ab647173b08898c8317a46106768c1bb816bc48780667fc3c4afd",
+      "parents": [
+        "e1a6648ccace699e41b4ffa48c6acd79209a7418"
+      ],
+      "tree": "20a0d571f4daf61b72c0d52e6c742036488c330f"
+    },
+    {
+      "oid": "3e6c450669850ebbd65f6f54dddca288a51831e5",
+      "bytes": 262,
+      "sha256": "8cc3e6f28865be9d78dd71a5c0f1ef3723749134b663faab235790b44ce035ee",
+      "parents": [
+        "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f"
+      ],
+      "tree": "ceb5c793dc4402cb7d4736c7c291193d2735bc7e"
+    },
+    {
+      "oid": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+      "bytes": 266,
+      "sha256": "625bec8e1aea132b9d51c3211487c098ce93e94d59598cc79b128839178961f8",
+      "parents": [
+        "3e6c450669850ebbd65f6f54dddca288a51831e5"
+      ],
+      "tree": "2d9c60a4cc24cef38bc929963c670c0767cf3947"
+    },
+    {
+      "oid": "f7a9fab902619f1d61027ef4b9b64ff616612090",
+      "bytes": 263,
+      "sha256": "259254eb44dcae4eeb6377a64ce7a9f0733bcf54641b227b2d12670cae77ad71",
+      "parents": [
+        "b27436d7ae9ed7a7cd661aceed21842376b5738b"
+      ],
+      "tree": "a41071276525dce2c929e02dab8a59a37ed3777b"
+    },
+    {
+      "oid": "3960e01dadef70e0dbe6d22aa217b480ab2b1ad0",
+      "bytes": 260,
+      "sha256": "f7b26b0ca9e66da2771d8b6395341bf29bef1f9fb81ce5e12fabb58a77f939cf",
+      "parents": [
+        "f7a9fab902619f1d61027ef4b9b64ff616612090"
+      ],
+      "tree": "27a89518f34aba3f3005e9e1287189e8e34aa013"
+    }
+  ],
+  "root_trees": [
+    {
+      "oid": "20a0d571f4daf61b72c0d52e6c742036488c330f",
+      "bytes": 2878,
+      "sha256": "ba98b5f26c26857431b6537541390a1444d3ee1249322d74046a07f7d0122a02",
+      "recursive_api_entries_matched": 1283
+    },
+    {
+      "oid": "ceb5c793dc4402cb7d4736c7c291193d2735bc7e",
+      "bytes": 2878,
+      "sha256": "d56b7ab143c159496b7b63f20d4518df4abc9aafe68c178a73191ec8e7bdf5dd",
+      "recursive_api_entries_matched": 1283
+    },
+    {
+      "oid": "2d9c60a4cc24cef38bc929963c670c0767cf3947",
+      "bytes": 2878,
+      "sha256": "217a6d07ec47fa71173e663fdb6f66ab311d8d83e251d0c9acea32c3b1bd6226",
+      "recursive_api_entries_matched": 1283
+    },
+    {
+      "oid": "a41071276525dce2c929e02dab8a59a37ed3777b",
+      "bytes": 2878,
+      "sha256": "37892c429abb9dad30c9a2f76f098d930a6e10229a156a687276dbd5b491dc5b",
+      "recursive_api_entries_matched": 1284
+    },
+    {
+      "oid": "27a89518f34aba3f3005e9e1287189e8e34aa013",
+      "bytes": 2878,
+      "sha256": "3adb8c9cdbb2c90246be7841c40b59d5b3bb6f7ff8c1dead9485ab5cdf2a2da5",
+      "recursive_api_entries_matched": 1284
+    }
+  ],
+  "historical_after_blobs": [
+    {
+      "oid": "039825ef6cb147e44dca0da2f9cfe0073c4f2a8e",
+      "bytes": 41953,
+      "sha256": "394361524372710179aea41f95f4ddf9559700082a80e02ac0d0a34fbe08ce4a"
+    },
+    {
+      "oid": "088a2cf662cc9a92bf070bb51c3982f5853dec0c",
+      "bytes": 39594,
+      "sha256": "a87a7c1ae3eb797a26ed87a968468a812b4cbc296cdfa4ba28c9e08fc61f4745"
+    },
+    {
+      "oid": "08f964c6a9097631b2b8859597b048a0a6a4eff2",
+      "bytes": 56016,
+      "sha256": "25d7dd81d84cf6cbe4bd8e17b1a329892e229bbfd2fe38471ee2e26d85457046"
+    },
+    {
+      "oid": "0f65329476c09ac925cecd772447c3ae0a640d43",
+      "bytes": 33942,
+      "sha256": "b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb"
+    },
+    {
+      "oid": "2ead4572fa496de937c91558f98c35f8edfe3767",
+      "bytes": 132951,
+      "sha256": "e5ed53c60f107f2bb6dd3224cf01ea245f9aecc6bfc08672ff1e9bad6f4f83f1"
+    },
+    {
+      "oid": "3c8bd71203ba62923529d4b05690a4ca989068e2",
+      "bytes": 456998,
+      "sha256": "a2ffeafe3a27a9fad226c9ca26dd111d3f654db511ade5d3bebe5a2c87047532"
+    },
+    {
+      "oid": "4146bd4f2b451d0778c45f054c5651e65eea1af4",
+      "bytes": 19870,
+      "sha256": "9307f60f77c2143fd0dc20e0a9ebcdc9b27a8ce08fa1cb919131d85844825323"
+    },
+    {
+      "oid": "46c8ee3f92df9ed6be221a8440f787b958040d0c",
+      "bytes": 3114,
+      "sha256": "db26916b0722dcd58280047f4b4bc7397f8a11ae974588955fe8dfbe502d0d6e"
+    },
+    {
+      "oid": "4c09183ed24671c3c28b74c7d8c6bb888b4871c0",
+      "bytes": 17955,
+      "sha256": "c9483ecfa65302b2117c2b801b5fdb8d93b5fceb2531f9c9ed891439bf75cdf7"
+    },
+    {
+      "oid": "4d82083c4fb13013dc13a70b1691fb89df9b1608",
+      "bytes": 73167,
+      "sha256": "099e7f87f244ca4cf0570c34b96e272d5f92fcd175d835aad8f8b3da824afbfd"
+    },
+    {
+      "oid": "4e544f757d41b663acf56cae1ae4771e4c2f61db",
+      "bytes": 25355,
+      "sha256": "3effacf1d4a5d621bf15a0e6cd79334661d50c60506f4589a00d27462a2fb3c6"
+    },
+    {
+      "oid": "7e702c59cc9aba8df343f0187f0c881d5726cd07",
+      "bytes": 41784,
+      "sha256": "df80b52d5fe9561e8d34eef3a5a94ccd6e826501857c9dc651ca5b933e199fa8"
+    },
+    {
+      "oid": "887504f23656615787e6f297a51ec2ef752fbf68",
+      "bytes": 289578,
+      "sha256": "f6d9981a776f1e777f9a2ca6701fbaef18e6885f87738fd6205eaf1829457f19"
+    },
+    {
+      "oid": "88c572e7320c1965d6fc8e062c3ec5af760881b4",
+      "bytes": 5617,
+      "sha256": "4164304f3bff4f58ee98aaa534db8de78ddd714923837d80971a967a9221bcf6"
+    },
+    {
+      "oid": "8b7e8fc05199082b9c363dfb798ad9cd94fd6fc2",
+      "bytes": 749067,
+      "sha256": "db24c4008061f9646f4af60e5aa129ae0462e0e9dbf149a0b63d336339de0938"
+    },
+    {
+      "oid": "9909a10a817ff7309722a81551ad1be1e058ae5b",
+      "bytes": 540136,
+      "sha256": "b410452e1739b37fccb7709a070d6c93ce2406d188bc6953827b499a438a299b"
+    },
+    {
+      "oid": "a075d7529226dd84671abcf4f2d6e5284f72dfd4",
+      "bytes": 24591,
+      "sha256": "52ae977e01d8133e63f2e88f31aec6cfe692b5ad9fbe0b3db0545ea0a21b0524"
+    },
+    {
+      "oid": "a14d462ebdea2ed909fa199e1f9fa31727a8fbdf",
+      "bytes": 17458,
+      "sha256": "dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24"
+    },
+    {
+      "oid": "ad3c8e58027721ed5df1266e8f3f8e1080f0fc82",
+      "bytes": 73955,
+      "sha256": "43327805cdf2c442d3e62a71481b50ec13baf49164c8083d8b8a87b7e425c226"
+    },
+    {
+      "oid": "b3711e82cbc0ae2777e022b439682b0244903f5a",
+      "bytes": 8524,
+      "sha256": "d7c381f64fc2c98d3aa7dd52a5aae0e072603db8e5cf188b5b2795372247cd4e"
+    },
+    {
+      "oid": "b76a493ef2ba258a1ad5670806170a01cd47898b",
+      "bytes": 6689,
+      "sha256": "f2fc37628e395a75b255eb6ed6e0515878be1232120dabf48aed0115a096510d"
+    },
+    {
+      "oid": "c56bfb433cefb61df6bb71b44eb2c5ca578d9204",
+      "bytes": 13572,
+      "sha256": "f2568f88f9700f0d280ea303de35bb61160210e93092727c6195421c2aef275c"
+    },
+    {
+      "oid": "c990d0641287b5562c719652cb5835b7ddd862e7",
+      "bytes": 2170,
+      "sha256": "11713155d317265e641f4d836a3af6efc193ff2ded0a5dbcb633d024bf923182"
+    },
+    {
+      "oid": "ca2feb714564831f8d787f69b87d4753fc1b9e2a",
+      "bytes": 555871,
+      "sha256": "b40bce0294f0bbd89cfbdcddfe58bcbc485c85a2743c5e4ff443034a9471a563"
+    },
+    {
+      "oid": "d72f36125f00fa6560b1ceccc572e73d7dae78fe",
+      "bytes": 264295,
+      "sha256": "0e7e9a30db4fb4878a43707e7132f2a5ee291ebb434c57d2d028117fa55a9bdd"
+    },
+    {
+      "oid": "e0f87c4fcf7bdec3f99cff51d8ad99ba429a4d30",
+      "bytes": 15073,
+      "sha256": "2847ea1cf2de5d972f680e4bdf5c1a200354daaa305cc5b405b7ce808e5ecbe3"
+    },
+    {
+      "oid": "e6d8905c2d450686d466aab28f1f9210d124f012",
+      "bytes": 86442,
+      "sha256": "f3f28a0a34368ecba4461111bd2d661515014f2959842a5447dfe8c27b138ad4"
+    },
+    {
+      "oid": "e9ff9667f150b171cc3c06e0904e9fe3a975ec06",
+      "bytes": 59846,
+      "sha256": "9aa7092dc80fc343cfe5be1c074a14f85332a6787724375846466ba6ed8cdc66"
+    },
+    {
+      "oid": "eb6423d10963e8655338eb122ecb948f01f9b8e4",
+      "bytes": 37822,
+      "sha256": "1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4"
+    },
+    {
+      "oid": "f23c9abd76d664636b57ca06d1694a0c82b11ed4",
+      "bytes": 3066,
+      "sha256": "677c9631567e38800863d229f10965ad2b837ab04e484e8c251bcdb8d31d9c49"
+    },
+    {
+      "oid": "f37ab75f1f8261a84de58330f2049d1849c8b978",
+      "bytes": 84997,
+      "sha256": "86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77"
+    },
+    {
+      "oid": "fab379d9c519cc70ace7bf30bdebf0cfdece23c9",
+      "bytes": 20348,
+      "sha256": "fadd73671fca24f7300c690d430db2f0caff893aa5b837698ba739f578749be8"
+    },
+    {
+      "oid": "fda112b4d912b64a0978994de013f256070a6881",
+      "bytes": 3054,
+      "sha256": "ef03f928bcaebef1619ada0eaf8b2c33eaa0b4a558c325d2728cd20589f4b8d3"
+    }
+  ],
+  "native_recovery": {
+    "five_nontruncated_API_tree_matches": true,
+    "all_33_blob_matches": true,
+    "positive_fresh_main_seed_missing_tip_before": true,
+    "positive_recovery_strict_fsck_exit": 0,
+    "positive_recovery_strict_fsck_streams_empty": true,
+    "empty_repository_prerequisite_rejection_exit": 1,
+    "empty_repository_tip_still_missing": true,
+    "no_alternates_shallow_or_promisor": true
+  },
+  "preserved_failure": {
+    "first_strict_fsck_exit": 8,
+    "stderr": "error: HEAD points to something strange (refs/custody/main)\n",
+    "repair": "Detached only private HEAD at literal P1; original script/failure preserved, separate strict fsck then passed with empty streams."
+  },
+  "scope": "Immutable historical local Git custody record. All source-disposition comparisons are against literal P1, not a moving main or later integration revision. Public remote-main retrieval and retirement require separate dated evidence.",
+  "recorded_local_recovery_completed_utc": "2026-09-19T19:28:51.785751+00:00",
+  "source_record_identities": [
+    {
+      "role": "native-command-ledger",
+      "bytes": 307793,
+      "sha256": "05579469e4187f0eb82bd612c79491fedd02ada8a77ac8295be9d97ca8dce736"
+    },
+    {
+      "role": "native-source-object-verification",
+      "bytes": 9032,
+      "sha256": "cff16a41f89ba5b252c5656434bfa15ea43c3b8eca5babe3d08ccb84164112e8"
+    },
+    {
+      "role": "first-fsck-failure-result",
+      "bytes": 8667,
+      "sha256": "fa3d150b2594b84f361301555ab8e0c66987d97259f8572a410582475c3a9ffb"
+    },
+    {
+      "role": "native-bundle-recovery",
+      "bytes": 908,
+      "sha256": "fe4cf3764fd8ac63c7a663305485f9be076fecd9eb562773c834085b39faa2c8"
+    },
+    {
+      "role": "private-metadata-repair",
+      "bytes": 426,
+      "sha256": "e0f852e790c336b5b9731487463d22f45b6adfa8dbec2f9569111acdd134afc4"
+    },
+    {
+      "role": "P1-path-dispositions",
+      "bytes": 28199,
+      "sha256": "b775861484b72524ca9d825307cc9e26c88f222b7cef38a00eb234ed797e6962"
+    },
+    {
+      "role": "P1-exact-variant-joins",
+      "bytes": 20420,
+      "sha256": "934167f1b0e5d0c8547fffae297de50c6c91236d0952c7aa23ec02f7b77294f6"
+    },
+    {
+      "role": "P1-reachability-joins",
+      "bytes": 5202,
+      "sha256": "8c95d21b783eb06e51f13ce3d2a8091c677e7990ee96c06a159e8bab35958c26"
+    },
+    {
+      "role": "earlier-unseeded-fetch-timeout",
+      "bytes": 3245,
+      "sha256": "34a61738ff0bf468c2b01dd006890692fcac8b3b3191197e46ab7bdb260b745b"
+    },
+    {
+      "role": "later-read-only-custody-review",
+      "bytes": 4228,
+      "sha256": "2cb4d65efedb9244b2400d712c3e5af2744b10056f4b8b8ef5593218019b6534"
+    },
+    {
+      "role": "later-context-differences",
+      "bytes": 2116,
+      "sha256": "d6c3087edf13f0f57a2fb3009ea253cb080843415cb0ff129d7e7f7c5e864ae0"
+    }
+  ],
+  "earlier_unseeded_fetch_failure": {
+    "started_utc": "2026-09-19T18:50:45.748116+00:00",
+    "ended_record_utc": "2026-09-19T18:52:45.791698+00:00",
+    "declared_seconds": 120,
+    "elapsed_seconds": 120.03706112504005,
+    "returncode": -9,
+    "failure": "timeout",
+    "remaining_live_group_processes": [],
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "ec3b2a2da5d973ed811ee283fb1f83743252e6d495445386d4495953eb45e3ad",
+    "interpretation": "Closed failed attempt. No tip acceptance, no diagnosis of the network cause, and no relabeling by the later successful main-seeded route."
+  },
+  "disposition_comparison": {
+    "commit": "17bec81e88eda6b7113ed6c47eb0b08830b584b6",
+    "label": "P1",
+    "paths": 31,
+    "distinct_historical_after_blobs": 33,
+    "main_history_reachable_variants": 31,
+    "exact_P1_tip_variants": 6,
+    "other_variants": "Two superseded workflow drafts recovered and included in the bundle.",
+    "scope": "The entire preserved path_dispositions array is a dated comparison against this exact commit. The words current/current-main in copied historical prose and exact_current booleans refer solely to P1, never to a later integration revision.",
+    "path_dispositions": [
+      {
+        "path": ".github/workflows/sxpid3-bounded-keyed-scalar-audit-expressions.yml",
+        "P1_blob": "b76a493ef2ba258a1ad5670806170a01cd47898b",
+        "P1_sha256": "f2fc37628e395a75b255eb6ed6e0515878be1232120dabf48aed0115a096510d",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "b3711e82cbc0ae2777e022b439682b0244903f5a",
+            "sha256": "d7c381f64fc2c98d3aa7dd52a5aae0e072603db8e5cf188b5b2795372247cd4e",
+            "exact_current": false
+          },
+          {
+            "commit": "f7a9fab902619f1d61027ef4b9b64ff616612090",
+            "blob": "b76a493ef2ba258a1ad5670806170a01cd47898b",
+            "sha256": "f2fc37628e395a75b255eb6ed6e0515878be1232120dabf48aed0115a096510d",
+            "exact_current": true
+          }
+        ],
+        "quality_disposition": "The final keyed workflow is exact current P1. Intermediate b371 embeds semantic gate/self-test normal/O and parity inside the keyed job; current separate semantic workflow preserves that useful execution while isolating its job scope. Superseded intermediate wiring, no active restoration.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": ".github/workflows/sxpid3-program-a-semantic-bridge-v4.yml",
+        "P1_blob": "fda112b4d912b64a0978994de013f256070a6881",
+        "P1_sha256": "ef03f928bcaebef1619ada0eaf8b2c33eaa0b4a558c325d2728cd20589f4b8d3",
+        "variants": [
+          {
+            "commit": "f7a9fab902619f1d61027ef4b9b64ff616612090",
+            "blob": "f23c9abd76d664636b57ca06d1694a0c82b11ed4",
+            "sha256": "677c9631567e38800863d229f10965ad2b837ab04e484e8c251bcdb8d31d9c49",
+            "exact_current": false
+          },
+          {
+            "commit": "3960e01dadef70e0dbe6d22aa217b480ab2b1ad0",
+            "blob": "fda112b4d912b64a0978994de013f256070a6881",
+            "sha256": "ef03f928bcaebef1619ada0eaf8b2c33eaa0b4a558c325d2728cd20589f4b8d3",
+            "exact_current": true
+          }
+        ],
+        "quality_disposition": "Final workflow is exact current P1. Intermediate f23 invokes the catalog under -I/-B; literal P1 catalog imports sibling json_schema_subset, so isolated script invocation does not satisfy that import route in the declared fresh tool environment. Final/current invocation fixes the route; keep intermediate as superseded failure-relevant source, no fresh reproduction claimed.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "AGENTS.md",
+        "P1_blob": "18e5996237b6aeada50c3d662f5b173a2e716814",
+        "P1_sha256": "4472c4a56562e142922215d473cbcd60dfc171045fe884c32de56ace098e1f78",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "e6d8905c2d450686d466aab28f1f9210d124f012",
+            "sha256": "f3f28a0a34368ecba4461111bd2d661515014f2959842a5447dfe8c27b138ad4",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Historical main preserves branch policy. Current P1 expands handoff, bounded execution, review and lifecycle instructions and current gate references; retain current policy, no older policy restoration.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "CHANGELOG.md",
+        "P1_blob": "9c03ce7913a19796b3d1d2085e6eec2ec81fc5c1",
+        "P1_sha256": "30ea0878d14c470041ade30740c7aa8ebb759311280e8cb6c76a4dc1bad6e440",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "887504f23656615787e6f297a51ec2ef752fbf68",
+            "sha256": "f6d9981a776f1e777f9a2ca6701fbaef18e6885f87738fd6205eaf1829457f19",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Historical branch additions remain preserved in the exact main tree; P1 accumulates later scoped publications and corrections. No new active implementation fragment; read relevant Program A correction sections, not a fresh review of every unrelated later milestone.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "MATHEMATICAL_RESULTS_GUIDE.md",
+        "P1_blob": "821e249b21e5ca77c42cc46286bbb25aafdc088d",
+        "P1_sha256": "453da6d6886353cc1a985f7ad64dd9423959d963c783c801647d140c2922f847",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "e9ff9667f150b171cc3c06e0904e9fe3a975ec06",
+            "sha256": "9aa7092dc80fc343cfe5be1c074a14f85332a6787724375846466ba6ed8cdc66",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Evolved guide preserves semantic-bridge material. Later guide corrects existing pairwise hyperbolic product-neighbourhood description and sample-space/preimage explanation, and moves/rewords the small-ball caption. Do not restore older geometric assertions or illustration scope.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "METHODS.md",
+        "P1_blob": "2a32ac067189735ad8390347132873a630bbe921",
+        "P1_sha256": "f022a09ecf128d0fd33a3a7da01be56305daadeef00a94ab9f5489c64f052b0b",
+        "variants": [
+          {
+            "commit": "3e6c450669850ebbd65f6f54dddca288a51831e5",
+            "blob": "ca2feb714564831f8d787f69b87d4753fc1b9e2a",
+            "sha256": "b40bce0294f0bbd89cfbdcddfe58bcbc485c85a2743c5e4ff443034a9471a563",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Generated catalog rendering evolved with typed-equality failures, archival links and a separate DNF/order lane. Current catalog is authority; do not restore older generated rows or digest roots.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md",
+        "P1_blob": "951cbfb6b7a905393837ff8266d745449a9ba9ec",
+        "P1_sha256": "be8119533280aea5aec165de4a3e2b3b6b30102d630f3169057174b591a8f7b6",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "08f964c6a9097631b2b8859597b048a0a6a4eff2",
+            "sha256": "25d7dd81d84cf6cbe4bd8e17b1a329892e229bbfd2fe38471ee2e26d85457046",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Evolved scientific paper adds typed-verifier defects/controls and the unresolved checkout-integrity incident without changing Program A closure. Historical bytes retained; keep current scoped correction.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "audit/evidence/method-catalog-semantic-authority-v1.json",
+        "P1_blob": "831890e38be1afccfdf7be871e871110b768344c",
+        "P1_sha256": "a86cd07dbc1da65dd6fd42bcb5799391c13d30e2d897bc76c0970601473456a3",
+        "variants": [
+          {
+            "commit": "3e6c450669850ebbd65f6f54dddca288a51831e5",
+            "blob": "088a2cf662cc9a92bf070bb51c3982f5853dec0c",
+            "sha256": "a87a7c1ae3eb797a26ed87a968468a812b4cbc296cdfa4ba28c9e08fc61f4745",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Historical catalog pins remain preserved by main ancestry. Active authority changed with current catalog; no rebind to stale branch roots.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "audit/evidence/sxpid3-mgw-v5-program-a-semantic-bridge-v4.json",
+        "P1_blob": "f501054aa539996a921d3a0477b9f7853f192d52",
+        "P1_sha256": "447094be207f4e5798ea602b7ee737baac8df8ec835ccc4d4f90c41514e5b7c1",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "a14d462ebdea2ed909fa199e1f9fa31727a8fbdf",
+            "sha256": "dbc43a78e88d5e35cce5e01ec69f676eef8c68bda2f5eae5994f61d21fe5db24",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current record strengthens exact type-and-value policy and adds two false-green classes and mutation counts. Preserve current typed contract; historical record is pre-correction evidence.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "audit/formal/latex/mathematical-results-guide/header.tex",
+        "P1_blob": "88c572e7320c1965d6fc8e062c3ec5af760881b4",
+        "P1_sha256": "4164304f3bff4f58ee98aaa534db8de78ddd714923837d80971a967a9221bcf6",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "88c572e7320c1965d6fc8e062c3ec5af760881b4",
+            "sha256": "4164304f3bff4f58ee98aaa534db8de78ddd714923837d80971a967a9221bcf6",
+            "exact_current": true
+          }
+        ],
+        "quality_disposition": "Exact current P1 blob; no source recovery action.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "audit/formal/latex/sxpid3-source-marginal-and-bounded-audit/header.tex",
+        "P1_blob": "46c8ee3f92df9ed6be221a8440f787b958040d0c",
+        "P1_sha256": "db26916b0722dcd58280047f4b4bc7397f8a11ae974588955fe8dfbe502d0d6e",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "46c8ee3f92df9ed6be221a8440f787b958040d0c",
+            "sha256": "db26916b0722dcd58280047f4b4bc7397f8a11ae974588955fe8dfbe502d0d6e",
+            "exact_current": true
+          }
+        ],
+        "quality_disposition": "Exact current P1 blob; no source recovery action.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/decision-v3.md",
+        "P1_blob": "7a0b9902ec5bd79d946294927815c4a004cf0b0d",
+        "P1_sha256": "24544d7b3af575ecff706e88d20b8c8e18372c13711fc508e60cd31beffcc152",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "e0f87c4fcf7bdec3f99cff51d8ad99ba429a4d30",
+            "sha256": "2847ea1cf2de5d972f680e4bdf5c1a200354daaa305cc5b405b7ce808e5ecbe3",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current decision retains mathematical scope and open status, adds exact typed-equality failures and corrected source identities. Older weaker verification wording remains historical only.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-adjudication-index.md",
+        "P1_blob": "771611129ac63a07010301f2fdbac387940f6f2d",
+        "P1_sha256": "1ffc5a5f7047ac1774b2089a62015f6101812048f90fdc3e5699b26e292400c4",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "c990d0641287b5562c719652cb5835b7ddd862e7",
+            "sha256": "11713155d317265e641f4d836a3af6efc193ff2ded0a5dbcb633d024bf923182",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current evidence pointer retains the same claim revision and updates scoped false-green coverage; no claim revision escalation or older pointer restoration.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/evidence-matrix-v3.md",
+        "P1_blob": "9f794b705c3e25b1fdd55f94a00f8e35c0ea2d6a",
+        "P1_sha256": "61aa07eb34344608b7683fc00f064ffcc914c74a1c39cb016a9ea0020b82667b",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "4146bd4f2b451d0778c45f054c5651e65eea1af4",
+            "sha256": "9307f60f77c2143fd0dc20e0a9ebcdc9b27a8ce08fa1cb919131d85844825323",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current matrix adds exact type-coercion counterexamples and negative-evidence disposition. Original mathematical scope is retained; no stronger theorem acceptance follows.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "claims/SX-CERTIFIED-AVERAGED-PID3-001/source-correspondence-v4.md",
+        "P1_blob": "8b806a7a257352ceb4500e8905a4d7a2a36bc9b9",
+        "P1_sha256": "cc2f228fec62603da61e5fd3f75550a727978aeda20225abe80b5d9be2fdce0d",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "0f65329476c09ac925cecd772447c3ae0a640d43",
+            "sha256": "b4e6fbcdc289e7a8e6c3af42509b568606e61b8908b59661b895bd9ca5eb72cb",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current source map preserves mathematical/event/count derivation and adds recursive-type repair, archived negative evidence and explicit limitations. No unintegrated theorem located in this diff.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "method-catalog.json",
+        "P1_blob": "9226907a735c76c5a6c2cc8e5cc44d287ed7d2e2",
+        "P1_sha256": "1bd1c9ce598668305d2328a8dff9e54c0b9526259c79d65d2255a4548e63e72d",
+        "variants": [
+          {
+            "commit": "3e6c450669850ebbd65f6f54dddca288a51831e5",
+            "blob": "3c8bd71203ba62923529d4b05690a4ca989068e2",
+            "sha256": "a2ffeafe3a27a9fad226c9ca26dd111d3f654db511ade5d3bebe5a2c87047532",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Only the SxPID3 assurance entry differs in the branch-to-P1 catalog comparison. It adds typed-verifier controls, incident/negative evidence and a distinct DNF/order Lean lane with full-pattern-realization premise. No source_files removed; retain new scoped authority and do not import older weaker limitations.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "output/pdf/mathematical-results-guide.pdf",
+        "P1_blob": "b6bf08b86e5fc7d7fa48d2f6dbe537e8af869981",
+        "P1_sha256": "39db599dca0e33b5f0380417f3faaad4fd1067d592141416728f0931e9016b51",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "8b7e8fc05199082b9c363dfb798ad9cd94fd6fc2",
+            "sha256": "db24c4008061f9646f4af60e5aa129ae0462e0e9dbf149a0b63d336339de0938",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Exact branch PDF bytes are reachable from main at ab0c697; current PDF has evolved with its sources/profiles. No new rendering or mathematical/visual acceptance of the old PDF; do not restore it.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "output/pdf/sxpid3-source-marginal-and-bounded-audit.pdf",
+        "P1_blob": "91cd05de39be7d2e21a1d6367482ec5f1b1200a2",
+        "P1_sha256": "788b993f39133f1bf0b1d5e81f61421d9f6a35ea774db53ff50fa3eed21a8cd2",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "9909a10a817ff7309722a81551ad1be1e058ae5b",
+            "sha256": "b410452e1739b37fccb7709a070d6c93ce2406d188bc6953827b499a438a299b",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Exact branch PDF bytes are reachable from main at ab0c697; current paper incorporates later corrections. Historical publication is custody evidence only; no new rendering or old-PDF restoration.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/README.md",
+        "P1_blob": "34b759cc46a0a66475ee0aba3b2b3807131448c5",
+        "P1_sha256": "bf7b33f204ad5576680cd1112991ebc23f340d42dfff80b7b046288f3ed5cc35",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "d72f36125f00fa6560b1ceccc572e73d7dae78fe",
+            "sha256": "0e7e9a30db4fb4878a43707e7132f2a5ee291ebb434c57d2d028117fa55a9bdd",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Evolved documentation records separate semantic route and updated typed controls/publication profiles. Relevant semantic/SxPID3 deltas inspected; unrelated later method/publication additions are not freshly adjudicated.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/build-mathematical-results-guide-pdf.sh",
+        "P1_blob": "6ff17110df756661ae866de0b05f191d455b73c1",
+        "P1_sha256": "764f1c0ba04ad048080df485ddb9bfa5ac065ce4f21a3f340cd430e6bf169825",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "7e702c59cc9aba8df343f0187f0c881d5726cd07",
+            "sha256": "df80b52d5fe9561e8d34eef3a5a94ccd6e826501857c9dc651ca5b933e199fa8",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current builder updates exact figure/font/notice identities for later publication. No stale-pin restoration; historical producer bytes remain recoverable from main.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/build-sxpid3-source-marginal-audit-pdf.sh",
+        "P1_blob": "95123d84414e81078b1a3fa02998fc79a3656c62",
+        "P1_sha256": "384c1eecc24df9e620987c5ef760eccbca40903ac396673bd328bb398b888279",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "4c09183ed24671c3c28b74c7d8c6bb888b4871c0",
+            "sha256": "c9483ecfa65302b2117c2b801b5fdb8d93b5fceb2531f9c9ed891439bf75cdf7",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current builder adds owned direct temporary-object and single-link publication-file identity checks, precise cleanup/status handling and corrected-paper sentinels. Keep current safeguards; old producer retained as history.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
+        "P1_blob": "d5043a4402cd591640b225a61ac1070ea0f8b807",
+        "P1_sha256": "d85f8a42ecfb418819be10104ab3c62fbc0fe21d9a8eb0103dea9fee81400ac8",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "2ead4572fa496de937c91558f98c35f8edfe3767",
+            "sha256": "e5ed53c60f107f2bb6dd3224cf01ea245f9aecc6bfc08672ff1e9bad6f4f83f1",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current mode test separates v3 current profile from v2 historical replay, adds stale-profile rejection and exact current navigation census. Retain current admission rules.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v2-self-test.py",
+        "P1_blob": "eb6423d10963e8655338eb122ecb948f01f9b8e4",
+        "P1_sha256": "1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "eb6423d10963e8655338eb122ecb948f01f9b8e4",
+            "sha256": "1bbe82137785f203cb32e86755af0320ca055cc1b34aa335b0030485968b91c4",
+            "exact_current": true
+          }
+        ],
+        "quality_disposition": "Exact current file bytes retained for historical v2 profile, not authority for current v3 publication.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v2.py",
+        "P1_blob": "f37ab75f1f8261a84de58330f2049d1849c8b978",
+        "P1_sha256": "86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "f37ab75f1f8261a84de58330f2049d1849c8b978",
+            "sha256": "86d789f0dcd5f315ec405e290ea35e59a23739845c186504c06dc34963a98c77",
+            "exact_current": true
+          }
+        ],
+        "quality_disposition": "Exact current file bytes retained for historical v2 profile, not authority for current v3 publication.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-mathematical-results-guide-pdf.sh",
+        "P1_blob": "0e5ea7ff221b316b1f731d686140b518101255d4",
+        "P1_sha256": "3faf2dd93cf02441ee3c4c7d1d275ded967c224974f5d2c559313d9c2f927e3d",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "ad3c8e58027721ed5df1266e8f3f8e1080f0fc82",
+            "sha256": "43327805cdf2c442d3e62a71481b50ec13baf49164c8083d8b8a87b7e425c226",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current wrapper selects v3 exact structure/raw-profile bindings and current source/navigation identities; old v2 route is historical. No weakening or source rebinding proposed.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-mathematical-results-guide-prose.py",
+        "P1_blob": "724e79215d6d93179c16673c389b68af69da1018",
+        "P1_sha256": "5d443ddf61a6d5c34965ed223f994a96f601dceb1b5a43a95c449938bece6adf",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "4e544f757d41b663acf56cae1ae4771e4c2f61db",
+            "sha256": "3effacf1d4a5d621bf15a0e6cd79334661d50c60506f4589a00d27462a2fb3c6",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Source-specific direct paragraph/sentence census updates with evolved guide; branch values are preserved history and must not replace the current census.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-method-catalog.py",
+        "P1_blob": "112f333c5f121f94cd8bfcd79204d1efc7a9f4c5",
+        "P1_sha256": "9576f4f4b64e1c259a5a39fd46ff231f81de2c75b16e958877051af38b733a6e",
+        "variants": [
+          {
+            "commit": "3e6c450669850ebbd65f6f54dddca288a51831e5",
+            "blob": "4d82083c4fb13013dc13a70b1691fb89df9b1608",
+            "sha256": "099e7f87f244ca4cf0570c34b96e272d5f92fcd175d835aad8f8b3da824afbfd",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Branch-to-P1 code difference is the reviewed semantic-authority root. Both have sibling json_schema_subset import, explaining the transient workflow import problem. Keep current authority.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4-self-test.py",
+        "P1_blob": "51bd7c514d5e75ed74c235505f445aee0ed79533",
+        "P1_sha256": "d51ba55d3d0c6434c096a199a2258bd270b49190f21b81f8d9eee6aeedddd1ba",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "fab379d9c519cc70ace7bf30bdebf0cfdece23c9",
+            "sha256": "fadd73671fca24f7300c690d430db2f0caff893aa5b837698ba739f578749be8",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current hostile suite adds typed JSON and compatibility-literal reseals, explicit causal messages and revised counts. Do not restore the branch suite that misses these controls.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-sxpid3-mgw-v5-program-a-semantic-bridge-v4.py",
+        "P1_blob": "512442787f1d05bb6b24b9843152859d1ed8b505",
+        "P1_sha256": "e2fd33074973eb6f48881761690c258796dcb09cf4677bd6c39cd9bbd7f65a57",
+        "variants": [
+          {
+            "commit": "8dc3ed23a2b42785a4b8d1ebb61eedb1d1a8805f",
+            "blob": "039825ef6cb147e44dca0da2f9cfe0073c4f2a8e",
+            "sha256": "394361524372710179aea41f95f4ddf9559700082a80e02ac0d0a34fbe08ce4a",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current checker replaces Python coercive equality at verdict-bearing fields and parsed registries with recursive exact type/shape/value comparison. Same finite reconstruction/open scope; pre-correction checker is negative evidence.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-sxpid3-source-marginal-audit-builder-self-test.sh",
+        "P1_blob": "742c205bb80bf2c18dd3c4b550de8c58c569f0d4",
+        "P1_sha256": "c92db5825cb00a888fdf36ef6d5ba220be99170c7e5b64d88378ceea5a590522",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "a075d7529226dd84671abcf4f2d6e5284f72dfd4",
+            "sha256": "52ae977e01d8133e63f2e88f31aec6cfe692b5ad9fbe0b3db0545ea0a21b0524",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current suite adds clean nested-shell boundaries, temporary-object identity/hardlink tests, exported-function/BASH_ENV controls and exact residue accounting. Old suite is superseded.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      },
+      {
+        "path": "scripts/check-sxpid3-source-marginal-audit-pdf.sh",
+        "P1_blob": "afad962c41e23a89ea7f725d7ab38192f14f3809",
+        "P1_sha256": "ae2daee99ae3ab54d86db3e580e563da916292c24f0c91abc2456fee83a45e9b",
+        "variants": [
+          {
+            "commit": "b27436d7ae9ed7a7cd661aceed21842376b5738b",
+            "blob": "c56bfb433cefb61df6bb71b44eb2c5ca578d9204",
+            "sha256": "f2568f88f9700f0d280ea303de35bb61160210e93092727c6195421c2aef275c",
+            "exact_current": false
+          }
+        ],
+        "quality_disposition": "Current gate pins pypdf 6.16.1, isolates nested shells, binds owned temporary directory identity and corrected source/link sentinels. Retain stricter current route; historical bytes are not new execution evidence.",
+        "active_adoption_required": false,
+        "scope": "source-delta disposition plus exact byte/reachability comparison; not a fresh full proof, native gate or visual review"
+      }
+    ]
+  },
+  "later_context_boundary": {
+    "observed_by_review_utc": "2026-09-19T19:51:56.656282+00:00",
+    "scope": "Later integration bytes differed at six paths; these observations are context only, not new source acceptance, a live status field or an instruction to restore P1.",
+    "paths_with_later_bytes": [
+      "CHANGELOG.md",
+      "METHODS.md",
+      "audit/evidence/method-catalog-semantic-authority-v1.json",
+      "method-catalog.json",
+      "scripts/README.md",
+      "scripts/check-method-catalog.py"
+    ]
+  },
+  "recovery_contract": {
+    "recorded_route": "P1-seeded fresh private bare repository",
+    "seed": "17bec81e88eda6b7113ed6c47eb0b08830b584b6",
+    "missing_tip_before_import": true,
+    "advertised_ref": "refs/custody/semantic",
+    "import_refspec": "refs/custody/semantic:refs/custody/semantic",
+    "declared_bundle_prerequisite": "e1a6648ccace699e41b4ffa48c6acd79209a7418",
+    "minimal_prerequisite_only_recovery_tested": false,
+    "canonical_objects": {
+      "commits": 5,
+      "root_trees": 5,
+      "historical_after_blobs": 33
+    },
+    "strict_fsck": "Exit zero, empty streams after separate private detached-P1 HEAD setup.",
+    "empty_repository_negative": "Prerequisite rejection exit 1; semantic tip remained missing.",
+    "pack_inventory_boundary": "The recorded bundle header identifies the prerequisite and advertised tip. No assertion that all packed delta bases are prerequisite-reachable is made."
+  },
+  "pending_after_recorded_local_recovery": [
+    "Adopt the reviewed immutable archive with applicable source/link/current-pin checks.",
+    "Publish it on accepted main and recover from the exact committed bundle blob without the live historical branch as an input.",
+    "Before retirement, reobserve the exact remote tip and scoped worktree/process ownership; the archive itself grants no deletion permission."
+  ]
+}

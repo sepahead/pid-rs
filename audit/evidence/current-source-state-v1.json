@@ -316,8 +316,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "c283feed162a87d4bed7294b52b9a4a6f4981af06e32b3b6ee867881f098d340",
-        "size_bytes": 309017
+        "sha256": "6772137db3c05fea8c1fc8620fafef9e1500a8abfdb279a76d67f5821896de32",
+        "size_bytes": 309240
       },
       {
         "git_mode": "100644",
@@ -1650,6 +1650,24 @@
         "path": "audit/archive/sxpid3-s1-historical-checkers-v1/payload/sha256-137c36c5a86415bbce8f0f93ffe22554332f96d58b6ca8fd561dc19fa8e039bc-false-green-record-v3.json.txt",
         "sha256": "137c36c5a86415bbce8f0f93ffe22554332f96d58b6ca8fd561dc19fa8e039bc",
         "size_bytes": 27885
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sxpid3-semantic-bridge-history-20260919/DISPOSITION.md",
+        "sha256": "fc9502a01363549e2669cd1ea9079261f70e552d906a21d1a879f1d179eaefb9",
+        "size_bytes": 6038
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sxpid3-semantic-bridge-history-20260919/manifest.json",
+        "sha256": "b21ecec7cb3d2fb85c638ae1e2ba502dd9498988f740856e3144e257d88ebcf1",
+        "size_bytes": 45436
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/archive/sxpid3-semantic-bridge-history-20260919/semantic-bridge-3960e01-from-e1a6648.bundle",
+        "sha256": "656d41a059a3b021383b9b94ba9c83d090f56f128666b455e9bd20afa3b6e3f0",
+        "size_bytes": 409720
       },
       {
         "git_mode": "100644",
@@ -27754,7 +27772,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "2765362f03a9b0af027efbe5a55eade13c62e877e4cc3731e488b83783de67b1",
+        "sha256": "0002d3afc2c4c2687ffbf91c3f80c1e62b314910d6b0221d4eb9acd4d138dab7",
         "size_bytes": 136973
       },
       {
@@ -28616,8 +28634,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "3effc380641d0a4daee44fba6beb06007d9ecd5776e1f66a900d534e1d4cb1a5",
-    "entry_count": 4745
+    "entries_sha256": "fe2d32962cb8f6f38271a4900bf8b4ca76dfb499fe48a5d09074536021134fd1",
+    "entry_count": 4748
   },
   "subprojections": [
     {
@@ -28645,7 +28663,7 @@
       ]
     },
     {
-      "entries_sha256": "64add83ae1aca6b2323c17d0fe1ed7b8da89113e7702ef67bd735b433ef9d542",
+      "entries_sha256": "3edd81ad23d8797b3eee38a18206f129935ebc1363ae6b272aa87a04a02448b3",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

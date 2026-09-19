@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve the five original SxPID3 semantic-bridge commits and 31 path dispositions in a
+  recoverable inert archive. Retain the failed fetch and separate metadata repair without
+  restoring superseded verification code.
+
 ### Added
 
 - Preserve nine historical branches in a compact [Git archive](audit/archive/nine-historical-branches-20260919/disposition.md) with verified local recovery, complete commit history, and explicit defect and successor records. Retain the failed first recovery check. Archived implementations remain inactive.
