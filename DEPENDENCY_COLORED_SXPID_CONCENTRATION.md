@@ -68,8 +68,8 @@ $$
 \boxed{\mathcal M(D_n,p_{\min})\text{ controls SxPID}}.
 $$
 
-The arrows have different meanings. The first three are design bookkeeping. The fourth is a
-probability theorem. The last is a deterministic continuity implication that additionally needs a
+The arrows have different meanings. The first two are design bookkeeping. The third is a
+probability theorem. The fourth is a deterministic continuity implication that additionally needs a
 justified positive population-cell floor and a strict common-support margin. A color label never
 enters the SxPID definition, and `pid-rs` exposes no public color-map estimator in this increment.
 

@@ -31,12 +31,19 @@ $$
  n=\sum_{z\in Z_+}c_z>0.
 $$
 
+For an event $E$ of complete states, define its count with multiplicity by
+
+$$
+ \#E:=\sum_{u\in Z_+}c_u\mathbf{1}_E(u),
+$$
+
+where $\mathbf{1}_E$ is the event indicator.
 For a fixed SxPID lattice node $\alpha$ and keyed state $z$, define integer counts
 
 $$
  a_{z,\alpha}=\#A_{z,\alpha},\qquad
- b_{z,\alpha}=\#(A_{z,\alpha}\cap\{T=t_z\}),\qquad
- t_z=\#\{T=t_z\}.
+ b_{z,\alpha}=\#(A_{z,\alpha}\cap\{T=t\}),\qquad
+ t_z=\#\{T=t\}.
 $$
 
 Here $A_{z,\alpha}$ is exactly the disjunction of source-collection events in the reviewed

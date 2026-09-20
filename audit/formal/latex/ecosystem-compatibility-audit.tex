@@ -495,8 +495,9 @@ transforms the same matrix.  The source correctly labels these paths descriptive
 projection held out.
 
 The following construction shows why a split is essential.  Let
-$X\in\mathbb{R}^{n\times p}$ be a continuous noise matrix independent of binary
-target $T$, with $p\geq n$.  With probability one, $X$ has row rank $n$.
+$X\in\mathbb{R}^{n\times p}$ have a joint law absolutely continuous with respect to Lebesgue
+measure on $\mathbb{R}^{np}$, independent of a binary target vector $T$, with $p\geq n$.
+Independent standard Gaussian entries are one example.  With probability one, $X$ has row rank $n$.
 Consequently, a target-adaptive linear fit can choose $w$ such that $Xw=T$ on
 the evaluation rows.  Let $\widehat P_n$ be the discrete empirical law assigning
 mass $1/n$ to each fitted pair $(Z_i,T_i)$, where $Z=Xw$.  Then

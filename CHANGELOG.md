@@ -78,6 +78,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Clarify five mathematical papers in Markdown and PDF: distinguish bookkeeping from probability
+  and continuity implications, state the singleton-alphabet case, define event counts with
+  multiplicity, attach support containment to the convergence chain, and require joint absolute
+  continuity for the full-row-rank example. Improve page breaks in the exact-count paper and
+  correct the results-guide navigation label. The estimator code and formal theorem
+  statements remain unchanged. Record the reasons and review limits in the
+  [source-correction record](audit/evidence/mathematical-paper-source-corrections-2026-09-20.md).
+
 - Extend the mathematical results guide and its PDF with six finite categorical MGW companion
   packages: prefix mean, bias and gradients, the support-change MI cusp, target-copy identities,
   and the fixed-world synergy comparison. State the motivation, assumptions, use and exact proof

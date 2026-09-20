@@ -323,8 +323,10 @@ transforms `x`; the code correctly calls the route descriptive
 components does not make the final same-row projection held out.
 
 A simple negative construction explains the risk. Let an evaluation design matrix
-$X\in\mathbb{R}^{n\times p}$ contain continuous noise independent of a binary target $T$, with
-$p\ge n$. With probability one, $X$ has row rank $n$. A target-adaptive linear fit can choose $w$
+$X\in\mathbb{R}^{n\times p}$ have a joint law absolutely continuous with respect to Lebesgue
+measure on $\mathbb{R}^{np}$, independent of a binary target vector $T$, with $p\ge n$.
+Independent standard Gaussian entries are one example. With probability one, $X$ has row rank
+$n$. A target-adaptive linear fit can choose $w$
 such that $Xw=T$ on those rows. Let $\widehat P_n$ be the discrete empirical law assigning mass
 $1/n$ to each fitted pair $(Z_i,T_i)$, where $Z=Xw$. Then
 $I_{\widehat P_n}(Z;T)=H_{\widehat P_n}(T)$ even though the population relation is $I(X;T)=0$.

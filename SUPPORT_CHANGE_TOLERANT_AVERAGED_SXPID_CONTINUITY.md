@@ -668,6 +668,10 @@ $$
 
 do not replace $\eta$ by $\varepsilon$ in the exact formulas without a monotonicity proof.
 
+If $K=1$, both laws are the unique singleton law, so every cumulative and atom difference is
+zero. Use this zero bound for any supplied radius $0\le\varepsilon\le1$, without evaluating
+the following formulas.
+
 For $K\ge2$, define the monotone upper envelopes
 
 $$

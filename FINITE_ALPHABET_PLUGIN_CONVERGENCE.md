@@ -43,8 +43,9 @@ continuous estimators.
 ## What problem this note solves
 
 An implementation can evaluate a published categorical functional at an empirical law, but code
-existence alone does not prove that the plug-in value approaches a population value. The key
-mathematical chain is
+existence alone does not prove that the plug-in value approaches a population value. Under
+FA-1's support-containment premise, $\mathrm{supp}(\widehat P_n)\subseteq\mathrm{supp}(P)$ for every
+$n$, the key mathematical chain is
 
 $$
 \widehat P_n\to P

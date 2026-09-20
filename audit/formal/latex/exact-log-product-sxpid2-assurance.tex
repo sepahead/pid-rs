@@ -15,6 +15,8 @@
 \usepackage{listings}
 
 \setlength{\emergencystretch}{3em}
+\clubpenalty=10000
+\widowpenalty=10000
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \ifdefined\pdfinfoomitdate
@@ -127,13 +129,18 @@ integer multiplicity \(c_z>0\), and
 \begin{equation}\label{eq:n}
 n=\sum_{z\in Z_+}c_z>0.
 \end{equation}
+For an event \(E\) of complete states, define its count with multiplicity by
+\[
+  \#E:=\sum_{u\in Z_+}c_u\mathbf{1}_E(u),
+\]
+where \(\mathbf{1}_E\) is the event indicator.
 Fix a two-source redundancy-lattice node \(\alpha\).  For a keyed observed state \(z\), let
 \(A_{z,\alpha}\) be the disjunction of the node's source-collection events, exactly as in the
 shared-exclusions construction.  Define integer masses
 \begin{align}
 a_{z,\alpha}&=\#A_{z,\alpha},\\
-b_{z,\alpha}&=\#\bigl(A_{z,\alpha}\cap\{T=t_z\}\bigr),\\
-t_z&=\#\{T=t_z\}.
+b_{z,\alpha}&=\#\bigl(A_{z,\alpha}\cap\{T=t\}\bigr),\\
+t_z&=\#\{T=t\}.
 \end{align}
 Every defining event contains its keyed observed state, so
 \begin{equation}\label{eq:nesting}

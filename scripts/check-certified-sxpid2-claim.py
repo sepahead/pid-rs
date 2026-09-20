@@ -218,13 +218,13 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "01e6e00f72a1ae75aa9f31e148b5685d38b2d82b2477aa8bc55ccfa333ebf84c"
     ),
     "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md": (
-        "03e3dcbe24e1e68e3ad77be970dba03ffb4a2d2f194c8067acee36d9b36430cd"
+        "45672b32d57b0e7fcc4d6bb8830c7a152c09ff2cdc8edba5495f92b084f3edaa"
     ),
     "audit/formal/latex/certified-sxpid2-executable-assurance.tex": (
         "297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61"
     ),
     "audit/formal/latex/exact-log-product-sxpid2-assurance.tex": (
-        "3e7afc3dd4c0186b30d751585db32d2f727ff46aa5e43f32818e631aeae39690"
+        "05e865acfc2745df6245cc2b99aa81503ac7fbf498a1f41b884afe6f3711d7d1"
     ),
     "audit/tools/certified-sxpid/deny.toml": (
         "8f5451e9ef2ee389a212f3c55b0d58032f5fe119fcff7109b74eff6d8ce04c03"
@@ -239,7 +239,7 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c"
     ),
     "output/pdf/exact-log-product-sxpid2-assurance.pdf": (
-        "ffa12c97a5869b248d11cc5b669f09556810747ae5ef77b497f34e57ca349529"
+        "3462a19fadc87fd542da356145413d7f71227f84d8ead1f38f334eec6462a615"
     ),
     "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md": (
         "646639199233515b72bf81b8f2843a781ae985abfde3cd1e77aa24691840c3e0"

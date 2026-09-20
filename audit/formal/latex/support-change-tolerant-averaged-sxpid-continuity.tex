@@ -586,8 +586,12 @@ by \(\log K_S\), and every net difference can be capped by \(2\log K_S\).
 
 \section{Support-change-tolerant statistical transfer}
 
-The exact functions \(g_J,e_K^\vee,e_K^\Sigma\) are not all monotone on \([0,1]\).  To use only an
-upper radius \(0\le\eta\le\varepsilon\le1\), define
+The exact functions \(g_J,e_K^\vee,e_K^\Sigma\) are not all monotone on \([0,1]\).
+If \(K=1\), both laws are the unique singleton law, so every cumulative and atom difference is
+zero.  Use this zero bound for any supplied radius \(0\le\varepsilon\le1\), without evaluating
+the following formulas.
+
+For \(K\ge2\), to use only an upper radius \(0\le\eta\le\varepsilon\le1\), define
 \begin{equation}
   \bar e_K^\vee(\varepsilon)
   =
