@@ -694,6 +694,11 @@ pub struct SxPointwise3 {
 }
 
 /// Result of a discrete 3-source shared-exclusions PID.
+///
+/// Public fields are caller-owned data. When editing them, preserve canonical antichain
+/// labels and keep `antichains`, `atoms`, and the pointwise atom vectors aligned. Edits do
+/// not recompute derived summaries or validate their relationships with the empirical PMF
+/// and provenance.
 #[derive(Debug, Serialize)]
 #[non_exhaustive]
 pub struct DiscreteSxPid3Result {
@@ -718,11 +723,15 @@ pub struct DiscreteSxPid3Result {
 impl DiscreteSxPid3Result {
     /// Look up the averaged atom for an antichain given as a slice of bitmasks (e.g. `&[0b001,
     /// 0b010, 0b100]` for `{{0},{1},{2}}`). Order-insensitive.
+    ///
+    /// Returns `None` when no key matches or its position has no stored atom. The lookup
+    /// uses the current vector contents; it does not repair alignment after caller edits.
     pub fn atom(&self, sets: &[u8]) -> Option<SxAveragedAtom> {
         self.antichains
             .iter()
             .position(|antichain| unordered_masks_equal(antichain, sets))
-            .map(|i| self.atoms[i])
+            .and_then(|i| self.atoms.get(i))
+            .copied()
     }
 }
 
@@ -2513,6 +2522,11 @@ pub struct SxPointwiseN {
 }
 
 /// Result of a general n-source discrete shared-exclusions PID.
+///
+/// Public fields are caller-owned data. When editing them, preserve canonical antichain
+/// labels and keep `antichains`, `atoms`, and the pointwise atom vectors aligned. Edits do
+/// not recompute derived summaries or validate their relationships with the empirical PMF
+/// and provenance.
 #[derive(Debug, Serialize)]
 #[non_exhaustive]
 pub struct DiscreteSxPidNResult {
@@ -2535,11 +2549,15 @@ pub struct DiscreteSxPidNResult {
 
 impl DiscreteSxPidNResult {
     /// Averaged atom for an antichain given as a slice of bitmasks (order-insensitive).
+    ///
+    /// Returns `None` when no key matches or its position has no stored atom. The lookup
+    /// uses the current vector contents; it does not repair alignment after caller edits.
     pub fn atom(&self, sets: &[u8]) -> Option<SxAveragedAtom> {
         self.antichains
             .iter()
             .position(|antichain| unordered_masks_equal(antichain, sets))
-            .map(|i| self.atoms[i])
+            .and_then(|i| self.atoms.get(i))
+            .copied()
     }
 }
 

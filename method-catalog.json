@@ -434,7 +434,8 @@
       "category": "estimator",
       "code_availability": "local",
       "constraints": [
-        "This is an MLE-style finite-sample diagnostic and is sensitive to neighborhood scale and support violations."
+        "This is an MLE-style finite-sample diagnostic and is sensitive to neighborhood scale and support violations.",
+        "Diagnostic quantiles select zero-based sorted position floor(((n - 1) * p + 50) / 100), for n > 0 and integer percentile p in 0..=100. This rounded-position convention performs no interpolation and differs from inverse-empirical-CDF nearest rank."
       ],
       "definition_origin": "paper-derived",
       "depends_on": [],
@@ -812,7 +813,8 @@
       "category": "estimator",
       "code_availability": "local",
       "constraints": [
-        "Requires an explicit full-dimensional absolute-continuity support contract for every marginal and joint law used by the call."
+        "Requires an explicit full-dimensional absolute-continuity support contract for every marginal and joint law used by the call.",
+        "Diagnostic quantiles using KsgValueQuantiles or KsgCountQuantiles select zero-based sorted position floor(((n - 1) * p + 50) / 100), for n > 0 and integer percentile p in 0..=100. This rounded-position convention performs no interpolation and differs from inverse-empirical-CDF nearest rank."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [
@@ -2792,7 +2794,8 @@
         "Computing a three- or four-source antichain lattice does not establish every desired cross-subsystem consistency property for multivariate PID.",
         "The exact-real plug-in convergence result uses fixed finite alphabets, a fixed lattice, eventual support equality, and realization keys; it is not a binary64 asymptotic result.",
         "A separate exact-real theorem gives support-change-tolerant continuity for joint-law-averaged cumulatives and full-lattice atoms on one fixed complete finite alphabet without a positive support-mass floor. It does not give pointwise continuity at a disappearing key, executable refinement, binary64 enclosure, or estimator calibration.",
-        "Lean now binds supplied exact natural counts with positive total to all 24 fixed two-source cumulative and atom coordinates across informative, misinformative, and signed-net components, including exact rational and real products and scaled-log sign and zero equivalences. The coordinate-swap theorem is formula-only and transports no source types, keys, counts, laws, or events. This does not formalize bytes or rows to counts, Rust event extraction, NODES2, invert2, result-field refinement, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, or sampling, statistical, population, calibration, or consumer-validity claims."
+        "Lean now binds supplied exact natural counts with positive total to all 24 fixed two-source cumulative and atom coordinates across informative, misinformative, and signed-net components, including exact rational and real products and scaled-log sign and zero equivalences. The coordinate-swap theorem is formula-only and transports no source types, keys, counts, laws, or events. This does not formalize bytes or rows to counts, Rust event extraction, NODES2, invert2, result-field refinement, binary64 or certifier/parser execution, component-atom nonnegativity, support-change transfer between laws, higher-source lattices, or sampling, statistical, population, calibration, or consumer-validity claims.",
+        "Public Rust result fields are caller-owned and mutable. Callers must preserve canonical antichain labels and align antichains, atoms, and pointwise atom vectors. Three-source and general-source atom lookups return None when the key or its aligned value is absent; edits do not recompute derived summaries or validate their empirical-PMF relationships."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [
@@ -3104,7 +3107,8 @@
         "The Ehrlich source-disjunction object is a gauge-dependent quasi-density/neighborhood construction, not a normalized probability-union law.",
         "The two sources must have equal ambient dimension; this is only a necessary software condition and does not establish compatible intrinsic dimensions or reference measures.",
         "Relative source units and preprocessing define the estimand and must be recorded.",
-        "The report records the lower-order branch-intersection assumption used when leading-order overlap terms are dropped."
+        "The report records the lower-order branch-intersection assumption used when leading-order overlap terms are dropped.",
+        "Diagnostic quantiles using KsgValueQuantiles or KsgCountQuantiles select zero-based sorted position floor(((n - 1) * p + 50) / 100), for n > 0 and integer percentile p in 0..=100. This rounded-position convention performs no interpolation and differs from inverse-empirical-CDF nearest rank."
       ],
       "definition_origin": "paper-defined",
       "depends_on": [

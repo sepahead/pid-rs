@@ -573,7 +573,12 @@ impl KsgReportWarning {
     }
 }
 
-/// Empirical nearest-rank quantiles of finite local floating-point diagnostics.
+/// Empirical quantiles at rounded zero-based positions in sorted finite local diagnostics.
+///
+/// For a nonempty sample of length `n` and integer percentile `p` in `0..=100`, the
+/// selected index is `floor(((n - 1) * p + 50) / 100)`. Midpoint ties select the higher
+/// position; no interpolation is performed. This differs from inverse-empirical-CDF
+/// nearest rank: for ten observations, the median is the sixth sorted value.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 #[non_exhaustive]
 pub struct KsgValueQuantiles {
@@ -585,7 +590,8 @@ pub struct KsgValueQuantiles {
     pub max: f64,
 }
 
-/// Empirical nearest-rank quantiles of marginal neighbor counts.
+/// Empirical marginal-count quantiles using the rounded-position convention of
+/// [`KsgValueQuantiles`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[non_exhaustive]
 pub struct KsgCountQuantiles {
@@ -1933,7 +1939,7 @@ fn summarize_local_diagnostics_with_cancellation(
     })
 }
 
-fn nearest_rank_index(len: usize, percentile: u128) -> PidResult<usize> {
+fn nearest_position_index(len: usize, percentile: u128) -> PidResult<usize> {
     if len == 0 || percentile > 100 {
         return Err(PidError::InvalidConfig {
             context: "ksg diagnostic quantiles",
@@ -1958,23 +1964,23 @@ pub(crate) fn value_quantiles(sorted: &[f64]) -> PidResult<KsgValueQuantiles> {
         });
     }
     Ok(KsgValueQuantiles {
-        min: sorted[nearest_rank_index(sorted.len(), 0)?],
-        p10: sorted[nearest_rank_index(sorted.len(), 10)?],
-        median: sorted[nearest_rank_index(sorted.len(), 50)?],
-        p90: sorted[nearest_rank_index(sorted.len(), 90)?],
-        p99: sorted[nearest_rank_index(sorted.len(), 99)?],
-        max: sorted[nearest_rank_index(sorted.len(), 100)?],
+        min: sorted[nearest_position_index(sorted.len(), 0)?],
+        p10: sorted[nearest_position_index(sorted.len(), 10)?],
+        median: sorted[nearest_position_index(sorted.len(), 50)?],
+        p90: sorted[nearest_position_index(sorted.len(), 90)?],
+        p99: sorted[nearest_position_index(sorted.len(), 99)?],
+        max: sorted[nearest_position_index(sorted.len(), 100)?],
     })
 }
 
 pub(crate) fn count_quantiles(sorted: &[usize]) -> PidResult<KsgCountQuantiles> {
     Ok(KsgCountQuantiles {
-        min: sorted[nearest_rank_index(sorted.len(), 0)?],
-        p10: sorted[nearest_rank_index(sorted.len(), 10)?],
-        median: sorted[nearest_rank_index(sorted.len(), 50)?],
-        p90: sorted[nearest_rank_index(sorted.len(), 90)?],
-        p99: sorted[nearest_rank_index(sorted.len(), 99)?],
-        max: sorted[nearest_rank_index(sorted.len(), 100)?],
+        min: sorted[nearest_position_index(sorted.len(), 0)?],
+        p10: sorted[nearest_position_index(sorted.len(), 10)?],
+        median: sorted[nearest_position_index(sorted.len(), 50)?],
+        p90: sorted[nearest_position_index(sorted.len(), 90)?],
+        p99: sorted[nearest_position_index(sorted.len(), 99)?],
+        max: sorted[nearest_position_index(sorted.len(), 100)?],
     })
 }
 
@@ -2157,8 +2163,14 @@ pub(crate) fn hash_text(value: &str) -> [u8; 32] {
 ///   the estimator, and must not be applied before algebraic identities or inference.
 ///
 /// # Example
-/// ```rust,ignore
-/// use pid_core::{experimental::continuous::ksg_mi, stable::continuous::KsgConfig, MatRef};
+/// ```no_run
+/// # #[cfg(feature = "experimental-continuous")]
+/// # {
+/// use pid_core::{
+///     experimental::continuous::raw_scalars::ksg_mi,
+///     stable::continuous::KsgConfig,
+///     MatRef,
+/// };
 /// // Columns are dimensions, rows are samples: scalar X and a dependent Y.
 /// let x = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0];
 /// let y = [0.1, 0.9, 2.1, 2.8, 4.2, 4.9, 6.1, 7.0];
@@ -2166,6 +2178,7 @@ pub(crate) fn hash_text(value: &str) -> [u8; 32] {
 /// let y = MatRef::new(&y, 8, 1)?;
 /// let mi = ksg_mi(x, y, &KsgConfig::assume_regular_full_dimensional())?; // nats
 /// assert!(mi.is_finite());
+/// # }
 /// # Ok::<(), pid_core::PidError>(())
 /// ```
 #[cfg(any(feature = "experimental-continuous", test))]
@@ -2918,6 +2931,36 @@ mod tests {
     };
     use crate::matrix::{concat_horiz, MatRef};
     use crate::resource::ResourceBudget;
+
+    #[test]
+    fn diagnostic_quantiles_select_rounded_positions_without_interpolation() {
+        let values = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0];
+        let counts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        // The inverse-ECDF convention would instead select 1 and 5 at p10 and median.
+        assert_eq!(
+            super::value_quantiles(&values).unwrap(),
+            super::KsgValueQuantiles {
+                min: 1.0,
+                p10: 2.0,
+                median: 6.0,
+                p90: 9.0,
+                p99: 10.0,
+                max: 10.0,
+            }
+        );
+        assert_eq!(
+            super::count_quantiles(&counts).unwrap(),
+            super::KsgCountQuantiles {
+                min: 1,
+                p10: 2,
+                median: 6,
+                p90: 9,
+                p99: 10,
+                max: 10,
+            }
+        );
+    }
 
     fn strict_radius_predecessor_fixture() -> ([f64; 4], [f64; 4]) {
         let predecessor = f64::from_bits(1.0_f64.to_bits() - 1);

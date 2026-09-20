@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Preserve diagnostic values while documenting their rounded-position quantile convention.
+  Make categorical SxPID3/N atom lookups return `None` for missing aligned values after caller
+  edits, and document the caller-owned alignment contract. Correct the KSG raw-scalar example
+  namespace and include it in compile-only documentation checks.
+
 - Preserve the five original SxPID3 semantic-bridge commits and 31 path dispositions in a
   recoverable inert archive. Retain the failed fetch and separate metadata repair without
   restoring superseded verification code.

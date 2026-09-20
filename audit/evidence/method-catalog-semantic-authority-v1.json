@@ -45,7 +45,7 @@
   "authority_schema_sha256": "afc9bb89a704dce43a53f01117e068dde9984177446c9e6d2ff049e120a27f20",
   "catalog_schema": "pid-rs/method-catalog",
   "catalog_schema_revision": 1,
-  "catalog_sha256": "7a7c5bb7e723d48ae257f77f52fa5fbdce1ea92e2db70e54404ac340bcd652c6",
+  "catalog_sha256": "2a140ed8af44a477cfe1c6961ae4aac87c7d46238fcd34aaa8b788abf4aa6206",
   "fact_semantics": {
     "conditioning": "External analysis-design, fitted-artifact, observation-model, or composition conditioning attached to the implemented row; this field does not inventory every conditional probability inside a defining formula.",
     "data_domain": "Scientific input-variable or record kind addressed by the row; a storage dtype or successful parse does not establish this domain.",
@@ -147,7 +147,7 @@
       },
       "method_id": "diagnostics.intrinsic-dimension",
       "observed_alias_families": [],
-      "payload_sha256": "1e6520fc179ed25d6cdba0b5b53b11bc30d29d0831ba402bb2957dc05ec96cf9"
+      "payload_sha256": "5d3deb57ff90b482c6c0c468658ed71503957ae80552e2154f9d4c083dfbd801"
     },
     {
       "facts": {
@@ -227,7 +227,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "a3fed08394f9ea13a1ae76473151cda695d19d1e5bb6543994b4ca8dd8e3414a"
+      "payload_sha256": "79e78b9183f7092f1d87a9de47c663c87e74bc1ce95746befca5c83f66cf1058"
     },
     {
       "facts": {
@@ -619,7 +619,7 @@
       "observed_alias_families": [
         "williams-beer-imin"
       ],
-      "payload_sha256": "77499b7c6a34cca0f46f5cb66ff4952a45928ed5a71277e3cd130c141b16cee1"
+      "payload_sha256": "c4c20493077d86e774512e93a97ce58759e0f4e84f62e30e5557ccd3d66bc08c"
     },
     {
       "facts": {
@@ -664,7 +664,7 @@
         "ksg-mutual-information",
         "mgw-categorical-shared-exclusions"
       ],
-      "payload_sha256": "234faaad967abb547d92b6cae1dde8cbd227bb6778996efb3181783359504333"
+      "payload_sha256": "7f5b5b78910db88c2fe15ea5a8bd48a8e33f9288905485f903647bb1b3c84463"
     },
     {
       "facts": {
@@ -999,7 +999,7 @@
       "payload_sha256": "aaaf6de34d392efa41c82a7980cc5f2e2bb6e218fa4ace016274dc5d907f02a5"
     }
   ],
-  "ordered_root_sha256": "56ba4191203ef4dd31e994bbd18edc54472dff4fce0837c5720d4c5fd7eed634",
+  "ordered_root_sha256": "a086f856dc6866c234239222f590e92773b7dac95b67cd991dc9ea028ca6e6e6",
   "reference_registry_sha256": "87a9a600ef866dc6dce6da60c514647c2e72c3e886b1cb3679d5c6c515b0e256",
   "schema": "pid-rs/method-catalog-semantic-authority",
   "schema_revision": 1

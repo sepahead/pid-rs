@@ -1375,3 +1375,45 @@ fn nsource_4source_symmetry_and_reconstruction() {
         assert_eq!(a.net_nats(), a.informative_nats() - a.misinformative_nats());
     }
 }
+
+#[test]
+fn three_source_atom_lookup_returns_none_after_caller_shortens_atoms() {
+    let values = [0, 1];
+    let input = DiscreteMatRef::new(&values, 2, 1).unwrap();
+    let mut result = discrete_sxpid3(input, input, input, input).unwrap();
+    let first_key = result.antichains[0].clone();
+    let removed_key = result.antichains.last().unwrap().clone();
+    let first_atom = result.atom(&first_key);
+    assert!(first_atom.is_some());
+    assert!(result.atom(&removed_key).is_some());
+
+    result.atoms.truncate(1);
+
+    assert_eq!(result.atom(&first_key), first_atom);
+    assert_eq!(result.atom(&removed_key), None);
+
+    result.atoms.clear();
+
+    assert_eq!(result.atom(&first_key), None);
+}
+
+#[test]
+fn general_atom_lookup_returns_none_after_caller_shortens_atoms() {
+    let values = [0, 1];
+    let input = DiscreteMatRef::new(&values, 2, 1).unwrap();
+    let mut result = discrete_sxpid_n(&[input, input, input], input).unwrap();
+    let first_key = result.antichains[0].clone();
+    let removed_key = result.antichains.last().unwrap().clone();
+    let first_atom = result.atom(&first_key);
+    assert!(first_atom.is_some());
+    assert!(result.atom(&removed_key).is_some());
+
+    result.atoms.truncate(1);
+
+    assert_eq!(result.atom(&first_key), first_atom);
+    assert_eq!(result.atom(&removed_key), None);
+
+    result.atoms.clear();
+
+    assert_eq!(result.atom(&first_key), None);
+}
