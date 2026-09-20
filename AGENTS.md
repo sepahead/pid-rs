@@ -195,6 +195,20 @@ prose for technical sections, but do not claim ASD-STE100 conformance without a 
 Preserve counterexamples, false positives, unsuccessful routes, and negative results with their
 scope and rejection reason; do not leave stale claims in an apparently current lane.
 
+For every new or materially changed mathematical or statistical study, include a section named
+**Rust implementation and computational cost** in the detailed Markdown and PDF, with a concise
+summary in any overview. State the exact estimand and assumptions, current public Rust API and
+feature gate, source route, and which parts are implemented, proposed or unavailable. Define the
+input shape, row count, dimension, alphabet and occupied support; account for time and memory,
+preprocessing, inference, training and resampling, resource limits, cancellation/failure behavior
+and numerical assumptions. Explain intended offline or online use and approximation trade-offs.
+Cite actual release measurements with their workload and environment, or explicitly state that
+no timing is reported. Separate proof checking from estimator runtime. Keep code, method status,
+examples and Markdown/PDF companions consistent; a formula or passing fixture does not establish
+an implemented learner, formal refinement or real-time suitability. Use the
+[Rust implementation and cost reference](RUST_IMPLEMENTATION_AND_COST.md) as the source-derived
+engineering baseline; retain each study's own assumptions and costs.
+
 New or materially redesigned human-facing PDFs, and changed pages in the mathematical-workflow and
 durability-blueprint PDFs, use the reviewed repository-local publication design language. Existing
 publications keep their established design

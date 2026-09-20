@@ -310,14 +310,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "c8af2e57379d9ff39c8749683054b84d526258d2e24c779b7ae87ea0d595bab1",
-        "size_bytes": 95988
+        "sha256": "b73ead70cadf18100ee1ae9ac0ae224021cd5b13a4a6bbdc8a90b96963131099",
+        "size_bytes": 97191
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "6e3bac5b115c9e16face6a60af5a347de4f96271f52e3f7020299d06e12ef28f",
-        "size_bytes": 310967
+        "sha256": "560ca042e6a4226371ae10531f4a0de00fff3ced62c5e6e4bb31153d859744d2",
+        "size_bytes": 311339
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "6df18dee6b09f18f0ce297c05433117312dd08ae479a11f8ec9056d51ee83064",
-        "size_bytes": 88025
+        "sha256": "a03459439fd46ce3a0ebdf7636242822d690574c2a7cec95b57e01aa6720d5dc",
+        "size_bytes": 88239
       },
       {
         "git_mode": "100644",
@@ -516,6 +516,12 @@
         "path": "RELEASE_SCOPE_1_0.md",
         "sha256": "c1c6c2e7c7ee6dc695293671da6622c1c1a9efe00cd8deb20cfe7f1c143f88f3",
         "size_bytes": 62827
+      },
+      {
+        "git_mode": "100644",
+        "path": "RUST_IMPLEMENTATION_AND_COST.md",
+        "sha256": "3b4748f17ff07fa070dbb0a38c19abd5f7c852041871b1bcfd7279379c2de2ef",
+        "size_bytes": 23594
       },
       {
         "git_mode": "100644",
@@ -27862,7 +27868,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "62addca5d41b3a015e4f733f9ec4ea412c91ebc5bf0413de03039d50a6546d13",
+        "sha256": "4d0dc4db1d724c70b80f298b82fc5cc02a31d88f26a6ae0a04f94ae25ba9c1ad",
         "size_bytes": 136973
       },
       {
@@ -28772,8 +28778,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "65d858a82601ac6fd534814bfaa1b6da1209dea6f6dc03cc056c8360571cb46b",
-    "entry_count": 4771
+    "entries_sha256": "114078d1374fd23e8283c50a90b12b2ab000ac8e483f937a1f7066f8b390d646",
+    "entry_count": 4772
   },
   "subprojections": [
     {
@@ -28801,7 +28807,7 @@
       ]
     },
     {
-      "entries_sha256": "8149a2f4ce60aca4fbaab1cf28bed5d6dfbb91c977be2c69da66af68f7dd8385",
+      "entries_sha256": "2f9cf5e83fd4f41a08be5f8074ebce7ceb1db7bb55d2eb9e6ce662302b4089b6",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

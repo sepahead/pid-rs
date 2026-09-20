@@ -18,6 +18,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add a [Rust implementation and cost reference](RUST_IMPLEMENTATION_AND_COST.md) for categorical,
+  continuous and exact-count routes, separating source-derived work from measured performance.
+  Require implementation and cost sections in new or materially updated mathematical studies;
+  retain their Markdown/PDF consistency and existing scientific-status boundaries.
+
 - Preserve nine historical branches in a compact [Git archive](audit/archive/nine-historical-branches-20260919/disposition.md) with verified local recovery, complete commit history, and explicit defect and successor records. Retain the failed first recovery check. Archived implementations remain inactive.
 
 - Preserve four historical branches in three compact Git archives with per-version dispositions

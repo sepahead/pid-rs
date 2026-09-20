@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "c8af2e57379d9ff39c8749683054b84d526258d2e24c779b7ae87ea0d595bab1",
-    "CHANGELOG.md": "6e3bac5b115c9e16face6a60af5a347de4f96271f52e3f7020299d06e12ef28f",
+    "AGENTS.md": "b73ead70cadf18100ee1ae9ac0ae224021cd5b13a4a6bbdc8a90b96963131099",
+    "CHANGELOG.md": "560ca042e6a4226371ae10531f4a0de00fff3ced62c5e6e4bb31153d859744d2",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
