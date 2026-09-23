@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Rebind the blueprint index and certified SxPID2 scripts-guide checks to reviewed current
+  documentation bytes, with a dated successor record. Preserve the earlier failed CI evidence,
+  historical claim bindings, and PDF content.
+
 - Repair finite-MGW publication controls after the author-header update. Isolate citation label,
   URL and author mutations, retain exact failure diagnostics, and correct the current profile and
   archive-alias documentation. The producer predicate and published PDF are unchanged.
