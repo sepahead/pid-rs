@@ -1,0 +1,52 @@
+\def\UnicodeFontFile#1#2{"[../fonts/#1.otf]:#2"}
+\input{tulmr.fd}
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm,headheight=14pt,footskip=12mm]{geometry}
+\usepackage{fontspec}
+\defaultfontfeatures{Path=../fonts/}
+\usepackage{unicode-math}
+\setmathfont{latinmodern-math.otf}
+\usepackage{amsmath,booktabs,longtable,array,calc,graphicx,xcolor}
+\usepackage{microtype,ragged2e,enumitem,seqsplit,etoolbox}
+\usepackage{newunicodechar,float}
+\usepackage{pid-rs-report-tables}
+\usepackage{pid-rs-workflow-publication}
+\usepackage{hyperref,xurl,bookmark}
+\pdfvariable minorversion=7
+\pdfvariable suppressoptionalinfo=767
+\pdfextension catalog { /Lang (en) }
+\hypersetup{colorlinks=true,linkcolor=PidPrimary,urlcolor=PidSecondary,citecolor=PidSecondary,filecolor=PidSecondary,pdftitle={Wibral-line PID for physical intelligence},pdfauthor={Sepehr Mahmoudian},pdfsubject={Results, limits and the next sensor experiment},pdfdisplaydoctitle=true}
+\PidSetRunningHeads{Categorical shared exclusions}{Embodied sensor utility}
+\PidWorkflowConfigureSections
+% Compose unavailable text glyphs in the current text family, including inline code.
+\newunicodechar{₂}{\textsubscript{2}}
+\newunicodechar{≈}{\ensuremath{\approx}}
+% Keep each admitted figure in its source order.
+\floatplacement{figure}{H}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48em plus 0.10em minus 0.06em}
+\setlength{\emergencystretch}{3em}
+\setlength{\LTpre}{0.5em}
+\setlength{\LTpost}{0.5em}
+\setlist{itemsep=0.2em,topsep=0.3em}
+\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\passthrough}[1]{#1}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
+\newcounter{none}
+\let\PidSavedTexttt\texttt
+\renewcommand{\texttt}[1]{\PidSavedTexttt{#1}}
+\AtBeginEnvironment{longtable}{\footnotesize\RaggedRight\setlength{\tabcolsep}{3pt}}
+\title{\PidReportTitle{Wibral-line PID for physical intelligence}{Results, limits and the next sensor experiment}}
+\author{Sepehr Mahmoudian}
+\date{23 September 2026}
+\begin{document}
+\microtypesetup{expansion=false}
+\RaggedRight
+\PidMakeTitle
+$body$
+\end{document}

@@ -79,6 +79,7 @@ you interpret an estimate.
 | Understand target-copy models | [Standalone note](audit/evidence/finite-target-copy-mgw-synergy.md), [PDF](output/pdf/finite-target-copy-mgw-synergy.pdf) | Exact categorical MGW identities, named-PID comparisons and signed cancellation; eleven local Lean targets, with complete replay qualification open |
 | Check a claim | [Assurance registry](audit/evidence/assurance-registry.json), [known limitations](KNOWN_LIMITATIONS.md) | Scoped evidence and open obligations; follow each claim's current decision |
 | Assess an application | [Ecosystem capabilities](ECOSYSTEM_CAPABILITIES.md), [sensor and Galadriel guide](PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md) | Physical inputs, alphabets, targets, simpler comparators, resource limits, and qualification gaps |
+| Plan an embodied sensor study | [Sensor overview](audit/research/embodied-sensor-utility/OVERVIEW.md), [overview PDF](output/pdf/embodied-sensor-overview.pdf), [full derivation](audit/research/embodied-sensor-utility/EXPOSITION.md) | Availability, signed MGW allocations and predictive loss; proposed offline evaluation against task loss, MI/CMI and masking baselines |
 | Develop or review a result | [Mathematical workflow](MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md), [discovery and durability blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) | Proof routes, counterexamples, failed attempts, formal checks, councils, and evidence preservation |
 | Resume unfinished work | [Session handoff](SESSION_HANDOFF.md), [agent instructions](AGENTS.md) | Current integration checkout, reading order, unfinished milestones, checks, and branch/worktree procedure |
 
@@ -172,6 +173,16 @@ optimizer, transfer between the categorical and continuous functionals, field va
 result, real-time qualification, or evidence that PID should replace coverage, task loss, MI/CMI,
 ablation, failure testing, Gaussian-process placement, Fisher design, or Bayesian experimental
 design.
+
+The [embodied-sensor report](audit/research/embodied-sensor-utility/EXPOSITION.md) and its
+[full PDF](output/pdf/embodied-sensor-utility.pdf) derive how exogenous availability weights signed
+categorical MGW atoms in Bayes log-loss gain. Both predictors observe the same mask under a fixed
+complete-data law; data-dependent missingness needs the stated conditional-law alternative.
+Subset MI already determines this oracle objective. The report gives handwritten derivations,
+exact controls, source-derived Rust costs and a proposed offline two-camera study with optional
+audio. It separates information availability, attained predictive loss and physical control.
+Existing formal results retain their own proof and replay scope. The report adds no Lean probability
+proof, sensor benchmark, implemented learner or completed consumer integration.
 
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the

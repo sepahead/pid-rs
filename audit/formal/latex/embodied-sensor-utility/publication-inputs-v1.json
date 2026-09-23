@@ -1,0 +1,704 @@
+{
+  "files": {
+    "audit/formal/latex/embodied-sensor-utility/layout/full.tex": {
+      "bytes": 2267,
+      "sha256": "40536bc4c350c274defbc952b8abfef98b4474d2f69c10b90916b68935213aa0"
+    },
+    "audit/formal/latex/embodied-sensor-utility/layout/overview.tex": {
+      "bytes": 2233,
+      "sha256": "254f3fda145c9bea0269013ab61703c83b4370d65dbec9d49c4b556b9bf42609"
+    },
+    "audit/formal/latex/embodied-sensor-utility/layout/publication-filter.lua": {
+      "bytes": 6427,
+      "sha256": "5c5b8d14b0252247e63a682b6fb1f969220f36b078621ec7a4d7346373621258"
+    },
+    "audit/formal/latex/embodied-sensor-utility/native-tools-v1.json": {
+      "bytes": 6362,
+      "sha256": "f3c5c6e1ca5f10b19e6c847fafd5679e4a9489eb2ed019b6283b1a0842b12cda"
+    },
+    "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt": {
+      "bytes": 1377,
+      "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050"
+    },
+    "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt": {
+      "bytes": 52635,
+      "sha256": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae"
+    },
+    "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt": {
+      "bytes": 4529,
+      "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9"
+    },
+    "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/GUST-FONT-LICENSE.txt": {
+      "bytes": 1456,
+      "sha256": "2bd69affc3da00715116f713f57eab9707e96daf3562ad0215987b15b9c16f73"
+    },
+    "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/MANIFEST-Latin-Modern-Math.txt": {
+      "bytes": 2186,
+      "sha256": "1daa729f7922c42ba5ce8da7dfe4ecdc9e5c878ad86217fd6f32c4671505b007"
+    },
+    "audit/formal/latex/mgw-fixed-world/font-licenses/latin-modern-math/README-Latin-Modern-Math.txt": {
+      "bytes": 4588,
+      "sha256": "e6fdd5fb44b656146fa988d191f58901c09a347d3f4fbaa3b45b24a6ad7ec30b"
+    },
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "audit/formal/latex/prefix-mgw-bias/reader-source-v2.json": {
+      "bytes": 8668,
+      "sha256": "5a0474ea26892b04b6ff1c931096ee115bdfdf68adc5945644a849bea064a378"
+    },
+    "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py": {
+      "bytes": 27277,
+      "sha256": "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
+    },
+    "audit/research/embodied-sensor-utility/EXPOSITION.md": {
+      "bytes": 48087,
+      "sha256": "f0fbcab778f397c0ad414203c55af10849cb92da24808b13796d48ae494d476b"
+    },
+    "audit/research/embodied-sensor-utility/OVERVIEW.md": {
+      "bytes": 7165,
+      "sha256": "d1fb8b7a3f1ceb01cbd02be7d32f80fa4b3cf42def98fe4261085da093ef9ae0"
+    },
+    "audit/research/embodied-sensor-utility/PUBLICATION.md": {
+      "bytes": 8180,
+      "sha256": "ea98620867a526f7c76b9ef81c2ece3a2ab8849ca20cf5e38a6401f823438856"
+    },
+    "audit/research/embodied-sensor-utility/SOURCE_OBSERVATIONS.json": {
+      "bytes": 28161,
+      "sha256": "2984c4549b03bf51cfb38eb005a9b4834ddb3d91b30eeeacfc69abc3fd058c88"
+    },
+    "audit/research/embodied-sensor-utility/figures/availability-weighted-gain.svg": {
+      "bytes": 5921,
+      "sha256": "e6f3e40d6eeb53c96f3deb501cf20914a925d16d05295679e363aa31cfdbc133"
+    },
+    "audit/research/embodied-sensor-utility/figures/sensor-data-to-evidence.svg": {
+      "bytes": 6792,
+      "sha256": "78ff714aeb04d1c2f8606b1bb30ba7b1a196fb7080779f01c9cdd6b8e3f80de8"
+    },
+    "audit/research/embodied-sensor-utility/figures/signed-atoms-and-sensor-value.svg": {
+      "bytes": 8259,
+      "sha256": "e74f2f0a29660d8388c68ee6ef2bd13171906993b5963fc6dbc8f652306120e4"
+    },
+    "scripts/check-formal-pdf-log.sh": {
+      "bytes": 2417,
+      "sha256": "52d657dd13e0940ad73ed5240b2f335785e658d11fba90edc82b9cc4179f83da"
+    }
+  },
+  "outputs": {
+    "full": {
+      "figure_pdfs": {
+        "figures/availability-weighted-gain.pdf": {
+          "bytes": 47272,
+          "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+        },
+        "figures/sensor-data-to-evidence.pdf": {
+          "bytes": 60527,
+          "sha256": "f47b9faeb803f95a1fc4a5285b93a8796b6d7ff54145b521074d371a171b2e43"
+        },
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "observation": {
+        "first_page_fit": true,
+        "font_rows": [
+          "GQMHAX+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
+          "LHINJS+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
+          "UFOQVA+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     20  0",
+          "UHIFJK+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
+          "FVNKKE+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     26  0",
+          "PAMASM+LMMono10-Regular              CID Type 0C       Identity-H       yes yes yes     29  0",
+          "KBBAFJ+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     37  0",
+          "JXSNVI+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     38  0",
+          "PNOTTV+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     40  0",
+          "WCZQOG+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     54  0",
+          "IVSZPL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes     65  0",
+          "STVLCY+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes     66  0",
+          "GIOCCD+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     67  0",
+          "MOAWQH+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     68  0",
+          "NHJZOU+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     69  0",
+          "VQHAYL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    108  0",
+          "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    109  0",
+          "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    110  0",
+          "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    111  0",
+          "VPMJCR+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes    146  0",
+          "BXSEAQ+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes    154  0",
+          "GPVCLR+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes    155  0",
+          "MZMIVL+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes    156  0",
+          "HRECGN+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes    157  0"
+        ],
+        "geometry": [
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ]
+        ],
+        "gotos": [
+          "section*.1",
+          "section*.11",
+          "section*.13",
+          "section*.14",
+          "section*.18",
+          "section*.20",
+          "section*.21",
+          "section*.22",
+          "section*.23",
+          "section*.26",
+          "section*.27",
+          "section*.3",
+          "section*.6",
+          "section*.7",
+          "section*.9",
+          "subsection*.12",
+          "subsection*.16",
+          "subsection*.17",
+          "subsection*.19",
+          "subsection*.2",
+          "subsection*.24",
+          "subsection*.25",
+          "subsection*.4",
+          "subsection*.5"
+        ],
+        "headings": [
+          {
+            "level": 0,
+            "name": "section*.1",
+            "page": 1,
+            "title": "1. The question and the named PID",
+            "x": 62.362,
+            "y": 389.526
+          },
+          {
+            "level": 1,
+            "name": "subsection*.2",
+            "page": 2,
+            "title": "Complete-data law and row meaning",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.3",
+            "page": 2,
+            "title": "2. Shared exclusions and signed atoms, from definitions",
+            "x": 62.362,
+            "y": 565.877
+          },
+          {
+            "level": 1,
+            "name": "subsection*.4",
+            "page": 3,
+            "title": "Entropy and the reconstruction link",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.5",
+            "page": 3,
+            "title": "Two sources",
+            "x": 62.362,
+            "y": 556.618
+          },
+          {
+            "level": 0,
+            "name": "section*.6",
+            "page": 3,
+            "title": "3. Why predictive log loss gives an information objective",
+            "x": 62.362,
+            "y": 314.03
+          },
+          {
+            "level": 0,
+            "name": "section*.7",
+            "page": 4,
+            "title": "4. Exactly which atoms matter when sensors are unavailable?",
+            "x": 62.362,
+            "y": 495.941
+          },
+          {
+            "level": 0,
+            "name": "section*.9",
+            "page": 5,
+            "title": "5. Same synergy, different value: a complete calculation",
+            "x": 62.362,
+            "y": 268.135
+          },
+          {
+            "level": 0,
+            "name": "section*.11",
+            "page": 7,
+            "title": "6. Natural occlusion changes the assumptions",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 1,
+            "name": "subsection*.12",
+            "page": 7,
+            "title": "Why separate independence checks are insufficient",
+            "x": 62.362,
+            "y": 417.818
+          },
+          {
+            "level": 0,
+            "name": "section*.13",
+            "page": 8,
+            "title": "7. Two to four sources: a useful limit of the objective",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.14",
+            "page": 8,
+            "title": "8. From recorded measurements to a valid row",
+            "x": 62.362,
+            "y": 209.782
+          },
+          {
+            "level": 1,
+            "name": "subsection*.16",
+            "page": 9,
+            "title": "Concrete source representation",
+            "x": 62.362,
+            "y": 410.133
+          },
+          {
+            "level": 1,
+            "name": "subsection*.17",
+            "page": 10,
+            "title": "Fit, evaluate and preserve the estimand",
+            "x": 62.362,
+            "y": 503.184
+          },
+          {
+            "level": 0,
+            "name": "section*.18",
+            "page": 10,
+            "title": "9. A falsifiable first study and its statistics",
+            "x": 62.362,
+            "y": 270.006
+          },
+          {
+            "level": 1,
+            "name": "subsection*.19",
+            "page": 11,
+            "title": "One conservative finite-sample rule",
+            "x": 62.362,
+            "y": 686.99
+          },
+          {
+            "level": 0,
+            "name": "section*.20",
+            "page": 12,
+            "title": "10. Learning, planning and physical intelligence",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.21",
+            "page": 12,
+            "title": "11. Comparison with established methods",
+            "x": 62.362,
+            "y": 225.32
+          },
+          {
+            "level": 0,
+            "name": "section*.22",
+            "page": 13,
+            "title": "12. Current project functions and the missing connections",
+            "x": 62.362,
+            "y": 443.832
+          },
+          {
+            "level": 0,
+            "name": "section*.23",
+            "page": 14,
+            "title": "13. Rust implementation and computational cost",
+            "x": 62.362,
+            "y": 578.477
+          },
+          {
+            "level": 1,
+            "name": "subsection*.24",
+            "page": 15,
+            "title": "Approximation and formal evidence",
+            "x": 62.362,
+            "y": 262.885
+          },
+          {
+            "level": 1,
+            "name": "subsection*.25",
+            "page": 16,
+            "title": "How verification supports the study",
+            "x": 62.362,
+            "y": 533.637
+          },
+          {
+            "level": 0,
+            "name": "section*.26",
+            "page": 17,
+            "title": "14. Findings and next acceptance criteria",
+            "x": 62.362,
+            "y": 697.223
+          },
+          {
+            "level": 0,
+            "name": "section*.27",
+            "page": 17,
+            "title": "Citation and attribution",
+            "x": 62.362,
+            "y": 384.292
+          }
+        ],
+        "https_uris": [
+          "https://arxiv.org/abs/1510.00831v1",
+          "https://arxiv.org/abs/1510.00831v1",
+          "https://arxiv.org/abs/1510.00831v1",
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://arxiv.org/abs/2302.11813",
+          "https://arxiv.org/abs/2311.06373v3",
+          "https://doi.org/10.1080/01621459.1963.10500830",
+          "https://doi.org/10.1080/01621459.1963.10500830",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://doi.org/10.1103/PhysRevE.103.032149",
+          "https://doi.org/10.1198/016214506000001437",
+          "https://doi.org/10.1198/016214506000001437",
+          "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
+          "https://github.com/sepahead/pid-rs/blob/main/ECOSYSTEM_CAPABILITIES.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md",
+          "https://github.com/sepahead/pid-rs/blob/main/PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/formal/LEAN_4_33_FREEZE_AND_REPLAY.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/support-change-mi-cusp/EXPOSITION.md",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/benches/estimators.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/lib.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/sxpid.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/scripts/check-primegaps-to-pid-transfer-ledger.py",
+          "https://github.com/sepahead/pid-rs/blob/main/scripts/check-primegaps-to-pid-transfer-ledger.py",
+          "https://proceedings.mlr.press/v270/skand25a.html",
+          "https://proceedings.mlr.press/v270/skand25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html"
+        ],
+        "named_destinations": [
+          "Doc-Start",
+          "Item.1",
+          "Item.2",
+          "Item.3",
+          "figure.caption.10",
+          "figure.caption.15",
+          "figure.caption.8",
+          "none.1",
+          "none.2",
+          "none.3",
+          "none.4",
+          "none.5",
+          "none.6",
+          "page.1",
+          "page.10",
+          "page.11",
+          "page.12",
+          "page.13",
+          "page.14",
+          "page.15",
+          "page.16",
+          "page.17",
+          "page.2",
+          "page.3",
+          "page.4",
+          "page.5",
+          "page.6",
+          "page.7",
+          "page.8",
+          "page.9",
+          "section*.1",
+          "section*.11",
+          "section*.13",
+          "section*.14",
+          "section*.18",
+          "section*.20",
+          "section*.21",
+          "section*.22",
+          "section*.23",
+          "section*.26",
+          "section*.27",
+          "section*.3",
+          "section*.6",
+          "section*.7",
+          "section*.9",
+          "subsection*.12",
+          "subsection*.16",
+          "subsection*.17",
+          "subsection*.19",
+          "subsection*.2",
+          "subsection*.24",
+          "subsection*.25",
+          "subsection*.4",
+          "subsection*.5"
+        ],
+        "pages": 17,
+        "poppler_bbox_sha256": "8f32d46f191346f04cac04c2590d8cca7cefee5fd5c3e24475b5f05f811666c0",
+        "poppler_layout_sha256": "c6282f50abf792c5e7bd868cef7c28d9ff2c147e4da3cf86d068ca3be40db69e",
+        "pypdf_text_sha256": [
+          "38b7cbe608031565b31d26d2902a1ae074f58c61cf1406bbf5d798a16751648e",
+          "b6d9d2c5f6db32f08abcaf6a280b71d22574655177d9f99b47aa501c023434e2",
+          "774846d698723b8f0eaced741444fb66dd0cf33f9ca7c7c3d58437b0b0a45bd3",
+          "e96359f34c39b8ff23423d321d4edf15004f7b9e2b4f00096ea790c268be8f9e",
+          "4a61a6dbf850323f9fe455a79deff455b95c60f1587ff64ba0b4e5ee4c3f07c2",
+          "6e83967914d2a4a643e4bffaf90dd2270ba914e185712f15f286d4b0f1a4cccd",
+          "6b9417169c6a716d31a9c3af2b285e2b538455447a7eeb3c2403aa142a26bb77",
+          "8866fb6938f35af68d6a78e73ebdffaa138ba54a456c3eca551bb0f4ffdf6945",
+          "1503d8d0e03369e5644fbbd5fe9720ca78344663f7142b4c48601e331b61e626",
+          "31cea97abc6ff59e2b1b29d92e45c0e8effb89b9afe54d9a6e44b439655ff521",
+          "352bdc75e13e575b787bf756019f89a3581996a3d2b4ff440bda96761b1a747b",
+          "633f313361a9bf9cfa4022faf8a4c27c34268756df3ad1e500f79ead453f7a28",
+          "3efca9c5b8ff0b011b75ad58d51ef9d6c619b3e78c61857592839f715abae76f",
+          "022116acfe94300d4109fad0515957833377e968ef3f7fd49fb7f84cde5c5855",
+          "ac9331ee524fc422aab432fa07ce63df0f34a8c623e60b017a9f49d7853ddf97",
+          "6d8d4e318dc7427871bcbbadba8acc3ab80144e055d5c7f4d4f4c9457b161c29",
+          "370bf7aa4203ed44126365bf1b8c1d3fa1e4f9ba3a999ecc9d5348fd721020fa"
+        ],
+        "root_keys": [
+          "/Lang",
+          "/Names",
+          "/OpenAction",
+          "/Outlines",
+          "/PageMode",
+          "/Pages",
+          "/Type",
+          "/ViewerPreferences"
+        ]
+      },
+      "pdf": {
+        "bytes": 298938,
+        "sha256": "b02d8fb6f7a9aa7ce3d4c0380326e21aad6acee4792f2690ac6302ba60c15339"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 59376,
+        "sha256": "6ef7a0bf73022abffd7f0cc98ff5db1279a222a8e37ef2ea6a4b6b284af04cb4"
+      }
+    },
+    "overview": {
+      "figure_pdfs": {
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "observation": {
+        "first_page_fit": true,
+        "font_rows": [
+          "JBXJMO+SourceSansPro-Semibold        CID Type 0C       Identity-H       yes yes yes     18  0",
+          "BFRLHA+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     19  0",
+          "PCIOGK+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     20  0",
+          "GFGMOK+LMRoman10-Bold                CID Type 0C       Identity-H       yes yes yes     21  0",
+          "PBUMXK+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     23  0",
+          "HWVZRB+LatinModernMath-Regular       CID Type 0C       Identity-H       yes yes yes     24  0",
+          "MSBLHP+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     25  0",
+          "VQHAYL+SourceSansPro-Bold            Type 1C           WinAnsi          yes yes yes     37  0",
+          "RKKAEK+SourceSansPro-Regular         Type 1C           WinAnsi          yes yes yes     38  0",
+          "BMZABT+SourceSansPro-Regular         CID Type 0C       Identity-H       yes yes yes     39  0",
+          "WFGEGQ+SourceSansPro-Bold            CID Type 0C       Identity-H       yes yes yes     40  0",
+          "OPYHFL+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     77  0"
+        ],
+        "geometry": [
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ],
+          [
+            595.276,
+            841.89
+          ]
+        ],
+        "gotos": [
+          "section*.1",
+          "section*.3",
+          "section*.4",
+          "section*.5",
+          "section*.6"
+        ],
+        "headings": [
+          {
+            "level": 0,
+            "name": "section*.1",
+            "page": 1,
+            "title": "The practical finding",
+            "x": 62.362,
+            "y": 489.607
+          },
+          {
+            "level": 0,
+            "name": "section*.3",
+            "page": 2,
+            "title": "What exists and what it supports",
+            "x": 62.362,
+            "y": 339.19
+          },
+          {
+            "level": 0,
+            "name": "section*.4",
+            "page": 3,
+            "title": "Rust implementation and computational cost",
+            "x": 62.362,
+            "y": 779.528
+          },
+          {
+            "level": 0,
+            "name": "section*.5",
+            "page": 3,
+            "title": "The ecosystem connection",
+            "x": 62.362,
+            "y": 601.835
+          },
+          {
+            "level": 0,
+            "name": "section*.6",
+            "page": 3,
+            "title": "How practical value will be tested",
+            "x": 62.362,
+            "y": 384.067
+          }
+        ],
+        "https_uris": [
+          "https://arxiv.org/abs/2002.03356v5",
+          "https://github.com/sepahead/pid-rs/blob/main/CITATION.cff",
+          "https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md",
+          "https://github.com/sepahead/pid-rs/blob/main/audit/research/embodied-sensor-utility/EXPOSITION.md#13-rust-implementation-and-computational-cost",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/lib.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/crates/pid-core/src/lib.rs",
+          "https://github.com/sepahead/pid-rs/blob/main/output/pdf/embodied-sensor-utility.pdf",
+          "https://proceedings.mlr.press/v270/skand25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html",
+          "https://proceedings.mlr.press/v305/almuzairee25a.html"
+        ],
+        "named_destinations": [
+          "Doc-Start",
+          "figure.caption.2",
+          "none.1",
+          "page.1",
+          "page.2",
+          "page.3",
+          "section*.1",
+          "section*.3",
+          "section*.4",
+          "section*.5",
+          "section*.6"
+        ],
+        "pages": 3,
+        "poppler_bbox_sha256": "afbe99f35979a22f82282439d3b95942364cd3ed4139fc8fdf74273e35fcc3ea",
+        "poppler_layout_sha256": "eca5c954a667da4a7891e01033260840e04a86175d573f10398f3ece741ac633",
+        "pypdf_text_sha256": [
+          "8fed687ce75f09fe3cc4a9120459b9b0cc7d4642f90efd947347577072175f92",
+          "7be5336d3ca26c1cca277271bff32cf1fd67eb17f653738281f60425681e0319",
+          "d26015b5246181c7b27c46e7be0b169cda718c75940562609880f515ac5ff913"
+        ],
+        "root_keys": [
+          "/Lang",
+          "/Names",
+          "/OpenAction",
+          "/Outlines",
+          "/PageMode",
+          "/Pages",
+          "/Type",
+          "/ViewerPreferences"
+        ]
+      },
+      "pdf": {
+        "bytes": 91502,
+        "sha256": "24bf1e90c85622de9688260a041b28caf7ffcfea458ff290e4f710d1a7606ecd"
+      },
+      "status": "reviewed-reference",
+      "tex": {
+        "bytes": 10908,
+        "sha256": "8b22f54f9b155f90445008d616decf7f5c3cc61b62f57b73411d9d8bd19c2090"
+      }
+    }
+  },
+  "schema": "pid-rs/embodied-sensor-publication-inputs-v1"
+}

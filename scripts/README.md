@@ -3197,6 +3197,51 @@ before launch; no child or aggregate may renew a deadline. Inventory-only and cr
 modes require none of those private values. The cross route requires both bias producers to refuse
 with status 2; no Linux reproduction relation is claimed.
 
+The [embodied-sensor report and overview](../audit/research/embodied-sensor-utility/PUBLICATION.md)
+use `build-embodied-sensor-pdfs.py --kind full|overview` and the source profile in
+`audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json`. Their authored sources
+include citation guidance. The publication disposition records adoption, reproduction and visual
+review separately. These reports give handwritten finite-law application derivations and a proposed
+sensor experiment; PDF checks add no Lean theorem, estimator calibration or consumer qualification.
+
+Exact mode requires reviewed PDF, generated TeX, vector-figure bytes and typed PDF observations.
+Each kind makes two fresh builds and compares them with the reviewed references. Discovery records
+candidates without adopting them. The profile has 22 closed source inputs; reference outputs belong
+in `outputs`, not in the source `files` map. The external caller separately binds the producer and
+its controls. It must retain actual outer exits, logs, results and cleanup observations. The declared
+native route does not provide complete TeX dependency closure, an operating-system hard resource
+cap or general cross-toolchain reproduction.
+
+Exact aggregate runs require 16 nonempty `PID_RS_EMBODIED_SENSOR_*` values:
+
+| Suffixes | Binding |
+|---|---|
+| `PYTHON`, `MANIFEST_SHA256` | Pinned interpreter and final publication profile |
+| `CONTROL_NORMAL_REGISTRATION`, `CONTROL_NORMAL_REGISTRATION_SHA256`, `CONTROL_NORMAL_OUTPUT` | Fresh normal-mode control call |
+| `CONTROL_OPTIMIZED_REGISTRATION`, `CONTROL_OPTIMIZED_REGISTRATION_SHA256`, `CONTROL_OPTIMIZED_OUTPUT` | Fresh optimized-mode control call |
+| `CONTROL_MONOTONIC_DEADLINE` | Original endpoint shared by both control registrations |
+| `FULL_REGISTRATION`, `FULL_REGISTRATION_SHA256`, `FULL_WORK_DIR` | Fresh full-paper exact call |
+| `OVERVIEW_REGISTRATION`, `OVERVIEW_REGISTRATION_SHA256`, `OVERVIEW_WORK_DIR` | Fresh overview exact call |
+| `PRODUCTION_MONOTONIC_DEADLINE` | Original endpoint shared by both producer registrations |
+
+Missing or empty values reject before any registered bias, derivative or sensor call. Registrations bind
+the actual aggregate root, frozen source/reference identities, interpreter, tools, reader source,
+fresh paths and original deadlines. A copied-root registration cannot be reused for another root.
+The two controls and two `--exact --check` producer calls follow the existing registered
+bias/derivative calls and precede the longer PDF gates. Budget all twelve early calls within their
+original windows. The aggregate forwards the original endpoints and creates no new clock.
+The sensor controls declare 109 cases per Python mode; full and overview production declare 66
+and 62 primary native commands respectively, including two builds per kind. These are inventories,
+not observed pass counts or proofs.
+
+Inventory-only and cross-toolchain modes require none of those sensor registration values. Both
+sensor kinds must refuse `--cross-toolchain` with status 2 before a registration read or native
+launch. A zero status or any other refusal status fails the aggregate. The sensor dispatch
+self-test runs in normal and optimized Python with inert call-recording substitutes. It covers
+missing/empty bindings, argument and deadline forwarding, failure propagation and both refusal
+branches; it launches no publication producer, parser, renderer or prover. Aggregate dispatch
+checks do not replace the external caller's custody or rendered-page review.
+
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
 `audit/formal/latex/real-occupancy-sensors/publication-inputs-v2.json`; v1 remains historical. The
@@ -3283,14 +3328,17 @@ is present without an explicit inventory update, or if any individual PDF gate f
 applies each artifact's declared bounded portability relation, except that the root blueprint,
 dated post-publication custody receipt, standalone mean exposition, recorded-sensor document,
 finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and
-support-change cusp deliberately have no reviewed cross-toolchain profiles. The aggregate
-requires each of these ten routes to refuse that request with status 2 and assigns zero
-source-to-PDF cross-toolchain credit; status 0 or any other refusal status fails the aggregate.
+support-change cusp, embodied-sensor full paper and embodied-sensor overview deliberately have no
+reviewed cross-toolchain profiles. The aggregate requires each of these twelve routes to refuse
+that request with status 2 and assigns zero source-to-PDF cross-toolchain credit; status 0 or any
+other refusal status fails the aggregate.
 The aggregate self-test directly protects the first eight listed routes, their exact-mode calls,
 cross-mode probes and status-2 branches against removal or weakening. It also invokes
 `check-mgw-derivative-pdf-dispatch-self-test.py` in both Python modes to check the gradient and
-cusp exact dispatch and their two status-2 refusals. The existing blueprint/custody hostile-suite
-calls and custody record checker in normal and optimized Python remain required.
+cusp exact dispatch and their two status-2 refusals, and
+`check-embodied-sensor-pdf-dispatch-self-test.py` in both modes for the two sensor routes.
+The existing blueprint/custody hostile-suite calls and custody record checker in normal and
+optimized Python remain required.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
 and its source preimage remain archived with the bias publication.

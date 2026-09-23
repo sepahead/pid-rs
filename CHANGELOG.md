@@ -18,6 +18,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Add Sepehr Mahmoudian’s [embodied-sensor report](audit/research/embodied-sensor-utility/EXPOSITION.md)
+  and [overview](audit/research/embodied-sensor-utility/OVERVIEW.md), with PDF companions and citation
+  guidance. Derive availability-weighted Bayes log-loss gain for a fixed finite law, retain signed
+  MGW controls and a missingness counterexample, and state why subset MI already determines the
+  objective. Include source-derived Rust costs and a proposed held-out episode study; no new Lean
+  probability proof, sensor benchmark, implemented learner or completed integration is claimed.
+
 - Add a [Rust implementation and cost reference](RUST_IMPLEMENTATION_AND_COST.md) for categorical,
   continuous and exact-count routes, separating source-derived work from measured performance.
   Require implementation and cost sections in new or materially updated mathematical studies;
@@ -87,6 +94,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   with vector figures and an exact reproduction check for its declared toolchain.
 
 ### Changed
+
+- Require visible Sepehr Mahmoudian authorship and discoverable citation in new or materially
+  revised first-party publications, with matching source and PDF metadata. Preserve historical
+  evidence and third-party attribution; existing publication migrations keep their own scope.
 
 - Clarify five mathematical papers in Markdown and PDF: distinguish bookkeeping from probability
   and continuity implications, state the singleton-alphabet case, define event counts with

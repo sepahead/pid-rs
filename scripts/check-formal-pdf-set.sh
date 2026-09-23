@@ -45,6 +45,8 @@ STANDALONE_LATEX_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_PAPERS=(
+  "embodied-sensor-utility"
+  "embodied-sensor-overview"
   "mathematical-results-guide"
   "finite-target-copy-mgw-synergy"
   "finite-prefix-mgw-gradient"
@@ -62,6 +64,8 @@ STANDALONE_MARKDOWN_PAPERS=(
 )
 
 STANDALONE_MARKDOWN_SOURCES=(
+  "audit/research/embodied-sensor-utility/EXPOSITION.md"
+  "audit/research/embodied-sensor-utility/OVERVIEW.md"
   "MATHEMATICAL_RESULTS_GUIDE.md"
   "audit/evidence/finite-target-copy-mgw-synergy.md"
   "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md"
@@ -141,6 +145,28 @@ if [[ "${actual_pdf[*]}" != "${expected_pdf[*]}" ]]; then
   exit 1
 fi
 
+# BEGIN EMBODIED SENSOR PREFLIGHT
+# Require every sensor binding before any registered bias, derivative, or sensor call.
+if [[ "$MODE" == "--exact" ]]; then
+  : "${PID_RS_EMBODIED_SENSOR_PYTHON:?formal PDF set: PID_RS_EMBODIED_SENSOR_PYTHON is required}"
+  : "${PID_RS_EMBODIED_SENSOR_MANIFEST_SHA256:?formal PDF set: PID_RS_EMBODIED_SENSOR_MANIFEST_SHA256 is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_REGISTRATION:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_REGISTRATION is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_REGISTRATION_SHA256:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_REGISTRATION_SHA256 is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_OUTPUT:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_OUTPUT is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_REGISTRATION:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_REGISTRATION is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_REGISTRATION_SHA256:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_REGISTRATION_SHA256 is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_OUTPUT:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_OUTPUT is required}"
+  : "${PID_RS_EMBODIED_SENSOR_CONTROL_MONOTONIC_DEADLINE:?formal PDF set: PID_RS_EMBODIED_SENSOR_CONTROL_MONOTONIC_DEADLINE is required}"
+  : "${PID_RS_EMBODIED_SENSOR_FULL_REGISTRATION:?formal PDF set: PID_RS_EMBODIED_SENSOR_FULL_REGISTRATION is required}"
+  : "${PID_RS_EMBODIED_SENSOR_FULL_REGISTRATION_SHA256:?formal PDF set: PID_RS_EMBODIED_SENSOR_FULL_REGISTRATION_SHA256 is required}"
+  : "${PID_RS_EMBODIED_SENSOR_FULL_WORK_DIR:?formal PDF set: PID_RS_EMBODIED_SENSOR_FULL_WORK_DIR is required}"
+  : "${PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION:?formal PDF set: PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION is required}"
+  : "${PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION_SHA256:?formal PDF set: PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION_SHA256 is required}"
+  : "${PID_RS_EMBODIED_SENSOR_OVERVIEW_WORK_DIR:?formal PDF set: PID_RS_EMBODIED_SENSOR_OVERVIEW_WORK_DIR is required}"
+  : "${PID_RS_EMBODIED_SENSOR_PRODUCTION_MONOTONIC_DEADLINE:?formal PDF set: PID_RS_EMBODIED_SENSOR_PRODUCTION_MONOTONIC_DEADLINE is required}"
+fi
+# END EMBODIED SENSOR PREFLIGHT
+
 # BEGIN DERIVATIVE PREFLIGHT
 # Check every derivative binding before any registered bias or derivative work.
 if [[ "$MODE" == "--exact" ]]; then
@@ -205,6 +231,16 @@ if [[ "$MODE" == "--exact" ]]; then
   "$PID_RS_DERIVATIVE_PYTHON" -I -S -B scripts/build-mgw-derivative-notes-pdf.py --kind cusp --exact --check --root "$ROOT" --manifest-sha256 "$PID_RS_DERIVATIVE_MANIFEST_SHA256" --registration "$PID_RS_DERIVATIVE_CUSP_REGISTRATION" --registration-sha256 "$PID_RS_DERIVATIVE_CUSP_REGISTRATION_SHA256" --work-dir "$PID_RS_DERIVATIVE_CUSP_WORK_DIR" --stage-monotonic-deadline "$PID_RS_DERIVATIVE_PRODUCTION_MONOTONIC_DEADLINE"
 fi
 # END DERIVATIVE EXACT DISPATCH
+
+# BEGIN EMBODIED SENSOR EXACT DISPATCH
+# Forward fresh externally reviewed registrations and their original monotonic endpoints.
+if [[ "$MODE" == "--exact" ]]; then
+  "$PID_RS_EMBODIED_SENSOR_PYTHON" -I -S -B scripts/check-embodied-sensor-pdfs-self-test.py --root "$ROOT" --registration "$PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_REGISTRATION" --registration-sha256 "$PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_REGISTRATION_SHA256" --output "$PID_RS_EMBODIED_SENSOR_CONTROL_NORMAL_OUTPUT" --stage-monotonic-deadline "$PID_RS_EMBODIED_SENSOR_CONTROL_MONOTONIC_DEADLINE"
+  "$PID_RS_EMBODIED_SENSOR_PYTHON" -O -I -S -B scripts/check-embodied-sensor-pdfs-self-test.py --root "$ROOT" --registration "$PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_REGISTRATION" --registration-sha256 "$PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_REGISTRATION_SHA256" --output "$PID_RS_EMBODIED_SENSOR_CONTROL_OPTIMIZED_OUTPUT" --stage-monotonic-deadline "$PID_RS_EMBODIED_SENSOR_CONTROL_MONOTONIC_DEADLINE"
+  "$PID_RS_EMBODIED_SENSOR_PYTHON" -I -S -B scripts/build-embodied-sensor-pdfs.py --kind full --exact --check --root "$ROOT" --manifest-sha256 "$PID_RS_EMBODIED_SENSOR_MANIFEST_SHA256" --registration "$PID_RS_EMBODIED_SENSOR_FULL_REGISTRATION" --registration-sha256 "$PID_RS_EMBODIED_SENSOR_FULL_REGISTRATION_SHA256" --work-dir "$PID_RS_EMBODIED_SENSOR_FULL_WORK_DIR" --stage-monotonic-deadline "$PID_RS_EMBODIED_SENSOR_PRODUCTION_MONOTONIC_DEADLINE"
+  "$PID_RS_EMBODIED_SENSOR_PYTHON" -I -S -B scripts/build-embodied-sensor-pdfs.py --kind overview --exact --check --root "$ROOT" --manifest-sha256 "$PID_RS_EMBODIED_SENSOR_MANIFEST_SHA256" --registration "$PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION" --registration-sha256 "$PID_RS_EMBODIED_SENSOR_OVERVIEW_REGISTRATION_SHA256" --work-dir "$PID_RS_EMBODIED_SENSOR_OVERVIEW_WORK_DIR" --stage-monotonic-deadline "$PID_RS_EMBODIED_SENSOR_PRODUCTION_MONOTONIC_DEADLINE"
+fi
+# END EMBODIED SENSOR EXACT DISPATCH
 
 python3 -I -B scripts/check-publication-links.py
 python3 -O -I -B scripts/check-publication-links.py
@@ -487,8 +523,26 @@ if [[ "$MODE" == "--cross-toolchain" ]]; then
 fi
 # END DERIVATIVE CROSS REFUSAL
 
+# BEGIN EMBODIED SENSOR CROSS REFUSAL
+# Neither sensor publication has an admitted alternate producer relation.
+if [[ "$MODE" == "--cross-toolchain" ]]; then
+  for EMBODIED_SENSOR_KIND in full overview; do
+    if python3 -I -S -B scripts/build-embodied-sensor-pdfs.py --kind "$EMBODIED_SENSOR_KIND" --cross-toolchain; then
+      echo "formal PDF set: $EMBODIED_SENSOR_KIND embodied-sensor cross-toolchain mode unexpectedly accepted" >&2
+      exit 1
+    else
+      EMBODIED_SENSOR_CROSS_STATUS=$?
+    fi
+    if [[ "$EMBODIED_SENSOR_CROSS_STATUS" -ne 2 ]]; then
+      echo "formal PDF set: $EMBODIED_SENSOR_KIND embodied-sensor refusal returned $EMBODIED_SENSOR_CROSS_STATUS, expected 2" >&2
+      exit 1
+    fi
+  done
+fi
+# END EMBODIED SENSOR CROSS REFUSAL
+
 if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias and derivative-note inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias, derivative-note, and embodied-sensor inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and support-change cusp intentionally have no accepted cross-toolchain relation, and all ten status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper, support-change cusp, embodied-sensor full paper and embodied-sensor overview intentionally have no accepted cross-toolchain relation, and all twelve status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi

@@ -88,6 +88,13 @@ relevant byte has a verified successor. The detailed rules below define the comp
   `tag.gpgsign=false` locally; leave them unsigned.
 - This is enforced by `.claude/settings.json` (`attribution.commit` and `attribution.pr` are empty
   strings). Do not re-introduce attribution there or in any commit you author.
+- **Authorship and citation for publications:** new or materially revised first-party reports must
+  visibly name **Sepehr Mahmoudian** in their source and rendered byline and in PDF author metadata.
+  Give a short citation with the report title and year, and instruct readers to include the exact
+  repository commit or release. Link [CITATION.cff](CITATION.cff) for the software and cite defining
+  method papers separately. Keep source, templates, PDF, metadata checks and citation text consistent.
+  Migrate existing current publications in bounded scopes; preserve historical receipts, observed metadata, third-party authorship and license notices.
+  Authorship records responsibility and does not establish scientific priority or completed review.
 
 ## What this project is
 

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Same synergy, different added information</title>
+  <desc id="desc">Exact analytic finite-law example, not empirical data. A, B and U are independent fair bits, the target is Y=(A,B), and baseline X1=A. Write ell=ln(2) and k=ln(4/3). For unrelated candidate X2=U, the signed net MGW atoms (R,U1,U2,S) are (k,ell-k,-k,k), conditional information I(X2;Y|X1) is zero, and expected availability gain is zero. For completing candidate X2=B the atoms are (k,ell-k,ell-k,k), conditional information is ell, and expected gain is 0.9 ell, approximately 0.623832 nats. For duplicate candidate X2=A the atoms are (ell,0,0,0), conditional information is zero, and expected gain is 0.18 ell, approximately 0.124766 nats. All bars share the same linear scale and zero axis; a dot denotes an exactly zero atom. The gain calculation uses observed sensor availability masks independent of the data and of each other, with baseline availability a=0.8 and candidate availability b=0.9. The unrelated and completing sensors have identical synergy but different added information. Gain is Bayes log-loss information gain, not demonstrated learned-policy benefit.</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 16 16" refX="15" refY="8" orient="auto">
+      <path d="M 1 1 L 15 8 L 1 15 Z" fill="#2C3E50"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Source Sans Pro", Arial, sans-serif; fill: #2C3E50; font-size: 22px; }
+    .title { fill: #1F3F60; font-weight: 700; font-size: 34px; }
+    .heading { fill: #1F6968; font-weight: 700; font-size: 25px; }
+    .body { font-size: 24px; }
+    .note { font-size: 22px; }
+    .formula { font-size: 28px; }
+    .strong { font-weight: 700; }
+  </style>
+  <rect width="1200" height="800" fill="#F7F3E9"/>
+  <rect width="1200" height="8" fill="#1F3F60"/>
+  <text x="44" y="55" class="title">Same synergy, different added information</text>
+  <text x="44" y="93" class="note">Exact analytic example · signed net MGW atoms in nats</text>
+  <text x="44" y="129" class="body">A, B, U independent fair bits; target Y = (A, B); baseline X₁ = A.</text>
+  <text x="44" y="163" class="note">ℓ = ln 2 ≈ 0.693147;  k = ln(4/3) ≈ 0.287682</text>
+  <text x="44" y="207" class="heading">Candidate</text>
+  <text x="282" y="207" class="heading">Atom</text>
+  <text x="391" y="207" class="note">Signed magnitude</text>
+  <text x="698" y="207" class="heading">Exact</text>
+  <text x="848" y="207" class="note">CMI = I(X₂; Y | X₁)</text>
+  <path d="M44 222 H1156" fill="none" stroke="#D2E0E2" stroke-width="2" stroke-linejoin="round"/>
+  <text x="44" y="268" class="heading">Unrelated</text>
+  <text x="44" y="305" class="formula">X₂ = U</text>
+  <text x="295" y="255" class="body" text-anchor="middle">R</text>
+  <rect x="456.000000" y="240" width="86.304622" height="16" rx="2" fill="#1F3F60" data-atom="R" data-value="0.28768207245178085"/>
+  <text x="698" y="255" class="body">k</text>
+  <text x="295" y="281" class="body" text-anchor="middle">U₁</text>
+  <rect x="456.000000" y="266" width="121.639532" height="16" rx="2" fill="#2C3E50" data-atom="U₁" data-value="0.40546510810816444"/>
+  <text x="698" y="281" class="body">ℓ − k</text>
+  <text x="295" y="307" class="body" text-anchor="middle">U₂</text>
+  <rect x="369.695378" y="292" width="86.304622" height="16" rx="2" fill="#743E37" data-atom="U₂" data-value="-0.28768207245178085"/>
+  <text x="698" y="307" class="body">−k</text>
+  <text x="295" y="333" class="body" text-anchor="middle">S</text>
+  <rect x="456.000000" y="318" width="86.304622" height="16" rx="2" fill="#1F6968" data-atom="S" data-value="0.28768207245178085"/>
+  <text x="698" y="333" class="body">k</text>
+  <text x="848" y="256" class="body strong">CMI: 0</text>
+  <text x="848" y="290" class="note">Expected gain:</text>
+  <text x="848" y="326" class="body" style="fill:#1F3F60">0</text>
+  <path d="M44 359 H1156" fill="none" stroke="#D2E0E2" stroke-width="2" stroke-linejoin="round"/>
+  <text x="44" y="413" class="heading">Completing</text>
+  <text x="44" y="450" class="formula">X₂ = B</text>
+  <text x="295" y="400" class="body" text-anchor="middle">R</text>
+  <rect x="456.000000" y="385" width="86.304622" height="16" rx="2" fill="#1F3F60" data-atom="R" data-value="0.28768207245178085"/>
+  <text x="698" y="400" class="body">k</text>
+  <text x="295" y="426" class="body" text-anchor="middle">U₁</text>
+  <rect x="456.000000" y="411" width="121.639532" height="16" rx="2" fill="#2C3E50" data-atom="U₁" data-value="0.40546510810816444"/>
+  <text x="698" y="426" class="body">ℓ − k</text>
+  <text x="295" y="452" class="body" text-anchor="middle">U₂</text>
+  <rect x="456.000000" y="437" width="121.639532" height="16" rx="2" fill="#916400" data-atom="U₂" data-value="0.40546510810816444"/>
+  <text x="698" y="452" class="body">ℓ − k</text>
+  <text x="295" y="478" class="body" text-anchor="middle">S</text>
+  <rect x="456.000000" y="463" width="86.304622" height="16" rx="2" fill="#1F6968" data-atom="S" data-value="0.28768207245178085"/>
+  <text x="698" y="478" class="body">k</text>
+  <text x="848" y="401" class="body strong">CMI: ℓ</text>
+  <text x="848" y="435" class="note">Expected gain:</text>
+  <text x="848" y="471" class="body" style="fill:#1F3F60">0.9ℓ ≈ 0.623832</text>
+  <path d="M44 504 H1156" fill="none" stroke="#D2E0E2" stroke-width="2" stroke-linejoin="round"/>
+  <text x="44" y="558" class="heading">Duplicate</text>
+  <text x="44" y="595" class="formula">X₂ = A</text>
+  <text x="295" y="545" class="body" text-anchor="middle">R</text>
+  <rect x="456.000000" y="530" width="207.944154" height="16" rx="2" fill="#1F3F60" data-atom="R" data-value="0.69314718055994529"/>
+  <text x="698" y="545" class="body">ℓ</text>
+  <text x="295" y="571" class="body" text-anchor="middle">U₁</text>
+  <circle cx="456" cy="564" r="4" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" data-atom="U₁" data-value="0"/>
+  <text x="698" y="571" class="body">0</text>
+  <text x="295" y="597" class="body" text-anchor="middle">U₂</text>
+  <circle cx="456" cy="590" r="4" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" data-atom="U₂" data-value="0"/>
+  <text x="698" y="597" class="body">0</text>
+  <text x="295" y="623" class="body" text-anchor="middle">S</text>
+  <circle cx="456" cy="616" r="4" fill="#F7F3E9" stroke="#2C3E50" stroke-width="2" data-atom="S" data-value="0"/>
+  <text x="698" y="623" class="body">0</text>
+  <text x="848" y="546" class="body strong">CMI: 0</text>
+  <text x="848" y="580" class="note">Expected gain:</text>
+  <text x="848" y="616" class="body" style="fill:#1F3F60">0.18ℓ ≈ 0.124766</text>
+  <path d="M456 232 V630" fill="none" stroke="#2C3E50" stroke-width="1.5" stroke-linejoin="round" stroke-dasharray="5 5"/>
+  <path d="M351 641 H671" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M366.0 635 V647" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+  <text x="366.0" y="675" class="note" text-anchor="middle">−0.3</text>
+  <path d="M456 635 V647" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+  <text x="456" y="675" class="note" text-anchor="middle">0</text>
+  <path d="M546.0 635 V647" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+  <text x="546.0" y="675" class="note" text-anchor="middle">+0.3</text>
+  <path d="M636.0 635 V647" fill="none" stroke="#2C3E50" stroke-width="2" stroke-linejoin="round"/>
+  <text x="636.0" y="675" class="note" text-anchor="middle">+0.6</text>
+  <text x="698" y="675" class="note">nats</text>
+  <text x="44" y="712" class="body">U and B have the same synergy k, but their added information is 0 versus ln 2.</text>
+  <text x="44" y="749" class="note">Gain: a = 0.8, b = 0.9; observed availability masks independent of data and each other.</text>
+  <text x="44" y="781" class="note">Bayes log-loss information gain; learned-policy benefit is unproved. Zero atoms use dots.</text>
+</svg>

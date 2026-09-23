@@ -310,14 +310,14 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "b73ead70cadf18100ee1ae9ac0ae224021cd5b13a4a6bbdc8a90b96963131099",
-        "size_bytes": 97191
+        "sha256": "665c18169b59f03d635abe2ad886373cd689d5e9a66f0067578e334037d0c16a",
+        "size_bytes": 97945
       },
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "560ca042e6a4226371ae10531f4a0de00fff3ced62c5e6e4bb31153d859744d2",
-        "size_bytes": 311339
+        "sha256": "e4605a3b4676637df7b498163694664108d7e054b0b67cdf9ed442be41ce1d7c",
+        "size_bytes": 312223
       },
       {
         "git_mode": "100644",
@@ -490,8 +490,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "a03459439fd46ce3a0ebdf7636242822d690574c2a7cec95b57e01aa6720d5dc",
-        "size_bytes": 88239
+        "sha256": "6306e09bffd10b4395050635b827bfccc0d3bbaa2aabe818fc32b34c5adbb818",
+        "size_bytes": 89457
       },
       {
         "git_mode": "100644",
@@ -13251,6 +13251,72 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/controls/roster-v1.json",
+        "sha256": "e27dc889a1f6e9b7f4b6206820b335d6c3c3afd0f19336423f15802c2cf33fd4",
+        "size_bytes": 3693
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/figures/availability-weighted-gain.pdf",
+        "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd",
+        "size_bytes": 47272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/figures/sensor-data-to-evidence.pdf",
+        "sha256": "f47b9faeb803f95a1fc4a5285b93a8796b6d7ff54145b521074d371a171b2e43",
+        "size_bytes": 60527
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/figures/signed-atoms-and-sensor-value.pdf",
+        "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f",
+        "size_bytes": 44338
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/full.expected.tex",
+        "sha256": "6ef7a0bf73022abffd7f0cc98ff5db1279a222a8e37ef2ea6a4b6b284af04cb4",
+        "size_bytes": 59376
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/layout/full.tex",
+        "sha256": "40536bc4c350c274defbc952b8abfef98b4474d2f69c10b90916b68935213aa0",
+        "size_bytes": 2267
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/layout/overview.tex",
+        "sha256": "254f3fda145c9bea0269013ab61703c83b4370d65dbec9d49c4b556b9bf42609",
+        "size_bytes": 2233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/layout/publication-filter.lua",
+        "sha256": "5c5b8d14b0252247e63a682b6fb1f969220f36b078621ec7a4d7346373621258",
+        "size_bytes": 6427
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/native-tools-v1.json",
+        "sha256": "f3c5c6e1ca5f10b19e6c847fafd5679e4a9489eb2ed019b6283b1a0842b12cda",
+        "size_bytes": 6362
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/overview.expected.tex",
+        "sha256": "8b22f54f9b155f90445008d616decf7f5c3cc61b62f57b73411d9d8bd19c2090",
+        "size_bytes": 10908
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
+        "sha256": "f3c36b1ddc50e589ce7c1d5965392184b861e66fb2114098d7b44dae211f375c",
+        "size_bytes": 26115
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
         "sha256": "05e865acfc2745df6245cc2b99aa81503ac7fbf498a1f41b884afe6f3711d7d1",
         "size_bytes": 45199
@@ -24477,6 +24543,54 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/EXPOSITION.md",
+        "sha256": "f0fbcab778f397c0ad414203c55af10849cb92da24808b13796d48ae494d476b",
+        "size_bytes": 48087
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/OVERVIEW.md",
+        "sha256": "d1fb8b7a3f1ceb01cbd02be7d32f80fa4b3cf42def98fe4261085da093ef9ae0",
+        "size_bytes": 7165
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/PUBLICATION.md",
+        "sha256": "ea98620867a526f7c76b9ef81c2ece3a2ab8849ca20cf5e38a6401f823438856",
+        "size_bytes": 8180
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/REPRODUCTION.json",
+        "sha256": "2adc9b944cc0c7e074ea40e7e89fe77dc10ee505caaa9198870a928836b1a482",
+        "size_bytes": 5660
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/SOURCE_OBSERVATIONS.json",
+        "sha256": "2984c4549b03bf51cfb38eb005a9b4834ddb3d91b30eeeacfc69abc3fd058c88",
+        "size_bytes": 28161
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/figures/availability-weighted-gain.svg",
+        "sha256": "e6f3e40d6eeb53c96f3deb501cf20914a925d16d05295679e363aa31cfdbc133",
+        "size_bytes": 5921
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/figures/sensor-data-to-evidence.svg",
+        "sha256": "78ff714aeb04d1c2f8606b1bb30ba7b1a196fb7080779f01c9cdd6b8e3f80de8",
+        "size_bytes": 6792
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/figures/signed-atoms-and-sensor-value.svg",
+        "sha256": "e74f2f0a29660d8388c68ee6ef2bd13171906993b5963fc6dbc8f652306120e4",
+        "size_bytes": 8259
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
         "sha256": "f1734c2efb89cb6b03cf384552a73ce84e5cfa7772971750ea6382d7cc5fc7b2",
         "size_bytes": 31569
@@ -26865,6 +26979,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/embodied-sensor-overview.pdf",
+        "sha256": "24bf1e90c85622de9688260a041b28caf7ffcfea458ff290e4f710d1a7606ecd",
+        "size_bytes": 91502
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/embodied-sensor-utility.pdf",
+        "sha256": "b02d8fb6f7a9aa7ce3d4c0380326e21aad6acee4792f2690ac6302ba60c15339",
+        "size_bytes": 298938
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/exact-log-product-sxpid2-assurance.pdf",
         "sha256": "3462a19fadc87fd542da356145413d7f71227f84d8ead1f38f334eec6462a615",
         "size_bytes": 373617
@@ -27046,8 +27172,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "dbde2ce48e86b311278db38f6c288ce3b4d8ce58e3d436183c9ff308983aa5e1",
-        "size_bytes": 295584
+        "sha256": "78018c5c8fd3e121ec6108cfe5b63e442091f173570c70981bcaab1b3f35b932",
+        "size_bytes": 299269
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/build-embodied-sensor-pdfs.py",
+        "sha256": "3ac72d1f7b0b0587cb86e95011e6d150953415a94fea162bbd3bf32cdc373275",
+        "size_bytes": 42403
       },
       {
         "git_mode": "100644",
@@ -27298,7 +27430,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "7c46e8615b1402d2dbd67b8ac7c34d22150a27c58fa6f969a056f5012394629b",
+        "sha256": "790652772ea8a4a3203d7261854aa58ce30780c2ea079e9d683a26ffbadc0ba6",
         "size_bytes": 90915
       },
       {
@@ -27369,6 +27501,18 @@
       },
       {
         "git_mode": "100755",
+        "path": "scripts/check-embodied-sensor-pdf-dispatch-self-test.py",
+        "sha256": "e98eadb3749d6d163759071266c854f57c453cc21d0fcad92651e639d8f99e5e",
+        "size_bytes": 14652
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-embodied-sensor-pdfs-self-test.py",
+        "sha256": "6063c3066bfd25fa9a3ca4b28d1a3d1445086ca84932812a169241c98873275b",
+        "size_bytes": 30417
+      },
+      {
+        "git_mode": "100755",
         "path": "scripts/check-exact-log-product-sxpid2-pdf.sh",
         "sha256": "38453a6a9b040a31fb4de65a407efe0a7258e57fc3f2b06ceed8bbb20343f43d",
         "size_bytes": 6683
@@ -27412,14 +27556,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "380a19274e38c3051d84db69d93b81c84d026d28d26a33994aae66a542c6d6ff",
-        "size_bytes": 80486
+        "sha256": "9a2d83d986765b37ad7acbc304e4904250b3baea4cc910643c8787c7500631f7",
+        "size_bytes": 81184
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "80f2547fde4688fc10ce9298f34f463a0da5f0191a8b91aa5d38e3aa8d57236c",
-        "size_bytes": 25316
+        "sha256": "ec6a3b8ed79aa7c857337e0653eb7b4fdb65b10a6d55662da45e9cb233b538dc",
+        "size_bytes": 30553
       },
       {
         "git_mode": "100755",
@@ -27868,7 +28012,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "4d0dc4db1d724c70b80f298b82fc5cc02a31d88f26a6ae0a04f94ae25ba9c1ad",
+        "sha256": "a8b4fa93a8f28f6abb08a9d6ddc83c922e29b57071b11815600326395291e397",
         "size_bytes": 136973
       },
       {
@@ -28778,8 +28922,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "114078d1374fd23e8283c50a90b12b2ab000ac8e483f937a1f7066f8b390d646",
-    "entry_count": 4772
+    "entries_sha256": "ff036b39f9c469b4473f08b4603711679d247c15da105d1efd7462b2b80306a6",
+    "entry_count": 4796
   },
   "subprojections": [
     {
@@ -28791,23 +28935,23 @@
       ]
     },
     {
-      "entries_sha256": "8c4d3b52ea0aeea7b5cec34bffc3d419d3100a8b1bf0644f3986e24703b3043b",
-      "entry_count": 1879,
+      "entries_sha256": "7d4f5b6c39c11a2c3c21431a52854b9da106ac6c051d42a3656641562aab14e6",
+      "entry_count": 1890,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "51b78eedf98aadfe5608191adf91d862426077e4ebaf9d1aaf08f86ae1822a81",
-      "entry_count": 32,
+      "entries_sha256": "04983e3c0e926129ef771794df12ed4db062984b945f40ef04a1b6c523994186",
+      "entry_count": 34,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "2f9cf5e83fd4f41a08be5f8074ebce7ceb1db7bb55d2eb9e6ce662302b4089b6",
+      "entries_sha256": "bf61487b159110329a30d29c55177769551e64030295264a7600f8e2fba45b9c",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

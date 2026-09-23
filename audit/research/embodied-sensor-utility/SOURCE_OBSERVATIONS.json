@@ -1,0 +1,619 @@
+{
+  "schema": "pid-rs-embodied-source-observations-v1",
+  "status": "selected source observations only",
+  "observed_date": "2026-09-20",
+  "limitations": "Actively developed checkouts. Per-file stable reads, not atomic snapshots, loaded-code identity, remote freshness, consumer qualification, or permission to change the observed projects. Exact private source copies and custody are retained separately.",
+  "sources": [
+    {
+      "project": "crebain",
+      "relative_path": "AGENTS.md",
+      "sha256": "367b228453279e4a15d7b4008a997b959947fd8a918304ee0d5c68854cc6f7c8",
+      "bytes": 15990,
+      "observed_utc": "2026-09-20T12:33:43.071583+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "README.md",
+      "sha256": "edde2a0230c53b9f3f9dc9249541f6d1edf94f1eccd3289ffed7a4234fd36e8e",
+      "bytes": 20963,
+      "observed_utc": "2026-09-20T12:33:43.071751+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "integrations/ncp-force-ground-sensors/README.md",
+      "sha256": "8c5667772b58d11c572d6db6ffeb577b641b5b644e6edf77c6fd080df025e4f3",
+      "bytes": 26438,
+      "observed_utc": "2026-09-20T12:33:43.071889+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "integrations/ncp-force-ground-sensors/python/crebain_ncp_sensors/client.py",
+      "sha256": "b8c8619377585b2278cfdc45eb37f6d0a88a56a17dd48702743daa85d82205d2",
+      "bytes": 13608,
+      "observed_utc": "2026-09-20T12:33:43.072062+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "integrations/ncp-force-ground-sensors/python/crebain_ncp_sensors/codec.py",
+      "sha256": "2836c6e6290e72e7f9bd8a2e28d59dda7d1b18109914642b6a50d58c81478c3b",
+      "bytes": 13336,
+      "observed_utc": "2026-09-20T12:33:43.072206+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "integrations/ncp-force-ground-sensors/python/crebain_ncp_sensors/types.py",
+      "sha256": "54ccb627aabd8e07e816844d7a655c5ea87ce4b28c197e090265ea18efed0c36",
+      "bytes": 5792,
+      "observed_utc": "2026-09-20T12:33:43.072337+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "docs/NATIVE_ENVIRONMENT.md",
+      "sha256": "191d52ec3da78cea3090132594610cdf7c4683aa986df841bbcf4f24ecef8c16",
+      "bytes": 28630,
+      "observed_utc": "2026-09-20T12:33:43.072454+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "src/environment/EnvironmentOwner.ts",
+      "sha256": "b7ab0d7fb4555f54be63addec5487aa66ee67de7a009a9a84599a2233dd008b4",
+      "bytes": 42632,
+      "observed_utc": "2026-09-20T12:33:43.072588+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "src/environment/EnvironmentState.ts",
+      "sha256": "9bc22c00e892e4f26f345c635108a39e81b09a57342329fb008197243339f988",
+      "bytes": 20010,
+      "observed_utc": "2026-09-20T12:33:43.072702+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "crebain",
+      "relative_path": "src/environment/AcousticObservation.ts",
+      "sha256": "513d15e65fab22bbbc115dca3be5f374f25bbb1359573bd0255657de9b70cf61",
+      "bytes": 6898,
+      "observed_utc": "2026-09-20T12:33:43.072826+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "AGENTS.md",
+      "sha256": "3ba564ab67ec1334c4140aa4cde021d9031003242ee1acea02b24419f8d1e0d7",
+      "bytes": 16788,
+      "observed_utc": "2026-09-20T12:33:43.072951+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "README.md",
+      "sha256": "20bef89e99b7373d84b99314ede7f7f0f7d8e49fc06c1d71108ffba063534a75",
+      "bytes": 16846,
+      "observed_utc": "2026-09-20T12:33:43.073070+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "integrations/agent-bridge/README.md",
+      "sha256": "038fd38748de3d3fb55adfe3bb5d3cd77af50a0f3ce00e8ecf0f750c9755fed2",
+      "bytes": 10623,
+      "observed_utc": "2026-09-20T12:33:43.073217+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "integrations/agent-bridge/GUIDE.md",
+      "sha256": "401454c6631b5deff0e7e55ca8fa5cc731219d88b8773a54055d22eb44a6efef",
+      "bytes": 7695,
+      "observed_utc": "2026-09-20T12:33:43.073347+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "integrations/agent-bridge/python/prisoma_agent_bridge/crebain.py",
+      "sha256": "4be84961e9415a56ed0366ae117081a2e9e0b6557aa87ce87857095eace2bc4e",
+      "bytes": 24042,
+      "observed_utc": "2026-09-20T12:33:43.073470+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "docs/lewm/PID_HANDOFF.md",
+      "sha256": "70cf8ae79aef695596a31ecf026fd89ef480a8a55376425568fa3fae4da377d3",
+      "bytes": 4131,
+      "observed_utc": "2026-09-20T12:33:43.073601+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "experiments/lewm/contracts.py",
+      "sha256": "e502444e011cbe3ee93078d893768018672c05817afe65c2d1008d358842a545",
+      "bytes": 13360,
+      "observed_utc": "2026-09-20T12:33:43.073749+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "experiments/lewm/model.py",
+      "sha256": "33fec2fa5508094c7d4f913cb9965fdf0923e94fe2fb6331e6ca0c85b28bdbe8",
+      "bytes": 6685,
+      "observed_utc": "2026-09-20T12:33:43.074070+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "crates/pid-sim/src/offline_harness.rs",
+      "sha256": "4c077f95454b8f1d70dd793becee1646fc4423d5ad50dde5bd9845f810b3bd12",
+      "bytes": 699930,
+      "observed_utc": "2026-09-20T12:33:43.074925+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "crates/pid-sim/Cargo.toml",
+      "sha256": "7c61698a9df9801fecafaa3d128a822f7663bfba7f43a36b00b2e5910eabbb66",
+      "bytes": 3847,
+      "observed_utc": "2026-09-20T12:33:43.075033+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "Cargo.toml",
+      "sha256": "fcb103d116a60274afb5878de3fc02928e9cbb30bef23cdce613a2838a194968",
+      "bytes": 1932,
+      "observed_utc": "2026-09-20T12:33:43.075136+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": ".gitmodules",
+      "sha256": "f43090476dc40993afe8c423ebb4ca1ce4ad3d1a4db86bd7686c7734fcb2730c",
+      "bytes": 82,
+      "observed_utc": "2026-09-20T12:33:43.075239+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "PID_METHOD_SELECTION_AND_PUBLICATION_CONTRACT.md",
+      "sha256": "9dfebb8197a96c68a018477389ee21aa8d096901bbc8402dc5178ce12e9167d1",
+      "bytes": 60022,
+      "observed_utc": "2026-09-20T12:33:43.075404+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "prisoma",
+      "relative_path": "grandplan.md",
+      "sha256": "0780ec6aae2ef04ec1d780eec3b09660c509fe3d3e1de6e26fde0924fe7285ac",
+      "bytes": 362542,
+      "observed_utc": "2026-09-20T12:33:43.075889+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "README.md",
+      "sha256": "6df18dee6b09f18f0ce297c05433117312dd08ae479a11f8ec9056d51ee83064",
+      "bytes": 88025,
+      "observed_utc": "2026-09-20T12:33:43.076034+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "crates/pid-core/src/sxpid.rs",
+      "sha256": "748a3ead55f247db341cf687d5ec29be2fd7e935cd0c627433c4667ce7ef18d5",
+      "bytes": 135126,
+      "observed_utc": "2026-09-20T12:33:43.076202+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "audit/formal/lean-prefix-mgw-mean/PUBLICATION.md",
+      "sha256": "214a45bb71e853e320fbfe9f70a3a843a8094f9712615e13ba4f34c32c3a0ce6",
+      "bytes": 3465,
+      "observed_utc": "2026-09-20T12:33:43.076309+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "audit/formal/lean-prefix-mgw-bias/SUMMARY.md",
+      "sha256": "8daf2f4c10710d8eb83aa585db296d0732557590d1e9cfd1a2c501ed8eb40414",
+      "bytes": 2883,
+      "observed_utc": "2026-09-20T12:33:43.076410+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "audit/formal/lean-prefix-mgw-gradient/PUBLICATION.md",
+      "sha256": "0ed51426c57dfa3cbb2fe3455672eae08316d93791b17e3cfcf8c358f41bb410",
+      "bytes": 3349,
+      "observed_utc": "2026-09-20T12:33:43.076503+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
+      "sha256": "f1734c2efb89cb6b03cf384552a73ce84e5cfa7772971750ea6382d7cc5fc7b2",
+      "bytes": 31569,
+      "observed_utc": "2026-09-20T12:33:43.076619+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "audit/evidence/finite-target-copy-mgw-synergy.md",
+      "sha256": "63c6adeb1f9078213e323ba895057e0e949315df45bd33d46ae6fb9e69714671",
+      "bytes": 33464,
+      "observed_utc": "2026-09-20T12:33:43.076729+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "audit/formal/lean-mgw-fixed-world/PUBLICATION.md",
+      "sha256": "2b46cb52d7d5572b2b69b3ea2e6714740dd4d14d1905753cef9dd18f4924f082",
+      "bytes": 8776,
+      "observed_utc": "2026-09-20T12:33:43.076846+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "PID_ALTERNATIVES_AND_INCREMENTAL_VALUE.md",
+      "sha256": "d9d9bde81580bac298715eda8f9796852283f2e4fceae7f12d58edaf463b9f5e",
+      "bytes": 40153,
+      "observed_utc": "2026-09-20T12:33:43.077106+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
+      "sha256": "fc35f3e4c0462a1bd61c39770a8a8c1f7995b022c58d7aa7b74a9f4f4cf816d1",
+      "bytes": 73239,
+      "observed_utc": "2026-09-20T12:33:43.077381+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "NUMERICAL_ASSURANCE.md",
+      "sha256": "095c6b42591c775e35bf6a84d9a9e40799c8f24cd0a87fc28a94ff23dc8b8c00",
+      "bytes": 82032,
+      "observed_utc": "2026-09-20T12:33:43.077668+00:00",
+      "read_scope": "Selected contract/function sections inspected; complete file bytes retained and hashed."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "README.md",
+      "sha256": "07d5e487487ca6ff33065462d6bd19fb1d5f273bb009459dbc1535d20265a44b",
+      "bytes": 61939,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "AGENTS.md",
+      "sha256": "8f38a539b35257ed0cbb79e748f1a06bf0e0db5b9b59af191823c0cedb2e1943",
+      "bytes": 26798,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "README.md",
+      "sha256": "1c95d69236fc8b59f8c1e4a2a559c27611674474b083a8d8445c5c8327e05b73",
+      "bytes": 7680,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "AGENTS.md",
+      "sha256": "4c85d28973456366b3c0b3b333ce12839730d1c7c9d691204728c1c22b7122a8",
+      "bytes": 6902,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "docs/PID_RS_1_0_MIGRATION.md",
+      "sha256": "16cd7e59b798e82e4e6668a4f4c4fcdcc7a8419203fc6b155b880b1032cfdf86",
+      "bytes": 17523,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "Cargo.toml",
+      "sha256": "3671ec0b414840f97a3b705af60dfbc0fb281d794d9b582c2cf1a120a0104c17",
+      "bytes": 3430,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "docs/INTEGRATION_CREBAIN.md",
+      "sha256": "c24a773ca0bd98551a5ce5f8d05330d367f16583ac8bfc03fc9b530662b3176a",
+      "bytes": 18584,
+      "observed_utc": null,
+      "observation_window": [
+        "2026-09-20T12:27:21.588Z",
+        "2026-09-20T12:39:08.787Z"
+      ],
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "MATHEMATICAL_RESULTS_GUIDE.md",
+      "sha256": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b",
+      "bytes": 74009,
+      "observed_utc": "2026-09-20T12:32:46.009Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "PID_SENSOR_PLACEMENT_AND_GALADRIEL_GUIDE.md",
+      "sha256": "c425091592eec6ae6814ce4a765441401054f58a266dcdf3b6bebddc533ed31e",
+      "bytes": 168401,
+      "observed_utc": "2026-09-20T12:32:46.009Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "crates/galadriel-justify/src/lib.rs",
+      "sha256": "a98dc598e4b250ff867784ada5b9bfeb388ffe4adce9414ea5faf6373311dd75",
+      "bytes": 188579,
+      "observed_utc": "2026-09-20T12:32:46.009Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "crates/galadriel-justify/src/crebain_mgw.rs",
+      "sha256": "685fdffb9a4f1440d1bab9e863deb7dc2b9daab668a294b9daac929f30d1a86e",
+      "bytes": 187478,
+      "observed_utc": "2026-09-20T12:32:46.010Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "crates/galadriel-core/src/fusion.rs",
+      "sha256": "68de4cb9f816af605121da8220f8f13adf4633d09eebcb477d0feca328c592a5",
+      "bytes": 62091,
+      "observed_utc": "2026-09-20T12:32:46.010Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "crates/galadriel-dependence/src/engine.rs",
+      "sha256": "f1609084134a5a2f8deb7684ddd82d6d469687cd37d019c6da611951b51df4b4",
+      "bytes": 163119,
+      "observed_utc": "2026-09-20T12:32:46.010Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "crates/galadriel-dependence/src/fusion.rs",
+      "sha256": "c1dd2bcd3b103104ad2ac7f485dd17e3315e5c3387a6f9930aae97af3c9e0bfd",
+      "bytes": 23890,
+      "observed_utc": "2026-09-20T12:32:46.010Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/fusion/scenarios.py",
+      "sha256": "251c8f7c05e331abea9f27fa43ff47c99d61fa952d0392c635bacbac519bae31",
+      "bytes": 23761,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/fusion/metrics.py",
+      "sha256": "df658d1820a450f8c34f784b2db03eeffaf727428afe7239d946499a61fced2c",
+      "bytes": 18335,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/audio/doa.py",
+      "sha256": "44212fbe79f74688314e3b24a4762278e3e72938ac454437ad01f79ded5f672c",
+      "bytes": 22968,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "crates/pid-core/src/sxpid.rs",
+      "sha256": "748a3ead55f247db341cf687d5ec29be2fd7e935cd0c627433c4667ce7ef18d5",
+      "bytes": 135126,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/fusion/filters.py",
+      "sha256": "fd95272938552a8c98f8a2ff2e92a25ddaaddb5a449bfa455bc3e02a0b6c5bf1",
+      "bytes": 110848,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "crates/pid-core/src/quantizer.rs",
+      "sha256": "ba769a6be5c45d23a7f5ab9a83414498516268f66a5e234aa7f9f9657d48bb0e",
+      "bytes": 94223,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/fusion/tracker.py",
+      "sha256": "b15259e4e8a6dc8c8b6c3812df745599d86a2434c6873f04a484e404f368b605",
+      "bytes": 93070,
+      "observed_utc": "2026-09-20T12:33:25.417Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "crates/pid-core/src/pid2.rs",
+      "sha256": "c063c108758c926202a38b76fa4e962418a281d4896445924edd56bd4cd6faec",
+      "bytes": 79552,
+      "observed_utc": "2026-09-20T12:33:25.418Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/common/contracts.py",
+      "sha256": "a4c3cfd6e429458724d6ed942e5a3f6aac5c8b7e79862ed1a1b17c5dac6f2a38",
+      "bytes": 65361,
+      "observed_utc": "2026-09-20T12:33:25.418Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "crates/pid-core/src/pipeline.rs",
+      "sha256": "08e09ef883a00e82700dd108f04bb350d27380ed013858f5d4552d86f725b29d",
+      "bytes": 208971,
+      "observed_utc": "2026-09-20T12:33:25.418Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/multicam/triangulation.py",
+      "sha256": "3fae509730b7e840e650975e876225e523ff315d58f204d35d7b2206f0464e43",
+      "bytes": 17599,
+      "observed_utc": "2026-09-20T12:33:25.418Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/src/manwe/cli.py",
+      "sha256": "a7fe6597f39ba4709d2a868cdf41ef7d96577a99990ca7d3cdd91594e95c0db9",
+      "bytes": 18684,
+      "observed_utc": "2026-09-20T12:33:25.418Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "DEPENDENCY_COLORED_SXPID_CONCENTRATION.md",
+      "sha256": "fc35f3e4c0462a1bd61c39770a8a8c1f7995b022c58d7aa7b74a9f4f4cf816d1",
+      "bytes": 73239,
+      "observed_utc": "2026-09-20T12:34:15.133Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "galadriel",
+      "relative_path": "crates/galadriel-core/src/observation.rs",
+      "sha256": "5b1c7fd01d08ba8f0f4a81624658701485d0b7c2134ecb934ccd691e38fc8450",
+      "bytes": 32819,
+      "observed_utc": "2026-09-20T12:34:15.133Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "pid-rs",
+      "relative_path": "crates/pid-core/src/lib.rs",
+      "sha256": "9a6c77053d0faece7258325890c91d3d8635b81e168c1ef8c2f25cb431bacbe9",
+      "bytes": 28688,
+      "observed_utc": "2026-09-20T12:36:34.148Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "Cargo.toml",
+      "sha256": "65ff85277f4d9b57141150a34a233570154cf59fe26094b954fb79d19b45178c",
+      "bytes": 4965,
+      "observed_utc": "2026-09-20T12:36:34.149Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    },
+    {
+      "project": "manwe",
+      "relative_path": "python/pyproject.toml",
+      "sha256": "2e4c3513bf69cff175ba23bf90c2feb7cbaeb447a6bf168e88ecc72fc3f85d4f",
+      "bytes": 5637,
+      "observed_utc": "2026-09-20T12:36:34.149Z",
+      "observation_window": null,
+      "rechecked_utc": "2026-09-20T12:39:08.789Z",
+      "scope": "Selected source clauses and exact whole-file hash; not a complete runtime or clean-tree qualification."
+    }
+  ]
+}
