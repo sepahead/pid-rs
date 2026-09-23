@@ -88,6 +88,13 @@ relevant byte has a verified successor. The detailed rules below define the comp
   `tag.gpgsign=false` locally; leave them unsigned.
 - This is enforced by `.claude/settings.json` (`attribution.commit` and `attribution.pr` are empty
   strings). Do not re-introduce attribution there or in any commit you author.
+- **Authorship and citation for publications:** new or materially revised first-party reports must
+  visibly name **Sepehr Mahmoudian** in their source and rendered byline and in PDF author metadata.
+  Give a short citation with the report title and year, and instruct readers to include the exact
+  repository commit or release. Link [CITATION.cff](CITATION.cff) for the software and cite defining
+  method papers separately. Keep source, templates, PDF, metadata checks and citation text consistent.
+  Migrate existing current publications in bounded scopes; preserve historical receipts, observed metadata, third-party authorship and license notices.
+  Authorship records responsibility and does not establish scientific priority or completed review.
 
 ## What this project is
 
@@ -817,17 +824,17 @@ python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation.py
 python3 -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py  # 3 controls + 56 hostiles
 python3 -O -I -B scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py
-python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v4-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
-python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v4-self-test.py
+python3 -I -B scripts/check-mathematical-results-guide-pdf-structure-v5-self-test.py  # 70 object + 1 raw + 4 diagnostic + 4 path controls
+python3 -O -I -B scripts/check-mathematical-results-guide-pdf-structure-v5-self-test.py
 # Retained 23-page v2 replay only; the fixture argument must be absolute.
 HOSTED_GUIDE_V2_FIXTURE="$PWD/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf"
 python3 -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
 python3 -O -I -B scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v2-replay-self-test.py "$HOSTED_GUIDE_V2_FIXTURE"
-scripts/check-mathematical-results-guide-pdf.sh --exact  # current 28-page v4; raw repeated-build and rebuilt/committed bytes
-# The selected Ubuntu 24.04/x86 route rebuilds current v4 against its reviewed raw fixture.
-# Exact fixture bytes or the strict trailer-ID relation are required, with strict v4 structure.
+scripts/check-mathematical-results-guide-pdf.sh --exact  # current 28-page v5; raw repeated-build and rebuilt/committed bytes
+# The selected Ubuntu 24.04/x86 route rebuilds current v5 against its reviewed raw fixture.
+# Exact fixture bytes or the strict trailer-ID relation are required, with strict v5 structure.
 # Its translated local Linux capture is separate from actual hosted execution.
-# Retained v1/v2/v3 profiles and capture receipts remain historical.
+# Retained v1/v2/v3/v4 profiles and capture receipts remain historical.
 scripts/check-mathematical-results-guide-pdf.sh --cross-toolchain
 scripts/check-numerical-assurance-pdf.sh --exact  # represented-binary64 assurance, 23 pages
 scripts/check-numerical-assurance-pdf.sh --cross-toolchain

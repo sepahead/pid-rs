@@ -1,0 +1,253 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "canonical": {
+    "bytes": 818505,
+    "path": "output/pdf/mathematical-results-guide.pdf",
+    "sha256": "166dd75fc3f60b6f30feee8cbba46076bba28abc5aaaf3d33f8b1475e6ab15f1"
+  },
+  "captured_at_utc": "2026-09-23T08:47:18.928934+00:00",
+  "cross_candidate_relation": "Exact Linux fixture bytes or the unchanged strict final duplicated trailer-ID-only relation; canonical structure manifests enforced. No arbitrary normalization.",
+  "current_canonical_and_linux_targets_navigation_text_geometry_equal": true,
+  "historical_v4": "Original v4 strict/raw checkers, fixture and receipt are preserved. Their observations are not transferred. The dated authorship source/diagnostic changes are separate current files.",
+  "hosted_replay": {
+    "execution_credit": "none",
+    "status": "pending"
+  },
+  "linux_fixture": {
+    "bytes": 818508,
+    "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v5.pdf",
+    "sha256": "09610708ae87e43b754a015480755b88e4cc2e299d5f1b427fb87c664dc27e64"
+  },
+  "page_count": 28,
+  "producer": {
+    "build_result_sha256": "906466559e903e60eacfa734cb61e15c1742e3ba918892854c82f7a805738b88",
+    "builder_declared_internal_builds": 2,
+    "builder_elapsed_seconds": 146.140261,
+    "builder_returncode": 0,
+    "capture_result_sha256": "5f8110dd70450216f4073fc216f9e2ea08085d53b2d68e2f20f822f07e2f8da6",
+    "captured_reader_route": [
+      "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+      "/opt/pdf-venv/bin/python3",
+      "6.15.0",
+      "/opt/pdf-venv/lib/python3.12/site-packages/pypdf/__init__.py"
+    ],
+    "class": "Local translated Ubuntu 24.04 Linux/amd64 container, not hosted execution",
+    "container_exited": true,
+    "image": "sha256:99d68036d810885bfed9828ada5f8751e2a363aef473a15838b567f95c695a39",
+    "internal_outputs_removed_by_existing_builder": true,
+    "source_tools_fonts_unchanged": true,
+    "tools": [
+      {
+        "bytes": 163344464,
+        "mode": "0o755",
+        "nlink": 1,
+        "path": "/opt/pandoc-3.10.2/bin/pandoc",
+        "sha256": "867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce",
+        "uid": 0
+      },
+      {
+        "bytes": 7033000,
+        "mode": "0o755",
+        "nlink": 1,
+        "path": "/usr/bin/luahbtex",
+        "sha256": "cc74da0d993e503321f9dd65b8cc5ddf103f2620c4bdbc41798841f253c46e02",
+        "uid": 0
+      },
+      {
+        "bytes": 27960,
+        "mode": "0o755",
+        "nlink": 1,
+        "path": "/usr/bin/kpsewhich",
+        "sha256": "e3f241dab416169b9a7c8e0ef719a3cc8568bf51256c7e354811b3963254fcda",
+        "uid": 0
+      },
+      {
+        "bytes": 12231665,
+        "mode": "0o644",
+        "nlink": 1,
+        "path": "/var/lib/texmf/web2c/luahbtex/lualatex.fmt",
+        "sha256": "40d6ce24b45663ff282b2d6586416b11831ddcc6b44528a272fe6f8d2cb7c8c9",
+        "uid": 0
+      }
+    ]
+  },
+  "raw_pdf_equality": false,
+  "schema": "pid-rs/results-guide-authorship-raw-profile/v5",
+  "scope": "Authorship-only publication profile. No new mathematical, formal, estimator, application, supply-chain authentication or accessibility claim.",
+  "source_manifest": {
+    "files": [
+      {
+        "bytes": 74009,
+        "path": "MATHEMATICAL_RESULTS_GUIDE.md",
+        "sha256": "3530f2cfd2ffcc16f64565eb6cd873a30e64bef5239d3f22749c49dd2f9b769b"
+      },
+      {
+        "bytes": 5629,
+        "path": "audit/formal/latex/mathematical-results-guide/header.tex",
+        "sha256": "bb82bfdd016ca58e94a744c89b71b9821ec18f8f2dbf5d8e14d10564448153d6"
+      },
+      {
+        "bytes": 8764,
+        "path": "audit/formal/latex/mathematical-results-guide/filter.lua",
+        "sha256": "e7512fe022e0fb4c768a3b40f1e90937c829b03bc630a5bba0fa8cb3b39087a8"
+      },
+      {
+        "bytes": 4234,
+        "path": "audit/formal/latex/mathematical-results-guide/tagpdf-openaction-compat.tex",
+        "sha256": "6b638ef882260e54ad619b1ec9bfa775e7e8ecce04b24932ba41ca0e55e91f17"
+      },
+      {
+        "bytes": 7231,
+        "path": "audit/formal/latex/mathematical-results-guide/hgeneric-uri-contents-compat.tex",
+        "sha256": "6294db9644cff4d7ded8e2a98415d72cb73fae4f3a55ad705607b39edc391ad5"
+      },
+      {
+        "bytes": 10773,
+        "path": "audit/formal/latex/mathematical-results-guide/l3pdffile-filespec-f-compat.tex",
+        "sha256": "a8eb78a26f554117fd5ff9661e617e0348e8e69fce3f63e3ff3c1321b51aa36a"
+      },
+      {
+        "bytes": 31867,
+        "path": "scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py",
+        "sha256": "73f61bc865cafecb45faecbe8a87b9332923a4bed984ae22f65e1fa2affe7ac6"
+      },
+      {
+        "bytes": 8446,
+        "path": "scripts/check-mathematical-results-guide-diagnostics.py",
+        "sha256": "b383e58845ac8655fbc3a6d11cffc133deee7815f134b4f26120dd7c8ac6dea6"
+      },
+      {
+        "bytes": 18943,
+        "path": "audit/formal/latex/mathematical-results-guide/canonical-diagnostics-v4.json",
+        "sha256": "a9589302cad3c5dc69b25aceccd0dee5aaec36cbc9744396d41274aaf6b2eba9"
+      },
+      {
+        "bytes": 18946,
+        "path": "audit/formal/latex/mathematical-results-guide/linux-diagnostics-v4.json",
+        "sha256": "04a9c13c5ce37f017f6eb0862727c03f0de79de47a35512cff939f9a7d279df5"
+      },
+      {
+        "bytes": 2237,
+        "path": "audit/formal/latex/mathematical-results-guide/pandoc-templates-bsd-3-clause-3.1.3-and-3.10.2.txt",
+        "sha256": "cf5b70694cf50403b51f3315f98d010de6435022ff984911819219034a088180"
+      },
+      {
+        "bytes": 10199,
+        "path": "audit/formal/latex/mathematical-results-guide/canonical-figure-pdfs.json",
+        "sha256": "eaf238a17595c6e63410c1358bfa8c4d57d876ed42176ebfd9dc1664b49b3316"
+      },
+      {
+        "bytes": 30968,
+        "path": "scripts/check-mathematical-results-guide-figure-assets.py",
+        "sha256": "93aa3e199ba9a27d1b0f4708cd568cd464f21f8a9332be8a60678c92feed19fd"
+      },
+      {
+        "bytes": 12028,
+        "path": "audit/formal/latex/mathematical-results-guide/open-font-figure-regeneration-v1.json",
+        "sha256": "9918831ac46a02111b4f8116f9be97cc30e0661eb2d61d2c0d148ed064a104f8"
+      },
+      {
+        "bytes": 44186,
+        "path": "scripts/regenerate-mathematical-results-guide-open-font-figures.py",
+        "sha256": "8c45cc8c490db81f84084054549a7654a272abcdaecd897cf7fc80a0439d6d6a"
+      },
+      {
+        "bytes": 8140,
+        "path": "THIRD_PARTY_NOTICES.md",
+        "sha256": "ae89a35053d73bef13cd28cfcc1249589ff1507e28e3dc417bf9702152a1dbd7"
+      },
+      {
+        "bytes": 4529,
+        "path": "audit/formal/latex/mathematical-results-guide/font-licenses/source-sans-pro-ofl-1.1-tex-live-2024.txt",
+        "sha256": "4a4a4179a96b5ef6786186d199f0d049b151352f460b8d2f3c00083792f37dd9"
+      },
+      {
+        "bytes": 1377,
+        "path": "audit/formal/latex/mathematical-results-guide/font-licenses/gust-font-license-1.0-tex-live-2024.txt",
+        "sha256": "49ea6cb9257bbee0a3979c48a774cd221550ac1c20c95549efe45fc99cc18050"
+      },
+      {
+        "bytes": 52635,
+        "path": "audit/formal/latex/mathematical-results-guide/font-licenses/manifest-latin-modern-2.004-tex-live-2024.txt",
+        "sha256": "402c79f4ede8548a6fe6f82f42f0288cb0243ba2403dfdeeaadf55d189a46fae"
+      },
+      {
+        "bytes": 11115,
+        "path": "scripts/check-mathematical-results-guide-pdf-id-variance.py",
+        "sha256": "d8e87ecaf1d77ea4f4307fb8a397664c86dc059cf74840ca1583d69e16b5a6b7"
+      },
+      {
+        "bytes": 5064,
+        "path": "scripts/check-mathematical-results-guide-font-roster.py",
+        "sha256": "39e53d5c731a8c232f41691eb5378fb02df94b9a62819bcc6bcc3c8c849135d8"
+      },
+      {
+        "bytes": 10320,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.svg",
+        "sha256": "e79ef4f3290f094efc1f786977800f4d4bd8a101760f57ed528c988d6d621042"
+      },
+      {
+        "bytes": 82732,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/semantic-firewall.pdf",
+        "sha256": "7d873332c3eb890d35457cd66d3dea9574d164d90826c6911e77019d9490dc61"
+      },
+      {
+        "bytes": 12333,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.svg",
+        "sha256": "34a4225a4fda9d7cdfcb8c4b72839e1394445d382c036f5f1ae0163a759c38f7"
+      },
+      {
+        "bytes": 90737,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/result-evidence-map.pdf",
+        "sha256": "154ffaa4342fb85096e7d585a59fc81c565d7205a128902d7ede141541617acc"
+      },
+      {
+        "bytes": 8938,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.svg",
+        "sha256": "cac0aca79ed5c2268dbeef4b886e45cb7c4a67dc44d48b0b2daeeaa74a6e17ac"
+      },
+      {
+        "bytes": 84999,
+        "path": "audit/formal/latex/figures/mathematical-results-guide/common-radius-small-ball-bridge.pdf",
+        "sha256": "bdd7694af0170f65367098d7feb7e316fd6c1e68d673fd6a433453b9908281ed"
+      },
+      {
+        "bytes": 5368,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.svg",
+        "sha256": "5619f118cf53a11f16524c906f1d4542e22ebea685161998aade8acc5bae469a"
+      },
+      {
+        "bytes": 77858,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/audit-coordinate-crosswalk.pdf",
+        "sha256": "6cfa13f06f20b6240abb3b28e4aca60611b410fa88c9eb7a0074f2985bf1aa02"
+      },
+      {
+        "bytes": 5143,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.svg",
+        "sha256": "a4c22c813275b1db3c554cc58ed82566dffe12594ef3b15660ccf0e1032ea061"
+      },
+      {
+        "bytes": 29172,
+        "path": "audit/formal/latex/figures/sxpid3-source-marginal-and-bounded-audit/source-cylinder-factorization.pdf",
+        "sha256": "8578c1f911e56e91ff34849ea7ea19194fa7ae67c221db2e45b4b1c13aef639d"
+      },
+      {
+        "bytes": 44202,
+        "path": "scripts/build-mathematical-results-guide-pdf.sh",
+        "sha256": "b35d5e286c529240411dd09830147c1643ef754736acbc26f67fbb5f8569b787"
+      },
+      {
+        "bytes": 89535,
+        "path": "README.md",
+        "sha256": "d7e2e97678ea5d7115cea82d360548ed44c02d2d743b006c9bb77f182b5b27a2"
+      }
+    ]
+  },
+  "strict_navigation_sha256": "88a424f3c51050a2d5af85d0303fee2b1849b1678a559648298fd021c12bce7b",
+  "strict_structure_sha256": "d8115d660de1bbfc2972e249429fab3d8ee383a2e981985b2b81ee7cd618f293",
+  "structure_checker": {
+    "bytes": 86355,
+    "path": "scripts/check-mathematical-results-guide-pdf-structure-v5.py",
+    "sha256": "9b0def2bc263aa5e406d432e9893a27f7f0d5098aaebae51d70a329830c4d21c"
+  }
+}

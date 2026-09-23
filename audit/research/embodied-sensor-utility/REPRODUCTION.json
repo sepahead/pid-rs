@@ -1,0 +1,148 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "calls": [
+    {
+      "actual_returncode": 0,
+      "adoption": false,
+      "inner_result_sha256": "89ae5345a09c800e53395a184b947ef6a2c659f3967c15b4ee45f23150bdd315",
+      "label": "controls-normal",
+      "observed_utc": "2026-09-23T03:02:49.998313+00:00",
+      "supervisor_result_sha256": "de3fe70b4ac7a012ed41667109756ee8c2cb98c156cb4739dc11f24dd812f44e"
+    },
+    {
+      "actual_returncode": 0,
+      "adoption": false,
+      "inner_result_sha256": "0a5a3fac0931b09a36a55509927a2379282f52d02260c1e44b3b2ae3dd204bfb",
+      "label": "controls-optimized",
+      "observed_utc": "2026-09-23T03:02:50.371379+00:00",
+      "supervisor_result_sha256": "36f8c6b7ab6af2af723e03346248995c6a0eee5aea8369017713a210ee6fcd5d"
+    },
+    {
+      "actual_returncode": 0,
+      "adoption": false,
+      "inner_result_sha256": "0d535d5d5084ee2ab9d30dd288a7b2b0822eea41310214e21633a890f0e1f34c",
+      "label": "full",
+      "observed_utc": "2026-09-23T03:03:16.739920+00:00",
+      "supervisor_result_sha256": "02799f116e513c817c91f9a528a1b54446ec9b14a0fb0c8caf59e95fa6203a92"
+    },
+    {
+      "actual_returncode": 0,
+      "adoption": false,
+      "inner_result_sha256": "50ce4aa0e8e3429558ccdee5cc59169554c5b7dd6dd7a37a28e2f70bb2b11bd4",
+      "label": "overview",
+      "observed_utc": "2026-09-23T03:03:38.074600+00:00",
+      "supervisor_result_sha256": "e172b8ffb68e46af64b53b3e6b995198a01277970ade0eac2e1776c554af6fb8"
+    }
+  ],
+  "control_modes": [
+    "normal",
+    "optimized"
+  ],
+  "controls_per_mode": 109,
+  "native_primary_commands": {
+    "full": 66,
+    "overview": 62
+  },
+  "new_formal_results": 0,
+  "observed_completed_utc": "2026-09-23T03:03:38.074826+00:00",
+  "outputs": {
+    "full": {
+      "builds": [
+        {
+          "figure_pdfs": {
+            "figures/availability-weighted-gain.pdf": {
+              "bytes": 47272,
+              "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+            },
+            "figures/sensor-data-to-evidence.pdf": {
+              "bytes": 60527,
+              "sha256": "f47b9faeb803f95a1fc4a5285b93a8796b6d7ff54145b521074d371a171b2e43"
+            },
+            "figures/signed-atoms-and-sensor-value.pdf": {
+              "bytes": 44338,
+              "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+            }
+          },
+          "pdf": {
+            "bytes": 298938,
+            "sha256": "b02d8fb6f7a9aa7ce3d4c0380326e21aad6acee4792f2690ac6302ba60c15339"
+          },
+          "tex": {
+            "bytes": 59376,
+            "sha256": "6ef7a0bf73022abffd7f0cc98ff5db1279a222a8e37ef2ea6a4b6b284af04cb4"
+          }
+        },
+        {
+          "figure_pdfs": {
+            "figures/availability-weighted-gain.pdf": {
+              "bytes": 47272,
+              "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+            },
+            "figures/sensor-data-to-evidence.pdf": {
+              "bytes": 60527,
+              "sha256": "f47b9faeb803f95a1fc4a5285b93a8796b6d7ff54145b521074d371a171b2e43"
+            },
+            "figures/signed-atoms-and-sensor-value.pdf": {
+              "bytes": 44338,
+              "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+            }
+          },
+          "pdf": {
+            "bytes": 298938,
+            "sha256": "b02d8fb6f7a9aa7ce3d4c0380326e21aad6acee4792f2690ac6302ba60c15339"
+          },
+          "tex": {
+            "bytes": 59376,
+            "sha256": "6ef7a0bf73022abffd7f0cc98ff5db1279a222a8e37ef2ea6a4b6b284af04cb4"
+          }
+        }
+      ],
+      "pages": 17,
+      "result_sha256": "0d535d5d5084ee2ab9d30dd288a7b2b0822eea41310214e21633a890f0e1f34c"
+    },
+    "overview": {
+      "builds": [
+        {
+          "figure_pdfs": {
+            "figures/signed-atoms-and-sensor-value.pdf": {
+              "bytes": 44338,
+              "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+            }
+          },
+          "pdf": {
+            "bytes": 91502,
+            "sha256": "24bf1e90c85622de9688260a041b28caf7ffcfea458ff290e4f710d1a7606ecd"
+          },
+          "tex": {
+            "bytes": 10908,
+            "sha256": "8b22f54f9b155f90445008d616decf7f5c3cc61b62f57b73411d9d8bd19c2090"
+          }
+        },
+        {
+          "figure_pdfs": {
+            "figures/signed-atoms-and-sensor-value.pdf": {
+              "bytes": 44338,
+              "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+            }
+          },
+          "pdf": {
+            "bytes": 91502,
+            "sha256": "24bf1e90c85622de9688260a041b28caf7ffcfea458ff290e4f710d1a7606ecd"
+          },
+          "tex": {
+            "bytes": 10908,
+            "sha256": "8b22f54f9b155f90445008d616decf7f5c3cc61b62f57b73411d9d8bd19c2090"
+          }
+        }
+      ],
+      "pages": 3,
+      "result_sha256": "50ce4aa0e8e3429558ccdee5cc59169554c5b7dd6dd7a37a28e2f70bb2b11bd4"
+    }
+  },
+  "owner_result_sha256": "cea17d9f1b17582ea4d830b54f0ab85b7041110de0082c7a04e8c2281a266ddd",
+  "remote_publication_state": "Resolve containing commit and exact hosted evidence separately; this observation alone establishes neither.",
+  "schema": "pid-rs/embodied-sensor-reproduction-observation-v1",
+  "scientific_or_consumer_qualification": false,
+  "scope": "Same-profile exact publication reproduction; portable projection of locally retained owner/leaf records. Machine-specific registrations and raw logs remain separately retained.",
+  "source_pin_roster_sha256": "6d302c8fd1776e64c1264493ef5a714eb1de1f8371788b08a2dd354ece1077c1"
+}

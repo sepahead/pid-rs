@@ -8,6 +8,10 @@ FIGURE_SVG="audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acycli
 FIGURE_PDF="audit/formal/latex/figures/ksg-m1a-composite-v4-process/c4-r4-acyclic-custody.pdf"
 VISUAL_RECEIPT="audit/evidence/ksg-m1a-composite-v4-process-visual-receipt-2026-08-17.md"
 RENDER_COMPARATOR="scripts/compare-formal-pdf-renders.py"
+AUTHORSHIP_DIR="audit/evidence/ksg-publication-authorship-2026-09-23/v4"
+EXPECTED_AUTHORSHIP_SHA256="efad7c6fb07accac8c7a04d3e6450ab67ac9bac0cdab058bb320ba859324dc2a"
+HISTORICAL_PDF="$AUTHORSHIP_DIR/previous.pdf.bin"
+RENDERING_RECEIPT="output/pdf/ksg-m1a-composite-v4-process.rendering-receipt.tsv"
 EXPECTED_RENDER_COMPARATOR_SHA256="7b230bef4371398c18a3975d6888207bc31a737eeffb0217f3d5bbc0aec3054b"
 EXPECTED_RENDER_COMPARATOR_BYTES=16408
 RENDER_DPI=120
@@ -1098,7 +1102,7 @@ if [[ ! -f "$VISUAL_RECEIPT" || -L "$VISUAL_RECEIPT" ]]; then
   exit 1
 fi
 python3 -I -S - \
-  "$VISUAL_RECEIPT" "$COMMITTED" "$FIGURE_SVG" "$FIGURE_PDF" <<'PY'
+  "$VISUAL_RECEIPT" "$HISTORICAL_PDF" "$FIGURE_SVG" "$FIGURE_PDF" <<'PY'
 from __future__ import annotations
 
 import hashlib
@@ -1217,6 +1221,207 @@ for hostile in hostile_bodies:
     else:
         fail("visual-review hostile control was accepted")
 PY
+
+# BEGIN CURRENT AUTHORSHIP RENDERING
+# This current receipt is generated from actual current report renders. It is not
+# a replacement for the preserved August visual observation.
+# Exact PNG bytes belong to the pinned renderer. Cross-toolchain mode retains
+# its existing same-renderer bounded comparison instead of inheriting that pin.
+if [[ "$MODE" == "--exact" ]]; then
+AUTHOR_COLOR="$BUILD_DIR/authorship-current-color"
+AUTHOR_GRAY="$BUILD_DIR/authorship-current-gray"
+mkdir -p "$AUTHOR_COLOR" "$AUTHOR_GRAY"
+for author_mode in color gray; do
+  author_output="$AUTHOR_COLOR"
+  author_command=(pdftoppm -png -r "$RENDER_DPI")
+  if [[ "$author_mode" == gray ]]; then
+    author_output="$AUTHOR_GRAY"
+    author_command+=(-gray)
+  fi
+  if ! env -i PATH="$PATH" LC_ALL=C LANG=C TZ=UTC TMPDIR="$BUILD_DIR" \
+      "${author_command[@]}" "$COMMITTED" "$author_output/page" \
+      >"$BUILD_DIR/authorship-$author_mode.stdout" 2>"$BUILD_DIR/authorship-$author_mode.stderr"; then
+    cat "$BUILD_DIR/authorship-$author_mode.stdout" "$BUILD_DIR/authorship-$author_mode.stderr" >&2
+    echo "composite-v4 process PDF check: current authorship rendering failed" >&2
+    exit 1
+  fi
+  if [[ -s "$BUILD_DIR/authorship-$author_mode.stdout" || -s "$BUILD_DIR/authorship-$author_mode.stderr" ]]; then
+    echo "composite-v4 process PDF check: current authorship rendering emitted diagnostics" >&2
+    exit 1
+  fi
+done
+python3 -I -S - "$COMMITTED" "$AUTHOR_COLOR" "$AUTHOR_GRAY" "$BUILD_DIR/authorship-current.tsv" "$EXPECTED_REPORT_PAGES" "$RENDER_DPI" <<'PY_CURRENT_RENDER'
+from __future__ import annotations
+import hashlib
+from pathlib import Path
+import struct
+import sys
+import zlib
+
+def fail(detail: str) -> None:
+    raise SystemExit(f"composite-v4 process PDF check: rendering receipt {detail}")
+
+def paeth(a: int, b: int, c: int) -> int:
+    p=a+b-c; values=(abs(p-a),abs(p-b),abs(p-c)); return (a,b,c)[values.index(min(values))]
+
+def inspect(path: Path, mode: str) -> tuple[int,int,int,int,int,int]:
+    data=path.read_bytes()
+    if not data.startswith(b"\x89PNG\r\n\x1a\n"): fail(f"{path.name} is not PNG")
+    offset=8; chunks=bytearray(); width=height=depth=color=interlace=None
+    while offset < len(data):
+        length=struct.unpack(">I",data[offset:offset+4])[0]; kind=data[offset+4:offset+8]
+        payload=data[offset+8:offset+8+length]
+        if len(payload)!=length: fail(f"{path.name} is truncated")
+        if kind==b"IHDR": width,height,depth,color,_,_,interlace=struct.unpack(">IIBBBBB",payload)
+        elif kind==b"IDAT": chunks.extend(payload)
+        elif kind==b"IEND": break
+        offset += 12+length
+    if (width,height)!=(993,1404) or depth!=8 or interlace!=0 or color not in {0,2}:
+        fail(f"{path.name} PNG geometry/encoding changed")
+    channels={0:1,2:3}[color]; stride=width*channels; raw=zlib.decompress(bytes(chunks))
+    if len(raw)!=height*(stride+1): fail(f"{path.name} decoded length changed")
+    previous=bytearray(stride); cursor=0; low=255; high=0; dark=0; chroma=0
+    for _ in range(height):
+        kind=raw[cursor]; scan=raw[cursor+1:cursor+1+stride]; cursor+=stride+1; row=bytearray(stride)
+        for i,value in enumerate(scan):
+            left=row[i-channels] if i>=channels else 0; up=previous[i]; corner=previous[i-channels] if i>=channels else 0
+            predicted={0:lambda:0,1:lambda:left,2:lambda:up,3:lambda:(left+up)//2,4:lambda:paeth(left,up,corner)}.get(kind)
+            if predicted is None: fail(f"{path.name} uses unsupported filter")
+            row[i]=(value+predicted())&255
+        for i in range(0,stride,channels):
+            if color==2:
+                r,g,b=row[i:i+3]; chroma += max(r,g,b)-min(r,g,b)>2; lum=(299*r+587*g+114*b)//1000
+                if mode=="gray" and not (r==g==b): fail(f"{path.name} gray render retained chroma")
+            else: lum=row[i]
+            low=min(low,lum); high=max(high,lum); dark += lum<230
+        previous=row
+    if high-low<30 or dark<500: fail(f"{path.name} appears blank")
+    if mode=="color" and chroma<500: fail(f"{path.name} lacks color content")
+    if mode=="gray" and chroma: fail(f"{path.name} grayscale has chroma")
+    return width,height,low,high,dark,chroma
+
+pdf=Path(sys.argv[1]); color=Path(sys.argv[2]); gray=Path(sys.argv[3]); out=Path(sys.argv[4]); pages=int(sys.argv[5]); dpi=int(sys.argv[6])
+rows=["schema\tpid-rs-formal-rendering-receipt-v2\n",f"pdf_sha256\t{hashlib.sha256(pdf.read_bytes()).hexdigest()}\n",f"pages\t{pages}\n",f"dpi\t{dpi}\n","mode\tpage\twidth\theight\tbytes\tsha256\tmin_luma\tmax_luma\tdark_pixels\tchromatic_pixels\n"]
+for mode,directory in (("color",color),("gray",gray)):
+    paths=sorted(directory.glob("page-*.png"))
+    if len(paths)!=pages: fail(f"{mode} page inventory changed")
+    for number,path in enumerate(paths,1):
+        width,height,low,high,dark,chroma=inspect(path,mode); data=path.read_bytes()
+        rows.append(f"{mode}\t{number}\t{width}\t{height}\t{len(data)}\t{hashlib.sha256(data).hexdigest()}\t{low}\t{high}\t{dark}\t{chroma}\n")
+out.write_text("".join(rows),encoding="utf-8",newline="\n")
+PY_CURRENT_RENDER
+if ! cmp -s "$BUILD_DIR/authorship-current.tsv" "$RENDERING_RECEIPT"; then
+  echo "composite-v4 process PDF check: current authorship rendering receipt differs from actual renders" >&2
+  exit 1
+fi
+fi
+# END CURRENT AUTHORSHIP RENDERING
+
+# BEGIN AUTHORSHIP SUCCESSOR
+# The original visual receipt is checked against preserved original bytes above.
+# Current native/object/render checks remain mandatory; this adds the author delta.
+python3 -I -S - "$ROOT" "$AUTHORSHIP_DIR" "$EXPECTED_AUTHORSHIP_SHA256" "$EXPECTED_REPORT_PAGES" <<'PY_AUTHORSHIP'
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+import sys
+
+root=Path(sys.argv[1]); relative=sys.argv[2]; expected_sha=sys.argv[3]; pages=int(sys.argv[4])
+directory=root/relative
+version=int(directory.name[1:]); stem=f"ksg-m1a-composite-v{version}-process"
+
+def fail(message):
+    raise SystemExit("KSG publication authorship successor: "+message)
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+raw=(directory/"SUCCESSOR.json").read_bytes()
+if digest(raw)!=expected_sha:
+    fail("record digest differs")
+record=json.loads(raw)
+expected_keys={"schema","version","author","previous_commit","authorship_commit","pages","render_dpi","source_delta","previous_rendering_origin","visual_review","nonclaims","files"}
+if type(record) is not dict or set(record)!=expected_keys:
+    fail("record field inventory differs")
+if (record["schema"]!="pid-rs/ksg-publication-authorship-successor/v1"
+    or type(record["version"]) is not int or record["version"]!=version
+    or record["author"]!="Sepehr Mahmoudian"
+    or record["previous_commit"]!="0f639b9e3af203d4dc00bd3bbd132b462cefa9eb"
+    or record["authorship_commit"]!="41ba5f9f447d8ea8f94dca5efe0d92c1ed801b08"
+    or type(record["pages"]) is not int or record["pages"]!=pages
+    or type(record["render_dpi"]) is not int or record["render_dpi"]!=120):
+    fail("typed identity differs")
+expected_review={"date":"2026-09-23","direct_pages":[1],"modes":["color","gray"],"dpi":120,"historical_review_applies_to_current_pdf":False,"remaining_pages":"Exact current 120-dpi color and grayscale render rows match a fresh same-day rendering of the preserved prior PDF; no new all-page inspection is claimed.","observation":"The newly rendered first page was opened in color and grayscale: Sepehr Mahmoudian is legible, the original date remains, and no clipping, overlap or layout defect was observed."}
+review=record["visual_review"]
+if (type(review) is not dict or review!=expected_review
+    or type(review.get("dpi")) is not int
+    or type(review.get("historical_review_applies_to_current_pdf")) is not bool
+    or any(type(x) is not int for x in review.get("direct_pages",[]))):
+    fail("visual review scope differs")
+if record["previous_rendering_origin"]!="Fresh 23 September 2026 rendering of the preserved prior PDF; no pre-existing v4 rendering TSV is claimed.":
+    fail("previous rendering observation provenance differs")
+if record["source_delta"]!="One visible author replacement; mathematical source, date and existing PDF author metadata unchanged.":
+    fail("source delta scope differs")
+if record["nonclaims"]!="No historical lifecycle is reopened and no theorem, scientific, hosted, human-review or independent-review credit is added. Existing complete native and rendering predicates remain required.":
+    fail("nonclaim scope differs")
+tex=f"audit/formal/latex/{stem}.tex"; pdf=f"output/pdf/{stem}.pdf"
+render=f"output/pdf/{stem}.rendering-receipt.tsv"
+visual=f"audit/evidence/ksg-m1a-composite-v{version}-process-visual-receipt-2026-08-17.md"
+expected_paths={tex,pdf,render,visual,*[relative+"/"+name for name in ("previous.tex.txt","previous.pdf.bin","previous-rendering-observation-2026-09-23.tsv.txt","first-page-color-120dpi.png","first-page-gray-120dpi.png")]}
+if type(record["files"]) is not dict or set(record["files"])!=expected_paths:
+    fail("file inventory differs")
+for path,binding in record["files"].items():
+    target=root/path
+    if not target.is_file() or target.is_symlink():
+        fail("bound path is absent or nonregular: "+path)
+    data=target.read_bytes()
+    if (type(binding) is not dict or set(binding)!={"bytes","sha256"}
+        or type(binding["bytes"]) is not int
+        or binding!={"bytes":len(data),"sha256":digest(data)}):
+        fail("typed bound bytes differ: "+path)
+old_source=(directory/"previous.tex.txt").read_bytes()
+old_author=b"\\author{pid-rs project analysis}"
+new_author=b"\\author{Sepehr Mahmoudian}"
+if old_source.count(old_author)!=1 or (root/tex).read_bytes()!=old_source.replace(old_author,new_author,1):
+    fail("source changed beyond one author substitution")
+old_rows=(directory/"previous-rendering-observation-2026-09-23.tsv.txt").read_text().splitlines()
+new_rows=(root/render).read_text().splitlines()
+for rows,subject in ((old_rows,directory/"previous.pdf.bin"),(new_rows,root/pdf)):
+    if (len(rows)!=5+2*pages or rows[:5]!=["schema\tpid-rs-formal-rendering-receipt-v2","pdf_sha256\t"+digest(subject.read_bytes()),"pages\t"+str(pages),"dpi\t120","mode\tpage\twidth\theight\tbytes\tsha256\tmin_luma\tmax_luma\tdark_pixels\tchromatic_pixels"]):
+        fail("rendering receipt subject or framing differs")
+for offset,(before,after) in enumerate(zip(old_rows[5:],new_rows[5:])):
+    mode=("color","gray")[offset//pages]; page=offset%pages+1
+    fields=after.split("\t")
+    if len(fields)!=10 or fields[:2]!=[mode,str(page)]:
+        fail("current render row inventory differs")
+    if page!=1 and before!=after:
+        fail("non-title render row differs")
+    if page==1:
+        data=(directory/f"first-page-{mode}-120dpi.png").read_bytes()
+        if fields[4:6]!=[str(len(data)),digest(data)]:
+            fail("actual first-page image binding differs")
+
+def run(args):
+    result=subprocess.run(args,capture_output=True,text=True,timeout=30,check=False)
+    if result.returncode or result.stderr:
+        fail("bounded PDF observation failed: "+args[0])
+    return result.stdout
+info=run(["pdfinfo",str(root/pdf)])
+if not re.search(r"^Author:\s+Sepehr Mahmoudian\s*$",info,re.M):
+    fail("current PDF Author differs")
+old_text=run(["pdftotext",str(directory/"previous.pdf.bin"),"-"])
+new_text=run(["pdftotext",str(root/pdf),"-"])
+old_label="pid-rs project analysis"
+if old_text.count(old_label)!=1 or " ".join(old_text.replace(old_label,"Sepehr Mahmoudian",1).split())!=" ".join(new_text.split()):
+    fail("PDF text differs beyond the author substitution")
+first=run(["pdftotext","-f","1","-l","1",str(root/pdf),"-"])
+if first.count("Sepehr Mahmoudian")!=1:
+    fail("first-page byline differs")
+print(f"OK: v{version} current authored publication and new title-page views; historical visual receipt remains bound only to preserved prior bytes")
+PY_AUTHORSHIP
+# END AUTHORSHIP SUCCESSOR
 
 DIGEST="$(shasum -a 256 "$BUILT" | awk '{print $1}')"
 if [[ "$MODE" == "--exact" ]]; then

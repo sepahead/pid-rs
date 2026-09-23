@@ -171,7 +171,7 @@ EXPECTED_REVIEWED_DOCUMENTATION_SHA256 = {
         "61171ae73138570ecede4b1607b04f576807b6e92af1538539b38a0fca21f063"
     ),
     "scripts/README.md": (
-        "dbde2ce48e86b311278db38f6c288ce3b4d8ce58e3d436183c9ff308983aa5e1"
+        "19fd09508823a831fdf5267df9488249ee9b7c6d2e31140b2e2a694ea640ed39"
     ),
 }
 EXPECTED_CATALOG_METHOD_PROJECTION_SHA256 = (
@@ -210,7 +210,7 @@ EXPECTED_LEAN_EVIDENCE_RAW_SHA256 = {
 }
 EXPECTED_SUPPORT_GATE_SHA256 = {
     "scripts/check-formal-pdf-set.sh": (
-        "80f2547fde4688fc10ce9298f34f463a0da5f0191a8b91aa5d38e3aa8d57236c"
+        "ec6a3b8ed79aa7c857337e0653eb7b4fdb65b10a6d55662da45e9cb233b538dc"
     ),
 }
 EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
@@ -221,10 +221,10 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "45672b32d57b0e7fcc4d6bb8830c7a152c09ff2cdc8edba5495f92b084f3edaa"
     ),
     "audit/formal/latex/certified-sxpid2-executable-assurance.tex": (
-        "297c9fdfae897b2136a3eb870a81c0ab0b3553d1056c1c87492dd0e6fbafdf61"
+        "3fd115f468d251294636dde447316fc43ff6fdce1579ebc39f043aefdc2912e5"
     ),
     "audit/formal/latex/exact-log-product-sxpid2-assurance.tex": (
-        "05e865acfc2745df6245cc2b99aa81503ac7fbf498a1f41b884afe6f3711d7d1"
+        "d9b6e69720744e8c781769f6435e081c8393ed3e75cfc654c87ab3013aae486e"
     ),
     "audit/tools/certified-sxpid/deny.toml": (
         "8f5451e9ef2ee389a212f3c55b0d58032f5fe119fcff7109b74eff6d8ce04c03"
@@ -236,10 +236,10 @@ EXPECTED_REVIEWED_EXECUTABLE_EVIDENCE_SHA256 = {
         "8e318585121bdbfa3bcfbbef9587855cfc5ee2bd3f35dcccac8c4e38d4488a37"
     ),
     "output/pdf/certified-sxpid2-executable-assurance.pdf": (
-        "2370637b750578fc1818279f6001f4143dd8e1e3d48136077a6953ceb2ee795c"
+        "1d8d38809f877dd4499b8fe79ebe9e469fa116aa1ba4cbc2d5d4e35bafd76800"
     ),
     "output/pdf/exact-log-product-sxpid2-assurance.pdf": (
-        "3462a19fadc87fd542da356145413d7f71227f84d8ead1f38f334eec6462a615"
+        "51d8d0b5f34c05ff607a1e1a6348c6789ea46476e66362b74cb01f9af0a2d580"
     ),
     "claims/SX-CERTIFIED-AVERAGED-PID2-001/failures/lean-exact-log-checker-adjudication-v1.md": (
         "646639199233515b72bf81b8f2843a781ae985abfde3cd1e77aa24691840c3e0"

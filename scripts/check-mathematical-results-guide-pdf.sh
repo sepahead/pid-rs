@@ -25,21 +25,21 @@ TRAILER_ID_OBSERVATION_CHECK="$ROOT/scripts/check-mathematical-results-guide-tra
 TRAILER_ID_OBSERVATION_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-trailer-id-observation-self-test.py"
 TRAILER_ID_OBSERVATION_CHECK_SHA256=e531d58620ff41275b741666a119a1245d5ec2a08fa943fc12a297d56317106f
 TRAILER_ID_OBSERVATION_SELF_TEST_SHA256=9b1d0da3dffc87e9d46a4986b9c54c457c036ff0cd0a0966f08155aad7b5b65b
-STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v4.py"
-STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v4-self-test.py"
-HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4.py"
-HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v4-self-test.py"
+STRUCTURE_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v5.py"
+STRUCTURE_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-structure-v5-self-test.py"
+HOSTED_RAW_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v5.py"
+HOSTED_RAW_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v5-self-test.py"
 FONT_ALPHA_CHECK="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence.py"
 FONT_ALPHA_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-font-alpha-equivalence-self-test.py"
 MODE_WIRING_SELF_TEST="$ROOT/scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py"
-RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf"
-HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v4.json"
+RETAINED_HOSTED_RAW_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v5.pdf"
+HOSTED_RAW_PROFILE_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v5.json"
 RETAINED_FONT_ALPHA_FIXTURE="$ROOT/audit/evidence/mathematical-results-guide-pandoc-3.1.3-texlive-2023-font-alpha.pdf"
-STRUCTURE_CHECK_SHA256=0d350c9d76733e287e3efa6e104a9c96446e5304707c73fd0b9ed67f61a87b47
-STRUCTURE_SELF_TEST_SHA256=278197c735f361aafcbb1b573cbad4fe229e4815d9374840b350a73117ca834e
-HOSTED_RAW_CHECK_SHA256=7791914449814bf203635ff8734055df19301c72ffcf283a14ce4adc991d80bd
-HOSTED_RAW_SELF_TEST_SHA256=164ba0007b9947e41958623b1baa0a5975d2a865b597a7a9a438db496a92e9c6
-HOSTED_RAW_PROFILE_RECEIPT_SHA256=435de9987d9f2518b4e96d16e8f9eca1793248da4d427ed09283191ced12dc5a
+STRUCTURE_CHECK_SHA256=9b0def2bc263aa5e406d432e9893a27f7f0d5098aaebae51d70a329830c4d21c
+STRUCTURE_SELF_TEST_SHA256=caac0dcfaf504e474100536ab661f49554a7cd9c49e30d8cb5ea65063e9f4c08
+HOSTED_RAW_CHECK_SHA256=dfc8bceee72df9c7fc6d5d14abd75b92e901fdeda8dc55cc9d7134c5436a7719
+HOSTED_RAW_SELF_TEST_SHA256=c5b92622967933c61e9d35dcd92ce9ecf9a905d91ea952c04feafbb24a3f86c7
+HOSTED_RAW_PROFILE_RECEIPT_SHA256=88d4f0d7c3179d5d078045f08d06070713c667a956b68649116d7d7b854f9db9
 FONT_ALPHA_CHECK_SHA256=5a07012129960b8db96d77f292fa21a5ff67cdc79103bef23c0826bf00e2e997
 FONT_ALPHA_SELF_TEST_SHA256=07f73bf9e2b027f5d50bcb3bd7c4ff5f8a7a4c1fb81f807af79387e3f962c5be
 PANDOC_TEX_NORMALIZER="$ROOT/scripts/normalize-mathematical-results-guide-pandoc-tex-v4.py"
@@ -63,7 +63,7 @@ LEGACY_PANDOC_PORTABILITY_RECEIPT_SHA256=7ea2acf89c8a33f5666ab9798a594c24febdad6
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT="$ROOT/audit/evidence/mathematical-results-guide-old-toolchain-trailer-id-observation-v1.json"
 LEGACY_TRAILER_ID_OBSERVATION_RECEIPT_SHA256=cd5602bb28dce0780c4bac5f70097e496d2afe9141a8210f249332b5e6d93596
 
-HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v4-bound
+HOSTED_PROFILE_ID=hosted-pandoc-3.10.2-ubuntu-24.04-raw-v5-bound
 HOSTED_PANDOC_VERSION='pandoc 3.10.2'
 HOSTED_PANDOC_SHA256=867c5fc83e6b18991d1880e040867d31d09a0d5e68b0bfae362d2fbc71cf25ce
 HOSTED_RENDERER_VERSION='This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Debian)'
@@ -1611,7 +1611,7 @@ case "$MODE:$CROSS_PROFILE" in
     validate_pdf built "$BUILT" strict
     ;;
   --cross-toolchain:"$HOSTED_PROFILE_ID")
-    # The v4 checker raw-binds one retained 28-page candidate and bound strict manifests.
+    # The v5 checker raw-binds one retained 28-page candidate and bound strict manifests.
     validate_pdf built "$BUILT" hosted-raw-and-strict
     ;;
   --cross-toolchain:"$LEGACY_PROFILE_ID")

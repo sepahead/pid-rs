@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">When a second sensor becomes useful</title>
+  <desc id="desc">Analytic availability-branch calculation under a fixed finite joint law P(X1,X2,Y). The observed availability mask M is independent of all source and target data, while the sensors themselves may be dependent. Mi=1 means sensor i is available. Let a=P(M1=1), b=P(M2=1); the product-probability version also assumes M1 and M2 independent. When the baseline is absent and candidate 2 present, probability (1-a)b, the gain is I(X2;Y)=R+U2. When both are present, probability ab, the gain is I(X2;Y|X1)=U2+S. When candidate 2 is absent, probability 1-b, the gain is zero. Weighting and summing gives Gain=b[(1-a)R+U2+aS]. For correlated masks still independent of data, the general formula is p01(R+U2)+p11(U2+S), where pij=P(M1=i,M2=j). Natural occlusion can depend on the data and requires conditional-law review. All information is in nats. This is a Bayes log-loss information-gain identity, not a proof of benefit for a learned prediction or control policy.</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 16 16" refX="15" refY="8" orient="auto">
+      <path d="M 1 1 L 15 8 L 1 15 Z" fill="#2C3E50"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Source Sans Pro", Arial, sans-serif; fill: #2C3E50; font-size: 22px; }
+    .title { fill: #1F3F60; font-weight: 700; font-size: 34px; }
+    .heading { fill: #1F6968; font-weight: 700; font-size: 25px; }
+    .body { font-size: 24px; }
+    .note { font-size: 22px; }
+    .formula { font-size: 28px; }
+    .strong { font-weight: 700; }
+  </style>
+  <rect width="1200" height="800" fill="#F7F3E9"/>
+  <rect width="1200" height="8" fill="#1F3F60"/>
+  <text x="44" y="55" class="title">When a second sensor becomes useful</text>
+  <text x="44" y="95" class="note">R: redundancy · U₂: unique candidate term · S: synergy (signed MGW atoms)</text>
+  <rect x="44" y="120" width="1112" height="110" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2"/>
+  <text x="64" y="153" class="body">P(X₁, X₂, Y) fixed;  M ⟂ (X₁, X₂, Y). The sensors may be dependent.</text>
+  <text x="64" y="187" class="note">M<tspan baseline-shift="sub" font-size="16">i</tspan> = 1 means sensor i is available;  a = P(M₁ = 1),  b = P(M₂ = 1).</text>
+  <text x="64" y="217" class="note">The product probabilities below also require M₁ and M₂ to be independent.</text>
+  <rect x="366" y="262" width="468" height="66" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="addition"/>
+  <text x="600" y="305" class="formula" text-anchor="middle">Add candidate 2 to baseline 1</text>
+  <path d="M600 340 V354 H218 V366" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="alone" data-end-gap="12"/>
+  <path d="M600 354 V366" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="together" data-end-gap="12"/>
+  <path d="M600 354 H982 V366" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="absent" data-end-gap="12"/>
+  <rect x="44" y="378" width="348" height="152" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="alone"/>
+  <text x="218" y="410" class="heading" text-anchor="middle">Baseline absent</text>
+  <text x="218" y="439" class="body" text-anchor="middle">candidate present</text>
+  <text x="218" y="478" class="body" text-anchor="middle">Probability (1 − a)b</text>
+  <text x="218" y="516" class="body" text-anchor="middle">R + U₂ = I(X₂; Y)</text>
+  <rect x="426" y="378" width="348" height="152" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="together"/>
+  <text x="600" y="410" class="heading" text-anchor="middle">Both sensors present</text>
+  <text x="600" y="439" class="body" text-anchor="middle">M₁ = M₂ = 1</text>
+  <text x="600" y="478" class="body" text-anchor="middle">Probability ab</text>
+  <text x="600" y="516" class="note" text-anchor="middle">U₂ + S = I(X₂; Y | X₁)</text>
+  <rect x="808" y="378" width="348" height="152" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="absent"/>
+  <text x="982" y="410" class="heading" text-anchor="middle">Candidate absent</text>
+  <text x="982" y="439" class="body" text-anchor="middle">M₂ = 0</text>
+  <text x="982" y="478" class="body" text-anchor="middle">Probability 1 − b</text>
+  <text x="982" y="516" class="body" text-anchor="middle">Gain = 0</text>
+  <path d="M218 542 V556 H600" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M982 542 V556 H600" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M600 542 V573" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="gain" data-end-gap="12"/>
+  <rect x="44" y="585" width="1112" height="82" rx="12" fill="#F7F3E9" stroke="#1F6968" stroke-width="2" id="gain"/>
+  <text x="600" y="622" class="formula strong" style="fill:#1F3F60" text-anchor="middle">Gain = b[(1 − a)R + U₂ + aS]</text>
+  <text x="600" y="653" class="note" text-anchor="middle">Expected Bayes log-loss information gain, in nats</text>
+  <text x="44" y="706" class="note">Correlated masks: Gain = p₀₁(R + U₂) + p₁₁(U₂ + S);  p<tspan baseline-shift="sub" font-size="16">ij</tspan> = P(M₁ = i, M₂ = j).</text>
+  <text x="44" y="742" class="note">Masks still independent of data. Natural occlusion needs conditional-law review.</text>
+  <text x="44" y="780" class="note">This identity does not prove benefit for a learned prediction or control policy.</text>
+</svg>

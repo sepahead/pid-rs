@@ -310,8 +310,8 @@
       {
         "git_mode": "100644",
         "path": "AGENTS.md",
-        "sha256": "b73ead70cadf18100ee1ae9ac0ae224021cd5b13a4a6bbdc8a90b96963131099",
-        "size_bytes": 97191
+        "sha256": "c678d5327a51613a85286978744602e988df68a5efe069b99133d44afbf96bcf",
+        "size_bytes": 97948
       },
       {
         "git_mode": "100644",
@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "4262d157a101182a7c4d2a8f72b34737e9bf47ce11a02eab514ba840b3c467b0",
-        "size_bytes": 311597
+        "sha256": "f6652c9f4b2c0894603eec11ed154361b889ca54cdcc1be2117ba6088e8db9ac",
+        "size_bytes": 312755
       },
       {
         "git_mode": "100644",
@@ -496,8 +496,8 @@
       {
         "git_mode": "100644",
         "path": "README.md",
-        "sha256": "adfc5a9fd67cb7dab28904561a7a1835cd6bbd97830c5a03556571159d6b2e1b",
-        "size_bytes": 88317
+        "sha256": "d7e2e97678ea5d7115cea82d360548ed44c02d2d743b006c9bb77f182b5b27a2",
+        "size_bytes": 89535
       },
       {
         "git_mode": "100644",
@@ -2955,6 +2955,150 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v4/SUCCESSOR.json",
+        "sha256": "efad7c6fb07accac8c7a04d3e6450ab67ac9bac0cdab058bb320ba859324dc2a",
+        "size_bytes": 3102
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v4/first-page-color-120dpi.png",
+        "sha256": "faff4245a3bc25547010e37f1e255d14f6c3e56acb614458e1a4f28830614c1b",
+        "size_bytes": 220599
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v4/first-page-gray-120dpi.png",
+        "sha256": "2d05517e3d28fe43212615194a3790d74085c4f527ed051f99b61c930e4c4d81",
+        "size_bytes": 217196
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v4/previous-rendering-observation-2026-09-23.tsv.txt",
+        "sha256": "895b6b609a01586eb7c02574ebc1d45c9af472e0ffd5188a1c2cd66c23de1ebc",
+        "size_bytes": 2112
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v4/previous.pdf.bin",
+        "sha256": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265",
+        "size_bytes": 1149221
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v4/previous.tex.txt",
+        "sha256": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657",
+        "size_bytes": 28520
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v5/SUCCESSOR.json",
+        "sha256": "83f7b3a76721f3f1f443c3d3fb9acdee621fddf7a4323f48e7312a49484f1bef",
+        "size_bytes": 2929
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v5/first-page-color-120dpi.png",
+        "sha256": "14ce6246d59e1ec2c96b8f342db107c3cc30c20c1f6155a97c30a9a4c6b97c9a",
+        "size_bytes": 196860
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v5/first-page-gray-120dpi.png",
+        "sha256": "34f6578964dbe02125c4a7e69a3a1f3e2aae5d6da3c77c1f2281cb1fc651cb7a",
+        "size_bytes": 193467
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v5/previous-rendering-receipt.tsv.txt",
+        "sha256": "7730f32febfb3a0ce2bc90b8300980aa299c6afd1d957ada7a14daaeae741413",
+        "size_bytes": 1061
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v5/previous.pdf.bin",
+        "sha256": "bf932cfb2dbe70500458cc8de0d4ce2f3718bfe5d135755e2a9147c3d6621a79",
+        "size_bytes": 1036495
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v5/previous.tex.txt",
+        "sha256": "8f32bf892c102b73c20d507c92b631d2387ab07b686ab7e0a163eae7f1f52527",
+        "size_bytes": 12800
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v6/SUCCESSOR.json",
+        "sha256": "3c48313376aa8e89652e976c7744cfbe24b6b14b67cbc83e4a81dbe1688e3849",
+        "size_bytes": 2929
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v6/first-page-color-120dpi.png",
+        "sha256": "fde7134a9291c0b348d9311c188330d81d8d63b3d26eddc64f6c333195f57924",
+        "size_bytes": 217547
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v6/first-page-gray-120dpi.png",
+        "sha256": "b2acfbbe6cc6179c97f09989b2386912aca4d288bcbd9123f8f17dbbe2ebe265",
+        "size_bytes": 214286
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v6/previous-rendering-receipt.tsv.txt",
+        "sha256": "333bb16caf3a793d383b06b70c51e3a30fa881f8c5743cd9a8798c4c20b5725d",
+        "size_bytes": 1064
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v6/previous.pdf.bin",
+        "sha256": "52751c8701ad527040907e399f41ee6579616bc63db1af174bea65e5303da09a",
+        "size_bytes": 1042119
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v6/previous.tex.txt",
+        "sha256": "d75ed1834dbc5d210bafb2a1f65784e13e465c199dcb36dc461eb27be3857e12",
+        "size_bytes": 13201
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v7/SUCCESSOR.json",
+        "sha256": "5ac7d91c387812b6622b65a5190a016ac7a7f6dddf03f0b6bc06b6e49937a8c7",
+        "size_bytes": 2929
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v7/first-page-color-120dpi.png",
+        "sha256": "cc725a3842b0ce174d4a51a52326a490a5d0af5fbafb997eef4fcd70d935d1d5",
+        "size_bytes": 219653
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v7/first-page-gray-120dpi.png",
+        "sha256": "0a8d85472e76b649c48812c323fd076dd6fbf4ce8b5cb39fb3af2f15535aa554",
+        "size_bytes": 215829
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v7/previous-rendering-receipt.tsv.txt",
+        "sha256": "f7be03f0cd1c89e046225b7743e0334f189c3216ead4d74ab309cf0243b9816e",
+        "size_bytes": 1275
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v7/previous.pdf.bin",
+        "sha256": "2b05eb2e9d1e694d2f2f04b2bed3acf9b7f1c2eb1ac6672c48757ef9d067d33f",
+        "size_bytes": 1049198
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/ksg-publication-authorship-2026-09-23/v7/previous.tex.txt",
+        "sha256": "8bb1461d5fc5e7fd883d040b0865a47276e060696176b0c1b4ae8e9c797e5b8b",
+        "size_bytes": 16188
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/ksg-rev4-8b792-ci-portability-path-policy.json",
         "sha256": "ffd763b2701c897ed3df75f3f97fe15933c37bf80adcadb0466e9a02113e6359",
         "size_bytes": 14776
@@ -3471,6 +3615,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-authorship-2026-09-23.md",
+        "sha256": "7f49fb699ec6d435135e105da7ed63489810bb6c4c1bab8345d163c073622d4d",
+        "size_bytes": 4676
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-results-guide-final-builder-linux-v4-supplement.json",
         "sha256": "58cdb536a97a1434d7e652914d020a7eec6707bcf335755e5726ec172db29de0",
         "size_bytes": 12511
@@ -3525,6 +3675,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v5.json",
+        "sha256": "88d4f0d7c3179d5d078045f08d06070713c667a956b68649116d7d7b854f9db9",
+        "size_bytes": 10805
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v2.pdf",
         "sha256": "b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6",
         "size_bytes": 744745
@@ -3540,6 +3696,12 @@
         "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v4.pdf",
         "sha256": "1b1ec340538111b479bbff4bc6f9c686e92ff14a8624a39b4e9e02b0d46a06ce",
         "size_bytes": 818418
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-results-guide-pandoc-3.10.2-ubuntu-24.04-texlive-2023-hosted-raw-v5.pdf",
+        "sha256": "09610708ae87e43b754a015480755b88e4cc2e299d5f1b427fb87c664dc27e64",
+        "size_bytes": 818508
       },
       {
         "git_mode": "100644",
@@ -3639,6 +3801,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR-v2.json",
+        "sha256": "be777ffd770e403bc807ab7e57021439fdeaf35f317ee5889c36000ce5958600",
+        "size_bytes": 9336
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json",
         "sha256": "495e7f07d5abb70358fdd428a0dd75d214c9cce6cccad028670fa81d07fa53b6",
         "size_bytes": 4253
@@ -3648,6 +3816,18 @@
         "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-120dpi.png",
         "sha256": "4f5dcee0b6127a779792a0383b7bc2b29ed5617b4e209bbd1463ad21265758dd",
         "size_bytes": 246307
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-color-300dpi.png",
+        "sha256": "70d4dd4afab862cfadb55f070cb2e92c1cf42879305f33cd7f84483fcadd421d",
+        "size_bytes": 538601
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-gray-120dpi.png",
+        "sha256": "9a3d0added839150d63b753768572246a7940ef1e166fb5147bf35cf843442bd",
+        "size_bytes": 229587
       },
       {
         "git_mode": "100644",
@@ -13353,6 +13533,72 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/controls/roster-v1.json",
+        "sha256": "e27dc889a1f6e9b7f4b6206820b335d6c3c3afd0f19336423f15802c2cf33fd4",
+        "size_bytes": 3693
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/figures/availability-weighted-gain.pdf",
+        "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd",
+        "size_bytes": 47272
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/figures/sensor-data-to-evidence.pdf",
+        "sha256": "f47b9faeb803f95a1fc4a5285b93a8796b6d7ff54145b521074d371a171b2e43",
+        "size_bytes": 60527
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/figures/signed-atoms-and-sensor-value.pdf",
+        "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f",
+        "size_bytes": 44338
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/full.expected.tex",
+        "sha256": "6ef7a0bf73022abffd7f0cc98ff5db1279a222a8e37ef2ea6a4b6b284af04cb4",
+        "size_bytes": 59376
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/layout/full.tex",
+        "sha256": "40536bc4c350c274defbc952b8abfef98b4474d2f69c10b90916b68935213aa0",
+        "size_bytes": 2267
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/layout/overview.tex",
+        "sha256": "254f3fda145c9bea0269013ab61703c83b4370d65dbec9d49c4b556b9bf42609",
+        "size_bytes": 2233
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/layout/publication-filter.lua",
+        "sha256": "5c5b8d14b0252247e63a682b6fb1f969220f36b078621ec7a4d7346373621258",
+        "size_bytes": 6427
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/native-tools-v1.json",
+        "sha256": "f3c5c6e1ca5f10b19e6c847fafd5679e4a9489eb2ed019b6283b1a0842b12cda",
+        "size_bytes": 6362
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/overview.expected.tex",
+        "sha256": "8b22f54f9b155f90445008d616decf7f5c3cc61b62f57b73411d9d8bd19c2090",
+        "size_bytes": 10908
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
+        "sha256": "f3c36b1ddc50e589ce7c1d5965392184b861e66fb2114098d7b44dae211f375c",
+        "size_bytes": 26115
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
         "sha256": "d9b6e69720744e8c781769f6435e081c8393ed3e75cfc654c87ab3013aae486e",
         "size_bytes": 45187
@@ -13456,8 +13702,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf",
-        "sha256": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
-        "size_bytes": 69880
+        "sha256": "f794cb966c4e2e9029d093a3e572f86068a428f70a9b67ff484c821f32b20f24",
+        "size_bytes": 69875
       },
       {
         "git_mode": "100644",
@@ -13468,8 +13714,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf",
-        "sha256": "2ca3228ea1fc13557b16d447cc9c3e4f623f85b7186e68d5bce5210084b5af63",
-        "size_bytes": 78447
+        "sha256": "3a7ca079704d5f20f7f157a2a1f4b8f268ebc1ec50fd2efc90dd15d4bd962be7",
+        "size_bytes": 78442
       },
       {
         "git_mode": "100644",
@@ -13480,8 +13726,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf",
-        "sha256": "6df641325ec83dd4edb14b1f4c34468f5c61083a51ef8ebbd4cfb8a81bb731da",
-        "size_bytes": 70076
+        "sha256": "9e003510ccd712b64b04a59cbb8ab2cbc0df52ea8c911659d7cc3469307cde59",
+        "size_bytes": 70071
       },
       {
         "git_mode": "100644",
@@ -13492,8 +13738,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf",
-        "sha256": "47e9e22b2cabd31ce3ba870dd40b68b42eda75a25ce6be1f19c0b3edcc5ee88d",
-        "size_bytes": 73502
+        "sha256": "dab9010266897c497227a74d8f13abb4e707ffec1b5afa67138ba4a85cabebe6",
+        "size_bytes": 73497
       },
       {
         "git_mode": "100644",
@@ -24621,6 +24867,54 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/EXPOSITION.md",
+        "sha256": "f0fbcab778f397c0ad414203c55af10849cb92da24808b13796d48ae494d476b",
+        "size_bytes": 48087
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/OVERVIEW.md",
+        "sha256": "d1fb8b7a3f1ceb01cbd02be7d32f80fa4b3cf42def98fe4261085da093ef9ae0",
+        "size_bytes": 7165
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/PUBLICATION.md",
+        "sha256": "ea98620867a526f7c76b9ef81c2ece3a2ab8849ca20cf5e38a6401f823438856",
+        "size_bytes": 8180
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/REPRODUCTION.json",
+        "sha256": "2adc9b944cc0c7e074ea40e7e89fe77dc10ee505caaa9198870a928836b1a482",
+        "size_bytes": 5660
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/SOURCE_OBSERVATIONS.json",
+        "sha256": "2984c4549b03bf51cfb38eb005a9b4834ddb3d91b30eeeacfc69abc3fd058c88",
+        "size_bytes": 28161
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/figures/availability-weighted-gain.svg",
+        "sha256": "e6f3e40d6eeb53c96f3deb501cf20914a925d16d05295679e363aa31cfdbc133",
+        "size_bytes": 5921
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/figures/sensor-data-to-evidence.svg",
+        "sha256": "78ff714aeb04d1c2f8606b1bb30ba7b1a196fb7080779f01c9cdd6b8e3f80de8",
+        "size_bytes": 6792
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/research/embodied-sensor-utility/figures/signed-atoms-and-sensor-value.svg",
+        "sha256": "e74f2f0a29660d8388c68ee6ef2bd13171906993b5963fc6dbc8f652306120e4",
+        "size_bytes": 8259
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/research/finite-prefix-mgw-gradient/EXPOSITION.md",
         "sha256": "beb9182bd1b59ed525d03245d60575d5406663cdd6c28b473e3a167b8adec16a",
         "size_bytes": 31606
@@ -27009,6 +27303,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/embodied-sensor-overview.pdf",
+        "sha256": "24bf1e90c85622de9688260a041b28caf7ffcfea458ff290e4f710d1a7606ecd",
+        "size_bytes": 91502
+      },
+      {
+        "git_mode": "100644",
+        "path": "output/pdf/embodied-sensor-utility.pdf",
+        "sha256": "b02d8fb6f7a9aa7ce3d4c0380326e21aad6acee4792f2690ac6302ba60c15339",
+        "size_bytes": 298938
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/exact-log-product-sxpid2-assurance.pdf",
         "sha256": "51d8d0b5f34c05ff607a1e1a6348c6789ea46476e66362b74cb01f9af0a2d580",
         "size_bytes": 373585
@@ -27051,6 +27357,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "output/pdf/ksg-m1a-composite-v4-process.rendering-receipt.tsv",
+        "sha256": "f8c4d5075c39dd901af8989c1f20b476f38c98364bcedaef552176ae53dfd047",
+        "size_bytes": 2112
+      },
+      {
+        "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v5-boundary.pdf",
         "sha256": "17d0fe7473f1f74f431af02d68f8a1c70e6e03a23648e2aaea056fb086950360",
         "size_bytes": 1036487
@@ -27058,7 +27370,7 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv",
-        "sha256": "7730f32febfb3a0ce2bc90b8300980aa299c6afd1d957ada7a14daaeae741413",
+        "sha256": "dd7c4b4a0f17930ddedbe6fffc0fb66032da12b7d08e4bd94f8f7da827b54a4b",
         "size_bytes": 1061
       },
       {
@@ -27070,7 +27382,7 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v6-boundary.rendering-receipt.tsv",
-        "sha256": "333bb16caf3a793d383b06b70c51e3a30fa881f8c5743cd9a8798c4c20b5725d",
+        "sha256": "ac93f6b63f017638ddfa0a1360035732a18acde147515ce4c6e772cb6e3d526a",
         "size_bytes": 1064
       },
       {
@@ -27082,7 +27394,7 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/ksg-m1a-composite-v7-boundary.rendering-receipt.tsv",
-        "sha256": "f7be03f0cd1c89e046225b7743e0334f189c3216ead4d74ab309cf0243b9816e",
+        "sha256": "583cf502d0631ec8742cf0d368853b6144c56f1c293c8a918bad4c3130b44f11",
         "size_bytes": 1275
       },
       {
@@ -27094,7 +27406,7 @@
       {
         "git_mode": "100644",
         "path": "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv",
-        "sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea",
+        "sha256": "5295ee5ba871894e7a5c03f8f3a78651cc897e8ca58c950eb5130239c49f8a66",
         "size_bytes": 19052
       },
       {
@@ -27190,8 +27502,14 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "5ffca399c6fb269a30aa64b722d58d9b0cd79ae2c5c5e86a4b5bb96b8490ced6",
-        "size_bytes": 296216
+        "sha256": "19fd09508823a831fdf5267df9488249ee9b7c6d2e31140b2e2a694ea640ed39",
+        "size_bytes": 300254
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/build-embodied-sensor-pdfs.py",
+        "sha256": "3ac72d1f7b0b0587cb86e95011e6d150953415a94fea162bbd3bf32cdc373275",
+        "size_bytes": 42403
       },
       {
         "git_mode": "100644",
@@ -27436,13 +27754,13 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim-self-test.py",
-        "sha256": "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1",
-        "size_bytes": 131686
+        "sha256": "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b",
+        "size_bytes": 131909
       },
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "7c46e8615b1402d2dbd67b8ac7c34d22150a27c58fa6f969a056f5012394629b",
+        "sha256": "a032f2b798482d0c511836fb37bcfced85f4542f3298b60c65212f267dac0428",
         "size_bytes": 90915
       },
       {
@@ -27513,6 +27831,18 @@
       },
       {
         "git_mode": "100755",
+        "path": "scripts/check-embodied-sensor-pdf-dispatch-self-test.py",
+        "sha256": "e98eadb3749d6d163759071266c854f57c453cc21d0fcad92651e639d8f99e5e",
+        "size_bytes": 14652
+      },
+      {
+        "git_mode": "100755",
+        "path": "scripts/check-embodied-sensor-pdfs-self-test.py",
+        "sha256": "6063c3066bfd25fa9a3ca4b28d1a3d1445086ca84932812a169241c98873275b",
+        "size_bytes": 30417
+      },
+      {
+        "git_mode": "100755",
         "path": "scripts/check-exact-log-product-sxpid2-pdf.sh",
         "sha256": "38453a6a9b040a31fb4de65a407efe0a7258e57fc3f2b06ceed8bbb20343f43d",
         "size_bytes": 6683
@@ -27556,14 +27886,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set-self-test.sh",
-        "sha256": "380a19274e38c3051d84db69d93b81c84d026d28d26a33994aae66a542c6d6ff",
-        "size_bytes": 80486
+        "sha256": "9a2d83d986765b37ad7acbc304e4904250b3baea4cc910643c8787c7500631f7",
+        "size_bytes": 81184
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-formal-pdf-set.sh",
-        "sha256": "80f2547fde4688fc10ce9298f34f463a0da5f0191a8b91aa5d38e3aa8d57236c",
-        "size_bytes": 25316
+        "sha256": "ec6a3b8ed79aa7c857337e0653eb7b4fdb65b10a6d55662da45e9cb233b538dc",
+        "size_bytes": 30553
       },
       {
         "git_mode": "100755",
@@ -27717,9 +28047,15 @@
       },
       {
         "git_mode": "100755",
+        "path": "scripts/check-ksg-m1a-composite-v4-process-pdf-self-test.sh",
+        "sha256": "f4f7b486da611bf8d42122f0f1676886d5fc8e329365c7a902debed83b94b5a5",
+        "size_bytes": 6210
+      },
+      {
+        "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v4-process-pdf.sh",
-        "sha256": "4342df52c516f19d550831b9b4430131e32779ccc4f219c3c89e2434ce0082df",
-        "size_bytes": 47339
+        "sha256": "4ffb79fb908a85073e79c961cb180b2d524aab70c7ae56e0e01ebe7db34800ea",
+        "size_bytes": 59572
       },
       {
         "git_mode": "100644",
@@ -27736,14 +28072,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh",
-        "sha256": "fe8aa30908d1d2f8fc603b50708a2f57011a8b7a46b95e82e1ec45b311660079",
-        "size_bytes": 6378
+        "sha256": "7fa7c0e8f4663ac041f62a201a2a10b42d35d25053a1cac19d2609810bc9b38a",
+        "size_bytes": 10752
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh",
-        "sha256": "fbd66bd6ae0dcd20b2ac11d309bb0610cde5c9d5efc97e32437a709ee7195fab",
-        "size_bytes": 39726
+        "sha256": "78253973229858d968f93d43df6c3cbde9b7bcc458b9db14231c6964707031f1",
+        "size_bytes": 46405
       },
       {
         "git_mode": "100644",
@@ -27760,14 +28096,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh",
-        "sha256": "c2a42bebb2f33f2e3e1d34ddce1abc0b8c2c554524e4ea7881c13ff489bc6625",
-        "size_bytes": 17071
+        "sha256": "47595a2a44800fabb327fffafde396acce89ea80608addb3ed585eaa6e12d7cd",
+        "size_bytes": 21445
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh",
-        "sha256": "2e233815c51c6fdc842387c9f4f0e2524bc25a0fe97c4eeea49be4a5cdacc3d1",
-        "size_bytes": 95273
+        "sha256": "661974e59388077bf1f1170392c7497d23f0e640eb269c10c8276b0e178838ed",
+        "size_bytes": 101952
       },
       {
         "git_mode": "100755",
@@ -27796,14 +28132,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh",
-        "sha256": "a88b769182dd0f28078354ce170a8c69881eabbe8213d82b1c2951267fdbdcb2",
-        "size_bytes": 23137
+        "sha256": "bb91773d23906cc440a12e64b769b85845f9a414457be379ca12ac0bd35e9e5d",
+        "size_bytes": 27511
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh",
-        "sha256": "1e697d32c07b0f430b9fc7f89c4d43f66d75de549552031e3bfe9ee82ec9f7b8",
-        "size_bytes": 111043
+        "sha256": "0201923fdb5f3c0e54132100af753e75e64118719d89669c6d3d655b54597969",
+        "size_bytes": 117722
       },
       {
         "git_mode": "100644",
@@ -28012,8 +28348,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "4d0dc4db1d724c70b80f298b82fc5cc02a31d88f26a6ae0a04f94ae25ba9c1ad",
-        "size_bytes": 136973
+        "sha256": "d5d93eb457ab43d84a2cc142f845d2676752b0442fe691b99fe8cb2ec7217b55",
+        "size_bytes": 138785
       },
       {
         "git_mode": "100644",
@@ -28155,6 +28491,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v5-self-test.py",
+        "sha256": "c5b92622967933c61e9d35dcd92ce9ecf9a905d91ea952c04feafbb24a3f86c7",
+        "size_bytes": 59869
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile-v5.py",
+        "sha256": "dfc8bceee72df9c7fc6d5d14abd75b92e901fdeda8dc55cc9d7134c5436a7719",
+        "size_bytes": 37424
+      },
+      {
+        "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-hosted-raw-profile.py",
         "sha256": "a1fc39a5bef8bc22286321cab8127b96d395cc08657afec88be13697ff70b2e7",
         "size_bytes": 37084
@@ -28174,7 +28522,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-mode-wiring-self-test.py",
-        "sha256": "059c321e1bf53da53143a0f0031e5e17ae5ce475692976af807e77851c7f06ad",
+        "sha256": "fa4731c8e56eb70428c592df5637eb719e9da55d3d2b2de96ef27a494e6679c5",
         "size_bytes": 140081
       },
       {
@@ -28227,6 +28575,18 @@
       },
       {
         "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v5-self-test.py",
+        "sha256": "caac0dcfaf504e474100536ab661f49554a7cd9c49e30d8cb5ea65063e9f4c08",
+        "size_bytes": 37915
+      },
+      {
+        "git_mode": "100644",
+        "path": "scripts/check-mathematical-results-guide-pdf-structure-v5.py",
+        "sha256": "9b0def2bc263aa5e406d432e9893a27f7f0d5098aaebae51d70a329830c4d21c",
+        "size_bytes": 86355
+      },
+      {
+        "git_mode": "100644",
         "path": "scripts/check-mathematical-results-guide-pdf-structure.py",
         "sha256": "50a5ba491a299750af65c14488be478481fbd1a9c779a9c4506a4029d9c4c0b2",
         "size_bytes": 84208
@@ -28234,7 +28594,7 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-results-guide-pdf.sh",
-        "sha256": "558ada53c57b6bb7b999866766c5b8d4ceacf92fc08b649792795fbe8dcfe203",
+        "sha256": "9fb658e386d04734303f56a3b4e0915491ca57f1106180131f6080a5a86fa320",
         "size_bytes": 78471
       },
       {
@@ -28276,14 +28636,14 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "774b0145ce12057d6e243154b7c8494a7dc20eb76b062196aee43e0019a9596e",
-        "size_bytes": 314855
+        "sha256": "bb84efa00c0e300b7e26b05340f6f3e77ada98826904031b41d75eb3c489136e",
+        "size_bytes": 315123
       },
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf.sh",
-        "sha256": "0cdf34d937646891581ddf46ba800008e54f6f978662a48925cab2f74e5d6787",
-        "size_bytes": 281317
+        "sha256": "085bcdefecf76b1e9a67436004e82918bd66f75543ed1e6af96e12da6e2c843c",
+        "size_bytes": 281451
       },
       {
         "git_mode": "100644",
@@ -28928,8 +29288,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "212d8a9a1023fdf22561505dff8b9e218cd86b8c895f010c6224280dd3aeeb72",
-    "entry_count": 4797
+    "entries_sha256": "585143a664e831be9f15110c84f61e65129caf55eb666c9a240bb0f61c99d905",
+    "entry_count": 4857
   },
   "subprojections": [
     {
@@ -28941,23 +29301,23 @@
       ]
     },
     {
-      "entries_sha256": "f6ff73d924cdf8f3d5b396c11890395127b0a508ac39f2305f2798e75059e008",
-      "entry_count": 1886,
+      "entries_sha256": "d0b99fef4acf96ed2987aa769c9ede7bbeda86cdd8392d161f3ec2d292dbfa83",
+      "entry_count": 1897,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
       ]
     },
     {
-      "entries_sha256": "553d29c942a746fe6d91846b5cb0de7834c4cf07d91abcf99482a78676e8fd53",
-      "entry_count": 32,
+      "entries_sha256": "21fd0e7f09f78161ad5365c707aea4ff37c1532c5d79a5680877775c12553f67",
+      "entry_count": 35,
       "name": "generated_pdf_set",
       "selectors": [
         "output/pdf/"
       ]
     },
     {
-      "entries_sha256": "a0e760acbc360b65cfbd631d13820d8e6d7a843309d761e51efba5c972cc45cc",
+      "entries_sha256": "ad02685916a1f55c66cffffcd06d3b90f05fc9867f4ecab10fe772eed9a10464",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

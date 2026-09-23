@@ -202,6 +202,9 @@ REVIEWED_DOCUMENTATION_PATHS = frozenset(
 SUPPORT_GATE_PATHS = frozenset({"scripts/check-formal-pdf-set.sh"})
 EXPECTED_EXECUTABLE_EVIDENCE_CHANGED_PATHS = frozenset(
     {
+        # Current author-only publication bindings; historical proof bytes stay fixed.
+        "audit/formal/latex/certified-sxpid2-executable-assurance.tex",
+        "output/pdf/certified-sxpid2-executable-assurance.pdf",
         "audit/formal/EXACT_LOG_PRODUCT_SXPID2_ASSURANCE.md",
         "audit/formal/latex/exact-log-product-sxpid2-assurance.tex",
         "output/pdf/exact-log-product-sxpid2-assurance.pdf",

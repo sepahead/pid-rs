@@ -18,6 +18,8 @@ fi
 
 python3 -I -S -B "$ROOT/scripts/check-mgw-derivative-pdf-dispatch-self-test.py"
 python3 -O -I -S -B "$ROOT/scripts/check-mgw-derivative-pdf-dispatch-self-test.py"
+python3 -I -S -B "$ROOT/scripts/check-embodied-sensor-pdf-dispatch-self-test.py"
+python3 -O -I -S -B "$ROOT/scripts/check-embodied-sensor-pdf-dispatch-self-test.py"
 
 TMP_ROOT_INPUT="${TMPDIR:-/tmp}"
 if [[ ! -d "$TMP_ROOT_INPUT" ]]; then
@@ -64,6 +66,8 @@ LATEX_STANDALONE=(
   two-source-sxpid-count-atom-bridge
 )
 MARKDOWN_SOURCES=(
+  audit/research/embodied-sensor-utility/EXPOSITION.md
+  audit/research/embodied-sensor-utility/OVERVIEW.md
   MATHEMATICAL_RESULTS_GUIDE.md
   audit/evidence/finite-target-copy-mgw-synergy.md
   audit/research/finite-prefix-mgw-gradient/EXPOSITION.md
@@ -80,6 +84,8 @@ MARKDOWN_SOURCES=(
   SXPID3_SOURCE_MARGINAL_AND_BOUNDED_AUDIT.md
 )
 STANDALONE=(
+  embodied-sensor-utility
+  embodied-sensor-overview
   certified-sxpid2-executable-assurance
   dependency-colored-sxpid-concentration
   ecosystem-compatibility-audit
@@ -296,7 +302,7 @@ for literal in required:
     if lines.count(literal) != 1:
         raise SystemExit(f"publication-link gate invocation drifted: {literal!r}")
 early_bias_end = '  "$PID_RS_BIAS_PYTHON" -I -S -B scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind summary --exact --check --registration "$PID_RS_BIAS_SUMMARY_REGISTRATION" --registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256" --work-dir "$PID_RS_BIAS_SUMMARY_WORK_DIR"\nfi\n\n'
-required_block = "# END DERIVATIVE EXACT DISPATCH\n\n" + "\n".join(required) + "\n"
+required_block = "# END EMBODIED SENSOR EXACT DISPATCH\n\n" + "\n".join(required) + "\n"
 if text.count(required_block) != 1:
     raise SystemExit(
         "publication-link gates are not one exact contiguous post-inventory block"
@@ -670,9 +676,9 @@ import sys
 
 text = Path(sys.argv[1]).read_text(encoding="utf-8")
 expected = '''if [[ "$MODE" == "--exact" ]]; then
-  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias and derivative-note inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
+  echo "OK: every declared formal paper passed declared same-toolchain typesetting diagnostics; current bias, derivative-note, and embodied-sensor inert source/data controls passed in normal and optimized Python; committed-byte relations are exact, including the root blueprint and post-publication custody receipt, and the source and renderer-fragment inventories are exact"
 else
-  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and support-change cusp intentionally have no accepted cross-toolchain relation, and all ten status-2 refusals plus the source and renderer-fragment inventories are exact"
+  echo "OK: every declared paper with a reviewed cross-toolchain profile passed its declared bounded typesetting diagnostics; the root blueprint, post-publication custody receipt, mean exposition, recorded-sensor document, finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper, support-change cusp, embodied-sensor full paper and embodied-sensor overview intentionally have no accepted cross-toolchain relation, and all twelve status-2 refusals plus the source and renderer-fragment inventories are exact"
 fi
 '''
 if text.count(expected) != 1:
@@ -1100,10 +1106,11 @@ PY
   fi
   pass "$label"
 done <<'CASES'
-exact success message cannot omit current bias controls	current bias and derivative-note inert source/data controls passed in normal and optimized Python; 	<DELETE>
+exact success message cannot omit current registered controls	current bias, derivative-note, and embodied-sensor inert source/data controls passed in normal and optimized Python; 	<DELETE>
 exact success message cannot omit the custody receipt	including the root blueprint and post-publication custody receipt	including the root blueprint
 cross success message cannot call all papers profiled	every declared paper with a reviewed cross-toolchain profile	every declared paper
-cross success message cannot omit the eighth refusal	all ten status-2 refusals	all seven status-2 refusals
+cross success message cannot omit required refusals	all twelve status-2 refusals	all seven status-2 refusals
+cross success message cannot omit the two sensor refusals	all twelve status-2 refusals	all ten status-2 refusals
 CASES
 
 for removed_invocation in \
@@ -1359,7 +1366,7 @@ private bias guards cannot run in cross mode	# Inventory and unsupported cross r
 private bias guards cannot run in inventory mode	# Inventory and unsupported cross requests never require or manufacture them.\nif [[ "$MODE" == "--exact" ]]; then	# Inventory and unsupported cross requests never require or manufacture them.\nif [[ "$MODE" == "--inventory-only" ]]; then
 full bias repetition cannot be removed	--kind full --exact --check --registration	--kind full --exact --registration
 summary bias repetition cannot be removed	--kind summary --exact --check --registration	--kind summary --exact --registration
-full bias cannot request unsupported cross mode	--kind full --exact --check	--kind full --cross-toolchain --check
+full bias cannot request unsupported cross mode	scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind full --exact --check	scripts/build-prefix-mgw-bias-pdf.py --root "$ROOT" --kind full --cross-toolchain --check
 summary bias cannot request unsupported cross mode	--kind summary --exact --check	--kind summary --cross-toolchain --check
 full bias registration hash cannot be omitted	--registration-sha256 "$PID_RS_BIAS_FULL_REGISTRATION_SHA256"	
 summary bias registration hash cannot be omitted	--registration-sha256 "$PID_RS_BIAS_SUMMARY_REGISTRATION_SHA256"	
@@ -1555,7 +1562,7 @@ mv "$fixture/output/pdf/mgw-fixed-world-added-information.pdf" "$fixture/removed
 expect_failure "missing finite MGW standalone PDF is rejected" "$fixture" \
   "rendered PDF inventory differs"
 
-for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp; do
+for bias_stem in prefix-mgw-bias prefix-mgw-bias-summary finite-prefix-mgw-gradient support-change-mi-cusp embodied-sensor-utility embodied-sensor-overview; do
   fixture="$TEST_ROOT/missing-$bias_stem-pdf"
   make_fixture "$fixture"
   mv "$fixture/output/pdf/$bias_stem.pdf" "$fixture/removed-bias-paper.pdf"

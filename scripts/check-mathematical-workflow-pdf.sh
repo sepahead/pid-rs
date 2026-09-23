@@ -30,8 +30,8 @@ RENDERING_RECEIPT="output/pdf/mathematical-problem-solving-workflow.rendering-re
 VISUAL_RECEIPT="audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md"
 VISUAL_RECORDS="audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json"
 AUTHORSHIP_DIR="audit/evidence/mathematical-workflow-authorship-2026-09-23"
-AUTHORSHIP_RECEIPT="$AUTHORSHIP_DIR/SUCCESSOR.json"
-AUTHORSHIP_RECEIPT_SHA256="495e7f07d5abb70358fdd428a0dd75d214c9cce6cccad028670fa81d07fa53b6"
+AUTHORSHIP_RECEIPT="$AUTHORSHIP_DIR/SUCCESSOR-v2.json"
+AUTHORSHIP_RECEIPT_SHA256="be777ffd770e403bc807ab7e57021439fdeaf35f317ee5889c36000ce5958600"
 SHARED_STYLE="audit/formal/latex/pid-rs-report-tables.sty"
 PUBLICATION_STYLE="audit/formal/latex/pid-rs-workflow-publication.sty"
 FIGURE_DIR="audit/formal/latex/figures/mathematical-workflow"
@@ -658,10 +658,11 @@ if [[ "$MODE" != "--refresh" ]]; then
   # inputs made a clean refresh impossible and falsely enlarged the build dependency closure.
   # Exact and cross-toolchain modes still capture the report, rendering, and visual records.
   manifest_paths+=("$COMMITTED" "$RENDERING_RECEIPT" "$VISUAL_RECEIPT" "$VISUAL_RECORDS")
-  manifest_paths+=("$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_DIR/previous.pdf.bin"
+  manifest_paths+=("$AUTHORSHIP_RECEIPT" "$AUTHORSHIP_DIR/SUCCESSOR.json" "$AUTHORSHIP_DIR/previous.pdf.bin"
     "$AUTHORSHIP_DIR/previous-rendering-receipt.tsv.txt" "$AUTHORSHIP_DIR/previous-visual-receipt.md.txt"
     "$AUTHORSHIP_DIR/previous-actual-views.json.txt" "$AUTHORSHIP_DIR/previous-source.tex.txt"
-    "$AUTHORSHIP_DIR/first-page-120dpi.png")
+    "$AUTHORSHIP_DIR/first-page-120dpi.png" "$AUTHORSHIP_DIR/first-page-gray-120dpi.png"
+    "$AUTHORSHIP_DIR/first-page-color-300dpi.png")
 fi
 for stem in "${FIGURE_STEMS[@]}"; do
   manifest_paths+=("$FIGURE_DIR/$stem.svg")
@@ -1829,7 +1830,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 root = Path(sys.argv[1])
-record_path = root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json'
+record_path = root / 'audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR-v2.json'
 expected_record_sha256 = sys.argv[2]
 
 def fail(message):

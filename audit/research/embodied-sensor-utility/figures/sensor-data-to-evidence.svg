@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-labelledby="title desc">
+  <title id="title">From sensor records to an information question</title>
+  <desc id="desc">Proposed offline workflow for embodied agents, robotics and drone observation. Two RGB camera instances and an optional microphone retain their identities in CREBAIN observation records and NCP transport, including time, trial, status and not_due. A feature encoder and bins are fitted on training data only, then frozen to define finite categorical variables X1, X2 and optionally X3. A later reference target Y is supplied separately; a command or fused prediction is not relabelled as truth. A proposed Prisoma experiment aligns records, declares split roles, alphabets and the analysis-row selection. Existing pid-rs categorical MGW accepts two to four sources and returns signed net atoms in nats; the two-source view is R, U1, U2, S. Parallel held-out comparisons use prediction loss, conditional mutual information, and both fixed-model and retrained sensor ablation. Galadriel evidence remains record-only. The online predictor or fuser is a separate runtime. These role labels propose responsibilities, not qualified integrations. Captured physics is not real-world calibration; the diagram reports no empirical performance.</desc>
+  <defs>
+    <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" viewBox="0 0 16 16" refX="15" refY="8" orient="auto">
+      <path d="M 1 1 L 15 8 L 1 15 Z" fill="#2C3E50"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Source Sans Pro", Arial, sans-serif; fill: #2C3E50; font-size: 22px; }
+    .title { fill: #1F3F60; font-weight: 700; font-size: 34px; }
+    .heading { fill: #1F6968; font-weight: 700; font-size: 25px; }
+    .body { font-size: 24px; }
+    .note { font-size: 22px; }
+    .formula { font-size: 28px; }
+    .strong { font-weight: 700; }
+  </style>
+  <rect width="1200" height="820" fill="#F7F3E9"/>
+  <rect width="1200" height="8" fill="#1F3F60"/>
+  <text x="44" y="59" class="title">From sensor records to an information question</text>
+  <text x="44" y="101" class="note">Proposed robotics / drone experiment · offline finite-categorical analysis</text>
+  <rect x="44" y="138" width="320" height="168" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="observations"/>
+  <text x="64" y="174" class="heading">CREBAIN observations</text>
+  <text x="64" y="214" class="body">RGB camera 1  →  X₁</text>
+  <text x="64" y="248" class="body">RGB camera 2  →  X₂</text>
+  <text x="64" y="282" class="note">Microphone (optional) → X₃</text>
+  <rect x="410" y="138" width="340" height="168" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="transport"/>
+  <text x="430" y="174" class="heading">NCP transport</text>
+  <text x="430" y="214" class="body">ID · time · trial · status</text>
+  <text x="430" y="248" class="body">Keep not_due explicit</text>
+  <text x="430" y="282" class="note">Retain each sensor payload</text>
+  <rect x="798" y="138" width="358" height="168" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="encoding"/>
+  <text x="818" y="174" class="heading">Training-only fit → freeze</text>
+  <text x="818" y="214" class="body">Feature encoder + bins</text>
+  <text x="818" y="248" class="body">Finite X₁, X₂, [X₃]</text>
+  <text x="818" y="282" class="note">Same map on evaluation rows</text>
+  <path d="M376 228 H398" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="transport" data-end-gap="12"/>
+  <path d="M762 228 H786" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="encoding" data-end-gap="12"/>
+  <rect x="44" y="360" width="320" height="146" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="reference"/>
+  <text x="64" y="394" class="heading">Later reference target Y</text>
+  <text x="64" y="428" class="note">Separate observation / label</text>
+  <text x="64" y="462" class="note">Never a command or</text>
+  <text x="64" y="490" class="note">fused prediction called truth</text>
+  <rect x="410" y="360" width="746" height="146" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="experiment"/>
+  <text x="430" y="394" class="heading">Prisoma experiment · aligned complete records</text>
+  <text x="430" y="428" class="body">Pair category rows with later reference Y by trial / time.</text>
+  <text x="430" y="462" class="note">Declare splits, alphabets, sampling, and the rows defining the PMF.</text>
+  <text x="430" y="490" class="note">Retain not_due and the reason for every analysis-row selection.</text>
+  <path d="M977 318 V348" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="experiment" data-end-gap="12"/>
+  <path d="M376 433 H398" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="experiment" data-end-gap="12"/>
+  <text x="44" y="545" class="note" style="fill:#1F6968">OFFLINE ANALYSIS</text>
+  <path d="M783 518 V535 H306 V548" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="mgw" data-end-gap="12"/>
+  <path d="M783 535 H892 V548" fill="none" stroke="#2C3E50" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#arrow)" data-target="comparators" data-end-gap="12"/>
+  <rect x="44" y="560" width="524" height="128" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="mgw"/>
+  <text x="64" y="594" class="heading">pid-rs · existing categorical MGW</text>
+  <text x="64" y="630" class="body">2–4 sources → signed net atoms (nats)</text>
+  <text x="64" y="665" class="body">Two-source view: R, U₁, U₂, S</text>
+  <rect x="628" y="560" width="528" height="128" rx="12" fill="#F7F3E9" stroke="#D2E0E2" stroke-width="2" id="comparators"/>
+  <text x="648" y="594" class="heading">Parallel held-out comparisons</text>
+  <text x="648" y="630" class="body">Prediction loss · CMI · sensor ablation</text>
+  <text x="648" y="665" class="note">Fixed-model and retrained ablations</text>
+  <path d="M44 711 H1156" fill="none" stroke="#D2E0E2" stroke-width="2" stroke-linejoin="round"/>
+  <text x="44" y="745" class="heading">Galadriel</text>
+  <text x="44" y="777" class="body">Record-only evidence</text>
+  <text x="648" y="745" class="heading">Online predictor / fuser</text>
+  <text x="648" y="777" class="body">Separate runtime</text>
+  <text x="44" y="809" class="note">Captured physics ≠ real-world calibration. Proposal only; no empirical performance claim.</text>
+</svg>

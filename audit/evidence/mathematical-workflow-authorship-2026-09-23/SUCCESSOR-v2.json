@@ -1,0 +1,160 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "build_scope": "Two isolated 87-page builds converged at four passes each and were byte-identical. The complete existing --refresh route regenerated all four SVG-derived figure PDFs, validated its source/tool/dependency/log/font/navigation/action and rendering predicates, installed all six outputs, and read back their exact bytes. The authored report PDF is unchanged from the earlier successor.",
+  "checks": "Exact current source/PDF/file bindings; Author metadata; all 87 page dimensions and non-author word texts/boxes compared to the original with 0.001 point coordinate tolerance; one first-page byline substitution. First page rendered at 120 dpi for actual inspection.",
+  "date": "2026-09-23",
+  "files": {
+    "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": {
+      "bytes": 250111,
+      "sha256": "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json": {
+      "bytes": 4253,
+      "sha256": "495e7f07d5abb70358fdd428a0dd75d214c9cce6cccad028670fa81d07fa53b6"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-120dpi.png": {
+      "bytes": 246307,
+      "sha256": "4f5dcee0b6127a779792a0383b7bc2b29ed5617b4e209bbd1463ad21265758dd"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-color-300dpi.png": {
+      "bytes": 538601,
+      "sha256": "70d4dd4afab862cfadb55f070cb2e92c1cf42879305f33cd7f84483fcadd421d"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/first-page-gray-120dpi.png": {
+      "bytes": 229587,
+      "sha256": "9a3d0added839150d63b753768572246a7940ef1e166fb5147bf35cf843442bd"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-actual-views.json.txt": {
+      "bytes": 89628,
+      "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-rendering-receipt.tsv.txt": {
+      "bytes": 19052,
+      "sha256": "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-source.tex.txt": {
+      "bytes": 284090,
+      "sha256": "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous-visual-receipt.md.txt": {
+      "bytes": 5722,
+      "sha256": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602"
+    },
+    "audit/evidence/mathematical-workflow-authorship-2026-09-23/previous.pdf.bin": {
+      "bytes": 860468,
+      "sha256": "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf"
+    },
+    "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md": {
+      "bytes": 5722,
+      "sha256": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602"
+    },
+    "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json": {
+      "bytes": 89628,
+      "sha256": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae"
+    },
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": {
+      "bytes": 69875,
+      "sha256": "f794cb966c4e2e9029d093a3e572f86068a428f70a9b67ff484c821f32b20f24"
+    },
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": {
+      "bytes": 78442,
+      "sha256": "3a7ca079704d5f20f7f157a2a1f4b8f268ebc1ec50fd2efc90dd15d4bd962be7"
+    },
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": {
+      "bytes": 70071,
+      "sha256": "9e003510ccd712b64b04a59cbb8ab2cbc0df52ea8c911659d7cc3469307cde59"
+    },
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": {
+      "bytes": 73497,
+      "sha256": "dab9010266897c497227a74d8f13abb4e707ffec1b5afa67138ba4a85cabebe6"
+    },
+    "audit/formal/latex/mathematical-problem-solving-workflow.tex": {
+      "bytes": 284086,
+      "sha256": "6b1298f2b3b99be00b6e8ae8503420e01855db94fef8f30d63971ab5d7efb7b2"
+    },
+    "audit/formal/latex/pid-rs-report-tables.sty": {
+      "bytes": 4051,
+      "sha256": "90da44cc2cecf922bc755a5337fa1cd4fbc9681b558d6d33620837de807550a6"
+    },
+    "audit/formal/latex/pid-rs-workflow-publication.sty": {
+      "bytes": 8607,
+      "sha256": "1e472a06a3c9ee7952e6485b42afd1ccbc65e98d2f7d947dfa5b6a8c4f7fd4c9"
+    },
+    "output/pdf/mathematical-problem-solving-workflow.pdf": {
+      "bytes": 860473,
+      "sha256": "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263"
+    },
+    "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": {
+      "bytes": 19052,
+      "sha256": "5295ee5ba871894e7a5c03f8f3a78651cc897e8ca58c950eb5130239c49f8a66"
+    }
+  },
+  "first_page_view": "On 23 September 2026 the current page 1 was actually opened and inspected in 120 dpi color, 120 dpi grayscale and 300 dpi color: Sepehr Mahmoudian is visible and legible; title, date, abstract and contents fit; no clipping or overlap was observed. Pages 2-87 were not newly viewed; their exact color and grayscale render rows are unchanged.",
+  "pages": 87,
+  "prior_successor": "audit/evidence/mathematical-workflow-authorship-2026-09-23/SUCCESSOR.json",
+  "publication_refresh": {
+    "checker_sha256": "0cdf34d937646891581ddf46ba800008e54f6f978662a48925cab2f74e5d6787",
+    "converged_passes": [
+      4,
+      4
+    ],
+    "ended_utc": "2026-09-23T08:52:18.494559+00:00",
+    "expected_process_group_absent": true,
+    "mode": "--refresh",
+    "outer_timeout_seconds": 1200,
+    "raw_evidence_scope": "Execution streams, per-pass stdout/log/FLS and pass counts are retained in the private operational archive. Public fields are a scoped projection; no host-local path is published.",
+    "returncode": 0,
+    "started_utc": "2026-09-23T08:42:00.139512+00:00",
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 1084,
+      "sha256": "4e1ac66248733b5a9d0b9921bb9220e56316ab7d29f2e6f1606bad6b0144b651"
+    }
+  },
+  "remaining": "The separate --exact invocation and its complete 430-control direct self-test have not been run for this successor. Refresh supplies two-build equality, fresh rendering, guarded installation and readback; no separate full-exact, cross-toolchain, hosted, new all-page visual, human-review, accessibility or scientific acceptance is claimed.",
+  "render_delta": {
+    "boundary": "Exact rendered-byte relation to the preserved original receipt; this does not transfer its past actual-view event to the current PDF.",
+    "changed_color_pages": [
+      1
+    ],
+    "changed_grayscale_pages": [
+      1
+    ],
+    "normal_dpi": 120,
+    "unchanged_color_pages": "2-87",
+    "unchanged_grayscale_pages": "2-87",
+    "unchanged_render_rows": 172
+  },
+  "schema": "pid-rs/workflow-authorship-successor/v1",
+  "scope": "Authorship-only publication successor after the complete guarded --refresh route. The original September 5 visual receipt and actual-view records still apply exclusively to their preserved previous PDF/rendering receipt. This successor reports fresh machine rendering and focused current cover views, not a new all-page visual review.",
+  "source_change": "Exactly two replacements of pid-rs contributors with Sepehr Mahmoudian in the current TeX source. Markdown, mathematical contents and dates are unchanged.",
+  "visual_review": {
+    "lenses": {
+      "a4_fonts_profile": "Fresh machine gates enforce the existing profile.",
+      "color_redundant_labels": "No new color-only meaning introduced.",
+      "deterministic_reproduction": "Two fresh identical builds observed.",
+      "grayscale_legibility": "Current page 1 grayscale view inspected.",
+      "grid": "Author/date alignment and text columns fit.",
+      "hierarchy": "Title, subtitle, author and date retain clear order.",
+      "link_action_safety": "Fresh refresh gates enforce the existing policy.",
+      "motif_coherence": "Header and corner motifs remain coherent.",
+      "motif_provenance": "Repository-local motifs unchanged.",
+      "narrative_order": "Title, abstract and contents remain ordered.",
+      "normal_high_resolution_views": "Page 1 viewed at 120 dpi color/gray and 300 dpi color.",
+      "ornamental_restraint": "Decoration remains behind the text.",
+      "palette_identity": "Existing palette retained.",
+      "pattern_data_semantics": "Motifs do not carry mathematical status.",
+      "portable_dependencies": "Existing captured dependency closure retained.",
+      "print_fidelity": "Digital normal/high-resolution inspection only; no physical print claim.",
+      "searchability_extraction": "Refresh extraction and existing word/geometry predicates retain their separate scope.",
+      "source_asset_separation": "Four derivative PDFs regenerated from unchanged SVGs.",
+      "spacing_rhythm": "No overlap or clipping observed.",
+      "typography": "New byline is legible at normal and high resolution."
+    },
+    "reviewer_kind": "agent",
+    "scope": "Current changed page 1 only; same source/toolchain/custody dependencies as the refresh. No human or institutional independence claimed."
+  }
+}

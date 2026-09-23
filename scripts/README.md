@@ -1976,12 +1976,16 @@ The builder's cross mode is a low-level candidate-generation relation. Publicati
 only from the outer guide gate's selected, digest-pinned profile and its independent artifact checks.
 
 The current 28-page guide adds six companion packages to its nine-family foundation map.
-Its v4 strict profile binds 75 HTTPS targets, 285 navigation records, 80 named destinations,
-26 outline nodes, 147 link annotations and 1,273 structure elements. The v4 local Linux
-raw profile preserves the exact-fixture or strict final-trailer-ID-only relation. Local
-translated-container capture and GitHub-hosted replay remain distinct evidence.
-The exact route requires raw rebuilt-versus-committed equality and does not invoke hosted or legacy cross-profile artifact checks.
-The v1/v2/v3 fixtures, checkers and capture receipts remain historical.
+Its v5 strict profile retains 75 HTTPS targets, 285 navigation records, 80 named destinations,
+26 outline nodes, 147 link annotations and 1,273 structure elements. It changes the measured
+content digests for Sepehr Mahmoudian’s byline and footer. The v5 local Linux raw profile preserves
+the exact-fixture or strict final-trailer-ID-only relation. Its
+[capture record](../audit/evidence/mathematical-results-guide-pandoc-3.10.2-hosted-raw-profile-v5.json)
+and [publication review](../audit/evidence/mathematical-results-guide-authorship-2026-09-23.md)
+separate local translated-container execution from pending GitHub-hosted replay.
+The exact route requires raw rebuilt-versus-committed equality and does not invoke hosted or
+legacy cross-profile artifact checks. The v1–v4 fixtures, checkers and capture receipts remain
+historical. The v4 Pandoc normalizer remains the current source projection.
 
 The retained v3 Linux capture contains one 748,561-byte, 24-page candidate at SHA-256
 `d202d8314d1c9adcb7195414f239eb2e99db6c7c693df147e7ac960ffaf90a24`.
@@ -2061,7 +2065,7 @@ The raw candidate must equal the fixture or differ only in the duplicated final-
 payloads accepted by the separately digest-pinned strict ID checker. The retained 744,745-byte v2
 fixture has SHA-256 `b879555d87f696be870483326e2e3158c1f95330d51291d80017c016830907b6` and is a
 CI-matched Ubuntu 24.04/x86 candidate produced under translated local container execution, not a
-hosted capture. Historical replay does not establish current v4 hosted admission.
+hosted capture. Historical replay does not establish current v5 hosted admission.
 The replay self-test retains the same 69-case mutation inventory against that exact fixture and
 recovered structure dependency. Run it with an absolute fixture path:
 
@@ -2136,7 +2140,7 @@ relation is not imported by the SxPID3 paper gate and transfers no PID theorem o
 `check-mathematical-results-guide-pdf-mode-wiring-self-test.py` executes the extracted producer
 capture, selection, and dispatch blocks and binds their exact source anchors. It admits exact and
 cross mode at the public arity guard, then checks that only the captured producer tuple selects
-its declared package. The current Ubuntu route selects the bound v4 raw profile. The legacy tuple
+its declared package. The current Ubuntu route selects the bound v5 raw profile. The legacy tuple
 remains unsupported because its format-byte binding is absent. Exact mode invokes no cross-profile
 artifact relation. The hosted route remains separate from the historical legacy alpha package;
 legacy dispatch remains separate from hosted checker, receipt, and fixture state. The suite also exercises fail-closed
@@ -2451,11 +2455,11 @@ admission is not a full ISO-conformance claim and is recorded in `KNOWN_LIMITATI
 resolves every internal destination, binds the external HTTPS target set and complete navigation
 manifest, rejects visible raw TeX and replacement characters, validates the complete normalized
 font roster, renders every page, and requires raw repeated-build and rebuilt-versus-committed bytes
-in default `--exact` mode. The selected hosted cross route uses the finite current v4 raw profile
+in default `--exact` mode. The selected hosted cross route uses the finite current v5 raw profile
 and its normal/optimized source controls. Its retained candidate was captured locally; actual
-hosted replay remains a separate obligation. The retained v1, v2, v3 and legacy packages remain
+hosted replay remains a separate obligation. The retained v1, v2, v3, v4 and legacy packages remain
 historical only. The current graph-aware
-`check-mathematical-results-guide-pdf-structure-v4.py` profile binds the 28-page guide. It requires
+`check-mathematical-results-guide-pdf-structure-v5.py` profile binds the 28-page guide. It requires
 75 external HTTPS targets, 285 ordered navigation records, 80 named destinations, 26 outline
 entries, and 147 link annotations: 121 URI and 26 internal GoTo links, with no GoToR. Its 1,273
 structure elements contain 813 marked-content references and 136 object references; all 147 URI or
@@ -2464,11 +2468,11 @@ internal-GoTo annotations carry `StructParent`, with repeated links permitted to
 source-specific navigation and structure digests are exact profile obligations. These counts bind
 this artifact version; they are not general PDF requirements.
 
-The v4 policy allows only the declared raw catalog,
+The v5 policy allows only the declared raw catalog,
 page/name/outline trees, typed destination and action-owner shapes, tagged structure/ID/parent
 trees, balanced tagged-content scopes with exact tag/MCID correspondence, decoded page-content
 streams, and typed page-resource dependency closures. It binds strict number classes plus
-represented-binary64 values. The v4 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
+represented-binary64 values. The v5 structure self-test has 70 object-graph mutations, one raw-parser mutation, four exact
 name-tree diagnostic controls, and four output-path controls. The diagnostic controls distinguish
 a non-array, an empty array, an odd array, and an even but wrong canonical pair count. They improve
 the failure explanation without accepting a second name-tree profile.
@@ -2483,7 +2487,7 @@ accessibility policy. The old ASCII `(url)` `/Contents` is a legal PDF text
 string; it fails this guide because it neither equals the URI nor meets the guide's source-specific
 UTF-16BE contract. The old UTF-16BE `/F` is not categorically malformed. The historical v1 guide
 adopted the reviewed upstream portable ASCII `/F` plus Unicode `/UF` policy for its GoToR actions.
-The current v4 guide has no GoToR action and therefore has no current `/F` or `/UF`
+The current v5 guide has no GoToR action and therefore has no current `/F` or `/UF`
 file-specification claim.
 For tagpdf before upstream commit `2846db13f8c4cf2e63fdf4984c66b1f064570708`, the dedicated
 LPPL-1.3c-or-later compatibility source supplies that upstream OpenAction update at
@@ -2496,17 +2500,17 @@ hook. Both paths must emit the same `/S /GoTo`, `/D`, and structure-aware `/SD` 
 the structure checker remains the semantic authority and is not widened for older toolchains.
 It does not distinguish decimal PDF-number lexemes that round to the same binary64 value; exact
 same-toolchain comparison separately binds every artifact byte.
-`check-mathematical-results-guide-pdf-structure-v4-self-test.py` rejects 70 object-graph mutations
+`check-mathematical-results-guide-pdf-structure-v5-self-test.py` rejects 70 object-graph mutations
 and one raw-parser mutation covering active content, aliases, type coercions, malformed numbers,
 destination/outline drift, structure/MCID/CMap drift, raw-string encoding collisions, stream
 masquerading, changed link geometry, and canonical-but-wrong URI/internal `/Contents` values under
 normal and optimized Python. Historical v1 tests separately retain the `/F` and `/UF` mutation
-controls for that artifact's GoToR actions. Four v4 CLI controls reject input/output aliases,
+controls for that artifact's GoToR actions. Four v5 CLI controls reject input/output aliases,
 hard-link aliases, shared output paths, and symbolic outputs while checking that the input PDF
 remains unchanged. The frozen v1 cross-toolchain profiles compare extracted text, geometry, target
 sets, and the bounded semantic navigation/structure projection for their 16-page artifact only.
-The current 28-page v4 profile has its own structure checker, raw profile and self-tests. The
-retained v2 fixture and receipt govern historical replay only; the v4 local capture does not
+The current 28-page v5 profile has its own structure checker, raw profile and self-tests. The
+retained v2 fixture and receipt govern historical replay only; the v5 local capture does not
 supply hosted execution credit.
 These checks
 establish a source-specific, bounded publication-artifact comparison policy. They are not a generic
@@ -3209,6 +3213,51 @@ before launch; no child or aggregate may renew a deadline. Inventory-only and cr
 modes require none of those private values. The cross route requires both bias producers to refuse
 with status 2; no Linux reproduction relation is claimed.
 
+The [embodied-sensor report and overview](../audit/research/embodied-sensor-utility/PUBLICATION.md)
+use `build-embodied-sensor-pdfs.py --kind full|overview` and the source profile in
+`audit/formal/latex/embodied-sensor-utility/publication-inputs-v1.json`. Their authored sources
+include citation guidance. The publication disposition records adoption, reproduction and visual
+review separately. These reports give handwritten finite-law application derivations and a proposed
+sensor experiment; PDF checks add no Lean theorem, estimator calibration or consumer qualification.
+
+Exact mode requires reviewed PDF, generated TeX, vector-figure bytes and typed PDF observations.
+Each kind makes two fresh builds and compares them with the reviewed references. Discovery records
+candidates without adopting them. The profile has 22 closed source inputs; reference outputs belong
+in `outputs`, not in the source `files` map. The external caller separately binds the producer and
+its controls. It must retain actual outer exits, logs, results and cleanup observations. The declared
+native route does not provide complete TeX dependency closure, an operating-system hard resource
+cap or general cross-toolchain reproduction.
+
+Exact aggregate runs require 16 nonempty `PID_RS_EMBODIED_SENSOR_*` values:
+
+| Suffixes | Binding |
+|---|---|
+| `PYTHON`, `MANIFEST_SHA256` | Pinned interpreter and final publication profile |
+| `CONTROL_NORMAL_REGISTRATION`, `CONTROL_NORMAL_REGISTRATION_SHA256`, `CONTROL_NORMAL_OUTPUT` | Fresh normal-mode control call |
+| `CONTROL_OPTIMIZED_REGISTRATION`, `CONTROL_OPTIMIZED_REGISTRATION_SHA256`, `CONTROL_OPTIMIZED_OUTPUT` | Fresh optimized-mode control call |
+| `CONTROL_MONOTONIC_DEADLINE` | Original endpoint shared by both control registrations |
+| `FULL_REGISTRATION`, `FULL_REGISTRATION_SHA256`, `FULL_WORK_DIR` | Fresh full-paper exact call |
+| `OVERVIEW_REGISTRATION`, `OVERVIEW_REGISTRATION_SHA256`, `OVERVIEW_WORK_DIR` | Fresh overview exact call |
+| `PRODUCTION_MONOTONIC_DEADLINE` | Original endpoint shared by both producer registrations |
+
+Missing or empty values reject before any registered bias, derivative or sensor call. Registrations bind
+the actual aggregate root, frozen source/reference identities, interpreter, tools, reader source,
+fresh paths and original deadlines. A copied-root registration cannot be reused for another root.
+The two controls and two `--exact --check` producer calls follow the existing registered
+bias/derivative calls and precede the longer PDF gates. Budget all twelve early calls within their
+original windows. The aggregate forwards the original endpoints and creates no new clock.
+The sensor controls declare 109 cases per Python mode; full and overview production declare 66
+and 62 primary native commands respectively, including two builds per kind. These are inventories,
+not observed pass counts or proofs.
+
+Inventory-only and cross-toolchain modes require none of those sensor registration values. Both
+sensor kinds must refuse `--cross-toolchain` with status 2 before a registration read or native
+launch. A zero status or any other refusal status fails the aggregate. The sensor dispatch
+self-test runs in normal and optimized Python with inert call-recording substitutes. It covers
+missing/empty bindings, argument and deadline forwarding, failure propagation and both refusal
+branches; it launches no publication producer, parser, renderer or prover. Aggregate dispatch
+checks do not replace the external caller's custody or rendered-page review.
+
 The [recorded office-sensor document](../audit/evidence/real-occupancy-sensors-example-2026-09-08.md)
 uses `build-recorded-office-sensors-pdf.py` and the fixed input profile in
 `audit/formal/latex/real-occupancy-sensors/publication-inputs-v2.json`; v1 remains historical. The
@@ -3295,14 +3344,17 @@ is present without an explicit inventory update, or if any individual PDF gate f
 applies each artifact's declared bounded portability relation, except that the root blueprint,
 dated post-publication custody receipt, standalone mean exposition, recorded-sensor document,
 finite MGW paper, target-copy MGW note, full bias paper, bias summary, gradient paper and
-support-change cusp deliberately have no reviewed cross-toolchain profiles. The aggregate
-requires each of these ten routes to refuse that request with status 2 and assigns zero
-source-to-PDF cross-toolchain credit; status 0 or any other refusal status fails the aggregate.
+support-change cusp, embodied-sensor full paper and embodied-sensor overview deliberately have no
+reviewed cross-toolchain profiles. The aggregate requires each of these twelve routes to refuse
+that request with status 2 and assigns zero source-to-PDF cross-toolchain credit; status 0 or any
+other refusal status fails the aggregate.
 The aggregate self-test directly protects the first eight listed routes, their exact-mode calls,
 cross-mode probes and status-2 branches against removal or weakening. It also invokes
 `check-mgw-derivative-pdf-dispatch-self-test.py` in both Python modes to check the gradient and
-cusp exact dispatch and their two status-2 refusals. The existing blueprint/custody hostile-suite
-calls and custody record checker in normal and optimized Python remain required.
+cusp exact dispatch and their two status-2 refusals, and
+`check-embodied-sensor-pdf-dispatch-self-test.py` in both modes for the two sensor routes.
+The existing blueprint/custody hostile-suite calls and custody record checker in normal and
+optimized Python remain required.
 The PDF inventory compares sorted validated stems. Sorting full filenames before removing `.pdf`
 does not preserve stem order for a paper and its `-summary` companion; the first failed baseline
 and its source preimage remain archived with the bias publication.

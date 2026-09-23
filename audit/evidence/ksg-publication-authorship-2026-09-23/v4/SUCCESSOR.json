@@ -1,0 +1,64 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "authorship_commit": "41ba5f9f447d8ea8f94dca5efe0d92c1ed801b08",
+  "files": {
+    "audit/evidence/ksg-m1a-composite-v4-process-visual-receipt-2026-08-17.md": {
+      "bytes": 2006,
+      "sha256": "f014f36f8f3cd6325a5fa9f74eda2fb7a7d9b2202eea0cb81b4af2b6387e0b81"
+    },
+    "audit/evidence/ksg-publication-authorship-2026-09-23/v4/first-page-color-120dpi.png": {
+      "bytes": 220599,
+      "sha256": "faff4245a3bc25547010e37f1e255d14f6c3e56acb614458e1a4f28830614c1b"
+    },
+    "audit/evidence/ksg-publication-authorship-2026-09-23/v4/first-page-gray-120dpi.png": {
+      "bytes": 217196,
+      "sha256": "2d05517e3d28fe43212615194a3790d74085c4f527ed051f99b61c930e4c4d81"
+    },
+    "audit/evidence/ksg-publication-authorship-2026-09-23/v4/previous-rendering-observation-2026-09-23.tsv.txt": {
+      "bytes": 2112,
+      "sha256": "895b6b609a01586eb7c02574ebc1d45c9af472e0ffd5188a1c2cd66c23de1ebc"
+    },
+    "audit/evidence/ksg-publication-authorship-2026-09-23/v4/previous.pdf.bin": {
+      "bytes": 1149221,
+      "sha256": "e9c38547d092b4d1c4940d4f04066d8384232d6afb3ea304f83fb4b18b835265"
+    },
+    "audit/evidence/ksg-publication-authorship-2026-09-23/v4/previous.tex.txt": {
+      "bytes": 28520,
+      "sha256": "21667a4d5d25a875d56d8794486593d4328cae4b24b655d26bc33de527496657"
+    },
+    "audit/formal/latex/ksg-m1a-composite-v4-process.tex": {
+      "bytes": 28514,
+      "sha256": "147785dc2ecba0a0bd246875b9f95c1bb72680f25f5b8981869b4798e5e8ba2b"
+    },
+    "output/pdf/ksg-m1a-composite-v4-process.pdf": {
+      "bytes": 1149217,
+      "sha256": "1683a6cf84646edc1a5f2258cf858ea9af707b3bf5712b6820c9fdb7436424d0"
+    },
+    "output/pdf/ksg-m1a-composite-v4-process.rendering-receipt.tsv": {
+      "bytes": 2112,
+      "sha256": "f8c4d5075c39dd901af8989c1f20b476f38c98364bcedaef552176ae53dfd047"
+    }
+  },
+  "nonclaims": "No historical lifecycle is reopened and no theorem, scientific, hosted, human-review or independent-review credit is added. Existing complete native and rendering predicates remain required.",
+  "pages": 9,
+  "previous_commit": "0f639b9e3af203d4dc00bd3bbd132b462cefa9eb",
+  "previous_rendering_origin": "Fresh 23 September 2026 rendering of the preserved prior PDF; no pre-existing v4 rendering TSV is claimed.",
+  "render_dpi": 120,
+  "schema": "pid-rs/ksg-publication-authorship-successor/v1",
+  "source_delta": "One visible author replacement; mathematical source, date and existing PDF author metadata unchanged.",
+  "version": 4,
+  "visual_review": {
+    "date": "2026-09-23",
+    "direct_pages": [
+      1
+    ],
+    "dpi": 120,
+    "historical_review_applies_to_current_pdf": false,
+    "modes": [
+      "color",
+      "gray"
+    ],
+    "observation": "The newly rendered first page was opened in color and grayscale: Sepehr Mahmoudian is legible, the original date remains, and no clipping, overlap or layout defect was observed.",
+    "remaining_pages": "Exact current 120-dpi color and grayscale render rows match a fresh same-day rendering of the preserved prior PDF; no new all-page inspection is claimed."
+  }
+}

@@ -668,8 +668,8 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     ".github/workflows/ksg-m1a-composite-v12.yml": (
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
-    "AGENTS.md": "b73ead70cadf18100ee1ae9ac0ae224021cd5b13a4a6bbdc8a90b96963131099",
-    "CHANGELOG.md": "560ca042e6a4226371ae10531f4a0de00fff3ced62c5e6e4bb31153d859744d2",
+    "AGENTS.md": "c678d5327a51613a85286978744602e988df68a5efe069b99133d44afbf96bcf",
+    "CHANGELOG.md": "f6652c9f4b2c0894603eec11ed154361b889ca54cdcc1be2117ba6088e8db9ac",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -687,24 +687,24 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "70986cfe81e40c300a18b1e63bddaa6ba681ecf25a45bcc59acf6233e2285d03"
     ),
     "audit/formal/latex/mathematical-problem-solving-workflow.tex": (
-        "dd59ded265b42a6854014923e0b81e49a0da79eccd9b2440835c1df0c735bb94"
+        "6b1298f2b3b99be00b6e8ae8503420e01855db94fef8f30d63971ab5d7efb7b2"
     ),
     "audit/schemas/ksg-rev4-m1a-composite-v12-terminal-failure.schema.json": (
         "2152411c804df3a75f6b106ae97761f4812adf2ae8ca963a98a296df812c0e5e"
     ),
     "justfile": "5eef6bbb7d4f0d4ecb42af5f302da20b6943b6db2ced093c07db290708d02032",
     "output/pdf/mathematical-problem-solving-workflow.pdf": (
-        "ecfc0c936def223220e6fd4eac79e6a77245c2a1005061d48e669b107774caaf"
+        "24a394e979d0a9430f10e5999790c6d467c502e2ccf6553cc74e5140fbb10263"
     ),
     "output/pdf/mathematical-problem-solving-workflow.rendering-receipt.tsv": (
-        "fc62cf441d4e87955bac79efd5015e1d4d3d5d92de3f3d3f2625fb2b20fd73ea"
+        "5295ee5ba871894e7a5c03f8f3a78651cc897e8ca58c950eb5130239c49f8a66"
     ),
-    "scripts/README.md": "dbde2ce48e86b311278db38f6c288ce3b4d8ce58e3d436183c9ff308983aa5e1",
+    "scripts/README.md": "19fd09508823a831fdf5267df9488249ee9b7c6d2e31140b2e2a694ea640ed39",
     "scripts/check-certified-sxpid2-claim-self-test.py": (
-        "f051e54fdf2687b0717d5257f91052ccd2b1a47d9ed37b6c437e4b393744b6c1"
+        "7a8127d281108149fba5d81176f0d1c0b54c7cd79aab27b2f3a71282b66b631b"
     ),
     "scripts/check-certified-sxpid2-claim.py": (
-        "7c46e8615b1402d2dbd67b8ac7c34d22150a27c58fa6f969a056f5012394629b"
+        "a032f2b798482d0c511836fb37bcfced85f4542f3298b60c65212f267dac0428"
     ),
     "scripts/check-cargo-deny-toolchain-self-test.sh": (
         "f1cf41670f187b622b1da2d5ca03faebad4cdc8111dfe6de6ac53e769f8c15cf"
@@ -713,10 +713,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "709b6ae98f0e88390260dcebfed8b3b87263ae8c578bd7cc2f45220678f5516e"
     ),
     "scripts/check-formal-pdf-set.sh": (
-        "80f2547fde4688fc10ce9298f34f463a0da5f0191a8b91aa5d38e3aa8d57236c"
+        "ec6a3b8ed79aa7c857337e0653eb7b4fdb65b10a6d55662da45e9cb233b538dc"
     ),
     "scripts/build-finite-target-copy-mgw-pdf.py": (
-        "ab1eb022cae6d2a10ebebcab26693afc597bf747d8f6f0490e3cbf8aa8f7e9ac"
+        "7aba9fdee6135a84ea68ebddef05d631aabcd47be92251e53380df1459d40af6"
     ),
     "scripts/check-formal-pdf-style.py": (
         "e4d75e0c6b97432cfb4bb9e7ef5da82e4501e9178d9a786b9e2fbf93c840fdee"
@@ -740,10 +740,10 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c9a54df51b2d3f28ed07bc2c47c606b0016f7f82158fccf2db1b2839fb592d7b"
     ),
     "scripts/check-mathematical-workflow-pdf-self-test.sh": (
-        "2b12a0d72281ecfdfa1c96475f0d9eb5db8dfe5a2d6d042d759170f6e1329b98"
+        "bb84efa00c0e300b7e26b05340f6f3e77ada98826904031b41d75eb3c489136e"
     ),
     "scripts/check-mathematical-workflow-pdf.sh": (
-        "bc84cddae22fc9a79136cd97ce3f64dde2f16e57f676066850850597cd7eb65e"
+        "085bcdefecf76b1e9a67436004e82918bd66f75543ed1e6af96e12da6e2c843c"
     ),
     "audit/evidence/mathematical-workflow-visual-receipt-2026-09-05.md": "4454d1975ff69a55944258f469e0603ce4cd9065b384218da013436cdfcef602",
     "audit/evidence/mathematical-workflow-visual-review-2026-09-05/actual-views.json": "7ebed4e3dd202180d5acc3fbcd5c985c15ff41c6a075e3894123f0fd608f9dae",
@@ -751,16 +751,30 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
     "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.svg": "127942939fa8fabcabb541fa31401ad8afc46215542130a0940104731f9ad999",
     "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.svg": "81d75b0deb6623d9230cabba297ed8855cc0421d2ae7949164d551bd2e89eb1f",
     "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.svg": "ff3b8f2e6df87ecec544d5a11c11329464621e7134f7ba6ec51cfc70f2f88c6e",
-    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "5153da85fba111d0249f21b9b3818cbb94d550373e00dd563b568fdcd94e0932",
-    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": "6df641325ec83dd4edb14b1f4c34468f5c61083a51ef8ebbd4cfb8a81bb731da",
-    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": "47e9e22b2cabd31ce3ba870dd40b68b42eda75a25ce6be1f19c0b3edcc5ee88d",
-    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "2ca3228ea1fc13557b16d447cc9c3e4f623f85b7186e68d5bce5210084b5af63",
+    "audit/formal/latex/figures/mathematical-workflow/four-object-assurance-chain.pdf": "f794cb966c4e2e9029d093a3e572f86068a428f70a9b67ff484c821f32b20f24",
+    "audit/formal/latex/figures/mathematical-workflow/obligation-dag-minimal-cuts.pdf": "9e003510ccd712b64b04a59cbb8ab2cbc0df52ea8c911659d7cc3469307cde59",
+    "audit/formal/latex/figures/mathematical-workflow/shared-oracle-correlated-routes.pdf": "dab9010266897c497227a74d8f13abb4e707ffec1b5afa67138ba4a85cabebe6",
+    "audit/formal/latex/figures/mathematical-workflow/invalidation-publication-state-machine.pdf": "3a7ca079704d5f20f7f157a2a1f4b8f268ebc1ec50fd2efc90dd15d4bd962be7",
     "audit/formal/requirements-pdf.txt": "90cda7a5c8dadda7ed0b0dbb2ef3767569b970fb7f86847bd866e63600addd49",
-    "scripts/check-ksg-m1a-composite-v4-process-pdf.sh": "4342df52c516f19d550831b9b4430131e32779ccc4f219c3c89e2434ce0082df",
-    "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh": "fbd66bd6ae0dcd20b2ac11d309bb0610cde5c9d5efc97e32437a709ee7195fab",
-    "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh": "2e233815c51c6fdc842387c9f4f0e2524bc25a0fe97c4eeea49be4a5cdacc3d1",
+    "scripts/check-ksg-m1a-composite-v4-process-pdf.sh": "4ffb79fb908a85073e79c961cb180b2d524aab70c7ae56e0e01ebe7db34800ea",
+    "scripts/check-ksg-m1a-composite-v5-boundary-pdf.sh": "78253973229858d968f93d43df6c3cbde9b7bcc458b9db14231c6964707031f1",
+    "scripts/check-ksg-m1a-composite-v6-boundary-pdf.sh": "661974e59388077bf1f1170392c7497d23f0e640eb269c10c8276b0e178838ed",
     "scripts/check-ksg-m1a-composite-v6-pdf-portability.sh": "dbd56651861360560bc9e576427eb617f846a9ec29a13031f22339d6af24925e",
-    "scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh": "1e697d32c07b0f430b9fc7f89c4d43f66d75de549552031e3bfe9ee82ec9f7b8",
+    "scripts/check-ksg-m1a-composite-v7-boundary-pdf.sh": "0201923fdb5f3c0e54132100af753e75e64118719d89669c6d3d655b54597969",
+    'audit/formal/latex/ksg-m1a-composite-v4-process.tex': '147785dc2ecba0a0bd246875b9f95c1bb72680f25f5b8981869b4798e5e8ba2b',
+    'audit/formal/latex/ksg-m1a-composite-v5-boundary.tex': '6d2c607629ecf6edf6ed96e3afe729e65adb6f1a37e7572e2257743149e2135c',
+    'audit/formal/latex/ksg-m1a-composite-v6-boundary.tex': 'cda8ea85faa9521359864daeb67297f1ee30ffce26b0eb1204e295a6253a5c1b',
+    'audit/formal/latex/ksg-m1a-composite-v7-boundary.tex': 'f3eb4827ae4dc2a9e9e44be4b043636babe5dc9041a8e29443a157aa0ffc4baf',
+    'output/pdf/ksg-m1a-composite-v4-process.pdf': '1683a6cf84646edc1a5f2258cf858ea9af707b3bf5712b6820c9fdb7436424d0',
+    'output/pdf/ksg-m1a-composite-v5-boundary.pdf': '17d0fe7473f1f74f431af02d68f8a1c70e6e03a23648e2aaea056fb086950360',
+    'output/pdf/ksg-m1a-composite-v5-boundary.rendering-receipt.tsv': 'dd7c4b4a0f17930ddedbe6fffc0fb66032da12b7d08e4bd94f8f7da827b54a4b',
+    'output/pdf/ksg-m1a-composite-v6-boundary.pdf': 'bd38024b800d1368b6a6490982c138e714cb96b75dbf6d0ec4ab52eedf6f8718',
+    'output/pdf/ksg-m1a-composite-v6-boundary.rendering-receipt.tsv': 'ac93f6b63f017638ddfa0a1360035732a18acde147515ce4c6e772cb6e3d526a',
+    'output/pdf/ksg-m1a-composite-v7-boundary.pdf': '81baddebb149c1f36693f7050405458b53037cf5374170b36cf985ef724b0bdd',
+    'output/pdf/ksg-m1a-composite-v7-boundary.rendering-receipt.tsv': '583cf502d0631ec8742cf0d368853b6144c56f1c293c8a918bad4c3130b44f11',
+    'scripts/check-ksg-m1a-composite-v5-boundary-pdf-self-test.sh': '7fa7c0e8f4663ac041f62a201a2a10b42d35d25053a1cac19d2609810bc9b38a',
+    'scripts/check-ksg-m1a-composite-v6-boundary-pdf-self-test.sh': '47595a2a44800fabb327fffafde396acce89ea80608addb3ed585eaa6e12d7cd',
+    'scripts/check-ksg-m1a-composite-v7-boundary-pdf-self-test.sh': 'bb91773d23906cc440a12e64b769b85845f9a414457be379ca12ac0bd35e9e5d',
 }
 EXPECTED_C12_TERMINAL_OPERATIONAL_PATHS = frozenset(
     {
