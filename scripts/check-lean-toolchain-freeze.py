@@ -669,7 +669,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c4b658a58f5afa93a25d918183de2f4e53559050c64f0bd723b5ed8f39a5e318"
     ),
     "AGENTS.md": "c678d5327a51613a85286978744602e988df68a5efe069b99133d44afbf96bcf",
-    "CHANGELOG.md": "f6652c9f4b2c0894603eec11ed154361b889ca54cdcc1be2117ba6088e8db9ac",
+    "CHANGELOG.md": "a9e3431477aa6e10f1d83665114f79d5f544ba0f00026cfa7c2f844378174bad",
     "MATHEMATICAL_PROBLEM_SOLVING_WORKFLOW.md": (
         "f1cfa3c6a2af48671edce95c469984bd90862fdbb65a4fd9ae32060afaeffac9"
     ),
@@ -740,7 +740,7 @@ EXPECTED_OPERATIONAL_WIRING_HASHES = {
         "c9a54df51b2d3f28ed07bc2c47c606b0016f7f82158fccf2db1b2839fb592d7b"
     ),
     "scripts/check-mathematical-workflow-pdf-self-test.sh": (
-        "bb84efa00c0e300b7e26b05340f6f3e77ada98826904031b41d75eb3c489136e"
+        "63a38ee16c19195232c1075623ab25b802a831097016f21a1ac6ac5524f65472"
     ),
     "scripts/check-mathematical-workflow-pdf.sh": (
         "085bcdefecf76b1e9a67436004e82918bd66f75543ed1e6af96e12da6e2c843c"

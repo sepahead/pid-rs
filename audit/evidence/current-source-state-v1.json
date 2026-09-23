@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "f6652c9f4b2c0894603eec11ed154361b889ca54cdcc1be2117ba6088e8db9ac",
-        "size_bytes": 312755
+        "sha256": "a9e3431477aa6e10f1d83665114f79d5f544ba0f00026cfa7c2f844378174bad",
+        "size_bytes": 312906
       },
       {
         "git_mode": "100644",
@@ -28348,7 +28348,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "d5d93eb457ab43d84a2cc142f845d2676752b0442fe691b99fe8cb2ec7217b55",
+        "sha256": "effaf1a469a90e753d4e06448d9197f5bec601c92ad0c800baa4a7fc80753251",
         "size_bytes": 138785
       },
       {
@@ -28636,8 +28636,8 @@
       {
         "git_mode": "100755",
         "path": "scripts/check-mathematical-workflow-pdf-self-test.sh",
-        "sha256": "bb84efa00c0e300b7e26b05340f6f3e77ada98826904031b41d75eb3c489136e",
-        "size_bytes": 315123
+        "sha256": "63a38ee16c19195232c1075623ab25b802a831097016f21a1ac6ac5524f65472",
+        "size_bytes": 315195
       },
       {
         "git_mode": "100755",
@@ -29288,7 +29288,7 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "585143a664e831be9f15110c84f61e65129caf55eb666c9a240bb0f61c99d905",
+    "entries_sha256": "7976f45f032d44c00585507f8fbd51cbe6a6c3ddf8942b31cb6bd6f022053fd5",
     "entry_count": 4857
   },
   "subprojections": [
@@ -29317,7 +29317,7 @@
       ]
     },
     {
-      "entries_sha256": "ad02685916a1f55c66cffffcd06d3b90f05fc9867f4ecab10fe772eed9a10464",
+      "entries_sha256": "aee6955eae780df8dde32d2eed22430b6c100bbfc114f40dfe747b41d10f27f1",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

@@ -7,6 +7,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Include the authorship check in the workflow PDF test's Python launch inventory;
+  retain the exact isolation flags and normal/optimized partition.
+
 - Reconcile current PDF checks with the credited publications. Preserve earlier visual records,
   add current workflow and KSG rendering receipts, and capture the guide’s authored Linux profile
   without transferring historical or local execution credit to a hosted run.

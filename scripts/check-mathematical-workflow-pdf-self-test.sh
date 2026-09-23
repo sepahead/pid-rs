@@ -5450,8 +5450,9 @@ pattern = re.compile(
     r'(?P<flags>(?: -[A-Za-z]+)+)'
 )
 launches = list(pattern.finditer(text))
-if len(launches) != 42:
-    fail("production Python launch inventory differs from 42")
+# The authorship successor adds one isolated launch to the previous 42.
+if len(launches) != 43:
+    fail("production Python launch inventory differs from 43")
 optimized = 0
 for launch in launches:
     flags = launch["flags"].split()
