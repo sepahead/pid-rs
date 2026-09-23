@@ -3157,11 +3157,12 @@ correspondence, or proves a PID claim.
 
 The [gradient and support-change publications](../audit/formal/latex/mgw-derivative-notes/PUBLICATION.md)
 use `build-mgw-derivative-notes-pdf.py --kind gradient|cusp` with the
-[version-3 source profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v3.json).
-It corrects only the gradient figure's anchor-score bracket; manuscript equations, assumptions
-and theorem scope are unchanged. The
+[version-4 source profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v4.json).
+It credits Sepehr Mahmoudian in both manuscript bylines and PDF metadata, while preserving the
+mathematical bodies and corrected anchor-score bracket. The historical
+[version-3 profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v3.json) and
 [bracket correction record](../audit/formal/latex/mgw-derivative-notes/ANCHOR_BRACKET_CORRECTION.json)
-separates discovery and visual review from exact reproduction and publication.
+retain the bracket repair's scope. Source review, exact reproduction and publication are separate.
 The [version-1 profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v1.json) and
 [version-2 profile](../audit/formal/latex/mgw-derivative-notes/publication-inputs-v2.json) remain
 historical. The [v2 record](../audit/formal/latex/mgw-derivative-notes/MARKDOWN_MATH_CORRECTION.json)
@@ -3201,8 +3202,11 @@ the predecessor; they are not the current reader profile.
 
 On 12 September 2026, [mean reproduction](../audit/formal/lean-prefix-mgw-mean/CURRENT_REPRODUCTION.md)
 passed 232 inert control cases and four exact builds; [bias reproduction](../audit/formal/latex/prefix-mgw-bias/CURRENT_REPRODUCTION.md)
-passed 316 inert cases and eight exact builds across full and summary. These local artifact results
-add no theorem, hosted replay, confidence guarantee or Rust refinement. Original proof manifests,
+passed 316 inert cases and eight exact builds across full and summary for the predecessor v2
+bias profile. The current [authored v3 profile](../audit/formal/latex/prefix-mgw-bias/publication-inputs-v3.json)
+uses the reviewed v3 control and production templates; its source bindings do not inherit those
+historical execution results. These local artifact results add no theorem, hosted replay,
+confidence guarantee or Rust refinement. Original proof manifests,
 failed attempts and superseded publication inputs remain preserved.
 
 The exact aggregate requires thirteen externally supplied bias values, listed in the publication

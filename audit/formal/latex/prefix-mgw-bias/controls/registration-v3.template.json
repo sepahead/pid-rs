@@ -1,0 +1,15 @@
+{
+  "builder_sha256": "fea1d9e1b252dd5c0cb8be3182f201491d9b71c701ce71c0e8f621d10767f789",
+  "deadline_utc": "REPLACE_WITH_FIXED_UTC_WITHIN_20_MINUTES",
+  "maximum_cases": 158,
+  "optimization": 0,
+  "output": "REPLACE_WITH_NEW_CANONICAL_CONTROL_OUTPUT",
+  "python_sha256": "b502cb4c5b46b8d4192ec6bcb600ce8922f1afc396fcf646e8765c6eba74a0bf",
+  "reader_directory": "REPLACE_WITH_CANONICAL_PINNED_PYPDF_6_16_1_SOURCE_DIRECTORY",
+  "registered_utc": "REPLACE_WITH_ACTUAL_UTC",
+  "root": "REPLACE_WITH_CANONICAL_ASSEMBLED_ROOT",
+  "roster_sha256": "b48adf01fe1274d7d698ed287983687381ae53f7e7160b227eb7ef528e7def97",
+  "schema": "pid-rs/prefix-mgw-bias-pdf-controls-v2",
+  "self_test_sha256": "c9cc4d001a9278e63eabe28e9cf7ce5789617bde24c9455e2d5b3050b132b25e",
+  "status": "UNRESOLVED_SOURCE_REVIEW"
+}

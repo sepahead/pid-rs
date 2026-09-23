@@ -322,8 +322,8 @@
       {
         "git_mode": "100644",
         "path": "CHANGELOG.md",
-        "sha256": "6d517d3f2d316f9e213cd9699db9b64db1fe67972d17513eb045e53e85ca7aa3",
-        "size_bytes": 314881
+        "sha256": "ef9cdd395949625f4ad33be6972b9424eb7a76d712cafb69743332ec0715183c",
+        "size_bytes": 315225
       },
       {
         "git_mode": "100644",
@@ -14110,8 +14110,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/mgw-derivative-notes/PUBLICATION.md",
-        "sha256": "7f0b16672f134971ea84ee9414038672f78440db072c447485f5e3813f9168cb",
-        "size_bytes": 14619
+        "sha256": "b78c096e3865d4dac9039be92db61b40ca61fe05244569204cf7327abe6e2700",
+        "size_bytes": 15165
       },
       {
         "git_mode": "100644",
@@ -14464,8 +14464,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/PUBLICATION.md",
-        "sha256": "c25d64a120ad052a7a52b3ab4635b8f66561edef05633c4b36ecb5dc3b193a56",
-        "size_bytes": 12092
+        "sha256": "acbbd5f1f5522ff8ae3a6586336a3d35f5f9d6d8e13d0dd3b96b419e80f5d095",
+        "size_bytes": 12988
       },
       {
         "git_mode": "100644",
@@ -14536,8 +14536,8 @@
       {
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/controls/CONTROLS.md",
-        "sha256": "0074874373ba25ef64366c7c8cb69dc993735da17203b61b44b62a7afc6c8092",
-        "size_bytes": 6079
+        "sha256": "fd4bf8803f8778f795e1a3f9264ac2f726d78aa02b213e7f52172dcb36349960",
+        "size_bytes": 6716
       },
       {
         "git_mode": "100644",
@@ -14561,6 +14561,12 @@
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/controls/registration-v2.template.json",
         "sha256": "3b175b4b1116b8856b7f36aa64038c0732c4e7208bc753d413cf2889ba0c45ac",
+        "size_bytes": 796
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/prefix-mgw-bias/controls/registration-v3.template.json",
+        "sha256": "eea4d939cf160329812fe914914371e662cf472e8b617320b189b6048091a0c5",
         "size_bytes": 796
       },
       {
@@ -14595,6 +14601,12 @@
       },
       {
         "git_mode": "100644",
+        "path": "audit/formal/latex/prefix-mgw-bias/execution-full-v3.template.json",
+        "sha256": "c1d0c546a46b37fc68a41ffdd5cd304b55e8f04475548ff5581151cc5e73d1ac",
+        "size_bytes": 1457
+      },
+      {
+        "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/execution-full.template.json",
         "sha256": "c1d107dca2ee3345f6bd12cfb58d5e992eda9a7c5410da9a0def58deec80d351",
         "size_bytes": 1457
@@ -14603,6 +14615,12 @@
         "git_mode": "100644",
         "path": "audit/formal/latex/prefix-mgw-bias/execution-summary-v2.template.json",
         "sha256": "a166639547df9636c6754cf6f227839bfa5e73b10d8d975aeb58747626017a1a",
+        "size_bytes": 1460
+      },
+      {
+        "git_mode": "100644",
+        "path": "audit/formal/latex/prefix-mgw-bias/execution-summary-v3.template.json",
+        "sha256": "d153a1d1a1ef6273cc6895eed2046186addd2c03453ea91c8ce71ae57a05fd55",
         "size_bytes": 1460
       },
       {
@@ -27670,8 +27688,8 @@
       {
         "git_mode": "100644",
         "path": "scripts/README.md",
-        "sha256": "243b29a812bb8adddc122f314f826626a702efd9beeccf6cb2d768dab3135b03",
-        "size_bytes": 300662
+        "sha256": "08287cbc9513842d48448a103c2948c41bae910ed2b8d2b5844dc2d298e3c239",
+        "size_bytes": 301073
       },
       {
         "git_mode": "100755",
@@ -27928,7 +27946,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-certified-sxpid2-claim.py",
-        "sha256": "26bdb6f662d4c6e4eab9b94f6a462ff67a924966e335cc5ab7e03a32ef518c8d",
+        "sha256": "fddf9e9715f002c1a563094a49f85620adafcc0174039a095b0a6795e384efad",
         "size_bytes": 90915
       },
       {
@@ -28516,7 +28534,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-lean-toolchain-freeze.py",
-        "sha256": "ec3a11678d638ff9df0aa810e7114ff852154b66d0125c55116acb805eb52445",
+        "sha256": "3ea869b60e55f90757b10498621d96560419f7aaf578606889d9da29ad185f0f",
         "size_bytes": 138785
       },
       {
@@ -28972,7 +28990,7 @@
       {
         "git_mode": "100644",
         "path": "scripts/check-prefix-mgw-bias-pdf-self-test.py",
-        "sha256": "3357936715aceee13e96029ee20093b4cbb67affd7910742521e4955ae03b129",
+        "sha256": "c9cc4d001a9278e63eabe28e9cf7ce5789617bde24c9455e2d5b3050b132b25e",
         "size_bytes": 31369
       },
       {
@@ -29456,8 +29474,8 @@
         "size_bytes": 8040
       }
     ],
-    "entries_sha256": "68fb9c52192a4202c18c4543093f00ad6ba75c2e2b792882bdb79d3b41c8c495",
-    "entry_count": 4885
+    "entries_sha256": "f3f8795242446ec146294491067496b9e0c3ce279875f196b2f5ca8408fb460d",
+    "entry_count": 4888
   },
   "subprojections": [
     {
@@ -29469,8 +29487,8 @@
       ]
     },
     {
-      "entries_sha256": "a2f76232ff7daf6ad398de79a9216b0eab9dfa654166008dd019c4a5f44cf3ad",
-      "entry_count": 1919,
+      "entries_sha256": "07ff8347d19de543bc8732c3831dc6bf8a502ef601a49e3513b19bb924f52a03",
+      "entry_count": 1922,
       "name": "formal_sources_and_receipts",
       "selectors": [
         "audit/formal/"
@@ -29485,7 +29503,7 @@
       ]
     },
     {
-      "entries_sha256": "19bce25c540262243b02ac9c3cd73e79a6732aa0aeec530f48ee0eab7b555e8d",
+      "entries_sha256": "67b4f8540e101bfb7e7f625ada933e5820635609de6b645131474d8519a4e806",
       "entry_count": 3,
       "name": "release_documents",
       "selectors": [

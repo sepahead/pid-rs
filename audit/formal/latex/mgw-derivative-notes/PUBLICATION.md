@@ -6,13 +6,9 @@ The gradient paper has eleven locally accepted formal theorem families; the cusp
 remains open. The [theorem map](../../lean-prefix-mgw-gradient/THEOREM_MAP.md) defines that boundary.
 This document describes artifact production, which adds no mathematical acceptance.
 
-The [version-3 input profile](publication-inputs-v3.json) binds eleven source files and the
-13-page [gradient PDF](../../../../output/pdf/finite-prefix-mgw-gradient.pdf) and 5-page
-[cusp PDF](../../../../output/pdf/support-change-mi-cusp.pdf). It corrects the gradient diagram's
-bronze bracket to mark only the anchor score. The manuscript, diagram text, expected TeX and cusp
-references are unchanged. The [bracket correction record](ANCHOR_BRACKET_CORRECTION.json) separates
-native discovery and visual review from later exact checks, aggregate checks and publication.
-The correction changes no equation, assumption, theorem scope or application claim.
+The [current version-4 input profile](publication-inputs-v4.json) binds eleven source files and the selected 13-page [gradient PDF](../../../../output/pdf/finite-prefix-mgw-gradient.pdf) and 5-page [cusp PDF](../../../../output/pdf/support-change-mi-cusp.pdf). Both authored manuscripts, first-page bylines, expected TeX metadata and PDF Author fields credit Sepehr Mahmoudian. The current adapter selects v4. This authorship successor preserves the mathematical bodies and the already corrected anchor-score bracket; its selected references do not by themselves establish fresh exact reproduction, a new whole-paper visual review or hosted completion.
+
+The [version-3 input profile](publication-inputs-v3.json) remains historical evidence for the gradient diagram's bronze-bracket correction, which marks only the anchor score. The manuscript equations, diagram text and cusp references were unchanged by that correction. The [bracket correction record](ANCHOR_BRACKET_CORRECTION.json) separates its native discovery and visual review from later exact checks, aggregate checks and publication. The bracket and authorship successors change no equation, assumption, theorem scope or application claim.
 
 The [version-2 profile](publication-inputs-v2.json) remains unchanged historical evidence for the
 Markdown math-syntax repair. Four complete exact checks, covering both notes in normal and

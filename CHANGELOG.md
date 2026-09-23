@@ -7,6 +7,11 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Bind Sepehr Mahmoudian's authored finite-prefix bias PDF profile to versioned successor control and
+  production templates, and label the derivative notes' authored v4 profile correctly.
+  Preserve September 12 reproduction records and predecessor templates; fresh controls,
+  exact builds and the full PDF aggregate remain separate checks.
+
 - Rebind the blueprint index and certified SxPID2 scripts-guide checks to reviewed current
   documentation bytes, with a dated successor record. Preserve the earlier failed CI evidence,
   historical claim bindings, and PDF content.

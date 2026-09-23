@@ -21,7 +21,7 @@ from types import ModuleType, SimpleNamespace
 import warnings
 
 BUILDER = "scripts/build-prefix-mgw-bias-pdf.py"
-BUILDER_SHA256 = "3f4172690532c39de474650fbb1664fc90821e558659927cc93258dfef893e07"
+BUILDER_SHA256 = "fea1d9e1b252dd5c0cb8be3182f201491d9b71c701ce71c0e8f621d10767f789"
 ASSETS = "audit/formal/latex/prefix-mgw-bias/"
 CASE_ROSTER = ASSETS + "controls/roster-v5.json"
 CASE_ROSTER_SHA256 = "b48adf01fe1274d7d698ed287983687381ae53f7e7160b227eb7ef528e7def97"
