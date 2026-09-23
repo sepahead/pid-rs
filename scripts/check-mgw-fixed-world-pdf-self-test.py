@@ -160,6 +160,30 @@ def main() -> int:
          "finite paper matched PDF identity changed", 0),
     )
     archived, current = captured[module.ARCHIVED_MARKDOWN], captured[module.MARKDOWN]
+    require(current.count(module.CURRENT_CITATION) == 1
+            and current.startswith(module.AUTHOR_FRONT_MATTER),
+            "current citation/authorship fixture changed")
+    label_drift = current.replace(
+        module.CURRENT_CITATION, module.CURRENT_CITATION.replace(b"VI.C", b"VI.3", 1), 1)
+    url_drift = current.replace(
+        module.CURRENT_CITATION, module.OLD_CITATION.replace(b"VI.3", b"VI.C", 1), 1)
+    missing_author = current[len(module.AUTHOR_FRONT_MATTER):]
+    changed_author = current.replace(
+        module.AUTHOR_FRONT_MATTER,
+        module.AUTHOR_FRONT_MATTER.replace(b"Sepehr Mahmoudian", b"Unrelated author", 1), 1)
+    for label, mutant in (("label", label_drift), ("URL", url_drift)):
+        require(mutant != current and mutant.startswith(module.AUTHOR_FRONT_MATTER),
+                label + " mutation must preserve authorship and change the citation")
+    require(label_drift.replace(b"[Section VI.3 and Table III of version 5]",
+                                b"[Section VI.C and Table III of version 5]", 1) == current,
+            "label mutation must change only the label")
+    require(url_drift.replace(b"https://arxiv.org/html/2002.03356v5#S6.SS3",
+                              b"https://arxiv.org/pdf/2002.03356v5#page=11", 1) == current,
+            "URL mutation must change only the URL")
+    for label, mutant in (("missing author", missing_author), ("changed author", changed_author)):
+        require(mutant != current and mutant.count(module.CURRENT_CITATION) == 1,
+                label + " mutation must retain the complete corrected citation")
+    projection_failure = "current Markdown is not the exact citation and authorship correction"
     projection_cases = (
         ("citation-projection-positive", archived, current, None),
         ("citation-projection-missing-anchor",
@@ -167,16 +191,11 @@ def main() -> int:
          "historical citation anchor changed"),
         ("citation-projection-repeated-anchor", archived + module.OLD_CITATION, current,
          "historical citation anchor changed"),
-        ("citation-projection-label-only", archived,
-         archived.replace(module.OLD_CITATION,
-                          module.OLD_CITATION.replace(b"VI.3", b"VI.C"), 1),
-         "current Markdown is not the exact citation correction"),
-        ("citation-projection-url-only", archived,
-         archived.replace(module.OLD_CITATION,
-                          module.CURRENT_CITATION.replace(b"VI.C", b"VI.3"), 1),
-         "current Markdown is not the exact citation correction"),
-        ("citation-projection-unrelated-change", archived, current + b"\n",
-         "current Markdown is not the exact citation correction"),
+        ("citation-projection-label-drift", archived, label_drift, projection_failure),
+        ("citation-projection-url-drift", archived, url_drift, projection_failure),
+        ("citation-projection-missing-author", archived, missing_author, projection_failure),
+        ("citation-projection-changed-author", archived, changed_author, projection_failure),
+        ("citation-projection-unrelated-change", archived, current + b"\n", projection_failure),
     )
     archived_svg, current_svg = captured[module.ARCHIVED_MATCHED_SVG], captured[module.MATCHED_SVG]
     figure_projection_cases = (

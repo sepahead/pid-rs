@@ -7,6 +7,10 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Repair finite-MGW publication controls after the author-header update. Isolate citation label,
+  URL and author mutations, retain exact failure diagnostics, and correct the current profile and
+  archive-alias documentation. The producer predicate and published PDF are unchanged.
+
 - Explain the role of three-source categorical MGW allocation in the sensor reports, with
   camera/audio event examples and explicit separation from subset-information objectives,
   implemented fusion, and the unfinished certificate program. Rebuild both PDF companions.

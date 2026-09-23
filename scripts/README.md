@@ -3303,17 +3303,20 @@ The [finite MGW archive](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) re
 `build-mgw-fixed-world-pdf.py` binds the paper, all nine formal source dependencies,
 the target report, the unchanged archive map and three SVG/PDF figure pairs. It does not rerun
 Lean. The current Markdown and first figure correct the MGW locator to Section VI.C.
-Three explicit inert preimages preserve the archive's original Markdown, SVG and figure PDF;
-the other 114 source-map entries retain direct lookups. Exact source substitutions bind the
-Markdown/SVG correction, while separate artifact hashes bind each figure PDF.
+Four explicit inert preimages preserve the archive's original Markdown, SVG, figure PDF and
+publication TeX; the other 113 source-map entries retain direct lookups. Exact source substitutions
+bind the citation corrections and Sepehr Mahmoudian author header and byline. Separate artifact
+hashes bind each figure PDF. Citation controls retain the author header and change only the label
+or URL; separate Markdown controls reject a missing or changed author and unrelated source changes.
 The current input profile is
-`audit/formal/latex/mgw-fixed-world/publication-inputs-v5.json`; v1–v4 remain historical.
-The v5 successor changes only the captured `METHODS.md` identity. It preserves the selected PDF,
-TeX and figure references and every other input pin; predecessor observations do not establish
-execution or native-input custody under v5. Each successor execution needs its own exact checks
-and retained record.
-The selected reference is the reviewed nine-page containing paper. Its publication record
-keeps discovery, reference admission, exact execution and formal qualification separate.
+`audit/formal/latex/mgw-fixed-world/publication-inputs-v7.json`; v1–v6 remain historical.
+The v7 profile binds the authored paper. Predecessor observations do not establish execution or
+native-input custody under v7. Each successor execution needs its own exact checks and retained
+record. The [publication entry](../audit/formal/lean-mgw-fixed-world/PUBLICATION.md) separates the
+current reference from the earlier citation-only PDF and records the stale-control failure.
+The current reference is the authored nine-page paper. Its v7 profile records focused authorship
+review, not a new all-page review. The publication record keeps that reference separate from the
+historical citation-only paper, its full-page review, exact execution and formal qualification.
 Discovery produces a candidate and retained diagnostics without admitting it. Exact mode refuses
 a pending reference; after admission it requires the specified finite-paper PDF bytes. Both modes
 with `--check` request two fresh builds. Supply `--tex-root` explicitly and use fresh work;

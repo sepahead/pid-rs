@@ -55,7 +55,7 @@ the locator; their geometry and five embedded font rows match. Normal, detailed
 and grayscale views preserve the signs, labels and layout.
 
 The immutable [117-entry source map](../../evidence/mgw-fixed-world-added-information-2026-09-09/source-map.json)
-continues to describe the archived bytes. The current builder resolves three
+continues to describe the archived bytes. The current builder resolves four
 original map keys through explicit preserved copies:
 
 | Original key | Preserved copy |
@@ -63,9 +63,11 @@ original map keys through explicit preserved copies:
 | Paper Markdown | [Citation preimage](../../evidence/mgw-fixed-world-added-information-2026-09-09.citation-preimage-v1.md.txt) |
 | Figure 1 SVG | [SVG preimage](../latex/figures/mgw-fixed-world/mgw-matched-comparison.citation-preimage-v1.svg.txt) |
 | Figure 1 PDF | [PDF preimage](../latex/figures/mgw-fixed-world/mgw-matched-comparison.citation-preimage-v1.pdf.bin) |
+| Publication TeX | [Authorship preimage](../latex/mgw-fixed-world/publication.authorship-preimage-v1.tex.txt) |
 
-The other 114 keys retain direct lookups. Exact whole-source substitutions bind
-the old and current Markdown/SVG citations. Separate artifact pins bind the old
+The other 113 keys retain direct lookups. Exact whole-source substitutions bind
+the citation changes and the explicit Sepehr Mahmoudian author header and byline.
+Separate artifact pins bind the old
 and current figure PDFs; no bytewise PDF substitution is asserted. The builder's
 finite-source record reports these distinctions and does not execute Lean.
 
@@ -75,7 +77,29 @@ selected as the new reference. The subsequent figure correction and original
 control retain this negative finding without rewriting its execution outcome.
 This was a citation defect, not a mathematical counterexample or a proof failure.
 
-## Reproduction
+## Current reference and publication controls
+
+The current [v7 input profile](../latex/mgw-fixed-world/publication-inputs-v7.json)
+binds the authored nine-page PDF: 231,810 bytes, SHA-256
+`6fc4cfbe5bb71037515c4ebdd3119b20e6e970ce6f117e1b9659b44a728b565a`.
+The paper names **Sepehr Mahmoudian** as author. Profiles v1–v6 remain historical;
+the earlier citation-only PDF and its execution observations below are distinct.
+An input profile identifies reference bytes; it does not prove their reproduction.
+The v7 profile records focused authorship review. Its retained observation note
+still names v6 and concerns predecessor evidence; it grants no v7 execution,
+native-input recheck or new all-page visual review.
+
+The [mainline check at commit 70c87e1](https://github.com/sepahead/pid-rs/actions/runs/35906791395/job/107336705586)
+failed in the finite-MGW publication self-test. The producer required the citation
+and author header together, but three negative controls expected its older
+citation-only diagnostic. Two citation fixtures also omitted the author header.
+The repair changes each citation component separately in the current document,
+checks that the other bytes are retained, and tests missing and changed authors
+separately. It preserves the producer predicate, PDF, proof sources and failed
+hosted outcome. Synthetic controls do not establish native PDF reproduction or
+mathematical correctness.
+
+## Historical citation-only reproduction
 
 The corrected containing paper has nine A4 pages and is 231,798 bytes, SHA-256
 `b43e0d8902d9c919c6ab13a13c3a7c9d55ea07d3d02af1944edd0600d1801185`.
@@ -86,7 +110,7 @@ observed reference; its SHA-256 is
 `eadd3f7a30d51abe95351668f1ca95ad317578e8697d43888f1d76db3a49fd6d`.
 The v1–v3 profiles preserve their historical observations and reference states.
 
-The current [v5 input profile](../latex/mgw-fixed-world/publication-inputs-v5.json)
+The historical [v5 input profile](../latex/mgw-fixed-world/publication-inputs-v5.json)
 changes only the captured `METHODS.md` identity for the permutation-null metadata correction.
 The selected PDF, TeX and figure references and every other input pin are unchanged. This
 profile selection supplies no new build, native-input recheck or visual-review evidence. The
@@ -102,8 +126,9 @@ not establish external URL availability or the full repository link gate.
 Compared with the earlier nonselected paper, layout text changes only the
 locator. Raw text also adds one space after the slash on that same figure line.
 
-A separately admitted exact run on 13 September 2026 then reproduced the selected
-reference in two fresh builds. The actual supervised command returned zero; its
+A separately admitted exact run on 13 September 2026 then reproduced the
+then-selected citation-only reference in two fresh builds. The actual supervised
+command returned zero; its
 terminal result was observed before both original 900-second deadlines. Complete
 readback joined all 402 retained build records, 17 commands and 34 output streams.
 Both paper PDFs and canonical bodies matched, and the selected source and public
