@@ -1,0 +1,113 @@
+{
+  "schema": "pid-rs/finite-conditional-bayes-local-publication-receipt-v1",
+  "record_kind": "Descriptive projection of retained local execution and root-adoption records; not an executable verifier, portable replay, hosted check, or independent attestation.",
+  "author": "Sepehr Mahmoudian",
+  "status": "thirteen_classical_conditional_targets_locally_compiled_judged_and_fresh_kernel_replayed",
+  "execution_completed_utc": "2026-09-23T17:38:17.141959+00:00",
+  "scope": "One exact finite PMF with finite nonempty state, target and observation alphabets; actual pushforward and conditional-measure semantics, null-fiber fallback, supported finite log loss, posterior Bayes risk, independently defined MI/CMI gains, and same-law expected-loss gap; nats.",
+  "source_layout": "The final nine-module source tree comprises the five byte-identical shared files under ../sources and four conditional files under sources. The historical four-target owner files with the same module names are not part of this conditional source tree.",
+  "source_files": {
+    "../sources/FiniteSensorBayes/Contract.lean": {"bytes": 7675, "sha256": "3a3ba6aa5c145aa7f14fd6fcc93289ecc5be58c7360bd221ada426e7b171db80"},
+    "../sources/FiniteSensorBayes/RawTargets.lean": {"bytes": 9409, "sha256": "4481af5277584bf55fbd2fb7c0ffe67a7b30ce702d8562cbc60c337c652727f6"},
+    "../sources/FiniteSensorBayes/FiniteLogScoreTarget.lean": {"bytes": 1348, "sha256": "5d45ed52b6d62d2951f304beb5a68a3c9309a9aa0a669443ff4b18a5a01168de"},
+    "../sources/FiniteSensorBayes/Candidate.lean": {"bytes": 5250, "sha256": "393d6db5bac4a988b567b682692872ea175b0fd38f3fae40648c9fa9d817ad62"},
+    "../sources/FiniteSensorBayesOwner/ExactTypeComponent.lean": {"bytes": 2527, "sha256": "d401c6602a87e5aaff0b4d0aa524c31605ac0501c2a05ff9bc49f13391d05c79"},
+    "sources/FiniteSensorBayes/ConditionalCandidate.lean": {"bytes": 43417, "sha256": "762fa227c8ec180fc1174f5042d7b6632b6e3057cfe8644cb435072de8ecff85"},
+    "sources/FiniteSensorBayesOwner/ImportBaseline.lean": {"bytes": 783, "sha256": "c20a6e8740b6ae153f413cc1f0b3735ee66f88dfb008dfbe2486bf86dc238de2"},
+    "sources/FiniteSensorBayesOwner/ModuleInventory.lean": {"bytes": 6758, "sha256": "00ac6caa137ffcc3978c4351c8a3c91f164f7e1078aefb13e55b60f5651a149a"},
+    "sources/FiniteSensorBayesOwner/CoreJudge.lean": {"bytes": 4256, "sha256": "a73bff9bf4909289761428369f17d13711c6e2858803c85b8ecb24e6fd2fc269"}
+  },
+  "raw_public_evidence": {
+    "evidence/import-baseline.stdout": {"bytes": 729777, "sha256": "9598bdd8e94fab0316707ebbe8d4d10326d49dde4d2a9f7b06cb40bc2cdc00a2"},
+    "evidence/core-judge.stdout": {"bytes": 791129, "sha256": "24fbbb38f19eb452fc8b5dde6a15d316b8f5900b3841b06255381a49ff5ef092"}
+  },
+  "exports": [
+    {"theorem": "FiniteSensorBayesConditionalCandidate.observationSemantics", "raw_target": "FiniteSensorBayes.Raw.ObservationSemanticsTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.posteriorSemantics", "raw_target": "FiniteSensorBayes.Raw.PosteriorSemanticsTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.nullFallbackRisk", "raw_target": "FiniteSensorBayes.Raw.NullFallbackRiskTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.admissibilityOnStates", "raw_target": "FiniteSensorBayes.Raw.AdmissibilityOnStatesTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.expectedLossSum", "raw_target": "FiniteSensorBayes.Raw.ExpectedLossSumTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.predictiveKL", "raw_target": "FiniteSensorBayes.Raw.PredictiveKLTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.logScoreDecomposition", "raw_target": "FiniteSensorBayes.Raw.LogScoreDecompositionTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.bayesAttainmentMinimality", "raw_target": "FiniteSensorBayes.Raw.BayesAttainmentMinimalityTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.noObservationRisk", "raw_target": "FiniteSensorBayes.Raw.NoObservationRiskTarget", "universe_parameters": ["u", "v"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.informationDomains", "raw_target": "FiniteSensorBayes.Raw.InformationDomainsTarget", "universe_parameters": ["u", "v", "w", "x"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.mutualInformationGain", "raw_target": "FiniteSensorBayes.Raw.MutualInformationGainTarget", "universe_parameters": ["u", "v", "w"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.conditionalInformationGain", "raw_target": "FiniteSensorBayes.Raw.ConditionalInformationGainTarget", "universe_parameters": ["u", "v", "w", "x"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"},
+    {"theorem": "FiniteSensorBayesConditionalCandidate.learnedLossGap", "raw_target": "FiniteSensorBayes.Raw.LearnedLossGapTarget", "universe_parameters": ["u", "v", "w", "x"], "axioms": ["Classical.choice", "Quot.sound", "propext"], "status": "exact_type_and_axioms_checked"}
+  ],
+  "export_check": "All thirteen exported theorems had exact frozen raw-target types and the listed universe parameters; each used exactly the allowed axiom names below in the final owner observation.",
+  "allowed_axioms_each_export": ["Classical.choice", "Quot.sound", "propext"],
+  "whole_module_observation": {
+    "module": "FiniteSensorBayes.ConditionalCandidate",
+    "declarations": 50,
+    "public_exported_theorems": 13,
+    "private_theorem_helpers": 37,
+    "all_declarations_kind": "theorem",
+    "all_declarations_axioms_within": ["Classical.choice", "Quot.sound", "propext"],
+    "metadata_extra_names": [],
+    "codegen_only_names": [],
+    "complete_declaration_inventory_in": "evidence/core-judge.stdout",
+    "candidate_direct_source_imports": ["FiniteSensorBayes.Contract", "FiniteSensorBayes.RawTargets", "FiniteSensorBayes.FiniteLogScoreTarget", "FiniteSensorBayes.Candidate", "Mathlib.Tactic.Positivity", "Mathlib.Tactic.Linarith", "Mathlib.Tactic.Ring", "Mathlib.Tactic.NormNum"],
+    "import_baseline_closure_rows": 4825,
+    "judge_closure_rows": 4826,
+    "sole_added_module": "FiniteSensorBayes.ConditionalCandidate",
+    "removed_modules": []
+  },
+  "final_native_calls": [
+    {"id": "compile-exact-type", "module": "FiniteSensorBayesOwner.ExactTypeComponent", "operation": "lean --trust=0 compilation", "returncode": 0, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "result_record_sha256": "10cd5ff75708ba6643974f662c80d5357287e42247471a9d103dbad1eebb19a9"},
+    {"id": "compile-module-inventory", "module": "FiniteSensorBayesOwner.ModuleInventory", "operation": "lean --trust=0 compilation", "returncode": 0, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "result_record_sha256": "ce863ceaa3c361f07de8db16ce13bdbedce08effeafa06300599f6560c6f8950"},
+    {"id": "compile-baseline", "module": "FiniteSensorBayesOwner.ImportBaseline", "operation": "lean --trust=0 compilation", "returncode": 0, "stdout_bytes": 729777, "stdout_sha256": "9598bdd8e94fab0316707ebbe8d4d10326d49dde4d2a9f7b06cb40bc2cdc00a2", "result_record_sha256": "be8f1cef97260954990ade2ccf20b650a325f3232e7d3c458e0df69f8f83c249"},
+    {"id": "compile-candidate", "module": "FiniteSensorBayes.ConditionalCandidate", "operation": "lean --trust=0 compilation", "returncode": 0, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "result_record_sha256": "a794ce7885a43095db7318b10cee364cc27f44395018d2ce5743d516248844c1"},
+    {"id": "compile-judge", "module": "FiniteSensorBayesOwner.CoreJudge", "operation": "lean --trust=0 compilation", "returncode": 0, "stdout_bytes": 791129, "stdout_sha256": "24fbbb38f19eb452fc8b5dde6a15d316b8f5900b3841b06255381a49ff5ef092", "result_record_sha256": "3c93e38f20e03f74e201546c8bbc64076cc7cee36ad9eecbb9be03f95061567e"},
+    {"id": "kernel", "module": "FiniteSensorBayes.ConditionalCandidate", "operation": "leanchecker --fresh FiniteSensorBayes.ConditionalCandidate", "returncode": 0, "stdout_bytes": 0, "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "result_record_sha256": "e56e23020ebe7fe9bef9350e907c9c171783e978047c3c3154c7dc5edc70d2f4"}
+  ],
+  "final_native_stderr_all": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+  "selection": {
+    "rule": "First complete successor development success, then one fresh final replay of identical candidate source bytes.",
+    "selected_development_id": "dev-01",
+    "development_source_manifest_sha256": "e8a03ba5ea8114ab2cf7f25bf8af8365ec73f757e6263686ea549e7ff10d7d96",
+    "final_source_manifest_sha256": "e8a03ba5ea8114ab2cf7f25bf8af8365ec73f757e6263686ea549e7ff10d7d96",
+    "development_first_success_record_sha256": "e801f4021003d2f0f9a73b9e9c7c00e4bb931d30818397cb79710be9db60eb9f",
+    "development_root_adoption_sha256": "4d89054a08b2613921b62194d9ce6bae32e3c81a8d1ecde513f3c583dee3f226",
+    "development_native_calls": 6,
+    "development_fresh_kernel": true,
+    "development_all_thirteen_targets": true,
+    "final_root_adoption_sha256": "9fd13438e00429bb9de44fc0cce8d72e08662aaacfa74b37a346cf067a320a07",
+    "final_complete_source_and_semantic_report_equal_development": true,
+    "predecessor_v3_status": "closed_failed_no_acceptance_credit_transferred"
+  },
+  "toolchain": {
+    "lean_version": "4.33.0",
+    "lean_binary_sha256": "1b370cfcbf44e80d1b004ab1b1ab9a4c73951f9f7c242140bcff9bc577576554",
+    "leanchecker_binary_sha256": "257f505f8241ab595c6b557d661fd832dbdace6839ab35d9d1600b3dcbce5880",
+    "lean_toolchain_file_sha256": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "lake_manifest_sha256": "6527e482d9bdbcbf48bf47a420df1ccf9b99958ea0152693446816891cc910af",
+    "mathlib_revision": "db584cd6d46c92f209a44c0f1c829460d327499d"
+  },
+  "retained_local_record_digests": {
+    "campaign_registration": "5e6704c6c01e241a3a52d5c37828d36061387ee8a1598a98882f2f65353ab586",
+    "final_admission": "4141d9941fc058586358648518c2e75054001d608120a71ce79d26e65683c058",
+    "final_source_manifest": "e8a03ba5ea8114ab2cf7f25bf8af8365ec73f757e6263686ea549e7ff10d7d96",
+    "final_object_manifest": "16bcace7d093ec9f4954e5a5496a009dc5fe67a13e9b3db6325ac8efff278451",
+    "final_capture_manifest": "f862ed4248b36984e779bd957cc08799f987f02b62fa4356301f401197008f01",
+    "final_pre_dependency_census": "43500234b8a157266d05e630591da50b195281f796c1f74d53311607305f3fee",
+    "final_post_dependency_census": "e314624771d4396b26006841712dd64bd7e7eeca9081320750fb9fcfcef25f5f",
+    "final_checked_baseline": "e701ebd01883b4a896d096fe553dd9bce72830507d3f9aaa3d47d88e64b2f677",
+    "final_checked_judge": "ef67a9637a1e7cc6ec0a13703a19e0dde249d4fdd03634aa4949ed32e0224621",
+    "final_complete": "cde673556bb51928773d403559b314b02f7c8f2d834530cd9882dde086541507",
+    "final_outer_result": "a15772e0e6b74056f51d423fbf3a7cf904cadd8f52243723882eb177e53c770d",
+    "final_root_readback": "babacd84ee8ef9fa93205245c8bab97fb1a941de090bacfa1cb08ab001eb82dc",
+    "final_root_adoption": "9fd13438e00429bb9de44fc0cce8d72e08662aaacfa74b37a346cf067a320a07",
+    "campaign_terminal": "db22793bdfa07c1b194f3502ee1b2a6bfc1116b6386715678b621374ef7d3534"
+  },
+  "limits": [
+    "The two published stdout files are raw owner observations and require the retained outer/root records for local acceptance.",
+    "The retained local digests identify custody records; their full bytes and dependency corpus are not published here.",
+    "The final stage reused four earlier accepted foundation objects; a prospective composite-source rebuild from the nine published source files has not been executed by this receipt.",
+    "The dependency census is a declared 19,276-file pre/post readback, not native-loader closure, independent cache authentication, atomic filesystem capture, or continuous monitoring.",
+    "Fresh leanchecker uses the same Lean implementation; it does not independently rerun owner run_cmd checks.",
+    "No portable automated replay, hosted verification, independent implementation or human/institutional review is claimed.",
+    "No mask-law, MGW/PID-functional bridge, Rust/binary64 refinement, estimator calibration, learned predictor benefit or physical sensor benefit follows from these targets."
+  ]
+}

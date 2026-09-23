@@ -30,11 +30,11 @@ There is also a useful limit: the expected Bayes log-loss reduction relative to 
 | Work | Useful role | Remaining boundary |
 |---|---|---|
 | Rust categorical MGW for 2–4 sources | Offline signed atom calculation with budgets and cancellation | No completed sensor benchmark follows from library availability |
-| [Four classical finite-PMF foundations](../../formal/lean-finite-logscore/PUBLICATION.md) | Mass/measure, integral, Gibbs and log-score results checked locally in Lean | Unconditional law only; 13 downstream conditional sensor/application targets remain open |
+| [Finite-law log-score package](../../formal/lean-finite-logscore/PUBLICATION.md) | Four foundational and 13 conditional targets checked locally: posterior, Bayes score and MI/CMI gains | No mask/MGW formal bridge, portable or hosted replay, calibration or sensor benefit |
 | Equal-synergy and target-copy formal work | Reject an invalid synergy-only selection rule | Exact theorem premises and replay status remain in the theorem maps |
 | Fixed-alphabet continuity and dependence-aware law bounds | Conditional tools for estimator sensitivity | A valid sampling/dependence model is still required |
 | Finite-prefix mean, bias and gradient work | Mathematical tools for a future bounded encoder experiment | Not an implemented robot-training method |
-| Availability exposition | Complete classical derivation, controls and experiment design | Conditional prediction and availability/mask arguments remain handwritten; no scientific-priority claim |
+| Availability exposition | Complete classical derivation, controls and experiment design | Availability/mask and MGW allocation arguments remain handwritten; no scientific-priority claim |
 
 The [mathematical results guide](../../../MATHEMATICAL_RESULTS_GUIDE.md) points to standalone proofs and exact formal status. A verified mathematical intermediate step does not establish estimator calibration or physical value.
 

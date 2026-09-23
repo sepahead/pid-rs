@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="1200" height="790" viewBox="0 0 1200 790" role="img" aria-labelledby="figure-title figure-description">
+  <title id="figure-title">Information gain and expected model loss</title>
+  <desc id="figure-description">Conceptual finite-law diagram by Sepehr Mahmoudian, with no quantitative scale or empirical result. Under one fixed finite joint probability law and natural logarithms, baseline observation O has minimum expected log loss H of Y given O, while augmented observation O together with V has minimum expected log loss H of Y given O and V. Adding V reduces that minimum by conditional mutual information I of Y and V given O, which is nonnegative. A particular admissible baseline forecast q zero has expected loss L zero equal to its minimum plus nonnegative predictive KL excess D zero. A particular admissible augmented forecast q one has expected loss L one equal to its minimum plus nonnegative predictive KL excess D one. The expected loss reduction for these forecasts, L zero minus L one, equals conditional mutual information plus D zero minus D one, and can be negative even when the conditional mutual information is positive. Forecasts must be positive on supported target outcomes for positive-probability observation fibers; null fibers carry no expected loss. The figure does not claim estimator calibration, model training benefit, a PID theorem, or sensor performance.</desc>
+  <defs>
+    <marker id="arrow-ink" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 14 14" refX="13" refY="7" orient="auto">
+      <path d="M1 1 L13 7 L1 13 Z" fill="#2C3E50"/>
+    </marker>
+    <marker id="arrow-turquoise" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" viewBox="0 0 14 14" refX="13" refY="7" orient="auto">
+      <path d="M1 1 L13 7 L1 13 Z" fill="#1F6968"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "Source Sans Pro", Arial, sans-serif; fill: #2C3E50; }
+    .title { font-size: 35px; font-weight: 700; fill: #1F3F60; }
+    .subtitle { font-size: 23px; }
+    .section { font-size: 24px; font-weight: 700; fill: #1F6968; }
+    .card-title { font-size: 25px; font-weight: 700; fill: #1F3F60; }
+    .card-label { font-size: 23px; }
+    .formula { font-size: 34px; }
+    .model-formula { font-size: 31px; }
+    .bridge-label { font-size: 23px; font-weight: 700; fill: #1F6968; }
+    .bridge-formula { font-size: 27px; font-weight: 700; fill: #1F6968; }
+    .excess { font-size: 24px; font-weight: 700; }
+    .takeaway-title { font-size: 26px; font-weight: 700; fill: #1F3F60; }
+    .takeaway-formula { font-size: 36px; font-weight: 700; }
+    .takeaway-note { font-size: 25px; }
+    .footer { font-size: 21px; fill: #596A73; }
+    .card { fill: #FFFFFF; stroke: #D2E0E2; stroke-width: 2.5; }
+    .arrow { fill: none; stroke: #2C3E50; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-ink); }
+    .info-arrow { fill: none; stroke: #1F6968; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-turquoise); }
+  </style>
+  <rect width="1200" height="790" fill="#F7F3E9"/>
+  <rect width="1200" height="8" fill="#1F3F60"/>
+  <text x="50" y="57" class="title">Information gain and expected model loss</text>
+  <text x="50" y="96" class="subtitle">One fixed finite law P · admissible forecasts q₀, q₁ · natural logs · nats</text>
+
+  <text x="50" y="139" class="section">Bayes-optimal loss from the available observations</text>
+  <rect x="50" y="158" width="420" height="148" rx="12" class="card"/>
+  <text x="77" y="199" class="card-title">Baseline · O</text>
+  <text x="77" y="238" class="card-label">Minimum expected loss</text>
+  <text x="77" y="282" class="formula">H(Y | O)</text>
+
+  <rect x="730" y="158" width="420" height="148" rx="12" class="card"/>
+  <text x="757" y="199" class="card-title">Augmented · (O, V)</text>
+  <text x="757" y="238" class="card-label">Minimum expected loss</text>
+  <text x="757" y="282" class="formula">H(Y | O, V)</text>
+
+  <text x="600" y="195" class="bridge-label" text-anchor="middle">Add V</text>
+  <path d="M491 228 H707" class="info-arrow"/>
+  <text x="600" y="267" class="bridge-label" text-anchor="middle">Bayes gain</text>
+  <text x="600" y="299" class="bridge-formula" text-anchor="middle">I(Y; V | O) ≥ 0</text>
+
+  <path d="M260 317 V392" class="arrow"/>
+  <text x="289" y="363" class="excess">+ D₀ ≥ 0</text>
+  <path d="M940 317 V392" class="arrow"/>
+  <text x="969" y="363" class="excess">+ D₁ ≥ 0</text>
+
+  <text x="600" y="372" class="section" text-anchor="middle">Predictive KL excess</text>
+  <rect x="50" y="410" width="420" height="137" rx="12" class="card"/>
+  <text x="77" y="450" class="card-title">Baseline forecast · q₀</text>
+  <text x="77" y="505" class="formula model-formula">L₀ = H(Y | O) + D₀</text>
+  <rect x="730" y="410" width="420" height="137" rx="12" class="card"/>
+  <text x="757" y="450" class="card-title">Augmented forecast · q₁</text>
+  <text x="757" y="505" class="formula model-formula">L₁ = H(Y | O, V) + D₁</text>
+
+  <rect x="50" y="584" width="1100" height="150" rx="12" fill="#D2E0E2" fill-opacity="0.54" stroke="#1F6968" stroke-width="2.5"/>
+  <text x="78" y="625" class="takeaway-title">Expected loss reduction for these forecasts</text>
+  <text x="78" y="675" class="takeaway-formula">L₀ − L₁ = I(Y; V | O) + D₀ − D₁</text>
+  <text x="78" y="713" class="takeaway-note">This can be negative even when the added observation has positive CMI.</text>
+
+  <text x="50" y="770" class="footer">Conceptual identity, not a measured result · Sepehr Mahmoudian</text>
+</svg>

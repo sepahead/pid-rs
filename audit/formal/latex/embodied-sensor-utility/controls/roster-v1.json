@@ -101,7 +101,7 @@
     "rust-link-src-lib.rs",
     "rust-link-src-sxpid.rs",
     "rust-link-benches-estimators.rs",
-    "three-one-figure-shape",
+    "four-one-figure-shape",
     "missing-full-figure-reference",
     "extra-overview-figure-reference",
     "finite-native-command-counts",

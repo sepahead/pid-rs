@@ -180,14 +180,18 @@ The [embodied-sensor report](audit/research/embodied-sensor-utility/EXPOSITION.m
 [full PDF](output/pdf/embodied-sensor-utility.pdf) derive how exogenous availability weights signed
 categorical MGW atoms in Bayes log-loss gain. Both predictors observe the same mask under a fixed
 complete-data law; data-dependent missingness needs the stated conditional-law alternative.
-Subset MI already determines this oracle objective. The report gives handwritten derivations,
-exact controls, source-derived Rust costs and a proposed offline two-camera study with optional
+Subset MI already determines this oracle objective. The report gives a locally checked classical
+conditional Bayes/MI bridge, handwritten availability/MGW derivations, exact controls,
+source-derived Rust costs and a proposed offline two-camera study with optional
 audio. It separates information availability, attained predictive loss and physical control.
 Its [finite-PMF foundation](audit/formal/lean-finite-logscore/PUBLICATION.md) has four locally
 checked Lean targets: probability mass, actual finite expectation, supported Gibbs inequality,
-and log-score decomposition, lower bound and attainment. The conditional sensor derivations
-remain handwritten. There is no new sensor benchmark, implemented learner or completed consumer
-integration; portable and hosted replay of this formal package remain open.
+and log-score decomposition, lower bound and attainment. A separate [13-target classical
+conditional continuation](audit/formal/lean-finite-logscore/conditional/EXPOSITION.md) locally checks
+fixed-law posterior, supported expected loss, Bayes risk, MI/CMI gains and a supplied-forecast
+loss-gap identity. The availability-mask and signed-MGW application derivations remain handwritten.
+There is no new sensor benchmark, implemented learner or completed consumer integration; portable
+and hosted replay of these local formal results remain open.
 
 The source-pinned [research blueprint](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.md) and
 its [derived human PDF](PID_DISCOVERY_VERIFICATION_AND_DURABILITY_BLUEPRINT.pdf) document the

@@ -7,13 +7,19 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Publish the locally checked 13-target classical finite conditional Bayes and log-score
+  continuation, with exact proof-source and execution records. Expand the sensor reports' fixed-law
+  derivation and add an expected-loss figure. Availability masks, categorical MGW allocation,
+  estimator calibration, Rust refinement and measured sensor benefit remain separate obligations.
+
 - Expand the sensor reports with explicit camera/audio feature inputs, shared-context and weight-provenance assumptions, partial-visibility cases, a worked fusion row, and the recorded information-versus-loss comparison. Redesign the input SVG and rebuild the detailed and overview PDFs.
 
 - Use GitHub-compatible mass notation in the finite-PMF formal source record.
 
 - Add four locally verified finite-PMF foundations for logarithmic prediction loss, with exact
   Lean source snapshots, support assumptions and retained failure evidence. Explain their role
-  in the sensor reports; conditional sensor proofs, Rust refinement and hosted replay remain open.
+  in the sensor reports. The separately checked conditional continuation does not establish
+  availability/MGW application proofs, Rust refinement or hosted replay.
 
 - Include the authorship check in the workflow PDF test's Python launch inventory;
   retain the exact isolation flags and normal/optimized partition.

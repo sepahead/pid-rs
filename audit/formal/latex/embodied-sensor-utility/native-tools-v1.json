@@ -81,7 +81,7 @@
     "builds_per_invocation": 2,
     "invocation_deadline_seconds_maximum": 2700,
     "latex_passes_per_build": 2,
-    "maximum_commands_full": 66,
+    "maximum_commands_full": 68,
     "observed_group_rss_bytes": 4294967296,
     "output_stream_bytes_each": 4194304,
     "stage_deadline_seconds_maximum": 5400,

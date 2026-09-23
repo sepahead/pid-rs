@@ -25,7 +25,7 @@ MANIFEST = ASSETS + "publication-inputs-v1.json"
 RUNTIME = "audit/formal/lean-prefix-mgw-mean/replay-support/runtime.py"
 RUNTIME_SHA256 = "bd8a9f2272a20422863c9902ce2148d2957471bb958d13949fece923cb6a7f5d"
 NATIVE = "audit/formal/latex/embodied-sensor-utility/native-tools-v1.json"
-NATIVE_SHA256 = "f3c5c6e1ca5f10b19e6c847fafd5679e4a9489eb2ed019b6283b1a0842b12cda"
+NATIVE_SHA256 = "7e949fd664984b5eea355c63f6f3510b26c2d7e321234947ba295cb8f702bdd7"
 READER = "audit/formal/latex/prefix-mgw-bias/reader-source-v2.json"
 READER_SHA256 = "5a0474ea26892b04b6ff1c931096ee115bdfdf68adc5945644a849bea064a378"
 KINDS = ("full", "overview")
@@ -36,7 +36,7 @@ TITLES = {"full": "Sensor information for embodied agents",
           "overview": "Wibral-line PID for physical intelligence"}
 TEMPLATES = {kind: ASSETS + "layout/" + kind + ".tex" for kind in KINDS}
 FIGURES = {"figures/" + name + ".svg": "audit/research/embodied-sensor-utility/figures/" + name + ".svg"
-           for name in ("sensor-data-to-evidence", "signed-atoms-and-sensor-value", "availability-weighted-gain")}
+           for name in ("sensor-data-to-evidence", "signed-atoms-and-sensor-value", "availability-weighted-gain", "loss-gap")}
 KIND_FIGURES = {"full": tuple(FIGURES), "overview": ("figures/signed-atoms-and-sensor-value.svg",)}
 STAGE_COMMON = {
     "layout/publication-filter.lua": ASSETS + "layout/publication-filter.lua",
@@ -75,8 +75,8 @@ FONT_NAMES = frozenset(("SourceSansPro-Bold.otf",
                        "lmroman10-regular.otf",
                        "lmroman12-bold.otf",
                        "lmroman12-regular.otf"))
-# 33 native commands per full build and 31 per overview build; both repeat from fresh inputs.
-COMMANDS = {"full": 66, "overview": 62}
+# 34 native commands per full build and 31 per overview build; both repeat from fresh inputs.
+COMMANDS = {"full": 68, "overview": 62}
 MAX_WORK_BYTES = 768 * 1024**2
 MAX_DIRECT_BYTES = 32 * 1024**2
 FINAL_RESULT_RESERVE = 16 * 1024**2

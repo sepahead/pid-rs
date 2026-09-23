@@ -33,6 +33,7 @@ local external_links = {
   ["https://proceedings.mlr.press/v305/almuzairee25a.html"] = true,
 }
 local figure_map = {
+  ["figures/loss-gap.svg"] = "figures/loss-gap.pdf",
   ["figures/sensor-data-to-evidence.svg"] = "figures/sensor-data-to-evidence.pdf",
   ["figures/signed-atoms-and-sensor-value.svg"] = "figures/signed-atoms-and-sensor-value.pdf",
   ["figures/availability-weighted-gain.svg"] = "figures/availability-weighted-gain.pdf",
@@ -114,7 +115,7 @@ local function complete(document)
   if h1_count ~= 1 then error("Exactly one source title is required") end
   local count = 0
   for _ in pairs(images) do count = count + 1 end
-  if count ~= (kind == "full" and 3 or 1) then error("Publication image inventory differs") end
+  if count ~= (kind == "full" and 4 or 1) then error("Publication image inventory differs") end
   return document
 end
 return {

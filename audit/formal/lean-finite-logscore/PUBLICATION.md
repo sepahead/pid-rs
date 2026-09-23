@@ -2,6 +2,13 @@
 
 Author: **Sepehr Mahmoudian**. Published source record, 23 September 2026.
 
+> **Later result, 23 September 2026.** The thirteen conditional targets called open in this
+> four-foundation record subsequently passed a separate, root-adopted local Lean campaign. Read
+> the [conditional publication](conditional/PUBLICATION.md), [exposition](conditional/EXPOSITION.md)
+> and [descriptive receipt](conditional/REPRODUCTION.json) for the exact later scope. This page and
+> its original receipt preserve the earlier four-target execution and its then-current status;
+> availability masks, MGW/PID correspondence, Rust refinement and sensor benefit remain open.
+
 Four finite-probability targets passed local Lean compilation, exact target and axiom inspection,
 and a separate fresh kernel replay. They establish normalized probability masses, the finite
 expectation formula, supported Gibbs nonnegativity, and logarithmic-score decomposition, lower

@@ -52,7 +52,7 @@ An embodied agent predicts and acts in a physical environment. A useful sensor s
 
 This report develops an offline starting point: two camera instances and, when useful, one microphone. It explains how categorical shared-exclusions PID can describe their information about a declared outcome. It derives a sensor-availability objective, gives exact examples, and identifies the experiment needed to establish practical value. Robotics and aerial-object observation share parts of this measurement problem. They need separate outcome definitions and task evaluations.
 
-\textbf{Status.} Four classical finite-PMF foundations have been checked locally in Lean: probability mass and measure, finite expectation as an integral, supported Gibbs nonnegativity, and log-score decomposition, lower bound and attainment. Section 3 explains their exact scope. The conditional prediction, availability/mask and application arguments remain handwritten; 13 downstream formal targets remain open. Existing linked formal results keep their individual theorem and replay status. The report contains no new sensor benchmark, trained policy, field result, or claim of scientific priority. Its useful contribution is a precise connection between signed MGW atoms, sensor availability, predictive loss, and the current ecosystem interfaces.
+\textbf{Status.} Four classical finite-PMF foundations and 13 classical conditional-probability targets have been checked locally in Lean, with separate fresh-kernel replays. Section 3 explains their fixed-law scope: posterior semantics, supported expected log loss, unrestricted Bayes risk, MI/CMI gain and a supplied-forecast loss gap. The availability/mask, MGW allocation and application arguments remain handwritten. Local checks do not establish portable or hosted replay, Rust or binary64 refinement, estimator calibration, or physical sensor benefit. Existing linked formal results keep their individual theorem and replay status. The report contains no new sensor benchmark, trained policy, field result, or claim of scientific priority. Its useful contribution is a precise connection between signed MGW atoms, sensor availability, predictive loss, and the current ecosystem interfaces.
 
 \par\Needspace{10\baselineskip}
 
@@ -165,7 +165,7 @@ First fix a finite, nonempty label alphabet \(\mathcal Y\), with every subset me
 \qquad S=\{y:r_y>0\}.
 \]
 
-The true law is \(r\); the forecast is \(q\). Require \(q_y>0\) for every \(y\in S\). Outside \(S\), \(q_y\) may be zero or positive. Neither full support nor a sampling or independence assumption is required. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md}{finite log-score formal package} records the four exact targets, proof sources and local replay scope. They establish this unconditional finite-law foundation, not a conditional sensor theorem or a new PID result.
+The true law is \(r\); the forecast is \(q\). Require \(q_y>0\) for every \(y\in S\). Outside \(S\), \(q_y\) may be zero or positive. Neither full support nor a sampling or independence assumption is required. The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md}{finite log-score formal package} records the four foundational targets and the separate 13-target conditional continuation, with their individual proof sources and local replay limits. These are classical finite-law statements, not a new PID result.
 
 Define entropy, supported KL divergence and expected log loss by
 
@@ -245,39 +245,95 @@ These results concern one exact law and admitted forecasts. They do not provide 
 
 \subsection{Conditional prediction and sensor information}\label{conditional-prediction-and-sensor-information}
 
-The following conditional argument applies the same classical calculation to each positive-probability observation and averages. Its posterior construction and downstream availability/mask steps are handwritten here; the four checked finite-law targets do not close the 13 remaining conditional sensor/application targets.
+The \href{https://github.com/sepahead/pid-rs/blob/main/audit/formal/lean-finite-logscore/PUBLICATION.md}{conditional continuation of the finite log-score formal package} locally checks this classical fixed-law argument for finite alphabets. Its source starts from a PMF on a finite state alphabet \(K\) and maps each state to observation and target labels. The joint law below is the pushforward of that PMF; \(K\) may include measurement randomness, so deterministic coordinate maps do not assert a noise-free sensor. The checked targets construct posterior PMFs, handle null observation fibers, and establish the supported loss and information identities below. The following calculation explains the steps; the mask and MGW arguments that use them remain handwritten.
 
-A predictor \(q(y\mid o)\) assigns a probability to each possible outcome after observing \(O=o\). Its loss when \(Y=y\) is \(-\ln q(y\mid o)\). Assume \(q>0\) on every outcome with positive conditional probability. For a finite expected loss,
+Let \(O\) be the finite baseline observation and \(Y\) the finite target under one fixed joint law \(P\). Write \(p(o,y)=P(O=o,Y=y)\) and \(p_O(o)=\sum_y p(o,y)\). On a \textbf{positive fiber} \(p_O(o)>0\), define \(r_o(y)=p(o,y)/p_O(o)\). The nonnegative \(p(o,y)\) sum to \(p_O(o)\), so \(r_o\) is a normalized PMF; \(r_o(y)>0\) exactly when \(p(o,y)>0\). On a null fiber \(p_O(o)=0\), every \(p(o,y)\) is zero, so a normalized posterior fallback has no effect on expected loss. A zero count in recorded data does not prove a null population fiber.
+
+A forecast row \(q_o\) is a normalized PMF for each \(o\). It is \textbf{admissible} when \(q_o(y)>0\) wherever \(p(o,y)>0\); it may assign mass outside the true support. With natural logarithms, its expected loss \(L_O(q)\) is a finite real number. Regrouping the finite joint sum by positive observation fibers and using \(p(o,y)=p_O(o)r_o(y)\) gives
 
 \[
 \begin{aligned}
-L(q)&=\sum_{o,y}P(o,y)[-\ln q(y\mid o)]\\
-&=\sum_{o,y}P(o,y)[-\ln P(y\mid o)]
- +\sum_{o,y}P(o,y)\ln\frac{P(y\mid o)}{q(y\mid o)}\\
-&=H(Y\mid O)+D(q),
+L_O(q)
+&=\sum_{o,y:p(o,y)>0}p(o,y)[-\ln q_o(y)]\\
+&=\sum_{o:p_O(o)>0}p_O(o)
+  \sum_{y:r_o(y)>0}r_o(y)[-\ln q_o(y)].
 \end{aligned}
 \]
 
-where \(D(q)=\sum_oP(o)\mathrm{KL}(P(\cdot\mid o)\Vert q(\cdot\mid o))\) is the conditional predictive KL excess loss. Summands with \(P(o,y)=0\) contribute zero.
-
-To see that KL is nonnegative, apply \(\ln t\leq t-1\) to \(t=q_y/p_y\) on the support of a PMF \(p\):
+Both \(r_o(y)\) and \(q_o(y)\) are positive in each included term, so \(-\ln q_o(y)=-\ln r_o(y)+\ln[r_o(y)/q_o(y)]\). Define conditional entropy and predictive KL excess by
 
 \[
-\sum_{y:p_y>0}p_y\ln\frac{q_y}{p_y}
-\leq\sum_{y:p_y>0}q_y-1\leq0.
+\begin{aligned}
+H(Y\mid O)&=\sum_{o:p_O(o)>0}p_O(o)H(r_o),\\
+D_O(q)&=\sum_{o:p_O(o)>0}p_O(o)
+\mathrm{KL}(r_o\Vert q_o).
+\end{aligned}
 \]
 
-Therefore the Bayes predictor \(q=P(\cdot\mid O)\) minimizes expected log loss and attains \(H(Y\mid O)\). With no source, its loss is \(H(Y)\). With source set \(A\), it is \(H(Y\mid X_A)\). Their difference is \(I(Y;X_A)\). Adding \(X_2\) to \(X_1\) reduces Bayes loss by \(I(Y;X_2\mid X_1)\).
-
-This is the classical logarithmic-score connection, not a new PID theorem; see \href{https://doi.org/10.1198/016214506000001437}{Gneiting and Raftery, \emph{Strictly Proper Scoring Rules, Prediction, and Estimation}}. It is specific to this predictive criterion. Position error, missed detections, task success, latency and energy have their own losses and need not rank sensors in the same order.
-
-For two actual trained predictors on the same evaluation law,
+Distributing the finite sums yields
 
 \[
-\boxed{\Delta_{\rm learned}=\Delta_{\rm Bayes}+D_{\rm baseline}-D_{\rm augmented}.}
+\boxed{L_O(q)=H(Y\mid O)+D_O(q)\geq H(Y\mid O).}
 \]
 
-The augmented model can perform worse despite a positive Bayes gain. Its excess loss includes approximation, estimation and optimization error, not only calibration. If either expected loss is infinite, subtracting the two losses or KL terms needs separate treatment; infinity minus infinity is undefined.
+The supported Gibbs argument in the preceding subsection gives each positive-fiber KL term a nonnegative value. For \(q_o=r_o\) on those fibers, every such term is zero. The posterior therefore attains the minimum \(H(Y\mid O)\) over all admissible forecast rows. This does not say that a restricted model class or a training algorithm attains it. A constant observation gives minimum loss \(H(Y)\).
+
+Now let \(V\) be a finite added observation under the \textbf{same} law; the augmented predictor observes the pair \((O,V)\) and retains \(O\). Put \(t(o,v,y)=P(O=o,V=v,Y=y)\) and \(p_{OV}(o,v)=\sum_y t(o,v,y)\). On a positive pair fiber, \(r_{ov}(y)=t(o,v,y)/p_{OV}(o,v)\). The independently defined conditional-information sum includes only positive cells:
+
+\[
+I(Y;V\mid O)=\sum_{o,v,y:t(o,v,y)>0}t(o,v,y)
+\ln\frac{t(o,v,y)p_O(o)}{p_{OV}(o,v)p(o,y)}.
+\]
+
+Every denominator factor is positive because a positive triple cell projects to positive pair and baseline cells. The log ratio reduces to \(\ln[r_{ov}(y)/r_o(y)]\). Regroup by positive pair fibers to obtain
+
+\[
+I(Y;V\mid O)=\sum_{o,v:p_{OV}(o,v)>0}p_{OV}(o,v)
+\mathrm{KL}(r_{ov}\Vert r_o)\geq0.
+\]
+
+To identify the entropy difference, expand the logarithm and use the marginal identity
+
+\[
+\sum_v p_{OV}(o,v)r_{ov}(y)=p_O(o)r_o(y).
+\]
+
+The two resulting sums give \(H(Y\mid O)-H(Y\mid O,V)\). The same supported joint-to-marginal expansion gives
+
+\[
+\begin{aligned}
+I(Y;O)&=H(Y)-H(Y\mid O),\\
+I(Y;O,V)&=H(Y)-H(Y\mid O,V).
+\end{aligned}
+\]
+
+Subtract these equalities to obtain the checked fixed-law identity
+
+\[
+\boxed{\begin{aligned}
+H(Y\mid O)-H(Y\mid O,V)
+&=I(Y;V\mid O)\\
+&=I(Y;O,V)-I(Y;O)\geq0.
+\end{aligned}}
+\]
+
+For source set \(A\), take \(O=X_A\); taking \(V=X_2\) and \(O=X_1\) recovers the two-source Bayes gain in Section 2. These are classical logarithmic-score and conditional-information identities, not a new PID theorem; see \href{https://doi.org/10.1198/016214506000001437}{Gneiting and Raftery, \emph{Strictly Proper Scoring Rules, Prediction, and Estimation}}. Position error, missed detections, task success, latency and energy have different losses and need not rank sensors in the same order.
+
+For two \textbf{supplied forecasts} \(q_0\) on \(O\) and \(q_1\) on \((O,V)\), both admissible under this same law, write \(L_0=L_O(q_0)\), \(L_1=L_{(O,V)}(q_1)\), \(D_0=D_O(q_0)\) and \(D_1=D_{(O,V)}(q_1)\). Subtracting the two finite decompositions gives the locally checked loss-gap identity
+
+\[
+\boxed{L_0-L_1=I(Y;V\mid O)+D_0-D_1.}
+\]
+
+\begin{figure}
+\centering
+\includegraphics[width=160mm,height=\textheight,keepaspectratio,alt={Conceptual fixed-law expected-loss identity: the augmented observation lowers unrestricted Bayes loss by conditional information, while predictive KL excess determines the loss of supplied forecasts.}]{figures/loss-gap.pdf}
+\caption{Conceptual fixed-law expected-loss identity: the augmented observation lowers unrestricted Bayes loss by conditional information, while predictive KL excess determines the loss of supplied forecasts.}
+\end{figure}
+
+\emph{Figure: Expected loss, not a measured model result. \(O\) is the baseline observation, \(V\) the added observation and \(Y\) the target; \(V\) is distinct from the synergy atom \(S\) in Section 2. Under one fixed finite law, \(L_0\) and \(L_1\) are the expected log losses of the admissible baseline and augmented forecasts. \(D_0\) and \(D_1\) are their nonnegative predictive KL excesses above the corresponding minimum expected losses. Each forecast is positive on supported target outcomes in every positive-probability observation fiber. Natural logs give nats. The Bayes gain \(I(Y;V\mid O)\) can be positive while \(L_0-L_1\) is negative.}
+
+An augmented trained model can therefore perform worse even when the added observation contains information; its KL excess includes approximation, estimation and optimization errors. This identity does not establish a trained model's empirical loss, calibration or physical task value. If a forecast excludes a possible outcome, its ordinary expected log loss can be infinite and the finite-real subtraction above does not apply.
 
 \par\Needspace{10\baselineskip}
 
@@ -956,7 +1012,7 @@ Boundary
 \endhead
 \bottomrule\noalign{}
 \endfoot
-Finite-PMF mass, integral, Gibbs and log-score foundations & Locally checked classical foundation for exact-law expected predictive loss & Unconditional law only; 13 downstream conditional sensor/application targets remain open \\*
+Finite-PMF foundations and conditional Bayes/log-score/MI/CMI targets & Four foundational and 13 conditional classical targets checked locally for fixed finite laws & No checked mask/MGW bridge, Rust or binary64 refinement, estimator calibration or physical benefit \\*
 Fixed-world equal-synergy and target-copy results & Negative controls for a sensor-selection score & Not field utility or an estimator confidence theorem \\*
 Fixed-alphabet continuity & Convert a justified PMF perturbation radius into an atom sensitivity statement & Does not supply that radius or permit changing bins \\*
 Dependency-color concentration & Conditional route from a specified dependence structure to law error & Requires its independence/common-law premises; arbitrary time series do not qualify \\*
@@ -965,7 +1021,7 @@ Finite-prefix gradient & Study a declared finite-law encoder objective & Support
 \end{longtable}
 }
 
-The \href{https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md}{mathematical results guide} and each linked theorem map distinguish compiled local proofs, replay obligations, paper correspondence and open application edges. Section 3's four finite-PMF foundations have local Lean checking evidence. Its conditional continuation and the application derivations in Sections 4, 6, 7 and 9 remain handwritten. Algebraic reconstruction, mathematical validity, estimator calibration and physical usefulness are separate obligations.
+The \href{https://github.com/sepahead/pid-rs/blob/main/MATHEMATICAL_RESULTS_GUIDE.md}{mathematical results guide} and each linked theorem map distinguish compiled local proofs, replay obligations, paper correspondence and open application edges. Section 3's four finite-PMF foundations and 13 conditional finite-law targets have separate local Lean checking and fresh-kernel evidence. The availability/mask and MGW application derivations in Sections 4, 6, 7 and 9 remain handwritten. The conditional results have no established portable or hosted replay in this report. Algebraic reconstruction, mathematical validity, estimator calibration and physical usefulness are separate obligations.
 
 \par\Needspace{10\baselineskip}
 

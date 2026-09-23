@@ -212,7 +212,7 @@ def main():
         figure_map = dict(re.findall(r'\["([^"]+)"\] = "([^"]+)"', figure_section))
         require(figure_map == {name: str(Path(name).with_suffix(".pdf")) for name in b.FIGURES}
                 and 'kind == "overview" and element.src ~= "figures/signed-atoms-and-sensor-value.svg"' in text
-                and 'kind == "full" and 3 or 1' in text
+                and 'kind == "full" and 4 or 1' in text
                 and '{Meta = metadata}' in text and '{Pandoc = complete}' in text
                 and "pandoc.WriterOptions{wrap_text='none'}" in text
                 and "pandoc.write(pandoc.Pandoc({e}),'latex',options)" in text
@@ -230,7 +230,7 @@ def main():
                     deadline_utc=(fixed+dt.timedelta(seconds=600)).isoformat(),
                     stage_started_utc=fixed.isoformat(),
                     stage_deadline_utc=(fixed+dt.timedelta(seconds=1200)).isoformat(),
-                    maximum_builds=2, maximum_commands=66,
+                    maximum_builds=2, maximum_commands=68,
                     tool_selectors={name: "/owned/bin/"+name for name in b.TOOLS},
                     reader_directory="/owned/reader")
     add("registration-positive", lambda: b.admit_registration(good_reg, binding, fixed, 10000.0))
@@ -238,7 +238,7 @@ def main():
         ("source", "builder_sha256", "d"*64, "source binding"),
         ("mode", "optimization", 1, "source binding"),
         ("boolean-mode", "optimization", False, "source binding"),
-        ("commands", "maximum_commands", 67, "command budget"),
+        ("commands", "maximum_commands", 69, "command budget"),
         ("deadline", "deadline_utc", fixed.isoformat(), "chronology"),
         ("renewed-window", "stage_deadline_utc", (fixed+dt.timedelta(hours=2)).isoformat(), "chronology"),
     ):
@@ -443,7 +443,7 @@ def main():
                 "observation": {}, "figure_pdfs": {str(Path(name).with_suffix(".pdf")): {}
                                                     for name in b.KIND_FIGURES[kind]}}
         return value
-    add("three-one-figure-shape", lambda: b.admit_manifest(reviewed_shape(), "full", True))
+    add("four-one-figure-shape", lambda: b.admit_manifest(reviewed_shape(), "full", True))
     wrong_figures = reviewed_shape()
     wrong_figures["outputs"]["full"]["figure_pdfs"].pop("figures/sensor-data-to-evidence.pdf")
     add("missing-full-figure-reference", lambda: b.admit_manifest(wrong_figures, "full", True), "figure output differs")
@@ -451,11 +451,11 @@ def main():
     extra_figure["outputs"]["overview"]["figure_pdfs"]["figures/sensor-data-to-evidence.pdf"] = {}
     add("extra-overview-figure-reference", lambda: b.admit_manifest(extra_figure, "overview", True), "figure output differs")
     add("finite-native-command-counts", lambda: require(
-        b.same_json_value(b.COMMANDS, {"full": 66, "overview": 62})
+        b.same_json_value(b.COMMANDS, {"full": 68, "overview": 62})
         and b.FONT_NAMES == frozenset(["SourceSansPro-Bold.otf","SourceSansPro-Regular.otf","SourceSansPro-RegularIt.otf","SourceSansPro-Semibold.otf","SourceSansPro-SemiboldIt.otf","latinmodern-math.otf","lmmono10-italic.otf","lmmono10-regular.otf","lmmonolt10-bold.otf","lmmonolt10-boldoblique.otf","lmroman10-bold.otf","lmroman10-bolditalic.otf","lmroman10-italic.otf","lmroman10-regular.otf","lmroman12-bold.otf","lmroman12-regular.otf"])
         and set(strict(captured_inputs[b.NATIVE])["fonts"]) == b.FONT_NAMES
         and digest(captured_inputs[b.NATIVE]) == b.NATIVE_SHA256
-        and strict(captured_inputs[b.NATIVE])["limits"]["maximum_commands_full"] == 66
+        and strict(captured_inputs[b.NATIVE])["limits"]["maximum_commands_full"] == 68
         and strict(captured_inputs[b.NATIVE])["limits"]["maximum_commands_overview"] == 62,
         "command counts or controlled font profile differ"))
     def missing_open(reader):

@@ -1,0 +1,111 @@
+{
+  "author": "Sepehr Mahmoudian",
+  "boundaries": [
+    "These are publication observations, not new mathematical theorems or a complete repository-wide exact replay.",
+    "Thirteen conditional targets and four foundations have separately recorded local Lean evidence. The classical identities are not new PID functionals.",
+    "No formal availability-mask/MGW correspondence, Rust refinement, sampling calibration or measured learner/sensor benefit is established.",
+    "The source, reviews and builds share local tooling and custody; no independent implementation or institutional review is claimed.",
+    "PDF native pins are bounded dependencies, not complete native closure. Portable/hosted proof replay and containing-commit hosted checks require separate evidence."
+  ],
+  "conditional_proof_publication": "../../formal/lean-finite-logscore/conditional/PUBLICATION.md",
+  "controls": {
+    "actual_outer_returncode": 0,
+    "normal_cases": 109,
+    "optimized_cases": 109,
+    "scope": "Finite inert source/data controls; no native proof credit."
+  },
+  "exact_reproduction": {
+    "full": {
+      "actual_outer_exit": 0,
+      "builds": 2,
+      "commands": 68,
+      "completed_utc": "2026-09-23T18:37:50.120421+00:00",
+      "result": {
+        "bytes": 227207,
+        "sha256": "00588e432b2f21c47008d7aea72b877356880ff170ae6210e94fec75849ab828"
+      }
+    },
+    "overview": {
+      "actual_outer_exit": 0,
+      "builds": 2,
+      "commands": 62,
+      "completed_utc": "2026-09-23T18:39:09.573343+00:00",
+      "result": {
+        "bytes": 180751,
+        "sha256": "041a49c0f43bf8e02f2ff5877be789c787a961ea710c7c802eb4b670d308e516"
+      }
+    }
+  },
+  "input_profile": "../../formal/latex/embodied-sensor-utility/publication-inputs-v1.json",
+  "negative_routes": [
+    {
+      "outcome": "Strict-log rejected three underfull lines in the inline conditional-information chain. Replaced it with displayed equations; no log tolerance weakened. Overview built but this source revision was not selected.",
+      "route": "First full discovery"
+    },
+    {
+      "outcome": "Admission rejected the old canonical PDF because selected bytes had been installed under a wrong new filename. No native overview command ran. Corrected the canonical path, removed the byte-identical duplicate, and used a fresh work directory within the original exact-stage deadline.",
+      "route": "Initial exact overview"
+    }
+  ],
+  "observed_utc": "2026-09-23T18:40:28.900583+00:00",
+  "outputs": {
+    "full": {
+      "figure_pdfs": {
+        "figures/availability-weighted-gain.pdf": {
+          "bytes": 47272,
+          "sha256": "5d6f39ed6e691240d8c4b4b3445da6a79ba7d7b6b332e52bfad42878276127cd"
+        },
+        "figures/loss-gap.pdf": {
+          "bytes": 42967,
+          "sha256": "ddafaaddcb542b5b1cef75c53e1aa5b9b9ba0da5083f647d50495fdfc1f65036"
+        },
+        "figures/sensor-data-to-evidence.pdf": {
+          "bytes": 48726,
+          "sha256": "5ceffd86575d9da2e852410899b6132e96ad3000777e6fe0908f8fa3424d9557"
+        },
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "pages": 28,
+      "pdf": {
+        "bytes": 391396,
+        "sha256": "af42c656de39b9f43fe1ba0b1ea8a9fcc36a8f96a3aa43e5d6d36e33f6c0ad06"
+      },
+      "tex": {
+        "bytes": 101306,
+        "sha256": "3c61c2f1294e0f9e15e47bedf16d0e3d0df0dc6f7e8e7570a98480a6d431e8f6"
+      }
+    },
+    "overview": {
+      "figure_pdfs": {
+        "figures/signed-atoms-and-sensor-value.pdf": {
+          "bytes": 44338,
+          "sha256": "1831d005e21a64c90e6ca0939585a7be819f7fd1e5f6f23e0c38368b1c194e6f"
+        }
+      },
+      "pages": 4,
+      "pdf": {
+        "bytes": 95983,
+        "sha256": "0c4128cfd63fd98e167476a121bb70bffdf563251d87526e4718f8e071fbf470"
+      },
+      "tex": {
+        "bytes": 14600,
+        "sha256": "1230f01c7cef8e9498a753c7f13ef943d5f464db21a9801a5f2f83fdef6f18f8"
+      }
+    }
+  },
+  "profile_sha256": "a3ff5e6d336ebe54a9eab22276c1dbcc921fe677be6a77134183174b6b19c412",
+  "schema": "pid-rs/embodied-sensor-conditional-bayes-publication-observation-v1",
+  "scope": "Two sensor publications: classical conditional-probability exposition and expected-loss diagram. Formal proof evidence remains separately scoped.",
+  "selected_source_file_count": 23,
+  "visual_review": {
+    "accessibility_audit": false,
+    "finding": "Supported equations, signs, subscripts, table margins, four diagram cards and arrowheads legible; no clipping observed.",
+    "high_risk": "Fullpages6and7at2400pixelwidth;page7also1800pixelgrayscale.",
+    "normal_size": "All28full and4overviewpages directly viewed: rootfull1-15+overview1-4, delegatedfull16-28.",
+    "phase_boundary": "Initial root render review closed partial after its deadline. A separate source-only phase inspected the three outstanding already-rendered high-risk images and selected the artifacts.",
+    "physical_print_test": false
+  }
+}
